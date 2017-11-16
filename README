@@ -1,0 +1,97 @@
+Free Heroes2 Engine
+
+Prerequisites:
+You need to have these libraries (with equivalent devel versions) to build fHeroes2:
+- SDL
+
+optional library:
+- SDL_mixer (play music: internal midi or external ogg tracks) or build WITHOUT_MIXER
+- SDL_image (loading external sprites, create screenshot in png format) or build WITHOUT_IMAGE
+- SDL_ttf (unicode support) or build WITHOUT_UNICODE
+- SDL_net or build WITHOUT_NETWORK
+- libogg
+- libpng
+
+SDL libraries can be found at http://www.libsdl.org .
+Sourcecode you can get it here: http://sourceforge.net/projects/fheroes2/
+And translations: http://translations.launchpad.net/fheroes2
+
+For play:
+Copy origin data/*.agg in to data directory.
+Copy maps files (*.mp2) in to maps directory.
+
+Hot keys:
+all hotkeys may be redefined (see fheroes2.key)
+
+All possibilities of fheroes2:
+- game: always confirm for rewrite savefile
+- game: also confirm autosave
+- game: remember last focus
+- game: battle show grid
+- game: battle mouse shadow
+- game: battle move shadow
+- game: battle show damage info
+- game: castle flash building
+- world: show visited content from objects
+- world: scouting skill show extended content info
+- world: abandoned mine random resource
+- world: save count monster after battle
+- world: allow set guardian to objects
+- world: guardian objects gets +2 defense
+- world: no in-built requirements or guardians for placed artifacts
+- world: only the first monster will attack (H2 bug).
+- world: Eagle Eye also works like Scholar in H3.
+- world: ban for WeekOf/MonthOf Monsters
+- world: new version WeekOf (+growth)
+- world: ban plagues months
+- world: Months Of Monsters do not place creatures on map
+- world: Crystal Ball also added Identify Hero and Visions spells
+- world: Artesian Springs have two separately visitable squares (h3 ver)
+- world: Starting heroes as Loss Conditions for Human Players
+- world: Only 1 hero can be hired by the one player every week
+- world: each castle allows one hero to be recruited every week
+- world: Outer creature dwellings should accumulate units
+- world: use unique artifacts for morale/luck
+- world: use unique artifacts for resource affecting
+- world: use unique artifacts for for primary skills
+- world: use unique artifacts for secondary skills
+- world: Wind/Water Mills and Magic Garden can be captured
+- world: disable Barrow Mounds
+- castle: allow buy from well
+- castle: allow guardians
+- castle: higher mage guilds regenerate more spell points/turn (20/40/60/80/100%)
+- castle: allow recruits special/expansion heroes
+- heroes: allow buy a spellbook from Shrines
+- heroes: learn new spells with day
+- heroes: recruit cost to be dependent on hero level
+- heroes: remember MP/SP for retreat/surrender result
+- heroes: surrendering gives some experience
+- heroes: recalculate movement points after creatures movement
+- heroes: allow pickup objects for patrol
+- heroes: after battle move to target cell
+- heroes: allow transcribing scrolls (needs: Eye Eagle skill)
+- heroes: allow banned sec. skills upgrade
+- heroes: in Arena can choose any of primary skills
+- unions: allow meeting heroes
+- unions: allow castle visiting
+- battle: soft wait troop
+- battle: high objects are an obstacle for archers
+- battle: merge armies for hero from castle
+- battle: archmage can resists (20%) bad spells
+- battle: magical creature resists (20%) the same magic
+- battle: skip increase +2 defense
+- battle: reverse wait order (fast, average, slow)
+- game: show system info
+- game: autosave on
+- game: autosave will be made at the beginning of the day
+- game: use fade
+- game: show SDL logo
+- game: use evil interface
+- game: also use dynamic interface for castles
+- game: hide interface
+- game: offer to continue the game afer victory condition
+- pocketpc: hide cursor
+- pocketpc: tap mode
+- pocketpc: drag&drop gamearea as scroll
+- pocketpc: low display resolution (needs restart)
+- pocketpc: low memory

@@ -1,0 +1,51 @@
+Free Heroes2 Engine
+
+Copyright (C) 2009 by Andrey Afletdinov <fheroes2@gmail.com>
+All rights reserved.
+
+License information can be found in the COPYING file.
+
+This distribution include materials developed by third
+parties.
+
+To play FHeroes2 you need the file HEROES2.AGG.
+All rights to the resource file HEROES2.AGG is owned by Ubisoft.
+Please! Do not make the official packages for assembly FHeroes2
+together with the resource file HEROES2.AGG.
+
+Other components:
+- AI code files:
+    authors: Andrey Afletdinov
+    license: Non-commercial License
+    files:
+     src/fheroes2/ai/simple/ai_battle.cpp
+     src/fheroes2/ai/simple/ai_castle.cpp
+     src/fheroes2/ai/simple/ai_heroes.cpp
+     src/fheroes2/ai/simple/ai_kingdom.cpp
+     src/fheroes2/ai/simple/ai_simple.cpp
+     src/fheroes2/ai/simple/ai_simple.h
+
+- save SDL_Surface to PNG format:
+    authors: Philip D. Bober
+    license: zlib license
+    files:
+     src/engine/IMG_savepng.h
+     src/engine/IMG_savepng.cpp
+
+- gzstream, C++ iostream classes wrapping the zlib compression library.
+    authors: Deepak Bandyopadhyay, Lutz Kettner
+    license: LGPL 2.1
+    files:
+     src/src/xmlccwrap/gzstream.h
+     src/src/xmlccwrap/gzstream.cpp
+
+- tinyxml 2.5.3, xml parser
+    authors: Lee Thomason
+    license: zlib license
+    files:
+    src/src/xmlccwrap/tinyxml.h
+    src/src/xmlccwrap/tinyxml.cpp
+    src/src/xmlccwrap/tinyxmlerror.cpp
+    src/src/xmlccwrap/tinyxmlparser.cpp
+    src/src/xmlccwrap/tinystr.h
+    src/src/xmlccwrap/tinystr.cpp
