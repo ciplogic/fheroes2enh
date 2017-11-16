@@ -28,10 +28,10 @@
 
 int ObjTree::GetPassable(u32 index)
 {
-    if(isShadow(index)) return DIRECTION_ALL;
+    if (isShadow(index)) return DIRECTION_ALL;
 
     return (5 == index || 15 == index || 22 == index || 27 == index ?
-        0 : DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW);
+            0 : DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW);
 }
 
 bool ObjTree::isAction(u32 index)
@@ -41,7 +41,7 @@ bool ObjTree::isAction(u32 index)
 
 bool ObjTree::isShadow(u32 index)
 {
-    const u8 shadows[] = { 0, 3, 7, 10, 13, 17, 20, 23, 26, 29, 32, 34 };
+    const u8 shadows[] = {0, 3, 7, 10, 13, 17, 20, 23, 26, 29, 32, 34};
     return ARRAY_COUNT_END(shadows) != std::find(shadows, ARRAY_COUNT_END(shadows), index);
 }
 

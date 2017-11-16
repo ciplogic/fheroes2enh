@@ -30,12 +30,13 @@ int ObjTown::GetPassable(u32 index0)
     u32 index = index0 % 32;
 
     // 13, 29, 45, 61, 77, 93, 109, 125, 141, 157, 173, 189
-    if(13 == index || 29 == index)
-	return Direction::CENTER | Direction::BOTTOM;
+    if (13 == index || 29 == index)
+        return Direction::CENTER | Direction::BOTTOM;
     else
-    // town/castle
-    if((5 < index && index < 13) || (13 < index && index < 16) ||
-	(21 < index && index < 29) || (29 < index)) return 0;
+        // town/castle
+    if ((5 < index && index < 13) || (13 < index && index < 16) ||
+        (21 < index && index < 29) || (29 < index))
+        return 0;
 
     return DIRECTION_ALL;
 }
@@ -45,18 +46,16 @@ int ObjTwba::GetPassable(u32 index0)
     u32 index = index0 % 10;
 
     // 2, 12, 22, 32, 42, 52, 62, 72
-    if(2 == index)
-	return Direction::CENTER | Direction::BOTTOM;
+    if (2 == index)
+        return Direction::CENTER | Direction::BOTTOM;
+    else if (index < 5)
+        return 0;
     else
-    if(index < 5)
-	return 0;
-    else
-    // 7, 17, 27, 37, 47, 57, 67, 77
-    if(7 == index)
-	return DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW | Direction::TOP;
-    else
-    if(4 < index)
-	return DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW;
+        // 7, 17, 27, 37, 47, 57, 67, 77
+    if (7 == index)
+        return DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW | Direction::TOP;
+    else if (4 < index)
+        return DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW;
 
     return DIRECTION_ALL;
 }
@@ -83,11 +82,13 @@ bool ObjTwba::isShadow(u32 index)
 
 int ObjTown::GetActionObject(u32 index)
 {
-    switch(index % 32)
+    switch (index % 32)
     {
         case 13:
-        case 29:        return MP2::OBJ_CASTLE;
-        default: break;
+        case 29:
+            return MP2::OBJ_CASTLE;
+        default:
+            break;
     }
 
     return MP2::OBJ_ZERO;

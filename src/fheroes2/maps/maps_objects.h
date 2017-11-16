@@ -34,120 +34,144 @@
 class MapObjectSimple : public MapPosition
 {
 public:
-    MapObjectSimple(int v = 0) : uid(0), type(v) {}
-    virtual ~MapObjectSimple() {}
+    MapObjectSimple(int v = 0) : uid(0), type(v)
+    {}
 
-    int         GetType(void) const { return type; }
-    u32         GetUID(void) const { return uid; }
-    void        SetUID(u32 v) { uid = v; }
+    virtual ~MapObjectSimple()
+    {}
+
+    int GetType(void) const
+    { return type; }
+
+    u32 GetUID(void) const
+    { return uid; }
+
+    void SetUID(u32 v)
+    { uid = v; }
 
 protected:
-    friend StreamBase & operator<< (StreamBase &, const MapObjectSimple &);
-    friend StreamBase & operator>> (StreamBase &, MapObjectSimple &);
+    friend StreamBase &operator<<(StreamBase &, const MapObjectSimple &);
 
-    u32         uid;
-    int         type;
+    friend StreamBase &operator>>(StreamBase &, MapObjectSimple &);
+
+    u32 uid;
+    int type;
 };
 
-StreamBase & operator<< (StreamBase &, const MapObjectSimple &);
-StreamBase & operator>> (StreamBase &, MapObjectSimple &);
+StreamBase &operator<<(StreamBase &, const MapObjectSimple &);
+
+StreamBase &operator>>(StreamBase &, MapObjectSimple &);
 
 struct MapEvent : public MapObjectSimple
 {
     MapEvent();
 
-    void	LoadFromMP2(s32 index, StreamBuf);
+    void LoadFromMP2(s32 index, StreamBuf);
 
-    bool	isAllow(int color) const;
-    void	SetVisited(int color);
+    bool isAllow(int color) const;
 
-    Funds	resources;
-    Artifact	artifact;
-    bool	computer;
-    bool	cancel;
-    int		colors;
+    void SetVisited(int color);
+
+    Funds resources;
+    Artifact artifact;
+    bool computer;
+    bool cancel;
+    int colors;
     std::string message;
 };
 
-StreamBase & operator<< (StreamBase &, const MapEvent &);
-StreamBase & operator>> (StreamBase &, MapEvent &);
+StreamBase &operator<<(StreamBase &, const MapEvent &);
 
-typedef std::list<std::string>    RiddleAnswers;
+StreamBase &operator>>(StreamBase &, MapEvent &);
+
+typedef std::list<std::string> RiddleAnswers;
 
 struct MapSphinx : public MapObjectSimple
 {
     MapSphinx();
 
-    void	LoadFromMP2(s32 index, StreamBuf);
+    void LoadFromMP2(s32 index, StreamBuf);
 
-    bool	AnswerCorrect(const std::string & answer);
-    void	SetQuiet(void);
+    bool AnswerCorrect(const std::string &answer);
 
-    Funds		resources;
-    Artifact		artifact;
-    RiddleAnswers	answers;
-    std::string		message;
-    bool		valid;
+    void SetQuiet(void);
+
+    Funds resources;
+    Artifact artifact;
+    RiddleAnswers answers;
+    std::string message;
+    bool valid;
 };
 
-StreamBase & operator<< (StreamBase &, const MapSphinx &);
-StreamBase & operator>> (StreamBase &, MapSphinx &);
+StreamBase &operator<<(StreamBase &, const MapSphinx &);
+
+StreamBase &operator>>(StreamBase &, MapSphinx &);
 
 struct MapSign : public MapObjectSimple
 {
     MapSign();
+
     MapSign(s32 index, const std::string &);
 
-    void	LoadFromMP2(s32 index, StreamBuf);
+    void LoadFromMP2(s32 index, StreamBuf);
 
-    std::string		message;
+    std::string message;
 };
 
-StreamBase & operator<< (StreamBase &, const MapSign &);
-StreamBase & operator>> (StreamBase &, MapSign &);
+StreamBase &operator<<(StreamBase &, const MapSign &);
+
+StreamBase &operator>>(StreamBase &, MapSign &);
 
 struct MapResource : public MapObjectSimple
 {
     MapResource();
 
-    ResourceCount	resource;
+    ResourceCount resource;
 };
 
-StreamBase & operator<< (StreamBase &, const MapResource &);
-StreamBase & operator>> (StreamBase &, MapResource &);
+StreamBase &operator<<(StreamBase &, const MapResource &);
+
+StreamBase &operator>>(StreamBase &, MapResource &);
 
 struct MapArtifact : public MapObjectSimple
 {
     MapArtifact();
 
-    Artifact		artifact;
-    int			condition;
-    int			extended;
+    Artifact artifact;
+    int condition;
+    int extended;
 
-    Funds		QuantityFunds(void) const;
-    ResourceCount	QuantityResourceCount(void) const;
+    Funds QuantityFunds(void) const;
+
+    ResourceCount QuantityResourceCount(void) const;
 };
 
-StreamBase & operator<< (StreamBase &, const MapArtifact &);
-StreamBase & operator>> (StreamBase &, MapArtifact &);
+StreamBase &operator<<(StreamBase &, const MapArtifact &);
+
+StreamBase &operator>>(StreamBase &, MapArtifact &);
 
 struct MapMonster : public MapObjectSimple
 {
     MapMonster();
 
-    Monster		monster;
+    Monster monster;
 
-    int			condition;
-    int			count;
+    int condition;
+    int count;
 
-    Troop		QuantityTroop(void) const;
-    bool		JoinConditionSkip(void) const;
-    bool		JoinConditionMoney(void) const;
-    bool		JoinConditionFree(void) const;
-    bool		JoinConditionForce(void) const;
+    Troop QuantityTroop(void) const;
+
+    bool JoinConditionSkip(void) const;
+
+    bool JoinConditionMoney(void) const;
+
+    bool JoinConditionFree(void) const;
+
+    bool JoinConditionForce(void) const;
 };
 
-StreamBase & operator<< (StreamBase &, const MapMonster &);
-StreamBase & operator>> (StreamBase &, MapMonster &);
+StreamBase &operator<<(StreamBase &, const MapMonster &);
+
+StreamBase &operator>>(StreamBase &, MapMonster &);
 
 #endif

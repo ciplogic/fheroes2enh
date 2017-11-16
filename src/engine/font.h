@@ -80,4 +80,5 @@ private:
     std::vector<u8> buf;
     Size size;
 };
+
 #endif

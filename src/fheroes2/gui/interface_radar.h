@@ -32,29 +32,39 @@ namespace Interface
     class Radar : public BorderWindow
     {
     public:
-	Radar(Basic &);
+        Radar(Basic &);
 
-	void SetPos(s32, s32);
-	void SetRedraw(void) const;
-	void Build(void);
-	void Redraw(void);
-	void SetHide(bool);
-	void ResetAreaSize(void);
-	void QueueEventProcessing(void);
+        void SetPos(s32, s32);
+
+        void SetRedraw(void) const;
+
+        void Build(void);
+
+        void Redraw(void);
+
+        void SetHide(bool);
+
+        void ResetAreaSize(void);
+
+        void QueueEventProcessing(void);
 
     private:
-	void SavePosition(void);
-	void Generate(void);
-	void RedrawObjects(int color = 0xFF);
-	void RedrawCursor(void);
-	void ChangeAreaSize(const Size &);
+        void SavePosition(void);
 
-	Basic & interface;
+        void Generate(void);
 
-        Surface		spriteArea;
-	SpriteMove	cursorArea;
-	Point		offset;
-	bool		hide;
+        void RedrawObjects(int color = 0xFF);
+
+        void RedrawCursor(void);
+
+        void ChangeAreaSize(const Size &);
+
+        Basic &interface;
+
+        Surface spriteArea;
+        SpriteMove cursorArea;
+        Point offset;
+        bool hide;
     };
 }
 

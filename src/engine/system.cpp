@@ -39,8 +39,10 @@
 #include <shellapi.h>
 #endif
 
-#if ! defined(__MINGW32CE__)
+#if !defined(__MINGW32CE__)
+
 #include <unistd.h>
+
 #endif
 
 #if defined(__MINGW32CE__)
@@ -74,7 +76,7 @@ extern HWND SDL_Window;
 #include "tools.h"
 #include "dir.h"
 
-int System::MakeDirectory(const std::string & path)
+int System::MakeDirectory(const std::string &path)
 {
 #if defined(__SYMBIAN32__)
     return mkdir(path.c_str(), S_IRWXU);
@@ -85,12 +87,12 @@ int System::MakeDirectory(const std::string & path)
 #endif
 }
 
-std::string System::ConcatePath(const std::string & str1, const std::string & str2)
+std::string System::ConcatePath(const std::string &str1, const std::string &str2)
 {
     return std::string(str1 + SEPARATOR + str2);
 }
 
-std::string System::GetHomeDirectory(const std::string & prog)
+std::string System::GetHomeDirectory(const std::string &prog)
 {
     std::string res;
 
@@ -99,17 +101,16 @@ std::string System::GetHomeDirectory(const std::string & prog)
     res = path;
     SDL_free(path);
 #endif
-    
-    if(System::GetEnvironment("HOME"))
+
+    if (System::GetEnvironment("HOME"))
         res = System::ConcatePath(System::GetEnvironment("HOME"), std::string(".").append(prog));
-    else
-    if(System::GetEnvironment("APPDATA"))
+    else if (System::GetEnvironment("APPDATA"))
         res = System::ConcatePath(System::GetEnvironment("APPDATA"), prog);
 
     return res;
 }
 
-ListDirs System::GetDataDirectories(const std::string & prog)
+ListDirs System::GetDataDirectories(const std::string &prog)
 {
     ListDirs dirs;
 
@@ -119,8 +120,8 @@ ListDirs System::GetDataDirectories(const std::string & prog)
 
     if(SDL_ANDROID_EXTERNAL_STORAGE_READ && SDL_AndroidGetExternalStorageState())
     {
-	const char* external = SDL_AndroidGetExternalStoragePath();
-	if(external) dirs.push_back(System::ConcatePath(external, prog));
+    const char* external = SDL_AndroidGetExternalStoragePath();
+    if(external) dirs.push_back(System::ConcatePath(external, prog));
     }
 
     dirs.push_back(System::ConcatePath("/storage/sdcard0", prog));
@@ -130,7 +131,7 @@ ListDirs System::GetDataDirectories(const std::string & prog)
     return dirs;
 }
 
-ListFiles System::GetListFiles(const std::string & prog, const std::string & prefix, const std::string & filter)
+ListFiles System::GetListFiles(const std::string &prog, const std::string &prefix, const std::string &filter)
 {
     ListFiles res;
 
@@ -141,23 +142,23 @@ ListFiles System::GetListFiles(const std::string & prog, const std::string & pre
     StreamFile sf;
     if(sf.open("assets.list", "rb"))
     {
-	std::list<std::string> rows = StringSplit(GetString(sf.getRaw(sf.size())), "\n");
-	for(std::list<std::string>::const_iterator
-	    it = rows.begin(); it != rows.end(); ++it)
-	if(prefix.empty() ||
-	    ((prefix.size() <= (*it).size() &&
-		0 == prefix.compare((*it).substr(0, prefix.size())))))
-	{
-	    if(filter.empty() ||
-		(0 == filter.compare((*it).substr((*it).size() - filter.size(), filter.size()))))
-		res.push_back(*it);
-	}
+    std::list<std::string> rows = StringSplit(GetString(sf.getRaw(sf.size())), "\n");
+    for(std::list<std::string>::const_iterator
+        it = rows.begin(); it != rows.end(); ++it)
+    if(prefix.empty() ||
+        ((prefix.size() <= (*it).size() &&
+        0 == prefix.compare((*it).substr(0, prefix.size())))))
+    {
+        if(filter.empty() ||
+        (0 == filter.compare((*it).substr((*it).size() - filter.size(), filter.size()))))
+        res.push_back(*it);
+    }
     }
 
     ListDirs dirs = GetDataDirectories(prog);
 
     for(ListDirs::const_iterator
-	it = dirs.begin(); it != dirs.end(); ++it)
+    it = dirs.begin(); it != dirs.end(); ++it)
     {
         res.ReadDir(prefix.size() ? System::ConcatePath(*it, prefix) : *it, filter, false);
     }
@@ -165,19 +166,17 @@ ListFiles System::GetListFiles(const std::string & prog, const std::string & pre
     return res;
 }
 
-std::string System::GetDirname(const std::string & str)
+std::string System::GetDirname(const std::string &str)
 {
-    if(str.size())
+    if (str.size())
     {
         size_t pos = str.rfind(SEPARATOR);
 
-        if(std::string::npos == pos)
+        if (std::string::npos == pos)
             return std::string(".");
-        else
-        if(pos == 0)
+        else if (pos == 0)
             return std::string("./");
-        else
-        if(pos == str.size() - 1)
+        else if (pos == str.size() - 1)
             return GetDirname(str.substr(0, str.size() - 1));
         else
             return str.substr(0, pos);
@@ -186,16 +185,16 @@ std::string System::GetDirname(const std::string & str)
     return str;
 }
 
-std::string System::GetBasename(const std::string & str)
+std::string System::GetBasename(const std::string &str)
 {
-    if(str.size())
+    if (str.size())
     {
         size_t pos = str.rfind(SEPARATOR);
 
-        if(std::string::npos == pos ||
-            pos == 0) return str;
-        else
-        if(pos == str.size() - 1)
+        if (std::string::npos == pos ||
+            pos == 0)
+            return str;
+        else if (pos == str.size() - 1)
             return GetBasename(str.substr(0, str.size() - 1));
         else
             return str.substr(pos + 1);
@@ -204,7 +203,7 @@ std::string System::GetBasename(const std::string & str)
     return str;
 }
 
-const char* System::GetEnvironment(const char* name)
+const char *System::GetEnvironment(const char *name)
 {
 #if defined(__MINGW32CE__) || defined(__MINGW32__)
     return SDL_getenv(name);
@@ -213,7 +212,7 @@ const char* System::GetEnvironment(const char* name)
 #endif
 }
 
-int System::SetEnvironment(const char* name, const char* value)
+int System::SetEnvironment(const char *name, const char *value)
 {
 #if defined(__MINGW32CE__) || defined(__MINGW32__)
     std::string str(std::string(name) + "=" + std::string(value));
@@ -224,7 +223,7 @@ int System::SetEnvironment(const char* name, const char* value)
 #endif
 }
 
-void System::SetLocale(int category, const char* locale)
+void System::SetLocale(int category, const char *locale)
 {
 #if defined(ANDROID)
     setlocale(category, locale);
@@ -241,26 +240,26 @@ std::string System::GetMessageLocale(int length /* 1, 2, 3 */)
 #elif defined(ANDROID)
     char* clocale = setlocale(LC_MESSAGES, NULL);
 #else
-    char* clocale = std::setlocale(LC_MESSAGES, NULL);
+    char *clocale = std::setlocale(LC_MESSAGES, NULL);
 #endif
 
-    if(clocale)
+    if (clocale)
     {
-	locname = StringLower(clocale);
-	// 3: en_us.utf-8
-	// 2: en_us
-	// 1: en
-	if(length < 3)
-	{
-	    std::list<std::string> list = StringSplit(locname, length < 2 ? "_" : ".");
-	    return list.empty() ? locname : list.front();
-	}
+        locname = StringLower(clocale);
+        // 3: en_us.utf-8
+        // 2: en_us
+        // 1: en
+        if (length < 3)
+        {
+            std::list<std::string> list = StringSplit(locname, length < 2 ? "_" : ".");
+            return list.empty() ? locname : list.front();
+        }
     }
 
     return locname;
 }
 
-int System::GetCommandOptions(int argc, char* const argv[], const char* optstring)
+int System::GetCommandOptions(int argc, char *const argv[], const char *optstring)
 {
 #if defined(__MINGW32CE__)
     return -1;
@@ -269,7 +268,7 @@ int System::GetCommandOptions(int argc, char* const argv[], const char* optstrin
 #endif
 }
 
-char* System::GetOptionsArgument(void)
+char *System::GetOptionsArgument(void)
 {
 #if defined(__MINGW32CE__)
     return NULL;
@@ -296,7 +295,7 @@ size_t System::GetMemoryUsage(void)
     os << "/proc/" << getpid() << "/statm";
 
     std::ifstream fs(os.str().c_str());
-    if(fs.is_open())
+    if (fs.is_open())
     {
         fs >> size;
         fs.close();
@@ -311,8 +310,8 @@ size_t System::GetMemoryUsage(void)
 std::string System::GetTime(void)
 {
     time_t raw;
-    struct tm* tmi;
-    char buf [13] = { 0 };
+    struct tm *tmi;
+    char buf[13] = {0};
 
     std::time(&raw);
     tmi = std::localtime(&raw);
@@ -322,35 +321,35 @@ std::string System::GetTime(void)
     return std::string(buf);
 }
 
-bool System::IsFile(const std::string & name, bool writable)
+bool System::IsFile(const std::string &name, bool writable)
 {
 #if defined(ANDROID)
     return writable ? 0 == access(name.c_str(), W_OK) : true;
 #else
     struct stat fs;
 
-    if(stat(name.c_str(), &fs) || !S_ISREG(fs.st_mode))
+    if (stat(name.c_str(), &fs) || !S_ISREG(fs.st_mode))
         return false;
 
     return writable ? 0 == access(name.c_str(), W_OK) : S_IRUSR & fs.st_mode;
 #endif
 }
 
-bool System::IsDirectory(const std::string & name, bool writable)
+bool System::IsDirectory(const std::string &name, bool writable)
 {
 #if defined (ANDROID)
     return writable ? 0 == access(name.c_str(), W_OK) : true;
 #else
     struct stat fs;
 
-    if(stat(name.c_str(), &fs) || !S_ISDIR(fs.st_mode))
+    if (stat(name.c_str(), &fs) || !S_ISDIR(fs.st_mode))
         return false;
 
     return writable ? 0 == access(name.c_str(), W_OK) : S_IRUSR & fs.st_mode;
 #endif
 }
 
-int System::Unlink(const std::string & file)
+int System::Unlink(const std::string &file)
 {
     return unlink(file.c_str());
 }
@@ -365,10 +364,10 @@ int System::CreateTrayIcon(bool fl)
 
     if(fl)
     {
-	nid.uFlags = NIF_ICON | NIF_MESSAGE;
-	nid.uCallbackMessage = WM_USER;
-	nid.hIcon = ::LoadIcon(SDL_Instance, MAKEINTRESOURCE(ID_ICON));
-	return Shell_NotifyIcon(NIM_ADD, &nid);
+    nid.uFlags = NIF_ICON | NIF_MESSAGE;
+    nid.uCallbackMessage = WM_USER;
+    nid.hIcon = ::LoadIcon(SDL_Instance, MAKEINTRESOURCE(ID_ICON));
+    return Shell_NotifyIcon(NIM_ADD, &nid);
     }
 
     return Shell_NotifyIcon(NIM_DELETE, &nid);
@@ -389,19 +388,19 @@ void System::PowerManagerOff(bool fl)
     if(ERROR_SUCCESS == RegOpenKeyEx(HKEY_LOCAL_MACHINE, lpGlobalSubKeyPM, 0, KEY_ALL_ACCESS, &hKey))
     {
         DWORD dwType = REG_DWORD;
-	DWORD value = 0;
+    DWORD value = 0;
 
-	// save orig value
-	if(fl)
-	{
-    	    DWORD valueLen = sizeof(origValuePM);
+    // save orig value
+    if(fl)
+    {
+            DWORD valueLen = sizeof(origValuePM);
 
-    	    if(ERROR_SUCCESS == RegQueryValueEx(hKey, lpNamePM, 0, &dwType, (LPBYTE) &origValuePM, &valueLen))
-		RegSetValueEx(hKey, lpNamePM, 0, dwType, (const BYTE*) &value, sizeof(value));
-	}
-	else
-	if(origValuePM)
-	    RegSetValueEx(hKey, lpNamePM, 0, dwType, (const BYTE*) &origValuePM, sizeof(origValuePM));
+            if(ERROR_SUCCESS == RegQueryValueEx(hKey, lpNamePM, 0, &dwType, (LPBYTE) &origValuePM, &valueLen))
+        RegSetValueEx(hKey, lpNamePM, 0, dwType, (const BYTE*) &value, sizeof(value));
+    }
+    else
+    if(origValuePM)
+        RegSetValueEx(hKey, lpNamePM, 0, dwType, (const BYTE*) &origValuePM, sizeof(origValuePM));
 
         RegCloseKey(hKey);
     }
@@ -422,19 +421,19 @@ void System::PowerManagerOff(bool fl)
     if(ERROR_SUCCESS == RegOpenKeyEx(HKEY_CURRENT_USER, lpGlobalSubKeyBL, 0, KEY_ALL_ACCESS, &hKey))
     {
         DWORD dwType = REG_DWORD;
-	DWORD value = 0;
+    DWORD value = 0;
 
-	// save orig value
-	if(fl)
-	{
-    	    DWORD valueLen = sizeof(origValueBL);
+    // save orig value
+    if(fl)
+    {
+            DWORD valueLen = sizeof(origValueBL);
 
-    	    if(ERROR_SUCCESS == RegQueryValueEx(hKey, lpNameBL, 0, &dwType, (LPBYTE) &origValueBL, &valueLen))
-		RegSetValueEx(hKey, lpNameBL, 0, dwType, (const BYTE*) &value, sizeof(value));
-	}
-	else
-	if(origValueBL)
-	    RegSetValueEx(hKey, lpNameBL, 0, dwType, (const BYTE*) &origValueBL, sizeof(origValueBL));
+            if(ERROR_SUCCESS == RegQueryValueEx(hKey, lpNameBL, 0, &dwType, (LPBYTE) &origValueBL, &valueLen))
+        RegSetValueEx(hKey, lpNameBL, 0, dwType, (const BYTE*) &value, sizeof(value));
+    }
+    else
+    if(origValueBL)
+        RegSetValueEx(hKey, lpNameBL, 0, dwType, (const BYTE*) &origValueBL, sizeof(origValueBL));
 
         RegCloseKey(hKey);
     }
@@ -469,7 +468,7 @@ bool System::isRunning(void)
     return false;
 }
 
-int System::ShellCommand(const char* cmd)
+int System::ShellCommand(const char *cmd)
 {
 #if defined(__MINGW32CE__)
     return cmd ? 0 : -1;
@@ -489,21 +488,21 @@ bool System::isEmbededDevice(void)
 int System::GetRenderFlags(void)
 {
 #if SDL_VERSION_ATLEAST(2, 0, 0)
- #if defined(__MINGW32CE__) || defined(__SYMBIAN32__)
+#if defined(__MINGW32CE__) || defined(__SYMBIAN32__)
     return SDL_RENDERER_SOFTWARE;
- #endif
- #if defined(__WIN32__) || defined(ANDROID)
+#endif
+#if defined(__WIN32__) || defined(ANDROID)
     return SDL_RENDERER_ACCELERATED;
- #endif
+#endif
     return SDL_RENDERER_ACCELERATED;
     //return SDL_RENDERER_SOFTWARE;
 #else
- #if defined(__MINGW32CE__) || defined(__SYMBIAN32__)
+#if defined(__MINGW32CE__) || defined(__SYMBIAN32__)
     return SDL_SWSURFACE;
- #endif
- #if defined(__WIN32__) || defined(ANDROID)
+#endif
+#if defined(__WIN32__) || defined(ANDROID)
     return SDL_HWSURFACE;
- #endif
+#endif
     return SDL_SWSURFACE;
 #endif
 }

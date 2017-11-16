@@ -32,11 +32,15 @@
 
 namespace Dialog
 {
-    Monster		SelectMonster(int id = Monster::UNKNOWN);
-    int			SelectHeroes(int cur = Heroes::UNKNOWN);
-    Artifact		SelectArtifact(int id = Artifact::UNKNOWN);
-    Spell		SelectSpell(int id = Spell::NONE);
-    Skill::Secondary	SelectSecondarySkill(void);
+    Monster SelectMonster(int id = Monster::UNKNOWN);
+
+    int SelectHeroes(int cur = Heroes::UNKNOWN);
+
+    Artifact SelectArtifact(int id = Artifact::UNKNOWN);
+
+    Spell SelectSpell(int id = Spell::NONE);
+
+    Skill::Secondary SelectSecondarySkill(void);
 }
 
 #endif

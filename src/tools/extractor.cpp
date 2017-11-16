@@ -33,26 +33,26 @@
 
 struct aggfat_t
 {
-    u32  crc;
-    u32  offset;
-    u32  size;
+    u32 crc;
+    u32 offset;
+    u32 size;
 };
-            
+
 int main(int argc, char **argv)
 {
-    if(argc != 3)
+    if (argc != 3)
     {
-	std::cout << argv[0] << " path_heroes2.agg extract_to_dir" << std::endl;
+        std::cout << argv[0] << " path_heroes2.agg extract_to_dir" << std::endl;
 
-	return EXIT_SUCCESS;
+        return EXIT_SUCCESS;
     }
 
     StreamFile sf1, sf2;
 
-    if(! sf1.open(argv[1], "rb"))
+    if (!sf1.open(argv[1], "rb"))
     {
-	std::cout << "error open file: " << argv[1] << std::endl;
-	return EXIT_SUCCESS;
+        std::cout << "error open file: " << argv[1] << std::endl;
+        return EXIT_SUCCESS;
     }
 
     System::MakeDirectory(argv[2]);
@@ -67,31 +67,31 @@ int main(int argc, char **argv)
 
     std::map<std::string, aggfat_t> maps;
 
-    for(int ii = 0; ii < count_items; ++ii)
+    for (int ii = 0; ii < count_items; ++ii)
     {
-        aggfat_t & f = maps[StringLower(names.toString(FATSIZENAME))];
+        aggfat_t &f = maps[StringLower(names.toString(FATSIZENAME))];
 
         f.crc = fats.getLE32();
         f.offset = fats.getLE32();
         f.size = fats.getLE32();
     }
 
-    for(std::map<std::string, aggfat_t>::const_iterator
-	it = maps.begin(); it != maps.end(); ++it)
+    for (std::map<std::string, aggfat_t>::const_iterator
+                 it = maps.begin(); it != maps.end(); ++it)
     {
-	const aggfat_t & fat = (*it).second;
-	const std::string & fn = System::ConcatePath(argv[2], (*it).first);
-	sf1.seek(fat.offset);
-	std::vector<u8> buf = sf1.getRaw(fat.size);
+        const aggfat_t &fat = (*it).second;
+        const std::string &fn = System::ConcatePath(argv[2], (*it).first);
+        sf1.seek(fat.offset);
+        std::vector<u8> buf = sf1.getRaw(fat.size);
 
-	if(buf.size() && sf2.open(fn, "wb"))
-	{
-    	    sf2.putRaw(reinterpret_cast<char*>(& buf[0]), buf.size());
-	    sf2.close();
+        if (buf.size() && sf2.open(fn, "wb"))
+        {
+            sf2.putRaw(reinterpret_cast<char *>(&buf[0]), buf.size());
+            sf2.close();
 
-	    ++total;
-	    std::cout << "extract: " << fn << std::endl;
-	}
+            ++total;
+            std::cout << "extract: " << fn << std::endl;
+        }
     }
 
     sf1.close();

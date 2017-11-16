@@ -26,16 +26,16 @@
 #include "settings.h"
 #include "position.h"
 
-MapPosition::MapPosition(const Point & pt) : center(pt)
+MapPosition::MapPosition(const Point &pt) : center(pt)
 {
 }
 
-bool MapPosition::operator== (s32 index) const
+bool MapPosition::operator==(s32 index) const
 {
     return index == GetIndex();
 }
 
-const Point & MapPosition::GetCenter(void) const
+const Point &MapPosition::GetCenter(void) const
 {
     return center;
 }
@@ -45,7 +45,7 @@ s32 MapPosition::GetIndex(void) const
     return center.x < 0 && center.y < 0 ? -1 : Maps::GetIndexFromAbsPoint(center);
 }
 
-void MapPosition::SetCenter(const Point & pt)
+void MapPosition::SetCenter(const Point &pt)
 {
     center = pt;
 }
@@ -53,20 +53,20 @@ void MapPosition::SetCenter(const Point & pt)
 void MapPosition::SetIndex(s32 index)
 {
     center = Maps::isValidAbsIndex(index) ?
-		Maps::GetPoint(index) : Point(-1, -1);
+             Maps::GetPoint(index) : Point(-1, -1);
 }
 
-StreamBase & operator<< (StreamBase & sb, const MapPosition & st)
+StreamBase &operator<<(StreamBase &sb, const MapPosition &st)
 {
     return sb << st.center;
 }
 
-StreamBase & operator>> (StreamBase & sb, MapPosition & st)
+StreamBase &operator>>(StreamBase &sb, MapPosition &st)
 {
     return sb >> st.center;
 }
 
-bool MapPosition::isPosition(const Point & pt) const
+bool MapPosition::isPosition(const Point &pt) const
 {
     return pt == center;
 }

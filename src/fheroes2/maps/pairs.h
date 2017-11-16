@@ -30,51 +30,75 @@
 
 class IndexDistance : public std::pair<s32, u32>
 {
-    public:
-    IndexDistance() : std::pair<s32, u32>(-1, 0) {};
-    IndexDistance(s32 i, u32 d) : std::pair<s32, u32>(i, d) {};
+public:
+    IndexDistance() : std::pair<s32, u32>(-1, 0)
+    {};
 
-    static bool Shortest(const IndexDistance & id1, const IndexDistance & id2){ return id1.second < id2.second; };
-    static bool Longest(const IndexDistance & id1, const IndexDistance & id2){ return id1.second > id2.second; };
+    IndexDistance(s32 i, u32 d) : std::pair<s32, u32>(i, d)
+    {};
+
+    static bool Shortest(const IndexDistance &id1, const IndexDistance &id2)
+    { return id1.second < id2.second; };
+
+    static bool Longest(const IndexDistance &id1, const IndexDistance &id2)
+    { return id1.second > id2.second; };
 };
 
-StreamBase & operator>> (StreamBase &, IndexDistance &);
+StreamBase &operator>>(StreamBase &, IndexDistance &);
 
 class IndexObject : public std::pair<s32, int>
 {
-    public:
-    IndexObject() : std::pair<s32, int>(-1, MP2::OBJ_ZERO) {};
-    IndexObject(s32 index, int object) : std::pair<s32, int>(index, object) {};
+public:
+    IndexObject() : std::pair<s32, int>(-1, MP2::OBJ_ZERO)
+    {};
 
-    bool isIndex(s32 index) const { return index == first; };
-    bool isObject(int object) const { return object == second; };
+    IndexObject(s32 index, int object) : std::pair<s32, int>(index, object)
+    {};
+
+    bool isIndex(s32 index) const
+    { return index == first; };
+
+    bool isObject(int object) const
+    { return object == second; };
 };
 
-StreamBase & operator>> (StreamBase &, IndexObject &);
+StreamBase &operator>>(StreamBase &, IndexObject &);
 
 class ObjectColor : public std::pair<int, int>
 {
-    public:
-    ObjectColor() : std::pair<int, int>(MP2::OBJ_ZERO, Color::NONE) {};
-    ObjectColor(int object, int color) : std::pair<int, int>(object, color) {};
+public:
+    ObjectColor() : std::pair<int, int>(MP2::OBJ_ZERO, Color::NONE)
+    {};
 
-    bool isObject(int object) const { return object == first; };
-    bool isColor(int colors) const { return colors & second; };
+    ObjectColor(int object, int color) : std::pair<int, int>(object, color)
+    {};
+
+    bool isObject(int object) const
+    { return object == first; };
+
+    bool isColor(int colors) const
+    { return colors & second; };
 };
 
-StreamBase & operator>> (StreamBase &, ObjectColor &);
+StreamBase &operator>>(StreamBase &, ObjectColor &);
 
 class ResourceCount : public std::pair<int, u32>
 {
-    public:
-    ResourceCount() : std::pair<int, u32>(Resource::UNKNOWN, 0) {};
-    ResourceCount(int res, u32 count) : std::pair<int, u32>(res, count) {};
+public:
+    ResourceCount() : std::pair<int, u32>(Resource::UNKNOWN, 0)
+    {};
 
-    bool isResource(int res) const { return res == first; };
-    bool isValid(void) const { return (first & Resource::ALL) && second; };
+    ResourceCount(int res, u32 count) : std::pair<int, u32>(res, count)
+    {};
+
+    bool isResource(int res) const
+    { return res == first; };
+
+    bool isValid(void) const
+    { return (first & Resource::ALL) && second; };
 };
 
-StreamBase & operator>> (StreamBase &, ResourceCount &);
+StreamBase &operator>>(StreamBase &, ResourceCount &);
 
 /*
 template<class T>

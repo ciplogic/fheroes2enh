@@ -34,18 +34,18 @@
 #include "kingdom.h"
 #include "pocketpc.h"
 
-int PocketPC::HeroesOpenDialog(Heroes & hero, bool readonly)
+int PocketPC::HeroesOpenDialog(Heroes &hero, bool readonly)
 {
-    Cursor & cursor = Cursor::Get();
-    Display & display = Display::Get();
-    LocalEvent & le = LocalEvent::Get();
+    Cursor &cursor = Cursor::Get();
+    Display &display = Display::Get();
+    LocalEvent &le = LocalEvent::Get();
 
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
     Dialog::FrameBorder frameborder(Size(320, 224));
-    const Rect & dst_rt = frameborder.GetArea();
-    const Sprite & backSprite = AGG::GetICN(ICN::SWAPWIN, 0);
+    const Rect &dst_rt = frameborder.GetArea();
+    const Sprite &backSprite = AGG::GetICN(ICN::SWAPWIN, 0);
 
     // portrait
     AGG::GetICN(ICN::BRCREST, 6).Blit(dst_rt.x + 8, dst_rt.y, display);
@@ -103,7 +103,7 @@ int PocketPC::HeroesOpenDialog(Heroes & hero, bool readonly)
     selectArmy.SetPos(dst_rt.x + 51, dst_rt.y + 170);
     selectArmy.SetHSpace(-1);
     selectArmy.Redraw();
-            
+
     // art bar
     ArtifactsBar selectArtifacts(&hero, true, readonly);
     selectArtifacts.SetColRows(7, 2);
@@ -119,16 +119,16 @@ int PocketPC::HeroesOpenDialog(Heroes & hero, bool readonly)
     Button buttonPrev(dst_rt.x + 34, dst_rt.y + 200, ICN::TRADPOST, 3, 4);
     Button buttonNext(dst_rt.x + 275, dst_rt.y + 200, ICN::TRADPOST, 5, 6);
 
-    if(hero.inCastle() || readonly)
+    if (hero.inCastle() || readonly)
     {
-	buttonDismiss.Press();
+        buttonDismiss.Press();
         buttonDismiss.SetDisable(true);
     }
 
-    if(readonly || 2 > hero.GetKingdom().GetHeroes().size())
+    if (readonly || 2 > hero.GetKingdom().GetHeroes().size())
     {
-	buttonNext.Press();
-	buttonPrev.Press();
+        buttonNext.Press();
+        buttonPrev.Press();
         buttonNext.SetDisable(true);
         buttonPrev.SetDisable(true);
     }
@@ -141,66 +141,63 @@ int PocketPC::HeroesOpenDialog(Heroes & hero, bool readonly)
     cursor.Show();
     display.Flip();
 
-    while(le.HandleEvents())
+    while (le.HandleEvents())
     {
         le.MousePressLeft(buttonNext) ? buttonNext.PressDraw() : buttonNext.ReleaseDraw();
         le.MousePressLeft(buttonPrev) ? buttonPrev.PressDraw() : buttonPrev.ReleaseDraw();
         le.MousePressLeft(buttonExit) ? buttonExit.PressDraw() : buttonExit.ReleaseDraw();
-        if(buttonDismiss.isEnable()) le.MousePressLeft(buttonDismiss) ? buttonDismiss.PressDraw() : buttonDismiss.ReleaseDraw();
+        if (buttonDismiss.isEnable())
+            le.MousePressLeft(buttonDismiss) ? buttonDismiss.PressDraw() : buttonDismiss.ReleaseDraw();
 
-        if(buttonNext.isEnable() && le.MouseClickLeft(buttonNext)) return Dialog::NEXT;
+        if (buttonNext.isEnable() && le.MouseClickLeft(buttonNext)) return Dialog::NEXT;
+        else if (buttonPrev.isEnable() && le.MouseClickLeft(buttonPrev)) return Dialog::PREV;
         else
-        if(buttonPrev.isEnable() && le.MouseClickLeft(buttonPrev)) return Dialog::PREV;
-	else
-        // exit
-        if(le.MouseClickLeft(buttonExit) ||
-		Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT)) return Dialog::CANCEL;
-	else
-        // dismiss
-	if(buttonDismiss.isEnable() && le.MouseClickLeft(buttonDismiss) &&
-	    Dialog::YES == Dialog::Message(hero.GetName(), _("Are you sure you want to dismiss this Hero?"), Font::BIG, Dialog::YES | Dialog::NO))
+            // exit
+        if (le.MouseClickLeft(buttonExit) ||
+            Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
+            return Dialog::CANCEL;
+        else
+            // dismiss
+        if (buttonDismiss.isEnable() && le.MouseClickLeft(buttonDismiss) &&
+            Dialog::YES == Dialog::Message(hero.GetName(), _("Are you sure you want to dismiss this Hero?"), Font::BIG,
+                                           Dialog::YES | Dialog::NO))
         { return Dialog::DISMISS; }
 
-	// skills click
-	if(le.MouseCursor(primskill_bar.GetArea()) && primskill_bar.QueueEventProcessing())
-	{
+        // skills click
+        if (le.MouseCursor(primskill_bar.GetArea()) && primskill_bar.QueueEventProcessing())
+        {
             cursor.Show();
-    	    display.Flip();
-        }
-	else
-	if(le.MouseCursor(secskill_bar.GetArea()) && secskill_bar.QueueEventProcessing())
-	{
+            display.Flip();
+        } else if (le.MouseCursor(secskill_bar.GetArea()) && secskill_bar.QueueEventProcessing())
+        {
             cursor.Show();
-    	    display.Flip();
+            display.Flip();
         }
 
         // selector troops event
-        if(le.MouseCursor(selectArmy.GetArea()) && selectArmy.QueueEventProcessing())
-	{
-	    if(selectArtifacts.isSelected()) selectArtifacts.ResetSelected();
-    	    moraleIndicator.Redraw();
+        if (le.MouseCursor(selectArmy.GetArea()) && selectArmy.QueueEventProcessing())
+        {
+            if (selectArtifacts.isSelected()) selectArtifacts.ResetSelected();
+            moraleIndicator.Redraw();
             luckIndicator.Redraw();
-	    selectArmy.Redraw();
+            selectArmy.Redraw();
             cursor.Show();
-    	    display.Flip();
+            display.Flip();
         }
 
         // selector artifacts event
-        if(le.MouseCursor(selectArtifacts.GetArea()) && selectArtifacts.QueueEventProcessing())
-	{
-    	    if(selectArmy.isSelected()) selectArmy.ResetSelected();
-	    selectArtifacts.Redraw();
-    	    cursor.Show();
-    	    display.Flip();
+        if (le.MouseCursor(selectArtifacts.GetArea()) && selectArtifacts.QueueEventProcessing())
+        {
+            if (selectArmy.isSelected()) selectArmy.ResetSelected();
+            selectArtifacts.Redraw();
+            cursor.Show();
+            display.Flip();
         }
 
-        if(le.MouseCursor(moraleIndicator.GetArea())) MoraleIndicator::QueueEventProcessing(moraleIndicator);
-        else
-        if(le.MouseCursor(luckIndicator.GetArea())) LuckIndicator::QueueEventProcessing(luckIndicator);
-        else
-	if(le.MouseCursor(experienceInfo.GetArea())) experienceInfo.QueueEventProcessing();
-        else
-	if(le.MouseCursor(spellPointsInfo.GetArea())) spellPointsInfo.QueueEventProcessing();
+        if (le.MouseCursor(moraleIndicator.GetArea())) MoraleIndicator::QueueEventProcessing(moraleIndicator);
+        else if (le.MouseCursor(luckIndicator.GetArea())) LuckIndicator::QueueEventProcessing(luckIndicator);
+        else if (le.MouseCursor(experienceInfo.GetArea())) experienceInfo.QueueEventProcessing();
+        else if (le.MouseCursor(spellPointsInfo.GetArea())) spellPointsInfo.QueueEventProcessing();
     }
 
     return Dialog::ZERO;

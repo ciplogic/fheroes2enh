@@ -33,29 +33,36 @@ class UltimateArtifact : public Artifact
 public:
     UltimateArtifact();
 
-    bool	isPosition(s32) const;
-    bool	isFound(void) const;
-    void	SetFound(bool);
-    void	Set(s32, const Artifact &);
-    void	Reset(void);
+    bool isPosition(s32) const;
+
+    bool isFound(void) const;
+
+    void SetFound(bool);
+
+    void Set(s32, const Artifact &);
+
+    void Reset(void);
 
     const Surface &
-		GetPuzzleMapSurface(void) const;
+    GetPuzzleMapSurface(void) const;
+
     const Artifact &
-		GetArtifact(void) const;
+    GetArtifact(void) const;
 
 private:
-    friend StreamBase & operator<< (StreamBase &, const UltimateArtifact &);
-    friend StreamBase & operator>> (StreamBase &, UltimateArtifact &);
+    friend StreamBase &operator<<(StreamBase &, const UltimateArtifact &);
+
+    friend StreamBase &operator>>(StreamBase &, UltimateArtifact &);
 
     void MakeSurface(void);
 
-    s32		index;
-    Surface	puzzlemap;
-    bool	isfound;
+    s32 index;
+    Surface puzzlemap;
+    bool isfound;
 };
 
-StreamBase & operator<< (StreamBase &, const UltimateArtifact &);
-StreamBase & operator>> (StreamBase &, UltimateArtifact &);
+StreamBase &operator<<(StreamBase &, const UltimateArtifact &);
+
+StreamBase &operator>>(StreamBase &, UltimateArtifact &);
 
 #endif

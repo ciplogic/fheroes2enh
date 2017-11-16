@@ -37,39 +37,59 @@
 class ICNSprite : public std::pair<Surface, Surface> /* first: image with out alpha, second: shadow with alpha */
 {
 public:
-    ICNSprite() {}
-    ICNSprite(const Surface & sf1, const Surface & sf2) : std::pair<Surface, Surface>(sf1, sf2) {}
+    ICNSprite()
+    {}
 
-    bool   isValid(void) const;
+    ICNSprite(const Surface &sf1, const Surface &sf2) : std::pair<Surface, Surface>(sf1, sf2)
+    {}
+
+    bool isValid(void) const;
+
     Sprite CreateSprite(bool reflect, bool shadow) const;
-    Surface First(void) { return first; }
-    Surface Second(void) { return second; }
 
-    Point      offset;
+    Surface First(void)
+    { return first; }
+
+    Surface Second(void)
+    { return second; }
+
+    Point offset;
 };
 
 namespace AGG
-{	
-    bool	Init(void);
-    void	Quit(void);
+{
+    bool Init(void);
 
-    int		PutICN(const Sprite &, bool init_reflect = false);
-    Sprite	GetICN(int icn, u32 index, bool reflect = false);
-    u32		GetICNCount(int icn);
-    Surface	GetTIL(int til, u32 index, u32 shape);
-    Surface	GetLetter(u32 ch, u32 ft);
+    void Quit(void);
+
+    int PutICN(const Sprite &, bool init_reflect = false);
+
+    Sprite GetICN(int icn, u32 index, bool reflect = false);
+
+    u32 GetICNCount(int icn);
+
+    Surface GetTIL(int til, u32 index, u32 shape);
+
+    Surface GetLetter(u32 ch, u32 ft);
+
 #ifdef WITH_TTF
     Surface	GetUnicodeLetter(u32 ch, u32 ft);
     u32		GetFontHeight(bool small);
 #endif
-    void	LoadLOOPXXSounds(const std::vector<int> &);
-    void	PlaySound(int m82);
-    void	PlayMusic(int mus, bool loop = true);
-    void	ResetMixer(void);
 
-    RGBA	GetPaletteColor(u32 index);
-    ICNSprite   RenderICNSprite(int, u32);
-    void        RenderICNSprite(int icn, u32 index, const Rect & srt, const Point & dpt, Surface & dst);
+    void LoadLOOPXXSounds(const std::vector<int> &);
+
+    void PlaySound(int m82);
+
+    void PlayMusic(int mus, bool loop = true);
+
+    void ResetMixer(void);
+
+    RGBA GetPaletteColor(u32 index);
+
+    ICNSprite RenderICNSprite(int, u32);
+
+    void RenderICNSprite(int icn, u32 index, const Rect &srt, const Point &dpt, Surface &dst);
 }
 
 #endif

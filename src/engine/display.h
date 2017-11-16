@@ -24,6 +24,7 @@
 
 #include <string>
 #include "surface.h"
+
 class Texture;
 
 class Display : public Surface
@@ -31,37 +32,48 @@ class Display : public Surface
 public:
     ~Display();
 
-    static Display &    Get(void);
+    static Display &Get(void);
 
-    Size        GetSize(void) const;
+    Size GetSize(void) const;
 
-    std::string	GetInfo(void) const;
-    Size	GetMaxMode(bool enable_rotate) const;
+    std::string GetInfo(void) const;
 
-    void	SetVideoMode(int w, int h, bool);
-    void	SetCaption(const char*);
-    void	SetIcons(Surface &);
+    Size GetMaxMode(bool enable_rotate) const;
 
-    void	Flip(void);
-    void	Present(void);
-    void        Clear(void);
-    void        ToggleFullScreen(void);
+    void SetVideoMode(int w, int h, bool);
 
-    void	Fade(int delay = 500);
-    void	Fade(const Surface &, const Surface &, const Point &, int level, int delay);
-    void	Rise(int delay = 500);
-    void	Rise(const Surface &, const Surface &, const Point &, int level, int delay);
+    void SetCaption(const char *);
+
+    void SetIcons(Surface &);
+
+    void Flip(void);
+
+    void Present(void);
+
+    void Clear(void);
+
+    void ToggleFullScreen(void);
+
+    void Fade(int delay = 500);
+
+    void Fade(const Surface &, const Surface &, const Point &, int level, int delay);
+
+    void Rise(int delay = 500);
+
+    void Rise(const Surface &, const Surface &, const Point &, int level, int delay);
 
     static void HideCursor(void);
+
     static void ShowCursor(void);
 
-    Surface	GetSurface(void) const;
-    Surface	GetSurface(const Rect & rt) const;
+    Surface GetSurface(void) const;
+
+    Surface GetSurface(const Rect &rt) const;
 
 protected:
     friend class Texture;
 
-    bool	isDisplay(void) const;
+    bool isDisplay(void) const;
 
     Display();
 
@@ -103,11 +115,13 @@ protected:
     int*		counter;
 };
 #else
+
 class Texture : public Surface
 {
 public:
     Texture(const Surface &);
 };
+
 #endif
 
 #endif

@@ -55,14 +55,14 @@ void Cdrom::Open(void)
                 continue;
             }
             else
-	    if(drive->numtracks > 1 && drive->track[0].type == SDL_DATA_TRACK)
+        if(drive->numtracks > 1 && drive->track[0].type == SDL_DATA_TRACK)
             {
                 cd = drive;
                 break;
             }
         }
     }
-    
+
     if(cd)
     {
         loopThread = SDL_CreateThread(&LoopCheck, NULL);
@@ -79,8 +79,8 @@ void Cdrom::Close(void)
         SDL_CDStop(cd);
         SDL_KillThread(loopThread);
         SDL_DestroyMutex(cdLock);
-	SDL_CDClose(cd);
-	cd = NULL;
+    SDL_CDClose(cd);
+    cd = NULL;
     }
 }
 

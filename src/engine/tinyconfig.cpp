@@ -34,14 +34,14 @@ bool SpaceCompare(char a, char b)
     return std::isspace(a) && std::isspace(b);
 }
 
-std::string ModifyKey(const std::string & str)
+std::string ModifyKey(const std::string &str)
 {
     std::string key = StringTrim(StringLower(str));
 
     // remove multiple space
     std::string::iterator it = std::unique(key.begin(), key.end(), SpaceCompare);
     key.resize(it - key.begin());
-    
+
     // change space
     std::replace_if(key.begin(), key.end(), ::isspace, 0x20);
 
@@ -52,43 +52,43 @@ TinyConfig::TinyConfig(char sep, char com) : separator(sep), comment(com)
 {
 }
 
-bool TinyConfig::Load(const std::string & cfile)
+bool TinyConfig::Load(const std::string &cfile)
 {
     StreamFile sf;
-    if(! sf.open(cfile, "rb")) return false;
+    if (!sf.open(cfile, "rb")) return false;
 
     std::list<std::string> rows = StringSplit(sf.toString(), "\n");
 
-    for(std::list<std::string>::const_iterator
-	it = rows.begin(); it != rows.end(); ++it)
+    for (std::list<std::string>::const_iterator
+                 it = rows.begin(); it != rows.end(); ++it)
     {
-	std::string str = StringTrim(*it);
-	if(str.empty() || str[0] == comment) continue;
+        std::string str = StringTrim(*it);
+        if (str.empty() || str[0] == comment) continue;
 
         size_t pos = str.find(separator);
-        if(std::string::npos != pos)
+        if (std::string::npos != pos)
         {
             std::string left(str.substr(0, pos));
             std::string right(str.substr(pos + 1, str.length() - pos - 1));
 
-	    left = StringTrim(left);
-    	    right = StringTrim(right);
+            left = StringTrim(left);
+            right = StringTrim(right);
 
-	    AddEntry(left, right, false);
+            AddEntry(left, right, false);
         }
     }
 
     return true;
 }
 
-bool TinyConfig::Save(const std::string & cfile) const
+bool TinyConfig::Save(const std::string &cfile) const
 {
     StreamFile sf;
-    if(! sf.open(cfile, "wb")) return false;
+    if (!sf.open(cfile, "wb")) return false;
 
-    for(const_iterator
-	it = begin(); it != end(); ++it)
-	sf << it->first << " " << separator << " " << it->second << '\n';
+    for (const_iterator
+                 it = begin(); it != end(); ++it)
+        sf << it->first << " " << separator << " " << it->second << '\n';
 
     return true;
 }
@@ -98,65 +98,65 @@ void TinyConfig::Clear(void)
     clear();
 }
 
-void TinyConfig::AddEntry(const std::string & key, const std::string & val, bool uniq)
+void TinyConfig::AddEntry(const std::string &key, const std::string &val, bool uniq)
 {
     iterator it = end();
 
-    if(uniq &&
-	(end() != (it = find(ModifyKey(key)))))
-	it->second = val;
+    if (uniq &&
+        (end() != (it = find(ModifyKey(key)))))
+        it->second = val;
     else
-	insert(std::pair<std::string, std::string>(ModifyKey(key), val));
+        insert(std::pair<std::string, std::string>(ModifyKey(key), val));
 }
 
-void TinyConfig::AddEntry(const std::string & key, int val, bool uniq)
+void TinyConfig::AddEntry(const std::string &key, int val, bool uniq)
 {
     iterator it = end();
 
-    if(uniq &&
-	(end() != (it = find(ModifyKey(key)))))
-	it->second = GetString(val);
+    if (uniq &&
+        (end() != (it = find(ModifyKey(key)))))
+        it->second = GetString(val);
     else
-	insert(std::pair<std::string, std::string>(ModifyKey(key), GetString(val)));
+        insert(std::pair<std::string, std::string>(ModifyKey(key), GetString(val)));
 }
 
-int TinyConfig::IntParams(const std::string & key) const
+int TinyConfig::IntParams(const std::string &key) const
 {
     const_iterator it = find(ModifyKey(key));
     return it != end() ? GetInt(it->second) : 0;
 }
 
-std::string TinyConfig::StrParams(const std::string & key) const
+std::string TinyConfig::StrParams(const std::string &key) const
 {
     const_iterator it = find(ModifyKey(key));
     return it != end() ? it->second : "";
 }
 
-std::list<std::string> TinyConfig::ListStr(const std::string & key) const
+std::list<std::string> TinyConfig::ListStr(const std::string &key) const
 {
     std::pair<const_iterator, const_iterator> ret = equal_range(ModifyKey(key));
     std::list<std::string> res;
 
-    for(const_iterator
-	it = ret.first; it != ret.second; ++it)
-	res.push_back(it->second);
+    for (const_iterator
+                 it = ret.first; it != ret.second; ++it)
+        res.push_back(it->second);
 
     return res;
 }
 
-std::list<int> TinyConfig::ListInt(const std::string & key) const
+std::list<int> TinyConfig::ListInt(const std::string &key) const
 {
     std::pair<const_iterator, const_iterator> ret = equal_range(ModifyKey(key));
     std::list<int> res;
 
-    for(const_iterator
-	it = ret.first; it != ret.second; ++it)
-	res.push_back(GetInt(it->second));
+    for (const_iterator
+                 it = ret.first; it != ret.second; ++it)
+        res.push_back(GetInt(it->second));
 
     return res;
 }
 
-bool TinyConfig::Exists(const std::string & key) const
+bool TinyConfig::Exists(const std::string &key) const
 {
     return end() != find(ModifyKey(key));
 }

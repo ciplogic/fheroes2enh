@@ -26,18 +26,19 @@ namespace Luck
 {
     enum
     {
-	UNKNOWN    = -4,
-        CURSED     = -3,
-        AWFUL      = -2,
-        BAD        = -1,
-        NORMAL     = 0,
-        GOOD       = 1,
-        GREAT      = 2,
-        IRISH      = 3
+        UNKNOWN = -4,
+        CURSED = -3,
+        AWFUL = -2,
+        BAD = -1,
+        NORMAL = 0,
+        GOOD = 1,
+        GREAT = 2,
+        IRISH = 3
     };
 
-    const char* String(int);
-    const char* Description(int);
+    const char *String(int);
+
+    const char *Description(int);
 }
 
 #endif

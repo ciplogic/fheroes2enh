@@ -28,7 +28,7 @@
 #include "settings.h"
 #include "captain.h"
 
-Captain::Captain(Castle & cstl) : HeroBase(HeroBase::CAPTAIN, cstl.GetRace()), home(cstl)
+Captain::Captain(Castle &cstl) : HeroBase(HeroBase::CAPTAIN, cstl.GetRace()), home(cstl)
 {
     SetCenter(home.GetCenter());
 }
@@ -50,7 +50,7 @@ int Captain::GetDefense(void) const
 
 int Captain::GetPower(void) const
 {
-   return power + GetPowerModificator(NULL);
+    return power + GetPowerModificator(NULL);
 }
 
 int Captain::GetKnowledge(void) const
@@ -66,17 +66,12 @@ int Captain::GetMorale(void) const
     result += GetMoraleModificator(NULL);
 
     // result
-    if(result < Morale::AWFUL)  return Morale::TREASON;
-    else
-    if(result < Morale::POOR)   return Morale::AWFUL;
-    else
-    if(result < Morale::NORMAL) return Morale::POOR;
-    else
-    if(result < Morale::GOOD)   return Morale::NORMAL;
-    else
-    if(result < Morale::GREAT)  return Morale::GOOD;
-    else
-    if(result < Morale::BLOOD)  return Morale::GREAT;
+    if (result < Morale::AWFUL) return Morale::TREASON;
+    else if (result < Morale::POOR) return Morale::AWFUL;
+    else if (result < Morale::NORMAL) return Morale::POOR;
+    else if (result < Morale::GOOD) return Morale::NORMAL;
+    else if (result < Morale::GREAT) return Morale::GOOD;
+    else if (result < Morale::BLOOD) return Morale::GREAT;
 
     return Morale::BLOOD;
 }
@@ -89,17 +84,12 @@ int Captain::GetLuck(void) const
     result += GetLuckModificator(NULL);
 
     // result
-    if(result < Luck::AWFUL)    return Luck::CURSED;
-    else
-    if(result < Luck::BAD)      return Luck::AWFUL;
-    else
-    if(result < Luck::NORMAL)   return Luck::BAD;
-    else
-    if(result < Luck::GOOD)     return Luck::NORMAL;
-    else
-    if(result < Luck::GREAT)    return Luck::GOOD;
-    else
-    if(result < Luck::IRISH)    return Luck::GREAT;
+    if (result < Luck::AWFUL) return Luck::CURSED;
+    else if (result < Luck::BAD) return Luck::AWFUL;
+    else if (result < Luck::NORMAL) return Luck::BAD;
+    else if (result < Luck::GOOD) return Luck::NORMAL;
+    else if (result < Luck::GREAT) return Luck::GOOD;
+    else if (result < Luck::IRISH) return Luck::GREAT;
 
     return Luck::IRISH;
 }
@@ -114,7 +104,7 @@ int Captain::GetColor(void) const
     return home.GetColor();
 }
 
-const std::string & Captain::GetName(void) const
+const std::string &Captain::GetName(void) const
 {
     return home.GetName();
 }
@@ -134,12 +124,12 @@ u32 Captain::GetSecondaryValues(int) const
     return 0;
 }
 
-const Army & Captain::GetArmy(void) const
+const Army &Captain::GetArmy(void) const
 {
     return home.GetArmy();
 }
 
-Army & Captain::GetArmy(void)
+Army &Captain::GetArmy(void)
 {
     return home.GetArmy();
 }
@@ -169,39 +159,53 @@ void Captain::ActionPreBattle(void)
     SetSpellPoints(GetMaxSpellPoints());
 }
 
-const Castle* Captain::inCastle(void) const
+const Castle *Captain::inCastle(void) const
 {
     return &home;
 }
 
 Surface Captain::GetPortrait(int type) const
 {
-    switch(type)
+    switch (type)
     {
         case PORT_BIG:
-            switch(GetRace())
+            switch (GetRace())
             {
-                case Race::KNGT:        return AGG::GetICN(ICN::PORT0090, 0);
-                case Race::BARB:        return AGG::GetICN(ICN::PORT0091, 0);
-                case Race::SORC:        return AGG::GetICN(ICN::PORT0092, 0);
-                case Race::WRLK:        return AGG::GetICN(ICN::PORT0093, 0);
-                case Race::WZRD:        return AGG::GetICN(ICN::PORT0094, 0);
-                case Race::NECR:        return AGG::GetICN(ICN::PORT0095, 0);
-                default: break;
+                case Race::KNGT:
+                    return AGG::GetICN(ICN::PORT0090, 0);
+                case Race::BARB:
+                    return AGG::GetICN(ICN::PORT0091, 0);
+                case Race::SORC:
+                    return AGG::GetICN(ICN::PORT0092, 0);
+                case Race::WRLK:
+                    return AGG::GetICN(ICN::PORT0093, 0);
+                case Race::WZRD:
+                    return AGG::GetICN(ICN::PORT0094, 0);
+                case Race::NECR:
+                    return AGG::GetICN(ICN::PORT0095, 0);
+                default:
+                    break;
             }
             break;
 
         case PORT_MEDIUM:
         case PORT_SMALL:
-            switch(GetRace())
+            switch (GetRace())
             {
-                case Race::KNGT:        return AGG::GetICN(ICN::MINICAPT, 0);
-                case Race::BARB:        return AGG::GetICN(ICN::MINICAPT, 1);
-                case Race::SORC:        return AGG::GetICN(ICN::MINICAPT, 2);
-                case Race::WRLK:        return AGG::GetICN(ICN::MINICAPT, 3);
-                case Race::WZRD:        return AGG::GetICN(ICN::MINICAPT, 4);
-                case Race::NECR:        return AGG::GetICN(ICN::MINICAPT, 5);
-                default: break;
+                case Race::KNGT:
+                    return AGG::GetICN(ICN::MINICAPT, 0);
+                case Race::BARB:
+                    return AGG::GetICN(ICN::MINICAPT, 1);
+                case Race::SORC:
+                    return AGG::GetICN(ICN::MINICAPT, 2);
+                case Race::WRLK:
+                    return AGG::GetICN(ICN::MINICAPT, 3);
+                case Race::WZRD:
+                    return AGG::GetICN(ICN::MINICAPT, 4);
+                case Race::NECR:
+                    return AGG::GetICN(ICN::MINICAPT, 5);
+                default:
+                    break;
             }
             break;
     }
@@ -209,7 +213,7 @@ Surface Captain::GetPortrait(int type) const
     return Surface();
 }
 
-void Captain::PortraitRedraw(s32 px, s32 py, int type, Surface & dstsf) const
+void Captain::PortraitRedraw(s32 px, s32 py, int type, Surface &dstsf) const
 {
     GetPortrait(type).Blit(px, py, dstsf);
 }

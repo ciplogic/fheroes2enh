@@ -44,13 +44,13 @@ void Test::Run(int num)
 {
     switch(num)
     {
-	case 1: RunTest1(); break;
-	case 2: RunTest2(); break;
-	case 3: RunTest3(); break;
+    case 1: RunTest1(); break;
+    case 2: RunTest2(); break;
+    case 3: RunTest3(); break;
 
-	case 9: TestMonsterSprite(); break;
+    case 9: TestMonsterSprite(); break;
 
-	default: DEBUG(DBG_ENGINE, DBG_WARN, "unknown test"); break;
+    default: DEBUG(DBG_ENGINE, DBG_WARN, "unknown test"); break;
     }
 }
 
@@ -140,7 +140,7 @@ void RunTest3(void)
 
     Maps::FileInfo fi;
     if(!fi.ReadMP2(amap)) return;
-    
+
     conf.SetCurrentFileInfo(fi);
     world.LoadMapMP2(amap);
 
@@ -187,8 +187,8 @@ void RunTest3(void)
     Army & army2 = castle->GetArmy();
     if(army2.GetCommander())
     {
-	army2.GetCommander()->SpellBookActivate();
-	army2.GetCommander()->AppendSpellToBook(Spell::SHIELD, true);
+    army2.GetCommander()->SpellBookActivate();
+    army2.GetCommander()->AppendSpellToBook(Spell::SHIELD, true);
     }
 
     army1.Clean();

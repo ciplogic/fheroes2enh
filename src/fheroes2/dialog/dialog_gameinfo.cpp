@@ -35,23 +35,23 @@
 void Dialog::GameInfo(void)
 {
     // FIXME: QVGA version
-    if(Settings::Get().QVGA())
+    if (Settings::Get().QVGA())
     {
-       Dialog::Message("", _("For the QVGA version is not available."), Font::SMALL, Dialog::OK);
-       return;
+        Dialog::Message("", _("For the QVGA version is not available."), Font::SMALL, Dialog::OK);
+        return;
     }
 
-    Display & display = Display::Get();
-    Cursor & cursor = Cursor::Get();
-    Settings & conf = Settings::Get();
+    Display &display = Display::Get();
+    Cursor &cursor = Cursor::Get();
+    Settings &conf = Settings::Get();
 
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
-    const Sprite & dlg = AGG::GetICN(ICN::SCENIBKG, 0);
+    const Sprite &dlg = AGG::GetICN(ICN::SCENIBKG, 0);
 
     SpriteBack back(Rect((display.w() - dlg.w()) / 2, (display.h() - dlg.h()) / 2, dlg.w(), dlg.h()));
-    const Point & pt = back.GetPos();
+    const Point &pt = back.GetPos();
     dlg.Blit(pt);
 
     TextBox text;
@@ -121,23 +121,24 @@ void Dialog::GameInfo(void)
     cursor.Show();
     display.Flip();
 
-    LocalEvent & le = LocalEvent::Get();
+    LocalEvent &le = LocalEvent::Get();
 
     // message loop
-    while(le.HandleEvents())
+    while (le.HandleEvents())
     {
-	le.MousePressLeft(buttonOk) ? buttonOk.PressDraw() : buttonOk.ReleaseDraw();
-	le.MousePressLeft(buttonCfg) ? buttonCfg.PressDraw() : buttonCfg.ReleaseDraw();
+        le.MousePressLeft(buttonOk) ? buttonOk.PressDraw() : buttonOk.ReleaseDraw();
+        le.MousePressLeft(buttonCfg) ? buttonCfg.PressDraw() : buttonCfg.ReleaseDraw();
 
-        if(le.MouseClickLeft(buttonCfg))
-	{
-	    Dialog::ExtSettings(true);
-	    Cursor::Get().Show();
-	    Display::Get().Flip();
-	}
+        if (le.MouseClickLeft(buttonCfg))
+        {
+            Dialog::ExtSettings(true);
+            Cursor::Get().Show();
+            Display::Get().Flip();
+        }
 
-        if(le.MouseClickLeft(buttonOk) ||
-	   HotKeyCloseWindow) break;
+        if (le.MouseClickLeft(buttonOk) ||
+            HotKeyCloseWindow)
+            break;
     }
 
     cursor.Hide();

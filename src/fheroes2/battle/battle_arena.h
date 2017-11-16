@@ -36,167 +36,224 @@
 #define ARENASIZE ARENAW * ARENAH
 
 class Castle;
+
 class HeroBase;
 
 namespace Battle
 {
     class Force;
+
     class Units;
+
     class Unit;
+
     class Command;
 
     class Actions : public std::list<Command>
     {
     public:
-	bool		HaveCommand(u32) const;
+        bool HaveCommand(u32) const;
     };
 
     class Arena
     {
     public:
-	Arena(Army &, Army &, s32, bool);
-	~Arena();
+        Arena(Army &, Army &, s32, bool);
 
-	void		Turns(void);
-	bool		NetworkTurn(void);
-	bool		BattleValid(void) const;
+        ~Arena();
 
-	bool		CanBreakAutoBattle(void) const;
-	void		BreakAutoBattle(void);
+        void Turns(void);
 
-	u32		GetCurrentTurn(void) const;
-	Result &	GetResult(void);
+        bool NetworkTurn(void);
 
-	const HeroBase*	GetCommander(int color, bool invert = false) const;
-	const HeroBase*	GetCommander1(void) const;
-	const HeroBase*	GetCommander2(void) const;
-	const HeroBase* GetCurrentCommander(void) const;
+        bool BattleValid(void) const;
 
-	Force &		GetForce1(void);
-	Force &		GetForce2(void);
-	Force &		GetForce(int color, bool invert = false);
-	Force &		GetCurrentForce(void);
+        bool CanBreakAutoBattle(void) const;
 
-	int		GetArmyColor1(void) const;
-	int		GetArmyColor2(void) const;
-	int		GetCurrentColor(void) const;
-	int		GetOppositeColor(int) const;
+        void BreakAutoBattle(void);
 
-	Unit*		GetTroopBoard(s32);
-	const Unit*	GetTroopBoard(s32) const;
+        u32 GetCurrentTurn(void) const;
 
-	Unit*		GetTroopUID(u32);
-	const Unit*	GetTroopUID(u32) const;
+        Result &GetResult(void);
 
-	const Unit*	GetEnemyMaxQuality(int) const;
+        const HeroBase *GetCommander(int color, bool invert = false) const;
 
-	const SpellStorage &
-			GetUsageSpells(void) const;
+        const HeroBase *GetCommander1(void) const;
 
-	void		DialogBattleSummary(const Result &) const;
-	int		DialogBattleHero(const HeroBase &, bool) const;
+        const HeroBase *GetCommander2(void) const;
 
-	void		FadeArena(void) const;
+        const HeroBase *GetCurrentCommander(void) const;
 
-	Indexes		GetPath(const Unit &, const Position &);
-	void		ApplyAction(Command &);
+        Force &GetForce1(void);
 
-	TargetsInfo	GetTargetsForDamage(Unit &, Unit &, s32);
-	void		TargetsApplyDamage(Unit &, Unit &, TargetsInfo &);
-	TargetsInfo	GetTargetsForSpells(const HeroBase*, const Spell &, s32);
-	void		TargetsApplySpell(const HeroBase*, const Spell &, TargetsInfo &);
+        Force &GetForce2(void);
 
-	bool		isDisableCastSpell(const Spell &, std::string *msg);
+        Force &GetForce(int color, bool invert = false);
 
-	bool		GraveyardAllowResurrect(s32, const Spell &) const;
-	const Unit*	GraveyardLastTroop(s32) const;
-	Indexes		GraveyardClosedCells(void) const;
+        Force &GetCurrentForce(void);
 
-	bool		CanSurrenderOpponent(int color) const;
-	bool		CanRetreatOpponent(int color) const;
+        int GetArmyColor1(void) const;
 
-	void		ApplyActionSpellSummonElemental(Command &, const Spell &);
-	void		ApplyActionSpellMirrorImage(Command &);
-	void		ApplyActionSpellTeleport(Command &);
-	void		ApplyActionSpellEarthQuake(Command &);
-	void		ApplyActionSpellDefaults(Command &, const Spell &);
+        int GetArmyColor2(void) const;
 
-	u32		GetObstaclesPenalty(const Unit &, const Unit &) const;
-	int		GetICNCovr(void) const;
+        int GetCurrentColor(void) const;
 
-        u32		GetCastleTargetValue(int) const;
+        int GetOppositeColor(int) const;
 
-	static Board*		GetBoard(void);
-	static Tower*		GetTower(int);
-	static Bridge*		GetBridge(void);
-	static const Castle*	GetCastle(void);
-	static Interface*	GetInterface(void);
-	static Graveyard*	GetGraveyard(void);
+        Unit *GetTroopBoard(s32);
+
+        const Unit *GetTroopBoard(s32) const;
+
+        Unit *GetTroopUID(u32);
+
+        const Unit *GetTroopUID(u32) const;
+
+        const Unit *GetEnemyMaxQuality(int) const;
+
+        const SpellStorage &
+        GetUsageSpells(void) const;
+
+        void DialogBattleSummary(const Result &) const;
+
+        int DialogBattleHero(const HeroBase &, bool) const;
+
+        void FadeArena(void) const;
+
+        Indexes GetPath(const Unit &, const Position &);
+
+        void ApplyAction(Command &);
+
+        TargetsInfo GetTargetsForDamage(Unit &, Unit &, s32);
+
+        void TargetsApplyDamage(Unit &, Unit &, TargetsInfo &);
+
+        TargetsInfo GetTargetsForSpells(const HeroBase *, const Spell &, s32);
+
+        void TargetsApplySpell(const HeroBase *, const Spell &, TargetsInfo &);
+
+        bool isDisableCastSpell(const Spell &, std::string *msg);
+
+        bool GraveyardAllowResurrect(s32, const Spell &) const;
+
+        const Unit *GraveyardLastTroop(s32) const;
+
+        Indexes GraveyardClosedCells(void) const;
+
+        bool CanSurrenderOpponent(int color) const;
+
+        bool CanRetreatOpponent(int color) const;
+
+        void ApplyActionSpellSummonElemental(Command &, const Spell &);
+
+        void ApplyActionSpellMirrorImage(Command &);
+
+        void ApplyActionSpellTeleport(Command &);
+
+        void ApplyActionSpellEarthQuake(Command &);
+
+        void ApplyActionSpellDefaults(Command &, const Spell &);
+
+        u32 GetObstaclesPenalty(const Unit &, const Unit &) const;
+
+        int GetICNCovr(void) const;
+
+        u32 GetCastleTargetValue(int) const;
+
+        static Board *GetBoard(void);
+
+        static Tower *GetTower(int);
+
+        static Bridge *GetBridge(void);
+
+        static const Castle *GetCastle(void);
+
+        static Interface *GetInterface(void);
+
+        static Graveyard *GetGraveyard(void);
 
     private:
-	friend StreamBase & operator<< (StreamBase &, const Arena &);
-	friend StreamBase & operator>> (StreamBase &, Arena &);
+        friend StreamBase &operator<<(StreamBase &, const Arena &);
 
-    	void		RemoteTurn(const Unit &, Actions &);
-	void		HumanTurn(const Unit &, Actions &);
+        friend StreamBase &operator>>(StreamBase &, Arena &);
 
-	void		TurnTroop(Unit*);
-	void		TowerAction(const Tower &);
+        void RemoteTurn(const Unit &, Actions &);
 
-        void		SetCastleTargetValue(int, u32);
-	void		CatapultAction(void);
+        void HumanTurn(const Unit &, Actions &);
 
-	s32		GetFreePositionNearHero(int) const;
-	std::vector<int>
-			GetCastleTargets(void) const;
+        void TurnTroop(Unit *);
 
-	void		ApplyActionRetreat(Command &);
-	void		ApplyActionSurrender(Command &);
-	void		ApplyActionAttack(Command &);
-	void		ApplyActionMove(Command &);
-	void		ApplyActionEnd(Command &);
-	void		ApplyActionSkip(Command &);
-	void		ApplyActionMorale(Command &);
-	void		ApplyActionLuck(Command &);
-	void		ApplyActionSpellCast(Command &);
-	void		ApplyActionTower(Command &);
-	void		ApplyActionCatapult(Command &);
-	void		ApplyActionAutoBattle(Command &);
+        void TowerAction(const Tower &);
 
-	void		BattleProcess(Unit &, Unit & b2, s32 = -1, int = 0);
+        void SetCastleTargetValue(int, u32);
 
-	Unit*		CreateElemental(const Spell &);
-	Unit*		CreateMirrorImage(Unit &, s32);
+        void CatapultAction(void);
 
-	Force*		army1;
-        Force*		army2;
-	Units*		armies_order;
+        s32 GetFreePositionNearHero(int) const;
 
-	const Castle*	castle;
-	int		current_color;
+        std::vector<int>
+        GetCastleTargets(void) const;
 
-	Tower*		towers[3];
-	Catapult*	catapult;
-	Bridge*		bridge;
+        void ApplyActionRetreat(Command &);
 
-	Interface*	interface;
-	Result		result_game;
+        void ApplyActionSurrender(Command &);
 
-	Graveyard	graveyard;
-	SpellStorage	usage_spells;
+        void ApplyActionAttack(Command &);
 
-	Board		board;
-	int		icn_covr;
+        void ApplyActionMove(Command &);
 
-	u32		current_turn;
-	int		auto_battle;
+        void ApplyActionEnd(Command &);
 
-	bool		end_turn;
+        void ApplyActionSkip(Command &);
+
+        void ApplyActionMorale(Command &);
+
+        void ApplyActionLuck(Command &);
+
+        void ApplyActionSpellCast(Command &);
+
+        void ApplyActionTower(Command &);
+
+        void ApplyActionCatapult(Command &);
+
+        void ApplyActionAutoBattle(Command &);
+
+        void BattleProcess(Unit &, Unit &b2, s32 = -1, int = 0);
+
+        Unit *CreateElemental(const Spell &);
+
+        Unit *CreateMirrorImage(Unit &, s32);
+
+        Force *army1;
+        Force *army2;
+        Units *armies_order;
+
+        const Castle *castle;
+        int current_color;
+
+        Tower *towers[3];
+        Catapult *catapult;
+        Bridge *bridge;
+
+        Interface *interface;
+        Result result_game;
+
+        Graveyard graveyard;
+        SpellStorage usage_spells;
+
+        Board board;
+        int icn_covr;
+
+        u32 current_turn;
+        int auto_battle;
+
+        bool end_turn;
     };
 
-    Arena*	GetArena(void);
-    StreamBase &	operator<< (StreamBase &, const Arena &);
-    StreamBase &	operator>> (StreamBase &, Arena &);
+    Arena *GetArena(void);
+
+    StreamBase &operator<<(StreamBase &, const Arena &);
+
+    StreamBase &operator>>(StreamBase &, Arena &);
 }
 
 #endif

@@ -48,38 +48,41 @@ namespace Game
 {
     struct HeaderSAV
     {
-	enum { IS_COMPRESS = 0x8000, IS_LOYALTY = 0x4000 };
+        enum
+        {
+            IS_COMPRESS = 0x8000, IS_LOYALTY = 0x4000
+        };
 
-	HeaderSAV() : status(0)
-	{
-	}
+        HeaderSAV() : status(0)
+        {
+        }
 
-	HeaderSAV(const Maps::FileInfo & fi, bool loyalty) : status(0), info(fi)
-	{
-	    time_t rawtime;
-	    std::time(&rawtime);
-	    info.localtime = rawtime;
+        HeaderSAV(const Maps::FileInfo &fi, bool loyalty) : status(0), info(fi)
+        {
+            time_t rawtime;
+            std::time(&rawtime);
+            info.localtime = rawtime;
 
-	    if(loyalty)
-		status |= IS_LOYALTY;
+            if (loyalty)
+                status |= IS_LOYALTY;
 
 #ifdef WITH_ZLIB
-	    status |= IS_COMPRESS;
+            status |= IS_COMPRESS;
 #endif
-	}
+        }
 
-	u16		status;
-	Maps::FileInfo	info;
+        u16 status;
+        Maps::FileInfo info;
     };
 
-    StreamBase & operator<< (StreamBase & msg, const HeaderSAV & hdr)
+    StreamBase &operator<<(StreamBase &msg, const HeaderSAV &hdr)
     {
-	return msg << hdr.status << hdr.info;
+        return msg << hdr.status << hdr.info;
     }
 
-    StreamBase & operator>> (StreamBase & msg, HeaderSAV & hdr)
+    StreamBase &operator>>(StreamBase &msg, HeaderSAV &hdr)
     {
-	return msg >> hdr.status >> hdr.info;
+        return msg >> hdr.status >> hdr.info;
     }
 }
 
@@ -87,31 +90,32 @@ bool Game::Save(const std::string &fn)
 {
     DEBUG(DBG_GAME, DBG_INFO, fn);
     const bool autosave = (System::GetBasename(fn) == "autosave.sav");
-    const Settings & conf = Settings::Get();
+    const Settings &conf = Settings::Get();
 
     // ask overwrite?
-    if(System::IsFile(fn) &&
-	((!autosave && conf.ExtGameRewriteConfirm()) || (autosave && Settings::Get().ExtGameAutosaveConfirm())) &&
-	Dialog::NO == Dialog::Message("", _("Are you sure you want to overwrite the save with this name?"), Font::BIG, Dialog::YES|Dialog::NO))
+    if (System::IsFile(fn) &&
+        ((!autosave && conf.ExtGameRewriteConfirm()) || (autosave && Settings::Get().ExtGameAutosaveConfirm())) &&
+        Dialog::NO == Dialog::Message("", _("Are you sure you want to overwrite the save with this name?"), Font::BIG,
+                                      Dialog::YES | Dialog::NO))
     {
-	return false;
+        return false;
     }
 
     StreamFile fs;
     fs.setbigendian(true);
 
-    if(! fs.open(fn, "wb"))
+    if (!fs.open(fn, "wb"))
     {
-	DEBUG(DBG_GAME, DBG_INFO, fn << ", error open");
-	return false;
+        DEBUG(DBG_GAME, DBG_INFO, fn << ", error open");
+        return false;
     }
 
     u16 loadver = GetLoadVersion();
-    if(! autosave) Game::SetLastSavename(fn);
+    if (!autosave) Game::SetLastSavename(fn);
 
     // raw info content
     fs << static_cast<char>(SAV2ID3 >> 8) << static_cast<char>(SAV2ID3) <<
-	GetString(loadver) << loadver << HeaderSAV(conf.CurrentFileInfo(), conf.PriceLoyaltyVersion());
+       GetString(loadver) << loadver << HeaderSAV(conf.CurrentFileInfo(), conf.PriceLoyaltyVersion());
     fs.close();
 
     ZStreamFile fz;
@@ -119,25 +123,25 @@ bool Game::Save(const std::string &fn)
 
     // zip game data content
     fz << loadver << World::Get() << Settings::Get() <<
-	GameOver::Result::Get() << GameStatic::Data::Get() << MonsterStaticData::Get() << SAV2ID3; // eof marker
+       GameOver::Result::Get() << GameStatic::Data::Get() << MonsterStaticData::Get() << SAV2ID3; // eof marker
 
     return !fz.fail() && fz.write(fn, true);
 }
 
-bool Game::Load(const std::string & fn)
+bool Game::Load(const std::string &fn)
 {
     DEBUG(DBG_GAME, DBG_INFO, fn);
-    Settings & conf = Settings::Get();
+    Settings &conf = Settings::Get();
     // loading info
     Game::ShowLoadMapsText();
 
     StreamFile fs;
     fs.setbigendian(true);
 
-    if(! fs.open(fn, "rb"))
+    if (!fs.open(fn, "rb"))
     {
-	DEBUG(DBG_GAME, DBG_INFO, fn << ", error open");
-	return false;
+        DEBUG(DBG_GAME, DBG_INFO, fn << ", error open");
+        return false;
     }
 
     char major, minor;
@@ -145,10 +149,10 @@ bool Game::Load(const std::string & fn)
     const u16 savid = (static_cast<u16>(major) << 8) | static_cast<u16>(minor);
 
     // check version sav file
-    if(savid != SAV2ID2 && savid != SAV2ID3)
+    if (savid != SAV2ID2 && savid != SAV2ID3)
     {
-	DEBUG(DBG_GAME, DBG_INFO, fn << ", incorrect SAV2ID");
-	return false;
+        DEBUG(DBG_GAME, DBG_INFO, fn << ", incorrect SAV2ID");
+        return false;
     }
 
     std::string strver;
@@ -163,36 +167,38 @@ bool Game::Load(const std::string & fn)
 #ifndef WITH_ZLIB
     if(header.status & HeaderSAV::IS_COMPRESS)
     {
-	DEBUG(DBG_GAME, DBG_INFO, fn << ", zlib: unsupported");
-	return false;
+    DEBUG(DBG_GAME, DBG_INFO, fn << ", zlib: unsupported");
+    return false;
     }
 #endif
 
     ZStreamFile fz;
     fz.setbigendian(true);
 
-    if(! fz.read(fn, offset))
+    if (!fz.read(fn, offset))
     {
-	DEBUG(DBG_GAME, DBG_INFO, ", uncompress: error");
-	return false;
+        DEBUG(DBG_GAME, DBG_INFO, ", uncompress: error");
+        return false;
     }
 
-    if((header.status & HeaderSAV::IS_LOYALTY) &&
-	!conf.PriceLoyaltyVersion())
-	Dialog::Message("Warning", _("This file is saved in the \"Price Loyalty\" version.\nSome items may be unavailable."), Font::BIG, Dialog::OK);
+    if ((header.status & HeaderSAV::IS_LOYALTY) &&
+        !conf.PriceLoyaltyVersion())
+        Dialog::Message("Warning",
+                        _("This file is saved in the \"Price Loyalty\" version.\nSome items may be unavailable."),
+                        Font::BIG, Dialog::OK);
 
     //SaveMemToFile(std::vector<u8>(fz.data(), fz.data() + fz.size()), "gdata.bin");
     fz >> binver;
 
     // check version: false
-    if(binver > CURRENT_FORMAT_VERSION || binver < LAST_FORMAT_VERSION)
+    if (binver > CURRENT_FORMAT_VERSION || binver < LAST_FORMAT_VERSION)
     {
-	std::ostringstream os;
-	os << "usupported save format: " << binver << std::endl <<
-     	"game version: " << CURRENT_FORMAT_VERSION << std::endl <<
-     	"last version: " << LAST_FORMAT_VERSION;
- 	Dialog::Message("Error", os.str(), Font::BIG, Dialog::OK);
- 	return false;
+        std::ostringstream os;
+        os << "usupported save format: " << binver << std::endl <<
+           "game version: " << CURRENT_FORMAT_VERSION << std::endl <<
+           "last version: " << LAST_FORMAT_VERSION;
+        Dialog::Message("Error", os.str(), Font::BIG, Dialog::OK);
+        return false;
     }
 
     DEBUG(DBG_GAME, DBG_TRACE, "load version: " << binver);
@@ -200,14 +206,14 @@ bool Game::Load(const std::string & fn)
     u16 end_check = 0;
 
     fz >> World::Get() >> Settings::Get() >>
-	GameOver::Result::Get() >> GameStatic::Data::Get() >> MonsterStaticData::Get() >> end_check;
+       GameOver::Result::Get() >> GameStatic::Data::Get() >> MonsterStaticData::Get() >> end_check;
 
     World::Get().PostFixLoad();
 
-    if(fz.fail() || (end_check != SAV2ID2 && end_check != SAV2ID3))
+    if (fz.fail() || (end_check != SAV2ID2 && end_check != SAV2ID3))
     {
-	DEBUG(DBG_GAME, DBG_WARN, "invalid load file: " << fn);
-	return false;
+        DEBUG(DBG_GAME, DBG_WARN, "invalid load file: " << fn);
+        return false;
     }
 
     SetLoadVersion(CURRENT_FORMAT_VERSION);
@@ -218,15 +224,15 @@ bool Game::Load(const std::string & fn)
     return true;
 }
 
-bool Game::LoadSAV2FileInfo(const std::string & fn,  Maps::FileInfo & finfo)
+bool Game::LoadSAV2FileInfo(const std::string &fn, Maps::FileInfo &finfo)
 {
     StreamFile fs;
     fs.setbigendian(true);
 
-    if(! fs.open(fn, "rb"))
+    if (!fs.open(fn, "rb"))
     {
-	DEBUG(DBG_GAME, DBG_INFO, fn << ", error open");
-	return false;
+        DEBUG(DBG_GAME, DBG_INFO, fn << ", error open");
+        return false;
     }
 
     char major, minor;
@@ -234,10 +240,10 @@ bool Game::LoadSAV2FileInfo(const std::string & fn,  Maps::FileInfo & finfo)
     const u16 savid = (static_cast<u16>(major) << 8) | static_cast<u16>(minor);
 
     // check version sav file
-    if(savid != SAV2ID2 && savid != SAV2ID3)
+    if (savid != SAV2ID2 && savid != SAV2ID3)
     {
-	DEBUG(DBG_GAME, DBG_INFO, fn << ", incorrect SAV2ID");
-	return false;
+        DEBUG(DBG_GAME, DBG_INFO, fn << ", incorrect SAV2ID");
+        return false;
     }
 
     std::string strver;
@@ -248,15 +254,15 @@ bool Game::LoadSAV2FileInfo(const std::string & fn,  Maps::FileInfo & finfo)
     fs >> strver >> binver >> header;
 
     // hide: unsupported version
-    if(binver > CURRENT_FORMAT_VERSION || binver < LAST_FORMAT_VERSION)
-	return false;
+    if (binver > CURRENT_FORMAT_VERSION || binver < LAST_FORMAT_VERSION)
+        return false;
 
 #ifndef WITH_ZLIB
     // check: compress game data
     if(header.status & HeaderSAV::IS_COMPRESS)
     {
-	DEBUG(DBG_GAME, DBG_INFO, fn << ", zlib: unsupported");
-	return false;
+    DEBUG(DBG_GAME, DBG_INFO, fn << ", zlib: unsupported");
+    return false;
     }
 #endif
 

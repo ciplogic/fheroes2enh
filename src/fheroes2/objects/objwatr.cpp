@@ -32,25 +32,22 @@ int ObjWat2::GetPassable(u32 index)
     // fixed: array subscript is above array bounds
     const u8 disabled[] = { 11, 12, 19, 22, 255 };
 #else
-    const u8 disabled[] = { 11, 12, 19, 22 };
+    const u8 disabled[] = {11, 12, 19, 22};
 #endif
-    const u8 restricted[] = { 2, 20 };
+    const u8 restricted[] = {2, 20};
 
-    if(isShadow(index))
+    if (isShadow(index))
         return DIRECTION_ALL;
-    else
-    if(10 == index)
+    else if (10 == index)
         return Direction::CENTER | Direction::TOP | Direction::LEFT | Direction::TOP_LEFT;
-    else
-    if(22 == index)
+    else if (22 == index)
         return DIRECTION_CENTER_ROW | Direction::BOTTOM | Direction::BOTTOM_LEFT;
-    else
-    if(isAction(index) ||
-        ARRAY_COUNT_END(disabled) != std::find(disabled, ARRAY_COUNT_END(disabled), index))
+    else if (isAction(index) ||
+             ARRAY_COUNT_END(disabled) != std::find(disabled, ARRAY_COUNT_END(disabled), index))
         return 0;
 
     return ARRAY_COUNT_END(restricted) != std::find(restricted, ARRAY_COUNT_END(restricted), index) ?
-            DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW : DIRECTION_ALL;
+           DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW : DIRECTION_ALL;
 }
 
 int ObjWatr::GetPassable(u32 index)
@@ -59,19 +56,18 @@ int ObjWatr::GetPassable(u32 index)
     // fixed: array subscript is above array bounds
     const u8 disabled[] = { 11, 12, 19, 22, 255 };
 #else
-    const u8 disabled[] = { 11, 12, 19, 22 };
+    const u8 disabled[] = {11, 12, 19, 22};
 #endif
-    const u8 restricted[] = { 69, 182, 183, 185, 186, 187, 248 };
+    const u8 restricted[] = {69, 182, 183, 185, 186, 187, 248};
 
-    if(isShadow(index))
+    if (isShadow(index))
         return DIRECTION_ALL;
-    else
-    if(isAction(index) ||
-        ARRAY_COUNT_END(disabled) != std::find(disabled, ARRAY_COUNT_END(disabled), index))
+    else if (isAction(index) ||
+             ARRAY_COUNT_END(disabled) != std::find(disabled, ARRAY_COUNT_END(disabled), index))
         return 0;
 
     return ARRAY_COUNT_END(restricted) != std::find(restricted, ARRAY_COUNT_END(restricted), index) ?
-            DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW : DIRECTION_ALL;
+           DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW : DIRECTION_ALL;
 }
 
 bool ObjWat2::isAction(u32 index)
@@ -90,7 +86,7 @@ bool ObjWatr::isShadow(u32 index)
     // fixed: array subscript is above array bounds
     const u8 shadows [] = { 12, 38, 52, 55, 118, 166, 188, 240, 255 };
 #else
-    const u8 shadows [] = { 12, 38, 52, 55, 118, 166, 188, 240 };
+    const u8 shadows[] = {12, 38, 52, 55, 118, 166, 188, 240};
 #endif
 
     return ARRAY_COUNT_END(shadows) != std::find(shadows, ARRAY_COUNT_END(shadows), index);
@@ -103,18 +99,23 @@ bool ObjWat2::isShadow(u32 index)
 
 int ObjWatr::GetActionObject(u32 index)
 {
-    switch(index)
+    switch (index)
     {
-        case 62:	return MP2::OBJ_MAGELLANMAPS;
-        case 195:	return MP2::OBJ_BUOY;
+        case 62:
+            return MP2::OBJ_MAGELLANMAPS;
+        case 195:
+            return MP2::OBJ_BUOY;
         case 202:
         case 206:
         case 210:
         case 214:
         case 218:
-        case 222:	return MP2::OBJ_WHIRLPOOL;
-        case 241:	return MP2::OBJ_SHIPWRECK;
-        default: break;
+        case 222:
+            return MP2::OBJ_WHIRLPOOL;
+        case 241:
+            return MP2::OBJ_SHIPWRECK;
+        default:
+            break;
     }
 
     return MP2::OBJ_ZERO;
@@ -122,10 +123,12 @@ int ObjWatr::GetActionObject(u32 index)
 
 int ObjWat2::GetActionObject(u32 index)
 {
-    switch(index)
+    switch (index)
     {
-        case 21:	return MP2::OBJ_DERELICTSHIP;
-        default: break;
+        case 21:
+            return MP2::OBJ_DERELICTSHIP;
+        default:
+            break;
     }
 
     return MP2::OBJ_ZERO;

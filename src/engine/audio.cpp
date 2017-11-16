@@ -64,9 +64,10 @@ Audio::CVT::CVT()
     filter_index = 0;
 }
 
-bool Audio::CVT::Build(const Audio::Spec & src, const Audio::Spec & dst)
+bool Audio::CVT::Build(const Audio::Spec &src, const Audio::Spec &dst)
 {
-    if(1 == SDL_BuildAudioCVT(this, src.format, src.channels, src.freq, dst.format, dst.channels, dst.freq)) return true;
+    if (1 == SDL_BuildAudioCVT(this, src.format, src.channels, src.freq, dst.format, dst.channels, dst.freq))
+        return true;
 
     ERROR(SDL_GetError());
     return false;
@@ -74,13 +75,13 @@ bool Audio::CVT::Build(const Audio::Spec & src, const Audio::Spec & dst)
 
 bool Audio::CVT::Convert(void)
 {
-    if(0 == SDL_ConvertAudio(this)) return true;
-    
+    if (0 == SDL_ConvertAudio(this)) return true;
+
     ERROR(SDL_GetError());
     return false;
 }
 
-Audio::Spec & Audio::GetHardwareSpec(void)
+Audio::Spec &Audio::GetHardwareSpec(void)
 {
     return hardware;
 }

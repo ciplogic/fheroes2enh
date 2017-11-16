@@ -31,168 +31,218 @@
 void StringAppendModifiers(std::string &, int);
 
 class Spell;
+
 class Heroes;
 
 namespace Skill
 {
-    int		GetLeadershipModifiers(int level, std::string* strs);
-    int		GetLuckModifiers(int level, std::string* strs);
-    void	UpdateStats(const std::string &);
+    int GetLeadershipModifiers(int level, std::string *strs);
+
+    int GetLuckModifiers(int level, std::string *strs);
+
+    void UpdateStats(const std::string &);
 
     namespace Level
     {
-	enum { NONE = 0, BASIC = 1, ADVANCED = 2, EXPERT = 3 };
+        enum
+        {
+            NONE = 0, BASIC = 1, ADVANCED = 2, EXPERT = 3
+        };
 
-	const char* String(int level);
+        const char *String(int level);
     }
 
     class Secondary : public std::pair<int, int>
     {
-	public:
-	enum
-	{
-	    UNKNOWN	= 0,
-	    PATHFINDING	= 1,
-	    ARCHERY	= 2,
-	    LOGISTICS	= 3,
-	    SCOUTING	= 4,
-	    DIPLOMACY	= 5,
-	    NAVIGATION	= 6,
-	    LEADERSHIP	= 7,
-	    WISDOM	= 8,
-	    MYSTICISM	= 9,
-	    LUCK	= 10,
-	    BALLISTICS	= 11,
-	    EAGLEEYE	= 12,
-	    NECROMANCY	= 13,
-	    ESTATES	= 14,
+    public:
+        enum
+        {
+            UNKNOWN = 0,
+            PATHFINDING = 1,
+            ARCHERY = 2,
+            LOGISTICS = 3,
+            SCOUTING = 4,
+            DIPLOMACY = 5,
+            NAVIGATION = 6,
+            LEADERSHIP = 7,
+            WISDOM = 8,
+            MYSTICISM = 9,
+            LUCK = 10,
+            BALLISTICS = 11,
+            EAGLEEYE = 12,
+            NECROMANCY = 13,
+            ESTATES = 14,
 
-	    LEARNING	= EAGLEEYE
-	};
+            LEARNING = EAGLEEYE
+        };
 
-	Secondary();
-	Secondary(int skill, int level);
+        Secondary();
 
-	void		Reset(void);
-	void		Set(const Secondary &);
-	void		SetSkill(int);
-	void		SetLevel(int);
-	void		NextLevel(void);
+        Secondary(int skill, int level);
 
-	int		Level(void) const;
-	int		Skill(void) const;
+        void Reset(void);
 
-	bool		isLevel(int) const;
-	bool		isSkill(int) const;
-	bool		isValid(void) const;
+        void Set(const Secondary &);
 
-	const char*	GetName(void) const;
-	std::string	GetDescription(void) const;
-	u32		GetValues(void) const;
+        void SetSkill(int);
 
-	/* index sprite from SECSKILL */
-	int		GetIndexSprite1(void) const;
-	/* index sprite from MINISS */
-	int		GetIndexSprite2(void) const;
+        void SetLevel(int);
 
-	static int	RandForWitchsHut(void);
-	static const char*
-			String(int);
+        void NextLevel(void);
+
+        int Level(void) const;
+
+        int Skill(void) const;
+
+        bool isLevel(int) const;
+
+        bool isSkill(int) const;
+
+        bool isValid(void) const;
+
+        const char *GetName(void) const;
+
+        std::string GetDescription(void) const;
+
+        u32 GetValues(void) const;
+
+        /* index sprite from SECSKILL */
+        int GetIndexSprite1(void) const;
+
+        /* index sprite from MINISS */
+        int GetIndexSprite2(void) const;
+
+        static int RandForWitchsHut(void);
+
+        static const char *
+        String(int);
     };
 
-    StreamBase & operator>> (StreamBase &, Secondary &);
+    StreamBase &operator>>(StreamBase &, Secondary &);
 
     class SecSkills : protected std::vector<Secondary>
     {
-	public:
-	SecSkills();
-	SecSkills(int race);
+    public:
+        SecSkills();
 
-	int		GetLevel(int skill) const;
-	u32		GetValues(int skill) const;
-	void		AddSkill(const Skill::Secondary &);
-	void		FindSkillsForLevelUp(int race, Secondary &, Secondary &) const;
-	void		FillMax(const Skill::Secondary &);
-	Secondary*	FindSkill(int);
-	std::string	String(void) const;
-	int		Count(void) const;
-	std::vector<Secondary> &
-			ToVector(void);
+        SecSkills(int race);
+
+        int GetLevel(int skill) const;
+
+        u32 GetValues(int skill) const;
+
+        void AddSkill(const Skill::Secondary &);
+
+        void FindSkillsForLevelUp(int race, Secondary &, Secondary &) const;
+
+        void FillMax(const Skill::Secondary &);
+
+        Secondary *FindSkill(int);
+
+        std::string String(void) const;
+
+        int Count(void) const;
+
+        std::vector<Secondary> &
+        ToVector(void);
 
     protected:
-	friend StreamBase & operator<< (StreamBase &, const SecSkills &);
-	friend StreamBase & operator>> (StreamBase &, SecSkills &);
+        friend StreamBase &operator<<(StreamBase &, const SecSkills &);
+
+        friend StreamBase &operator>>(StreamBase &, SecSkills &);
     };
 
-    StreamBase & operator<< (StreamBase &, const SecSkills &);
-    StreamBase & operator>> (StreamBase &, SecSkills &);
+    StreamBase &operator<<(StreamBase &, const SecSkills &);
+
+    StreamBase &operator>>(StreamBase &, SecSkills &);
 
     class Primary
     {
-	public:
-	Primary();
-	virtual ~Primary(){};
+    public:
+        Primary();
 
-	enum { UNKNOWN = 0, ATTACK = 1, DEFENSE = 2, POWER = 3, KNOWLEDGE = 4 };
+        virtual ~Primary()
+        {};
 
-    	virtual int GetAttack(void) const = 0;
-	virtual int GetDefense(void) const = 0;
+        enum
+        {
+            UNKNOWN = 0, ATTACK = 1, DEFENSE = 2, POWER = 3, KNOWLEDGE = 4
+        };
+
+        virtual int GetAttack(void) const = 0;
+
+        virtual int GetDefense(void) const = 0;
+
         virtual int GetPower(void) const = 0;
+
         virtual int GetKnowledge(void) const = 0;
-	virtual int GetMorale(void) const = 0;
-	virtual int GetLuck(void) const = 0;
-	virtual int GetRace(void) const = 0;
 
-	virtual bool	isCaptain(void) const;
-	virtual bool	isHeroes(void) const;
+        virtual int GetMorale(void) const = 0;
 
-	int		LevelUp(int race, int level);
+        virtual int GetLuck(void) const = 0;
 
-	std::string	StringSkills(const std::string &) const;
+        virtual int GetRace(void) const = 0;
 
-        static const char*	String(int);
-	static std::string	StringDescription(int, const Heroes*);
-	static int		GetInitialSpell(int race);
+        virtual bool isCaptain(void) const;
 
-	protected:
-	void LoadDefaults(int type, int race);
+        virtual bool isHeroes(void) const;
 
-	friend StreamBase & operator<< (StreamBase &, const Primary &);
-	friend StreamBase & operator>> (StreamBase &, Primary &);
+        int LevelUp(int race, int level);
 
-	int			attack;
-	int			defense;
-	int			power;
-	int			knowledge;
+        std::string StringSkills(const std::string &) const;
+
+        static const char *String(int);
+
+        static std::string StringDescription(int, const Heroes *);
+
+        static int GetInitialSpell(int race);
+
+    protected:
+        void LoadDefaults(int type, int race);
+
+        friend StreamBase &operator<<(StreamBase &, const Primary &);
+
+        friend StreamBase &operator>>(StreamBase &, Primary &);
+
+        int attack;
+        int defense;
+        int power;
+        int knowledge;
     };
 
-    StreamBase & operator<< (StreamBase &, const Primary &);
-    StreamBase & operator>> (StreamBase &, Primary &);
+    StreamBase &operator<<(StreamBase &, const Primary &);
+
+    StreamBase &operator>>(StreamBase &, Primary &);
 }
 
 #include "interface_itemsbar.h"
+
 class PrimarySkillsBar : public Interface::ItemsBar<int>
 {
 public:
-    PrimarySkillsBar(const Heroes*, bool mini);
+    PrimarySkillsBar(const Heroes *, bool mini);
 
-    void	SetTextOff(s32, s32);
-    void	RedrawBackground(const Rect &, Surface &);
-    void	RedrawItem(int &, const Rect &, Surface &);
+    void SetTextOff(s32, s32);
 
-    bool	ActionBarSingleClick(const Point &, int &, const Rect &);
-    bool	ActionBarPressRight(const Point &, int &, const Rect &);
-    bool        ActionBarCursor(const Point &, int &, const Rect &);
+    void RedrawBackground(const Rect &, Surface &);
 
-    bool        QueueEventProcessing(std::string* = NULL);
+    void RedrawItem(int &, const Rect &, Surface &);
+
+    bool ActionBarSingleClick(const Point &, int &, const Rect &);
+
+    bool ActionBarPressRight(const Point &, int &, const Rect &);
+
+    bool ActionBarCursor(const Point &, int &, const Rect &);
+
+    bool QueueEventProcessing(std::string * = NULL);
 
 protected:
-    const Heroes*	hero;
-    Surface		backsf;
-    bool		use_mini_sprite;
-    std::vector<int>	content;
-    Point		toff;
-    std::string		msg;
+    const Heroes *hero;
+    Surface backsf;
+    bool use_mini_sprite;
+    std::vector<int> content;
+    Point toff;
+    std::string msg;
 };
 
 class SecondarySkillsBar : public Interface::ItemsBar<Skill::Secondary>
@@ -200,20 +250,23 @@ class SecondarySkillsBar : public Interface::ItemsBar<Skill::Secondary>
 public:
     SecondarySkillsBar(bool mini = true, bool change = false);
 
-    void	RedrawBackground(const Rect &, Surface &);
-    void	RedrawItem(Skill::Secondary &, const Rect &, Surface &);
+    void RedrawBackground(const Rect &, Surface &);
 
-    bool	ActionBarSingleClick(const Point &, Skill::Secondary &, const Rect &);
-    bool	ActionBarPressRight(const Point &, Skill::Secondary &, const Rect &);
-    bool        ActionBarCursor(const Point &, Skill::Secondary &, const Rect &);
+    void RedrawItem(Skill::Secondary &, const Rect &, Surface &);
 
-    bool        QueueEventProcessing(std::string* = NULL);
+    bool ActionBarSingleClick(const Point &, Skill::Secondary &, const Rect &);
+
+    bool ActionBarPressRight(const Point &, Skill::Secondary &, const Rect &);
+
+    bool ActionBarCursor(const Point &, Skill::Secondary &, const Rect &);
+
+    bool QueueEventProcessing(std::string * = NULL);
 
 protected:
-    Surface	backsf;
-    bool	use_mini_sprite;
-    bool	can_change;
-    std::string	msg;
+    Surface backsf;
+    bool use_mini_sprite;
+    bool can_change;
+    std::string msg;
 };
 
 #endif

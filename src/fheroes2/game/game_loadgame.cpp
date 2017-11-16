@@ -102,11 +102,11 @@ int Game::LoadGame(void)
 int Game::LoadStandard(void)
 {
     // cursor
-    Cursor & cursor = Cursor::Get();
+    Cursor &cursor = Cursor::Get();
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
-    Display & display = Display::Get();
+    Display &display = Display::Get();
     display.Fill(ColorBlack);
 
     // image background
@@ -118,7 +118,7 @@ int Game::LoadStandard(void)
     display.Flip();
 
     std::string file = Dialog::SelectFileLoad();
-    if(file.empty() || !Game::Load(file)) return MAINMENU;
+    if (file.empty() || !Game::Load(file)) return MAINMENU;
 
     return STARTGAME;
 }

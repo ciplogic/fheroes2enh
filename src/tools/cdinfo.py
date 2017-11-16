@@ -87,11 +87,12 @@ tracks = [
 ]
 
 discinfo = {
-    "DTITLE" : "New World Computing / Heroes of Might & Magic II Soundtrack",
-    "DYEAR" : 1996,
-    "DGENRE" : "Soundtrack",
-    "PLAYORDER" : ""
+    "DTITLE": "New World Computing / Heroes of Might & Magic II Soundtrack",
+    "DYEAR": 1996,
+    "DGENRE": "Soundtrack",
+    "PLAYORDER": ""
 }
+
 
 def debug(*args):
     for arg in args:
@@ -99,17 +100,18 @@ def debug(*args):
     print '\n',
     sys.stdout.flush()
 
+
 class Client:
     def __init__(self, sock, addr):
         self.sock = sock
         self.addr = addr
         self.data = ""
         self.http = False
-    
+
     def send(self, data):
         self.data += data
         self.data += "\n"
-    
+
     def httpFlush(self):
         response = "HTTP/1.1 200 OK\r\n"
         response += "Content-Type: text/plain\r\n"
@@ -117,27 +119,29 @@ class Client:
         response += self.data + "\r\n"
         debug("sending response (%s)" % response)
         self.sock.send(response)
-    
+
     def flush(self):
         if not self.data:
             return
-    
+
         if not self.http:
             debug("sending response (%s)" % self.data.strip())
             self.sock.send(self.data)
         else:
             self.httpFlush()
         self.data = ""
-    
+
     def close(self):
         self.sock.close()
-    
+
     def recv(self, size):
         return self.sock.recv(size)
+
 
 def actOnAccept(client):
     client.send("201 %s CDDBP server v1.0PL0 ready at %s" % (socket.gethostname(), time.strftime("%a %b %H:%M:%S %Y")))
     return True
+
 
 def actOnQuery(client, data):
     global disclength
@@ -149,6 +153,7 @@ def actOnQuery(client, data):
     disclength = elements[len(elements) - 1].strip()
     client.send("200 soundtrack %s %s" % (elements[2].strip(), discinfo["DTITLE"]))
     return True
+
 
 def actOnRead(client, data):
     global disclength
@@ -162,7 +167,7 @@ def actOnRead(client, data):
     client.send("# Disc length: " + disclength + " seconds")
     client.send("# Revision: 0")
     client.send("# Submitted via: jmatthews v1.0PL0");
-    client.send("DISCID="+elements[3].strip())
+    client.send("DISCID=" + elements[3].strip())
     for key, value in discinfo.items():
         client.send(key + "=" + str(discinfo[key]))
     for tracknum, track in enumerate(tracks):
@@ -170,9 +175,11 @@ def actOnRead(client, data):
     client.send('.')
     return True
 
+
 def actOnQuit(client, data):
     client.send("%s Closing connection.  Goodbye." % client.addr[0])
     return False
+
 
 def actOnHello(client, data):
     elements = data.split(' ')
@@ -181,11 +188,13 @@ def actOnHello(client, data):
                                                                elements[4], elements[5]))
     return True
 
+
 def actOnProto(client, data):
     elements = data.split(' ')
     elements = map(lambda x: x.strip(), elements)
     client.send("201 OK, protocol version now: %s" % elements[1])
     return True
+
 
 def actHTTPcmd(client, data):
     elements = data.split(' ')
@@ -193,24 +202,25 @@ def actHTTPcmd(client, data):
     parts[0] = parts[0][5:]
     cmd = parts[0].replace('+', ' ')
     client.http = True
-    #return parseMessage(client, cmd)
+    # return parseMessage(client, cmd)
     return False
+
 
 # Based on http://ftp.freedb.org/pub/freedb/latest/CDDBPROTO
 
 def parseMessage(client, data):
     if not data:
         return False
-    
+
     handled = False
     ret = True
     handlers = {
-        "GET"        : actHTTPcmd,
-        "cddb hello" : actOnHello,
-        "cddb query" : actOnQuery,
-        "cddb read"  : actOnRead,
-        "quit"       : actOnQuit,
-        "proto"      : actOnProto
+        "GET": actHTTPcmd,
+        "cddb hello": actOnHello,
+        "cddb query": actOnQuery,
+        "cddb read": actOnRead,
+        "quit": actOnQuit,
+        "proto": actOnProto
     }
     for key, handler in handlers.items():
         if data.startswith(key):
@@ -226,6 +236,7 @@ def parseMessage(client, data):
         client.send("500 error")
     return ret
 
+
 def main(argc, argv):
     host = ''
     port = 8880
@@ -235,7 +246,7 @@ def main(argc, argv):
     s = None
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.bind((host,port))
+        s.bind((host, port))
         s.listen(1)
     except socket.error, (value, message):
         if s:
@@ -265,6 +276,7 @@ def main(argc, argv):
             s.close();
             break
     return 0
+
 
 if __name__ == "__main__":
     sys.exit(main(len(sys.argv), sys.argv))

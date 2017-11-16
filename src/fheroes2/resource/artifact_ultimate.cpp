@@ -28,9 +28,9 @@ UltimateArtifact::UltimateArtifact() : index(-1), isfound(false)
 {
 }
 
-void UltimateArtifact::Set(s32 pos, const Artifact & a)
+void UltimateArtifact::Set(s32 pos, const Artifact &a)
 {
-    Artifact & art = *this;
+    Artifact &art = *this;
     art = a.isValid() ? a : Artifact::Rand(Artifact::ART_ULTIMATE);
     index = pos;
     isfound = false;
@@ -38,12 +38,12 @@ void UltimateArtifact::Set(s32 pos, const Artifact & a)
     MakeSurface();
 }
 
-const Surface & UltimateArtifact::GetPuzzleMapSurface(void) const
+const Surface &UltimateArtifact::GetPuzzleMapSurface(void) const
 {
     return puzzlemap;
 }
 
-const Artifact & UltimateArtifact::GetArtifact(void) const
+const Artifact &UltimateArtifact::GetArtifact(void) const
 {
     return *this;
 }
@@ -73,20 +73,20 @@ void UltimateArtifact::Reset(void)
 
 void UltimateArtifact::MakeSurface(void)
 {
-    if(Maps::isValidAbsIndex(index))
-	puzzlemap = Interface::GameArea::GenerateUltimateArtifactAreaSurface(index);
+    if (Maps::isValidAbsIndex(index))
+        puzzlemap = Interface::GameArea::GenerateUltimateArtifactAreaSurface(index);
     else
-	puzzlemap.Reset();
+        puzzlemap.Reset();
 }
 
-StreamBase & operator<< (StreamBase & msg, const UltimateArtifact & ultimate)
+StreamBase &operator<<(StreamBase &msg, const UltimateArtifact &ultimate)
 {
     return msg << static_cast<Artifact>(ultimate) << ultimate.index << ultimate.isfound;
 }
 
-StreamBase & operator>> (StreamBase & msg, UltimateArtifact & ultimate)
+StreamBase &operator>>(StreamBase &msg, UltimateArtifact &ultimate)
 {
-    Artifact & artifact = ultimate;
+    Artifact &artifact = ultimate;
     msg >> artifact >> ultimate.index >> ultimate.isfound;
 
     ultimate.MakeSurface();

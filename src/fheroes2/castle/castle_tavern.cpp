@@ -36,24 +36,24 @@
 
 void Castle::OpenTavern(void)
 {
-    const std::string & header = _("A generous tip for the barkeep yields the following rumor:");
+    const std::string &header = _("A generous tip for the barkeep yields the following rumor:");
     const int system = (Settings::Get().ExtGameEvilInterface() ? ICN::SYSTEME : ICN::SYSTEM);
     const int tavwin = ICN::TAVWIN;
-    const std::string & tavern = GetStringBuilding(BUILD_TAVERN);
-    const std::string & message = world.GetRumors();
+    const std::string &tavern = GetStringBuilding(BUILD_TAVERN);
+    const std::string &message = world.GetRumors();
 
-    Display & display = Display::Get();
-    Cursor & cursor = Cursor::Get();
+    Display &display = Display::Get();
+    Cursor &cursor = Cursor::Get();
     cursor.Hide();
 
     Text text(tavern, Font::BIG);
-    const Sprite & s1 = AGG::GetICN(tavwin, 0);
+    const Sprite &s1 = AGG::GetICN(tavwin, 0);
     TextBox box1(header, Font::BIG, BOXAREA_WIDTH);
     TextBox box2(message, Font::BIG, BOXAREA_WIDTH);
 
     Dialog::FrameBox box(text.h() + 10 + s1.h() + 13 + box1.h() + 20 + box2.h(), true);
 
-    const Rect & pos = box.GetArea();
+    const Rect &pos = box.GetArea();
     Point dst_pt(pos.x, pos.y);
 
     text.Blit(pos.x + (pos.w - text.w()) / 2, dst_pt.y);
@@ -65,20 +65,20 @@ void Castle::OpenTavern(void)
     dst_pt.x += 3;
     dst_pt.y += 3;
 
-    const Sprite & s20 = AGG::GetICN(tavwin, 1);
+    const Sprite &s20 = AGG::GetICN(tavwin, 1);
     s20.Blit(dst_pt);
 
-    if(const u32 index = ICN::AnimationFrame(tavwin, 0, 0))
+    if (const u32 index = ICN::AnimationFrame(tavwin, 0, 0))
     {
-	const Sprite & s21 = AGG::GetICN(tavwin, index);
-	s21.Blit(dst_pt.x + s21.x(), dst_pt.y + s21.y());
+        const Sprite &s21 = AGG::GetICN(tavwin, index);
+        s21.Blit(dst_pt.x + s21.x(), dst_pt.y + s21.y());
     }
 
     box1.Blit(pos.x, dst_pt.y + s1.h() + 10);
     box2.Blit(pos.x, dst_pt.y + s1.h() + 10 + box1.h() + 20);
 
     // button yes
-    const Sprite & s4 = AGG::GetICN(system, 5);
+    const Sprite &s4 = AGG::GetICN(system, 5);
     Button buttonYes(pos.x + (pos.w - s4.w()) / 2, pos.y + pos.h - s4.h(), system, 5, 6);
 
     buttonYes.Draw();
@@ -86,29 +86,29 @@ void Castle::OpenTavern(void)
     cursor.Show();
     display.Flip();
 
-    LocalEvent & le = LocalEvent::Get();
+    LocalEvent &le = LocalEvent::Get();
     u32 frame = 0;
 
     // message loop
-    while(le.HandleEvents())
+    while (le.HandleEvents())
     {
         le.MousePressLeft(buttonYes) ? buttonYes.PressDraw() : buttonYes.ReleaseDraw();
-        if(le.MouseClickLeft(buttonYes) || HotKeyCloseWindow) break;
+        if (le.MouseClickLeft(buttonYes) || HotKeyCloseWindow) break;
 
         // animation
-	if(Game::AnimateInfrequentDelay(Game::CASTLE_TAVERN_DELAY))
-	{
-	    cursor.Hide();
-	    s20.Blit(dst_pt);
+        if (Game::AnimateInfrequentDelay(Game::CASTLE_TAVERN_DELAY))
+        {
+            cursor.Hide();
+            s20.Blit(dst_pt);
 
-	    if(const u32 index = ICN::AnimationFrame(tavwin, 0, frame++))
-	    {
-		const Sprite & s22 = AGG::GetICN(tavwin, index);
-		s22.Blit(dst_pt.x + s22.x(), dst_pt.y + s22.y());
-	    }
+            if (const u32 index = ICN::AnimationFrame(tavwin, 0, frame++))
+            {
+                const Sprite &s22 = AGG::GetICN(tavwin, index);
+                s22.Blit(dst_pt.x + s22.x(), dst_pt.y + s22.y());
+            }
 
-	    cursor.Show();
-	    display.Flip();
-	}
+            cursor.Show();
+            display.Flip();
+        }
     }
 }

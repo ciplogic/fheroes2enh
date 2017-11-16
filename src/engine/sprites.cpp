@@ -27,11 +27,11 @@ SpritePos::SpritePos()
 {
 }
 
-SpritePos::SpritePos(const Surface & sf, const Point & pt) : Surface(sf), pos(pt)
+SpritePos::SpritePos(const Surface &sf, const Point &pt) : Surface(sf), pos(pt)
 {
 }
 
-const Point & SpritePos::GetPos(void) const
+const Point &SpritePos::GetPos(void) const
 {
     return pos;
 }
@@ -41,12 +41,12 @@ Rect SpritePos::GetArea(void) const
     return Rect(GetPos(), GetSize());
 }
 
-void SpritePos::SetSurface(const Surface & sf)
+void SpritePos::SetSurface(const Surface &sf)
 {
     Surface::Set(sf, true);
 }
 
-void SpritePos::SetPos(const Point & pt)
+void SpritePos::SetPos(const Point &pt)
 {
     pos = pt;
 }
@@ -71,12 +71,12 @@ u32 SpriteBack::GetMemoryUsage(void) const
     return Surface::GetMemoryUsage() + sizeof(pos);
 }
 
-SpriteBack::SpriteBack(const Rect & rt)
+SpriteBack::SpriteBack(const Rect &rt)
 {
     Save(rt);
 }
 
-void SpriteBack::SetPos(const Point & pt)
+void SpriteBack::SetPos(const Point &pt)
 {
     pos.x = pt.x;
     pos.y = pt.y;
@@ -87,33 +87,34 @@ bool SpriteBack::isValid(void) const
     return Surface::isValid();
 }
 
-void SpriteBack::Save(const Rect & rt)
+void SpriteBack::Save(const Rect &rt)
 {
     // resize SpriteBack
-    if(Surface::isValid() &&
-	GetSize() != rt) FreeSurface(*this);
+    if (Surface::isValid() &&
+        GetSize() != rt)
+        FreeSurface(*this);
 
-    if(rt.w && rt.h)
+    if (rt.w && rt.h)
     {
-	Set(Display::Get().GetSurface(rt), true);
+        Set(Display::Get().GetSurface(rt), true);
 
-	pos.w = rt.w;
-	pos.h = rt.h;
+        pos.w = rt.w;
+        pos.h = rt.h;
     }
 
     pos.x = rt.x;
     pos.y = rt.y;
 }
 
-void SpriteBack::Save(const Point & pt)
+void SpriteBack::Save(const Point &pt)
 {
     Save(Rect(pt, GetSize()));
 }
 
 void SpriteBack::Restore(void)
 {
-    if(Surface::isValid())
-	Blit(GetPos(), Display::Get());
+    if (Surface::isValid())
+        Blit(GetPos(), Display::Get());
 }
 
 void SpriteBack::Destroy(void)
@@ -123,35 +124,38 @@ void SpriteBack::Destroy(void)
     pos.h = 0;
 }
 
-const Point & SpriteBack::GetPos(void) const
+const Point &SpriteBack::GetPos(void) const
 {
     return pos;
 }
 
-const Size & SpriteBack::GetSize(void) const
+const Size &SpriteBack::GetSize(void) const
 {
     return pos;
 }
 
-const Rect & SpriteBack::GetArea(void) const
+const Rect &SpriteBack::GetArea(void) const
 {
     return pos;
 }
 
-enum { _VISIBLE = 0x00001 };
+enum
+{
+    _VISIBLE = 0x00001
+};
 
 SpriteMove::SpriteMove() : mode(0)
 {
 }
 
-SpriteMove::SpriteMove(const Surface & sf) : mode(0)
+SpriteMove::SpriteMove(const Surface &sf) : mode(0)
 {
     Set(sf, true);
 }
 
-void SpriteMove::Move(const Point & pt)
+void SpriteMove::Move(const Point &pt)
 {
-    if(GetPos() != pt)
+    if (GetPos() != pt)
         Hide();
 
     Show(pt);
@@ -164,20 +168,20 @@ void SpriteMove::Move(int ax, int ay)
 
 void SpriteMove::Hide(void)
 {
-    if(isVisible())
+    if (isVisible())
     {
         background.Restore();
-	mode &= ~(_VISIBLE);
+        mode &= ~(_VISIBLE);
     }
 }
 
-void SpriteMove::Show(const Point & pos)
+void SpriteMove::Show(const Point &pos)
 {
-    if(! isVisible() && Surface::isValid())
+    if (!isVisible() && Surface::isValid())
     {
         background.Save(Rect(pos, GetSize()));
         Surface::Blit(GetPos(), Display::Get());
-	mode |= _VISIBLE;
+        mode |= _VISIBLE;
     }
 }
 
@@ -197,12 +201,12 @@ bool SpriteMove::isVisible(void) const
     return mode & _VISIBLE;
 }
 
-const Point & SpriteMove::GetPos(void) const
+const Point &SpriteMove::GetPos(void) const
 {
     return background.GetPos();
 }
 
-const Rect & SpriteMove::GetArea(void) const
+const Rect &SpriteMove::GetArea(void) const
 {
     return background.GetArea();
 }
@@ -210,5 +214,5 @@ const Rect & SpriteMove::GetArea(void) const
 u32 SpriteMove::GetMemoryUsage(void) const
 {
     return Surface::GetMemoryUsage() +
-	background.GetMemoryUsage() + sizeof(mode);
+           background.GetMemoryUsage() + sizeof(mode);
 }

@@ -33,17 +33,17 @@
 #include "kingdom.h"
 #include "pocketpc.h"
 
-void PocketPC::HeroesMeeting(Heroes & hero1, Heroes & hero2)
+void PocketPC::HeroesMeeting(Heroes &hero1, Heroes &hero2)
 {
-    Cursor & cursor = Cursor::Get();
-    Display & display = Display::Get();
-    LocalEvent & le = LocalEvent::Get();
+    Cursor &cursor = Cursor::Get();
+    Display &display = Display::Get();
+    LocalEvent &le = LocalEvent::Get();
 
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
     Dialog::FrameBorder frameborder(Size(320, 236));
-    const Rect & dst_rt = frameborder.GetArea();
+    const Rect &dst_rt = frameborder.GetArea();
 
     // portrait
     AGG::GetICN(ICN::BRCREST, 6).Blit(dst_rt.x + 4, dst_rt.y + 4, display);
@@ -88,45 +88,43 @@ void PocketPC::HeroesMeeting(Heroes & hero1, Heroes & hero2)
     cursor.Show();
     display.Flip();
 
-    while(le.HandleEvents())
+    while (le.HandleEvents())
     {
         // exit
-        if(le.MouseClickLeft(rectExit) || HotKeyCloseWindow) break;
+        if (le.MouseClickLeft(rectExit) || HotKeyCloseWindow) break;
 
-        if((le.MouseCursor(selectArmy1.GetArea()) &&
-            selectArmy1.QueueEventProcessing(selectArmy2)) ||
-           (le.MouseCursor(selectArmy2.GetArea()) &&
-            selectArmy2.QueueEventProcessing(selectArmy1)))
+        if ((le.MouseCursor(selectArmy1.GetArea()) &&
+             selectArmy1.QueueEventProcessing(selectArmy2)) ||
+            (le.MouseCursor(selectArmy2.GetArea()) &&
+             selectArmy2.QueueEventProcessing(selectArmy1)))
         {
             cursor.Hide();
 
-    	    if(selectArtifacts1.isSelected()) selectArtifacts1.ResetSelected();
-            else
-            if(selectArtifacts2.isSelected()) selectArtifacts2.ResetSelected();
+            if (selectArtifacts1.isSelected()) selectArtifacts1.ResetSelected();
+            else if (selectArtifacts2.isSelected()) selectArtifacts2.ResetSelected();
 
             selectArmy1.Redraw();
             selectArmy2.Redraw();
 
             cursor.Show();
             display.Flip();
-	}
+        }
 
-        if((le.MouseCursor(selectArtifacts1.GetArea()) &&
-            selectArtifacts1.QueueEventProcessing(selectArtifacts2)) ||
-           (le.MouseCursor(selectArtifacts2.GetArea()) &&
-            selectArtifacts2.QueueEventProcessing(selectArtifacts1)))
+        if ((le.MouseCursor(selectArtifacts1.GetArea()) &&
+             selectArtifacts1.QueueEventProcessing(selectArtifacts2)) ||
+            (le.MouseCursor(selectArtifacts2.GetArea()) &&
+             selectArtifacts2.QueueEventProcessing(selectArtifacts1)))
         {
             cursor.Hide();
 
-    	    if(selectArmy1.isSelected()) selectArmy1.ResetSelected();
-            else
-            if(selectArmy2.isSelected()) selectArmy2.ResetSelected();
+            if (selectArmy1.isSelected()) selectArmy1.ResetSelected();
+            else if (selectArmy2.isSelected()) selectArmy2.ResetSelected();
 
             selectArtifacts1.Redraw();
             selectArtifacts2.Redraw();
 
             cursor.Show();
             display.Flip();
-    	}
+        }
     }
 }

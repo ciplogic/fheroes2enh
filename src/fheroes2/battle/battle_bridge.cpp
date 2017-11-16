@@ -55,19 +55,17 @@ bool Battle::Bridge::AllowUp(void) const
     return NULL == Board::GetCell(49)->GetUnit() && NULL == Board::GetCell(50)->GetUnit();
 }
 
-bool Battle::Bridge::NeedDown(const Unit & b, s32 pos2) const
+bool Battle::Bridge::NeedDown(const Unit &b, s32 pos2) const
 {
     const s32 pos1 = b.GetHeadIndex();
 
-    if(pos2 == 50)
+    if (pos2 == 50)
     {
-	if(pos1 == 51) return true;
-	if((pos1 == 61 || pos1 == 39) && b.GetColor() == Arena::GetCastle()->GetColor()) return true;
-    }
-    else
-    if(pos2 == 49)
+        if (pos1 == 51) return true;
+        if ((pos1 == 61 || pos1 == 39) && b.GetColor() == Arena::GetCastle()->GetColor()) return true;
+    } else if (pos2 == 49)
     {
-	if(pos1 != 50 && b.GetColor() == Arena::GetCastle()->GetColor()) return true;
+        if (pos1 != 50 && b.GetColor() == Arena::GetCastle()->GetColor()) return true;
     }
 
     return false;
@@ -85,36 +83,35 @@ void Battle::Bridge::SetDestroy(void)
     Board::GetCell(50)->SetObject(0);
 }
 
-void Battle::Bridge::SetPassable(const Unit & b)
+void Battle::Bridge::SetPassable(const Unit &b)
 {
-    if(Board::isCastleIndex(b.GetHeadIndex()) || b.GetColor() == Arena::GetCastle()->GetColor())
+    if (Board::isCastleIndex(b.GetHeadIndex()) || b.GetColor() == Arena::GetCastle()->GetColor())
     {
-	Board::GetCell(49)->SetObject(0);
-	Board::GetCell(50)->SetObject(0);
-    }
-    else
+        Board::GetCell(49)->SetObject(0);
+        Board::GetCell(50)->SetObject(0);
+    } else
     {
-	Board::GetCell(49)->SetObject(1);
-	Board::GetCell(50)->SetObject(1);
+        Board::GetCell(49)->SetObject(1);
+        Board::GetCell(50)->SetObject(1);
     }
 }
 
 
-bool Battle::Bridge::NeedAction(const Unit & b, s32 dst) const
+bool Battle::Bridge::NeedAction(const Unit &b, s32 dst) const
 {
     return (!isDown() && NeedDown(b, dst)) ||
-	    (isValid() && isDown() && AllowUp());
+           (isValid() && isDown() && AllowUp());
 }
 
-void Battle::Bridge::Action(const Unit & b, s32 dst)
+void Battle::Bridge::Action(const Unit &b, s32 dst)
 {
     bool action_down = false;
 
-    if(!isDown() && NeedDown(b, dst))
-	action_down = true;
+    if (!isDown() && NeedDown(b, dst))
+        action_down = true;
 
-    if(Arena::GetInterface())
-	Arena::GetInterface()->RedrawBridgeAnimation(action_down);
+    if (Arena::GetInterface())
+        Arena::GetInterface()->RedrawBridgeAnimation(action_down);
 
     SetDown(action_down);
 }

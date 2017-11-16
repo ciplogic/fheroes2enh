@@ -35,11 +35,11 @@ Troop::Troop() : Monster(Monster::UNKNOWN), count(0)
 {
 }
 
-Troop::Troop(const Monster & m, u32 c) : Monster(m), count(c)
+Troop::Troop(const Monster &m, u32 c) : Monster(m), count(c)
 {
 }
 
-bool Troop::operator== (const Monster & m) const
+bool Troop::operator==(const Monster &m) const
 {
     return static_cast<Monster>(*this) == m;
 }
@@ -49,7 +49,7 @@ bool Troop::isMonster(int mons) const
     return GetID() == mons;
 }
 
-Monster Troop::operator() (void) const
+Monster Troop::operator()(void) const
 {
     return *this;
 }
@@ -59,18 +59,18 @@ Monster Troop::GetMonster(void) const
     return *this;
 }
 
-void Troop::Set(const Troop & t)
+void Troop::Set(const Troop &t)
 {
     SetMonster(t.GetMonster());
     SetCount(t.GetCount());
 }
 
-void Troop::Set(const Monster & m, u32 c)
+void Troop::Set(const Monster &m, u32 c)
 {
     Set(Troop(m, c));
 }
 
-void Troop::SetMonster(const Monster & m)
+void Troop::SetMonster(const Monster &m)
 {
     id = m();
 }
@@ -86,7 +86,7 @@ void Troop::Reset(void)
     count = 0;
 }
 
-const char* Troop::GetName(void) const
+const char *Troop::GetName(void) const
 {
     return Monster::GetPluralName(count);
 }
@@ -116,19 +116,22 @@ u32 Troop::GetStrength(void) const
     float res = (GetDamageMin() + GetDamageMax()) >> 1;
 
     // increase strength
-    if(isFly())		res += res * 0.5;
-    if(isArchers())	res += res * 0.5;
-    if(isTwiceAttack())	res += res * 0.5;
-    if(isHideAttack())	res += res * 0.5;
+    if (isFly()) res += res * 0.5;
+    if (isArchers()) res += res * 0.5;
+    if (isTwiceAttack()) res += res * 0.5;
+    if (isHideAttack()) res += res * 0.5;
 
     // slowly: decrease strength
-    if((!isFly() && !isArchers()) && Speed::AVERAGE > GetSpeed()) res -= res * 0.5;
+    if ((!isFly() && !isArchers()) && Speed::AVERAGE > GetSpeed()) res -= res * 0.5;
 
-    switch(GetID())
+    switch (GetID())
     {
-	case Monster::GHOST: res *= 2; break;
+        case Monster::GHOST:
+            res *= 2;
+            break;
 
-	default: break;
+        default:
+            break;
     }
 
     return static_cast<u32>(res);
@@ -195,15 +198,15 @@ u32 Troop::GetAffectedDuration(u32) const
 }
 
 /* ArmyTroop */
-ArmyTroop::ArmyTroop(Army* a) : army(a)
+ArmyTroop::ArmyTroop(Army *a) : army(a)
 {
 }
 
-ArmyTroop::ArmyTroop(Army* a, const Troop & t) : Troop(t), army(a)
+ArmyTroop::ArmyTroop(Army *a, const Troop &t) : Troop(t), army(a)
 {
 }
 
-ArmyTroop & ArmyTroop::operator= (const Troop & t)
+ArmyTroop &ArmyTroop::operator=(const Troop &t)
 {
     Set(t);
     return *this;
@@ -234,20 +237,20 @@ int ArmyTroop::GetLuck(void) const
     return army ? army->GetLuck() : Troop::GetLuck();
 }
 
-void ArmyTroop::SetArmy(const Army & a)
+void ArmyTroop::SetArmy(const Army &a)
 {
     army = &a;
 }
 
-const Army* ArmyTroop::GetArmy(void) const
+const Army *ArmyTroop::GetArmy(void) const
 {
     return army;
 }
 
 std::string ArmyTroop::GetAttackString(void) const
 {
-    if(Troop::GetAttack() == GetAttack())
-	return GetString(Troop::GetAttack());
+    if (Troop::GetAttack() == GetAttack())
+        return GetString(Troop::GetAttack());
 
     std::ostringstream os;
     os << Troop::GetAttack() << " (" << GetAttack() << ")";
@@ -256,20 +259,20 @@ std::string ArmyTroop::GetAttackString(void) const
 
 std::string ArmyTroop::GetDefenseString(void) const
 {
-    if(Troop::GetDefense() == GetDefense())
-	return GetString(Troop::GetDefense());
+    if (Troop::GetDefense() == GetDefense())
+        return GetString(Troop::GetDefense());
 
     std::ostringstream os;
     os << Troop::GetDefense() << " (" << GetDefense() << ")";
     return os.str();
 }
 
-StreamBase & operator<< (StreamBase & msg, const Troop & troop)
+StreamBase &operator<<(StreamBase &msg, const Troop &troop)
 {
     return msg << troop.id << troop.count;
 }
 
-StreamBase & operator>> (StreamBase & msg, Troop & troop)
+StreamBase &operator>>(StreamBase &msg, Troop &troop)
 {
     return msg >> troop.id >> troop.count;
 }

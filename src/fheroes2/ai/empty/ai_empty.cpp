@@ -33,12 +33,12 @@
 #include "agg.h"
 #include "game_interface.h"
 
-const char* AI::Type(void)
+const char *AI::Type(void)
 {
     return "empty";
 }
 
-const char* AI::License(void)
+const char *AI::License(void)
 {
     return "GPL";
 }
@@ -113,27 +113,27 @@ bool AI::HeroesSkipFog(void)
     return false;
 }
 
-bool AI::HeroesGetTask(Heroes & hero)
+bool AI::HeroesGetTask(Heroes &hero)
 {
     // stop hero
     hero.GetPath().Reset();
     return false;
 }
 
-bool AI::HeroesCanMove(const Heroes & hero)
+bool AI::HeroesCanMove(const Heroes &hero)
 {
-    return hero.MayStillMove() && ! hero.Modes(HEROES_MOVED);
+    return hero.MayStillMove() && !hero.Modes(HEROES_MOVED);
 }
 
-void AI::HeroesTurn(Heroes & hero)
+void AI::HeroesTurn(Heroes &hero)
 {
-   Interface::StatusWindow & status = Interface::Basic::Get().GetStatusWindow();
+    Interface::StatusWindow &status = Interface::Basic::Get().GetStatusWindow();
 
     hero.ResetModes(HEROES_MOVED);
 
-    while(AI::HeroesCanMove(hero))
+    while (AI::HeroesCanMove(hero))
     {
-	// turn indicator
+        // turn indicator
         status.RedrawTurnProgress(3);
         status.RedrawTurnProgress(4);
 
@@ -146,7 +146,7 @@ void AI::HeroesTurn(Heroes & hero)
 
         // heroes AI turn
         AI::HeroesMove(hero);
-	hero.SetModes(HEROES_MOVED);
+        hero.SetModes(HEROES_MOVED);
 
         // turn indicator
         status.RedrawTurnProgress(7);
@@ -156,22 +156,22 @@ void AI::HeroesTurn(Heroes & hero)
     DEBUG(DBG_AI, DBG_TRACE, hero.GetName() << ", end");
 }
 
-void AI::KingdomTurn(Kingdom & kingdom)
+void AI::KingdomTurn(Kingdom &kingdom)
 {
-    KingdomHeroes & heroes = kingdom.GetHeroes();
-    KingdomCastles & castles = kingdom.GetCastles();
+    KingdomHeroes &heroes = kingdom.GetHeroes();
+    KingdomCastles &castles = kingdom.GetCastles();
 
     const int color = kingdom.GetColor();
 
-    if(kingdom.isLoss() || color == Color::NONE)
+    if (kingdom.isLoss() || color == Color::NONE)
     {
         kingdom.LossPostActions();
         return;
     }
 
-    if(! Settings::Get().MusicMIDI()) AGG::PlayMusic(MUS::COMPUTER);
+    if (!Settings::Get().MusicMIDI()) AGG::PlayMusic(MUS::COMPUTER);
 
-    Interface::StatusWindow & status = Interface::Basic::Get().GetStatusWindow();
+    Interface::StatusWindow &status = Interface::Basic::Get().GetStatusWindow();
 
     // indicator
     status.RedrawTurnProgress(0);
@@ -179,16 +179,16 @@ void AI::KingdomTurn(Kingdom & kingdom)
     status.RedrawTurnProgress(1);
 
     // castles AI turn
-    for(KingdomCastles::iterator
-	it = castles.begin(); it != castles.end(); ++it)
-	if(*it) CastleTurn(**it);
+    for (KingdomCastles::iterator
+                 it = castles.begin(); it != castles.end(); ++it)
+        if (*it) CastleTurn(**it);
 
     status.RedrawTurnProgress(3);
 
     // heroes turns
-    for(KingdomHeroes::iterator
-	it = heroes.begin(); it != heroes.end(); ++it)
-	if(*it) HeroesTurn(**it);
+    for (KingdomHeroes::iterator
+                 it = heroes.begin(); it != heroes.end(); ++it)
+        if (*it) HeroesTurn(**it);
 
     status.RedrawTurnProgress(6);
     status.RedrawTurnProgress(7);
@@ -198,13 +198,13 @@ void AI::KingdomTurn(Kingdom & kingdom)
     DEBUG(DBG_AI, DBG_INFO, Color::String(color) << " moved");
 }
 
-void AI::BattleTurn(Battle::Arena &, const Battle::Unit & b, Battle::Actions & a)
+void AI::BattleTurn(Battle::Arena &, const Battle::Unit &b, Battle::Actions &a)
 {
     // end action
     a.push_back(Battle::Command(Battle::MSG_BATTLE_END_TURN, b.GetUID()));
 }
 
-bool AI::BattleMagicTurn(Battle::Arena &, const Battle::Unit &, Battle::Actions &, const Battle::Unit*)
+bool AI::BattleMagicTurn(Battle::Arena &, const Battle::Unit &, Battle::Actions &, const Battle::Unit *)
 {
     return false;
 }

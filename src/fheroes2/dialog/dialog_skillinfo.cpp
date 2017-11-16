@@ -30,40 +30,41 @@
 #include "game.h"
 #include "dialog.h"
 
-void Dialog::SecondarySkillInfo(const Skill::Secondary & skill, const bool ok_button)
+void Dialog::SecondarySkillInfo(const Skill::Secondary &skill, const bool ok_button)
 {
     SecondarySkillInfo(skill.GetName(), skill.GetDescription(), skill, ok_button);
 }
 
-void Dialog::SecondarySkillInfo(const std::string & header, const std::string & message, const Skill::Secondary & skill, const bool ok_button)
+void Dialog::SecondarySkillInfo(const std::string &header, const std::string &message, const Skill::Secondary &skill,
+                                const bool ok_button)
 {
-    Display & display = Display::Get();
+    Display &display = Display::Get();
     const int system = Settings::Get().ExtGameEvilInterface() ? ICN::SYSTEME : ICN::SYSTEM;
 
     // cursor
-    Cursor & cursor = Cursor::Get();
+    Cursor &cursor = Cursor::Get();
 
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
     TextBox box1(header, Font::YELLOW_BIG, BOXAREA_WIDTH);
     TextBox box2(message, Font::BIG, BOXAREA_WIDTH);
-    const Sprite & border = AGG::GetICN(ICN::SECSKILL, 15);
+    const Sprite &border = AGG::GetICN(ICN::SECSKILL, 15);
     const int spacer = Settings::Get().QVGA() ? 5 : 10;
 
     FrameBox box(box1.h() + spacer + box2.h() + spacer + border.h(), ok_button);
     Rect pos = box.GetArea();
 
-    if(header.size()) box1.Blit(pos);
+    if (header.size()) box1.Blit(pos);
     pos.y += box1.h() + spacer;
 
-    if(message.size()) box2.Blit(pos);
+    if (message.size()) box2.Blit(pos);
     pos.y += box2.h() + spacer;
 
     // blit sprite
     pos.x = box.GetArea().x + (pos.w - border.w()) / 2;
     border.Blit(pos.x, pos.y);
-    const Sprite & sprite = AGG::GetICN(ICN::SECSKILL, skill.GetIndexSprite1());
+    const Sprite &sprite = AGG::GetICN(ICN::SECSKILL, skill.GetIndexSprite1());
     pos.x = box.GetArea().x + (pos.w - sprite.w()) / 2;
     sprite.Blit(pos.x, pos.y + 3);
 
@@ -78,46 +79,48 @@ void Dialog::SecondarySkillInfo(const std::string & header, const std::string & 
     pos.x = box.GetArea().x + (pos.w - text.w()) / 2;
     text.Blit(pos.x, pos.y + 55);
 
-    LocalEvent & le = LocalEvent::Get();
+    LocalEvent &le = LocalEvent::Get();
 
     Button *button = NULL;
     Point pt;
 
-    if(ok_button)
+    if (ok_button)
     {
         pt.x = box.GetArea().x + (box.GetArea().w - AGG::GetICN(system, 1).w()) / 2;
         pt.y = box.GetArea().y + box.GetArea().h - AGG::GetICN(system, 1).h();
-	button = new Button(pt.x, pt.y, system, 1, 2);
+        button = new Button(pt.x, pt.y, system, 1, 2);
     }
 
-    if(button) (*button).Draw();
+    if (button) (*button).Draw();
 
     cursor.Show();
     display.Flip();
 
     // message loop
-    while(le.HandleEvents())
+    while (le.HandleEvents())
     {
-        if(!ok_button && !le.MousePressRight()) break;
+        if (!ok_button && !le.MousePressRight()) break;
 
-	if(button) le.MousePressLeft(*button) ? button->PressDraw() : button->ReleaseDraw();
+        if (button) le.MousePressLeft(*button) ? button->PressDraw() : button->ReleaseDraw();
 
-        if(button && le.MouseClickLeft(*button)){ break; }
+        if (button && le.MouseClickLeft(*button))
+        { break; }
 
-	if(HotKeyCloseWindow){ break; }
+        if (HotKeyCloseWindow)
+        { break; }
     }
 
     cursor.Hide();
-    if(button) delete button;
+    if (button) delete button;
 }
 
 void Dialog::PrimarySkillInfo(const std::string &header, const std::string &message, int skill)
 {
-    Display & display = Display::Get();
+    Display &display = Display::Get();
     const int system = Settings::Get().ExtGameEvilInterface() ? ICN::SYSTEME : ICN::SYSTEM;
 
     // cursor
-    Cursor & cursor = Cursor::Get();
+    Cursor &cursor = Cursor::Get();
 
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
@@ -125,49 +128,50 @@ void Dialog::PrimarySkillInfo(const std::string &header, const std::string &mess
     int index = 0;
     std::string skill_name;
 
-    switch(skill)
+    switch (skill)
     {
-	case Skill::Primary::ATTACK:
-	    index = 0;
-	    skill_name = _("Attack Skill");
-	    break;
+        case Skill::Primary::ATTACK:
+            index = 0;
+            skill_name = _("Attack Skill");
+            break;
 
-	case Skill::Primary::DEFENSE:
-	    index = 1;
-	    skill_name = _("Defense Skill");
-	    break;
+        case Skill::Primary::DEFENSE:
+            index = 1;
+            skill_name = _("Defense Skill");
+            break;
 
-	case Skill::Primary::POWER:
-	    index = 2;
-	    skill_name = _("Spell Power");
-	    break;
+        case Skill::Primary::POWER:
+            index = 2;
+            skill_name = _("Spell Power");
+            break;
 
-	case Skill::Primary::KNOWLEDGE:
-	    index = 3;
-	    skill_name = _("Knowledge");
-	    break;
+        case Skill::Primary::KNOWLEDGE:
+            index = 3;
+            skill_name = _("Knowledge");
+            break;
 
-	default: break;
+        default:
+            break;
     }
 
     TextBox box1(header, Font::BIG, BOXAREA_WIDTH);
     TextBox box2(message, Font::BIG, BOXAREA_WIDTH);
-    const Sprite & border = AGG::GetICN(ICN::PRIMSKIL, 4);
+    const Sprite &border = AGG::GetICN(ICN::PRIMSKIL, 4);
     const int spacer = Settings::Get().QVGA() ? 5 : 10;
 
     FrameBox box(box1.h() + spacer + box2.h() + spacer + border.h(), Dialog::OK);
     Rect pos = box.GetArea();
 
-    if(header.size()) box1.Blit(pos);
+    if (header.size()) box1.Blit(pos);
     pos.y += box1.h() + spacer;
 
-    if(message.size()) box2.Blit(pos);
+    if (message.size()) box2.Blit(pos);
     pos.y += box2.h() + spacer;
 
     // blit sprite
     pos.x = box.GetArea().x + (pos.w - border.w()) / 2;
     border.Blit(pos.x, pos.y);
-    const Sprite & sprite = AGG::GetICN(ICN::PRIMSKIL, index);
+    const Sprite &sprite = AGG::GetICN(ICN::PRIMSKIL, index);
     pos.x = box.GetArea().x + (pos.w - sprite.w()) / 2;
     sprite.Blit(pos.x, pos.y + 6);
 
@@ -181,7 +185,7 @@ void Dialog::PrimarySkillInfo(const std::string &header, const std::string &mess
     pos.x = box.GetArea().x + (pos.w - text.w()) / 2;
     text.Blit(pos.x, pos.y + 80);
 
-    LocalEvent & le = LocalEvent::Get();
+    LocalEvent &le = LocalEvent::Get();
 
     Point pt;
 
@@ -195,13 +199,15 @@ void Dialog::PrimarySkillInfo(const std::string &header, const std::string &mess
     display.Flip();
 
     // message loop
-    while(le.HandleEvents())
+    while (le.HandleEvents())
     {
-	le.MousePressLeft(button) ? button.PressDraw() : button.ReleaseDraw();
+        le.MousePressLeft(button) ? button.PressDraw() : button.ReleaseDraw();
 
-        if(le.MouseClickLeft(button)){ break; }
+        if (le.MouseClickLeft(button))
+        { break; }
 
-	if(HotKeyCloseWindow){ break; }
+        if (HotKeyCloseWindow)
+        { break; }
     }
 
     cursor.Hide();

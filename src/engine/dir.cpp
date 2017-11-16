@@ -27,7 +27,7 @@
 #include "dir.h"
 
 
-void ListFiles::Append(const ListFiles & list)
+void ListFiles::Append(const ListFiles &list)
 {
     insert(end(), list.begin(), list.end());
 }
@@ -37,37 +37,36 @@ void ListFiles::ReadDir(const std::string &path, const std::string &filter, bool
     // read directory
     DIR *dp = opendir(path.c_str());
 
-    if(dp)
+    if (dp)
     {
-	struct dirent *ep;
-	while(NULL != (ep = readdir(dp)))
-	{
-	    const std::string fullname = System::ConcatePath(path, ep->d_name);
+        struct dirent *ep;
+        while (NULL != (ep = readdir(dp)))
+        {
+            const std::string fullname = System::ConcatePath(path, ep->d_name);
 
-    	    // if not regular file
-    	    if(! System::IsFile(fullname)) continue;
+            // if not regular file
+            if (!System::IsFile(fullname)) continue;
 
-	    if(filter.size())
-	    {
-    		std::string filename(ep->d_name);
+            if (filter.size())
+            {
+                std::string filename(ep->d_name);
 
-		if(sensitive)
-		{
-		    if(std::string::npos == filename.find(filter)) continue;
-    		}
-    		else
-    		{
-		    if(std::string::npos == StringLower(filename).find(StringLower(filter))) continue;
-		}
-    	    }
+                if (sensitive)
+                {
+                    if (std::string::npos == filename.find(filter)) continue;
+                } else
+                {
+                    if (std::string::npos == StringLower(filename).find(StringLower(filter))) continue;
+                }
+            }
 
-    	    push_back(fullname);
-	}
-	closedir(dp);
+            push_back(fullname);
+        }
+        closedir(dp);
     }
 }
 
-void ListDirs::Append(const std::list<std::string> & dirs)
+void ListDirs::Append(const std::list<std::string> &dirs)
 {
     insert(end(), dirs.begin(), dirs.end());
 }

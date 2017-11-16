@@ -29,10 +29,10 @@
 #include "game.h"
 #include "dialog.h"
 
-int Dialog::ArtifactInfo(const std::string & hdr, const std::string & msg, const Artifact & art, int buttons)
+int Dialog::ArtifactInfo(const std::string &hdr, const std::string &msg, const Artifact &art, int buttons)
 {
-    const Sprite & border = AGG::GetICN(ICN::RESOURCE, 7);
-    const Sprite & artifact = AGG::GetICN(ICN::ARTIFACT, art.IndexSprite64());
+    const Sprite &border = AGG::GetICN(ICN::RESOURCE, 7);
+    const Sprite &artifact = AGG::GetICN(ICN::ARTIFACT, art.IndexSprite64());
     Surface image = border.GetSurface();
     border.Blit(image);
     artifact.Blit(5, 5, image);
@@ -46,12 +46,12 @@ int Dialog::ArtifactInfo(const std::string & hdr, const std::string & msg, const
     return Dialog::SpriteInfo(hdr, ext, image, buttons);
 }
 
-int Dialog::SpriteInfo(const std::string & header, const std::string & message, const Surface & sprite, int buttons)
+int Dialog::SpriteInfo(const std::string &header, const std::string &message, const Surface &sprite, int buttons)
 {
-    Display & display = Display::Get();
+    Display &display = Display::Get();
 
     // cursor
-    Cursor & cursor = Cursor::Get();
+    Cursor &cursor = Cursor::Get();
 
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
@@ -63,17 +63,17 @@ int Dialog::SpriteInfo(const std::string & header, const std::string & message, 
     FrameBox box(box1.h() + spacer + box2.h() + spacer + sprite.h(), buttons);
     Rect pos = box.GetArea();
 
-    if(header.size()) box1.Blit(pos);
+    if (header.size()) box1.Blit(pos);
     pos.y += box1.h() + spacer;
 
-    if(message.size()) box2.Blit(pos);
+    if (message.size()) box2.Blit(pos);
     pos.y += box2.h() + spacer;
 
     // blit sprite
     pos.x = box.GetArea().x + (pos.w - sprite.w()) / 2;
     sprite.Blit(pos.x, pos.y, display);
 
-    LocalEvent & le = LocalEvent::Get();
+    LocalEvent &le = LocalEvent::Get();
 
     ButtonGroups btnGroups(box.GetArea(), buttons);
     btnGroups.Draw();
@@ -84,9 +84,9 @@ int Dialog::SpriteInfo(const std::string & header, const std::string & message, 
     // message loop
     int result = Dialog::ZERO;
 
-    while(result == Dialog::ZERO && le.HandleEvents())
+    while (result == Dialog::ZERO && le.HandleEvents())
     {
-        if(!buttons && !le.MousePressRight()) break;
+        if (!buttons && !le.MousePressRight()) break;
         result = btnGroups.QueueEventProcessing();
     }
 

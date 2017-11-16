@@ -27,79 +27,104 @@
 
 namespace Maps
 {
-  class FileInfo
-  {
-  public:
-    FileInfo();
-    FileInfo(const FileInfo &);
+    class FileInfo
+    {
+    public:
+        FileInfo();
 
-    FileInfo & operator= (const FileInfo &);
+        FileInfo(const FileInfo &);
 
-    bool ReadMAP(const std::string &);
-    bool ReadMP2(const std::string &);
-    bool ReadSAV(const std::string &);
+        FileInfo &operator=(const FileInfo &);
 
-    bool	operator== (const FileInfo & fi) const { return file == fi.file; }
-    static bool NameSorting(const FileInfo &, const FileInfo &);
-    static bool FileSorting(const FileInfo &, const FileInfo &);
-    static bool	NameCompare(const FileInfo &, const FileInfo &);
+        bool ReadMAP(const std::string &);
 
-    bool	isAllowCountPlayers(u32) const;
-    bool	isMultiPlayerMap(void) const;
-    int		AllowCompHumanColors(void) const;
-    int		AllowComputerColors(void) const;
-    int		AllowHumanColors(void) const;
-    int		HumanOnlyColors(void) const;
-    int		ComputerOnlyColors(void) const;
+        bool ReadMP2(const std::string &);
 
-    int		KingdomRace(int color) const;
+        bool ReadSAV(const std::string &);
 
-    int		ConditionWins(void) const;
-    int		ConditionLoss(void) const;
-    bool	WinsCompAlsoWins(void) const;
-    bool	WinsAllowNormalVictory(void) const;
-    int		WinsFindArtifactID(void) const;
-    bool	WinsFindUltimateArtifact(void) const;
-    u32		WinsAccumulateGold(void) const;
-    Point	WinsMapsPositionObject(void) const;
-    Point	LossMapsPositionObject(void) const;
-    u32		LossCountDays(void) const;
+        bool operator==(const FileInfo &fi) const
+        { return file == fi.file; }
 
-    std::string String(void) const;
-    void	Reset(void);
-    void	FillUnions(void);
+        static bool NameSorting(const FileInfo &, const FileInfo &);
 
-    std::string file;
-    std::string name;
-    std::string description;
+        static bool FileSorting(const FileInfo &, const FileInfo &);
 
-    u16		size_w;
-    u16		size_h;
-    u8		difficulty;
-    u8		races[KINGDOMMAX];
-    u8		unions[KINGDOMMAX];
+        static bool NameCompare(const FileInfo &, const FileInfo &);
 
-    u8		kingdom_colors;
-    u8		allow_human_colors;
-    u8		allow_comp_colors;
-    u8		rnd_races;
+        bool isAllowCountPlayers(u32) const;
 
-    u8		conditions_wins; // 0: wins def, 1: town, 2: hero, 3: artifact, 4: side, 5: gold
-    bool	comp_also_wins;
-    bool	allow_normal_victory;
-    u16		wins1;
-    u16		wins2;
-    u8		conditions_loss; // 0: loss def, 1: town, 2: hero, 3: out time
-    u16		loss1;
-    u16		loss2;
+        bool isMultiPlayerMap(void) const;
 
-    u32		localtime;
+        int AllowCompHumanColors(void) const;
 
-    bool	with_heroes;
-  };
+        int AllowComputerColors(void) const;
 
-  StreamBase & operator<< (StreamBase &, const FileInfo &);
-  StreamBase & operator>> (StreamBase &, FileInfo &);
+        int AllowHumanColors(void) const;
+
+        int HumanOnlyColors(void) const;
+
+        int ComputerOnlyColors(void) const;
+
+        int KingdomRace(int color) const;
+
+        int ConditionWins(void) const;
+
+        int ConditionLoss(void) const;
+
+        bool WinsCompAlsoWins(void) const;
+
+        bool WinsAllowNormalVictory(void) const;
+
+        int WinsFindArtifactID(void) const;
+
+        bool WinsFindUltimateArtifact(void) const;
+
+        u32 WinsAccumulateGold(void) const;
+
+        Point WinsMapsPositionObject(void) const;
+
+        Point LossMapsPositionObject(void) const;
+
+        u32 LossCountDays(void) const;
+
+        std::string String(void) const;
+
+        void Reset(void);
+
+        void FillUnions(void);
+
+        std::string file;
+        std::string name;
+        std::string description;
+
+        u16 size_w;
+        u16 size_h;
+        u8 difficulty;
+        u8 races[KINGDOMMAX];
+        u8 unions[KINGDOMMAX];
+
+        u8 kingdom_colors;
+        u8 allow_human_colors;
+        u8 allow_comp_colors;
+        u8 rnd_races;
+
+        u8 conditions_wins; // 0: wins def, 1: town, 2: hero, 3: artifact, 4: side, 5: gold
+        bool comp_also_wins;
+        bool allow_normal_victory;
+        u16 wins1;
+        u16 wins2;
+        u8 conditions_loss; // 0: loss def, 1: town, 2: hero, 3: out time
+        u16 loss1;
+        u16 loss2;
+
+        u32 localtime;
+
+        bool with_heroes;
+    };
+
+    StreamBase &operator<<(StreamBase &, const FileInfo &);
+
+    StreamBase &operator>>(StreamBase &, FileInfo &);
 }
 
 typedef std::vector<Maps::FileInfo> MapsFileInfoList;

@@ -80,7 +80,9 @@ namespace MUS
     const std::string GetString(int, bool shortname = false);
 
     int FromGround(int);
+
     int FromRace(int);
+
     int FromMapObject(int);
 
     int GetBattleRandom(void);

@@ -35,16 +35,16 @@
 #include "game.h"
 #include "game_interface.h"
 
-void RedrawPrimarySkillInfo(const Point &, PrimarySkillsBar*, PrimarySkillsBar*);
+void RedrawPrimarySkillInfo(const Point &, PrimarySkillsBar *, PrimarySkillsBar *);
 
-void Heroes::MeetingDialog(Heroes & heroes2)
+void Heroes::MeetingDialog(Heroes &heroes2)
 {
-    if(Settings::Get().QVGA()) return PocketPC::HeroesMeeting(*this, heroes2);
+    if (Settings::Get().QVGA()) return PocketPC::HeroesMeeting(*this, heroes2);
 
-    Display & display = Display::Get();
+    Display &display = Display::Get();
 
     // cursor
-    Cursor & cursor = Cursor::Get();
+    Cursor &cursor = Cursor::Get();
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
@@ -189,87 +189,82 @@ void Heroes::MeetingDialog(Heroes & heroes2)
     heroes2.MovePointsScaleFixed();
 
     // scholar action
-    if(Settings::Get().ExtWorldEyeEagleAsScholar())
-	Heroes::ScholarAction(*this, heroes2);
+    if (Settings::Get().ExtWorldEyeEagleAsScholar())
+        Heroes::ScholarAction(*this, heroes2);
 
-    LocalEvent & le = LocalEvent::Get();
+    LocalEvent &le = LocalEvent::Get();
 
     // message loop
-    while(le.HandleEvents())
+    while (le.HandleEvents())
     {
         le.MousePressLeft(buttonExit) ? buttonExit.PressDraw() : buttonExit.ReleaseDraw();
-        if(le.MouseClickLeft(buttonExit) || HotKeyCloseWindow) break;
+        if (le.MouseClickLeft(buttonExit) || HotKeyCloseWindow) break;
 
-	// selector troops event
-	if((le.MouseCursor(selectArmy1.GetArea()) &&
-    	    selectArmy1.QueueEventProcessing(selectArmy2)) ||
-	   (le.MouseCursor(selectArmy2.GetArea()) &&
-    	    selectArmy2.QueueEventProcessing(selectArmy1)))
-	{
-	    cursor.Hide();
+        // selector troops event
+        if ((le.MouseCursor(selectArmy1.GetArea()) &&
+             selectArmy1.QueueEventProcessing(selectArmy2)) ||
+            (le.MouseCursor(selectArmy2.GetArea()) &&
+             selectArmy2.QueueEventProcessing(selectArmy1)))
+        {
+            cursor.Hide();
 
-	    if(selectArtifacts1.isSelected()) selectArtifacts1.ResetSelected();
-	    else
-	    if(selectArtifacts2.isSelected()) selectArtifacts2.ResetSelected();
+            if (selectArtifacts1.isSelected()) selectArtifacts1.ResetSelected();
+            else if (selectArtifacts2.isSelected()) selectArtifacts2.ResetSelected();
 
-	    selectArmy1.Redraw();
-	    selectArmy2.Redraw();
+            selectArmy1.Redraw();
+            selectArmy2.Redraw();
 
-	    moraleIndicator1.Redraw();
-	    moraleIndicator2.Redraw();
-	    luckIndicator1.Redraw();
-	    luckIndicator2.Redraw();
-	    cursor.Show();
-	    display.Flip();
-	}
+            moraleIndicator1.Redraw();
+            moraleIndicator2.Redraw();
+            luckIndicator1.Redraw();
+            luckIndicator2.Redraw();
+            cursor.Show();
+            display.Flip();
+        }
 
-	// selector artifacts event
-	if((le.MouseCursor(selectArtifacts1.GetArea()) &&
-    	    selectArtifacts1.QueueEventProcessing(selectArtifacts2)) ||
-	   (le.MouseCursor(selectArtifacts2.GetArea()) &&
-    	    selectArtifacts2.QueueEventProcessing(selectArtifacts1)))
-	{
-	    cursor.Hide();
+        // selector artifacts event
+        if ((le.MouseCursor(selectArtifacts1.GetArea()) &&
+             selectArtifacts1.QueueEventProcessing(selectArtifacts2)) ||
+            (le.MouseCursor(selectArtifacts2.GetArea()) &&
+             selectArtifacts2.QueueEventProcessing(selectArtifacts1)))
+        {
+            cursor.Hide();
 
-	    if(selectArmy1.isSelected()) selectArmy1.ResetSelected();
-	    else
-	    if(selectArmy2.isSelected()) selectArmy2.ResetSelected();
+            if (selectArmy1.isSelected()) selectArmy1.ResetSelected();
+            else if (selectArmy2.isSelected()) selectArmy2.ResetSelected();
 
-	    selectArtifacts1.Redraw();
-	    selectArtifacts2.Redraw();
+            selectArtifacts1.Redraw();
+            selectArtifacts2.Redraw();
 
-	    backPrimary.Restore();
-	    RedrawPrimarySkillInfo(cur_pt, &primskill_bar1, &primskill_bar2);
-	    moraleIndicator1.Redraw();
-	    moraleIndicator2.Redraw();
-	    luckIndicator1.Redraw();
-	    luckIndicator2.Redraw();
-	    cursor.Show();
-	    display.Flip();
-	}
+            backPrimary.Restore();
+            RedrawPrimarySkillInfo(cur_pt, &primskill_bar1, &primskill_bar2);
+            moraleIndicator1.Redraw();
+            moraleIndicator2.Redraw();
+            luckIndicator1.Redraw();
+            luckIndicator2.Redraw();
+            cursor.Show();
+            display.Flip();
+        }
 
-        if((le.MouseCursor(primskill_bar1.GetArea()) && primskill_bar1.QueueEventProcessing()) ||
-           (le.MouseCursor(primskill_bar2.GetArea()) && primskill_bar2.QueueEventProcessing()) ||
-           (le.MouseCursor(secskill_bar1.GetArea()) && secskill_bar1.QueueEventProcessing()) ||
-           (le.MouseCursor(secskill_bar2.GetArea()) && secskill_bar2.QueueEventProcessing()))
-	{
-	    cursor.Show();
-	    display.Flip();
-	}
+        if ((le.MouseCursor(primskill_bar1.GetArea()) && primskill_bar1.QueueEventProcessing()) ||
+            (le.MouseCursor(primskill_bar2.GetArea()) && primskill_bar2.QueueEventProcessing()) ||
+            (le.MouseCursor(secskill_bar1.GetArea()) && secskill_bar1.QueueEventProcessing()) ||
+            (le.MouseCursor(secskill_bar2.GetArea()) && secskill_bar2.QueueEventProcessing()))
+        {
+            cursor.Show();
+            display.Flip();
+        }
 
-        if(le.MouseCursor(moraleIndicator1.GetArea())) MoraleIndicator::QueueEventProcessing(moraleIndicator1);
-        else
-        if(le.MouseCursor(moraleIndicator2.GetArea())) MoraleIndicator::QueueEventProcessing(moraleIndicator2);
-	else
-        if(le.MouseCursor(luckIndicator1.GetArea())) LuckIndicator::QueueEventProcessing(luckIndicator1);
-        else
-        if(le.MouseCursor(luckIndicator2.GetArea())) LuckIndicator::QueueEventProcessing(luckIndicator2);
+        if (le.MouseCursor(moraleIndicator1.GetArea())) MoraleIndicator::QueueEventProcessing(moraleIndicator1);
+        else if (le.MouseCursor(moraleIndicator2.GetArea())) MoraleIndicator::QueueEventProcessing(moraleIndicator2);
+        else if (le.MouseCursor(luckIndicator1.GetArea())) LuckIndicator::QueueEventProcessing(luckIndicator1);
+        else if (le.MouseCursor(luckIndicator2.GetArea())) LuckIndicator::QueueEventProcessing(luckIndicator2);
     }
 
-    if(Settings::Get().ExtHeroRecalculateMovement())
+    if (Settings::Get().ExtHeroRecalculateMovement())
     {
-	RecalculateMovePoints();
-	heroes2.RecalculateMovePoints();
+        RecalculateMovePoints();
+        heroes2.RecalculateMovePoints();
     }
 
     cursor.Hide();
@@ -278,7 +273,7 @@ void Heroes::MeetingDialog(Heroes & heroes2)
     display.Flip();
 }
 
-void RedrawPrimarySkillInfo(const Point & cur_pt, PrimarySkillsBar* bar1, PrimarySkillsBar* bar2)
+void RedrawPrimarySkillInfo(const Point &cur_pt, PrimarySkillsBar *bar1, PrimarySkillsBar *bar2)
 {
     // attack skill
     Text text(_("Attack Skill"), Font::SMALL);
@@ -296,59 +291,56 @@ void RedrawPrimarySkillInfo(const Point & cur_pt, PrimarySkillsBar* bar1, Primar
     text.Set(_("Knowledge"));
     text.Blit(cur_pt.x + 320 - text.w() / 2, cur_pt.y + 160);
 
-    if(bar1) bar1->Redraw();
-    if(bar2) bar2->Redraw();
+    if (bar1) bar1->Redraw();
+    if (bar2) bar2->Redraw();
 }
 
 // spell_book.cpp
-struct HeroesCanTeachSpell : std::binary_function<const HeroBase*, Spell, bool>
+struct HeroesCanTeachSpell : std::binary_function<const HeroBase *, Spell, bool>
 {
-    bool operator() (const HeroBase* hero, Spell spell) const { return hero->CanTeachSpell(spell); };
+    bool operator()(const HeroBase *hero, Spell spell) const
+    { return hero->CanTeachSpell(spell); };
 };
 
-struct HeroesHaveSpell : std::binary_function<const HeroBase*, Spell, bool>
+struct HeroesHaveSpell : std::binary_function<const HeroBase *, Spell, bool>
 {
-    bool operator() (const HeroBase* hero, Spell spell) const { return hero->HaveSpell(spell); };
+    bool operator()(const HeroBase *hero, Spell spell) const
+    { return hero->HaveSpell(spell); };
 };
 
-void Heroes::ScholarAction(Heroes & hero1, Heroes & hero2)
+void Heroes::ScholarAction(Heroes &hero1, Heroes &hero2)
 {
-    if(! hero1.HaveSpellBook() || ! hero2.HaveSpellBook())
+    if (!hero1.HaveSpellBook() || !hero2.HaveSpellBook())
     {
-	DEBUG(DBG_GAME, DBG_INFO, "spell_book disabled");
-	return;
-    }
-    else
-    if(! Settings::Get().ExtWorldEyeEagleAsScholar())
+        DEBUG(DBG_GAME, DBG_INFO, "spell_book disabled");
+        return;
+    } else if (!Settings::Get().ExtWorldEyeEagleAsScholar())
     {
-	DEBUG(DBG_GAME, DBG_WARN, "EyeEagleAsScholar settings disabled");
-	return;
+        DEBUG(DBG_GAME, DBG_WARN, "EyeEagleAsScholar settings disabled");
+        return;
     }
 
     const int scholar1 = hero1.GetLevelSkill(Skill::Secondary::EAGLEEYE);
     const int scholar2 = hero2.GetLevelSkill(Skill::Secondary::EAGLEEYE);
     int scholar = 0;
 
-    Heroes* teacher = NULL;
-    Heroes* learner = NULL;
+    Heroes *teacher = NULL;
+    Heroes *learner = NULL;
 
-    if(scholar1 && scholar1 >= scholar2)
+    if (scholar1 && scholar1 >= scholar2)
     {
-	teacher = &hero1;
-	learner = &hero2;
-	scholar = scholar1;
-    }
-    else
-    if(scholar2 && scholar2 >= scholar1)
+        teacher = &hero1;
+        learner = &hero2;
+        scholar = scholar1;
+    } else if (scholar2 && scholar2 >= scholar1)
     {
-	teacher = &hero2;
-	learner = &hero1;
-	scholar = scholar2;
-    }
-    else
+        teacher = &hero2;
+        learner = &hero1;
+        scholar = scholar2;
+    } else
     {
-	DEBUG(DBG_GAME, DBG_WARN, "Eagle Eye skill not found");
-	return;
+        DEBUG(DBG_GAME, DBG_WARN, "Eagle Eye skill not found");
+        return;
     }
 
     // skip bag artifacts
@@ -356,79 +348,82 @@ void Heroes::ScholarAction(Heroes & hero1, Heroes & hero2)
     SpellStorage learn = learner->spell_book.SetFilter(SpellBook::ALL);
 
     // remove_if for learn spells
-    if(learn.size())
+    if (learn.size())
     {
-	SpellStorage::iterator
-	    res = std::remove_if(learn.begin(), learn.end(), std::bind1st(HeroesHaveSpell(), teacher));
-	learn.resize(std::distance(learn.begin(), res));
+        SpellStorage::iterator
+                res = std::remove_if(learn.begin(), learn.end(), std::bind1st(HeroesHaveSpell(), teacher));
+        learn.resize(std::distance(learn.begin(), res));
     }
 
-    if(learn.size())
+    if (learn.size())
     {
-	SpellStorage::iterator
-	    res = std::remove_if(learn.begin(), learn.end(), std::not1(std::bind1st(HeroesCanTeachSpell(), teacher)));
-	learn.resize(std::distance(learn.begin(), res));
+        SpellStorage::iterator
+                res = std::remove_if(learn.begin(), learn.end(),
+                                     std::not1(std::bind1st(HeroesCanTeachSpell(), teacher)));
+        learn.resize(std::distance(learn.begin(), res));
     }
 
     // remove_if for teach spells
-    if(teach.size())
+    if (teach.size())
     {
-	SpellStorage::iterator
-	    res = std::remove_if(teach.begin(), teach.end(), std::bind1st(HeroesHaveSpell(), learner));
-	teach.resize(std::distance(teach.begin(), res));
+        SpellStorage::iterator
+                res = std::remove_if(teach.begin(), teach.end(), std::bind1st(HeroesHaveSpell(), learner));
+        teach.resize(std::distance(teach.begin(), res));
     }
 
-    if(teach.size())
+    if (teach.size())
     {
-	SpellStorage::iterator
-	    res = std::remove_if(teach.begin(), teach.end(), std::not1(std::bind1st(HeroesCanTeachSpell(), teacher)));
-	teach.resize(std::distance(teach.begin(), res));
+        SpellStorage::iterator
+                res = std::remove_if(teach.begin(), teach.end(),
+                                     std::not1(std::bind1st(HeroesCanTeachSpell(), teacher)));
+        teach.resize(std::distance(teach.begin(), res));
     }
 
     std::string message, spells1, spells2;
 
     // learning
-    for(SpellStorage::const_iterator
-	it = learn.begin(); it != learn.end(); ++it)
+    for (SpellStorage::const_iterator
+                 it = learn.begin(); it != learn.end(); ++it)
     {
-	teacher->AppendSpellToBook(*it);
-	if(spells1.size())
-	    spells1.append(it + 1 == learn.end() ? _(" and ") : ", ");
-	spells1.append((*it).GetName());
+        teacher->AppendSpellToBook(*it);
+        if (spells1.size())
+            spells1.append(it + 1 == learn.end() ? _(" and ") : ", ");
+        spells1.append((*it).GetName());
     }
 
     // teacher
-    for(SpellStorage::const_iterator
-	it = teach.begin(); it != teach.end(); ++it)
+    for (SpellStorage::const_iterator
+                 it = teach.begin(); it != teach.end(); ++it)
     {
-	learner->AppendSpellToBook(*it);
-	if(spells2.size())
-	    spells2.append(it + 1 == teach.end() ? _(" and ") : ", ");
-	spells2.append((*it).GetName());
+        learner->AppendSpellToBook(*it);
+        if (spells2.size())
+            spells2.append(it + 1 == teach.end() ? _(" and ") : ", ");
+        spells2.append((*it).GetName());
     }
 
 
-    if(teacher->isControlHuman() || learner->isControlHuman())
+    if (teacher->isControlHuman() || learner->isControlHuman())
     {
-	if(spells1.size() && spells2.size())
-	    message = _("%{teacher}, whose %{level} %{scholar} knows many magical secrets, learns %{spells1} from %{learner}, and teaches %{spells2} to %{learner}.");
-	else
-	if(spells1.size())
-	    message = _("%{teacher}, whose %{level} %{scholar} knows many magical secrets, learns %{spells1} from %{learner}.");
-	else
-	if(spells2.size())
-	    message = _("%{teacher}, whose %{level} %{scholar} knows many magical secrets, teaches %{spells2} to %{learner}.");
+        if (spells1.size() && spells2.size())
+            message = _(
+                    "%{teacher}, whose %{level} %{scholar} knows many magical secrets, learns %{spells1} from %{learner}, and teaches %{spells2} to %{learner}.");
+        else if (spells1.size())
+            message = _(
+                    "%{teacher}, whose %{level} %{scholar} knows many magical secrets, learns %{spells1} from %{learner}.");
+        else if (spells2.size())
+            message = _(
+                    "%{teacher}, whose %{level} %{scholar} knows many magical secrets, teaches %{spells2} to %{learner}.");
 
-	if(message.size())
-	{
-	    StringReplace(message, "%{teacher}", teacher->GetName());
-	    StringReplace(message, "%{learner}", learner->GetName());
-	    StringReplace(message, "%{level}", Skill::Level::String(scholar));
-	    StringReplace(message, "%{scholar}", Skill::Secondary::String(Skill::Secondary::EAGLEEYE));
-	    StringReplace(message, "%{spells1}", spells1);
-	    StringReplace(message, "%{spells2}", spells2);
+        if (message.size())
+        {
+            StringReplace(message, "%{teacher}", teacher->GetName());
+            StringReplace(message, "%{learner}", learner->GetName());
+            StringReplace(message, "%{level}", Skill::Level::String(scholar));
+            StringReplace(message, "%{scholar}", Skill::Secondary::String(Skill::Secondary::EAGLEEYE));
+            StringReplace(message, "%{spells1}", spells1);
+            StringReplace(message, "%{spells2}", spells2);
 
-	    Dialog::Message(_("Scholar Ability"), message, Font::BIG, Dialog::OK);
-	}
+            Dialog::Message(_("Scholar Ability"), message, Font::BIG, Dialog::OK);
+        }
     }
 }

@@ -27,30 +27,38 @@
 
 namespace BarrierColor
 {
-    enum { NONE = 0, AQUA = 1, BLUE = 2, BROWN = 3, GOLD = 4, GREEN = 5, ORANGE = 6, PURPLE = 7, RED = 8 };
-    const char* String(int);
+    enum
+    {
+        NONE = 0, AQUA = 1, BLUE = 2, BROWN = 3, GOLD = 4, GREEN = 5, ORANGE = 6, PURPLE = 7, RED = 8
+    };
+
+    const char *String(int);
 }
 
 namespace Color
 {
     enum
     {
-	NONE	= 0x00,
-        BLUE    = 0x01,
-        GREEN   = 0x02,
-        RED     = 0x04,
-        YELLOW  = 0x08,
-        ORANGE  = 0x10,
-        PURPLE  = 0x20,
-	UNUSED	= 0x80,
-	ALL	= BLUE | GREEN | RED | YELLOW | ORANGE | PURPLE
+        NONE = 0x00,
+        BLUE = 0x01,
+        GREEN = 0x02,
+        RED = 0x04,
+        YELLOW = 0x08,
+        ORANGE = 0x10,
+        PURPLE = 0x20,
+        UNUSED = 0x80,
+        ALL = BLUE | GREEN | RED | YELLOW | ORANGE | PURPLE
     };
 
-    const char* String(int);
-    int		Count(int);
-    int		GetIndex(int);
-    int		GetFirst(int);
-    int		FromInt(int);
+    const char *String(int);
+
+    int Count(int);
+
+    int GetIndex(int);
+
+    int GetFirst(int);
+
+    int FromInt(int);
 }
 
 class Colors : public std::vector<int>
@@ -67,22 +75,28 @@ class ColorBase
 {
     int color;
 
-    friend StreamBase & operator<< (StreamBase &, const ColorBase &);
-    friend StreamBase & operator>> (StreamBase &, ColorBase &);
+    friend StreamBase &operator<<(StreamBase &, const ColorBase &);
+
+    friend StreamBase &operator>>(StreamBase &, ColorBase &);
 
 public:
-    ColorBase(int col = Color::NONE): color(col){}
+    ColorBase(int col = Color::NONE) : color(col)
+    {}
 
-    bool	operator== (int) const;
-    bool	isFriends(int) const;
-    void	SetColor(int);
+    bool operator==(int) const;
 
-    Kingdom &	GetKingdom(void) const;
+    bool isFriends(int) const;
 
-    int GetColor(void) const { return color; }
+    void SetColor(int);
+
+    Kingdom &GetKingdom(void) const;
+
+    int GetColor(void) const
+    { return color; }
 };
 
-StreamBase & operator<< (StreamBase &, const ColorBase &);
-StreamBase & operator>> (StreamBase &, ColorBase &);
+StreamBase &operator<<(StreamBase &, const ColorBase &);
+
+StreamBase &operator>>(StreamBase &, ColorBase &);
 
 #endif

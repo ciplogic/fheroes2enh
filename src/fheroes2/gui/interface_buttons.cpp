@@ -27,7 +27,7 @@
 #include "game_interface.h"
 #include "interface_buttons.h"
 
-Interface::ButtonsArea::ButtonsArea(Basic & basic) : BorderWindow(Rect(0, 0, 144, 72)), interface(basic)
+Interface::ButtonsArea::ButtonsArea(Basic &basic) : BorderWindow(Rect(0, 0, 144, 72)), interface(basic)
 {
 }
 
@@ -74,39 +74,39 @@ void Interface::ButtonsArea::SetPos(s32 ox, s32 oy)
 
 void Interface::ButtonsArea::Redraw(void)
 {
-    const Settings & conf = Settings::Get();
+    const Settings &conf = Settings::Get();
 
-    if(!conf.ExtGameHideInterface() || conf.ShowButtons())
+    if (!conf.ExtGameHideInterface() || conf.ShowButtons())
     {
-	const int icnbtn = Settings::Get().ExtGameEvilInterface() ? ICN::ADVEBTNS : ICN::ADVBTNS;
+        const int icnbtn = Settings::Get().ExtGameEvilInterface() ? ICN::ADVEBTNS : ICN::ADVBTNS;
 
-	if(conf.ExtGameHideInterface())
-	    BorderWindow::Redraw();
+        if (conf.ExtGameHideInterface())
+            BorderWindow::Redraw();
 
-	buttonNextHero.SetSprite(icnbtn, 0, 1);
-	buttonMovement.SetSprite(icnbtn, 2, 3);
-	buttonKingdom.SetSprite(icnbtn, 4, 5);
-	buttonSpell.SetSprite(icnbtn, 6, 7);
-	buttonEndTur.SetSprite(icnbtn, 8, 9);
-	buttonAdventure.SetSprite(icnbtn, 10, 11);
-	buttonFile.SetSprite(icnbtn, 12, 13);
-	buttonSystem.SetSprite(icnbtn, 14, 15);
+        buttonNextHero.SetSprite(icnbtn, 0, 1);
+        buttonMovement.SetSprite(icnbtn, 2, 3);
+        buttonKingdom.SetSprite(icnbtn, 4, 5);
+        buttonSpell.SetSprite(icnbtn, 6, 7);
+        buttonEndTur.SetSprite(icnbtn, 8, 9);
+        buttonAdventure.SetSprite(icnbtn, 10, 11);
+        buttonFile.SetSprite(icnbtn, 12, 13);
+        buttonSystem.SetSprite(icnbtn, 14, 15);
 
-	buttonNextHero.Draw();
-	buttonMovement.Draw();
-	buttonKingdom.Draw();
-	buttonSpell.Draw();
-	buttonEndTur.Draw();
-	buttonAdventure.Draw();
-	buttonFile.Draw();
-	buttonSystem.Draw();
+        buttonNextHero.Draw();
+        buttonMovement.Draw();
+        buttonKingdom.Draw();
+        buttonSpell.Draw();
+        buttonEndTur.Draw();
+        buttonAdventure.Draw();
+        buttonFile.Draw();
+        buttonSystem.Draw();
     }
 }
 
 int Interface::ButtonsArea::QueueEventProcessing(void)
 {
-    Settings & conf = Settings::Get();
-    LocalEvent & le = LocalEvent::Get();
+    Settings &conf = Settings::Get();
+    LocalEvent &le = LocalEvent::Get();
     int res = Game::CANCEL;
 
     le.MousePressLeft(buttonNextHero) ? buttonNextHero.PressDraw() : buttonNextHero.ReleaseDraw();
@@ -118,83 +118,69 @@ int Interface::ButtonsArea::QueueEventProcessing(void)
     le.MousePressLeft(buttonFile) ? buttonFile.PressDraw() : buttonFile.ReleaseDraw();
     le.MousePressLeft(buttonSystem) ? buttonSystem.PressDraw() : buttonSystem.ReleaseDraw();
 
-    if(conf.ShowButtons() &&
-	// move border window
-	BorderWindow::QueueEventProcessing())
+    if (conf.ShowButtons() &&
+        // move border window
+        BorderWindow::QueueEventProcessing())
     {
-    }
-    else
-    if(le.MouseClickLeft(buttonNextHero))
+    } else if (le.MouseClickLeft(buttonNextHero))
     {
         // for QVGA: auto hide buttons after click
-        if(conf.QVGA()) conf.SetShowButtons(false);
-	interface.EventNextHero();
-    }
-    else
-    if(le.MouseClickLeft(buttonMovement))
+        if (conf.QVGA()) conf.SetShowButtons(false);
+        interface.EventNextHero();
+    } else if (le.MouseClickLeft(buttonMovement))
     {
         // for QVGA: auto hide buttons after click
-        if(conf.QVGA()) conf.SetShowButtons(false);
-	interface.EventContinueMovement();
-    }
-    else
-    if(le.MouseClickLeft(buttonKingdom))
+        if (conf.QVGA()) conf.SetShowButtons(false);
+        interface.EventContinueMovement();
+    } else if (le.MouseClickLeft(buttonKingdom))
     {
         // for QVGA: auto hide buttons after click
-        if(conf.QVGA()) conf.SetShowButtons(false);
-	interface.EventKingdomInfo();
-    }
-    else
-    if(le.MouseClickLeft(buttonSpell))
+        if (conf.QVGA()) conf.SetShowButtons(false);
+        interface.EventKingdomInfo();
+    } else if (le.MouseClickLeft(buttonSpell))
     {
         // for QVGA: auto hide buttons after click
-        if(conf.QVGA()) conf.SetShowButtons(false);
-	interface.EventCastSpell();
-    }
-    else
-    if(le.MouseClickLeft(buttonEndTur))
+        if (conf.QVGA()) conf.SetShowButtons(false);
+        interface.EventCastSpell();
+    } else if (le.MouseClickLeft(buttonEndTur))
     {
         // for QVGA: auto hide buttons after click
-        if(conf.QVGA()) conf.SetShowButtons(false);
-	res = interface.EventEndTurn();
-    }
-    else
-    if(le.MouseClickLeft(buttonAdventure))
+        if (conf.QVGA()) conf.SetShowButtons(false);
+        res = interface.EventEndTurn();
+    } else if (le.MouseClickLeft(buttonAdventure))
     {
         // for QVGA: auto hide buttons after click
-        if(conf.QVGA()) conf.SetShowButtons(false);
-	res = interface.EventAdventureDialog();
-    }
-    else
-    if(le.MouseClickLeft(buttonFile))
+        if (conf.QVGA()) conf.SetShowButtons(false);
+        res = interface.EventAdventureDialog();
+    } else if (le.MouseClickLeft(buttonFile))
     {
         // for QVGA: auto hide buttons after click
-        if(conf.QVGA()) conf.SetShowButtons(false);
-	res = interface.EventFileDialog();
-    }
-    else
-    if(le.MouseClickLeft(buttonSystem))
+        if (conf.QVGA()) conf.SetShowButtons(false);
+        res = interface.EventFileDialog();
+    } else if (le.MouseClickLeft(buttonSystem))
     {
         // for QVGA: auto hide buttons after click
-        if(conf.QVGA()) conf.SetShowButtons(false);
-	interface.EventSystemDialog();
+        if (conf.QVGA()) conf.SetShowButtons(false);
+        interface.EventSystemDialog();
     }
 
-    if(le.MousePressRight(buttonNextHero)) Dialog::Message(_("Next Hero"), _("Select the next Hero."), Font::BIG);
-    else
-    if(le.MousePressRight(buttonMovement)) Dialog::Message(_("Continue Movement"), _("Continue the Hero's movement along the current path."), Font::BIG);
-    else
-    if(le.MousePressRight(buttonKingdom)) Dialog::Message(_("Kingdom Summary"), _("View a Summary of your Kingdom."), Font::BIG);
-    else
-    if(le.MousePressRight(buttonSpell)) Dialog::Message(_("Cast Spell"), _("Cast an adventure spell."), Font::BIG);
-    else
-    if(le.MousePressRight(buttonEndTur)) Dialog::Message(_("End Turn"), _("End your turn and left the computer take its turn."), Font::BIG);
-    else
-    if(le.MousePressRight(buttonAdventure)) Dialog::Message(_("Adventure Options"), _("Bring up the adventure options menu."), Font::BIG);
-    else
-    if(le.MousePressRight(buttonFile)) Dialog::Message(_("File Options"), _("Bring up the file options menu, alloving you to load menu, save etc."), Font::BIG);
-    else
-    if(le.MousePressRight(buttonSystem)) Dialog::Message(_("System Options"), _("Bring up the system options menu, alloving you to customize your game."), Font::BIG);
+    if (le.MousePressRight(buttonNextHero)) Dialog::Message(_("Next Hero"), _("Select the next Hero."), Font::BIG);
+    else if (le.MousePressRight(buttonMovement))
+        Dialog::Message(_("Continue Movement"), _("Continue the Hero's movement along the current path."), Font::BIG);
+    else if (le.MousePressRight(buttonKingdom))
+        Dialog::Message(_("Kingdom Summary"), _("View a Summary of your Kingdom."), Font::BIG);
+    else if (le.MousePressRight(buttonSpell))
+        Dialog::Message(_("Cast Spell"), _("Cast an adventure spell."), Font::BIG);
+    else if (le.MousePressRight(buttonEndTur))
+        Dialog::Message(_("End Turn"), _("End your turn and left the computer take its turn."), Font::BIG);
+    else if (le.MousePressRight(buttonAdventure))
+        Dialog::Message(_("Adventure Options"), _("Bring up the adventure options menu."), Font::BIG);
+    else if (le.MousePressRight(buttonFile))
+        Dialog::Message(_("File Options"), _("Bring up the file options menu, alloving you to load menu, save etc."),
+                        Font::BIG);
+    else if (le.MousePressRight(buttonSystem))
+        Dialog::Message(_("System Options"),
+                        _("Bring up the system options menu, alloving you to customize your game."), Font::BIG);
 
     return res;
 }

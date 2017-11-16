@@ -26,7 +26,7 @@
 #include "game_interface.h"
 #include "interface_cpanel.h"
 
-Interface::ControlPanel::ControlPanel(Basic & basic) : interface(basic)
+Interface::ControlPanel::ControlPanel(Basic &basic) : interface(basic)
 {
     w = 180;
     h = 36;
@@ -64,7 +64,7 @@ void Interface::ControlPanel::ResetTheme(void)
     btn_quit.SetAlphaMod(alpha);
 }
 
-const Rect & Interface::ControlPanel::GetArea(void)
+const Rect &Interface::ControlPanel::GetArea(void)
 {
     return *this;
 }
@@ -88,7 +88,7 @@ void Interface::ControlPanel::SetPos(s32 ox, s32 oy)
 
 void Interface::ControlPanel::Redraw(void)
 {
-    Display & display = Display::Get();
+    Display &display = Display::Get();
 
     btn_radr.Blit(x, y, display);
     btn_icon.Blit(x + 36, y, display);
@@ -99,17 +99,13 @@ void Interface::ControlPanel::Redraw(void)
 
 int Interface::ControlPanel::QueueEventProcessing(void)
 {
-    LocalEvent & le = LocalEvent::Get();
+    LocalEvent &le = LocalEvent::Get();
 
-    if(le.MouseClickLeft(rt_radr))	interface.EventSwitchShowRadar();
-    else
-    if(le.MouseClickLeft(rt_icon))	interface.EventSwitchShowIcons();
-    else
-    if(le.MouseClickLeft(rt_bttn))	interface.EventSwitchShowButtons();
-    else
-    if(le.MouseClickLeft(rt_stat))	interface.EventSwitchShowStatus();
-    else
-    if(le.MouseClickLeft(rt_quit))	return interface.EventEndTurn();
+    if (le.MouseClickLeft(rt_radr)) interface.EventSwitchShowRadar();
+    else if (le.MouseClickLeft(rt_icon)) interface.EventSwitchShowIcons();
+    else if (le.MouseClickLeft(rt_bttn)) interface.EventSwitchShowButtons();
+    else if (le.MouseClickLeft(rt_stat)) interface.EventSwitchShowStatus();
+    else if (le.MouseClickLeft(rt_quit)) return interface.EventEndTurn();
 
     return Game::CANCEL;
 }

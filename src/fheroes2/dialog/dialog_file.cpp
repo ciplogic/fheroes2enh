@@ -30,13 +30,13 @@
 
 int Dialog::FileOptions(void)
 {
-    Display & display = Display::Get();
+    Display &display = Display::Get();
     // preload
     const int cpanbkg = Settings::Get().ExtGameEvilInterface() ? ICN::CPANBKGE : ICN::CPANBKG;
-    const int cpanel  = Settings::Get().ExtGameEvilInterface() ? ICN::CPANELE : ICN::CPANEL;
+    const int cpanel = Settings::Get().ExtGameEvilInterface() ? ICN::CPANELE : ICN::CPANEL;
 
     // cursor
-    Cursor & cursor = Cursor::Get();
+    Cursor &cursor = Cursor::Get();
     const int oldcursor = cursor.Themes();
     cursor.Hide();
     cursor.SetThemes(Cursor::POINTER);
@@ -45,10 +45,10 @@ int Dialog::FileOptions(void)
     const Sprite &box = AGG::GetICN(cpanbkg, 0);
 
     SpriteBack back(Rect((display.w() - box.w()) / 2, (display.h() - box.h()) / 2, box.w(), box.h()));
-    const Point & rb = back.GetPos();
+    const Point &rb = back.GetPos();
     box.Blit(rb.x, rb.y);
 
-    LocalEvent & le = LocalEvent::Get();
+    LocalEvent &le = LocalEvent::Get();
 
     Button buttonNew(rb.x + 62, rb.y + 31, cpanel, 0, 1);
     Button buttonLoad(rb.x + 195, rb.y + 31, cpanel, 2, 3);
@@ -68,7 +68,7 @@ int Dialog::FileOptions(void)
     int result = Game::QUITGAME;
 
     // dialog menu loop
-    while(le.HandleEvents())
+    while (le.HandleEvents())
     {
         le.MousePressLeft(buttonNew) ? buttonNew.PressDraw() : buttonNew.ReleaseDraw();
         le.MousePressLeft(buttonLoad) ? buttonLoad.PressDraw() : buttonLoad.ReleaseDraw();
@@ -76,11 +76,31 @@ int Dialog::FileOptions(void)
         le.MousePressLeft(buttonQuit) ? buttonQuit.PressDraw() : buttonQuit.ReleaseDraw();
         le.MousePressLeft(buttonCancel) ? buttonCancel.PressDraw() : buttonCancel.ReleaseDraw();
 
-        if(le.MouseClickLeft(buttonNew)) { result = Game::NEWGAME;  break; }
-        if(le.MouseClickLeft(buttonLoad)){ result = Game::LOADGAME; break; }
-        if(le.MouseClickLeft(buttonSave)){ result = Game::SAVEGAME; break; }
-        if(le.MouseClickLeft(buttonQuit)){ result = Game::QUITGAME; break; }
-        if(le.MouseClickLeft(buttonCancel) || Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT)){ result = Game::CANCEL; break; }
+        if (le.MouseClickLeft(buttonNew))
+        {
+            result = Game::NEWGAME;
+            break;
+        }
+        if (le.MouseClickLeft(buttonLoad))
+        {
+            result = Game::LOADGAME;
+            break;
+        }
+        if (le.MouseClickLeft(buttonSave))
+        {
+            result = Game::SAVEGAME;
+            break;
+        }
+        if (le.MouseClickLeft(buttonQuit))
+        {
+            result = Game::QUITGAME;
+            break;
+        }
+        if (le.MouseClickLeft(buttonCancel) || Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
+        {
+            result = Game::CANCEL;
+            break;
+        }
     }
 
     // restore background

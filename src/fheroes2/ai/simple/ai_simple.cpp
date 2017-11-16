@@ -32,12 +32,12 @@
 #include "castle.h"
 #include "ai_simple.h"
 
-const char* AI::Type(void)
+const char *AI::Type(void)
 {
     return "simple";
 }
 
-const char* AI::License(void)
+const char *AI::License(void)
 {
     return "Non-Commercial";
 }
@@ -54,11 +54,11 @@ void AI::CastleAdd(const Castle &)
 {
 }
 
-void AI::CastleRemove(const Castle & castle)
+void AI::CastleRemove(const Castle &castle)
 {
-    AIKingdom & ai = AIKingdoms::Get(castle.GetColor());
+    AIKingdom &ai = AIKingdoms::Get(castle.GetColor());
 
-    if(ai.capital == &castle)
+    if (ai.capital == &castle)
     {
         ai.capital->ResetModes(Castle::CAPITAL);
         ai.capital = NULL;

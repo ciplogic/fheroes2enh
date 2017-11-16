@@ -29,7 +29,7 @@
 
 bool SkipLocalAlpha(int icn)
 {
-    switch(icn)
+    switch (icn)
     {
         case ICN::SYSTEM:
         case ICN::SYSTEME:
@@ -42,7 +42,8 @@ bool SkipLocalAlpha(int icn)
 
             return true;
 
-        default: break;
+        default:
+            break;
     }
 
     return false;
@@ -52,7 +53,7 @@ Sprite::Sprite()
 {
 }
 
-Sprite::Sprite(const Surface & sf, s32 ox, s32 oy) : SpritePos(sf, Point(ox, oy))
+Sprite::Sprite(const Surface &sf, s32 ox, s32 oy) : SpritePos(sf, Point(ox, oy))
 {
 }
 
@@ -66,38 +67,38 @@ int Sprite::y(void) const
     return pos.y;
 }
 
-Surface Sprite::ScaleQVGASurface(const Surface & src)
+Surface Sprite::ScaleQVGASurface(const Surface &src)
 {
     s32 w = src.w() / 2;
     s32 h = src.h() / 2;
     return src.RenderScale(Size((w ? w : 1), (h ? h : 1)));
 }
 
-Sprite Sprite::ScaleQVGASprite(const Sprite & sp)
+Sprite Sprite::ScaleQVGASprite(const Sprite &sp)
 {
-    Cursor & cursor = Cursor::Get();
-    Display & display = Display::Get();
+    Cursor &cursor = Cursor::Get();
+    Display &display = Display::Get();
     Sprite res;
 
-    if(sp.w() > 3 && sp.h() > 3)
+    if (sp.w() > 3 && sp.h() > 3)
     {
-	int theme = 0;
-	if(cursor.isVisible() && Cursor::WAIT != cursor.Themes())
-	{
-	    theme = cursor.Themes();
-	    cursor.SetThemes(Cursor::WAIT);
-	    cursor.Show();
-	    display.Flip();
-	}
+        int theme = 0;
+        if (cursor.isVisible() && Cursor::WAIT != cursor.Themes())
+        {
+            theme = cursor.Themes();
+            cursor.SetThemes(Cursor::WAIT);
+            cursor.Show();
+            display.Flip();
+        }
 
-	res.SetSurface(ScaleQVGASurface(sp));
+        res.SetSurface(ScaleQVGASurface(sp));
 
-	if(theme)
-	{
-	    cursor.SetThemes(theme);
-	    cursor.Show();
-	    display.Flip();
-	}
+        if (theme)
+        {
+            cursor.SetThemes(theme);
+            cursor.Show();
+            display.Flip();
+        }
     }
 
     const Point pt = sp.GetPos();
@@ -121,17 +122,17 @@ void Sprite::Blit(s32 dx, s32 dy) const
     Blit(Point(dx, dy), Display::Get());
 }
 
-void Sprite::Blit(const Point & dpt) const
+void Sprite::Blit(const Point &dpt) const
 {
     Blit(Rect(Point(0, 0), GetSize()), dpt, Display::Get());
 }
 
-void Sprite::Blit(const Rect & srt, s32 dx, s32 dy) const
+void Sprite::Blit(const Rect &srt, s32 dx, s32 dy) const
 {
     Blit(srt, Point(dx, dy), Display::Get());
 }
 
-void Sprite::Blit(const Rect & srt, const Point & dpt) const
+void Sprite::Blit(const Rect &srt, const Point &dpt) const
 {
     Blit(srt, dpt, Display::Get());
 }

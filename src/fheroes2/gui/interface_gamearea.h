@@ -29,25 +29,28 @@ class Sprite;
 
 enum scroll_t
 {
-    SCROLL_NONE	  = 0x00,
-    SCROLL_LEFT	  = 0x01,
-    SCROLL_RIGHT  = 0x02,
-    SCROLL_TOP	  = 0x04,
+    SCROLL_NONE = 0x00,
+    SCROLL_LEFT = 0x01,
+    SCROLL_RIGHT = 0x02,
+    SCROLL_TOP = 0x04,
     SCROLL_BOTTOM = 0x08
 };
 
 enum level_t
 {
-    LEVEL_BOTTOM  = 0x01,
-    LEVEL_TOP     = 0x02,
-    LEVEL_HEROES  = 0x04,
+    LEVEL_BOTTOM = 0x01,
+    LEVEL_TOP = 0x02,
+    LEVEL_HEROES = 0x04,
     LEVEL_OBJECTS = 0x08,
-    LEVEL_FOG     = 0x20,
+    LEVEL_FOG = 0x20,
 
-    LEVEL_ALL     = 0xFF
+    LEVEL_ALL = 0xFF
 };
 
-namespace Maps { class Tiles; }
+namespace Maps
+{
+    class Tiles;
+}
 
 namespace Interface
 {
@@ -56,54 +59,66 @@ namespace Interface
     class GameArea
     {
     public:
-	GameArea(Basic &);
-	void		Build(void);
+        GameArea(Basic &);
 
-	const Rect &	GetArea(void) const;
-	const Point &	GetMapsPos(void) const;
-	const Rect &	GetRectMaps(void) const;
+        void Build(void);
 
-	int		GetScrollCursor(void) const;
-	bool		NeedScroll(void) const;
-	void		Scroll(void);
-	void		SetScroll(int);
+        const Rect &GetArea(void) const;
 
-	void		SetCenter(s32, s32);
-	void		SetCenter(const Point &);
-	void		SetRedraw(void) const;
+        const Point &GetMapsPos(void) const;
 
-	void		Redraw(Surface & dst, int) const;
-	void		Redraw(Surface & dst, int, const Rect &) const;
+        const Rect &GetRectMaps(void) const;
 
-	void		BlitOnTile(Surface &, const Surface &, s32, s32, const Point &) const;
-	void		BlitOnTile(Surface &, const Sprite &, const Point &) const;
+        int GetScrollCursor(void) const;
 
-	void		SetUpdateCursor(void);
-        void		QueueEventProcessing(void);
-        
-	s32		GetIndexFromMousePoint(const Point &) const;
-	Rect		RectFixed(Point & dst, int rw, int rh) const;
+        bool NeedScroll(void) const;
 
-	static Surface	GenerateUltimateArtifactAreaSurface(s32);
+        void Scroll(void);
+
+        void SetScroll(int);
+
+        void SetCenter(s32, s32);
+
+        void SetCenter(const Point &);
+
+        void SetRedraw(void) const;
+
+        void Redraw(Surface &dst, int) const;
+
+        void Redraw(Surface &dst, int, const Rect &) const;
+
+        void BlitOnTile(Surface &, const Surface &, s32, s32, const Point &) const;
+
+        void BlitOnTile(Surface &, const Sprite &, const Point &) const;
+
+        void SetUpdateCursor(void);
+
+        void QueueEventProcessing(void);
+
+        s32 GetIndexFromMousePoint(const Point &) const;
+
+        Rect RectFixed(Point &dst, int rw, int rh) const;
+
+        static Surface GenerateUltimateArtifactAreaSurface(s32);
 
     private:
-	void SetAreaPosition(s32, s32, u32, u32);
+        void SetAreaPosition(s32, s32, u32, u32);
 
-	Basic & interface;
+        Basic &interface;
 
-	Rect	areaPosition;
-	Rect	rectMaps;
-	Point	rectMapsPosition;
-	Point	scrollOffset;
-	s32	oldIndexPos;
-	int	scrollDirection;
-	int	scrollStepX;
-	int	scrollStepY;
-	int	tailX;
-	int	tailY;
-	bool    updateCursor;
+        Rect areaPosition;
+        Rect rectMaps;
+        Point rectMapsPosition;
+        Point scrollOffset;
+        s32 oldIndexPos;
+        int scrollDirection;
+        int scrollStepX;
+        int scrollStepY;
+        int tailX;
+        int tailY;
+        bool updateCursor;
 
-	SDL::Time scrollTime;
+        SDL::Time scrollTime;
     };
 }
 

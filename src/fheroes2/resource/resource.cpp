@@ -29,93 +29,134 @@
 #include "resource.h"
 
 Funds::Funds()
-    : wood(0), mercury(0), ore(0), sulfur(0), crystal(0), gems(0), gold(0)
+        : wood(0), mercury(0), ore(0), sulfur(0), crystal(0), gems(0), gold(0)
 {
 }
 
 Funds::Funds(s32 _ore, s32 _wood, s32 _mercury, s32 _sulfur, s32 _crystal, s32 _gems, s32 _gold)
-    : wood(_wood), mercury(_mercury), ore(_ore), sulfur(_sulfur), crystal(_crystal), gems(_gems), gold(_gold)
+        : wood(_wood), mercury(_mercury), ore(_ore), sulfur(_sulfur), crystal(_crystal), gems(_gems), gold(_gold)
 {
 }
 
 Funds::Funds(int rs, u32 count) : wood(0), mercury(0), ore(0), sulfur(0), crystal(0), gems(0), gold(0)
 {
-    switch(rs)
+    switch (rs)
     {
-	case Resource::ORE:	ore = count;	break;
-	case Resource::WOOD:	wood = count;	break;
-	case Resource::MERCURY:	mercury = count;break;
-	case Resource::SULFUR:	sulfur = count;	break;
-	case Resource::GEMS:	gems = count;	break;
-	case Resource::CRYSTAL:	crystal = count;break;
-	case Resource::GOLD:	gold = count;	break;
+        case Resource::ORE:
+            ore = count;
+            break;
+        case Resource::WOOD:
+            wood = count;
+            break;
+        case Resource::MERCURY:
+            mercury = count;
+            break;
+        case Resource::SULFUR:
+            sulfur = count;
+            break;
+        case Resource::GEMS:
+            gems = count;
+            break;
+        case Resource::CRYSTAL:
+            crystal = count;
+            break;
+        case Resource::GOLD:
+            gold = count;
+            break;
 
-	default:	DEBUG(DBG_GAME, DBG_WARN, "unknown resource"); break;
+        default:
+            DEBUG(DBG_GAME, DBG_WARN, "unknown resource");
+            break;
     }
 }
 
-Funds::Funds(const cost_t & cost)
-    : wood(cost.wood), mercury(cost.mercury), ore(cost.ore), sulfur(cost.sulfur), crystal(cost.crystal), gems(cost.gems), gold(cost.gold)
+Funds::Funds(const cost_t &cost)
+        : wood(cost.wood), mercury(cost.mercury), ore(cost.ore), sulfur(cost.sulfur), crystal(cost.crystal),
+          gems(cost.gems), gold(cost.gold)
 {
 }
 
-Funds::Funds(const ResourceCount & rs)
-    : wood(0), mercury(0), ore(0), sulfur(0), crystal(0), gems(0), gold(0)
+Funds::Funds(const ResourceCount &rs)
+        : wood(0), mercury(0), ore(0), sulfur(0), crystal(0), gems(0), gold(0)
 {
-    s32* ptr = GetPtr(rs.first);
-    if(ptr) *ptr = rs.second;
+    s32 *ptr = GetPtr(rs.first);
+    if (ptr) *ptr = rs.second;
 }
 
 int Resource::Rand(bool with_gold)
 {
-    switch(Rand::Get(1, (with_gold ? 7 : 6)))
+    switch (Rand::Get(1, (with_gold ? 7 : 6)))
     {
-        case 1: return Resource::WOOD;
-        case 2: return Resource::MERCURY;
-        case 3: return Resource::ORE;
-        case 4: return Resource::SULFUR;
-        case 5: return Resource::CRYSTAL;
-        case 6: return Resource::GEMS;
-	case 7: return Resource::GOLD;
-        default: break;
+        case 1:
+            return Resource::WOOD;
+        case 2:
+            return Resource::MERCURY;
+        case 3:
+            return Resource::ORE;
+        case 4:
+            return Resource::SULFUR;
+        case 5:
+            return Resource::CRYSTAL;
+        case 6:
+            return Resource::GEMS;
+        case 7:
+            return Resource::GOLD;
+        default:
+            break;
     }
 
     return Resource::UNKNOWN;
 }
 
-s32* Funds::GetPtr(int rs)
+s32 *Funds::GetPtr(int rs)
 {
-    switch(rs)
+    switch (rs)
     {
-        case Resource::ORE:     return &ore;
-        case Resource::WOOD:    return &wood;
-        case Resource::MERCURY: return &mercury;
-        case Resource::SULFUR:  return &sulfur;
-        case Resource::GEMS:    return &gems;
-        case Resource::CRYSTAL: return &crystal;
-        case Resource::GOLD:    return &gold;
-        default: break;
+        case Resource::ORE:
+            return &ore;
+        case Resource::WOOD:
+            return &wood;
+        case Resource::MERCURY:
+            return &mercury;
+        case Resource::SULFUR:
+            return &sulfur;
+        case Resource::GEMS:
+            return &gems;
+        case Resource::CRYSTAL:
+            return &crystal;
+        case Resource::GOLD:
+            return &gold;
+        default:
+            break;
     }
     return NULL;
 }
 
 s32 Funds::Get(int rs) const
 {
-    switch(rs)
+    switch (rs)
     {
-        case Resource::ORE:     return ore;
-        case Resource::WOOD:    return wood;
-        case Resource::MERCURY: return mercury;
-        case Resource::SULFUR:  return sulfur;
-        case Resource::GEMS:    return gems;
-        case Resource::CRYSTAL: return crystal;
-        case Resource::GOLD:    return gold;
-        default: break;
+        case Resource::ORE:
+            return ore;
+        case Resource::WOOD:
+            return wood;
+        case Resource::MERCURY:
+            return mercury;
+        case Resource::SULFUR:
+            return sulfur;
+        case Resource::GEMS:
+            return gems;
+        case Resource::CRYSTAL:
+            return crystal;
+        case Resource::GOLD:
+            return gold;
+        default:
+            break;
     }
     return 0;
 }
 
-Funds & Funds::operator= (const cost_t & cost)
+Funds &Funds::operator=(const cost_t &cost)
 {
     wood = cost.wood;
     mercury = cost.mercury;
@@ -126,11 +167,11 @@ Funds & Funds::operator= (const cost_t & cost)
     gold = cost.gold;
 
     return *this;
-}                                                                                                                        
+}
 
 
 // operator Funds +
-Funds Funds::operator+ (const Funds & pm) const
+Funds Funds::operator+(const Funds &pm) const
 {
     Funds res;
 
@@ -145,7 +186,7 @@ Funds Funds::operator+ (const Funds & pm) const
     return res;
 }
 
-Funds & Funds::operator+= (const Funds & pm)
+Funds &Funds::operator+=(const Funds &pm)
 {
     wood += pm.wood;
     mercury += pm.mercury;
@@ -159,7 +200,7 @@ Funds & Funds::operator+= (const Funds & pm)
 }
 
 // operator Funds -
-Funds Funds::operator- (const Funds & pm) const
+Funds Funds::operator-(const Funds &pm) const
 {
     Funds res;
 
@@ -174,7 +215,7 @@ Funds Funds::operator- (const Funds & pm) const
     return res;
 }
 
-Funds & Funds::operator-= (const Funds & pm)
+Funds &Funds::operator-=(const Funds &pm)
 {
     wood -= pm.wood;
     mercury -= pm.mercury;
@@ -188,7 +229,7 @@ Funds & Funds::operator-= (const Funds & pm)
 }
 
 // operator Funds *
-Funds Funds::operator* (u32 mul) const
+Funds Funds::operator*(u32 mul) const
 {
     Funds res;
 
@@ -203,7 +244,7 @@ Funds Funds::operator* (u32 mul) const
     return res;
 }
 
-Funds & Funds::operator*= (u32 mul)
+Funds &Funds::operator*=(u32 mul)
 {
     wood *= mul;
     mercury *= mul;
@@ -217,98 +258,115 @@ Funds & Funds::operator*= (u32 mul)
 }
 
 // operator Funds <
-bool Funds::operator< (const Funds & pm) const
+bool Funds::operator<(const Funds &pm) const
 {
-    return      wood < pm.wood &&
-                mercury < pm.mercury &&
-                ore < pm.ore &&
-                sulfur < pm.sulfur &&
-                crystal < pm.crystal &&
-                gems < pm.gems &&
-                gold < pm.gold;
+    return wood < pm.wood &&
+           mercury < pm.mercury &&
+           ore < pm.ore &&
+           sulfur < pm.sulfur &&
+           crystal < pm.crystal &&
+           gems < pm.gems &&
+           gold < pm.gold;
 }
 
 // operator Funds <=
-bool Funds::operator<= (const Funds & pm) const
+bool Funds::operator<=(const Funds &pm) const
 {
-    return      wood <= pm.wood &&
-                mercury <= pm.mercury &&
-                ore <= pm.ore &&
-                sulfur <= pm.sulfur &&
-                crystal <= pm.crystal &&
-                gems <= pm.gems &&
-                gold <= pm.gold;
+    return wood <= pm.wood &&
+           mercury <= pm.mercury &&
+           ore <= pm.ore &&
+           sulfur <= pm.sulfur &&
+           crystal <= pm.crystal &&
+           gems <= pm.gems &&
+           gold <= pm.gold;
 }
 
 // operator Funds >
-bool Funds::operator> (const Funds & pm) const
+bool Funds::operator>(const Funds &pm) const
 {
-    return      wood > pm.wood &&
-                mercury > pm.mercury &&
-                ore > pm.ore &&
-                sulfur > pm.sulfur &&
-                crystal > pm.crystal &&
-                gems > pm.gems &&
-                gold > pm.gold;
+    return wood > pm.wood &&
+           mercury > pm.mercury &&
+           ore > pm.ore &&
+           sulfur > pm.sulfur &&
+           crystal > pm.crystal &&
+           gems > pm.gems &&
+           gold > pm.gold;
 }
 
 // operator Funds >=
-bool Funds::operator>= (const Funds & pm) const
+bool Funds::operator>=(const Funds &pm) const
 {
-    return      wood >= pm.wood &&
-                mercury >= pm.mercury &&
-                ore >= pm.ore &&
-                sulfur >= pm.sulfur &&
-                crystal >= pm.crystal &&
-                gems >= pm.gems &&
-                gold >= pm.gold;
+    return wood >= pm.wood &&
+           mercury >= pm.mercury &&
+           ore >= pm.ore &&
+           sulfur >= pm.sulfur &&
+           crystal >= pm.crystal &&
+           gems >= pm.gems &&
+           gold >= pm.gold;
 }
 
 std::string Funds::String(void) const
 {
     std::ostringstream os;
     os << "ore: " << ore <<
-	", wood: " << wood <<
-	", mercury: " << mercury <<
-	", sulfur: " << sulfur <<
-	", crystal: " << crystal <<
-	", gems: " << gems <<
-	", gold: " << gold;
+       ", wood: " << wood <<
+       ", mercury: " << mercury <<
+       ", sulfur: " << sulfur <<
+       ", crystal: " << crystal <<
+       ", gems: " << gems <<
+       ", gold: " << gold;
     return os.str();
 }
 
 /* name resource */
-const char* Resource::String(int resource)
+const char *Resource::String(int resource)
 {
-    const char* res[] = { "Unknown", _("Wood"), _("Mercury"), _("Ore"), _("Sulfur"), _("Crystal"), _("Gems"), _("Gold") };
+    const char *res[] = {"Unknown", _("Wood"), _("Mercury"), _("Ore"), _("Sulfur"), _("Crystal"), _("Gems"), _("Gold")};
 
-    switch(resource){
-        case Resource::WOOD:	return res[1];
-        case Resource::MERCURY:	return res[2];
-        case Resource::ORE:	return res[3];
-        case Resource::SULFUR:	return res[4];
-        case Resource::CRYSTAL: return res[5];
-        case Resource::GEMS:	return res[6];
-	case Resource::GOLD:	return res[7];
-	default: break;
+    switch (resource)
+    {
+        case Resource::WOOD:
+            return res[1];
+        case Resource::MERCURY:
+            return res[2];
+        case Resource::ORE:
+            return res[3];
+        case Resource::SULFUR:
+            return res[4];
+        case Resource::CRYSTAL:
+            return res[5];
+        case Resource::GEMS:
+            return res[6];
+        case Resource::GOLD:
+            return res[7];
+        default:
+            break;
     }
-    
+
     return res[0];
 }
 
 /* return index sprite objnrsrc.icn */
 u32 Resource::GetIndexSprite(int resource)
 {
-    switch(resource){
-        case Resource::WOOD:	return  1;
-        case Resource::MERCURY:	return  3;
-        case Resource::ORE:	return  5;
-        case Resource::SULFUR:	return  7;
-        case Resource::CRYSTAL: return  9;
-        case Resource::GEMS:	return  11;
-	case Resource::GOLD:	return  13;
-        default: 
-	    DEBUG(DBG_GAME, DBG_WARN, "unknown resource");
+    switch (resource)
+    {
+        case Resource::WOOD:
+            return 1;
+        case Resource::MERCURY:
+            return 3;
+        case Resource::ORE:
+            return 5;
+        case Resource::SULFUR:
+            return 7;
+        case Resource::CRYSTAL:
+            return 9;
+        case Resource::GEMS:
+            return 11;
+        case Resource::GOLD:
+            return 13;
+        default:
+            DEBUG(DBG_GAME, DBG_WARN, "unknown resource");
     }
 
     return 0;
@@ -316,17 +374,25 @@ u32 Resource::GetIndexSprite(int resource)
 
 int Resource::FromIndexSprite(u32 index)
 {
-    switch(index)
+    switch (index)
     {
-        case 1:     return WOOD;
-        case 3:     return MERCURY;
-	case 5:     return ORE;
-        case 7:     return SULFUR;
-        case 9:     return CRYSTAL;
-        case 11:    return GEMS;
-        case 13:    return GOLD;
+        case 1:
+            return WOOD;
+        case 3:
+            return MERCURY;
+        case 5:
+            return ORE;
+        case 7:
+            return SULFUR;
+        case 9:
+            return CRYSTAL;
+        case 11:
+            return GEMS;
+        case 13:
+            return GOLD;
 
-	default: break;
+        default:
+            break;
     }
 
     return UNKNOWN;
@@ -335,17 +401,24 @@ int Resource::FromIndexSprite(u32 index)
 /* return index sprite resource.icn */
 u32 Resource::GetIndexSprite2(int resource)
 {
-    switch(resource)
+    switch (resource)
     {
-        case Resource::WOOD:	return  0;
-        case Resource::MERCURY:	return  1;
-        case Resource::ORE:	return  2;
-        case Resource::SULFUR:	return  3;
-        case Resource::CRYSTAL: return  4;
-        case Resource::GEMS:	return  5;
-	case Resource::GOLD:	return  6;
-        default: 
-	    DEBUG(DBG_GAME, DBG_WARN, "unknown resource");
+        case Resource::WOOD:
+            return 0;
+        case Resource::MERCURY:
+            return 1;
+        case Resource::ORE:
+            return 2;
+        case Resource::SULFUR:
+            return 3;
+        case Resource::CRYSTAL:
+            return 4;
+        case Resource::GEMS:
+            return 5;
+        case Resource::GOLD:
+            return 6;
+        default:
+            DEBUG(DBG_GAME, DBG_WARN, "unknown resource");
     }
 
     return 0;
@@ -353,17 +426,25 @@ u32 Resource::GetIndexSprite2(int resource)
 
 int Resource::FromIndexSprite2(u32 index)
 {
-    switch(index)
+    switch (index)
     {
-        case 0:     return WOOD;
-        case 1:     return MERCURY;
-	case 2:     return ORE;
-        case 3:     return SULFUR;
-        case 4:     return CRYSTAL;
-        case 5:     return GEMS;
-        case 6:     return GOLD;
+        case 0:
+            return WOOD;
+        case 1:
+            return MERCURY;
+        case 2:
+            return ORE;
+        case 3:
+            return SULFUR;
+        case 4:
+            return CRYSTAL;
+        case 5:
+            return GEMS;
+        case 6:
+            return GOLD;
 
-	default: break;
+        default:
+            break;
     }
 
     return UNKNOWN;
@@ -373,13 +454,13 @@ int Funds::GetValidItems(void) const
 {
     int rs = 0;
 
-    if(wood)	rs |= Resource::WOOD;
-    if(ore)	rs |= Resource::ORE;
-    if(mercury)	rs |= Resource::MERCURY;
-    if(sulfur)	rs |= Resource::SULFUR;
-    if(crystal)	rs |= Resource::CRYSTAL;
-    if(gems)	rs |= Resource::GEMS;
-    if(gold)	rs |= Resource::GOLD;
+    if (wood) rs |= Resource::WOOD;
+    if (ore) rs |= Resource::ORE;
+    if (mercury) rs |= Resource::MERCURY;
+    if (sulfur) rs |= Resource::SULFUR;
+    if (crystal) rs |= Resource::CRYSTAL;
+    if (gems) rs |= Resource::GEMS;
+    if (gold) rs |= Resource::GOLD;
 
     return rs;
 }
@@ -388,13 +469,13 @@ u32 Funds::GetValidItemsCount(void) const
 {
     u32 result = 0;
 
-    if(wood) ++result;
-    if(ore) ++result;
-    if(mercury) ++result;
-    if(sulfur) ++result;
-    if(crystal) ++result;
-    if(gems) ++result;
-    if(gold) ++result;
+    if (wood) ++result;
+    if (ore) ++result;
+    if (mercury) ++result;
+    if (sulfur) ++result;
+    if (crystal) ++result;
+    if (gems) ++result;
+    if (gold) ++result;
 
     return result;
 }
@@ -410,13 +491,13 @@ void Funds::Reset(void)
     gold = 0;
 }
 
-Resource::BoxSprite::BoxSprite(const Funds & f, u32 w) : Rect(0, 0, w, 0), rs(f)
+Resource::BoxSprite::BoxSprite(const Funds &f, u32 w) : Rect(0, 0, w, 0), rs(f)
 {
     const u32 count = rs.GetValidItemsCount();
     h = 4 > count ? 45 : (7 > count ? 90 : 135);
 }
 
-const Rect & Resource::BoxSprite::GetArea(void) const
+const Rect &Resource::BoxSprite::GetArea(void) const
 {
     return *this;
 }
@@ -427,10 +508,10 @@ void Resource::BoxSprite::SetPos(s32 px, s32 py)
     y = py;
 }
 
-void RedrawResourceSprite(const Surface & sf, const Point & pos,
-		    u32 count, u32 width, u32 offset, s32 value)
+void RedrawResourceSprite(const Surface &sf, const Point &pos,
+                          u32 count, u32 width, u32 offset, s32 value)
 {
-    Display & display = Display::Get();
+    Display &display = Display::Get();
     Point dst_pt;
     Text text;
 
@@ -446,92 +527,108 @@ void RedrawResourceSprite(const Surface & sf, const Point & pos,
 void Resource::BoxSprite::Redraw(void) const
 {
     const u32 valid_resource = rs.GetValidItemsCount();
-    if(0 == valid_resource) return;
+    if (0 == valid_resource) return;
 
     u32 width = 2 < valid_resource ? w / 3 : w / valid_resource;
 
     u32 count = 0;
     u32 offset = 35;
 
-    if(rs.wood)
+    if (rs.wood)
     {
-	const Sprite & sprite = AGG::GetICN(ICN::RESOURCE, 0);
-	RedrawResourceSprite(sprite, Point(x, y), count, width, offset, rs.wood);
-	++count;
+        const Sprite &sprite = AGG::GetICN(ICN::RESOURCE, 0);
+        RedrawResourceSprite(sprite, Point(x, y), count, width, offset, rs.wood);
+        ++count;
     }
 
-    if(rs.ore)
+    if (rs.ore)
     {
-	const Sprite & sprite = AGG::GetICN(ICN::RESOURCE, 2);
-	RedrawResourceSprite(sprite, Point(x, y), count, width, offset, rs.ore);
-	++count;
+        const Sprite &sprite = AGG::GetICN(ICN::RESOURCE, 2);
+        RedrawResourceSprite(sprite, Point(x, y), count, width, offset, rs.ore);
+        ++count;
     }
 
-    if(rs.mercury)
+    if (rs.mercury)
     {
-	const Sprite & sprite = AGG::GetICN(ICN::RESOURCE, 1);
-	RedrawResourceSprite(sprite, Point(x, y), count, width, offset, rs.mercury);
-	++count;
+        const Sprite &sprite = AGG::GetICN(ICN::RESOURCE, 1);
+        RedrawResourceSprite(sprite, Point(x, y), count, width, offset, rs.mercury);
+        ++count;
     }
 
-    if(2 < count){ count = 0; offset += 45; }
-
-    if(rs.sulfur)
+    if (2 < count)
     {
-	const Sprite & sprite = AGG::GetICN(ICN::RESOURCE, 3);
-	RedrawResourceSprite(sprite, Point(x, y), count, width, offset, rs.sulfur);
-	++count;
+        count = 0;
+        offset += 45;
     }
 
-    if(2 < count){ count = 0; offset += 45; }
-    if(rs.crystal)
+    if (rs.sulfur)
     {
-	const Sprite & sprite = AGG::GetICN(ICN::RESOURCE, 4);
-	RedrawResourceSprite(sprite, Point(x, y), count, width, offset, rs.crystal);
-	++count;
+        const Sprite &sprite = AGG::GetICN(ICN::RESOURCE, 3);
+        RedrawResourceSprite(sprite, Point(x, y), count, width, offset, rs.sulfur);
+        ++count;
     }
 
-    if(2 < count){ count = 0; offset += 45; }
-    if(rs.gems)
+    if (2 < count)
     {
-	const Sprite & sprite = AGG::GetICN(ICN::RESOURCE, 5);
-	RedrawResourceSprite(sprite, Point(x, y), count, width, offset, rs.gems);
-	++count;
+        count = 0;
+        offset += 45;
+    }
+    if (rs.crystal)
+    {
+        const Sprite &sprite = AGG::GetICN(ICN::RESOURCE, 4);
+        RedrawResourceSprite(sprite, Point(x, y), count, width, offset, rs.crystal);
+        ++count;
     }
 
-    if(2 < count){ count = 0; offset += 45; }
-    if(rs.gold)
+    if (2 < count)
     {
-	const Sprite & sprite = AGG::GetICN(ICN::RESOURCE, 6);
-	if(! count) width = w;
-	RedrawResourceSprite(sprite, Point(x, y), count, width, offset, rs.gold);
+        count = 0;
+        offset += 45;
+    }
+    if (rs.gems)
+    {
+        const Sprite &sprite = AGG::GetICN(ICN::RESOURCE, 5);
+        RedrawResourceSprite(sprite, Point(x, y), count, width, offset, rs.gems);
+        ++count;
+    }
+
+    if (2 < count)
+    {
+        count = 0;
+        offset += 45;
+    }
+    if (rs.gold)
+    {
+        const Sprite &sprite = AGG::GetICN(ICN::RESOURCE, 6);
+        if (!count) width = w;
+        RedrawResourceSprite(sprite, Point(x, y), count, width, offset, rs.gold);
     }
 }
 
-StreamBase & operator<< (StreamBase & msg, const Funds & res)
+StreamBase &operator<<(StreamBase &msg, const Funds &res)
 {
     return msg << res.wood <<
-	res.mercury << res.ore << res.sulfur <<
-	res.crystal << res.gems << res.gold;
+               res.mercury << res.ore << res.sulfur <<
+               res.crystal << res.gems << res.gold;
 }
 
-StreamBase & operator>> (StreamBase & msg, Funds & res)
+StreamBase &operator>>(StreamBase &msg, Funds &res)
 {
     return msg >> res.wood >>
-	res.mercury >> res.ore >> res.sulfur >>
-	res.crystal >> res.gems >> res.gold;
+               res.mercury >> res.ore >> res.sulfur >>
+               res.crystal >> res.gems >> res.gold;
 }
 
-StreamBase & operator<< (StreamBase & msg, const cost_t & res)
+StreamBase &operator<<(StreamBase &msg, const cost_t &res)
 {
     return msg << res.wood <<
-	res.mercury << res.ore << res.sulfur <<
-	res.crystal << res.gems << res.gold;
+               res.mercury << res.ore << res.sulfur <<
+               res.crystal << res.gems << res.gold;
 }
 
-StreamBase & operator>> (StreamBase & msg, cost_t & res)
+StreamBase &operator>>(StreamBase &msg, cost_t &res)
 {
     return msg >> res.wood >>
-	res.mercury >> res.ore >> res.sulfur >>
-	res.crystal >> res.gems >> res.gold;
+               res.mercury >> res.ore >> res.sulfur >>
+               res.crystal >> res.gems >> res.gold;
 }

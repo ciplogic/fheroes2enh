@@ -23,7 +23,7 @@
 #define __IMG_SAVETOPNG_H__
 
 #if SDL_VERSION_ATLEAST(2, 0, 0)
-    // SDL2 also supported png, skipped...
+// SDL2 also supported png, skipped...
 #else
 /* #include <SDL/begin_code.h> */
 

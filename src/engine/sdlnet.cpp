@@ -56,9 +56,9 @@ void Network::Socket::Assign(const TCPsocket csd)
 
     if(csd)
     {
-	sd = csd;
-	sdset = SDLNet_AllocSocketSet(1);
-	if(sdset) SDLNet_TCP_AddSocket(sdset, sd);
+    sd = csd;
+    sdset = SDLNet_AllocSocketSet(1);
+    if(sdset) SDLNet_TCP_AddSocket(sdset, sd);
     }
 }
 
@@ -88,16 +88,16 @@ bool Network::Socket::Recv(char *buf, int len)
 {
     if(sd && buf && len)
     {
-	int rcv = 0;
+    int rcv = 0;
 
-	while((rcv = SDLNet_TCP_Recv(sd, buf, len)) > 0 && rcv < len)
-	{
-	    buf += rcv;
-	    len -= rcv;
-	}
+    while((rcv = SDLNet_TCP_Recv(sd, buf, len)) > 0 && rcv < len)
+    {
+        buf += rcv;
+        len -= rcv;
+    }
 
-	if(rcv != len)
-	    status |= ERROR_RECV;
+    if(rcv != len)
+        status |= ERROR_RECV;
     }
 
     return ! (status & ERROR_RECV);
@@ -106,7 +106,7 @@ bool Network::Socket::Recv(char *buf, int len)
 bool Network::Socket::Send(const char* buf, int len)
 {
     if(sd && len != SDLNet_TCP_Send(sd, (void*) buf, len))
-	status |= ERROR_SEND;
+    status |= ERROR_SEND;
 
     return ! (status & ERROR_SEND);
 }
@@ -152,7 +152,7 @@ bool Network::Socket::Open(IPaddress & ip)
     Assign(SDLNet_TCP_Open(&ip));
 
     if(! sd)
-	ERROR(SDLNet_GetError());
+    ERROR(SDLNet_GetError());
 
     return sd;
 }
@@ -166,14 +166,14 @@ void Network::Socket::Close(void)
 {
     if(sd)
     {
-	if(sdset)
-	{
-	    SDLNet_TCP_DelSocket(sdset, sd);
-	    SDLNet_FreeSocketSet(sdset);
-	    sdset = NULL;
-	}
-	SDLNet_TCP_Close(sd);
-	sd = NULL;
+    if(sdset)
+    {
+        SDLNet_TCP_DelSocket(sdset, sd);
+        SDLNet_FreeSocketSet(sdset);
+        sdset = NULL;
+    }
+    SDLNet_TCP_Close(sd);
+    sd = NULL;
     }
 }
 
@@ -190,7 +190,7 @@ bool Network::Init(void)
 {
     if(SDLNet_Init() < 0)
     {
-	ERROR(SDLNet_GetError());
+    ERROR(SDLNet_GetError());
         return false;
     }
     return true;
@@ -205,8 +205,8 @@ bool Network::ResolveHost(IPaddress & ip, const char* host, u16 port)
 {
     if(SDLNet_ResolveHost(&ip, host, port) < 0)
     {
-	ERROR(SDLNet_GetError());
-	return false;
+    ERROR(SDLNet_GetError());
+    return false;
     }
     return true;
 }

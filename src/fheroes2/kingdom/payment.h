@@ -28,14 +28,21 @@
 
 typedef Funds payment_t;
 
-enum { INCOME_CAPTURED = 0x01, INCOME_CASTLES = 0x02, INCOME_ARTIFACTS = 0x04, INCOME_HEROSKILLS = 0x08, INCOME_ALL = 0xFF };
+enum
+{
+    INCOME_CAPTURED = 0x01, INCOME_CASTLES = 0x02, INCOME_ARTIFACTS = 0x04, INCOME_HEROSKILLS = 0x08, INCOME_ALL = 0xFF
+};
 
 namespace PaymentConditions
 {
     payment_t BuyBuilding(int race, u32 build);
+
     payment_t BuyBoat(void);
+
     payment_t BuySpellBook(int shrine = 0);
+
     payment_t RecruitHero(int level);
+
     payment_t ForAlchemist(int arts);
 
     void UpdateCosts(const std::string &);

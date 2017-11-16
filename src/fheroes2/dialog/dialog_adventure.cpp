@@ -30,14 +30,14 @@
 
 int Dialog::AdventureOptions(bool enabledig)
 {
-    Display & display = Display::Get();
+    Display &display = Display::Get();
 
     // preload
     const int apanbkg = Settings::Get().ExtGameEvilInterface() ? ICN::APANBKGE : ICN::APANBKG;
-    const int apanel  = Settings::Get().ExtGameEvilInterface() ? ICN::APANELE : ICN::APANEL;
+    const int apanel = Settings::Get().ExtGameEvilInterface() ? ICN::APANELE : ICN::APANEL;
 
     // cursor
-    Cursor & cursor = Cursor::Get();
+    Cursor &cursor = Cursor::Get();
     const int oldcursor = cursor.Themes();
 
     cursor.Hide();
@@ -46,10 +46,10 @@ int Dialog::AdventureOptions(bool enabledig)
     // image box
     const Sprite &box = AGG::GetICN(apanbkg, 0);
     SpriteBack back(Rect((display.w() - box.w()) / 2, (display.h() - box.h()) / 2, box.w(), box.h()));
-    const Point & rb = back.GetPos();
+    const Point &rb = back.GetPos();
     box.Blit(rb.x, rb.y);
 
-    LocalEvent & le = LocalEvent::Get();
+    LocalEvent &le = LocalEvent::Get();
 
     Button buttonWorld(rb.x + 62, rb.y + 30, apanel, 0, 1);
     Button buttonPuzzle(rb.x + 195, rb.y + 30, apanel, 2, 3);
@@ -57,7 +57,7 @@ int Dialog::AdventureOptions(bool enabledig)
     Button buttonDig(rb.x + 195, rb.y + 107, apanel, 6, 7);
     Button buttonCancel(rb.x + 128, rb.y + 184, apanel, 8, 9);
 
-    if(! enabledig) buttonDig.SetDisable(true);
+    if (!enabledig) buttonDig.SetDisable(true);
 
     buttonWorld.Draw();
     buttonPuzzle.Draw();
@@ -71,7 +71,7 @@ int Dialog::AdventureOptions(bool enabledig)
     int result = Dialog::ZERO;
 
     // dialog menu loop
-    while(le.HandleEvents())
+    while (le.HandleEvents())
     {
         le.MousePressLeft(buttonWorld) ? buttonWorld.PressDraw() : buttonWorld.ReleaseDraw();
         le.MousePressLeft(buttonPuzzle) ? buttonPuzzle.PressDraw() : buttonPuzzle.ReleaseDraw();
@@ -79,18 +79,40 @@ int Dialog::AdventureOptions(bool enabledig)
         le.MousePressLeft(buttonDig) ? buttonDig.PressDraw() : buttonDig.ReleaseDraw();
         le.MousePressLeft(buttonCancel) ? buttonCancel.PressDraw() : buttonCancel.ReleaseDraw();
 
-        if(le.MouseClickLeft(buttonWorld)){ result = Dialog::WORLD; break; }
-        if(le.MouseClickLeft(buttonPuzzle)){ result = Dialog::PUZZLE; break; }
-        if(le.MouseClickLeft(buttonInfo)){ result = Dialog::INFO; break; }
-        if(le.MouseClickLeft(buttonDig) && buttonDig.isEnable()){ result = Dialog::DIG; break; }
-        if(le.MouseClickLeft(buttonCancel) || Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT)){ result = Dialog::CANCEL; break; }
+        if (le.MouseClickLeft(buttonWorld))
+        {
+            result = Dialog::WORLD;
+            break;
+        }
+        if (le.MouseClickLeft(buttonPuzzle))
+        {
+            result = Dialog::PUZZLE;
+            break;
+        }
+        if (le.MouseClickLeft(buttonInfo))
+        {
+            result = Dialog::INFO;
+            break;
+        }
+        if (le.MouseClickLeft(buttonDig) && buttonDig.isEnable())
+        {
+            result = Dialog::DIG;
+            break;
+        }
+        if (le.MouseClickLeft(buttonCancel) || Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
+        {
+            result = Dialog::CANCEL;
+            break;
+        }
 
-	// right info
-        if(le.MousePressRight(buttonWorld)) Dialog::Message("", _("View the entire world."), Font::BIG);
-        if(le.MousePressRight(buttonPuzzle)) Dialog::Message("", _("View the obelisk puzzle."), Font::BIG);
-        if(le.MousePressRight(buttonInfo)) Dialog::Message("", _("View information on the scenario you are currently playing."), Font::BIG);
-        if(le.MousePressRight(buttonDig)) Dialog::Message("", _("Dig for the Ultimate Artifact."), Font::BIG);
-        if(le.MousePressRight(buttonCancel)) Dialog::Message("", _("Exit this menu without doing anything."), Font::BIG);
+        // right info
+        if (le.MousePressRight(buttonWorld)) Dialog::Message("", _("View the entire world."), Font::BIG);
+        if (le.MousePressRight(buttonPuzzle)) Dialog::Message("", _("View the obelisk puzzle."), Font::BIG);
+        if (le.MousePressRight(buttonInfo))
+            Dialog::Message("", _("View information on the scenario you are currently playing."), Font::BIG);
+        if (le.MousePressRight(buttonDig)) Dialog::Message("", _("Dig for the Ultimate Artifact."), Font::BIG);
+        if (le.MousePressRight(buttonCancel))
+            Dialog::Message("", _("Exit this menu without doing anything."), Font::BIG);
     }
 
     // restore background

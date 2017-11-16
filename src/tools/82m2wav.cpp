@@ -27,20 +27,20 @@
 
 int main(int argc, char **argv)
 {
-    if(argc != 3)
+    if (argc != 3)
     {
-	std::cout << argv[0] << " infile.82m outfile.wav" << std::endl;
+        std::cout << argv[0] << " infile.82m outfile.wav" << std::endl;
 
-	return EXIT_SUCCESS;
+        return EXIT_SUCCESS;
     }
 
     std::fstream fd_data(argv[1], std::ios::in | std::ios::binary);
 
-    if(fd_data.fail())
+    if (fd_data.fail())
     {
-	std::cout << "error open file: " << argv[1] << std::endl;
+        std::cout << "error open file: " << argv[1] << std::endl;
 
-	return EXIT_SUCCESS;
+        return EXIT_SUCCESS;
     }
 
     fd_data.seekg(0, std::ios_base::end);
@@ -51,7 +51,7 @@ int main(int argc, char **argv)
     fd_data.close();
 
     std::fstream fd_body(argv[2], std::ios::out | std::ios::binary);
-    if(! fd_body.fail())
+    if (!fd_body.fail())
     {
         StreamBuf wavHeader(44);
         wavHeader.putLE32(0x46464952);          // RIFF
@@ -68,11 +68,11 @@ int main(int argc, char **argv)
         wavHeader.putLE32(0x61746164);          // DATA
         wavHeader.putLE32(size);                // size
 
-    	fd_body.write((const char*) wavHeader.data(), wavHeader.size());
-	fd_body.close();
+        fd_body.write((const char *) wavHeader.data(), wavHeader.size());
+        fd_body.close();
     }
 
-    delete [] body;
+    delete[] body;
 
     return EXIT_SUCCESS;
 }

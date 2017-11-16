@@ -28,7 +28,7 @@ StatusBar::StatusBar()
 {
 }
 
-void StatusBar::SetCenter(const Point & pt)
+void StatusBar::SetCenter(const Point &pt)
 {
     center = pt;
 }
@@ -39,9 +39,9 @@ void StatusBar::SetCenter(s32 cx, s32 cy)
     center.y = cy;
 }
 
-void StatusBar::ShowMessage(const std::string & msg)
+void StatusBar::ShowMessage(const std::string &msg)
 {
-    if(msg != prev)
+    if (msg != prev)
     {
         Cursor::Get().Hide();
         SetText(msg);
@@ -49,7 +49,7 @@ void StatusBar::ShowMessage(const std::string & msg)
         Show();
         Cursor::Get().Show();
         Display::Get().Flip();
-	prev = msg;
+        prev = msg;
     }
 }
 
@@ -59,7 +59,7 @@ void StatusBar::Redraw(void)
     Show();
 }
 
-const std::string & StatusBar::GetMessage(void) const
+const std::string &StatusBar::GetMessage(void) const
 {
     return prev;
 }

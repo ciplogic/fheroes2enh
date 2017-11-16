@@ -80,85 +80,85 @@ void TestMonsterSprite(void)
     // mainmenu loop
     while(le.HandleEvents())
     {
-	if(Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT)) break;
+    if(Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT)) break;
 
-	if(le.MouseClickLeft(pos))
-	{
+    if(le.MouseClickLeft(pos))
+    {
             u32 mons = troop.GetID();
             if(Dialog::SelectCount("Monster", Monster::PEASANT, Monster::WATER_ELEMENT, mons))
-	    {
-        	cursor.Hide();
-		troop.SetMonster(Monster(mons));
-		start = 0;
-		count = AGG::GetICNCount(troop.ICNFile());
-		frame = 0;
-        	cursor.Show();
-        	display.Flip();
-	    }
-	}
+        {
+            cursor.Hide();
+        troop.SetMonster(Monster(mons));
+        start = 0;
+        count = AGG::GetICNCount(troop.ICNFile());
+        frame = 0;
+            cursor.Show();
+            display.Flip();
+        }
+    }
 
-	if(le.MouseClickLeft(start_bar.GetRect()))
-	{
-	    u32 start2 = start;
-	    if(Dialog::SelectCount("Start", 0, AGG::GetICNCount(troop.ICNFile()) - 1, start2))
-	    {
-        	cursor.Hide();
-		start = start2;
-		if(start + count > AGG::GetICNCount(troop.ICNFile())) count = AGG::GetICNCount(troop.ICNFile()) - start;
-		start_bar.ShowMessage("start: " + GetString(start));
-        	cursor.Show();
-        	display.Flip();
-    	    }
-	}
+    if(le.MouseClickLeft(start_bar.GetRect()))
+    {
+        u32 start2 = start;
+        if(Dialog::SelectCount("Start", 0, AGG::GetICNCount(troop.ICNFile()) - 1, start2))
+        {
+            cursor.Hide();
+        start = start2;
+        if(start + count > AGG::GetICNCount(troop.ICNFile())) count = AGG::GetICNCount(troop.ICNFile()) - start;
+        start_bar.ShowMessage("start: " + GetString(start));
+            cursor.Show();
+            display.Flip();
+            }
+    }
 
-	if(le.MouseClickLeft(count_bar.GetRect()))
-	{
-	    u32 count2 = count;
-	    if(Dialog::SelectCount("Count", 1, AGG::GetICNCount(troop.ICNFile()), count2))
-	    {
-        	cursor.Hide();
-		count = count2;
-		frame = start;
-		count_bar.ShowMessage("count: " + GetString(count));
-        	cursor.Show();
-        	display.Flip();
-	    }
-	}
+    if(le.MouseClickLeft(count_bar.GetRect()))
+    {
+        u32 count2 = count;
+        if(Dialog::SelectCount("Count", 1, AGG::GetICNCount(troop.ICNFile()), count2))
+        {
+            cursor.Hide();
+        count = count2;
+        frame = start;
+        count_bar.ShowMessage("count: " + GetString(count));
+            cursor.Show();
+            display.Flip();
+        }
+    }
 
-	if(le.MouseClickLeft(speed_bar.GetRect()))
-	{
-	    u32 speed2 = speed;
-	    if(Dialog::SelectCount("Speed", 1, 50, speed2))
-	    {
-        	cursor.Hide();
-		speed = speed2;
-		frame = start;
-		speed_bar.ShowMessage("speed: " + GetString(speed));
-        	cursor.Show();
-        	display.Flip();
-	    }
-	}
+    if(le.MouseClickLeft(speed_bar.GetRect()))
+    {
+        u32 speed2 = speed;
+        if(Dialog::SelectCount("Speed", 1, 50, speed2))
+        {
+            cursor.Hide();
+        speed = speed2;
+        frame = start;
+        speed_bar.ShowMessage("speed: " + GetString(speed));
+            cursor.Show();
+            display.Flip();
+        }
+    }
 
         if(0 == (ticket % speed))
         {
             cursor.Hide();
             const Sprite & sprite = AGG::GetICN(troop.ICNFile(), frame);
-	    pos.x = 320 + sprite.x();
-	    pos.y = 240 + sprite.y();
-	    pos.w = sprite.w();
-	    pos.h = sprite.h();
-	    back.Restore();
-	    back.Save(pos);
+        pos.x = 320 + sprite.x();
+        pos.y = 240 + sprite.y();
+        pos.w = sprite.w();
+        pos.h = sprite.h();
+        back.Restore();
+        back.Save(pos);
             sprite.Blit(pos);
 
-	    frame_bar.ShowMessage("frame: " + GetString(frame));
-	    info_bar.ShowMessage("ox: " + GetString(sprite.x()) + ", oy: " + GetString(sprite.y()));
+        frame_bar.ShowMessage("frame: " + GetString(frame));
+        info_bar.ShowMessage("ox: " + GetString(sprite.x()) + ", oy: " + GetString(sprite.y()));
 
             cursor.Show();
             display.Flip();
 
-	    ++frame;
-	    if(frame >= start + count) frame = start;
+        ++frame;
+        if(frame >= start + count) frame = start;
         }
 
         ++ticket;

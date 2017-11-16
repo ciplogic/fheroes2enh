@@ -29,10 +29,10 @@
 
 int Dialog::Message(const std::string &header, const std::string &message, int ft, int buttons)
 {
-    Display & display = Display::Get();
+    Display &display = Display::Get();
 
     // cursor
-    Cursor & cursor = Cursor::Get();
+    Cursor &cursor = Cursor::Get();
     int oldthemes = cursor.Themes();
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
@@ -41,12 +41,12 @@ int Dialog::Message(const std::string &header, const std::string &message, int f
     TextBox textbox2(message, ft, BOXAREA_WIDTH);
 
     FrameBox box(10 + (header.size() ? textbox1.h() + 10 : 0) + textbox2.h(), buttons);
-    const Rect & pos = box.GetArea();
+    const Rect &pos = box.GetArea();
 
-    if(header.size()) textbox1.Blit(pos.x, pos.y + 10);
-    if(message.size()) textbox2.Blit(pos.x, pos.y + 10 + (header.size() ? textbox1.h() : 0) + 10);
+    if (header.size()) textbox1.Blit(pos.x, pos.y + 10);
+    if (message.size()) textbox2.Blit(pos.x, pos.y + 10 + (header.size() ? textbox1.h() : 0) + 10);
 
-    LocalEvent & le = LocalEvent::Get();
+    LocalEvent &le = LocalEvent::Get();
 
     ButtonGroups btnGroups(box.GetArea(), buttons);
     btnGroups.Draw();
@@ -57,10 +57,10 @@ int Dialog::Message(const std::string &header, const std::string &message, int f
     // message loop
     int result = Dialog::ZERO;
 
-    while(result == Dialog::ZERO && le.HandleEvents())
+    while (result == Dialog::ZERO && le.HandleEvents())
     {
-        if(!buttons && !le.MousePressRight()) break;
-	result = btnGroups.QueueEventProcessing();
+        if (!buttons && !le.MousePressRight()) break;
+        result = btnGroups.QueueEventProcessing();
     }
 
     cursor.Hide();

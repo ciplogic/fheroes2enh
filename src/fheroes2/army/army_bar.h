@@ -32,39 +32,48 @@ class Army;
 class ArmyBar : public Interface::ItemsActionBar<ArmyTroop>
 {
 public:
-    ArmyBar(Army*, bool mini, bool ro, bool change = false);
+    ArmyBar(Army *, bool mini, bool ro, bool change = false);
 
-    void        RedrawBackground(const Rect &, Surface &);
-    void        RedrawItem(ArmyTroop &, const Rect &, bool, Surface &);
+    void RedrawBackground(const Rect &, Surface &);
 
-    void	SetBackground(const Size &, const RGBA &);
-    void	SetArmy(Army*);
+    void RedrawItem(ArmyTroop &, const Rect &, bool, Surface &);
 
-    bool	isValid(void) const;
+    void SetBackground(const Size &, const RGBA &);
 
-    void        ResetSelected(void);
-    void        Redraw(Surface & dstsf = Display::Get());
+    void SetArmy(Army *);
 
-    bool        ActionBarSingleClick(const Point &, ArmyTroop &, const Rect &);
-    bool        ActionBarSingleClick(const Point &, ArmyTroop &, const Rect &, ArmyTroop &, const Rect &);
-    bool        ActionBarDoubleClick(const Point &, ArmyTroop &, const Rect &);
-    bool        ActionBarPressRight(const Point &, ArmyTroop &, const Rect &);
-    bool        ActionBarPressRight(const Point &, ArmyTroop &, const Rect &, ArmyTroop &, const Rect &);
+    bool isValid(void) const;
 
-    bool	ActionBarCursor(const Point &, ArmyTroop &, const Rect &);
-    bool	ActionBarCursor(const Point &, ArmyTroop &, const Rect &, ArmyTroop &, const Rect &);
+    void ResetSelected(void);
 
-    bool	QueueEventProcessing(std::string* = NULL);
-    bool	QueueEventProcessing(ArmyBar &, std::string* = NULL);
+    void Redraw(Surface &dstsf = Display::Get());
+
+    bool ActionBarSingleClick(const Point &, ArmyTroop &, const Rect &);
+
+    bool ActionBarSingleClick(const Point &, ArmyTroop &, const Rect &, ArmyTroop &, const Rect &);
+
+    bool ActionBarDoubleClick(const Point &, ArmyTroop &, const Rect &);
+
+    bool ActionBarPressRight(const Point &, ArmyTroop &, const Rect &);
+
+    bool ActionBarPressRight(const Point &, ArmyTroop &, const Rect &, ArmyTroop &, const Rect &);
+
+    bool ActionBarCursor(const Point &, ArmyTroop &, const Rect &);
+
+    bool ActionBarCursor(const Point &, ArmyTroop &, const Rect &, ArmyTroop &, const Rect &);
+
+    bool QueueEventProcessing(std::string * = NULL);
+
+    bool QueueEventProcessing(ArmyBar &, std::string * = NULL);
 
 protected:
-    Army*		army;
-    Surface             backsf;
-    SpriteMove          spcursor;
-    bool                use_mini_sprite;
-    bool                read_only;
-    bool                can_change;
-    std::string		msg;
+    Army *army;
+    Surface backsf;
+    SpriteMove spcursor;
+    bool use_mini_sprite;
+    bool read_only;
+    bool can_change;
+    std::string msg;
 };
 
 #endif

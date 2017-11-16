@@ -28,15 +28,16 @@
 #include "rand.h"
 
 
-void Rand::Init(void){ std::srand((u32) std::time(0)); }
+void Rand::Init(void)
+{ std::srand((u32) std::time(0)); }
 
 u32 Rand::Get(u32 min, u32 max)
 {
-    if(max)
+    if (max)
     {
-	if(min > max) std::swap(min, max);
+        if (min > max) std::swap(min, max);
 
-	return min + Get(max - min);
+        return min + Get(max - min);
     }
 
     return static_cast<u32>((min + 1) * (std::rand() / (RAND_MAX + 1.0)));
@@ -54,8 +55,8 @@ void Rand::Queue::Reset(void)
 
 void Rand::Queue::Push(s32 value, u32 percent)
 {
-    if(percent)
-	push_back(std::make_pair(value, percent));
+    if (percent)
+        push_back(std::make_pair(value, percent));
 }
 
 size_t Rand::Queue::Size(void) const
@@ -70,25 +71,25 @@ s32 Rand::Queue::Get(void)
     // get max
     it = begin();
     u32 max = 0;
-    for(; it != end(); ++it) max += (*it).second;
+    for (; it != end(); ++it) max += (*it).second;
 
     // set weight (from 100)
     it = begin();
-    for(; it != end(); ++it) (*it).second = 100 * (*it).second / max;
+    for (; it != end(); ++it) (*it).second = 100 * (*it).second / max;
 
     // get max
     max = 0;
     it = begin();
-    for(; it != end(); ++it) max += (*it).second;
+    for (; it != end(); ++it) max += (*it).second;
 
     u8 rand = Rand::Get(max);
     u8 amount = 0;
 
     it = begin();
-    for(; it != end(); ++it)
+    for (; it != end(); ++it)
     {
         amount += (*it).second;
-        if(rand <= amount) return (*it).first;
+        if (rand <= amount) return (*it).first;
     }
 
     ERROR("weight not found, return 0");

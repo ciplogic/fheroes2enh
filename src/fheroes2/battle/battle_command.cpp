@@ -35,46 +35,48 @@ Battle::Command::Command(int cmd) : type(cmd)
 {
 }
 
-Battle::Command & Battle::Command::operator<< (const int & val)
+Battle::Command &Battle::Command::operator<<(const int &val)
 {
     push_back(val);
     return *this;
 }
 
-Battle::Command & Battle::Command::operator>> (int & val)
+Battle::Command &Battle::Command::operator>>(int &val)
 {
-    if(size())
+    if (size())
     {
-	val = back();
-	pop_back();
+        val = back();
+        pop_back();
     }
     return *this;
 }
 
 int Battle::Command::GetValue(void)
 {
-    int val = 0; *this >> val;
+    int val = 0;
+    *this >> val;
     return val;
 }
 
-Battle::Command::Command(int cmd, int param1, int param2, const Indexes & param3) : type(cmd)
+Battle::Command::Command(int cmd, int param1, int param2, const Indexes &param3) : type(cmd)
 {
-    switch(type)
+    switch (type)
     {
         case MSG_BATTLE_MOVE:
-	    for(Indexes::const_reverse_iterator
-		it = param3.rbegin(); it != param3.rend(); ++it)
-		    *this << *it;
+            for (Indexes::const_reverse_iterator
+                         it = param3.rbegin(); it != param3.rend(); ++it)
+                *this << *it;
             *this << param3.size() << param2 << param1;  // path, dst, uid
             break;
 
-        default: break;
+        default:
+            break;
     }
 }
 
 Battle::Command::Command(int cmd, int param1, int param2, int param3, int param4) : type(cmd)
 {
-    switch(type)
+    switch (type)
     {
         case MSG_BATTLE_AUTO:
             *this << param1; // color
@@ -85,14 +87,14 @@ Battle::Command::Command(int cmd, int param1, int param2, int param3, int param4
             break;
 
         case MSG_BATTLE_TOWER:
-	    *this << param2 << param1; // enemy uid, type
+            *this << param2 << param1; // enemy uid, type
             break;
 
         case MSG_BATTLE_CATAPULT: // battle_arena.cpp
             break;
 
         case MSG_BATTLE_CAST:
-            switch(param1)
+            switch (param1)
             {
                 case Spell::MIRRORIMAGE:
                     *this << param2 << param1; // who, spell
@@ -128,6 +130,7 @@ Battle::Command::Command(int cmd, int param1, int param2, int param3, int param4
             *this << param2 << param1; // state, uid
             break;
 
-        default: break;
+        default:
+            break;
     }
 }

@@ -46,37 +46,37 @@ int Recruits::GetID2(void) const
     return second;
 }
 
-const Heroes* Recruits::GetHero1(void) const
+const Heroes *Recruits::GetHero1(void) const
 {
     return world.GetHeroes(first);
 }
 
-const Heroes* Recruits::GetHero2(void) const
+const Heroes *Recruits::GetHero2(void) const
 {
     return world.GetHeroes(second);
 }
 
-Heroes* Recruits::GetHero1(void)
+Heroes *Recruits::GetHero1(void)
 {
     return world.GetHeroes(first);
 }
 
-Heroes* Recruits::GetHero2(void)
+Heroes *Recruits::GetHero2(void)
 {
     return world.GetHeroes(second);
 }
 
-void Recruits::SetHero1(const Heroes* hero)
+void Recruits::SetHero1(const Heroes *hero)
 {
     first = hero ? hero->hid : Heroes::UNKNOWN;
 }
 
-void Recruits::SetHero2(const Heroes* hero)
+void Recruits::SetHero2(const Heroes *hero)
 {
     second = hero ? hero->hid : Heroes::UNKNOWN;
 }
 
-StreamBase & operator>> (StreamBase & sb, Recruits & rt)
+StreamBase &operator>>(StreamBase &sb, Recruits &rt)
 {
     return sb >> rt.first >> rt.second;
 }
