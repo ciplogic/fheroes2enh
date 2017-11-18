@@ -235,8 +235,7 @@ void Battle::EagleEyeSkillAction(HeroBase &hero, const SpellStorage &spells, boo
     }
 
     // add new spell
-    for (SpellStorage::const_iterator
-                 it = new_spells.begin(); it != new_spells.end(); ++it)
+    for (auto it = new_spells.begin(); it != new_spells.end(); ++it)
     {
         const Spell &sp = *it;
         if (local)
