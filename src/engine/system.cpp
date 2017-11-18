@@ -63,6 +63,7 @@ extern HWND SDL_Window;
 
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <clocale>
 
 #if defined(__SYMBIAN32__)
 #define SEPARATOR '\\'

@@ -222,7 +222,7 @@ enum
 
 struct chunk_t
 {
-    chunk_t() : data(NULL), length(0), position(0), volume1(0), state(0)
+    chunk_t() : data(nullptr), length(0), position(0), volume1(0), state(0)
     {};
 
     bool this_ptr(const chunk_t *ch) const
@@ -377,12 +377,14 @@ int Mixer::Play(const u8 *ptr, u32 size, int channel, bool loop)
 {
     if (valid && ptr)
     {
-        chunk_t *ch = NULL;
+        chunk_t *ch = nullptr;
 
         if (0 > channel)
         {
-            std::vector<chunk_t>::iterator it = std::find_if(chunks.begin(), chunks.end(),
-                                                             std::bind2nd(std::mem_fun_ref(&chunk_t::this_ptr), ptr));
+            //TODO: Fix to compile with C++ 11
+            auto it = chunks.end();
+                    //std::find_if(chunks.begin(), chunks.end(),
+                      //                                       std::bind2nd(std::mem_fun_ref(&chunk_t::this_ptr), ptr));
             if (it == chunks.end())
             {
                 it = std::find_if(chunks.begin() + reserved_channels, chunks.end(), PredicateIsFreeSound);
@@ -419,8 +421,7 @@ void Mixer::Pause(int ch)
 
         if (0 > ch)
         {
-            for (std::vector<chunk_t>::iterator
-                         it = chunks.begin(); it != chunks.end(); ++it)
+            for (auto it = chunks.begin(); it != chunks.end(); ++it)
                 if ((*it).state & MIX_PLAY)
                 {
                     paused.push_back((*it).data);
@@ -442,8 +443,7 @@ void Mixer::Resume(int ch)
         if (0 > ch)
         {
             if (paused.size())
-                for (std::vector<chunk_t>::iterator
-                             it = chunks.begin(); it != chunks.end(); ++it)
+                for (auto it = chunks.begin(); it != chunks.end(); ++it)
                     if (paused.end() != std::find(paused.begin(), paused.end(), (*it).data))
                         (*it).state |= MIX_PLAY;
 
@@ -483,8 +483,7 @@ void Mixer::Reduce(void)
 {
     if (valid)
     {
-        for (std::vector<chunk_t>::iterator
-                     it = chunks.begin(); it != chunks.end(); ++it)
+        for (auto it = chunks.begin(); it != chunks.end(); ++it)
         {
             if ((*it).state & MIX_PLAY)
             {

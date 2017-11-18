@@ -26,6 +26,7 @@
 #include <functional>
 #include "gamedefs.h"
 #include "direction.h"
+#include "serialize.h"
 #include "skill.h"
 #include "artifact.h"
 #include "army_troop.h"

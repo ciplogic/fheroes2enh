@@ -23,6 +23,7 @@
 #define H2HEROPATH_H
 
 #include <list>
+#include "serialize.h"
 #include "gamedefs.h"
 #include "direction.h"
 

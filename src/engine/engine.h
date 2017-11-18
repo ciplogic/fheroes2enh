@@ -32,7 +32,6 @@
 #include "rand.h"
 #include "font.h"
 #include "tools.h"
-#include "serialize.h"
 #include "translations.h"
 #include "system.h"
 

@@ -38,6 +38,8 @@
 #include "game_over.h"
 #include "maps_fileinfo.h"
 
+#include "serialize.h"
+
 #define LENGTHNAME        16
 #define LENGTHDESCRIPTION    143
 

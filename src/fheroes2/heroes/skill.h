@@ -27,6 +27,7 @@
 #include <vector>
 #include <utility>
 #include "gamedefs.h"
+#include "serialize.h"
 
 void StringAppendModifiers(std::string &, int);
 

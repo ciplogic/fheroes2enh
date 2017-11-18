@@ -65,8 +65,12 @@ std::string GetCaption(void)
 {
     return std::string("Free Heroes II, version: " + Settings::GetVersion());
 }
-
+#define MACOSX
+#ifdef MACOSX
+int SDL_main(int argc, char **argv)
+#else
 int main(int argc, char **argv)
+#endif
 {
     Settings &conf = Settings::Get();
     int test = 0;

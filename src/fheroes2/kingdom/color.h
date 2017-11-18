@@ -24,6 +24,7 @@
 
 #include <vector>
 #include "gamedefs.h"
+#include "serialize.h"
 
 namespace BarrierColor
 {

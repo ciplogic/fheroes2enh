@@ -25,7 +25,6 @@
 #include <vector>
 #include <string>
 #include <utility>
-#include <functional>
 #include "types.h"
 
 struct Point
@@ -115,14 +114,14 @@ SDL_Rect SDLRect(const Rect &);
 
 struct Points : std::vector<Point>
 {
-    Rect GetRect(void) const;
+    Rect GetRect() const;
 };
 
 struct Rects : std::vector<Rect>
 {
     s32 GetIndex(const Point &) const;
 
-    Rect GetRect(void) const;
+    Rect GetRect() const;
 };
 
 #endif

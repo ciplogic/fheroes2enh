@@ -40,6 +40,8 @@
 #define TAG_MTHD    0x4D546864
 #define TAG_MTRK    0x4D54726B
 
+#include "serialize.h"
+
 struct pack_t : public std::pair<u32, u32> /* delta offset */
 {
     pack_t() : std::pair<u32, u32>(0, 0)
@@ -309,8 +311,7 @@ struct MidEvent
 
 StreamBuf &operator<<(StreamBuf &sb, const MidEvent &st)
 {
-    for (std::vector<u8>::const_iterator
-                 it = st.pack.begin(); it != st.pack.end(); ++it)
+    for (auto it = st.pack.begin(); it != st.pack.end(); ++it)
         sb << *it;
     sb << st.data[0];
     if (2 == st.data[3])
@@ -320,7 +321,7 @@ StreamBuf &operator<<(StreamBuf &sb, const MidEvent &st)
     return sb;
 }
 
-struct MidEvents : std::list<MidEvent>
+struct MidEvents : public std::list<MidEvent>
 {
     size_t count(void) const
     {
@@ -354,8 +355,8 @@ struct MidEvents : std::list<MidEvent>
                 // sort duration
                 notesoff.sort();
 
-                std::list<meta_t>::iterator it1 = notesoff.begin();
-                std::list<meta_t>::iterator it2 = notesoff.end();
+                auto it1 = notesoff.begin();
+                auto it2 = notesoff.end();
                 u32 delta2 = 0;
 
                 // apply delta
