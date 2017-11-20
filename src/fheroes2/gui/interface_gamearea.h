@@ -61,19 +61,19 @@ namespace Interface
     public:
         GameArea(Basic &);
 
-        void Build(void);
+        void Build();
 
-        const Rect &GetArea(void) const;
+        const Rect &GetArea() const;
 
-        const Point &GetMapsPos(void) const;
+        const Point &GetMapsPos() const;
 
-        const Rect &GetRectMaps(void) const;
+        const Rect &GetRectMaps() const;
 
-        int GetScrollCursor(void) const;
+        int GetScrollCursor() const;
 
-        bool NeedScroll(void) const;
+        bool NeedScroll() const;
 
-        void Scroll(void);
+        void Scroll();
 
         void SetScroll(int);
 
@@ -81,7 +81,7 @@ namespace Interface
 
         void SetCenter(const Point &);
 
-        void SetRedraw(void) const;
+        void SetRedraw() const;
 
         void Redraw(Surface &dst, int) const;
 
@@ -91,9 +91,9 @@ namespace Interface
 
         void BlitOnTile(Surface &, const Sprite &, const Point &) const;
 
-        void SetUpdateCursor(void);
+        void SetUpdateCursor();
 
-        void QueueEventProcessing(void);
+        void QueueEventProcessing();
 
         s32 GetIndexFromMousePoint(const Point &) const;
 

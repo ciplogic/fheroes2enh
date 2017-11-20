@@ -100,13 +100,13 @@ public:
 
     bool operator>=(const Funds &) const;
 
-    int GetValidItems(void) const;
+    int GetValidItems() const;
 
-    u32 GetValidItemsCount(void) const;
+    u32 GetValidItemsCount() const;
 
-    void Reset(void);
+    void Reset();
 
-    std::string String(void) const;
+    std::string String() const;
 
     s32 wood;
     s32 mercury;
@@ -146,11 +146,11 @@ namespace Resource
     public:
         BoxSprite(const Funds &, u32);
 
-        const Rect &GetArea(void) const;
+        const Rect &GetArea() const;
 
         void SetPos(s32, s32);
 
-        void Redraw(void) const;
+        void Redraw() const;
 
         const Funds rs;
     };

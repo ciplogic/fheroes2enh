@@ -61,7 +61,7 @@ struct Size
 
     Size(const Point &);
 
-    bool isEmpty(void) const;
+    bool isEmpty() const;
 
     bool operator==(const Size &) const;
 

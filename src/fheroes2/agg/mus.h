@@ -85,7 +85,7 @@ namespace MUS
 
     int FromMapObject(int);
 
-    int GetBattleRandom(void);
+    int GetBattleRandom();
 }
 
 #endif

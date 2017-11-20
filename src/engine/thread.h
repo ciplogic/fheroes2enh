@@ -43,13 +43,13 @@ namespace SDL
 
         void Create(int (*)(void *), void *param = nullptr);
 
-        int Wait(void);
+        int Wait();
 
-        void Kill(void);
+        void Kill();
 
-        bool IsRun(void) const;
+        bool IsRun() const;
 
-        u32 GetID(void) const;
+        u32 GetID() const;
 
     private:
         SDL_Thread *thread;
@@ -66,11 +66,11 @@ namespace SDL
 
         Mutex &operator=(const Mutex &);
 
-        void Create(void);
+        void Create();
 
-        bool Lock(void) const;
+        bool Lock() const;
 
-        bool Unlock(void) const;
+        bool Unlock() const;
 
     private:
 
@@ -82,11 +82,11 @@ namespace SDL
     public:
         Timer();
 
-        bool IsValid(void) const;
+        bool IsValid() const;
 
         void Run(u32, u32 (*)(u32, void *), void *param = nullptr);
 
-        void Remove(void);
+        void Remove();
 
     private:
         SDL_TimerID id;
@@ -97,11 +97,11 @@ namespace SDL
     public:
         Time();
 
-        void Start(void);
+        void Start();
 
-        void Stop(void);
+        void Stop();
 
-        u32 Get(void) const;
+        u32 Get() const;
 
         void Print(const char *header = nullptr) const;
 

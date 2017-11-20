@@ -199,31 +199,31 @@ namespace Maps
 
         void Init(s32, const MP2::mp2tile_t &);
 
-        s32 GetIndex(void) const;
+        s32 GetIndex() const;
 
-        Point GetCenter(void) const;
+        Point GetCenter() const;
 
         int GetObject(bool skip_hero = true) const;
 
         u32 GetObjectUID(int obj) const;
 
-        int GetQuantity1(void) const
+        int GetQuantity1() const
         { return quantity1; }
 
-        int GetQuantity2(void) const
+        int GetQuantity2() const
         { return quantity2; }
 
-        int GetPassable(void) const;
+        int GetPassable() const;
 
-        int GetGround(void) const;
+        int GetGround() const;
 
-        bool isWater(void) const;
+        bool isWater() const;
 
-        u32 TileSpriteIndex(void) const;
+        u32 TileSpriteIndex() const;
 
-        u32 TileSpriteShape(void) const;
+        u32 TileSpriteShape() const;
 
-        Surface GetTileSurface(void) const;
+        Surface GetTileSurface() const;
 
         bool isPassable(const Heroes &) const;
 
@@ -234,9 +234,9 @@ namespace Maps
         bool isObject(int obj) const
         { return obj == mp2_object; };
 
-        bool isStream(void) const;
+        bool isStream() const;
 
-        bool GoodForUltimateArtifact(void) const;
+        bool GoodForUltimateArtifact() const;
 
         TilesAddon *FindAddonICN1(int icn1);
 
@@ -256,9 +256,9 @@ namespace Maps
 
         void SetIndex(int);
 
-        void FixObject(void);
+        void FixObject();
 
-        void UpdatePassable(void);
+        void UpdatePassable();
 
         void CaptureFlags32(int obj, int col);
 
@@ -290,77 +290,77 @@ namespace Maps
 
         void AddonsPushLevel2(const TilesAddon &);
 
-        void AddonsSort(void);
+        void AddonsSort();
 
         void Remove(u32 uniq);
 
-        void RemoveObjectSprite(void);
+        void RemoveObjectSprite();
 
-        std::string String(void) const;
+        std::string String() const;
 
         bool isFog(int color) const;
 
         void ClearFog(int color);
 
         /* monster operation */
-        bool MonsterJoinConditionSkip(void) const;
+        bool MonsterJoinConditionSkip() const;
 
-        bool MonsterJoinConditionMoney(void) const;
+        bool MonsterJoinConditionMoney() const;
 
-        bool MonsterJoinConditionFree(void) const;
+        bool MonsterJoinConditionFree() const;
 
-        bool MonsterJoinConditionForce(void) const;
+        bool MonsterJoinConditionForce() const;
 
-        int MonsterJoinCondition(void) const;
+        int MonsterJoinCondition() const;
 
         void MonsterSetJoinCondition(int);
 
-        void MonsterSetFixedCount(void);
+        void MonsterSetFixedCount();
 
-        bool MonsterFixedCount(void) const;
+        bool MonsterFixedCount() const;
 
         void MonsterSetCount(u32 count);
 
-        u32 MonsterCount(void) const;
+        u32 MonsterCount() const;
 
-        bool CaptureObjectIsProtection(void) const;
+        bool CaptureObjectIsProtection() const;
 
         /* object quantity operation */
-        void QuantityUpdate(void);
+        void QuantityUpdate();
 
-        void QuantityReset(void);
+        void QuantityReset();
 
-        bool QuantityIsValid(void) const;
+        bool QuantityIsValid() const;
 
         void QuantitySetColor(int);
 
-        int QuantityTeleportType(void) const;
+        int QuantityTeleportType() const;
 
-        int QuantityVariant(void) const;
+        int QuantityVariant() const;
 
-        int QuantityExt(void) const;
+        int QuantityExt() const;
 
-        int QuantityColor(void) const;
+        int QuantityColor() const;
 
-        u32 QuantityGold(void) const;
+        u32 QuantityGold() const;
 
-        Spell QuantitySpell(void) const;
+        Spell QuantitySpell() const;
 
-        Skill::Secondary QuantitySkill(void) const;
+        Skill::Secondary QuantitySkill() const;
 
-        Artifact QuantityArtifact(void) const;
+        Artifact QuantityArtifact() const;
 
-        ResourceCount QuantityResourceCount(void) const;
+        ResourceCount QuantityResourceCount() const;
 
-        Funds QuantityFunds(void) const;
+        Funds QuantityFunds() const;
 
-        Monster QuantityMonster(void) const;
+        Monster QuantityMonster() const;
 
-        Troop QuantityTroop(void) const;
+        Troop QuantityTroop() const;
 
         void SetObjectPassable(bool);
 
-        Heroes *GetHeroes(void) const;
+        Heroes *GetHeroes() const;
 
         void SetHeroes(Heroes *);
 
@@ -371,13 +371,13 @@ namespace Maps
         static void FixedPreload(Tiles &);
 
     private:
-        TilesAddon *FindFlags(void);
+        TilesAddon *FindFlags();
 
         void CorrectFlags32(u32 index, bool);
 
-        void RemoveJailSprite(void);
+        void RemoveJailSprite();
 
-        void RemoveBarrierSprite(void);
+        void RemoveBarrierSprite();
 
         bool isLongObject(int direction);
 
@@ -399,7 +399,7 @@ namespace Maps
 
         void QuantitySetTeleportType(int);
 
-        int GetQuantity3(void) const;
+        int GetQuantity3() const;
 
         void SetQuantity3(int);
 

@@ -42,9 +42,9 @@ public:
 
     void SetArmy(Army *);
 
-    bool isValid(void) const;
+    bool isValid() const;
 
-    void ResetSelected(void);
+    void ResetSelected();
 
     void Redraw(Surface &dstsf = Display::Get());
 

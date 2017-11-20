@@ -193,7 +193,7 @@ int MUS::FromMapObject(int object)
     }
 }
 
-int MUS::GetBattleRandom(void)
+int MUS::GetBattleRandom()
 {
     switch (Rand::Get(1, 3))
     {

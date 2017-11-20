@@ -51,9 +51,9 @@ namespace Battle
 
         void SortFastest(bool);
 
-        void SortStrongest(void);
+        void SortStrongest();
 
-        void SortWeakest(void);
+        void SortWeakest();
     };
 
     enum
@@ -68,33 +68,33 @@ namespace Battle
 
         ~Force();
 
-        HeroBase *GetCommander(void);
+        HeroBase *GetCommander();
 
-        const HeroBase *GetCommander(void) const;
+        const HeroBase *GetCommander() const;
 
-        bool isValid(void) const;
+        bool isValid() const;
 
         bool HasMonster(const Monster &) const;
 
-        u32 GetDeadHitPoints(void) const;
+        u32 GetDeadHitPoints() const;
 
-        u32 GetDeadCounts(void) const;
+        u32 GetDeadCounts() const;
 
-        int GetColor(void) const;
+        int GetColor() const;
 
-        int GetControl(void) const;
+        int GetControl() const;
 
-        u32 GetSurrenderCost(void) const;
+        u32 GetSurrenderCost() const;
 
-        Troops GetKilledTroops(void) const;
+        Troops GetKilledTroops() const;
 
-        bool SetIdleAnimation(void);
+        bool SetIdleAnimation();
 
-        bool NextIdleAnimation(void);
+        bool NextIdleAnimation();
 
-        void NewTurn(void);
+        void NewTurn();
 
-        void SyncArmyCount(void);
+        void SyncArmyCount();
 
         static Unit *GetCurrentUnit(const Force &, const Force &, Unit *last, Units *all, bool part1);
 

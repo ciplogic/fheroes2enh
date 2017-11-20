@@ -36,26 +36,26 @@ namespace Interface
 
         void SetPos(s32, s32);
 
-        void SetRedraw(void) const;
+        void SetRedraw() const;
 
-        void Build(void);
+        void Build();
 
-        void Redraw(void);
+        void Redraw();
 
         void SetHide(bool);
 
-        void ResetAreaSize(void);
+        void ResetAreaSize();
 
-        void QueueEventProcessing(void);
+        void QueueEventProcessing();
 
     private:
-        void SavePosition(void);
+        void SavePosition();
 
-        void Generate(void);
+        void Generate();
 
         void RedrawObjects(int color = 0xFF);
 
-        void RedrawCursor(void);
+        void RedrawCursor();
 
         void ChangeAreaSize(const Size &);
 

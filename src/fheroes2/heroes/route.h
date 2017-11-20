@@ -40,15 +40,15 @@ namespace Route
         Step(s32 index, int dir, u32 cost) : from(index), direction(dir), penalty(cost)
         {}
 
-        s32 GetIndex(void) const;
+        s32 GetIndex() const;
 
-        u32 GetPenalty(void) const;
+        u32 GetPenalty() const;
 
-        s32 GetFrom(void) const;
+        s32 GetFrom() const;
 
-        int GetDirection(void) const;
+        int GetDirection() const;
 
-        bool isBad(void) const;
+        bool isBad() const;
 
     protected:
         friend StreamBase &operator<<(StreamBase &, const Step &);
@@ -69,48 +69,48 @@ namespace Route
 
         Path &operator=(const Path &);
 
-        s32 GetDestinationIndex(void) const;
+        s32 GetDestinationIndex() const;
 
-        s32 GetLastIndex(void) const;
+        s32 GetLastIndex() const;
 
-        s32 GetDestinedIndex(void) const;
+        s32 GetDestinedIndex() const;
 
-        int GetFrontDirection(void) const;
+        int GetFrontDirection() const;
 
-        u32 GetFrontPenalty(void) const;
+        u32 GetFrontPenalty() const;
 
-        u32 GetTotalPenalty(void) const;
+        u32 GetTotalPenalty() const;
 
         bool Calculate(const s32 &, int limit = -1);
 
-        void Show(void)
+        void Show()
         { hide = false; }
 
-        void Hide(void)
+        void Hide()
         { hide = true; }
 
-        void Reset(void);
+        void Reset();
 
-        void PopFront(void);
+        void PopFront();
 
-        void PopBack(void);
+        void PopBack();
 
-        void RescanObstacle(void);
+        void RescanObstacle();
 
-        void RescanPassable(void);
+        void RescanPassable();
 
-        bool isComplete(void) const;
+        bool isComplete() const;
 
-        bool isValid(void) const;
+        bool isValid() const;
 
-        bool isShow(void) const
+        bool isShow() const
         { return !hide; }
 
-        bool hasObstacle(void) const;
+        bool hasObstacle() const;
 
-        std::string String(void) const;
+        std::string String() const;
 
-        s32 GetAllowStep(void) const;
+        s32 GetAllowStep() const;
 
         static int GetIndexSprite(int from, int to, int mod);
 

@@ -39,17 +39,17 @@ class StreamBase
 protected:
     size_t flags;
 
-    virtual int get8(void) = 0;
+    virtual int get8() = 0;
 
     virtual void put8(char) = 0;
 
-    virtual size_t sizeg(void) const = 0;
+    virtual size_t sizeg() const = 0;
 
-    virtual size_t sizep(void) const = 0;
+    virtual size_t sizep() const = 0;
 
-    virtual size_t tellg(void) const = 0;
+    virtual size_t tellg() const = 0;
 
-    virtual size_t tellp(void) const = 0;
+    virtual size_t tellp() const = 0;
 
     void setconstbuf(bool);
 
@@ -64,21 +64,21 @@ public:
 
     void setbigendian(bool);
 
-    bool isconstbuf(void) const;
+    bool isconstbuf() const;
 
-    bool fail(void) const;
+    bool fail() const;
 
-    bool bigendian(void) const;
+    bool bigendian() const;
 
     virtual void skip(size_t) = 0;
 
-    virtual int getBE16(void) = 0;
+    virtual int getBE16() = 0;
 
-    virtual int getLE16(void) = 0;
+    virtual int getLE16() = 0;
 
-    virtual int getBE32(void) = 0;
+    virtual int getBE32() = 0;
 
-    virtual int getLE32(void) = 0;
+    virtual int getLE32() = 0;
 
     virtual void putBE32(u32) = 0;
 
@@ -93,15 +93,15 @@ public:
 
     virtual void putRaw(const char *, size_t) = 0;
 
-    int get16(void);
+    int get16();
 
-    int get32(void);
+    int get32();
 
     void put16(u16);
 
     void put32(u32);
 
-    int get(void)
+    int get()
     { return get8(); } // get char
     void put(int ch)
     { put8(ch); }
@@ -258,23 +258,23 @@ public:
 
     StreamBuf &operator=(const StreamBuf &);
 
-    const u8 *data(void) const;
+    const u8 *data() const;
 
-    size_t size(void) const;
+    size_t size() const;
 
-    size_t capacity(void) const;
+    size_t capacity() const;
 
     void seek(size_t);
 
     void skip(size_t);
 
-    int getBE16(void);
+    int getBE16();
 
-    int getLE16(void);
+    int getLE16();
 
-    int getBE32(void);
+    int getBE32();
 
-    int getLE32(void);
+    int getLE32();
 
     void putBE32(u32);
 
@@ -291,23 +291,23 @@ public:
     std::string toString(size_t = 0 /* all data */);
 
 protected:
-    void reset(void);
+    void reset();
 
-    size_t tellg(void) const;
+    size_t tellg() const;
 
-    size_t tellp(void) const;
+    size_t tellp() const;
 
-    size_t sizeg(void) const;
+    size_t sizeg() const;
 
-    size_t sizep(void) const;
+    size_t sizep() const;
 
     void copy(const StreamBuf &);
 
     void realloc(size_t);
 
-    void setfail(void);
+    void setfail();
 
-    int get8(void);
+    int get8();
 
     void put8(char);
 
@@ -335,13 +335,13 @@ public:
 
     ~StreamFile();
 
-    size_t size(void) const;
+    size_t size() const;
 
-    size_t tell(void) const;
+    size_t tell() const;
 
     bool open(const std::string &, const char *mode);
 
-    void close(void);
+    void close();
 
     StreamBuf toStreamBuf(size_t = 0 /* all data */);
 
@@ -349,13 +349,13 @@ public:
 
     void skip(size_t);
 
-    int getBE16(void);
+    int getBE16();
 
-    int getLE16(void);
+    int getLE16();
 
-    int getBE32(void);
+    int getBE32();
 
-    int getLE32(void);
+    int getLE32();
 
     void putBE32(u32);
 
@@ -375,15 +375,15 @@ protected:
     StreamFile &operator=(const StreamFile &)
     { return *this; }
 
-    size_t sizeg(void) const;
+    size_t sizeg() const;
 
-    size_t sizep(void) const;
+    size_t sizep() const;
 
-    size_t tellg(void) const;
+    size_t tellg() const;
 
-    size_t tellp(void) const;
+    size_t tellp() const;
 
-    int get8(void);
+    int get8();
 
     void put8(char);
 };

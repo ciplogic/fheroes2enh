@@ -35,17 +35,17 @@ class Kingdom;
 
 namespace PocketPC
 {
-    int MainMenu(void);
+    int MainMenu();
 
-    int NewGame(void);
+    int NewGame();
 
-    int NewMulti(void);
+    int NewMulti();
 
-    int SelectScenario(void);
+    int SelectScenario();
 
-    int ScenarioInfo(void);
+    int ScenarioInfo();
 
-    int LoadGame(void);
+    int LoadGame();
 
     int HeroesOpenDialog(Heroes &, bool);
 

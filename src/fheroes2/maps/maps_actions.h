@@ -43,10 +43,10 @@ public:
     virtual ~ActionSimple()
     {}
 
-    int GetType(void) const
+    int GetType() const
     { return type; }
 
-    u32 GetUID(void) const
+    u32 GetUID() const
     { return uid; }
 
     void SetUID(u32 v)

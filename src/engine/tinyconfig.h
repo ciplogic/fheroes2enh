@@ -37,7 +37,7 @@ public:
 
     bool Save(const std::string &) const;
 
-    void Clear(void);
+    void Clear();
 
     void AddEntry(const std::string &, const std::string &, bool uniq = true);
 

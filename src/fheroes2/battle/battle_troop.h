@@ -47,9 +47,9 @@ namespace Battle
 
         bool isMode(u32) const;
 
-        bool isZeroDuration(void) const;
+        bool isZeroDuration() const;
 
-        void DecreaseDuration(void);
+        void DecreaseDuration();
     };
 
     struct ModesAffected : public std::vector<ModeDuration>
@@ -62,9 +62,9 @@ namespace Battle
 
         void RemoveMode(u32);
 
-        void DecreaseDuration(void);
+        void DecreaseDuration();
 
-        u32 FindZeroDuration(void) const;
+        u32 FindZeroDuration() const;
     };
 
     StreamBase &operator<<(StreamBase &, const ModesAffected &);
@@ -86,64 +86,64 @@ namespace Battle
 
         bool isModes(u32) const;
 
-        bool isBattle(void) const;
+        bool isBattle() const;
 
-        std::string GetShotString(void) const;
+        std::string GetShotString() const;
 
-        std::string GetSpeedString(void) const;
+        std::string GetSpeedString() const;
 
-        u32 GetHitPointsLeft(void) const;
+        u32 GetHitPointsLeft() const;
 
         u32 GetAffectedDuration(u32) const;
 
-        u32 GetSpeed(void) const;
+        u32 GetSpeed() const;
 
         Surface GetContour(int) const;
 
-        void InitContours(void);
+        void InitContours();
 
         void SetMirror(Unit *);
 
-        void SetRandomMorale(void);
+        void SetRandomMorale();
 
-        void SetRandomLuck(void);
+        void SetRandomLuck();
 
-        void NewTurn(void);
+        void NewTurn();
 
-        bool isValid(void) const;
+        bool isValid() const;
 
-        bool isArchers(void) const;
+        bool isArchers() const;
 
-        bool isFly(void) const;
+        bool isFly() const;
 
-        bool isTwiceAttack(void) const;
+        bool isTwiceAttack() const;
 
-        bool AllowResponse(void) const;
+        bool AllowResponse() const;
 
-        bool isHandFighting(void) const;
+        bool isHandFighting() const;
 
-        bool isReflect(void) const;
+        bool isReflect() const;
 
-        bool isHaveDamage(void) const;
+        bool isHaveDamage() const;
 
         bool isMagicResist(const Spell &, u32) const;
 
-        bool isMagicAttack(void) const;
+        bool isMagicAttack() const;
 
-        bool OutOfWalls(void) const;
+        bool OutOfWalls() const;
 
 
         std::string String(bool more = false) const;
 
-        u32 GetUID(void) const;
+        u32 GetUID() const;
 
         bool isUID(u32) const;
 
-        s32 GetHeadIndex(void) const;
+        s32 GetHeadIndex() const;
 
-        s32 GetTailIndex(void) const;
+        s32 GetTailIndex() const;
 
-        const Position &GetPosition(void) const;
+        const Position &GetPosition() const;
 
         void SetPosition(s32);
 
@@ -151,27 +151,27 @@ namespace Battle
 
         void SetReflection(bool);
 
-        u32 GetAttack(void) const;
+        u32 GetAttack() const;
 
-        u32 GetDefense(void) const;
+        u32 GetDefense() const;
 
-        int GetArmyColor(void) const;
+        int GetArmyColor() const;
 
-        int GetColor(void) const;
+        int GetColor() const;
 
         u32 GetSpeed(bool skip_standing_check) const;
 
-        int GetControl(void) const;
+        int GetControl() const;
 
         u32 GetDamage(const Unit &) const;
 
         s32 GetScoreQuality(const Unit &) const;
 
-        u32 GetDead(void) const;
+        u32 GetDead() const;
 
-        u32 GetHitPoints(void) const;
+        u32 GetHitPoints() const;
 
-        u32 GetShots(void) const;
+        u32 GetShots() const;
 
         u32 ApplyDamage(Unit &, u32);
 
@@ -189,7 +189,7 @@ namespace Battle
 
         void PostAttackAction(Unit &);
 
-        void ResetBlind(void);
+        void ResetBlind();
 
         void SpellModesAction(const Spell &, u32, const HeroBase *);
 
@@ -200,65 +200,65 @@ namespace Battle
         u32 Resurrect(u32, bool, bool);
 
         const monstersprite_t &
-        GetMonsterSprite(void) const;
+        GetMonsterSprite() const;
 
         const animframe_t &
-        GetFrameState(void) const;
+        GetFrameState() const;
 
         const animframe_t &
         GetFrameState(int) const;
 
         void IncreaseAnimFrame(bool loop = false);
 
-        bool isStartAnimFrame(void) const;
+        bool isStartAnimFrame() const;
 
-        bool isFinishAnimFrame(void) const;
+        bool isFinishAnimFrame() const;
 
         void SetFrameStep(int);
 
         void SetFrame(int);
 
-        int GetFrame(void) const;
+        int GetFrame() const;
 
-        int GetFrameOffset(void) const;
+        int GetFrameOffset() const;
 
-        int GetFrameStart(void) const;
+        int GetFrameStart() const;
 
-        int GetFrameCount(void) const;
+        int GetFrameCount() const;
 
         int GetStartMissileOffset(int) const;
 
-        int M82Attk(void) const;
+        int M82Attk() const;
 
-        int M82Kill(void) const;
+        int M82Kill() const;
 
-        int M82Move(void) const;
+        int M82Move() const;
 
-        int M82Wnce(void) const;
+        int M82Wnce() const;
 
-        int M82Expl(void) const;
+        int M82Expl() const;
 
-        int ICNFile(void) const;
+        int ICNFile() const;
 
-        int ICNMiss(void) const;
+        int ICNMiss() const;
 
-        Point GetBackPoint(void) const;
+        Point GetBackPoint() const;
 
-        Rect GetRectPosition(void) const;
+        Rect GetRectPosition() const;
 
         u32 HowManyCanKill(const Unit &) const;
 
         u32 HowManyWillKilled(u32) const;
 
-        void SetResponse(void);
+        void SetResponse();
 
         void ResetAnimFrame(int);
 
-        void UpdateDirection(void);
+        void UpdateDirection();
 
         bool UpdateDirection(const Rect &);
 
-        void PostKilledAction(void);
+        void PostKilledAction();
 
         u32 GetMagicResist(const Spell &, u32) const;
 
@@ -266,7 +266,7 @@ namespace Battle
 
         u32 GetObstaclesPenalty(const Unit &) const;
 
-        const HeroBase *GetCommander(void) const;
+        const HeroBase *GetCommander() const;
 
         static bool isHandFighting(const Unit &, const Unit &);
 

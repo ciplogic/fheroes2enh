@@ -40,9 +40,9 @@ namespace Interface
         virtual ~ListBasic()
         {}
 
-        virtual void Redraw(void) = 0;
+        virtual void Redraw() = 0;
 
-        virtual bool QueueEventProcessing(void) = 0;
+        virtual bool QueueEventProcessing() = 0;
     };
 
     template<class Item>
@@ -65,9 +65,9 @@ namespace Interface
 
         virtual void RedrawBackground(const Point &) = 0;
 
-        virtual void ActionCurrentUp(void) = 0;
+        virtual void ActionCurrentUp() = 0;
 
-        virtual void ActionCurrentDn(void) = 0;
+        virtual void ActionCurrentDn() = 0;
 
         virtual void ActionListDoubleClick(Item &) = 0;
 
@@ -95,17 +95,17 @@ namespace Interface
         void SetAreaMaxItems(u32);
         void SetAreaItems(const Rect &);
         void SetListContent(std::vector<Item> &);
-        void Redraw(void);
-        bool QueueEventProcessing(void);
-        Item & GetCurrent(void);
+        void Redraw();
+        bool QueueEventProcessing();
+        Item & GetCurrent();
         void SetCurrent(size_t);
         void SetCurrent(const Item &);
-        void SetCurrentVisible(void);
-        void RemoveSelected(void);
+        void SetCurrentVisible();
+        void RemoveSelected();
         void DisableHotkeys(bool);
-        bool isSelected(void) const;
-        void Unselect(void);
-        void Reset(void);
+        bool isSelected() const;
+        void Unselect();
+        void Reset();
         */
 
         void SetTopLeft(const Point &tl)
@@ -131,7 +131,7 @@ namespace Interface
             splitter.SetSprite(sp);
         }
 
-        Splitter &GetSplitter(void)
+        Splitter &GetSplitter()
         {
             return splitter;
         }
@@ -162,7 +162,7 @@ namespace Interface
             }
         }
 
-        void Reset(void)
+        void Reset()
         {
             if (content)
             {
@@ -183,7 +183,7 @@ namespace Interface
             useHotkeys = !f;
         }
 
-        void Redraw(void)
+        void Redraw()
         {
             Cursor::Get().Hide();
 
@@ -199,7 +199,7 @@ namespace Interface
                 RedrawItem(*curt, rtAreaItems.x, rtAreaItems.y + (curt - top) * rtAreaItems.h / maxItems, curt == cur);
         }
 
-        Item &GetCurrent(void)
+        Item &GetCurrent()
         {
             return *cur;
         }
@@ -220,7 +220,7 @@ namespace Interface
             SetCurrentVisible();
         }
 
-        void SetCurrentVisible(void)
+        void SetCurrentVisible()
         {
             if (top > cur || top + maxItems <= cur)
             {
@@ -237,22 +237,22 @@ namespace Interface
             SetCurrentVisible();
         }
 
-        void RemoveSelected(void)
+        void RemoveSelected()
         {
             if (content && cur != content->end()) content->erase(cur);
         }
 
-        bool isSelected(void) const
+        bool isSelected() const
         {
             return content && cur != content->end();
         }
 
-        void Unselect(void)
+        void Unselect()
         {
             if (content) cur = content->end();
         }
 
-        bool QueueEventProcessing(void)
+        bool QueueEventProcessing()
         {
             LocalEvent &le = LocalEvent::Get();
             Cursor &cursor = Cursor::Get();
@@ -362,7 +362,7 @@ namespace Interface
         }
 
     protected:
-        void UpdateSplitterRange(void)
+        void UpdateSplitterRange()
         {
             int max = content && maxItems < content->size() ? content->size() - maxItems : 0;
 

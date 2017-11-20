@@ -105,7 +105,7 @@ void Interface::Basic::MoveHeroFromArrowKeys(Heroes &hero, int direct)
     }
 }
 
-void Interface::Basic::EventNextHero(void)
+void Interface::Basic::EventNextHero()
 {
     const Kingdom &myKingdom = world.GetKingdom(Settings::Get().CurrentColor());
     const KingdomHeroes &myHeroes = myKingdom.GetHeroes();
@@ -126,7 +126,7 @@ void Interface::Basic::EventNextHero(void)
     RedrawFocus();
 }
 
-void Interface::Basic::EventContinueMovement(void)
+void Interface::Basic::EventContinueMovement()
 {
     Heroes *hero = GetFocusHeroes();
 
@@ -134,7 +134,7 @@ void Interface::Basic::EventContinueMovement(void)
         hero->SetMove(!hero->isEnableMove());
 }
 
-void Interface::Basic::EventKingdomInfo(void)
+void Interface::Basic::EventKingdomInfo()
 {
     Kingdom &myKingdom = world.GetKingdom(Settings::Get().CurrentColor());
 
@@ -146,7 +146,7 @@ void Interface::Basic::EventKingdomInfo(void)
     iconsPanel.SetRedraw();
 }
 
-void Interface::Basic::EventCastSpell(void)
+void Interface::Basic::EventCastSpell()
 {
     Heroes *hero = GetFocusHeroes();
 
@@ -162,7 +162,7 @@ void Interface::Basic::EventCastSpell(void)
     }
 }
 
-int Interface::Basic::EventEndTurn(void)
+int Interface::Basic::EventEndTurn()
 {
     const Kingdom &myKingdom = world.GetKingdom(Settings::Get().CurrentColor());
 
@@ -178,7 +178,7 @@ int Interface::Basic::EventEndTurn(void)
     return Game::CANCEL;
 }
 
-int Interface::Basic::EventAdventureDialog(void)
+int Interface::Basic::EventAdventureDialog()
 {
     Mixer::Reduce();
     switch (Dialog::AdventureOptions(GameFocus::HEROES == GetFocusType()))
@@ -205,7 +205,7 @@ int Interface::Basic::EventAdventureDialog(void)
     return Game::CANCEL;
 }
 
-int Interface::Basic::EventFileDialog(void)
+int Interface::Basic::EventFileDialog()
 {
     switch (Dialog::FileOptions())
     {
@@ -232,7 +232,7 @@ int Interface::Basic::EventFileDialog(void)
     return Game::CANCEL;
 }
 
-void Interface::Basic::EventSystemDialog(void)
+void Interface::Basic::EventSystemDialog()
 {
     const Settings &conf = Settings::Get();
 
@@ -269,7 +269,7 @@ void Interface::Basic::EventSystemDialog(void)
     }
 }
 
-int Interface::Basic::EventExit(void)
+int Interface::Basic::EventExit()
 {
     Heroes *hero = GetFocusHeroes();
 
@@ -283,7 +283,7 @@ int Interface::Basic::EventExit(void)
     return Game::CANCEL;
 }
 
-void Interface::Basic::EventNextTown(void)
+void Interface::Basic::EventNextTown()
 {
     Kingdom &myKingdom = world.GetKingdom(Settings::Get().CurrentColor());
     KingdomCastles &myCastles = myKingdom.GetCastles();
@@ -304,7 +304,7 @@ void Interface::Basic::EventNextTown(void)
     }
 }
 
-int Interface::Basic::EventSaveGame(void)
+int Interface::Basic::EventSaveGame()
 {
     std::string filename = Dialog::SelectFileSave();
     if (filename.size() && Game::Save(filename))
@@ -312,24 +312,24 @@ int Interface::Basic::EventSaveGame(void)
     return Game::CANCEL;
 }
 
-int Interface::Basic::EventLoadGame(void)
+int Interface::Basic::EventLoadGame()
 {
     return Dialog::YES ==
            Dialog::Message("", _("Are you sure you want to load a new game? (Your current game will be lost)"),
                            Font::BIG, Dialog::YES | Dialog::NO) ? Game::LOADGAME : Game::CANCEL;
 }
 
-void Interface::Basic::EventPuzzleMaps(void)
+void Interface::Basic::EventPuzzleMaps()
 {
     world.GetKingdom(Settings::Get().CurrentColor()).PuzzleMaps().ShowMapsDialog();
 }
 
-void Interface::Basic::EventGameInfo(void)
+void Interface::Basic::EventGameInfo()
 {
     Dialog::GameInfo();
 }
 
-void Interface::Basic::EventSwitchHeroSleeping(void)
+void Interface::Basic::EventSwitchHeroSleeping()
 {
     Heroes *hero = GetFocusHeroes();
 
@@ -347,7 +347,7 @@ void Interface::Basic::EventSwitchHeroSleeping(void)
     }
 }
 
-int Interface::Basic::EventDigArtifact(void)
+int Interface::Basic::EventDigArtifact()
 {
     Heroes *hero = GetFocusHeroes();
 
@@ -403,7 +403,7 @@ int Interface::Basic::EventDigArtifact(void)
     return Game::CANCEL;
 }
 
-void Interface::Basic::EventDefaultAction(void)
+void Interface::Basic::EventDefaultAction()
 {
     Heroes *hero = GetFocusHeroes();
 
@@ -434,7 +434,7 @@ void Interface::Basic::EventDefaultAction(void)
     }
 }
 
-void Interface::Basic::EventOpenFocus(void)
+void Interface::Basic::EventOpenFocus()
 {
     if (GetFocusHeroes())
         Game::OpenHeroesDialog(*GetFocusHeroes());
@@ -442,7 +442,7 @@ void Interface::Basic::EventOpenFocus(void)
         Game::OpenCastleDialog(*GetFocusCastle());
 }
 
-void Interface::Basic::EventSwitchShowRadar(void)
+void Interface::Basic::EventSwitchShowRadar()
 {
     Settings &conf = Settings::Get();
 
@@ -467,7 +467,7 @@ void Interface::Basic::EventSwitchShowRadar(void)
     }
 }
 
-void Interface::Basic::EventSwitchShowButtons(void)
+void Interface::Basic::EventSwitchShowButtons()
 {
     Settings &conf = Settings::Get();
 
@@ -492,7 +492,7 @@ void Interface::Basic::EventSwitchShowButtons(void)
     }
 }
 
-void Interface::Basic::EventSwitchShowStatus(void)
+void Interface::Basic::EventSwitchShowStatus()
 {
     Settings &conf = Settings::Get();
 
@@ -517,7 +517,7 @@ void Interface::Basic::EventSwitchShowStatus(void)
     }
 }
 
-void Interface::Basic::EventSwitchShowIcons(void)
+void Interface::Basic::EventSwitchShowIcons()
 {
     Settings &conf = Settings::Get();
 
@@ -543,7 +543,7 @@ void Interface::Basic::EventSwitchShowIcons(void)
     }
 }
 
-void Interface::Basic::EventSwitchShowControlPanel(void)
+void Interface::Basic::EventSwitchShowControlPanel()
 {
     Settings &conf = Settings::Get();
 
@@ -597,7 +597,7 @@ void Interface::Basic::EventKeyArrowPress(int dir)
         }
 }
 
-void Interface::Basic::EventDebug1(void)
+void Interface::Basic::EventDebug1()
 {
     VERBOSE("");
 /*
@@ -613,7 +613,7 @@ void Interface::Basic::EventDebug1(void)
 */
 }
 
-void Interface::Basic::EventDebug2(void)
+void Interface::Basic::EventDebug2()
 {
     VERBOSE("");
 }

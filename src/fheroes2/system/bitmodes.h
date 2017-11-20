@@ -37,7 +37,7 @@ public:
     BitModes() : modes(0)
     {};
 
-    u32 operator()(void) const
+    u32 operator()() const
     { return modes; }
 
     void SetModes(u32 f)

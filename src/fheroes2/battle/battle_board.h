@@ -47,9 +47,9 @@ namespace Battle
     public:
         Board();
 
-        void Reset(void);
+        void Reset();
 
-        Rect GetArea(void) const;
+        Rect GetArea() const;
 
         void SetArea(const Rect &);
 
@@ -61,7 +61,7 @@ namespace Battle
 
         Indexes GetAStarPath(const Unit &, const Position &, bool debug = true);
 
-        std::string AllUnitsInfo(void) const;
+        std::string AllUnitsInfo() const;
 
         void SetEnemyQuality(const Unit &);
 
@@ -75,7 +75,7 @@ namespace Battle
 
         void SetCovrObjects(int icn);
 
-        static std::string GetMoatInfo(void);
+        static std::string GetMoatInfo();
 
         static Cell *GetCell(s32, int = CENTER);
 

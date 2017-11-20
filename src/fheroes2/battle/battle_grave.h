@@ -44,7 +44,7 @@ namespace Battle
         Graveyard()
         {}
 
-        Indexes GetClosedCells(void) const;
+        Indexes GetClosedCells() const;
 
         void AddTroop(const Unit &);
 

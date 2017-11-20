@@ -32,9 +32,9 @@ public:
 
     bool operator==(s32) const;
 
-    const Point &GetCenter(void) const;
+    const Point &GetCenter() const;
 
-    s32 GetIndex(void) const;
+    s32 GetIndex() const;
 
     void SetCenter(const Point &);
 

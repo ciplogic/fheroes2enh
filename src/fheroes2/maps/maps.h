@@ -82,7 +82,7 @@ namespace Maps
 
     s32 GetIndexFromAbsPoint(s32 px, s32 py);
 
-    Indexes GetAllIndexes(void);
+    Indexes GetAllIndexes();
 
     Indexes GetAroundIndexes(s32);
 

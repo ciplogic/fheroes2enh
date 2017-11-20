@@ -41,21 +41,21 @@ namespace Battle
     public:
         Tower(const Castle &, int);
 
-        bool isValid(void) const;
+        bool isValid() const;
 
-        int GetColor(void) const;
+        int GetColor() const;
 
-        u32 GetType(void) const;
+        u32 GetType() const;
 
-        u32 GetBonus(void) const;
+        u32 GetBonus() const;
 
-        u32 GetAttack(void) const;
+        u32 GetAttack() const;
 
-        const char *GetName(void) const;
+        const char *GetName() const;
 
-        void SetDestroy(void);
+        void SetDestroy();
 
-        Point GetPortPosition(void) const;
+        Point GetPortPosition() const;
 
         static std::string GetInfo(const Castle &);
 

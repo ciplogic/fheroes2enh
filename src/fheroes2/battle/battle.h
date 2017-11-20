@@ -62,17 +62,17 @@ namespace Battle
         Result() : army1(0), army2(0), exp1(0), exp2(0), killed(0)
         {}
 
-        bool AttackerWins(void) const;
+        bool AttackerWins() const;
 
-        bool DefenderWins(void) const;
+        bool DefenderWins() const;
 
-        u32 AttackerResult(void) const;
+        u32 AttackerResult() const;
 
-        u32 DefenderResult(void) const;
+        u32 DefenderResult() const;
 
-        u32 GetExperienceAttacker(void) const;
+        u32 GetExperienceAttacker() const;
 
-        u32 GetExperienceDefender(void) const;
+        u32 GetExperienceDefender() const;
     };
 
     StreamBase &operator<<(StreamBase &, const Result &);
@@ -147,7 +147,7 @@ namespace Battle
 
         bool operator==(const TargetInfo &) const;
 
-        bool isFinishAnimFrame(void) const;
+        bool isFinishAnimFrame() const;
     };
 
     StreamBase &operator<<(StreamBase &, const TargetInfo &);

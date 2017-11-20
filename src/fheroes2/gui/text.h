@@ -51,13 +51,13 @@ public:
 
     virtual void SetFont(int) = 0;
 
-    virtual void Clear(void) = 0;
+    virtual void Clear() = 0;
 
-    virtual int w(void) const = 0;
+    virtual int w() const = 0;
 
-    virtual int h(void) const = 0;
+    virtual int h() const = 0;
 
-    virtual size_t Size(void) const = 0;
+    virtual size_t Size() const = 0;
 
     virtual void Blit(s32, s32, int maxw, Surface &sf = Display::Get()) = 0;
 
@@ -77,17 +77,17 @@ public:
 
     void SetFont(int);
 
-    void Clear(void);
+    void Clear();
 
-    int w(void) const;
+    int w() const;
 
     int w(u32, u32) const;
 
-    int h(void) const;
+    int h() const;
 
     int h(int) const;
 
-    size_t Size(void) const;
+    size_t Size() const;
 
     void Blit(s32, s32, int maxw, Surface &sf = Display::Get());
 
@@ -113,13 +113,13 @@ public:
 
     void	SetText(const std::string &);
     void	SetFont(int);
-    void	Clear(void);
+    void	Clear();
 
-    int		w(void) const;
+    int		w() const;
     int		w(u32, u32) const;
-    int		h(void) const;
+    int		h() const;
     int		h(int) const;
-    size_t	Size(void) const;
+    size_t	Size() const;
 
     void	Blit(s32, s32, int maxw, Surface & sf = Display::Get());
 
@@ -157,14 +157,14 @@ public:
 
     void Set(int);
 
-    void Clear(void);
+    void Clear();
 
-    size_t Size(void) const;
+    size_t Size() const;
 
-    int w(void) const
+    int w() const
     { return gw; }
 
-    int h(void) const
+    int h() const
     { return gh; }
 
     void Blit(s32, s32, Surface &sf = Display::Get()) const;
@@ -203,20 +203,20 @@ public:
 
     void SetFont(int);
 
-    void Show(void);
+    void Show();
 
-    void Hide(void);
+    void Hide();
 
-    bool isHide(void) const;
+    bool isHide() const;
 
-    bool isShow(void) const;
+    bool isShow() const;
 
-    int w(void);
+    int w();
 
-    int h(void);
+    int h();
 
     const Rect &
-    GetRect(void) const;
+    GetRect() const;
 
 private:
     SpriteBack back;
@@ -236,22 +236,22 @@ public:
 
     void SetAlign(int type);
 
-    const Rect &GetRect(void) const
+    const Rect &GetRect() const
     { return *this; }
 
-    s32 x(void) const
+    s32 x() const
     { return Rect::x; }
 
-    s32 y(void) const
+    s32 y() const
     { return Rect::y; }
 
-    int w(void) const
+    int w() const
     { return Rect::w; }
 
-    int h(void) const
+    int h() const
     { return Rect::h; }
 
-    u32 row(void) const
+    u32 row() const
     { return messages.size(); }
 
     void Blit(s32, s32, Surface &sf = Display::Get());

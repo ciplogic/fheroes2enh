@@ -56,37 +56,37 @@ public:
         UNDEFINED, CAPTAIN, HEROES
     };
 
-    virtual const std::string &GetName(void) const = 0;
+    virtual const std::string &GetName() const = 0;
 
-    virtual int GetColor(void) const = 0;
+    virtual int GetColor() const = 0;
 
-    virtual int GetControl(void) const = 0;
+    virtual int GetControl() const = 0;
 
-    virtual bool isValid(void) const = 0;
+    virtual bool isValid() const = 0;
 
-    virtual const Army &GetArmy(void) const = 0;
+    virtual const Army &GetArmy() const = 0;
 
-    virtual Army &GetArmy(void) = 0;
+    virtual Army &GetArmy() = 0;
 
-    virtual u32 GetMaxSpellPoints(void) const = 0;
+    virtual u32 GetMaxSpellPoints() const = 0;
 
     virtual int GetLevelSkill(int skill) const = 0;
 
     virtual u32 GetSecondaryValues(int skill) const = 0;
 
-    virtual void ActionAfterBattle(void) = 0;
+    virtual void ActionAfterBattle() = 0;
 
-    virtual void ActionPreBattle(void) = 0;
+    virtual void ActionPreBattle() = 0;
 
-    virtual const Castle *inCastle(void) const = 0;
+    virtual const Castle *inCastle() const = 0;
 
     virtual void PortraitRedraw(s32, s32, int type, Surface &) const = 0;
 
-    virtual int GetType(void) const = 0;
+    virtual int GetType() const = 0;
 
-    bool isCaptain(void) const;
+    bool isCaptain() const;
 
-    bool isHeroes(void) const;
+    bool isHeroes() const;
 
     int GetAttackModificator(std::string * = nullptr) const;
 
@@ -100,7 +100,7 @@ public:
 
     int GetLuckModificator(std::string * = nullptr) const;
 
-    u32 GetSpellPoints(void) const;
+    u32 GetSpellPoints() const;
 
     bool HaveSpellPoints(const Spell &) const;
 
@@ -118,11 +118,11 @@ public:
 
     void SetSpellPoints(u32);
 
-    void EditSpellBook(void);
+    void EditSpellBook();
 
     Spell OpenSpellBook(int filter, bool) const;
 
-    bool HaveSpellBook(void) const;
+    bool HaveSpellBook() const;
 
     bool HaveSpell(const Spell &, bool skip_bag = false) const;
 
@@ -130,11 +130,11 @@ public:
 
     void AppendSpellsToBook(const SpellStorage &, bool without_wisdom = false);
 
-    bool SpellBookActivate(void);
+    bool SpellBookActivate();
 
-    BagArtifacts &GetBagArtifacts(void);
+    BagArtifacts &GetBagArtifacts();
 
-    const BagArtifacts &GetBagArtifacts(void) const;
+    const BagArtifacts &GetBagArtifacts() const;
 
     u32 HasArtifact(const Artifact &) const;
 

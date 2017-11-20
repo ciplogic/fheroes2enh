@@ -40,7 +40,7 @@ namespace Dialog
 
     Spell SelectSpell(int id = Spell::NONE);
 
-    Skill::Secondary SelectSecondarySkill(void);
+    Skill::Secondary SelectSecondarySkill();
 }
 
 #endif

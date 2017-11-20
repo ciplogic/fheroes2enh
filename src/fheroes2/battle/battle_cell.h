@@ -59,9 +59,9 @@ namespace Battle
 
         Cell(s32);
 
-        void ResetQuality(void);
+        void ResetQuality();
 
-        void ResetDirection(void);
+        void ResetDirection();
 
         void SetObject(int);
 
@@ -79,21 +79,21 @@ namespace Battle
 
         bool isPositionIncludePoint(const Point &) const;
 
-        s32 GetIndex(void) const;
+        s32 GetIndex() const;
 
-        const Rect &GetPos(void) const;
+        const Rect &GetPos() const;
 
-        int GetObject(void) const;
+        int GetObject() const;
 
-        int GetDirection(void) const;
+        int GetDirection() const;
 
-        s32 GetQuality(void) const;
+        s32 GetQuality() const;
 
         direction_t GetTriangleDirection(const Point &) const;
 
-        const Unit *GetUnit(void) const;
+        const Unit *GetUnit() const;
 
-        Unit *GetUnit(void);
+        Unit *GetUnit();
 
         void SetUnit(Unit *);
 
@@ -123,23 +123,23 @@ namespace Battle
 
         void Set(s32 head, bool wide, bool reflect);
 
-        void Swap(void);
+        void Swap();
 
-        bool isReflect(void) const;
+        bool isReflect() const;
 
-        bool isValid(void) const;
+        bool isValid() const;
 
         static Position GetCorrect(const Unit &, s32);
 
-        Rect GetRect(void) const;
+        Rect GetRect() const;
 
-        Cell *GetHead(void);
+        Cell *GetHead();
 
-        const Cell *GetHead(void) const;
+        const Cell *GetHead() const;
 
-        Cell *GetTail(void);
+        Cell *GetTail();
 
-        const Cell *GetTail(void) const;
+        const Cell *GetTail() const;
     };
 }
 

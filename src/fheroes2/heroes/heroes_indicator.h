@@ -33,9 +33,9 @@ class HeroesIndicator
 public:
     HeroesIndicator(const Heroes &);
 
-    const Rect &GetArea(void) const;
+    const Rect &GetArea() const;
 
-    const std::string &GetDescriptions(void) const;
+    const std::string &GetDescriptions() const;
 
     void SetPos(const Point &, bool skip_back = false);
 
@@ -51,7 +51,7 @@ class LuckIndicator : public HeroesIndicator
 public:
     LuckIndicator(const Heroes &);
 
-    void Redraw(void);
+    void Redraw();
 
     static void QueueEventProcessing(LuckIndicator &);
 
@@ -64,7 +64,7 @@ class MoraleIndicator : public HeroesIndicator
 public:
     MoraleIndicator(const Heroes &);
 
-    void Redraw(void);
+    void Redraw();
 
     static void QueueEventProcessing(MoraleIndicator &);
 
@@ -77,9 +77,9 @@ class ExperienceIndicator : public HeroesIndicator
 public:
     ExperienceIndicator(const Heroes &);
 
-    void Redraw(void);
+    void Redraw();
 
-    void QueueEventProcessing(void);
+    void QueueEventProcessing();
 };
 
 class SpellPointsIndicator : public HeroesIndicator
@@ -87,9 +87,9 @@ class SpellPointsIndicator : public HeroesIndicator
 public:
     SpellPointsIndicator(const Heroes &);
 
-    void Redraw(void);
+    void Redraw();
 
-    void QueueEventProcessing(void);
+    void QueueEventProcessing();
 };
 
 #endif

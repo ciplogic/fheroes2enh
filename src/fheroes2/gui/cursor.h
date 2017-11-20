@@ -132,7 +132,7 @@ public:
         SP_ARROW = 0x3026
     };
 
-    static Cursor &Get(void);
+    static Cursor &Get();
 
     static void Redraw(s32, s32);
 
@@ -140,11 +140,11 @@ public:
 
     static int WithoutDistanceThemes(int);
 
-    int Themes(void);
+    int Themes();
 
     bool SetThemes(int, bool force = false);
 
-    void Show(void);
+    void Show();
 
 private:
     Cursor();

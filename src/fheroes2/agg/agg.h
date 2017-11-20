@@ -43,14 +43,14 @@ public:
     ICNSprite(const Surface &sf1, const Surface &sf2) : std::pair<Surface, Surface>(sf1, sf2)
     {}
 
-    bool isValid(void) const;
+    bool isValid() const;
 
     Sprite CreateSprite(bool reflect, bool shadow) const;
 
-    Surface First(void)
+    Surface First()
     { return first; }
 
-    Surface Second(void)
+    Surface Second()
     { return second; }
 
     Point offset;
@@ -58,9 +58,9 @@ public:
 
 namespace AGG
 {
-    bool Init(void);
+    bool Init();
 
-    void Quit(void);
+    void Quit();
 
     int PutICN(const Sprite &, bool init_reflect = false);
 
@@ -83,7 +83,7 @@ namespace AGG
 
     void PlayMusic(int mus, bool loop = true);
 
-    void ResetMixer(void);
+    void ResetMixer();
 
     RGBA GetPaletteColor(u32 index);
 

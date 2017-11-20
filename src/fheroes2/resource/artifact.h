@@ -168,42 +168,42 @@ public:
 
     bool operator!=(const Artifact &) const;
 
-    int operator()(void) const;
+    int operator()() const;
 
-    int GetID(void) const;
+    int GetID() const;
 
-    bool isUltimate(void) const;
+    bool isUltimate() const;
 
-    bool isAlchemistRemove(void) const;
+    bool isAlchemistRemove() const;
 
-    bool isValid(void) const;
+    bool isValid() const;
 
-    void Reset(void);
+    void Reset();
 
-    u32 ExtraValue(void) const;
+    u32 ExtraValue() const;
 
-    int Level(void) const;
+    int Level() const;
 
-    int LoyaltyLevel(void) const;
+    int LoyaltyLevel() const;
 
-    int Type(void) const;
+    int Type() const;
 
     /* objnarti.icn */
-    u32 IndexSprite(void) const;
+    u32 IndexSprite() const;
 
     /* artfx.icn */
-    u32 IndexSprite32(void) const;
+    u32 IndexSprite32() const;
 
     /* artifact.icn */
-    u32 IndexSprite64(void) const;
+    u32 IndexSprite64() const;
 
     void SetSpell(int);
 
-    int GetSpell(void) const;
+    int GetSpell() const;
 
-    const char *GetName(void) const;
+    const char *GetName() const;
 
-    std::string GetDescription(void) const;
+    std::string GetDescription() const;
 
     static int Rand(level_t);
 
@@ -239,21 +239,21 @@ public:
 
     bool PushArtifact(const Artifact &);
 
-    bool isFull(void) const;
+    bool isFull() const;
 
-    bool MakeBattleGarb(void);
+    bool MakeBattleGarb();
 
-    bool ContainUltimateArtifact(void) const;
+    bool ContainUltimateArtifact() const;
 
     void RemoveArtifact(const Artifact &);
 
     void RemoveScroll(const Artifact &);
 
-    u32 CountArtifacts(void) const;
+    u32 CountArtifacts() const;
 
     u32 Count(const Artifact &) const;
 
-    std::string String(void) const;
+    std::string String() const;
 };
 
 #include "interface_itemsbar.h"
@@ -267,7 +267,7 @@ public:
 
     void RedrawItem(Artifact &, const Rect &, bool, Surface &);
 
-    void ResetSelected(void);
+    void ResetSelected();
 
     void Redraw(Surface &dstsf = Display::Get());
 

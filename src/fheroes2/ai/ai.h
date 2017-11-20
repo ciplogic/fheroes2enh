@@ -52,7 +52,7 @@ namespace AI
         HEROES_STUPID = 0x80000000
     };
 
-    void Init(void);
+    void Init();
 
     void KingdomTurn(Kingdom &);
 
@@ -90,7 +90,7 @@ namespace AI
 
     void HeroesClearTask(const Heroes &);
 
-    bool HeroesSkipFog(void);
+    bool HeroesSkipFog();
 
     std::string HeroesString(const Heroes &);
 
@@ -104,9 +104,9 @@ namespace AI
 
     void CastleAfterBattle(Castle &, bool attacker_wins);
 
-    const char *Type(void);
+    const char *Type();
 
-    const char *License(void);
+    const char *License();
 }
 
 #endif

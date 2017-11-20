@@ -45,22 +45,22 @@ namespace Interface
         void SetShow(bool f)
         { show = f; };
 
-        bool IsShow(void) const
+        bool IsShow() const
         { return show; };
 
         void RedrawBackground(const Point &);
 
-        u32 CountIcons(void) const
+        u32 CountIcons() const
         { return iconsCount; }
 
         void SetIconsCount(u32 c)
         { iconsCount = c; }
 
-        static u32 GetItemWidth(void);
+        static u32 GetItemWidth();
 
-        static u32 GetItemHeight(void);
+        static u32 GetItemHeight();
 
-        static bool IsVisible(void);
+        static bool IsVisible();
 
     protected:
         u32 iconsCount;
@@ -83,9 +83,9 @@ namespace Interface
         void SetShow(bool);
 
     protected:
-        void ActionCurrentUp(void);
+        void ActionCurrentUp();
 
-        void ActionCurrentDn(void);
+        void ActionCurrentDn();
 
         void ActionListDoubleClick(HEROES &);
 
@@ -109,9 +109,9 @@ namespace Interface
         void SetShow(bool);
 
     protected:
-        void ActionCurrentUp(void);
+        void ActionCurrentUp();
 
-        void ActionCurrentDn(void);
+        void ActionCurrentDn();
 
         void ActionListDoubleClick(CASTLE &);
 
@@ -133,17 +133,17 @@ namespace Interface
 
         void SetPos(s32, s32);
 
-        void SavePosition(void);
+        void SavePosition();
 
-        void SetRedraw(void) const;
+        void SetRedraw() const;
 
         void SetRedraw(icons_t) const;
 
-        void Redraw(void);
+        void Redraw();
 
-        void QueueEventProcessing(void);
+        void QueueEventProcessing();
 
-        u32 CountIcons(void) const;
+        u32 CountIcons() const;
 
         void Select(const Heroes &);
 
@@ -159,7 +159,7 @@ namespace Interface
 
         void RedrawIcons(icons_t = ICON_ANY);
 
-        void SetCurrentVisible(void);
+        void SetCurrentVisible();
 
     private:
         Basic &interface;

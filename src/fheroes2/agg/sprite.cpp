@@ -57,12 +57,12 @@ Sprite::Sprite(const Surface &sf, s32 ox, s32 oy) : SpritePos(sf, Point(ox, oy))
 {
 }
 
-int Sprite::x(void) const
+int Sprite::x() const
 {
     return pos.x;
 }
 
-int Sprite::y(void) const
+int Sprite::y() const
 {
     return pos.y;
 }
@@ -112,7 +112,7 @@ void Sprite::ChangeColorIndex(u32 fc, u32 tc)
     SetSurface(RenderChangeColor(AGG::GetPaletteColor(fc), AGG::GetPaletteColor(tc)));
 }
 
-void Sprite::Blit(void) const
+void Sprite::Blit() const
 {
     Blit(Display::Get());
 }

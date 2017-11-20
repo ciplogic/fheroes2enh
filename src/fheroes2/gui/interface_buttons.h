@@ -37,13 +37,13 @@ namespace Interface
 
         void SetPos(s32, s32);
 
-        void SavePosition(void);
+        void SavePosition();
 
-        void SetRedraw(void) const;
+        void SetRedraw() const;
 
-        void Redraw(void);
+        void Redraw();
 
-        int QueueEventProcessing(void);
+        int QueueEventProcessing();
 
     private:
         Basic &interface;

@@ -56,9 +56,9 @@ public:
 
     void PushBack(const Monster &, u32);
 
-    void PopBack(void);
+    void PopBack();
 
-    size_t Size(void) const;
+    size_t Size() const;
 
     Troop *GetTroop(size_t);
 
@@ -68,15 +68,15 @@ public:
 
     u32 GetCountMonsters(const Monster &) const;
 
-    u32 GetCount(void) const;
+    u32 GetCount() const;
 
-    bool isValid(void) const;
+    bool isValid() const;
 
     bool HasMonster(const Monster &) const;
 
     bool AllTroopsIsRace(int) const;
 
-    u32 GetUniqueCount(void) const;
+    u32 GetUniqueCount() const;
 
     bool JoinTroop(const Troop &);
 
@@ -88,29 +88,29 @@ public:
 
     bool CanJoinTroops(const Troops &) const;
 
-    Troops GetOptimized(void) const;
+    Troops GetOptimized() const;
 
-    virtual u32 GetAttack(void) const;
+    virtual u32 GetAttack() const;
 
-    virtual u32 GetDefense(void) const;
+    virtual u32 GetDefense() const;
 
-    u32 GetHitPoints(void) const;
+    u32 GetHitPoints() const;
 
-    u32 GetDamageMin(void) const;
+    u32 GetDamageMin() const;
 
-    u32 GetDamageMax(void) const;
+    u32 GetDamageMax() const;
 
-    u32 GetStrength(void) const;
+    u32 GetStrength() const;
 
-    void Clean(void);
+    void Clean();
 
     void UpgradeTroops(const Castle &);
 
-    Troop *GetFirstValid(void);
+    Troop *GetFirstValid();
 
-    Troop *GetWeakestTroop(void);
+    Troop *GetWeakestTroop();
 
-    Troop *GetSlowestTroop(void);
+    Troop *GetSlowestTroop();
 
     void ArrangeForBattle(bool = false);
 
@@ -178,37 +178,37 @@ public:
 
     void Reset(bool = false);    // reset: soft or hard
 
-    int GetRace(void) const;
+    int GetRace() const;
 
-    int GetColor(void) const;
+    int GetColor() const;
 
-    int GetControl(void) const;
+    int GetControl() const;
 
-    u32 GetAttack(void) const;
+    u32 GetAttack() const;
 
-    u32 GetDefense(void) const;
+    u32 GetDefense() const;
 
     void SetColor(int);
 
-    int GetMorale(void) const;
+    int GetMorale() const;
 
-    int GetLuck(void) const;
+    int GetLuck() const;
 
     int GetMoraleModificator(std::string *) const;
 
     int GetLuckModificator(std::string *) const;
 
-    u32 ActionToSirens(void);
+    u32 ActionToSirens();
 
-    const HeroBase *GetCommander(void) const;
+    const HeroBase *GetCommander() const;
 
-    HeroBase *GetCommander(void);
+    HeroBase *GetCommander();
 
     void SetCommander(HeroBase *);
 
-    const Castle *inCastle(void) const;
+    const Castle *inCastle() const;
 
-    std::string String(void) const;
+    std::string String() const;
 
     void JoinStrongestFromArmy(Army &);
 
@@ -216,11 +216,11 @@ public:
 
     void SetSpreadFormat(bool);
 
-    bool isSpreadFormat(void) const;
+    bool isSpreadFormat() const;
 
-    bool isFullHouse(void) const;
+    bool isFullHouse() const;
 
-    bool SaveLastTroop(void) const;
+    bool SaveLastTroop() const;
 
 protected:
     friend StreamBase &operator<<(StreamBase &, const Army &);

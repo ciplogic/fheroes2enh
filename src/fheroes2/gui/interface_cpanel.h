@@ -36,13 +36,13 @@ namespace Interface
 
         void SetPos(s32, s32);
 
-        void Redraw(void);
+        void Redraw();
 
-        void ResetTheme(void);
+        void ResetTheme();
 
-        int QueueEventProcessing(void);
+        int QueueEventProcessing();
 
-        const Rect &GetArea(void);
+        const Rect &GetArea();
 
     private:
         Basic &interface;

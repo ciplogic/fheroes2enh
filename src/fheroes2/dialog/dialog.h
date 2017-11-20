@@ -88,13 +88,13 @@ namespace Dialog
 
     int AdventureOptions(bool enabledig);
 
-    int FileOptions(void);
+    int FileOptions();
 
-    int SystemOptions(void);
+    int SystemOptions();
 
-    std::string SelectFileLoad(void);
+    std::string SelectFileLoad();
 
-    std::string SelectFileSave(void);
+    std::string SelectFileSave();
 
     // show info cell maps
     void QuickInfo(const Maps::Tiles &);
@@ -130,7 +130,7 @@ namespace Dialog
 
     int ResourceInfo(const std::string &, const std::string &, const Funds &, int buttons = Dialog::OK);
 
-    int SelectSkillFromArena(void);
+    int SelectSkillFromArena();
 
     bool SelectCount(const std::string &, u32 min, u32 max, u32 &res, int step = 1);
 
@@ -152,15 +152,15 @@ namespace Dialog
 
     void Marketplace(bool fromTradingPost = false);
 
-    void MakeGiftResource(void);
+    void MakeGiftResource();
 
     int BuyBoat(bool enable);
 
-    void PuzzleMaps(void);
+    void PuzzleMaps();
 
     void ThievesGuild(bool oracle);
 
-    void GameInfo(void);
+    void GameInfo();
 
     class FrameBox
     {
@@ -169,7 +169,7 @@ namespace Dialog
 
         ~FrameBox();
 
-        const Rect &GetArea(void)
+        const Rect &GetArea()
         { return area; };
 
     protected:
@@ -192,19 +192,19 @@ namespace Dialog
 
         void SetBorder(int);
 
-        int BorderWidth(void) const;
+        int BorderWidth() const;
 
-        int BorderHeight(void) const;
+        int BorderHeight() const;
 
-        bool isValid(void) const;
+        bool isValid() const;
 
         void SetPosition(s32, s32, u32 = 0, u32 = 0);
 
-        const Rect &GetRect(void) const;
+        const Rect &GetRect() const;
 
-        const Rect &GetArea(void) const;
+        const Rect &GetArea() const;
 
-        const Rect &GetTop(void) const;
+        const Rect &GetTop() const;
 
         static void RenderRegular(const Rect &);
 

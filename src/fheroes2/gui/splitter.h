@@ -31,19 +31,19 @@ public:
 
     Splitter(const Surface &, const Rect &);
 
-    void Forward(void);
+    void Forward();
 
-    void Backward(void);
+    void Backward();
 
     void MoveIndex(int);
 
-    void MoveCenter(void);
+    void MoveCenter();
 
-    void RedrawCursor(void);
+    void RedrawCursor();
 
-    void HideCursor(void);
+    void HideCursor();
 
-    void ShowCursor(void);
+    void ShowCursor();
 
     void SetSprite(const Surface &);
 
@@ -51,25 +51,25 @@ public:
 
     void SetRange(int smin, int smax);
 
-    bool isVertical(void) const;
+    bool isVertical() const;
 
-    int GetCurrent(void) const
+    int GetCurrent() const
     { return cur; };
 
-    int GetStep(void) const
+    int GetStep() const
     { return step; };
 
-    int Max(void) const
+    int Max() const
     { return max; };
 
-    int Min(void) const
+    int Min() const
     { return min; };
 
-    const Rect &GetRect(void) const
+    const Rect &GetRect() const
     { return area; };
 
 private:
-    Point GetPositionCursor(void);
+    Point GetPositionCursor();
 
     Rect area;
     int step;

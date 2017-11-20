@@ -50,7 +50,7 @@ public:
 
     bool isPresentSpell(const Spell &) const;
 
-    std::string String(void) const;
+    std::string String() const;
 };
 
 #endif

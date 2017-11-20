@@ -55,10 +55,10 @@ struct Focus : std::pair<int, void *>
     Focus() : std::pair<int, void *>(FOCUS_UNSEL, nullptr)
     {}
 
-    bool isValid(void) const
+    bool isValid() const
     { return first != FOCUS_UNSEL && second; }
 
-    void Reset(void)
+    void Reset()
     {
         first = FOCUS_UNSEL;
         second = nullptr;
@@ -76,27 +76,27 @@ struct Focus : std::pair<int, void *>
         second = ptr;
     }
 
-    Castle *GetCastle(void)
+    Castle *GetCastle()
     { return first == FOCUS_CASTLE && second ? reinterpret_cast<Castle *>(second) : nullptr; }
 
-    Heroes *GetHeroes(void)
+    Heroes *GetHeroes()
     { return first == FOCUS_HEROES && second ? reinterpret_cast<Heroes *>(second) : nullptr; }
 };
 
 struct Control
 {
-    virtual int GetControl(void) const = 0;
+    virtual int GetControl() const = 0;
 
     virtual            ~Control()
     {}
 
-    bool isControlAI(void) const;
+    bool isControlAI() const;
 
-    bool isControlHuman(void) const;
+    bool isControlHuman() const;
 
-    bool isControlRemote(void) const;
+    bool isControlRemote() const;
 
-    bool isControlLocal(void) const;
+    bool isControlLocal() const;
 };
 
 class Player : public BitModes, public Control
@@ -113,7 +113,7 @@ public:
 
     bool isName(const std::string &) const;
 
-    bool isPlay(void) const;
+    bool isPlay() const;
 
     void SetColor(int);
 
@@ -127,21 +127,21 @@ public:
 
     void SetName(const std::string &);
 
-    int GetControl(void) const;
+    int GetControl() const;
 
-    int GetColor(void) const;
+    int GetColor() const;
 
-    int GetRace(void) const;
+    int GetRace() const;
 
-    int GetFriends(void) const;
+    int GetFriends() const;
 
-    int GetID(void) const;
+    int GetID() const;
 
-    const std::string &GetName(void) const;
+    const std::string &GetName() const;
 
-    Focus &GetFocus(void);
+    Focus &GetFocus();
 
-    const Focus &GetFocus(void) const;
+    const Focus &GetFocus() const;
 
 protected:
     friend StreamBase &operator<<(StreamBase &, const Player &);
@@ -172,19 +172,19 @@ public:
 
     void Init(const Maps::FileInfo &);
 
-    void clear(void);
+    void clear();
 
-    void SetStartGame(void);
+    void SetStartGame();
 
     int GetColors(int control = 0xFF, bool strong = false) const;
 
-    int GetActualColors(void) const;
+    int GetActualColors() const;
 
-    std::string String(void) const;
+    std::string String() const;
 
-    Player *GetCurrent(void);
+    Player *GetCurrent();
 
-    const Player *GetCurrent(void) const;
+    const Player *GetCurrent() const;
 
     static Player *Get(int color);
 
@@ -204,9 +204,9 @@ public:
 
     static void SetPlayerInGame(int color, bool);
 
-    static int HumanColors(void);
+    static int HumanColors();
 
-    static int FriendColors(void);
+    static int FriendColors();
 
     int current_color;
 };
@@ -246,7 +246,7 @@ namespace Interface
 
         void RedrawInfo(bool show_play_info = false) const;
 
-        bool QueueEventProcessing(void);
+        bool QueueEventProcessing();
 
         bool show_name;
         bool show_race;

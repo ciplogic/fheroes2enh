@@ -71,15 +71,15 @@ namespace Game
         TESTING
     };
 
-    void Init(void);
+    void Init();
 
-    const std::string &GetLastSavename(void);
+    const std::string &GetLastSavename();
 
     void SetLastSavename(const std::string &);
 
     void SetLoadVersion(int);
 
-    int GetLoadVersion(void);
+    int GetLoadVersion();
 
     // type_t
     enum
@@ -215,91 +215,91 @@ namespace Game
 
     void AnimateResetDelay(int);
 
-    void UpdateHeroesMoveSpeed(void);
+    void UpdateHeroesMoveSpeed();
 
-    void UpdateBattleSpeed(void);
+    void UpdateBattleSpeed();
 
-    int MainMenu(void);
+    int MainMenu();
 
-    int NewGame(void);
+    int NewGame();
 
-    int LoadGame(void);
+    int LoadGame();
 
     int HighScores(bool);
 
-    int Credits(void);
+    int Credits();
 
-    int NewStandard(void);
+    int NewStandard();
 
-    int NewCampain(void);
+    int NewCampain();
 
-    int NewMulti(void);
+    int NewMulti();
 
-    int NewHotSeat(void);
+    int NewHotSeat();
 
-    int NewNetwork(void);
+    int NewNetwork();
 
-    int NewBattleOnly(void);
+    int NewBattleOnly();
 
-    int LoadStandard(void);
+    int LoadStandard();
 
-    int LoadCampain(void);
+    int LoadCampain();
 
-    int LoadMulti(void);
+    int LoadMulti();
 
-    int ScenarioInfo(void);
+    int ScenarioInfo();
 
-    int SelectScenario(void);
+    int SelectScenario();
 
-    int StartGame(void);
+    int StartGame();
 
-    int StartBattleOnly(void);
+    int StartBattleOnly();
 
-    int NetworkHost(void);
+    int NetworkHost();
 
-    int NetworkGuest(void);
+    int NetworkGuest();
 
     int Testing(int);
 
-    void DrawInterface(void);
+    void DrawInterface();
 
-    void SetFixVideoMode(void);
+    void SetFixVideoMode();
 
-    void EnvironmentSoundMixer(void);
+    void EnvironmentSoundMixer();
 
-    int GetKingdomColors(void);
+    int GetKingdomColors();
 
-    int GetActualKingdomColors(void);
+    int GetActualKingdomColors();
 
     void DialogPlayers(int color, std::string);
 
     void SetCurrentMusic(int);
 
-    int CurrentMusic(void);
+    int CurrentMusic();
 
-    u32 &CastleAnimationFrame(void);
+    u32 &CastleAnimationFrame();
 
-    u32 &MapsAnimationFrame(void);
+    u32 &MapsAnimationFrame();
 
-    u32 GetRating(void);
+    u32 GetRating();
 
-    u32 GetGameOverScores(void);
+    u32 GetGameOverScores();
 
-    u32 GetLostTownDays(void);
+    u32 GetLostTownDays();
 
     u32 GetViewDistance(u32);
 
-    u32 GetWhirlpoolPercent(void);
+    u32 GetWhirlpoolPercent();
 
-    u32 SelectCountPlayers(void);
+    u32 SelectCountPlayers();
 
-    void ShowLoadMapsText(void);
+    void ShowLoadMapsText();
 
-    void PlayPickupSound(void);
+    void PlayPickupSound();
 
     void DisableChangeMusic(bool);
 
-    bool ChangeMusicDisabled(void);
+    bool ChangeMusicDisabled();
 
     void OpenHeroesDialog(Heroes &);
 
@@ -309,15 +309,15 @@ namespace Game
 
     namespace Editor
     {
-        int MainMenu(void);
+        int MainMenu();
 
-        int NewMaps(void);
+        int NewMaps();
 
-        int LoadMaps(void);
+        int LoadMaps();
 
-        int StartGame(void);
+        int StartGame();
 
-        int StartGame(void);
+        int StartGame();
     }
 
     u32 GetStep4Player(u32, u32, u32);

@@ -67,46 +67,46 @@ namespace GameFocus
 
 namespace Interface
 {
-    Castle *GetFocusCastle(void);
+    Castle *GetFocusCastle();
 
-    Heroes *GetFocusHeroes(void);
+    Heroes *GetFocusHeroes();
 
-    int GetFocusType(void);
+    int GetFocusType();
 
-    Point GetFocusCenter(void);
+    Point GetFocusCenter();
 
     class Basic
     {
     public:
-        static Basic &Get(void);
+        static Basic &Get();
 
-        bool NeedRedraw(void) const;
+        bool NeedRedraw() const;
 
         void SetRedraw(int);
 
         void Redraw(int f = 0);
 
-        const Rect &GetScrollLeft(void) const;
+        const Rect &GetScrollLeft() const;
 
-        const Rect &GetScrollRight(void) const;
+        const Rect &GetScrollRight() const;
 
-        const Rect &GetScrollTop(void) const;
+        const Rect &GetScrollTop() const;
 
-        const Rect &GetScrollBottom(void) const;
+        const Rect &GetScrollBottom() const;
 
         s32 GetDimensionDoorDestination(s32, u32, bool) const;
 
-        GameArea &GetGameArea(void);
+        GameArea &GetGameArea();
 
-        Radar &GetRadar(void);
+        Radar &GetRadar();
 
-        IconsPanel &GetIconsPanel(void);
+        IconsPanel &GetIconsPanel();
 
-        ButtonsArea &GetButtonsArea(void);
+        ButtonsArea &GetButtonsArea();
 
-        StatusWindow &GetStatusWindow(void);
+        StatusWindow &GetStatusWindow();
 
-        ControlPanel &GetControlPanel(void);
+        ControlPanel &GetControlPanel();
 
         void SetFocus(Heroes *);
 
@@ -114,63 +114,63 @@ namespace Interface
 
         void ResetFocus(int);
 
-        void RedrawFocus(void);
+        void RedrawFocus();
 
         void SetHideInterface(bool);
 
-        void EventSwitchHeroSleeping(void);
+        void EventSwitchHeroSleeping();
 
-        void EventDefaultAction(void);
+        void EventDefaultAction();
 
-        void EventOpenFocus(void);
+        void EventOpenFocus();
 
-        int EventSaveGame(void);
+        int EventSaveGame();
 
-        void EventPuzzleMaps(void);
+        void EventPuzzleMaps();
 
-        void EventGameInfo(void);
+        void EventGameInfo();
 
-        void EventSystemDialog(void);
+        void EventSystemDialog();
 
-        void EventNextHero(void);
+        void EventNextHero();
 
-        void EventNextTown(void);
+        void EventNextTown();
 
-        void EventContinueMovement(void);
+        void EventContinueMovement();
 
-        void EventKingdomInfo(void);
+        void EventKingdomInfo();
 
-        void EventCastSpell(void);
+        void EventCastSpell();
 
-        void EventSwitchShowRadar(void);
+        void EventSwitchShowRadar();
 
-        void EventSwitchShowStatus(void);
+        void EventSwitchShowStatus();
 
-        void EventSwitchShowButtons(void);
+        void EventSwitchShowButtons();
 
-        void EventSwitchShowIcons(void);
+        void EventSwitchShowIcons();
 
-        void EventSwitchShowControlPanel(void);
+        void EventSwitchShowControlPanel();
 
-        void EventDebug1(void);
+        void EventDebug1();
 
-        void EventDebug2(void);
+        void EventDebug2();
 
-        int EventLoadGame(void);
+        int EventLoadGame();
 
-        int EventAdventureDialog(void);
+        int EventAdventureDialog();
 
-        int EventFileDialog(void);
+        int EventFileDialog();
 
-        int EventEndTurn(void);
+        int EventEndTurn();
 
-        int EventExit(void);
+        int EventExit();
 
-        int EventDigArtifact(void);
+        int EventDigArtifact();
 
         void EventKeyArrowPress(int direct);
 
-        int StartGame(void);
+        int StartGame();
 
         void MouseCursorAreaClickLeft(s32);
 

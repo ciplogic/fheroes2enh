@@ -31,13 +31,13 @@ public:
 
     Sprite(const Surface &, s32, s32);
 
-    int x(void) const;
+    int x() const;
 
-    int y(void) const;
+    int y() const;
 
     using Surface::Blit;
 
-    void Blit(void) const;
+    void Blit() const;
 
     void Blit(s32, s32) const;
 

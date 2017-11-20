@@ -62,41 +62,41 @@ namespace Battle
 
         ~Arena();
 
-        void Turns(void);
+        void Turns();
 
-        bool NetworkTurn(void);
+        bool NetworkTurn();
 
-        bool BattleValid(void) const;
+        bool BattleValid() const;
 
-        bool CanBreakAutoBattle(void) const;
+        bool CanBreakAutoBattle() const;
 
-        void BreakAutoBattle(void);
+        void BreakAutoBattle();
 
-        u32 GetCurrentTurn(void) const;
+        u32 GetCurrentTurn() const;
 
-        Result &GetResult(void);
+        Result &GetResult();
 
         const HeroBase *GetCommander(int color, bool invert = false) const;
 
-        const HeroBase *GetCommander1(void) const;
+        const HeroBase *GetCommander1() const;
 
-        const HeroBase *GetCommander2(void) const;
+        const HeroBase *GetCommander2() const;
 
-        const HeroBase *GetCurrentCommander(void) const;
+        const HeroBase *GetCurrentCommander() const;
 
-        Force &GetForce1(void);
+        Force &GetForce1();
 
-        Force &GetForce2(void);
+        Force &GetForce2();
 
         Force &GetForce(int color, bool invert = false);
 
-        Force &GetCurrentForce(void);
+        Force &GetCurrentForce();
 
-        int GetArmyColor1(void) const;
+        int GetArmyColor1() const;
 
-        int GetArmyColor2(void) const;
+        int GetArmyColor2() const;
 
-        int GetCurrentColor(void) const;
+        int GetCurrentColor() const;
 
         int GetOppositeColor(int) const;
 
@@ -111,13 +111,13 @@ namespace Battle
         const Unit *GetEnemyMaxQuality(int) const;
 
         const SpellStorage &
-        GetUsageSpells(void) const;
+        GetUsageSpells() const;
 
         void DialogBattleSummary(const Result &) const;
 
         int DialogBattleHero(const HeroBase &, bool) const;
 
-        void FadeArena(void) const;
+        void FadeArena() const;
 
         Indexes GetPath(const Unit &, const Position &);
 
@@ -137,7 +137,7 @@ namespace Battle
 
         const Unit *GraveyardLastTroop(s32) const;
 
-        Indexes GraveyardClosedCells(void) const;
+        Indexes GraveyardClosedCells() const;
 
         bool CanSurrenderOpponent(int color) const;
 
@@ -155,21 +155,21 @@ namespace Battle
 
         u32 GetObstaclesPenalty(const Unit &, const Unit &) const;
 
-        int GetICNCovr(void) const;
+        int GetICNCovr() const;
 
         u32 GetCastleTargetValue(int) const;
 
-        static Board *GetBoard(void);
+        static Board *GetBoard();
 
         static Tower *GetTower(int);
 
-        static Bridge *GetBridge(void);
+        static Bridge *GetBridge();
 
-        static const Castle *GetCastle(void);
+        static const Castle *GetCastle();
 
-        static Interface *GetInterface(void);
+        static Interface *GetInterface();
 
-        static Graveyard *GetGraveyard(void);
+        static Graveyard *GetGraveyard();
 
     private:
         friend StreamBase &operator<<(StreamBase &, const Arena &);
@@ -186,12 +186,12 @@ namespace Battle
 
         void SetCastleTargetValue(int, u32);
 
-        void CatapultAction(void);
+        void CatapultAction();
 
         s32 GetFreePositionNearHero(int) const;
 
         std::vector<int>
-        GetCastleTargets(void) const;
+        GetCastleTargets() const;
 
         void ApplyActionRetreat(Command &);
 
@@ -249,7 +249,7 @@ namespace Battle
         bool end_turn;
     };
 
-    Arena *GetArena(void);
+    Arena *GetArena();
 
     StreamBase &operator<<(StreamBase &, const Arena &);
 

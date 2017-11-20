@@ -136,103 +136,103 @@ public:
 
     bool operator!=(const Monster &) const;
 
-    int operator()(void) const;
+    int operator()() const;
 
-    int GetID(void) const;
+    int GetID() const;
 
-    void Upgrade(void);
+    void Upgrade();
 
-    Monster GetUpgrade(void) const;
+    Monster GetUpgrade() const;
 
-    Monster GetDowngrade(void) const;
+    Monster GetDowngrade() const;
 
-    virtual u32 GetAttack(void) const;
+    virtual u32 GetAttack() const;
 
-    virtual u32 GetDefense(void) const;
+    virtual u32 GetDefense() const;
 
-    virtual int GetColor(void) const;
+    virtual int GetColor() const;
 
-    virtual int GetMorale(void) const;
+    virtual int GetMorale() const;
 
-    virtual int GetLuck(void) const;
+    virtual int GetLuck() const;
 
-    virtual int GetRace(void) const;
+    virtual int GetRace() const;
 
-    u32 GetDamageMin(void) const;
+    u32 GetDamageMin() const;
 
-    u32 GetDamageMax(void) const;
+    u32 GetDamageMax() const;
 
-    u32 GetShots(void) const;
+    u32 GetShots() const;
 
-    u32 GetHitPoints(void) const;
+    u32 GetHitPoints() const;
 
-    u32 GetSpeed(void) const;
+    u32 GetSpeed() const;
 
-    u32 GetGrown(void) const;
+    u32 GetGrown() const;
 
-    int GetLevel(void) const;
+    int GetLevel() const;
 
     u32 GetRNDSize(bool skip) const;
 
-    const char *GetName(void) const;
+    const char *GetName() const;
 
-    const char *GetMultiName(void) const;
+    const char *GetMultiName() const;
 
     const char *GetPluralName(u32) const;
 
-    bool isValid(void) const;
+    bool isValid() const;
 
-    bool isElemental(void) const;
+    bool isElemental() const;
 
-    bool isUndead(void) const;
+    bool isUndead() const;
 
-    bool isFly(void) const;
+    bool isFly() const;
 
-    bool isWide(void) const;
+    bool isWide() const;
 
-    bool isArchers(void) const;
+    bool isArchers() const;
 
-    bool isAllowUpgrade(void) const;
+    bool isAllowUpgrade() const;
 
-    bool isTwiceAttack(void) const;
+    bool isTwiceAttack() const;
 
-    bool isResurectLife(void) const;
+    bool isResurectLife() const;
 
-    bool isDoubleCellAttack(void) const;
+    bool isDoubleCellAttack() const;
 
-    bool isMultiCellAttack(void) const;
+    bool isMultiCellAttack() const;
 
-    bool isAlwayResponse(void) const;
+    bool isAlwayResponse() const;
 
-    bool isHideAttack(void) const;
+    bool isHideAttack() const;
 
-    bool isDragons(void) const;
+    bool isDragons() const;
 
-    bool isAffectedByMorale(void) const;
+    bool isAffectedByMorale() const;
 
-    bool isAlive(void) const;
+    bool isAlive() const;
 
-    int ICNMonh(void) const;
+    int ICNMonh() const;
 
-    u32 GetSpriteIndex(void) const;
+    u32 GetSpriteIndex() const;
 
-    payment_t GetCost(void) const;
+    payment_t GetCost() const;
 
-    payment_t GetUpgradeCost(void) const;
+    payment_t GetUpgradeCost() const;
 
-    u32 GetDwelling(void) const;
+    u32 GetDwelling() const;
 
     static Monster Rand(level_t = LEVEL0);
 
-    static u32 Rand4WeekOf(void);
+    static u32 Rand4WeekOf();
 
-    static u32 Rand4MonthOf(void);
+    static u32 Rand4MonthOf();
 
     static u32 GetCountFromHitPoints(const Monster &, u32);
 
     static void UpdateStats(const std::string &);
 
-    static float GetUpgradeRatio(void);
+    static float GetUpgradeRatio();
 
 protected:
     static Monster FromDwelling(int race, u32 dw);
@@ -243,7 +243,7 @@ protected:
 struct MonsterStaticData
 {
     // wrapper for stream
-    static MonsterStaticData &Get(void);
+    static MonsterStaticData &Get();
 };
 
 StreamBase &operator<<(StreamBase &, const Monster &);

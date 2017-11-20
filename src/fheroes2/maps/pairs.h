@@ -94,7 +94,7 @@ public:
     bool isResource(int res) const
     { return res == first; };
 
-    bool isValid(void) const
+    bool isValid() const
     { return (first & Resource::ALL) && second; };
 };
 

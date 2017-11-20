@@ -28,7 +28,7 @@
 #include "rand.h"
 
 
-void Rand::Init(void)
+void Rand::Init()
 { std::srand((u32) std::time(0)); }
 
 u32 Rand::Get(u32 min, u32 max)
@@ -48,7 +48,7 @@ Rand::Queue::Queue(u32 size)
     reserve(size);
 }
 
-void Rand::Queue::Reset(void)
+void Rand::Queue::Reset()
 {
     clear();
 }
@@ -59,12 +59,12 @@ void Rand::Queue::Push(s32 value, u32 percent)
         push_back(std::make_pair(value, percent));
 }
 
-size_t Rand::Queue::Size(void) const
+size_t Rand::Queue::Size() const
 {
     return size();
 }
 
-s32 Rand::Queue::Get(void)
+s32 Rand::Queue::Get()
 {
     std::vector<ValuePercent>::iterator it;
 

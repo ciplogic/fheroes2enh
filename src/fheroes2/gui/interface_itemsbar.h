@@ -60,13 +60,13 @@ namespace Interface
 	void		SetContent(const std::list<Item> &);
 	void		SetContent(const std::vector<Item> &);
 	
-	const Point &	GetPos(void) const;
-	const Rect &	GetArea(void) const;
-	const Size &	GetColRows(void) const;
+	const Point &	GetPos() const;
+	const Rect &	GetArea() const;
+	const Size &	GetColRows() const;
 	Item*		GetItem(const Point &) const;
 
 	void		Redraw(Surface & dstsf = Display::Get());
-	bool		QueueEventProcessing(void);
+	bool		QueueEventProcessing();
 */
 
         virtual void RedrawBackground(const Rect &, Surface &)
@@ -153,17 +153,17 @@ namespace Interface
             return posItem != items.end() ? std::distance(items.end(), posItem) : -1;
         }
 
-        const Point &GetPos(void) const
+        const Point &GetPos() const
         {
             return barsz;
         }
 
-        const Rect &GetArea(void) const
+        const Rect &GetArea() const
         {
             return barsz;
         }
 
-        const Size &GetColRows(void) const
+        const Size &GetColRows() const
         {
             return colrows;
         }
@@ -207,7 +207,7 @@ namespace Interface
             }
         }
 
-        bool QueueEventProcessing(void)
+        bool QueueEventProcessing()
         {
             const Point &cursor = LocalEvent::Get().GetMouseCursor();
 
@@ -216,26 +216,26 @@ namespace Interface
         }
 
     protected:
-        virtual void SetContentItems(void)
+        virtual void SetContentItems()
         {
         }
 
-        ItemsIterator GetBeginItemIter(void)
+        ItemsIterator GetBeginItemIter()
         {
             return items.begin();
         }
 
-        ItemsIterator GetEndItemIter(void)
+        ItemsIterator GetEndItemIter()
         {
             return items.end();
         }
 
-        virtual ItemsIterator GetTopItemIter(void)
+        virtual ItemsIterator GetTopItemIter()
         {
             return items.begin();
         }
 
-        virtual ItemsIterator GetCurItemIter(void)
+        virtual ItemsIterator GetCurItemIter()
         {
             return items.end();
         }
@@ -262,7 +262,7 @@ namespace Interface
             return false;
         }
 
-        bool isItemsEmpty(void)
+        bool isItemsEmpty()
         {
             return items.empty();
         }
@@ -299,7 +299,7 @@ namespace Interface
         }
 
     private:
-        void RescanSize(void)
+        void RescanSize()
         {
             barsz.w = colrows.w ? colrows.w * itemsz.w + (colrows.w - 1) * hspace : 0;
             barsz.h = colrows.h ? colrows.h * itemsz.h + (colrows.h - 1) * vspace : 0;
@@ -326,14 +326,14 @@ namespace Interface
         {}
 
 /*
-	Item*		GetSelectedItem(void);
-	Rect*		GetSelectedPos(void);
-	s32		GetSelectedIndex(void);
+	Item*		GetSelectedItem();
+	Rect*		GetSelectedPos();
+	s32		GetSelectedIndex();
 
-	bool		isSelected(void);
-	void		ResetSelected(void);
+	bool		isSelected();
+	void		ResetSelected();
 
-        bool QueueEventProcessing(void);
+        bool QueueEventProcessing();
 	bool QueueEventProcessing(ItemsActionBar<Item> &);
 */
 
@@ -365,33 +365,33 @@ namespace Interface
         { return false; }
 
         // body
-        Item *GetSelectedItem(void)
+        Item *GetSelectedItem()
         {
             return *GetCurItemIter();
         }
 
-        Rect *GetSelectedPos(void)
+        Rect *GetSelectedPos()
         {
             return &curItemPos.second;
         }
 
-        s32 GetSelectedIndex(void)
+        s32 GetSelectedIndex()
         {
             return std::distance(ItemsBar<Item>::GetBeginItemIter(), GetCurItemIter());
         }
 
-        bool isSelected(void)
+        bool isSelected()
         {
             return GetCurItemIter() != ItemsBar<Item>::GetEndItemIter();
         }
 
-        void ResetSelected(void)
+        void ResetSelected()
         {
             topItem = ItemsBar<Item>::GetBeginItemIter();
             curItemPos = ItemIterPos(ItemsBar<Item>::items.end(), Rect());
         }
 
-        bool QueueEventProcessing(void)
+        bool QueueEventProcessing()
         {
             return ItemsBar<Item>::QueueEventProcessing();
         }
@@ -409,17 +409,17 @@ namespace Interface
         }
 
     protected:
-        ItemsIterator GetTopItemIter(void)
+        ItemsIterator GetTopItemIter()
         {
             return topItem;
         }
 
-        ItemsIterator GetCurItemIter(void)
+        ItemsIterator GetCurItemIter()
         {
             return curItemPos.first;
         }
 
-        void SetContentItems(void)
+        void SetContentItems()
         {
             ResetSelected();
         }

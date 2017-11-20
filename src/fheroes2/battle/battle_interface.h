@@ -52,7 +52,7 @@ namespace Battle
     struct TargetsInfo;
     struct Result;
 
-    void DialogBattleSettings(void);
+    void DialogBattleSettings();
 
     bool DialogBattleSurrender(const HeroBase &, u32);
 
@@ -66,21 +66,21 @@ namespace Battle
     public:
         OpponentSprite(const Rect &, const HeroBase *, bool);
 
-        const Rect &GetArea(void) const;
+        const Rect &GetArea() const;
 
-        void Redraw(void) const;
+        void Redraw() const;
 
         void ResetAnimFrame(int);
 
         void IncreaseAnimFrame(bool loop = false);
 
-        bool isFinishFrame(void) const;
+        bool isFinishFrame() const;
 
-        bool isStartFrame(void) const;
+        bool isStartFrame() const;
 
-        int GetColor(void) const;
+        int GetColor() const;
 
-        const HeroBase *GetHero(void) const;
+        const HeroBase *GetHero() const;
 
     private:
         const HeroBase *base;
@@ -104,10 +104,10 @@ namespace Battle
 
         void SetMessage(const std::string &, bool = false);
 
-        void Redraw(void);
+        void Redraw();
 
         const std::string &
-        GetMessage(void) const;
+        GetMessage() const;
 
     private:
         Text bar1;
@@ -148,7 +148,7 @@ namespace Battle
 
         void SetInfo(const Cell *, const Unit *, const Unit *);
 
-        void Reset(void);
+        void Reset();
 
         void Redraw(int, int);
 
@@ -166,19 +166,19 @@ namespace Battle
 
         ~Interface();
 
-        void Redraw(void);
+        void Redraw();
 
         void HumanTurn(const Unit &, Actions &);
 
         bool NetworkTurn(Result &);
 
-        const Rect &GetArea(void) const;
+        const Rect &GetArea() const;
 
         void SetStatus(const std::string &, bool = false);
 
         void SetArmiesOrder(const Units *);
 
-        void FadeArena(void);
+        void FadeArena();
 
         void RedrawActionAttackPart1(Unit &, Unit &, const TargetsInfo &);
 
@@ -225,9 +225,9 @@ namespace Battle
 
         void HumanCastSpellTurn(const Unit &, Actions &, std::string &);
 
-        void RedrawBorder(void);
+        void RedrawBorder();
 
-        void RedrawCover(void);
+        void RedrawCover();
 
         void RedrawCoverStatic(Surface &);
 
@@ -241,21 +241,21 @@ namespace Battle
 
         void RedrawCastle3(const Castle &) const;
 
-        void RedrawKilled(void);
+        void RedrawKilled();
 
-        void RedrawInterface(void);
+        void RedrawInterface();
 
-        void RedrawOpponents(void) const;
+        void RedrawOpponents() const;
 
-        void RedrawOpponentsFlags(void) const;
+        void RedrawOpponentsFlags() const;
 
-        void RedrawArmies(void) const;
+        void RedrawArmies() const;
 
         void RedrawTroopSprite(const Unit &) const;
 
         void RedrawTroopCount(const Unit &) const;
 
-        void RedrawPocketControls(void) const;
+        void RedrawPocketControls() const;
 
         void RedrawActionWincesKills(TargetsInfo &);
 
@@ -287,7 +287,7 @@ namespace Battle
 
         void RedrawTargetsWithFrameAnimation(const TargetsInfo &, int, int, bool);
 
-        bool IdleTroopsAnimation(void);
+        bool IdleTroopsAnimation();
 
         void CheckGlobalEvents(LocalEvent &);
 
@@ -295,11 +295,11 @@ namespace Battle
 
         void EventAutoSwitch(const Unit &, Actions &);
 
-        void EventShowOptions(void);
+        void EventShowOptions();
 
         void ButtonAutoAction(const Unit &, Actions &);
 
-        void ButtonSettingsAction(void);
+        void ButtonSettingsAction();
 
         void ButtonSkipAction(Actions &);
 

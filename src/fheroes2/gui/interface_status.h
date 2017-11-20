@@ -48,17 +48,17 @@ namespace Interface
 
         void SetPos(s32, s32);
 
-        void SavePosition(void);
+        void SavePosition();
 
-        void SetRedraw(void) const;
+        void SetRedraw() const;
 
-        void Reset(void);
+        void Reset();
 
-        void Redraw(void);
+        void Redraw();
 
-        void NextState(void);
+        void NextState();
 
-        int GetState(void) const;
+        int GetState() const;
 
         void SetState(int);
 
@@ -66,9 +66,9 @@ namespace Interface
 
         void RedrawTurnProgress(u32);
 
-        void QueueEventProcessing(void);
+        void QueueEventProcessing();
 
-        static void ResetTimer(void);
+        static void ResetTimer();
 
     private:
         void DrawKingdomInfo(int oh = 0) const;
@@ -79,9 +79,9 @@ namespace Interface
 
         void DrawResourceInfo(int oh = 0) const;
 
-        void DrawBackground(void) const;
+        void DrawBackground() const;
 
-        void DrawAITurns(void) const;
+        void DrawAITurns() const;
 
         static u32 ResetResourceStatus(u32, void *);
 
