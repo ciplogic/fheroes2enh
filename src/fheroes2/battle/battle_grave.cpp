@@ -30,8 +30,8 @@ Battle::Indexes Battle::Graveyard::GetClosedCells(void) const
     Indexes res;
     res.reserve(size());
 
-    for (const_iterator it = begin(); it != end(); ++it)
-        res.push_back((*it).first);
+    for (const auto& it : *this)
+        res.push_back(it.first);
 
     return res;
 }
@@ -65,7 +65,7 @@ void Battle::Graveyard::RemoveTroop(const Unit &b)
 
 u32 Battle::Graveyard::GetLastTroopUID(s32 index) const
 {
-    for (const_iterator it = begin(); it != end(); ++it)
+    for (auto it = begin(); it != end(); ++it)
         if (index == (*it).first && (*it).second.size())
             return (*it).second.back();
 

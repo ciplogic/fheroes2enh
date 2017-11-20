@@ -129,7 +129,7 @@ public:
 
     const char *GetDescription(void) const;
 
-    u32 SpellPoint(const HeroBase *hero = NULL) const;
+    u32 SpellPoint(const HeroBase *hero = nullptr) const;
 
     u32 MovePoint(void) const;
 

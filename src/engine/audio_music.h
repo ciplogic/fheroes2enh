@@ -39,15 +39,15 @@ namespace Music
 
     void SetExtCommand(const std::string &);
 
-    void Pause(void);
+    void Pause();
 
-    void Resume(void);
+    void Resume();
 
-    void Reset(void);
+    void Reset();
 
-    bool isPlaying(void);
+    bool isPlaying();
 
-    bool isPaused(void);
+    bool isPaused();
 
     std::vector<u8> Xmi2Mid(const std::vector<u8> &);
 }

@@ -52,7 +52,7 @@ void Battle::Bridge::SetDown(bool f)
 
 bool Battle::Bridge::AllowUp(void) const
 {
-    return NULL == Board::GetCell(49)->GetUnit() && NULL == Board::GetCell(50)->GetUnit();
+    return nullptr == Board::GetCell(49)->GetUnit() && nullptr == Board::GetCell(50)->GetUnit();
 }
 
 bool Battle::Bridge::NeedDown(const Unit &b, s32 pos2) const

@@ -128,12 +128,11 @@ struct ResourceBar
         text.Blit(posx + (sprite.w() - text.w()) / 2, posy + sprite.h() - 12);
     }
 
-    void Redraw(const Funds *res = NULL) const
+    void Redraw(const Funds *res = nullptr) const
     {
         if (!res) res = &resource;
 
-        for (Rects::const_iterator
-                     it = positions.begin(); it != positions.end(); ++it)
+        for (auto it = positions.begin(); it != positions.end(); ++it)
         {
             int rs = Resource::FromIndexSprite2(std::distance(positions.begin(), it));
             RedrawResource(rs, res->Get(rs), (*it).x, (*it).y);

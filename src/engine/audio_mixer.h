@@ -47,7 +47,7 @@ namespace Mixer
 
     void SetChannels(u8);
 
-    u16 MaxVolume(void);
+    u16 MaxVolume();
 
     u16 Volume(int ch, s16 = -1);
 
@@ -57,17 +57,17 @@ namespace Mixer
 
     void Stop(int ch = -1);
 
-    void Reset(void);
+    void Reset();
 
     u8 isPlaying(int);
 
     u8 isPaused(int);
 
-    bool isValid(void);
+    bool isValid();
 
-    void Reduce(void);
+    void Reduce();
 
-    void Enhance(void);
+    void Enhance();
 }
 
 #endif

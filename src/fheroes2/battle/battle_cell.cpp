@@ -91,7 +91,7 @@ Battle::Position Battle::Position::GetCorrect(const Unit &b, s32 head)
             if (result.second)
                 std::swap(result.first, result.second);
             else
-                    DEBUG(DBG_BATTLE, DBG_WARN, "NULL pointer, " << b.String() << ", dst: " << head);
+                    DEBUG(DBG_BATTLE, DBG_WARN, "nullptr pointer, " << b.String() << ", dst: " << head);
         }
     }
 
@@ -110,11 +110,11 @@ bool Battle::Position::isValid(void) const
 }
 
 
-Battle::Cell::Cell() : index(0), object(0), direction(UNKNOWN), quality(0), troop(NULL)
+Battle::Cell::Cell() : index(0), object(0), direction(UNKNOWN), quality(0), troop(nullptr)
 {
 }
 
-Battle::Cell::Cell(s32 ii) : index(ii), object(0), direction(UNKNOWN), quality(0), troop(NULL)
+Battle::Cell::Cell(s32 ii) : index(ii), object(0), direction(UNKNOWN), quality(0), troop(nullptr)
 {
     SetArea(Rect());
 }
@@ -287,7 +287,7 @@ bool Battle::Cell::isPassable3(const Unit &b, bool check_reflect) const
 
 bool Battle::Cell::isPassable1(bool check_troop) const
 {
-    return 0 == object && (!check_troop || NULL == troop);
+    return 0 == object && (!check_troop || nullptr == troop);
 }
 
 void Battle::Cell::ResetQuality(void)

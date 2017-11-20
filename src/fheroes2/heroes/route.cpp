@@ -438,9 +438,8 @@ u32 Route::Path::GetTotalPenalty(void) const
 {
     u32 result = 0;
 
-    for (const_iterator
-                 it = begin(); it != end(); ++it)
-        result += (*it).GetPenalty();
+    for (auto it : *this)
+        result += it.GetPenalty();
 
     return result;
 }
@@ -450,10 +449,11 @@ s32 Route::Path::GetAllowStep(void) const
     s32 green = 0;
     u32 move_point = hero->GetMovePoints();
 
-    for (const_iterator
-                 it = begin(); it != end() && move_point >= (*it).GetPenalty(); ++it)
+    for (auto it : *this)
     {
-        move_point -= (*it).GetPenalty();
+        if(move_point < it.GetPenalty())
+            break;
+        move_point -= it.GetPenalty();
         ++green;
     }
 
@@ -467,9 +467,8 @@ std::string Route::Path::String(void) const
     os << "from: " << hero->GetIndex() << ", to: " << GetLastIndex() <<
        ", obj: " << MP2::StringObject(world.GetTiles(dst).GetObject()) << ", dump: ";
 
-    for (const_iterator
-                 it = begin(); it != end(); ++it)
-        os << Direction::String((*it).GetDirection()) << "(" << (*it).GetPenalty() << ")" << ", ";
+    for (auto it : *this)
+        os << Direction::String(it.GetDirection()) << "(" << it.GetPenalty() << ")" << ", ";
 
     os << "end";
     return os.str();
@@ -525,7 +524,7 @@ void Route::Path::RescanPassable(void)
     iterator it = begin();
 
     for (; it != end(); ++it)
-        if (!world.GetTiles((*it).GetFrom()).isPassable(NULL, (*it).GetDirection(), false))
+        if (!world.GetTiles((*it).GetFrom()).isPassable(nullptr, (*it).GetDirection(), false))
             break;
 
     if (hero->isControlAI())

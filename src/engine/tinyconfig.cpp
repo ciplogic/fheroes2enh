@@ -86,9 +86,8 @@ bool TinyConfig::Save(const std::string &cfile) const
     StreamFile sf;
     if (!sf.open(cfile, "wb")) return false;
 
-    for (const_iterator
-                 it = begin(); it != end(); ++it)
-        sf << it->first << " " << separator << " " << it->second << '\n';
+    for (const auto& it : *this)
+        sf << it.first << " " << separator << " " << it.second << '\n';
 
     return true;
 }
@@ -137,8 +136,7 @@ std::list<std::string> TinyConfig::ListStr(const std::string &key) const
     std::pair<const_iterator, const_iterator> ret = equal_range(ModifyKey(key));
     std::list<std::string> res;
 
-    for (const_iterator
-                 it = ret.first; it != ret.second; ++it)
+    for (auto it = ret.first; it != ret.second; ++it)
         res.push_back(it->second);
 
     return res;
@@ -149,8 +147,7 @@ std::list<int> TinyConfig::ListInt(const std::string &key) const
     std::pair<const_iterator, const_iterator> ret = equal_range(ModifyKey(key));
     std::list<int> res;
 
-    for (const_iterator
-                 it = ret.first; it != ret.second; ++it)
+    for (auto it = ret.first; it != ret.second; ++it)
         res.push_back(GetInt(it->second));
 
     return res;

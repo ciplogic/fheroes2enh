@@ -175,7 +175,7 @@ void Interface::GameArea::Redraw(Surface &dst, int flag, const Rect &rt) const
         }
 
     // route
-    const Heroes *hero = flag & LEVEL_HEROES ? GetFocusHeroes() : NULL;
+    const Heroes *hero = flag & LEVEL_HEROES ? GetFocusHeroes() : nullptr;
 
     if (hero && hero->GetPath().isShow())
     {

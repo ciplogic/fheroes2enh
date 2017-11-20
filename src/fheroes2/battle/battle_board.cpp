@@ -58,8 +58,8 @@ Battle::Board::Board()
 
 void Battle::Board::SetArea(const Rect &area)
 {
-    for (iterator it = begin(); it != end(); ++it)
-        (*it).SetArea(area);
+    for (auto& it : *this)
+        it.SetArea(area);
 }
 
 Rect Battle::Board::GetArea(void) const
@@ -67,8 +67,8 @@ Rect Battle::Board::GetArea(void) const
     Rects rects;
     rects.reserve(size());
 
-    for (const_iterator it = begin(); it != end(); ++it)
-        rects.push_back((*it).GetPos());
+    for (const auto& it : *this)
+        rects.push_back(it.GetPos());
 
     return rects.GetRect();
 }
@@ -84,20 +84,16 @@ void Battle::Board::SetPositionQuality(const Unit &b)
     Arena *arena = GetArena();
     Units enemies(arena->GetForce(b.GetColor(), true), true);
 
-    for (Units::const_iterator
-                 it1 = enemies.begin(); it1 != enemies.end(); ++it1)
+    for (auto unit : enemies)
     {
-        const Unit *unit = *it1;
-
         if (unit && unit->isValid())
         {
             const Cell *cell1 = GetCell(unit->GetHeadIndex());
             const Indexes around = GetAroundIndexes(*unit);
 
-            for (Indexes::const_iterator
-                         it2 = around.begin(); it2 != around.end(); ++it2)
+            for (int it2 : around)
             {
-                Cell *cell2 = GetCell(*it2);
+                Cell *cell2 = GetCell(it2);
                 if (cell2 && cell2->isPassable3(b, false))
                     cell2->SetQuality(cell2->GetQuality() + cell1->GetQuality());
             }
@@ -151,8 +147,8 @@ void Battle::Board::SetScanPassability(const Unit &b)
 
     if (b.isFly())
     {
-        for (iterator it = begin(); it != end(); ++it)
-            if ((*it).isPassable3(b, false)) (*it).SetDirection(CENTER);
+        for (auto& it : *this)
+            if (it.isPassable3(b, false)) it.SetDirection(CENTER);
     } else
     {
         Indexes indexes = GetDistanceIndexes(b.GetHeadIndex(), b.GetSpeed());
@@ -323,10 +319,9 @@ std::string Battle::Board::AllUnitsInfo(void) const
 {
     std::ostringstream os;
 
-    for (const_iterator
-                 it = begin(); it != end(); ++it)
+    for (const auto& it : *this)
     {
-        const Unit *b = (*it).GetUnit();
+        const Unit *b = it.GetUnit();
         if (b) os << "\t" << b->String(true) << std::endl;
     }
 
@@ -338,9 +333,9 @@ Battle::Indexes Battle::Board::GetPassableQualityPositions(const Unit &b)
     Indexes result;
     result.reserve(30);
 
-    for (const_iterator it = begin(); it != end(); ++it)
-        if ((*it).isPassable3(b, false) && (*it).GetQuality())
-            result.push_back((*it).GetIndex());
+    for (auto& it : *this)
+        if (it.isPassable3(b, false) && it.GetQuality())
+            result.push_back(it.GetIndex());
 
     if (IS_DEBUG(DBG_BATTLE, DBG_TRACE))
     {
@@ -366,9 +361,9 @@ Battle::Indexes Battle::Board::GetNearestTroopIndexes(s32 pos, const Indexes *bl
     std::vector<IndexDistance> dists;
     dists.reserve(15);
 
-    for (const_iterator it = begin(); it != end(); ++it)
+    for (const auto& it : *this)
     {
-        const Battle::Unit *b = (*it).GetUnit();
+        const Battle::Unit *b = it.GetUnit();
 
         if (b)
         {
@@ -520,7 +515,7 @@ s32 Battle::Board::GetIndexDirection(s32 index, int dir)
 
 s32 Battle::Board::GetIndexAbsPosition(const Point &pt) const
 {
-    const_iterator it = begin();
+    auto it = begin();
 
     for (; it != end(); ++it)
         if ((*it).isPositionIncludePoint(pt)) break;
@@ -950,7 +945,7 @@ Battle::Cell *Battle::Board::GetCell(s32 position, int dir)
             return &board->at(GetIndexDirection(position, dir));
     }
 
-    return NULL;
+    return nullptr;
 }
 
 Battle::Indexes Battle::Board::GetMoveWideIndexes(s32 center, bool reflect)

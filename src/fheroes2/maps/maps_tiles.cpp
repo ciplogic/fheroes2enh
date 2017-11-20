@@ -1152,7 +1152,7 @@ void Maps::Tiles::SetQuantity3(int mod)
 Heroes *Maps::Tiles::GetHeroes(void) const
 {
     return MP2::OBJ_HEROES == mp2_object && GetQuantity3() ?
-           world.GetHeroes(GetQuantity3() - 1) : NULL;
+           world.GetHeroes(GetQuantity3() - 1) : nullptr;
 }
 
 void Maps::Tiles::SetHeroes(Heroes *hero)
@@ -1851,7 +1851,7 @@ Maps::TilesAddon *Maps::Tiles::FindAddonICN1(int icn1)
     auto it = std::find_if(addons_level1.begin(), addons_level1.end(),
                            std::bind2nd(std::mem_fun_ref(&Maps::TilesAddon::isICN), icn1));
 
-    return it != addons_level1.end() ? &(*it) : NULL;
+    return it != addons_level1.end() ? &(*it) : nullptr;
 }
 
 Maps::TilesAddon *Maps::Tiles::FindAddonICN2(int icn2)
@@ -1859,7 +1859,7 @@ Maps::TilesAddon *Maps::Tiles::FindAddonICN2(int icn2)
     auto it = std::find_if(addons_level2.begin(), addons_level2.end(),
                            std::bind2nd(std::mem_fun_ref(&Maps::TilesAddon::isICN), icn2));
 
-    return it != addons_level2.end() ? &(*it) : NULL;
+    return it != addons_level2.end() ? &(*it) : nullptr;
 }
 
 Maps::TilesAddon *Maps::Tiles::FindAddonLevel1(u32 uniq1)
@@ -1867,7 +1867,7 @@ Maps::TilesAddon *Maps::Tiles::FindAddonLevel1(u32 uniq1)
     auto it = std::find_if(addons_level1.begin(), addons_level1.end(),
                            std::bind2nd(std::mem_fun_ref(&Maps::TilesAddon::isUniq), uniq1));
 
-    return it != addons_level1.end() ? &(*it) : NULL;
+    return it != addons_level1.end() ? &(*it) : nullptr;
 }
 
 Maps::TilesAddon *Maps::Tiles::FindAddonLevel2(u32 uniq2)
@@ -1875,7 +1875,7 @@ Maps::TilesAddon *Maps::Tiles::FindAddonLevel2(u32 uniq2)
     auto it = std::find_if(addons_level2.begin(), addons_level2.end(),
                            std::bind2nd(std::mem_fun_ref(&Maps::TilesAddon::isUniq), uniq2));
 
-    return it != addons_level2.end() ? &(*it) : NULL;
+    return it != addons_level2.end() ? &(*it) : nullptr;
 }
 
 
@@ -2241,7 +2241,7 @@ const Maps::TilesAddon *Maps::Tiles::FindObjectConst(int objs) const
             break;
     }
 
-    return addons_level1.end() != it ? &(*it) : NULL;
+    return addons_level1.end() != it ? &(*it) : nullptr;
 }
 
 Maps::TilesAddon *Maps::Tiles::FindFlags(void)
@@ -2251,10 +2251,10 @@ Maps::TilesAddon *Maps::Tiles::FindFlags(void)
     if (it == addons_level1.end())
     {
         it = std::find_if(addons_level2.begin(), addons_level2.end(), TilesAddon::isFlag32);
-        return addons_level2.end() != it ? &(*it) : NULL;
+        return addons_level2.end() != it ? &(*it) : nullptr;
     }
 
-    return addons_level1.end() != it ? &(*it) : NULL;
+    return addons_level1.end() != it ? &(*it) : nullptr;
 }
 
 /* ICN::FLAGS32 version */
@@ -2444,7 +2444,7 @@ bool Maps::Tiles::CaptureObjectIsProtection(void) const
 
 void Maps::Tiles::RemoveObjectSprite(void)
 {
-    Maps::TilesAddon *addon = NULL;
+    Maps::TilesAddon *addon = nullptr;
 
     switch (GetObject())
     {
@@ -2589,7 +2589,7 @@ void Maps::Tiles::UpdateAbandoneMineSprite(Tiles &tile)
 
 void Maps::Tiles::UpdateRNDArtifactSprite(Tiles &tile)
 {
-    TilesAddon *addon = NULL;
+    TilesAddon *addon = nullptr;
     u32 index = 0;
     Artifact art;
 

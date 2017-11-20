@@ -52,7 +52,7 @@ enum
 
 struct Focus : std::pair<int, void *>
 {
-    Focus() : std::pair<int, void *>(FOCUS_UNSEL, NULL)
+    Focus() : std::pair<int, void *>(FOCUS_UNSEL, nullptr)
     {}
 
     bool isValid(void) const
@@ -61,7 +61,7 @@ struct Focus : std::pair<int, void *>
     void Reset(void)
     {
         first = FOCUS_UNSEL;
-        second = NULL;
+        second = nullptr;
     }
 
     void Set(Castle *ptr)
@@ -77,10 +77,10 @@ struct Focus : std::pair<int, void *>
     }
 
     Castle *GetCastle(void)
-    { return first == FOCUS_CASTLE && second ? reinterpret_cast<Castle *>(second) : NULL; }
+    { return first == FOCUS_CASTLE && second ? reinterpret_cast<Castle *>(second) : nullptr; }
 
     Heroes *GetHeroes(void)
-    { return first == FOCUS_HEROES && second ? reinterpret_cast<Heroes *>(second) : NULL; }
+    { return first == FOCUS_HEROES && second ? reinterpret_cast<Heroes *>(second) : nullptr; }
 };
 
 struct Control
@@ -219,7 +219,7 @@ namespace Interface
 {
     struct PlayerInfo
     {
-        PlayerInfo() : player(NULL)
+        PlayerInfo() : player(nullptr)
         {}
 
         bool operator==(const Player *) const;

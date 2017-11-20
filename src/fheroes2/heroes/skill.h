@@ -235,7 +235,7 @@ public:
 
     bool ActionBarCursor(const Point &, int &, const Rect &);
 
-    bool QueueEventProcessing(std::string * = NULL);
+    bool QueueEventProcessing(std::string * = nullptr);
 
 protected:
     const Heroes *hero;
@@ -261,7 +261,7 @@ public:
 
     bool ActionBarCursor(const Point &, Skill::Secondary &, const Rect &);
 
-    bool QueueEventProcessing(std::string * = NULL);
+    bool QueueEventProcessing(std::string * = nullptr);
 
 protected:
     Surface backsf;

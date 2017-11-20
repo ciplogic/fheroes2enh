@@ -399,21 +399,21 @@ bool ActionSpellTownGate(Heroes &hero)
 {
     const Kingdom &kingdom = hero.GetKingdom();
     const KingdomCastles &castles = kingdom.GetCastles();
-    KingdomCastles::const_iterator it;
 
-    const Castle *castle = NULL;
+
+    const Castle *castle = nullptr;
     const s32 center = hero.GetIndex();
     s32 min = -1;
 
     // find the nearest castle
-    for (it = castles.begin(); it != castles.end(); ++it)
-        if (*it && !(*it)->GetHeroes().Guest())
+    for (auto it : castles)
+        if (it && !it->GetHeroes().Guest())
         {
-            int min2 = Maps::GetApproximateDistance(center, (*it)->GetIndex());
+            int min2 = Maps::GetApproximateDistance(center, it->GetIndex());
             if (0 > min || min2 < min)
             {
                 min = min2;
-                castle = *it;
+                castle = it;
             }
         }
 

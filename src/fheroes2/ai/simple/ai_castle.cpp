@@ -48,7 +48,7 @@ void AICastleDefense(Castle &c)
         if (!c.isBuild(BUILD_MOAT))
             c.BuyBuilding(BUILD_MOAT);
 
-        if (!c.isBuild(BUILD_CAPTAIN) && NULL == c.GetHeroes().Guest())
+        if (!c.isBuild(BUILD_CAPTAIN) && nullptr == c.GetHeroes().Guest())
             c.BuyBuilding(BUILD_CAPTAIN);
 
         if (!c.isBuild(BUILD_TAVERN) && Race::KNGT == c.GetRace())
@@ -173,7 +173,7 @@ void AI::CastleTurn(Castle &castle)
     if (castle.GetColor() != Color::NONE)
     {
         s32 range = Game::GetViewDistance(castle.isCastle() ? Game::VIEW_CASTLE : Game::VIEW_TOWN);
-        const Heroes *enemy = NULL;
+        const Heroes *enemy = nullptr;
 
         // find enemy hero
         for (s32 y = -range; y <= range; ++y)
@@ -190,7 +190,7 @@ void AI::CastleTurn(Castle &castle)
                         enemy = tile.GetHeroes();
 
                     if (enemy && castle.GetColor() == enemy->GetColor())
-                        enemy = NULL;
+                        enemy = nullptr;
 
                     if (enemy) break;
                 }

@@ -356,10 +356,10 @@ void Game::UpdateGlobalDefines(const std::string &spec)
 #ifdef WITH_XML
     // parse profits.xml
     TiXmlDocument doc;
-    const TiXmlElement* xml_globals = NULL;
+    const TiXmlElement* xml_globals = nullptr;
 
     if(doc.LoadFile(spec.c_str()) &&
-    NULL != (xml_globals = doc.FirstChildElement("globals")))
+    nullptr != (xml_globals = doc.FirstChildElement("globals")))
     {
     // starting_resource
     KingdomUpdateStartingResource(xml_globals->FirstChildElement("starting_resource"));

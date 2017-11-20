@@ -113,7 +113,7 @@ void RowSpells::Redraw(void)
             {
                 icon.Blit(dst.x + 5 + (dst.w - icon.w()) / 2, dst.y + 40 - icon.h() / 2);
 
-                TextBox text(std::string(spell.GetName()) + " [" + GetString(spell.SpellPoint(NULL)) + "]", Font::SMALL,
+                TextBox text(std::string(spell.GetName()) + " [" + GetString(spell.SpellPoint(nullptr)) + "]", Font::SMALL,
                              78);
                 text.Blit(dst.x + 18, dst.y + 62);
             }

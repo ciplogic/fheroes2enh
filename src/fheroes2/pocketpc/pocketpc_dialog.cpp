@@ -191,7 +191,7 @@ void PocketPC::KeyboardDialog(std::string &str)
 
     // 2 row
     const Rect rt_EMPTY1(top.x + 2, top.y + 27, 8, sp.h());
-    RedrawTouchButton(sp, rt_EMPTY1, NULL);
+    RedrawTouchButton(sp, rt_EMPTY1, nullptr);
 
     const Rect rt_Q(rt_EMPTY1.x + rt_EMPTY1.w + 1, top.y + 27, sp.w(), sp.h());
     RedrawTouchButton(sp, rt_Q, "q");
@@ -234,7 +234,7 @@ void PocketPC::KeyboardDialog(std::string &str)
 
     // 3 row
     const Rect rt_EMPTY3(top.x + 2, top.y + 52, 15, sp.h());
-    RedrawTouchButton(sp, rt_EMPTY3, NULL);
+    RedrawTouchButton(sp, rt_EMPTY3, nullptr);
 
     const Rect rt_A(rt_EMPTY3.x + rt_EMPTY3.w + 1, top.y + 52, sp.w(), sp.h());
     RedrawTouchButton(sp, rt_A, "a");
@@ -274,7 +274,7 @@ void PocketPC::KeyboardDialog(std::string &str)
 
     // 4 row
     const Rect rt_EMPTY5(top.x + 2, top.y + 77, 26, sp.h());
-    RedrawTouchButton(sp, rt_EMPTY5, NULL);
+    RedrawTouchButton(sp, rt_EMPTY5, nullptr);
 
     const Rect rt_Z(rt_EMPTY5.x + rt_EMPTY5.w + 1, top.y + 77, sp.w(), sp.h());
     RedrawTouchButton(sp, rt_Z, "z");

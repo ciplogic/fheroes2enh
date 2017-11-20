@@ -359,7 +359,7 @@ void TextUnicode::Blit(s32 ax, s32 ay, int maxw, Surface & dst)
 #endif
 
 
-Text::Text() : message(NULL), gw(0), gh(0)
+Text::Text() : message(nullptr), gw(0), gh(0)
 {
 #ifdef WITH_TTF
     if(Settings::Get().Unicode())
@@ -369,7 +369,7 @@ Text::Text() : message(NULL), gw(0), gh(0)
     message = static_cast<TextInterface *>(new TextAscii());
 }
 
-Text::Text(const std::string &msg, int ft) : message(NULL), gw(0), gh(0)
+Text::Text(const std::string &msg, int ft) : message(nullptr), gw(0), gh(0)
 {
 #ifdef WITH_TTF
     if(Settings::Get().Unicode())
@@ -383,7 +383,7 @@ Text::Text(const std::string &msg, int ft) : message(NULL), gw(0), gh(0)
 }
 
 #ifdef WITH_TTF
-Text::Text(const u16* pt, size_t sz, int ft) : message(NULL), gw(0), gh(0)
+Text::Text(const u16* pt, size_t sz, int ft) : message(nullptr), gw(0), gh(0)
 {
     if(Settings::Get().Unicode() && pt)
     {

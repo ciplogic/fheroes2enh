@@ -237,11 +237,11 @@ std::string System::GetMessageLocale(int length /* 1, 2, 3 */)
 {
     std::string locname;
 #if defined(__MINGW32CE__) || defined(__MINGW32__)
-    char* clocale = std::setlocale(LC_MONETARY, NULL);
+    char* clocale = std::setlocale(LC_MONETARY, nullptr);
 #elif defined(ANDROID)
-    char* clocale = setlocale(LC_MESSAGES, NULL);
+    char* clocale = setlocale(LC_MESSAGES, nullptr);
 #else
-    char *clocale = std::setlocale(LC_MESSAGES, NULL);
+    char *clocale = std::setlocale(LC_MESSAGES, nullptr);
 #endif
 
     if (clocale)
@@ -272,7 +272,7 @@ int System::GetCommandOptions(int argc, char *const argv[], const char *optstrin
 char *System::GetOptionsArgument(void)
 {
 #if defined(__MINGW32CE__)
-    return NULL;
+    return nullptr;
 #else
     return optarg;
 #endif
@@ -406,9 +406,9 @@ void System::PowerManagerOff(bool fl)
         RegCloseKey(hKey);
     }
 
-    HANDLE hEvent = CreateEvent(NULL, FALSE, FALSE, TEXT("PowerManager/ReloadActivityTimeouts"));
+    HANDLE hEvent = CreateEvent(nullptr, FALSE, FALSE, TEXT("PowerManager/ReloadActivityTimeouts"));
 
-    if(hEvent != NULL)
+    if(hEvent != nullptr)
     {
         SetEvent(hEvent);
         CloseHandle(hEvent);
@@ -439,9 +439,9 @@ void System::PowerManagerOff(bool fl)
         RegCloseKey(hKey);
     }
 
-    hEvent = CreateEvent(NULL, FALSE, FALSE, TEXT("BackLightChangeEvent"));
+    hEvent = CreateEvent(nullptr, FALSE, FALSE, TEXT("BackLightChangeEvent"));
 
-    if(hEvent != NULL)
+    if(hEvent != nullptr)
     {
         SetEvent(hEvent);
         CloseHandle(hEvent);
@@ -455,7 +455,7 @@ bool System::isRunning(void)
     SetEnvironment("DEBUG_VIDEO", "1");
     SetEnvironment("DEBUG_VIDEO_GAPI", "1");
 
-    HWND hwnd = FindWindow(NULL, L"SDL_app");
+    HWND hwnd = FindWindow(nullptr, L"SDL_app");
 
     if(hwnd)
     {

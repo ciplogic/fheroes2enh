@@ -330,7 +330,7 @@ int Castle::OpenDialog(bool readonly, bool fade)
     dst_pt.x = cur_pt.x + 112;
     dst_pt.y = cur_pt.y + 361;
 
-    ArmyBar selectArmy2(NULL, false, readonly);
+    ArmyBar selectArmy2(nullptr, false, readonly);
     selectArmy2.SetColRows(5, 1);
     selectArmy2.SetPos(dst_pt.x, dst_pt.y);
     selectArmy2.SetHSpace(6);
@@ -423,8 +423,8 @@ int Castle::OpenDialog(bool readonly, bool fade)
 
         if (conf.ExtCastleAllowGuardians() && !readonly)
         {
-            Army *army1 = NULL;
-            Army *army2 = NULL;
+            Army *army1 = nullptr;
+            Army *army2 = nullptr;
 
             // swap guest <-> guardian
             if (heroes.Guest() && heroes.Guard())
@@ -473,7 +473,7 @@ int Castle::OpenDialog(bool readonly, bool fade)
                 } else if (army1)
                 {
                     selectArmy1.SetArmy(army1);
-                    selectArmy2.SetArmy(NULL);
+                    selectArmy2.SetArmy(nullptr);
                 } else if (army2)
                 {
                     selectArmy1.SetArmy(&army);
@@ -661,9 +661,9 @@ int Castle::OpenDialog(bool readonly, bool fade)
                                     if (prev)
                                     {
                                         selectArmy1.SetArmy(&heroes.Guard()->GetArmy());
-                                        selectArmy2.SetArmy(NULL);
+                                        selectArmy2.SetArmy(nullptr);
                                         cursor.Hide();
-                                        RedrawIcons(*this, CastleHeroes(NULL, heroes.Guard()), cur_pt);
+                                        RedrawIcons(*this, CastleHeroes(nullptr, heroes.Guard()), cur_pt);
                                         selectArmy1.Redraw();
                                         if (selectArmy2.isValid()) selectArmy2.Redraw();
                                         cursor.Show();

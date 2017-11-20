@@ -206,10 +206,10 @@ bool Maps::FileInfo::ReadMAP(const std::string &filename)
     Reset();
 
     TiXmlDocument doc;
-    const TiXmlElement* xml_map = NULL;
+    const TiXmlElement* xml_map = nullptr;
 
     if(doc.LoadFile(filename.c_str()) &&
-        NULL != (xml_map = doc.FirstChildElement("map")))
+        nullptr != (xml_map = doc.FirstChildElement("map")))
     {
     const TiXmlElement* xml_header = xml_map->FirstChildElement("header");
     if(! xml_header)

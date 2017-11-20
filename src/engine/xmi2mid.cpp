@@ -331,8 +331,8 @@ struct MidEvents : public std::list<MidEvent>
     size_t size(void) const
     {
         size_t res = 0;
-        for (const_iterator it = begin(); it != end(); ++it)
-            res += (*it).size();
+        for (const auto& it : *this)
+            res += it.size();
         return res;
     }
 
@@ -500,8 +500,8 @@ struct MidTracks : std::list<MidTrack>
     size_t size(void) const
     {
         size_t res = 0;
-        for (const_iterator it = begin(); it != end(); ++it)
-            res += (*it).size();
+        for (const auto& it : *this)
+            res += it.size();
         return res;
     }
 

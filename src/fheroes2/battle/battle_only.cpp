@@ -59,11 +59,11 @@ void Battle::ControlInfo::Redraw(void)
     text.Blit(rtAI.x + cell.w() + 5, rtAI.y + 5);
 }
 
-Battle::Only::Only() : hero1(NULL), hero2(NULL), player1(Color::BLUE), player2(Color::NONE),
-                       army1(NULL), army2(NULL), moraleIndicator1(NULL), moraleIndicator2(NULL),
-                       luckIndicator1(NULL), luckIndicator2(NULL), primskill_bar1(NULL), primskill_bar2(NULL),
-                       secskill_bar1(NULL), secskill_bar2(NULL), selectArmy1(NULL), selectArmy2(NULL),
-                       selectArtifacts1(NULL), selectArtifacts2(NULL), cinfo2(NULL),
+Battle::Only::Only() : hero1(nullptr), hero2(nullptr), player1(Color::BLUE), player2(Color::NONE),
+                       army1(nullptr), army2(nullptr), moraleIndicator1(nullptr), moraleIndicator2(nullptr),
+                       luckIndicator1(nullptr), luckIndicator2(nullptr), primskill_bar1(nullptr), primskill_bar2(nullptr),
+                       secskill_bar1(nullptr), secskill_bar2(nullptr), selectArmy1(nullptr), selectArmy2(nullptr),
+                       selectArtifacts1(nullptr), selectArtifacts2(nullptr), cinfo2(nullptr),
                        rt1(36, 267, 43, 53), sfb1(rt1, false), rt2(23, 347, 34, 34), sfb2(rt2, false)
 {
     player1.SetControl(CONTROL_HUMAN);
@@ -254,7 +254,7 @@ bool Battle::Only::ChangeSettings(void)
                 hero2 = world.GetHeroes(hid);
                 if (hero2) hero2->GetSecondarySkills().FillMax(Skill::Secondary());
                 UpdateHero2(cur_pt);
-                if (player2.isControlLocal() && NULL == cinfo2)
+                if (player2.isControlLocal() && nullptr == cinfo2)
                     cinfo2 = new ControlInfo(Point(cur_pt.x + 500, cur_pt.y + 425), player2.GetControl());
                 redraw = true;
             }
@@ -463,37 +463,37 @@ void Battle::Only::UpdateHero1(const Point &cur_pt)
     if (moraleIndicator1)
     {
         delete moraleIndicator1;
-        moraleIndicator1 = NULL;
+        moraleIndicator1 = nullptr;
     }
 
     if (luckIndicator1)
     {
         delete luckIndicator1;
-        luckIndicator1 = NULL;
+        luckIndicator1 = nullptr;
     }
 
     if (primskill_bar1)
     {
         delete primskill_bar1;
-        primskill_bar1 = NULL;
+        primskill_bar1 = nullptr;
     }
 
     if (secskill_bar1)
     {
         delete secskill_bar1;
-        secskill_bar1 = NULL;
+        secskill_bar1 = nullptr;
     }
 
     if (selectArtifacts1)
     {
         delete selectArtifacts1;
-        selectArtifacts1 = NULL;
+        selectArtifacts1 = nullptr;
     }
 
     if (selectArmy1)
     {
         delete selectArmy1;
-        selectArmy1 = NULL;
+        selectArmy1 = nullptr;
     }
 
     if (hero1)
@@ -540,37 +540,37 @@ void Battle::Only::UpdateHero2(const Point &cur_pt)
     if (moraleIndicator2)
     {
         delete moraleIndicator2;
-        moraleIndicator2 = NULL;
+        moraleIndicator2 = nullptr;
     }
 
     if (luckIndicator2)
     {
         delete luckIndicator2;
-        luckIndicator2 = NULL;
+        luckIndicator2 = nullptr;
     }
 
     if (primskill_bar2)
     {
         delete primskill_bar2;
-        primskill_bar2 = NULL;
+        primskill_bar2 = nullptr;
     }
 
     if (secskill_bar2)
     {
         delete secskill_bar2;
-        secskill_bar2 = NULL;
+        secskill_bar2 = nullptr;
     }
 
     if (selectArtifacts2)
     {
         delete selectArtifacts2;
-        selectArtifacts2 = NULL;
+        selectArtifacts2 = nullptr;
     }
 
     if (selectArmy2)
     {
         delete selectArmy2;
-        selectArmy2 = NULL;
+        selectArmy2 = nullptr;
     }
 
     if (hero2)

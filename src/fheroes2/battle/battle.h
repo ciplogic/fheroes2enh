@@ -142,7 +142,7 @@ namespace Battle
         u32 killed;
         bool resist;
 
-        TargetInfo() : defender(NULL), damage(0), killed(0), resist(false)
+        TargetInfo() : defender(nullptr), damage(0), killed(0), resist(false)
         {}
 
         bool operator==(const TargetInfo &) const;

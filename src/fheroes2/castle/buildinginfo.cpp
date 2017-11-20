@@ -149,10 +149,10 @@ void BuildingInfo::UpdateCosts(const std::string &spec)
 #ifdef WITH_XML
     // parse buildings.xml
     TiXmlDocument doc;
-    const TiXmlElement* xml_buildings = NULL;
+    const TiXmlElement* xml_buildings = nullptr;
 
     if(doc.LoadFile(spec.c_str()) &&
-        NULL != (xml_buildings = doc.FirstChildElement("buildings")))
+        nullptr != (xml_buildings = doc.FirstChildElement("buildings")))
     {
     size_t index = 0;
 
@@ -625,7 +625,7 @@ const char *GetBuildConditionDescription(int bcond)
             break;
     }
 
-    return NULL;
+    return nullptr;
 }
 
 std::string BuildingInfo::GetConditionDescription(void) const

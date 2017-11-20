@@ -32,6 +32,14 @@
 #include "dialog.h"
 #include "settings.h"
 
+#ifdef WINDOWS
+#include <direct.h>
+    #define GetCurrentDir _getcwd
+#else
+#include <unistd.h>
+#define GetCurrentDir getcwd
+#endif
+
 #define DEFAULT_PORT    5154
 #define DEFAULT_DEBUG    DBG_ALL_WARN
 
@@ -114,7 +122,7 @@ const settings_t settingsGeneral[] =
                 {GLOBAL_POCKETPC,     "pocketpc",},
                 {GLOBAL_POCKETPC,     "pocket pc",},
                 {GLOBAL_USESWSURFACE, "use swsurface only",},
-                {0, NULL,},
+                {0, nullptr,},
         };
 
 // internal settings
@@ -191,10 +199,10 @@ const settings_t settingsFHeroes2[] =
                 {Settings::POCKETPC_DRAG_DROP_SCROLL,        _("pocketpc: drag&drop gamearea as scroll"),},
                 {Settings::POCKETPC_LOW_MEMORY,              _("pocketpc: low memory"),},
 
-                {0,                                          NULL},
+                {0,                                          nullptr},
         };
 
-std::string Settings::GetVersion(void)
+std::string Settings::GetVersion()
 {
     std::ostringstream os;
 
@@ -236,7 +244,7 @@ Settings::~Settings()
     if (!LoadedGameVersion()) BinarySave();
 }
 
-Settings &Settings::Get(void)
+Settings &Settings::Get()
 {
     static Settings conf;
 
@@ -505,7 +513,7 @@ bool Settings::Read(const std::string &filename)
     return true;
 }
 
-void Settings::PostLoad(void)
+void Settings::PostLoad()
 {
     if (QVGA())
     {
@@ -532,7 +540,7 @@ void Settings::PostLoad(void)
     }
 }
 
-void Settings::SetAutoVideoMode(void)
+void Settings::SetAutoVideoMode()
 {
     video_mode = Display::Get().GetMaxMode(PocketPC());
     PostLoad();
@@ -549,7 +557,7 @@ bool Settings::Save(const std::string &filename) const
     return true;
 }
 
-std::string Settings::String(void) const
+std::string Settings::String() const
 {
     std::ostringstream os;
 
@@ -609,48 +617,48 @@ void Settings::SetCurrentFileInfo(const Maps::FileInfo &fi)
     preferably_count_players = 0;
 }
 
-const Maps::FileInfo &Settings::CurrentFileInfo(void) const
+const Maps::FileInfo &Settings::CurrentFileInfo() const
 {
     return current_maps_file;
 }
 
 /* return debug */
-int Settings::Debug(void) const
+int Settings::Debug() const
 { return debug; }
 
 /* return game difficulty */
-int Settings::GameDifficulty(void) const
+int Settings::GameDifficulty() const
 { return game_difficulty; }
 
-int Settings::CurrentColor(void) const
+int Settings::CurrentColor() const
 { return players.current_color; }
 
-const std::string &Settings::SelectVideoDriver(void) const
+const std::string &Settings::SelectVideoDriver() const
 { return video_driver; }
 
 /* return fontname */
-const std::string &Settings::FontsNormal(void) const
+const std::string &Settings::FontsNormal() const
 { return font_normal; }
 
-const std::string &Settings::FontsSmall(void) const
+const std::string &Settings::FontsSmall() const
 { return font_small; }
 
-const std::string &Settings::ForceLang(void) const
+const std::string &Settings::ForceLang() const
 { return force_lang; }
 
-const std::string &Settings::MapsCharset(void) const
+const std::string &Settings::MapsCharset() const
 { return maps_charset; }
 
-int Settings::FontsNormalSize(void) const
+int Settings::FontsNormalSize() const
 { return size_normal; }
 
-int Settings::FontsSmallSize(void) const
+int Settings::FontsSmallSize() const
 { return size_small; }
 
-bool Settings::FontSmallRenderBlended(void) const
+bool Settings::FontSmallRenderBlended() const
 { return opt_global.Modes(GLOBAL_FONTRENDERBLENDED1); }
 
-bool Settings::FontNormalRenderBlended(void) const
+bool Settings::FontNormalRenderBlended() const
 { return opt_global.Modes(GLOBAL_FONTRENDERBLENDED2); }
 
 void Settings::SetProgramPath(const char *argv0)
@@ -658,7 +666,7 @@ void Settings::SetProgramPath(const char *argv0)
     if (argv0) path_program = argv0;
 }
 
-ListDirs Settings::GetRootDirs(void)
+ListDirs Settings::GetRootDirs()
 {
     const Settings &conf = Settings::Get();
     ListDirs dirs;
@@ -678,6 +686,13 @@ ListDirs Settings::GetRootDirs(void)
     // from HOME
     const std::string &home = System::GetHomeDirectory("fheroes2");
     if (!home.empty()) dirs.push_back(home);
+    char cCurrentPath[FILENAME_MAX];
+
+    if (GetCurrentDir(cCurrentPath, sizeof(cCurrentPath)))
+    {
+        dirs.push_back(cCurrentPath);
+    }
+
 
     return dirs;
 }
@@ -691,10 +706,9 @@ ListFiles Settings::GetListFiles(const std::string &prefix, const std::string &f
     if (prefix.size() && System::IsDirectory(prefix))
         res.ReadDir(prefix, filter, false);
 
-    for (ListDirs::const_iterator
-                 it = dirs.begin(); it != dirs.end(); ++it)
+    for (const auto& dir : dirs)
     {
-        std::string path = prefix.size() ? System::ConcatePath(*it, prefix) : *it;
+        std::string path = prefix.size() ? System::ConcatePath(dir, prefix) : dir;
 
         if (System::IsDirectory(path))
             res.ReadDir(path, filter, false);
@@ -711,7 +725,7 @@ std::string Settings::GetLastFile(const std::string &prefix, const std::string &
     return files.empty() ? name : files.back();
 }
 
-std::string Settings::GetLangDir(void)
+std::string Settings::GetLangDir()
 {
 #ifdef CONFIGURE_FHEROES2_LOCALEDIR
     return std::string(CONFIGURE_FHEROES2_LOCALEDIR);
@@ -719,8 +733,8 @@ std::string Settings::GetLangDir(void)
     std::string res;
     const ListDirs dirs = GetRootDirs();
 
-    for (ListDirs::const_reverse_iterator
-                 it = dirs.rbegin(); it != dirs.rend(); ++it)
+    for (auto
+         it = dirs.rbegin(); it != dirs.rend(); ++it)
     {
         res = System::ConcatePath(System::ConcatePath(*it, "files"), "lang");
         if (System::IsDirectory(res)) return res;
@@ -735,13 +749,12 @@ std::string Settings::GetWriteableDir(const char *subdir)
     ListDirs dirs = GetRootDirs();
     dirs.Append(System::GetDataDirectories("fheroes2"));
 
-    for (ListDirs::const_iterator
-                 it = dirs.begin(); it != dirs.end(); ++it)
+    for (auto& dir : dirs)
     {
-        std::string dir_files = System::ConcatePath(*it, "files");
+        std::string dir_files = System::ConcatePath(dir, "files");
 
         // create files
-        if (System::IsDirectory(*it, true) &&
+        if (System::IsDirectory(dir, true) &&
             !System::IsDirectory(dir_files, true))
             System::MakeDirectory(dir_files);
 
@@ -763,40 +776,40 @@ std::string Settings::GetWriteableDir(const char *subdir)
     return "";
 }
 
-std::string Settings::GetSaveDir(void)
+std::string Settings::GetSaveDir()
 {
     return GetWriteableDir("save");
 }
 
-bool Settings::MusicExt(void) const
+bool Settings::MusicExt() const
 { return opt_global.Modes(GLOBAL_MUSIC_EXT); }
 
-bool Settings::MusicMIDI(void) const
+bool Settings::MusicMIDI() const
 { return opt_global.Modes(GLOBAL_MUSIC_MIDI); }
 
-bool Settings::MusicCD(void) const
+bool Settings::MusicCD() const
 { return opt_global.Modes(GLOBAL_MUSIC_CD); }
 
 /* return sound */
-bool Settings::Sound(void) const
+bool Settings::Sound() const
 { return opt_global.Modes(GLOBAL_SOUND); }
 
 /* return music */
-bool Settings::Music(void) const
+bool Settings::Music() const
 { return opt_global.Modes(GLOBAL_MUSIC); }
 
 /* return move speed */
-int Settings::HeroesMoveSpeed(void) const
+int Settings::HeroesMoveSpeed() const
 { return heroes_speed; }
 
-int Settings::AIMoveSpeed(void) const
+int Settings::AIMoveSpeed() const
 { return ai_speed; }
 
-int Settings::BattleSpeed(void) const
+int Settings::BattleSpeed() const
 { return battle_speed; }
 
 /* return scroll speed */
-int Settings::ScrollSpeed(void) const
+int Settings::ScrollSpeed() const
 { return scroll_speed; }
 
 /* set ai speed: 0 - 10 */
@@ -814,7 +827,7 @@ void Settings::SetBattleSpeed(int speed)
 void Settings::SetBlitSpeed(int speed)
 { blit_speed = speed; }
 
-int Settings::BlitSpeed(void) const
+int Settings::BlitSpeed() const
 { return blit_speed; }
 
 /* set scroll speed: 1 - 4 */
@@ -841,43 +854,43 @@ void Settings::SetScrollSpeed(int speed)
 }
 
 /* return full screen */
-bool Settings::QVGA(void) const
+bool Settings::QVGA() const
 { return video_mode.w && video_mode.h && (video_mode.w < 640 || video_mode.h < 480); }
 
-bool Settings::UseAltResource(void) const
+bool Settings::UseAltResource() const
 { return opt_global.Modes(GLOBAL_ALTRESOURCE); }
 
-bool Settings::PriceLoyaltyVersion(void) const
+bool Settings::PriceLoyaltyVersion() const
 { return opt_global.Modes(GLOBAL_PRICELOYALTY); }
 
-bool Settings::LoadedGameVersion(void) const
+bool Settings::LoadedGameVersion() const
 { return game_type & Game::TYPE_LOADFILE; }
 
-bool Settings::ShowControlPanel(void) const
+bool Settings::ShowControlPanel() const
 { return opt_global.Modes(GLOBAL_SHOWCPANEL); }
 
-bool Settings::ShowRadar(void) const
+bool Settings::ShowRadar() const
 { return opt_global.Modes(GLOBAL_SHOWRADAR); }
 
-bool Settings::ShowIcons(void) const
+bool Settings::ShowIcons() const
 { return opt_global.Modes(GLOBAL_SHOWICONS); }
 
-bool Settings::ShowButtons(void) const
+bool Settings::ShowButtons() const
 { return opt_global.Modes(GLOBAL_SHOWBUTTONS); }
 
-bool Settings::ShowStatus(void) const
+bool Settings::ShowStatus() const
 { return opt_global.Modes(GLOBAL_SHOWSTATUS); }
 
 /* unicode support */
-bool Settings::Unicode(void) const
+bool Settings::Unicode() const
 { return opt_global.Modes(GLOBAL_USEUNICODE); }
 
 /* pocketpc mode */
-bool Settings::PocketPC(void) const
+bool Settings::PocketPC() const
 { return opt_global.Modes(GLOBAL_POCKETPC); }
 
 /* get video mode */
-const Size &Settings::VideoMode(void) const
+const Size &Settings::VideoMode() const
 { return video_mode; }
 
 /* set level debug */
@@ -891,10 +904,10 @@ void Settings::SetGameDifficulty(int d)
 void Settings::SetCurrentColor(int color)
 { players.current_color = color; }
 
-int Settings::SoundVolume(void) const
+int Settings::SoundVolume() const
 { return sound_volume; }
 
-int Settings::MusicVolume(void) const
+int Settings::MusicVolume() const
 { return music_volume; }
 
 /* sound volume: 0 - 10 */
@@ -909,19 +922,19 @@ void Settings::SetMusicVolume(int v)
 bool Settings::GameType(int f) const
 { return game_type & f; }
 
-int Settings::GameType(void) const
+int Settings::GameType() const
 { return game_type; }
 
 /* set game type */
 void Settings::SetGameType(int type)
 { game_type = type; }
 
-const Players &Settings::GetPlayers(void) const
+const Players &Settings::GetPlayers() const
 {
     return players;
 }
 
-Players &Settings::GetPlayers(void)
+Players &Settings::GetPlayers()
 {
     return players;
 }
@@ -931,37 +944,37 @@ void Settings::SetPreferablyCountPlayers(int c)
     preferably_count_players = 6 < c ? 6 : c;
 }
 
-int Settings::PreferablyCountPlayers(void) const
+int Settings::PreferablyCountPlayers() const
 {
     return preferably_count_players;
 }
 
-int Settings::GetPort(void) const
+int Settings::GetPort() const
 {
     return port;
 }
 
-const std::string &Settings::MapsFile(void) const
+const std::string &Settings::MapsFile() const
 {
     return current_maps_file.file;
 }
 
-const std::string &Settings::MapsName(void) const
+const std::string &Settings::MapsName() const
 {
     return current_maps_file.name;
 }
 
-const std::string &Settings::MapsDescription(void) const
+const std::string &Settings::MapsDescription() const
 {
     return current_maps_file.description;
 }
 
-int Settings::MapsDifficulty(void) const
+int Settings::MapsDifficulty() const
 {
     return current_maps_file.difficulty;
 }
 
-Size Settings::MapsSize(void) const
+Size Settings::MapsSize() const
 {
     return Size(current_maps_file.size_w, current_maps_file.size_h);
 }
@@ -971,57 +984,57 @@ bool Settings::AllowChangeRace(int f) const
     return current_maps_file.rnd_races & f;
 }
 
-bool Settings::GameStartWithHeroes(void) const
+bool Settings::GameStartWithHeroes() const
 {
     return current_maps_file.with_heroes;
 }
 
-int Settings::ConditionWins(void) const
+int Settings::ConditionWins() const
 {
     return current_maps_file.ConditionWins();
 }
 
-int Settings::ConditionLoss(void) const
+int Settings::ConditionLoss() const
 {
     return current_maps_file.ConditionLoss();
 }
 
-bool Settings::WinsCompAlsoWins(void) const
+bool Settings::WinsCompAlsoWins() const
 {
     return current_maps_file.WinsCompAlsoWins();
 }
 
-bool Settings::WinsAllowNormalVictory(void) const
+bool Settings::WinsAllowNormalVictory() const
 {
     return current_maps_file.WinsAllowNormalVictory();
 }
 
-int Settings::WinsFindArtifactID(void) const
+int Settings::WinsFindArtifactID() const
 {
     return current_maps_file.WinsFindArtifactID();
 }
 
-bool Settings::WinsFindUltimateArtifact(void) const
+bool Settings::WinsFindUltimateArtifact() const
 {
     return current_maps_file.WinsFindUltimateArtifact();
 }
 
-u32 Settings::WinsAccumulateGold(void) const
+u32 Settings::WinsAccumulateGold() const
 {
     return current_maps_file.WinsAccumulateGold();
 }
 
-Point Settings::WinsMapsPositionObject(void) const
+Point Settings::WinsMapsPositionObject() const
 {
     return current_maps_file.WinsMapsPositionObject();
 }
 
-Point Settings::LossMapsPositionObject(void) const
+Point Settings::LossMapsPositionObject() const
 {
     return current_maps_file.LossMapsPositionObject();
 }
 
-u32 Settings::LossCountDays(void) const
+u32 Settings::LossCountDays() const
 {
     return current_maps_file.LossCountDays();
 }
@@ -1031,7 +1044,7 @@ void Settings::SetUnicode(bool f)
     f ? opt_global.SetModes(GLOBAL_USEUNICODE) : opt_global.ResetModes(GLOBAL_USEUNICODE);
 }
 
-void Settings::SetPriceLoyaltyVersion(void)
+void Settings::SetPriceLoyaltyVersion()
 {
     opt_global.SetModes(GLOBAL_PRICELOYALTY);
 }
@@ -1061,12 +1074,12 @@ void Settings::SetBattleMouseShaded(bool f)
     f ? ExtSetModes(GAME_BATTLE_SHOW_MOUSE_SHADOW) : ExtResetModes(GAME_BATTLE_SHOW_MOUSE_SHADOW);
 }
 
-void Settings::ResetSound(void)
+void Settings::ResetSound()
 {
     opt_global.ResetModes(GLOBAL_SOUND);
 }
 
-void Settings::ResetMusic(void)
+void Settings::ResetMusic()
 {
     opt_global.ResetModes(GLOBAL_MUSIC);
 }
@@ -1125,7 +1138,7 @@ const char *Settings::ExtName(u32 f) const
     const settings_t *ptr = std::find(settingsFHeroes2,
                                       ARRAY_COUNT_END(settingsFHeroes2) - 1, f);
 
-    return ptr ? _(ptr->str) : NULL;
+    return ptr ? _(ptr->str) : nullptr;
 }
 
 void Settings::ExtSetModes(u32 f)
@@ -1172,371 +1185,371 @@ void Settings::ExtResetModes(u32 f)
     }
 }
 
-bool Settings::ExtCastleAllowBuyFromWell(void) const
+bool Settings::ExtCastleAllowBuyFromWell() const
 {
     return ExtModes(CASTLE_ALLOW_BUY_FROM_WELL);
 }
 
-bool Settings::ExtCastleGuildRestorePointsTurn(void) const
+bool Settings::ExtCastleGuildRestorePointsTurn() const
 {
     return ExtModes(CASTLE_MAGEGUILD_POINTS_TURN);
 }
 
-bool Settings::ExtCastleAllowFlash(void) const
+bool Settings::ExtCastleAllowFlash() const
 {
     return ExtModes(GAME_CASTLE_FLASH_BUILDING);
 }
 
-bool Settings::ExtCastleAllowGuardians(void) const
+bool Settings::ExtCastleAllowGuardians() const
 {
     return ExtModes(CASTLE_ALLOW_GUARDIANS);
 }
 
-bool Settings::ExtWorldShowVisitedContent(void) const
+bool Settings::ExtWorldShowVisitedContent() const
 {
     return ExtModes(WORLD_SHOW_VISITED_CONTENT);
 }
 
-bool Settings::ExtWorldScouteExtended(void) const
+bool Settings::ExtWorldScouteExtended() const
 {
     return ExtModes(WORLD_SCOUTING_EXTENDED);
 }
 
-bool Settings::ExtGameRememberLastFocus(void) const
+bool Settings::ExtGameRememberLastFocus() const
 {
     return ExtModes(GAME_REMEMBER_LAST_FOCUS);
 }
 
-bool Settings::ExtWorldAbandonedMineRandom(void) const
+bool Settings::ExtWorldAbandonedMineRandom() const
 {
     return ExtModes(WORLD_ABANDONED_MINE_RANDOM);
 }
 
-bool Settings::ExtWorldSaveMonsterBattle(void) const
+bool Settings::ExtWorldSaveMonsterBattle() const
 {
     return ExtModes(WORLD_SAVE_MONSTER_BATTLE);
 }
 
-bool Settings::ExtWorldAllowSetGuardian(void) const
+bool Settings::ExtWorldAllowSetGuardian() const
 {
     return ExtModes(WORLD_ALLOW_SET_GUARDIAN);
 }
 
-bool Settings::ExtWorldNoRequirementsForArtifacts(void) const
+bool Settings::ExtWorldNoRequirementsForArtifacts() const
 {
     return ExtModes(WORLD_NOREQ_FOR_ARTIFACTS);
 }
 
-bool Settings::ExtWorldArtifactCrystalBall(void) const
+bool Settings::ExtWorldArtifactCrystalBall() const
 {
     return ExtModes(WORLD_ARTIFACT_CRYSTAL_BALL);
 }
 
-bool Settings::ExtWorldOnlyFirstMonsterAttack(void) const
+bool Settings::ExtWorldOnlyFirstMonsterAttack() const
 {
     return ExtModes(WORLD_ONLY_FIRST_MONSTER_ATTACK);
 }
 
-bool Settings::ExtWorldEyeEagleAsScholar(void) const
+bool Settings::ExtWorldEyeEagleAsScholar() const
 {
     return ExtModes(WORLD_EYE_EAGLE_AS_SCHOLAR);
 }
 
-bool Settings::ExtHeroBuySpellBookFromShrine(void) const
+bool Settings::ExtHeroBuySpellBookFromShrine() const
 {
     return ExtModes(HEROES_BUY_BOOK_FROM_SHRINES);
 }
 
-bool Settings::ExtHeroRecruitCostDependedFromLevel(void) const
+bool Settings::ExtHeroRecruitCostDependedFromLevel() const
 {
     return ExtModes(HEROES_COST_DEPENDED_FROM_LEVEL);
 }
 
-bool Settings::ExtHeroPatrolAllowPickup(void) const
+bool Settings::ExtHeroPatrolAllowPickup() const
 {
     return ExtModes(HEROES_PATROL_ALLOW_PICKUP);
 }
 
-bool Settings::ExtHeroRememberPointsForRetreating(void) const
+bool Settings::ExtHeroRememberPointsForRetreating() const
 {
     return ExtModes(HEROES_REMEMBER_POINTS_RETREAT);
 }
 
-bool Settings::ExtHeroSurrenderingGiveExp(void) const
+bool Settings::ExtHeroSurrenderingGiveExp() const
 {
     return ExtModes(HEROES_SURRENDERING_GIVE_EXP);
 }
 
-bool Settings::ExtHeroRecalculateMovement(void) const
+bool Settings::ExtHeroRecalculateMovement() const
 {
     return ExtModes(HEROES_RECALCULATE_MOVEMENT);
 }
 
-bool Settings::ExtHeroLearnSpellsWithDay(void) const
+bool Settings::ExtHeroLearnSpellsWithDay() const
 {
     return ExtModes(HEROES_LEARN_SPELLS_WITH_DAY);
 }
 
-bool Settings::ExtUnionsAllowCastleVisiting(void) const
+bool Settings::ExtUnionsAllowCastleVisiting() const
 {
     return ExtModes(UNIONS_ALLOW_CASTLE_VISITING);
 }
 
-bool Settings::ExtUnionsAllowHeroesMeetings(void) const
+bool Settings::ExtUnionsAllowHeroesMeetings() const
 {
     return ExtModes(UNIONS_ALLOW_HERO_MEETINGS);
 }
 
-bool Settings::ExtUnionsAllowViewMaps(void) const
+bool Settings::ExtUnionsAllowViewMaps() const
 {
     return true;
 }
 
-bool Settings::ExtBattleShowDamage(void) const
+bool Settings::ExtBattleShowDamage() const
 {
     return ExtModes(GAME_BATTLE_SHOW_DAMAGE);
 }
 
-bool Settings::ExtBattleSkipIncreaseDefense(void) const
+bool Settings::ExtBattleSkipIncreaseDefense() const
 {
     return ExtModes(BATTLE_SKIP_INCREASE_DEFENSE);
 }
 
-bool Settings::ExtHeroAllowTranscribingScroll(void) const
+bool Settings::ExtHeroAllowTranscribingScroll() const
 {
     return ExtModes(HEROES_TRANSCRIBING_SCROLLS);
 }
 
-bool Settings::ExtHeroAutoMove2BattleTarget(void) const
+bool Settings::ExtHeroAutoMove2BattleTarget() const
 {
     return ExtModes(HEROES_AUTO_MOVE_BATTLE_DST);
 }
 
-bool Settings::ExtBattleSoftWait(void) const
+bool Settings::ExtBattleSoftWait() const
 {
     return ExtModes(BATTLE_SOFT_WAITING);
 }
 
-bool Settings::ExtBattleShowGrid(void) const
+bool Settings::ExtBattleShowGrid() const
 {
     return ExtModes(GAME_BATTLE_SHOW_GRID);
 }
 
-bool Settings::ExtBattleShowMouseShadow(void) const
+bool Settings::ExtBattleShowMouseShadow() const
 {
     return ExtModes(GAME_BATTLE_SHOW_MOUSE_SHADOW);
 }
 
-bool Settings::ExtBattleShowMoveShadow(void) const
+bool Settings::ExtBattleShowMoveShadow() const
 {
     return ExtModes(GAME_BATTLE_SHOW_MOVE_SHADOW);
 }
 
-bool Settings::ExtBattleObjectsArchersPenalty(void) const
+bool Settings::ExtBattleObjectsArchersPenalty() const
 {
     return ExtModes(BATTLE_OBJECTS_ARCHERS_PENALTY);
 }
 
-bool Settings::ExtBattleMergeArmies(void) const
+bool Settings::ExtBattleMergeArmies() const
 {
     return ExtModes(BATTLE_MERGE_ARMIES);
 }
 
-bool Settings::ExtBattleArchmageCanResistBadMagic(void) const
+bool Settings::ExtBattleArchmageCanResistBadMagic() const
 {
     return ExtModes(BATTLE_ARCHMAGE_RESIST_BAD_SPELL);
 }
 
-bool Settings::ExtBattleMagicTroopCanResist(void) const
+bool Settings::ExtBattleMagicTroopCanResist() const
 {
     return ExtModes(BATTLE_MAGIC_TROOP_RESIST);
 }
 
-bool Settings::ExtGameRewriteConfirm(void) const
+bool Settings::ExtGameRewriteConfirm() const
 {
     return ExtModes(GAME_SAVE_REWRITE_CONFIRM);
 }
 
-bool Settings::ExtGameAutosaveConfirm(void) const
+bool Settings::ExtGameAutosaveConfirm() const
 {
     return ExtModes(GAME_ALSO_CONFIRM_AUTOSAVE);
 }
 
-bool Settings::ExtPocketHideCursor(void) const
+bool Settings::ExtPocketHideCursor() const
 {
     return ExtModes(POCKETPC_HIDE_CURSOR);
 }
 
-bool Settings::ExtGameShowSystemInfo(void) const
+bool Settings::ExtGameShowSystemInfo() const
 {
     return ExtModes(GAME_SHOW_SYSTEM_INFO);
 }
 
-bool Settings::ExtGameAutosaveBeginOfDay(void) const
+bool Settings::ExtGameAutosaveBeginOfDay() const
 {
     return ExtModes(GAME_AUTOSAVE_BEGIN_DAY);
 }
 
-bool Settings::ExtGameAutosaveOn(void) const
+bool Settings::ExtGameAutosaveOn() const
 {
     return ExtModes(GAME_AUTOSAVE_ON);
 }
 
-bool Settings::ExtGameUseFade(void) const
+bool Settings::ExtGameUseFade() const
 {
     return video_mode.w == 640 && video_mode.h == 480 && ExtModes(GAME_USE_FADE);
 }
 
-bool Settings::ExtGameShowSDL(void) const
+bool Settings::ExtGameShowSDL() const
 {
     return ExtModes(GAME_SHOW_SDL_LOGO);
 }
 
-bool Settings::ExtGameEvilInterface(void) const
+bool Settings::ExtGameEvilInterface() const
 {
     return ExtModes(GAME_EVIL_INTERFACE);
 }
 
-bool Settings::ExtGameDynamicInterface(void) const
+bool Settings::ExtGameDynamicInterface() const
 {
     return ExtModes(GAME_DYNAMIC_INTERFACE);
 }
 
-bool Settings::ExtGameHideInterface(void) const
+bool Settings::ExtGameHideInterface() const
 {
     return ExtModes(GAME_HIDE_INTERFACE);
 }
 
-bool Settings::ExtPocketLowMemory(void) const
+bool Settings::ExtPocketLowMemory() const
 {
     return ExtModes(POCKETPC_LOW_MEMORY);
 }
 
-bool Settings::ExtPocketTapMode(void) const
+bool Settings::ExtPocketTapMode() const
 {
     return ExtModes(POCKETPC_TAP_MODE);
 }
 
-bool Settings::ExtPocketDragDropScroll(void) const
+bool Settings::ExtPocketDragDropScroll() const
 {
     return ExtModes(POCKETPC_DRAG_DROP_SCROLL);
 }
 
-bool Settings::ExtCastleAllowRecruitSpecialHeroes(void) const
+bool Settings::ExtCastleAllowRecruitSpecialHeroes() const
 {
     return PriceLoyaltyVersion() && ExtModes(CASTLE_ALLOW_RECRUITS_SPECIAL);
 }
 
-bool Settings::ExtWorldNewVersionWeekOf(void) const
+bool Settings::ExtWorldNewVersionWeekOf() const
 {
     return ExtModes(WORLD_NEW_VERSION_WEEKOF);
 }
 
-bool Settings::ExtWorldBanWeekOf(void) const
+bool Settings::ExtWorldBanWeekOf() const
 {
     return ExtModes(WORLD_BAN_WEEKOF);
 }
 
-bool Settings::ExtWorldBanMonthOfMonsters(void) const
+bool Settings::ExtWorldBanMonthOfMonsters() const
 {
     return ExtModes(WORLD_BAN_MONTHOF_MONSTERS);
 }
 
-bool Settings::ExtWorldArtesianSpringSeparatelyVisit(void) const
+bool Settings::ExtWorldArtesianSpringSeparatelyVisit() const
 {
     return ExtModes(WORLD_ARTSPRING_SEPARATELY_VISIT);
 }
 
-bool Settings::ExtWorldBanPlagues(void) const
+bool Settings::ExtWorldBanPlagues() const
 {
     return ExtModes(WORLD_BAN_PLAGUES);
 }
 
-bool Settings::ExtBattleReverseWaitOrder(void) const
+bool Settings::ExtBattleReverseWaitOrder() const
 {
     return ExtModes(BATTLE_REVERSE_WAIT_ORDER);
 }
 
-bool Settings::ExtWorldStartHeroLossCond4Humans(void) const
+bool Settings::ExtWorldStartHeroLossCond4Humans() const
 {
     return ExtModes(WORLD_STARTHERO_LOSSCOND4HUMANS);
 }
 
-bool Settings::ExtHeroAllowBannedSecSkillsUpgrade(void) const
+bool Settings::ExtHeroAllowBannedSecSkillsUpgrade() const
 {
     return ExtModes(HEROES_ALLOW_BANNED_SECSKILLS);
 }
 
-bool Settings::ExtWorldOneHeroHiredEveryWeek(void) const
+bool Settings::ExtWorldOneHeroHiredEveryWeek() const
 {
     return ExtModes(WORLD_1HERO_HIRED_EVERY_WEEK);
 }
 
-bool Settings::ExtCastleOneHeroHiredEveryWeek(void) const
+bool Settings::ExtCastleOneHeroHiredEveryWeek() const
 {
     return ExtModes(CASTLE_1HERO_HIRED_EVERY_WEEK);
 }
 
-bool Settings::ExtWorldDwellingsAccumulateUnits(void) const
+bool Settings::ExtWorldDwellingsAccumulateUnits() const
 {
     return ExtModes(WORLD_DWELLING_ACCUMULATE_UNITS);
 }
 
-bool Settings::ExtWorldUseUniqueArtifactsML(void) const
+bool Settings::ExtWorldUseUniqueArtifactsML() const
 {
     return ExtModes(WORLD_USE_UNIQUE_ARTIFACTS_ML);
 }
 
-bool Settings::ExtWorldUseUniqueArtifactsRS(void) const
+bool Settings::ExtWorldUseUniqueArtifactsRS() const
 {
     return ExtModes(WORLD_USE_UNIQUE_ARTIFACTS_RS);
 }
 
-bool Settings::ExtWorldUseUniqueArtifactsPS(void) const
+bool Settings::ExtWorldUseUniqueArtifactsPS() const
 {
     return ExtModes(WORLD_USE_UNIQUE_ARTIFACTS_PS);
 }
 
-bool Settings::ExtWorldUseUniqueArtifactsSS(void) const
+bool Settings::ExtWorldUseUniqueArtifactsSS() const
 {
     return ExtModes(WORLD_USE_UNIQUE_ARTIFACTS_SS);
 }
 
-bool Settings::ExtHeroArenaCanChoiseAnySkills(void) const
+bool Settings::ExtHeroArenaCanChoiseAnySkills() const
 {
     return ExtModes(HEROES_ARENA_ANY_SKILLS);
 }
 
-bool Settings::ExtWorldExtObjectsCaptured(void) const
+bool Settings::ExtWorldExtObjectsCaptured() const
 {
     return ExtModes(WORLD_EXT_OBJECTS_CAPTURED);
 }
 
-bool Settings::ExtWorldGuardianObjectsTwoDefense(void) const
+bool Settings::ExtWorldGuardianObjectsTwoDefense() const
 {
     return ExtModes(WORLD_GUARDIAN_TWO_DEFENSE);
 }
 
-bool Settings::ExtWorldDisableBarrowMounds(void) const
+bool Settings::ExtWorldDisableBarrowMounds() const
 {
     return ExtModes(WORLD_DISABLE_BARROW_MOUNDS);
 }
 
-bool Settings::ExtGameContinueAfterVictory(void) const
+bool Settings::ExtGameContinueAfterVictory() const
 {
     return ExtModes(GAME_CONTINUE_AFTER_VICTORY);
 }
 
-const Point &Settings::PosRadar(void) const
+const Point &Settings::PosRadar() const
 { return pos_radr; }
 
-const Point &Settings::PosButtons(void) const
+const Point &Settings::PosButtons() const
 { return pos_bttn; }
 
-const Point &Settings::PosIcons(void) const
+const Point &Settings::PosIcons() const
 { return pos_icon; }
 
-const Point &Settings::PosStatus(void) const
+const Point &Settings::PosStatus() const
 { return pos_stat; }
 
 void Settings::SetPosRadar(const Point &pt)
@@ -1551,7 +1564,7 @@ void Settings::SetPosIcons(const Point &pt)
 void Settings::SetPosStatus(const Point &pt)
 { pos_stat = pt; }
 
-void Settings::BinarySave(void) const
+void Settings::BinarySave() const
 {
     const std::string fname = System::ConcatePath(GetSaveDir(), "fheroes2.bin");
 
@@ -1568,7 +1581,7 @@ void Settings::BinarySave(void) const
 
 #include "dialog.h"
 
-void Settings::BinaryLoad(void)
+void Settings::BinaryLoad()
 {
     std::string fname = System::ConcatePath(GetSaveDir(), "fheroes2.bin");
 
@@ -1593,12 +1606,12 @@ void Settings::SetMemoryLimit(u32 limit)
     memory_limit = limit;
 }
 
-u32 Settings::MemoryLimit(void) const
+u32 Settings::MemoryLimit() const
 {
     return memory_limit;
 }
 
-bool Settings::FullScreen(void) const
+bool Settings::FullScreen() const
 {
     return System::isEmbededDevice() ||
            opt_global.Modes(GLOBAL_FULLSCREEN);

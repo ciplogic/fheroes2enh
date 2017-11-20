@@ -72,7 +72,7 @@ void AIKingdoms::Reset(void)
 
 void AIKingdom::Reset(void)
 {
-    capital = NULL;
+    capital = nullptr;
     scans.clear();
 }
 
@@ -158,9 +158,9 @@ void AI::KingdomTurn(Kingdom &kingdom)
     DEBUG(DBG_AI, DBG_INFO, Color::String(color) << ", size cache objects: " << ai.scans.size());
 
     // set capital
-    if (NULL == ai.capital && castles.size())
+    if (nullptr == ai.capital && castles.size())
     {
-        KingdomCastles::iterator it = std::find_if(castles.begin(), castles.end(), Castle::PredicateIsCastle);
+        auto it = std::find_if(castles.begin(), castles.end(), Castle::PredicateIsCastle);
 
         if (castles.end() != it)
         {

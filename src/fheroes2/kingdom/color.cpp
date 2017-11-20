@@ -155,9 +155,8 @@ std::string Colors::String(void) const
 {
     std::ostringstream os;
 
-    for (const_iterator
-                 it = begin(); it != end(); ++it)
-        os << Color::String(*it) << ", ";
+    for (int it : *this)
+        os << Color::String(it) << ", ";
 
     return os.str();
 }

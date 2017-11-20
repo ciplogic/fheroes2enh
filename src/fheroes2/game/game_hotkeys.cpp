@@ -184,7 +184,7 @@ const char *Game::EventsName(int evnt)
         default:
             break;
     }
-    return NULL;
+    return nullptr;
 }
 
 void Game::HotKeysDefaults(void)
@@ -294,7 +294,7 @@ bool Game::HotKeyPressEvent(int evnt)
 void Game::HotKeysLoad(const std::string &hotkeys)
 {
     TinyConfig config('=', '#');
-    //const Tiny::Entry* entry = NULL;
+    //const Tiny::Entry* entry = nullptr;
 
     if (config.Load(hotkeys.c_str()))
     {

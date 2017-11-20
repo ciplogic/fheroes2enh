@@ -26,7 +26,7 @@
 
 #ifdef WITH_TTF
 
-FontTTF::FontTTF() : ptr(NULL)
+FontTTF::FontTTF() : ptr(nullptr)
 {
 }
 

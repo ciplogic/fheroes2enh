@@ -118,7 +118,7 @@ namespace Battle
     class Position : protected std::pair<Cell *, Cell *>
     {
     public:
-        Position() : std::pair<Cell *, Cell *>(NULL, NULL)
+        Position() : std::pair<Cell *, Cell *>(nullptr, nullptr)
         {}
 
         void Set(s32 head, bool wide, bool reflect);

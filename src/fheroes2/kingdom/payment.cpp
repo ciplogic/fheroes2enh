@@ -43,7 +43,7 @@ paymentstats_t _payments[] = {
         {"recruit_level",               {500,  0,  0, 0, 0, 0, 0}},
         {"alchemist_payment",           {750,  0,  0, 0, 0, 0, 0}},
 
-        {NULL,                          {0,    0,  0, 0, 0, 0, 0}},
+        {nullptr,                          {0,    0,  0, 0, 0, 0, 0}},
 };
 
 #ifdef WITH_XML
@@ -66,10 +66,10 @@ void PaymentConditions::UpdateCosts(const std::string &spec)
 #ifdef WITH_XML
     // parse payments.xml
     TiXmlDocument doc;
-    const TiXmlElement* xml_payments = NULL;
+    const TiXmlElement* xml_payments = nullptr;
 
     if(doc.LoadFile(spec.c_str()) &&
-        NULL != (xml_payments = doc.FirstChildElement("payments")))
+        nullptr != (xml_payments = doc.FirstChildElement("payments")))
     {
     paymentstats_t* ptr = &_payments[0];
 
@@ -108,7 +108,7 @@ payment_t PaymentConditions::BuySpellBook(int shrine)
 {
     payment_t result;
     paymentstats_t *ptr = &_payments[0];
-    const char *skey = NULL;
+    const char *skey = nullptr;
 
     switch (shrine)
     {

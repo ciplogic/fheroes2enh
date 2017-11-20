@@ -102,16 +102,15 @@ s32 Battle::AIMaxQualityPosition(const Indexes &positions)
 
 const Battle::Unit *Battle::AIGetEnemyAbroadMaxQuality(s32 position, int color)
 {
-    const Unit *res = NULL;
+    const Unit *res = nullptr;
     s32 quality = 0;
 
     const Indexes around = Board::GetAroundIndexes(position);
 
-    for (Indexes::const_iterator
-                 it = around.begin(); it != around.end(); ++it)
+    for (int it : around)
     {
-        const Cell *cell = Board::GetCell(*it);
-        const Unit *enemy = cell ? cell->GetUnit() : NULL;
+        const Cell *cell = Board::GetCell(it);
+        const Unit *enemy = cell ? cell->GetUnit() : nullptr;
 
         if (enemy && enemy->GetColor() != color &&
             quality < cell->GetQuality())
@@ -235,7 +234,7 @@ void AI::BattleTurn(Arena &arena, const Unit &b, Actions &a)
     // set quality for enemy troop
     board->SetEnemyQuality(b);
 
-    const Unit *enemy = NULL;
+    const Unit *enemy = nullptr;
     bool attack = false;
 
     if (b.isArchers() && !b.isHandFighting())
@@ -254,11 +253,11 @@ void AI::BattleTurn(Arena &arena, const Unit &b, Actions &a)
 
         if (b.Modes(SP_BERSERKER))
         {
-            const Indexes positions = board->GetNearestTroopIndexes(b.GetHeadIndex(), NULL);
+            const Indexes positions = board->GetNearestTroopIndexes(b.GetHeadIndex(), nullptr);
             if (positions.size()) move = *Rand::Get(positions);
         } else
         {
-            if (BattleMagicTurn(arena, b, a, NULL)) return; /* repeat turn: correct spell ability */
+            if (BattleMagicTurn(arena, b, a, nullptr)) return; /* repeat turn: correct spell ability */
 
             // set quality position from enemy
             board->SetPositionQuality(b);
@@ -335,7 +334,7 @@ void AI::BattleTurn(Arena &arena, const Unit &b, Actions &a)
             a.push_back(Battle::Command(MSG_BATTLE_ATTACK, b.GetUID(), enemy->GetUID(), enemy->GetHeadIndex(), 0));
     } else
     {
-        DEBUG(DBG_BATTLE, DBG_TRACE, "enemy: " << "is NULL" << ", board: " << board->AllUnitsInfo());
+        DEBUG(DBG_BATTLE, DBG_TRACE, "enemy: " << "is nullptr" << ", board: " << board->AllUnitsInfo());
     }
 
     // end action
@@ -348,7 +347,7 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
     const HeroBase *hero = b.GetCommander();
 
     if (b.Modes(SP_BERSERKER) || !hero || hero->Modes(Heroes::SPELLCASTED) || !hero->HaveSpellBook() ||
-        arena.isDisableCastSpell(Spell(), NULL) || a.HaveCommand(Battle::MSG_BATTLE_CAST))
+        arena.isDisableCastSpell(Spell(), nullptr) || a.HaveCommand(Battle::MSG_BATTLE_CAST))
         return false;
 
     const Force &my_army = arena.GetForce(b.GetArmyColor(), false);
@@ -485,16 +484,16 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
         if (std::count_if(friends.begin(), friends.end(), std::mem_fun(&Unit::isUndead)) <
             std::count_if(enemies.begin(), enemies.end(), std::mem_fun(&Unit::isUndead)))
         {
-            if (AIApplySpell(Spell::HOLYSHOUT, NULL, *hero, a)) return true;
-            if (AIApplySpell(Spell::HOLYWORD, NULL, *hero, a)) return true;
+            if (AIApplySpell(Spell::HOLYSHOUT, nullptr, *hero, a)) return true;
+            if (AIApplySpell(Spell::HOLYWORD, nullptr, *hero, a)) return true;
         }
 
         // check alife
         if (std::count_if(friends.begin(), friends.end(), std::mem_fun(&Unit::isAlive)) <
             std::count_if(enemies.begin(), enemies.end(), std::mem_fun(&Unit::isAlive)))
         {
-            if (AIApplySpell(Spell::DEATHRIPPLE, NULL, *hero, a)) return true;
-            if (AIApplySpell(Spell::DEATHWAVE, NULL, *hero, a)) return true;
+            if (AIApplySpell(Spell::DEATHRIPPLE, nullptr, *hero, a)) return true;
+            if (AIApplySpell(Spell::DEATHWAVE, nullptr, *hero, a)) return true;
         }
 
         Unit *stats = *Rand::Get(enemies);
@@ -507,8 +506,8 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
     FIX: Damage Spell:
 */
 
-    if (AIApplySpell(Spell::ARMAGEDDON, NULL, *hero, a)) return true;
-    if (AIApplySpell(Spell::ELEMENTALSTORM, NULL, *hero, a)) return true;
+    if (AIApplySpell(Spell::ARMAGEDDON, nullptr, *hero, a)) return true;
+    if (AIApplySpell(Spell::ELEMENTALSTORM, nullptr, *hero, a)) return true;
 
     return false;
 }

@@ -203,12 +203,12 @@ void Troops::PopBack()
 
 Troop *Troops::GetTroop(size_t pos)
 {
-    return pos < _items.size() ? _items.at(pos) : NULL;
+    return pos < _items.size() ? _items.at(pos) : nullptr;
 }
 
 const Troop *Troops::GetTroop(size_t pos) const
 {
-    return pos < _items.size() ? _items.at(pos) : NULL;
+    return pos < _items.size() ? _items.at(pos) : nullptr;
 }
 
 void Troops::UpgradeMonsters(const Monster &m)
@@ -434,7 +434,7 @@ void Troops::UpgradeTroops(const Castle &castle)
 Troop *Troops::GetFirstValid(void)
 {
     auto it = std::find_if(_items.begin(), _items.end(), std::mem_fun(&Troop::isValid));
-    return it == _items.end() ? NULL : *it;
+    return it == _items.end() ? nullptr : *it;
 }
 
 Troop *Troops::GetWeakestTroop(void)
@@ -446,7 +446,7 @@ Troop *Troops::GetWeakestTroop(void)
 
     while (first != last) if ((*first)->isValid()) break; else ++first;
 
-    if (first == _items.end()) return NULL;
+    if (first == _items.end()) return nullptr;
     lowest = first;
 
     if (first != last)
@@ -464,7 +464,7 @@ Troop *Troops::GetSlowestTroop(void)
 
     while (first != last) if ((*first)->isValid()) break; else ++first;
 
-    if (first == _items.end()) return NULL;
+    if (first == _items.end()) return nullptr;
     lowest = first;
 
     if (first != last)
@@ -709,7 +709,7 @@ Army::Army(HeroBase *s) : commander(s), combat_format(true), color(Color::NONE)
     for (u32 ii = 0; ii < ARMYMAXTROOPS; ++ii) _items.push_back(new ArmyTroop(this));
 }
 
-Army::Army(const Maps::Tiles &t) : commander(NULL), combat_format(true), color(Color::NONE)
+Army::Army(const Maps::Tiles &t) : commander(nullptr), combat_format(true), color(Color::NONE)
 {
     _items.reserve(ARMYMAXTROOPS);
     for (u32 ii = 0; ii < ARMYMAXTROOPS; ++ii) _items.push_back(new ArmyTroop(this));
@@ -912,7 +912,7 @@ int Army::GetRace(void) const
 
 int Army::GetLuck(void) const
 {
-    return GetCommander() ? GetCommander()->GetLuck() : GetLuckModificator(NULL);
+    return GetCommander() ? GetCommander()->GetLuck() : GetLuckModificator(nullptr);
 }
 
 int Army::GetLuckModificator(std::string *strs) const
@@ -922,7 +922,7 @@ int Army::GetLuckModificator(std::string *strs) const
 
 int Army::GetMorale(void) const
 {
-    return GetCommander() ? GetCommander()->GetMorale() : GetMoraleModificator(NULL);
+    return GetCommander() ? GetCommander()->GetMorale() : GetMoraleModificator(nullptr);
 }
 
 // TODO:: need optimize
@@ -1152,17 +1152,17 @@ void Army::SetCommander(HeroBase *c)
 
 HeroBase *Army::GetCommander(void)
 {
-    return (!commander || (commander->isCaptain() && !commander->isValid())) ? NULL : commander;
+    return (!commander || (commander->isCaptain() && !commander->isValid())) ? nullptr : commander;
 }
 
 const Castle *Army::inCastle(void) const
 {
-    return commander ? commander->inCastle() : NULL;
+    return commander ? commander->inCastle() : nullptr;
 }
 
 const HeroBase *Army::GetCommander(void) const
 {
-    return (!commander || (commander->isCaptain() && !commander->isValid())) ? NULL : commander;
+    return (!commander || (commander->isCaptain() && !commander->isValid())) ? nullptr : commander;
 }
 
 int Army::GetControl(void) const
@@ -1372,7 +1372,7 @@ StreamBase &operator>>(StreamBase &msg, Army &army)
     }
 
     // set later from owner (castle, heroes)
-    army.commander = NULL;
+    army.commander = nullptr;
 
     return msg;
 }

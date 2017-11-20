@@ -316,7 +316,7 @@ void Dialog::QuickInfo(const Maps::Tiles &tile)
         {
             const Maps::Tiles &left = world.GetTiles(tile.GetIndex() - 1);
             const Maps::Tiles &right = world.GetTiles(tile.GetIndex() + 1);
-            const Maps::Tiles *center = NULL;
+            const Maps::Tiles *center = nullptr;
 
             if (MP2::isGroundObject(left.GetObject())) center = &left;
             else if (MP2::isGroundObject(right.GetObject())) center = &right;
@@ -806,7 +806,7 @@ void Dialog::QuickInfo(const Heroes &hero)
     // luck
     if (hero.isFriends(conf.CurrentColor()))
     {
-        const s32 luck = hero.GetLuckWithModificators(NULL);
+        const s32 luck = hero.GetLuckWithModificators(nullptr);
         const Sprite &sprite = AGG::GetICN(ICN::MINILKMR, (0 > luck ? 0 : (0 < luck ? 1 : 2)));
         u32 count = (0 == luck ? 1 : std::abs(luck));
         dst_pt.x = cur_rt.x + 120;
@@ -822,7 +822,7 @@ void Dialog::QuickInfo(const Heroes &hero)
     // morale
     if (hero.isFriends(conf.CurrentColor()))
     {
-        const s32 morale = hero.GetMoraleWithModificators(NULL);
+        const s32 morale = hero.GetMoraleWithModificators(nullptr);
         const Sprite &sprite = AGG::GetICN(ICN::MINILKMR, (0 > morale ? 3 : (0 < morale ? 4 : 5)));
         u32 count = (0 == morale ? 1 : std::abs(morale));
         dst_pt.x = cur_rt.x + 10;

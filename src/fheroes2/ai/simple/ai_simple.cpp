@@ -61,7 +61,7 @@ void AI::CastleRemove(const Castle &castle)
     if (ai.capital == &castle)
     {
         ai.capital->ResetModes(Castle::CAPITAL);
-        ai.capital = NULL;
+        ai.capital = nullptr;
     }
 }
 

@@ -60,7 +60,7 @@ profitstats_t _profits[] = {
         {"endless_pouch_crystal", {0,     0, 0, 0, 0, 1, 0}},
         {"endless_pouch_gems",    {0,     0, 0, 0, 0, 0, 1}},
 
-        {NULL,                    {0,     0, 0, 0, 0, 0, 0}},
+        {nullptr,                    {0,     0, 0, 0, 0, 0, 0}},
 };
 
 void ProfitConditions::UpdateCosts(const std::string &spec)
@@ -68,10 +68,10 @@ void ProfitConditions::UpdateCosts(const std::string &spec)
 #ifdef WITH_XML
     // parse profits.xml
     TiXmlDocument doc;
-    const TiXmlElement* xml_profits = NULL;
+    const TiXmlElement* xml_profits = nullptr;
 
     if(doc.LoadFile(spec.c_str()) &&
-        NULL != (xml_profits = doc.FirstChildElement("profits")))
+        nullptr != (xml_profits = doc.FirstChildElement("profits")))
     {
     profitstats_t* ptr = &_profits[0];
 
@@ -93,7 +93,7 @@ void ProfitConditions::UpdateCosts(const std::string &spec)
 payment_t ProfitConditions::FromBuilding(u32 building, int race)
 {
     payment_t result;
-    const char *id = NULL;
+    const char *id = nullptr;
 
     switch (building)
     {
@@ -126,7 +126,7 @@ payment_t ProfitConditions::FromBuilding(u32 building, int race)
 payment_t ProfitConditions::FromArtifact(int artifact)
 {
     payment_t result;
-    const char *id = NULL;
+    const char *id = nullptr;
 
     switch (artifact)
     {
@@ -180,7 +180,7 @@ payment_t ProfitConditions::FromArtifact(int artifact)
 payment_t ProfitConditions::FromMine(int type)
 {
     payment_t result;
-    const char *id = NULL;
+    const char *id = nullptr;
 
     switch (type)
     {

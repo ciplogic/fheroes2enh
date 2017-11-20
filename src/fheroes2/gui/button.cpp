@@ -158,7 +158,7 @@ void Button::Draw(void)
     if (localcursor) cursor.Show();
 }
 
-ButtonGroups::ButtonGroups(const Rect &pos, u32 btns) : button1(NULL), button2(NULL), result1(Dialog::ZERO),
+ButtonGroups::ButtonGroups(const Rect &pos, u32 btns) : button1(nullptr), button2(nullptr), result1(Dialog::ZERO),
                                                         result2(Dialog::ZERO), buttons(btns)
 {
     Point pt;

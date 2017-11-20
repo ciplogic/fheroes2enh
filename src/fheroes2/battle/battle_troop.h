@@ -185,7 +185,7 @@ namespace Battle
 
         bool ApplySpell(const Spell &, const HeroBase *hero, TargetInfo &);
 
-        bool AllowApplySpell(const Spell &, const HeroBase *hero, std::string *msg = NULL) const;
+        bool AllowApplySpell(const Spell &, const HeroBase *hero, std::string *msg = nullptr) const;
 
         void PostAttackAction(Unit &);
 

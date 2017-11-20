@@ -130,10 +130,10 @@ void Spell::UpdateStats(const std::string &spec)
 #ifdef WITH_XML
     // parse spells.xml
     TiXmlDocument doc;
-    const TiXmlElement* xml_spells = NULL;
+    const TiXmlElement* xml_spells = nullptr;
 
     if(doc.LoadFile(spec.c_str()) &&
-        NULL != (xml_spells = doc.FirstChildElement("spells")))
+        nullptr != (xml_spells = doc.FirstChildElement("spells")))
     {
     size_t index = 0;
         const TiXmlElement* xml_spell = xml_spells->FirstChildElement("spell");

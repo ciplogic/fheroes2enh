@@ -162,7 +162,7 @@ u32 DialogCaptureResourceObject(const std::string &hdr, const std::string &str, 
 
     std::string perday = _("%{count} / day");
     payment_t info = ProfitConditions::FromMine(res);
-    s32 *current = NULL;
+    s32 *current = nullptr;
 
     switch (res)
     {
@@ -339,9 +339,9 @@ void BattleLose(Heroes &hero, const Battle::Result &res, bool attacker, int colo
 
 void AnimationRemoveObject(Maps::Tiles &tile)
 {
-    Maps::TilesAddon *addon = MP2::isRemoveObject(tile.GetObject()) ? tile.FindObject(tile.GetObject()) : NULL;
+    Maps::TilesAddon *addon = MP2::isRemoveObject(tile.GetObject()) ? tile.FindObject(tile.GetObject()) : nullptr;
 
-    if (NULL == addon) return;
+    if (nullptr == addon) return;
 
     const Interface::GameArea &gamearea = Interface::Basic::Get().GetGameArea();
     const Point &area = gamearea.GetMapsPos();
@@ -1338,7 +1338,7 @@ void ActionToShrine(Heroes &hero, u32 obj, s32 dst_index)
     // check spell book
     if (!hero.HaveSpellBook())
     {
-        if (!Settings::Get().ExtHeroBuySpellBookFromShrine() || !hero.BuySpellBook(NULL, spell_level))
+        if (!Settings::Get().ExtHeroBuySpellBookFromShrine() || !hero.BuySpellBook(nullptr, spell_level))
         {
             PlaySoundFailure;
             body += _("\nUnfortunately, you have no Magic Book to record the spell with.");
@@ -2516,11 +2516,11 @@ void ActionToDwellingBattleMonster(Heroes &hero, u32 obj, s32 dst_index)
     const bool &battle = Color::NONE == tile.QuantityColor();
     const Troop &troop = tile.QuantityTroop();
 
-    const char *str_empty = NULL;
-    const char *str_recr = NULL;
-    const char *str_warn = NULL;
-    const char *str_wins = NULL;
-    const char *str_scss = NULL;
+    const char *str_empty = nullptr;
+    const char *str_recr = nullptr;
+    const char *str_warn = nullptr;
+    const char *str_wins = nullptr;
+    const char *str_scss = nullptr;
 
     switch (obj)
     {

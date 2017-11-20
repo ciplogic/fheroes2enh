@@ -399,7 +399,7 @@ TiXmlElement & operator>> (TiXmlElement & doc, AllHeroes & heroes)
     }
 
     std::pair<int, int> colorRace(Color::NONE, race);
-    Heroes* hero = NULL;
+    Heroes* hero = nullptr;
 
     if(! jail)
     {
@@ -911,10 +911,10 @@ bool World::LoadMapMAP(const std::string & filename)
     Defaults();
 
     TiXmlDocument doc;
-    TiXmlElement* xml_map = NULL;
+    TiXmlElement* xml_map = nullptr;
 
     if(doc.LoadFile(filename.c_str()) &&
-        NULL != (xml_map = doc.FirstChildElement("map")))
+        nullptr != (xml_map = doc.FirstChildElement("map")))
     {
         TiXmlElement* xml_data = xml_map->FirstChildElement("data");
     if(! xml_data->Attribute("compress"))
@@ -1282,7 +1282,7 @@ bool World::LoadMapMP2(const std::string &filename)
         if (0 <= findobject)
         {
             const Maps::Tiles &tile = vec_tiles[findobject];
-            const Maps::TilesAddon *addon = NULL;
+            const Maps::TilesAddon *addon = nullptr;
 
             switch (tile.GetObject())
             {
@@ -1369,7 +1369,7 @@ bool World::LoadMapMP2(const std::string &filename)
                     if (SIZEOFMP2HEROES != pblock.size())
                     {
                         DEBUG(DBG_GAME, DBG_WARN, "read heroes: " << "incorrect size block: " << pblock.size());
-                    } else if (NULL != (addon = tile.FindObjectConst(MP2::OBJ_HEROES)))
+                    } else if (nullptr != (addon = tile.FindObjectConst(MP2::OBJ_HEROES)))
                     {
                         std::pair<int, int> colorRace = Maps::TilesAddon::ColorRaceFromHeroSprite(*addon);
                         Kingdom &kingdom = GetKingdom(colorRace.first);
@@ -1381,7 +1381,7 @@ bool World::LoadMapMP2(const std::string &filename)
                         // check heroes max count
                         if (kingdom.AllowRecruitHero(false, 0))
                         {
-                            Heroes *hero = NULL;
+                            Heroes *hero = nullptr;
 
                             if (pblock[17] &&
                                 pblock[18] < Heroes::BAX)
@@ -1645,10 +1645,10 @@ void World::PostLoad(void)
         }
     } else
     {
-        const Maps::TilesAddon *addon = NULL;
+        const Maps::TilesAddon *addon = nullptr;
 
         // remove ultimate artifact sprite
-        if (NULL != (addon = (*it).FindObjectConst(MP2::OBJ_RNDULTIMATEARTIFACT)))
+        if (nullptr != (addon = (*it).FindObjectConst(MP2::OBJ_RNDULTIMATEARTIFACT)))
         {
             ultimate_artifact.Set((*it).GetIndex(), Artifact::FromMP2IndexSprite(addon->index));
             (*it).Remove(addon->uniq);

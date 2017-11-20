@@ -705,7 +705,7 @@ void Battle::OpponentSprite::Redraw(void) const
     AGG::GetICN(icn, animframe, reflect).Blit(pos.x, pos.y);
 }
 
-Battle::Status::Status() : back1(AGG::GetICN(ICN::TEXTBAR, 8)), back2(AGG::GetICN(ICN::TEXTBAR, 9)), listlog(NULL)
+Battle::Status::Status() : back1(AGG::GetICN(ICN::TEXTBAR, 8)), back2(AGG::GetICN(ICN::TEXTBAR, 9)), listlog(nullptr)
 {
     Rect::w = back1.w();
     Rect::h = back1.h() + back2.h();
@@ -748,7 +748,7 @@ const std::string &Battle::Status::GetMessage(void) const
     return message;
 }
 
-Battle::ArmiesOrder::ArmiesOrder() : orders(NULL), army_color2(0)
+Battle::ArmiesOrder::ArmiesOrder() : orders(nullptr), army_color2(0)
 {
     const RGBA yellow = RGBA(0xe0, 0xe0, 0);
     const RGBA orange = RGBA(0xe0, 0x48, 0);
@@ -851,9 +851,9 @@ Battle::Interface::Interface(Arena &a, s32 center) : arena(a), icn_cbkg(ICN::UNK
                                                      humanturn_spell(Spell::NONE), humanturn_exit(true),
                                                      humanturn_redraw(true), animation_flags_frame(0),
                                                      catapult_frame(0),
-                                                     b_current(NULL), b_move(NULL), b_fly(NULL), b_current_sprite(NULL),
+                                                     b_current(nullptr), b_move(nullptr), b_fly(nullptr), b_current_sprite(nullptr),
                                                      b_current_alpha(255), index_pos(-1), teleport_src(-1),
-                                                     listlog(NULL), turn(0)
+                                                     listlog(nullptr), turn(0)
 {
     const Settings &conf = Settings::Get();
     bool pda = conf.QVGA();
@@ -985,8 +985,8 @@ Battle::Interface::Interface(Arena &a, s32 center) : arena(a), icn_cbkg(ICN::UNK
     status.SetLogs(listlog);
 
     // opponents
-    opponent1 = arena.GetCommander1() ? new OpponentSprite(area, arena.GetCommander1(), false) : NULL;
-    opponent2 = arena.GetCommander2() ? new OpponentSprite(area, arena.GetCommander2(), true) : NULL;
+    opponent1 = arena.GetCommander1() ? new OpponentSprite(area, arena.GetCommander1(), false) : nullptr;
+    opponent2 = arena.GetCommander2() ? new OpponentSprite(area, arena.GetCommander2(), true) : nullptr;
 
     if (Arena::GetCastle())
         main_tower = Rect(area.x + 570, area.y + 145, 70, 70);
@@ -1708,7 +1708,7 @@ void Battle::Interface::RedrawBorder(void)
 
 void Battle::Interface::RedrawPocketControls(void) const
 {
-    const HeroBase *hero = b_current ? b_current->GetCommander() : NULL;
+    const HeroBase *hero = b_current ? b_current->GetCommander() : nullptr;
     if (hero && hero->HaveSpellBook() && !hero->Modes(Heroes::SPELLCASTED))
     {
         AGG::GetICN(ICN::ARTFX, 81).Blit(pocket_book);
@@ -1923,7 +1923,7 @@ void Battle::Interface::HumanTurn(const Unit &b, Actions &a)
     }
 
     popup.Reset();
-    b_current = NULL;
+    b_current = nullptr;
 }
 
 void Battle::Interface::HumanBattleTurn(const Unit &b, Actions &a, std::string &msg)
@@ -2515,7 +2515,7 @@ void Battle::Interface::RedrawActionAttackPart1(Unit &attacker, Unit &defender, 
 
     cursor.SetThemes(Cursor::WAR_NONE);
 
-    b_current = NULL;
+    b_current = nullptr;
     b_move = &attacker;
     p_move = attacker.GetRectPosition();
 
@@ -2696,7 +2696,7 @@ void Battle::Interface::RedrawActionAttackPart2(Unit &attacker, TargetsInfo &tar
         }
     if (opponent1) opponent1->ResetAnimFrame(OP_IDLE);
     if (opponent2) opponent2->ResetAnimFrame(OP_IDLE);
-    b_move = NULL;
+    b_move = nullptr;
     attacker.ResetAnimFrame(AS_IDLE);
 }
 
@@ -2798,7 +2798,7 @@ void Battle::Interface::RedrawActionMove(Unit &b, const Indexes &path)
     StringReplace(msg, "%{monster}", b.GetName());
     StringReplace(msg, "%{src}", b.GetHeadIndex());
 
-    b_current = NULL;
+    b_current = nullptr;
     b_move = &b;
 
     while (dst != path.end())
@@ -2809,7 +2809,7 @@ void Battle::Interface::RedrawActionMove(Unit &b, const Indexes &path)
 
         if (bridge && bridge->NeedAction(b, *dst))
         {
-            b_move = NULL;
+            b_move = nullptr;
             b.ResetAnimFrame(AS_IDLE);
             bridge->Action(b, *dst);
             b_move = &b;
@@ -2839,9 +2839,9 @@ void Battle::Interface::RedrawActionMove(Unit &b, const Indexes &path)
     }
 
     // restore
-    b_fly = NULL;
-    b_move = NULL;
-    b_current = NULL;
+    b_fly = nullptr;
+    b_move = nullptr;
+    b_current = nullptr;
     b.ResetAnimFrame(AS_IDLE);
 
     StringReplace(msg, "%{dst}", b.GetHeadIndex());
@@ -2865,17 +2865,17 @@ void Battle::Interface::RedrawActionFly(Unit &b, const Position &pos)
     Points::const_iterator pnt = points.begin();
 
     // jump up
-    b_current = NULL;
-    b_move = NULL;
+    b_current = nullptr;
+    b_move = nullptr;
     p_move = pnt != points.end() ? *pnt : pt1;
-    b_fly = NULL;
+    b_fly = nullptr;
     b_move = &b;
     p_fly = pt1;
 
     b.ResetAnimFrame(AS_FLY1);
     RedrawTroopFrameAnimation(b);
 
-    b_move = NULL;
+    b_move = nullptr;
     b_fly = &b;
     p_fly = p_move;
     if (pnt != points.end()) ++pnt;
@@ -2895,14 +2895,14 @@ void Battle::Interface::RedrawActionFly(Unit &b, const Position &pos)
     b.SetPosition(dst);
 
     // jump down
-    b_fly = NULL;
+    b_fly = nullptr;
     b_move = &b;
     p_move = pt2;
     b.ResetAnimFrame(AS_FLY3);
     RedrawTroopFrameAnimation(b);
 
     // restore
-    b_move = NULL;
+    b_move = nullptr;
     b.ResetAnimFrame(AS_IDLE);
 }
 
@@ -2918,7 +2918,7 @@ void Battle::Interface::RedrawActionSpellCastPart1(const Spell &spell, s32 dst, 
                                                    const std::string &name, const TargetsInfo &targets)
 {
     std::string msg;
-    Unit *target = targets.size() ? targets.front().defender : NULL;
+    Unit *target = targets.size() ? targets.front().defender : nullptr;
 
     if (target && target->GetHeadIndex() == dst)
     {
@@ -3155,12 +3155,12 @@ void Battle::Interface::RedrawActionSpellCastPart2(const Spell &spell, TargetsIn
         }
     if (opponent1) opponent1->ResetAnimFrame(OP_IDLE);
     if (opponent2) opponent2->ResetAnimFrame(OP_IDLE);
-    b_move = NULL;
+    b_move = nullptr;
 }
 
 void Battle::Interface::RedrawActionMonsterSpellCastStatus(const Unit &attacker, const TargetInfo &target)
 {
-    const char *msg = NULL;
+    const char *msg = nullptr;
 
     switch (attacker.GetID())
     {
@@ -3280,7 +3280,7 @@ void Battle::Interface::RedrawActionTowerPart1(Tower &tower, Unit &defender)
     Cursor &cursor = Cursor::Get();
 
     cursor.SetThemes(Cursor::WAR_NONE);
-    b_current = NULL;
+    b_current = nullptr;
 
     const Point pos1 = tower.GetPortPosition() + border.GetArea();
     const Rect &pos2 = defender.GetRectPosition();
@@ -3342,7 +3342,7 @@ void Battle::Interface::RedrawActionTowerPart2(Tower &tower, TargetInfo &target)
 
     if (opponent1) opponent1->ResetAnimFrame(OP_IDLE);
     if (opponent2) opponent2->ResetAnimFrame(OP_IDLE);
-    b_move = NULL;
+    b_move = nullptr;
 }
 
 void Battle::Interface::RedrawActionCatapult(int target)
@@ -3553,8 +3553,8 @@ void Battle::Interface::RedrawActionTeleportSpell(Unit &target, s32 dst)
     }
 
     b_current_alpha = 255;
-    b_current = NULL;
-    b_current_sprite = NULL;
+    b_current = nullptr;
+    b_current_sprite = nullptr;
 }
 
 void Battle::Interface::RedrawActionSummonElementalSpell(const Unit &target)
@@ -3591,8 +3591,8 @@ void Battle::Interface::RedrawActionSummonElementalSpell(const Unit &target)
     }
 
     b_current_alpha = 255;
-    b_current = NULL;
-    b_current_sprite = NULL;
+    b_current = nullptr;
+    b_current_sprite = nullptr;
 }
 
 void Battle::Interface::RedrawActionMirrorImageSpell(const Unit &target, const Position &pos)
@@ -3697,8 +3697,8 @@ void Battle::Interface::RedrawActionBloodLustSpell(Unit &target)
 
     while (Mixer::isValid() && Mixer::isPlaying(-1)) DELAY(10);
 
-    b_current = NULL;
-    b_current_sprite = NULL;
+    b_current = nullptr;
+    b_current_sprite = nullptr;
 }
 
 void Battle::Interface::RedrawActionColdRaySpell(Unit &target)
@@ -3875,7 +3875,7 @@ void Battle::Interface::RedrawActionDisruptingRaySpell(Unit &target)
     }
 
     b_current = old_current;
-    b_current_sprite = NULL;
+    b_current_sprite = nullptr;
 }
 
 void Battle::Interface::RedrawActionColdRingSpell(s32 dst, const TargetsInfo &targets)
@@ -3892,7 +3892,7 @@ void Battle::Interface::RedrawActionColdRingSpell(s32 dst, const TargetsInfo &ta
     cursor.SetThemes(Cursor::WAR_NONE);
 
     // set WNCE
-    b_current = NULL;
+    b_current = nullptr;
     for (TargetsInfo::const_iterator
                  it = targets.begin(); it != targets.end(); ++it)
         if ((*it).defender && (*it).damage) (*it).defender->ResetAnimFrame(AS_WNCE);
@@ -3928,7 +3928,7 @@ void Battle::Interface::RedrawActionColdRingSpell(s32 dst, const TargetsInfo &ta
         if ((*it).defender)
         {
             (*it).defender->ResetAnimFrame(AS_IDLE);
-            b_current = NULL;
+            b_current = nullptr;
         }
 }
 
@@ -3948,7 +3948,7 @@ void Battle::Interface::RedrawActionElementalStormSpell(const TargetsInfo &targe
 
     cursor.SetThemes(Cursor::WAR_NONE);
 
-    b_current = NULL;
+    b_current = nullptr;
     for (TargetsInfo::const_iterator
                  it = targets.begin(); it != targets.end(); ++it)
         if ((*it).defender && (*it).damage) (*it).defender->ResetAnimFrame(AS_WNCE);
@@ -3993,7 +3993,7 @@ void Battle::Interface::RedrawActionElementalStormSpell(const TargetsInfo &targe
         if ((*it).defender)
         {
             (*it).defender->ResetAnimFrame(AS_IDLE);
-            b_current = NULL;
+            b_current = nullptr;
         }
 }
 
@@ -4015,7 +4015,7 @@ void Battle::Interface::RedrawActionArmageddonSpell(const TargetsInfo &targets)
     display.Blit(area, 0, 0, sprite1);
     sprite2.Fill(RGBA(0xb0, 0x0c, 0));
 
-    b_current = NULL;
+    b_current = nullptr;
     AGG::PlaySound(M82::ARMGEDN);
     u32 alpha = 10;
 
@@ -4104,7 +4104,7 @@ void Battle::Interface::RedrawActionEarthQuakeSpell(const std::vector<int> &targ
 
     Surface sprite = display.GetSurface(area);
 
-    b_current = NULL;
+    b_current = nullptr;
     AGG::PlaySound(M82::ERTHQUAK);
 
     const u32 offset = Settings::Get().QVGA() ? 5 : 10;
@@ -4207,7 +4207,7 @@ void Battle::Interface::RedrawTargetsWithFrameAnimation(s32 dst, const TargetsIn
 
     cursor.SetThemes(Cursor::WAR_NONE);
 
-    b_current = NULL;
+    b_current = nullptr;
     for (TargetsInfo::const_iterator
                  it = targets.begin(); it != targets.end(); ++it)
         if ((*it).defender && (*it).damage) (*it).defender->ResetAnimFrame(AS_WNCE);
@@ -4241,7 +4241,7 @@ void Battle::Interface::RedrawTargetsWithFrameAnimation(s32 dst, const TargetsIn
         if ((*it).defender)
         {
             (*it).defender->ResetAnimFrame(AS_IDLE);
-            b_current = NULL;
+            b_current = nullptr;
         }
 }
 
@@ -4277,7 +4277,7 @@ void Battle::Interface::RedrawTargetsWithFrameAnimation(const TargetsInfo &targe
 
     cursor.SetThemes(Cursor::WAR_NONE);
 
-    b_current = NULL;
+    b_current = nullptr;
 
     if (wnce)
         for (TargetsInfo::const_iterator
@@ -4336,7 +4336,7 @@ void Battle::Interface::RedrawTargetsWithFrameAnimation(const TargetsInfo &targe
             if ((*it).defender)
             {
                 (*it).defender->ResetAnimFrame(AS_IDLE);
-                b_current = NULL;
+                b_current = nullptr;
             }
 }
 
@@ -4370,7 +4370,7 @@ void Battle::Interface::RedrawTroopWithFrameAnimation(Unit &b, int icn, int m82,
 
     if (pain)
     {
-        b_current = NULL;
+        b_current = nullptr;
         b.ResetAnimFrame(AS_WNCE);
     }
 
@@ -4405,7 +4405,7 @@ void Battle::Interface::RedrawTroopWithFrameAnimation(Unit &b, int icn, int m82,
     if (pain)
     {
         b.ResetAnimFrame(AS_IDLE);
-        b_current = NULL;
+        b_current = nullptr;
     }
 }
 
@@ -4519,7 +4519,7 @@ void Battle::Interface::ProcessingHeroDialogResult(int res, Actions &a)
         //cast
         case 1:
         {
-            const HeroBase *hero = b_current ? b_current->GetCommander() : NULL;
+            const HeroBase *hero = b_current ? b_current->GetCommander() : nullptr;
             if (hero)
             {
                 if (hero->HaveSpellBook())
@@ -4598,7 +4598,7 @@ void Battle::Interface::ProcessingHeroDialogResult(int res, Actions &a)
     }
 }
 
-Battle::PopupDamageInfo::PopupDamageInfo() : Dialog::FrameBorder(5), cell(NULL), attacker(NULL), defender(NULL),
+Battle::PopupDamageInfo::PopupDamageInfo() : Dialog::FrameBorder(5), cell(nullptr), attacker(nullptr), defender(nullptr),
                                              redraw(false)
 {
 }
@@ -4628,9 +4628,9 @@ void Battle::PopupDamageInfo::Reset(void)
         Cursor::Get().Hide();
         background.Restore();
         redraw = false;
-        cell = NULL;
-        attacker = NULL;
-        defender = NULL;
+        cell = nullptr;
+        attacker = nullptr;
+        defender = nullptr;
     }
     Game::AnimateResetDelay(Game::BATTLE_POPUP_DELAY);
 }

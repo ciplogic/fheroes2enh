@@ -53,7 +53,7 @@ namespace Battle
                                                    std::bind2nd(std::ptr_fun(&AllowPart1), orders_mode)) :
                               std::find_if(units2.begin(), units2.end(),
                                            std::bind2nd(std::ptr_fun(&AllowPart2), orders_mode));
-        Unit *result = NULL;
+        Unit *result = nullptr;
 
         if (it1 != units1.end() &&
             it2 != units2.end())
@@ -180,7 +180,7 @@ Battle::Unit *Battle::Units::FindUID(u32 pid)
     iterator it = std::find_if(begin(), end(),
                                std::bind2nd(std::mem_fun(&Unit::isUID), pid));
 
-    return it == end() ? NULL : *it;
+    return it == end() ? nullptr : *it;
 }
 
 Battle::Unit *Battle::Units::FindMode(u32 mod)
@@ -188,7 +188,7 @@ Battle::Unit *Battle::Units::FindMode(u32 mod)
     iterator it = std::find_if(begin(), end(),
                                std::bind2nd(std::mem_fun(&Unit::Modes), mod));
 
-    return it == end() ? NULL : *it;
+    return it == end() ? nullptr : *it;
 }
 
 
@@ -215,7 +215,7 @@ Battle::Force::Force(Army &parent, bool opposite) : army(parent)
 
 Battle::Force::~Force()
 {
-    for (iterator it = begin(); it != end(); ++it) delete *it;
+    for (auto& it : *this) delete it;
 }
 
 const HeroBase *Battle::Force::GetCommander(void) const
@@ -247,11 +247,11 @@ u32 Battle::Force::GetSurrenderCost(void) const
 {
     float res = 0;
 
-    for (const_iterator it = begin(); it != end(); ++it)
-        if ((*it)->isValid())
+    for (auto it : *this)
+        if (it->isValid())
         {
             // FIXME: orig: 3 titan = 7500
-            payment_t payment = (*it)->GetCost();
+            payment_t payment = it->GetCost();
             res += payment.gold;
         }
 
@@ -307,7 +307,7 @@ bool isUnitFirst(const Battle::Unit *last, bool part1, int army2_color)
 void Battle::Force::UpdateOrderUnits(const Force &army1, const Force &army2, Units &orders)
 {
     orders.clear();
-    Unit *last = NULL;
+    Unit *last = nullptr;
 
     if (1)
     {
@@ -317,7 +317,7 @@ void Battle::Force::UpdateOrderUnits(const Force &army1, const Force &army2, Uni
         units1.SortFastest(true);
         units2.SortFastest(true);
 
-        while (NULL !=
+        while (nullptr !=
                (last = ForceGetCurrentUnitPart(units1, units2, true, isUnitFirst(last, true, army2.GetColor()), true)))
             orders.push_back(last);
     }
@@ -337,7 +337,7 @@ void Battle::Force::UpdateOrderUnits(const Force &army1, const Force &army2, Uni
             units2.SortSlowest(true);
         }
 
-        while (NULL !=
+        while (nullptr !=
                (last = ForceGetCurrentUnitPart(units1, units2, false, isUnitFirst(last, false, army2.GetColor()),
                                                true)))
             orders.push_back(last);
@@ -363,7 +363,7 @@ Battle::Unit *Battle::Force::GetCurrentUnit(const Force &army1, const Force &arm
 
     return result &&
            result->isValid() &&
-           result->GetSpeed() > Speed::STANDING ? result : NULL;
+           result->GetSpeed() > Speed::STANDING ? result : nullptr;
 }
 
 StreamBase &Battle::operator<<(StreamBase &msg, const Force &f)
@@ -398,10 +398,9 @@ Troops Battle::Force::GetKilledTroops(void) const
 {
     Troops killed;
 
-    for (const_iterator
-                 it = begin(); it != end(); ++it)
+    for (auto it : *this)
     {
-        const Unit &b = (**it);
+        const Unit &b = (*it);
         killed.PushBack(b, b.GetDead());
     }
 
@@ -412,9 +411,9 @@ bool Battle::Force::SetIdleAnimation(void)
 {
     bool res = false;
 
-    for (iterator it = begin(); it != end(); ++it)
+    for (auto& it : *this)
     {
-        Unit &unit = **it;
+        Unit &unit = *it;
 
         if (unit.isValid())
         {
@@ -435,9 +434,9 @@ bool Battle::Force::NextIdleAnimation(void)
 {
     bool res = false;
 
-    for (iterator it = begin(); it != end(); ++it)
+    for (auto& it : *this)
     {
-        Unit &unit = **it;
+        Unit &unit = *it;
 
         if (unit.isValid() && !unit.isStartAnimFrame())
         {
@@ -459,8 +458,8 @@ u32 Battle::Force::GetDeadCounts(void) const
 {
     u32 res = 0;
 
-    for (const_iterator it = begin(); it != end(); ++it)
-        res += (*it)->GetDead();
+    for (auto it : *this)
+        res += it->GetDead();
 
     return res;
 }
@@ -469,9 +468,9 @@ u32 Battle::Force::GetDeadHitPoints(void) const
 {
     u32 res = 0;
 
-    for (const_iterator it = begin(); it != end(); ++it)
+    for (auto it : *this)
     {
-        res += static_cast<Monster *>(*it)->GetHitPoints() * (*it)->GetDead();
+        res += static_cast<Monster *>(it)->GetHitPoints() * it->GetDead();
     }
 
     return res;

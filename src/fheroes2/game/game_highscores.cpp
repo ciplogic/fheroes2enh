@@ -130,7 +130,7 @@ void HGSData::ScoreRegistry(const std::string &p, const std::string &m, u32 r, u
 
     h.player = p;
     h.land = m;
-    h.localtime = std::time(NULL);
+    h.localtime = std::time(nullptr);
     h.days = r;
     h.rating = s;
 

@@ -88,7 +88,7 @@ namespace AGG
 
     struct icn_cache_t
     {
-        icn_cache_t() : sprites(NULL), reflect(NULL), count(0)
+        icn_cache_t() : sprites(nullptr), reflect(nullptr), count(0)
         {}
 
         Sprite *sprites;
@@ -98,7 +98,7 @@ namespace AGG
 
     struct til_cache_t
     {
-        til_cache_t() : sprites(NULL), count(0)
+        til_cache_t() : sprites(nullptr), count(0)
         {}
 
         Surface *sprites;
@@ -512,7 +512,7 @@ bool AGG::LoadExtICN(int icn, u32 index, bool reflect)
     icn_cache_t &v = icn_cache[icn];
     DEBUG(DBG_ENGINE, DBG_TRACE, ICN::GetString(icn) << ", " << index);
 
-    if (NULL == v.sprites)
+    if (nullptr == v.sprites)
     {
         v.sprites = new Sprite[count];
         v.reflect = new Sprite[count];
@@ -753,16 +753,16 @@ bool AGG::LoadAltICN(int icn, u32 index, bool reflect)
 
     // parse spec.xml
     TiXmlDocument doc;
-    const TiXmlElement* xml_icn = NULL;
+    const TiXmlElement* xml_icn = nullptr;
 
     if(doc.LoadFile(xml_spec.c_str()) &&
-    NULL != (xml_icn = doc.FirstChildElement("icn")))
+    nullptr != (xml_icn = doc.FirstChildElement("icn")))
     {
     int count, ox, oy;
     xml_icn->Attribute("count", &count);
     icn_cache_t & v = icn_cache[icn];
 
-    if(NULL == v.sprites)
+    if(nullptr == v.sprites)
     {
         v.count = count;
         v.sprites = new Sprite [v.count];
@@ -833,7 +833,7 @@ void AGG::SaveICN(int icn)
         const std::string stats_file = System::ConcatePath(icn_dir, "spec.xml");
         bool need_save = false;
         TiXmlDocument doc;
-        TiXmlElement* icn_element = NULL;
+        TiXmlElement* icn_element = nullptr;
 
         if(doc.LoadFile(stats_file.c_str()))
         icn_element = doc.FirstChildElement("icn");
@@ -1135,7 +1135,7 @@ bool AGG::LoadOrgICN(int icn, u32 index, bool reflect)
 {
     icn_cache_t &v = icn_cache[icn];
 
-    if (NULL == v.sprites)
+    if (nullptr == v.sprites)
     {
         const std::vector<u8> &body = ReadChunk(ICN::GetString(icn));
 
@@ -1261,16 +1261,16 @@ bool AGG::LoadAltTIL(int til, u32 max)
 
     // parse spec.xml
     TiXmlDocument doc;
-    const TiXmlElement* xml_til = NULL;
+    const TiXmlElement* xml_til = nullptr;
 
     if(doc.LoadFile(xml_spec.c_str()) &&
-    NULL != (xml_til = doc.FirstChildElement("til")))
+    nullptr != (xml_til = doc.FirstChildElement("til")))
     {
     int count, index;
     xml_til->Attribute("count", &count);
     til_cache_t & v = til_cache[til];
 
-    if(NULL == v.sprites)
+    if(nullptr == v.sprites)
     {
         v.count = count;
         v.sprites = new Surface [v.count];
@@ -1328,7 +1328,7 @@ void AGG::SaveTIL(int til)
         const std::string stats_file = System::ConcatePath(til_dir, "spec.xml");
         bool need_save = false;
         TiXmlDocument doc;
-        TiXmlElement* til_element = NULL;
+        TiXmlElement* til_element = nullptr;
 
         if(doc.LoadFile(stats_file.c_str()))
         til_element = doc.FirstChildElement("til");
@@ -1504,7 +1504,7 @@ Surface AGG::GetTIL(int til, u32 index, u32 shape)
             if (src.isValid())
                 surface = src.RenderReflect(shape);
             else
-                    DEBUG(DBG_ENGINE, DBG_WARN, "is NULL");
+                    DEBUG(DBG_ENGINE, DBG_WARN, "is nullptr");
         }
 
         if (!surface.isValid())
@@ -1600,7 +1600,7 @@ void AGG::LoadWAV(int m82, std::vector<u8> &v)
             v.assign(cvt.buf, cvt.buf + size - 1);
 
             delete[] cvt.buf;
-            cvt.buf = NULL;
+            cvt.buf = nullptr;
         }
 #endif
     }
@@ -1986,9 +1986,9 @@ void AGG::Quit(void)
 
         if (icns.sprites)
             delete[] icns.sprites;
-        icns.sprites = NULL;
+        icns.sprites = nullptr;
         if (icns.reflect) delete[] icns.reflect;
-        icns.reflect = NULL;
+        icns.reflect = nullptr;
     }
 
     for (std::vector<til_cache_t>::iterator

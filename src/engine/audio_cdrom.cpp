@@ -28,10 +28,10 @@
 
 namespace Cdrom
 {
-    void Open(void);
-    void Close(void);
+    void Open();
+    void Close();
     
-    static SDL_CD *cd		  = NULL;
+    static SDL_CD *cd		  = nullptr;
     static int currentTrack       = -1;
     static unsigned int startTime = 0;
     static unsigned int tickLength;
@@ -41,7 +41,7 @@ namespace Cdrom
     int LoopCheck(void *data);
 }
 
-void Cdrom::Open(void)
+void Cdrom::Open()
 {
     for(int i = 0; i < SDL_CDNumDrives(); i++)
     {
@@ -65,14 +65,14 @@ void Cdrom::Open(void)
 
     if(cd)
     {
-        loopThread = SDL_CreateThread(&LoopCheck, NULL);
+        loopThread = SDL_CreateThread(&LoopCheck, nullptr);
         cdLock = SDL_CreateMutex();
     }
 
     ERROR(cd ? "found CD audio device." : "no CDROM devices available.");
 }
 
-void Cdrom::Close(void)
+void Cdrom::Close()
 {
     if(cd)
     {
@@ -80,11 +80,11 @@ void Cdrom::Close(void)
         SDL_KillThread(loopThread);
         SDL_DestroyMutex(cdLock);
     SDL_CDClose(cd);
-    cd = NULL;
+    cd = nullptr;
     }
 }
 
-bool Cdrom::isValid(void)
+bool Cdrom::isValid()
 {
     return cd;
 }
@@ -129,7 +129,7 @@ void Cdrom::Play(const u8 track, bool loop, bool force)
     }
 }
 
-void Cdrom::Pause(void)
+void Cdrom::Pause()
 {
     if(cd) SDL_CDPause(cd);
 }

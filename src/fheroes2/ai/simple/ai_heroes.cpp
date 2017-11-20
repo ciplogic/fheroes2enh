@@ -535,7 +535,7 @@ bool AI::HeroesGetTask(Heroes &hero)
                                                     ai_hero.primary_target << ", " << MP2::StringObject(
                     world.GetTiles(ai_hero.primary_target).GetObject()));
 
-            const Castle *castle = NULL;
+            const Castle *castle = nullptr;
 
             if (nullptr != (castle = world.GetCastle(Maps::GetPoint(ai_hero.primary_target))) &&
                     nullptr != castle->GetHeroes().Guest() && castle->isFriends(hero.GetColor()))

@@ -36,7 +36,7 @@
 #include "images_pack.h"
 #include "zzlib.h"
 
-void LoadZLogo(void);
+void LoadZLogo();
 
 void SetVideoDriver(const std::string &);
 
@@ -44,11 +44,11 @@ void SetTimidityEnvPath(const Settings &);
 
 void SetLangEnvPath(const Settings &);
 
-void InitHomeDir(void);
+void InitHomeDir();
 
-void ReadConfigs(void);
+void ReadConfigs();
 
-int TestBlitSpeed(void);
+int TestBlitSpeed();
 
 int PrintHelp(const char *basename)
 {
@@ -61,7 +61,7 @@ int PrintHelp(const char *basename)
     return EXIT_SUCCESS;
 }
 
-std::string GetCaption(void)
+std::string GetCaption()
 {
     return std::string("Free Heroes II, version: " + Settings::GetVersion());
 }
@@ -259,7 +259,7 @@ int main(int argc, char **argv)
     return EXIT_SUCCESS;
 }
 
-int TestBlitSpeed(void)
+int TestBlitSpeed()
 {
     Display &display = Display::Get();
     Surface sf(display.GetSize(), true);
@@ -286,7 +286,7 @@ int TestBlitSpeed(void)
     return res;
 }
 
-void LoadZLogo(void)
+void LoadZLogo()
 {
 #ifdef BUILD_RELEASE
     std::string file = Settings::GetLastFile("image", "sdl_logo.png");
@@ -314,17 +314,16 @@ void LoadZLogo(void)
 #endif
 }
 
-void ReadConfigs(void)
+void ReadConfigs()
 {
     Settings &conf = Settings::Get();
     ListFiles files = conf.GetListFiles("", "fheroes2.cfg");
 
-    for (ListFiles::const_iterator
-                 it = files.begin(); it != files.end(); ++it)
-        if (System::IsFile(*it)) conf.Read(*it);
+    for (auto& file : files)
+        if (System::IsFile(file)) conf.Read(file);
 }
 
-void InitHomeDir(void)
+void InitHomeDir()
 {
     const std::string home = System::GetHomeDirectory("fheroes2");
 

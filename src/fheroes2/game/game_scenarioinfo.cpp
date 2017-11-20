@@ -78,16 +78,16 @@ int Game::ScenarioInfo(void)
 
     Point top, pointDifficultyInfo, pointOpponentInfo, pointClassInfo;
     Rect rectPanel;
-    Button *buttonSelectMaps = NULL;
-    Button *buttonOk = NULL;
-    Button *buttonCancel = NULL;
+    Button *buttonSelectMaps = nullptr;
+    Button *buttonOk = nullptr;
+    Button *buttonCancel = nullptr;
 
     // vector coord difficulty
     Rects coordDifficulty;
     coordDifficulty.reserve(5);
 
     const Sprite &ngextra = AGG::GetICN(ICN::NGEXTRA, 62);
-    Dialog::FrameBorder *frameborder = NULL;
+    Dialog::FrameBorder *frameborder = nullptr;
 
     // image background
     if (conf.QVGA())
@@ -152,7 +152,7 @@ int Game::ScenarioInfo(void)
 
     playersInfo.RedrawInfo();
 
-    TextSprite *rating = conf.QVGA() ? NULL : new TextSprite();
+    TextSprite *rating = conf.QVGA() ? nullptr : new TextSprite();
     if (rating)
     {
         rating->SetFont(Font::BIG);

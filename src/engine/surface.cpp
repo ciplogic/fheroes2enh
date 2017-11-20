@@ -41,7 +41,7 @@ namespace
 {
     u32 default_depth = 16;
     RGBA default_color_key;
-    SDL_Color *pal_colors = NULL;
+    SDL_Color *pal_colors = nullptr;
     u32 pal_nums = 0;
 }
 
@@ -248,26 +248,26 @@ RGBA RGBA::unpack(int v)
     return RGBA(r, g, b, a);
 }
 
-Surface::Surface() : surface(NULL)
+Surface::Surface() : surface(nullptr)
 {
 }
 
-Surface::Surface(const Size &sz, bool amask) : surface(NULL)
+Surface::Surface(const Size &sz, bool amask) : surface(nullptr)
 {
     Set(sz.w, sz.h, amask);
 }
 
-Surface::Surface(const Size &sz, const SurfaceFormat &fm) : surface(NULL)
+Surface::Surface(const Size &sz, const SurfaceFormat &fm) : surface(nullptr)
 {
     Set(sz.w, sz.h, fm);
 }
 
-Surface::Surface(const Surface &bs) : surface(NULL)
+Surface::Surface(const Surface &bs) : surface(nullptr)
 {
     Set(bs, true);
 }
 
-Surface::Surface(const std::string &file) : surface(NULL)
+Surface::Surface(const std::string &file) : surface(nullptr)
 {
     Load(file);
 }
@@ -277,7 +277,7 @@ Surface::Surface(SDL_Surface *sf) : surface(sf)
 }
 
 Surface::Surface(const void *pixels, u32 width, u32 height, u32 bytes_per_pixel /* 1, 2, 3, 4 */, bool amask) : surface(
-        NULL)
+        nullptr)
 {
     SurfaceFormat fm = GetRGBAMask(8 * bytes_per_pixel);
 
@@ -330,7 +330,7 @@ bool Surface::operator==(const Surface &bs) const
 void Surface::Reset(void)
 {
     FreeSurface(*this);
-    surface = NULL; /* hard set: for ref copy */
+    surface = nullptr; /* hard set: for ref copy */
 }
 
 void Surface::Set(SDL_Surface *sf)
@@ -825,19 +825,19 @@ void Surface::FreeSurface(Surface &sf)
         if (sf.isRefCopy())
         {
             --sf.surface->refcount;
-            sf.surface = NULL;
+            sf.surface = nullptr;
         } else
         {
             // clear static palette
             if (sf.surface->format && 8 == sf.surface->format->BitsPerPixel && pal_colors && pal_nums &&
                 sf.surface->format->palette && pal_colors == sf.surface->format->palette->colors)
             {
-                sf.surface->format->palette->colors = NULL;
+                sf.surface->format->palette->colors = nullptr;
                 sf.surface->format->palette->ncolors = 0;
             }
 
             SDL_FreeSurface(sf.surface);
-            sf.surface = NULL;
+            sf.surface = nullptr;
         }
     }
 }

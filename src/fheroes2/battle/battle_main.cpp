@@ -90,9 +90,9 @@ Battle::Result Battle::Loader(Army &army1, Army &army2, s32 mapsindex)
     AGG::ResetMixer();
 
     HeroBase *hero_wins = (result.army1 & RESULT_WINS ? army1.GetCommander() : (result.army2 & RESULT_WINS
-                                                                                ? army2.GetCommander() : NULL));
+                                                                                ? army2.GetCommander() : nullptr));
     HeroBase *hero_loss = (result.army1 & RESULT_LOSS ? army1.GetCommander() : (result.army2 & RESULT_LOSS
-                                                                                ? army2.GetCommander() : NULL));
+                                                                                ? army2.GetCommander() : nullptr));
     const u32 loss_result = result.army1 & RESULT_LOSS ? result.army1 : result.army2;
 
     if (local)

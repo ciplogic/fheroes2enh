@@ -40,22 +40,22 @@ bool Captain::isValid(void) const
 
 int Captain::GetAttack(void) const
 {
-    return attack + GetAttackModificator(NULL);
+    return attack + GetAttackModificator(nullptr);
 }
 
 int Captain::GetDefense(void) const
 {
-    return defense + GetDefenseModificator(NULL);
+    return defense + GetDefenseModificator(nullptr);
 }
 
 int Captain::GetPower(void) const
 {
-    return power + GetPowerModificator(NULL);
+    return power + GetPowerModificator(nullptr);
 }
 
 int Captain::GetKnowledge(void) const
 {
-    return knowledge + GetKnowledgeModificator(NULL);
+    return knowledge + GetKnowledgeModificator(nullptr);
 }
 
 int Captain::GetMorale(void) const
@@ -63,7 +63,7 @@ int Captain::GetMorale(void) const
     int result = Morale::NORMAL;
 
     // global modificator
-    result += GetMoraleModificator(NULL);
+    result += GetMoraleModificator(nullptr);
 
     // result
     if (result < Morale::AWFUL) return Morale::TREASON;
@@ -81,7 +81,7 @@ int Captain::GetLuck(void) const
     int result = Luck::NORMAL;
 
     // global modificator
-    result += GetLuckModificator(NULL);
+    result += GetLuckModificator(nullptr);
 
     // result
     if (result < Luck::AWFUL) return Luck::CURSED;

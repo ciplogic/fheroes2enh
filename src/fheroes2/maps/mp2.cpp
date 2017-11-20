@@ -812,7 +812,7 @@ const char *MP2::StringObject(int object)
             break;
     }
 
-    return NULL;
+    return nullptr;
 }
 
 bool MP2::isDayLife(int obj)

@@ -75,7 +75,7 @@ bool PassableToTile(const Heroes &hero, const Maps::Tiles &toTile, int direct, s
             return Direction::Reflect(direct) & toTile.GetPassable();
 
         if (MP2::OBJ_HEROES == toTile.GetObject())
-            return toTile.isPassable(NULL, Direction::Reflect(direct),
+            return toTile.isPassable(nullptr, Direction::Reflect(direct),
                                      (hero.isControlAI() ? AI::HeroesSkipFog() : false));
     }
 

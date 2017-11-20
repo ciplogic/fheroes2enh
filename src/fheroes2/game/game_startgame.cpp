@@ -124,7 +124,7 @@ void Game::OpenCastleDialog(Castle &castle)
     Kingdom &myKingdom = world.GetKingdom(conf.CurrentColor());
     const KingdomCastles &myCastles = myKingdom.GetCastles();
     Display &display = Display::Get();
-    KingdomCastles::const_iterator it = std::find(myCastles.begin(), myCastles.end(), &castle);
+    auto it = std::find(myCastles.begin(), myCastles.end(), &castle);
     Interface::StatusWindow::ResetTimer();
     bool need_fade = conf.ExtGameUseFade() && 640 == display.w() && 480 == display.h();
 
@@ -175,7 +175,7 @@ void Game::OpenHeroesDialog(Heroes &hero)
     Kingdom &myKingdom = hero.GetKingdom();
     const KingdomHeroes &myHeroes = myKingdom.GetHeroes();
     Display &display = Display::Get();
-    KingdomHeroes::const_iterator it = std::find(myHeroes.begin(), myHeroes.end(), &hero);
+    auto it = std::find(myHeroes.begin(), myHeroes.end(), &hero);
     Interface::StatusWindow::ResetTimer();
     Interface::Basic &I = Interface::Basic::Get();
     Interface::GameArea &gameArea = I.GetGameArea();
@@ -321,7 +321,7 @@ int Interface::Basic::GetCursorFocusCastle(const Castle &from_castle, const Maps
         {
             const Castle *to_castle = world.GetCastle(tile.GetCenter());
 
-            if (NULL != to_castle)
+            if (nullptr != to_castle)
                 return to_castle->GetColor() == from_castle.GetColor() ? Cursor::CASTLE : Cursor::POINTER;
         }
             break;
@@ -330,7 +330,7 @@ int Interface::Basic::GetCursorFocusCastle(const Castle &from_castle, const Maps
         {
             const Heroes *heroes = tile.GetHeroes();
 
-            if (NULL != heroes)
+            if (nullptr != heroes)
                 return heroes->GetColor() == from_castle.GetColor() ? Cursor::HEROES : Cursor::POINTER;
         }
             break;
@@ -429,7 +429,7 @@ int Interface::Basic::GetCursorFocusHeroes(const Heroes &from_hero, const Maps::
         {
             const Castle *castle = world.GetCastle(tile.GetCenter());
 
-            if (NULL != castle)
+            if (nullptr != castle)
             {
                 if (tile.GetObject() == MP2::OBJN_CASTLE &&
                     from_hero.GetColor() == castle->GetColor())
@@ -453,7 +453,7 @@ int Interface::Basic::GetCursorFocusHeroes(const Heroes &from_hero, const Maps::
         {
             const Heroes *to_hero = tile.GetHeroes();
 
-            if (NULL != to_hero)
+            if (nullptr != to_hero)
             {
                 if (from_hero.Modes(Heroes::GUARDIAN))
                     return from_hero.GetColor() == to_hero->GetColor() ? Cursor::HEROES : Cursor::POINTER;
@@ -522,7 +522,7 @@ int Interface::Basic::GetCursorTileIndex(s32 dst_index)
     return Cursor::POINTER;
 }
 
-int Interface::Basic::StartGame(void)
+int Interface::Basic::StartGame()
 {
     Cursor &cursor = Cursor::Get();
     Settings &conf = Settings::Get();
@@ -548,8 +548,7 @@ int Interface::Basic::StartGame(void)
     {
         if (!skip_turns) world.NewDay();
 
-        for (Players::const_iterator
-                     it = players.begin(); it != players.end(); ++it)
+        for (auto it = players.begin(); it != players.end(); ++it)
             if (*it)
             {
                 const Player &player = (**it);
@@ -623,7 +622,7 @@ int Interface::Basic::StartGame(void)
                     res = Game::ENDTURN;
             }
 
-        DELAY(10);
+        //DELAY(10);
     }
 
     if (res == Game::ENDTURN)
@@ -985,8 +984,8 @@ int Interface::Basic::HumanTurn(bool isload)
 
 void Interface::Basic::MouseCursorAreaClickLeft(s32 index_maps)
 {
-    Castle *to_castle = NULL;
-    Heroes *to_hero = NULL;
+    Castle *to_castle = nullptr;
+    Heroes *to_hero = nullptr;
     Heroes *from_hero = GetFocusHeroes();
     const Maps::Tiles &tile = world.GetTiles(index_maps);
 
@@ -1002,7 +1001,7 @@ void Interface::Basic::MouseCursorAreaClickLeft(s32 index_maps)
     {
         case Cursor::HEROES:
             // focus change/open hero
-            if (NULL != (to_hero = tile.GetHeroes()))
+            if (nullptr != (to_hero = tile.GetHeroes()))
             {
                 if (!from_hero ||
                     from_hero != to_hero)

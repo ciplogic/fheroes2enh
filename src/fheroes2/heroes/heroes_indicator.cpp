@@ -49,7 +49,7 @@ const char *MoraleString(int morale)
         default:
             break;
     }
-    return NULL;
+    return nullptr;
 }
 
 const char *LuckString(int luck)
@@ -72,7 +72,7 @@ const char *LuckString(int luck)
         default:
             break;
     }
-    return NULL;
+    return nullptr;
 }
 
 HeroesIndicator::HeroesIndicator(const Heroes &h) : hero(h)

@@ -213,7 +213,7 @@ screen_t CastleOpenDialog1(Castle &castle, bool readonly)
     selectArmy1.SetHSpace(2);
     selectArmy1.Redraw();
 
-    ArmyBar selectArmy2(NULL, true, readonly);
+    ArmyBar selectArmy2(nullptr, true, readonly);
     selectArmy2.SetColRows(5, 1);
     selectArmy2.SetPos(dst_rt.x + 47, dst_rt.y + 124);
     selectArmy2.SetHSpace(2);
@@ -339,8 +339,8 @@ screen_t CastleOpenDialog1(Castle &castle, bool readonly)
 
         if (conf.ExtCastleAllowGuardians() && !readonly)
         {
-            Army *army1 = NULL;
-            Army *army2 = NULL;
+            Army *army1 = nullptr;
+            Army *army2 = nullptr;
 
             // swap guest <-> guardian
             if (heroes.Guest() && heroes.Guard())
@@ -388,7 +388,7 @@ screen_t CastleOpenDialog1(Castle &castle, bool readonly)
                 } else if (army1)
                 {
                     selectArmy1.SetArmy(army1);
-                    selectArmy2.SetArmy(NULL);
+                    selectArmy2.SetArmy(nullptr);
                 } else if (army2)
                 {
                     selectArmy1.SetArmy(&castle.GetArmy());
@@ -845,8 +845,8 @@ screen_t CastleOpenDialog6(Castle &castle, bool readonly)
     }
 
     Rect rectRecruit1, rectRecruit2, rectCaptain;
-    Heroes *hero1 = NULL;
-    Heroes *hero2 = NULL;
+    Heroes *hero1 = nullptr;
+    Heroes *hero2 = nullptr;
 
     if (castle.isBuild(BUILD_CASTLE))
     {

@@ -188,10 +188,10 @@ void Monster::UpdateStats(const std::string &spec)
 #ifdef WITH_XML
     // parse monsters.xml
     TiXmlDocument doc;
-    const TiXmlElement* xml_monsters = NULL;
+    const TiXmlElement* xml_monsters = nullptr;
 
     if(doc.LoadFile(spec.c_str()) &&
-        NULL != (xml_monsters = doc.FirstChildElement("monsters")))
+        nullptr != (xml_monsters = doc.FirstChildElement("monsters")))
     {
     size_t index = 0;
         const TiXmlElement* xml_monster = xml_monsters->FirstChildElement("monster");

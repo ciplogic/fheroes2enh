@@ -54,8 +54,8 @@ ListActions::~ListActions()
 
 void ListActions::clear(void)
 {
-    for (iterator it = begin(); it != end(); ++it)
-        delete *it;
+    for (auto& it : *this)
+        delete it;
     std::list<ActionSimple *>::clear();
 }
 
@@ -66,8 +66,8 @@ MapObjects::~MapObjects()
 
 void MapObjects::clear(void)
 {
-    for (iterator it = begin(); it != end(); ++it)
-        delete (*it).second;
+    for (auto& it : *this)
+        delete it.second;
     std::map<u32, MapObjectSimple *>::clear();
 }
 
@@ -84,15 +84,15 @@ void MapObjects::add(MapObjectSimple *obj)
 MapObjectSimple *MapObjects::get(u32 uid)
 {
     iterator it = find(uid);
-    return it != end() ? (*it).second : NULL;
+    return it != end() ? (*it).second : nullptr;
 }
 
 std::list<MapObjectSimple *> MapObjects::get(const Point &pos)
 {
     std::list<MapObjectSimple *> res;
-    for (iterator it = begin(); it != end(); ++it)
-        if ((*it).second && (*it).second->isPosition(pos))
-            res.push_back((*it).second);
+    for (auto& it : *this)
+        if (it.second && it.second->isPosition(pos))
+            res.push_back(it.second);
     return res;
 }
 
@@ -100,9 +100,9 @@ void MapObjects::remove(const Point &pos)
 {
     std::vector<u32> uids;
 
-    for (iterator it = begin(); it != end(); ++it)
-        if ((*it).second && (*it).second->isPosition(pos))
-            uids.push_back((*it).second->GetUID());
+    for (auto& it : *this)
+        if (it.second && it.second->isPosition(pos))
+            uids.push_back(it.second->GetUID());
 
     for (std::vector<u32>::const_iterator
                  it = uids.begin(); it != uids.end(); ++it)
@@ -143,8 +143,8 @@ u32 CapturedObjects::GetCount(int obj, int col) const
 
     const ObjectColor objcol(obj, col);
 
-    for (const_iterator it = begin(); it != end(); ++it)
-        if (objcol == (*it).second.objcol)
+    for (const auto& it : *this)
+        if (objcol == it.second.objcol)
             ++result;
 
     return result;
@@ -157,14 +157,14 @@ u32 CapturedObjects::GetCountMines(int type, int col) const
     const ObjectColor objcol1(MP2::OBJ_MINES, col);
     const ObjectColor objcol2(MP2::OBJ_HEROES, col);
 
-    for (const_iterator it = begin(); it != end(); ++it)
+    for (const auto& it : *this)
     {
-        const ObjectColor &objcol = (*it).second.objcol;
+        const ObjectColor &objcol = it.second.objcol;
 
         if (objcol == objcol1 || objcol == objcol2)
         {
             // scan for find mines
-            const Maps::TilesAddon *addon = world.GetTiles((*it).first).FindObject(MP2::OBJ_MINES);
+            const Maps::TilesAddon *addon = world.GetTiles(it.first).FindObject(MP2::OBJ_MINES);
 
             if (addon)
             {
@@ -190,9 +190,9 @@ int CapturedObjects::GetColor(s32 index) const
 void CapturedObjects::ClearFog(int colors)
 {
     // clear abroad objects
-    for (const_iterator it = begin(); it != end(); ++it)
+    for (auto& it : *this)
     {
-        const ObjectColor &objcol = (*it).second.objcol;
+        const ObjectColor &objcol = it.second.objcol;
 
         if (objcol.isColor(colors))
         {
@@ -214,21 +214,21 @@ void CapturedObjects::ClearFog(int colors)
                     break;
             }
 
-            if (scoute) Maps::ClearFog((*it).first, scoute, colors);
+            if (scoute) Maps::ClearFog(it.first, scoute, colors);
         }
     }
 }
 
 void CapturedObjects::ResetColor(int color)
 {
-    for (iterator it = begin(); it != end(); ++it)
+    for (auto& it : *this)
     {
-        ObjectColor &objcol = (*it).second.objcol;
+        ObjectColor &objcol = it.second.objcol;
 
         if (objcol.isColor(color))
         {
             objcol.second = Color::UNUSED;
-            world.GetTiles((*it).first).CaptureFlags32(objcol.first, objcol.second);
+            world.GetTiles(it.first).CaptureFlags32(objcol.first, objcol.second);
         }
     }
 }
@@ -237,13 +237,13 @@ Funds CapturedObjects::TributeCapturedObject(int color, int obj)
 {
     Funds result;
 
-    for (iterator it = begin(); it != end(); ++it)
+    for (auto& it : *this)
     {
-        const ObjectColor &objcol = (*it).second.objcol;
+        const ObjectColor &objcol = it.second.objcol;
 
         if (objcol.isObject(obj) && objcol.isColor(color))
         {
-            Maps::Tiles &tile = world.GetTiles((*it).first);
+            Maps::Tiles &tile = world.GetTiles(it.first);
 
             result += Funds(tile.QuantityResourceCount());
             tile.QuantityReset();
@@ -616,7 +616,7 @@ void World::MonthOfMonstersAction(const Monster &mons)
 
             if (!tile.isWater() &&
                 MP2::OBJ_ZERO == tile.GetObject() &&
-                tile.isPassable(NULL, Direction::CENTER, true) &&
+                tile.isPassable(nullptr, Direction::CENTER, true) &&
                 excld.end() == std::find(excld.begin(), excld.end(), tile.GetIndex()))
             {
                 tiles.push_back(tile.GetIndex());
@@ -797,7 +797,7 @@ int World::ColorCapturedObject(s32 index) const
 ListActions *World::GetListActions(s32 index)
 {
     MapActions::iterator it = map_actions.find(index);
-    return it != map_actions.end() ? &(*it).second : NULL;
+    return it != map_actions.end() ? &(*it).second : nullptr;
 }
 
 CapturedObject &World::GetCapturedObject(s32 index)
@@ -930,12 +930,12 @@ void World::ActionToEyeMagi(int color) const
 MapEvent *World::GetMapEvent(const Point &pos)
 {
     std::list<MapObjectSimple *> res = map_objects.get(pos);
-    return res.size() ? static_cast<MapEvent *>(res.front()) : NULL;
+    return res.size() ? static_cast<MapEvent *>(res.front()) : nullptr;
 }
 
 MapObjectSimple *World::GetMapObject(u32 uid)
 {
-    return uid ? map_objects.get(uid) : NULL;
+    return uid ? map_objects.get(uid) : nullptr;
 }
 
 void World::RemoveMapObject(const MapObjectSimple *obj)
@@ -948,7 +948,7 @@ void World::UpdateRecruits(Recruits &recruits) const
     if (vec_heroes.HaveTwoFreemans())
         while (recruits.GetID1() == recruits.GetID2()) recruits.SetHero2(GetFreemanHeroes());
     else
-        recruits.SetHero2(NULL);
+        recruits.SetHero2(nullptr);
 }
 
 const Heroes *World::GetHeroesCondWins(void) const

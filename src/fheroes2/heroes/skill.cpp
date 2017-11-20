@@ -643,7 +643,7 @@ Skill::Secondary *Skill::SecSkills::FindSkill(int skill)
 {
     iterator it = std::find_if(begin(), end(),
                                std::bind2nd(std::mem_fun_ref(&Secondary::isSkill), skill));
-    return it != end() ? &(*it) : NULL;
+    return it != end() ? &(*it) : nullptr;
 }
 
 std::vector<Skill::Secondary> &Skill::SecSkills::ToVector(void)
@@ -656,8 +656,8 @@ std::string Skill::SecSkills::String(void) const
 {
     std::ostringstream os;
 
-    for (const_iterator it = begin(); it != end(); ++it)
-        os << (*it).GetName() << ", ";
+    for (const auto& it : *this)
+        os << it.GetName() << ", ";
 
     return os.str();
 }
@@ -672,23 +672,22 @@ int Skill::SecondaryGetWeightSkillFromRace(int race, int skill)
 {
     const stats_t *ptr = GameStatic::GetSkillStats(race);
 
-    if (ptr)
-    {
-        if (skill == Secondary::PATHFINDING) return ptr->mature_secondary.pathfinding;
-        else if (skill == Secondary::ARCHERY) return ptr->mature_secondary.archery;
-        else if (skill == Secondary::LOGISTICS) return ptr->mature_secondary.logistics;
-        else if (skill == Secondary::SCOUTING) return ptr->mature_secondary.scouting;
-        else if (skill == Secondary::DIPLOMACY) return ptr->mature_secondary.diplomacy;
-        else if (skill == Secondary::NAVIGATION) return ptr->mature_secondary.navigation;
-        else if (skill == Secondary::LEADERSHIP) return ptr->mature_secondary.leadership;
-        else if (skill == Secondary::WISDOM) return ptr->mature_secondary.wisdom;
-        else if (skill == Secondary::MYSTICISM) return ptr->mature_secondary.mysticism;
-        else if (skill == Secondary::LUCK) return ptr->mature_secondary.luck;
-        else if (skill == Secondary::BALLISTICS) return ptr->mature_secondary.ballistics;
-        else if (skill == Secondary::EAGLEEYE) return ptr->mature_secondary.eagleeye;
-        else if (skill == Secondary::NECROMANCY) return ptr->mature_secondary.necromancy;
-        else if (skill == Secondary::ESTATES) return ptr->mature_secondary.estates;
-    }
+    if (!ptr)
+        return 0;
+    if (skill == Secondary::PATHFINDING) return ptr->mature_secondary.pathfinding;
+    else if (skill == Secondary::ARCHERY) return ptr->mature_secondary.archery;
+    else if (skill == Secondary::LOGISTICS) return ptr->mature_secondary.logistics;
+    else if (skill == Secondary::SCOUTING) return ptr->mature_secondary.scouting;
+    else if (skill == Secondary::DIPLOMACY) return ptr->mature_secondary.diplomacy;
+    else if (skill == Secondary::NAVIGATION) return ptr->mature_secondary.navigation;
+    else if (skill == Secondary::LEADERSHIP) return ptr->mature_secondary.leadership;
+    else if (skill == Secondary::WISDOM) return ptr->mature_secondary.wisdom;
+    else if (skill == Secondary::MYSTICISM) return ptr->mature_secondary.mysticism;
+    else if (skill == Secondary::LUCK) return ptr->mature_secondary.luck;
+    else if (skill == Secondary::BALLISTICS) return ptr->mature_secondary.ballistics;
+    else if (skill == Secondary::EAGLEEYE) return ptr->mature_secondary.eagleeye;
+    else if (skill == Secondary::NECROMANCY) return ptr->mature_secondary.necromancy;
+    else if (skill == Secondary::ESTATES) return ptr->mature_secondary.estates;
 
     return 0;
 }
@@ -723,9 +722,8 @@ void Skill::SecSkills::FindSkillsForLevelUp(int race, Secondary &sec1, Secondary
     exclude_skills.reserve(MAXSECONDARYSKILL + HEROESMAXSKILL);
 
     // exclude for expert
-    for (const_iterator
-                 it = begin(); it != end(); ++it)
-        if ((*it).Level() == Level::EXPERT) exclude_skills.push_back((*it).Skill());
+    for (const auto& it : *this)
+        if (it.Level() == Level::EXPERT) exclude_skills.push_back(it.Skill());
 
     // exclude is full, add other.
     if (HEROESMAXSKILL <= Count())
@@ -768,7 +766,7 @@ void StringAppendModifiers(std::string &str, int value)
     str.append(GetString(value));
 }
 
-int Skill::GetLeadershipModifiers(int level, std::string *strs = NULL)
+int Skill::GetLeadershipModifiers(int level, std::string *strs = nullptr)
 {
     Secondary skill(Secondary::LEADERSHIP, level);
 
@@ -782,7 +780,7 @@ int Skill::GetLeadershipModifiers(int level, std::string *strs = NULL)
     return skill.GetValues();
 }
 
-int Skill::GetLuckModifiers(int level, std::string *strs = NULL)
+int Skill::GetLuckModifiers(int level, std::string *strs = nullptr)
 {
     Secondary skill(Secondary::LUCK, level);
 

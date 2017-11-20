@@ -138,10 +138,10 @@ void Battle::UpdateMonsterAttributes(const std::string &spec)
 #ifdef WITH_XML
                                                                                                                             // parse battle.xml
     TiXmlDocument doc;
-    const TiXmlElement* xml_battle = NULL;
+    const TiXmlElement* xml_battle = nullptr;
 
     if(doc.LoadFile(spec.c_str()) &&
-        NULL != (xml_battle = doc.FirstChildElement("battle")))
+        nullptr != (xml_battle = doc.FirstChildElement("battle")))
     {
 	const TiXmlElement* xml_element;
 	int value;
@@ -165,10 +165,10 @@ void Battle::UpdateMonsterSpriteAnimation(const std::string &spec)
 #ifdef WITH_XML
                                                                                                                             // parse battle.xml
     TiXmlDocument doc;
-    const TiXmlElement* xml_animation = NULL;
+    const TiXmlElement* xml_animation = nullptr;
 
     if(doc.LoadFile(spec.c_str()) &&
-        NULL != (xml_animation = doc.FirstChildElement("animations")))
+        nullptr != (xml_animation = doc.FirstChildElement("animations")))
     {
         const TiXmlElement* xml_icn = xml_animation->FirstChildElement("icn");
         for(; xml_icn; xml_icn = xml_icn->NextSiblingElement("icn"))
@@ -298,11 +298,11 @@ u32 Battle::ModesAffected::FindZeroDuration(void) const
     return it == end() ? 0 : (*it).first;
 }
 
-Battle::Unit::Unit(const Troop &t, s32 pos, bool ref) : ArmyTroop(NULL, t),
+Battle::Unit::Unit(const Troop &t, s32 pos, bool ref) : ArmyTroop(nullptr, t),
                                                         uid(World::GetUniq()), hp(t.GetHitPoints()),
                                                         count0(t.GetCount()), dead(0), shots(t.GetShots()),
                                                         disruptingray(0), reflect(ref), animstate(0), animframe(0),
-                                                        animstep(1), mirror(NULL), blindanswer(false)
+                                                        animstep(1), mirror(nullptr), blindanswer(false)
 {
     // set position
     if (Board::isValidIndex(pos))
@@ -325,8 +325,8 @@ Battle::Unit::~Unit()
 
 void Battle::Unit::SetPosition(s32 pos)
 {
-    if (position.GetHead()) position.GetHead()->SetUnit(NULL);
-    if (position.GetTail()) position.GetTail()->SetUnit(NULL);
+    if (position.GetHead()) position.GetHead()->SetUnit(nullptr);
+    if (position.GetTail()) position.GetTail()->SetUnit(nullptr);
 
     position.Set(pos, isWide(), reflect);
 
@@ -336,8 +336,8 @@ void Battle::Unit::SetPosition(s32 pos)
 
 void Battle::Unit::SetPosition(const Position &pos)
 {
-    if (position.GetHead()) position.GetHead()->SetUnit(NULL);
-    if (position.GetTail()) position.GetTail()->SetUnit(NULL);
+    if (position.GetHead()) position.GetHead()->SetUnit(nullptr);
+    if (position.GetTail()) position.GetTail()->SetUnit(nullptr);
 
     position = pos;
 
@@ -640,7 +640,7 @@ void Battle::Unit::NewTurn(void)
             if (Arena::GetInterface()) Arena::GetInterface()->RedrawActionRemoveMirrorImage(*mirror);
 
             mirror->SetCount(0);
-            mirror = NULL;
+            mirror = nullptr;
         }
     }
 
@@ -785,7 +785,7 @@ u32 Battle::Unit::ApplyDamage(u32 dmg)
             mirror->ResetModes(CAP_MIRROROWNER);
             dmg = hp;
             killed = GetCount();
-            mirror = NULL;
+            mirror = nullptr;
         }
 
         DEBUG(DBG_BATTLE, DBG_TRACE, dmg << " to " << String() << " and killed: " << killed);
@@ -818,10 +818,10 @@ void Battle::Unit::PostKilledAction(void)
         modes = 0;
         mirror->hp = 0;
         mirror->SetCount(0);
-        mirror->mirror = NULL;
+        mirror->mirror = nullptr;
         mirror->animstate = 0;
         mirror->animframe = 0;
-        mirror = NULL;
+        mirror = nullptr;
         ResetModes(CAP_MIRROROWNER);
     }
 
@@ -842,8 +842,8 @@ void Battle::Unit::PostKilledAction(void)
 
     Cell *head = Board::GetCell(GetHeadIndex());
     Cell *tail = Board::GetCell(GetTailIndex());
-    if (head) head->SetUnit(NULL);
-    if (tail) tail->SetUnit(NULL);
+    if (head) head->SetUnit(nullptr);
+    if (tail) tail->SetUnit(nullptr);
 
     DEBUG(DBG_BATTLE, DBG_TRACE, String() << ", is dead...");
     // possible also..
@@ -2300,5 +2300,5 @@ int Battle::Unit::GetColor(void) const
 
 const HeroBase *Battle::Unit::GetCommander(void) const
 {
-    return GetArmy() ? GetArmy()->GetCommander() : NULL;
+    return GetArmy() ? GetArmy()->GetCommander() : nullptr;
 }

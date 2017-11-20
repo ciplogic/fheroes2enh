@@ -1945,7 +1945,7 @@ bool AI::HeroesValidObject(const Heroes &hero, s32 index)
             if (castle)
             {
                 if (hero.GetColor() == castle->GetColor())
-                    return NULL == castle->GetHeroes().Guest() && !hero.isVisited(tile);
+                    return nullptr == castle->GetHeroes().Guest() && !hero.isVisited(tile);
                 else
                     // FIXME: AI skip visiting alliance
                 if (hero.isFriends(castle->GetColor())) return false;

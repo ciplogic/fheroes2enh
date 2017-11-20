@@ -263,7 +263,7 @@ StreamBase &StreamBase::operator<<(const Size &v)
     return *this << v.w << v.h;
 }
 
-StreamBuf::StreamBuf(size_t sz) : itbeg(NULL), itget(NULL), itput(NULL), itend(NULL)
+StreamBuf::StreamBuf(size_t sz) : itbeg(nullptr), itget(nullptr), itput(nullptr), itend(nullptr)
 {
     if (sz) realloc(sz);
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
@@ -278,12 +278,12 @@ StreamBuf::~StreamBuf()
     if (itbeg && !isconstbuf()) delete[] itbeg;
 }
 
-StreamBuf::StreamBuf(const StreamBuf &st) : itbeg(NULL), itget(NULL), itput(NULL), itend(NULL)
+StreamBuf::StreamBuf(const StreamBuf &st) : itbeg(nullptr), itget(nullptr), itput(nullptr), itend(nullptr)
 {
     copy(st);
 }
 
-StreamBuf::StreamBuf(const std::vector<u8> &buf) : itbeg(NULL), itget(NULL), itput(NULL), itend(NULL)
+StreamBuf::StreamBuf(const std::vector<u8> &buf) : itbeg(nullptr), itget(nullptr), itput(nullptr), itend(nullptr)
 {
     itbeg = (u8 *) &buf[0];
     itend = itbeg + buf.size();
@@ -297,7 +297,7 @@ StreamBuf::StreamBuf(const std::vector<u8> &buf) : itbeg(NULL), itget(NULL), itp
 #endif
 }
 
-StreamBuf::StreamBuf(const u8 *buf, size_t bufsz) : itbeg(NULL), itget(NULL), itput(NULL), itend(NULL)
+StreamBuf::StreamBuf(const u8 *buf, size_t bufsz) : itbeg(nullptr), itget(nullptr), itput(nullptr), itend(nullptr)
 {
     itbeg = const_cast<u8 *>(buf);
     itend = itbeg + bufsz;
@@ -585,7 +585,7 @@ bool StreamFile::open(const std::string &fn, const char *mode)
 void StreamFile::close(void)
 {
     if (rw) SDL_RWclose(rw);
-    rw = NULL;
+    rw = nullptr;
 }
 
 size_t StreamFile::size(void) const

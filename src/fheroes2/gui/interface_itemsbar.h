@@ -138,13 +138,13 @@ namespace Interface
         Item *GetItem(const Point &pt)
         {
             ItemsIterator posItem = GetItemIter(pt);
-            return posItem != items.end() ? *posItem : NULL;
+            return posItem != items.end() ? *posItem : nullptr;
         }
 
         Rect *GetItemPos(const Point &pt)
         {
             ItemIterPos posItem = GetItemIterPos(pt);
-            return posItem.first != items.end() ? &posItem.second : NULL;
+            return posItem.first != items.end() ? &posItem.second : nullptr;
         }
 
         s32 GetIndex(const Point &pt)

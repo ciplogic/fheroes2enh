@@ -180,7 +180,7 @@ const Maps::FileInfo *Dialog::SelectScenario(const MapsFileInfoList &all)
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
-    const Maps::FileInfo *result = NULL;
+    const Maps::FileInfo *result = nullptr;
     MapsFileInfoList small;
     MapsFileInfoList medium;
     MapsFileInfoList large;
@@ -283,11 +283,11 @@ const Maps::FileInfo *Dialog::SelectScenario(const MapsFileInfoList &all)
             listbox.selectOk)
         {
             MapsFileInfoList::const_iterator it = std::find(all.begin(), all.end(), listbox.GetCurrent());
-            result = it != all.end() ? &(*it) : NULL;
+            result = it != all.end() ? &(*it) : nullptr;
             break;
         } else if (Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
         {
-            result = NULL;
+            result = nullptr;
             break;
         } else if ((le.MouseClickLeft(buttonSelectSmall) || le.KeyPress(KEY_s)) &&
                    buttonSelectSmall.isEnable() && buttonSelectSmall.isEnable())

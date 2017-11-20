@@ -52,10 +52,10 @@ namespace Interface
         typedef std::vector<Item> Items;
         typedef typename std::vector<Item>::iterator ItemsIterator;
 
-        ListBox(const Point &pt) : ptRedraw(pt), maxItems(0), useHotkeys(true), content(NULL)
+        ListBox(const Point &pt) : ptRedraw(pt), maxItems(0), useHotkeys(true), content(nullptr)
         {}
 
-        ListBox() : maxItems(0), useHotkeys(true), content(NULL)
+        ListBox() : maxItems(0), useHotkeys(true), content(nullptr)
         {}
 
         virtual ~ListBox()
@@ -209,7 +209,7 @@ namespace Interface
             ItemsIterator click = content->end();
             float offset = (mp.y - rtAreaItems.y) * maxItems / rtAreaItems.h;
             click = top + static_cast<size_t>(offset);
-            return click < content->begin() || click >= content->end() ? NULL : &(*click);
+            return click < content->begin() || click >= content->end() ? nullptr : &(*click);
         }
 
         void SetCurrent(size_t pos)

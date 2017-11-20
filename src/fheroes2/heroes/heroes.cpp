@@ -480,7 +480,7 @@ int Heroes::GetManaIndexSprite(void) const
 
 int Heroes::GetAttack(void) const
 {
-    return GetAttack(NULL);
+    return GetAttack(nullptr);
 }
 
 int Heroes::GetAttack(std::string *strs) const
@@ -491,7 +491,7 @@ int Heroes::GetAttack(std::string *strs) const
 
 int Heroes::GetDefense(void) const
 {
-    return GetDefense(NULL);
+    return GetDefense(nullptr);
 }
 
 int Heroes::GetDefense(std::string *strs) const
@@ -502,7 +502,7 @@ int Heroes::GetDefense(std::string *strs) const
 
 int Heroes::GetPower(void) const
 {
-    return GetPower(NULL);
+    return GetPower(nullptr);
 }
 
 int Heroes::GetPower(std::string *strs) const
@@ -513,7 +513,7 @@ int Heroes::GetPower(std::string *strs) const
 
 int Heroes::GetKnowledge(void) const
 {
-    return GetKnowledge(NULL);
+    return GetKnowledge(nullptr);
 }
 
 int Heroes::GetKnowledge(std::string *strs) const
@@ -636,7 +636,7 @@ u32 Heroes::GetMaxMovePoints(void) const
 
 int Heroes::GetMorale(void) const
 {
-    return GetMoraleWithModificators(NULL);
+    return GetMoraleWithModificators(nullptr);
 }
 
 int Heroes::GetMoraleWithModificators(std::string *strs) const
@@ -669,7 +669,7 @@ int Heroes::GetMoraleWithModificators(std::string *strs) const
 
 int Heroes::GetLuck(void) const
 {
-    return GetLuckWithModificators(NULL);
+    return GetLuckWithModificators(nullptr);
 }
 
 int Heroes::GetLuckWithModificators(std::string *strs) const
@@ -851,14 +851,14 @@ void Heroes::RescanPath(void)
 /* if hero in castle */
 const Castle *Heroes::inCastle(void) const
 {
-    const Castle *castle = Color::NONE != GetColor() ? world.GetCastle(GetCenter()) : NULL;
-    return castle && castle->GetHeroes() == this ? castle : NULL;
+    const Castle *castle = Color::NONE != GetColor() ? world.GetCastle(GetCenter()) : nullptr;
+    return castle && castle->GetHeroes() == this ? castle : nullptr;
 }
 
 Castle *Heroes::inCastle(void)
 {
-    Castle *castle = Color::NONE != GetColor() ? world.GetCastle(GetCenter()) : NULL;
-    return castle && castle->GetHeroes() == this ? castle : NULL;
+    Castle *castle = Color::NONE != GetColor() ? world.GetCastle(GetCenter()) : nullptr;
+    return castle && castle->GetHeroes() == this ? castle : nullptr;
 }
 
 /* is visited cell */
@@ -1341,7 +1341,7 @@ void Heroes::LevelUpSecondarySkill(int primary, bool autoselect)
     secondary_skills.FindSkillsForLevelUp(race, sec1, sec2);
     DEBUG(DBG_GAME, DBG_INFO, GetName() << " select " << Skill::Secondary::String(sec1.Skill()) <<
                                         " or " << Skill::Secondary::String(sec2.Skill()));
-    Skill::Secondary *selected = NULL;
+    Skill::Secondary *selected = nullptr;
 
     if (autoselect)
     {
@@ -1441,7 +1441,7 @@ void Heroes::SetFreeman(int reason)
         if (GetColor() != Color::NONE) kingdom.RemoveHeroes(this);
 
         SetColor(Color::NONE);
-        world.GetTiles(GetIndex()).SetHeroes(NULL);
+        world.GetTiles(GetIndex()).SetHeroes(nullptr);
         modes = 0;
         SetIndex(-1);
         move_point_scale = -1;
@@ -1639,7 +1639,7 @@ void Heroes::Move2Dest(const s32 &dst_index, bool skip_action /* false */)
 {
     if (dst_index != GetIndex())
     {
-        world.GetTiles(GetIndex()).SetHeroes(NULL);
+        world.GetTiles(GetIndex()).SetHeroes(nullptr);
         SetIndex(dst_index);
         Scoute();
         ApplyPenaltyMovement();
@@ -1889,37 +1889,36 @@ void AllHeroes::Init(void)
 
 void AllHeroes::clear(void)
 {
-    for (iterator
-                 it = begin(); it != end(); ++it)
-        delete *it;
+    for (auto& it : *this)
+        delete it;
     std::vector<Heroes *>::clear();
 }
 
 Heroes *VecHeroes::Get(int hid) const
 {
     const std::vector<Heroes *> &vec = *this;
-    return 0 <= hid && hid < Heroes::UNKNOWN ? vec[hid] : NULL;
+    return 0 <= hid && hid < Heroes::UNKNOWN ? vec[hid] : nullptr;
 }
 
 Heroes *VecHeroes::Get(const Point &center) const
 {
     const_iterator it = begin();
     for (; it != end(); ++it) if ((*it)->isPosition(center)) break;
-    return end() != it ? *it : NULL;
+    return end() != it ? *it : nullptr;
 }
 
 Heroes *AllHeroes::GetGuest(const Castle &castle) const
 {
     const_iterator it = std::find_if(begin(), end(),
                                      std::bind1st(InCastleNotGuardian(), &castle));
-    return end() != it ? *it : NULL;
+    return end() != it ? *it : nullptr;
 }
 
 Heroes *AllHeroes::GetGuard(const Castle &castle) const
 {
     const_iterator it = Settings::Get().ExtCastleAllowGuardians() ?
                         std::find_if(begin(), end(), std::bind1st(InCastleAndGuardian(), &castle)) : end();
-    return end() != it ? *it : NULL;
+    return end() != it ? *it : nullptr;
 }
 
 Heroes *AllHeroes::GetFreeman(int race) const
@@ -1991,7 +1990,7 @@ Heroes *AllHeroes::GetFreeman(int race) const
     if (freeman_heroes.empty())
     {
         DEBUG(DBG_GAME, DBG_WARN, "freeman not found, all heroes busy.");
-        return NULL;
+        return nullptr;
     }
 
     return at(*Rand::Get(freeman_heroes));
@@ -1999,15 +1998,15 @@ Heroes *AllHeroes::GetFreeman(int race) const
 
 void AllHeroes::Scoute(int colors) const
 {
-    for (const_iterator it = begin(); it != end(); ++it)
-        if (colors & (*it)->GetColor()) (*it)->Scoute();
+    for (auto it : *this)
+        if (colors & it->GetColor()) it->Scoute();
 }
 
 Heroes *AllHeroes::FromJail(s32 index) const
 {
-    const_iterator it = std::find_if(begin(), end(),
+    auto it = std::find_if(begin(), end(),
                                      std::bind1st(InJailMode(), index));
-    return end() != it ? *it : NULL;
+    return end() != it ? *it : nullptr;
 }
 
 bool AllHeroes::HaveTwoFreemans(void) const
@@ -2020,9 +2019,8 @@ StreamBase &operator<<(StreamBase &msg, const VecHeroes &heroes)
 {
     msg << static_cast<u32>(heroes.size());
 
-    for (AllHeroes::const_iterator
-                 it = heroes.begin(); it != heroes.end(); ++it)
-        msg << (*it ? (*it)->GetID() : Heroes::UNKNOWN);
+    for (auto heroe : heroes)
+        msg << (heroe ? heroe->GetID() : Heroes::UNKNOWN);
 
     return msg;
 }
@@ -2032,14 +2030,13 @@ StreamBase &operator>>(StreamBase &msg, VecHeroes &heroes)
     u32 size;
     msg >> size;
 
-    heroes.resize(size, NULL);
+    heroes.resize(size, nullptr);
 
-    for (AllHeroes::iterator
-                 it = heroes.begin(); it != heroes.end(); ++it)
+    for (auto& heroe : heroes)
     {
         u32 hid;
         msg >> hid;
-        *it = (hid != Heroes::UNKNOWN ? world.GetHeroes(hid) : NULL);
+        heroe = (hid != Heroes::UNKNOWN ? world.GetHeroes(hid) : nullptr);
     }
 
     return msg;
@@ -2112,9 +2109,8 @@ StreamBase &operator<<(StreamBase &msg, const AllHeroes &heroes)
 {
     msg << static_cast<u32>(heroes.size());
 
-    for (AllHeroes::const_iterator
-                 it = heroes.begin(); it != heroes.end(); ++it)
-        msg << **it;
+    for (auto heroe : heroes)
+        msg << *heroe;
 
     return msg;
 }
@@ -2125,13 +2121,12 @@ StreamBase &operator>>(StreamBase &msg, AllHeroes &heroes)
     msg >> size;
 
     heroes.clear();
-    heroes.resize(size, NULL);
+    heroes.resize(size, nullptr);
 
-    for (AllHeroes::iterator
-                 it = heroes.begin(); it != heroes.end(); ++it)
+    for (auto& heroe : heroes)
     {
-        *it = new Heroes();
-        msg >> **it;
+        heroe = new Heroes();
+        msg >> *heroe;
     }
 
     return msg;

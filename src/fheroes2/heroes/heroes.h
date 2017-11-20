@@ -155,9 +155,9 @@ public:
 
     int GetLuck(void) const;
 
-    int GetMoraleWithModificators(std::string *str = NULL) const;
+    int GetMoraleWithModificators(std::string *str = nullptr) const;
 
-    int GetLuckWithModificators(std::string *str = NULL) const;
+    int GetLuckWithModificators(std::string *str = nullptr) const;
 
     int GetLevel(void) const;
 

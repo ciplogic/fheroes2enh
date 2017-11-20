@@ -271,7 +271,7 @@ void Interface::StatusWindow::DrawResourceInfo(int oh) const
 
 void Interface::StatusWindow::DrawArmyInfo(int oh) const
 {
-    const Army *armies = NULL;
+    const Army *armies = nullptr;
 
     if (GetFocusHeroes())
         armies = &GetFocusHeroes()->GetArmy();

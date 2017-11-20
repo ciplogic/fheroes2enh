@@ -45,7 +45,7 @@ struct HeroRow
     SecondarySkillsBar *secskillsBar;
     PrimarySkillsBar *primskillsBar;
 
-    HeroRow() : hero(NULL), armyBar(NULL), artifactsBar(NULL), secskillsBar(NULL), primskillsBar(NULL)
+    HeroRow() : hero(nullptr), armyBar(nullptr), artifactsBar(nullptr), secskillsBar(nullptr), primskillsBar(nullptr)
     {}
 
     ~HeroRow()
@@ -273,7 +273,7 @@ struct CstlRow
     ArmyBar *armyBarGuest;
     DwellingsBar *dwellingsBar;
 
-    CstlRow() : castle(NULL), armyBarGuard(NULL), armyBarGuest(NULL), dwellingsBar(NULL)
+    CstlRow() : castle(nullptr), armyBarGuard(nullptr), armyBarGuest(nullptr), dwellingsBar(nullptr)
     {}
 
     ~CstlRow()
@@ -631,7 +631,7 @@ void Kingdom::OverviewDialog(void)
 
     const Rect rectIncome(cur_pt.x + 1, cur_pt.y + 360, 535, 60);
 
-    Interface::ListBasic *listStats = NULL;
+    Interface::ListBasic *listStats = nullptr;
 
     // set state view: castles
     if (Modes(OVERVIEWCSTL))

@@ -41,7 +41,7 @@ namespace Skill
             {"warlock",     {0, 0, 2, 2}, {0, 0, 3, 2}, 1, 19, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1}, 10, {10, 10, 50, 30}, {20, 20, 30, 30}, {1, 3, 2, 3, 2, 1, 2, 1, 3, 2, 1, 2, 4, 5}},
             {"wizard",      {0, 0, 2, 2}, {0, 1, 2, 2}, 1, 17, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2}, 10, {10, 10, 40, 40}, {20, 20, 30, 30}, {1, 3, 2, 3, 2, 2, 2, 2, 4, 2, 0, 2, 2, 5}},
             {"necromancer", {0, 0, 2, 2}, {1, 0, 2, 2}, 1, 10, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1}, 10, {15, 15, 35, 35}, {25, 25, 25, 25}, {1, 3, 2, 3, 2, 0, 2, 1, 3, 2, 5, 3, 1, 4}},
-            {NULL,          {0, 0, 0, 0}, {0, 0, 0, 0}, 0, 0,  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 10, {0,  0,  0,  0},  {0,  0,  0,  0},  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}}
+            {nullptr,          {0, 0, 0, 0}, {0, 0, 0, 0}, 0, 0,  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 10, {0,  0,  0,  0},  {0,  0,  0,  0},  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}}
     };
 
     values_t _values[] = {
@@ -59,7 +59,7 @@ namespace Skill
             {"eagleeye",    {20,  30,  40}},
             {"necromancy",  {10,  20,  30}},
             {"estates",     {100, 250, 500}},
-            {NULL,          {0,   0,   0}},
+            {nullptr,          {0,   0,   0}},
     };
 
     secondary_t _from_witchs_hut = {
@@ -312,12 +312,12 @@ StreamBase &GameStatic::operator>>(StreamBase &msg, Data &obj)
     return msg;
 }
 
-float GameStatic::GetMonsterUpgradeRatio(void)
+float GameStatic::GetMonsterUpgradeRatio()
 {
     return monster_upgrade_ratio;
 }
 
-u32 GameStatic::GetLostOnWhirlpoolPercent(void)
+u32 GameStatic::GetLostOnWhirlpoolPercent()
 {
     return whirlpool_lost_percent;
 }
@@ -327,7 +327,7 @@ u32 GameStatic::GetOverViewDistance(u32 d)
     return d >= ARRAY_COUNT(overview_distance) ? 0 : overview_distance[d];
 }
 
-u32 GameStatic::GetGameOverLostDays(void)
+u32 GameStatic::GetGameOverLostDays()
 {
     return gameover_lost_days;
 }
@@ -353,7 +353,7 @@ cost_t &GameStatic::GetKingdomStartingResource(int df)
     return kingdom_starting_resource[5];
 }
 
-u32 GameStatic::GetHeroesRestoreSpellPointsPerDay(void)
+u32 GameStatic::GetHeroesRestoreSpellPointsPerDay()
 {
     return heroes_spell_points_day;
 }
@@ -363,27 +363,27 @@ u32 GameStatic::GetMageGuildRestoreSpellPointsPercentDay(int level)
     return level && level < 6 ? mageguild_restore_spell_points_day[level - 1] : 0;
 }
 
-u32 GameStatic::GetKingdomMaxHeroes(void)
+u32 GameStatic::GetKingdomMaxHeroes()
 {
     return kingdom_max_heroes;
 }
 
-u32 GameStatic::GetCastleGrownWell(void)
+u32 GameStatic::GetCastleGrownWell()
 {
     return castle_grown_well;
 }
 
-u32 GameStatic::GetCastleGrownWel2(void)
+u32 GameStatic::GetCastleGrownWel2()
 {
     return castle_grown_wel2;
 }
 
-u32 GameStatic::GetCastleGrownWeekOf(void)
+u32 GameStatic::GetCastleGrownWeekOf()
 {
     return castle_grown_week_of;
 }
 
-u32 GameStatic::GetCastleGrownMonthOf(void)
+u32 GameStatic::GetCastleGrownMonthOf()
 {
     return castle_grown_month_of;
 }
@@ -423,17 +423,17 @@ s32 GameStatic::ObjectVisitedModifiers(int obj)
     return 0;
 }
 
-u32 GameStatic::Spell_DD_Distance(void)
+u32 GameStatic::Spell_DD_Distance()
 {
     return spell_dd_distance;
 }
 
-u32 GameStatic::Spell_DD_SP(void)
+u32 GameStatic::Spell_DD_SP()
 {
     return spell_dd_sp;
 }
 
-u32 GameStatic::Spell_DD_HP(void)
+u32 GameStatic::Spell_DD_HP()
 {
     return spell_dd_hp;
 }
@@ -473,7 +473,7 @@ const Skill::stats_t *GameStatic::GetSkillStats(int race)
             break;
     }
 
-    return NULL;
+    return nullptr;
 }
 
 const Skill::values_t *GameStatic::GetSkillValues(int type)
@@ -512,10 +512,10 @@ const Skill::values_t *GameStatic::GetSkillValues(int type)
             break;
     }
 
-    return NULL;
+    return nullptr;
 }
 
-const Skill::secondary_t *GameStatic::GetSkillForWitchsHut(void)
+const Skill::secondary_t *GameStatic::GetSkillForWitchsHut()
 {
     return &Skill::_from_witchs_hut;
 }
@@ -549,11 +549,11 @@ void Game::KingdomUpdateStartingResource(const TiXmlElement* xml)
     {
     const TiXmlElement* xml_difficult;
     const char* ai_always = xml->Attribute("ai_always");
-    const char* level[] = { "easy", "normal", "hard", "expert", "impossible", NULL };
+    const char* level[] = { "easy", "normal", "hard", "expert", "impossible", nullptr };
 
     for(u32 ii = 0; ii < 5; ++ii)
     {
-        if(NULL != (xml_difficult = xml->FirstChildElement(level[ii])))
+        if(nullptr != (xml_difficult = xml->FirstChildElement(level[ii])))
         {
             LoadCostFromXMLElement(GameStatic::kingdom_starting_resource[ii], *xml_difficult);
             if(ai_always && 0 == std::strcmp(ai_always, level[ii]))
@@ -645,16 +645,16 @@ void Game::SkillUpdateStatic(const TiXmlElement* xml)
         const TiXmlElement* xml_captain = xml->FirstChildElement("captain");
         const TiXmlElement* xml_initial = xml->FirstChildElement("initial");
         const TiXmlElement* xml_maturity = xml->FirstChildElement("maturity");
-        const TiXmlElement* xml_secondary = xml_maturity ? xml_maturity->FirstChildElement("secondary") : NULL;
-        const TiXmlElement* xml_primary = xml_maturity ? xml_maturity->FirstChildElement("primary") : NULL;
-        const TiXmlElement* xml_under = xml_primary ? xml_primary->FirstChildElement("under") : NULL;
-        const TiXmlElement* xml_over = xml_primary ? xml_primary->FirstChildElement("over") : NULL;
+        const TiXmlElement* xml_secondary = xml_maturity ? xml_maturity->FirstChildElement("secondary") : nullptr;
+        const TiXmlElement* xml_primary = xml_maturity ? xml_maturity->FirstChildElement("primary") : nullptr;
+        const TiXmlElement* xml_under = xml_primary ? xml_primary->FirstChildElement("under") : nullptr;
+        const TiXmlElement* xml_over = xml_primary ? xml_primary->FirstChildElement("over") : nullptr;
         Skill::stats_t *ptr = &Skill::_stats[0];
         int value;
 
         while(ptr->id)
         {
-            const TiXmlElement* initial_race = xml_initial ? xml_initial->FirstChildElement(ptr->id) : NULL;
+            const TiXmlElement* initial_race = xml_initial ? xml_initial->FirstChildElement(ptr->id) : nullptr;
 
             if(initial_race)
             {
@@ -665,13 +665,13 @@ void Game::SkillUpdateStatic(const TiXmlElement* xml)
                 initial_race->Attribute("spell", &value); ptr->initial_spell = value;
             }
 
-            const TiXmlElement* captain_race = xml_captain ? xml_captain->FirstChildElement(ptr->id) : NULL;
+            const TiXmlElement* captain_race = xml_captain ? xml_captain->FirstChildElement(ptr->id) : nullptr;
             if(captain_race) LoadPrimarySection(captain_race, ptr->captain_primary);
 
-            const TiXmlElement* under_race = xml_under ? xml_under->FirstChildElement(ptr->id) : NULL;
+            const TiXmlElement* under_race = xml_under ? xml_under->FirstChildElement(ptr->id) : nullptr;
             if(under_race) LoadPrimarySection(under_race, ptr->mature_primary_under);
 
-            const TiXmlElement* over_race = xml_over ? xml_over->FirstChildElement(ptr->id) : NULL;
+            const TiXmlElement* over_race = xml_over ? xml_over->FirstChildElement(ptr->id) : nullptr;
             if(over_race)
             {
                 LoadPrimarySection(over_race, ptr->mature_primary_over);
@@ -679,7 +679,7 @@ void Game::SkillUpdateStatic(const TiXmlElement* xml)
                 if(value) ptr->over_level = value;
             }
 
-            const TiXmlElement* secondary_race = xml_secondary ? xml_secondary->FirstChildElement(ptr->id) : NULL;
+            const TiXmlElement* secondary_race = xml_secondary ? xml_secondary->FirstChildElement(ptr->id) : nullptr;
             if(secondary_race) LoadSecondarySection(secondary_race, ptr->mature_secondary);
 
             ++ptr;
@@ -728,13 +728,13 @@ void Skill::UpdateStats(const std::string &stats)
 
 #endif
 
-GameStatic::Data &GameStatic::Data::Get(void)
+GameStatic::Data &GameStatic::Data::Get()
 {
     static Data gds;
     return gds;
 }
 
-int GameStatic::GetBattleMoatReduceDefense(void)
+int GameStatic::GetBattleMoatReduceDefense()
 {
     return 2;
 }

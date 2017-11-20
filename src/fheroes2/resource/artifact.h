@@ -279,9 +279,9 @@ public:
 
     bool ActionBarPressRight(const Point &, Artifact &, const Rect &);
 
-    bool QueueEventProcessing(std::string * = NULL);
+    bool QueueEventProcessing(std::string * = nullptr);
 
-    bool QueueEventProcessing(ArtifactsBar &, std::string * = NULL);
+    bool QueueEventProcessing(ArtifactsBar &, std::string * = nullptr);
 
     bool ActionBarCursor(const Point &, Artifact &, const Rect &);
 

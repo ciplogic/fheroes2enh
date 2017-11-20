@@ -225,8 +225,7 @@ Rect Points::GetRect(void) const
     {
         res = Rect::Get(at(0), at(1));
 
-        for (const_iterator
-                     it = begin() + 2; it != end(); ++it)
+        for (auto it = begin() + 2; it != end(); ++it)
         {
             if ((*it).x < res.x) res.x = (*it).x;
             else if ((*it).x > res.x + res.w) res.w = (*it).x - res.x + 1;
@@ -259,8 +258,7 @@ Rect Rects::GetRect(void) const
 
 s32 Rects::GetIndex(const Point &pt) const
 {
-    for (const_iterator
-                 it = begin(); it != end(); ++it)
+    for (auto it = begin(); it != end(); ++it)
         if (*it & pt) return std::distance(begin(), it);
     return -1;
 }

@@ -62,9 +62,9 @@ public:
 
     bool ActionBarCursor(const Point &, ArmyTroop &, const Rect &, ArmyTroop &, const Rect &);
 
-    bool QueueEventProcessing(std::string * = NULL);
+    bool QueueEventProcessing(std::string * = nullptr);
 
-    bool QueueEventProcessing(ArmyBar &, std::string * = NULL);
+    bool QueueEventProcessing(ArmyBar &, std::string * = nullptr);
 
 protected:
     Army *army;

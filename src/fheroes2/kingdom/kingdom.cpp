@@ -245,11 +245,11 @@ void Kingdom::AddHeroStartCondLoss(Heroes *hero)
 
 const Heroes *Kingdom::GetFirstHeroStartCondLoss(void) const
 {
-    for (KingdomHeroes::const_iterator
+    for (auto
                  it = heroes_cond_loss.begin(); it != heroes_cond_loss.end(); ++it)
         if ((*it)->isFreeman() || (*it)->GetColor() != GetColor())
             return *it;
-    return NULL;
+    return nullptr;
 }
 
 std::string Kingdom::GetNamesHeroStartCondLoss(void) const
@@ -456,7 +456,7 @@ void Kingdom::ApplyPlayWithStartingHero(void)
     {
         // get first castle
         Castle *first = castles.GetFirstCastle();
-        if (NULL == first) first = castles.front();
+        if (nullptr == first) first = castles.front();
 
         // check manual set hero (castle position + point(0, 1))?
         const Point &cp = (first)->GetCenter();
@@ -565,7 +565,7 @@ Funds Kingdom::GetIncome(int type /* INCOME_ALL */) const
 
 const Heroes *Kingdom::GetBestHero(void) const
 {
-    return heroes.size() ? *std::max_element(heroes.begin(), heroes.end(), HeroesStrongestArmy) : NULL;
+    return heroes.size() ? *std::max_element(heroes.begin(), heroes.end(), HeroesStrongestArmy) : nullptr;
 }
 
 u32 Kingdom::GetArmiesStrength(void) const
@@ -676,7 +676,7 @@ void Kingdom::ResetLastLostHero(void)
 Heroes *Kingdom::GetLastLostHero(void) const
 {
     return Heroes::UNKNOWN != lost_hero.first && world.CountDay() - lost_hero.second < DAYOFWEEK ?
-           world.GetHeroes(lost_hero.first) : NULL;
+           world.GetHeroes(lost_hero.first) : nullptr;
 }
 
 void Kingdoms::NewDay(void)

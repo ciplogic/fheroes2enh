@@ -129,7 +129,7 @@ s32 *Funds::GetPtr(int rs)
         default:
             break;
     }
-    return NULL;
+    return nullptr;
 }
 
 s32 Funds::Get(int rs) const

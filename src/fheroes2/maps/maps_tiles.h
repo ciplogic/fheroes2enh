@@ -268,7 +268,7 @@ namespace Maps
 
         void RedrawBottom4Hero(Surface &) const;
 
-        void RedrawTop(Surface &, const TilesAddon *skip = NULL) const;
+        void RedrawTop(Surface &, const TilesAddon *skip = nullptr) const;
 
         void RedrawTop4Hero(Surface &, bool skip_ground) const;
 

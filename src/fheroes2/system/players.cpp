@@ -34,7 +34,7 @@
 
 namespace
 {
-    Player *_players[KINGDOMMAX + 1] = {NULL};
+    Player *_players[KINGDOMMAX + 1] = {nullptr};
     int human_colors = 0;
 
     enum
@@ -207,7 +207,7 @@ StreamBase &operator>>(StreamBase &msg, Focus &focus)
             focus.second = world.GetCastle(Maps::GetPoint(index));
             break;
         default:
-            focus.second = NULL;
+            focus.second = nullptr;
             break;
     }
 
@@ -256,13 +256,13 @@ Players::~Players()
 
 void Players::clear(void)
 {
-    for (iterator it = begin(); it != end(); ++it)
-        delete *it;
+    for (auto& it : *this)
+        delete it;
 
     std::vector<Player *>::clear();
 
     for (u32 ii = 0; ii < KINGDOMMAX + 1; ++ii)
-        _players[ii] = NULL;
+        _players[ii] = nullptr;
 
     current_color = 0;
     human_colors = 0;
@@ -274,11 +274,10 @@ void Players::Init(int colors)
 
     const Colors vcolors(colors);
 
-    for (Colors::const_iterator
-                 it = vcolors.begin(); it != vcolors.end(); ++it)
+    for (int vcolor : vcolors)
     {
-        push_back(new Player(*it));
-        _players[Color::GetIndex(*it)] = back();
+        push_back(new Player(vcolor));
+        _players[Color::GetIndex(vcolor)] = back();
     }
 
     DEBUG(DBG_GAME, DBG_INFO, "Players: " << String());
@@ -286,41 +285,39 @@ void Players::Init(int colors)
 
 void Players::Init(const Maps::FileInfo &fi)
 {
-    if (fi.kingdom_colors)
-    {
-        clear();
-        const Colors vcolors(fi.kingdom_colors);
-
-        Player *first = NULL;
-
-        for (Colors::const_iterator
-                     it = vcolors.begin(); it != vcolors.end(); ++it)
-        {
-            Player *player = new Player(*it);
-            player->SetRace(fi.KingdomRace(*it));
-            player->SetControl(CONTROL_AI);
-            player->SetFriends(*it | fi.unions[Color::GetIndex(*it)]);
-
-            if ((*it & fi.HumanOnlyColors()) && Settings::Get().GameType(Game::TYPE_MULTI))
-                player->SetControl(CONTROL_HUMAN);
-            else if (*it & fi.AllowHumanColors())
-                player->SetControl(player->GetControl() | CONTROL_HUMAN);
-
-            if (!first && (player->GetControl() & CONTROL_HUMAN))
-                first = player;
-
-            push_back(player);
-            _players[Color::GetIndex(*it)] = back();
-        }
-
-        if (first)
-            first->SetControl(CONTROL_HUMAN);
-
-        DEBUG(DBG_GAME, DBG_INFO, "Players: " << String());
-    } else
+    if (!fi.kingdom_colors)
     {
         DEBUG(DBG_GAME, DBG_INFO, "Players: " << "unknown colors");
+        return;
     }
+    clear();
+    const Colors vcolors(fi.kingdom_colors);
+
+    Player* first = nullptr;
+
+    for (int vcolor : vcolors)
+    {
+        Player* player = new Player(vcolor);
+        player->SetRace(fi.KingdomRace(vcolor));
+        player->SetControl(CONTROL_AI);
+        player->SetFriends(vcolor | fi.unions[Color::GetIndex(vcolor)]);
+
+        if ((vcolor & fi.HumanOnlyColors()) && Settings::Get().GameType(Game::TYPE_MULTI))
+            player->SetControl(CONTROL_HUMAN);
+        else if (vcolor & fi.AllowHumanColors())
+            player->SetControl(player->GetControl() | CONTROL_HUMAN);
+
+        if (!first && (player->GetControl() & CONTROL_HUMAN))
+            first = player;
+
+        push_back(player);
+        _players[Color::GetIndex(vcolor)] = back();
+    }
+
+    if (first)
+        first->SetControl(CONTROL_HUMAN);
+
+    DEBUG(DBG_GAME, DBG_INFO, "Players: " << String());
 }
 
 Player *Players::Get(int color)
@@ -354,11 +351,11 @@ int Players::GetColors(int control, bool strong) const
 {
     int res = 0;
 
-    for (const_iterator it = begin(); it != end(); ++it)
+    for (auto it : *this)
         if (control == 0xFF ||
-            (strong && (*it)->GetControl() == control) ||
-            (!strong && ((*it)->GetControl() & control)))
-            res |= (*it)->GetColor();
+            (strong && it->GetControl() == control) ||
+            (!strong && (it->GetControl() & control)))
+            res |= it->GetColor();
 
     return res;
 }
@@ -367,8 +364,8 @@ int Players::GetActualColors(void) const
 {
     int res = 0;
 
-    for (const_iterator it = begin(); it != end(); ++it)
-        if ((*it)->isPlay()) res |= (*it)->GetColor();
+    for (auto it : *this)
+        if (it->isPlay()) res |= it->GetColor();
 
     return res;
 }
@@ -454,12 +451,11 @@ std::string Players::String(void) const
     std::ostringstream os;
     os << "Players: ";
 
-    for (const_iterator
-                 it = begin(); it != end(); ++it)
+    for (auto it : *this)
     {
-        os << Color::String((*it)->GetColor()) << "(" << Race::String((*it)->GetRace()) << ", ";
+        os << Color::String(it->GetColor()) << "(" << Race::String(it->GetRace()) << ", ";
 
-        switch ((*it)->GetControl())
+        switch (it->GetControl())
         {
             case CONTROL_AI | CONTROL_HUMAN:
                 os << "ai|human";
@@ -492,9 +488,8 @@ StreamBase &operator<<(StreamBase &msg, const Players &players)
 {
     msg << players.GetColors() << players.current_color;
 
-    for (Players::const_iterator
-                 it = players.begin(); it != players.end(); ++it)
-        msg << (**it);
+    for (auto player : players)
+        msg << (*player);
 
     return msg;
 }
@@ -535,8 +530,7 @@ void Interface::PlayersInfo::UpdateInfo(Players &players, const Point &pt1, cons
 
     clear();
 
-    for (Players::iterator
-                 it = players.begin(); it != players.end(); ++it)
+    for (auto it = players.begin(); it != players.end(); ++it)
     {
         const u32 current = std::distance(players.begin(), it);
         PlayerInfo info;
@@ -550,8 +544,7 @@ void Interface::PlayersInfo::UpdateInfo(Players &players, const Point &pt1, cons
         push_back(info);
     }
 
-    for (iterator
-                 it = begin(); it != end(); ++it)
+    for (auto it = begin(); it != end(); ++it)
     {
         if ((it + 1) != end())
         {
@@ -567,34 +560,34 @@ void Interface::PlayersInfo::UpdateInfo(Players &players, const Point &pt1, cons
 
 Player *Interface::PlayersInfo::GetFromOpponentClick(const Point &pt)
 {
-    for (iterator it = begin(); it != end(); ++it)
-        if ((*it).rect1 & pt) return (*it).player;
+    for (auto& it : *this)
+        if (it.rect1 & pt) return it.player;
 
-    return NULL;
+    return nullptr;
 }
 
 Player *Interface::PlayersInfo::GetFromOpponentNameClick(const Point &pt)
 {
-    for (iterator it = begin(); it != end(); ++it)
-        if (Rect((*it).rect1.x, (*it).rect1.y + (*it).rect1.h, (*it).rect1.w, 10) & pt) return (*it).player;
+    for (auto& it : *this)
+        if (Rect(it.rect1.x, it.rect1.y + it.rect1.h, it.rect1.w, 10) & pt) return it.player;
 
-    return NULL;
+    return nullptr;
 }
 
 Player *Interface::PlayersInfo::GetFromOpponentChangeClick(const Point &pt)
 {
-    for (iterator it = begin(); it != end(); ++it)
-        if ((*it).rect3 & pt) return (*it).player;
+    for (auto& it : *this)
+        if (it.rect3 & pt) return it.player;
 
-    return NULL;
+    return nullptr;
 }
 
 Player *Interface::PlayersInfo::GetFromClassClick(const Point &pt)
 {
-    for (iterator it = begin(); it != end(); ++it)
-        if ((*it).rect2 & pt) return (*it).player;
+    for (auto& it : *this)
+        if (it.rect2 & pt) return it.player;
 
-    return NULL;
+    return nullptr;
 }
 
 void Interface::PlayersInfo::RedrawInfo(
@@ -606,7 +599,7 @@ void Interface::PlayersInfo::RedrawInfo(
     const u32 humans_colors = conf.GetPlayers().GetColors(CONTROL_HUMAN, true);
     u32 index = 0;
 
-    for (const_iterator it = begin(); it != end(); ++it)
+    for (auto it = begin(); it != end(); ++it)
     {
         const Player &player = *((*it).player);
         const Rect &rect1 = (*it).rect1;
@@ -713,18 +706,18 @@ bool Interface::PlayersInfo::QueueEventProcessing(void)
 {
     Settings &conf = Settings::Get();
     LocalEvent &le = LocalEvent::Get();
-    Player *player = NULL;
+    Player *player = nullptr;
 
     if (le.MousePressRight())
     {
         // opponent
-        if (NULL != (player = GetFromOpponentClick(le.GetMouseCursor())))
+        if (nullptr != (player = GetFromOpponentClick(le.GetMouseCursor())))
             Dialog::Message(_("Opponents"),
                             _("This lets you change player starting positions and colors. A particular color will always start in a particular location. Some positions may only be played by a computer player or only by a human player."),
                             Font::BIG);
         else
             // class
-        if (NULL != (player = GetFromClassClick(le.GetMouseCursor())))
+        if (nullptr != (player = GetFromClassClick(le.GetMouseCursor())))
             Dialog::Message(_("Class"),
                             _("This lets you change the class of a player. Classes are not always changeable. Depending on the scenario, a player may receive additional towns and/or heroes not of their primary alignment."),
                             Font::BIG);
@@ -732,7 +725,7 @@ bool Interface::PlayersInfo::QueueEventProcessing(void)
         //if(le.MouseClickLeft())
     {
         // select opponent
-        if (NULL != (player = GetFromOpponentClick(le.GetMouseCursor())))
+        if (nullptr != (player = GetFromOpponentClick(le.GetMouseCursor())))
         {
             const Maps::FileInfo &fi = conf.CurrentFileInfo();
             Players &players = conf.GetPlayers();
@@ -759,7 +752,7 @@ bool Interface::PlayersInfo::QueueEventProcessing(void)
             }
         } else
             // modify name
-        if (show_name && NULL != (player = GetFromOpponentNameClick(le.GetMouseCursor())))
+        if (show_name && nullptr != (player = GetFromOpponentNameClick(le.GetMouseCursor())))
         {
             std::string res;
             std::string str = _("%{color} player");
@@ -769,7 +762,7 @@ bool Interface::PlayersInfo::QueueEventProcessing(void)
                 player->SetName(res);
         } else
             // select class
-        if (NULL != (player = GetFromClassClick(le.GetMouseCursor())))
+        if (nullptr != (player = GetFromClassClick(le.GetMouseCursor())))
         {
             if (conf.AllowChangeRace(player->GetColor()))
             {
@@ -803,14 +796,14 @@ bool Interface::PlayersInfo::QueueEventProcessing(void)
         } else
             // change players
         if (show_swap &&
-            !conf.QVGA() && NULL != (player = GetFromOpponentChangeClick(le.GetMouseCursor())))
+            !conf.QVGA() && nullptr != (player = GetFromOpponentChangeClick(le.GetMouseCursor())))
         {
-            iterator it = std::find(begin(), end(), player);
+            auto it = std::find(begin(), end(), player);
             if (it != end() && (it + 1) != end())
             {
                 Players &players = conf.GetPlayers();
-                Players::iterator it1 = std::find(players.begin(), players.end(), (*it).player);
-                Players::iterator it2 = std::find(players.begin(), players.end(), (*(it + 1)).player);
+                auto it1 = std::find(players.begin(), players.end(), (*it).player);
+                auto it2 = std::find(players.begin(), players.end(), (*(it + 1)).player);
 
                 if (it1 != players.end() && it2 != players.end())
                 {
@@ -818,7 +811,7 @@ bool Interface::PlayersInfo::QueueEventProcessing(void)
                     std::swap(*it1, *it2);
                 }
             } else
-                player = NULL;
+                player = nullptr;
         }
     }
 

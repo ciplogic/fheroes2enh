@@ -44,7 +44,7 @@ struct IndexObjectMap : public std::map<s32, int>
 
 struct AIKingdom
 {
-    AIKingdom() : capital(NULL)
+    AIKingdom() : capital(nullptr)
     {};
 
     void Reset(void);

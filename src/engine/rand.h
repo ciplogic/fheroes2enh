@@ -39,7 +39,7 @@ namespace Rand
     {
         typename std::vector<T>::const_iterator it = vec.begin();
         std::advance(it, Rand::Get(vec.size() - 1));
-        return it == vec.end() ? NULL : &(*it);
+        return it == vec.end() ? nullptr : &(*it);
     }
 
     template<typename T>
@@ -47,7 +47,7 @@ namespace Rand
     {
         typename std::list<T>::const_iterator it = list.begin();
         std::advance(it, Rand::Get(list.size() - 1));
-        return it == list.end() ? NULL : &(*it);
+        return it == list.end() ? nullptr : &(*it);
     }
 
     typedef std::pair<s32, u32> ValuePercent;

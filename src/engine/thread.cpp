@@ -25,7 +25,7 @@
 
 using namespace SDL;
 
-Thread::Thread() : thread(NULL)
+Thread::Thread() : thread(nullptr)
 {
 }
 
@@ -34,7 +34,7 @@ Thread::~Thread()
     Kill();
 }
 
-Thread::Thread(const Thread &) : thread(NULL)
+Thread::Thread(const Thread &) : thread(nullptr)
 {
 }
 
@@ -56,7 +56,7 @@ int Thread::Wait(void)
 {
     int status = 0;
     if (thread) SDL_WaitThread(thread, &status);
-    thread = NULL;
+    thread = nullptr;
     return status;
 }
 
@@ -65,7 +65,7 @@ void Thread::Kill(void)
 #if SDL_VERSION_ATLEAST(2, 0, 0)
 #else
     if (thread) SDL_KillThread(thread);
-    thread = NULL;
+    thread = nullptr;
 #endif
 }
 
@@ -79,11 +79,11 @@ u32 Thread::GetID(void) const
     return thread ? SDL_GetThreadID(thread) : 0;
 }
 
-Mutex::Mutex(bool init) : mutex(init ? SDL_CreateMutex() : NULL)
+Mutex::Mutex(bool init) : mutex(init ? SDL_CreateMutex() : nullptr)
 {
 }
 
-Mutex::Mutex(const Mutex &) : mutex(NULL)
+Mutex::Mutex(const Mutex &) : mutex(nullptr)
 {
 }
 

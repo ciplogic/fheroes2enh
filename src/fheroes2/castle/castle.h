@@ -141,7 +141,7 @@ public:
 
     bool PresentBoat(void) const;
 
-    bool AllowBuyHero(const Heroes &, std::string * = NULL);
+    bool AllowBuyHero(const Heroes &, std::string * = nullptr);
 
     bool isPosition(const Point &) const;
 

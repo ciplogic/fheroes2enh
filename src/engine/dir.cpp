@@ -40,7 +40,7 @@ void ListFiles::ReadDir(const std::string &path, const std::string &filter, bool
     if (dp)
     {
         struct dirent *ep;
-        while (NULL != (ep = readdir(dp)))
+        while (nullptr != (ep = readdir(dp)))
         {
             const std::string fullname = System::ConcatePath(path, ep->d_name);
 

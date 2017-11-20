@@ -81,7 +81,7 @@ void Dialog::SecondarySkillInfo(const std::string &header, const std::string &me
 
     LocalEvent &le = LocalEvent::Get();
 
-    Button *button = NULL;
+    Button *button = nullptr;
     Point pt;
 
     if (ok_button)

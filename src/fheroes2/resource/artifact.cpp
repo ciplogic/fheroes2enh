@@ -237,10 +237,10 @@ void Artifact::UpdateStats(const std::string &spec)
 #ifdef WITH_XML
     // parse artifacts.xml
     TiXmlDocument doc;
-    const TiXmlElement* xml_artifacts = NULL;
+    const TiXmlElement* xml_artifacts = nullptr;
 
     if(doc.LoadFile(spec.c_str()) &&
-        NULL != (xml_artifacts = doc.FirstChildElement("artifacts")))
+        nullptr != (xml_artifacts = doc.FirstChildElement("artifacts")))
     {
     size_t index = 0;
         const TiXmlElement* xml_artifact = xml_artifacts->FirstChildElement("artifact");
@@ -714,7 +714,7 @@ const char *Artifact::GetScenario(const Artifact &art)
             break;
     }
 
-    return NULL;
+    return nullptr;
 }
 
 StreamBase &operator<<(StreamBase &msg, const Artifact &art)
@@ -748,7 +748,7 @@ bool BagArtifacts::PushArtifact(const Artifact &art)
         if (art() == Artifact::MAGIC_BOOK && isPresentArtifact(art))
             return false;
 
-        iterator it = std::find(begin(), end(), Artifact(Artifact::UNKNOWN));
+        auto it = std::find(begin(), end(), Artifact(Artifact::UNKNOWN));
         if (it == end()) return false;
 
         *it = art;
@@ -765,7 +765,7 @@ bool BagArtifacts::PushArtifact(const Artifact &art)
 
 void BagArtifacts::RemoveArtifact(const Artifact &art)
 {
-    iterator it = std::find(begin(), end(), art);
+    auto it = std::find(begin(), end(), art);
     if (it != end()) (*it).Reset();
 }
 
@@ -815,8 +815,8 @@ std::string BagArtifacts::String(void) const
 {
     std::ostringstream os;
 
-    for (const_iterator it = begin(); it != end(); ++it)
-        os << (*it).GetName() << ", ";
+    for (auto it : *this)
+        os << it.GetName() << ", ";
 
     return os.str();
 }

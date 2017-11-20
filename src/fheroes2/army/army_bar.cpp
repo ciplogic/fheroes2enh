@@ -81,7 +81,7 @@ void RedistributeArmy(ArmyTroop &troop1 /* from */, ArmyTroop &troop2 /* to */)
 }
 
 ArmyBar::ArmyBar(Army *ptr, bool mini, bool ro, bool change /* false */)
-        : army(NULL), spcursor(AGG::GetICN(ICN::STRIP, 1)), use_mini_sprite(mini), read_only(ro), can_change(change)
+        : army(nullptr), spcursor(AGG::GetICN(ICN::STRIP, 1)), use_mini_sprite(mini), read_only(ro), can_change(change)
 {
     if (use_mini_sprite)
         SetBackground(Size(43, 43), RGBA(0, 45, 0));
@@ -111,7 +111,7 @@ void ArmyBar::SetArmy(Army *ptr)
 
 bool ArmyBar::isValid(void) const
 {
-    return army != NULL;
+    return army != nullptr;
 }
 
 void ArmyBar::SetBackground(const Size &sz, const RGBA &fillColor)

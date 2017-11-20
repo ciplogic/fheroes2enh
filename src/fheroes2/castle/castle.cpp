@@ -42,14 +42,14 @@
 #include "battle_board.h"
 #include "profit.h"
 
-Castle::Castle() : race(Race::NONE), building(0), captain(*this), army(NULL)
+Castle::Castle() : race(Race::NONE), building(0), captain(*this), army(nullptr)
 {
     std::fill(dwelling, dwelling + CASTLEMAXMONSTER, 0);
     army.SetCommander(&captain);
 }
 
 Castle::Castle(s32 cx, s32 cy, int rc) : MapPosition(Point(cx, cy)), race(rc), building(0), captain(*this),
-                                         army(NULL)
+                                         army(nullptr)
 {
     std::fill(dwelling, dwelling + CASTLEMAXMONSTER, 0);
     army.SetCommander(&captain);
@@ -387,7 +387,7 @@ u32 *Castle::GetDwelling(u32 dw)
             default:
                 break;
         }
-    return NULL;
+    return nullptr;
 }
 
 void Castle::ActionNewWeek(void)
@@ -399,11 +399,11 @@ void Castle::ActionNewWeek(void)
     {
         const u32 dwellings1[] = {DWELLING_MONSTER1, DWELLING_MONSTER2, DWELLING_MONSTER3, DWELLING_MONSTER4,
                                   DWELLING_MONSTER5, DWELLING_MONSTER6, 0};
-        u32 *dw = NULL;
+        u32 *dw = nullptr;
 
         // simple growth
         for (u32 ii = 0; dwellings1[ii]; ++ii)
-            if (NULL != (dw = GetDwelling(dwellings1[ii])))
+            if (nullptr != (dw = GetDwelling(dwellings1[ii])))
             {
                 u32 growth = Monster(race, GetActualDwelling(dwellings1[ii])).GetGrown();
 
@@ -428,7 +428,7 @@ void Castle::ActionNewWeek(void)
                                       DWELLING_MONSTER5, 0};
 
             for (u32 ii = 0; dwellings2[ii]; ++ii)
-                if (NULL != (dw = GetDwelling(dwellings2[ii])))
+                if (nullptr != (dw = GetDwelling(dwellings2[ii])))
                 {
                     const Monster mons(race, dwellings2[ii]);
                     if (mons.isValid() && mons() == world.GetWeekType().GetMonster())
@@ -460,10 +460,10 @@ void Castle::ActionNewMonth(void)
         const u32 dwellings[] = {DWELLING_MONSTER1, DWELLING_UPGRADE2, DWELLING_UPGRADE3, DWELLING_UPGRADE4,
                                  DWELLING_UPGRADE5, DWELLING_MONSTER2, DWELLING_MONSTER3, DWELLING_MONSTER4,
                                  DWELLING_MONSTER5, 0};
-        u32 *dw = NULL;
+        u32 *dw = nullptr;
 
         for (u32 ii = 0; dwellings[ii]; ++ii)
-            if (NULL != (dw = GetDwelling(dwellings[ii])))
+            if (nullptr != (dw = GetDwelling(dwellings[ii])))
             {
                 const Monster mons(race, dwellings[ii]);
                 if (mons.isValid() && mons() == world.GetWeekType().GetMonster())
@@ -804,7 +804,7 @@ bool Castle::AllowBuyHero(const Heroes &hero, std::string *msg)
 
 Heroes *Castle::RecruitHero(Heroes *hero)
 {
-    if (!hero || !AllowBuyHero(*hero)) return NULL;
+    if (!hero || !AllowBuyHero(*hero)) return nullptr;
 
     CastleHeroes heroes = world.GetHeroes(*this);
     if (heroes.Guest())
@@ -814,11 +814,11 @@ Heroes *Castle::RecruitHero(Heroes *hero)
             // move guest to guard
             SwapCastleHeroes(heroes);
         } else
-            return NULL;
+            return nullptr;
     }
 
     // recruit
-    if (!hero->Recruit(*this)) return NULL;
+    if (!hero->Recruit(*this)) return nullptr;
 
     Kingdom &kingdom = GetKingdom();
 
@@ -2153,7 +2153,7 @@ std::string Castle::String(void) const
 {
     std::ostringstream os;
     const CastleHeroes heroes = GetHeroes();
-    const Heroes *hero = NULL;
+    const Heroes *hero = nullptr;
 
     os << "name            : " << name << std::endl <<
        "race            : " << Race::String(race) << std::endl <<
@@ -2164,13 +2164,13 @@ std::string Castle::String(void) const
        "is castle       : " << (isCastle() ? "yes" : "no") << std::endl <<
        "army            : " << army.String() << std::endl;
 
-    if (NULL != (hero = heroes.Guard()))
+    if (nullptr != (hero = heroes.Guard()))
     {
         os <<
            "army guard      : " << hero->GetArmy().String() << std::endl;
     }
 
-    if (NULL != (hero = heroes.Guest()))
+    if (nullptr != (hero = heroes.Guest()))
     {
         os <<
            "army guest      : " << hero->GetArmy().String() << std::endl;
@@ -2471,20 +2471,20 @@ Castle *VecCastles::Get(const Point &position) const
 {
     const_iterator it = std::find_if(begin(), end(),
                                      std::bind2nd(CastleHavePoint(), &position));
-    return end() != it ? *it : NULL;
+    return end() != it ? *it : nullptr;
 }
 
 Castle *VecCastles::GetFirstCastle(void) const
 {
     const_iterator it = std::find_if(begin(), end(),
                                      std::mem_fun(&Castle::isCastle));
-    return end() != it ? *it : NULL;
+    return end() != it ? *it : nullptr;
 }
 
 void VecCastles::ChangeColors(int col1, int col2)
 {
-    for (iterator it = begin(); it != end(); ++it)
-        if ((*it)->GetColor() == col1) (*it)->ChangeColor(col2);
+    for (auto& it : *this)
+        if (it->GetColor() == col1) it->ChangeColor(col2);
 }
 
 AllCastles::AllCastles()
@@ -2506,16 +2506,15 @@ void AllCastles::Init(void)
 
 void AllCastles::clear(void)
 {
-    for (iterator
-                 it = begin(); it != end(); ++it)
-        delete *it;
+    for (auto& it : *this)
+        delete it;
     std::vector<Castle *>::clear();
 }
 
 void AllCastles::Scoute(int colors) const
 {
-    for (const_iterator it = begin(); it != end(); ++it)
-        if (colors & (*it)->GetColor()) (*it)->Scoute();
+    for (auto it : *this)
+        if (colors & it->GetColor()) it->Scoute();
 }
 
 /* pack castle */
@@ -2570,9 +2569,8 @@ StreamBase &operator<<(StreamBase &msg, const VecCastles &castles)
 {
     msg << static_cast<u32>(castles.size());
 
-    for (AllCastles::const_iterator
-                 it = castles.begin(); it != castles.end(); ++it)
-        msg << (*it ? (*it)->GetIndex() : static_cast<s32>(-1));
+    for (auto castle : castles)
+        msg << (castle ? castle->GetIndex() : static_cast<s32>(-1));
 
     return msg;
 }
@@ -2583,13 +2581,13 @@ StreamBase &operator>>(StreamBase &msg, VecCastles &castles)
     u32 size;
     msg >> size;
 
-    castles.resize(size, NULL);
+    castles.resize(size, nullptr);
 
     for (AllCastles::iterator
                  it = castles.begin(); it != castles.end(); ++it)
     {
         msg >> index;
-        *it = (index < 0 ? NULL : world.GetCastle(Maps::GetPoint(index)));
+        *it = (index < 0 ? nullptr : world.GetCastle(Maps::GetPoint(index)));
     }
 
     return msg;
@@ -2599,9 +2597,8 @@ StreamBase &operator<<(StreamBase &msg, const AllCastles &castles)
 {
     msg << static_cast<u32>(castles.size());
 
-    for (AllCastles::const_iterator
-                 it = castles.begin(); it != castles.end(); ++it)
-        msg << **it;
+    for (auto castle : castles)
+        msg << *castle;
 
     return msg;
 }
@@ -2612,13 +2609,12 @@ StreamBase &operator>>(StreamBase &msg, AllCastles &castles)
     msg >> size;
 
     castles.clear();
-    castles.resize(size, NULL);
+    castles.resize(size, nullptr);
 
-    for (AllCastles::iterator
-                 it = castles.begin(); it != castles.end(); ++it)
+    for (auto& castle : castles)
     {
-        *it = new Castle();
-        msg >> **it;
+        castle = new Castle();
+        msg >> *castle;
     }
 
     return msg;
@@ -2633,7 +2629,7 @@ void Castle::SwapCastleHeroes(CastleHeroes &heroes)
         heroes.Guard()->ResetModes(Heroes::GUARDIAN);
         heroes.Swap();
 
-        world.GetTiles(center.x, center.y).SetHeroes(NULL);
+        world.GetTiles(center.x, center.y).SetHeroes(nullptr);
 
         Point position(heroes.Guard()->GetCenter());
         position.y -= 1;
@@ -2653,7 +2649,7 @@ void Castle::SwapCastleHeroes(CastleHeroes &heroes)
         heroes.Swap();
         heroes.Guard()->GetArmy().JoinTroops(army);
 
-        world.GetTiles(center.x, center.y).SetHeroes(NULL);
+        world.GetTiles(center.x, center.y).SetHeroes(nullptr);
 
         Point position(heroes.Guard()->GetCenter());
         position.y -= 1;

@@ -289,7 +289,7 @@ void GameOver::DialogLoss(int cond)
     if (body.size()) Dialog::Message("", body, Font::BIG, Dialog::OK);
 }
 
-GameOver::Result &GameOver::Result::Get(void)
+GameOver::Result &GameOver::Result::Get()
 {
     static Result gresult;
     return gresult;
@@ -299,7 +299,7 @@ GameOver::Result::Result() : colors(0), result(0), continue_game(false)
 {
 }
 
-void GameOver::Result::Reset(void)
+void GameOver::Result::Reset()
 {
     colors = Game::GetKingdomColors();
     result = GameOver::COND_NONE;
@@ -310,12 +310,12 @@ void GameOver::Result::SetResult(int r)
     result = r;
 }
 
-int GameOver::Result::GetResult(void) const
+int GameOver::Result::GetResult() const
 {
     return result;
 }
 
-int GameOver::Result::LocalCheckGameOver(void)
+int GameOver::Result::LocalCheckGameOver()
 {
     if (continue_game)
         return Game::CANCEL;

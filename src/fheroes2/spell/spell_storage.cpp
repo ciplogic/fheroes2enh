@@ -86,17 +86,16 @@ std::string SpellStorage::String(void) const
 {
     std::ostringstream os;
 
-    for (const_iterator it = begin(); it != end(); ++it)
-        os << (*it).GetName() << ", ";
+    for (auto it : *this)
+        os << it.GetName() << ", ";
 
     return os.str();
 }
 
 void SpellStorage::Append(const BagArtifacts &bag)
 {
-    for (BagArtifacts::const_iterator
-                 it = bag.begin(); it != bag.end(); ++it)
-        Append(*it);
+    for (auto it : bag)
+        Append(it);
 }
 
 void SpellStorage::Append(const Artifact &art)
