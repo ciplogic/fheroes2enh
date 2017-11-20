@@ -75,5 +75,6 @@ protected:
     bool can_change;
     std::string msg;
 };
+bool CanUpgradeTroop(Troop& troop, Army* army);
 
 #endif

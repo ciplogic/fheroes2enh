@@ -399,5 +399,5 @@ else()
 endif()
 
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 -std=c++11")
 set(CMAKE_LD_FLAGS "${CMAKE_LD_FLAGS} ")

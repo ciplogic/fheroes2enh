@@ -27,10 +27,41 @@
 #include "dialog.h"
 #include "dialog_selectitems.h"
 #include "world.h"
-#include "army.h"
 #include "text.h"
-#include "army_troop.h"
 #include "army_bar.h"
+
+bool CanUpgradeTroop(Troop& troop, Army* army)
+{
+    const Castle *castle = army->inCastle();
+    bool candidate = false;
+    if (troop.isAllowUpgrade() &&
+        // allow upgrade
+        castle && castle->GetRace() == troop.GetRace() && castle->isBuild(troop.GetUpgrade().GetDwelling()))
+    {
+        candidate = true;
+    }
+    if(!candidate)
+        return false;
+
+    return (world.GetKingdom(army->GetColor()).AllowPayment(troop.GetUpgradeCost()));
+}
+
+bool DoUpgradeOnPlusClick(const Point &cursor, ArmyTroop &troop, const Rect &pos, Army* army)
+{
+    int posXInArea = cursor.x - pos.x;
+    int posYInArea = cursor.y - pos.y;
+    auto isUpgradable = false;
+
+    Text textPlus = {"+"};
+    if((pos.w - posXInArea <textPlus.w()+4) && (posYInArea<textPlus.h()+4)){
+        isUpgradable = true;
+    }
+    if(isUpgradable && CanUpgradeTroop(troop, army)){
+        world.GetKingdom(army->GetColor()).OddFundsResource(troop.GetUpgradeCost());
+        troop.Upgrade();
+        return true;
+    }
+}
 
 void RedistributeArmy(ArmyTroop &troop1 /* from */, ArmyTroop &troop2 /* to */)
 {
@@ -137,6 +168,8 @@ void ArmyBar::RedrawBackground(const Rect &pos, Surface &dstsf)
         AGG::GetICN(ICN::STRIP, 2).Blit(pos, dstsf);
 }
 
+#define ColorGreen RGBA(255,255,0,255)
+
 void ArmyBar::RedrawItem(ArmyTroop &troop, const Rect &pos, bool selected, Surface &dstsf)
 {
     if (troop.isValid())
@@ -194,11 +227,24 @@ void ArmyBar::RedrawItem(ArmyTroop &troop, const Rect &pos, bool selected, Surfa
 
         if (!use_mini_sprite)
         {
-            Surface black(Size(text.w() + 4, text.h()), false);
-            black.Fill(ColorBlack);
-            const Point pt(pos.x + pos.w - black.w() - 1, pos.y + pos.h - black.h() - 1);
-            black.Blit(pt.x, pt.y, dstsf);
-            text.Blit(pt.x + 2, pt.y + 1, dstsf);
+            {
+                Surface black(Size(text.w() + 4, text.h()), false);
+                black.Fill(ColorBlack);
+                const Point pt(pos.x + pos.w - black.w() - 1, pos.y + pos.h - black.h() - 1);
+                black.Blit(pt.x, pt.y, dstsf);
+                text.Blit(pt.x + 2, pt.y + 1, dstsf);
+            }
+            if(CanUpgradeTroop(troop, army))
+            {
+                Text textPlus = {"+"};
+                Surface greenUp(Size(textPlus.w() + 4, textPlus.h()+4), false);
+                greenUp.Fill(ColorGreen);
+                const Point ptPlus(pos.x + pos.w - greenUp.w() - 1, pos.y + 2);
+                greenUp.Blit(ptPlus.x, ptPlus.y, dstsf);
+                textPlus.Blit(ptPlus.x + 2, ptPlus.y + 1, dstsf);
+            }
+
+
         } else
             text.Blit(pos.x + pos.w - text.w() - 3, pos.y + pos.h - text.h() - 1, dstsf);
 
@@ -323,6 +369,9 @@ ArmyBar::ActionBarCursor(const Point &cursor, ArmyTroop &troop1, const Rect &pos
 
 bool ArmyBar::ActionBarSingleClick(const Point &cursor, ArmyTroop &troop, const Rect &pos)
 {
+    if(DoUpgradeOnPlusClick(cursor, troop, pos, army))
+        return true;
+
     if (isSelected())
     {
         ArmyTroop *troop2 = GetSelectedItem();
@@ -420,8 +469,12 @@ bool ArmyBar::ActionBarDoubleClick(const Point &cursor, ArmyTroop &troop, const 
 {
     ArmyTroop *troop2 = GetSelectedItem();
 
+
     if (&troop == troop2)
     {
+        if(DoUpgradeOnPlusClick(cursor, troop, pos, army))
+            return true;
+
         int flags = (read_only || army->SaveLastTroop() ? Dialog::READONLY | Dialog::BUTTONS : Dialog::BUTTONS);
         const Castle *castle = army->inCastle();
 
