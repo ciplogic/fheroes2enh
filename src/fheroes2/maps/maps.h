@@ -38,16 +38,17 @@ class MapsIndexes : public std::vector<s32>
 };
 
 
+enum class mapsize_t
+{
+    ZERO = 0,
+    SMALL = 36,
+    MEDIUM = 72,
+    LARGE = 108,
+    XLARGE = 144
+};
+
 namespace Maps
 {
-    enum mapsize_t
-    {
-        ZERO = 0,
-        SMALL = 36,
-        MEDIUM = 72,
-        LARGE = 108,
-        XLARGE = 144
-    };
 
     typedef MapsIndexes Indexes;
 

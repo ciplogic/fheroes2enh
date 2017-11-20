@@ -1541,8 +1541,7 @@ void Maps::Tiles::RedrawBottom(Surface &dst, bool skip_objs) const
     if ((area.GetRectMaps() & mp) &&
         !addons_level1.empty())
     {
-        for (Addons::const_iterator
-                     it = addons_level1.begin(); it != addons_level1.end(); ++it)
+        for (auto it = addons_level1.begin(); it != addons_level1.end(); ++it)
         {
             // skip
             if (skip_objs &&

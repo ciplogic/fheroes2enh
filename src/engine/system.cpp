@@ -169,7 +169,7 @@ ListFiles System::GetListFiles(const std::string &prog, const std::string &prefi
 
 std::string System::GetDirname(const std::string &str)
 {
-    if (str.size())
+    if (!str.empty())
     {
         size_t pos = str.rfind(SEPARATOR);
 
@@ -188,7 +188,7 @@ std::string System::GetDirname(const std::string &str)
 
 std::string System::GetBasename(const std::string &str)
 {
-    if (str.size())
+    if (!str.empty())
     {
         size_t pos = str.rfind(SEPARATOR);
 

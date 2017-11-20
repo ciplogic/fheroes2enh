@@ -702,6 +702,7 @@ int Interface::Basic::HumanTurn(bool isload)
     // startgame loop
     while (Game::CANCEL == res && le.HandleEvents())
     {
+
         // for pocketpc: auto hide status if start turn
         if (autohide_status && Game::AnimateInfrequentDelay(Game::AUTOHIDE_STATUS_DELAY))
         {

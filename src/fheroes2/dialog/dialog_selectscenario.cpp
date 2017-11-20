@@ -62,23 +62,23 @@ void ScenarioListBox::RedrawItem(const Maps::FileInfo &info, s32 dstx, s32 dsty,
     spriteCount.Blit(dstx, dsty);
 
     if (info.size_w != info.size_h ||
-        info.size_w < Maps::SMALL || info.size_w > Maps::XLARGE)
+            (info.size_w < (int)mapsize_t::SMALL) || (info.size_w > (int)mapsize_t::XLARGE))
     {
         GetNonStandardSizeIcon().Blit(dstx + spriteCount.w() + 2, dsty, Display::Get());
     } else
     {
-        switch (info.size_w)
+        switch ((mapsize_t)info.size_w)
         {
-            case Maps::SMALL:
+            case mapsize_t::SMALL:
                 index = 26;
                 break;
-            case Maps::MEDIUM:
+            case mapsize_t::MEDIUM:
                 index = 27;
                 break;
-            case Maps::LARGE:
+            case mapsize_t::LARGE:
                 index = 28;
                 break;
-            case Maps::XLARGE:
+            case mapsize_t::XLARGE:
                 index = 29;
                 break;
             default:
@@ -126,18 +126,18 @@ void ScenarioListBox::RedrawBackground(const Point &dst)
             const Sprite &spriteCount = AGG::GetICN(ICN::REQUESTS, index);
             spriteCount.Blit(dst.x + 65, dst.y + 265);
 
-            switch (info.size_w)
+            switch ((mapsize_t)info.size_w)
             {
-                case Maps::SMALL:
+                case mapsize_t::SMALL:
                     index = 26;
                     break;
-                case Maps::MEDIUM:
+                case mapsize_t::MEDIUM:
                     index = 27;
                     break;
-                case Maps::LARGE:
+                case mapsize_t::LARGE:
                     index = 28;
                     break;
-                case Maps::XLARGE:
+                case mapsize_t::XLARGE:
                     index = 29;
                     break;
                 default:
@@ -193,18 +193,18 @@ const Maps::FileInfo *Dialog::SelectScenario(const MapsFileInfoList &all)
 
     for (MapsFileInfoList::const_iterator cur = all.begin(); cur != all.end(); ++cur)
     {
-        switch ((*cur).size_w)
+        switch ((mapsize_t)(*cur).size_w)
         {
-            case Maps::SMALL:
+            case mapsize_t::SMALL:
                 small.push_back(*cur);
                 break;
-            case Maps::MEDIUM:
+            case mapsize_t::MEDIUM:
                 medium.push_back(*cur);
                 break;
-            case Maps::LARGE:
+            case mapsize_t::LARGE:
                 large.push_back(*cur);
                 break;
-            case Maps::XLARGE:
+            case mapsize_t::XLARGE:
                 xlarge.push_back(*cur);
                 break;
             default:

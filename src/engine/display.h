@@ -71,6 +71,7 @@ public:
     Surface GetSurface(const Rect &rt) const;
 
 protected:
+
     friend class Texture;
 
     bool isDisplay() const;

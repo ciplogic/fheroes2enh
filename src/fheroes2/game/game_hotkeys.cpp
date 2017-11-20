@@ -296,7 +296,7 @@ void Game::HotKeysLoad(const std::string &hotkeys)
     TinyConfig config('=', '#');
     //const Tiny::Entry* entry = nullptr;
 
-    if (config.Load(hotkeys.c_str()))
+    if (config.Load(hotkeys))
     {
         int ival = 0;
 
@@ -356,7 +356,7 @@ void Game::KeyboardGlobalFilter(int sym, int mod)
 #else
         stream << ".png";
 #endif
-        if (display.Save(stream.str().c_str())) DEBUG(DBG_GAME, DBG_INFO, "save: " << stream.str());
+        if (display.Save(stream.str())) DEBUG(DBG_GAME, DBG_INFO, "save: " << stream.str());
     }
 #ifdef WITHOUT_MOUSE
         else

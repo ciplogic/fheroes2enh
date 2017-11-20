@@ -65,20 +65,20 @@ int PocketPC::SelectScenario(void)
     large.reserve(all.size());
     xlarge.reserve(all.size());
 
-    for (MapsFileInfoList::iterator cur = all.begin(); cur != all.end(); ++cur)
+    for (auto cur = all.begin(); cur != all.end(); ++cur)
     {
-        switch ((*cur).size_w)
+        switch ((mapsize_t)(*cur).size_w)
         {
-            case Maps::SMALL:
+            case mapsize_t::SMALL:
                 small.push_back(*cur);
                 break;
-            case Maps::MEDIUM:
+            case mapsize_t::MEDIUM:
                 medium.push_back(*cur);
                 break;
-            case Maps::LARGE:
+            case mapsize_t::LARGE:
                 large.push_back(*cur);
                 break;
-            case Maps::XLARGE:
+            case mapsize_t::XLARGE:
                 xlarge.push_back(*cur);
                 break;
             default:

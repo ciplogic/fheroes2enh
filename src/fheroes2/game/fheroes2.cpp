@@ -65,8 +65,7 @@ std::string GetCaption()
 {
     return std::string("Free Heroes II, version: " + Settings::GetVersion());
 }
-#define MACOSX
-#ifdef MACOSX
+#ifdef __APPLE__
 int SDL_main(int argc, char **argv)
 #else
 int main(int argc, char **argv)

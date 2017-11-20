@@ -206,22 +206,22 @@ RGBA::RGBA(int r, int g, int b, int a)
 #endif
 }
 
-int RGBA::r(void) const
+int RGBA::r() const
 {
     return color.r;
 }
 
-int RGBA::g(void) const
+int RGBA::g() const
 {
     return color.g;
 }
 
-int RGBA::b(void) const
+int RGBA::b() const
 {
     return color.b;
 }
 
-int RGBA::a(void) const
+int RGBA::a() const
 {
 #if SDL_VERSION_ATLEAST(2, 0, 0)
     return color.a;
@@ -230,7 +230,7 @@ int RGBA::a(void) const
 #endif
 }
 
-int RGBA::pack(void) const
+int RGBA::pack() const
 {
     return (((r() << 24) & 0xFF000000) |
             ((g() << 16) & 0x00FF0000) |
@@ -327,7 +327,7 @@ bool Surface::operator==(const Surface &bs) const
     return surface && bs.surface ? surface == bs.surface : false;
 }
 
-void Surface::Reset(void)
+void Surface::Reset()
 {
     FreeSurface(*this);
     surface = nullptr; /* hard set: for ref copy */
@@ -464,12 +464,12 @@ void Surface::SetDefaultDepth(u32 depth)
     }
 }
 
-Size Surface::GetSize(void) const
+Size Surface::GetSize() const
 {
     return Size(w(), h());
 }
 
-bool Surface::isValid(void) const
+bool Surface::isValid() const
 {
     return surface && surface->format;
 }
@@ -516,27 +516,27 @@ bool Surface::Save(const std::string &fn) const
     return true;
 }
 
-int Surface::w(void) const
+int Surface::w() const
 {
     return surface ? surface->w : 0;
 }
 
-int Surface::h(void) const
+int Surface::h() const
 {
     return surface ? surface->h : 0;
 }
 
-u32 Surface::depth(void) const
+u32 Surface::depth() const
 {
     return isValid() ? surface->format->BitsPerPixel : 0;
 }
 
-u32 Surface::amask(void) const
+u32 Surface::amask() const
 {
     return isValid() ? surface->format->Amask : 0;
 }
 
-u32 Surface::alpha(void) const
+u32 Surface::alpha() const
 {
 #if SDL_VERSION_ATLEAST(2, 0, 0)
     if(isValid())
@@ -551,7 +551,7 @@ u32 Surface::alpha(void) const
 #endif
 }
 
-SurfaceFormat Surface::GetFormat(void) const
+SurfaceFormat Surface::GetFormat() const
 {
     SurfaceFormat res;
     if (surface->format)
@@ -590,7 +590,7 @@ RGBA Surface::GetRGB(u32 pixel) const
 }
 
 /* load static palette (economize 1kb for each surface) only 8bit color! */
-void Surface::SetPalette(void)
+void Surface::SetPalette()
 {
     if (isValid() &&
         pal_colors && pal_nums && surface->format->palette)
@@ -604,7 +604,7 @@ void Surface::SetPalette(void)
     }
 }
 
-u32 Surface::GetColorKey(void) const
+u32 Surface::GetColorKey() const
 {
 #if SDL_VERSION_ATLEAST(2, 0, 0)
     if(isValid() && ! amask())
@@ -657,6 +657,7 @@ void Surface::SetPixel1(s32 x, s32 y, u32 color)
 }
 
 /* draw pixel */
+
 void Surface::SetPixel(int x, int y, u32 pixel)
 {
     if (x < w() && y < h())
@@ -803,17 +804,17 @@ void Surface::SetAlphaMod(int level)
 #endif
 }
 
-void Surface::Lock(void) const
+void Surface::Lock() const
 {
     if (SDL_MUSTLOCK(surface)) SDL_LockSurface(surface);
 }
 
-void Surface::Unlock(void) const
+void Surface::Unlock() const
 {
     if (SDL_MUSTLOCK(surface)) SDL_UnlockSurface(surface);
 }
 
-bool Surface::isRefCopy(void) const
+bool Surface::isRefCopy() const
 {
     return surface ? 1 < surface->refcount : false;
 }
@@ -842,7 +843,7 @@ void Surface::FreeSurface(Surface &sf)
     }
 }
 
-u32 Surface::GetMemoryUsage(void) const
+u32 Surface::GetMemoryUsage() const
 {
     u32 res = sizeof(surface);
 
@@ -858,7 +859,7 @@ u32 Surface::GetMemoryUsage(void) const
     return res;
 }
 
-std::string Surface::Info(void) const
+std::string Surface::Info() const
 {
     std::ostringstream os;
 
@@ -893,7 +894,7 @@ void Surface::Swap(Surface &sf1, Surface &sf2)
     std::swap(sf1.surface, sf2.surface);
 }
 
-bool Surface::isDisplay(void) const
+bool Surface::isDisplay() const
 {
     return false;
 }
@@ -1053,7 +1054,7 @@ Surface Surface::RenderContour(const RGBA &color) const
     return res;
 }
 
-Surface Surface::RenderGrayScale(void) const
+Surface Surface::RenderGrayScale() const
 {
     Surface res(GetSize(), GetFormat());
     const u32 colkey = GetColorKey();
@@ -1076,7 +1077,7 @@ Surface Surface::RenderGrayScale(void) const
     return res;
 }
 
-Surface Surface::RenderSepia(void) const
+Surface Surface::RenderSepia() const
 {
     Surface res(GetSize(), GetFormat());
     const u32 colkey = GetColorKey();
@@ -1125,7 +1126,7 @@ Surface Surface::RenderChangeColor(const RGBA &col1, const RGBA &col2) const
     return res;
 }
 
-Surface Surface::GetSurface(void) const
+Surface Surface::GetSurface() const
 {
     return GetSurface(Rect(Point(0, 0), GetSize()));
 }

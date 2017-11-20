@@ -981,19 +981,19 @@ bool World::LoadMapMP2(const std::string &filename)
     fs.seek(MP2OFFSETDATA - 2 * 4);
 
     // width
-    switch (fs.getLE32())
+    switch ((mapsize_t)fs.getLE32())
     {
-        case Maps::SMALL:
-            Size::w = Maps::SMALL;
+        case mapsize_t::SMALL:
+            Size::w = static_cast<u16>(mapsize_t::SMALL);
             break;
-        case Maps::MEDIUM:
-            Size::w = Maps::MEDIUM;
+        case mapsize_t::MEDIUM:
+            Size::w = static_cast<u16>(mapsize_t::MEDIUM);
             break;
-        case Maps::LARGE:
-            Size::w = Maps::LARGE;
+        case mapsize_t::LARGE:
+            Size::w = static_cast<u16>(mapsize_t::LARGE);
             break;
-        case Maps::XLARGE:
-            Size::w = Maps::XLARGE;
+        case mapsize_t::XLARGE:
+            Size::w = static_cast<u16>(mapsize_t::XLARGE);
             break;
         default:
             Size::w = 0;
@@ -1001,19 +1001,19 @@ bool World::LoadMapMP2(const std::string &filename)
     }
 
     // height
-    switch (fs.getLE32())
+    switch ((mapsize_t)fs.getLE32())
     {
-        case Maps::SMALL:
-            Size::h = Maps::SMALL;
+        case mapsize_t::SMALL:
+            Size::h = static_cast<u16>(mapsize_t::SMALL);
             break;
-        case Maps::MEDIUM:
-            Size::h = Maps::MEDIUM;
+        case mapsize_t::MEDIUM:
+            Size::h = static_cast<u16>(mapsize_t::MEDIUM);
             break;
-        case Maps::LARGE:
-            Size::h = Maps::LARGE;
+        case mapsize_t::LARGE:
+            Size::h = static_cast<u16>(mapsize_t::LARGE);
             break;
-        case Maps::XLARGE:
-            Size::h = Maps::XLARGE;
+        case mapsize_t::XLARGE:
+            Size::h = static_cast<u16>(mapsize_t::XLARGE);
             break;
         default:
             Size::h = 0;
@@ -1032,8 +1032,7 @@ bool World::LoadMapMP2(const std::string &filename)
     // read all addons
     std::vector<MP2::mp2addon_t> vec_mp2addons(fs.getLE32() /* count mp2addon_t */);
 
-    for (std::vector<MP2::mp2addon_t>::iterator
-                 it = vec_mp2addons.begin(); it != vec_mp2addons.end(); ++it)
+    for (auto it = vec_mp2addons.begin(); it != vec_mp2addons.end(); ++it)
     {
         MP2::mp2addon_t &mp2addon = *it;
 
@@ -1615,7 +1614,7 @@ void World::PostLoad(void)
     }
 
     // set ultimate
-    MapsTiles::iterator it = std::find_if(vec_tiles.begin(), vec_tiles.end(),
+    auto it = std::find_if(vec_tiles.begin(), vec_tiles.end(),
                                           std::bind2nd(std::mem_fun_ref(&Maps::Tiles::isObject),
                                                        static_cast<int>(MP2::OBJ_RNDULTIMATEARTIFACT)));
     Point ultimate_pos;
@@ -1627,9 +1626,8 @@ void World::PostLoad(void)
         MapsIndexes pools;
         pools.reserve(vec_tiles.size() / 2);
 
-        for (size_t ii = 0; ii < vec_tiles.size(); ++ii)
+        for (const auto &tile : vec_tiles)
         {
-            const Maps::Tiles &tile = vec_tiles[ii];
             const s32 x = tile.GetIndex() % w();
             const s32 y = tile.GetIndex() / w();
             if (tile.GoodForUltimateArtifact() &&

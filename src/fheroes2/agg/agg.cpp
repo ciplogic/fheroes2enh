@@ -1139,9 +1139,9 @@ bool AGG::LoadOrgICN(int icn, u32 index, bool reflect)
     {
         const std::vector<u8> &body = ReadChunk(ICN::GetString(icn));
 
-        if (body.size())
+        if (!body.empty())
         {
-            v.count = StreamBuf(body).getLE16();
+            v.count = StreamBuf (body).getLE16();
             v.sprites = new Sprite[v.count];
             v.reflect = new Sprite[v.count];
         } else

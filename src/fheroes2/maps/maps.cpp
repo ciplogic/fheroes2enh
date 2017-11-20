@@ -58,8 +58,7 @@ void Maps::IndexesDistance::Assign(s32 from, const Indexes &indexes, int sort)
 {
     reserve(indexes.size());
 
-    for (Indexes::const_iterator
-                 it = indexes.begin(); it != indexes.end(); ++it)
+    for (auto it = indexes.begin(); it != indexes.end(); ++it)
         push_back(IndexDistance(*it, Maps::GetApproximateDistance(from, *it)));
 
     if (1 == sort)
@@ -105,15 +104,15 @@ const char *Maps::SizeString(int s)
     const char *mapsize[] = {"Unknown", _("maps|Small"), _("maps|Medium"), _("maps|Large"), _("maps|Extra Large"),
                              _("maps|Custom Size")};
 
-    switch (s)
+    switch ((mapsize_t)s)
     {
-        case SMALL:
+        case mapsize_t::SMALL:
             return mapsize[1];
-        case MEDIUM:
+        case mapsize_t::MEDIUM:
             return mapsize[2];
-        case LARGE:
+        case mapsize_t::LARGE:
             return mapsize[3];
-        case XLARGE:
+        case mapsize_t::XLARGE:
             return mapsize[4];
         default:
             break;

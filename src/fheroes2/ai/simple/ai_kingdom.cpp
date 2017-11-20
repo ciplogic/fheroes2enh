@@ -191,7 +191,7 @@ void AI::KingdomTurn(Kingdom &kingdom)
     if (ai.capital && ai.capital->isCastle())
     {
         u32 modes = 0;
-        const u32 maxhero = Maps::XLARGE > world.w() ? (Maps::LARGE > world.w() ? 3 : 2) : 4;
+        const u32 maxhero = (s32)mapsize_t::XLARGE > world.w() ? ((s32)mapsize_t::LARGE > world.w() ? 3 : 2) : 4;
 
         if (heroes.empty())
             modes = AI::HEROES_HUNTER | AI::HEROES_SCOUTER;
@@ -230,10 +230,9 @@ void AI::KingdomTurn(Kingdom &kingdom)
                               std::bind2nd(std::mem_fun(&Heroes::Modes), AI::HEROES_HUNTER));
 
         // every time
-        if (0 == hunters &&
-            heroes.size())
+        if (0 == hunters && heroes.size())
         {
-            KingdomHeroes::iterator it = std::find_if(heroes.begin(), heroes.end(),
+            auto it = std::find_if(heroes.begin(), heroes.end(),
                                                       std::not1(std::bind2nd(std::mem_fun(&Heroes::Modes),
                                                                              Heroes::PATROL)));
 
