@@ -30,6 +30,23 @@
 #include "text.h"
 #include "army_bar.h"
 
+
+bool CanUpgradeTroopButNoResources(Troop& troop, Army* army)
+{
+    const Castle *castle = army->inCastle();
+    bool candidate = false;
+    if (troop.isAllowUpgrade() &&
+        // allow upgrade
+        castle && castle->GetRace() == troop.GetRace() && castle->isBuild(troop.GetUpgrade().GetDwelling()))
+    {
+        candidate = true;
+    }
+    if(!candidate)
+        return false;
+
+    return !CanUpgradeTroop(troop, army);
+}
+
 bool CanUpgradeTroop(Troop& troop, Army* army)
 {
     const Castle *castle = army->inCastle();
@@ -169,6 +186,7 @@ void ArmyBar::RedrawBackground(const Rect &pos, Surface &dstsf)
 }
 
 #define ColorGreen RGBA(255,255,0,255)
+#define ColorGray RGBA(127,127,127,255)
 
 void ArmyBar::RedrawItem(ArmyTroop &troop, const Rect &pos, bool selected, Surface &dstsf)
 {
@@ -243,7 +261,15 @@ void ArmyBar::RedrawItem(ArmyTroop &troop, const Rect &pos, bool selected, Surfa
                 greenUp.Blit(ptPlus.x, ptPlus.y, dstsf);
                 textPlus.Blit(ptPlus.x + 2, ptPlus.y + 1, dstsf);
             }
-
+            if(CanUpgradeTroopButNoResources(troop, army))
+            {
+                Text textPlus = {"+"};
+                Surface greenUp(Size(textPlus.w() + 4, textPlus.h()+4), false);
+                greenUp.Fill(ColorGray);
+                const Point ptPlus(pos.x + pos.w - greenUp.w() - 1, pos.y + 2);
+                greenUp.Blit(ptPlus.x, ptPlus.y, dstsf);
+                textPlus.Blit(ptPlus.x + 2, ptPlus.y + 1, dstsf);
+            }
 
         } else
             text.Blit(pos.x + pos.w - text.w() - 3, pos.y + pos.h - text.h() - 1, dstsf);
