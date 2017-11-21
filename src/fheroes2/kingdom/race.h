@@ -40,7 +40,7 @@ namespace Race
 
     const char *String(int);
 
-    int Rand(void);
+    int Rand();
 
     int FromInt(int);
 }

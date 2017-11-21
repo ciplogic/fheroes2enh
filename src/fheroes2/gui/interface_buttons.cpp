@@ -31,12 +31,12 @@ Interface::ButtonsArea::ButtonsArea(Basic &basic) : BorderWindow(Rect(0, 0, 144,
 {
 }
 
-void Interface::ButtonsArea::SavePosition(void)
+void Interface::ButtonsArea::SavePosition()
 {
     Settings::Get().SetPosButtons(GetRect());
 }
 
-void Interface::ButtonsArea::SetRedraw(void) const
+void Interface::ButtonsArea::SetRedraw() const
 {
     interface.SetRedraw(REDRAW_BUTTONS);
 }
@@ -72,7 +72,7 @@ void Interface::ButtonsArea::SetPos(s32 ox, s32 oy)
     buttonSystem.SetPos(buttonFile.x + buttonFile.w, oy);
 }
 
-void Interface::ButtonsArea::Redraw(void)
+void Interface::ButtonsArea::Redraw()
 {
     const Settings &conf = Settings::Get();
 
@@ -103,7 +103,7 @@ void Interface::ButtonsArea::Redraw(void)
     }
 }
 
-int Interface::ButtonsArea::QueueEventProcessing(void)
+int Interface::ButtonsArea::QueueEventProcessing()
 {
     Settings &conf = Settings::Get();
     LocalEvent &le = LocalEvent::Get();

@@ -53,7 +53,7 @@ struct HeroRow
         Clear();
     }
 
-    void Clear(void)
+    void Clear()
     {
         if (armyBar) delete armyBar;
         if (artifactsBar) delete artifactsBar;
@@ -103,10 +103,10 @@ public:
 
     void RedrawBackground(const Point &);
 
-    void ActionCurrentUp(void)
+    void ActionCurrentUp()
     {};
 
-    void ActionCurrentDn(void)
+    void ActionCurrentDn()
     {};
 
     void ActionListSingleClick(HeroRow &)
@@ -281,7 +281,7 @@ struct CstlRow
         Clear();
     }
 
-    void Clear(void)
+    void Clear()
     {
         if (armyBarGuard) delete armyBarGuard;
         if (armyBarGuest) delete armyBarGuest;
@@ -327,10 +327,10 @@ public:
 
     void RedrawBackground(const Point &);
 
-    void ActionCurrentUp(void)
+    void ActionCurrentUp()
     {};
 
-    void ActionCurrentDn(void)
+    void ActionCurrentDn()
     {};
 
     void ActionListDoubleClick(CstlRow &)
@@ -596,7 +596,7 @@ void RedrawFundsInfo(const Point &pt, const Kingdom &myKingdom)
     text.Blit(pt.x + 360, pt.y + 462);
 }
 
-void Kingdom::OverviewDialog(void)
+void Kingdom::OverviewDialog()
 {
     Display &display = Display::Get();
     Cursor &cursor = Cursor::Get();

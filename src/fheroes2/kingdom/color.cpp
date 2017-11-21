@@ -151,7 +151,7 @@ Colors::Colors(int colors)
     if (colors & Color::PURPLE) push_back(Color::PURPLE);
 }
 
-std::string Colors::String(void) const
+std::string Colors::String() const
 {
     std::ostringstream os;
 
@@ -176,7 +176,7 @@ void ColorBase::SetColor(int col)
     color = Color::FromInt(col);
 }
 
-Kingdom &ColorBase::GetKingdom(void) const
+Kingdom &ColorBase::GetKingdom() const
 {
     return world.GetKingdom(color);
 }

@@ -39,10 +39,10 @@ public:
 
     void RedrawBackground(const Point &);
 
-    void ActionCurrentUp(void)
+    void ActionCurrentUp()
     {};
 
-    void ActionCurrentDn(void)
+    void ActionCurrentDn()
     {};
 
     void ActionListDoubleClick(u32 &);

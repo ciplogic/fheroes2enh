@@ -32,50 +32,50 @@ class Captain : public HeroBase
 public:
     Captain(Castle &);
 
-    bool isValid(void) const;
+    bool isValid() const;
 
-    int GetAttack(void) const;
+    int GetAttack() const;
 
-    int GetDefense(void) const;
+    int GetDefense() const;
 
-    int GetPower(void) const;
+    int GetPower() const;
 
-    int GetKnowledge(void) const;
+    int GetKnowledge() const;
 
-    int GetMorale(void) const;
+    int GetMorale() const;
 
-    int GetLuck(void) const;
+    int GetLuck() const;
 
-    int GetRace(void) const;
+    int GetRace() const;
 
-    int GetColor(void) const;
+    int GetColor() const;
 
-    int GetType(void) const;
+    int GetType() const;
 
-    int GetControl(void) const;
+    int GetControl() const;
 
-    s32 GetIndex(void) const;
+    s32 GetIndex() const;
 
     const std::string &
-    GetName(void) const;
+    GetName() const;
 
     const Castle *
-    inCastle(void) const;
+    inCastle() const;
 
     int GetLevelSkill(int) const;
 
     u32 GetSecondaryValues(int) const;
 
     const Army &
-    GetArmy(void) const;
+    GetArmy() const;
 
-    Army &GetArmy(void);
+    Army &GetArmy();
 
-    u32 GetMaxSpellPoints(void) const;
+    u32 GetMaxSpellPoints() const;
 
-    void ActionPreBattle(void);
+    void ActionPreBattle();
 
-    void ActionAfterBattle(void);
+    void ActionAfterBattle();
 
     void PortraitRedraw(s32, s32, int type, Surface &) const;
 

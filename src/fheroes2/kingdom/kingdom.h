@@ -78,15 +78,15 @@ public:
 
     void Init(int color);
 
-    void clear(void);
+    void clear();
 
-    void OverviewDialog(void);
+    void OverviewDialog();
 
-    void UpdateStartingResource(void);
+    void UpdateStartingResource();
 
-    bool isPlay(void) const;
+    bool isPlay() const;
 
-    bool isLoss(void) const;
+    bool isLoss() const;
 
     bool AllowPayment(const Funds &) const;
 
@@ -94,89 +94,89 @@ public:
 
     void SetLastLostHero(Heroes &);
 
-    void ResetLastLostHero(void);
+    void ResetLastLostHero();
 
     void AddHeroStartCondLoss(Heroes *);
 
-    std::string GetNamesHeroStartCondLoss(void) const;
+    std::string GetNamesHeroStartCondLoss() const;
 
-    Heroes *GetLastLostHero(void) const;
-
-    const Heroes *
-    GetFirstHeroStartCondLoss(void) const;
+    Heroes *GetLastLostHero() const;
 
     const Heroes *
-    GetBestHero(void) const;
+    GetFirstHeroStartCondLoss() const;
 
-    int GetControl(void) const;
+    const Heroes *
+    GetBestHero() const;
 
-    int GetColor(void) const;
+    int GetControl() const;
 
-    int GetRace(void) const;
+    int GetColor() const;
+
+    int GetRace() const;
 
     const Funds &
-    GetFunds(void) const
+    GetFunds() const
     { return resource; }
 
     Funds GetIncome(int = INCOME_ALL) const;
 
-    u32 GetArmiesStrength(void) const;
+    u32 GetArmiesStrength() const;
 
     void AddFundsResource(const Funds &);
 
     void OddFundsResource(const Funds &);
 
-    u32 GetCountCastle(void) const;
+    u32 GetCountCastle() const;
 
-    u32 GetCountTown(void) const;
+    u32 GetCountTown() const;
 
-    u32 GetCountMarketplace(void) const;
+    u32 GetCountMarketplace() const;
 
-    u32 GetCountCapital(void) const;
+    u32 GetCountCapital() const;
 
-    u32 GetLostTownDays(void) const;
+    u32 GetLostTownDays() const;
 
-    u32 GetCountNecromancyShrineBuild(void) const;
+    u32 GetCountNecromancyShrineBuild() const;
 
     u32 GetCountBuilding(u32) const;
 
-    Recruits &GetRecruits(void);
+    Recruits &GetRecruits();
 
     const KingdomHeroes &
-    GetHeroes(void) const
+    GetHeroes() const
     { return heroes; }
 
     const KingdomCastles &
-    GetCastles(void) const
+    GetCastles() const
     { return castles; }
 
     KingdomHeroes &
-    GetHeroes(void)
+    GetHeroes()
     { return heroes; }
 
     KingdomCastles &
-    GetCastles(void)
+    GetCastles()
     { return castles; }
 
     void AddHeroes(Heroes *);
 
     void RemoveHeroes(const Heroes *);
 
-    void ApplyPlayWithStartingHero(void);
+    void ApplyPlayWithStartingHero();
 
-    void HeroesActionNewPosition(void);
+    void HeroesActionNewPosition();
 
     void AddCastle(const Castle *);
 
     void RemoveCastle(const Castle *);
 
-    void ActionBeforeTurn(void);
+    void ActionBeforeTurn();
 
-    void ActionNewDay(void);
+    void ActionNewDay();
 
-    void ActionNewWeek(void);
+    void ActionNewWeek();
 
-    void ActionNewMonth(void);
+    void ActionNewMonth();
 
     void SetVisited(s32 index, int object = MP2::OBJ_ZERO);
 
@@ -188,22 +188,22 @@ public:
 
     bool isVisited(s32, int obj) const;
 
-    bool HeroesMayStillMove(void) const;
+    bool HeroesMayStillMove() const;
 
     const Puzzle &
-    PuzzleMaps(void) const;
+    PuzzleMaps() const;
 
-    Puzzle &PuzzleMaps(void);
+    Puzzle &PuzzleMaps();
 
     void SetVisitTravelersTent(int);
 
     bool IsVisitTravelersTent(int) const;
 
-    void UpdateRecruits(void);
+    void UpdateRecruits();
 
-    void LossPostActions(void);
+    void LossPostActions();
 
-    static u32 GetMaxHeroes(void);
+    static u32 GetMaxHeroes();
 
 private:
     friend StreamBase &operator<<(StreamBase &, const Kingdom &);
@@ -235,26 +235,26 @@ class Kingdoms
 public:
     Kingdoms();
 
-    void Init(void);
+    void Init();
 
-    void clear(void);
+    void clear();
 
-    void ApplyPlayWithStartingHero(void);
+    void ApplyPlayWithStartingHero();
 
-    void NewDay(void);
+    void NewDay();
 
-    void NewWeek(void);
+    void NewWeek();
 
-    void NewMonth(void);
+    void NewMonth();
 
     Kingdom &GetKingdom(int color);
 
     const Kingdom &
     GetKingdom(int color) const;
 
-    int GetLossColors(void) const;
+    int GetLossColors() const;
 
-    int GetNotLossColors(void) const;
+    int GetNotLossColors() const;
 
     int FindWins(int) const;
 
@@ -266,7 +266,7 @@ public:
 
     void AddTributeEvents(CapturedObjects &, u32 day, int obj);
 
-    u32 size(void) const;
+    u32 size() const;
 
 private:
     friend StreamBase &operator<<(StreamBase &, const Kingdoms &);

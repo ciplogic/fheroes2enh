@@ -157,7 +157,7 @@ void ArmyBar::SetArmy(Army *ptr)
     SetContentItems();
 }
 
-bool ArmyBar::isValid(void) const
+bool ArmyBar::isValid() const
 {
     return army != nullptr;
 }
@@ -279,7 +279,7 @@ void ArmyBar::RedrawItem(ArmyTroop &troop, const Rect &pos, bool selected, Surfa
     }
 }
 
-void ArmyBar::ResetSelected(void)
+void ArmyBar::ResetSelected()
 {
     Cursor::Get().Hide();
     spcursor.Hide();
@@ -329,18 +329,6 @@ bool ArmyBar::ActionBarCursor(const Point &cursor, ArmyTroop &troop, const Rect 
 
     if (!troop.isValid() && troop_p && troop_p->isValid())
     {
-/*
-	const Rect* pos_p = GetItemPos(le.GetMousePressLeft());
-	const Point offset(Point(le.GetMousePressLeft()) - *pos_p);
-	Surface sf(pos.w, pos.h);
-	RedrawItem(*troop_p, Rect(0, 0, pos.w, pos.h), false, sf);
-	sf.GrayScale();
-	SpriteCursor sp;
-	sp.SetSprite(sf);
-	while(le.HandleEvents() && le.MousePressLeft()){ Cursor::Get().Hide(); sp.Move(Point(le.GetMouseCursor()) - offset); Cursor::Get().Show(); Display::Get().Flip(); DELAY(1); };
-	Cursor::Get().Hide();
-	sp.Hide();
-*/
         while (le.HandleEvents() && le.MousePressLeft())
         {
             Cursor::Get().Show();

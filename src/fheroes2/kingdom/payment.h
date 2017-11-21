@@ -37,7 +37,7 @@ namespace PaymentConditions
 {
     payment_t BuyBuilding(int race, u32 build);
 
-    payment_t BuyBoat(void);
+    payment_t BuyBoat();
 
     payment_t BuySpellBook(int shrine = 0);
 

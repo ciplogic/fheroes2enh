@@ -55,9 +55,9 @@ public:
 
     void RedrawBackground(const Point &);
 
-    void ActionCurrentUp(void);
+    void ActionCurrentUp();
 
-    void ActionCurrentDn(void);
+    void ActionCurrentDn();
 
     void ActionListDoubleClick(Maps::FileInfo &);
 
@@ -104,12 +104,12 @@ void FileInfoListBox::RedrawBackground(const Point &dst)
         panel.Blit(dst);
 }
 
-void FileInfoListBox::ActionCurrentUp(void)
+void FileInfoListBox::ActionCurrentUp()
 {
     edit_mode = false;
 }
 
-void FileInfoListBox::ActionCurrentDn(void)
+void FileInfoListBox::ActionCurrentDn()
 {
     edit_mode = false;
 }
@@ -150,7 +150,7 @@ size_t GetInsertPosition(const std::string &name, s32 cx, s32 posx)
     return 0;
 }
 
-MapsFileInfoList GetSortedMapsFileInfoList(void)
+MapsFileInfoList GetSortedMapsFileInfoList()
 {
     ListFiles list1;
     list1.ReadDir(Settings::GetSaveDir(), ".sav", false);
@@ -170,7 +170,7 @@ bool IsPunct(char c)
     return true;
 }
 
-std::string Dialog::SelectFileSave(void)
+std::string Dialog::SelectFileSave()
 {
     const Settings &conf = Settings::Get();
     const std::string &name = conf.CurrentFileInfo().name;
@@ -187,7 +187,7 @@ std::string Dialog::SelectFileSave(void)
     return SelectFileListSimple(_("File to Save:"), lastfile, true);
 }
 
-std::string Dialog::SelectFileLoad(void)
+std::string Dialog::SelectFileLoad()
 {
     const std::string &lastfile = Game::GetLastSavename();
     return SelectFileListSimple(_("File to Load:"), (lastfile.size() ? lastfile : ""), false);

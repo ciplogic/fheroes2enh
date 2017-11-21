@@ -37,7 +37,7 @@ int InfoSkillNext(int);
 
 int InfoSkillPrev(int);
 
-int Dialog::SelectSkillFromArena(void)
+int Dialog::SelectSkillFromArena()
 {
     Display &display = Display::Get();
     const int system = Settings::Get().ExtGameEvilInterface() ? ICN::SYSTEME : ICN::SYSTEM;

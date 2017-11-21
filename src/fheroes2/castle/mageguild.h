@@ -60,9 +60,9 @@ class RowSpells
 public:
     RowSpells(const Point &, const Castle &, int);
 
-    void Redraw(void);
+    void Redraw();
 
-    bool QueueEventProcessing(void);
+    bool QueueEventProcessing();
 
 private:
     Rects coords;

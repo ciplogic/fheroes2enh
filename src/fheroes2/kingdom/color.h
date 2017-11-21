@@ -67,7 +67,7 @@ class Colors : public std::vector<int>
 public:
     Colors(int = Color::ALL);
 
-    std::string String(void) const;
+    std::string String() const;
 };
 
 class Kingdom;
@@ -90,9 +90,9 @@ public:
 
     void SetColor(int);
 
-    Kingdom &GetKingdom(void) const;
+    Kingdom &GetKingdom() const;
 
-    int GetColor(void) const
+    int GetColor() const
     { return color; }
 };
 

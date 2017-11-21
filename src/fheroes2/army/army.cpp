@@ -147,7 +147,7 @@ Troops::~Troops()
     for (auto it : _items) delete it;
 }
 
-size_t Troops::Size(void) const
+size_t Troops::Size() const
 {
     return _items.size();
 }
@@ -227,12 +227,12 @@ u32 Troops::GetCountMonsters(const Monster &m) const
     return c;
 }
 
-bool Troops::isValid(void) const
+bool Troops::isValid() const
 {
     return _items.end() != std::find_if(_items.begin(), _items.end(), std::mem_fun(&Troop::isValid));
 }
 
-u32 Troops::GetCount(void) const
+u32 Troops::GetCount() const
 {
     return std::count_if(_items.begin(), _items.end(), std::mem_fun(&Troop::isValid));
 }
@@ -312,7 +312,7 @@ void Troops::JoinTroops(Troops &troops2)
         }
 }
 
-u32 Troops::GetUniqueCount(void) const
+u32 Troops::GetUniqueCount() const
 {
     std::vector<int> monsters;
     monsters.reserve(_items.size());
@@ -328,7 +328,7 @@ u32 Troops::GetUniqueCount(void) const
 }
 
 
-u32 Troops::GetAttack(void) const
+u32 Troops::GetAttack() const
 {
     u32 res = 0;
     u32 count = 0;
@@ -343,7 +343,7 @@ u32 Troops::GetAttack(void) const
     return count ? res / count : 0;
 }
 
-u32 Troops::GetDefense(void) const
+u32 Troops::GetDefense() const
 {
     u32 res = 0;
     u32 count = 0;
@@ -358,7 +358,7 @@ u32 Troops::GetDefense(void) const
     return count ? res / count : 0;
 }
 
-u32 Troops::GetHitPoints(void) const
+u32 Troops::GetHitPoints() const
 {
     u32 res = 0;
 
@@ -368,7 +368,7 @@ u32 Troops::GetHitPoints(void) const
     return res;
 }
 
-u32 Troops::GetDamageMin(void) const
+u32 Troops::GetDamageMin() const
 {
     u32 res = 0;
     u32 count = 0;
@@ -383,7 +383,7 @@ u32 Troops::GetDamageMin(void) const
     return count ? res / count : 0;
 }
 
-u32 Troops::GetDamageMax(void) const
+u32 Troops::GetDamageMax() const
 {
     u32 res = 0;
     u32 count = 0;
@@ -398,7 +398,7 @@ u32 Troops::GetDamageMax(void) const
     return count ? res / count : 0;
 }
 
-u32 Troops::GetStrength(void) const
+u32 Troops::GetStrength() const
 {
     u32 res = 0;
 
@@ -408,7 +408,7 @@ u32 Troops::GetStrength(void) const
     return res;
 }
 
-void Troops::Clean(void)
+void Troops::Clean()
 {
     std::for_each(_items.begin(), _items.end(), std::mem_fun(&Troop::Reset));
 }
@@ -431,13 +431,13 @@ void Troops::UpgradeTroops(const Castle &castle)
         }
 }
 
-Troop *Troops::GetFirstValid(void)
+Troop *Troops::GetFirstValid()
 {
     auto it = std::find_if(_items.begin(), _items.end(), std::mem_fun(&Troop::isValid));
     return it == _items.end() ? nullptr : *it;
 }
 
-Troop *Troops::GetWeakestTroop(void)
+Troop *Troops::GetWeakestTroop()
 {
     std::vector<Troop*>::iterator first, last, lowest;
 
@@ -455,7 +455,7 @@ Troop *Troops::GetWeakestTroop(void)
     return *lowest;
 }
 
-Troop *Troops::GetSlowestTroop(void)
+Troop *Troops::GetSlowestTroop()
 {
     std::vector<Troop*>::iterator first, last, lowest;
 
@@ -473,7 +473,7 @@ Troop *Troops::GetSlowestTroop(void)
     return *lowest;
 }
 
-Troops Troops::GetOptimized(void) const
+Troops Troops::GetOptimized() const
 {
     Troops result;
     result._items.reserve(_items.size());
@@ -865,7 +865,7 @@ Army::~Army()
     _items.clear();
 }
 
-bool Army::isFullHouse(void) const
+bool Army::isFullHouse() const
 {
     return GetCount() == _items.size();
 }
@@ -875,12 +875,12 @@ void Army::SetSpreadFormat(bool f)
     combat_format = f;
 }
 
-bool Army::isSpreadFormat(void) const
+bool Army::isSpreadFormat() const
 {
     return combat_format;
 }
 
-int Army::GetColor(void) const
+int Army::GetColor() const
 {
     return GetCommander() ? GetCommander()->GetColor() : color;
 }
@@ -890,7 +890,7 @@ void Army::SetColor(int cl)
     color = cl;
 }
 
-int Army::GetRace(void) const
+int Army::GetRace() const
 {
     std::vector<int> races;
     races.reserve(_items.size());
@@ -910,7 +910,7 @@ int Army::GetRace(void) const
     return 1 < races.size() ? Race::MULT : races[0];
 }
 
-int Army::GetLuck(void) const
+int Army::GetLuck() const
 {
     return GetCommander() ? GetCommander()->GetLuck() : GetLuckModificator(nullptr);
 }
@@ -920,7 +920,7 @@ int Army::GetLuckModificator(std::string *strs) const
     return Luck::NORMAL;
 }
 
-int Army::GetMorale(void) const
+int Army::GetMorale() const
 {
     return GetCommander() ? GetCommander()->GetMorale() : GetMoraleModificator(nullptr);
 }
@@ -1083,7 +1083,7 @@ int Army::GetMoraleModificator(std::string *strs) const
     return result;
 }
 
-u32 Army::GetAttack(void) const
+u32 Army::GetAttack() const
 {
     u32 res = 0;
     u32 count = 0;
@@ -1098,7 +1098,7 @@ u32 Army::GetAttack(void) const
     return count ? res / count : 0;
 }
 
-u32 Army::GetDefense(void) const
+u32 Army::GetDefense() const
 {
     u32 res = 0;
     u32 count = 0;
@@ -1150,27 +1150,27 @@ void Army::SetCommander(HeroBase *c)
     commander = c;
 }
 
-HeroBase *Army::GetCommander(void)
+HeroBase *Army::GetCommander()
 {
     return (!commander || (commander->isCaptain() && !commander->isValid())) ? nullptr : commander;
 }
 
-const Castle *Army::inCastle(void) const
+const Castle *Army::inCastle() const
 {
     return commander ? commander->inCastle() : nullptr;
 }
 
-const HeroBase *Army::GetCommander(void) const
+const HeroBase *Army::GetCommander() const
 {
     return (!commander || (commander->isCaptain() && !commander->isValid())) ? nullptr : commander;
 }
 
-int Army::GetControl(void) const
+int Army::GetControl() const
 {
     return commander ? commander->GetControl() : (color == Color::NONE ? CONTROL_AI : Players::GetPlayerControl(color));
 }
 
-std::string Army::String(void) const
+std::string Army::String() const
 {
     std::ostringstream os;
 
@@ -1201,7 +1201,7 @@ void Army::KeepOnlyWeakestTroops(Army &army2)
     KeepOnlyWeakest(army2, save_last);
 }
 
-u32 Army::ActionToSirens(void)
+u32 Army::ActionToSirens()
 {
     u32 res = 0;
 
@@ -1338,7 +1338,7 @@ void Army::SwapTroops(Troop &t1, Troop &t2)
     std::swap(t1, t2);
 }
 
-bool Army::SaveLastTroop(void) const
+bool Army::SaveLastTroop() const
 {
     return commander && commander->isHeroes() && 1 == GetCount();
 }

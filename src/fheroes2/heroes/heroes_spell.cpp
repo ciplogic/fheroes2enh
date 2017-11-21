@@ -35,7 +35,7 @@
 
 void DialogSpellFailed(const Spell &);
 
-void DialogNotAvailable(void);
+void DialogNotAvailable();
 
 bool ActionSpellViewMines(Heroes &);
 
@@ -73,10 +73,10 @@ public:
 
     void RedrawBackground(const Point &);
 
-    void ActionCurrentUp(void)
+    void ActionCurrentUp()
     {};
 
-    void ActionCurrentDn(void)
+    void ActionCurrentDn()
     {};
 
     void ActionListDoubleClick(s32 &)
@@ -247,7 +247,7 @@ void DialogSpellFailed(const Spell &spell)
     Dialog::Message("", str, Font::BIG, Dialog::OK);
 }
 
-void DialogNotAvailable(void)
+void DialogNotAvailable()
 {
     Dialog::Message("", "Not available for current version", Font::BIG, Dialog::OK);
 }

@@ -47,13 +47,13 @@ void RedrawRatingInfo(TextSprite &);
 
 void RedrawDifficultyInfo(const Point &dst, bool label = true);
 
-int Game::SelectScenario(void)
+int Game::SelectScenario()
 {
     if (Settings::Get().QVGA()) return PocketPC::SelectScenario();
     return SCENARIOINFO;
 }
 
-int Game::ScenarioInfo(void)
+int Game::ScenarioInfo()
 {
     Settings &conf = Settings::Get();
 

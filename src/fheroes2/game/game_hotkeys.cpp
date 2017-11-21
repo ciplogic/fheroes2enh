@@ -34,7 +34,7 @@
 
 namespace Game
 {
-    void HotKeysDefaults(void);
+    void HotKeysDefaults();
 
     void HotKeysLoad(const std::string &);
 
@@ -187,7 +187,7 @@ const char *Game::EventsName(int evnt)
     return nullptr;
 }
 
-void Game::HotKeysDefaults(void)
+void Game::HotKeysDefaults()
 {
     std::fill(&key_events[0], &key_events[EVENT_LAST], KEY_NONE);
 
@@ -237,7 +237,7 @@ void Game::HotKeysDefaults(void)
     // next town
     key_events[EVENT_NEXTTOWN] = KEY_t;
     // continue (move hero)
-    key_events[EVENT_CONTINUE] = KEY_m;
+    key_events[EVENT_CONTINUE] = KEY_SPACE;
     // save game
     key_events[EVENT_SAVEGAME] = KEY_s;
     // load game
