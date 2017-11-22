@@ -135,6 +135,7 @@ public:
 
     u32 GetColorKey() const;
 
+    void BlitAlpha(const Rect &srt, const Point &dpt, Surface &dst) const;
     void Blit(Surface &) const;
 
     void Blit(s32, s32, Surface &) const;
@@ -149,6 +150,9 @@ public:
 
     void FillRect(const Rect &, const RGBA &);
 
+    void drawPixel( int x , int y , float brightness, u32 col);
+    void drawAALine(int x0 , int y0 , int x1 , int y1, const RGBA&);
+    void DrawLineAa(const Point &, const Point &, const RGBA &);
     void DrawLine(const Point &, const Point &, const RGBA &);
 
     void DrawPoint(const Point &, const RGBA &);

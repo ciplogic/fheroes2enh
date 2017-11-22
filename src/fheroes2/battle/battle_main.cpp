@@ -181,7 +181,7 @@ void Battle::PickupArtifactsAction(HeroBase &hero1, HeroBase &hero2, bool local)
             art = Artifact::UNKNOWN;
         } else if (art() != Artifact::UNKNOWN && art() != Artifact::MAGIC_BOOK)
         {
-            BagArtifacts::iterator it = std::find(bag1.begin(), bag1.end(), Artifact((Artifact::UNKNOWN)));
+            auto it = std::find(bag1.begin(), bag1.end(), Artifact((Artifact::UNKNOWN)));
             if (bag1.end() != it)
             {
                 *it = art;
@@ -208,10 +208,8 @@ void Battle::EagleEyeSkillAction(HeroBase &hero, const SpellStorage &spells, boo
     const Skill::Secondary eagleeye(Skill::Secondary::EAGLEEYE, hero.GetLevelSkill(Skill::Secondary::EAGLEEYE));
 
     // filter spells
-    for (SpellStorage::const_iterator
-                 it = spells.begin(); it != spells.end(); ++it)
+    for (auto sp : spells)
     {
-        const Spell &sp = *it;
         if (!hero.HaveSpell(sp))
         {
             switch (eagleeye.Level())
@@ -235,9 +233,8 @@ void Battle::EagleEyeSkillAction(HeroBase &hero, const SpellStorage &spells, boo
     }
 
     // add new spell
-    for (auto it = new_spells.begin(); it != new_spells.end(); ++it)
+    for (auto &sp : new_spells)
     {
-        const Spell &sp = *it;
         if (local)
         {
             std::string msg = _("Through eagle-eyed observation, %{name} is able to learn the magic spell %{spell}.");

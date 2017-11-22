@@ -58,10 +58,9 @@ int Direction::Get(s32 from, s32 to)
 {
     const Directions directions = Direction::All();
 
-    for (Directions::const_iterator
-                 it = directions.begin(); it != directions.end(); ++it)
-        if (to == Maps::GetDirectionIndex(from, *it))
-            return *it;
+    for (int direction : directions)
+        if (to == Maps::GetDirectionIndex(from, direction))
+            return direction;
 
     return to == from ? CENTER : UNKNOWN;
 }

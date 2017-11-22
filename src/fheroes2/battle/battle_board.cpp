@@ -286,8 +286,7 @@ Battle::Indexes Battle::Board::GetAStarPath(const Unit &b, const Position &dst, 
         }
 
         // set passable info
-        for (Indexes::iterator
-                     it = result.begin(); it != result.end(); ++it)
+        for (auto it = result.begin(); it != result.end(); ++it)
         {
             Cell *cell = GetCell(*it);
             cell->SetDirection(cell->GetDirection() |

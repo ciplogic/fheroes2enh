@@ -207,14 +207,14 @@ Surface DrawHexagon(const RGBA &color)
 
     Surface sf(Size(w, h), false);
 
-    sf.DrawLine(Point(r, 0), Point(0, l), color);
-    sf.DrawLine(Point(r, 0), Point(w - 1, l), color);
+    sf.DrawLineAa(Point(r, 0), Point(0, l), color);
+    sf.DrawLineAa(Point(r, 0), Point(w - 1, l), color);
 
-    sf.DrawLine(Point(0, l + 1), Point(0, h - l - 1), color);
-    sf.DrawLine(Point(w - 1, l + 1), Point(w - 1, h - l - 1), color);
+    sf.DrawLineAa(Point(0, l + 1), Point(0, h - l - 1), color);
+    sf.DrawLineAa(Point(w - 1, l + 1), Point(w - 1, h - l - 1), color);
 
-    sf.DrawLine(Point(r, h - 1), Point(0, h - l - 1), color);
-    sf.DrawLine(Point(r, h - 1), Point(w - 1, h - l - 1), color);
+    sf.DrawLineAa(Point(r, h - 1), Point(0, h - l - 1), color);
+    sf.DrawLineAa(Point(r, h - 1), Point(w - 1, h - l - 1), color);
 
     return sf;
 }
@@ -1307,10 +1307,9 @@ void Battle::Interface::RedrawCover()
         !b_current->isControlAI())
     {
         const Board &board = *Arena::GetBoard();
-        for (Board::const_iterator
-                     it = board.begin(); it != board.end(); ++it)
-            if ((*it).isPassable1(true) && UNKNOWN != (*it).GetDirection())
-                sf_shadow.Blit((*it).GetPos().x, (*it).GetPos().y, display);
+        for (const auto &it : board)
+            if (it.isPassable1(true) && UNKNOWN != it.GetDirection())
+                sf_shadow.Blit(it.GetPos().x, it.GetPos().y, display);
     }
 
     const Bridge *bridge = Arena::GetBridge();
@@ -1368,9 +1367,11 @@ void Battle::Interface::RedrawCoverStatic(Surface &dst)
     // grid
     if (conf.ExtBattleShowGrid())
     {
-        for (Board::const_iterator
-                     it = board.begin(); it != board.end(); ++it)
-            if ((*it).GetObject() == 0) sf_hexagon.Blit((*it).GetPos(), dst);
+        for (const auto &it : board)
+            if (it.GetObject() == 0) {
+                Rect sizeHex(Point(0, 0), sf_hexagon.GetSize());
+                sf_hexagon.BlitAlpha(sizeHex, it.GetPos(), dst);
+            }
     }
 
 }
@@ -1380,7 +1381,7 @@ void Battle::Interface::RedrawCastle1(const Castle &castle, Surface &dst) const
     const Point &topleft = border.GetArea();
     const bool fortification = (Race::KNGT == castle.GetRace()) && castle.isBuild(BUILD_SPEC);
 
-    int icn_castbkg = ICN::UNKNOWN;
+    int icn_castbkg;
 
     switch (castle.GetRace())
     {
