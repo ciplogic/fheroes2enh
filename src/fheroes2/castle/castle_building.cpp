@@ -187,20 +187,19 @@ void CastleRedrawCurrentBuilding(const Castle &castle, const Point &dst_pt,
     // redraw all builds
     if (BUILD_NOTHING == build)
     {
-        for (CastleDialog::CacheBuildings::const_iterator
-                     it = orders.begin(); it != orders.end(); ++it)
+        for (const auto &order : orders)
         {
-            if (castle.isBuild((*it).id))
+            if (castle.isBuild(order.id))
             {
-                CastleRedrawBuilding(castle, dst_pt, (*it).id, frame, 0);
+                CastleRedrawBuilding(castle, dst_pt, order.id, frame, 0);
 
-                if (flash == (*it).id)
+                if (flash == order.id)
                 {
-                    CastleDialog::RedrawBuildingSpriteToArea((*it).contour,
-                                                             dst_pt.x + (*it).contour.x(), dst_pt.y + (*it).contour.y(),
+                    CastleDialog::RedrawBuildingSpriteToArea(order.contour,
+                                                             dst_pt.x + order.contour.x(), dst_pt.y + order.contour.y(),
                                                              max);
                 }
-                CastleRedrawBuildingExtended(castle, dst_pt, (*it).id, frame);
+                CastleRedrawBuildingExtended(castle, dst_pt, order.id, frame);
             }
         }
     }
@@ -216,10 +215,9 @@ void CastleRedrawCurrentBuilding(const Castle &castle, const Point &dst_pt,
             {
                 cursor.Hide();
 
-                for (CastleDialog::CacheBuildings::const_iterator
-                             it = orders.begin(); it != orders.end(); ++it)
+                for (const auto &order : orders)
                 {
-                    const u32 &build2 = (*it).id;
+                    const u32 &build2 = order.id;
 
                     if (castle.isBuild(build2))
                     {

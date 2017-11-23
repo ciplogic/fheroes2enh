@@ -69,6 +69,8 @@ private:
     std::string description;
     Rect area;
     int bcond;
+
+    bool CanQuickBuild(const Point &cursor, Rect area);
 };
 
 struct DwellingItem

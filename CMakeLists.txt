@@ -363,7 +363,7 @@ set(SOURCE_FILES
         src/xmlccwrap/tinyxml.h
         src/xmlccwrap/tinyxmlerror.cpp
         src/xmlccwrap/tinyxmlparser.cpp
-        src/xmlccwrap/xmlccwrap.h)
+        src/xmlccwrap/xmlccwrap.h src/fheroes2/agg/ColorTable.h)
 
 add_executable(fheroes2 ${SOURCE_FILES})
 

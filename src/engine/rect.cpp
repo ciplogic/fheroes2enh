@@ -136,10 +136,6 @@ Rect::Rect()
 {
 }
 
-Rect::Rect(s16 rx, s16 ry, u16 rw, u16 rh) : Point(rx, ry), Size(rw, rh)
-{
-}
-
 Rect::Rect(const Point &pt, u16 rw, u16 rh) : Point(pt), Size(rw, rh)
 {
 }
@@ -298,6 +294,11 @@ std::pair<Rect, Point> Rect::Fixed4Blit(const Rect &srcrt, const Rect &dstrt)
     }
 
     return res;
+}
+
+Rect::Rect(int x, int y, int w, int h)
+: Point(static_cast<s16>(x), static_cast<s16>(y)), Size(static_cast<u16>(w), static_cast<u16>(h))
+{
 }
 
 SDL_Rect SDLRect(s32 x, s32 y, u32 w, u32 h)

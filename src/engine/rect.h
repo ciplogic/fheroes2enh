@@ -79,8 +79,7 @@ struct Size
 struct Rect : Point, Size
 {
     Rect();
-
-    Rect(s16, s16, u16, u16);
+    Rect(int, int, int, int);
 
     Rect(const Point &, u16, u16);
 

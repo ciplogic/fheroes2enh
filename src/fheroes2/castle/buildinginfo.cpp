@@ -34,6 +34,7 @@
 #include "profit.h"
 #include "statusbar.h"
 #include "buildinginfo.h"
+#include "ColorTable.h"
 
 struct buildstats_t
 {
@@ -384,6 +385,7 @@ void BuildingInfo::RedrawCaptain()
     }
 }
 
+
 void BuildingInfo::Redraw()
 {
     if (BUILD_CAPTAIN == building)
@@ -423,11 +425,16 @@ void BuildingInfo::Redraw()
         } else if (bcond != ALLOW_BUILD)
         {
             if (LACK_RESOURCES == bcond)
+            {
                 sprite_money.Blit(dst_pt);
+            }
             else
+            {
                 sprite_deny.Blit(dst_pt);
+            }
         }
 
+        bool canBuildQuick = bcond == ALLOW_BUILD;
         // status bar
         if (bcond != BUILD_DISABLE && bcond != ALREADY_BUILT)
         {
@@ -441,6 +448,17 @@ void BuildingInfo::Redraw()
         dst_pt.x = area.x + 68 - text.w() / 2;
         dst_pt.y = area.y + 59;
         text.Blit(dst_pt);
+
+        if(canBuildQuick)
+        {
+            Text textPlus = {"+"};
+            Rect pos(area.x+120, area.y+3, 10, 10);
+            Surface greenUp(Size(textPlus.w() + 4, textPlus.h()+4), false);
+            greenUp.Fill(ColorsTable::Green);
+            const Point ptPlus(pos.x + pos.w - greenUp.w() - 1, pos.y + 2);
+            greenUp.Blit(ptPlus.x, ptPlus.y, Display::Get());
+            textPlus.Blit(ptPlus.x + 2, ptPlus.y + 1, Display::Get());
+        }
     }
 }
 
@@ -464,7 +482,14 @@ bool BuildingInfo::QueueEventProcessing()
         if (bcond == ALREADY_BUILT)
             Dialog::Message(GetName(), GetDescription(), Font::BIG, Dialog::OK);
         else if (bcond == ALLOW_BUILD || bcond == REQUIRES_BUILD || bcond == LACK_RESOURCES)
+        {
+            const Point cursor = LocalEvent::Get().GetMouseCursor();
+            if(CanQuickBuild(cursor, area)){
+                //build quickly
+                return true;
+            }
             return DialogBuyBuilding(true);
+        }
         else
             Dialog::Message("", GetConditionDescription(), Font::BIG, Dialog::OK);
     } else if (le.MousePressRight(area))
@@ -696,6 +721,17 @@ void BuildingInfo::SetStatusMessage(StatusBar &bar) const
     }
 
     bar.ShowMessage(str);
+}
+
+bool BuildingInfo::CanQuickBuild(const Point &cursor, Rect area)
+{
+    int dx = area.w  - (cursor.x - area.x);
+    int dy = cursor.y - area.y;
+    if((dy < 20) &&(dx < 20)){
+        return true;
+    }
+
+    return false;
 }
 
 DwellingItem::DwellingItem(Castle &castle, u32 dw)

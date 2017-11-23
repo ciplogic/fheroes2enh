@@ -29,7 +29,7 @@
 #include "world.h"
 #include "text.h"
 #include "army_bar.h"
-
+#include "ColorTable.h"
 
 bool CanUpgradeTroopButNoResources(Troop& troop, Army* army)
 {
@@ -185,9 +185,6 @@ void ArmyBar::RedrawBackground(const Rect &pos, Surface &dstsf)
         AGG::GetICN(ICN::STRIP, 2).Blit(pos, dstsf);
 }
 
-#define ColorGreen RGBA(255,255,0,255)
-#define ColorGray RGBA(127,127,127,255)
-
 void ArmyBar::RedrawItem(ArmyTroop &troop, const Rect &pos, bool selected, Surface &dstsf)
 {
     if (troop.isValid())
@@ -256,7 +253,7 @@ void ArmyBar::RedrawItem(ArmyTroop &troop, const Rect &pos, bool selected, Surfa
             {
                 Text textPlus = {"+"};
                 Surface greenUp(Size(textPlus.w() + 4, textPlus.h()+4), false);
-                greenUp.Fill(ColorGreen);
+                greenUp.Fill(ColorsTable::Green);
                 const Point ptPlus(pos.x + pos.w - greenUp.w() - 1, pos.y + 2);
                 greenUp.Blit(ptPlus.x, ptPlus.y, dstsf);
                 textPlus.Blit(ptPlus.x + 2, ptPlus.y + 1, dstsf);
@@ -265,7 +262,7 @@ void ArmyBar::RedrawItem(ArmyTroop &troop, const Rect &pos, bool selected, Surfa
             {
                 Text textPlus = {"+"};
                 Surface greenUp(Size(textPlus.w() + 4, textPlus.h()+4), false);
-                greenUp.Fill(ColorGray);
+                greenUp.Fill(ColorsTable::Gray);
                 const Point ptPlus(pos.x + pos.w - greenUp.w() - 1, pos.y + 2);
                 greenUp.Blit(ptPlus.x, ptPlus.y, dstsf);
                 textPlus.Blit(ptPlus.x + 2, ptPlus.y + 1, dstsf);

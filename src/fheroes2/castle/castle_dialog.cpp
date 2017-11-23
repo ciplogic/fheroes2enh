@@ -523,14 +523,9 @@ int Castle::OpenDialog(bool readonly, bool fade)
         }
 
         // buildings event
-#if defined(ANDROID)
-        CastleDialog::CacheBuildings::const_reverse_iterator crend = cacheBuildings.rend();
-        for(CastleDialog::CacheBuildings::const_reverse_iterator
-                it = cacheBuildings.rbegin(); it != crend; ++it)
-#else
+
         for (CastleDialog::CacheBuildings::const_reverse_iterator
                      it = cacheBuildings.rbegin(); it != cacheBuildings.rend(); ++it)
-#endif
         {
             if ((*it).id == GetActualDwelling((*it).id) && isBuild((*it).id))
             {
