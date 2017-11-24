@@ -34,13 +34,15 @@
 #include "world.h"
 #include "text.h"
 
-struct dwelling_t : public std::pair<u32, u32>
+using namespace std;
+
+struct dwelling_t : public pair<u32, u32>
 {
-    dwelling_t(u32 type, u32 count) : std::pair<u32, u32>(type, count)
+    dwelling_t(u32 type, u32 count) : pair<u32, u32>(type, count)
     {};
 };
 
-struct dwellings_t : public std::vector<dwelling_t>
+struct dwellings_t : public vector<dwelling_t>
 {
     dwellings_t()
     { reserve(6); };
@@ -106,7 +108,7 @@ void Castle::OpenWell()
         buttonMax.Draw();
     }
 
-    std::vector<u32> alldwellings;
+    vector<u32> alldwellings;
     alldwellings.reserve(6);
     alldwellings.push_back(DWELLING_MONSTER6);
     alldwellings.push_back(DWELLING_MONSTER5);
@@ -139,9 +141,9 @@ void Castle::OpenWell()
                 dwellings_t results;
                 Funds cur, total;
                 u32 can_recruit;
-                std::string str;
+                string str;
 
-                for (std::vector<u32>::const_iterator
+                for (vector<u32>::const_iterator
                              it = alldwellings.begin(); it != alldwellings.end(); ++it)
                     if (0 != (can_recruit = HowManyRecruitMonster(*this, *it, total, cur)))
                     {
@@ -310,33 +312,33 @@ void Castle::WellRedrawInfoArea(const Point &cur_pt)
         dst_pt.y = pt.y + 16;
         text.Blit(dst_pt);
         // attack
-        std::string str;
-        str = std::string(_("Attack")) + ": " + GetString(monster.GetAttack());
+        string str;
+        str = string(_("Attack")) + ": " + GetString(monster.GetAttack());
         text.Set(str);
         dst_pt.x = pt.x + 268 - text.w() / 2;
         dst_pt.y = pt.y + 22;
         text.Blit(dst_pt);
         // defense
-        str = std::string(_("Defense")) + ": " + GetString(monster.GetDefense());
+        str = string(_("Defense")) + ": " + GetString(monster.GetDefense());
         text.Set(str);
         dst_pt.x = pt.x + 268 - text.w() / 2;
         dst_pt.y = pt.y + 34;
         text.Blit(dst_pt);
         // damage
-        str = std::string(_("Damage")) + ": " + GetString(monster.GetDamageMin()) + "-" +
+        str = string(_("Damage")) + ": " + GetString(monster.GetDamageMin()) + "-" +
               GetString(monster.GetDamageMax());
         text.Set(str);
         dst_pt.x = pt.x + 268 - text.w() / 2;
         dst_pt.y = pt.y + 46;
         text.Blit(dst_pt);
         // hp
-        str = std::string(_("HP")) + ": " + GetString(monster.GetHitPoints());
+        str = string(_("HP")) + ": " + GetString(monster.GetHitPoints());
         text.Set(str);
         dst_pt.x = pt.x + 268 - text.w() / 2;
         dst_pt.y = pt.y + 58;
         text.Blit(dst_pt);
         // speed
-        str = std::string(_("Speed")) + ": ";
+        str = string(_("Speed")) + ": ";
         text.Set(str);
         dst_pt.x = pt.x + 268 - text.w() / 2;
         dst_pt.y = pt.y + 78;
@@ -356,13 +358,13 @@ void Castle::WellRedrawInfoArea(const Point &cur_pt)
             dst_pt.x = pt.x + 268 - text.w() / 2;
             dst_pt.y = pt.y + 110;
             text.Blit(dst_pt);
-            str = std::string("+ ") + GetString(grown) + " / " + _("week");
+            str = string("+ ") + GetString(grown) + " / " + _("week");
             text.Set(str);
             dst_pt.x = pt.x + 268 - text.w() / 2;
             dst_pt.y = pt.y + 122;
             text.Blit(dst_pt);
 
-            str = std::string(_("Available")) + ": ";
+            str = string(_("Available")) + ": ";
             text.Set(str);
             dst_pt.x = pt.x + 44;
             dst_pt.y = pt.y + 122;
