@@ -167,7 +167,8 @@ ButtonGroups::ButtonGroups(const Rect &pos, u32 btns) : button1(nullptr), button
     switch (buttons)
     {
         case Dialog::YES | Dialog::NO:
-            pt.x = pos.x;
+            //pt.x = pos.x;
+            pt.x = pos.x + pos.w - AGG::GetICN(system, 5).w()- AGG::GetICN(system, 7).w() - 5;
             pt.y = pos.y + pos.h - AGG::GetICN(system, 5).h();
             button1 = new Button(pt.x, pt.y, system, 5, 6);
             result1 = Dialog::YES;
@@ -178,7 +179,8 @@ ButtonGroups::ButtonGroups(const Rect &pos, u32 btns) : button1(nullptr), button
             break;
 
         case Dialog::OK | Dialog::CANCEL:
-            pt.x = pos.x;
+            ///pt.x = pos.x;
+            pt.x = pos.x + pos.w - AGG::GetICN(system, 1).w()- AGG::GetICN(system, 3).w() - 5;
             pt.y = pos.y + pos.h - AGG::GetICN(system, 1).h();
             button1 = new Button(pt.x, pt.y, system, 1, 2);
             result1 = Dialog::OK;
@@ -189,14 +191,14 @@ ButtonGroups::ButtonGroups(const Rect &pos, u32 btns) : button1(nullptr), button
             break;
 
         case Dialog::OK:
-            pt.x = pos.x + (pos.w - AGG::GetICN(system, 1).w()) / 2;
+            pt.x = pos.x + (pos.w - AGG::GetICN(system, 1).w()) - 4;
             pt.y = pos.y + pos.h - AGG::GetICN(system, 1).h();
             button1 = new Button(pt.x, pt.y, system, 1, 2);
             result1 = Dialog::OK;
             break;
 
         case Dialog::CANCEL:
-            pt.x = pos.x + (pos.w - AGG::GetICN(system, 3).w()) / 2;
+            pt.x = pos.x + (pos.w - AGG::GetICN(system, 3).w()) - 4;
             pt.y = pos.y + pos.h - AGG::GetICN(system, 3).h();
             button2 = new Button(pt.x, pt.y, system, 3, 4);
             result2 = Dialog::CANCEL;

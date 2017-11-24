@@ -30,7 +30,7 @@ Point::Point() : x(0), y(0)
 {
 }
 
-Point::Point(s16 px, s16 py) : x(px), y(py)
+Point::Point(int px, int py) : x(static_cast<s16>(px)), y(static_cast<s16>(py))
 {
 }
 

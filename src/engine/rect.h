@@ -33,7 +33,7 @@ struct Point
 
     Point();
 
-    Point(s16, s16);
+    Point(int, int);
 
     bool operator==(const Point &) const;
 

@@ -375,13 +375,26 @@ void BuildingInfo::RedrawCaptain()
     // indicator
     dst_pt.x = area.x + 65;
     dst_pt.y = area.y + 60;
-    if (bcond == ALREADY_BUILT) sprite_allow.Blit(dst_pt);
+    if (bcond == ALREADY_BUILT) {
+        sprite_allow.Blit(dst_pt);
+
+    }
     else if (!allow_buy)
     {
         if (LACK_RESOURCES == bcond)
             sprite_money.Blit(dst_pt);
         else
             sprite_deny.Blit(dst_pt);
+    }
+
+    {
+        Text textPlus = {"+"};
+        Rect pos(area.x+area.w-14, area.y+3, 10, 10);
+        Surface greenUp(Size(textPlus.w() + 4, textPlus.h()+4), false);
+        greenUp.Fill(ColorsTable::Green);
+        const Point ptPlus(pos.x + pos.w - greenUp.w() - 1, pos.y + 2);
+        greenUp.Blit(ptPlus.x, ptPlus.y, Display::Get());
+        textPlus.Blit(ptPlus.x + 2, ptPlus.y + 1, Display::Get());
     }
 }
 
@@ -743,7 +756,7 @@ DwellingItem::DwellingItem(Castle &castle, u32 dw)
 DwellingsBar::DwellingsBar(Castle &cstl, const Size &sz, const RGBA &fill) : castle(cstl)
 {
     for (u32 dw = DWELLING_MONSTER1; dw <= DWELLING_MONSTER6; dw <<= 1)
-        content.push_back(DwellingItem(castle, dw));
+        content.emplace_back(castle, dw);
 
     SetContent(content);
     backsf.Set(sz.w, sz.h, false);
