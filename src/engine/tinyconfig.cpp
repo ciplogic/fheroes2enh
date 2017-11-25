@@ -28,6 +28,7 @@
 #include "tools.h"
 #include "serialize.h"
 #include "tinyconfig.h"
+using namespace std;
 
 bool SpaceCompare(char a, char b)
 {
@@ -36,16 +37,19 @@ bool SpaceCompare(char a, char b)
 
 string ModifyKey(const string &str)
 {
-    string key = StringTrim(StringLower(str));
+    string keyString = StringTrim(StringLower(str));
 
     // remove multiple space
-    string::iterator it = unique(key.begin(), key.end(), SpaceCompare);
-    key.resize(it - key.begin());
+    string::iterator it = unique(keyString.begin(), keyString.end(), SpaceCompare);
+    keyString.resize(it - keyString.begin());
 
     // change space
-    replace_if(key.begin(), key.end(), isspace, 0x20);
+    for(auto &c:keyString){
+        if(isspace(c))
+            c = ' ';
+    }
 
-    return key;
+    return keyString;
 }
 
 TinyConfig::TinyConfig(char sep, char com) : separator(sep), comment(com)
@@ -120,20 +124,20 @@ void TinyConfig::AddEntry(const string &key, int val, bool uniq)
 
 int TinyConfig::IntParams(const string &key) const
 {
-    const_iterator it = find(ModifyKey(key));
+    auto it = find(ModifyKey(key));
     return it != end() ? GetInt(it->second) : 0;
 }
 
 string TinyConfig::StrParams(const string &key) const
 {
-    const_iterator it = find(ModifyKey(key));
+    auto it = find(ModifyKey(key));
     return it != end() ? it->second : "";
 }
 
-list<string> TinyConfig::ListStr(const string &key) const
+vector<string> TinyConfig::ListStr(const string &key) const
 {
     pair<const_iterator, const_iterator> ret = equal_range(ModifyKey(key));
-    list<string> res;
+    vector<string> res;
 
     for (auto it = ret.first; it != ret.second; ++it)
         res.push_back(it->second);
@@ -141,10 +145,10 @@ list<string> TinyConfig::ListStr(const string &key) const
     return res;
 }
 
-list<int> TinyConfig::ListInt(const string &key) const
+vector<int> TinyConfig::ListInt(const string &key) const
 {
     pair<const_iterator, const_iterator> ret = equal_range(ModifyKey(key));
-    list<int> res;
+    vector<int> res;
 
     for (auto it = ret.first; it != ret.second; ++it)
         res.push_back(GetInt(it->second));

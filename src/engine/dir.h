@@ -26,6 +26,7 @@
 #include <string>
 #include <locale>
 #include <codecvt>
+#include <vector>
 
 using namespace std;
 #ifdef WIN32
@@ -35,16 +36,16 @@ wstring s2ws(const string& str);
 string ws2s(const wstring& wstr);
 #endif
 
-struct ListFiles : public list<string>
+struct ListFiles : public vector<string>
 {
     void Append(const ListFiles &);
 
     void ReadDir(const string &path, const string &filter = "", bool sensitive = true);
 };
 
-struct ListDirs : public list<string>
+struct ListDirs : public vector<string>
 {
-    void Append(const list<string> &);
+    void Append(const vector<string> &);
 };
 
 #endif

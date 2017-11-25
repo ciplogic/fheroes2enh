@@ -29,55 +29,54 @@
 #include "rect.h"
 #include "localevent.h"
 
-using namespace std;
 
-string GetString(int);
+std::string GetString(int);
 
-string GetStringShort(int);
+std::string GetStringShort(int);
 
-string GetString(const Point &);
+std::string GetString(const Point &);
 
-string GetString(const Size &);
+std::string GetString(const Size &);
 
-string GetString(const Rect &);
+std::string GetString(const Rect &);
 
-string GetString(double, u8);
+std::string GetString(double, u8);
 
-string GetHexString(int value, int width = 8);
+std::string GetHexString(int value, int width = 8);
 
-int GetInt(const string &);
+int GetInt(const std::string &);
 
 int Sign(int);
 
-string StringTrim(string);
+std::string StringTrim(std::string);
 
-string StringLower(string);
+std::string StringLower(std::string);
 
-string StringUpper(string);
+std::string StringUpper(std::string);
 
-vector<string> StringSplit(const string &, const string &);
+std::vector<std::string> StringSplit(const std::string &, const std::string &);
 
-void StringReplace(string &, const char *, const string &);
+void StringReplace(std::string &, const char *, const std::string &);
 
-void StringReplace(string &, const char *, int);
+void StringReplace(std::string &, const char *, int);
 
 int CountBits(u32);
 
-int CheckSum(const vector<u8> &);
+int CheckSum(const std::vector<u8> &);
 
-int CheckSum(const string &);
+int CheckSum(const std::string &);
 
-string EncodeString(const string &, const char *charset);
+std::string EncodeString(const std::string &, const char *charset);
 
-vector<u16> StringUTF8_to_UNICODE(const string &);
+std::vector<u16> StringUTF8_to_UNICODE(const std::string &);
 
-string StringUNICODE_to_UTF8(const vector<u16> &);
+std::string StringUNICODE_to_UTF8(const std::vector<u16> &);
 
-vector<u8> decodeBase64(const string &);
+std::vector<u8> decodeBase64(const std::string &);
 
-string InsertString(const string &, size_t, const char *);
+std::string InsertString(const std::string &, size_t, const char *);
 
-size_t InsertKeySym(string &, size_t, KeySym, u16 mod = 0);
+size_t InsertKeySym(std::string &, size_t, KeySym, u16 mod = 0);
 
 KeySym KeySymFromChar(char);
 
@@ -85,9 +84,9 @@ char CharFromKeySym(KeySym, u16 mod = 0);
 
 bool PressIntKey(u32 min, u32 max, u32 &result);
 
-bool SaveMemToFile(const vector<u8> &, const string &);
+bool SaveMemToFile(const std::vector<u8> &, const std::string &);
 
-vector<u8> LoadFileToMem(const string &);
+std::vector<u8> LoadFileToMem(const std::string &);
 
 Points GetLinePoints(const Point &pt1, const Point &pt2, u16 step);
 

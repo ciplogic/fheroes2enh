@@ -292,7 +292,8 @@ int System::GetCommandOptions(int argc, vector<string> argv, const char *optstri
 #if defined(__MINGW32CE__)
     return -1;
 #else
-    return getopt(argc, argv, optstring);
+    return -1;
+
 #endif
 }
 
@@ -392,7 +393,11 @@ bool System::IsDirectory(const string &name, bool writable)
 
 int System::Unlink(const string &file)
 {
+#ifdef WIN32
     return _unlink(file.c_str());
+#else
+    return unlink(file.c_str());
+#endif
 }
 
 int System::CreateTrayIcon(bool fl)

@@ -30,6 +30,7 @@
 #include "tools.h"
 #include "dir.h"
 
+using namespace std;
 
 wstring s2ws(const string& str)
 {
@@ -43,9 +44,9 @@ string ws2s(const wstring& wstr)
 
 	return converterX.to_bytes(wstr);
 }
-void ListFiles::Append(const ListFiles &list)
+void ListFiles::Append(const ListFiles &lst)
 {
-    insert(end(), list.begin(), list.end());
+    insert(end(), lst.begin(), lst.end());
 }
 
 #ifdef WIN32
@@ -71,11 +72,9 @@ vector<string> GetFilesOfDir(const string &path)
 	}
 	return dirsInCurrent;
 }
-#endif
 
 void ListFiles::ReadDir(const string &path, const string &filter, bool sensitive)
 {
-#ifdef WIN32
 	auto files = GetFilesOfDir(path);
 	if (filter.empty())
 	{
@@ -91,8 +90,12 @@ void ListFiles::ReadDir(const string &path, const string &filter, bool sensitive
 			push_back(fullname);
 		}
 	}
-#else
+}
+#endif
 
+void ListFiles::ReadDir(const string &path, const string &filter, bool sensitive)
+{
+#ifndef WIN32
 	// read directory
 	DIR *dp = opendir(path.c_str());
 
@@ -106,29 +109,32 @@ void ListFiles::ReadDir(const string &path, const string &filter, bool sensitive
 			// if not regular file
 			if (!System::IsFile(fullname)) continue;
 
-			if (filter.size())
-			{
-				std::string filename(ep->d_name);
+			if (filter.empty())
+            {
+                push_back(fullname);
+                continue;
+            }
 
-				if (sensitive)
-				{
-					if (std::string::npos == filename.find(filter)) continue;
-				}
-				else
-				{
-					if (std::string::npos == StringLower(filename).find(StringLower(filter))) continue;
-				}
-			}
+            std::string filename(ep->d_name);
+            if (sensitive)
+            {
+                if (std::string::npos == filename.find(filter)) continue;
+            }
+            else
+            {
+                if (std::string::npos == StringLower(filename).find(StringLower(filter))) continue;
+            }
 
-			push_back(fullname);
+
+            push_back(fullname);
 		}
 		closedir(dp);
-	
+	}
 #endif
 
 }
 
-void ListDirs::Append(const list<string> &dirs)
+void ListDirs::Append(const vector<string> &dirs)
 {
     insert(end(), dirs.begin(), dirs.end());
 }

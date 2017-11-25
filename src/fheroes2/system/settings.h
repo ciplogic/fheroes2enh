@@ -24,6 +24,7 @@
 #define H2SETTINGS_H
 
 #include <list>
+#include <vector>
 #include <iomanip>
 
 #include "system.h"

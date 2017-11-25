@@ -26,6 +26,7 @@
 #include <ostream>
 #include <string>
 #include <list>
+#include <vector>
 #include <map>
 
 class TinyConfig : protected multimap<string, string>
@@ -49,9 +50,9 @@ public:
 
     string StrParams(const string &) const;
 
-    list<string> ListStr(const string &) const;
+    vector<string> ListStr(const string &) const;
 
-    list<int> ListInt(const string &) const;
+    vector<int> ListInt(const string &) const;
 
 protected:
     char separator;

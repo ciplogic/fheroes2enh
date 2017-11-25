@@ -81,9 +81,9 @@ int main(int argc, char **argv)
 	vector<string> vArgv;
 
 #ifndef WIN32
-	for (int i = 0; i<nArgs; i++)
+	for (int i = 0; i<argc; i++)
 	{
-		vArgv.push_back(argv[i]);
+		vArgv.emplace_back(argv[i]);
 	}
 #else   
 	LPWSTR *szArglist;
@@ -93,7 +93,7 @@ int main(int argc, char **argv)
 	szArglist = CommandLineToArgvW(commandLine.c_str(), &nArgs);
 	for (int i = 0; i<nArgs; i++)
 	{
-		vArgv.push_back(ws2s(szArglist[i]));
+		vArgv.emplace_back(ws2s(szArglist[i]));
 	}
 	LocalFree(szArglist);
 #endif

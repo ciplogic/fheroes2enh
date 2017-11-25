@@ -321,8 +321,8 @@ bool Settings::Read(const string &filename)
 
     // maps directories
     maps_params.Append(config.ListStr("maps"));
-    maps_params.sort();
-    maps_params.unique();
+    std::sort(maps_params.begin(), maps_params.end());
+    std::unique(maps_params.begin(), maps_params.end());
 
     // data
     sval = config.StrParams("data");
