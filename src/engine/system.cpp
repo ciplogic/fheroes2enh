@@ -353,7 +353,7 @@ bool System::IsFile(const std::string &name, bool writable)
 		return !writable;
 			
 	}
-	return writable;
+	return true;
 #else
 	struct stat fs;
 

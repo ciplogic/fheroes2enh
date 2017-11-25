@@ -8,3 +8,10 @@ CMakeFiles
 *.vcxproj.filters
 *.vcxproj.user
 *.ilk
+/DATA/*
+/MAPS/*
+/MUSIC/*
+/*.dll
+/SOUND/
+/GAMES/*
+/FHeroes2Enh.exe

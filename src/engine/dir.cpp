@@ -59,7 +59,7 @@ void ListFiles::ReadDir(const std::string &path, const std::string &filter, bool
 
 			wstring wFileName = FindFileData.cFileName;
 			string fileName = ws2s(wFileName);
-			push_back(fileName);
+			push_back(path + "\\"+ filter);
 		} while (FindNextFile(hFind, &FindFileData));
 		FindClose(hFind);
 	}

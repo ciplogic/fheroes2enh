@@ -339,8 +339,13 @@ void ReadConfigs()
     Settings &conf = Settings::Get();
     ListFiles files = conf.GetListFiles("", "fheroes2.cfg");
 
-    for (auto& file : files)
-        if (System::IsFile(file)) conf.Read(file);
+	for (auto& file : files)
+	{
+		if (System::IsFile(file))
+		{
+			conf.Read(file);
+		}
+	}
 }
 
 void InitHomeDir()
