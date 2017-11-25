@@ -7,3 +7,4 @@ CMakeFiles
 /libs/SDL/.*
 *.vcxproj.filters
 *.vcxproj.user
+*.ilk

@@ -98,6 +98,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Cs-Oss\fheroes2enh\libs\SDL\lib;C:\Cs-Oss\fheroes2enh\libs\libpng\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL.lib;libpng.lib;SDL_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>...\..\FH2Enh.exe</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
