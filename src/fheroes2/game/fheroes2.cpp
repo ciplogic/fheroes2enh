@@ -67,6 +67,9 @@ std::string GetCaption()
 }
 #ifdef __APPLE__
 int SDL_main(int argc, char **argv)
+#elif WIN32
+#include <windows.h>
+int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 #else
 int main(int argc, char **argv)
 #endif
@@ -75,8 +78,26 @@ int main(int argc, char **argv)
     int test = 0;
 
     DEBUG(DBG_ALL, DBG_INFO, "Free Heroes II, " + conf.GetVersion());
+	std::vector<std::string> vArgv;
 
-    conf.SetProgramPath(argv[0]);
+#ifndef WIN32
+	for (int i = 0; i<nArgs; i++)
+	{
+		vArgv.push_back(argv[i]);
+	}
+#else   
+	LPWSTR *szArglist;
+	int nArgs;
+	wstring commandLine = GetCommandLineW();
+
+	szArglist = CommandLineToArgvW(commandLine.c_str(), &nArgs);
+	for (int i = 0; i<nArgs; i++)
+	{
+		vArgv.push_back(ws2s(szArglist[i]));
+	}
+	LocalFree(szArglist);
+#endif
+    conf.SetProgramPath(vArgv[0].c_str());
 
     InitHomeDir();
     ReadConfigs();
@@ -84,7 +105,7 @@ int main(int argc, char **argv)
     // getopt
     {
         int opt;
-        while ((opt = System::GetCommandOptions(argc, argv, "ht:d:")) != -1)
+        while ((opt = System::GetCommandOptions(vArgv.size(), vArgv, "ht:d:")) != -1)
             switch (opt)
             {
 #ifndef BUILD_RELEASE
@@ -98,7 +119,7 @@ int main(int argc, char **argv)
 #endif
                 case '?':
                 case 'h':
-                    return PrintHelp(argv[0]);
+                    return PrintHelp(vArgv[0].c_str());
 
                 default:
                     break;

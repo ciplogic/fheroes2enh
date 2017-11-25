@@ -32,6 +32,10 @@
 #include "dialog.h"
 #include "settings.h"
 
+#ifdef WIN32
+#define WINDOWS
+#endif
+
 #ifdef WINDOWS
 #include <direct.h>
     #define GetCurrentDir _getcwd

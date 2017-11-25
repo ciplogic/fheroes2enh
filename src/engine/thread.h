@@ -23,7 +23,10 @@
 #ifndef SDLTHREAD_H
 #define SDLTHREAD_H
 
+#ifndef WIN32
 #include <sys/time.h>
+#endif // !WINDOWS
+
 #include "SDL_thread.h"
 #include "types.h"
 

@@ -1,2 +1,9 @@
 dist
 cmake-build-*
+/.idea/
+CMakeFiles
+/VisualStudio/FHeroes2Enh/Debug/
+.vs
+/libs/SDL/.*
+*.vcxproj.filters
+*.vcxproj.user

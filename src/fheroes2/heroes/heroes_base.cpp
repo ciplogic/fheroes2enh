@@ -68,7 +68,7 @@ int ArtifactsModifiersResult(int type, const u8 *arts, u32 size, const HeroBase 
                         break;
                         // morale
                     case Artifact::FIZBIN_MISFORTUNE:
-                        if (type == MDF_MORALE) mod = -art.ExtraValue();
+                        if (type == MDF_MORALE) mod = 0-art.ExtraValue();
                         break;
                     default:
                         break;

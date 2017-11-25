@@ -20,13 +20,29 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
+#ifndef WIN32
 #include <dirent.h>
+#else 
+#include <Windows.h>
+#endif
 
 #include "system.h"
 #include "tools.h"
 #include "dir.h"
 
 
+wstring s2ws(const std::string& str)
+{
+	return std::wstring(str.begin(), str.end());
+}
+
+string ws2s(const std::wstring& wstr)
+{
+	using convert_typeX = std::codecvt_utf8<wchar_t>;
+	std::wstring_convert<convert_typeX, wchar_t> converterX;
+
+	return converterX.to_bytes(wstr);
+}
 void ListFiles::Append(const ListFiles &list)
 {
     insert(end(), list.begin(), list.end());
@@ -34,36 +50,54 @@ void ListFiles::Append(const ListFiles &list)
 
 void ListFiles::ReadDir(const std::string &path, const std::string &filter, bool sensitive)
 {
-    // read directory
-    DIR *dp = opendir(path.c_str());
+#ifdef WIN32
+	HANDLE hFind;
+	WIN32_FIND_DATA FindFileData;
+	auto wPath = s2ws(path);
+	if ((hFind = FindFirstFile(wPath.c_str(), &FindFileData)) != INVALID_HANDLE_VALUE) {
+		do {
 
-    if (dp)
-    {
-        struct dirent *ep;
-        while (nullptr != (ep = readdir(dp)))
-        {
-            const std::string fullname = System::ConcatePath(path, ep->d_name);
+			wstring wFileName = FindFileData.cFileName;
+			string fileName = ws2s(wFileName);
+			push_back(fileName);
+		} while (FindNextFile(hFind, &FindFileData));
+		FindClose(hFind);
+	}
+#else
 
-            // if not regular file
-            if (!System::IsFile(fullname)) continue;
+	// read directory
+	DIR *dp = opendir(path.c_str());
 
-            if (filter.size())
-            {
-                std::string filename(ep->d_name);
+	if (dp)
+	{
+		struct dirent *ep;
+		while (nullptr != (ep = readdir(dp)))
+		{
+			const std::string fullname = System::ConcatePath(path, ep->d_name);
 
-                if (sensitive)
-                {
-                    if (std::string::npos == filename.find(filter)) continue;
-                } else
-                {
-                    if (std::string::npos == StringLower(filename).find(StringLower(filter))) continue;
-                }
-            }
+			// if not regular file
+			if (!System::IsFile(fullname)) continue;
 
-            push_back(fullname);
-        }
-        closedir(dp);
-    }
+			if (filter.size())
+			{
+				std::string filename(ep->d_name);
+
+				if (sensitive)
+				{
+					if (std::string::npos == filename.find(filter)) continue;
+				}
+				else
+				{
+					if (std::string::npos == StringLower(filename).find(StringLower(filter))) continue;
+				}
+			}
+
+			push_back(fullname);
+		}
+		closedir(dp);
+	
+#endif
+
 }
 
 void ListDirs::Append(const std::list<std::string> &dirs)

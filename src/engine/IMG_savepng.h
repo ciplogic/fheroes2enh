@@ -27,9 +27,6 @@
 #else
 /* #include <SDL/begin_code.h> */
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #define IMG_COMPRESS_OFF 0
 #define IMG_COMPRESS_MAX 9
@@ -40,20 +37,15 @@ extern "C" {
  * Takes a filename, a surface to save, and a compression level.  The
  * compression level can be 0(min) through 9(max), or -1(default).
  */
-DECLSPEC int SDLCALL    IMG_SavePNG(const char  *file,
+int IMG_SavePNG(const char  *file,
                                     SDL_Surface *surf,
                                     int          compression);
 /**
  * Takes a SDL_RWops pointer, a surface to save, and a compression level.
  * compression can be 0(min) through 9(max), or -1(default).
  */
-DECLSPEC int SDLCALL IMG_SavePNG_RW(SDL_RWops   *src,
-                                    SDL_Surface *surf,
-                                    int          compression);
+int IMG_SavePNG_RW(SDL_RWops *src, SDL_Surface *surf, int compression);
 #endif
 
-#ifdef __cplusplus
-}
-#endif
 #endif
 #endif/*__IMG_SAVETOPNG_H__*/

@@ -46,6 +46,7 @@ namespace std
 #define ERROR(x) { COUT(System::GetTime() << ": [ERROR]\t" << __FUNCTION__ << ":  " << x); }
 
 #include "dir.h"
+#include <vector>
 
 namespace System
 {
@@ -75,7 +76,7 @@ namespace System
 
     size_t GetMemoryUsage();
 
-    int GetCommandOptions(int argc, char *const argv[], const char *optstring);
+    int GetCommandOptions(int argc, vector<string> argv, const char *optstring);
 
     char *GetOptionsArgument();
 

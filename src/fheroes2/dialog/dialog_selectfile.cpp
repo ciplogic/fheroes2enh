@@ -19,6 +19,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+#ifdef WIN32
+#define _CRT_SECURE_NO_WARNINGS
+#endif
 
 #include <algorithm>
 #include <iterator>
@@ -40,6 +43,7 @@
 #include "world.h"
 #include "game.h"
 #include "dialog.h"
+
 
 std::string SelectFileListSimple(const std::string &, const std::string &, bool);
 

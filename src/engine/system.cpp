@@ -20,6 +20,8 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <ctime>
 #include <sstream>
 #include <fstream>
@@ -34,12 +36,25 @@
 #include "SDL.h"
 #include "system.h"
 
-#if defined(__MINGW32CE__) || defined(__MINGW32__)
+#if defined(WIN32)
+
 #include <windows.h>
 #include <shellapi.h>
+#include <direct.h>
+#include <sys\stat.h>
+
+#define  __MINGW32CE__
 #endif
 
-#if !defined(__MINGW32CE__)
+#include <sys/stat.h>
+
+#if defined(WIN32) || defined(WIN64)
+ // Copied from linux libc sys/stat.h:
+#define S_ISREG(m) (((m) & S_IFMT) == S_IFREG)
+#define S_ISDIR(m) (((m) & S_IFMT) == S_IFDIR)
+#endif
+
+#if !defined(WIN32)
 
 #include <unistd.h>
 
@@ -81,8 +96,8 @@ int System::MakeDirectory(const std::string &path)
 {
 #if defined(__SYMBIAN32__)
     return mkdir(path.c_str(), S_IRWXU);
-#elif defined(__WIN32__)
-    return mkdir(path.c_str());
+#elif defined(WIN32)
+    return _mkdir(path.c_str());
 #else
     return mkdir(path.c_str(), S_IRWXU);
 #endif
@@ -260,7 +275,7 @@ std::string System::GetMessageLocale(int length /* 1, 2, 3 */)
     return locname;
 }
 
-int System::GetCommandOptions(int argc, char *const argv[], const char *optstring)
+int System::GetCommandOptions(int argc, vector<string> argv, const char *optstring)
 {
 #if defined(__MINGW32CE__)
     return -1;
@@ -327,32 +342,66 @@ bool System::IsFile(const std::string &name, bool writable)
 #if defined(ANDROID)
     return writable ? 0 == access(name.c_str(), W_OK) : true;
 #else
-    struct stat fs;
+#ifdef WIN32
+	if ((_access(name.c_str(), 0)) == -1)
+	{
+		//file doesn't exist
+		return false;
+	}
+	if ((_access(name.c_str(), 2)) == -1)
+	{
+		return !writable;
+			
+	}
+	return writable;
+#else
+	struct stat fs;
 
-    if (stat(name.c_str(), &fs) || !S_ISREG(fs.st_mode))
-        return false;
-
+	if (stat(name.c_str(), &fs) || !S_ISREG(fs.st_mode))
+		return false;
     return writable ? 0 == access(name.c_str(), W_OK) : S_IRUSR & fs.st_mode;
 #endif
+#endif
 }
+
+#ifdef WIN32
+bool dirExists(const std::string& dirName_in)
+{
+	DWORD ftyp = GetFileAttributesA(dirName_in.c_str());
+	if (ftyp == INVALID_FILE_ATTRIBUTES)
+		return false;  //something is wrong with your path!
+
+	if (ftyp & FILE_ATTRIBUTE_DIRECTORY)
+		return true;   // this is a directory!
+
+	return false;    // this is not a directory!
+}
+#endif
+
+
 
 bool System::IsDirectory(const std::string &name, bool writable)
 {
 #if defined (ANDROID)
     return writable ? 0 == access(name.c_str(), W_OK) : true;
 #else
-    struct stat fs;
+#ifdef WIN32
+	return dirExists(name);
+	#else
+	struct stat fs;
 
-    if (stat(name.c_str(), &fs) || !S_ISDIR(fs.st_mode))
-        return false;
+	if (stat(name.c_str(), &fs) || !S_ISDIR(fs.st_mode))
+		return false;
 
-    return writable ? 0 == access(name.c_str(), W_OK) : S_IRUSR & fs.st_mode;
+	return writable ? 0 == access(name.c_str(), W_OK) : S_IRUSR & fs.st_mode;
+
+#endif
 #endif
 }
 
 int System::Unlink(const std::string &file)
 {
-    return unlink(file.c_str());
+    return _unlink(file.c_str());
 }
 
 int System::CreateTrayIcon(bool fl)

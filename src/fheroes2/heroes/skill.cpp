@@ -23,6 +23,9 @@
 #include <sstream>
 #include <cstring>
 #include <algorithm>
+
+#include <functional>
+
 #include "gamedefs.h"
 #include "race.h"
 #include "text.h"

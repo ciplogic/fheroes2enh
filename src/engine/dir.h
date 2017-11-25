@@ -24,6 +24,16 @@
 
 #include <list>
 #include <string>
+#include <locale>
+#include <codecvt>
+
+using namespace std;
+#ifdef WIN32
+
+wstring s2ws(const std::string& str);
+
+string ws2s(const std::wstring& wstr);
+#endif
 
 struct ListFiles : public std::list<std::string>
 {
