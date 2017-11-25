@@ -50,7 +50,7 @@ u32 crc32b(const char *msg)
 
         for (int bit = 0; bit < 8; ++bit)
         {
-            size_t mask = -(crc & 1);
+            size_t mask = 0-(crc & 1);
             crc = (crc >> 1) ^ (0xEDB88320 & mask);
         }
 

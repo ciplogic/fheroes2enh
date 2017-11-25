@@ -21,15 +21,15 @@
  ***************************************************************************/
 
 
-#ifdef WITH_ZLIB
 
 #include <sstream>
-#include <zlib.h>
 
 #include "error.h"
 #include "system.h"
 #include "zzlib.h"
 
+#ifdef WITH_ZLIB
+#include <zlib.h>
 std::vector<u8> zlibDecompress(const u8 *src, size_t srcsz, size_t realsz)
 {
     std::vector<u8> res;
@@ -85,7 +85,6 @@ std::vector<u8> zlibCompress(const u8 *src, size_t srcsz)
 
     return res;
 }
-
 #include "system.h"
 
 bool ZSurface::Load(int w, int h, int bpp, int pitch, u32 rmask, u32 gmask, u32 bmask, u32 amask, const u8 *p, size_t s)
@@ -109,6 +108,8 @@ bool ZSurface::Load(int w, int h, int bpp, int pitch, u32 rmask, u32 gmask, u32 
     return false;
 }
 
+#endif
+
 bool ZStreamFile::read(const std::string &fn, size_t offset)
 {
     StreamFile sf;
@@ -128,7 +129,7 @@ bool ZStreamFile::read(const std::string &fn, size_t offset)
 #else
         const u32 size0 = sf.get32(); // raw size
     std::vector<u8> raw = sf.getRaw(size0);
-    putRaw(& raw[0], raw.size());
+    putRaw((const char*)&raw[0], raw.size());
     seek(0);
 #endif
         return !fail();
@@ -156,11 +157,10 @@ bool ZStreamFile::write(const std::string &fn, bool append) const
         }
 #else
         sf.put32(size());
-    sf.putRaw(data(), size());
+    sf.putRaw((const char*)data(), size());
     return ! sf.fail();
 #endif
     }
     return false;
 }
 
-#endif

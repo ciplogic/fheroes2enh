@@ -39,6 +39,7 @@
 #include "maps_fileinfo.h"
 
 #include "serialize.h"
+#include <functional>
 
 #define LENGTHNAME        16
 #define LENGTHDESCRIPTION    143

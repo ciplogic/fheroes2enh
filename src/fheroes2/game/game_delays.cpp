@@ -25,6 +25,7 @@
 #include "gamedefs.h"
 #include "settings.h"
 #include "game.h"
+#include <functional>
 
 struct TimeDelay : std::pair<SDL::Time, int>
 {

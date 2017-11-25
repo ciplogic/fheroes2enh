@@ -28,6 +28,7 @@
 #include <cstring>
 #include <climits>
 #include <cctype>
+#include <functional>
 
 #include "types.h"
 #include "error.h"
