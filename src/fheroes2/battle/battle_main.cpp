@@ -181,7 +181,7 @@ void Battle::PickupArtifactsAction(HeroBase &hero1, HeroBase &hero2, bool local)
             art = Artifact::UNKNOWN;
         } else if (art() != Artifact::UNKNOWN && art() != Artifact::MAGIC_BOOK)
         {
-            auto it = std::find(bag1.begin(), bag1.end(), Artifact((Artifact::UNKNOWN)));
+            auto it = find(bag1.begin(), bag1.end(), Artifact((Artifact::UNKNOWN)));
             if (bag1.end() != it)
             {
                 *it = art;
@@ -237,7 +237,7 @@ void Battle::EagleEyeSkillAction(HeroBase &hero, const SpellStorage &spells, boo
     {
         if (local)
         {
-            std::string msg = _("Through eagle-eyed observation, %{name} is able to learn the magic spell %{spell}.");
+            string msg = _("Through eagle-eyed observation, %{name} is able to learn the magic spell %{spell}.");
             StringReplace(msg, "%{name}", hero.GetName());
             StringReplace(msg, "%{spell}", sp.GetName());
             Game::PlayPickupSound();
@@ -277,7 +277,7 @@ void Battle::NecromancySkillAction(HeroBase &hero, u32 killed, bool local)
 
     if (local)
     {
-        std::string msg = _(
+        string msg = _(
                 "Practicing the dark arts of necromancy, you are able to raise %{count} of the enemy's dead to return under your service as %{monster}");
         StringReplace(msg, "%{count}", count);
         StringReplace(msg, "%{monster}", mons.GetPluralName(count));

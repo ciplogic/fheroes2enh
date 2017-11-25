@@ -43,7 +43,7 @@ Rect SpritePos::GetArea() const
 
 void SpritePos::SetSurface(const Surface &sf)
 {
-    Surface::Set(sf, true);
+    Set(sf, true);
 }
 
 void SpritePos::SetPos(const Point &pt)
@@ -119,7 +119,7 @@ void SpriteBack::Restore()
 
 void SpriteBack::Destroy()
 {
-    Surface::FreeSurface(*this);
+    FreeSurface(*this);
     pos.w = 0;
     pos.h = 0;
 }
@@ -177,10 +177,10 @@ void SpriteMove::Hide()
 
 void SpriteMove::Show(const Point &pos)
 {
-    if (!isVisible() && Surface::isValid())
+    if (!isVisible() && isValid())
     {
         background.Save(Rect(pos, GetSize()));
-        Surface::Blit(GetPos(), Display::Get());
+        Blit(GetPos(), Display::Get());
         mode |= _VISIBLE;
     }
 }

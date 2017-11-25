@@ -236,12 +236,12 @@ int ButtonGroups::QueueEventProcessing()
         if (buttons == (Dialog::YES | Dialog::NO) ||
             buttons == (Dialog::OK | Dialog::CANCEL))
         {
-            if (Game::HotKeyPressEvent(Game::EVENT_DEFAULT_READY)) return result1;
-            if (Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT)) return result2;
+            if (HotKeyPressEvent(Game::EVENT_DEFAULT_READY)) return result1;
+            if (HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT)) return result2;
         }
 
-        if (Game::HotKeyPressEvent(Game::EVENT_DEFAULT_LEFT)) return result1;
-        else if (Game::HotKeyPressEvent(Game::EVENT_DEFAULT_RIGHT)) return result2;
+        if (HotKeyPressEvent(Game::EVENT_DEFAULT_LEFT)) return result1;
+        else if (HotKeyPressEvent(Game::EVENT_DEFAULT_RIGHT)) return result2;
     } else
         // one button
     {

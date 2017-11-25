@@ -44,14 +44,14 @@
 
 Castle::Castle() : race(Race::NONE), building(0), captain(*this), army(nullptr)
 {
-    std::fill(dwelling, dwelling + CASTLEMAXMONSTER, 0);
+    fill(dwelling, dwelling + CASTLEMAXMONSTER, 0);
     army.SetCommander(&captain);
 }
 
 Castle::Castle(s32 cx, s32 cy, int rc) : MapPosition(Point(cx, cy)), race(rc), building(0), captain(*this),
                                          army(nullptr)
 {
-    std::fill(dwelling, dwelling + CASTLEMAXMONSTER, 0);
+    fill(dwelling, dwelling + CASTLEMAXMONSTER, 0);
     army.SetCommander(&captain);
 }
 
@@ -758,7 +758,7 @@ const char *Castle::GetDescriptionBuilding(u32 build, int race)
     return desc_build[13];
 }
 
-bool Castle::AllowBuyHero(const Heroes &hero, std::string *msg)
+bool Castle::AllowBuyHero(const Heroes &hero, string *msg)
 {
     const Kingdom &myKingdom = GetKingdom();
     if (Modes(DISABLEHIRES) || myKingdom.Modes(Kingdom::DISABLEHIRES))
@@ -898,7 +898,7 @@ bool Castle::RecruitMonster(const Troop &troop)
 
         if (!heroes.Guest() || !heroes.Guest()->GetArmy().JoinTroop(ms, count))
         {
-            Dialog::Message("", _("There is no room in the garrison for this army."), Font::BIG, Dialog::OK);
+            Message("", _("There is no room in the garrison for this army."), Font::BIG, Dialog::OK);
             return false;
         }
     }
@@ -1342,7 +1342,7 @@ int Castle::CheckBuyBuilding(u32 build) const
     }
 
     // check build requirements
-    const u32 requires(Castle::GetBuildingRequires(build));
+    const u32 requires(GetBuildingRequires(build));
 
     for (u32 itr = 0x00000001; itr; itr <<= 1)
         if ((requires & itr) && !(building & itr)) return REQUIRES_BUILD;
@@ -1392,7 +1392,7 @@ bool Castle::BuyBuilding(u32 build)
         case BUILD_CASTLE:
             building &= ~BUILD_TENT;
             Maps::UpdateSpritesFromTownToCastle(GetCenter());
-            Maps::ClearFog(GetIndex(), Game::GetViewDistance(Game::VIEW_CASTLE), GetColor());
+            Maps::ClearFog(GetIndex(), GetViewDistance(Game::VIEW_CASTLE), GetColor());
             break;
 
         case BUILD_MAGEGUILD1:
@@ -2149,47 +2149,47 @@ bool Castle::PredicateIsBuildMarketplace(const Castle *castle)
     return castle && castle->isBuild(BUILD_MARKETPLACE);
 }
 
-std::string Castle::String() const
+string Castle::String() const
 {
-    std::ostringstream os;
+    ostringstream os;
     const CastleHeroes heroes = GetHeroes();
     const Heroes *hero = nullptr;
 
-    os << "name            : " << name << std::endl <<
-       "race            : " << Race::String(race) << std::endl <<
-       "color           : " << Color::String(GetColor()) << std::endl <<
-       "build           : " << "0x" << std::hex << building << std::dec << std::endl <<
-       "present boat    : " << (PresentBoat() ? "yes" : "no") << std::endl <<
-       "nearly sea      : " << (HaveNearlySea() ? "yes" : "no") << std::endl <<
-       "is castle       : " << (isCastle() ? "yes" : "no") << std::endl <<
-       "army            : " << army.String() << std::endl;
+    os << "name            : " << name << endl <<
+       "race            : " << Race::String(race) << endl <<
+       "color           : " << Color::String(GetColor()) << endl <<
+       "build           : " << "0x" << hex << building << dec << endl <<
+       "present boat    : " << (PresentBoat() ? "yes" : "no") << endl <<
+       "nearly sea      : " << (HaveNearlySea() ? "yes" : "no") << endl <<
+       "is castle       : " << (isCastle() ? "yes" : "no") << endl <<
+       "army            : " << army.String() << endl;
 
     if (nullptr != (hero = heroes.Guard()))
     {
         os <<
-           "army guard      : " << hero->GetArmy().String() << std::endl;
+           "army guard      : " << hero->GetArmy().String() << endl;
     }
 
     if (nullptr != (hero = heroes.Guest()))
     {
         os <<
-           "army guest      : " << hero->GetArmy().String() << std::endl;
+           "army guest      : " << hero->GetArmy().String() << endl;
     }
 
     return os.str();
 }
 
-int Castle::GetAttackModificator(std::string *strs) const
+int Castle::GetAttackModificator(string *strs) const
 {
     return 0;
 }
 
-int Castle::GetDefenseModificator(std::string *strs) const
+int Castle::GetDefenseModificator(string *strs) const
 {
     return 0;
 }
 
-int Castle::GetPowerModificator(std::string *strs) const
+int Castle::GetPowerModificator(string *strs) const
 {
     int result = 0;
 
@@ -2207,12 +2207,12 @@ int Castle::GetPowerModificator(std::string *strs) const
     return result;
 }
 
-int Castle::GetKnowledgeModificator(std::string *strs) const
+int Castle::GetKnowledgeModificator(string *strs) const
 {
     return 0;
 }
 
-int Castle::GetMoraleModificator(std::string *strs) const
+int Castle::GetMoraleModificator(string *strs) const
 {
     int result = Morale::NORMAL;
 
@@ -2245,7 +2245,7 @@ int Castle::GetMoraleModificator(std::string *strs) const
     return result;
 }
 
-int Castle::GetLuckModificator(std::string *strs) const
+int Castle::GetLuckModificator(string *strs) const
 {
     int result = Luck::NORMAL;
 
@@ -2255,7 +2255,7 @@ int Castle::GetLuckModificator(std::string *strs) const
         result += mod;
         if (strs)
         {
-            strs->append(Castle::GetStringBuilding(BUILD_SPEC, race));
+            strs->append(GetStringBuilding(BUILD_SPEC, race));
             StringAppendModifiers(*strs, mod);
             strs->append("\n");
         }
@@ -2350,7 +2350,7 @@ int Castle::GetRace() const
     return race;
 }
 
-const std::string &Castle::GetName() const
+const string &Castle::GetName() const
 {
     return name;
 }
@@ -2399,7 +2399,7 @@ u32 Castle::GetGrownMonthOf()
 
 void Castle::Scoute() const
 {
-    Maps::ClearFog(GetIndex(), Game::GetViewDistance(isCastle() ? Game::VIEW_CASTLE : Game::VIEW_TOWN), GetColor());
+    Maps::ClearFog(GetIndex(), GetViewDistance(isCastle() ? Game::VIEW_CASTLE : Game::VIEW_TOWN), GetColor());
 }
 
 void Castle::JoinRNDArmy()
@@ -2459,7 +2459,7 @@ void Castle::ActionAfterBattle(bool attacker_wins)
         AI::CastleAfterBattle(*this, attacker_wins);
 }
 
-struct CastleHavePoint : public std::binary_function<const Castle *, const Point *, bool>
+struct CastleHavePoint : public binary_function<const Castle *, const Point *, bool>
 {
     bool operator()(const Castle *castle, const Point *pt) const
     {
@@ -2469,15 +2469,15 @@ struct CastleHavePoint : public std::binary_function<const Castle *, const Point
 
 Castle *VecCastles::Get(const Point &position) const
 {
-    const_iterator it = std::find_if(begin(), end(),
-                                     std::bind2nd(CastleHavePoint(), &position));
+    const_iterator it = find_if(begin(), end(),
+                                     bind2nd(CastleHavePoint(), &position));
     return end() != it ? *it : nullptr;
 }
 
 Castle *VecCastles::GetFirstCastle() const
 {
-    const_iterator it = std::find_if(begin(), end(),
-                                     std::mem_fun(&Castle::isCastle));
+    const_iterator it = find_if(begin(), end(),
+                                     mem_fun(&Castle::isCastle));
     return end() != it ? *it : nullptr;
 }
 
@@ -2495,20 +2495,20 @@ AllCastles::AllCastles()
 
 AllCastles::~AllCastles()
 {
-    AllCastles::clear();
+    clear();
 }
 
 void AllCastles::Init()
 {
     if (size())
-        AllCastles::clear();
+        clear();
 }
 
 void AllCastles::clear()
 {
     for (auto& it : *this)
         delete it;
-    std::vector<Castle *>::clear();
+    vector<Castle *>::clear();
 }
 
 void AllCastles::Scoute(int colors) const
@@ -2669,14 +2669,14 @@ void Castle::SwapCastleHeroes(CastleHeroes &heroes)
     }
 }
 
-std::string Castle::GetStringBuilding(u32 build) const
+string Castle::GetStringBuilding(u32 build) const
 {
     return GetStringBuilding(build, GetRace());
 }
 
-std::string Castle::GetDescriptionBuilding(u32 build) const
+string Castle::GetDescriptionBuilding(u32 build) const
 {
-    std::string res = GetDescriptionBuilding(build, GetRace());
+    string res = GetDescriptionBuilding(build, GetRace());
 
     switch (build)
     {

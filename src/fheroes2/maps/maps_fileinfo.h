@@ -36,11 +36,11 @@ namespace Maps
 
         FileInfo &operator=(const FileInfo &);
 
-        bool ReadMAP(const std::string &);
+        bool ReadMAP(const string &);
 
-        bool ReadMP2(const std::string &);
+        bool ReadMP2(const string &);
 
-        bool ReadSAV(const std::string &);
+        bool ReadSAV(const string &);
 
         bool operator==(const FileInfo &fi) const
         { return file == fi.file; }
@@ -87,15 +87,15 @@ namespace Maps
 
         u32 LossCountDays() const;
 
-        std::string String() const;
+        string String() const;
 
         void Reset();
 
         void FillUnions();
 
-        std::string file;
-        std::string name;
-        std::string description;
+        string file;
+        string name;
+        string description;
 
         u16 size_w;
         u16 size_h;
@@ -127,7 +127,7 @@ namespace Maps
     StreamBase &operator>>(StreamBase &, FileInfo &);
 }
 
-typedef std::vector<Maps::FileInfo> MapsFileInfoList;
+typedef vector<Maps::FileInfo> MapsFileInfoList;
 
 bool PrepareMapsFileInfoList(MapsFileInfoList &, bool multi);
 

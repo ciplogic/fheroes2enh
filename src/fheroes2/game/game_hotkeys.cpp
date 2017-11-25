@@ -36,7 +36,7 @@ namespace Game
 {
     void HotKeysDefaults();
 
-    void HotKeysLoad(const std::string &);
+    void HotKeysLoad(const string &);
 
     const char *EventsName(int);
 
@@ -189,7 +189,7 @@ const char *Game::EventsName(int evnt)
 
 void Game::HotKeysDefaults()
 {
-    std::fill(&key_events[0], &key_events[EVENT_LAST], KEY_NONE);
+    fill(&key_events[0], &key_events[EVENT_LAST], KEY_NONE);
 
     // main menu
     key_events[EVENT_BUTTON_NEWGAME] = KEY_n;
@@ -291,7 +291,7 @@ bool Game::HotKeyPressEvent(int evnt)
     return le.KeyPress() && le.KeyValue() == key_events[evnt];
 }
 
-void Game::HotKeysLoad(const std::string &hotkeys)
+void Game::HotKeysLoad(const string &hotkeys)
 {
     TinyConfig config('=', '#');
     //const Tiny::Entry* entry = nullptr;
@@ -348,8 +348,8 @@ void Game::KeyboardGlobalFilter(int sym, int mod)
         display.ToggleFullScreen();
     else if (sym == key_events[EVENT_SYSTEM_SCREENSHOT])
     {
-        std::ostringstream stream;
-        stream << System::ConcatePath(Settings::GetSaveDir(), "screenshot_") << std::time(0);
+        ostringstream stream;
+        stream << System::ConcatePath(Settings::GetSaveDir(), "screenshot_") << time(0);
 
 #ifndef WITH_IMAGE
         stream << ".bmp";

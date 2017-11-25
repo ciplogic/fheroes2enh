@@ -29,7 +29,7 @@
 #include "gamedefs.h"
 #include "serialize.h"
 
-void StringAppendModifiers(std::string &, int);
+void StringAppendModifiers(string &, int);
 
 class Spell;
 
@@ -37,11 +37,11 @@ class Heroes;
 
 namespace Skill
 {
-    int GetLeadershipModifiers(int level, std::string *strs);
+    int GetLeadershipModifiers(int level, string *strs);
 
-    int GetLuckModifiers(int level, std::string *strs);
+    int GetLuckModifiers(int level, string *strs);
 
-    void UpdateStats(const std::string &);
+    void UpdateStats(const string &);
 
     namespace Level
     {
@@ -53,7 +53,7 @@ namespace Skill
         const char *String(int level);
     }
 
-    class Secondary : public std::pair<int, int>
+    class Secondary : public pair<int, int>
     {
     public:
         enum
@@ -103,7 +103,7 @@ namespace Skill
 
         const char *GetName() const;
 
-        std::string GetDescription() const;
+        string GetDescription() const;
 
         u32 GetValues() const;
 
@@ -121,7 +121,7 @@ namespace Skill
 
     StreamBase &operator>>(StreamBase &, Secondary &);
 
-    class SecSkills : protected std::vector<Secondary>
+    class SecSkills : protected vector<Secondary>
     {
     public:
         SecSkills();
@@ -132,19 +132,19 @@ namespace Skill
 
         u32 GetValues(int skill) const;
 
-        void AddSkill(const Skill::Secondary &);
+        void AddSkill(const Secondary &);
 
         void FindSkillsForLevelUp(int race, Secondary &, Secondary &) const;
 
-        void FillMax(const Skill::Secondary &);
+        void FillMax(const Secondary &);
 
         Secondary *FindSkill(int);
 
-        std::string String() const;
+        string String() const;
 
         int Count() const;
 
-        std::vector<Secondary> &
+        vector<Secondary> &
         ToVector();
 
     protected:
@@ -190,11 +190,11 @@ namespace Skill
 
         int LevelUp(int race, int level);
 
-        std::string StringSkills(const std::string &) const;
+        string StringSkills(const string &) const;
 
         static const char *String(int);
 
-        static std::string StringDescription(int, const Heroes *);
+        static string StringDescription(int, const Heroes *);
 
         static int GetInitialSpell(int race);
 
@@ -235,15 +235,15 @@ public:
 
     bool ActionBarCursor(const Point &, int &, const Rect &);
 
-    bool QueueEventProcessing(std::string * = nullptr);
+    bool QueueEventProcessing(string * = nullptr);
 
 protected:
     const Heroes *hero;
     Surface backsf;
     bool use_mini_sprite;
-    std::vector<int> content;
+    vector<int> content;
     Point toff;
-    std::string msg;
+    string msg;
 };
 
 class SecondarySkillsBar : public Interface::ItemsBar<Skill::Secondary>
@@ -261,13 +261,13 @@ public:
 
     bool ActionBarCursor(const Point &, Skill::Secondary &, const Rect &);
 
-    bool QueueEventProcessing(std::string * = nullptr);
+    bool QueueEventProcessing(string * = nullptr);
 
 protected:
     Surface backsf;
     bool use_mini_sprite;
     bool can_change;
-    std::string msg;
+    string msg;
 };
 
 #endif

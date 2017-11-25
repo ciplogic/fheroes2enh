@@ -56,7 +56,7 @@ public:
         UNDEFINED, CAPTAIN, HEROES
     };
 
-    virtual const std::string &GetName() const = 0;
+    virtual const string &GetName() const = 0;
 
     virtual int GetColor() const = 0;
 
@@ -88,23 +88,23 @@ public:
 
     bool isHeroes() const;
 
-    int GetAttackModificator(std::string * = nullptr) const;
+    int GetAttackModificator(string * = nullptr) const;
 
-    int GetDefenseModificator(std::string * = nullptr) const;
+    int GetDefenseModificator(string * = nullptr) const;
 
-    int GetPowerModificator(std::string * = nullptr) const;
+    int GetPowerModificator(string * = nullptr) const;
 
-    int GetKnowledgeModificator(std::string * = nullptr) const;
+    int GetKnowledgeModificator(string * = nullptr) const;
 
-    int GetMoraleModificator(std::string * = nullptr) const;
+    int GetMoraleModificator(string * = nullptr) const;
 
-    int GetLuckModificator(std::string * = nullptr) const;
+    int GetLuckModificator(string * = nullptr) const;
 
     u32 GetSpellPoints() const;
 
     bool HaveSpellPoints(const Spell &) const;
 
-    bool CanCastSpell(const Spell &, std::string * = nullptr) const;
+    bool CanCastSpell(const Spell &, string * = nullptr) const;
 
     bool CanTeachSpell(const Spell &) const;
 
@@ -158,7 +158,7 @@ protected:
     BagArtifacts bag_artifacts;
 };
 
-struct HeroHasArtifact : public std::binary_function<const HeroBase *, Artifact, bool>
+struct HeroHasArtifact : public binary_function<const HeroBase *, Artifact, bool>
 {
     bool operator()(const HeroBase *hero, Artifact art) const
     {

@@ -64,9 +64,9 @@ struct mofile
 {
     u32 count, offset_strings1, offset_strings2, hash_size, hash_offset;
     StreamBuf buf;
-    std::map<u32, chunk> hash_offsets;
-    std::string encoding;
-    std::string plural_forms;
+    map<u32, chunk> hash_offsets;
+    string encoding;
+    string plural_forms;
     u32 nplurals;
 
     mofile() : count(0), offset_strings1(0), offset_strings2(0), hash_size(0), hash_offset(0), nplurals(0)
@@ -74,7 +74,7 @@ struct mofile
 
     const char *ngettext(const char *str, size_t plural)
     {
-        std::map<u32, chunk>::const_iterator it = hash_offsets.find(crc32b(str));
+        map<u32, chunk>::const_iterator it = hash_offsets.find(crc32b(str));
         if (it == hash_offsets.end())
             return str;
 
@@ -91,20 +91,20 @@ struct mofile
         return reinterpret_cast<const char *>(ptr);
     }
 
-    std::string get_tag(const std::string &str, const std::string &tag, const std::string &sep)
+    string get_tag(const string &str, const string &tag, const string &sep)
     {
-        std::string res;
+        string res;
         if (str.size() > tag.size() &&
             tag == str.substr(0, tag.size()))
         {
             size_t pos = str.find(sep);
-            if (pos != std::string::npos)
+            if (pos != string::npos)
                 res = str.substr(pos + sep.size());
         }
         return res;
     }
 
-    bool open(const std::string &file)
+    bool open(const string &file)
     {
         StreamFile sf;
 
@@ -148,16 +148,15 @@ struct mofile
             u32 length2 = buf.get32();
             u32 offset2 = buf.get32();
 
-            const std::string tag1("Content-Type");
-            const std::string sep1("charset=");
-            const std::string tag2("Plural-Forms");
-            const std::string sep2(": ");
+            const string tag1("Content-Type");
+            const string sep1("charset=");
+            const string tag2("Plural-Forms");
+            const string sep2(": ");
 
             buf.seek(offset2);
-            std::list<std::string> tags = StringSplit(buf.toString(length2), "\n");
+            auto tags = StringSplit(buf.toString(length2), "\n");
 
-            for (std::list<std::string>::const_iterator
-                         it = tags.begin(); it != tags.end(); ++it)
+            for (auto it = tags.begin(); it != tags.end(); ++it)
             {
                 if (encoding.empty())
                     encoding = get_tag(*it, tag1, sep1);
@@ -174,12 +173,12 @@ struct mofile
             u32 length1 = buf.get32();
             u32 offset1 = buf.get32();
             buf.seek(offset1);
-            const std::string msg1 = buf.toString(length1);
+            const string msg1 = buf.toString(length1);
             u32 crc = crc32b(msg1.c_str());
             buf.seek(offset_strings2 + index * 8 /* length, offset */);
             u32 length2 = buf.get32();
             u32 offset2 = buf.get32();
-            std::map<u32, chunk>::const_iterator it = hash_offsets.find(crc);
+            map<u32, chunk>::const_iterator it = hash_offsets.find(crc);
             if (it == hash_offsets.end())
                 hash_offsets[crc] = chunk(offset2, length2);
             else
@@ -204,7 +203,7 @@ namespace Translation
     };
 
     mofile *current = nullptr;
-    std::map<std::string, mofile> domains;
+    map<string, mofile> domains;
     int locale = LOCALE_EN;
     char context = 0;
 
@@ -223,11 +222,11 @@ namespace Translation
 
     bool bindDomain(const char *domain, const char *file)
     {
-        std::map<std::string, mofile>::const_iterator it = domains.find(domain);
+        map<string, mofile>::const_iterator it = domains.find(domain);
         if (it != domains.end())
             return true;
 
-        std::string str = System::GetMessageLocale(1);
+        string str = System::GetMessageLocale(1);
 
         if (str == "af" || str == "afrikaans") locale = LOCALE_AF;
         else if (str == "ar" || str == "arabic") locale = LOCALE_AR;
@@ -266,7 +265,7 @@ namespace Translation
 
     bool setDomain(const char *domain)
     {
-        std::map<std::string, mofile>::iterator it = domains.find(domain);
+        map<string, mofile>::iterator it = domains.find(domain);
         if (it == domains.end())
             return false;
 
@@ -274,7 +273,7 @@ namespace Translation
         return true;
     }
 
-    const char *gettext(const std::string &str)
+    const char *gettext(const string &str)
     {
         return gettext(str.c_str());
     }

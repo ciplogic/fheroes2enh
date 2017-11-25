@@ -25,7 +25,7 @@
 
 #include "monster.h"
 
-struct Week : std::pair<int, int>
+struct Week : pair<int, int>
 {
     enum
     {
@@ -58,7 +58,7 @@ struct Week : std::pair<int, int>
         MONSTERS    // week of monsters game
     };
 
-    Week(int type = UNNAMED, int mons = Monster::UNKNOWN) : std::pair<int, int>(type, mons)
+    Week(int type = UNNAMED, int mons = Monster::UNKNOWN) : pair<int, int>(type, mons)
     {}
 
     int GetType() const

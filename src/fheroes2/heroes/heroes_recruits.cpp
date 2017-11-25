@@ -26,7 +26,7 @@
 #include "heroes.h"
 #include "heroes_recruits.h"
 
-Recruits::Recruits() : std::pair<int, int>(Heroes::UNKNOWN, Heroes::UNKNOWN)
+Recruits::Recruits() : pair<int, int>(Heroes::UNKNOWN, Heroes::UNKNOWN)
 {
 }
 

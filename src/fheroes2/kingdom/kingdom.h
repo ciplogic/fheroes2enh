@@ -44,9 +44,9 @@ struct AllCastles;
 struct VecCastles;
 struct CapturedObjects;
 
-struct LastLoseHero : std::pair<int, u32> /* Heroes, date */
+struct LastLoseHero : pair<int, u32> /* Heroes, date */
 {
-    LastLoseHero() : std::pair<int, u32>(Heroes::UNKNOWN, 0)
+    LastLoseHero() : pair<int, u32>(Heroes::UNKNOWN, 0)
     {}
 };
 
@@ -98,7 +98,7 @@ public:
 
     void AddHeroStartCondLoss(Heroes *);
 
-    std::string GetNamesHeroStartCondLoss() const;
+    string GetNamesHeroStartCondLoss() const;
 
     Heroes *GetLastLostHero() const;
 
@@ -221,7 +221,7 @@ private:
     Recruits recruits;
     LastLoseHero lost_hero;
 
-    std::list<IndexObject>
+    list<IndexObject>
             visit_object;
 
     Puzzle puzzle_maps;

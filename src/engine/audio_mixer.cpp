@@ -243,9 +243,9 @@ namespace Mixer
 
     void AudioCallBack(void *, u8 *, int);
 
-    std::vector<chunk_t> chunks;
+    vector<chunk_t> chunks;
     u8 reserved_channels;
-    std::vector<const u8 *> paused;
+    vector<const u8 *> paused;
 }
 
 bool Mixer::PredicateIsFreeSound(const chunk_t &ch)
@@ -323,7 +323,7 @@ void Mixer::Quit()
     if (SDL::SubSystem(SDL_INIT_AUDIO) && valid)
     {
         Music::Reset();
-        Mixer::Reset();
+        Reset();
         SDL_CloseAudio();
         chunks.clear();
         paused.clear();
@@ -387,7 +387,7 @@ int Mixer::Play(const u8 *ptr, u32 size, int channel, bool loop)
                       //                                       std::bind2nd(std::mem_fun_ref(&chunk_t::this_ptr), ptr));
             if (it == chunks.end())
             {
-                it = std::find_if(chunks.begin() + reserved_channels, chunks.end(), PredicateIsFreeSound);
+                it = find_if(chunks.begin() + reserved_channels, chunks.end(), PredicateIsFreeSound);
                 if (it == chunks.end())
                 {
                     ERROR("mixer is full");
@@ -444,7 +444,7 @@ void Mixer::Resume(int ch)
         {
             if (paused.size())
                 for (auto it = chunks.begin(); it != chunks.end(); ++it)
-                    if (paused.end() != std::find(paused.begin(), paused.end(), (*it).data))
+                    if (paused.end() != find(paused.begin(), paused.end(), (*it).data))
                         (*it).state |= MIX_PLAY;
 
             paused.clear();
@@ -499,7 +499,7 @@ void Mixer::Enhance()
 {
     if (valid)
     {
-        for (std::vector<chunk_t>::iterator
+        for (vector<chunk_t>::iterator
                      it = chunks.begin(); it != chunks.end(); ++it)
         {
             if ((*it).state & MIX_PLAY)

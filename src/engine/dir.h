@@ -30,21 +30,21 @@
 using namespace std;
 #ifdef WIN32
 
-wstring s2ws(const std::string& str);
+wstring s2ws(const string& str);
 
-string ws2s(const std::wstring& wstr);
+string ws2s(const wstring& wstr);
 #endif
 
-struct ListFiles : public std::list<std::string>
+struct ListFiles : public list<string>
 {
     void Append(const ListFiles &);
 
-    void ReadDir(const std::string &path, const std::string &filter = "", bool sensitive = true);
+    void ReadDir(const string &path, const string &filter = "", bool sensitive = true);
 };
 
-struct ListDirs : public std::list<std::string>
+struct ListDirs : public list<string>
 {
-    void Append(const std::list<std::string> &);
+    void Append(const list<string> &);
 };
 
 #endif

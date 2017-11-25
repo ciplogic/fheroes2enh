@@ -45,14 +45,14 @@
 #include "dialog.h"
 
 
-std::string SelectFileListSimple(const std::string &, const std::string &, bool);
+string SelectFileListSimple(const string &, const string &, bool);
 
-bool RedrawExtraInfo(const Point &, const std::string &, const std::string &, const Rect &);
+bool RedrawExtraInfo(const Point &, const string &, const string &, const Rect &);
 
 class FileInfoListBox : public Interface::ListBox<Maps::FileInfo>
 {
 public:
-    FileInfoListBox(const Point &pt, bool &edit) : Interface::ListBox<Maps::FileInfo>(pt), edit_mode(edit)
+    FileInfoListBox(const Point &pt, bool &edit) : ListBox<Maps::FileInfo>(pt), edit_mode(edit)
     {};
 
     void RedrawItem(const Maps::FileInfo &, s32, s32, bool);
@@ -78,9 +78,9 @@ void FileInfoListBox::RedrawItem(const Maps::FileInfo &info, s32 dstx, s32 dsty,
     char short_date[20];
     time_t timeval = info.localtime;
 
-    std::fill(short_date, ARRAY_COUNT_END(short_date), 0);
-    std::strftime(short_date, ARRAY_COUNT(short_date) - 1, "%b %d, %H:%M", std::localtime(&timeval));
-    std::string savname(System::GetBasename(info.file));
+    fill(short_date, ARRAY_COUNT_END(short_date), 0);
+    strftime(short_date, ARRAY_COUNT(short_date) - 1, "%b %d, %H:%M", localtime(&timeval));
+    string savname(System::GetBasename(info.file));
 
     if (savname.size())
     {
@@ -128,15 +128,15 @@ void FileInfoListBox::ActionListSingleClick(Maps::FileInfo &)
     edit_mode = false;
 }
 
-std::string ResizeToShortName(const std::string &str)
+string ResizeToShortName(const string &str)
 {
-    std::string res = System::GetBasename(str);
+    string res = System::GetBasename(str);
     size_t it = res.find('.');
-    if (std::string::npos != it) res.resize(it);
+    if (string::npos != it) res.resize(it);
     return res;
 }
 
-size_t GetInsertPosition(const std::string &name, s32 cx, s32 posx)
+size_t GetInsertPosition(const string &name, s32 cx, s32 posx)
 {
     if (name.size())
     {
@@ -164,7 +164,7 @@ MapsFileInfoList GetSortedMapsFileInfoList()
     for (ListFiles::const_iterator itd = list1.begin(); itd != list1.end(); ++itd, ++ii)
         if (!list2[ii].ReadSAV(*itd))--ii;
     if (static_cast<size_t>(ii) != list2.size()) list2.resize(ii);
-    std::sort(list2.begin(), list2.end(), Maps::FileInfo::FileSorting);
+    sort(list2.begin(), list2.end(), Maps::FileInfo::FileSorting);
 
     return list2;
 }
@@ -174,30 +174,30 @@ bool IsPunct(char c)
     return true;
 }
 
-std::string Dialog::SelectFileSave()
+string Dialog::SelectFileSave()
 {
     const Settings &conf = Settings::Get();
-    const std::string &name = conf.CurrentFileInfo().name;
+    const string &name = conf.CurrentFileInfo().name;
 
-    std::string base = name.size() ? name : "newgame";
-    base.resize(std::distance(base.begin(), std::find_if(base.begin(), base.end(), ::ispunct)));
-    std::replace_if(base.begin(), base.end(), ::isspace, '_');
-    std::ostringstream os;
+    string base = name.size() ? name : "newgame";
+    base.resize(distance(base.begin(), find_if(base.begin(), base.end(), ::ispunct)));
+    replace_if(base.begin(), base.end(), ::isspace, '_');
+    ostringstream os;
 
     os << System::ConcatePath(Settings::GetSaveDir(), base) <<
        // add postfix:
-       '_' << std::setw(4) << std::setfill('0') << world.CountDay() << ".sav";
-    std::string lastfile = os.str();
+       '_' << setw(4) << setfill('0') << world.CountDay() << ".sav";
+    string lastfile = os.str();
     return SelectFileListSimple(_("File to Save:"), lastfile, true);
 }
 
-std::string Dialog::SelectFileLoad()
+string Dialog::SelectFileLoad()
 {
-    const std::string &lastfile = Game::GetLastSavename();
+    const string &lastfile = Game::GetLastSavename();
     return SelectFileListSimple(_("File to Load:"), (lastfile.size() ? lastfile : ""), false);
 }
 
-std::string SelectFileListSimple(const std::string &header, const std::string &lastfile, bool editor)
+string SelectFileListSimple(const string &header, const string &lastfile, bool editor)
 {
     Display &display = Display::Get();
     Cursor &cursor = Cursor::Get();
@@ -232,7 +232,7 @@ std::string SelectFileListSimple(const std::string &header, const std::string &l
     listbox.SetAreaItems(Rect(rt.x + 40, rt.y + 55, 265, (pocket ? 78 : 215)));
     listbox.SetListContent(lists);
 
-    std::string filename;
+    string filename;
     size_t charInsertPos = 0;
 
     if (lastfile.size())
@@ -244,7 +244,7 @@ std::string SelectFileListSimple(const std::string &header, const std::string &l
         for (; it != lists.end(); ++it) if ((*it).file == lastfile) break;
 
         if (it != lists.end())
-            listbox.SetCurrent(std::distance(lists.begin(), it));
+            listbox.SetCurrent(distance(lists.begin(), it));
         else
             listbox.Unselect();
     }
@@ -267,7 +267,7 @@ std::string SelectFileListSimple(const std::string &header, const std::string &l
     cursor.Show();
     display.Flip();
 
-    std::string result;
+    string result;
     bool is_limit = false;
 
     while (le.HandleEvents() && result.empty())
@@ -277,13 +277,13 @@ std::string SelectFileListSimple(const std::string &header, const std::string &l
 
         listbox.QueueEventProcessing();
 
-        if ((buttonOk.isEnable() && le.MouseClickLeft(buttonOk)) || Game::HotKeyPressEvent(Game::EVENT_DEFAULT_READY))
+        if ((buttonOk.isEnable() && le.MouseClickLeft(buttonOk)) || HotKeyPressEvent(Game::EVENT_DEFAULT_READY))
         {
             if (filename.size())
                 result = System::ConcatePath(Settings::GetSaveDir(), filename + ".sav");
             else if (listbox.isSelected())
                 result = listbox.GetCurrent().file;
-        } else if (le.MouseClickLeft(buttonCancel) || Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
+        } else if (le.MouseClickLeft(buttonCancel) || HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
         {
             break;
         } else if (le.MouseClickLeft(enter_field) && editor)
@@ -303,7 +303,7 @@ std::string SelectFileListSimple(const std::string &header, const std::string &l
         }
         if ((le.KeyPress(KEY_DELETE) || (pocket && le.MousePressRight())) && listbox.isSelected())
         {
-            std::string msg(_("Are you sure you want to delete file:"));
+            string msg(_("Are you sure you want to delete file:"));
             msg.append("\n \n");
             msg.append(System::GetBasename(listbox.GetCurrent().file));
             if (Dialog::YES == Dialog::Message(_("Warning!"), msg, Font::BIG, Dialog::YES | Dialog::NO))
@@ -343,7 +343,7 @@ std::string SelectFileListSimple(const std::string &header, const std::string &l
     return result;
 }
 
-bool RedrawExtraInfo(const Point &dst, const std::string &header, const std::string &filename, const Rect &field)
+bool RedrawExtraInfo(const Point &dst, const string &header, const string &filename, const Rect &field)
 {
     Text text(header, Font::BIG);
     text.Blit(dst.x + 175 - text.w() / 2, dst.y + 30);

@@ -28,7 +28,7 @@
 #include "settings.h"
 #include "captain.h"
 
-Captain::Captain(Castle &cstl) : HeroBase(HeroBase::CAPTAIN, cstl.GetRace()), home(cstl)
+Captain::Captain(Castle &cstl) : HeroBase(CAPTAIN, cstl.GetRace()), home(cstl)
 {
     SetCenter(home.GetCenter());
 }
@@ -104,14 +104,14 @@ int Captain::GetColor() const
     return home.GetColor();
 }
 
-const std::string &Captain::GetName() const
+const string &Captain::GetName() const
 {
     return home.GetName();
 }
 
 int Captain::GetType() const
 {
-    return HeroBase::CAPTAIN;
+    return CAPTAIN;
 }
 
 int Captain::GetLevelSkill(int) const

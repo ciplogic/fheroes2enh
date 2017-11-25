@@ -45,9 +45,9 @@
 #define LENGTHDESCRIPTION    143
 
 template<typename CharType>
-bool AlphabeticalCompare(const std::basic_string<CharType> &lhs, const std::basic_string<CharType> &rhs)
+bool AlphabeticalCompare(const basic_string<CharType> &lhs, const basic_string<CharType> &rhs)
 {
-    return std::use_facet<std::collate<CharType> >(std::locale()).compare(lhs.data(), lhs.data() + lhs.size(),
+    return std::use_facet<collate<CharType> >(locale()).compare(lhs.data(), lhs.data() + lhs.size(),
                                                                           rhs.data(), rhs.data() + rhs.size()) == -1;
 }
 
@@ -195,13 +195,13 @@ void Maps::FileInfo::Reset()
     }
 }
 
-bool Maps::FileInfo::ReadSAV(const std::string &filename)
+bool Maps::FileInfo::ReadSAV(const string &filename)
 {
     Reset();
     return Game::LoadSAV2FileInfo(filename, *this);
 }
 
-bool Maps::FileInfo::ReadMAP(const std::string &filename)
+bool Maps::FileInfo::ReadMAP(const string &filename)
 {
 #ifdef WITH_XML
     Reset();
@@ -370,7 +370,7 @@ bool Maps::FileInfo::ReadMAP(const std::string &filename)
     return false;
 }
 
-bool Maps::FileInfo::ReadMP2(const std::string &filename)
+bool Maps::FileInfo::ReadMP2(const string &filename)
 {
     Reset();
     StreamFile fs;
@@ -679,9 +679,9 @@ bool Maps::FileInfo::isMultiPlayerMap() const
     return 1 < Color::Count(HumanOnlyColors());
 }
 
-std::string Maps::FileInfo::String() const
+string Maps::FileInfo::String() const
 {
-    std::ostringstream os;
+    ostringstream os;
 
     os << "file: " << file << ", " << "name: " << name << ", " << "kingdom colors: " << static_cast<int>(kingdom_colors)
        << \
@@ -741,25 +741,25 @@ bool PrepareMapsFileInfoList(MapsFileInfoList &lists, bool multi)
 
     if (lists.empty()) return false;
 
-    std::sort(lists.begin(), lists.end(), Maps::FileInfo::NameSorting);
-    lists.resize(std::unique(lists.begin(), lists.end(), Maps::FileInfo::NameCompare) - lists.begin());
+    sort(lists.begin(), lists.end(), Maps::FileInfo::NameSorting);
+    lists.resize(unique(lists.begin(), lists.end(), Maps::FileInfo::NameCompare) - lists.begin());
 
     if (multi == false)
     {
-        MapsFileInfoList::iterator it = std::remove_if(lists.begin(), lists.end(),
-                                                       std::mem_fun_ref(&Maps::FileInfo::isMultiPlayerMap));
-        if (it != lists.begin()) lists.resize(std::distance(lists.begin(), it));
+        MapsFileInfoList::iterator it = remove_if(lists.begin(), lists.end(),
+                                                       mem_fun_ref(&Maps::FileInfo::isMultiPlayerMap));
+        if (it != lists.begin()) lists.resize(distance(lists.begin(), it));
     }
 
     // set preferably count filter
     if (conf.PreferablyCountPlayers())
     {
 
-        MapsFileInfoList::iterator it = std::remove_if(lists.begin(), lists.end(),
-                                                       std::not1(std::bind2nd(
-                                                               std::mem_fun_ref(&Maps::FileInfo::isAllowCountPlayers),
+        MapsFileInfoList::iterator it = remove_if(lists.begin(), lists.end(),
+                                                       not1(bind2nd(
+                                                               mem_fun_ref(&Maps::FileInfo::isAllowCountPlayers),
                                                                conf.PreferablyCountPlayers())));
-        if (it != lists.begin()) lists.resize(std::distance(lists.begin(), it));
+        if (it != lists.begin()) lists.resize(distance(lists.begin(), it));
     }
 
     return lists.size();

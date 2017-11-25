@@ -29,19 +29,19 @@
 #include "game.h"
 #include "dialog.h"
 
-void DialogPrimaryOnly(const std::string &name, const std::string &primary)
+void DialogPrimaryOnly(const string &name, const string &primary)
 {
-    std::string message = _("%{name} has gained a level.");
+    string message = _("%{name} has gained a level.");
     message.append("\n \n");
     message.append(_("%{skill} Skill +1"));
     StringReplace(message, "%{name}", name);
     StringReplace(message, "%{skill}", primary);
-    Dialog::Message("", message, Font::BIG, Dialog::OK);
+    Message("", message, Font::BIG, Dialog::OK);
 }
 
-int DialogOneSecondary(const std::string &name, const std::string &primary, const Skill::Secondary &sec)
+int DialogOneSecondary(const string &name, const string &primary, const Skill::Secondary &sec)
 {
-    std::string message = _("%{name} has gained a level.");
+    string message = _("%{name} has gained a level.");
     message.append("\n \n");
     message.append(_("%{skill} Skill +1"));
     StringReplace(message, "%{name}", name);
@@ -68,10 +68,10 @@ int DialogOneSecondary(const std::string &name, const std::string &primary, cons
     return sec.Skill();
 }
 
-int DialogSelectSecondary(const std::string &name, const std::string &primary, const Skill::Secondary &sec1,
+int DialogSelectSecondary(const string &name, const string &primary, const Skill::Secondary &sec1,
                           const Skill::Secondary &sec2, Heroes &hero)
 {
-    std::string header = _("%{name} has gained a level.");
+    string header = _("%{name} has gained a level.");
     header.append("\n \n");
     header.append(_("%{skill} Skill +1"));
     StringReplace(header, "%{name}", name);
@@ -91,7 +91,7 @@ int DialogSelectSecondary(const std::string &name, const std::string &primary, c
     const Sprite &sprite_skill2 = AGG::GetICN(ICN::SECSKILL, sec2.GetIndexSprite1());
 
     Point pt;
-    std::string message = _("You may learn either:");
+    string message = _("You may learn either:");
     message.append("\n%{skill1}\n");
     message.append(" ");
     message.append(_("or"));
@@ -170,10 +170,10 @@ int DialogSelectSecondary(const std::string &name, const std::string &primary, c
         le.MousePressLeft(button_learn2) ? button_learn2.PressDraw() : button_learn2.ReleaseDraw();
         le.MousePressLeft(button_hero) ? button_hero.PressDraw() : button_hero.ReleaseDraw();
 
-        if (le.MouseClickLeft(button_learn1) || Game::HotKeyPressEvent(Game::EVENT_DEFAULT_LEFT)) return sec1.Skill();
-        else if (le.MouseClickLeft(button_learn2) || Game::HotKeyPressEvent(Game::EVENT_DEFAULT_RIGHT))
+        if (le.MouseClickLeft(button_learn1) || HotKeyPressEvent(Game::EVENT_DEFAULT_LEFT)) return sec1.Skill();
+        else if (le.MouseClickLeft(button_learn2) || HotKeyPressEvent(Game::EVENT_DEFAULT_RIGHT))
             return sec2.Skill();
-        else if (le.MouseClickLeft(button_hero) || Game::HotKeyPressEvent(Game::EVENT_DEFAULT_READY))
+        else if (le.MouseClickLeft(button_hero) || HotKeyPressEvent(Game::EVENT_DEFAULT_READY))
         {
             hero.OpenDialog(true /* read only */, false);
             cursor.Show();
@@ -215,7 +215,7 @@ int DialogSelectSecondary(const std::string &name, const std::string &primary, c
     return Skill::Secondary::UNKNOWN;
 }
 
-int Dialog::LevelUpSelectSkill(const std::string &name, const std::string &primary, const Skill::Secondary &sec1,
+int Dialog::LevelUpSelectSkill(const string &name, const string &primary, const Skill::Secondary &sec1,
                                const Skill::Secondary &sec2, Heroes &hero)
 {
     int result = Skill::Secondary::UNKNOWN;

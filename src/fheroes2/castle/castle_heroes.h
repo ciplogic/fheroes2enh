@@ -28,10 +28,10 @@
 #include "gamedefs.h"
 #include "heroes.h"
 
-class CastleHeroes : protected std::pair<Heroes *, Heroes *>
+class CastleHeroes : protected pair<Heroes *, Heroes *>
 {
 public:
-    CastleHeroes(Heroes *guest, Heroes *guard) : std::pair<Heroes *, Heroes *>(guest, guard)
+    CastleHeroes(Heroes *guest, Heroes *guard) : pair<Heroes *, Heroes *>(guest, guard)
     {};
 
     Heroes *Guest()

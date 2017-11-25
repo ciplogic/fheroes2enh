@@ -49,7 +49,7 @@ namespace GameOver
 
     const char *GetString(int);
 
-    std::string GetActualDescription(int);
+    string GetActualDescription(int);
 
     void DialogWins(int);
 

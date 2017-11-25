@@ -34,13 +34,13 @@
 #include "xmi.h"
 #include "sprite.h"
 
-class ICNSprite : public std::pair<Surface, Surface> /* first: image with out alpha, second: shadow with alpha */
+class ICNSprite : public pair<Surface, Surface> /* first: image with out alpha, second: shadow with alpha */
 {
 public:
     ICNSprite()
     {}
 
-    ICNSprite(const Surface &sf1, const Surface &sf2) : std::pair<Surface, Surface>(sf1, sf2)
+    ICNSprite(const Surface &sf1, const Surface &sf2) : pair<Surface, Surface>(sf1, sf2)
     {}
 
     bool isValid() const;
@@ -77,7 +77,7 @@ namespace AGG
     u32		GetFontHeight(bool small);
 #endif
 
-    void LoadLOOPXXSounds(const std::vector<int> &);
+    void LoadLOOPXXSounds(const vector<int> &);
 
     void PlaySound(int m82);
 

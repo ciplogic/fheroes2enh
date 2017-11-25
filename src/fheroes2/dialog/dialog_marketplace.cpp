@@ -39,7 +39,7 @@ void RedrawFromResource(const Point &, const Funds &);
 
 void RedrawToResource(const Point &, bool showcost, bool tradingPost, int from_resource = 0);
 
-std::string GetStringTradeCosts(int rs_from, int rs_to, bool tradingPost);
+string GetStringTradeCosts(int rs_from, int rs_to, bool tradingPost);
 
 u32 GetTradeCosts(int rs_from, int rs_to, bool tradingPost);
 
@@ -131,7 +131,7 @@ void TradeWindowGUI::ShowTradeArea(int resourceFrom, int resourceTo, u32 max_buy
         bar.Blit(dst_pt);
         splitter.SetRange(0, (Resource::GOLD == resourceTo ? max_sell : max_buy));
         u32 exchange_rate = GetTradeCosts(resourceFrom, resourceTo, fromTradingPost);
-        std::string message;
+        string message;
         if (Resource::GOLD == resourceTo)
         {
             message = _("I can offer you %{count} for 1 unit of %{resfrom}.");
@@ -196,14 +196,14 @@ void TradeWindowGUI::RedrawInfoBuySell(u32 count_sell, u32 count_buy, u32 max_se
     splitter.HideCursor();
 
     textSell.Hide();
-    textSell.SetText(std::string("-") + GetString(count_sell) + " " + "(" + GetString(max_sell - count_sell) + ")");
+    textSell.SetText(string("-") + GetString(count_sell) + " " + "(" + GetString(max_sell - count_sell) + ")");
     dst_pt.x = pos_rt.x + pos_rt.w / 2 - 70 - textSell.w() / 2;
     dst_pt.y = pos_rt.y + 116;
     textSell.SetPos(dst_pt);
     textSell.Show();
 
     textBuy.Hide();
-    textBuy.SetText(std::string("+") + GetString(count_buy) + " " + "(" + GetString(orig_buy + count_buy) + ")");
+    textBuy.SetText(string("+") + GetString(count_buy) + " " + "(" + GetString(orig_buy + count_buy) + ")");
     dst_pt.x = pos_rt.x + pos_rt.w / 2 + 70 - textBuy.w() / 2;
     dst_pt.y = pos_rt.y + 116;
     textBuy.SetPos(dst_pt);
@@ -216,13 +216,13 @@ void Dialog::Marketplace(bool fromTradingPost)
 {
     Display &display = Display::Get();
     const int tradpost = Settings::Get().ExtGameEvilInterface() ? ICN::TRADPOSE : ICN::TRADPOST;
-    const std::string &header = _("Marketplace");
+    const string &header = _("Marketplace");
 
     Cursor &cursor = Cursor::Get();
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
-    Dialog::FrameBox box(260, true);
+    FrameBox box(260, true);
 
     const Rect &pos_rt = box.GetArea();
     Point dst_pt(pos_rt.x, pos_rt.y);
@@ -239,7 +239,7 @@ void Dialog::Marketplace(bool fromTradingPost)
 
     Kingdom &kingdom = world.GetKingdom(Settings::Get().CurrentColor());
 
-    const std::string &header_from = _("Your Resources");
+    const string &header_from = _("Your Resources");
 
     Funds fundsFrom = kingdom.GetFunds();
     int resourceFrom = 0;
@@ -261,7 +261,7 @@ void Dialog::Marketplace(bool fromTradingPost)
     text.Blit(dst_pt);
     RedrawFromResource(pt1, fundsFrom);
 
-    const std::string &header_to = _("Available Trades");
+    const string &header_to = _("Available Trades");
 
     Funds fundsTo;
     int resourceTo = 0;
@@ -328,7 +328,7 @@ void Dialog::Marketplace(bool fromTradingPost)
             le.MouseClickLeft(buttonGift))
         {
             cursor.Hide();
-            Dialog::MakeGiftResource();
+            MakeGiftResource();
             fundsFrom = kingdom.GetFunds();
             RedrawFromResource(pt1, fundsFrom);
             cursor.Show();
@@ -368,7 +368,7 @@ void Dialog::Marketplace(bool fromTradingPost)
                 cursor.Show();
                 display.Flip();
             } else if (le.MousePressRight(rect_from))
-                Dialog::ResourceInfo("", "income:", kingdom.GetIncome(INCOME_ALL), 0);
+                ResourceInfo("", "income:", kingdom.GetIncome(INCOME_ALL), 0);
         }
 
         // click to
@@ -584,9 +584,9 @@ void RedrawToResource(const Point &pt, bool showcost, bool tradingPost, int from
                           tradingPost);
 }
 
-std::string GetStringTradeCosts(int rs_from, int rs_to, bool tradingPost)
+string GetStringTradeCosts(int rs_from, int rs_to, bool tradingPost)
 {
-    std::string res;
+    string res;
 
     if (rs_from == rs_to)
     {

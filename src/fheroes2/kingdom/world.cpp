@@ -56,7 +56,7 @@ void ListActions::clear()
 {
     for (auto& it : *this)
         delete it;
-    std::list<ActionSimple *>::clear();
+    list<ActionSimple *>::clear();
 }
 
 MapObjects::~MapObjects()
@@ -68,14 +68,14 @@ void MapObjects::clear()
 {
     for (auto& it : *this)
         delete it.second;
-    std::map<u32, MapObjectSimple *>::clear();
+    map<u32, MapObjectSimple *>::clear();
 }
 
 void MapObjects::add(MapObjectSimple *obj)
 {
     if (obj)
     {
-        std::map<u32, MapObjectSimple *> &map = *this;
+        map<u32, MapObjectSimple *> &map = *this;
         if (map[obj->GetUID()]) delete map[obj->GetUID()];
         map[obj->GetUID()] = obj;
     }
@@ -87,9 +87,9 @@ MapObjectSimple *MapObjects::get(u32 uid)
     return it != end() ? (*it).second : nullptr;
 }
 
-std::list<MapObjectSimple *> MapObjects::get(const Point &pos)
+list<MapObjectSimple *> MapObjects::get(const Point &pos)
 {
-    std::list<MapObjectSimple *> res;
+    list<MapObjectSimple *> res;
     for (auto& it : *this)
         if (it.second && it.second->isPosition(pos))
             res.push_back(it.second);
@@ -98,13 +98,13 @@ std::list<MapObjectSimple *> MapObjects::get(const Point &pos)
 
 void MapObjects::remove(const Point &pos)
 {
-    std::vector<u32> uids;
+    vector<u32> uids;
 
     for (auto& it : *this)
         if (it.second && it.second->isPosition(pos))
             uids.push_back(it.second->GetUID());
 
-    for (std::vector<u32>::const_iterator
+    for (vector<u32>::const_iterator
                  it = uids.begin(); it != uids.end(); ++it)
         remove(*it);
 }
@@ -118,7 +118,7 @@ void MapObjects::remove(u32 uid)
 
 CapturedObject &CapturedObjects::Get(s32 index)
 {
-    std::map<s32, CapturedObject> &my = *this;
+    map<s32, CapturedObject> &my = *this;
     return my[index];
 }
 
@@ -341,7 +341,7 @@ void World::NewMaps(u32 sw, u32 sh)
         mp2tile.uniqNumber1 = 0;
         mp2tile.uniqNumber2 = 0;
 
-        (*it).Init(std::distance(vec_tiles.begin(), it), mp2tile);
+        (*it).Init(distance(vec_tiles.begin(), it), mp2tile);
     }
 
     // reset current maps info
@@ -532,7 +532,7 @@ void World::NewDay()
     }
 
     // remove deprecated events
-    if (day) vec_eventsday.remove_if(std::bind2nd(std::mem_fun_ref(&EventDate::isDeprecated), day - 1));
+    if (day) vec_eventsday.remove_if(bind2nd(mem_fun_ref(&EventDate::isDeprecated), day - 1));
 }
 
 void World::NewWeek()
@@ -569,8 +569,8 @@ void World::NewWeek()
     }
 
     // new day - reset option: "heroes: remember MP/SP for retreat/surrender result"
-    std::for_each(vec_heroes.begin(), vec_heroes.end(),
-                  std::bind2nd(std::mem_fun(&Heroes::ResetModes), Heroes::SAVEPOINTS));
+    for_each(vec_heroes.begin(), vec_heroes.end(),
+                  bind2nd(mem_fun(&Heroes::ResetModes), Heroes::SAVEPOINTS));
 }
 
 void World::NewMonth()
@@ -617,7 +617,7 @@ void World::MonthOfMonstersAction(const Monster &mons)
             if (!tile.isWater() &&
                 MP2::OBJ_ZERO == tile.GetObject() &&
                 tile.isPassable(nullptr, Direction::CENTER, true) &&
-                excld.end() == std::find(excld.begin(), excld.end(), tile.GetIndex()))
+                excld.end() == find(excld.begin(), excld.end(), tile.GetIndex()))
             {
                 tiles.push_back(tile.GetIndex());
                 const MapsIndexes &obja = Maps::GetAroundIndexes(tile.GetIndex(), dist);
@@ -627,7 +627,7 @@ void World::MonthOfMonstersAction(const Monster &mons)
 
         const u32 area = 12;
         const u32 maxc = (w() / area) * (h() / area);
-        std::random_shuffle(tiles.begin(), tiles.end());
+        random_shuffle(tiles.begin(), tiles.end());
         if (tiles.size() > maxc) tiles.resize(maxc);
 
         for (MapsIndexes::const_iterator
@@ -636,7 +636,7 @@ void World::MonthOfMonstersAction(const Monster &mons)
     }
 }
 
-const std::string &World::GetRumors()
+const string &World::GetRumors()
 {
     // vec_rumors always contain values
     return *Rand::Get(vec_rumors);
@@ -669,19 +669,19 @@ MapsIndexes World::GetTeleportEndPoints(s32 center) const
             MapsIndexes::iterator itend = result.end();
 
             // remove if not type
-            itend = std::remove_if(result.begin(), itend,
-                                   std::not1(std::bind2nd(std::ptr_fun(&TeleportCheckType),
+            itend = remove_if(result.begin(), itend,
+                                   not1(bind2nd(ptr_fun(&TeleportCheckType),
                                                           GetTiles(center).QuantityTeleportType())));
 
             // remove if index
-            itend = std::remove(result.begin(), itend, center);
+            itend = remove(result.begin(), itend, center);
 
             // remove if not ground
-            itend = std::remove_if(result.begin(), itend,
-                                   std::not1(std::bind2nd(std::ptr_fun(&TeleportCheckGround),
+            itend = remove_if(result.begin(), itend,
+                                   not1(bind2nd(ptr_fun(&TeleportCheckGround),
                                                           GetTiles(center).isWater())));
 
-            result.resize(std::distance(result.begin(), itend));
+            result.resize(distance(result.begin(), itend));
         }
     }
 
@@ -702,7 +702,7 @@ MapsIndexes World::GetWhirlpoolEndPoints(s32 center) const
     if (MP2::OBJ_WHIRLPOOL == GetTiles(center).GetObject(false))
     {
         MapsIndexes whilrpools = Maps::GetObjectPositions(MP2::OBJ_WHIRLPOOL, false);
-        std::map<s32, MapsIndexes> uniq_whirlpools;
+        map<s32, MapsIndexes> uniq_whirlpools;
 
         for (MapsIndexes::const_iterator
                      it = whilrpools.begin(); it != whilrpools.end(); ++it)
@@ -724,7 +724,7 @@ MapsIndexes World::GetWhirlpoolEndPoints(s32 center) const
 
         if (addon)
         {
-            for (std::map<s32, MapsIndexes>::const_iterator
+            for (map<s32, MapsIndexes>::const_iterator
                          it = uniq_whirlpools.begin(); it != uniq_whirlpools.end(); ++it)
             {
                 const u32 &uniq = (*it).first;
@@ -888,9 +888,9 @@ EventsDate World::GetEventsDate(int color) const
     return res;
 }
 
-std::string World::DateString() const
+string World::DateString() const
 {
-    std::ostringstream os;
+    ostringstream os;
     os << "month: " << static_cast<int>(GetMonth()) <<
        ", " << "week: " << static_cast<int>(GetWeek()) << ", " << "day: " << static_cast<int>(GetDay());
     return os.str();
@@ -903,7 +903,7 @@ bool IsObeliskOnMaps(const Maps::Tiles &tile)
 
 u32 World::CountObeliskOnMaps()
 {
-    u32 res = std::count_if(vec_tiles.begin(), vec_tiles.end(), IsObeliskOnMaps);
+    u32 res = count_if(vec_tiles.begin(), vec_tiles.end(), IsObeliskOnMaps);
     return res ? res : 6;
 }
 
@@ -922,13 +922,13 @@ void World::ActionToEyeMagi(int color) const
     {
         for (MapsIndexes::const_iterator
                      it = vec_eyes.begin(); it != vec_eyes.end(); ++it)
-            Maps::ClearFog(*it, Game::GetViewDistance(Game::VIEW_MAGI_EYES), color);
+            Maps::ClearFog(*it, GetViewDistance(Game::VIEW_MAGI_EYES), color);
     }
 }
 
 MapEvent *World::GetMapEvent(const Point &pos)
 {
-    std::list<MapObjectSimple *> res = map_objects.get(pos);
+    list<MapObjectSimple *> res = map_objects.get(pos);
     return res.size() ? static_cast<MapEvent *>(res.front()) : nullptr;
 }
 
@@ -990,13 +990,13 @@ bool World::KingdomIsWins(const Kingdom &kingdom, int wins) const
             const KingdomHeroes &heroes = kingdom.GetHeroes();
             if (conf.WinsFindUltimateArtifact())
             {
-                return (heroes.end() != std::find_if(heroes.begin(), heroes.end(),
-                                                     std::mem_fun(&Heroes::HasUltimateArtifact)));
+                return (heroes.end() != find_if(heroes.begin(), heroes.end(),
+                                                     mem_fun(&Heroes::HasUltimateArtifact)));
             } else
             {
                 const Artifact art = conf.WinsFindArtifactID();
-                return (heroes.end() != std::find_if(heroes.begin(), heroes.end(),
-                                                     std::bind2nd(HeroHasArtifact(), art)));
+                return (heroes.end() != find_if(heroes.begin(), heroes.end(),
+                                                     bind2nd(HeroHasArtifact(), art)));
             }
         }
 
@@ -1288,12 +1288,12 @@ StreamBase &operator>>(StreamBase &msg, World &w)
         w.map_objects;
 
     // update tile passable
-    std::for_each(w.vec_tiles.begin(), w.vec_tiles.end(),
-                  std::mem_fun_ref(&Maps::Tiles::UpdatePassable));
+    for_each(w.vec_tiles.begin(), w.vec_tiles.end(),
+                  mem_fun_ref(&Maps::Tiles::UpdatePassable));
 
     // heroes postfix
-    std::for_each(w.vec_heroes.begin(), w.vec_heroes.end(),
-                  std::mem_fun(&Heroes::RescanPathPassable));
+    for_each(w.vec_heroes.begin(), w.vec_heroes.end(),
+                  mem_fun(&Heroes::RescanPathPassable));
 
     return msg;
 }

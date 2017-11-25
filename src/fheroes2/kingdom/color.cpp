@@ -34,19 +34,19 @@ const char *Color::String(int color)
 
     switch (color)
     {
-        case Color::BLUE:
+        case BLUE:
             return str_color[1];
-        case Color::GREEN:
+        case GREEN:
             return str_color[2];
-        case Color::RED:
+        case RED:
             return str_color[3];
-        case Color::YELLOW:
+        case YELLOW:
             return str_color[4];
-        case Color::ORANGE:
+        case ORANGE:
             return str_color[5];
-        case Color::PURPLE:
+        case PURPLE:
             return str_color[6];
-        case Color::UNUSED:
+        case UNUSED:
             return str_color[7];
     }
 
@@ -151,9 +151,9 @@ Colors::Colors(int colors)
     if (colors & Color::PURPLE) push_back(Color::PURPLE);
 }
 
-std::string Colors::String() const
+string Colors::String() const
 {
-    std::ostringstream os;
+    ostringstream os;
 
     for (int it : *this)
         os << Color::String(it) << ", ";

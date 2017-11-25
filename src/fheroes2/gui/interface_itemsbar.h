@@ -33,9 +33,9 @@ namespace Interface
     class ItemsBar
     {
     protected:
-        typedef std::list<Item *> Items;
-        typedef typename std::list<Item *>::iterator ItemsIterator;
-        typedef std::pair<ItemsIterator, Rect> ItemIterPos;
+        typedef list<Item *> Items;
+        typedef typename list<Item *>::iterator ItemsIterator;
+        typedef pair<ItemsIterator, Rect> ItemIterPos;
 
         Items items;
         Rect barsz;
@@ -92,19 +92,19 @@ namespace Interface
             RescanSize();
         }
 
-        void SetContent(std::list<Item> &content)
+        void SetContent(list<Item> &content)
         {
             items.clear();
-            for (typename std::list<Item>::iterator
+            for (typename list<Item>::iterator
                          it = content.begin(); it != content.end(); ++it)
                 items.push_back(&(*it));
             SetContentItems();
         }
 
-        void SetContent(std::vector<Item> &content)
+        void SetContent(vector<Item> &content)
         {
             items.clear();
-            for (typename std::vector<Item>::iterator
+            for (typename vector<Item>::iterator
                          it = content.begin(); it != content.end(); ++it)
                 items.push_back(&(*it));
             SetContentItems();

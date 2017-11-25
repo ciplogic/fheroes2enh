@@ -28,7 +28,7 @@
 #include "resource.h"
 #include "dialog.h"
 
-int Dialog::ResourceInfo(const std::string &header, const std::string &message, const Funds &rs, int buttons)
+int Dialog::ResourceInfo(const string &header, const string &message, const Funds &rs, int buttons)
 {
     Display &display = Display::Get();
 
@@ -64,9 +64,9 @@ int Dialog::ResourceInfo(const std::string &header, const std::string &message, 
     cursor.Show();
     display.Flip();
 
-    int result = Dialog::ZERO;
+    int result = ZERO;
 
-    while (result == Dialog::ZERO && le.HandleEvents())
+    while (result == ZERO && le.HandleEvents())
     {
         if (!buttons && !le.MousePressRight()) break;
         result = btnGroups.QueueEventProcessing();

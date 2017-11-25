@@ -83,10 +83,10 @@ namespace MUS
             {UNKNOWN,      "UNKNOWN"}
     };
 
-    const std::string GetString(int mus, bool shortname)
+    const string GetString(int mus, bool shortname)
     {
-        std::stringstream sstream;
-        sstream << std::setw(2) << std::setfill('0') << mus;
+        stringstream sstream;
+        sstream << setw(2) << setfill('0') << mus;
         if (shortname)
             sstream << ".ogg";
         else
@@ -151,7 +151,7 @@ int MUS::FromRace(int race)
 int MUS::FromMapObject(int object)
 {
     if (Settings::Get().MusicMIDI())
-        return MUS::UNKNOWN;
+        return UNKNOWN;
 
     switch (object)
     {
@@ -160,36 +160,36 @@ int MUS::FromMapObject(int object)
         case MP2::OBJ_MERCENARYCAMP:
         case MP2::OBJ_DOCTORHUT:
         case MP2::OBJ_STANDINGSTONES:
-            return MUS::SKILL;
+            return SKILL;
 
         case MP2::OBJ_GAZEBO:
         case MP2::OBJ_TREEKNOWLEDGE:
-            return MUS::EXPERIENCE;
+            return EXPERIENCE;
 
         case MP2::OBJ_DAEMONCAVE:
-            return MUS::DEMONCAVE;
+            return DEMONCAVE;
 
         case MP2::OBJ_TREEHOUSE:
         case MP2::OBJ_TREECITY:
-            return MUS::TREEHOUSE;
+            return TREEHOUSE;
 
         case MP2::OBJ_WATCHTOWER:
-            return MUS::WATCHTOWER;
+            return WATCHTOWER;
 
         case MP2::OBJ_DESERTTENT:
-            return MUS::NOMADTENTS;
+            return NOMADTENTS;
 
         case MP2::OBJ_ARTESIANSPRING:
-            return MUS::WATERSPRING;
+            return WATERSPRING;
 
         case MP2::OBJ_SPHINX:
-            return MUS::ARABIAN;
+            return ARABIAN;
 
         case MP2::OBJ_EVENT:
-            return MUS::NEWS;
+            return NEWS;
 
         default:
-            return MUS::UNKNOWN;
+            return UNKNOWN;
     }
 }
 

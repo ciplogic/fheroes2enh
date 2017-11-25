@@ -58,13 +58,13 @@ int Game::StartBattleOnly()
     if (main.ChangeSettings())
         main.StartBattle();
 
-    return Game::MAINMENU;
+    return MAINMENU;
 }
 
 int Game::StartGame()
 {
     SetFixVideoMode();
-    ::AI::Init();
+    AI::Init();
 
     // cursor
     Cursor &cursor = Cursor::Get();
@@ -79,7 +79,7 @@ int Game::StartGame()
     return Interface::Basic::Get().StartGame();
 }
 
-void Game::DialogPlayers(int color, std::string str)
+void Game::DialogPlayers(int color, string str)
 {
     const Player *player = Settings::Get().GetPlayers().Get(color);
     StringReplace(str, "%{color}", (player ? player->GetName() : Color::String(color)));
@@ -124,7 +124,7 @@ void Game::OpenCastleDialog(Castle &castle)
     Kingdom &myKingdom = world.GetKingdom(conf.CurrentColor());
     const KingdomCastles &myCastles = myKingdom.GetCastles();
     Display &display = Display::Get();
-    auto it = std::find(myCastles.begin(), myCastles.end(), &castle);
+    auto it = find(myCastles.begin(), myCastles.end(), &castle);
     Interface::StatusWindow::ResetTimer();
     bool need_fade = conf.ExtGameUseFade() && 640 == display.w() && 480 == display.h();
 
@@ -175,7 +175,7 @@ void Game::OpenHeroesDialog(Heroes &hero)
     Kingdom &myKingdom = hero.GetKingdom();
     const KingdomHeroes &myHeroes = myKingdom.GetHeroes();
     Display &display = Display::Get();
-    auto it = std::find(myHeroes.begin(), myHeroes.end(), &hero);
+    auto it = find(myHeroes.begin(), myHeroes.end(), &hero);
     Interface::StatusWindow::ResetTimer();
     Interface::Basic &I = Interface::Basic::Get();
     Interface::GameArea &gameArea = I.GetGameArea();
@@ -233,7 +233,7 @@ void ShowNewWeekDialog()
     const Week &week = world.GetWeekType();
 
     // head
-    std::string message = world.BeginMonth() ? _("Astrologers proclaim Month of the %{name}.") : _(
+    string message = world.BeginMonth() ? _("Astrologers proclaim Month of the %{name}.") : _(
             "Astrologers proclaim Week of the %{name}.");
     AGG::PlayMusic(world.BeginMonth() ?
                    (week.GetType() == Week::MONSTERS ? MUS::MONTH2 : MUS::WEEK2_MONTH1) : MUS::WEEK1, false);
@@ -266,7 +266,7 @@ void ShowNewWeekDialog()
     else
         message += _(" All dwellings increase population.");
 
-    Dialog::Message("", message, Font::BIG, Dialog::OK);
+    Message("", message, Font::BIG, Dialog::OK);
 }
 
 void ShowEventDayDialog()
@@ -281,7 +281,7 @@ void ShowEventDayDialog()
         if ((*it).resource.GetValidItemsCount())
             Dialog::ResourceInfo("", (*it).message, (*it).resource);
         else if ((*it).message.size())
-            Dialog::Message("", (*it).message, Font::BIG, Dialog::OK);
+            Message("", (*it).message, Font::BIG, Dialog::OK);
     }
 }
 
@@ -302,7 +302,7 @@ int ShowWarningLostTownsDialog()
                             _("%{color} player, this is your last day to capture a town, or you will be banished from this land."));
     } else if (Game::GetLostTownDays() >= myKingdom.GetLostTownDays())
     {
-        std::string str = _(
+        string str = _(
                 "%{color} player, you only have %{day} days left to capture a town, or you will be banished from this land.");
         StringReplace(str, "%{day}", myKingdom.GetLostTownDays());
         Game::DialogPlayers(myKingdom.GetColor(), str);
@@ -607,7 +607,7 @@ int Interface::Basic::StartGame()
                             cursor.Show();
                             display.Flip();
 
-                            ::AI::KingdomTurn(kingdom);
+                            AI::KingdomTurn(kingdom);
                         }
                         break;
                 }
@@ -696,7 +696,7 @@ int Interface::Basic::HumanTurn(bool isload)
 
     // auto hide status
     bool autohide_status = conf.QVGA() && conf.ShowStatus();
-    if (autohide_status) Game::AnimateResetDelay(Game::AUTOHIDE_STATUS_DELAY);
+    if (autohide_status) AnimateResetDelay(Game::AUTOHIDE_STATUS_DELAY);
 
 
     // startgame loop
@@ -704,7 +704,7 @@ int Interface::Basic::HumanTurn(bool isload)
     {
 
         // for pocketpc: auto hide status if start turn
-        if (autohide_status && Game::AnimateInfrequentDelay(Game::AUTOHIDE_STATUS_DELAY))
+        if (autohide_status && AnimateInfrequentDelay(Game::AUTOHIDE_STATUS_DELAY))
         {
             EventSwitchShowStatus();
             autohide_status = false;
@@ -876,7 +876,7 @@ int Interface::Basic::HumanTurn(bool isload)
         }
 
         // fast scroll
-        if (gameArea.NeedScroll() && Game::AnimateInfrequentDelay(Game::SCROLL_DELAY))
+        if (gameArea.NeedScroll() && AnimateInfrequentDelay(Game::SCROLL_DELAY))
         {
             cursor.Hide();
 
@@ -906,7 +906,7 @@ int Interface::Basic::HumanTurn(bool isload)
         }
 
         // heroes move animation
-        if (Game::AnimateInfrequentDelay(Game::CURRENT_HERO_DELAY))
+        if (AnimateInfrequentDelay(Game::CURRENT_HERO_DELAY))
         {
             Heroes *hero = GetFocusHeroes();
 
@@ -941,7 +941,7 @@ int Interface::Basic::HumanTurn(bool isload)
         }
 
         // slow maps objects animation
-        if (Game::AnimateInfrequentDelay(Game::MAPS_DELAY))
+        if (AnimateInfrequentDelay(Game::MAPS_DELAY))
         {
             u32 &frame = Game::MapsAnimationFrame();
             ++frame;

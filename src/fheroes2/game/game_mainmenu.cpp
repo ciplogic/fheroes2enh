@@ -78,7 +78,7 @@ int Game::MainMenu()
     const Sprite &lantern10 = AGG::GetICN(ICN::SHNGANIM, 0);
     lantern10.Blit(top.x + lantern10.x(), top.y + lantern10.y());
 
-    const Sprite &lantern11 = AGG::GetICN(ICN::SHNGANIM, ICN::AnimationFrame(ICN::SHNGANIM, 0, 0));
+    const Sprite &lantern11 = AGG::GetICN(ICN::SHNGANIM, AnimationFrame(ICN::SHNGANIM, 0, 0));
     lantern11.Blit(top.x + lantern11.x(), top.y + lantern11.y());
 
     buttonNewGame.Draw();
@@ -169,7 +169,7 @@ int Game::MainMenu()
         {
             cursor.Hide();
             const Sprite &lantern12 = AGG::GetICN(ICN::SHNGANIM,
-                                                  ICN::AnimationFrame(ICN::SHNGANIM, 0, lantern_frame++));
+                                                  AnimationFrame(ICN::SHNGANIM, 0, lantern_frame++));
             lantern12.Blit(top.x + lantern12.x(), top.y + lantern12.y());
             cursor.Show();
             display.Flip();

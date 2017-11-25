@@ -45,7 +45,7 @@ int Dialog::SystemOptions()
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
-    Dialog::FrameBorder frameborder((display.w() - 300 - BORDERWIDTH * 2) / 2,
+    FrameBorder frameborder((display.w() - 300 - BORDERWIDTH * 2) / 2,
                                     (display.h() - 320 - BORDERWIDTH * 2) / 2 - (conf.QVGA() ? 25 : 0), 300, 315);
     const Rect &area = frameborder.GetArea();
 
@@ -76,18 +76,18 @@ int Dialog::SystemOptions()
 
     LocalEvent &le = LocalEvent::Get();
 
-    ButtonGroups btnGroups(area, Dialog::OK);
+    ButtonGroups btnGroups(area, OK);
     btnGroups.Draw();
 
     cursor.Show();
     display.Flip();
 
-    int btnres = Dialog::ZERO;
+    int btnres = ZERO;
     int result = 0;
     bool redraw = false;
 
     // dialog menu loop
-    while (btnres == Dialog::ZERO && le.HandleEvents())
+    while (btnres == ZERO && le.HandleEvents())
     {
         btnres = btnGroups.QueueEventProcessing();
 
@@ -174,7 +174,7 @@ void Dialog::DrawSystemInfo(const Rects &rects)
     Display &display = Display::Get();
     Settings &conf = Settings::Get();
 
-    std::string str;
+    string str;
     Text text;
 
     Surface black(Size(65, 65), false);

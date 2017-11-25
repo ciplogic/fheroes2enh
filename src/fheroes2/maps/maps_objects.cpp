@@ -136,7 +136,7 @@ void MapSphinx::LoadFromMP2(s32 index, StreamBuf st)
         // answers
         for (u32 i = 0; i < 8; ++i)
         {
-            std::string answer = Game::GetEncodeString(st.toString(13));
+            string answer = Game::GetEncodeString(st.toString(13));
 
             if (count-- && answer.size())
                 answers.push_back(StringLower(answer));
@@ -151,9 +151,9 @@ void MapSphinx::LoadFromMP2(s32 index, StreamBuf st)
             DEBUG(DBG_GAME, DBG_WARN, "unknown id");
 }
 
-bool MapSphinx::AnswerCorrect(const std::string &answer)
+bool MapSphinx::AnswerCorrect(const string &answer)
 {
-    return answers.end() != std::find(answers.begin(), answers.end(), StringLower(answer));
+    return answers.end() != find(answers.begin(), answers.end(), StringLower(answer));
 }
 
 void MapSphinx::SetQuiet()
@@ -213,7 +213,7 @@ MapSign::MapSign() : MapObjectSimple(MP2::OBJ_SIGN)
 {
 }
 
-MapSign::MapSign(s32 index, const std::string &msg) : MapObjectSimple(MP2::OBJ_SIGN)
+MapSign::MapSign(s32 index, const string &msg) : MapObjectSimple(MP2::OBJ_SIGN)
 {
     SetIndex(index);
     message = msg;

@@ -183,7 +183,7 @@ float Monster::GetUpgradeRatio()
     return GameStatic::GetMonsterUpgradeRatio();
 }
 
-void Monster::UpdateStats(const std::string &spec)
+void Monster::UpdateStats(const string &spec)
 {
 #ifdef WITH_XML
     // parse monsters.xml
@@ -555,11 +555,11 @@ bool Monster::isHideAttack() const
 {
     switch (id)
     {
-        case Monster::ROGUE:
-        case Monster::SPRITE:
-        case Monster::VAMPIRE:
-        case Monster::VAMPIRE_LORD:
-        case Monster::HYDRA:
+        case ROGUE:
+        case SPRITE:
+        case VAMPIRE:
+        case VAMPIRE_LORD:
+        case HYDRA:
             return true;
 
         default:
@@ -1009,7 +1009,7 @@ Monster Monster::Rand(level_t level)
             break;
     }
 
-    std::vector<Monster> monsters;
+    vector<Monster> monsters;
     monsters.reserve(30);
 
     for (u32 ii = PEASANT; ii <= WATER_ELEMENT; ++ii)

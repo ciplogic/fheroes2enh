@@ -32,13 +32,13 @@ namespace Battle
 {
     class Unit;
 
-    struct TroopUIDs : public std::vector<u32>
+    struct TroopUIDs : public vector<u32>
     {
         TroopUIDs()
         { reserve(4); }
     };
 
-    class Graveyard : public std::map<s32, TroopUIDs>
+    class Graveyard : public map<s32, TroopUIDs>
     {
     public:
         Graveyard()

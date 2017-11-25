@@ -276,7 +276,7 @@ int Castle::OpenDialog(bool readonly, bool fade)
 
     const Point &cur_pt = background.GetArea();
     Point dst_pt(cur_pt);
-    std::string msg_date, msg_status;
+    string msg_date, msg_status;
 
     // date string
     msg_date = _("Month: %{month}, Week: %{week}, Day: %{day}");
@@ -364,7 +364,7 @@ int Castle::OpenDialog(bool readonly, bool fade)
     CastleDialog::CacheBuildings cacheBuildings(*this, cur_pt);
 
     // draw building
-    CastleDialog::RedrawAllBuilding(*this, cur_pt, cacheBuildings);
+    RedrawAllBuilding(*this, cur_pt, cacheBuildings);
 
     if (2 > world.GetKingdom(GetColor()).GetCastles().size() || readonly)
     {
@@ -392,7 +392,7 @@ int Castle::OpenDialog(bool readonly, bool fade)
     while (le.HandleEvents())
     {
         // exit
-        if (le.MouseClickLeft(buttonExit) || Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
+        if (le.MouseClickLeft(buttonExit) || HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
         {
             result = Dialog::CANCEL;
             break;
@@ -406,7 +406,7 @@ int Castle::OpenDialog(bool readonly, bool fade)
         le.MousePressLeft(buttonExit) ? buttonExit.PressDraw() : buttonExit.ReleaseDraw();
 
         if (le.MouseClickLeft(rectResource))
-            Dialog::ResourceInfo("", _("Income:"), world.GetKingdom(GetColor()).GetIncome(INCOME_ALL), Dialog::OK);
+            ResourceInfo("", _("Income:"), world.GetKingdom(GetColor()).GetIncome(INCOME_ALL), Dialog::OK);
         else if (le.MousePressRight(rectResource))
             Dialog::ResourceInfo("", _("Income:"), world.GetKingdom(GetColor()).GetIncome(INCOME_ALL), 0);
 
@@ -446,7 +446,7 @@ int Castle::OpenDialog(bool readonly, bool fade)
                 if (!heroes.Guest()->GetArmy().CanJoinTroops(army))
                 {
                     // FIXME: correct message
-                    Dialog::Message(_("Join Error"), _("Army is full"), Font::BIG, Dialog::OK);
+                    Message(_("Join Error"), _("Army is full"), Font::BIG, Dialog::OK);
                 } else
                 {
                     SwapCastleHeroes(heroes);
@@ -530,7 +530,7 @@ int Castle::OpenDialog(bool readonly, bool fade)
             if ((*it).id == GetActualDwelling((*it).id) && isBuild((*it).id))
             {
                 if (!readonly && le.MouseClickLeft((*it).coord) &&
-                    Castle::RecruitMonster(Dialog::RecruitMonster(
+                    RecruitMonster(Dialog::RecruitMonster(
                             Monster(race, GetActualDwelling((*it).id)), GetDwellingLivedCount((*it).id), true)))
                     need_redraw = true;
                 else if (le.MousePressRight((*it).coord))
@@ -575,7 +575,7 @@ int Castle::OpenDialog(bool readonly, bool fade)
 
                     if (readonly &&
                         ((*it).id & (BUILD_SHIPYARD | BUILD_MARKETPLACE | BUILD_WELL | BUILD_TENT | BUILD_CASTLE)))
-                        Dialog::Message(GetStringBuilding((*it).id), GetDescriptionBuilding((*it).id), Font::BIG,
+                        Message(GetStringBuilding((*it).id), GetDescriptionBuilding((*it).id), Font::BIG,
                                         Dialog::OK);
                     else
                         switch ((*it).id)
@@ -594,7 +594,7 @@ int Castle::OpenDialog(bool readonly, bool fade)
                             case BUILD_MOAT:
                             case BUILD_SPEC:
                             case BUILD_SHRINE:
-                                Dialog::Message(GetStringBuilding((*it).id), GetDescriptionBuilding((*it).id),
+                                Message(GetStringBuilding((*it).id), GetDescriptionBuilding((*it).id),
                                                 Font::BIG, Dialog::OK);
                                 break;
 
@@ -618,13 +618,13 @@ int Castle::OpenDialog(bool readonly, bool fade)
 
                             case BUILD_TENT:
                                 if (!Modes(ALLOWCASTLE))
-                                    Dialog::Message(_("Town"), _("This town may not be upgraded to a castle."),
+                                    Message(_("Town"), _("This town may not be upgraded to a castle."),
                                                     Font::BIG, Dialog::OK);
                                 else if (Dialog::OK == DialogBuyCastle(true))
                                 {
                                     AGG::PlaySound(M82::BUILDTWN);
 
-                                    CastleDialog::RedrawAnimationBuilding(*this, cur_pt, cacheBuildings, BUILD_CASTLE);
+                                    RedrawAnimationBuilding(*this, cur_pt, cacheBuildings, BUILD_CASTLE);
                                     BuyBuilding(BUILD_CASTLE);
 
                                     need_redraw = true;
@@ -642,7 +642,7 @@ int Castle::OpenDialog(bool readonly, bool fade)
                                 {
                                     AGG::PlaySound(M82::BUILDTWN);
 
-                                    CastleDialog::RedrawAnimationBuilding(*this, cur_pt, cacheBuildings, build);
+                                    RedrawAnimationBuilding(*this, cur_pt, cacheBuildings, build);
                                     BuyBuilding(build);
 
                                     if (BUILD_CAPTAIN == build)
@@ -683,7 +683,7 @@ int Castle::OpenDialog(bool readonly, bool fade)
                                     int alpha = 0;
                                     while (le.HandleEvents() && alpha < 240)
                                     {
-                                        if (Game::AnimateInfrequentDelay(Game::CASTLE_BUYHERO_DELAY))
+                                        if (AnimateInfrequentDelay(Game::CASTLE_BUYHERO_DELAY))
                                         {
                                             cursor.Hide();
                                             sf.SetAlphaMod(alpha);
@@ -762,10 +762,10 @@ int Castle::OpenDialog(bool readonly, bool fade)
         }
 
         // animation sprite
-        if (Game::AnimateInfrequentDelay(Game::CASTLE_AROUND_DELAY))
+        if (AnimateInfrequentDelay(Game::CASTLE_AROUND_DELAY))
         {
             cursor.Hide();
-            CastleDialog::RedrawAllBuilding(*this, cur_pt, cacheBuildings,
+            RedrawAllBuilding(*this, cur_pt, cacheBuildings,
                                             (conf.ExtCastleAllowFlash() ? GetCurrentFlash(*this, cacheBuildings)
                                                                         : BUILD_NOTHING));
             cursor.Show();

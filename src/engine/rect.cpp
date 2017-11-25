@@ -87,7 +87,7 @@ Size::Size(u16 sw, u16 sh) : w(sw), h(sh)
 {
 }
 
-Size::Size(const Point &pt) : w(std::abs(pt.x)), h(std::abs(pt.y))
+Size::Size(const Point &pt) : w(abs(pt.x)), h(abs(pt.y))
 {
 }
 
@@ -255,7 +255,7 @@ Rect Rects::GetRect() const
 s32 Rects::GetIndex(const Point &pt) const
 {
     for (auto it = begin(); it != end(); ++it)
-        if (*it & pt) return std::distance(begin(), it);
+        if (*it & pt) return distance(begin(), it);
     return -1;
 }
 

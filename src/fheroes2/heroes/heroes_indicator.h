@@ -35,7 +35,7 @@ public:
 
     const Rect &GetArea() const;
 
-    const std::string &GetDescriptions() const;
+    const string &GetDescriptions() const;
 
     void SetPos(const Point &, bool skip_back = false);
 
@@ -43,7 +43,7 @@ protected:
     const Heroes &hero;
     Rect area;
     SpriteBack back;
-    std::string descriptions;
+    string descriptions;
 };
 
 class LuckIndicator : public HeroesIndicator

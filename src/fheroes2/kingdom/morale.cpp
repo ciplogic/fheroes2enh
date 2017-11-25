@@ -30,19 +30,19 @@ const char *Morale::String(int morale)
 
     switch (morale)
     {
-        case Morale::TREASON:
+        case TREASON:
             return str_morale[1];
-        case Morale::AWFUL:
+        case AWFUL:
             return str_morale[2];
-        case Morale::POOR:
+        case POOR:
             return str_morale[3];
-        case Morale::NORMAL:
+        case NORMAL:
             return str_morale[4];
-        case Morale::GOOD:
+        case GOOD:
             return str_morale[5];
-        case Morale::GREAT:
+        case GREAT:
             return str_morale[6];
-        case Morale::BLOOD:
+        case BLOOD:
             return str_morale[7];
         default:
             break;
@@ -60,15 +60,15 @@ const char *Morale::Description(int morale)
 
     switch (morale)
     {
-        case Morale::TREASON:
-        case Morale::AWFUL:
-        case Morale::POOR:
+        case TREASON:
+        case AWFUL:
+        case POOR:
             return str_desc_morale[1];
-        case Morale::NORMAL:
+        case NORMAL:
             return str_desc_morale[2];
-        case Morale::GOOD:
-        case Morale::GREAT:
-        case Morale::BLOOD:
+        case GOOD:
+        case GREAT:
+        case BLOOD:
             return str_desc_morale[3];
         default:
             break;

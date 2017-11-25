@@ -60,7 +60,7 @@ namespace Route
         u32 penalty;
     };
 
-    class Path : public std::list<Step>
+    class Path : public list<Step>
     {
     public:
         Path(const Heroes &);
@@ -108,7 +108,7 @@ namespace Route
 
         bool hasObstacle() const;
 
-        std::string String() const;
+        string String() const;
 
         s32 GetAllowStep() const;
 

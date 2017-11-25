@@ -50,9 +50,9 @@ enum
     FOCUS_UNSEL = 0, FOCUS_HEROES = 1, FOCUS_CASTLE = 2
 };
 
-struct Focus : std::pair<int, void *>
+struct Focus : pair<int, void *>
 {
-    Focus() : std::pair<int, void *>(FOCUS_UNSEL, nullptr)
+    Focus() : pair<int, void *>(FOCUS_UNSEL, nullptr)
     {}
 
     bool isValid() const
@@ -111,7 +111,7 @@ public:
 
     bool isColor(int) const;
 
-    bool isName(const std::string &) const;
+    bool isName(const string &) const;
 
     bool isPlay() const;
 
@@ -125,7 +125,7 @@ public:
 
     void SetFriends(int);
 
-    void SetName(const std::string &);
+    void SetName(const string &);
 
     int GetControl() const;
 
@@ -137,7 +137,7 @@ public:
 
     int GetID() const;
 
-    const std::string &GetName() const;
+    const string &GetName() const;
 
     Focus &GetFocus();
 
@@ -152,7 +152,7 @@ protected:
     int color;
     int race;
     int friends;
-    std::string name;
+    string name;
     u32 id;
     Focus focus;
 };
@@ -161,7 +161,7 @@ StreamBase &operator<<(StreamBase &, const Player &);
 
 StreamBase &operator>>(StreamBase &, Player &);
 
-class Players : public std::vector<Player *>
+class Players : public vector<Player *>
 {
 public:
     Players();
@@ -180,7 +180,7 @@ public:
 
     int GetActualColors() const;
 
-    std::string String() const;
+    string String() const;
 
     Player *GetCurrent();
 
@@ -230,7 +230,7 @@ namespace Interface
         Rect rect3; // change
     };
 
-    struct PlayersInfo : std::vector<PlayerInfo>
+    struct PlayersInfo : vector<PlayerInfo>
     {
         PlayersInfo(bool /* show name */, bool /* show race */, bool /* show swap button */);
 

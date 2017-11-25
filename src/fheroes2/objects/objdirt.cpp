@@ -37,10 +37,10 @@ int ObjDirt::GetPassable(u32 index)
     if (isShadow(index))
         return DIRECTION_ALL;
     else if (isAction(index) ||
-             ARRAY_COUNT_END(disabled) != std::find(disabled, ARRAY_COUNT_END(disabled), index))
+             ARRAY_COUNT_END(disabled) != find(disabled, ARRAY_COUNT_END(disabled), index))
         return 0;
 
-    return ARRAY_COUNT_END(restricted) != std::find(restricted, ARRAY_COUNT_END(restricted), index) ?
+    return ARRAY_COUNT_END(restricted) != find(restricted, ARRAY_COUNT_END(restricted), index) ?
            DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW : DIRECTION_ALL;
 }
 
@@ -55,7 +55,7 @@ bool ObjDirt::isShadow(u32 index)
                           87, 91, 94, 97, 100, 103, 111, 114, 117, 126, 128, 136, 149, 150, 161, 165, 177, 181, 196,
                           200};
 
-    return ARRAY_COUNT_END(shadows) != std::find(shadows, ARRAY_COUNT_END(shadows), index);
+    return ARRAY_COUNT_END(shadows) != find(shadows, ARRAY_COUNT_END(shadows), index);
 }
 
 int ObjDirt::GetActionObject(u32 index)

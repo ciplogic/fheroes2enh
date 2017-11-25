@@ -49,14 +49,14 @@ class MapObjectSimple;
 
 class ActionSimple;
 
-struct ListActions : public std::list<ActionSimple *>
+struct ListActions : public list<ActionSimple *>
 {
     ~ListActions();
 
     void clear();
 };
 
-struct MapObjects : public std::map<u32, MapObjectSimple *>
+struct MapObjects : public map<u32, MapObjectSimple *>
 {
     ~MapObjects();
 
@@ -64,7 +64,7 @@ struct MapObjects : public std::map<u32, MapObjectSimple *>
 
     void add(MapObjectSimple *);
 
-    std::list<MapObjectSimple *>
+    list<MapObjectSimple *>
     get(const Point &);
 
     MapObjectSimple *get(u32 uid);
@@ -74,7 +74,7 @@ struct MapObjects : public std::map<u32, MapObjectSimple *>
     void remove(u32 uid);
 };
 
-typedef std::map<s32, ListActions> MapActions;
+typedef map<s32, ListActions> MapActions;
 
 struct CapturedObject
 {
@@ -110,7 +110,7 @@ struct CapturedObject
     { return guardians.isValid(); }
 };
 
-struct CapturedObjects : std::map<s32, CapturedObject>
+struct CapturedObjects : map<s32, CapturedObject>
 {
     void Set(s32, int, int);
 
@@ -147,16 +147,16 @@ struct EventDate
     u32 first;
     u32 subsequent;
     int colors;
-    std::string message;
+    string message;
 };
 
 StreamBase &operator<<(StreamBase &, const EventDate &);
 
 StreamBase &operator>>(StreamBase &, EventDate &);
 
-typedef std::list<std::string> Rumors;
-typedef std::list<EventDate> EventsDate;
-typedef std::vector<Maps::Tiles> MapsTiles;
+typedef list<string> Rumors;
+typedef list<EventDate> EventsDate;
+typedef vector<Maps::Tiles> MapsTiles;
 
 
 class World : protected Size
@@ -165,9 +165,9 @@ public:
     ~World()
     { Reset(); }
 
-    bool LoadMapMP2(const std::string &);
+    bool LoadMapMP2(const string &);
 
-    bool LoadMapMAP(const std::string &);
+    bool LoadMapMAP(const string &);
 
     void NewMaps(u32, u32);
 
@@ -237,7 +237,7 @@ public:
 
     const Week &GetWeekType() const;
 
-    std::string DateString() const;
+    string DateString() const;
 
     void NewDay();
 
@@ -245,7 +245,7 @@ public:
 
     void NewMonth();
 
-    const std::string &GetRumors();
+    const string &GetRumors();
 
     s32 NextTeleport(s32) const;
 

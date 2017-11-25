@@ -25,6 +25,8 @@
 #include <map>
 #include <vector>
 
+#include "agg.h"
+
 #include "system.h"
 #include "font.h"
 #include "settings.h"
@@ -34,7 +36,6 @@
 #include "dir.h"
 #include "game.h"
 #include "palette_h2.h"
-#include "agg.h"
 
 #ifdef WITH_ZLIB
 
@@ -57,7 +58,7 @@ namespace AGG
         u32 offset;
         u32 size;
 
-        std::string Info() const;
+        string Info() const;
     };
 
     class File
@@ -67,23 +68,23 @@ namespace AGG
 
         ~File();
 
-        bool Open(const std::string &);
+        bool Open(const string &);
 
         bool isGood() const;
 
-        const std::string &Name() const;
+        const string &Name() const;
 
-        const FAT &Fat(const std::string &key);
+        const FAT &Fat(const string &key);
 
-        const std::vector<u8> &Read(const std::string &key);
+        const vector<u8> &Read(const string &key);
 
     private:
-        std::string filename;
-        std::map<std::string, FAT> fat;
+        string filename;
+        map<string, FAT> fat;
         u32 count_items;
         StreamFile stream;
-        std::string key;
-        std::vector<u8> body;
+        string key;
+        vector<u8> body;
     };
 
     struct icn_cache_t
@@ -125,17 +126,17 @@ namespace AGG
     File heroes2_agg;
     File heroes2x_agg;
 
-    std::vector<icn_cache_t> icn_cache;
-    std::vector<til_cache_t> til_cache;
+    vector<icn_cache_t> icn_cache;
+    vector<til_cache_t> til_cache;
 
-    std::map<int, std::vector<u8> > wav_cache;
-    std::map<int, std::vector<u8> > mid_cache;
-    std::vector<loop_sound_t> loop_sounds;
-    std::map<u32, fnt_cache_t> fnt_cache;
+    map<int, vector<u8> > wav_cache;
+    map<int, vector<u8> > mid_cache;
+    vector<loop_sound_t> loop_sounds;
+    map<u32, fnt_cache_t> fnt_cache;
 
     bool memlimit_usage = true;
 
-    std::vector<SDL_Color> pal_colors;
+    vector<SDL_Color> pal_colors;
 
 #ifdef WITH_TTF
     FontTTF*			fonts; /* small, medium */
@@ -144,13 +145,13 @@ namespace AGG
     Surface			GetFNT(u32, u32);
 #endif
 
-    const std::vector<u8> &GetWAV(int m82);
+    const vector<u8> &GetWAV(int m82);
 
-    const std::vector<u8> &GetMID(int xmi);
+    const vector<u8> &GetMID(int xmi);
 
-    void LoadWAV(int m82, std::vector<u8> &);
+    void LoadWAV(int m82, vector<u8> &);
 
-    void LoadMID(int xmi, std::vector<u8> &);
+    void LoadMID(int xmi, vector<u8> &);
 
     bool LoadExtICN(int icn, u32, bool);
 
@@ -182,9 +183,9 @@ namespace AGG
 
     bool ReadDataDir();
 
-    const std::vector<u8> &ReadICNChunk(int icn, u32);
+    const vector<u8> &ReadICNChunk(int icn, u32);
 
-    const std::vector<u8> &ReadChunk(const std::string &);
+    const vector<u8> &ReadChunk(const string &);
 }
 
 Sprite ICNSprite::CreateSprite(bool reflect, bool shadow) const
@@ -208,7 +209,7 @@ AGG::File::File() : count_items(0)
 {
 }
 
-bool AGG::File::Open(const std::string &fname)
+bool AGG::File::Open(const string &fname)
 {
     filename = fname;
 
@@ -248,32 +249,32 @@ bool AGG::File::isGood() const
 }
 
 /* get AGG file name */
-const std::string &AGG::File::Name() const
+const string &AGG::File::Name() const
 {
     return filename;
 }
 
 /* get FAT element */
-const AGG::FAT &AGG::File::Fat(const std::string &key)
+const AGG::FAT &AGG::File::Fat(const string &key)
 {
     return fat[key];
 }
 
 /* dump FAT */
-std::string AGG::FAT::Info() const
+string AGG::FAT::Info() const
 {
-    std::ostringstream os;
+    ostringstream os;
 
     os << "crc: " << crc << ", offset: " << offset << ", size: " << size;
     return os.str();
 }
 
 /* read element to body */
-const std::vector<u8> &AGG::File::Read(const std::string &str)
+const vector<u8> &AGG::File::Read(const string &str)
 {
     if (key != str)
     {
-        std::map<std::string, FAT>::const_iterator it = fat.find(str);
+        map<string, FAT>::const_iterator it = fat.find(str);
 
         if (it != fat.end())
         {
@@ -302,7 +303,7 @@ u32 AGG::ClearFreeObjects()
     u32 total = 0;
 
     // wav cache
-    for (std::map<int, std::vector<u8> >::iterator
+    for (map<int, vector<u8> >::iterator
                  it = wav_cache.begin(); it != wav_cache.end(); ++it)
         total += (*it).second.size();
 
@@ -310,7 +311,7 @@ u32 AGG::ClearFreeObjects()
     total = 0;
 
     // mus cache
-    for (std::map<int, std::vector<u8> >::iterator
+    for (map<int, vector<u8> >::iterator
                  it = mid_cache.begin(); it != mid_cache.end(); ++it)
         total += (*it).second.size();
 
@@ -333,7 +334,7 @@ u32 AGG::ClearFreeObjects()
 #endif
 
     // til cache
-    for (std::vector<til_cache_t>::iterator
+    for (vector<til_cache_t>::iterator
                  it = til_cache.begin(); it != til_cache.end(); ++it)
     {
         til_cache_t &tils = *it;
@@ -348,7 +349,7 @@ u32 AGG::ClearFreeObjects()
     // icn cache
     u32 used = 0;
 
-    for (std::vector<icn_cache_t>::iterator
+    for (vector<icn_cache_t>::iterator
                  it = icn_cache.begin(); it != icn_cache.end(); ++it)
     {
         icn_cache_t &icns = (*it);
@@ -424,7 +425,7 @@ bool AGG::ReadDataDir()
     Settings &conf = Settings::Get();
 
     ListFiles aggs = conf.GetListFiles("data", ".agg");
-    const std::string &other_data = conf.GetDataParams();
+    const string &other_data = conf.GetDataParams();
 
     if (other_data.size() && other_data != "data")
         aggs.Append(conf.GetListFiles(other_data, ".agg"));
@@ -436,9 +437,9 @@ bool AGG::ReadDataDir()
     for (ListFiles::const_iterator
                  it = aggs.begin(); it != aggs.end(); ++it)
     {
-        std::string lower = StringLower(*it);
-        if (std::string::npos != lower.find("heroes2.agg") && !heroes2_agg.isGood()) heroes2_agg.Open(*it);
-        if (std::string::npos != lower.find("heroes2x.agg") && !heroes2x_agg.isGood()) heroes2x_agg.Open(*it);
+        string lower = StringLower(*it);
+        if (string::npos != lower.find("heroes2.agg") && !heroes2_agg.isGood()) heroes2_agg.Open(*it);
+        if (string::npos != lower.find("heroes2x.agg") && !heroes2x_agg.isGood()) heroes2x_agg.Open(*it);
     }
 
     if (heroes2x_agg.isGood()) conf.SetPriceLoyaltyVersion();
@@ -446,11 +447,11 @@ bool AGG::ReadDataDir()
     return heroes2_agg.isGood();
 }
 
-const std::vector<u8> &AGG::ReadChunk(const std::string &key)
+const vector<u8> &AGG::ReadChunk(const string &key)
 {
     if (heroes2x_agg.isGood())
     {
-        const std::vector<u8> &buf = heroes2x_agg.Read(key);
+        const vector<u8> &buf = heroes2x_agg.Read(key);
         if (buf.size()) return buf;
     }
 
@@ -892,7 +893,7 @@ void AGG::SaveICN(int icn)
 #endif
 }
 
-const std::vector<u8> &AGG::ReadICNChunk(int icn, u32 index)
+const vector<u8> &AGG::ReadICNChunk(int icn, u32 index)
 {
     // hard fix artifact "ultimate stuff" sprite for loyalty version
     if (ICN::ARTIFACT == icn &&
@@ -938,7 +939,7 @@ void AGG::RenderICNSprite(int icn, u32 index, const Rect &srt, const Point &dpt,
 ICNSprite AGG::RenderICNSprite(int icn, u32 index)
 {
     ICNSprite res;
-    const std::vector<u8> &body = ReadICNChunk(icn, index);
+    const vector<u8> &body = ReadICNChunk(icn, index);
 
     if (body.empty())
     {
@@ -1078,7 +1079,7 @@ ICNSprite AGG::RenderICNSprite(int icn, u32 index)
 
 bool AGG::LoadOrgICN(Sprite &sp, int icn, u32 index, bool reflect)
 {
-    ICNSprite icnSprite = AGG::RenderICNSprite(icn, index);
+    ICNSprite icnSprite = RenderICNSprite(icn, index);
 
     if (icnSprite.isValid())
     {
@@ -1137,7 +1138,7 @@ bool AGG::LoadOrgICN(int icn, u32 index, bool reflect)
 
     if (nullptr == v.sprites)
     {
-        const std::vector<u8> &body = ReadChunk(ICN::GetString(icn));
+        const vector<u8> &body = ReadChunk(ICN::GetString(icn));
 
         if (!body.empty())
         {
@@ -1230,7 +1231,7 @@ Sprite AGG::GetICN(int icn, u32 index, bool reflect)
 /* return count of sprites from specific ICN */
 u32 AGG::GetICNCount(int icn)
 {
-    if (icn_cache[icn].count == 0) AGG::GetICN(icn, 0);
+    if (icn_cache[icn].count == 0) GetICN(icn, 0);
     return icn_cache[icn].count;
 }
 
@@ -1385,7 +1386,7 @@ void AGG::SaveTIL(int til)
 
 bool AGG::LoadOrgTIL(int til, u32 max)
 {
-    const std::vector<u8> &body = ReadChunk(TIL::GetString(til));
+    const vector<u8> &body = ReadChunk(TIL::GetString(til));
 
     if (body.size())
     {
@@ -1519,7 +1520,7 @@ Surface AGG::GetTIL(int til, u32 index, u32 shape)
 }
 
 /* load 82M object to AGG::Cache in Audio::CVT */
-void AGG::LoadWAV(int m82, std::vector<u8> &v)
+void AGG::LoadWAV(int m82, vector<u8> &v)
 {
 #ifdef WITH_MIXER
     const Settings & conf = Settings::Get();
@@ -1552,7 +1553,7 @@ void AGG::LoadWAV(int m82, std::vector<u8> &v)
 #endif
 
     DEBUG(DBG_ENGINE, DBG_INFO, M82::GetString(m82));
-    const std::vector<u8> &body = ReadChunk(M82::GetString(m82));
+    const vector<u8> &body = ReadChunk(M82::GetString(m82));
 
     if (body.size())
     {
@@ -1607,32 +1608,32 @@ void AGG::LoadWAV(int m82, std::vector<u8> &v)
 }
 
 /* load XMI object */
-void AGG::LoadMID(int xmi, std::vector<u8> &v)
+void AGG::LoadMID(int xmi, vector<u8> &v)
 {
     DEBUG(DBG_ENGINE, DBG_INFO, XMI::GetString(xmi));
-    const std::vector<u8> &body = ReadChunk(XMI::GetString(xmi));
+    const vector<u8> &body = ReadChunk(XMI::GetString(xmi));
 
     if (body.size())
         v = Music::Xmi2Mid(body);
 }
 
 /* return CVT */
-const std::vector<u8> &AGG::GetWAV(int m82)
+const vector<u8> &AGG::GetWAV(int m82)
 {
-    std::vector<u8> &v = wav_cache[m82];
+    vector<u8> &v = wav_cache[m82];
     if (Mixer::isValid() && v.empty()) LoadWAV(m82, v);
     return v;
 }
 
 /* return MID */
-const std::vector<u8> &AGG::GetMID(int xmi)
+const vector<u8> &AGG::GetMID(int xmi)
 {
-    std::vector<u8> &v = mid_cache[xmi];
+    vector<u8> &v = mid_cache[xmi];
     if (Mixer::isValid() && v.empty()) LoadMID(xmi, v);
     return v;
 }
 
-void AGG::LoadLOOPXXSounds(const std::vector<int> &vols)
+void AGG::LoadLOOPXXSounds(const vector<int> &vols)
 {
     const Settings &conf = Settings::Get();
 
@@ -1642,11 +1643,11 @@ void AGG::LoadLOOPXXSounds(const std::vector<int> &vols)
         for (auto itv = vols.begin(); itv != vols.end(); ++itv)
         {
             int vol = *itv;
-            int m82 = M82::GetLOOP00XX(std::distance(vols.begin(), itv));
+            int m82 = M82::GetLOOP00XX(distance(vols.begin(), itv));
             if (M82::UNKNOWN == m82) continue;
 
             // find loops
-            auto itl = std::find(loop_sounds.begin(), loop_sounds.end(), m82);
+            auto itl = find(loop_sounds.begin(), loop_sounds.end(), m82);
 
             if (itl != loop_sounds.end())
             {
@@ -1672,7 +1673,7 @@ void AGG::LoadLOOPXXSounds(const std::vector<int> &vols)
                 // new sound
             if (0 != vol)
             {
-                const std::vector<u8> &v = GetWAV(m82);
+                const vector<u8> &v = GetWAV(m82);
                 int ch = Mixer::Play(&v[0], v.size(), -1, true);
 
                 if (0 <= ch)
@@ -1682,7 +1683,7 @@ void AGG::LoadLOOPXXSounds(const std::vector<int> &vols)
                     Mixer::Resume(ch);
 
                     // find unused
-                    auto itl = std::find(loop_sounds.begin(), loop_sounds.end(),
+                    auto itl = find(loop_sounds.begin(), loop_sounds.end(),
                                          static_cast<int>(M82::UNKNOWN));
 
                     if (itl != loop_sounds.end())
@@ -1707,7 +1708,7 @@ void AGG::PlaySound(int m82)
     if (conf.Sound())
     {
         DEBUG(DBG_ENGINE, DBG_INFO, M82::GetString(m82));
-        const std::vector<u8> &v = AGG::GetWAV(m82);
+        const vector<u8> &v = GetWAV(m82);
         int ch = Mixer::Play(&v[0], v.size(), -1, false);
         Mixer::Pause(ch);
         Mixer::Volume(ch, Mixer::MaxVolume() * conf.SoundVolume() / 10);
@@ -1725,11 +1726,11 @@ void AGG::PlayMusic(int mus, bool loop)
         return;
 
     Game::SetCurrentMusic(mus);
-    const std::string prefix_music = System::ConcatePath("files", "music");
+    const string prefix_music = System::ConcatePath("files", "music");
 
     if (conf.MusicExt())
     {
-        std::string filename = Settings::GetLastFile(prefix_music, MUS::GetString(mus));
+        string filename = Settings::GetLastFile(prefix_music, MUS::GetString(mus));
 
         if (!System::IsFile(filename))
             filename.clear();
@@ -1774,9 +1775,9 @@ void AGG::PlayMusic(int mus, bool loop)
             const std::vector<u8> & v = GetMID(xmi);
             if(v.size()) Music::Play(v, loop);
 #else
-            std::string mid = XMI::GetString(xmi);
+            string mid = XMI::GetString(xmi);
             StringReplace(mid, ".XMI", ".MID");
-            const std::string file = System::ConcatePath(Settings::GetWriteableDir("music"), mid);
+            const string file = System::ConcatePath(Settings::GetWriteableDir("music"), mid);
 
             if (!System::IsFile(file))
                 SaveMemToFile(GetMID(xmi), file);
@@ -1881,19 +1882,19 @@ Surface AGG::GetLetter(u32 ch, u32 ft)
     switch (ft)
     {
         case Font::YELLOW_BIG:
-            return AGG::GetICN(ICN::YELLOW_FONT, ch - 0x20);
+            return GetICN(ICN::YELLOW_FONT, ch - 0x20);
         case Font::YELLOW_SMALL:
-            return AGG::GetICN(ICN::YELLOW_SMALFONT, ch - 0x20);
+            return GetICN(ICN::YELLOW_SMALFONT, ch - 0x20);
         case Font::BIG:
-            return AGG::GetICN(ICN::FONT, ch - 0x20);
+            return GetICN(ICN::FONT, ch - 0x20);
         case Font::SMALL:
-            return AGG::GetICN(ICN::SMALFONT, ch - 0x20);
+            return GetICN(ICN::SMALFONT, ch - 0x20);
 
         default:
             break;
     }
 
-    return AGG::GetICN(ICN::SMALFONT, ch - 0x20);
+    return GetICN(ICN::SMALFONT, ch - 0x20);
 }
 
 void AGG::ResetMixer()
@@ -1979,7 +1980,7 @@ bool AGG::Init()
 
 void AGG::Quit()
 {
-    for (std::vector<icn_cache_t>::iterator
+    for (vector<icn_cache_t>::iterator
                  it = icn_cache.begin(); it != icn_cache.end(); ++it)
     {
         icn_cache_t &icns = (*it);
@@ -1991,7 +1992,7 @@ void AGG::Quit()
         icns.reflect = nullptr;
     }
 
-    for (std::vector<til_cache_t>::iterator
+    for (vector<til_cache_t>::iterator
                  it = til_cache.begin(); it != til_cache.end(); ++it)
     {
         til_cache_t &tils = (*it);

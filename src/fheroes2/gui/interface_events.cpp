@@ -114,7 +114,7 @@ void Interface::Basic::EventNextHero()
 
     if (GetFocusHeroes())
     {
-        KingdomHeroes::const_iterator it = std::find(myHeroes.begin(), myHeroes.end(),
+        KingdomHeroes::const_iterator it = find(myHeroes.begin(), myHeroes.end(),
                                                      GetFocusHeroes());
         ++it;
         if (it == myHeroes.end()) it = myHeroes.begin();
@@ -292,7 +292,7 @@ void Interface::Basic::EventNextTown()
     {
         if (GetFocusCastle())
         {
-            KingdomCastles::const_iterator it = std::find(myCastles.begin(), myCastles.end(),
+            KingdomCastles::const_iterator it = find(myCastles.begin(), myCastles.end(),
                                                           GetFocusCastle());
             ++it;
             if (it == myCastles.end()) it = myCastles.begin();
@@ -306,9 +306,9 @@ void Interface::Basic::EventNextTown()
 
 int Interface::Basic::EventSaveGame()
 {
-    std::string filename = Dialog::SelectFileSave();
+    string filename = Dialog::SelectFileSave();
     if (filename.size() && Game::Save(filename))
-        Dialog::Message("", _("Game saved successfully."), Font::BIG, Dialog::OK);
+        Message("", _("Game saved successfully."), Font::BIG, Dialog::OK);
     return Game::CANCEL;
 }
 
@@ -354,7 +354,7 @@ int Interface::Basic::EventDigArtifact()
     if (hero)
     {
         if (hero->isShipMaster())
-            Dialog::Message("", _("Try looking on land!!!"), Font::BIG, Dialog::OK);
+            Message("", _("Try looking on land!!!"), Font::BIG, Dialog::OK);
         else if (hero->GetMaxMovePoints() <= hero->GetMovePoints())
         {
             if (world.GetTiles(hero->GetIndex()).GoodForUltimateArtifact())
@@ -368,7 +368,7 @@ int Interface::Basic::EventDigArtifact()
                     AGG::PlaySound(M82::TREASURE);
                     const Artifact &ultimate = world.GetUltimateArtifact().GetArtifact();
                     hero->PickupArtifact(ultimate);
-                    std::string msg(_("After spending many hours digging here, you have uncovered the %{artifact}"));
+                    string msg(_("After spending many hours digging here, you have uncovered the %{artifact}"));
                     StringReplace(msg, "%{artifact}", ultimate.GetName());
                     Dialog::ArtifactInfo(_("Congratulations!"), msg, ultimate());
 
@@ -384,7 +384,7 @@ int Interface::Basic::EventDigArtifact()
                     kingdom.PuzzleMaps().Update(kingdom.CountVisitedObjects(MP2::OBJ_OBELISK),
                                                 world.CountObeliskOnMaps());
                 } else
-                    Dialog::Message("", _("Nothing here. Where could it be?"), Font::BIG, Dialog::OK);
+                    Message("", _("Nothing here. Where could it be?"), Font::BIG, Dialog::OK);
 
                 Cursor::Get().Hide();
                 iconsPanel.RedrawIcons(ICON_HEROES);
@@ -394,10 +394,10 @@ int Interface::Basic::EventDigArtifact()
                 // check game over for ultimate artifact
                 return GameOver::Result::Get().LocalCheckGameOver();
             } else
-                Dialog::Message("", _("Try searching on clear ground."), Font::BIG, Dialog::OK);
+                Message("", _("Try searching on clear ground."), Font::BIG, Dialog::OK);
         }
     } else
-        Dialog::Message("", _("Digging for artifacts requires a whole day, try again tomorrow."), Font::BIG,
+        Message("", _("Digging for artifacts requires a whole day, try again tomorrow."), Font::BIG,
                         Dialog::OK);
 
     return Game::CANCEL;

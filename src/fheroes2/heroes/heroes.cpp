@@ -80,7 +80,7 @@ const char *Heroes::GetName(int id)
     return names[id];
 }
 
-int ObjectVisitedModifiersResult(int type, const u8 *objs, u32 size, const Heroes &hero, std::string *strs)
+int ObjectVisitedModifiersResult(int type, const u8 *objs, u32 size, const Heroes &hero, string *strs)
 {
     int result = 0;
 
@@ -108,7 +108,7 @@ Heroes::Heroes() : move_point_scale(-1), army(this), hid(UNKNOWN), portrait(UNKN
 {
 }
 
-Heroes::Heroes(int heroid, int rc) : HeroBase(HeroBase::HEROES, rc), ColorBase(Color::NONE), experience(0),
+Heroes::Heroes(int heroid, int rc) : HeroBase(HEROES, rc), ColorBase(Color::NONE), experience(0),
                                      move_point_scale(-1), secondary_skills(rc), army(this), hid(heroid),
                                      portrait(heroid), race(rc),
                                      save_maps_object(MP2::OBJ_ZERO), path(*this), direction(Direction::RIGHT),
@@ -343,19 +343,19 @@ void Heroes::LoadFromMP2(s32 map_index, int cl, int rc, StreamBuf st)
     {
         SetModes(NOTDEFAULTS);
         SetModes(CUSTOMSKILLS);
-        std::vector<Skill::Secondary> secs(8);
+        vector<Skill::Secondary> secs(8);
 
-        for (std::vector<Skill::Secondary>::iterator
+        for (vector<Skill::Secondary>::iterator
                      it = secs.begin(); it != secs.end(); ++it)
             (*it).SetSkill(st.get() + 1);
 
-        for (std::vector<Skill::Secondary>::iterator
+        for (vector<Skill::Secondary>::iterator
                      it = secs.begin(); it != secs.end(); ++it)
             (*it).SetLevel(st.get());
 
         secondary_skills = Skill::SecSkills();
 
-        for (std::vector<Skill::Secondary>::const_iterator
+        for (vector<Skill::Secondary>::const_iterator
                      it = secs.begin(); it != secs.end(); ++it)
             if ((*it).isValid()) secondary_skills.AddSkill(*it);
     } else
@@ -409,7 +409,7 @@ void Heroes::PostLoad()
     if ((race & (Race::SORC | Race::WRLK | Race::WZRD | Race::NECR)) &&
         !HaveSpellBook())
     {
-        Spell spell = Skill::Primary::GetInitialSpell(race);
+        Spell spell = GetInitialSpell(race);
         if (spell.isValid())
         {
             SpellBookActivate();
@@ -439,7 +439,7 @@ int Heroes::GetRace() const
     return race;
 }
 
-const std::string &Heroes::GetName() const
+const string &Heroes::GetName() const
 {
     return name;
 }
@@ -451,7 +451,7 @@ int Heroes::GetColor() const
 
 int Heroes::GetType() const
 {
-    return HeroBase::HEROES;
+    return HEROES;
 }
 
 const Army &Heroes::GetArmy() const
@@ -483,7 +483,7 @@ int Heroes::GetAttack() const
     return GetAttack(nullptr);
 }
 
-int Heroes::GetAttack(std::string *strs) const
+int Heroes::GetAttack(string *strs) const
 {
     int result = attack + GetAttackModificator(strs);
     return result < 0 ? 0 : (result > 255 ? 255 : result);
@@ -494,7 +494,7 @@ int Heroes::GetDefense() const
     return GetDefense(nullptr);
 }
 
-int Heroes::GetDefense(std::string *strs) const
+int Heroes::GetDefense(string *strs) const
 {
     int result = defense + GetDefenseModificator(strs);
     return result < 0 ? 0 : (result > 255 ? 255 : result);
@@ -505,7 +505,7 @@ int Heroes::GetPower() const
     return GetPower(nullptr);
 }
 
-int Heroes::GetPower(std::string *strs) const
+int Heroes::GetPower(string *strs) const
 {
     int result = power + GetPowerModificator(strs);
     return result < 0 ? 0 : (result > 255 ? 255 : result);
@@ -516,7 +516,7 @@ int Heroes::GetKnowledge() const
     return GetKnowledge(nullptr);
 }
 
-int Heroes::GetKnowledge(std::string *strs) const
+int Heroes::GetKnowledge(string *strs) const
 {
     int result = knowledge + GetKnowledgeModificator(strs);
     return result < 0 ? 0 : (result > 255 ? 255 : result);
@@ -526,16 +526,16 @@ void Heroes::IncreasePrimarySkill(int skill)
 {
     switch (skill)
     {
-        case Skill::Primary::ATTACK:
+        case ATTACK:
             ++attack;
             break;
-        case Skill::Primary::DEFENSE:
+        case DEFENSE:
             ++defense;
             break;
-        case Skill::Primary::POWER:
+        case POWER:
             ++power;
             break;
-        case Skill::Primary::KNOWLEDGE:
+        case KNOWLEDGE:
             ++knowledge;
             break;
         default:
@@ -639,7 +639,7 @@ int Heroes::GetMorale() const
     return GetMoraleWithModificators(nullptr);
 }
 
-int Heroes::GetMoraleWithModificators(std::string *strs) const
+int Heroes::GetMoraleWithModificators(string *strs) const
 {
     int result = Morale::NORMAL;
 
@@ -672,7 +672,7 @@ int Heroes::GetLuck() const
     return GetLuckWithModificators(nullptr);
 }
 
-int Heroes::GetLuckWithModificators(std::string *strs) const
+int Heroes::GetLuckWithModificators(string *strs) const
 {
     int result = Luck::NORMAL;
 
@@ -869,7 +869,7 @@ bool Heroes::isVisited(const Maps::Tiles &tile, Visit::type_t type) const
 
     if (Visit::GLOBAL == type) return GetKingdom().isVisited(index, object);
 
-    return visit_object.end() != std::find(visit_object.begin(), visit_object.end(), IndexObject(index, object));
+    return visit_object.end() != find(visit_object.begin(), visit_object.end(), IndexObject(index, object));
 }
 
 /* return true if object visited */
@@ -877,8 +877,8 @@ bool Heroes::isVisited(int object, Visit::type_t type) const
 {
     if (Visit::GLOBAL == type) return GetKingdom().isVisited(object);
 
-    return visit_object.end() != std::find_if(visit_object.begin(), visit_object.end(),
-                                              std::bind2nd(std::mem_fun_ref(&IndexObject::isObject), object));
+    return visit_object.end() != find_if(visit_object.begin(), visit_object.end(),
+                                              bind2nd(mem_fun_ref(&IndexObject::isObject), object));
 }
 
 /* set visited cell */
@@ -964,10 +964,10 @@ bool Heroes::PickupArtifact(const Artifact &art)
         if (isControlHuman())
         {
             art() == Artifact::MAGIC_BOOK ?
-            Dialog::Message("",
+            Message("",
                             _("You must purchase a spell book to use the mage guild, but you currently have no room for a spell book. Try giving one of your artifacts to another hero."),
                             Font::BIG, Dialog::OK) :
-            Dialog::Message(art.GetName(), _("You have no room to carry another artifact!"), Font::BIG, Dialog::OK);
+            Message(art.GetName(), _("You have no room to carry another artifact!"), Font::BIG, Dialog::OK);
         }
         return false;
     }
@@ -1124,7 +1124,7 @@ bool Heroes::BuySpellBook(const Castle *castle, int shrine)
     const payment_t payment = PaymentConditions::BuySpellBook(shrine);
     Kingdom &kingdom = GetKingdom();
 
-    std::string header = _("To cast spells, you must first buy a spell book for %{gold} gold.");
+    string header = _("To cast spells, you must first buy a spell book for %{gold} gold.");
     StringReplace(header, "%{gold}", payment.gold);
 
     if (!kingdom.AllowPayment(payment))
@@ -1133,7 +1133,7 @@ bool Heroes::BuySpellBook(const Castle *castle, int shrine)
         {
             header.append(" ");
             header.append(_("Unfortunately, you seem to be a little short of cash at the moment."));
-            Dialog::Message("", header, Font::BIG, Dialog::OK);
+            Message("", header, Font::BIG, Dialog::OK);
         }
         return false;
     }
@@ -1263,8 +1263,8 @@ int Heroes::GetScoute() const
 {
     int acount = HasArtifact(Artifact::TELESCOPE);
 
-    return (acount ? acount * Game::GetViewDistance(Game::VIEW_TELESCOPE) : 0) +
-           Game::GetViewDistance(Game::VIEW_HEROES) + GetSecondaryValues(Skill::Secondary::SCOUTING);
+    return (acount ? acount * GetViewDistance(Game::VIEW_TELESCOPE) : 0) +
+           GetViewDistance(Game::VIEW_HEROES) + GetSecondaryValues(Skill::Secondary::SCOUTING);
 }
 
 u32 Heroes::GetVisionsDistance() const
@@ -1327,7 +1327,7 @@ void Heroes::LevelUp(bool skipsecondary, bool autoselect)
 
 int Heroes::LevelUpPrimarySkill()
 {
-    int skill = Skill::Primary::LevelUp(race, GetLevel());
+    int skill = Primary::LevelUp(race, GetLevel());
 
     DEBUG(DBG_GAME, DBG_INFO, "for " << GetName() << ", up " << Skill::Primary::String(skill));
     return skill;
@@ -1356,7 +1356,7 @@ void Heroes::LevelUpSecondarySkill(int primary, bool autoselect)
     } else
     {
         AGG::PlaySound(M82::NWHEROLV);
-        int result = Dialog::LevelUpSelectSkill(name, Skill::Primary::String(primary), sec1, sec2, *this);
+        int result = Dialog::LevelUpSelectSkill(name, Primary::String(primary), sec1, sec2, *this);
 
         if (Skill::Secondary::UNKNOWN != result)
             selected = result == sec2.Skill() ? &sec2 : &sec1;
@@ -1366,7 +1366,7 @@ void Heroes::LevelUpSecondarySkill(int primary, bool autoselect)
     if (selected)
     {
         DEBUG(DBG_GAME, DBG_INFO, GetName() << ", selected: " << Skill::Secondary::String(selected->Skill()));
-        std::vector<Skill::Secondary>::iterator it;
+        vector<Skill::Secondary>::iterator it;
 
         Skill::Secondary *secs = secondary_skills.FindSkill(selected->Skill());
 
@@ -1525,7 +1525,7 @@ void Heroes::ActionNewPosition()
         GetPath().Hide();
 
         // first target
-        MapsIndexes::iterator it = std::find(targets.begin(), targets.end(),
+        MapsIndexes::iterator it = find(targets.begin(), targets.end(),
                                              GetPath().GetDestinedIndex());
         if (it != targets.end())
         {
@@ -1652,16 +1652,16 @@ void Heroes::Move2Dest(const s32 &dst_index, bool skip_action /* false */)
 
 Surface Heroes::GetPortrait(int id, int type)
 {
-    if (Heroes::UNKNOWN != id)
+    if (UNKNOWN != id)
         switch (type)
         {
             case PORT_BIG:
                 return AGG::GetICN(ICN::PORTxxxx(id), 0);
             case PORT_MEDIUM:
-                return Heroes::SANDYSANDY > id ? AGG::GetICN(ICN::PORTMEDI, id + 1) : AGG::GetICN(ICN::PORTMEDI,
+                return SANDYSANDY > id ? AGG::GetICN(ICN::PORTMEDI, id + 1) : AGG::GetICN(ICN::PORTMEDI,
                                                                                                   BAX + 1);
             case PORT_SMALL:
-                return Heroes::SANDYSANDY > id ? AGG::GetICN(ICN::MINIPORT, id) : AGG::GetICN(ICN::MINIPORT, BAX);
+                return SANDYSANDY > id ? AGG::GetICN(ICN::MINIPORT, id) : AGG::GetICN(ICN::MINIPORT, BAX);
             default:
                 break;
         }
@@ -1671,7 +1671,7 @@ Surface Heroes::GetPortrait(int id, int type)
 
 Surface Heroes::GetPortrait(int type) const
 {
-    return Heroes::GetPortrait(portrait, type);
+    return GetPortrait(portrait, type);
 }
 
 void Heroes::PortraitRedraw(s32 px, s32 py, int type, Surface &dstsf) const
@@ -1718,14 +1718,14 @@ void Heroes::PortraitRedraw(s32 px, s32 py, int type, Surface &dstsf) const
     }
 
     // heroes marker
-    if (Modes(Heroes::SHIPMASTER))
+    if (Modes(SHIPMASTER))
     {
         const Sprite &sprite = AGG::GetICN(ICN::BOAT12, 0);
         const Rect pos(px + mp.x, py + mp.y - 1, sprite.w(), sprite.h());
         dstsf.FillRect(pos, ColorBlack);
         sprite.Blit(pos.x, pos.y, dstsf);
         mp.y = sprite.h();
-    } else if (Modes(Heroes::GUARDIAN))
+    } else if (Modes(GUARDIAN))
     {
         const Sprite &sprite = AGG::GetICN(ICN::MISC6, 11);
         const Rect pos(px + mp.x + 3, py + mp.y, sprite.w(), sprite.h());
@@ -1734,7 +1734,7 @@ void Heroes::PortraitRedraw(s32 px, s32 py, int type, Surface &dstsf) const
         mp.y = sprite.h();
     }
 
-    if (Modes(Heroes::SLEEPER))
+    if (Modes(SLEEPER))
     {
         const Sprite &sprite = AGG::GetICN(ICN::MISC4, 14);
         const Rect pos(px + mp.x + 3, py + mp.y - 1, sprite.w() - 4, sprite.h() - 4);
@@ -1743,50 +1743,50 @@ void Heroes::PortraitRedraw(s32 px, s32 py, int type, Surface &dstsf) const
     }
 }
 
-std::string Heroes::String() const
+string Heroes::String() const
 {
-    std::ostringstream os;
+    ostringstream os;
 
     os <<
-       "name            : " << name << std::endl <<
-       "race            : " << Race::String(race) << std::endl <<
-       "color           : " << Color::String(GetColor()) << std::endl <<
-       "experience      : " << experience << std::endl <<
-       "level           : " << GetLevel() << std::endl <<
-       "magic point     : " << GetSpellPoints() << std::endl <<
-       "position x      : " << GetCenter().x << std::endl <<
-       "position y      : " << GetCenter().y << std::endl <<
-       "move point      : " << move_point << std::endl <<
-       "max magic point : " << GetMaxSpellPoints() << std::endl <<
-       "max move point  : " << GetMaxMovePoints() << std::endl <<
-       "direction       : " << Direction::String(direction) << std::endl <<
-       "index sprite    : " << sprite_index << std::endl <<
-       "in castle       : " << (inCastle() ? "true" : "false") << std::endl <<
-       "save object     : " << MP2::StringObject(world.GetTiles(GetIndex()).GetObject(false)) << std::endl <<
+       "name            : " << name << endl <<
+       "race            : " << Race::String(race) << endl <<
+       "color           : " << Color::String(GetColor()) << endl <<
+       "experience      : " << experience << endl <<
+       "level           : " << GetLevel() << endl <<
+       "magic point     : " << GetSpellPoints() << endl <<
+       "position x      : " << GetCenter().x << endl <<
+       "position y      : " << GetCenter().y << endl <<
+       "move point      : " << move_point << endl <<
+       "max magic point : " << GetMaxSpellPoints() << endl <<
+       "max move point  : " << GetMaxMovePoints() << endl <<
+       "direction       : " << Direction::String(direction) << endl <<
+       "index sprite    : " << sprite_index << endl <<
+       "in castle       : " << (inCastle() ? "true" : "false") << endl <<
+       "save object     : " << MP2::StringObject(world.GetTiles(GetIndex()).GetObject(false)) << endl <<
        "flags           : " << (Modes(SHIPMASTER) ? "SHIPMASTER," : "") <<
-       (Modes(PATROL) ? "PATROL" : "") << std::endl;
+       (Modes(PATROL) ? "PATROL" : "") << endl;
 
     if (Modes(PATROL))
     {
-        os << "patrol square   : " << patrol_square << std::endl;
+        os << "patrol square   : " << patrol_square << endl;
     }
 
     if (!visit_object.empty())
     {
         os << "visit objects   : ";
-        for (std::list<IndexObject>::const_iterator
+        for (list<IndexObject>::const_iterator
                      it = visit_object.begin(); it != visit_object.end(); ++it)
             os << MP2::StringObject((*it).second) << "(" << (*it).first << "), ";
-        os << std::endl;
+        os << endl;
     }
 
     if (isControlAI())
     {
         os <<
-           "skills          : " << secondary_skills.String() << std::endl <<
-           "artifacts       : " << bag_artifacts.String() << std::endl <<
-           "spell book      : " << (HaveSpellBook() ? spell_book.String() : "disabled") << std::endl <<
-           "army dump       : " << army.String() << std::endl;
+           "skills          : " << secondary_skills.String() << endl <<
+           "artifacts       : " << bag_artifacts.String() << endl <<
+           "spell book      : " << (HaveSpellBook() ? spell_book.String() : "disabled") << endl <<
+           "army dump       : " << army.String() << endl;
 
         os << AI::HeroesString(*this);
     }
@@ -1794,7 +1794,7 @@ std::string Heroes::String() const
     return os.str();
 }
 
-struct InCastleAndGuardian : public std::binary_function<const Castle *, Heroes *, bool>
+struct InCastleAndGuardian : public binary_function<const Castle *, Heroes *, bool>
 {
     bool operator()(const Castle *castle, Heroes *hero) const
     {
@@ -1804,7 +1804,7 @@ struct InCastleAndGuardian : public std::binary_function<const Castle *, Heroes 
     }
 };
 
-struct InCastleNotGuardian : public std::binary_function<const Castle *, Heroes *, bool>
+struct InCastleNotGuardian : public binary_function<const Castle *, Heroes *, bool>
 {
     bool operator()(const Castle *castle, Heroes *hero) const
     {
@@ -1812,7 +1812,7 @@ struct InCastleNotGuardian : public std::binary_function<const Castle *, Heroes 
     }
 };
 
-struct InJailMode : public std::binary_function<s32, Heroes *, bool>
+struct InJailMode : public binary_function<s32, Heroes *, bool>
 {
     bool operator()(s32 index, Heroes *hero) const
     {
@@ -1827,13 +1827,13 @@ AllHeroes::AllHeroes()
 
 AllHeroes::~AllHeroes()
 {
-    AllHeroes::clear();
+    clear();
 }
 
 void AllHeroes::Init()
 {
     if (size())
-        AllHeroes::clear();
+        clear();
 
     const bool loyalty = Settings::Get().PriceLoyaltyVersion();
 
@@ -1891,12 +1891,12 @@ void AllHeroes::clear()
 {
     for (auto& it : *this)
         delete it;
-    std::vector<Heroes *>::clear();
+    vector<Heroes *>::clear();
 }
 
 Heroes *VecHeroes::Get(int hid) const
 {
-    const std::vector<Heroes *> &vec = *this;
+    const vector<Heroes *> &vec = *this;
     return 0 <= hid && hid < Heroes::UNKNOWN ? vec[hid] : nullptr;
 }
 
@@ -1909,15 +1909,15 @@ Heroes *VecHeroes::Get(const Point &center) const
 
 Heroes *AllHeroes::GetGuest(const Castle &castle) const
 {
-    const_iterator it = std::find_if(begin(), end(),
-                                     std::bind1st(InCastleNotGuardian(), &castle));
+    const_iterator it = find_if(begin(), end(),
+                                     bind1st(InCastleNotGuardian(), &castle));
     return end() != it ? *it : nullptr;
 }
 
 Heroes *AllHeroes::GetGuard(const Castle &castle) const
 {
     const_iterator it = Settings::Get().ExtCastleAllowGuardians() ?
-                        std::find_if(begin(), end(), std::bind1st(InCastleAndGuardian(), &castle)) : end();
+                        find_if(begin(), end(), bind1st(InCastleAndGuardian(), &castle)) : end();
     return end() != it ? *it : nullptr;
 }
 
@@ -1968,7 +1968,7 @@ Heroes *AllHeroes::GetFreeman(int race) const
             break;
     }
 
-    std::vector<int> freeman_heroes;
+    vector<int> freeman_heroes;
     freeman_heroes.reserve(HEROESMAXCOUNT);
 
     // find freeman in race (skip: manual changes)
@@ -2004,15 +2004,15 @@ void AllHeroes::Scoute(int colors) const
 
 Heroes *AllHeroes::FromJail(s32 index) const
 {
-    auto it = std::find_if(begin(), end(),
-                                     std::bind1st(InJailMode(), index));
+    auto it = find_if(begin(), end(),
+                                     bind1st(InJailMode(), index));
     return end() != it ? *it : nullptr;
 }
 
 bool AllHeroes::HaveTwoFreemans() const
 {
-    return 2 <= std::count_if(begin(), end(),
-                              std::mem_fun(&Heroes::isFreeman));
+    return 2 <= count_if(begin(), end(),
+                              mem_fun(&Heroes::isFreeman));
 }
 
 StreamBase &operator<<(StreamBase &msg, const VecHeroes &heroes)

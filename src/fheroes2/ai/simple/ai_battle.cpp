@@ -56,13 +56,13 @@ namespace Battle
 
     s32 AIAreaSpellDst(const HeroBase &);
 
-    bool MaxDstCount(const std::pair<s32, u32> &p1, const std::pair<s32, u32> &p2)
+    bool MaxDstCount(const pair<s32, u32> &p1, const pair<s32, u32> &p2)
     { return p1.second < p2.second; }
 }
 
 s32 Battle::AIAreaSpellDst(const HeroBase &hero)
 {
-    std::map<s32, u32> dstcount;
+    map<s32, u32> dstcount;
 
     Arena *arena = GetArena();
     Units enemies(arena->GetForce(hero.GetColor(), true), true);
@@ -78,7 +78,7 @@ s32 Battle::AIAreaSpellDst(const HeroBase &hero)
     }
 
     // find max
-    std::map<s32, u32>::const_iterator max = std::max_element(dstcount.begin(), dstcount.end(), MaxDstCount);
+    map<s32, u32>::const_iterator max = max_element(dstcount.begin(), dstcount.end(), MaxDstCount);
 
     return max != dstcount.end() ? (*max).first : -1;
 }
@@ -192,7 +192,7 @@ s32 Battle::AIAttackPosition(Arena &arena, const Unit &b, const Indexes &positio
                              it2 = around.begin(); it2 != around.end(); ++it2)
                 {
                     const Unit *unit = Board::GetCell(*it2)->GetUnit();
-                    if (unit && enemies.end() != std::find(enemies.begin(), enemies.end(), unit))
+                    if (unit && enemies.end() != find(enemies.begin(), enemies.end(), unit))
                         results.push_back(*it2);
                 }
             }
@@ -205,11 +205,11 @@ s32 Battle::AIAttackPosition(Arena &arena, const Unit &b, const Indexes &positio
 
                 for (Indexes::const_iterator
                              it = results.begin(); it != results.end(); ++it)
-                    if (passable.end() != std::find(passable.begin(), passable.end(), *it))
+                    if (passable.end() != find(passable.begin(), passable.end(), *it))
                         *it2++ = *it;
 
                 if (it2 != results.end())
-                    results.resize(std::distance(results.begin(), it2));
+                    results.resize(distance(results.begin(), it2));
 
                 // get max quality
                 if (results.size())
@@ -276,7 +276,7 @@ void AI::BattleTurn(Arena &arena, const Unit &b, Actions &a)
             {
                 enemy = AIGetEnemyAbroadMaxQuality(move, b.GetColor());
                 if (BattleMagicTurn(arena, b, a, enemy)) return; /* repeat turn: correct spell ability */
-                a.push_back(Battle::Command(MSG_BATTLE_MOVE, b.GetUID(), move));
+                a.push_back(Command(MSG_BATTLE_MOVE, b.GetUID(), move));
                 attack = true;
             } else
             {
@@ -318,7 +318,7 @@ void AI::BattleTurn(Arena &arena, const Unit &b, Actions &a)
                     if (!enemy)
                         enemy = AIGetEnemyAbroadMaxQuality(path.back(), b.GetColor());
 
-                    a.push_back(Battle::Command(MSG_BATTLE_MOVE, b.GetUID(), path.back()));
+                    a.push_back(Command(MSG_BATTLE_MOVE, b.GetUID(), path.back()));
 
                     // archers move and short attack only
                     attack = b.isArchers() ? false : true;
@@ -331,14 +331,14 @@ void AI::BattleTurn(Arena &arena, const Unit &b, Actions &a)
     if (enemy)
     {
         if (attack)
-            a.push_back(Battle::Command(MSG_BATTLE_ATTACK, b.GetUID(), enemy->GetUID(), enemy->GetHeadIndex(), 0));
+            a.push_back(Command(MSG_BATTLE_ATTACK, b.GetUID(), enemy->GetUID(), enemy->GetHeadIndex(), 0));
     } else
     {
         DEBUG(DBG_BATTLE, DBG_TRACE, "enemy: " << "is nullptr" << ", board: " << board->AllUnitsInfo());
     }
 
     // end action
-    a.push_back(Battle::Command(MSG_BATTLE_END_TURN, b.GetUID()));
+    a.push_back(Command(MSG_BATTLE_END_TURN, b.GetUID()));
 }
 
 
@@ -347,7 +347,7 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
     const HeroBase *hero = b.GetCommander();
 
     if (b.Modes(SP_BERSERKER) || !hero || hero->Modes(Heroes::SPELLCASTED) || !hero->HaveSpellBook() ||
-        arena.isDisableCastSpell(Spell(), nullptr) || a.HaveCommand(Battle::MSG_BATTLE_CAST))
+        arena.isDisableCastSpell(Spell(), nullptr) || a.HaveCommand(MSG_BATTLE_CAST))
         return false;
 
     const Force &my_army = arena.GetForce(b.GetArmyColor(), false);
@@ -362,8 +362,8 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
     // troop bad spell - clean
     {
         // sort strongest
-        Units::iterator it = std::find_if(friends.begin(), friends.end(),
-                                          std::bind2nd(std::mem_fun(&Unit::Modes), IS_BAD_MAGIC));
+        Units::iterator it = find_if(friends.begin(), friends.end(),
+                                          bind2nd(mem_fun(&Unit::Modes), IS_BAD_MAGIC));
         if (it != friends.end())
         {
             if (AIApplySpell(Spell::DISPEL, *it, *hero, a)) return true;
@@ -382,7 +382,7 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
             {
                 if (hero->CanCastSpell(areasp[ii]))
                 {
-                    a.push_back(Battle::Command(MSG_BATTLE_CAST, areasp[ii], dst));
+                    a.push_back(Command(MSG_BATTLE_CAST, areasp[ii], dst));
                     return true;
                 }
             }
@@ -419,8 +419,8 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
     if (hero->HaveSpell(Spell::HASTE) && !enemy)
     {
         // sort strongest
-        Units::iterator it = std::find_if(friends.begin(), friends.end(),
-                                          std::not1(std::bind2nd(std::mem_fun(&Unit::Modes), SP_HASTE)));
+        Units::iterator it = find_if(friends.begin(), friends.end(),
+                                          not1(bind2nd(mem_fun(&Unit::Modes), SP_HASTE)));
         if (it != friends.end() &&
             AIApplySpell(Spell::HASTE, *it, *hero, a))
             return true;
@@ -428,8 +428,8 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
 
     // shield spell conditions
     {
-        Units::iterator it = std::find_if(enemies.begin(), enemies.end(),
-                                          std::mem_fun(&Unit::isArchers));
+        Units::iterator it = find_if(enemies.begin(), enemies.end(),
+                                          mem_fun(&Unit::isArchers));
 
         const Castle *castle = Arena::GetCastle();
 
@@ -444,8 +444,8 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
 
             // or other strongest friends
             if (it == friends.end())
-                it = std::find_if(friends.begin(), friends.end(),
-                                  std::not1(std::bind2nd(std::mem_fun(&Unit::Modes), SP_SHIELD)));
+                it = find_if(friends.begin(), friends.end(),
+                                  not1(bind2nd(mem_fun(&Unit::Modes), SP_SHIELD)));
 
             if (it != friends.end() &&
                 AIApplySpell(Spell::SHIELD, *it, *hero, a))
@@ -457,8 +457,8 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
     // enemy army spell
     {
         // find mirror image or summon elem
-        Units::iterator it = std::find_if(enemies.begin(), enemies.end(),
-                                          std::bind2nd(std::mem_fun(&Unit::Modes), CAP_MIRRORIMAGE | CAP_SUMMONELEM));
+        Units::iterator it = find_if(enemies.begin(), enemies.end(),
+                                          bind2nd(mem_fun(&Unit::Modes), CAP_MIRRORIMAGE | CAP_SUMMONELEM));
 
         if (it != enemies.end())
         {
@@ -467,8 +467,8 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
         }
 
         // find good magic
-        it = std::find_if(enemies.begin(), enemies.end(),
-                          std::bind2nd(std::mem_fun(&Unit::Modes), IS_GOOD_MAGIC));
+        it = find_if(enemies.begin(), enemies.end(),
+                          bind2nd(mem_fun(&Unit::Modes), IS_GOOD_MAGIC));
 
         if (it != enemies.end())
         {
@@ -481,16 +481,16 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
         }
 
         // check undead
-        if (std::count_if(friends.begin(), friends.end(), std::mem_fun(&Unit::isUndead)) <
-            std::count_if(enemies.begin(), enemies.end(), std::mem_fun(&Unit::isUndead)))
+        if (count_if(friends.begin(), friends.end(), mem_fun(&Unit::isUndead)) <
+            count_if(enemies.begin(), enemies.end(), mem_fun(&Unit::isUndead)))
         {
             if (AIApplySpell(Spell::HOLYSHOUT, nullptr, *hero, a)) return true;
             if (AIApplySpell(Spell::HOLYWORD, nullptr, *hero, a)) return true;
         }
 
         // check alife
-        if (std::count_if(friends.begin(), friends.end(), std::mem_fun(&Unit::isAlive)) <
-            std::count_if(enemies.begin(), enemies.end(), std::mem_fun(&Unit::isAlive)))
+        if (count_if(friends.begin(), friends.end(), mem_fun(&Unit::isAlive)) <
+            count_if(enemies.begin(), enemies.end(), mem_fun(&Unit::isAlive)))
         {
             if (AIApplySpell(Spell::DEATHRIPPLE, nullptr, *hero, a)) return true;
             if (AIApplySpell(Spell::DEATHWAVE, nullptr, *hero, a)) return true;
@@ -550,7 +550,7 @@ bool Battle::AIApplySpell(const Spell &spell, const Unit *b, const HeroBase &her
 
     if (hero.CanCastSpell(spell) && (!b || b->AllowApplySpell(spell, &hero)))
     {
-        a.push_back(Battle::Command(MSG_BATTLE_CAST, spell(), (b ? b->GetHeadIndex() : -1)));
+        a.push_back(Command(MSG_BATTLE_CAST, spell(), (b ? b->GetHeadIndex() : -1)));
         return true;
     }
 

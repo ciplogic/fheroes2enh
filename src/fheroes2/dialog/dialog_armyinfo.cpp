@@ -133,7 +133,7 @@ int Dialog::ArmyInfo(const Troop &troop, int flags)
     }
 
     LocalEvent &le = LocalEvent::Get();
-    int result = Dialog::ZERO;
+    int result = ZERO;
 
     cursor.Show();
     display.Flip();
@@ -152,29 +152,29 @@ int Dialog::ArmyInfo(const Troop &troop, int flags)
             // upgrade
             if (buttonUpgrade.isEnable() && le.MouseClickLeft(buttonUpgrade))
             {
-                std::string msg = 1.0f != Monster::GetUpgradeRatio() ?
+                string msg = 1.0f != Monster::GetUpgradeRatio() ?
                                   _("Your troops can be upgraded, but it will cost you %{ratio} times the difference in cost for each troop, rounded up to next highest number. Do you wish to upgrade them?")
                                                                      :
                                   _("Your troops can be upgraded, but it will cost you dearly. Do you wish to upgrade them?");
                 StringReplace(msg, "%{ratio}", GetString(Monster::GetUpgradeRatio(), 2));
-                if (Dialog::YES == Dialog::ResourceInfo("", msg, troop.GetUpgradeCost(), Dialog::YES | Dialog::NO))
+                if (YES == ResourceInfo("", msg, troop.GetUpgradeCost(), YES | NO))
                 {
-                    result = Dialog::UPGRADE;
+                    result = UPGRADE;
                     break;
                 }
             } else
                 // dismiss
             if (buttonDismiss.isEnable() && le.MouseClickLeft(buttonDismiss) &&
-                Dialog::YES == Dialog::Message("", _("Are you sure you want to dismiss this army?"), Font::BIG,
-                                               Dialog::YES | Dialog::NO))
+                YES == Message("", _("Are you sure you want to dismiss this army?"), Font::BIG,
+                                               YES | NO))
             {
-                result = Dialog::DISMISS;
+                result = DISMISS;
                 break;
             } else
                 // exit
-            if (le.MouseClickLeft(buttonExit) || Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
+            if (le.MouseClickLeft(buttonExit) || HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
             {
-                result = Dialog::CANCEL;
+                result = CANCEL;
                 break;
             }
         } else
@@ -196,7 +196,7 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
     bool pda = Settings::Get().QVGA();
 
     // attack
-    text.Set(std::string(_("Attack")) + ":");
+    text.Set(string(_("Attack")) + ":");
     dst_pt.x = dst.x - text.w();
     dst_pt.y = dst.y;
     text.Blit(dst_pt);
@@ -208,7 +208,7 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
     text.Blit(dst_pt);
 
     // defense
-    text.Set(std::string(_("Defense")) + ":");
+    text.Set(string(_("Defense")) + ":");
     dst_pt.x = dst.x - text.w();
     dst_pt.y += (pda ? 14 : 18);
     text.Blit(dst_pt);
@@ -220,7 +220,7 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
     // shot
     if (troop.isArchers())
     {
-        std::string message = troop.isBattle() ? _("Shots Left") : _("Shots");
+        string message = troop.isBattle() ? _("Shots Left") : _("Shots");
         message.append(":");
         text.Set(message);
         dst_pt.x = dst.x - text.w();
@@ -233,7 +233,7 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
     }
 
     // damage
-    text.Set(std::string(_("Damage")) + ":");
+    text.Set(string(_("Damage")) + ":");
     dst_pt.x = dst.x - text.w();
     dst_pt.y += (pda ? 14 : 18);
     text.Blit(dst_pt);
@@ -246,7 +246,7 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
     text.Blit(dst_pt);
 
     // hp
-    text.Set(std::string(_("Hit Points")) + ":");
+    text.Set(string(_("Hit Points")) + ":");
     dst_pt.x = dst.x - text.w();
     dst_pt.y += (pda ? 14 : 18);
     text.Blit(dst_pt);
@@ -257,7 +257,7 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
 
     if (troop.isBattle())
     {
-        text.Set(std::string(_("Hit Points Left")) + ":");
+        text.Set(string(_("Hit Points Left")) + ":");
         dst_pt.x = dst.x - text.w();
         dst_pt.y += (pda ? 14 : 18);
         text.Blit(dst_pt);
@@ -268,7 +268,7 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
     }
 
     // speed
-    text.Set(std::string(_("Speed")) + ":");
+    text.Set(string(_("Speed")) + ":");
     dst_pt.x = dst.x - text.w();
     dst_pt.y += (pda ? 14 : 18);
     text.Blit(dst_pt);
@@ -278,7 +278,7 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
     text.Blit(dst_pt);
 
     // morale
-    text.Set(std::string(_("Morale")) + ":");
+    text.Set(string(_("Morale")) + ":");
     dst_pt.x = dst.x - text.w();
     dst_pt.y += (pda ? 14 : 18);
     text.Blit(dst_pt);
@@ -288,7 +288,7 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
     text.Blit(dst_pt);
 
     // luck
-    text.Set(std::string(_("Luck")) + ":");
+    text.Set(string(_("Luck")) + ":");
     dst_pt.x = dst.x - text.w();
     dst_pt.y += (pda ? 14 : 18);
     text.Blit(dst_pt);
@@ -394,11 +394,11 @@ int Dialog::ArmyJoinFree(const Troop &troop, Heroes &hero)
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
-    std::string message = _("A group of %{monster} with a desire for greater glory wish to join you.\nDo you accept?");
+    string message = _("A group of %{monster} with a desire for greater glory wish to join you.\nDo you accept?");
     StringReplace(message, "%{monster}", StringLower(troop.GetMultiName()));
 
     TextBox textbox(message, Font::BIG, BOXAREA_WIDTH);
-    const int buttons = Dialog::YES | Dialog::NO;
+    const int buttons = YES | NO;
     int posy = 0;
 
     FrameBox box(10 + textbox.h() + 10, buttons);
@@ -428,9 +428,9 @@ int Dialog::ArmyJoinFree(const Troop &troop, Heroes &hero)
     LocalEvent &le = LocalEvent::Get();
 
     // message loop
-    int result = Dialog::ZERO;
+    int result = ZERO;
 
-    while (result == Dialog::ZERO && le.HandleEvents())
+    while (result == ZERO && le.HandleEvents())
     {
         if (btnHeroes.isEnable())
             le.MousePressLeft(btnHeroes) ? btnHeroes.PressDraw() : btnHeroes.ReleaseDraw();
@@ -472,7 +472,7 @@ int Dialog::ArmyJoinWithCost(const Troop &troop, u32 join, u32 gold, Heroes &her
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
-    std::string message;
+    string message;
 
     if (troop.GetCount() == 1)
         message = _(
@@ -495,7 +495,7 @@ int Dialog::ArmyJoinWithCost(const Troop &troop, u32 join, u32 gold, Heroes &her
     StringReplace(message, "%{gold}", gold);
 
     TextBox textbox(message, Font::BIG, BOXAREA_WIDTH);
-    const int buttons = Dialog::YES | Dialog::NO;
+    const int buttons = YES | NO;
     const Sprite &sprite = AGG::GetICN(ICN::RESOURCE, 6);
     int posy = 0;
     Text text;
@@ -539,7 +539,7 @@ int Dialog::ArmyJoinWithCost(const Troop &troop, u32 join, u32 gold, Heroes &her
             btnMarket.SetDisable(true);
         else
         {
-            std::string msg = _("Not enough gold (%{gold})");
+            string msg = _("Not enough gold (%{gold})");
             StringReplace(msg, "%{gold}", gold - kingdom.GetFunds().Get(Resource::GOLD));
             tsEnough.SetText(msg, Font::YELLOW_SMALL);
             tsEnough.SetPos(btnMarket.x - 25, btnMarket.y - 17);
@@ -566,9 +566,9 @@ int Dialog::ArmyJoinWithCost(const Troop &troop, u32 join, u32 gold, Heroes &her
     LocalEvent &le = LocalEvent::Get();
 
     // message loop
-    int result = Dialog::ZERO;
+    int result = ZERO;
 
-    while (result == Dialog::ZERO && le.HandleEvents())
+    while (result == ZERO && le.HandleEvents())
     {
         if (btnMarket.isEnable())
             le.MousePressLeft(btnMarket) ? btnMarket.PressDraw() : btnMarket.ReleaseDraw();
@@ -598,7 +598,7 @@ int Dialog::ArmyJoinWithCost(const Troop &troop, u32 join, u32 gold, Heroes &her
             } else
             {
                 tsEnough.Hide();
-                std::string msg = _("Not enough gold (%{gold})");
+                string msg = _("Not enough gold (%{gold})");
                 StringReplace(msg, "%{gold}", gold - kingdom.GetFunds().Get(Resource::GOLD));
                 tsEnough.SetText(msg, Font::SMALL);
                 tsEnough.Show();

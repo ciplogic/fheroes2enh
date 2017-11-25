@@ -56,7 +56,7 @@ int Castle::DialogBuyHero(const Heroes *hero)
     u32 count = hero->GetCountArtifacts();
     if (hero->HasArtifact(Artifact::MAGIC_BOOK)) count--;
 
-    std::string str = _("%{name} is a level %{value} %{race}");
+    string str = _("%{name} is a level %{value} %{race}");
 
     // FIXME: It is necessary to consider locale features for numerals (with getext).
     if (count)
@@ -127,11 +127,11 @@ int Castle::DialogBuyHero(const Heroes *hero)
 
         if (button1.isEnable() &&
             (le.MouseClickLeft(button1) ||
-             Game::HotKeyPressEvent(Game::EVENT_DEFAULT_READY)))
+             HotKeyPressEvent(Game::EVENT_DEFAULT_READY)))
             return Dialog::OK;
 
         if (le.MouseClickLeft(button2) ||
-            Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
+            HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
             break;
     }
 
@@ -294,9 +294,9 @@ u32 Castle::OpenTown()
                                     spriteSpreadArmyFormat.h());
     const Rect rectGroupedArmyFormat(cur_pt.x + 585, cur_pt.y + 220, spriteGroupedArmyFormat.w(),
                                      spriteGroupedArmyFormat.h());
-    const std::string descriptionSpreadArmyFormat(
+    const string descriptionSpreadArmyFormat(
             _("'Spread' combat formation spreads your armies from the top to the bottom of the battlefield, with at least one empty space between each army."));
-    const std::string descriptionGroupedArmyFormat(
+    const string descriptionGroupedArmyFormat(
             _("'Grouped' combat formation bunches your army toget her in the center of your side of the battlefield."));
     const Point pointSpreadArmyFormat(rectSpreadArmyFormat.x - 1, rectSpreadArmyFormat.y - 1);
     const Point pointGroupedArmyFormat(rectGroupedArmyFormat.x - 1, rectGroupedArmyFormat.y - 1);
@@ -305,7 +305,7 @@ u32 Castle::OpenTown()
 
     if (isBuild(BUILD_CAPTAIN))
     {
-        text.Set(_("Attack Skill") + std::string(" "), Font::SMALL);
+        text.Set(_("Attack Skill") + string(" "), Font::SMALL);
         dst_pt.x = cur_pt.x + 535;
         dst_pt.y = cur_pt.y + 168;
         text.Blit(dst_pt);
@@ -314,7 +314,7 @@ u32 Castle::OpenTown()
         dst_pt.x += 90;
         text.Blit(dst_pt);
 
-        text.Set(_("Defense Skill") + std::string(" "));
+        text.Set(_("Defense Skill") + string(" "));
         dst_pt.x = cur_pt.x + 535;
         dst_pt.y += 12;
         text.Blit(dst_pt);
@@ -323,7 +323,7 @@ u32 Castle::OpenTown()
         dst_pt.x += 90;
         text.Blit(dst_pt);
 
-        text.Set(_("Spell Power") + std::string(" "));
+        text.Set(_("Spell Power") + string(" "));
         dst_pt.x = cur_pt.x + 535;
         dst_pt.y += 12;
         text.Blit(dst_pt);
@@ -332,7 +332,7 @@ u32 Castle::OpenTown()
         dst_pt.x += 90;
         text.Blit(dst_pt);
 
-        text.Set(_("Knowledge") + std::string(" "));
+        text.Set(_("Knowledge") + string(" "));
         dst_pt.x = cur_pt.x + 535;
         dst_pt.y += 12;
         text.Blit(dst_pt);
@@ -353,7 +353,7 @@ u32 Castle::OpenTown()
     Heroes *hero2 = kingdom.GetLastLostHero() && kingdom.GetLastLostHero() != hero1 ? kingdom.GetLastLostHero()
                                                                                     : kingdom.GetRecruits().GetHero2();
 
-    std::string not_allow1_msg, not_allow2_msg;
+    string not_allow1_msg, not_allow2_msg;
     const bool allow_buy_hero1 = hero1 ? AllowBuyHero(*hero1, &not_allow1_msg) : false;
     const bool allow_buy_hero2 = hero2 ? AllowBuyHero(*hero2, &not_allow2_msg) : false;
 
@@ -525,7 +525,7 @@ u32 Castle::OpenTown()
                 statusBar.ShowMessage(not_allow1_msg);
             else
             {
-                std::string str = _("Recruit %{name} the %{race}");
+                string str = _("Recruit %{name} the %{race}");
                 StringReplace(str, "%{name}", hero1->GetName());
                 StringReplace(str, "%{race}", Race::String(hero1->GetRace()));
                 statusBar.ShowMessage(str);
@@ -536,7 +536,7 @@ u32 Castle::OpenTown()
                 statusBar.ShowMessage(not_allow2_msg);
             else
             {
-                std::string str = _("Recruit %{name} the %{race}");
+                string str = _("Recruit %{name} the %{race}");
                 StringReplace(str, "%{name}", hero2->GetName());
                 StringReplace(str, "%{race}", Race::String(hero2->GetRace()));
                 statusBar.ShowMessage(str);

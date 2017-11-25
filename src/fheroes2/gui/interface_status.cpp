@@ -61,12 +61,12 @@ u32 Interface::StatusWindow::ResetResourceStatus(u32 tick, void *ptr)
 {
     if (ptr)
     {
-        Interface::StatusWindow *status = reinterpret_cast<Interface::StatusWindow *>(ptr);
+        StatusWindow *status = reinterpret_cast<StatusWindow *>(ptr);
         if (STATUS_RESOURCE == status->state)
         {
             status->state = status->oldState;
             Cursor::Get().Hide();
-            Interface::Basic::Get().SetRedraw(REDRAW_STATUS);
+            Basic::Get().SetRedraw(REDRAW_STATUS);
         } else
             status->timerShowLastResource.Remove();
     }
@@ -94,7 +94,7 @@ void Interface::StatusWindow::SetPos(s32 ox, s32 oy)
         oh = Display::Get().h() - oy - BORDERWIDTH;
     }
 
-    BorderWindow::SetPosition(ox, oy, ow, oh);
+    SetPosition(ox, oy, ow, oh);
 }
 
 void Interface::StatusWindow::SetState(int info)
@@ -216,7 +216,7 @@ void Interface::StatusWindow::DrawDayInfo(int oh) const
     AGG::GetICN(Settings::Get().ExtGameEvilInterface() ? ICN::SUNMOONE : ICN::SUNMOON,
                 (world.GetWeek() - 1) % 5).Blit(pos.x, pos.y + 1 + oh);
 
-    std::string message = _("Month: %{month} Week: %{week}");
+    string message = _("Month: %{month} Week: %{week}");
     StringReplace(message, "%{month}", world.GetMonth());
     StringReplace(message, "%{week}", world.GetWeek());
     Text text(message, Font::SMALL);
@@ -244,7 +244,7 @@ void Interface::StatusWindow::SetResource(int res, u32 count)
 
 void Interface::StatusWindow::ResetTimer()
 {
-    StatusWindow &window = Interface::Basic::Get().GetStatusWindow();
+    StatusWindow &window = Basic::Get().GetStatusWindow();
 
     if (window.timerShowLastResource.IsValid())
     {
@@ -257,7 +257,7 @@ void Interface::StatusWindow::DrawResourceInfo(int oh) const
 {
     const Rect &pos = GetArea();
 
-    std::string message = _("You find a small\nquantity of %{resource}.");
+    string message = _("You find a small\nquantity of %{resource}.");
     StringReplace(message, "%{resource}", Resource::String(lastResource));
     TextBox text(message, Font::SMALL, pos.w);
     text.Blit(pos.x, pos.y + 4 + oh);

@@ -737,7 +737,7 @@ void Heroes::FadeOut() const
 
     while (le.HandleEvents() && alpha > 0)
     {
-        if (Game::AnimateInfrequentDelay(Game::HEROES_FADE_DELAY))
+        if (AnimateInfrequentDelay(Game::HEROES_FADE_DELAY))
         {
             Cursor::Get().Hide();
 
@@ -796,7 +796,7 @@ void Heroes::FadeIn() const
 
     while (le.HandleEvents() && alpha < 250)
     {
-        if (Game::AnimateInfrequentDelay(Game::HEROES_FADE_DELAY))
+        if (AnimateInfrequentDelay(Game::HEROES_FADE_DELAY))
         {
             Cursor::Get().Hide();
 

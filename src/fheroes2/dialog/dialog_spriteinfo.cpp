@@ -29,7 +29,7 @@
 #include "game.h"
 #include "dialog.h"
 
-int Dialog::ArtifactInfo(const std::string &hdr, const std::string &msg, const Artifact &art, int buttons)
+int Dialog::ArtifactInfo(const string &hdr, const string &msg, const Artifact &art, int buttons)
 {
     const Sprite &border = AGG::GetICN(ICN::RESOURCE, 7);
     const Sprite &artifact = AGG::GetICN(ICN::ARTIFACT, art.IndexSprite64());
@@ -37,16 +37,16 @@ int Dialog::ArtifactInfo(const std::string &hdr, const std::string &msg, const A
     border.Blit(image);
     artifact.Blit(5, 5, image);
 
-    std::string ext = msg;
+    string ext = msg;
     ext.append("\n");
     ext.append(" ");
     ext.append("\n");
     ext.append(art.GetDescription());
 
-    return Dialog::SpriteInfo(hdr, ext, image, buttons);
+    return SpriteInfo(hdr, ext, image, buttons);
 }
 
-int Dialog::SpriteInfo(const std::string &header, const std::string &message, const Surface &sprite, int buttons)
+int Dialog::SpriteInfo(const string &header, const string &message, const Surface &sprite, int buttons)
 {
     Display &display = Display::Get();
 
@@ -82,9 +82,9 @@ int Dialog::SpriteInfo(const std::string &header, const std::string &message, co
     display.Flip();
 
     // message loop
-    int result = Dialog::ZERO;
+    int result = ZERO;
 
-    while (result == Dialog::ZERO && le.HandleEvents())
+    while (result == ZERO && le.HandleEvents())
     {
         if (!buttons && !le.MousePressRight()) break;
         result = btnGroups.QueueEventProcessing();

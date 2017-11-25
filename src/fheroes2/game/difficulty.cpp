@@ -29,15 +29,15 @@ const char *Difficulty::String(int difficulty)
 
     switch (difficulty)
     {
-        case Difficulty::EASY:
+        case EASY:
             return str_difficulty[0];
-        case Difficulty::NORMAL:
+        case NORMAL:
             return str_difficulty[1];
-        case Difficulty::HARD:
+        case HARD:
             return str_difficulty[2];
-        case Difficulty::EXPERT:
+        case EXPERT:
             return str_difficulty[3];
-        case Difficulty::IMPOSSIBLE:
+        case IMPOSSIBLE:
             return str_difficulty[4];
         default:
             break;

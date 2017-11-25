@@ -944,14 +944,14 @@ bool World::LoadMapMAP(const std::string & filename)
 }
 #else
 
-bool World::LoadMapMAP(const std::string &filename)
+bool World::LoadMapMAP(const string &filename)
 {
     return false;
 }
 
 #endif // WITH_XML
 
-bool World::LoadMapMP2(const std::string &filename)
+bool World::LoadMapMP2(const string &filename)
 {
     Reset();
     Defaults();
@@ -1030,7 +1030,7 @@ bool World::LoadMapMP2(const std::string &filename)
     fs.skip(w() * h() * SIZEOFMP2TILE);
 
     // read all addons
-    std::vector<MP2::mp2addon_t> vec_mp2addons(fs.getLE32() /* count mp2addon_t */);
+    vector<MP2::mp2addon_t> vec_mp2addons(fs.getLE32() /* count mp2addon_t */);
 
     for (auto it = vec_mp2addons.begin(); it != vec_mp2addons.end(); ++it)
     {
@@ -1059,7 +1059,7 @@ bool World::LoadMapMP2(const std::string &filename)
     for (MapsTiles::iterator
                  it = vec_tiles.begin(); it != vec_tiles.end(); ++it)
     {
-        const size_t index = std::distance(vec_tiles.begin(), it);
+        const size_t index = distance(vec_tiles.begin(), it);
         Maps::Tiles &tile = *it;
 
         MP2::mp2tile_t mp2tile;
@@ -1262,7 +1262,7 @@ bool World::LoadMapMP2(const std::string &filename)
 
         // read block
         size_t sizeblock = fs.getLE16();
-        std::vector<u8> pblock = fs.getRaw(sizeblock);
+        vector<u8> pblock = fs.getRaw(sizeblock);
 
         for (MapsIndexes::const_iterator
                      it_index = vec_object.begin(); it_index != vec_object.end() && findobject < 0; ++it_index)
@@ -1370,7 +1370,7 @@ bool World::LoadMapMP2(const std::string &filename)
                         DEBUG(DBG_GAME, DBG_WARN, "read heroes: " << "incorrect size block: " << pblock.size());
                     } else if (nullptr != (addon = tile.FindObjectConst(MP2::OBJ_HEROES)))
                     {
-                        std::pair<int, int> colorRace = Maps::TilesAddon::ColorRaceFromHeroSprite(*addon);
+                        pair<int, int> colorRace = Maps::TilesAddon::ColorRaceFromHeroSprite(*addon);
                         Kingdom &kingdom = GetKingdom(colorRace.first);
 
                         if (colorRace.second == Race::RAND &&
@@ -1585,8 +1585,8 @@ void World::PostLoad()
     }
 
     // update tile passable
-    std::for_each(vec_tiles.begin(), vec_tiles.end(),
-                  std::mem_fun_ref(&Maps::Tiles::UpdatePassable));
+    for_each(vec_tiles.begin(), vec_tiles.end(),
+                  mem_fun_ref(&Maps::Tiles::UpdatePassable));
 
     // play with hero
     vec_kingdoms.ApplyPlayWithStartingHero();
@@ -1614,8 +1614,8 @@ void World::PostLoad()
     }
 
     // set ultimate
-    auto it = std::find_if(vec_tiles.begin(), vec_tiles.end(),
-                                          std::bind2nd(std::mem_fun_ref(&Maps::Tiles::isObject),
+    auto it = find_if(vec_tiles.begin(), vec_tiles.end(),
+                                          bind2nd(mem_fun_ref(&Maps::Tiles::isObject),
                                                        static_cast<int>(MP2::OBJ_RNDULTIMATEARTIFACT)));
     Point ultimate_pos;
 
@@ -1655,7 +1655,7 @@ void World::PostLoad()
         }
     }
 
-    std::string rumor = _("The ultimate artifact is really the %{name}");
+    string rumor = _("The ultimate artifact is really the %{name}");
     StringReplace(rumor, "%{name}", ultimate_artifact.GetName());
     vec_rumors.push_back(rumor);
 

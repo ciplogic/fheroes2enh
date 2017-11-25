@@ -247,7 +247,7 @@ screen_t CastleOpenDialog1(Castle &castle, bool readonly)
     screenSwitch.Redraw();
 
     // update extra description
-    std::string description_castle = castle.GetDescriptionBuilding(BUILD_CASTLE, castle.GetRace());
+    string description_castle = castle.GetDescriptionBuilding(BUILD_CASTLE, castle.GetRace());
     {
         payment_t profit = ProfitConditions::FromBuilding(BUILD_CASTLE, castle.GetRace());
         StringReplace(description_castle, "%{count}", profit.gold);
@@ -277,15 +277,15 @@ screen_t CastleOpenDialog1(Castle &castle, bool readonly)
             return screenSwitch.result;
         else
             // exit
-        if (le.MouseClickLeft(rectExit) || Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT)) break;
+        if (le.MouseClickLeft(rectExit) || HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT)) break;
         else if (!readonly && buttonNext.isEnable() && le.MouseClickLeft(buttonNext)) return SCREENOUT_NEXT;
         else if (!readonly && buttonPrev.isEnable() && le.MouseClickLeft(buttonPrev)) return SCREENOUT_PREV;
         else if (!readonly && le.MouseClickLeft(rectTown))
         {
             if (castle.isBuild(BUILD_CASTLE))
-                Dialog::Message(castle.GetStringBuilding(BUILD_CASTLE), description_castle, Font::BIG, Dialog::OK);
+                Message(castle.GetStringBuilding(BUILD_CASTLE), description_castle, Font::BIG, Dialog::OK);
             else if (!castle.Modes(Castle::ALLOWCASTLE))
-                Dialog::Message(_("Town"), _("This town may not be upgraded to a castle."), Font::BIG, Dialog::OK);
+                Message(_("Town"), _("This town may not be upgraded to a castle."), Font::BIG, Dialog::OK);
             else if (Dialog::OK == castle.DialogBuyCastle(true))
             {
                 // play sound
@@ -361,7 +361,7 @@ screen_t CastleOpenDialog1(Castle &castle, bool readonly)
                 if (!heroes.Guest()->GetArmy().CanJoinTroops(castle.GetArmy()))
                 {
                     // FIXME: correct message
-                    Dialog::Message("Join Error", "Army is full", Font::BIG, Dialog::OK);
+                    Message("Join Error", "Army is full", Font::BIG, Dialog::OK);
                 } else
                 {
                     castle.SwapCastleHeroes(heroes);
@@ -494,7 +494,7 @@ screen_t CastleOpenDialog2(Castle &castle, bool readonly)
             return screenSwitch.result;
         else
             // exit
-        if (le.MouseClickLeft(rectExit) || Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT)) break;
+        if (le.MouseClickLeft(rectExit) || HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT)) break;
 
         if (le.MouseCursor(dwelling1.GetArea()) && dwelling1.QueueEventProcessing())
         {
@@ -607,7 +607,7 @@ screen_t CastleOpenDialog3(Castle &castle, bool readonly)
             return screenSwitch.result;
         else
             // exit
-        if (le.MouseClickLeft(rectExit) || Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT)) break;
+        if (le.MouseClickLeft(rectExit) || HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT)) break;
 
         if (le.MouseCursor(building1.GetArea()) && building1.QueueEventProcessing())
         {
@@ -700,7 +700,7 @@ screen_t CastleOpenDialog4(Castle &castle, bool readonly)
             return screenSwitch.result;
         else
             // exit
-        if (le.MouseClickLeft(rectExit) || Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT)) break;
+        if (le.MouseClickLeft(rectExit) || HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT)) break;
 
         if (le.MouseCursor(building1.GetArea()) && building1.QueueEventProcessing())
         {
@@ -793,7 +793,7 @@ screen_t CastleOpenDialog5(Castle &castle, bool readonly)
             return screenSwitch.result;
         else
             // exit
-        if (le.MouseClickLeft(rectExit) || Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT)) break;
+        if (le.MouseClickLeft(rectExit) || HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT)) break;
         else if (need_buy_book && le.MouseClickLeft(book_pos))
         {
             const_cast<Heroes *>(hero)->BuySpellBook(&castle);
@@ -914,7 +914,7 @@ screen_t CastleOpenDialog6(Castle &castle, bool readonly)
             return screenSwitch.result;
         else
             // exit
-        if (le.MouseClickLeft(rectExit) || Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT)) break;
+        if (le.MouseClickLeft(rectExit) || HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT)) break;
         else if (hero1 && le.MouseClickLeft(rectRecruit1) &&
                  Dialog::OK == castle.DialogBuyHero(hero1))
         {
@@ -929,7 +929,7 @@ screen_t CastleOpenDialog6(Castle &castle, bool readonly)
         {
             BuildingInfo b(castle, BUILD_CAPTAIN);
             if (castle.isBuild(BUILD_CAPTAIN))
-                Dialog::Message(b.GetName(), b.GetDescription(), Font::SMALL, Dialog::OK);
+                Message(b.GetName(), b.GetDescription(), Font::SMALL, Dialog::OK);
             else if (b.DialogBuyBuilding(true))
             {
                 AGG::PlaySound(M82::BUILDTWN);
@@ -954,12 +954,12 @@ screen_t CastleOpenDialog6(Castle &castle, bool readonly)
 
 
         // animation
-        if (castle.isBuild(BUILD_TAVERN) && Game::AnimateInfrequentDelay(Game::CASTLE_TAVERN_DELAY))
+        if (castle.isBuild(BUILD_TAVERN) && AnimateInfrequentDelay(Game::CASTLE_TAVERN_DELAY))
         {
             cursor.Hide();
             const Sprite &s20 = AGG::GetICN(ICN::TAVWIN, 1);
             s20.Blit(dst_pt.x + 3, dst_pt.y + 3);
-            if (u32 index = ICN::AnimationFrame(ICN::TAVWIN, 0, frame++))
+            if (u32 index = AnimationFrame(ICN::TAVWIN, 0, frame++))
             {
                 const Sprite &s22 = AGG::GetICN(ICN::TAVWIN, index);
                 s22.Blit(dst_pt.x + s22.x() + 3, dst_pt.y + s22.y() + 3);

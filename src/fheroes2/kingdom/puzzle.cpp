@@ -50,15 +50,15 @@ void PuzzlesDraw(const Puzzle &, const Surface &, s32, s32);
 
 Puzzle::Puzzle()
 {
-    std::copy(zone1_index, zone1_index + ARRAY_COUNT(zone1_index), zone1_order);
-    std::copy(zone2_index, zone2_index + ARRAY_COUNT(zone2_index), zone2_order);
-    std::copy(zone3_index, zone3_index + ARRAY_COUNT(zone3_index), zone3_order);
-    std::copy(zone4_index, zone4_index + ARRAY_COUNT(zone4_index), zone4_order);
+    copy(zone1_index, zone1_index + ARRAY_COUNT(zone1_index), zone1_order);
+    copy(zone2_index, zone2_index + ARRAY_COUNT(zone2_index), zone2_order);
+    copy(zone3_index, zone3_index + ARRAY_COUNT(zone3_index), zone3_order);
+    copy(zone4_index, zone4_index + ARRAY_COUNT(zone4_index), zone4_order);
 
-    std::random_shuffle(zone1_order, zone1_order + ARRAY_COUNT(zone1_order));
-    std::random_shuffle(zone2_order, zone2_order + ARRAY_COUNT(zone2_order));
-    std::random_shuffle(zone3_order, zone3_order + ARRAY_COUNT(zone3_order));
-    std::random_shuffle(zone4_order, zone4_order + ARRAY_COUNT(zone4_order));
+    random_shuffle(zone1_order, zone1_order + ARRAY_COUNT(zone1_order));
+    random_shuffle(zone2_order, zone2_order + ARRAY_COUNT(zone2_order));
+    random_shuffle(zone3_order, zone3_order + ARRAY_COUNT(zone3_order));
+    random_shuffle(zone4_order, zone4_order + ARRAY_COUNT(zone4_order));
 }
 
 Puzzle &Puzzle::operator=(const char *str)
@@ -225,7 +225,7 @@ void PuzzlesDraw(const Puzzle &pzl, const Surface &sf, s32 dstx, s32 dsty)
 
     while (le.HandleEvents() && 0 < alpha)
     {
-        if (Game::AnimateInfrequentDelay(Game::PUZZLE_FADE_DELAY))
+        if (AnimateInfrequentDelay(Game::PUZZLE_FADE_DELAY))
         {
             cursor.Hide();
             sf.Blit(dstx, dsty, display);
@@ -252,7 +252,7 @@ void PuzzlesDraw(const Puzzle &pzl, const Surface &sf, s32 dstx, s32 dsty)
 
 StreamBase &operator<<(StreamBase &msg, const Puzzle &pzl)
 {
-    msg << pzl.to_string<char, std::char_traits<char>, std::allocator<char> >();
+    msg << pzl.to_string<char, char_traits<char>, allocator<char> >();
 
     // orders
     msg << static_cast<u8>(ARRAY_COUNT(pzl.zone1_order));
@@ -272,7 +272,7 @@ StreamBase &operator<<(StreamBase &msg, const Puzzle &pzl)
 
 StreamBase &operator>>(StreamBase &msg, Puzzle &pzl)
 {
-    std::string str;
+    string str;
 
     msg >> str;
     pzl = str.c_str();

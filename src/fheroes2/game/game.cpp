@@ -47,21 +47,21 @@ namespace Game
 
     void KeyboardGlobalFilter(int, int);
 
-    void UpdateGlobalDefines(const std::string &);
+    void UpdateGlobalDefines(const string &);
 
     void LoadExternalResource(const Settings &);
 
     void HotKeysDefaults();
 
-    void HotKeysLoad(const std::string &);
+    void HotKeysLoad(const string &);
 
     bool disable_change_music = false;
     int current_music = MUS::UNKNOWN;
     u32 castle_animation_frame = 0;
     u32 maps_animation_frame = 0;
-    std::string last_name;
+    string last_name;
     int save_version = CURRENT_FORMAT_VERSION;
-    std::vector<int>
+    vector<int>
             reserved_vols(LOOPXX_COUNT, 0);
 }
 
@@ -75,12 +75,12 @@ int Game::GetLoadVersion()
     return save_version;
 }
 
-const std::string &Game::GetLastSavename()
+const string &Game::GetLastSavename()
 {
     return last_name;
 }
 
-void Game::SetLastSavename(const std::string &name)
+void Game::SetLastSavename(const string &name)
 {
     last_name = name;
 }
@@ -91,7 +91,7 @@ int Game::Testing(int t)
     Test::Run(t);
     return Game::QUITGAME;
 #else
-    return Game::MAINMENU;
+    return MAINMENU;
 #endif
 }
 
@@ -99,7 +99,7 @@ int Game::Credits()
 {
     const Settings &conf = Settings::Get();
 
-    std::string str;
+    string str;
     str.reserve(200);
 
     str.append("version: ");
@@ -119,11 +119,11 @@ int Game::Credits()
     str.append("Andrey Afletdinov, maintainer\n");
     str.append("email: fheroes2 at gmail.com\n");
 
-    Dialog::Message("Free Heroes II Engine", str, Font::SMALL, Dialog::OK);
+    Message("Free Heroes II Engine", str, Font::SMALL, Dialog::OK);
 
     //VERBOSE("Credits: under construction.");
 
-    return Game::MAINMENU;
+    return MAINMENU;
 }
 
 bool Game::ChangeMusicDisabled()
@@ -149,17 +149,17 @@ void Game::Init()
 
     // set global events
     le.SetGlobalFilterMouseEvents(Cursor::Redraw);
-    le.SetGlobalFilterKeysEvents(Game::KeyboardGlobalFilter);
+    le.SetGlobalFilterKeysEvents(KeyboardGlobalFilter);
     le.SetGlobalFilter(true);
 
     le.SetTapMode(conf.ExtPocketTapMode());
 
-    Game::AnimateDelaysInitialize();
+    AnimateDelaysInitialize();
 
     HotKeysDefaults();
 
-    const std::string hotkeys = Settings::GetLastFile("", "fheroes2.key");
-    Game::HotKeysLoad(hotkeys);
+    const string hotkeys = Settings::GetLastFile("", "fheroes2.key");
+    HotKeysLoad(hotkeys);
 }
 
 int Game::CurrentMusic()
@@ -208,7 +208,7 @@ void Game::EnvironmentSoundMixer()
 
     if (conf.Sound())
     {
-        std::fill(reserved_vols.begin(), reserved_vols.end(), 0);
+        fill(reserved_vols.begin(), reserved_vols.end(), 0);
 
         // scan 4x4 square from focus
         for (s32 yy = abs_pt.y - 3; yy <= abs_pt.y + 3; ++yy)
@@ -221,7 +221,7 @@ void Game::EnvironmentSoundMixer()
                     if (channel < reserved_vols.size())
                     {
                         // calculation volume
-                        const int length = std::max(std::abs(xx - abs_pt.x), std::abs(yy - abs_pt.y));
+                        const int length = max(abs(xx - abs_pt.x), abs(yy - abs_pt.y));
                         const int volume =
                                 (2 < length ? 4 : (1 < length ? 8 : (0 < length ? 12 : 16))) * Mixer::MaxVolume() / 16;
 
@@ -351,7 +351,7 @@ u32 Game::GetViewDistance(u32 d)
     return GameStatic::GetOverViewDistance(d);
 }
 
-void Game::UpdateGlobalDefines(const std::string &spec)
+void Game::UpdateGlobalDefines(const string &spec)
 {
 #ifdef WITH_XML
     // parse profits.xml
@@ -390,14 +390,14 @@ u32 Game::GetWhirlpoolPercent()
 
 void Game::LoadExternalResource(const Settings &conf)
 {
-    std::string spec;
-    const std::string prefix_stats = System::ConcatePath("files", "stats");
+    string spec;
+    const string prefix_stats = System::ConcatePath("files", "stats");
 
     // globals.xml
     spec = Settings::GetLastFile(prefix_stats, "globals.xml");
 
     if (System::IsFile(spec))
-        Game::UpdateGlobalDefines(spec);
+        UpdateGlobalDefines(spec);
 
     // animations.xml
     spec = Settings::GetLastFile(prefix_stats, "animations.xml");
@@ -454,7 +454,7 @@ void Game::LoadExternalResource(const Settings &conf)
         Skill::UpdateStats(spec);
 }
 
-std::string Game::GetEncodeString(const std::string &str1)
+string Game::GetEncodeString(const string &str1)
 {
     const Settings &conf = Settings::Get();
 
@@ -477,10 +477,10 @@ int Game::GetActualKingdomColors()
 
 #include <cmath>
 
-std::string Game::CountScoute(u32 count, int scoute, bool shorts)
+string Game::CountScoute(u32 count, int scoute, bool shorts)
 {
     float infelicity = 0;
-    std::string res;
+    string res;
 
     switch (scoute)
     {
@@ -502,16 +502,16 @@ std::string Game::CountScoute(u32 count, int scoute, bool shorts)
 
     if (res.empty())
     {
-        u32 min = Rand::Get(static_cast<u32>(std::floor(count - infelicity + 0.5)),
-                            static_cast<u32>(std::floor(count + infelicity + 0.5)));
+        u32 min = Rand::Get(static_cast<u32>(floor(count - infelicity + 0.5)),
+                            static_cast<u32>(floor(count + infelicity + 0.5)));
         u32 max = 0;
 
         if (min > count)
         {
             max = min;
-            min = static_cast<u32>(std::floor(count - infelicity + 0.5));
+            min = static_cast<u32>(floor(count - infelicity + 0.5));
         } else
-            max = static_cast<u32>(std::floor(count + infelicity + 0.5));
+            max = static_cast<u32>(floor(count + infelicity + 0.5));
 
         res = GetString(min);
 

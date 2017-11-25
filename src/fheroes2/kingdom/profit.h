@@ -33,7 +33,7 @@ namespace ProfitConditions
 
     payment_t FromMine(int);
 
-    void UpdateCosts(const std::string &);
+    void UpdateCosts(const string &);
 }
 
 #endif

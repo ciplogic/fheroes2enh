@@ -94,7 +94,7 @@ struct HeroRow
 
 class StatsHeroesList : public Interface::ListBox<HeroRow>
 {
-    std::vector<HeroRow> content;
+    vector<HeroRow> content;
 
 public:
     StatsHeroesList(const Point &pt, KingdomHeroes &);
@@ -127,7 +127,7 @@ public:
     bool ActionListCursor(HeroRow &, const Point &, s32, s32);
 };
 
-StatsHeroesList::StatsHeroesList(const Point &pt, KingdomHeroes &heroes) : Interface::ListBox<HeroRow>(pt)
+StatsHeroesList::StatsHeroesList(const Point &pt, KingdomHeroes &heroes) : ListBox<HeroRow>(pt)
 {
     const Sprite &back = AGG::GetICN(ICN::OVERVIEW, 13);
 
@@ -145,7 +145,7 @@ StatsHeroesList::StatsHeroesList(const Point &pt, KingdomHeroes &heroes) : Inter
 
     for (KingdomHeroes::iterator
                  it = heroes.begin(); it != heroes.end(); ++it)
-        content[std::distance(heroes.begin(), it)].Init(*it);
+        content[distance(heroes.begin(), it)].Init(*it);
 
     SetListContent(content);
 }
@@ -318,7 +318,7 @@ struct CstlRow
 
 class StatsCastlesList : public Interface::ListBox<CstlRow>
 {
-    std::vector<CstlRow> content;
+    vector<CstlRow> content;
 
 public:
     StatsCastlesList(const Point &pt, KingdomCastles &);
@@ -351,7 +351,7 @@ public:
     bool ActionListCursor(CstlRow &, const Point &, s32, s32);
 };
 
-StatsCastlesList::StatsCastlesList(const Point &pt, KingdomCastles &castles) : Interface::ListBox<CstlRow>(pt)
+StatsCastlesList::StatsCastlesList(const Point &pt, KingdomCastles &castles) : ListBox<CstlRow>(pt)
 {
     const Sprite &back = AGG::GetICN(ICN::OVERVIEW, 13);
 
@@ -369,7 +369,7 @@ StatsCastlesList::StatsCastlesList(const Point &pt, KingdomCastles &castles) : I
 
     for (KingdomCastles::iterator
                  it = castles.begin(); it != castles.end(); ++it)
-        content[std::distance(castles.begin(), it)].Init(*it);
+        content[distance(castles.begin(), it)].Init(*it);
 
     SetListContent(content);
 }
@@ -516,9 +516,9 @@ void StatsCastlesList::RedrawBackground(const Point &dst)
     }
 }
 
-std::string CapturedExtInfoString(int res, int color, const Funds &funds)
+string CapturedExtInfoString(int res, int color, const Funds &funds)
 {
-    std::ostringstream os;
+    ostringstream os;
     os << world.CountCapturedMines(res, color);
     const s32 vals = funds.Get(res);
 
@@ -587,10 +587,10 @@ void RedrawFundsInfo(const Point &pt, const Kingdom &myKingdom)
     text.Set(GetString(funds.gold));
     text.Blit(pt.x + 496 - text.w() / 2, pt.y + 448);
 
-    text.Set(_("Gold Per Day:") + std::string(" ") + GetString(myKingdom.GetIncome().Get(Resource::GOLD)));
+    text.Set(_("Gold Per Day:") + string(" ") + GetString(myKingdom.GetIncome().Get(Resource::GOLD)));
     text.Blit(pt.x + 180, pt.y + 462);
 
-    std::string msg = _("Day: %{day}");
+    string msg = _("Day: %{day}");
     StringReplace(msg, "%{day}", world.GetDay());
     text.Set(msg);
     text.Blit(pt.x + 360, pt.y + 462);
@@ -691,13 +691,13 @@ void Kingdom::OverviewDialog()
 
         // exit event
         if (le.MouseClickLeft(buttonExit) ||
-            Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
+            HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
             break;
 
         listStats->QueueEventProcessing();
 
         if (le.MouseClickLeft(rectIncome))
-            Dialog::ResourceInfo("", "income:", GetIncome(INCOME_ALL), Dialog::OK);
+            ResourceInfo("", "income:", GetIncome(INCOME_ALL), Dialog::OK);
         else if (le.MousePressRight(rectIncome))
             Dialog::ResourceInfo("", "income:", GetIncome(INCOME_ALL), 0);
 

@@ -133,7 +133,7 @@ namespace Battle
     u32 genie_enemy_half_percent = 10;
 }
 
-void Battle::UpdateMonsterAttributes(const std::string &spec)
+void Battle::UpdateMonsterAttributes(const string &spec)
 {
 #ifdef WITH_XML
                                                                                                                             // parse battle.xml
@@ -160,7 +160,7 @@ void Battle::UpdateMonsterAttributes(const std::string &spec)
 #endif
 }
 
-void Battle::UpdateMonsterSpriteAnimation(const std::string &spec)
+void Battle::UpdateMonsterSpriteAnimation(const string &spec)
 {
 #ifdef WITH_XML
                                                                                                                             // parse battle.xml
@@ -232,11 +232,11 @@ void Battle::UpdateMonsterSpriteAnimation(const std::string &spec)
 #endif
 }
 
-Battle::ModeDuration::ModeDuration() : std::pair<u32, u32>(0, 0)
+Battle::ModeDuration::ModeDuration() : pair<u32, u32>(0, 0)
 {
 }
 
-Battle::ModeDuration::ModeDuration(u32 mode, u32 duration) : std::pair<u32, u32>(mode, duration)
+Battle::ModeDuration::ModeDuration(u32 mode, u32 duration) : pair<u32, u32>(mode, duration)
 {
 }
 
@@ -262,14 +262,14 @@ Battle::ModesAffected::ModesAffected()
 
 u32 Battle::ModesAffected::GetMode(u32 mode) const
 {
-    const_iterator it = std::find_if(begin(), end(),
-                                     std::bind2nd(std::mem_fun_ref(&ModeDuration::isMode), mode));
+    const_iterator it = find_if(begin(), end(),
+                                     bind2nd(mem_fun_ref(&ModeDuration::isMode), mode));
     return it == end() ? 0 : (*it).second;
 }
 
 void Battle::ModesAffected::AddMode(u32 mode, u32 duration)
 {
-    iterator it = std::find_if(begin(), end(), std::bind2nd(std::mem_fun_ref(&ModeDuration::isMode), mode));
+    iterator it = find_if(begin(), end(), bind2nd(mem_fun_ref(&ModeDuration::isMode), mode));
     if (it == end())
         push_back(ModeDuration(mode, duration));
     else
@@ -278,7 +278,7 @@ void Battle::ModesAffected::AddMode(u32 mode, u32 duration)
 
 void Battle::ModesAffected::RemoveMode(u32 mode)
 {
-    iterator it = std::find_if(begin(), end(), std::bind2nd(std::mem_fun_ref(&ModeDuration::isMode), mode));
+    iterator it = find_if(begin(), end(), bind2nd(mem_fun_ref(&ModeDuration::isMode), mode));
     if (it != end())
     {
         // erase(it)
@@ -289,12 +289,12 @@ void Battle::ModesAffected::RemoveMode(u32 mode)
 
 void Battle::ModesAffected::DecreaseDuration()
 {
-    std::for_each(begin(), end(), std::mem_fun_ref(&ModeDuration::DecreaseDuration));
+    for_each(begin(), end(), mem_fun_ref(&ModeDuration::DecreaseDuration));
 }
 
 u32 Battle::ModesAffected::FindZeroDuration() const
 {
-    const_iterator it = std::find_if(begin(), end(), std::mem_fun_ref(&ModeDuration::isZeroDuration));
+    const_iterator it = find_if(begin(), end(), mem_fun_ref(&ModeDuration::isZeroDuration));
     return it == end() ? 0 : (*it).first;
 }
 
@@ -386,19 +386,19 @@ bool Battle::Unit::isModes(u32 v) const
     return Modes(v);
 }
 
-std::string Battle::Unit::GetShotString() const
+string Battle::Unit::GetShotString() const
 {
     if (Troop::GetShots() == GetShots())
         return GetString(Troop::GetShots());
 
-    std::ostringstream os;
+    ostringstream os;
     os << Troop::GetShots() << " (" << GetShots() << ")";
     return os.str();
 }
 
-std::string Battle::Unit::GetSpeedString() const
+string Battle::Unit::GetSpeedString() const
 {
-    std::ostringstream os;
+    ostringstream os;
     os << Speed::String(GetSpeed()) << " (" << GetSpeed() << ")";
     return os.str();
 }
@@ -531,7 +531,7 @@ void Battle::Unit::SetRandomLuck()
     s32 f = GetLuck();
 
     //check enemy: have bone dragon
-    if (GetArena()->GetForce(GetArmyColor(), true).HasMonster(Monster::BONE_DRAGON)) --f;
+    if (GetArena()->GetForce(GetArmyColor(), true).HasMonster(BONE_DRAGON)) --f;
 
     switch (f)
     {
@@ -694,9 +694,9 @@ u32 Battle::Unit::CalculateDamageUnit(const Unit &enemy, float dmg) const
             switch (GetID())
             {
                 // skip
-                case Monster::MAGE:
-                case Monster::ARCHMAGE:
-                case Monster::TITAN:
+                case MAGE:
+                case ARCHMAGE:
+                case TITAN:
                     break;
 
                 default:
@@ -728,7 +728,7 @@ u32 Battle::Unit::CalculateDamageUnit(const Unit &enemy, float dmg) const
     // check monster capability
     switch (GetID())
     {
-        case Monster::CRUSADER:
+        case CRUSADER:
             // double damage for undead
             if (enemy.isUndead()) dmg *= 2;
             break;
@@ -740,7 +740,7 @@ u32 Battle::Unit::CalculateDamageUnit(const Unit &enemy, float dmg) const
     // approximate.. from faq
     int r = GetAttack() - enemy.GetDefense();
     if (enemy.isDragons() && Modes(SP_DRAGONSLAYER)) r += Spell(Spell::DRAGONSLAYER).ExtraValue();
-    dmg *= 1 + (0 < r ? 0.1 * std::min(r, 20) : 0.05 * std::max(r, -15));
+    dmg *= 1 + (0 < r ? 0.1 * min(r, 20) : 0.05 * max(r, -15));
 
     return static_cast<u32>(dmg) < 1 ? 1 : static_cast<u32>(dmg);
 }
@@ -769,7 +769,7 @@ u32 Battle::Unit::HowManyCanKill(const Unit &b) const
 
 u32 Battle::Unit::HowManyWillKilled(u32 dmg) const
 {
-    return dmg >= hp ? GetCount() : GetCount() - Monster::GetCountFromHitPoints(*this, hp - dmg);
+    return dmg >= hp ? GetCount() : GetCount() - GetCountFromHitPoints(*this, hp - dmg);
 }
 
 u32 Battle::Unit::ApplyDamage(u32 dmg)
@@ -851,7 +851,7 @@ void Battle::Unit::PostKilledAction()
 
 u32 Battle::Unit::Resurrect(u32 points, bool allow_overflow, bool skip_dead)
 {
-    u32 resurrect = Monster::GetCountFromHitPoints(*this, hp + points) - GetCount();
+    u32 resurrect = GetCountFromHitPoints(*this, hp + points) - GetCount();
 
     SetCount(GetCount() + resurrect);
     hp += points;
@@ -879,7 +879,7 @@ u32 Battle::Unit::ApplyDamage(Unit &enemy, u32 dmg)
 
     switch (enemy.GetID())
     {
-        case Monster::GENIE:
+        case GENIE:
             // 10% half
             if (1 < GetCount() && killed < GetCount() &&
                 genie_enemy_half_percent >= Rand::Get(1, 100))
@@ -888,7 +888,7 @@ u32 Battle::Unit::ApplyDamage(Unit &enemy, u32 dmg)
 
                 if (Arena::GetInterface())
                 {
-                    std::string str(_("%{name} half the enemy troops!"));
+                    string str(_("%{name} half the enemy troops!"));
                     StringReplace(str, "%{name}", enemy.GetName());
                     Arena::GetInterface()->SetStatus(str, true);
                 }
@@ -902,14 +902,14 @@ u32 Battle::Unit::ApplyDamage(Unit &enemy, u32 dmg)
     if (killed)
         switch (enemy.GetID())
         {
-            case Monster::GHOST:
+            case GHOST:
                 resurrect = killed * static_cast<Monster>(enemy).GetHitPoints();
                 DEBUG(DBG_BATTLE, DBG_TRACE, String() << ", enemy: " << enemy.String() << " resurrect: " << resurrect);
                 // grow troop
                 enemy.Resurrect(resurrect, true, false);
                 break;
 
-            case Monster::VAMPIRE_LORD:
+            case VAMPIRE_LORD:
                 resurrect = killed * Monster::GetHitPoints();
                 DEBUG(DBG_BATTLE, DBG_TRACE, String() << ", enemy: " << enemy.String() << " resurrect: " << resurrect);
                 // restore hit points
@@ -938,7 +938,7 @@ u32 Battle::Unit::ApplyDamage(Unit &enemy, u32 dmg)
     return killed;
 }
 
-bool Battle::Unit::AllowApplySpell(const Spell &spell, const HeroBase *hero, std::string *msg) const
+bool Battle::Unit::AllowApplySpell(const Spell &spell, const HeroBase *hero, string *msg) const
 {
     if (Modes(SP_ANTIMAGIC)) return false;
 
@@ -1026,9 +1026,9 @@ bool Battle::Unit::ApplySpell(const Spell &spell, const HeroBase *hero, TargetIn
     return true;
 }
 
-std::string Battle::Unit::String(bool more) const
+string Battle::Unit::String(bool more) const
 {
-    std::stringstream ss;
+    stringstream ss;
 
     ss << "Unit: " << "[ " <<
        // info
@@ -1037,8 +1037,8 @@ std::string Battle::Unit::String(bool more) const
 
     if (more)
         ss <<
-           ", mode(" << "0x" << std::hex << modes << std::dec << ")" <<
-           ", uid(" << "0x" << std::setw(8) << std::setfill('0') << std::hex << uid << std::dec << ")" <<
+           ", mode(" << "0x" << hex << modes << dec << ")" <<
+           ", uid(" << "0x" << setw(8) << setfill('0') << hex << uid << dec << ")" <<
            ", speed(" << Speed::String(GetSpeed()) << ", " << static_cast<int>(GetSpeed()) << ")" <<
            ", hp(" << hp << ")" << ", die(" << dead << ")" << ")";
 
@@ -1144,7 +1144,7 @@ void Battle::Unit::PostAttackAction(Unit &enemy)
 {
     switch (GetID())
     {
-        case Monster::ARCHMAGE:
+        case ARCHMAGE:
             // 20% clean magic state
             if (enemy.isValid() && enemy.Modes(IS_GOOD_MAGIC) && 3 > Rand::Get(1, 10)) enemy.ResetModes(IS_GOOD_MAGIC);
             break;
@@ -1250,12 +1250,12 @@ s32 Battle::Unit::GetScoreQuality(const Unit &defender) const
     // attacker
     switch (attacker.GetID())
     {
-        case Monster::GHOST:
+        case GHOST:
             // priority: from killed only
             noscale = true;
             break;
 
-        case Monster::VAMPIRE_LORD:
+        case VAMPIRE_LORD:
             if (attacker.isHaveDamage())
             {
                 // alive priority
@@ -1467,8 +1467,8 @@ void Battle::Unit::SpellApplyDamage(const Spell &spell, u32 spoint, const HeroBa
 
     switch (GetID())
     {
-        case Monster::IRON_GOLEM:
-        case Monster::STEEL_GOLEM:
+        case IRON_GOLEM:
+        case STEEL_GOLEM:
             switch (spell())
             {
                 // 50% damage
@@ -1487,7 +1487,7 @@ void Battle::Unit::SpellApplyDamage(const Spell &spell, u32 spoint, const HeroBa
             }
             break;
 
-        case Monster::WATER_ELEMENT:
+        case WATER_ELEMENT:
             switch (spell())
             {
                 // 200% damage
@@ -1500,7 +1500,7 @@ void Battle::Unit::SpellApplyDamage(const Spell &spell, u32 spoint, const HeroBa
             }
             break;
 
-        case Monster::AIR_ELEMENT:
+        case AIR_ELEMENT:
             switch (spell())
             {
                 // 200% damage
@@ -1514,7 +1514,7 @@ void Battle::Unit::SpellApplyDamage(const Spell &spell, u32 spoint, const HeroBa
             }
             break;
 
-        case Monster::FIRE_ELEMENT:
+        case FIRE_ELEMENT:
             switch (spell())
             {
                 // 200% damage
@@ -1663,7 +1663,7 @@ void Battle::Unit::SpellRestoreAction(const Spell &spell, u32 spoint, const Hero
 
             if (Arena::GetInterface())
             {
-                std::string str(_("%{count} %{name} rise(s) from the dead!"));
+                string str(_("%{count} %{name} rise(s) from the dead!"));
                 StringReplace(str, "%{count}", resurrect);
                 StringReplace(str, "%{name}", GetName());
                 Arena::GetInterface()->SetStatus(str, true);
@@ -1680,9 +1680,9 @@ bool Battle::Unit::isTwiceAttack() const
 {
     switch (GetID())
     {
-        case Monster::ELF:
-        case Monster::GRAND_ELF:
-        case Monster::RANGER:
+        case ELF:
+        case GRAND_ELF:
+        case RANGER:
             return !isHandFighting();
 
         default:
@@ -1701,7 +1701,7 @@ u32 Battle::Unit::GetMagicResist(const Spell &spell, u32 spower) const
 {
     if (spell.isMindInfluence() &&
         (isUndead() || isElemental() ||
-         GetID() == Monster::GIANT || GetID() == Monster::TITAN))
+         GetID() == GIANT || GetID() == TITAN))
         return 100;
 
     if (spell.isALiveOnly() &&
@@ -1717,24 +1717,24 @@ u32 Battle::Unit::GetMagicResist(const Spell &spell, u32 spower) const
 
     switch (GetID())
     {
-        case Monster::ARCHMAGE:
+        case ARCHMAGE:
             if (Settings::Get().ExtBattleArchmageCanResistBadMagic() &&
                 (spell.isDamage() || spell.isApplyToEnemies()))
                 return 20;
             break;
 
             // 25% unfortunatly
-        case Monster::DWARF:
-        case Monster::BATTLE_DWARF:
+        case DWARF:
+        case BATTLE_DWARF:
             if (spell.isDamage() || spell.isApplyToEnemies()) return 25;
             break;
 
-        case Monster::GREEN_DRAGON:
-        case Monster::RED_DRAGON:
-        case Monster::BLACK_DRAGON:
+        case GREEN_DRAGON:
+        case RED_DRAGON:
+        case BLACK_DRAGON:
             return 100;
 
-        case Monster::PHOENIX:
+        case PHOENIX:
             switch (spell())
             {
                 case Spell::COLDRAY:
@@ -1750,7 +1750,7 @@ u32 Battle::Unit::GetMagicResist(const Spell &spell, u32 spower) const
             }
             break;
 
-        case Monster::CRUSADER:
+        case CRUSADER:
             switch (spell())
             {
                 case Spell::CURSE:
@@ -1761,7 +1761,7 @@ u32 Battle::Unit::GetMagicResist(const Spell &spell, u32 spower) const
             }
             break;
 
-        case Monster::EARTH_ELEMENT:
+        case EARTH_ELEMENT:
             switch (spell())
             {
                 case Spell::METEORSHOWER:
@@ -1773,7 +1773,7 @@ u32 Battle::Unit::GetMagicResist(const Spell &spell, u32 spower) const
             }
             break;
 
-        case Monster::AIR_ELEMENT:
+        case AIR_ELEMENT:
             switch (spell())
             {
                 case Spell::METEORSHOWER:
@@ -1783,7 +1783,7 @@ u32 Battle::Unit::GetMagicResist(const Spell &spell, u32 spower) const
             }
             break;
 
-        case Monster::FIRE_ELEMENT:
+        case FIRE_ELEMENT:
             switch (spell())
             {
                 case Spell::FIREBALL:
@@ -1794,7 +1794,7 @@ u32 Battle::Unit::GetMagicResist(const Spell &spell, u32 spower) const
             }
             break;
 
-        case Monster::WATER_ELEMENT:
+        case WATER_ELEMENT:
             switch (spell())
             {
                 case Spell::COLDRAY:
@@ -1847,22 +1847,22 @@ int Battle::Unit::GetSpellMagic(bool force) const
 {
     switch (GetID())
     {
-        case Monster::UNICORN:
+        case UNICORN:
             // 20% blind
             if (force || 3 > Rand::Get(1, 10)) return Spell::BLIND;
             break;
 
-        case Monster::CYCLOPS:
+        case CYCLOPS:
             // 20% paralyze
             if (force || 3 > Rand::Get(1, 10)) return Spell::PARALYZE;
             break;
 
-        case Monster::MUMMY:
+        case MUMMY:
             // 20% curse
             if (force || 3 > Rand::Get(1, 10)) return Spell::CURSE;
             break;
 
-        case Monster::ROYAL_MUMMY:
+        case ROYAL_MUMMY:
             // 30% curse
             if (force || 4 > Rand::Get(1, 10)) return Spell::CURSE;
             break;
@@ -1874,7 +1874,7 @@ int Battle::Unit::GetSpellMagic(bool force) const
             break;
 	*/
 
-        case Monster::MEDUSA:
+        case MEDUSA:
             // 20% stone
             if (force || 3 > Rand::Get(1, 10)) return Spell::STONE;
             break;
@@ -2014,32 +2014,32 @@ int Battle::Unit::M82Attk() const
     {
         switch (GetID())
         {
-            case Monster::ARCHER:
-            case Monster::RANGER:
+            case ARCHER:
+            case RANGER:
                 return M82::ARCHSHOT;
-            case Monster::ORC:
-            case Monster::ORC_CHIEF:
+            case ORC:
+            case ORC_CHIEF:
                 return M82::ORC_SHOT;
-            case Monster::TROLL:
-            case Monster::WAR_TROLL:
+            case TROLL:
+            case WAR_TROLL:
                 return M82::TRLLSHOT;
-            case Monster::ELF:
-            case Monster::GRAND_ELF:
+            case ELF:
+            case GRAND_ELF:
                 return M82::ELF_SHOT;
-            case Monster::DRUID:
-            case Monster::GREATER_DRUID:
+            case DRUID:
+            case GREATER_DRUID:
                 return M82::DRUISHOT;
-            case Monster::CENTAUR:
+            case CENTAUR:
                 return M82::CNTRSHOT;
-            case Monster::HALFLING:
+            case HALFLING:
                 return M82::HALFSHOT;
-            case Monster::MAGE:
-            case Monster::ARCHMAGE:
+            case MAGE:
+            case ARCHMAGE:
                 return M82::MAGESHOT;
-            case Monster::TITAN:
+            case TITAN:
                 return M82::TITNSHOT;
-            case Monster::LICH:
-            case Monster::POWER_LICH:
+            case LICH:
+            case POWER_LICH:
                 return M82::LICHSHOT;
             default:
                 break;
@@ -2068,13 +2068,13 @@ int Battle::Unit::M82Expl() const
 {
     switch (GetID())
     {
-        case Monster::VAMPIRE:
+        case VAMPIRE:
             return M82::VAMPEXT1;
-        case Monster::VAMPIRE_LORD:
+        case VAMPIRE_LORD:
             return M82::VAMPEXT1;
-        case Monster::LICH:
+        case LICH:
             return M82::LICHEXPL;
-        case Monster::POWER_LICH:
+        case POWER_LICH:
             return M82::LICHEXPL;
 
         default:
@@ -2093,39 +2093,39 @@ int Battle::Unit::ICNMiss() const
 {
     switch (GetID())
     {
-        case Monster::ARCHER:
+        case ARCHER:
             return ICN::ARCH_MSL;
-        case Monster::RANGER:
+        case RANGER:
             return ICN::ARCH_MSL;
-        case Monster::ORC:
+        case ORC:
             return ICN::ORC__MSL;
-        case Monster::ORC_CHIEF:
+        case ORC_CHIEF:
             return ICN::ORC__MSL;
-        case Monster::TROLL:
+        case TROLL:
             return ICN::TROLLMSL;
-        case Monster::WAR_TROLL:
+        case WAR_TROLL:
             return ICN::TROLLMSL;
-        case Monster::ELF:
+        case ELF:
             return ICN::ELF__MSL;
-        case Monster::GRAND_ELF:
+        case GRAND_ELF:
             return ICN::ELF__MSL;
-        case Monster::DRUID:
+        case DRUID:
             return ICN::DRUIDMSL;
-        case Monster::GREATER_DRUID:
+        case GREATER_DRUID:
             return ICN::DRUIDMSL;
-        case Monster::CENTAUR:
+        case CENTAUR:
             return ICN::ARCH_MSL;
-        case Monster::HALFLING:
+        case HALFLING:
             return ICN::HALFLMSL;
-        case Monster::MAGE:
+        case MAGE:
             return ICN::DRUIDMSL;
-        case Monster::ARCHMAGE:
+        case ARCHMAGE:
             return ICN::DRUIDMSL;
-        case Monster::TITAN:
+        case TITAN:
             return ICN::TITANMSL;
-        case Monster::LICH:
+        case LICH:
             return ICN::LICH_MSL;
-        case Monster::POWER_LICH:
+        case POWER_LICH:
             return ICN::LICH_MSL;
 
         default:
@@ -2150,8 +2150,8 @@ int Battle::Unit::GetStartMissileOffset(int state) const
 {
     switch (GetID())
     {
-        case Monster::ARCHER:
-        case Monster::RANGER:
+        case ARCHER:
+        case RANGER:
             switch (state)
             {
                 case AS_SHOT1:
@@ -2165,16 +2165,16 @@ int Battle::Unit::GetStartMissileOffset(int state) const
             }
             break;
 
-        case Monster::ORC:
-        case Monster::ORC_CHIEF:
+        case ORC:
+        case ORC_CHIEF:
             return 5;
 
-        case Monster::TROLL:
-        case Monster::WAR_TROLL:
+        case TROLL:
+        case WAR_TROLL:
             return -20;
 
-        case Monster::LICH:
-        case Monster::POWER_LICH:
+        case LICH:
+        case POWER_LICH:
             switch (state)
             {
                 case AS_SHOT1:
@@ -2188,8 +2188,8 @@ int Battle::Unit::GetStartMissileOffset(int state) const
             }
             break;
 
-        case Monster::ELF:
-        case Monster::GRAND_ELF:
+        case ELF:
+        case GRAND_ELF:
             switch (state)
             {
                 case AS_SHOT1:
@@ -2203,7 +2203,7 @@ int Battle::Unit::GetStartMissileOffset(int state) const
             }
             break;
 
-        case Monster::CENTAUR:
+        case CENTAUR:
             switch (state)
             {
                 case AS_SHOT1:
@@ -2217,8 +2217,8 @@ int Battle::Unit::GetStartMissileOffset(int state) const
             }
             break;
 
-        case Monster::DRUID:
-        case Monster::GREATER_DRUID:
+        case DRUID:
+        case GREATER_DRUID:
             switch (state)
             {
                 case AS_SHOT1:
@@ -2232,7 +2232,7 @@ int Battle::Unit::GetStartMissileOffset(int state) const
             }
             break;
 
-        case Monster::HALFLING:
+        case HALFLING:
             switch (state)
             {
                 case AS_SHOT1:
@@ -2246,8 +2246,8 @@ int Battle::Unit::GetStartMissileOffset(int state) const
             }
             break;
 
-        case Monster::MAGE:
-        case Monster::ARCHMAGE:
+        case MAGE:
+        case ARCHMAGE:
             switch (state)
             {
                 case AS_SHOT1:
@@ -2261,7 +2261,7 @@ int Battle::Unit::GetStartMissileOffset(int state) const
             }
             break;
 
-        case Monster::TITAN:
+        case TITAN:
             switch (state)
             {
                 case AS_SHOT1:

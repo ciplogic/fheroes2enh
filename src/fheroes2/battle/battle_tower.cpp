@@ -26,7 +26,7 @@
 #include "battle_troop.h"
 #include "battle_tower.h"
 
-Battle::Tower::Tower(const Castle &castle, int twr) : Unit(Troop(Monster::ARCHER, 0), -1, false),
+Battle::Tower::Tower(const Castle &castle, int twr) : Unit(Troop(ARCHER, 0), -1, false),
                                                       type(twr), color(castle.GetColor()), bonus(0), valid(true)
 {
     count += castle.CountBuildings();
@@ -125,13 +125,13 @@ void Battle::Tower::SetDestroy()
     valid = false;
 }
 
-std::string Battle::Tower::GetInfo(const Castle &cstl)
+string Battle::Tower::GetInfo(const Castle &cstl)
 {
     const char *tmpl = _("The %{name} fires with the strength of %{count} Archers");
     const char *addn = _("each with a +%{attack} bonus to their attack skill.");
 
-    std::vector<int> towers;
-    std::string msg;
+    vector<int> towers;
+    string msg;
 
     if (cstl.isBuild(BUILD_CASTLE))
     {
@@ -140,7 +140,7 @@ std::string Battle::Tower::GetInfo(const Castle &cstl)
         if (cstl.isBuild(BUILD_LEFTTURRET)) towers.push_back(TWR_LEFT);
         if (cstl.isBuild(BUILD_RIGHTTURRET)) towers.push_back(TWR_RIGHT);
 
-        for (std::vector<int>::const_iterator
+        for (vector<int>::const_iterator
                      it = towers.begin(); it != towers.end(); ++it)
         {
             Tower twr = Tower(cstl, *it);

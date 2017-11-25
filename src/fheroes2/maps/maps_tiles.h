@@ -67,7 +67,7 @@ namespace Maps
 
         bool isICN(int) const;
 
-        std::string String(int level) const;
+        string String(int level) const;
 
         static bool isStream(const TilesAddon &);
 
@@ -159,7 +159,7 @@ namespace Maps
 
         static int ColorFromTravellerTentSprite(const TilesAddon &);
 
-        static std::pair<int, int>
+        static pair<int, int>
         ColorRaceFromHeroSprite(const TilesAddon &);
 
         static bool PredicateSortRules1(const TilesAddon &, const TilesAddon &);
@@ -187,7 +187,7 @@ namespace Maps
         u8 tmp;
     };
 
-    struct Addons : public std::list<TilesAddon>
+    struct Addons : public list<TilesAddon>
     {
         void Remove(u32 uniq);
     };
@@ -296,7 +296,7 @@ namespace Maps
 
         void RemoveObjectSprite();
 
-        std::string String() const;
+        string String() const;
 
         bool isFog(int color) const;
 

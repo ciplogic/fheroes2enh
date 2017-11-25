@@ -45,14 +45,14 @@ namespace Battle
 
     Unit *ForceGetCurrentUnitPart(Units &units1, Units &units2, bool part1, bool units1_first, bool orders_mode)
     {
-        Units::iterator it1 = part1 ? std::find_if(units1.begin(), units1.end(),
-                                                   std::bind2nd(std::ptr_fun(&AllowPart1), orders_mode)) :
-                              std::find_if(units1.begin(), units1.end(),
-                                           std::bind2nd(std::ptr_fun(&AllowPart2), orders_mode));
-        Units::iterator it2 = part1 ? std::find_if(units2.begin(), units2.end(),
-                                                   std::bind2nd(std::ptr_fun(&AllowPart1), orders_mode)) :
-                              std::find_if(units2.begin(), units2.end(),
-                                           std::bind2nd(std::ptr_fun(&AllowPart2), orders_mode));
+        Units::iterator it1 = part1 ? find_if(units1.begin(), units1.end(),
+                                                   bind2nd(ptr_fun(&AllowPart1), orders_mode)) :
+                              find_if(units1.begin(), units1.end(),
+                                           bind2nd(ptr_fun(&AllowPart2), orders_mode));
+        Units::iterator it2 = part1 ? find_if(units2.begin(), units2.end(),
+                                                   bind2nd(ptr_fun(&AllowPart1), orders_mode)) :
+                              find_if(units2.begin(), units2.end(),
+                                           bind2nd(ptr_fun(&AllowPart2), orders_mode));
         Unit *result = nullptr;
 
         if (it1 != units1.end() &&
@@ -101,8 +101,8 @@ Battle::Units::Units(const Units &units, bool filter)
     reserve(CAPACITY < units.size() ? units.size() : CAPACITY);
     assign(units.begin(), units.end());
     if (filter)
-        resize(std::distance(begin(),
-                             std::remove_if(begin(), end(), std::not1(std::mem_fun(&Unit::isValid)))));
+        resize(distance(begin(),
+                             remove_if(begin(), end(), not1(mem_fun(&Unit::isValid)))));
 }
 
 Battle::Units::Units(const Units &units1, const Units &units2)
@@ -155,38 +155,38 @@ void Battle::Units::SortSlowest(bool f)
 {
     SlowestUnits CompareFunc(f);
 
-    std::sort(begin(), end(), CompareFunc);
+    sort(begin(), end(), CompareFunc);
 }
 
 void Battle::Units::SortFastest(bool f)
 {
     FastestUnits CompareFunc(f);
 
-    std::sort(begin(), end(), CompareFunc);
+    sort(begin(), end(), CompareFunc);
 }
 
 void Battle::Units::SortStrongest()
 {
-    std::sort(begin(), end(), Army::StrongestTroop);
+    sort(begin(), end(), Army::StrongestTroop);
 }
 
 void Battle::Units::SortWeakest()
 {
-    std::sort(begin(), end(), Army::WeakestTroop);
+    sort(begin(), end(), Army::WeakestTroop);
 }
 
 Battle::Unit *Battle::Units::FindUID(u32 pid)
 {
-    iterator it = std::find_if(begin(), end(),
-                               std::bind2nd(std::mem_fun(&Unit::isUID), pid));
+    iterator it = find_if(begin(), end(),
+                               bind2nd(mem_fun(&Unit::isUID), pid));
 
     return it == end() ? nullptr : *it;
 }
 
 Battle::Unit *Battle::Units::FindMode(u32 mod)
 {
-    iterator it = std::find_if(begin(), end(),
-                               std::bind2nd(std::mem_fun(&Unit::Modes), mod));
+    iterator it = find_if(begin(), end(),
+                               bind2nd(mem_fun(&Unit::Modes), mod));
 
     return it == end() ? nullptr : *it;
 }
@@ -240,7 +240,7 @@ int Battle::Force::GetControl() const
 
 bool Battle::Force::isValid() const
 {
-    return end() != std::find_if(begin(), end(), std::mem_fun(&Unit::isValid));
+    return end() != find_if(begin(), end(), mem_fun(&Unit::isValid));
 }
 
 u32 Battle::Force::GetSurrenderCost() const
@@ -296,7 +296,7 @@ void Battle::Force::NewTurn()
     if (GetCommander())
         GetCommander()->ResetModes(Heroes::SPELLCASTED);
 
-    std::for_each(begin(), end(), std::mem_fun(&Unit::NewTurn));
+    for_each(begin(), end(), mem_fun(&Unit::NewTurn));
 }
 
 bool isUnitFirst(const Battle::Unit *last, bool part1, int army2_color)
@@ -450,8 +450,8 @@ bool Battle::Force::NextIdleAnimation()
 
 bool Battle::Force::HasMonster(const Monster &mons) const
 {
-    return end() != std::find_if(begin(), end(),
-                                 std::bind2nd(std::mem_fun(&Troop::isMonster), mons()));
+    return end() != find_if(begin(), end(),
+                                 bind2nd(mem_fun(&Troop::isMonster), mons()));
 }
 
 u32 Battle::Force::GetDeadCounts() const

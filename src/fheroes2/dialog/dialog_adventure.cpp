@@ -68,7 +68,7 @@ int Dialog::AdventureOptions(bool enabledig)
     cursor.Show();
     display.Flip();
 
-    int result = Dialog::ZERO;
+    int result = ZERO;
 
     // dialog menu loop
     while (le.HandleEvents())
@@ -81,38 +81,38 @@ int Dialog::AdventureOptions(bool enabledig)
 
         if (le.MouseClickLeft(buttonWorld))
         {
-            result = Dialog::WORLD;
+            result = WORLD;
             break;
         }
         if (le.MouseClickLeft(buttonPuzzle))
         {
-            result = Dialog::PUZZLE;
+            result = PUZZLE;
             break;
         }
         if (le.MouseClickLeft(buttonInfo))
         {
-            result = Dialog::INFO;
+            result = INFO;
             break;
         }
         if (le.MouseClickLeft(buttonDig) && buttonDig.isEnable())
         {
-            result = Dialog::DIG;
+            result = DIG;
             break;
         }
-        if (le.MouseClickLeft(buttonCancel) || Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
+        if (le.MouseClickLeft(buttonCancel) || HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
         {
-            result = Dialog::CANCEL;
+            result = CANCEL;
             break;
         }
 
         // right info
-        if (le.MousePressRight(buttonWorld)) Dialog::Message("", _("View the entire world."), Font::BIG);
-        if (le.MousePressRight(buttonPuzzle)) Dialog::Message("", _("View the obelisk puzzle."), Font::BIG);
+        if (le.MousePressRight(buttonWorld)) Message("", _("View the entire world."), Font::BIG);
+        if (le.MousePressRight(buttonPuzzle)) Message("", _("View the obelisk puzzle."), Font::BIG);
         if (le.MousePressRight(buttonInfo))
-            Dialog::Message("", _("View information on the scenario you are currently playing."), Font::BIG);
-        if (le.MousePressRight(buttonDig)) Dialog::Message("", _("Dig for the Ultimate Artifact."), Font::BIG);
+            Message("", _("View information on the scenario you are currently playing."), Font::BIG);
+        if (le.MousePressRight(buttonDig)) Message("", _("Dig for the Ultimate Artifact."), Font::BIG);
         if (le.MousePressRight(buttonCancel))
-            Dialog::Message("", _("Exit this menu without doing anything."), Font::BIG);
+            Message("", _("Exit this menu without doing anything."), Font::BIG);
     }
 
     // restore background

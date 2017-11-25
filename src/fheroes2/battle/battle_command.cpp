@@ -28,7 +28,7 @@
 
 bool Battle::Actions::HaveCommand(u32 cmd) const
 {
-    return end() != std::find_if(begin(), end(), std::bind2nd(std::mem_fun_ref(&Command::isType), cmd));
+    return end() != find_if(begin(), end(), bind2nd(mem_fun_ref(&Command::isType), cmd));
 }
 
 Battle::Command::Command(int cmd) : type(cmd)
@@ -63,7 +63,7 @@ Battle::Command::Command(int cmd, int param1, int param2, const Indexes &param3)
     switch (type)
     {
         case MSG_BATTLE_MOVE:
-            for (Indexes::const_reverse_iterator
+            for (const_reverse_iterator
                          it = param3.rbegin(); it != param3.rend(); ++it)
                 *this << *it;
             *this << param3.size() << param2 << param1;  // path, dst, uid

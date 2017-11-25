@@ -37,7 +37,7 @@ Splitter::Splitter(const Surface &sf, const Rect &rt)
 
 void Splitter::SetSprite(const Surface &sf)
 {
-    Surface::Set(sf, true);
+    Set(sf, true);
 }
 
 void Splitter::SetArea(const Rect &rt)
@@ -59,17 +59,17 @@ void Splitter::SetRange(int smin, int smax)
 
     if (min < max)
     {
-        step = 100 * (isVertical() ? (area.h - SpriteMove::h()) : (area.w - SpriteMove::w())) / (max - min);
+        step = 100 * (isVertical() ? (area.h - h()) : (area.w - w())) / (max - min);
         cur = min;
         move = GetPositionCursor();
     } else
     {
         step = 0;
-        move = Point(area.x + (area.w - SpriteMove::w()) / 2,
-                     area.y + (area.h - SpriteMove::h()) / 2);
+        move = Point(area.x + (area.w - w()) / 2,
+                     area.y + (area.h - h()) / 2);
     }
 
-    SpriteMove::background.SetPos(move);
+    background.SetPos(move);
 }
 
 Point Splitter::GetPositionCursor()
@@ -78,12 +78,12 @@ Point Splitter::GetPositionCursor()
 
     if (isVertical())
     {
-        res.x = area.x + (area.w - SpriteMove::w()) / 2;
+        res.x = area.x + (area.w - w()) / 2;
         res.y = area.y + cur * step / 100;
     } else
     {
         res.x = area.x + cur * step / 100;
-        res.y = area.y + (area.h - SpriteMove::h()) / 2;
+        res.y = area.y + (area.h - h()) / 2;
     }
 
     return res;
@@ -106,8 +106,8 @@ void Splitter::ShowCursor()
 
 void Splitter::MoveCenter()
 {
-    Move(area.x + (area.w - SpriteMove::w()) / 2,
-         area.y + (area.h - SpriteMove::h()) / 2);
+    Move(area.x + (area.w - w()) / 2,
+         area.y + (area.h - h()) / 2);
 }
 
 /* move splitter to pos */

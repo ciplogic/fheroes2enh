@@ -75,8 +75,8 @@ Rect Battle::Board::GetArea() const
 
 void Battle::Board::Reset()
 {
-    std::for_each(begin(), end(), std::mem_fun_ref(&Cell::ResetQuality));
-    std::for_each(begin(), end(), std::mem_fun_ref(&Cell::ResetDirection));
+    for_each(begin(), end(), mem_fun_ref(&Cell::ResetQuality));
+    for_each(begin(), end(), mem_fun_ref(&Cell::ResetDirection));
 }
 
 void Battle::Board::SetPositionQuality(const Unit &b)
@@ -133,7 +133,7 @@ s32 Battle::Board::GetDistance(s32 index1, s32 index2)
         const s32 dx = (index1 % ARENAW) - (index2 % ARENAW);
         const s32 dy = (index1 / ARENAW) - (index2 / ARENAW);
 
-        return Sign(dx) == Sign(dy) ? std::max(std::abs(dx), std::abs(dy)) : std::abs(dx) + std::abs(dy);
+        return Sign(dx) == Sign(dy) ? max(abs(dx), abs(dy)) : abs(dx) + abs(dy);
     }
 
     return 0;
@@ -141,7 +141,7 @@ s32 Battle::Board::GetDistance(s32 index1, s32 index2)
 
 void Battle::Board::SetScanPassability(const Unit &b)
 {
-    std::for_each(begin(), end(), std::mem_fun_ref(&Cell::ResetDirection));
+    for_each(begin(), end(), mem_fun_ref(&Cell::ResetDirection));
 
     at(b.GetHeadIndex()).SetDirection(CENTER);
 
@@ -152,8 +152,8 @@ void Battle::Board::SetScanPassability(const Unit &b)
     } else
     {
         Indexes indexes = GetDistanceIndexes(b.GetHeadIndex(), b.GetSpeed());
-        indexes.resize(std::distance(indexes.begin(),
-                                     std::remove_if(indexes.begin(), indexes.end(), isImpassableIndex)));
+        indexes.resize(distance(indexes.begin(),
+                                     remove_if(indexes.begin(), indexes.end(), isImpassableIndex)));
 
         // set pasable
         for (Indexes::const_iterator
@@ -176,7 +176,7 @@ Battle::Indexes Battle::Board::GetAStarPath(const Unit &b, const Position &dst, 
 {
     const Castle *castle = Arena::GetCastle();
     const Bridge *bridge = Arena::GetBridge();
-    std::map<s32, bcell_t> list;
+    map<s32, bcell_t> list;
     s32 cur = b.GetHeadIndex();
 
     list[cur].prnt = -1;
@@ -200,12 +200,12 @@ Battle::Indexes Battle::Board::GetAStarPath(const Unit &b, const Position &dst, 
 
             if (list[*it].open && cell.isPassable4(b, center) &&
                 // check bridge
-                (!bridge || !Board::isBridgeIndex(*it) || bridge->isPassable(b.GetColor())))
+                (!bridge || !isBridgeIndex(*it) || bridge->isPassable(b.GetColor())))
             {
-                const s32 cost = 100 * Board::GetDistance(*it, dst.GetHead()->GetIndex()) +
+                const s32 cost = 100 * GetDistance(*it, dst.GetHead()->GetIndex()) +
                                  (b.isWide() && WideDifficultDirection(center.GetDirection(), GetDirection(*it, cur))
                                   ? 100 : 0) +
-                                 (castle && castle->isBuild(BUILD_MOAT) && Board::isMoatIndex(*it) ? 100 : 0);
+                                 (castle && castle->isBuild(BUILD_MOAT) && isMoatIndex(*it) ? 100 : 0);
 
                 // new cell
                 if (0 > list[*it].prnt)
@@ -226,7 +226,7 @@ Battle::Indexes Battle::Board::GetAStarPath(const Unit &b, const Position &dst, 
         s32 cost = MAXU16;
 
         // find min cost opens
-        for (std::map<s32, bcell_t>::const_iterator
+        for (map<s32, bcell_t>::const_iterator
                      it = list.begin(); it != list.end(); ++it)
             if ((*it).second.open && cost > (*it).second.cost)
             {
@@ -250,7 +250,7 @@ Battle::Indexes Battle::Board::GetAStarPath(const Unit &b, const Position &dst, 
             cur = list[cur].prnt;
         }
 
-        std::reverse(result.begin(), result.end());
+        reverse(result.begin(), result.end());
 
         // correct wide position
         if (b.isWide() && result.size())
@@ -278,11 +278,11 @@ Battle::Indexes Battle::Board::GetAStarPath(const Unit &b, const Position &dst, 
             result.resize(b.GetSpeed());
 
         // skip moat position
-        if (castle && castle->isBuild(BUILD_MOAT) && !Board::isMoatIndex(b.GetHeadIndex()))
+        if (castle && castle->isBuild(BUILD_MOAT) && !isMoatIndex(b.GetHeadIndex()))
         {
-            Indexes::iterator moat = std::find_if(result.begin(), result.end(), Board::isMoatIndex);
+            Indexes::iterator moat = find_if(result.begin(), result.end(), isMoatIndex);
             if (moat != result.end())
-                result.resize(std::distance(result.begin(), ++moat));
+                result.resize(distance(result.begin(), ++moat));
         }
 
         // set passable info
@@ -314,14 +314,14 @@ Battle::Indexes Battle::Board::GetAStarPath(const Unit &b, const Position &dst, 
     return result;
 }
 
-std::string Battle::Board::AllUnitsInfo() const
+string Battle::Board::AllUnitsInfo() const
 {
-    std::ostringstream os;
+    ostringstream os;
 
     for (const auto& it : *this)
     {
         const Unit *b = it.GetUnit();
-        if (b) os << "\t" << b->String(true) << std::endl;
+        if (b) os << "\t" << b->String(true) << endl;
     }
 
     return os.str();
@@ -338,7 +338,7 @@ Battle::Indexes Battle::Board::GetPassableQualityPositions(const Unit &b)
 
     if (IS_DEBUG(DBG_BATTLE, DBG_TRACE))
     {
-        std::stringstream ss;
+        stringstream ss;
         if (result.empty()) ss << "empty";
         else
             for (Indexes::const_iterator it = result.begin(); it != result.end(); ++it) ss << *it << ", ";
@@ -348,7 +348,7 @@ Battle::Indexes Battle::Board::GetPassableQualityPositions(const Unit &b)
     return result;
 }
 
-struct IndexDistanceEqualDistance : std::binary_function<IndexDistance, u32, bool>
+struct IndexDistanceEqualDistance : binary_function<IndexDistance, u32, bool>
 {
     bool operator()(const IndexDistance &id, u32 dist) const
     { return id.second == dist; };
@@ -357,17 +357,17 @@ struct IndexDistanceEqualDistance : std::binary_function<IndexDistance, u32, boo
 Battle::Indexes Battle::Board::GetNearestTroopIndexes(s32 pos, const Indexes *black) const
 {
     Indexes result;
-    std::vector<IndexDistance> dists;
+    vector<IndexDistance> dists;
     dists.reserve(15);
 
     for (const auto& it : *this)
     {
-        const Battle::Unit *b = it.GetUnit();
+        const Unit *b = it.GetUnit();
 
         if (b)
         {
             // check black list
-            if (black && black->end() != std::find(black->begin(), black->end(), b->GetHeadIndex())) continue;
+            if (black && black->end() != find(black->begin(), black->end(), b->GetHeadIndex())) continue;
             // added
             if (pos != b->GetHeadIndex())
                 dists.push_back(IndexDistance(b->GetHeadIndex(), GetDistance(pos, b->GetHeadIndex())));
@@ -376,15 +376,15 @@ Battle::Indexes Battle::Board::GetNearestTroopIndexes(s32 pos, const Indexes *bl
 
     if (1 < dists.size())
     {
-        std::sort(dists.begin(), dists.end(), IndexDistance::Shortest);
-        dists.resize(std::count_if(dists.begin(), dists.end(),
-                                   std::bind2nd(IndexDistanceEqualDistance(), dists.front().second)));
+        sort(dists.begin(), dists.end(), IndexDistance::Shortest);
+        dists.resize(count_if(dists.begin(), dists.end(),
+                                   bind2nd(IndexDistanceEqualDistance(), dists.front().second)));
     }
 
     if (dists.size())
     {
         result.reserve(dists.size());
-        for (std::vector<IndexDistance>::const_iterator
+        for (vector<IndexDistance>::const_iterator
                      it = dists.begin(); it != dists.end(); ++it)
             result.push_back((*it).first);
     }
@@ -555,7 +555,7 @@ bool Battle::Board::isOutOfWallsIndex(s32 index)
 
 bool Battle::Board::isImpassableIndex(s32 index)
 {
-    const Cell *cell = Board::GetCell(index);
+    const Cell *cell = GetCell(index);
     return !cell || !cell->isPassable1(true);
 }
 
@@ -600,7 +600,7 @@ void Battle::Board::SetCobjObjects(const Maps::Tiles &tile)
 //    bool trees = Maps::ScanAroundObject(center, MP2::OBJ_TREES).size();
     bool grave = MP2::OBJ_GRAVEYARD == tile.GetObject(false);
     int ground = tile.GetGround();
-    std::vector<int> objs;
+    vector<int> objs;
 
     if (grave)
     {
@@ -940,7 +940,7 @@ Battle::Cell *Battle::Board::GetCell(s32 position, int dir)
     {
         if (dir == CENTER)
             return &board->at(position);
-        else if (Board::isValidDirection(position, dir))
+        else if (isValidDirection(position, dir))
             return &board->at(GetIndexDirection(position, dir));
     }
 
@@ -994,9 +994,9 @@ Battle::Indexes Battle::Board::GetAroundIndexes(const Unit &b)
         around.insert(around.end(), tail.begin(), tail.end());
 
         Indexes::iterator it_end = around.end();
-        it_end = std::remove(around.begin(), it_end, b.GetHeadIndex());
-        it_end = std::remove(around.begin(), it_end, b.GetTailIndex());
-        around.resize(std::distance(around.begin(), it_end));
+        it_end = remove(around.begin(), it_end, b.GetHeadIndex());
+        it_end = remove(around.begin(), it_end, b.GetTailIndex());
+        around.resize(distance(around.begin(), it_end));
 
         return around;
     }
@@ -1010,7 +1010,7 @@ Battle::Indexes Battle::Board::GetDistanceIndexes(s32 center, u32 radius)
 
     if (isValidIndex(center))
     {
-        std::set<s32> st;
+        set<s32> st;
         Indexes abroad;
 
         st.insert(center);
@@ -1018,7 +1018,7 @@ Battle::Indexes Battle::Board::GetDistanceIndexes(s32 center, u32 radius)
 
         while (abroad.size() && radius)
         {
-            std::set<s32> tm = st;
+            set<s32> tm = st;
 
             for (Indexes::const_iterator
                          it = abroad.begin(); it != abroad.end(); ++it)
@@ -1030,9 +1030,9 @@ Battle::Indexes Battle::Board::GetDistanceIndexes(s32 center, u32 radius)
             abroad.resize(tm.size());
 
             Indexes::iterator abroad_end =
-                    std::set_difference(tm.begin(), tm.end(), st.begin(), st.end(), abroad.begin());
+                    set_difference(tm.begin(), tm.end(), st.begin(), st.end(), abroad.begin());
 
-            abroad.resize(std::distance(abroad.begin(), abroad_end));
+            abroad.resize(distance(abroad.begin(), abroad_end));
 
             st.swap(tm);
             --radius;
@@ -1040,7 +1040,7 @@ Battle::Indexes Battle::Board::GetDistanceIndexes(s32 center, u32 radius)
 
         st.erase(center);
         result.reserve(st.size());
-        std::copy(st.begin(), st.end(), std::back_inserter(result));
+        copy(st.begin(), st.end(), back_inserter(result));
     }
 
     return result;
@@ -1053,9 +1053,9 @@ bool Battle::Board::isValidMirrorImageIndex(s32 index, const Unit *b)
            GetCell(index)->isPassable3(*b, true);
 }
 
-std::string Battle::Board::GetMoatInfo()
+string Battle::Board::GetMoatInfo()
 {
-    std::string msg = _("The Moat reduces by -%{count} the defense skill of any unit and slows to half movement rate.");
+    string msg = _("The Moat reduces by -%{count} the defense skill of any unit and slows to half movement rate.");
     StringReplace(msg, "%{count}", GameStatic::GetBattleMoatReduceDefense());
 
     return msg;

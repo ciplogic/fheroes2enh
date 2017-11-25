@@ -122,7 +122,7 @@ void Interface::Radar::SavePosition()
 
 void Interface::Radar::SetPos(s32 ox, s32 oy)
 {
-    BorderWindow::SetPosition(ox, oy);
+    SetPosition(ox, oy);
 }
 
 /* construct gui */
@@ -236,7 +236,7 @@ int GetChunkSize(float size1, float size2)
     if (size1 > size2)
     {
         double intpart;
-        double fractpart = std::modf(size1 / size2, &intpart);
+        double fractpart = modf(size1 / size2, &intpart);
         res = static_cast<int>(intpart);
 
         if (static_cast<int>(fractpart * 100) > 10)

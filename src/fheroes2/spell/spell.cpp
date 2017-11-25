@@ -125,7 +125,7 @@ spellstats_t spells[] = {
         {"Stone",                     0,  0, 0,  0,  0, COST_NONE, "Stone spell from Medusa."},
 };
 
-void Spell::UpdateStats(const std::string &spec)
+void Spell::UpdateStats(const string &spec)
 {
 #ifdef WITH_XML
     // parse spells.xml
@@ -195,7 +195,7 @@ bool Spell::operator!=(const Spell &s) const
 
 bool Spell::isValid() const
 {
-    return id != Spell::NONE;
+    return id != NONE;
 }
 
 int Spell::operator()() const
@@ -509,8 +509,8 @@ u32 Spell::Restore() const
 {
     switch (id)
     {
-        case Spell::CURE:
-        case Spell::MASSCURE:
+        case CURE:
+        case MASSCURE:
             return spells[id].extra;
 
         default:
@@ -524,9 +524,9 @@ u32 Spell::Resurrect() const
 {
     switch (id)
     {
-        case Spell::ANIMATEDEAD:
-        case Spell::RESURRECT:
-        case Spell::RESURRECTTRUE:
+        case ANIMATEDEAD:
+        case RESURRECT:
+        case RESURRECTTRUE:
             return spells[id].extra;
 
         default:
@@ -554,7 +554,7 @@ u32 Spell::ExtraValue() const
 
 Spell Spell::Rand(int lvl, bool adv)
 {
-    std::vector<Spell> v;
+    vector<Spell> v;
     v.reserve(15);
 
     for (u32 sp = NONE; sp < STONE; ++sp)
@@ -565,7 +565,7 @@ Spell Spell::Rand(int lvl, bool adv)
             !(spells[sp].bits & SP_DISABLE))
             v.push_back(spell);
     }
-    return v.size() ? *Rand::Get(v) : Spell(Spell::NONE);
+    return v.size() ? *Rand::Get(v) : Spell(NONE);
 }
 
 Spell Spell::RandCombat(int lvl)

@@ -37,7 +37,7 @@ void Dialog::GameInfo()
     // FIXME: QVGA version
     if (Settings::Get().QVGA())
     {
-        Dialog::Message("", _("For the QVGA version is not available."), Font::SMALL, Dialog::OK);
+        Message("", _("For the QVGA version is not available."), Font::SMALL, OK);
         return;
     }
 
@@ -131,7 +131,7 @@ void Dialog::GameInfo()
 
         if (le.MouseClickLeft(buttonCfg))
         {
-            Dialog::ExtSettings(true);
+            ExtSettings(true);
             Cursor::Get().Show();
             Display::Get().Flip();
         }

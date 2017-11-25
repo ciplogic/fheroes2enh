@@ -141,7 +141,7 @@ public:
 
     bool PresentBoat() const;
 
-    bool AllowBuyHero(const Heroes &, std::string * = nullptr);
+    bool AllowBuyHero(const Heroes &, string * = nullptr);
 
     bool isPosition(const Point &) const;
 
@@ -155,7 +155,7 @@ public:
 
     int GetRace() const;
 
-    const std::string &GetName() const;
+    const string &GetName() const;
 
     int GetControl() const;
 
@@ -203,17 +203,17 @@ public:
 
     int OpenDialog(bool readonly = false, bool fade = false);
 
-    int GetAttackModificator(std::string *) const;
+    int GetAttackModificator(string *) const;
 
-    int GetDefenseModificator(std::string *) const;
+    int GetDefenseModificator(string *) const;
 
-    int GetPowerModificator(std::string *) const;
+    int GetPowerModificator(string *) const;
 
-    int GetKnowledgeModificator(std::string *) const;
+    int GetKnowledgeModificator(string *) const;
 
-    int GetMoraleModificator(std::string *) const;
+    int GetMoraleModificator(string *) const;
 
-    int GetLuckModificator(std::string *) const;
+    int GetLuckModificator(string *) const;
 
     bool AllowBuild() const;
 
@@ -235,9 +235,9 @@ public:
 
     void Scoute() const;
 
-    std::string GetStringBuilding(u32) const;
+    string GetStringBuilding(u32) const;
 
-    std::string GetDescriptionBuilding(u32) const;
+    string GetDescriptionBuilding(u32) const;
 
     static const char *GetStringBuilding(u32, int race);
 
@@ -265,7 +265,7 @@ public:
 
     static u32 GetGrownMonthOf();
 
-    std::string String() const;
+    string String() const;
 
     int DialogBuyHero(const Heroes *);
 
@@ -311,7 +311,7 @@ private:
     u32 building;
     Captain captain;
 
-    std::string name;
+    string name;
 
     MageGuild mageguild;
     u32 dwelling[CASTLEMAXMONSTER];
@@ -333,7 +333,7 @@ namespace CastleDialog
         Sprite contour;
     };
 
-    struct CacheBuildings : std::vector<builds_t>
+    struct CacheBuildings : vector<builds_t>
     {
         CacheBuildings(const Castle &, const Point &);
 
@@ -347,7 +347,7 @@ namespace CastleDialog
     void RedrawBuildingSpriteToArea(const Sprite &, s32, s32, const Rect &);
 }
 
-struct VecCastles : public std::vector<Castle *>
+struct VecCastles : public vector<Castle *>
 {
     Castle *Get(const Point &) const;
 

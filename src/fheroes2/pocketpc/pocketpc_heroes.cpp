@@ -52,7 +52,7 @@ int PocketPC::HeroesOpenDialog(Heroes &hero, bool readonly)
     hero.PortraitRedraw(dst_rt.x + 12, dst_rt.y + 4, PORT_MEDIUM, display);
 
     // name
-    std::string message = _("%{name} the %{race} ( Level %{level} )");
+    string message = _("%{name} the %{race} ( Level %{level} )");
     StringReplace(message, "%{name}", hero.GetName());
     StringReplace(message, "%{race}", Race::String(hero.GetRace()));
     StringReplace(message, "%{level}", hero.GetLevel());
@@ -154,7 +154,7 @@ int PocketPC::HeroesOpenDialog(Heroes &hero, bool readonly)
         else
             // exit
         if (le.MouseClickLeft(buttonExit) ||
-            Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
+            HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
             return Dialog::CANCEL;
         else
             // dismiss

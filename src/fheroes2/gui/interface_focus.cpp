@@ -105,8 +105,8 @@ void Interface::Basic::ResetFocus(int priority)
                 const KingdomHeroes &heroes = myKingdom.GetHeroes();
                 // skip sleeping
                 KingdomHeroes::const_iterator it =
-                        std::find_if(heroes.begin(), heroes.end(),
-                                     std::not1(std::bind2nd(std::mem_fun(&Heroes::Modes), Heroes::SLEEPER)));
+                        find_if(heroes.begin(), heroes.end(),
+                                     not1(bind2nd(mem_fun(&Heroes::Modes), Heroes::SLEEPER)));
 
                 if (it != heroes.end())
                     SetFocus(*it);

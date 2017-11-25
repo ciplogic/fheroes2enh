@@ -39,7 +39,7 @@ void StatusBar::SetCenter(s32 cx, s32 cy)
     center.y = cy;
 }
 
-void StatusBar::ShowMessage(const std::string &msg)
+void StatusBar::ShowMessage(const string &msg)
 {
     if (msg != prev)
     {
@@ -59,7 +59,7 @@ void StatusBar::Redraw()
     Show();
 }
 
-const std::string &StatusBar::GetMessage() const
+const string &StatusBar::GetMessage() const
 {
     return prev;
 }

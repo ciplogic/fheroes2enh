@@ -122,7 +122,7 @@ public:
 
     void SplitTroopIntoFreeSlots(const Troop &, u32 slots);
 
-    std::vector<Troop *> _items;
+    vector<Troop *> _items;
 };
 
 enum
@@ -130,21 +130,21 @@ enum
     JOIN_NONE, JOIN_FREE, JOIN_COST, JOIN_FLEE
 };
 
-struct JoinCount : std::pair<int, u32>
+struct JoinCount : pair<int, u32>
 {
-    JoinCount() : std::pair<int, u32>(JOIN_NONE, 0)
+    JoinCount() : pair<int, u32>(JOIN_NONE, 0)
     {}
 
-    JoinCount(int reason, u32 count) : std::pair<int, u32>(reason, count)
+    JoinCount(int reason, u32 count) : pair<int, u32>(reason, count)
     {}
 };
 
 class Army : public Troops, public Control
 {
 public:
-    static std::string SizeString(u32);
+    static string SizeString(u32);
 
-    static std::string TroopSizeString(const Troop &);
+    static string TroopSizeString(const Troop &);
 
     // compare
     static bool WeakestTroop(const Troop *, const Troop *);
@@ -194,9 +194,9 @@ public:
 
     int GetLuck() const;
 
-    int GetMoraleModificator(std::string *) const;
+    int GetMoraleModificator(string *) const;
 
-    int GetLuckModificator(std::string *) const;
+    int GetLuckModificator(string *) const;
 
     u32 ActionToSirens();
 
@@ -208,7 +208,7 @@ public:
 
     const Castle *inCastle() const;
 
-    std::string String() const;
+    string String() const;
 
     void JoinStrongestFromArmy(Army &);
 

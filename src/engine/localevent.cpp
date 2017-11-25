@@ -880,7 +880,7 @@ int LocalEvent::GlobalFilterEvents(void* userdata, SDL_Event* event)
 int LocalEvent::GlobalFilterEvents(const SDL_Event *event)
 #endif
 {
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent &le = Get();
 
     // motion
     if ((le.modes & GLOBAL_FILTER) && SDL_MOUSEMOTION == event->type)

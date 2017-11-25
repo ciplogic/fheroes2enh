@@ -34,15 +34,15 @@ public:
 
     void SetCenter(s32 cx, s32 cy);
 
-    void ShowMessage(const std::string &msg);
+    void ShowMessage(const string &msg);
 
     void Redraw();
 
-    const std::string &GetMessage() const;
+    const string &GetMessage() const;
 
 private:
     Point center;
-    std::string prev;
+    string prev;
 };
 
 #endif

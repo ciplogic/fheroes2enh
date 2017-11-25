@@ -36,10 +36,10 @@ int ObjSnow::GetPassable(u32 index)
     if (isShadow(index))
         return DIRECTION_ALL;
     else if (isAction(index) ||
-             ARRAY_COUNT_END(disabled) != std::find(disabled, ARRAY_COUNT_END(disabled), index))
+             ARRAY_COUNT_END(disabled) != find(disabled, ARRAY_COUNT_END(disabled), index))
         return 0;
 
-    return ARRAY_COUNT_END(restricted) != std::find(restricted, ARRAY_COUNT_END(restricted), index) ?
+    return ARRAY_COUNT_END(restricted) != find(restricted, ARRAY_COUNT_END(restricted), index) ?
            DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW : DIRECTION_ALL;
 }
 
@@ -53,7 +53,7 @@ bool ObjSnow::isShadow(u32 index)
     const u8 shadows[] = {21, 25, 29, 31, 33, 36, 40, 48, 54, 59, 63, 67, 70, 73, 76, 79,
                           104, 108, 120, 124, 137, 140, 142, 144, 148, 193, 203, 207};
 
-    return ARRAY_COUNT_END(shadows) != std::find(shadows, ARRAY_COUNT_END(shadows), index);
+    return ARRAY_COUNT_END(shadows) != find(shadows, ARRAY_COUNT_END(shadows), index);
 }
 
 int ObjSnow::GetActionObject(u32 index)

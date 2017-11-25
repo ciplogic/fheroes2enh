@@ -262,7 +262,7 @@ bool Interface::BorderWindow::QueueEventProcessing()
 
         cursor.Hide();
         SetPos(mp.x - ox, mp.y - oy);
-        Interface::Basic::Get().SetRedraw(REDRAW_GAMEAREA);
+        Basic::Get().SetRedraw(REDRAW_GAMEAREA);
 
         return true;
     }

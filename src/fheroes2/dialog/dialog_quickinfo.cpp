@@ -40,11 +40,11 @@
 #include "game.h"
 #include "dialog.h"
 
-std::string GetMinesIncomeString(int type)
+string GetMinesIncomeString(int type)
 {
     const payment_t income = ProfitConditions::FromMine(type);
     const s32 value = income.Get(type);
-    std::string res;
+    string res;
 
     if (value)
     {
@@ -58,9 +58,9 @@ std::string GetMinesIncomeString(int type)
     return res;
 }
 
-std::string ShowGuardiansInfo(const Maps::Tiles &tile, int scoute)
+string ShowGuardiansInfo(const Maps::Tiles &tile, int scoute)
 {
-    std::string str;
+    string str;
     const Troop &troop = tile.QuantityTroop();
 
     if (MP2::OBJ_MINES == tile.GetObject())
@@ -82,9 +82,9 @@ std::string ShowGuardiansInfo(const Maps::Tiles &tile, int scoute)
     return str;
 }
 
-std::string ShowMonsterInfo(const Maps::Tiles &tile, int scoute)
+string ShowMonsterInfo(const Maps::Tiles &tile, int scoute)
 {
-    std::string str;
+    string str;
     const Troop &troop = tile.QuantityTroop();
 
     if (scoute)
@@ -98,9 +98,9 @@ std::string ShowMonsterInfo(const Maps::Tiles &tile, int scoute)
     return str;
 }
 
-std::string ShowArtifactInfo(const Maps::Tiles &tile, bool show)
+string ShowArtifactInfo(const Maps::Tiles &tile, bool show)
 {
-    std::string str = MP2::StringObject(tile.GetObject());
+    string str = MP2::StringObject(tile.GetObject());
 
     if (show)
     {
@@ -112,9 +112,9 @@ std::string ShowArtifactInfo(const Maps::Tiles &tile, bool show)
     return str;
 }
 
-std::string ShowResourceInfo(const Maps::Tiles &tile, bool show, int scoute)
+string ShowResourceInfo(const Maps::Tiles &tile, bool show, int scoute)
 {
-    std::string str = MP2::StringObject(tile.GetObject());
+    string str = MP2::StringObject(tile.GetObject());
 
     if (show)
     {
@@ -134,9 +134,9 @@ std::string ShowResourceInfo(const Maps::Tiles &tile, bool show, int scoute)
     return str;
 }
 
-std::string ShowDwellingInfo(const Maps::Tiles &tile, int scoute)
+string ShowDwellingInfo(const Maps::Tiles &tile, int scoute)
 {
-    std::string str = MP2::StringObject(tile.GetObject());
+    string str = MP2::StringObject(tile.GetObject());
 
     if (scoute)
     {
@@ -153,9 +153,9 @@ std::string ShowDwellingInfo(const Maps::Tiles &tile, int scoute)
     return str;
 }
 
-std::string ShowShrineInfo(const Maps::Tiles &tile, const Heroes *hero, int scoute)
+string ShowShrineInfo(const Maps::Tiles &tile, const Heroes *hero, int scoute)
 {
-    std::string str = MP2::StringObject(tile.GetObject());
+    string str = MP2::StringObject(tile.GetObject());
     bool show = false;
 
     switch (tile.GetObject())
@@ -190,9 +190,9 @@ std::string ShowShrineInfo(const Maps::Tiles &tile, const Heroes *hero, int scou
     return str;
 }
 
-std::string ShowWitchHutInfo(const Maps::Tiles &tile, const Heroes *hero, bool show)
+string ShowWitchHutInfo(const Maps::Tiles &tile, const Heroes *hero, bool show)
 {
-    std::string str = MP2::StringObject(tile.GetObject());
+    string str = MP2::StringObject(tile.GetObject());
 
     if (show)
     {
@@ -220,9 +220,9 @@ std::string ShowWitchHutInfo(const Maps::Tiles &tile, const Heroes *hero, bool s
     return str;
 }
 
-std::string ShowLocalVisitTileInfo(const Maps::Tiles &tile, const Heroes *hero)
+string ShowLocalVisitTileInfo(const Maps::Tiles &tile, const Heroes *hero)
 {
-    std::string str = MP2::StringObject(tile.GetObject());
+    string str = MP2::StringObject(tile.GetObject());
     if (hero)
     {
         str.append("\n");
@@ -232,9 +232,9 @@ std::string ShowLocalVisitTileInfo(const Maps::Tiles &tile, const Heroes *hero)
     return str;
 }
 
-std::string ShowLocalVisitObjectInfo(const Maps::Tiles &tile, const Heroes *hero)
+string ShowLocalVisitObjectInfo(const Maps::Tiles &tile, const Heroes *hero)
 {
-    std::string str = MP2::StringObject(tile.GetObject());
+    string str = MP2::StringObject(tile.GetObject());
     if (hero)
     {
         str.append("\n");
@@ -244,18 +244,18 @@ std::string ShowLocalVisitObjectInfo(const Maps::Tiles &tile, const Heroes *hero
     return str;
 }
 
-std::string ShowGlobalVisitInfo(const Maps::Tiles &tile, const Kingdom &kingdom)
+string ShowGlobalVisitInfo(const Maps::Tiles &tile, const Kingdom &kingdom)
 {
-    std::string str = MP2::StringObject(tile.GetObject());
+    string str = MP2::StringObject(tile.GetObject());
     str.append("\n");
     str.append(kingdom.isVisited(tile) ? _("(already visited)") : _("(not visited)"));
 
     return str;
 }
 
-std::string ShowGlobalVisitInfo(const Maps::Tiles &tile, const Kingdom &kingdom, bool ext)
+string ShowGlobalVisitInfo(const Maps::Tiles &tile, const Kingdom &kingdom, bool ext)
 {
-    std::string str = MP2::StringObject(tile.GetObject());
+    string str = MP2::StringObject(tile.GetObject());
     if (ext && kingdom.isVisited(tile))
     {
         str.append("\n");
@@ -265,9 +265,9 @@ std::string ShowGlobalVisitInfo(const Maps::Tiles &tile, const Kingdom &kingdom,
     return str;
 }
 
-std::string ShowBarrierTentInfo(const Maps::Tiles &tile, const Kingdom &kingdom)
+string ShowBarrierTentInfo(const Maps::Tiles &tile, const Kingdom &kingdom)
 {
-    std::string str = BarrierColor::String(tile.QuantityColor());
+    string str = BarrierColor::String(tile.QuantityColor());
     str.append(" ");
     str.append(MP2::StringObject(tile.GetObject()));
 
@@ -281,9 +281,9 @@ std::string ShowBarrierTentInfo(const Maps::Tiles &tile, const Kingdom &kingdom)
     return str;
 }
 
-std::string ShowGroundInfo(const Maps::Tiles &tile, bool show, const Heroes *hero)
+string ShowGroundInfo(const Maps::Tiles &tile, bool show, const Heroes *hero)
 {
-    std::string str = Maps::Ground::String(tile.GetGround());
+    string str = Maps::Ground::String(tile.GetGround());
 
     if (show && hero)
     {
@@ -373,7 +373,7 @@ void Dialog::QuickInfo(const Maps::Tiles &tile)
     SpriteBack back(pos);
     box.Blit(pos.x, pos.y);
 
-    std::string name_object;
+    string name_object;
 
     const Heroes *from_hero = Interface::GetFocusHeroes();
     const Kingdom &kingdom = world.GetKingdom(settings.CurrentColor());
@@ -779,7 +779,7 @@ void Dialog::QuickInfo(const Heroes &hero)
     cur_rt = Rect(back.GetPos().x + 28, back.GetPos().y + 10, 146, 144);
     Point dst_pt;
     Text text;
-    std::string message;
+    string message;
 
     // heroes name
     if (hero.isFriends(conf.CurrentColor()))
@@ -808,7 +808,7 @@ void Dialog::QuickInfo(const Heroes &hero)
     {
         const s32 luck = hero.GetLuckWithModificators(nullptr);
         const Sprite &sprite = AGG::GetICN(ICN::MINILKMR, (0 > luck ? 0 : (0 < luck ? 1 : 2)));
-        u32 count = (0 == luck ? 1 : std::abs(luck));
+        u32 count = (0 == luck ? 1 : abs(luck));
         dst_pt.x = cur_rt.x + 120;
         dst_pt.y = cur_rt.y + (count == 1 ? 20 : 13);
 
@@ -824,7 +824,7 @@ void Dialog::QuickInfo(const Heroes &hero)
     {
         const s32 morale = hero.GetMoraleWithModificators(nullptr);
         const Sprite &sprite = AGG::GetICN(ICN::MINILKMR, (0 > morale ? 3 : (0 < morale ? 4 : 5)));
-        u32 count = (0 == morale ? 1 : std::abs(morale));
+        u32 count = (0 == morale ? 1 : abs(morale));
         dst_pt.x = cur_rt.x + 10;
         dst_pt.y = cur_rt.y + (count == 1 ? 20 : 13);
 
@@ -876,7 +876,7 @@ void Dialog::QuickInfo(const Heroes &hero)
     r_flag.Blit(dst_pt);
 
     // attack
-    text.Set(std::string(_("Attack")) + ":");
+    text.Set(string(_("Attack")) + ":");
     dst_pt.x = cur_rt.x + 10;
     dst_pt.y += port.h();
     text.Blit(dst_pt);
@@ -886,7 +886,7 @@ void Dialog::QuickInfo(const Heroes &hero)
     text.Blit(dst_pt);
 
     // defense
-    text.Set(std::string(_("Defense")) + ":");
+    text.Set(string(_("Defense")) + ":");
     dst_pt.x = cur_rt.x + 10;
     dst_pt.y += 12;
     text.Blit(dst_pt);
@@ -896,7 +896,7 @@ void Dialog::QuickInfo(const Heroes &hero)
     text.Blit(dst_pt);
 
     // power
-    text.Set(std::string(_("Spell Power")) + ":");
+    text.Set(string(_("Spell Power")) + ":");
     dst_pt.x = cur_rt.x + 10;
     dst_pt.y += 12;
     text.Blit(dst_pt);
@@ -906,7 +906,7 @@ void Dialog::QuickInfo(const Heroes &hero)
     text.Blit(dst_pt);
 
     // knowledge
-    text.Set(std::string(_("Knowledge")) + ":");
+    text.Set(string(_("Knowledge")) + ":");
     dst_pt.x = cur_rt.x + 10;
     dst_pt.y += 12;
     text.Blit(dst_pt);
@@ -916,7 +916,7 @@ void Dialog::QuickInfo(const Heroes &hero)
     text.Blit(dst_pt);
 
     // spell point
-    text.Set(std::string(_("Spell Points")) + ":");
+    text.Set(string(_("Spell Points")) + ":");
     dst_pt.x = cur_rt.x + 10;
     dst_pt.y += 12;
     text.Blit(dst_pt);
@@ -926,7 +926,7 @@ void Dialog::QuickInfo(const Heroes &hero)
     text.Blit(dst_pt);
 
     // move point
-    text.Set(std::string(_("Move Points")) + ":");
+    text.Set(string(_("Move Points")) + ":");
     dst_pt.x = cur_rt.x + 10;
     dst_pt.y += 12;
     text.Blit(dst_pt);

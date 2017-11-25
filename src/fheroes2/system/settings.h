@@ -189,11 +189,11 @@ public:
 
     static Settings &Get();
 
-    bool Read(const std::string &);
+    bool Read(const string &);
 
-    bool Save(const std::string &) const;
+    bool Save(const string &) const;
 
-    std::string String() const;
+    string String() const;
 
     void SetCurrentFileInfo(const Maps::FileInfo &);
 
@@ -212,19 +212,19 @@ public:
 
     u32 MemoryLimit() const;
 
-    const std::string &PlayMusCommand() const;
+    const string &PlayMusCommand() const;
 
-    const std::string &SelectVideoDriver() const;
+    const string &SelectVideoDriver() const;
 
     int GameDifficulty() const;
 
-    const std::string &MapsCharset() const;
+    const string &MapsCharset() const;
 
-    const std::string &ForceLang() const;
+    const string &ForceLang() const;
 
-    const std::string &FontsNormal() const;
+    const string &FontsNormal() const;
 
-    const std::string &FontsSmall() const;
+    const string &FontsSmall() const;
 
     int FontsNormalSize() const;
 
@@ -521,11 +521,11 @@ public:
     // from maps info
     bool AllowChangeRace(int) const;
 
-    const std::string &MapsFile() const;
+    const string &MapsFile() const;
 
-    const std::string &MapsName() const;
+    const string &MapsName() const;
 
-    const std::string &MapsDescription() const;
+    const string &MapsDescription() const;
 
     int MapsDifficulty() const;
 
@@ -553,34 +553,34 @@ public:
 
     u32 LossCountDays() const;
 
-    std::string GetProgramPath() const
+    string GetProgramPath() const
     { return path_program; }
 
     void SetProgramPath(const char *);
 
-    static std::string GetVersion();
+    static string GetVersion();
 
-    static ListFiles GetListFiles(const std::string &prefix, const std::string &filter);
+    static ListFiles GetListFiles(const string &prefix, const string &filter);
 
     static ListDirs GetRootDirs();
 
-    static std::string GetLastFile(const std::string &prefix, const std::string &name);
+    static string GetLastFile(const string &prefix, const string &name);
 
-    static std::string GetWriteableDir(const char *);
+    static string GetWriteableDir(const char *);
 
-    static std::string GetSaveDir();
+    static string GetSaveDir();
 
-    static std::string GetLangDir();
+    static string GetLangDir();
 
     // deprecated
-    const std::string &GetDataParams() const
+    const string &GetDataParams() const
     { return data_params; }
 
     const ListDirs GetMapsParams() const
     { return maps_params; }
 
 protected:
-    void Parse(const std::string &left, const std::string &right);
+    void Parse(const string &left, const string &right);
 
     void PostLoad();
 
@@ -603,14 +603,14 @@ private:
     Size video_mode;
     int game_difficulty;
 
-    std::string path_program;
-    std::string data_params;
+    string path_program;
+    string data_params;
     ListDirs maps_params;
 
-    std::string font_normal;
-    std::string font_small;
-    std::string force_lang;
-    std::string maps_charset;
+    string font_normal;
+    string font_small;
+    string force_lang;
+    string maps_charset;
     int size_normal;
     int size_small;
 
@@ -628,7 +628,7 @@ private:
     int game_type;
     int preferably_count_players;
 
-    std::string video_driver;
+    string video_driver;
 
     int port;
     u32 memory_limit;

@@ -67,7 +67,7 @@ StreamBase &operator>>(StreamBase &, ActionSimple &);
 
 struct ActionMessage : public ActionSimple
 {
-    std::string message;
+    string message;
 
     ActionMessage() : ActionSimple(ACTION_MESSAGE)
     {}
@@ -78,7 +78,7 @@ struct ActionMessage : public ActionSimple
 struct ActionDefault : public ActionSimple
 {
     bool enabled;
-    std::string message;
+    string message;
 
     ActionDefault() : ActionSimple(ACTION_DEFAULT), enabled(true)
     {}
@@ -91,7 +91,7 @@ struct ActionAccess : public ActionSimple
     int allowPlayers;
     bool allowComputer;
     bool cancelAfterFirstVisit;
-    std::string message;
+    string message;
 
     ActionAccess() : ActionSimple(ACTION_ACCESS), allowPlayers(Color::ALL), allowComputer(true),
                      cancelAfterFirstVisit(false)
@@ -103,7 +103,7 @@ struct ActionAccess : public ActionSimple
 struct ActionArtifact : public ActionSimple
 {
     Artifact artifact;
-    std::string message;
+    string message;
 
     ActionArtifact() : ActionSimple(ACTION_ARTIFACT)
     {}
@@ -114,7 +114,7 @@ struct ActionArtifact : public ActionSimple
 struct ActionResources : public ActionSimple
 {
     Funds resources;
-    std::string message;
+    string message;
 
     ActionResources() : ActionSimple(ACTION_RESOURCES)
     {}

@@ -31,23 +31,23 @@ const char *Race::String(int race)
 
     switch (race)
     {
-        case Race::KNGT:
+        case KNGT:
             return str_race[0];
-        case Race::BARB:
+        case BARB:
             return str_race[1];
-        case Race::SORC:
+        case SORC:
             return str_race[2];
-        case Race::WRLK:
+        case WRLK:
             return str_race[3];
-        case Race::WZRD:
+        case WZRD:
             return str_race[4];
-        case Race::NECR:
+        case NECR:
             return str_race[5];
-        case Race::MULT:
+        case MULT:
             return str_race[6];
-        case Race::RAND:
+        case RAND:
             return str_race[7];
-        case Race::NONE:
+        case NONE:
             return str_race[8];
         default:
             break;
@@ -61,20 +61,20 @@ int Race::Rand()
     switch (Rand::Get(1, 6))
     {
         case 1:
-            return Race::KNGT;
+            return KNGT;
         case 2:
-            return Race::BARB;
+            return BARB;
         case 3:
-            return Race::SORC;
+            return SORC;
         case 4:
-            return Race::WRLK;
+            return WRLK;
         case 5:
-            return Race::WZRD;
+            return WZRD;
         default:
             break;
     }
 
-    return Race::NECR;
+    return NECR;
 }
 
 int Race::FromInt(int race)
@@ -94,5 +94,5 @@ int Race::FromInt(int race)
             break;
     }
 
-    return Race::NONE;
+    return NONE;
 }

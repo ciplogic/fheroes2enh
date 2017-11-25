@@ -24,11 +24,11 @@
 #include "maps.h"
 #include "direction.h"
 
-std::string Direction::String(int direct)
+string Direction::String(int direct)
 {
     const char *str_direct[] = {"unknown", "center", "top", "top right", "right", "bottom right", "bottom",
                                 "bottom left", "left", "top left"};
-    std::ostringstream os;
+    ostringstream os;
 
     if (direct & CENTER)
         os << str_direct[1] << ",";
@@ -49,14 +49,14 @@ std::string Direction::String(int direct)
     if (direct & TOP_LEFT)
         os << str_direct[9] << ",";
 
-    const std::string &res = os.str();
+    const string &res = os.str();
 
     return res.empty() ? str_direct[0] : res;
 }
 
 int Direction::Get(s32 from, s32 to)
 {
-    const Directions directions = Direction::All();
+    const Directions directions = All();
 
     for (int direction : directions)
         if (to == Maps::GetDirectionIndex(from, direction))

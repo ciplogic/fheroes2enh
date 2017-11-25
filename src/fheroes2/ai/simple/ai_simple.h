@@ -37,7 +37,7 @@
 #include "pairs.h"
 #include "ai.h"
 
-struct IndexObjectMap : public std::map<s32, int>
+struct IndexObjectMap : public map<s32, int>
 {
     void DumpObjects(const IndexDistance &id);
 };
@@ -53,7 +53,7 @@ struct AIKingdom
     IndexObjectMap scans;
 };
 
-class AIKingdoms : public std::vector<AIKingdom>
+class AIKingdoms : public vector<AIKingdom>
 {
 public:
     static AIKingdom &Get(int color);
@@ -63,11 +63,11 @@ public:
 private:
     static AIKingdoms &Get();
 
-    AIKingdoms() : std::vector<AIKingdom>(KINGDOMMAX + 1)
+    AIKingdoms() : vector<AIKingdom>(KINGDOMMAX + 1)
     {};
 };
 
-struct Queue : public std::list<s32>
+struct Queue : public list<s32>
 {
     bool isPresent(s32) const;
 };
@@ -87,7 +87,7 @@ struct AIHero
     u32 fix_loop;
 };
 
-struct AIHeroes : public std::vector<AIHero>
+struct AIHeroes : public vector<AIHero>
 {
 public:
     static AIHero &Get(const Heroes &);
@@ -97,7 +97,7 @@ public:
 private:
     static AIHeroes &Get();
 
-    AIHeroes() : std::vector<AIHero>(HEROESMAXCOUNT + 2)
+    AIHeroes() : vector<AIHero>(HEROESMAXCOUNT + 2)
     {};
 };
 

@@ -722,7 +722,7 @@ void Skill::UpdateStats(const std::string & spec)
 
 #else
 
-void Skill::UpdateStats(const std::string &stats)
+void Skill::UpdateStats(const string &stats)
 {
 }
 

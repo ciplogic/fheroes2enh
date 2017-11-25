@@ -40,7 +40,7 @@
 
 namespace Battle
 {
-    void GetSummaryParams(int res1, int res2, const HeroBase &, u32 exp, int &, std::string &);
+    void GetSummaryParams(int res1, int res2, const HeroBase &, u32 exp, int &, string &);
 
     void SpeedRedraw(const Point &);
 }
@@ -48,7 +48,7 @@ namespace Battle
 void Battle::SpeedRedraw(const Point &dst)
 {
     int speed = Settings::Get().BattleSpeed();
-    std::string str = _("speed: %{speed}");
+    string str = _("speed: %{speed}");
 
     StringReplace(str, "%{speed}", speed);
     Text text(str, Font::SMALL);
@@ -147,7 +147,7 @@ void Battle::DialogBattleSettings()
         }
 
         // exit
-        if (Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT) || le.MouseClickLeft(btn_ok)) break;
+        if (HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT) || le.MouseClickLeft(btn_ok)) break;
     }
 
     // restore background
@@ -157,7 +157,7 @@ void Battle::DialogBattleSettings()
     display.Flip();
 }
 
-void Battle::GetSummaryParams(int res1, int res2, const HeroBase &hero, u32 exp, int &icn_anim, std::string &msg)
+void Battle::GetSummaryParams(int res1, int res2, const HeroBase &hero, u32 exp, int &icn_anim, string &msg)
 {
     if (res1 & RESULT_WINS)
     {
@@ -207,7 +207,7 @@ void Battle::Arena::DialogBattleSummary(const Result &res) const
     cursor.Hide();
     cursor.SetThemes(Cursor::POINTER);
 
-    std::string msg;
+    string msg;
     int icn_anim = ICN::UNKNOWN;
 
     if ((res.army1 & RESULT_WINS) && army1->GetCommander() && army1->GetCommander()->isControlHuman())
@@ -322,7 +322,7 @@ void Battle::Arena::DialogBattleSummary(const Result &res) const
         if (HotKeyCloseWindow || le.MouseClickLeft(btn_ok)) break;
 
         // animation
-        if (!conf.QVGA() && Game::AnimateInfrequentDelay(Game::BATTLE_DIALOG_DELAY))
+        if (!conf.QVGA() && AnimateInfrequentDelay(Game::BATTLE_DIALOG_DELAY))
         {
             if (0 == frame || 1 != ICN::AnimationFrame(icn_anim, 1, frame))
             {
@@ -375,7 +375,7 @@ int Battle::Arena::DialogBattleHero(const HeroBase &hero, bool buttons) const
 
     Point tp(pos_rt);
 
-    std::string str;
+    string str;
     Text text;
     text.Set(Font::SMALL);
     str = _("%{name} the %{race}");
@@ -385,37 +385,37 @@ int Battle::Arena::DialogBattleHero(const HeroBase &hero, bool buttons) const
     tp.x = pos_rt.x + (pos_rt.w - text.w()) / 2;
     tp.y += 10;
     text.Blit(tp);
-    str = _("Attack") + std::string(": ") + GetString(hero.GetAttack());
+    str = _("Attack") + string(": ") + GetString(hero.GetAttack());
     text.Set(str);
     tp.x = pos_rt.x + 205 - text.w() / 2;
     tp.y = pos_rt.y + 40;
     text.Blit(tp);
-    str = _("Defense") + std::string(": ") + GetString(hero.GetDefense());
+    str = _("Defense") + string(": ") + GetString(hero.GetDefense());
     text.Set(str);
     tp.x = pos_rt.x + 205 - text.w() / 2;
     tp.y = pos_rt.y + 51;
     text.Blit(tp);
-    str = _("Spell Power") + std::string(": ") + GetString(hero.GetPower());
+    str = _("Spell Power") + string(": ") + GetString(hero.GetPower());
     text.Set(str);
     tp.x = pos_rt.x + 205 - text.w() / 2;
     tp.y = pos_rt.y + 62;
     text.Blit(tp);
-    str = _("Knowledge") + std::string(": ") + GetString(hero.GetKnowledge());
+    str = _("Knowledge") + string(": ") + GetString(hero.GetKnowledge());
     text.Set(str);
     tp.x = pos_rt.x + 205 - text.w() / 2;
     tp.y = pos_rt.y + 73;
     text.Blit(tp);
-    str = _("Morale") + std::string(": ") + Morale::String(hero.GetMorale());
+    str = _("Morale") + string(": ") + Morale::String(hero.GetMorale());
     text.Set(str);
     tp.x = pos_rt.x + 205 - text.w() / 2;
     tp.y = pos_rt.y + 84;
     text.Blit(tp);
-    str = _("Luck") + std::string(": ") + Luck::String(hero.GetLuck());
+    str = _("Luck") + string(": ") + Luck::String(hero.GetLuck());
     text.Set(str);
     tp.x = pos_rt.x + 205 - text.w() / 2;
     tp.y = pos_rt.y + 95;
     text.Blit(tp);
-    str = _("Spell Points") + std::string(": ") + GetString(hero.GetSpellPoints()) + "/" +
+    str = _("Spell Points") + string(": ") + GetString(hero.GetSpellPoints()) + "/" +
           GetString(hero.GetMaxSpellPoints());
     text.Set(str);
     tp.x = pos_rt.x + 205 - text.w() / 2;
@@ -461,15 +461,15 @@ int Battle::Arena::DialogBattleHero(const HeroBase &hero, bool buttons) const
 
         if (!buttons && !le.MousePressRight()) break;
 
-        if (Game::HotKeyPressEvent(Game::EVENT_BATTLE_CASTSPELL) ||
+        if (HotKeyPressEvent(Game::EVENT_BATTLE_CASTSPELL) ||
             (btnCast.isEnable() && le.MouseClickLeft(btnCast)))
             result = 1;
 
-        if (Game::HotKeyPressEvent(Game::EVENT_BATTLE_RETREAT) ||
+        if (HotKeyPressEvent(Game::EVENT_BATTLE_RETREAT) ||
             (btnRetreat.isEnable() && le.MouseClickLeft(btnRetreat)))
             result = 2;
 
-        if (Game::HotKeyPressEvent(Game::EVENT_BATTLE_SURRENDER) ||
+        if (HotKeyPressEvent(Game::EVENT_BATTLE_SURRENDER) ||
             (btnSurrender.isEnable() && le.MouseClickLeft(btnSurrender)))
             result = 3;
 
@@ -542,7 +542,7 @@ bool Battle::DialogBattleSurrender(const HeroBase &hero, u32 cost)
             btnMarket.SetDisable(true);
         else
         {
-            std::string msg = _("Not enough gold (%{gold})");
+            string msg = _("Not enough gold (%{gold})");
             StringReplace(msg, "%{gold}", cost - kingdom.GetFunds().Get(Resource::GOLD));
             Text text(msg, Font::SMALL);
             text.Blit(btnMarket.x + (btnMarket.w - text.w()) / 2, btnMarket.y - 15);
@@ -557,7 +557,7 @@ bool Battle::DialogBattleSurrender(const HeroBase &hero, u32 cost)
     window.Blit(pos_rt.x + 54, pos_rt.y + 30);
     hero.PortraitRedraw(pos_rt.x + 58, pos_rt.y + 38, PORT_BIG, display);
 
-    std::string str = _("%{name} states:");
+    string str = _("%{name} states:");
     StringReplace(str, "%{name}", hero.GetName());
     Text text(str, Font::BIG);
     text.Blit(pos_rt.x + 320 - text.w() / 2, pos_rt.y + 30);
@@ -595,7 +595,7 @@ bool Battle::DialogBattleSurrender(const HeroBase &hero, u32 cost)
         }
 
         // exit
-        if (Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT) || le.MouseClickLeft(btnDecline)) break;
+        if (HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT) || le.MouseClickLeft(btnDecline)) break;
     }
 
     cursor.Hide();

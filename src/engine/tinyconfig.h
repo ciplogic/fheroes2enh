@@ -28,30 +28,30 @@
 #include <list>
 #include <map>
 
-class TinyConfig : protected std::multimap<std::string, std::string>
+class TinyConfig : protected multimap<string, string>
 {
 public:
     TinyConfig(char sep = '=', char com = ';');
 
-    bool Load(const std::string &);
+    bool Load(const string &);
 
-    bool Save(const std::string &) const;
+    bool Save(const string &) const;
 
     void Clear();
 
-    void AddEntry(const std::string &, const std::string &, bool uniq = true);
+    void AddEntry(const string &, const string &, bool uniq = true);
 
-    void AddEntry(const std::string &, int, bool uniq = true);
+    void AddEntry(const string &, int, bool uniq = true);
 
-    bool Exists(const std::string &) const;
+    bool Exists(const string &) const;
 
-    int IntParams(const std::string &) const;
+    int IntParams(const string &) const;
 
-    std::string StrParams(const std::string &) const;
+    string StrParams(const string &) const;
 
-    std::list<std::string> ListStr(const std::string &) const;
+    list<string> ListStr(const string &) const;
 
-    std::list<int> ListInt(const std::string &) const;
+    list<int> ListInt(const string &) const;
 
 protected:
     char separator;

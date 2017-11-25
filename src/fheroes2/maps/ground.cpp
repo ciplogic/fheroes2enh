@@ -59,7 +59,7 @@ const char *Maps::Ground::String(int ground)
 
 u32 Maps::Ground::GetPenalty(s32 index, int direct, u32 level)
 {
-    const Maps::Tiles &tile = world.GetTiles(index);
+    const Tiles &tile = world.GetTiles(index);
 
     //            none   basc   advd   expr
     //    Desert  2.00   1.75   1.50   1.00

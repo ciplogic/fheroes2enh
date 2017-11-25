@@ -96,7 +96,7 @@ int Dialog::FileOptions()
             result = Game::QUITGAME;
             break;
         }
-        if (le.MouseClickLeft(buttonCancel) || Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
+        if (le.MouseClickLeft(buttonCancel) || HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
         {
             result = Game::CANCEL;
             break;

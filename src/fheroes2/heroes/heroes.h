@@ -115,7 +115,7 @@ public:
 
     int GetRace() const;
 
-    const std::string &GetName() const;
+    const string &GetName() const;
 
     int GetColor() const;
 
@@ -141,13 +141,13 @@ public:
 
     int GetKnowledge() const;
 
-    int GetAttack(std::string *) const;
+    int GetAttack(string *) const;
 
-    int GetDefense(std::string *) const;
+    int GetDefense(string *) const;
 
-    int GetPower(std::string *) const;
+    int GetPower(string *) const;
 
-    int GetKnowledge(std::string *) const;
+    int GetKnowledge(string *) const;
 
     void IncreasePrimarySkill(int skill);
 
@@ -155,9 +155,9 @@ public:
 
     int GetLuck() const;
 
-    int GetMoraleWithModificators(std::string *str = nullptr) const;
+    int GetMoraleWithModificators(string *str = nullptr) const;
 
-    int GetLuckWithModificators(std::string *str = nullptr) const;
+    int GetLuckWithModificators(string *str = nullptr) const;
 
     int GetLevel() const;
 
@@ -305,7 +305,7 @@ public:
 
     bool AllowBattle(bool attacker) const;
 
-    std::string String() const;
+    string String() const;
 
     Surface GetPortrait(int type) const;
 
@@ -340,7 +340,7 @@ private:
 
     static void MoveStep(Heroes &, s32 from, s32 to, bool newpos);
 
-    std::string name;
+    string name;
     ColorBase killer_color;
     u32 experience;
     s32 move_point_scale;
@@ -362,11 +362,11 @@ private:
     Point patrol_center;
     int patrol_square;
 
-    std::list<IndexObject>
+    list<IndexObject>
             visit_object;
 };
 
-struct VecHeroes : public std::vector<Heroes *>
+struct VecHeroes : public vector<Heroes *>
 {
     Heroes *Get(int /* hero id */) const;
 

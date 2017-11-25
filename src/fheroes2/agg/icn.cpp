@@ -1559,157 +1559,157 @@ int ICN::PORTxxxx(int heroId)
     switch (heroId)
     {
         case Heroes::LORDKILBURN:
-            return ICN::PORT0000;
+            return PORT0000;
         case Heroes::SIRGALLANTH:
-            return ICN::PORT0001;
+            return PORT0001;
         case Heroes::ECTOR:
-            return ICN::PORT0002;
+            return PORT0002;
         case Heroes::GVENNETH:
-            return ICN::PORT0003;
+            return PORT0003;
         case Heroes::TYRO:
-            return ICN::PORT0004;
+            return PORT0004;
         case Heroes::AMBROSE:
-            return ICN::PORT0005;
+            return PORT0005;
         case Heroes::RUBY:
-            return ICN::PORT0006;
+            return PORT0006;
         case Heroes::MAXIMUS:
-            return ICN::PORT0007;
+            return PORT0007;
         case Heroes::DIMITRY:
-            return ICN::PORT0008;
+            return PORT0008;
         case Heroes::THUNDAX:
-            return ICN::PORT0009;
+            return PORT0009;
         case Heroes::FINEOUS:
-            return ICN::PORT0010;
+            return PORT0010;
         case Heroes::JOJOSH:
-            return ICN::PORT0011;
+            return PORT0011;
         case Heroes::CRAGHACK:
-            return ICN::PORT0012;
+            return PORT0012;
         case Heroes::JEZEBEL:
-            return ICN::PORT0013;
+            return PORT0013;
         case Heroes::JACLYN:
-            return ICN::PORT0014;
+            return PORT0014;
         case Heroes::ERGON:
-            return ICN::PORT0015;
+            return PORT0015;
         case Heroes::TSABU:
-            return ICN::PORT0016;
+            return PORT0016;
         case Heroes::ATLAS:
-            return ICN::PORT0017;
+            return PORT0017;
         case Heroes::ASTRA:
-            return ICN::PORT0018;
+            return PORT0018;
         case Heroes::NATASHA:
-            return ICN::PORT0019;
+            return PORT0019;
         case Heroes::TROYAN:
-            return ICN::PORT0020;
+            return PORT0020;
         case Heroes::VATAWNA:
-            return ICN::PORT0021;
+            return PORT0021;
         case Heroes::REBECCA:
-            return ICN::PORT0022;
+            return PORT0022;
         case Heroes::GEM:
-            return ICN::PORT0023;
+            return PORT0023;
         case Heroes::ARIEL:
-            return ICN::PORT0024;
+            return PORT0024;
         case Heroes::CARLAWN:
-            return ICN::PORT0025;
+            return PORT0025;
         case Heroes::LUNA:
-            return ICN::PORT0026;
+            return PORT0026;
         case Heroes::ARIE:
-            return ICN::PORT0027;
+            return PORT0027;
         case Heroes::ALAMAR:
-            return ICN::PORT0028;
+            return PORT0028;
         case Heroes::VESPER:
-            return ICN::PORT0029;
+            return PORT0029;
         case Heroes::CRODO:
-            return ICN::PORT0030;
+            return PORT0030;
         case Heroes::BAROK:
-            return ICN::PORT0031;
+            return PORT0031;
         case Heroes::KASTORE:
-            return ICN::PORT0032;
+            return PORT0032;
         case Heroes::AGAR:
-            return ICN::PORT0033;
+            return PORT0033;
         case Heroes::FALAGAR:
-            return ICN::PORT0034;
+            return PORT0034;
         case Heroes::WRATHMONT:
-            return ICN::PORT0035;
+            return PORT0035;
         case Heroes::MYRA:
-            return ICN::PORT0036;
+            return PORT0036;
         case Heroes::FLINT:
-            return ICN::PORT0037;
+            return PORT0037;
         case Heroes::DAWN:
-            return ICN::PORT0038;
+            return PORT0038;
         case Heroes::HALON:
-            return ICN::PORT0039;
+            return PORT0039;
         case Heroes::MYRINI:
-            return ICN::PORT0040;
+            return PORT0040;
         case Heroes::WILFREY:
-            return ICN::PORT0041;
+            return PORT0041;
         case Heroes::SARAKIN:
-            return ICN::PORT0042;
+            return PORT0042;
         case Heroes::KALINDRA:
-            return ICN::PORT0043;
+            return PORT0043;
         case Heroes::MANDIGAL:
-            return ICN::PORT0044;
+            return PORT0044;
         case Heroes::ZOM:
-            return ICN::PORT0045;
+            return PORT0045;
         case Heroes::DARLANA:
-            return ICN::PORT0046;
+            return PORT0046;
         case Heroes::ZAM:
-            return ICN::PORT0047;
+            return PORT0047;
         case Heroes::RANLOO:
-            return ICN::PORT0048;
+            return PORT0048;
         case Heroes::CHARITY:
-            return ICN::PORT0049;
+            return PORT0049;
         case Heroes::RIALDO:
-            return ICN::PORT0050;
+            return PORT0050;
         case Heroes::ROXANA:
-            return ICN::PORT0051;
+            return PORT0051;
         case Heroes::SANDRO:
-            return ICN::PORT0052;
+            return PORT0052;
         case Heroes::CELIA:
-            return ICN::PORT0053;
+            return PORT0053;
         case Heroes::ROLAND:
-            return ICN::PORT0054;
+            return PORT0054;
         case Heroes::CORLAGON:
-            return ICN::PORT0055;
+            return PORT0055;
         case Heroes::ELIZA:
-            return ICN::PORT0056;
+            return PORT0056;
         case Heroes::ARCHIBALD:
-            return ICN::PORT0057;
+            return PORT0057;
         case Heroes::HALTON:
-            return ICN::PORT0058;
+            return PORT0058;
         case Heroes::BAX:
-            return ICN::PORT0059;
+            return PORT0059;
 
         case Heroes::SOLMYR:
-            return ICN::PORT0060;
+            return PORT0060;
         case Heroes::DAINWIN:
-            return ICN::PORT0061;
+            return PORT0061;
         case Heroes::MOG:
-            return ICN::PORT0062;
+            return PORT0062;
         case Heroes::UNCLEIVAN:
-            return ICN::PORT0063;
+            return PORT0063;
         case Heroes::JOSEPH:
-            return ICN::PORT0064;
+            return PORT0064;
         case Heroes::GALLAVANT:
-            return ICN::PORT0065;
+            return PORT0065;
         case Heroes::ELDERIAN:
-            return ICN::PORT0066;
+            return PORT0066;
         case Heroes::CEALLACH:
-            return ICN::PORT0067;
+            return PORT0067;
         case Heroes::DRAKONIA:
-            return ICN::PORT0068;
+            return PORT0068;
         case Heroes::MARTINE:
-            return ICN::PORT0069;
+            return PORT0069;
         case Heroes::JARKONAS:
-            return ICN::PORT0070;
+            return PORT0070;
 
         case Heroes::SANDYSANDY:
-            return ICN::PORT0059;
+            return PORT0059;
 
         default:
             break;
     }
 
-    return ICN::UNKNOWN;
+    return UNKNOWN;
 }
 
 bool ICN::NeedMinify4PocketPC(int icn, u32 index)
@@ -1891,7 +1891,7 @@ u32 ICN::missile9(float dx, float dy)
     if (0 == dx) return dy > 0 ? 0 : 8;
     else if (0 == dy) return 4;
 
-    const float tan = std::fabs(dy / dx);
+    const float tan = fabs(dy / dx);
 
     // tan 30: 0 - 30
     if (0.577 >= tan) return dy > 0 ? 3 : 5;
@@ -1908,7 +1908,7 @@ u32 ICN::missile7(float dx, float dy)
     if (0 == dx) return dy > 0 ? 0 : 6;
     else if (0 == dy) return 3;
 
-    const float tan = std::fabs(dy / dx);
+    const float tan = fabs(dy / dx);
 
     // tan 45: 0 - 45
     if (1 >= tan) return dy > 0 ? 2 : 4;
@@ -2023,7 +2023,7 @@ bool ICN::isBattleMonsterICN(int icn)
 int ICN::FromString(const char *str)
 {
     const icnmap_t *ptr = &icnmap[0];
-    while (ptr->type != ICN::UNKNOWN && str && 0 != std::strcmp(str, ptr->string)) ++ptr;
+    while (ptr->type != UNKNOWN && str && 0 != strcmp(str, ptr->string)) ++ptr;
     return ptr->type;
 }
 

@@ -33,11 +33,11 @@ TextInterface::TextInterface(int ft) : font(ft)
         ft == Font::YELLOW_BIG || ft == Font::YELLOW_SMALL ? font = Font::YELLOW_SMALL : font = Font::SMALL;
 }
 
-TextAscii::TextAscii(const std::string &msg, int ft) : TextInterface(ft), message(msg)
+TextAscii::TextAscii(const string &msg, int ft) : TextInterface(ft), message(msg)
 {
 }
 
-void TextAscii::SetText(const std::string &msg)
+void TextAscii::SetText(const string &msg)
 {
     message = msg;
 }
@@ -117,13 +117,13 @@ int TextAscii::h(int width) const
     int res = 0;
     int www = 0;
 
-    std::string::const_iterator pos1 = message.begin();
-    std::string::const_iterator pos2 = message.end();
-    std::string::const_iterator space = pos2;
+    string::const_iterator pos1 = message.begin();
+    string::const_iterator pos2 = message.end();
+    string::const_iterator space = pos2;
 
     while (pos1 < pos2)
     {
-        if (std::isspace(*pos1)) space = pos1;
+        if (isspace(*pos1)) space = pos1;
 
         if (www + CharWidth(*pos1, font) >= width)
         {
@@ -148,7 +148,7 @@ void TextAscii::Blit(s32 ax, s32 ay, int maxw, Surface &dst)
     int oy = 0;
     int sx = ax;
 
-    for (std::string::const_iterator
+    for (string::const_iterator
                  it = message.begin(); it != message.end(); ++it)
     {
         if (maxw && (ax - sx) >= maxw) break;
@@ -369,7 +369,7 @@ Text::Text() : message(nullptr), gw(0), gh(0)
     message = static_cast<TextInterface *>(new TextAscii());
 }
 
-Text::Text(const std::string &msg, int ft) : message(nullptr), gw(0), gh(0)
+Text::Text(const string &msg, int ft) : message(nullptr), gw(0), gh(0)
 {
 #ifdef WITH_TTF
     if(Settings::Get().Unicode())
@@ -429,7 +429,7 @@ Text &Text::operator=(const Text &t)
     return *this;
 }
 
-void Text::Set(const std::string &msg, int ft)
+void Text::Set(const string &msg, int ft)
 {
     message->SetText(msg);
     message->SetFont(ft);
@@ -437,7 +437,7 @@ void Text::Set(const std::string &msg, int ft)
     gh = message->h();
 }
 
-void Text::Set(const std::string &msg)
+void Text::Set(const string &msg)
 {
     message->SetText(msg);
     gw = message->w();
@@ -478,7 +478,7 @@ void Text::Blit(s32 ax, s32 ay, int maxw, Surface &dst) const
     return message->Blit(ax, ay, maxw, dst);
 }
 
-u32 Text::width(const std::string &str, int ft, u32 start, u32 count)
+u32 Text::width(const string &str, int ft, u32 start, u32 count)
 {
 #ifdef WITH_TTF
     if(Settings::Get().Unicode())
@@ -496,7 +496,7 @@ u32 Text::width(const std::string &str, int ft, u32 start, u32 count)
     return 0;
 }
 
-u32 Text::height(const std::string &str, int ft, u32 width)
+u32 Text::height(const string &str, int ft, u32 width)
 {
     if (!str.empty())
     {
@@ -521,18 +521,18 @@ TextBox::TextBox() : align(ALIGN_CENTER)
 {
 }
 
-TextBox::TextBox(const std::string &msg, int ft, u32 width) : align(ALIGN_CENTER)
+TextBox::TextBox(const string &msg, int ft, u32 width) : align(ALIGN_CENTER)
 {
     Set(msg, ft, width);
 }
 
-TextBox::TextBox(const std::string &msg, int ft, const Rect &rt) : align(ALIGN_CENTER)
+TextBox::TextBox(const string &msg, int ft, const Rect &rt) : align(ALIGN_CENTER)
 {
     Set(msg, ft, rt.w);
     Blit(rt.x, rt.y);
 }
 
-void TextBox::Set(const std::string &msg, int ft, u32 width)
+void TextBox::Set(const string &msg, int ft, u32 width)
 {
     messages.clear();
     if (msg.empty()) return;
@@ -563,11 +563,11 @@ void TextBox::Set(const std::string &msg, int ft, u32 width)
 #endif
     {
         const char sep = '\n';
-        std::string substr;
+        string substr;
         substr.reserve(msg.size());
-        std::string::const_iterator pos1 = msg.begin();
-        std::string::const_iterator pos2;
-        while (msg.end() != (pos2 = std::find(pos1, msg.end(), sep)))
+        string::const_iterator pos1 = msg.begin();
+        string::const_iterator pos2;
+        while (msg.end() != (pos2 = find(pos1, msg.end(), sep)))
         {
             substr.assign(pos1, pos2);
             Append(substr, ft, width);
@@ -586,7 +586,7 @@ void TextBox::SetAlign(int f)
     align = f;
 }
 
-void TextBox::Append(const std::string &msg, int ft, u32 width)
+void TextBox::Append(const string &msg, int ft, u32 width)
 {
     const Settings &conf = Settings::Get();
     if (conf.QVGA() && !conf.Unicode())
@@ -595,14 +595,14 @@ void TextBox::Append(const std::string &msg, int ft, u32 width)
     u32 www = 0;
     Rect::w = width;
 
-    std::string::const_iterator pos1 = msg.begin();
-    std::string::const_iterator pos2 = pos1;
-    std::string::const_iterator pos3 = msg.end();
-    std::string::const_iterator space = pos2;
+    string::const_iterator pos1 = msg.begin();
+    string::const_iterator pos2 = pos1;
+    string::const_iterator pos3 = msg.end();
+    string::const_iterator space = pos2;
 
     while (pos2 < pos3)
     {
-        if (std::isspace(*pos2)) space = pos2;
+        if (isspace(*pos2)) space = pos2;
         int char_w = TextAscii::CharWidth(*pos2, ft);
 
         if (www + char_w >= width)
@@ -684,7 +684,7 @@ void TextBox::Blit(s32 ax, s32 ay, Surface &sf)
     Rect::x = ax;
     Rect::y = ay;
 
-    for (std::list<Text>::const_iterator
+    for (list<Text>::const_iterator
                  it = messages.begin(); it != messages.end(); ++it)
     {
         switch (align)
@@ -716,12 +716,12 @@ TextSprite::TextSprite() : hide(true)
 {
 }
 
-TextSprite::TextSprite(const std::string &msg, int ft, const Point &pt) : Text(msg, ft), hide(true)
+TextSprite::TextSprite(const string &msg, int ft, const Point &pt) : Text(msg, ft), hide(true)
 {
     back.Save(Rect(pt, gw, gh + 5));
 }
 
-TextSprite::TextSprite(const std::string &msg, int ft, s32 ax, s32 ay) : Text(msg, ft), hide(true)
+TextSprite::TextSprite(const string &msg, int ft, s32 ax, s32 ay) : Text(msg, ft), hide(true)
 {
     back.Save(Rect(ax, ay, gw, gh + 5));
 }
@@ -738,14 +738,14 @@ void TextSprite::Hide()
     hide = true;
 }
 
-void TextSprite::SetText(const std::string &msg)
+void TextSprite::SetText(const string &msg)
 {
     Hide();
     Set(msg);
     back.Save(Rect(back.GetPos(), gw, gh + 5));
 }
 
-void TextSprite::SetText(const std::string &msg, int ft)
+void TextSprite::SetText(const string &msg, int ft)
 {
     Hide();
     Set(msg, ft);

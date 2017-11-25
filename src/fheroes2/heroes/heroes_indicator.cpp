@@ -85,7 +85,7 @@ const Rect &HeroesIndicator::GetArea() const
     return area;
 }
 
-const std::string &HeroesIndicator::GetDescriptions() const
+const string &HeroesIndicator::GetDescriptions() const
 {
     return descriptions;
 }
@@ -105,7 +105,7 @@ LuckIndicator::LuckIndicator(const Heroes &h) : HeroesIndicator(h), luck(Luck::N
 
 void LuckIndicator::Redraw()
 {
-    std::string modificators;
+    string modificators;
     modificators.reserve(256);
     luck = hero.GetLuckWithModificators(&modificators);
 
@@ -117,7 +117,7 @@ void LuckIndicator::Redraw()
 
     const Sprite &sprite = AGG::GetICN(ICN::HSICONS, (0 > luck ? 3 : (0 < luck ? 2 : 6)));
     const int inter = 6;
-    int count = (0 == luck ? 1 : std::abs(luck));
+    int count = (0 == luck ? 1 : abs(luck));
     s32 cx = area.x + (area.w - (sprite.w() + inter * (count - 1))) / 2;
     s32 cy = area.y + (area.h - sprite.h()) / 2;
 
@@ -139,7 +139,7 @@ void LuckIndicator::QueueEventProcessing(LuckIndicator &indicator)
     LocalEvent &le = LocalEvent::Get();
 
     if (le.MouseClickLeft(indicator.area))
-        Dialog::Message(LuckString(indicator.luck), indicator.descriptions, Font::BIG, Dialog::OK);
+        Message(LuckString(indicator.luck), indicator.descriptions, Font::BIG, Dialog::OK);
     else if (le.MousePressRight(indicator.area))
         Dialog::Message(LuckString(indicator.luck), indicator.descriptions, Font::BIG);
 }
@@ -152,7 +152,7 @@ MoraleIndicator::MoraleIndicator(const Heroes &h) : HeroesIndicator(h), morale(M
 
 void MoraleIndicator::Redraw()
 {
-    std::string modificators;
+    string modificators;
     modificators.reserve(256);
     morale = hero.GetMoraleWithModificators(&modificators);
 
@@ -164,7 +164,7 @@ void MoraleIndicator::Redraw()
 
     const Sprite &sprite = AGG::GetICN(ICN::HSICONS, (0 > morale ? 5 : (0 < morale ? 4 : 7)));
     const int inter = 6;
-    int count = (0 == morale ? 1 : std::abs(morale));
+    int count = (0 == morale ? 1 : abs(morale));
     s32 cx = area.x + (area.w - (sprite.w() + inter * (count - 1))) / 2;
     s32 cy = area.y + (area.h - sprite.h()) / 2;
 
@@ -186,7 +186,7 @@ void MoraleIndicator::QueueEventProcessing(MoraleIndicator &indicator)
     LocalEvent &le = LocalEvent::Get();
 
     if (le.MouseClickLeft(indicator.area))
-        Dialog::Message(MoraleString(indicator.morale), indicator.descriptions, Font::BIG, Dialog::OK);
+        Message(MoraleString(indicator.morale), indicator.descriptions, Font::BIG, Dialog::OK);
     else if (le.MousePressRight(indicator.area))
         Dialog::Message(MoraleString(indicator.morale), indicator.descriptions, Font::BIG);
 }
@@ -217,7 +217,7 @@ void ExperienceIndicator::QueueEventProcessing()
 
     if (le.MouseClickLeft(area) || le.MousePressRight(area))
     {
-        std::string message = _("Level %{level}");
+        string message = _("Level %{level}");
         StringReplace(message, "%{level}", hero.GetLevel());
         Dialog::Message(message, descriptions, Font::BIG, (le.MousePressRight() ? 0 : Dialog::OK));
     }

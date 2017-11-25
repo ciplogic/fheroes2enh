@@ -844,8 +844,8 @@ void Maps::Tiles::QuantityUpdate()
 
         case MP2::OBJ_BARRIER:
         {
-            Addons::const_reverse_iterator it = std::find_if(addons_level1.rbegin(), addons_level1.rend(),
-                                                             std::ptr_fun(&TilesAddon::ColorFromBarrierSprite));
+            Addons::const_reverse_iterator it = find_if(addons_level1.rbegin(), addons_level1.rend(),
+                                                             ptr_fun(&TilesAddon::ColorFromBarrierSprite));
             if (it != addons_level1.rend())
                 QuantitySetColor(TilesAddon::ColorFromBarrierSprite(*it));
         }
@@ -853,8 +853,8 @@ void Maps::Tiles::QuantityUpdate()
 
         case MP2::OBJ_TRAVELLERTENT:
         {
-            Addons::const_reverse_iterator it = std::find_if(addons_level1.rbegin(), addons_level1.rend(),
-                                                             std::ptr_fun(&TilesAddon::ColorFromTravellerTentSprite));
+            Addons::const_reverse_iterator it = find_if(addons_level1.rbegin(), addons_level1.rend(),
+                                                             ptr_fun(&TilesAddon::ColorFromTravellerTentSprite));
             if (it != addons_level1.rend())
                 QuantitySetColor(TilesAddon::ColorFromTravellerTentSprite(*it));
         }
@@ -1023,13 +1023,13 @@ void Maps::Tiles::QuantityUpdate()
 
 int Maps::Tiles::MonsterJoinCondition() const
 {
-    const Maps::TilesAddon *addon = FindObjectConst(MP2::OBJ_MONSTER);
+    const TilesAddon *addon = FindObjectConst(MP2::OBJ_MONSTER);
     return addon ? 0x03 & addon->tmp : 0;
 }
 
 void Maps::Tiles::MonsterSetJoinCondition(int cond)
 {
-    Maps::TilesAddon *addon = FindObject(MP2::OBJ_MONSTER);
+    TilesAddon *addon = FindObject(MP2::OBJ_MONSTER);
     if (addon)
     {
         addon->tmp &= 0xFC;
@@ -1039,13 +1039,13 @@ void Maps::Tiles::MonsterSetJoinCondition(int cond)
 
 void Maps::Tiles::MonsterSetFixedCount()
 {
-    Maps::TilesAddon *addon = FindObject(MP2::OBJ_MONSTER);
+    TilesAddon *addon = FindObject(MP2::OBJ_MONSTER);
     if (addon) addon->tmp |= 0x80;
 }
 
 bool Maps::Tiles::MonsterFixedCount() const
 {
-    const Maps::TilesAddon *addon = FindObjectConst(MP2::OBJ_MONSTER);
+    const TilesAddon *addon = FindObjectConst(MP2::OBJ_MONSTER);
     return addon ? addon->tmp & 0x80 : 0;
 }
 
@@ -1139,7 +1139,7 @@ void Maps::Tiles::PlaceMonsterOnTile(Tiles &tile, const Monster &mons, u32 count
     }
 
     //
-    Maps::TilesAddon *addon = tile.FindObject(MP2::OBJ_MONSTER);
+    TilesAddon *addon = tile.FindObject(MP2::OBJ_MONSTER);
 
     if (!addon)
     {
@@ -1158,13 +1158,13 @@ void Maps::Tiles::UpdateMonsterInfo(Tiles &tile)
 
     if (MP2::OBJ_MONSTER == tile.GetObject())
     {
-        const Maps::TilesAddon *addon = tile.FindObject(MP2::OBJ_MONSTER);
+        const TilesAddon *addon = tile.FindObject(MP2::OBJ_MONSTER);
 
         if (addon)
             mons = Monster(addon->index + 1); // ICN::MONS32 start from PEASANT
     } else
     {
-        Maps::TilesAddon *addon = tile.FindObject(MP2::OBJ_RNDMONSTER);
+        TilesAddon *addon = tile.FindObject(MP2::OBJ_RNDMONSTER);
 
         switch (tile.GetObject())
         {

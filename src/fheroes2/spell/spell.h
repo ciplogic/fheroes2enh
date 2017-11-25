@@ -191,7 +191,7 @@ public:
 
     static Spell Rand(int lvl, bool adv);
 
-    static void UpdateStats(const std::string &);
+    static void UpdateStats(const string &);
 
     static u32 CalculateDimensionDoorDistance(u32 current_sp, u32 total_hp);
 

@@ -27,7 +27,7 @@
 #include "button.h"
 #include "dialog.h"
 
-int Dialog::Message(const std::string &header, const std::string &message, int ft, int buttons)
+int Dialog::Message(const string &header, const string &message, int ft, int buttons)
 {
     Display &display = Display::Get();
 
@@ -55,9 +55,9 @@ int Dialog::Message(const std::string &header, const std::string &message, int f
     display.Flip();
 
     // message loop
-    int result = Dialog::ZERO;
+    int result = ZERO;
 
-    while (result == Dialog::ZERO && le.HandleEvents())
+    while (result == ZERO && le.HandleEvents())
     {
         if (!buttons && !le.MousePressRight()) break;
         result = btnGroups.QueueEventProcessing();

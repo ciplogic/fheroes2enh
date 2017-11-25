@@ -30,19 +30,19 @@ const char *Luck::String(int luck)
 
     switch (luck)
     {
-        case Luck::CURSED:
+        case CURSED:
             return str_luck[1];
-        case Luck::AWFUL:
+        case AWFUL:
             return str_luck[2];
-        case Luck::BAD:
+        case BAD:
             return str_luck[3];
-        case Luck::NORMAL:
+        case NORMAL:
             return str_luck[4];
-        case Luck::GOOD:
+        case GOOD:
             return str_luck[5];
-        case Luck::GREAT:
+        case GREAT:
             return str_luck[6];
-        case Luck::IRISH:
+        case IRISH:
             return str_luck[7];
         default:
             break;
@@ -60,15 +60,15 @@ const char *Luck::Description(int luck)
 
     switch (luck)
     {
-        case Luck::CURSED:
-        case Luck::AWFUL:
-        case Luck::BAD:
+        case CURSED:
+        case AWFUL:
+        case BAD:
             return str_desc_luck[1];
-        case Luck::NORMAL:
+        case NORMAL:
             return str_desc_luck[2];
-        case Luck::GOOD:
-        case Luck::GREAT:
-        case Luck::IRISH:
+        case GOOD:
+        case GREAT:
+        case IRISH:
             return str_desc_luck[3];
         default:
             break;

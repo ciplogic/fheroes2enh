@@ -44,7 +44,7 @@ struct cell_t
     s32 parent;
 };
 
-int GetCurrentLength(std::map<s32, cell_t> &list, s32 from)
+int GetCurrentLength(map<s32, cell_t> &list, s32 from)
 {
     int res = 0;
     while (0 <= list[from].parent)
@@ -58,7 +58,7 @@ int GetCurrentLength(std::map<s32, cell_t> &list, s32 from)
 bool CheckMonsterProtectionAndNotDst(const s32 &to, const s32 &dst)
 {
     const MapsIndexes &monsters = Maps::GetTilesUnderProtection(to);
-    return monsters.size() && monsters.end() == std::find(monsters.begin(), monsters.end(), dst);
+    return monsters.size() && monsters.end() == find(monsters.begin(), monsters.end(), dst);
 }
 
 bool PassableToTile(const Heroes &hero, const Maps::Tiles &toTile, int direct, s32 dst)
@@ -233,9 +233,9 @@ bool Route::Path::Find(s32 to, int limit)
     s32 cur = from;
     s32 alt = 0;
     s32 tmp = 0;
-    std::map<s32, cell_t> list;
-    std::map<s32, cell_t>::iterator it1 = list.begin();
-    std::map<s32, cell_t>::iterator it2 = list.end();
+    map<s32, cell_t> list;
+    map<s32, cell_t>::iterator it1 = list.begin();
+    map<s32, cell_t>::iterator it2 = list.end();
 
     list[cur].cost_g = 0;
     list[cur].cost_t = 0;
@@ -345,7 +345,7 @@ bool Route::Path::Find(s32 to, int limit)
     {
         while (cur != from)
         {
-            push_front(Route::Step(list[cur].parent, list[cur].direct, list[cur].cost_g));
+            push_front(Step(list[cur].parent, list[cur].direct, list[cur].cost_g));
             cur = list[cur].parent;
         }
     } else

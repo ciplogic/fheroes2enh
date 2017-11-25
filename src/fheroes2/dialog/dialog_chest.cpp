@@ -30,7 +30,7 @@
 #include "dialog.h"
 
 bool
-Dialog::SelectGoldOrExp(const std::string &header, const std::string &message, u32 gold, u32 expr, const Heroes &hero)
+Dialog::SelectGoldOrExp(const string &header, const string &message, u32 gold, u32 expr, const Heroes &hero)
 {
     Display &display = Display::Get();
     const int system = Settings::Get().ExtGameEvilInterface() ? ICN::SYSTEME : ICN::SYSTEM;
@@ -100,12 +100,12 @@ Dialog::SelectGoldOrExp(const std::string &header, const std::string &message, u
         le.MousePressLeft(button_yes) ? button_yes.PressDraw() : button_yes.ReleaseDraw();
         le.MousePressLeft(button_no) ? button_no.PressDraw() : button_no.ReleaseDraw();
 
-        if (Game::HotKeyPressEvent(Game::EVENT_DEFAULT_READY) || le.MouseClickLeft(button_yes))
+        if (HotKeyPressEvent(Game::EVENT_DEFAULT_READY) || le.MouseClickLeft(button_yes))
         {
             result = true;
             break;
         }
-        if (Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT) || le.MouseClickLeft(button_no))
+        if (HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT) || le.MouseClickLeft(button_no))
         {
             result = false;
             break;

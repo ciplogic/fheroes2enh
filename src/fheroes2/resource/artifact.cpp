@@ -232,7 +232,7 @@ bool SkipExtra(int art)
     return false;
 }
 
-void Artifact::UpdateStats(const std::string &spec)
+void Artifact::UpdateStats(const string &spec)
 {
 #ifdef WITH_XML
     // parse artifacts.xml
@@ -274,11 +274,11 @@ bool Artifact::operator==(const Spell &spell) const
         case SPELL_SCROLL:
             return ext == spell();
 
-        case Artifact::CRYSTAL_BALL:
+        case CRYSTAL_BALL:
             return spell == Spell::IDENTIFYHERO ||
                    spell == Spell::VISIONS;
 
-        case Artifact::BATTLE_GARB:
+        case BATTLE_GARB:
             return spell == Spell::TOWNPORTAL;
 
         default:
@@ -318,14 +318,14 @@ int Artifact::Type() const
     return artifacts[id].type;
 }
 
-std::string Artifact::GetDescription() const
+string Artifact::GetDescription() const
 {
     u32 count = ExtraValue();
-    std::string str = GetPluralDescription(*this, count);
+    string str = GetPluralDescription(*this, count);
 
     StringReplace(str, "%{name}", GetName());
 
-    if (id == Artifact::SPELL_SCROLL)
+    if (id == SPELL_SCROLL)
         StringReplace(str, "%{spell}", Spell(ext).GetName());
     else
         StringReplace(str, "%{count}", count);
@@ -614,7 +614,7 @@ void Artifact::Reset()
 /* get rand all artifact */
 int Artifact::Rand(level_t lvl)
 {
-    std::vector<int> v;
+    vector<int> v;
     v.reserve(25);
 
     // if possibly: make unique on map
@@ -633,7 +633,7 @@ int Artifact::Rand(level_t lvl)
                 v.push_back(art);
     }
 
-    int res = v.size() ? *Rand::Get(v) : Artifact::UNKNOWN;
+    int res = v.size() ? *Rand::Get(v) : UNKNOWN;
     artifacts[res].bits |= ART_RNDUSED;
 
     return res;
@@ -727,18 +727,18 @@ StreamBase &operator>>(StreamBase &msg, Artifact &art)
     return msg >> art.id >> art.ext;
 }
 
-BagArtifacts::BagArtifacts() : std::vector<Artifact>(HEROESMAXARTIFACT, Artifact::UNKNOWN)
+BagArtifacts::BagArtifacts() : vector<Artifact>(HEROESMAXARTIFACT, Artifact::UNKNOWN)
 {
 }
 
 bool BagArtifacts::ContainSpell(const Spell &spell) const
 {
-    return end() != std::find(begin(), end(), spell);
+    return end() != find(begin(), end(), spell);
 }
 
 bool BagArtifacts::isPresentArtifact(const Artifact &art) const
 {
-    return end() != std::find(begin(), end(), art);
+    return end() != find(begin(), end(), art);
 }
 
 bool BagArtifacts::PushArtifact(const Artifact &art)
@@ -748,7 +748,7 @@ bool BagArtifacts::PushArtifact(const Artifact &art)
         if (art() == Artifact::MAGIC_BOOK && isPresentArtifact(art))
             return false;
 
-        auto it = std::find(begin(), end(), Artifact(Artifact::UNKNOWN));
+        auto it = find(begin(), end(), Artifact(Artifact::UNKNOWN));
         if (it == end()) return false;
 
         *it = art;
@@ -765,21 +765,21 @@ bool BagArtifacts::PushArtifact(const Artifact &art)
 
 void BagArtifacts::RemoveArtifact(const Artifact &art)
 {
-    auto it = std::find(begin(), end(), art);
+    auto it = find(begin(), end(), art);
     if (it != end()) (*it).Reset();
 }
 
 bool BagArtifacts::isFull() const
 {
-    return end() == std::find(begin(), end(), Artifact(Artifact::UNKNOWN));
+    return end() == find(begin(), end(), Artifact(Artifact::UNKNOWN));
 }
 
 bool BagArtifacts::MakeBattleGarb()
 {
     iterator it1, it2, it3;
-    it1 = std::find(begin(), end(), Artifact(Artifact::BREASTPLATE_ANDURAN));
-    it2 = std::find(begin(), end(), Artifact(Artifact::HELMET_ANDURAN));
-    it3 = std::find(begin(), end(), Artifact(Artifact::SWORD_ANDURAN));
+    it1 = find(begin(), end(), Artifact(Artifact::BREASTPLATE_ANDURAN));
+    it2 = find(begin(), end(), Artifact(Artifact::HELMET_ANDURAN));
+    it3 = find(begin(), end(), Artifact(Artifact::SWORD_ANDURAN));
     if (it1 == end() || it2 == end() || it3 == end()) return false;
 
     *it1 = Artifact::UNKNOWN;
@@ -793,12 +793,12 @@ bool BagArtifacts::MakeBattleGarb()
 
 u32 BagArtifacts::CountArtifacts() const
 {
-    return std::count_if(begin(), end(), std::mem_fun_ref(&Artifact::isValid));
+    return count_if(begin(), end(), mem_fun_ref(&Artifact::isValid));
 }
 
 bool BagArtifacts::ContainUltimateArtifact() const
 {
-    return end() != std::find_if(begin(), end(), std::mem_fun_ref(&Artifact::isUltimate));
+    return end() != find_if(begin(), end(), mem_fun_ref(&Artifact::isUltimate));
 }
 
 void BagArtifacts::RemoveScroll(const Artifact &art)
@@ -806,14 +806,14 @@ void BagArtifacts::RemoveScroll(const Artifact &art)
     Spell spell(art.GetSpell());
     if (spell.isValid())
     {
-        iterator it = std::find(begin(), end(), spell);
+        iterator it = find(begin(), end(), spell);
         if (it != end()) (*it).Reset();
     }
 }
 
-std::string BagArtifacts::String() const
+string BagArtifacts::String() const
 {
-    std::ostringstream os;
+    ostringstream os;
 
     for (auto it : *this)
         os << it.GetName() << ", ";
@@ -823,7 +823,7 @@ std::string BagArtifacts::String() const
 
 u32 BagArtifacts::Count(const Artifact &art) const
 {
-    return std::count(begin(), end(), art);
+    return count(begin(), end(), art);
 }
 
 u32 GoldInsteadArtifact(int obj)
@@ -875,14 +875,14 @@ void ArtifactsBar::ResetSelected()
 {
     Cursor::Get().Hide();
     spcursor.Hide();
-    Interface::ItemsActionBar<Artifact>::ResetSelected();
+    ItemsActionBar<Artifact>::ResetSelected();
 }
 
 void ArtifactsBar::Redraw(Surface &dstsf)
 {
     Cursor::Get().Hide();
     spcursor.Hide();
-    Interface::ItemsActionBar<Artifact>::Redraw(dstsf);
+    ItemsActionBar<Artifact>::Redraw(dstsf);
 }
 
 void ArtifactsBar::RedrawBackground(const Rect &pos, Surface &dstsf)
@@ -918,7 +918,7 @@ bool ArtifactsBar::ActionBarSingleClick(const Point &cursor, Artifact &art, cons
 {
     if (isSelected())
     {
-        std::swap(art, *GetSelectedItem());
+        swap(art, *GetSelectedItem());
         return false;
     } else if (art.isValid())
     {
@@ -959,7 +959,7 @@ bool ArtifactsBar::ActionBarDoubleClick(const Point &cursor, Artifact &art, cons
         {
             payment_t cost = spell.GetCost();
             u32 answer = 0;
-            std::string msg = _(
+            string msg = _(
                     "Do you want to use your knowledge of magical secrets to transcribe the %{spell} Scroll into your spell book?\nThe Scroll will be consumed.\n Spell point: %{sp}");
 
             StringReplace(msg, "%{spell}", spell.GetName());
@@ -1008,7 +1008,7 @@ bool ArtifactsBar::ActionBarSingleClick(const Point &cursor, Artifact &art1, con
 {
     if (art1() != Artifact::MAGIC_BOOK && art2() != Artifact::MAGIC_BOOK)
     {
-        std::swap(art1, art2);
+        swap(art1, art2);
         return false;
     }
 
@@ -1072,18 +1072,18 @@ bool ArtifactsBar::ActionBarCursor(const Point &cursor, Artifact &art1, const Re
     return false;
 }
 
-bool ArtifactsBar::QueueEventProcessing(std::string *str)
+bool ArtifactsBar::QueueEventProcessing(string *str)
 {
     msg.clear();
-    bool res = Interface::ItemsActionBar<Artifact>::QueueEventProcessing();
+    bool res = ItemsActionBar<Artifact>::QueueEventProcessing();
     if (str) *str = msg;
     return res;
 }
 
-bool ArtifactsBar::QueueEventProcessing(ArtifactsBar &bar, std::string *str)
+bool ArtifactsBar::QueueEventProcessing(ArtifactsBar &bar, string *str)
 {
     msg.clear();
-    bool res = Interface::ItemsActionBar<Artifact>::QueueEventProcessing(bar);
+    bool res = ItemsActionBar<Artifact>::QueueEventProcessing(bar);
     if (str) *str = msg;
     return res;
 }

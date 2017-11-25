@@ -267,7 +267,7 @@ Surface::Surface(const Surface &bs) : surface(nullptr)
     Set(bs, true);
 }
 
-Surface::Surface(const std::string &file) : surface(nullptr)
+Surface::Surface(const string &file) : surface(nullptr)
 {
     Load(file);
 }
@@ -305,7 +305,7 @@ Surface::Surface(const void *pixels, u32 width, u32 height, u32 bytes_per_pixel 
     {
         SetPalette();
         Lock();
-        std::memcpy(surface->pixels, pixels, width * height);
+        memcpy(surface->pixels, pixels, width * height);
         Unlock();
     }
 }
@@ -474,7 +474,7 @@ bool Surface::isValid() const
     return surface && surface->format;
 }
 
-bool Surface::Load(const std::string &fn)
+bool Surface::Load(const string &fn)
 {
     FreeSurface(*this);
 
@@ -493,7 +493,7 @@ bool Surface::Load(const std::string &fn)
     return surface;
 }
 
-bool Surface::Save(const std::string &fn) const
+bool Surface::Save(const string &fn) const
 {
     int res = 0;
 
@@ -682,7 +682,7 @@ void Surface::SetPixel(int x, int y, u32 pixel)
         }
     } else
     {
-        std::ostringstream os;
+        ostringstream os;
         os << "out of range: " << "x: " << x << ", " << "y: " << y << ", " << "width: " << w() << ", " << "height: "
            << h();
         Error::Except(__FUNCTION__, os.str().c_str());
@@ -892,9 +892,9 @@ u32 Surface::GetMemoryUsage() const
     return res;
 }
 
-std::string Surface::Info() const
+string Surface::Info() const
 {
-    std::ostringstream os;
+    ostringstream os;
 
     if (isValid())
     {
@@ -911,9 +911,9 @@ std::string Surface::Info() const
            "bpp" << "(" << depth() << "), " <<
            #if SDL_VERSION_ATLEAST(2, 0, 0)
            #else
-           "Amask" << "(" << "0x" << std::setw(8) << std::setfill('0') << std::hex << surface->format->Amask << "), " <<
-           "colorkey" << "(" << "0x" << std::setw(8) << std::setfill('0') << surface->format->colorkey << "), "
-           << std::dec <<
+           "Amask" << "(" << "0x" << setw(8) << setfill('0') << hex << surface->format->Amask << "), " <<
+           "colorkey" << "(" << "0x" << setw(8) << setfill('0') << surface->format->colorkey << "), "
+           << dec <<
            #endif
            "alpha" << "(" << alpha() << "), ";
     } else
@@ -924,7 +924,7 @@ std::string Surface::Info() const
 
 void Surface::Swap(Surface &sf1, Surface &sf2)
 {
-    std::swap(sf1.surface, sf2.surface);
+    swap(sf1.surface, sf2.surface);
 }
 
 bool Surface::isDisplay() const
@@ -1334,8 +1334,8 @@ void Surface::DrawLineAa(const Point &p1, const Point &p2, const RGBA &color)
     int x2 = p2.x;
     int y2 = p2.y;
 
-    const int dx = std::abs(x2 - x1);
-    const int dy = std::abs(y2 - y1);
+    const int dx = abs(x2 - x1);
+    const int dy = abs(y2 - y1);
 
     Lock();
     drawAALine(x1, y1, x2,y2, color);
@@ -1349,13 +1349,13 @@ void Surface::DrawLine(const Point &p1, const Point &p2, const RGBA &color)
     int y2 = p2.y;
 
     const u32 pixel = MapRGB(color);
-    const int dx = std::abs(x2 - x1);
-    const int dy = std::abs(y2 - y1);
+    const int dx = abs(x2 - x1);
+    const int dy = abs(y2 - y1);
 
     Lock();
     if (dx > dy)
     {
-        int ns = std::div(dx, 2).quot;
+        int ns = div(dx, 2).quot;
 
         for (int i = 0; i <= dx; ++i)
         {
@@ -1370,7 +1370,7 @@ void Surface::DrawLine(const Point &p1, const Point &p2, const RGBA &color)
         }
     } else
     {
-        int ns = std::div(dy, 2).quot;
+        int ns = div(dy, 2).quot;
 
         for (int i = 0; i <= dy; ++i)
         {

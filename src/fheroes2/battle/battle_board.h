@@ -40,9 +40,9 @@ namespace Battle
     inline direction_t &operator--(direction_t &d)
     { return d = (TOP_LEFT == d ? CENTER : direction_t(d >> 1)); }
 
-    typedef std::vector<s32> Indexes;
+    typedef vector<s32> Indexes;
 
-    class Board : public std::vector<Cell>
+    class Board : public vector<Cell>
     {
     public:
         Board();
@@ -61,7 +61,7 @@ namespace Battle
 
         Indexes GetAStarPath(const Unit &, const Position &, bool debug = true);
 
-        std::string AllUnitsInfo() const;
+        string AllUnitsInfo() const;
 
         void SetEnemyQuality(const Unit &);
 
@@ -75,7 +75,7 @@ namespace Battle
 
         void SetCovrObjects(int icn);
 
-        static std::string GetMoatInfo();
+        static string GetMoatInfo();
 
         static Cell *GetCell(s32, int = CENTER);
 
@@ -116,7 +116,7 @@ namespace Battle
         static bool isValidMirrorImageIndex(s32, const Unit *);
     };
 
-    struct ShortestDistance : public std::binary_function<s32, s32, bool>
+    struct ShortestDistance : public binary_function<s32, s32, bool>
     {
         ShortestDistance(s32 index) : center(index)
         {}

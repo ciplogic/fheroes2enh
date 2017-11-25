@@ -144,12 +144,12 @@ StreamBase &StreamBase::operator>>(float &v)
     return *this;
 }
 
-StreamBase &StreamBase::operator>>(std::string &v)
+StreamBase &StreamBase::operator>>(string &v)
 {
     u32 size = get32();
     v.resize(size);
 
-    for (std::string::iterator
+    for (string::iterator
                  it = v.begin(); it != v.end(); ++it)
         *it = get8();
 
@@ -239,11 +239,11 @@ StreamBase &StreamBase::operator<<(const float &v)
     return *this << intpart << static_cast<s32>(decpart);
 }
 
-StreamBase &StreamBase::operator<<(const std::string &v)
+StreamBase &StreamBase::operator<<(const string &v)
 {
     put32(v.size());
 
-    for (std::string::const_iterator
+    for (string::const_iterator
                  it = v.begin(); it != v.end(); ++it)
         put8(*it);
 
@@ -288,7 +288,7 @@ StreamBuf::StreamBuf(const StreamBuf &st) : itbeg(nullptr), itget(nullptr), itpu
     copy(st);
 }
 
-StreamBuf::StreamBuf(const std::vector<u8> &buf) : itbeg(nullptr), itget(nullptr), itput(nullptr), itend(nullptr)
+StreamBuf::StreamBuf(const vector<u8> &buf) : itbeg(nullptr), itget(nullptr), itput(nullptr), itend(nullptr)
 {
     itbeg = (u8 *) &buf[0];
     itend = itbeg + buf.size();
@@ -373,7 +373,7 @@ void StreamBuf::realloc(size_t sz)
 
         itbeg = new u8[sz];
         itend = itbeg + sz;
-        std::fill(itbeg, itend, 0);
+        fill(itbeg, itend, 0);
 
         reset();
     } else if (sizep() < sz)
@@ -382,7 +382,7 @@ void StreamBuf::realloc(size_t sz)
 
         u8 *ptr = new u8[sz];
 
-        std::fill(ptr, ptr + sz, 0);
+        fill(ptr, ptr + sz, 0);
         std::copy(itbeg, itput, ptr);
 
         itput = ptr + tellp();
@@ -482,11 +482,11 @@ void StreamBuf::putLE32(u32 v)
     put8(v >> 24);
 }
 
-std::vector<u8> StreamBuf::getRaw(size_t sz)
+vector<u8> StreamBuf::getRaw(size_t sz)
 {
-    std::vector<u8> v(sz ? sz : sizeg(), 0);
+    vector<u8> v(sz ? sz : sizeg(), 0);
 
-    for (std::vector<u8>::iterator
+    for (vector<u8>::iterator
                  it = v.begin(); it != v.end(); ++it)
         *this >> *it;
 
@@ -499,13 +499,13 @@ void StreamBuf::putRaw(const char *ptr, size_t sz)
         *this << ptr[it];
 }
 
-std::string StreamBuf::toString(size_t sz)
+string StreamBuf::toString(size_t sz)
 {
     u8 *it1 = itget;
     u8 *it2 = itget + (sz ? sz : sizeg());
-    it2 = std::find(it1, it2, 0);
+    it2 = find(it1, it2, 0);
     itget = it1 + (sz ? sz : sizeg());
-    return std::string(it1, it2);
+    return string(it1, it2);
 }
 
 void StreamBuf::skip(size_t sz)
@@ -564,7 +564,7 @@ std::istream & operator>> (std::istream & is, StreamBuf & sb)
 }
 */
 
-StreamFile::StreamFile(const std::string &fn, const char *mode)
+StreamFile::StreamFile(const string &fn, const char *mode)
 {
     open(fn, mode);
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
@@ -579,7 +579,7 @@ StreamFile::~StreamFile()
     close();
 }
 
-bool StreamFile::open(const std::string &fn, const char *mode)
+bool StreamFile::open(const string &fn, const char *mode)
 {
     rw = SDL_RWFromFile(fn.c_str(), mode);
     if (!rw)
@@ -700,9 +700,9 @@ void StreamFile::putLE16(u16 val)
     if (rw) SDL_WriteLE16(rw, val);
 }
 
-std::vector<u8> StreamFile::getRaw(size_t sz)
+vector<u8> StreamFile::getRaw(size_t sz)
 {
-    std::vector<u8> v(sz ? sz : sizeg(), 0);
+    vector<u8> v(sz ? sz : sizeg(), 0);
     if (rw) SDL_RWread(rw, &v[0], v.size(), 1);
     return v;
 }
@@ -715,14 +715,14 @@ void StreamFile::putRaw(const char *ptr, size_t sz)
 StreamBuf StreamFile::toStreamBuf(size_t sz)
 {
     StreamBuf sb;
-    std::vector<u8> buf = getRaw(sz);
+    vector<u8> buf = getRaw(sz);
     sb.putRaw(reinterpret_cast<const char *>(&buf[0]), buf.size());
     return sb;
 }
 
-std::string StreamFile::toString(size_t sz)
+string StreamFile::toString(size_t sz)
 {
-    const std::vector<u8> buf = getRaw(sz);
-    std::vector<u8>::const_iterator itend = std::find(buf.begin(), buf.end(), 0);
-    return std::string(buf.begin(), itend != buf.end() ? itend : buf.end());
+    const vector<u8> buf = getRaw(sz);
+    vector<u8>::const_iterator itend = find(buf.begin(), buf.end(), 0);
+    return string(buf.begin(), itend != buf.end() ? itend : buf.end());
 }

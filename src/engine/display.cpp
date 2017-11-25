@@ -115,15 +115,15 @@ Size Display::GetMaxMode(bool rotate) const
         result.h = modes[cur]->h;
 
         if (rotate && result.w < result.h)
-            std::swap(result.w, result.h);
+            swap(result.w, result.h);
     }
 
     return result;
 }
 
-std::string Display::GetInfo() const
+string Display::GetInfo() const
 {
-    std::ostringstream os;
+    ostringstream os;
     char namebuf[12];
 
     os << "Display::" << "GetInfo: " <<

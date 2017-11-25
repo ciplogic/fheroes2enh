@@ -60,7 +60,7 @@ namespace Game
         HeaderSAV(const Maps::FileInfo &fi, bool loyalty) : status(0), info(fi)
         {
             time_t rawtime;
-            std::time(&rawtime);
+            time(&rawtime);
             info.localtime = rawtime;
 
             if (loyalty)
@@ -86,7 +86,7 @@ namespace Game
     }
 }
 
-bool Game::Save(const std::string &fn)
+bool Game::Save(const string &fn)
 {
     DEBUG(DBG_GAME, DBG_INFO, fn);
     const bool autosave = (System::GetBasename(fn) == "autosave.sav");
@@ -111,7 +111,7 @@ bool Game::Save(const std::string &fn)
     }
 
     u16 loadver = GetLoadVersion();
-    if (!autosave) Game::SetLastSavename(fn);
+    if (!autosave) SetLastSavename(fn);
 
     // raw info content
     fs << static_cast<char>(SAV2ID3 >> 8) << static_cast<char>(SAV2ID3) <<
@@ -128,12 +128,12 @@ bool Game::Save(const std::string &fn)
     return !fz.fail() && fz.write(fn, true);
 }
 
-bool Game::Load(const std::string &fn)
+bool Game::Load(const string &fn)
 {
     DEBUG(DBG_GAME, DBG_INFO, fn);
     Settings &conf = Settings::Get();
     // loading info
-    Game::ShowLoadMapsText();
+    ShowLoadMapsText();
 
     StreamFile fs;
     fs.setbigendian(true);
@@ -155,7 +155,7 @@ bool Game::Load(const std::string &fn)
         return false;
     }
 
-    std::string strver;
+    string strver;
     u16 binver = 0;
     HeaderSAV header;
 
@@ -183,7 +183,7 @@ bool Game::Load(const std::string &fn)
 
     if ((header.status & HeaderSAV::IS_LOYALTY) &&
         !conf.PriceLoyaltyVersion())
-        Dialog::Message("Warning",
+        Message("Warning",
                         _("This file is saved in the \"Price Loyalty\" version.\nSome items may be unavailable."),
                         Font::BIG, Dialog::OK);
 
@@ -193,11 +193,11 @@ bool Game::Load(const std::string &fn)
     // check version: false
     if (binver > CURRENT_FORMAT_VERSION || binver < LAST_FORMAT_VERSION)
     {
-        std::ostringstream os;
-        os << "usupported save format: " << binver << std::endl <<
-           "game version: " << CURRENT_FORMAT_VERSION << std::endl <<
+        ostringstream os;
+        os << "usupported save format: " << binver << endl <<
+           "game version: " << CURRENT_FORMAT_VERSION << endl <<
            "last version: " << LAST_FORMAT_VERSION;
-        Dialog::Message("Error", os.str(), Font::BIG, Dialog::OK);
+        Message("Error", os.str(), Font::BIG, Dialog::OK);
         return false;
     }
 
@@ -218,13 +218,13 @@ bool Game::Load(const std::string &fn)
 
     SetLoadVersion(CURRENT_FORMAT_VERSION);
 
-    Game::SetLastSavename(fn);
-    conf.SetGameType(conf.GameType() | Game::TYPE_LOADFILE);
+    SetLastSavename(fn);
+    conf.SetGameType(conf.GameType() | TYPE_LOADFILE);
 
     return true;
 }
 
-bool Game::LoadSAV2FileInfo(const std::string &fn, Maps::FileInfo &finfo)
+bool Game::LoadSAV2FileInfo(const string &fn, Maps::FileInfo &finfo)
 {
     StreamFile fs;
     fs.setbigendian(true);
@@ -246,7 +246,7 @@ bool Game::LoadSAV2FileInfo(const std::string &fn, Maps::FileInfo &finfo)
         return false;
     }
 
-    std::string strver;
+    string strver;
     u16 binver = 0;
     HeaderSAV header;
 

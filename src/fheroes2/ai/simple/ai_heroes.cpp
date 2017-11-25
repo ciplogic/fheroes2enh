@@ -58,13 +58,13 @@ AIHeroes &AIHeroes::Get()
 
 AIHero &AIHeroes::Get(const Heroes &ht)
 {
-    return AIHeroes::Get().at(ht.GetID());
+    return Get().at(ht.GetID());
 }
 
 void AIHeroes::Reset()
 {
-    AIHeroes &ai = AIHeroes::Get();
-    std::for_each(ai.begin(), ai.end(), std::mem_fun_ref(&AIHero::Reset));
+    AIHeroes &ai = Get();
+    for_each(ai.begin(), ai.end(), mem_fun_ref(&AIHero::Reset));
 }
 
 void AIHero::Reset()
@@ -83,41 +83,41 @@ void AI::HeroesActionComplete(Heroes &, s32)
 {
 }
 
-std::string AI::HeroesString(const Heroes &hero)
+string AI::HeroesString(const Heroes &hero)
 {
-    std::ostringstream os;
+    ostringstream os;
 
     AIHero &ai_hero = AIHeroes::Get(hero);
     Queue &task = ai_hero.sheduled_visit;
 
     os << "flags           : " <<
-       (hero.Modes(AI::HEROES_SCOUTER) ? "SCOUTER," : "") <<
-       (hero.Modes(AI::HEROES_HUNTER) ? "HUNTER," : "") <<
-       (hero.Modes(AI::HEROES_WAITING) ? "WAITING," : "") <<
-       (hero.Modes(AI::HEROES_STUPID) ? "STUPID" : "") << std::endl;
+       (hero.Modes(HEROES_SCOUTER) ? "SCOUTER," : "") <<
+       (hero.Modes(HEROES_HUNTER) ? "HUNTER," : "") <<
+       (hero.Modes(HEROES_WAITING) ? "WAITING," : "") <<
+       (hero.Modes(HEROES_STUPID) ? "STUPID" : "") << endl;
 
-    os << "ai primary target: " << ai_hero.primary_target << std::endl <<
+    os << "ai primary target: " << ai_hero.primary_target << endl <<
        "ai sheduled visit: ";
     for (Queue::const_iterator
                  it = task.begin(); it != task.end(); ++it)
         os << *it << "(" << MP2::StringObject(world.GetTiles(*it).GetObject()) << "), ";
-    os << std::endl;
+    os << endl;
 
     return os.str();
 }
 
 void AI::HeroesPostLoad(Heroes &hero)
 {
-    hero.SetModes(AI::HEROES_HUNTER);
+    hero.SetModes(HEROES_HUNTER);
 }
 
 void AI::HeroesLevelUp(Heroes &hero)
 {
-    if (4 < hero.GetLevel() && !hero.Modes(AI::HEROES_HUNTER))
-        hero.SetModes(AI::HEROES_HUNTER);
+    if (4 < hero.GetLevel() && !hero.Modes(HEROES_HUNTER))
+        hero.SetModes(HEROES_HUNTER);
 
-    if (9 < hero.GetLevel() && hero.Modes(AI::HEROES_SCOUTER))
-        hero.ResetModes(AI::HEROES_SCOUTER);
+    if (9 < hero.GetLevel() && hero.Modes(HEROES_SCOUTER))
+        hero.ResetModes(HEROES_SCOUTER);
 }
 
 void AI::HeroesPreBattle(HeroBase &hero)
@@ -196,8 +196,8 @@ s32 FindUncharteredTerritory(Heroes &hero, u32 scoute)
     Maps::Indexes v = Maps::GetAroundIndexes(hero.GetIndex(), scoute, true);
     Maps::Indexes res;
 
-    v.resize(std::distance(v.begin(),
-                           std::remove_if(v.begin(), v.end(), std::ptr_fun(&Maps::TileIsUnderProtection))));
+    v.resize(distance(v.begin(),
+                           remove_if(v.begin(), v.end(), ptr_fun(&Maps::TileIsUnderProtection))));
 
 
 #if defined(ANDROID)
@@ -234,8 +234,8 @@ s32 GetRandomHeroesPosition(Heroes &hero, u32 scoute)
     Maps::Indexes v = Maps::GetAroundIndexes(hero.GetIndex(), scoute, true);
     Maps::Indexes res;
 
-    v.resize(std::distance(v.begin(),
-                           std::remove_if(v.begin(), v.end(), std::ptr_fun(&Maps::TileIsUnderProtection))));
+    v.resize(distance(v.begin(),
+                           remove_if(v.begin(), v.end(), ptr_fun(&Maps::TileIsUnderProtection))));
 
 #if defined(ANDROID)
     const MapsIndexes::const_reverse_iterator crend = v.rend();
@@ -321,10 +321,10 @@ void AIHeroesAddedTask(Heroes &hero)
     IndexObjectMap &ai_objects = ai_kingdom.scans;
 
     // load minimal distance tasks
-    std::vector<IndexDistance> objs;
+    vector<IndexDistance> objs;
     objs.reserve(ai_objects.size());
 
-    for (std::map<s32, int>::const_iterator
+    for (map<s32, int>::const_iterator
                  it = ai_objects.begin(); it != ai_objects.end(); ++it)
     {
         const Maps::Tiles &tile = world.GetTiles((*it).first);
@@ -352,9 +352,9 @@ void AIHeroesAddedTask(Heroes &hero)
                                                            ", hero: " << hero.GetName() << ", task prepare: "
                                                            << objs.size());
 
-    std::sort(objs.begin(), objs.end(), IndexDistance::Shortest);
+    sort(objs.begin(), objs.end(), IndexDistance::Shortest);
 
-    for (std::vector<IndexDistance>::const_iterator
+    for (vector<IndexDistance>::const_iterator
                  it = objs.begin(); it != objs.end(); ++it)
     {
         if (task.size() >= HERO_MAX_SHEDULED_TASK) break;
@@ -396,7 +396,7 @@ void AI::HeroesActionNewPosition(Heroes &hero)
     Maps::Indexes pickups = Maps::ScanAroundObjects(hero.GetIndex(), objs);
 
     if (pickups.size() && hero.GetPath().isValid() &&
-        pickups.end() == std::find(pickups.begin(), pickups.end(), hero.GetPath().GetDestinationIndex()))
+        pickups.end() == find(pickups.begin(), pickups.end(), hero.GetPath().GetDestinationIndex()))
         hero.GetPath().Reset();
 
     for (MapsIndexes::const_iterator
@@ -407,7 +407,7 @@ void AI::HeroesActionNewPosition(Heroes &hero)
 
 bool AI::HeroesGetTask(Heroes &hero)
 {
-    std::vector<s32> results;
+    vector<s32> results;
     results.reserve(5);
 
     const Settings &conf = Settings::Get();
@@ -434,9 +434,9 @@ bool AI::HeroesGetTask(Heroes &hero)
         hero.GetArmy().UpgradeTroops(*castle);
 
         // recruit army
-        if (hero.Modes(AI::HEROES_HUNTER))
+        if (hero.Modes(HEROES_HUNTER))
             hero.GetArmy().JoinStrongestFromArmy(castle->GetArmy());
-        else if (hero.Modes(AI::HEROES_SCOUTER))
+        else if (hero.Modes(HEROES_SCOUTER))
             hero.GetArmy().KeepOnlyWeakestTroops(castle->GetArmy());
 
         DEBUG(DBG_AI, DBG_TRACE, hero.GetName() << ", " << hero.GetArmy().String());
@@ -477,7 +477,7 @@ bool AI::HeroesGetTask(Heroes &hero)
             const Maps::Indexes &results = Maps::ScanAroundObjects(hero.GetIndex(),
                                                                    hero.GetSquarePatrol(), objs1);
             for (auto it = results.begin(); it != results.end(); ++it)
-                if (AI::HeroesValidObject(hero, *it) &&
+                if (HeroesValidObject(hero, *it) &&
                     hero.GetPath().Calculate(*it))
                 {
                     ai_objects.erase(*it);
@@ -510,14 +510,14 @@ bool AI::HeroesGetTask(Heroes &hero)
         }
         */
 
-        hero.SetModes(AI::HEROES_STUPID);
+        hero.SetModes(HEROES_STUPID);
         return false;
     }
 
     if (ai_hero.fix_loop > 3)
     {
         DEBUG(DBG_AI, DBG_TRACE, hero.GetName() << ": loop");
-        hero.SetModes(hero.Modes(AI::HEROES_WAITING) ? AI::HEROES_STUPID : AI::HEROES_WAITING);
+        hero.SetModes(hero.Modes(HEROES_WAITING) ? HEROES_STUPID : HEROES_WAITING);
         return false;
     }
 
@@ -540,7 +540,7 @@ bool AI::HeroesGetTask(Heroes &hero)
             if (nullptr != (castle = world.GetCastle(Maps::GetPoint(ai_hero.primary_target))) &&
                     nullptr != castle->GetHeroes().Guest() && castle->isFriends(hero.GetColor()))
             {
-                hero.SetModes(AI::HEROES_WAITING);
+                hero.SetModes(HEROES_WAITING);
                 DEBUG(DBG_AI, DBG_TRACE, hero.GetName() << ", castle busy..");
             }
 
@@ -575,7 +575,7 @@ bool AI::HeroesGetTask(Heroes &hero)
     // check destination
     if (hero.GetPath().isValid())
     {
-        if (!AI::HeroesValidObject(hero, hero.GetPath().GetDestinationIndex()))
+        if (!HeroesValidObject(hero, hero.GetPath().GetDestinationIndex()))
             hero.GetPath().Reset();
         else if (hero.GetPath().size() < 5)
         {
@@ -597,7 +597,7 @@ bool AI::HeroesGetTask(Heroes &hero)
 
         for (MapsIndexes::const_iterator
                      it = pickups.begin(); it != pickups.end(); ++it)
-            if (AI::HeroesValidObject(hero, *it))
+            if (HeroesValidObject(hero, *it))
             {
                 task.push_front(*it);
 
@@ -621,7 +621,7 @@ bool AI::HeroesGetTask(Heroes &hero)
         AIHeroesAddedTask(hero);
     } else
         // remove invalid task
-        task.remove_if(std::not1(std::bind1st(std::ptr_fun(&AIHeroesValidObject2), &hero)));
+        task.remove_if(not1(bind1st(ptr_fun(&AIHeroesValidObject2), &hero)));
 
     // random shuffle
     if (1 < task.size() && Rand::Get(1))
@@ -630,7 +630,7 @@ bool AI::HeroesGetTask(Heroes &hero)
         it2 = it1 = task.begin();
         ++it2;
 
-        std::swap(*it1, *it2);
+        swap(*it1, *it2);
     }
 
     // find passable index
@@ -658,17 +658,17 @@ bool AI::HeroesGetTask(Heroes &hero)
 
         DEBUG(DBG_AI, DBG_TRACE, hero.GetName() << ", route: " << hero.GetPath().String());
         return true;
-    } else if (hero.Modes(AI::HEROES_WAITING))
+    } else if (hero.Modes(HEROES_WAITING))
     {
         hero.GetPath().Reset();
         DEBUG(DBG_AI, DBG_TRACE, hero.GetName() << " say: unknown task., help my please..");
 
-        hero.ResetModes(AI::HEROES_WAITING);
-        hero.SetModes(AI::HEROES_STUPID);
+        hero.ResetModes(HEROES_WAITING);
+        hero.SetModes(HEROES_STUPID);
     } else
     {
         DEBUG(DBG_AI, DBG_TRACE, hero.GetName() << " say: waiting...");
-        hero.SetModes(AI::HEROES_WAITING);
+        hero.SetModes(HEROES_WAITING);
     }
 
     return false;
@@ -692,19 +692,19 @@ void AI::HeroesTurn(Heroes &hero)
     Interface::StatusWindow &status = Interface::Basic::Get().GetStatusWindow();
 
     while (hero.MayStillMove() &&
-           !hero.Modes(AI::HEROES_WAITING | AI::HEROES_STUPID))
+           !hero.Modes(HEROES_WAITING | HEROES_STUPID))
     {
         // turn indicator
         status.RedrawTurnProgress(3);
 
         // get task for heroes
-        AI::HeroesGetTask(hero);
+        HeroesGetTask(hero);
 
         // turn indicator
         status.RedrawTurnProgress(5);
 
         // heroes AI turn
-        AI::HeroesMove(hero);
+        HeroesMove(hero);
 
         // turn indicator
         status.RedrawTurnProgress(7);
@@ -725,7 +725,7 @@ bool AIHeroesScheduledVisit(const Kingdom &kingdom, s32 index)
     return false;
 }
 
-bool IsPriorityAndNotVisitAndNotPresent(const std::pair<s32, int> &indexObj, const Heroes *hero)
+bool IsPriorityAndNotVisitAndNotPresent(const pair<s32, int> &indexObj, const Heroes *hero)
 {
     AIHero &ai_hero = AIHeroes::Get(*hero);
     Queue &task = ai_hero.sheduled_visit;

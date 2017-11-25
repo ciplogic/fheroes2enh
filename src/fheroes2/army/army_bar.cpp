@@ -280,14 +280,14 @@ void ArmyBar::ResetSelected()
 {
     Cursor::Get().Hide();
     spcursor.Hide();
-    Interface::ItemsActionBar<ArmyTroop>::ResetSelected();
+    ItemsActionBar<ArmyTroop>::ResetSelected();
 }
 
 void ArmyBar::Redraw(Surface &dstsf)
 {
     Cursor::Get().Hide();
     spcursor.Hide();
-    Interface::ItemsActionBar<ArmyTroop>::Redraw(dstsf);
+    ItemsActionBar<ArmyTroop>::Redraw(dstsf);
 }
 
 bool ArmyBar::ActionBarCursor(const Point &cursor, ArmyTroop &troop, const Rect &pos)
@@ -557,18 +557,18 @@ ArmyBar::ActionBarPressRight(const Point &cursor, ArmyTroop &troop1, const Rect 
     return true;
 }
 
-bool ArmyBar::QueueEventProcessing(std::string *str)
+bool ArmyBar::QueueEventProcessing(string *str)
 {
     msg.clear();
-    bool res = Interface::ItemsActionBar<ArmyTroop>::QueueEventProcessing();
+    bool res = ItemsActionBar<ArmyTroop>::QueueEventProcessing();
     if (str) *str = msg;
     return res;
 }
 
-bool ArmyBar::QueueEventProcessing(ArmyBar &bar, std::string *str)
+bool ArmyBar::QueueEventProcessing(ArmyBar &bar, string *str)
 {
     msg.clear();
-    bool res = Interface::ItemsActionBar<ArmyTroop>::QueueEventProcessing(bar);
+    bool res = ItemsActionBar<ArmyTroop>::QueueEventProcessing(bar);
     if (str) *str = msg;
     return res;
 }

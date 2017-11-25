@@ -102,11 +102,11 @@ namespace Battle
         void SetLogs(StatusListBox *logs)
         { listlog = logs; };
 
-        void SetMessage(const std::string &, bool = false);
+        void SetMessage(const string &, bool = false);
 
         void Redraw();
 
-        const std::string &
+        const string &
         GetMessage() const;
 
     private:
@@ -114,7 +114,7 @@ namespace Battle
         Text bar2;
         Sprite back1;
         Sprite back2;
-        std::string message;
+        string message;
         StatusListBox *listlog;
     };
 
@@ -127,10 +127,10 @@ namespace Battle
 
         void Redraw(const Unit *);
 
-        void QueueEventProcessing(std::string &);
+        void QueueEventProcessing(string &);
 
     private:
-        typedef std::pair<const Unit *, Rect> UnitPos;
+        typedef pair<const Unit *, Rect> UnitPos;
 
         void RedrawUnit(const Rect &, const Unit &, bool, bool) const;
 
@@ -138,7 +138,7 @@ namespace Battle
         int army_color2;
         Rect area;
         Surface sf_color[3];
-        std::vector<UnitPos> rects;
+        vector<UnitPos> rects;
     };
 
     class PopupDamageInfo : public Dialog::FrameBorder
@@ -174,7 +174,7 @@ namespace Battle
 
         const Rect &GetArea() const;
 
-        void SetStatus(const std::string &, bool = false);
+        void SetStatus(const string &, bool = false);
 
         void SetArmiesOrder(const Units *);
 
@@ -184,7 +184,7 @@ namespace Battle
 
         void RedrawActionAttackPart2(Unit &, TargetsInfo &);
 
-        void RedrawActionSpellCastPart1(const Spell &, s32, const HeroBase *, const std::string &, const TargetsInfo &);
+        void RedrawActionSpellCastPart1(const Spell &, s32, const HeroBase *, const string &, const TargetsInfo &);
 
         void RedrawActionSpellCastPart2(const Spell &, TargetsInfo &);
 
@@ -208,7 +208,7 @@ namespace Battle
 
         void RedrawActionTeleportSpell(Unit &, s32);
 
-        void RedrawActionEarthQuakeSpell(const std::vector<int> &);
+        void RedrawActionEarthQuakeSpell(const vector<int> &);
 
         void RedrawActionSummonElementalSpell(const Unit &);
 
@@ -221,9 +221,9 @@ namespace Battle
         void RedrawBridgeAnimation(bool down);
 
     private:
-        void HumanBattleTurn(const Unit &, Actions &, std::string &);
+        void HumanBattleTurn(const Unit &, Actions &, string &);
 
-        void HumanCastSpellTurn(const Unit &, Actions &, std::string &);
+        void HumanCastSpellTurn(const Unit &, Actions &, string &);
 
         void RedrawBorder();
 
@@ -309,9 +309,9 @@ namespace Battle
 
         void MousePressRightBoardAction(u32, const Cell &, Actions &);
 
-        int GetBattleCursor(std::string &);
+        int GetBattleCursor(string &);
 
-        int GetBattleSpellCursor(std::string &);
+        int GetBattleSpellCursor(string &);
 
         int GetAllowSwordDirection(u32);
 

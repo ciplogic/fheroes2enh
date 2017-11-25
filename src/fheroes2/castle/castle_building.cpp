@@ -40,25 +40,25 @@ void CastleRedrawBuildingExtended(const Castle &, const Point &, u32 build, u32 
 
 Rect CastleGetCoordBuilding(int, building_t, const Point &);
 
-void CastlePackOrdersBuildings(const Castle &, std::vector<building_t> &);
+void CastlePackOrdersBuildings(const Castle &, vector<building_t> &);
 
 Rect CastleGetMaxArea(const Castle &, const Point &);
 
 void CastleDialog::RedrawBuildingSpriteToArea(const Sprite &sprite, s32 dst_x, s32 dst_y, const Rect &max)
 {
-    std::pair<Rect, Point> res = Rect::Fixed4Blit(Rect(dst_x, dst_y, sprite.w(), sprite.h()), max);
+    pair<Rect, Point> res = Rect::Fixed4Blit(Rect(dst_x, dst_y, sprite.w(), sprite.h()), max);
     sprite.Blit(res.first, res.second);
 }
 
 CastleDialog::CacheBuildings::CacheBuildings(const Castle &castle, const Point &top)
 {
-    std::vector<building_t> ordersBuildings;
+    vector<building_t> ordersBuildings;
 
     ordersBuildings.reserve(25);
 
     CastlePackOrdersBuildings(castle, ordersBuildings);
 
-    for (std::vector<building_t>::const_iterator
+    for (vector<building_t>::const_iterator
                  it = ordersBuildings.begin(); it != ordersBuildings.end(); ++it)
     {
         push_back(builds_t(*it, CastleGetCoordBuilding(castle.GetRace(), *it, top)));
@@ -67,7 +67,7 @@ CastleDialog::CacheBuildings::CacheBuildings(const Castle &castle, const Point &
 
 const Rect &CastleDialog::CacheBuildings::GetRect(building_t b) const
 {
-    const_iterator it = std::find(begin(), end(), b);
+    const_iterator it = find(begin(), end(), b);
     return it != end() ? (*it).coord : back().coord;
 }
 
@@ -204,14 +204,14 @@ void CastleRedrawCurrentBuilding(const Castle &castle, const Point &dst_pt,
         }
     }
         // redraw build with alpha
-    else if (orders.end() != std::find(orders.begin(), orders.end(), build))
+    else if (orders.end() != find(orders.begin(), orders.end(), build))
     {
         LocalEvent &le = LocalEvent::Get();
         int alpha = 1;
 
         while (le.HandleEvents() && alpha < 250)
         {
-            if (Game::AnimateInfrequentDelay(Game::CASTLE_BUILD_DELAY))
+            if (AnimateInfrequentDelay(Game::CASTLE_BUILD_DELAY))
             {
                 cursor.Hide();
 
@@ -850,7 +850,7 @@ Rect CastleGetCoordBuilding(int race, building_t building, const Point &pt)
     return Rect();
 }
 
-void CastlePackOrdersBuildings(const Castle &castle, std::vector<building_t> &ordersBuildings)
+void CastlePackOrdersBuildings(const Castle &castle, vector<building_t> &ordersBuildings)
 {
     ordersBuildings.reserve(30);
 

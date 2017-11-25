@@ -35,7 +35,7 @@
 #include "pocketpc.h"
 
 // dialog_thievesguild.cpp
-struct ValueColors : std::pair<int, int>
+struct ValueColors : pair<int, int>
 {
     ValueColors();
 
@@ -48,30 +48,30 @@ struct ValueColors : std::pair<int, int>
     static bool SortValueGreat(const ValueColors &v1, const ValueColors &v2);
 };
 
-void GetTownsInfo(std::vector<ValueColors> &, const Colors &);
+void GetTownsInfo(vector<ValueColors> &, const Colors &);
 
-void GetCastlesInfo(std::vector<ValueColors> &, const Colors &);
+void GetCastlesInfo(vector<ValueColors> &, const Colors &);
 
-void GetHeroesInfo(std::vector<ValueColors> &, const Colors &);
+void GetHeroesInfo(vector<ValueColors> &, const Colors &);
 
-void GetGoldsInfo(std::vector<ValueColors> &, const Colors &);
+void GetGoldsInfo(vector<ValueColors> &, const Colors &);
 
-void GetWoodOreInfo(std::vector<ValueColors> &, const Colors &);
+void GetWoodOreInfo(vector<ValueColors> &, const Colors &);
 
-void GetGemsCrSlfMerInfo(std::vector<ValueColors> &, const Colors &);
+void GetGemsCrSlfMerInfo(vector<ValueColors> &, const Colors &);
 
-void GetObelisksInfo(std::vector<ValueColors> &, const Colors &);
+void GetObelisksInfo(vector<ValueColors> &, const Colors &);
 
-void GetArmyInfo(std::vector<ValueColors> &, const Colors &);
+void GetArmyInfo(vector<ValueColors> &, const Colors &);
 
-void GetIncomesInfo(std::vector<ValueColors> &, const Colors &);
+void GetIncomesInfo(vector<ValueColors> &, const Colors &);
 
-void GetBestHeroArmyInfo(std::vector<ValueColors> &, const Colors &);
+void GetBestHeroArmyInfo(vector<ValueColors> &, const Colors &);
 
 // from dialog_thievesguild.cpp
-void DrawFlags(const std::vector<ValueColors> &, const Point &, u32 width, u32 count);
+void DrawFlags(const vector<ValueColors> &, const Point &, u32 width, u32 count);
 
-void DrawHeroIcons(const std::vector<ValueColors> &, const Point &, u32 width);
+void DrawHeroIcons(const vector<ValueColors> &, const Point &, u32 width);
 
 void PocketPC::ThievesGuild(bool oracle)
 {
@@ -91,7 +91,7 @@ void PocketPC::ThievesGuild(bool oracle)
     const u32 count = oracle ? 0xFF : world.GetKingdom(Settings::Get().CurrentColor()).GetCountBuilding(
             BUILD_THIEVESGUILD);
 
-    std::vector<ValueColors> v;
+    vector<ValueColors> v;
     v.reserve(KINGDOMMAX);
     const Colors colors(Game::GetActualKingdomColors());
     u32 textx = 115;

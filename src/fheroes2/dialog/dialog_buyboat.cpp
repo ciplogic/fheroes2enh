@@ -48,7 +48,7 @@ int Dialog::BuyBoat(bool enable)
     Text text(_("Build a new ship:"), Font::BIG);
     const int spacer = Settings::Get().QVGA() ? 5 : 10;
 
-    Dialog::FrameBox box(text.h() + spacer + sprite.h() + spacer + text.h() + spacer + rbs.GetArea().h - 20, true);
+    FrameBox box(text.h() + spacer + sprite.h() + spacer + text.h() + spacer + rbs.GetArea().h - 20, true);
 
     const Rect &box_rt = box.GetArea();
     Point dst_pt;
@@ -98,13 +98,13 @@ int Dialog::BuyBoat(bool enable)
         le.MousePressLeft(button2) ? button2.PressDraw() : button2.ReleaseDraw();
 
         if (button1.isEnable() &&
-            (Game::HotKeyPressEvent(Game::EVENT_DEFAULT_READY) || le.MouseClickLeft(button1)))
-            return Dialog::OK;
+            (HotKeyPressEvent(Game::EVENT_DEFAULT_READY) || le.MouseClickLeft(button1)))
+            return OK;
 
-        if (Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT) ||
+        if (HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT) ||
             le.MouseClickLeft(button2))
-            return Dialog::CANCEL;
+            return CANCEL;
     }
 
-    return Dialog::ZERO;
+    return ZERO;
 }

@@ -31,15 +31,15 @@
 #include "dir.h"
 
 
-wstring s2ws(const std::string& str)
+wstring s2ws(const string& str)
 {
-	return std::wstring(str.begin(), str.end());
+	return wstring(str.begin(), str.end());
 }
 
-string ws2s(const std::wstring& wstr)
+string ws2s(const wstring& wstr)
 {
-	using convert_typeX = std::codecvt_utf8<wchar_t>;
-	std::wstring_convert<convert_typeX, wchar_t> converterX;
+	using convert_typeX = codecvt_utf8<wchar_t>;
+	wstring_convert<convert_typeX, wchar_t> converterX;
 
 	return converterX.to_bytes(wstr);
 }
@@ -48,20 +48,48 @@ void ListFiles::Append(const ListFiles &list)
     insert(end(), list.begin(), list.end());
 }
 
-void ListFiles::ReadDir(const std::string &path, const std::string &filter, bool sensitive)
-{
 #ifdef WIN32
+vector<string> GetFilesOfDir(const string &path)
+{
 	HANDLE hFind;
 	WIN32_FIND_DATA FindFileData;
-	auto wPath = s2ws(path);
+	auto wPath = s2ws(path + "\\*.*");
+	vector<string> dirsInCurrent;
 	if ((hFind = FindFirstFile(wPath.c_str(), &FindFileData)) != INVALID_HANDLE_VALUE) {
 		do {
-
 			wstring wFileName = FindFileData.cFileName;
 			string fileName = ws2s(wFileName);
-			push_back(path + "\\"+ filter);
+			string fullFileName = path + "\\" + fileName;
+			if (System::IsFile(fullFileName))
+			{
+				dirsInCurrent.push_back(fullFileName);
+			}
+			
+
 		} while (FindNextFile(hFind, &FindFileData));
 		FindClose(hFind);
+	}
+	return dirsInCurrent;
+}
+#endif
+
+void ListFiles::ReadDir(const string &path, const string &filter, bool sensitive)
+{
+#ifdef WIN32
+	auto files = GetFilesOfDir(path);
+	if (filter.empty())
+	{
+		for(auto fullname : files)
+			push_back(fullname);
+		return;
+	}
+	for (auto fullname : files)
+	{
+		auto insensitiveFile = StringLower(fullname);
+		if (insensitiveFile.find(filter) != string::npos)
+		{
+			push_back(fullname);
+		}
 	}
 #else
 
@@ -100,7 +128,7 @@ void ListFiles::ReadDir(const std::string &path, const std::string &filter, bool
 
 }
 
-void ListDirs::Append(const std::list<std::string> &dirs)
+void ListDirs::Append(const list<string> &dirs)
 {
     insert(end(), dirs.begin(), dirs.end());
 }

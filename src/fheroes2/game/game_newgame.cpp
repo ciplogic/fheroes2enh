@@ -34,25 +34,25 @@
 int Game::NewStandard()
 {
     Settings &conf = Settings::Get();
-    conf.SetGameType(Game::TYPE_STANDARD);
+    conf.SetGameType(TYPE_STANDARD);
     conf.SetPreferablyCountPlayers(0);
-    return Game::SELECTSCENARIO;
+    return SELECTSCENARIO;
 }
 
 int Game::NewBattleOnly()
 {
     Settings &conf = Settings::Get();
-    conf.SetGameType(Game::TYPE_BATTLEONLY);
+    conf.SetGameType(TYPE_BATTLEONLY);
 
-    return Game::NEWMULTI;
+    return NEWMULTI;
 }
 
 int Game::NewHotSeat()
 {
     Settings &conf = Settings::Get();
-    conf.SetGameType(conf.GameType() | Game::TYPE_HOTSEAT);
+    conf.SetGameType(conf.GameType() | TYPE_HOTSEAT);
 
-    if (conf.GameType(Game::TYPE_BATTLEONLY))
+    if (conf.GameType(TYPE_BATTLEONLY))
     {
         conf.SetPreferablyCountPlayers(2);
         world.NewMaps(10, 10);
@@ -63,17 +63,17 @@ int Game::NewHotSeat()
         if (select)
         {
             conf.SetPreferablyCountPlayers(select);
-            return Game::SELECTSCENARIO;
+            return SELECTSCENARIO;
         }
     }
-    return Game::MAINMENU;
+    return MAINMENU;
 }
 
 int Game::NewCampain()
 {
-    Settings::Get().SetGameType(Game::TYPE_CAMPAIGN);
+    Settings::Get().SetGameType(TYPE_CAMPAIGN);
     VERBOSE("New Campain Game: under construction.");
-    return Game::NEWGAME;
+    return NEWGAME;
 }
 
 #ifdef NETWORK_ENABLE
@@ -139,7 +139,7 @@ int Game::NewGame()
     Settings &conf = Settings::Get();
 
     // reset last save name
-    Game::SetLastSavename("");
+    SetLastSavename("");
 
     if (conf.QVGA()) return PocketPC::NewGame();
 
@@ -235,8 +235,8 @@ int Game::NewMulti()
 {
     Settings &conf = Settings::Get();
 
-    if (!(conf.GameType(Game::TYPE_BATTLEONLY)))
-        conf.SetGameType(Game::TYPE_STANDARD);
+    if (!(conf.GameType(TYPE_BATTLEONLY)))
+        conf.SetGameType(TYPE_STANDARD);
 
     if (conf.QVGA()) return PocketPC::NewMulti();
 
@@ -351,7 +351,7 @@ u32 Game::SelectCountPlayers()
         if (le.MouseClickLeft(button5Players) || le.KeyPress(KEY_5)) return 5;
         if (le.MouseClickLeft(button6Players) || le.KeyPress(KEY_6)) return 6;
 
-        if (HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT) || le.MouseClickLeft(buttonCancel)) return 0;
+        if (HotKeyPressEvent(EVENT_DEFAULT_EXIT) || le.MouseClickLeft(buttonCancel)) return 0;
 
         // right info
         if (le.MousePressRight(button2Players))

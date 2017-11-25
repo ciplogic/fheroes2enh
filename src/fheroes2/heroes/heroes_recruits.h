@@ -28,7 +28,7 @@
 
 class Heroes;
 
-class Recruits : public std::pair<int, int>
+class Recruits : public pair<int, int>
 {
 public:
     Recruits();

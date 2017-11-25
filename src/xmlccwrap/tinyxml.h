@@ -1299,11 +1299,11 @@ class TiXmlComment : public TiXmlNode
 {
 public:
     /// Constructs an empty comment.
-    TiXmlComment() : TiXmlNode(TiXmlNode::COMMENT)
+    TiXmlComment() : TiXmlNode(COMMENT)
     {}
 
     /// Construct a comment from text.
-    TiXmlComment(const char *_value) : TiXmlNode(TiXmlNode::COMMENT)
+    TiXmlComment(const char *_value) : TiXmlNode(COMMENT)
     {
         SetValue(_value);
     }
@@ -1363,7 +1363,7 @@ public:
         normal, encoded text. If you want it be output as a CDATA text
         element, set the parameter _cdata to 'true'
     */
-    TiXmlText(const char *initValue) : TiXmlNode(TiXmlNode::TEXT)
+    TiXmlText(const char *initValue) : TiXmlNode(TEXT)
     {
         SetValue(initValue);
         cdata = false;
@@ -1381,7 +1381,7 @@ public:
     }
 #endif
 
-    TiXmlText(const TiXmlText &copy) : TiXmlNode(TiXmlNode::TEXT)
+    TiXmlText(const TiXmlText &copy) : TiXmlNode(TEXT)
     { copy.CopyTo(this); }
 
     void operator=(const TiXmlText &base)
@@ -1443,7 +1443,7 @@ class TiXmlDeclaration : public TiXmlNode
 {
 public:
     /// Construct an empty declaration.
-    TiXmlDeclaration() : TiXmlNode(TiXmlNode::DECLARATION)
+    TiXmlDeclaration() : TiXmlNode(DECLARATION)
     {}
 
 #ifdef TIXML_USE_STL
@@ -1524,13 +1524,13 @@ private:
 class TiXmlUnknown : public TiXmlNode
 {
 public:
-    TiXmlUnknown() : TiXmlNode(TiXmlNode::UNKNOWN)
+    TiXmlUnknown() : TiXmlNode(UNKNOWN)
     {}
 
     virtual ~TiXmlUnknown()
     {}
 
-    TiXmlUnknown(const TiXmlUnknown &copy) : TiXmlNode(TiXmlNode::UNKNOWN)
+    TiXmlUnknown(const TiXmlUnknown &copy) : TiXmlNode(UNKNOWN)
     { copy.CopyTo(this); }
 
     void operator=(const TiXmlUnknown &copy)

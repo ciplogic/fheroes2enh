@@ -33,7 +33,7 @@ namespace Translation
 
     const char *gettext(const char *str);
 
-    const char *gettext(const std::string &str);
+    const char *gettext(const string &str);
 
     const char *dgettext(const char *domain, const char *str);
 

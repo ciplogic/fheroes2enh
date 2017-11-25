@@ -60,9 +60,9 @@ int Game::ScenarioInfo()
     AGG::PlayMusic(MUS::MAINMENU);
 
     MapsFileInfoList lists;
-    if (!PrepareMapsFileInfoList(lists, (conf.GameType(Game::TYPE_MULTI))))
+    if (!PrepareMapsFileInfoList(lists, (conf.GameType(TYPE_MULTI))))
     {
-        Dialog::Message(_("Warning"), _("No maps available!"), Font::BIG, Dialog::OK);
+        Message(_("Warning"), _("No maps available!"), Font::BIG, Dialog::OK);
         return MAINMENU;
     }
 
@@ -198,7 +198,7 @@ int Game::ScenarioInfo()
 
         // click select
         if (buttonSelectMaps &&
-            (HotKeyPressEvent(Game::EVENT_BUTTON_SELECT) || le.MouseClickLeft(*buttonSelectMaps)))
+            (HotKeyPressEvent(EVENT_BUTTON_SELECT) || le.MouseClickLeft(*buttonSelectMaps)))
         {
             levelCursor.Hide();
             const Maps::FileInfo *fi = Dialog::SelectScenario(lists);
@@ -292,13 +292,13 @@ int Game::ScenarioInfo()
     {
         players.SetStartGame();
         if (conf.ExtGameUseFade()) display.Fade();
-        Game::ShowLoadMapsText();
+        ShowLoadMapsText();
         // Load maps
-        std::string lower = StringLower(conf.MapsFile());
+        string lower = StringLower(conf.MapsFile());
 
         if (lower.size() > 3)
         {
-            std::string ext = lower.substr(lower.size() - 3);
+            string ext = lower.substr(lower.size() - 3);
 
             if (ext == "mp2" || ext == "mx2")
                 result = world.LoadMapMP2(conf.MapsFile()) ? STARTGAME : MAINMENU;
@@ -386,7 +386,7 @@ void RedrawDifficultyInfo(const Point &dst, bool label)
 void RedrawRatingInfo(TextSprite &sprite)
 {
     sprite.Hide();
-    std::string str(_("Rating %{rating}%"));
+    string str(_("Rating %{rating}%"));
     StringReplace(str, "%{rating}", Game::GetRating());
     sprite.SetText(str);
     sprite.Show();

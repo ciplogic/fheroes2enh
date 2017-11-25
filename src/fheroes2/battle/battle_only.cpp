@@ -118,7 +118,7 @@ StreamBase &operator>>(StreamBase &msg, Battle::Only &b)
 Recruits Battle::Only::GetHeroesFromStreamBuf(StreamBuf &msg)
 {
     Recruits heroes;
-    Battle::Only b;
+    Only b;
     msg >> b;
     heroes.SetHero1(b.hero1);
     heroes.SetHero2(b.hero2);
@@ -224,18 +224,18 @@ bool Battle::Only::ChangeSettings()
         le.MousePressLeft(buttonStart) ? buttonStart.PressDraw() : buttonStart.ReleaseDraw();
 
         if ((buttonStart.isEnable() && le.MouseClickLeft(buttonStart)) ||
-            Game::HotKeyPressEvent(Game::EVENT_DEFAULT_READY))
+            HotKeyPressEvent(Game::EVENT_DEFAULT_READY))
         {
             result = true;
             exit = true;
-        } else if (Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT)) exit = true;
+        } else if (HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT)) exit = true;
 
         if (allow1 && le.MouseClickLeft(rtPortrait1))
         {
             int hid = Dialog::SelectHeroes(hero1->GetID());
             if (hero2 && hid == hero2->GetID())
             {
-                Dialog::Message("Error", "Please, select other hero.", Font::BIG, Dialog::OK);
+                Message("Error", "Please, select other hero.", Font::BIG, Dialog::OK);
             } else if (Heroes::UNKNOWN != hid)
             {
                 hero1 = world.GetHeroes(hid);
@@ -248,7 +248,7 @@ bool Battle::Only::ChangeSettings()
             int hid = Dialog::SelectHeroes(hero2 ? hero2->GetID() : Heroes::UNKNOWN);
             if (hid == hero1->GetID())
             {
-                Dialog::Message("Error", "Please, select other hero.", Font::BIG, Dialog::OK);
+                Message("Error", "Please, select other hero.", Font::BIG, Dialog::OK);
             } else if (Heroes::UNKNOWN != hid)
             {
                 hero2 = world.GetHeroes(hid);
@@ -619,12 +619,12 @@ void Battle::Only::RedrawBaseInfo(const Point &top)
     AGG::GetICN(ICN::SWAPWIN, 0).Blit(top);
 
     // header
-    std::string message = "%{name1} vs %{name2}";
+    string message = "%{name1} vs %{name2}";
 
-    StringReplace(message, "%{name1}", std::string(Race::String(hero1->GetRace())) + " " + hero1->GetName());
+    StringReplace(message, "%{name1}", string(Race::String(hero1->GetRace())) + " " + hero1->GetName());
     if (hero2)
         StringReplace(message, "%{name2}",
-                      (hero2 ? std::string(Race::String(hero2->GetRace())) + " " + hero2->GetName() : "Monsters"));
+                      (hero2 ? string(Race::String(hero2->GetRace())) + " " + hero2->GetName() : "Monsters"));
 
     Text text(message, Font::BIG);
     text.Blit(top.x + 320 - text.w() / 2, top.y + 26);
@@ -675,6 +675,6 @@ void Battle::Only::StartBattle()
             hero2->Recruit(player2.GetColor(), Point(5, 6));
         }
 
-        Battle::Loader(hero1->GetArmy(), (hero2 ? hero2->GetArmy() : monsters), hero1->GetIndex() + 1);
+        Loader(hero1->GetArmy(), (hero2 ? hero2->GetArmy() : monsters), hero1->GetIndex() + 1);
     }
 }

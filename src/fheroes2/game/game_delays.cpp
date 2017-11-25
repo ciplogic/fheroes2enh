@@ -27,7 +27,7 @@
 #include "game.h"
 #include <functional>
 
-struct TimeDelay : std::pair<SDL::Time, int>
+struct TimeDelay : pair<SDL::Time, int>
 {
     TimeDelay(int dl)
     {
@@ -99,7 +99,7 @@ namespace Game
 
 void Game::AnimateDelaysInitialize()
 {
-    std::for_each(&delays[0], &delays[LAST_DELAY], std::mem_fun_ref(&TimeDelay::Reset));
+    for_each(&delays[0], &delays[LAST_DELAY], mem_fun_ref(&TimeDelay::Reset));
     UpdateHeroesMoveSpeed();
     UpdateBattleSpeed();
 }
@@ -165,7 +165,7 @@ void Game::UpdateBattleSpeed()
                            BATTLE_CATAPULT_DELAY, BATTLE_CATAPULT2_DELAY, BATTLE_CATAPULT3_DELAY, BATTLE_BRIDGE_DELAY};
 
         DEBUG(DBG_GAME, DBG_INFO, "set battle speed: " << conf.BattleSpeed());
-        std::ostringstream os;
+        ostringstream os;
 
         for (u32 it = 0; it < ARRAY_COUNT(ids); ++it)
         {

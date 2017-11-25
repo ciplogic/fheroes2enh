@@ -115,10 +115,10 @@ namespace Battle
 
     StreamBase &operator>>(StreamBase &, Cell &);
 
-    class Position : protected std::pair<Cell *, Cell *>
+    class Position : protected pair<Cell *, Cell *>
     {
     public:
-        Position() : std::pair<Cell *, Cell *>(nullptr, nullptr)
+        Position() : pair<Cell *, Cell *>(nullptr, nullptr)
         {}
 
         void Set(s32 head, bool wide, bool reflect);

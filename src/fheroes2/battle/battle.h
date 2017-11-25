@@ -81,9 +81,9 @@ namespace Battle
 
     Result Loader(Army &, Army &, s32);
 
-    void UpdateMonsterSpriteAnimation(const std::string &);
+    void UpdateMonsterSpriteAnimation(const string &);
 
-    void UpdateMonsterAttributes(const std::string &);
+    void UpdateMonsterAttributes(const string &);
 
     enum
     {
@@ -154,7 +154,7 @@ namespace Battle
 
     StreamBase &operator>>(StreamBase &, TargetInfo &);
 
-    struct TargetsInfo : public std::vector<TargetInfo>
+    struct TargetsInfo : public vector<TargetInfo>
     {
         TargetsInfo()
         {}

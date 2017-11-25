@@ -76,13 +76,13 @@ public:
 
     virtual bool isModes(u32) const;
 
-    virtual std::string GetAttackString() const;
+    virtual string GetAttackString() const;
 
-    virtual std::string GetDefenseString() const;
+    virtual string GetDefenseString() const;
 
-    virtual std::string GetShotString() const;
+    virtual string GetShotString() const;
 
-    virtual std::string GetSpeedString() const;
+    virtual string GetSpeedString() const;
 
     virtual u32 GetHitPointsLeft() const;
 
@@ -125,9 +125,9 @@ public:
 
     const Army *GetArmy() const;
 
-    std::string GetAttackString() const;
+    string GetAttackString() const;
 
-    std::string GetDefenseString() const;
+    string GetDefenseString() const;
 
 protected:
     const Army *army;

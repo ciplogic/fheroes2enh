@@ -279,13 +279,13 @@ const Maps::FileInfo *Dialog::SelectScenario(const MapsFileInfoList &all)
         listbox.QueueEventProcessing();
 
         if ((buttonOk.isEnable() && le.MouseClickLeft(buttonOk)) ||
-            Game::HotKeyPressEvent(Game::EVENT_DEFAULT_READY) ||
+            HotKeyPressEvent(Game::EVENT_DEFAULT_READY) ||
             listbox.selectOk)
         {
-            MapsFileInfoList::const_iterator it = std::find(all.begin(), all.end(), listbox.GetCurrent());
+            MapsFileInfoList::const_iterator it = find(all.begin(), all.end(), listbox.GetCurrent());
             result = it != all.end() ? &(*it) : nullptr;
             break;
-        } else if (Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
+        } else if (HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
         {
             result = nullptr;
             break;
@@ -317,25 +317,25 @@ const Maps::FileInfo *Dialog::SelectScenario(const MapsFileInfoList &all)
 
         // right info
         if (le.MousePressRight(buttonSelectSmall))
-            Dialog::Message(_("Small Maps"), _("View only maps of size small (36x36)."), Font::BIG);
+            Message(_("Small Maps"), _("View only maps of size small (36x36)."), Font::BIG);
         else if (le.MousePressRight(buttonSelectMedium))
-            Dialog::Message(_("Medium Maps"), _("View only maps of size medium (72x72)."), Font::BIG);
+            Message(_("Medium Maps"), _("View only maps of size medium (72x72)."), Font::BIG);
         else if (le.MousePressRight(buttonSelectLarge))
-            Dialog::Message(_("Large Maps"), _("View only maps of size large (108x108)."), Font::BIG);
+            Message(_("Large Maps"), _("View only maps of size large (108x108)."), Font::BIG);
         else if (le.MousePressRight(buttonSelectXLarge))
-            Dialog::Message(_("Extra Large Maps"), _("View only maps of size extra large (144x144)."), Font::BIG);
+            Message(_("Extra Large Maps"), _("View only maps of size extra large (144x144)."), Font::BIG);
         else if (le.MousePressRight(buttonSelectAll))
-            Dialog::Message(_("All Maps"), _("View all maps, regardless of size."), Font::BIG);
+            Message(_("All Maps"), _("View all maps, regardless of size."), Font::BIG);
         else if (le.MousePressRight(countPlayers) || le.MousePressRight(curCountPlayer))
-            Dialog::Message(_("Players Icon"),
+            Message(_("Players Icon"),
                             _("Indicates how many players total are in the EditScenario. Any positions not occupied by humans will be occupied by computer players."),
                             Font::BIG);
         else if (le.MousePressRight(sizeMaps) || le.MousePressRight(curMapSize))
-            Dialog::Message(_("Size Icon"),
+            Message(_("Size Icon"),
                             _("Indicates whether the maps is small (36x36), medium (72x72), large (108x108), or extra large (144x144)."),
                             Font::BIG);
         else if (le.MousePressRight(curMapName))
-            Dialog::Message(_("Selected Name"), _("The name of the currently selected map."), Font::BIG);
+            Message(_("Selected Name"), _("The name of the currently selected map."), Font::BIG);
         else if (le.MousePressRight(victoryConds))
         {
             const Maps::FileInfo *item = listbox.GetFromPosition(le.GetMouseCursor());
@@ -347,12 +347,12 @@ const Maps::FileInfo *Dialog::SelectScenario(const MapsFileInfoList &all)
         } else if (le.MousePressRight(curVictoryCond)) VictoryConditionInfo(listbox.GetCurrent());
         else if (le.MousePressRight(curLossCond)) LossConditionInfo(listbox.GetCurrent());
         else if (le.MousePressRight(curDifficulty))
-            Dialog::Message(_("Selected Map Difficulty"),
+            Message(_("Selected Map Difficulty"),
                             _("The map difficulty of the currently selected map.  The map difficulty is determined by the EditScenario designer. More difficult maps might include more or stronger enemies, fewer resources, or other special conditions making things tougher for the human player."),
                             Font::BIG);
         else if (le.MousePressRight(curDescription))
-            Dialog::Message(_("Selected Description"), _("The description of the currently selected map."), Font::BIG);
-        else if (le.MousePressRight(buttonOk)) Dialog::Message(_("OK"), _("Accept the choice made."), Font::BIG);
+            Message(_("Selected Description"), _("The description of the currently selected map."), Font::BIG);
+        else if (le.MousePressRight(buttonOk)) Message(_("OK"), _("Accept the choice made."), Font::BIG);
 
         if (!cursor.isVisible())
         {
@@ -376,7 +376,7 @@ const Maps::FileInfo *Dialog::SelectScenario(const MapsFileInfoList &all)
 
 void LossConditionInfo(const Maps::FileInfo &info)
 {
-    std::string msg;
+    string msg;
 
     switch (info.conditions_loss)
     {
@@ -400,7 +400,7 @@ void LossConditionInfo(const Maps::FileInfo &info)
 
 void VictoryConditionInfo(const Maps::FileInfo &info)
 {
-    std::string msg;
+    string msg;
 
     switch (info.conditions_wins)
     {

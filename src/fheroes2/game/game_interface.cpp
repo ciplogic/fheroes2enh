@@ -202,17 +202,17 @@ void Interface::Basic::Redraw(int force)
 
 void Interface::Basic::RedrawSystemInfo(s32 cx, s32 cy, u32 usage)
 {
-    std::ostringstream os;
+    ostringstream os;
 
     os << "mem. usage: " << usage / 1024 << "Kb" << ", cur. time: ";
 
     time_t rawtime;
-    std::time(&rawtime);
+    time(&rawtime);
     // strtime format: Www Mmm dd hh:mm:ss yyyy
-    const char *strtime = std::ctime(&rawtime);
+    const char *strtime = ctime(&rawtime);
 
     // draw info
-    os << std::string(&strtime[11], 8);
+    os << string(&strtime[11], 8);
 
     system_info.Set(os.str());
     system_info.Blit(cx, cy);

@@ -32,7 +32,7 @@ UltimateArtifact::UltimateArtifact() : index(-1), isfound(false)
 void UltimateArtifact::Set(s32 pos, const Artifact &a)
 {
     Artifact &art = *this;
-    art = a.isValid() ? a : Artifact::Rand(Artifact::ART_ULTIMATE);
+    art = a.isValid() ? a : Rand(ART_ULTIMATE);
     index = pos;
     isfound = false;
 

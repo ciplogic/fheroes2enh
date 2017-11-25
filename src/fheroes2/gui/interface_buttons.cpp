@@ -43,7 +43,7 @@ void Interface::ButtonsArea::SetRedraw() const
 
 void Interface::ButtonsArea::SetPos(s32 ox, s32 oy)
 {
-    BorderWindow::SetPosition(ox, oy);
+    SetPosition(ox, oy);
 
     const int icnbtn = Settings::Get().ExtGameEvilInterface() ? ICN::ADVEBTNS : ICN::ADVBTNS;
 

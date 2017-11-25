@@ -47,32 +47,41 @@ namespace std
 
 #include "dir.h"
 #include <vector>
+#include <functional>
 
 namespace System
 {
+	struct ScopeExit
+	{
+		explicit ScopeExit(function<void()> action);
+		~ScopeExit();
+	private:
+		function<void()> _action;
+
+	};
     int SetEnvironment(const char *name, const char *value);
 
     const char *GetEnvironment(const char *name);
 
-    int MakeDirectory(const std::string &);
+    int MakeDirectory(const string &);
 
-    std::string ConcatePath(const std::string &, const std::string &);
+    string ConcatePath(const string &, const string &);
 
-    ListDirs GetDataDirectories(const std::string &);
+    ListDirs GetDataDirectories(const string &);
 
-    ListFiles GetListFiles(const std::string &, const std::string &, const std::string &);
+    ListFiles GetListFiles(const string &, const string &, const string &);
 
-    std::string GetHomeDirectory(const std::string &);
+    string GetHomeDirectory(const string &);
 
-    std::string GetDirname(const std::string &);
+    string GetDirname(const string &);
 
-    std::string GetBasename(const std::string &);
+    string GetBasename(const string &);
 
-    std::string GetTime();
+    string GetTime();
 
     void SetLocale(int, const char *);
 
-    std::string GetMessageLocale(int /* 3: en_us.utf-8, 2: en_us, 1: en */);
+    string GetMessageLocale(int /* 3: en_us.utf-8, 2: en_us, 1: en */);
 
     size_t GetMemoryUsage();
 
@@ -80,11 +89,11 @@ namespace System
 
     char *GetOptionsArgument();
 
-    bool IsFile(const std::string &name, bool writable = false);
+    bool IsFile(const string &name, bool writable = false);
 
-    bool IsDirectory(const std::string &name, bool writable = false);
+    bool IsDirectory(const string &name, bool writable = false);
 
-    int Unlink(const std::string &);
+    int Unlink(const string &);
 
     bool isEmbededDevice();
 

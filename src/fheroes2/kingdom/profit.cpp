@@ -63,7 +63,7 @@ profitstats_t _profits[] = {
         {nullptr,                    {0,     0, 0, 0, 0, 0, 0}},
 };
 
-void ProfitConditions::UpdateCosts(const std::string &spec)
+void ProfitConditions::UpdateCosts(const string &spec)
 {
 #ifdef WITH_XML
     // parse profits.xml
@@ -116,7 +116,7 @@ payment_t ProfitConditions::FromBuilding(u32 building, int race)
     if (id)
     {
         profitstats_t *ptr = &_profits[0];
-        while (ptr->id && std::strcmp(id, ptr->id)) ++ptr;
+        while (ptr->id && strcmp(id, ptr->id)) ++ptr;
         if (ptr->id) result = ptr->cost;
     }
 
@@ -170,7 +170,7 @@ payment_t ProfitConditions::FromArtifact(int artifact)
     if (id)
     {
         profitstats_t *ptr = &_profits[0];
-        while (ptr->id && std::strcmp(id, ptr->id)) ++ptr;
+        while (ptr->id && strcmp(id, ptr->id)) ++ptr;
         if (ptr->id) result = ptr->cost;
     }
 
@@ -212,7 +212,7 @@ payment_t ProfitConditions::FromMine(int type)
     if (id)
     {
         profitstats_t *ptr = &_profits[0];
-        while (ptr->id && std::strcmp(id, ptr->id)) ++ptr;
+        while (ptr->id && strcmp(id, ptr->id)) ++ptr;
         if (ptr->id) result = ptr->cost;
     }
 

@@ -54,7 +54,7 @@ int Dialog::SelectSkillFromArena()
     const Sprite &sprite = AGG::GetICN(ICN::XPRIMARY, 0);
     const int spacer = Settings::Get().QVGA() ? 5 : 10;
 
-    Dialog::FrameBox box(textbox.h() + spacer + sprite.h() + 15, true);
+    FrameBox box(textbox.h() + spacer + sprite.h() + 15, true);
 
     const Rect &box_rt = box.GetArea();
     Point dst_pt = box_rt;
@@ -122,11 +122,11 @@ int Dialog::SelectSkillFromArena()
     {
         le.MousePressLeft(buttonOk) ? buttonOk.PressDraw() : buttonOk.ReleaseDraw();
 
-        if (Game::HotKeyPressEvent(Game::EVENT_DEFAULT_LEFT) && Skill::Primary::UNKNOWN != InfoSkillPrev(res))
+        if (HotKeyPressEvent(Game::EVENT_DEFAULT_LEFT) && Skill::Primary::UNKNOWN != InfoSkillPrev(res))
         {
             res = InfoSkillPrev(res);
             redraw = true;
-        } else if (Game::HotKeyPressEvent(Game::EVENT_DEFAULT_RIGHT) && Skill::Primary::UNKNOWN != InfoSkillNext(res))
+        } else if (HotKeyPressEvent(Game::EVENT_DEFAULT_RIGHT) && Skill::Primary::UNKNOWN != InfoSkillNext(res))
         {
             res = InfoSkillNext(res);
             redraw = true;
@@ -158,7 +158,7 @@ int Dialog::SelectSkillFromArena()
             redraw = false;
         }
 
-        if (Game::HotKeyPressEvent(Game::EVENT_DEFAULT_READY) || le.MouseClickLeft(buttonOk)) break;
+        if (HotKeyPressEvent(Game::EVENT_DEFAULT_READY) || le.MouseClickLeft(buttonOk)) break;
     }
 
     cursor.Hide();

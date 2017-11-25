@@ -152,7 +152,7 @@ void Interface::IconsBar::RedrawBackground(const Point &pos)
     icnadv.Blit(srcrt, dstpt);
 
     for (u32 ii = 0; ii < iconsCount; ++ii)
-        back.Blit(pos.x + 5, pos.y + 5 + ii * (IconsBar::GetItemHeight() + 10));
+        back.Blit(pos.x + 5, pos.y + 5 + ii * (GetItemHeight() + 10));
 }
 
 /* Interface::CastleIcons */
@@ -174,12 +174,12 @@ void Interface::CastleIcons::RedrawBackground(const Point &pos)
 
 void Interface::CastleIcons::ActionCurrentUp()
 {
-    Interface::Basic::Get().SetFocus(GetCurrent());
+    Basic::Get().SetFocus(GetCurrent());
 }
 
 void Interface::CastleIcons::ActionCurrentDn()
 {
-    Interface::Basic::Get().SetFocus(GetCurrent());
+    Basic::Get().SetFocus(GetCurrent());
 }
 
 void Interface::CastleIcons::ActionListDoubleClick(CASTLE &item)
@@ -197,7 +197,7 @@ void Interface::CastleIcons::ActionListSingleClick(CASTLE &item)
 {
     if (item)
     {
-        Interface::Basic &I = Interface::Basic::Get();
+        Basic &I = Basic::Get();
 
         I.SetFocus(item);
         I.RedrawFocus();
@@ -220,7 +220,7 @@ void Interface::CastleIcons::SetShow(bool f)
 {
     IconsBar::SetShow(f);
 
-    if (IconsBar::IsVisible())
+    if (IsVisible())
     {
         if (f)
             GetSplitter().ShowCursor();
@@ -267,12 +267,12 @@ void Interface::HeroesIcons::RedrawBackground(const Point &pos)
 
 void Interface::HeroesIcons::ActionCurrentUp()
 {
-    Interface::Basic::Get().SetFocus(GetCurrent());
+    Basic::Get().SetFocus(GetCurrent());
 }
 
 void Interface::HeroesIcons::ActionCurrentDn()
 {
-    Interface::Basic::Get().SetFocus(GetCurrent());
+    Basic::Get().SetFocus(GetCurrent());
 }
 
 void Interface::HeroesIcons::ActionListDoubleClick(HEROES &item)
@@ -295,7 +295,7 @@ void Interface::HeroesIcons::ActionListSingleClick(HEROES &item)
 {
     if (item)
     {
-        Interface::Basic &I = Interface::Basic::Get();
+        Basic &I = Basic::Get();
 
         I.SetFocus(item);
         I.RedrawFocus();
@@ -318,7 +318,7 @@ void Interface::HeroesIcons::SetShow(bool f)
 {
     IconsBar::SetShow(f);
 
-    if (IconsBar::IsVisible())
+    if (IsVisible())
     {
         if (f)
             GetSplitter().ShowCursor();
@@ -403,7 +403,7 @@ void Interface::IconsPanel::SetPos(s32 ox, s32 oy)
         iconsCount = count_h > 3 ? 8 : (count_h < 3 ? 4 : 7);
     }
 
-    BorderWindow::SetPosition(ox, oy, 144, iconsCount * ICONS_CURSOR_HEIGHT);
+    SetPosition(ox, oy, 144, iconsCount * ICONS_CURSOR_HEIGHT);
 
     const Rect &area = GetArea();
 

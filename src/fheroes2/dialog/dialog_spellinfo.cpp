@@ -31,7 +31,7 @@
 
 void Dialog::SpellInfo(const Spell &spell, bool ok_button)
 {
-    std::string msg = spell.GetDescription();
+    string msg = spell.GetDescription();
     u32 extra = spell.ExtraValue();
 
     switch (spell())
@@ -52,10 +52,10 @@ void Dialog::SpellInfo(const Spell &spell, bool ok_button)
     else
         StringReplace(msg, "%{count}", extra);
 
-    Dialog::SpellInfo(spell.GetName(), msg, spell, ok_button);
+    SpellInfo(spell.GetName(), msg, spell, ok_button);
 }
 
-void Dialog::SpellInfo(const std::string &header, const std::string &message, const Spell &spell, bool ok_button)
+void Dialog::SpellInfo(const string &header, const string &message, const Spell &spell, bool ok_button)
 {
     Display &display = Display::Get();
     const int system = Settings::Get().ExtGameEvilInterface() ? ICN::SYSTEME : ICN::SYSTEM;

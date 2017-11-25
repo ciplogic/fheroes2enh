@@ -62,9 +62,9 @@ public:
 
     bool ActionBarCursor(const Point &, ArmyTroop &, const Rect &, ArmyTroop &, const Rect &);
 
-    bool QueueEventProcessing(std::string * = nullptr);
+    bool QueueEventProcessing(string * = nullptr);
 
-    bool QueueEventProcessing(ArmyBar &, std::string * = nullptr);
+    bool QueueEventProcessing(ArmyBar &, string * = nullptr);
 
 protected:
     Army *army;
@@ -73,7 +73,7 @@ protected:
     bool use_mini_sprite;
     bool read_only;
     bool can_change;
-    std::string msg;
+    string msg;
 };
 bool CanUpgradeTroop(Troop& troop, Army* army);
 

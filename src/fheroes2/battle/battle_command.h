@@ -53,7 +53,7 @@ namespace Battle
         MSG_UNKNOWN
     };
 
-    class Command : public std::vector<int>
+    class Command : public vector<int>
     {
         int type;
 

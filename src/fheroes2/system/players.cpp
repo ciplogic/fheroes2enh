@@ -83,7 +83,7 @@ Player::Player(int col) : control(CONTROL_NONE), color(col), race(Race::NONE), f
     name = Color::String(color);
 }
 
-const std::string &Player::GetName() const
+const string &Player::GetName() const
 {
     return name;
 }
@@ -133,7 +133,7 @@ bool Player::isColor(int col) const
     return col == color;
 }
 
-bool Player::isName(const std::string &str) const
+bool Player::isName(const string &str) const
 {
     return str == name;
 }
@@ -148,7 +148,7 @@ void Player::SetFriends(int f)
     friends = f;
 }
 
-void Player::SetName(const std::string &n)
+void Player::SetName(const string &n)
 {
     name = n;
 }
@@ -259,7 +259,7 @@ void Players::clear()
     for (auto& it : *this)
         delete it;
 
-    std::vector<Player *>::clear();
+    vector<Player *>::clear();
 
     for (u32 ii = 0; ii < KINGDOMMAX + 1; ++ii)
         _players[ii] = nullptr;
@@ -412,10 +412,10 @@ void Players::SetPlayerInGame(int color, bool f)
 
 void Players::SetStartGame()
 {
-    for_each(begin(), end(), std::bind2nd(std::mem_fun(&Player::SetPlay), true));
-    for_each(begin(), end(), std::ptr_fun(&PlayerFocusReset));
-    for_each(begin(), end(), std::ptr_fun(&PlayerFixRandomRace));
-    for_each(begin(), end(), std::ptr_fun(&PlayerFixMultiControl));
+    for_each(begin(), end(), bind2nd(mem_fun(&Player::SetPlay), true));
+    for_each(begin(), end(), ptr_fun(&PlayerFocusReset));
+    for_each(begin(), end(), ptr_fun(&PlayerFixRandomRace));
+    for_each(begin(), end(), ptr_fun(&PlayerFixMultiControl));
 
     current_color = Color::NONE;
     human_colors = Color::NONE;
@@ -435,20 +435,20 @@ int Players::FriendColors()
     int colors = 0;
     const Players &players = Settings::Get().GetPlayers();
 
-    if (players.current_color & Players::HumanColors())
+    if (players.current_color & HumanColors())
     {
         const Player *player = players.GetCurrent();
         if (player)
             colors = player->GetFriends();
     } else
-        colors = Players::HumanColors();
+        colors = HumanColors();
 
     return colors;
 }
 
-std::string Players::String() const
+string Players::String() const
 {
-    std::ostringstream os;
+    ostringstream os;
     os << "Players: ";
 
     for (auto it : *this)
@@ -532,7 +532,7 @@ void Interface::PlayersInfo::UpdateInfo(Players &players, const Point &pt1, cons
 
     for (auto it = players.begin(); it != players.end(); ++it)
     {
-        const u32 current = std::distance(players.begin(), it);
+        const u32 current = distance(players.begin(), it);
         PlayerInfo info;
 
         info.player = *it;
@@ -686,7 +686,7 @@ void Interface::PlayersInfo::RedrawInfo(
 
         if (show_race)
         {
-            const std::string &name = (Race::NECR == player.GetRace() ? _("Necroman") : Race::String(player.GetRace()));
+            const string &name = (Race::NECR == player.GetRace() ? _("Necroman") : Race::String(player.GetRace()));
             Text text(name, Font::SMALL);
             text.Blit(rect2.x + (rect2.w - text.w()) / 2, rect2.y + rect2.h + 2);
         }
@@ -754,8 +754,8 @@ bool Interface::PlayersInfo::QueueEventProcessing()
             // modify name
         if (show_name && nullptr != (player = GetFromOpponentNameClick(le.GetMouseCursor())))
         {
-            std::string res;
-            std::string str = _("%{color} player");
+            string res;
+            string str = _("%{color} player");
             StringReplace(str, "%{color}", Color::String(player->GetColor()));
 
             if (Dialog::InputString(str, res) && !res.empty())
@@ -798,12 +798,12 @@ bool Interface::PlayersInfo::QueueEventProcessing()
         if (show_swap &&
             !conf.QVGA() && nullptr != (player = GetFromOpponentChangeClick(le.GetMouseCursor())))
         {
-            auto it = std::find(begin(), end(), player);
+            auto it = find(begin(), end(), player);
             if (it != end() && (it + 1) != end())
             {
                 Players &players = conf.GetPlayers();
-                auto it1 = std::find(players.begin(), players.end(), (*it).player);
-                auto it2 = std::find(players.begin(), players.end(), (*(it + 1)).player);
+                auto it1 = find(players.begin(), players.end(), (*it).player);
+                auto it2 = find(players.begin(), players.end(), (*(it + 1)).player);
 
                 if (it1 != players.end() && it2 != players.end())
                 {

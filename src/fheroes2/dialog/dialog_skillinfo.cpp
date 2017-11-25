@@ -35,7 +35,7 @@ void Dialog::SecondarySkillInfo(const Skill::Secondary &skill, const bool ok_but
     SecondarySkillInfo(skill.GetName(), skill.GetDescription(), skill, ok_button);
 }
 
-void Dialog::SecondarySkillInfo(const std::string &header, const std::string &message, const Skill::Secondary &skill,
+void Dialog::SecondarySkillInfo(const string &header, const string &message, const Skill::Secondary &skill,
                                 const bool ok_button)
 {
     Display &display = Display::Get();
@@ -114,7 +114,7 @@ void Dialog::SecondarySkillInfo(const std::string &header, const std::string &me
     if (button) delete button;
 }
 
-void Dialog::PrimarySkillInfo(const std::string &header, const std::string &message, int skill)
+void Dialog::PrimarySkillInfo(const string &header, const string &message, int skill)
 {
     Display &display = Display::Get();
     const int system = Settings::Get().ExtGameEvilInterface() ? ICN::SYSTEME : ICN::SYSTEM;
@@ -126,7 +126,7 @@ void Dialog::PrimarySkillInfo(const std::string &header, const std::string &mess
     cursor.SetThemes(cursor.POINTER);
 
     int index = 0;
-    std::string skill_name;
+    string skill_name;
 
     switch (skill)
     {
@@ -159,7 +159,7 @@ void Dialog::PrimarySkillInfo(const std::string &header, const std::string &mess
     const Sprite &border = AGG::GetICN(ICN::PRIMSKIL, 4);
     const int spacer = Settings::Get().QVGA() ? 5 : 10;
 
-    FrameBox box(box1.h() + spacer + box2.h() + spacer + border.h(), Dialog::OK);
+    FrameBox box(box1.h() + spacer + box2.h() + spacer + border.h(), OK);
     Rect pos = box.GetArea();
 
     if (header.size()) box1.Blit(pos);

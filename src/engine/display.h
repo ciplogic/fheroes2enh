@@ -24,6 +24,7 @@
 
 #include <string>
 #include "surface.h"
+using namespace std;
 
 class Texture;
 
@@ -36,7 +37,7 @@ public:
 
     Size GetSize() const;
 
-    std::string GetInfo() const;
+    string GetInfo() const;
 
     Size GetMaxMode(bool enable_rotate) const;
 

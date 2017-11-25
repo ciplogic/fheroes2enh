@@ -27,6 +27,7 @@
 #include <utility>
 #include <iterator>
 #include "types.h"
+using namespace std;
 
 namespace Rand
 {
@@ -35,24 +36,24 @@ namespace Rand
     u32 Get(u32 min, u32 max = 0);
 
     template<typename T>
-    const T *Get(const std::vector<T> &vec)
+    const T *Get(const vector<T> &vec)
     {
-        typename std::vector<T>::const_iterator it = vec.begin();
+        typename vector<T>::const_iterator it = vec.begin();
         std::advance(it, Rand::Get(vec.size() - 1));
         return it == vec.end() ? nullptr : &(*it);
     }
 
     template<typename T>
-    const T *Get(const std::list<T> &list)
+    const T *Get(const list<T> &lst)
     {
-        typename std::list<T>::const_iterator it = list.begin();
-        std::advance(it, Rand::Get(list.size() - 1));
-        return it == list.end() ? nullptr : &(*it);
+        auto it = lst.begin();
+        std::advance(it, Rand::Get(lst.size() - 1));
+        return it == lst.end() ? nullptr : &(*it);
     }
 
-    typedef std::pair<s32, u32> ValuePercent;
+    typedef pair<s32, u32> ValuePercent;
 
-    class Queue : private std::vector<ValuePercent>
+    class Queue : private vector<ValuePercent>
     {
     public:
         Queue(u32 size = 0);

@@ -61,7 +61,7 @@ void LoadCostFromXMLElement(cost_t & cost, const TiXmlElement & element)
 }
 #endif
 
-void PaymentConditions::UpdateCosts(const std::string &spec)
+void PaymentConditions::UpdateCosts(const string &spec)
 {
 #ifdef WITH_XML
     // parse payments.xml
@@ -98,7 +98,7 @@ payment_t PaymentConditions::BuyBoat()
     payment_t result;
     paymentstats_t *ptr = &_payments[0];
 
-    while (ptr->id && std::strcmp("buy_boat", ptr->id)) ++ptr;
+    while (ptr->id && strcmp("buy_boat", ptr->id)) ++ptr;
     if (ptr->id) result = ptr->cost;
 
     return result;
@@ -126,7 +126,7 @@ payment_t PaymentConditions::BuySpellBook(int shrine)
             break;
     }
 
-    while (ptr->id && std::strcmp(skey, ptr->id)) ++ptr;
+    while (ptr->id && strcmp(skey, ptr->id)) ++ptr;
     if (ptr->id) result = ptr->cost;
 
     return result;
@@ -136,14 +136,14 @@ payment_t PaymentConditions::RecruitHero(int level)
 {
     payment_t result;
     paymentstats_t *ptr = &_payments[0];
-    while (ptr->id && std::strcmp("recruit_hero", ptr->id)) ++ptr;
+    while (ptr->id && strcmp("recruit_hero", ptr->id)) ++ptr;
     if (ptr->id) result = ptr->cost;
 
     // level price
     if (Settings::Get().ExtHeroRecruitCostDependedFromLevel())
     {
         ptr = &_payments[0];
-        while (ptr->id && std::strcmp("recruit_level", ptr->id)) ++ptr;
+        while (ptr->id && strcmp("recruit_level", ptr->id)) ++ptr;
         if (ptr && 1 < level)
         {
             if (ptr->cost.gold) result.gold += (level - 1) * ptr->cost.gold;
@@ -163,7 +163,7 @@ payment_t PaymentConditions::ForAlchemist(int arts)
 {
     payment_t result;
     paymentstats_t *ptr = &_payments[0];
-    while (ptr->id && std::strcmp("alchemist_payment", ptr->id)) ++ptr;
+    while (ptr->id && strcmp("alchemist_payment", ptr->id)) ++ptr;
     if (ptr->id) result = ptr->cost;
 
     return result;

@@ -70,7 +70,7 @@ void Battle::Arena::BattleProcess(Unit &attacker, Unit &defender, s32 dst, int d
     // magic attack
     if (defender.isValid() && spell.isValid())
     {
-        const std::string name(attacker.GetName());
+        const string name(attacker.GetName());
         targets = GetTargetsForSpells(attacker.GetCommander(), spell, defender.GetHeadIndex());
 
         if (targets.size())
@@ -190,8 +190,8 @@ void Battle::Arena::ApplyActionAttack(Command &cmd)
     s32 dst = cmd.GetValue();
     int dir = cmd.GetValue();
 
-    Battle::Unit *b1 = GetTroopUID(uid1);
-    Battle::Unit *b2 = GetTroopUID(uid2);
+    Unit *b1 = GetTroopUID(uid1);
+    Unit *b2 = GetTroopUID(uid2);
 
     if (b1 && b1->isValid() &&
         b2 && b2->isValid() &&
@@ -247,7 +247,7 @@ void Battle::Arena::ApplyActionMove(Command &cmd)
     s32 dst = cmd.GetValue();
     int path_size = cmd.GetValue();
 
-    Battle::Unit *b = GetTroopUID(uid);
+    Unit *b = GetTroopUID(uid);
     Cell *cell = Board::GetCell(dst);
 
     if (b && b->isValid() &&
@@ -320,7 +320,7 @@ void Battle::Arena::ApplyActionSkip(Command &cmd)
     u32 uid = cmd.GetValue();
     int hard = cmd.GetValue();
 
-    Battle::Unit *battle = GetTroopUID(uid);
+    Unit *battle = GetTroopUID(uid);
     if (battle && battle->isValid())
     {
         if (!battle->Modes(TR_MOVED))
@@ -349,7 +349,7 @@ void Battle::Arena::ApplyActionEnd(Command &cmd)
 {
     u32 uid = cmd.GetValue();
 
-    Battle::Unit *battle = GetTroopUID(uid);
+    Unit *battle = GetTroopUID(uid);
 
     if (battle)
     {
@@ -374,7 +374,7 @@ void Battle::Arena::ApplyActionMorale(Command &cmd)
     u32 uid = cmd.GetValue();
     int morale = cmd.GetValue();
 
-    Battle::Unit *b = GetTroopUID(uid);
+    Unit *b = GetTroopUID(uid);
 
     if (b && b->isValid())
     {
@@ -490,7 +490,7 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForDamage(Unit &attacker, Unit &def
         // around hydra
     if (attacker.GetID() == Monster::HYDRA)
     {
-        std::vector<Unit *> v;
+        vector<Unit *> v;
         v.reserve(8);
 
         const Indexes around = Board::GetAroundIndexes(attacker);
@@ -605,7 +605,7 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForSpells(const HeroBase *hero, con
                     {
                         res.defender = target;
                         // store temp priority for calculate damage
-                        res.damage = std::distance(trgts.begin(), it);
+                        res.damage = distance(trgts.begin(), it);
                         targets.push_back(res);
                     }
                 }
@@ -632,7 +632,7 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForSpells(const HeroBase *hero, con
                 }
 
                 // unique
-                targets.resize(std::distance(targets.begin(), std::unique(targets.begin(), targets.end())));
+                targets.resize(distance(targets.begin(), unique(targets.begin(), targets.end())));
             }
                 break;
 
@@ -663,7 +663,7 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForSpells(const HeroBase *hero, con
                 }
 
                 // unique
-                targets.resize(std::distance(targets.begin(), std::unique(targets.begin(), targets.end())));
+                targets.resize(distance(targets.begin(), unique(targets.begin(), targets.end())));
             }
                 break;
 
@@ -682,7 +682,7 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForSpells(const HeroBase *hero, con
             if (interface) interface->RedrawActionResistSpell(*(*it).defender);
 
             // erase(it)
-            if (it + 1 != targets.end()) std::swap(*it, targets.back());
+            if (it + 1 != targets.end()) swap(*it, targets.back());
             targets.pop_back();
         } else ++it;
     }
@@ -696,7 +696,7 @@ void Battle::Arena::ApplyActionTower(Command &cmd)
     u32 uid = cmd.GetValue();
 
     Tower *tower = GetTower(type);
-    Battle::Unit *b2 = GetTroopUID(uid);
+    Unit *b2 = GetTroopUID(uid);
 
     if (b2 && b2->isValid() && tower)
     {
@@ -806,7 +806,7 @@ void Battle::Arena::ApplyActionSpellTeleport(Command &cmd)
 
 void Battle::Arena::ApplyActionSpellEarthQuake(Command &cmd)
 {
-    std::vector<int> targets = GetCastleTargets();
+    vector<int> targets = GetCastleTargets();
 
     if (interface) interface->RedrawActionEarthQuakeSpell(targets);
 
@@ -834,10 +834,10 @@ void Battle::Arena::ApplyActionSpellMirrorImage(Command &cmd)
         Indexes distances = Board::GetDistanceIndexes(b->GetHeadIndex(), 4);
 
         ShortestDistance SortingDistance(b->GetHeadIndex());
-        std::sort(distances.begin(), distances.end(), SortingDistance);
+        sort(distances.begin(), distances.end(), SortingDistance);
 
-        Indexes::const_iterator it = std::find_if(distances.begin(), distances.end(),
-                                                  std::bind2nd(std::ptr_fun(&Board::isValidMirrorImageIndex), b));
+        Indexes::const_iterator it = find_if(distances.begin(), distances.end(),
+                                                  bind2nd(ptr_fun(&Board::isValidMirrorImageIndex), b));
 
         for (Indexes::const_iterator
                      it = distances.begin(); it != distances.end(); ++it)

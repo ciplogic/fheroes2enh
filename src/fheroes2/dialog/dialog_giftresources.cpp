@@ -51,7 +51,7 @@ struct SelectRecipientsColors
         for (Colors::const_iterator
                      it = colors.begin(); it != colors.end(); ++it)
         {
-            const u32 current = std::distance(colors.begin(), it);
+            const u32 current = distance(colors.begin(), it);
             const Sprite &sprite = AGG::GetICN(ICN::CELLWIN, 43);
 
             positions.push_back(Rect(pos.x + Game::GetStep4Player(current, sprite.w() + 15, colors.size()),
@@ -69,7 +69,7 @@ struct SelectRecipientsColors
         for (Colors::const_iterator
                      it = colors.begin(); it != colors.end(); ++it)
         {
-            const Rect &pos = positions[std::distance(colors.begin(), it)];
+            const Rect &pos = positions[distance(colors.begin(), it)];
 
             AGG::GetICN(ICN::CELLWIN, 43 + Color::GetIndex(*it)).Blit(pos);
             if (recipients & *it)
@@ -119,7 +119,7 @@ struct ResourceBar
 
     static void RedrawResource(int type, s32 count, s32 posx, s32 posy)
     {
-        std::ostringstream os;
+        ostringstream os;
 
         os << count;
         Text text(os.str(), Font::SMALL);
@@ -134,7 +134,7 @@ struct ResourceBar
 
         for (auto it = positions.begin(); it != positions.end(); ++it)
         {
-            int rs = Resource::FromIndexSprite2(std::distance(positions.begin(), it));
+            int rs = Resource::FromIndexSprite2(distance(positions.begin(), it));
             RedrawResource(rs, res->Get(rs), (*it).x, (*it).y);
         }
     }
@@ -159,15 +159,15 @@ struct ResourceBar
 
             if (0 == mul)
             {
-                Dialog::Message("", "First select recipients!", Font::BIG, Dialog::OK);
+                Message("", "First select recipients!", Font::BIG, Dialog::OK);
             } else if (0 == max)
             {
-                std::string msg = _("You cannot select %{resource}!");
+                string msg = _("You cannot select %{resource}!");
                 StringReplace(msg, "%{resource}", Resource::String(rs));
-                Dialog::Message("", msg, Font::BIG, Dialog::OK);
+                Message("", msg, Font::BIG, Dialog::OK);
             } else
             {
-                std::string msg = _("Select count %{resource}:");
+                string msg = _("Select count %{resource}:");
                 StringReplace(msg, "%{resource}", Resource::String(rs));
 
                 if (Dialog::SelectCount(msg, 0, max, sel, step) && cur != sel)
@@ -202,7 +202,7 @@ void Dialog::MakeGiftResource()
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
-    Dialog::FrameBorder frameborder(Size(320, 224));
+    FrameBorder frameborder(Size(320, 224));
     const Rect &box = frameborder.GetArea();
 
     Kingdom &myKingdom = world.GetKingdom(conf.CurrentColor());
@@ -230,7 +230,7 @@ void Dialog::MakeGiftResource()
     info2.Redraw();
 
 
-    ButtonGroups btnGroups(box, Dialog::OK | Dialog::CANCEL);
+    ButtonGroups btnGroups(box, OK | CANCEL);
     btnGroups.DisableButton1(true);
     btnGroups.Draw();
 
@@ -241,8 +241,8 @@ void Dialog::MakeGiftResource()
     u32 count = Color::Count(selector.recipients);
 
     // message loop
-    int result = Dialog::ZERO;
-    while (result == Dialog::ZERO && le.HandleEvents())
+    int result = ZERO;
+    while (result == ZERO && le.HandleEvents())
     {
         if (selector.QueueEventProcessing())
         {
@@ -275,7 +275,7 @@ void Dialog::MakeGiftResource()
         result = btnGroups.QueueEventProcessing();
     }
 
-    if (Dialog::OK == result)
+    if (OK == result)
     {
         EventDate event;
 

@@ -44,7 +44,7 @@ namespace Skill
 {
     int SecondaryGetWeightSkillFromRace(int race, int skill);
 
-    int SecondaryPriorityFromRace(int, const std::vector<int> &);
+    int SecondaryPriorityFromRace(int, const vector<int> &);
 
     const int secskills[] = {Secondary::PATHFINDING, Secondary::ARCHERY, Secondary::LOGISTICS, Secondary::SCOUTING,
                              Secondary::DIPLOMACY, Secondary::NAVIGATION, Secondary::LEADERSHIP, Secondary::WISDOM,
@@ -185,9 +185,9 @@ const char *Skill::Primary::String(int skill)
     return str_skill[4];
 }
 
-std::string Skill::Primary::StringDescription(int skill, const Heroes *hero)
+string Skill::Primary::StringDescription(int skill, const Heroes *hero)
 {
-    std::string res, ext;
+    string res, ext;
 
     switch (skill)
     {
@@ -226,9 +226,9 @@ std::string Skill::Primary::StringDescription(int skill, const Heroes *hero)
     return res;
 }
 
-std::string Skill::Primary::StringSkills(const std::string &sep) const
+string Skill::Primary::StringSkills(const string &sep) const
 {
-    std::ostringstream os;
+    ostringstream os;
     os << GetString(attack) << sep << GetString(defense) << sep << GetString(knowledge) << sep << GetString(power);
     return os.str();
 }
@@ -252,11 +252,11 @@ const char *Skill::Level::String(int level)
     return str_level[0];
 }
 
-Skill::Secondary::Secondary() : std::pair<int, int>(UNKNOWN, Level::NONE)
+Skill::Secondary::Secondary() : pair<int, int>(UNKNOWN, Level::NONE)
 {
 }
 
-Skill::Secondary::Secondary(int skill, int level) : std::pair<int, int>(UNKNOWN, Level::NONE)
+Skill::Secondary::Secondary(int skill, int level) : pair<int, int>(UNKNOWN, Level::NONE)
 {
     SetSkill(skill);
     SetLevel(level);
@@ -329,8 +329,8 @@ bool Skill::Secondary::isValid() const
 
 int Skill::Secondary::RandForWitchsHut()
 {
-    const Skill::secondary_t *sec = GameStatic::GetSkillForWitchsHut();
-    std::vector<int> v;
+    const secondary_t *sec = GameStatic::GetSkillForWitchsHut();
+    vector<int> v;
 
     if (sec)
     {
@@ -435,10 +435,10 @@ const char *Skill::Secondary::GetName() const
     return isValid() ? name_skill[(Level() - 1) + (Skill() - 1) * 3] : "unknown";
 }
 
-std::string Skill::Secondary::GetDescription() const
+string Skill::Secondary::GetDescription() const
 {
     u32 count = GetValues();
-    std::string str = "unknown";
+    string str = "unknown";
 
     switch (Skill())
     {
@@ -603,37 +603,37 @@ Skill::SecSkills::SecSkills(int race)
 
 int Skill::SecSkills::GetLevel(int skill) const
 {
-    const_iterator it = std::find_if(begin(), end(),
-                                     std::bind2nd(std::mem_fun_ref(&Secondary::isSkill), skill));
+    const_iterator it = find_if(begin(), end(),
+                                     bind2nd(mem_fun_ref(&Secondary::isSkill), skill));
 
     return it == end() ? Level::NONE : (*it).Level();
 }
 
 u32 Skill::SecSkills::GetValues(int skill) const
 {
-    const_iterator it = std::find_if(begin(), end(),
-                                     std::bind2nd(std::mem_fun_ref(&Secondary::isSkill), skill));
+    const_iterator it = find_if(begin(), end(),
+                                     bind2nd(mem_fun_ref(&Secondary::isSkill), skill));
 
     return it == end() ? 0 : (*it).GetValues();
 }
 
 int Skill::SecSkills::Count() const
 {
-    return std::count_if(begin(), end(), std::mem_fun_ref(&Secondary::isValid));
+    return count_if(begin(), end(), mem_fun_ref(&Secondary::isValid));
 }
 
-void Skill::SecSkills::AddSkill(const Skill::Secondary &skill)
+void Skill::SecSkills::AddSkill(const Secondary &skill)
 {
     if (skill.isValid())
     {
-        iterator it = std::find_if(begin(), end(),
-                                   std::bind2nd(std::mem_fun_ref(&Secondary::isSkill), skill.Skill()));
+        iterator it = find_if(begin(), end(),
+                                   bind2nd(mem_fun_ref(&Secondary::isSkill), skill.Skill()));
         if (it != end())
             (*it).SetLevel(skill.Level());
         else
         {
-            it = std::find_if(begin(), end(),
-                              std::not1(std::mem_fun_ref(&Secondary::isValid)));
+            it = find_if(begin(), end(),
+                              not1(mem_fun_ref(&Secondary::isValid)));
             if (it != end())
                 (*it).Set(skill);
             else if (size() < HEROESMAXSKILL)
@@ -644,20 +644,20 @@ void Skill::SecSkills::AddSkill(const Skill::Secondary &skill)
 
 Skill::Secondary *Skill::SecSkills::FindSkill(int skill)
 {
-    iterator it = std::find_if(begin(), end(),
-                               std::bind2nd(std::mem_fun_ref(&Secondary::isSkill), skill));
+    iterator it = find_if(begin(), end(),
+                               bind2nd(mem_fun_ref(&Secondary::isSkill), skill));
     return it != end() ? &(*it) : nullptr;
 }
 
-std::vector<Skill::Secondary> &Skill::SecSkills::ToVector()
+vector<Skill::Secondary> &Skill::SecSkills::ToVector()
 {
-    std::vector<Secondary> &v = *this;
+    vector<Secondary> &v = *this;
     return v;
 }
 
-std::string Skill::SecSkills::String() const
+string Skill::SecSkills::String() const
 {
-    std::ostringstream os;
+    ostringstream os;
 
     for (const auto& it : *this)
         os << it.GetName() << ", ";
@@ -665,7 +665,7 @@ std::string Skill::SecSkills::String() const
     return os.str();
 }
 
-void Skill::SecSkills::FillMax(const Skill::Secondary &skill)
+void Skill::SecSkills::FillMax(const Secondary &skill)
 {
     if (size() < HEROESMAXSKILL)
         resize(HEROESMAXSKILL, skill);
@@ -706,13 +706,13 @@ std::vector<int> Skill::SecondarySkills()
 }
 */
 
-int Skill::SecondaryPriorityFromRace(int race, const std::vector<int> &exclude)
+int Skill::SecondaryPriorityFromRace(int race, const vector<int> &exclude)
 {
     Rand::Queue parts(MAXSECONDARYSKILL);
 
     for (u32 ii = 0; ii < ARRAY_COUNT(secskills); ++ii)
         if (exclude.empty() ||
-            exclude.end() == std::find(exclude.begin(), exclude.end(), secskills[ii]))
+            exclude.end() == find(exclude.begin(), exclude.end(), secskills[ii]))
             parts.Push(secskills[ii], SecondaryGetWeightSkillFromRace(race, secskills[ii]));
 
     return parts.Size() ? parts.Get() : Secondary::UNKNOWN;
@@ -721,7 +721,7 @@ int Skill::SecondaryPriorityFromRace(int race, const std::vector<int> &exclude)
 /* select secondary skills for level up */
 void Skill::SecSkills::FindSkillsForLevelUp(int race, Secondary &sec1, Secondary &sec2) const
 {
-    std::vector<int> exclude_skills;
+    vector<int> exclude_skills;
     exclude_skills.reserve(MAXSECONDARYSKILL + HEROESMAXSKILL);
 
     // exclude for expert
@@ -749,8 +749,8 @@ void Skill::SecSkills::FindSkillsForLevelUp(int race, Secondary &sec1, Secondary
         sec2.NextLevel();
     } else if (Settings::Get().ExtHeroAllowBannedSecSkillsUpgrade())
     {
-        const_iterator it = std::find_if(begin(), end(),
-                                         std::not1(std::bind2nd(std::mem_fun_ref(&Secondary::isLevel),
+        const_iterator it = find_if(begin(), end(),
+                                         not1(bind2nd(mem_fun_ref(&Secondary::isLevel),
                                                                 static_cast<int>(Level::EXPERT))));
         if (it != end())
         {
@@ -761,7 +761,7 @@ void Skill::SecSkills::FindSkillsForLevelUp(int race, Secondary &sec1, Secondary
     }
 }
 
-void StringAppendModifiers(std::string &str, int value)
+void StringAppendModifiers(string &str, int value)
 {
     if (value < 0) str.append(" "); // '-' present
     else if (value > 0) str.append(" +");
@@ -769,7 +769,7 @@ void StringAppendModifiers(std::string &str, int value)
     str.append(GetString(value));
 }
 
-int Skill::GetLeadershipModifiers(int level, std::string *strs = nullptr)
+int Skill::GetLeadershipModifiers(int level, string *strs = nullptr)
 {
     Secondary skill(Secondary::LEADERSHIP, level);
 
@@ -783,7 +783,7 @@ int Skill::GetLeadershipModifiers(int level, std::string *strs = nullptr)
     return skill.GetValues();
 }
 
-int Skill::GetLuckModifiers(int level, std::string *strs = nullptr)
+int Skill::GetLuckModifiers(int level, string *strs = nullptr)
 {
     Secondary skill(Secondary::LUCK, level);
 
@@ -927,7 +927,7 @@ bool PrimarySkillsBar::ActionBarSingleClick(const Point &cursor, int &skill, con
 {
     if (Skill::Primary::UNKNOWN != skill)
     {
-        Dialog::Message(Skill::Primary::String(skill), Skill::Primary::StringDescription(skill, hero), Font::BIG,
+        Message(Skill::Primary::String(skill), Skill::Primary::StringDescription(skill, hero), Font::BIG,
                         Dialog::OK);
         return true;
     }
@@ -957,10 +957,10 @@ bool PrimarySkillsBar::ActionBarCursor(const Point &cursor, int &skill, const Re
     return false;
 }
 
-bool PrimarySkillsBar::QueueEventProcessing(std::string *str)
+bool PrimarySkillsBar::QueueEventProcessing(string *str)
 {
     msg.clear();
-    bool res = Interface::ItemsBar<int>::QueueEventProcessing();
+    bool res = ItemsBar<int>::QueueEventProcessing();
     if (str) *str = msg;
     return res;
 }
@@ -1056,10 +1056,10 @@ bool SecondarySkillsBar::ActionBarCursor(const Point &cursor, Skill::Secondary &
     return false;
 }
 
-bool SecondarySkillsBar::QueueEventProcessing(std::string *str)
+bool SecondarySkillsBar::QueueEventProcessing(string *str)
 {
     msg.clear();
-    bool res = Interface::ItemsBar<Skill::Secondary>::QueueEventProcessing();
+    bool res = ItemsBar<Skill::Secondary>::QueueEventProcessing();
     if (str) *str = msg;
     return res;
 }
@@ -1071,13 +1071,13 @@ StreamBase &Skill::operator>>(StreamBase &sb, Secondary &st)
 
 StreamBase &Skill::operator<<(StreamBase &sb, const SecSkills &ss)
 {
-    const std::vector<Secondary> &v = ss;
+    const vector<Secondary> &v = ss;
     return sb << v;
 }
 
 StreamBase &Skill::operator>>(StreamBase &sb, SecSkills &ss)
 {
-    std::vector<Secondary> &v = ss;
+    vector<Secondary> &v = ss;
     sb >> v;
 
     if (FORMAT_VERSION_3255 > Game::GetLoadVersion())

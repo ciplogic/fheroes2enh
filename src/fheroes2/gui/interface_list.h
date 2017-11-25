@@ -49,8 +49,8 @@ namespace Interface
     class ListBox : public ListBasic
     {
     public:
-        typedef std::vector<Item> Items;
-        typedef typename std::vector<Item>::iterator ItemsIterator;
+        typedef vector<Item> Items;
+        typedef typename vector<Item>::iterator ItemsIterator;
 
         ListBox(const Point &pt) : ptRedraw(pt), maxItems(0), useHotkeys(true), content(nullptr)
         {}
@@ -146,7 +146,7 @@ namespace Interface
             rtAreaItems = rt;
         }
 
-        void SetListContent(std::vector<Item> &list)
+        void SetListContent(vector<Item> &list)
         {
             content = &list;
             cur = content->begin();

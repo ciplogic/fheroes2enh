@@ -42,20 +42,20 @@
 
 #include "serialize.h"
 
-struct pack_t : public std::pair<u32, u32> /* delta offset */
+struct pack_t : public pair<u32, u32> /* delta offset */
 {
-    pack_t() : std::pair<u32, u32>(0, 0)
+    pack_t() : pair<u32, u32>(0, 0)
     {}
 };
 
-std::vector<u8> packValue(u32 delta)
+vector<u8> packValue(u32 delta)
 {
     u8 c1 = delta & 0x0000007F;
     u8 c2 = (delta & 0x00003F80) >> 7;
     u8 c3 = (delta & 0x001FC000) >> 14;
     u8 c4 = (delta & 0x0FE00000) >> 21;
 
-    std::vector<u8> res;
+    vector<u8> res;
     res.reserve(4);
 
     if (c4)
@@ -180,11 +180,11 @@ StreamBuf &operator>>(StreamBuf &sb, GroupChunkHeader &st)
 
 struct XMITrack
 {
-    std::vector<u8> timb;
-    std::vector<u8> evnt;
+    vector<u8> timb;
+    vector<u8> evnt;
 };
 
-struct XMITracks : std::list<XMITrack>
+struct XMITracks : list<XMITrack>
 {
 };
 
@@ -192,7 +192,7 @@ struct XMIData
 {
     XMITracks tracks;
 
-    XMIData(const std::vector<u8> &buf)
+    XMIData(const vector<u8> &buf)
     {
         StreamBuf sb(buf);
 
@@ -217,8 +217,8 @@ struct XMIData
                     {
                         tracks.push_back(XMITrack());
 
-                        std::vector<u8> &timb = tracks.back().timb;
-                        std::vector<u8> &evnt = tracks.back().evnt;
+                        vector<u8> &timb = tracks.back().timb;
+                        vector<u8> &evnt = tracks.back().evnt;
 
                         sb >> group;
                         // FORM XMID
@@ -277,7 +277,7 @@ struct XMIData
 
 struct MidEvent
 {
-    std::vector<u8> pack;
+    vector<u8> pack;
     u8 data[4]; // status, data1, data2, count
     //char		status;
     //std::vector<u8>	data;
@@ -321,11 +321,11 @@ StreamBuf &operator<<(StreamBuf &sb, const MidEvent &st)
     return sb;
 }
 
-struct MidEvents : public std::list<MidEvent>
+struct MidEvents : public list<MidEvent>
 {
     size_t count() const
     {
-        return std::list<MidEvent>::size();
+        return list<MidEvent>::size();
     }
 
     size_t size() const
@@ -345,7 +345,7 @@ struct MidEvents : public std::list<MidEvent>
         const u8 *end = ptr + t.evnt.size();
 
         u32 delta = 0;
-        std::list<meta_t> notesoff;
+        list<meta_t> notesoff;
 
         while (ptr && ptr < end)
         {
@@ -378,7 +378,7 @@ struct MidEvents : public std::list<MidEvent>
                 if (delta2) delta -= delta2;
 
                 // decrease duration
-                for (std::list<meta_t>::iterator
+                for (list<meta_t>::iterator
                              it = notesoff.begin(); it != notesoff.end(); it++)
                     it->decrease_duration(delta);
             }
@@ -460,7 +460,7 @@ struct MidEvents : public std::list<MidEvent>
 
 StreamBuf &operator<<(StreamBuf &sb, const MidEvents &st)
 {
-    for (std::list<MidEvent>::const_iterator
+    for (list<MidEvent>::const_iterator
                  it = st.begin(); it != st.end(); ++it)
         sb << *it;
     return sb;
@@ -490,11 +490,11 @@ StreamBuf &operator<<(StreamBuf &sb, const MidTrack &st)
     return sb;
 }
 
-struct MidTracks : std::list<MidTrack>
+struct MidTracks : list<MidTrack>
 {
     size_t count() const
     {
-        return std::list<MidTrack>::size();
+        return list<MidTrack>::size();
     }
 
     size_t size() const
@@ -518,7 +518,7 @@ struct MidTracks : std::list<MidTrack>
 
 StreamBuf &operator<<(StreamBuf &sb, const MidTracks &st)
 {
-    for (std::list<MidTrack>::const_iterator
+    for (list<MidTrack>::const_iterator
                  it = st.begin(); it != st.end(); ++it)
         sb << *it;
     return sb;
@@ -548,7 +548,7 @@ StreamBuf &operator<<(StreamBuf &sb, const MidData &st)
     return sb;
 }
 
-std::vector<u8> Music::Xmi2Mid(const std::vector<u8> &buf)
+vector<u8> Music::Xmi2Mid(const vector<u8> &buf)
 {
     XMIData xmi(buf);
     StreamBuf sb(16 * 4096);

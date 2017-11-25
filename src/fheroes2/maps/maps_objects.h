@@ -77,14 +77,14 @@ struct MapEvent : public MapObjectSimple
     bool computer;
     bool cancel;
     int colors;
-    std::string message;
+    string message;
 };
 
 StreamBase &operator<<(StreamBase &, const MapEvent &);
 
 StreamBase &operator>>(StreamBase &, MapEvent &);
 
-typedef std::list<std::string> RiddleAnswers;
+typedef list<string> RiddleAnswers;
 
 struct MapSphinx : public MapObjectSimple
 {
@@ -92,14 +92,14 @@ struct MapSphinx : public MapObjectSimple
 
     void LoadFromMP2(s32 index, StreamBuf);
 
-    bool AnswerCorrect(const std::string &answer);
+    bool AnswerCorrect(const string &answer);
 
     void SetQuiet();
 
     Funds resources;
     Artifact artifact;
     RiddleAnswers answers;
-    std::string message;
+    string message;
     bool valid;
 };
 
@@ -111,11 +111,11 @@ struct MapSign : public MapObjectSimple
 {
     MapSign();
 
-    MapSign(s32 index, const std::string &);
+    MapSign(s32 index, const string &);
 
     void LoadFromMP2(s32 index, StreamBuf);
 
-    std::string message;
+    string message;
 };
 
 StreamBase &operator<<(StreamBase &, const MapSign &);

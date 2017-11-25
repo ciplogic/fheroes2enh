@@ -45,7 +45,7 @@ namespace PaymentConditions
 
     payment_t ForAlchemist(int arts);
 
-    void UpdateCosts(const std::string &);
+    void UpdateCosts(const string &);
 }
 
 #endif

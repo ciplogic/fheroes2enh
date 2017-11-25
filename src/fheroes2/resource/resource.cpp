@@ -88,24 +88,24 @@ int Resource::Rand(bool with_gold)
     switch (Rand::Get(1, (with_gold ? 7 : 6)))
     {
         case 1:
-            return Resource::WOOD;
+            return WOOD;
         case 2:
-            return Resource::MERCURY;
+            return MERCURY;
         case 3:
-            return Resource::ORE;
+            return ORE;
         case 4:
-            return Resource::SULFUR;
+            return SULFUR;
         case 5:
-            return Resource::CRYSTAL;
+            return CRYSTAL;
         case 6:
-            return Resource::GEMS;
+            return GEMS;
         case 7:
-            return Resource::GOLD;
+            return GOLD;
         default:
             break;
     }
 
-    return Resource::UNKNOWN;
+    return UNKNOWN;
 }
 
 s32 *Funds::GetPtr(int rs)
@@ -305,9 +305,9 @@ bool Funds::operator>=(const Funds &pm) const
            gold >= pm.gold;
 }
 
-std::string Funds::String(void) const
+string Funds::String(void) const
 {
-    std::ostringstream os;
+    ostringstream os;
     os << "ore: " << ore <<
        ", wood: " << wood <<
        ", mercury: " << mercury <<
@@ -325,19 +325,19 @@ const char *Resource::String(int resource)
 
     switch (resource)
     {
-        case Resource::WOOD:
+        case WOOD:
             return res[1];
-        case Resource::MERCURY:
+        case MERCURY:
             return res[2];
-        case Resource::ORE:
+        case ORE:
             return res[3];
-        case Resource::SULFUR:
+        case SULFUR:
             return res[4];
-        case Resource::CRYSTAL:
+        case CRYSTAL:
             return res[5];
-        case Resource::GEMS:
+        case GEMS:
             return res[6];
-        case Resource::GOLD:
+        case GOLD:
             return res[7];
         default:
             break;
@@ -351,19 +351,19 @@ u32 Resource::GetIndexSprite(int resource)
 {
     switch (resource)
     {
-        case Resource::WOOD:
+        case WOOD:
             return 1;
-        case Resource::MERCURY:
+        case MERCURY:
             return 3;
-        case Resource::ORE:
+        case ORE:
             return 5;
-        case Resource::SULFUR:
+        case SULFUR:
             return 7;
-        case Resource::CRYSTAL:
+        case CRYSTAL:
             return 9;
-        case Resource::GEMS:
+        case GEMS:
             return 11;
-        case Resource::GOLD:
+        case GOLD:
             return 13;
         default:
             DEBUG(DBG_GAME, DBG_WARN, "unknown resource");
@@ -403,19 +403,19 @@ u32 Resource::GetIndexSprite2(int resource)
 {
     switch (resource)
     {
-        case Resource::WOOD:
+        case WOOD:
             return 0;
-        case Resource::MERCURY:
+        case MERCURY:
             return 1;
-        case Resource::ORE:
+        case ORE:
             return 2;
-        case Resource::SULFUR:
+        case SULFUR:
             return 3;
-        case Resource::CRYSTAL:
+        case CRYSTAL:
             return 4;
-        case Resource::GEMS:
+        case GEMS:
             return 5;
-        case Resource::GOLD:
+        case GOLD:
             return 6;
         default:
             DEBUG(DBG_GAME, DBG_WARN, "unknown resource");

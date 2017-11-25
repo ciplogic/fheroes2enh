@@ -36,11 +36,11 @@
 
 void Castle::OpenTavern()
 {
-    const std::string &header = _("A generous tip for the barkeep yields the following rumor:");
+    const string &header = _("A generous tip for the barkeep yields the following rumor:");
     const int system = (Settings::Get().ExtGameEvilInterface() ? ICN::SYSTEME : ICN::SYSTEM);
     const int tavwin = ICN::TAVWIN;
-    const std::string &tavern = GetStringBuilding(BUILD_TAVERN);
-    const std::string &message = world.GetRumors();
+    const string &tavern = GetStringBuilding(BUILD_TAVERN);
+    const string &message = world.GetRumors();
 
     Display &display = Display::Get();
     Cursor &cursor = Cursor::Get();
@@ -96,7 +96,7 @@ void Castle::OpenTavern()
         if (le.MouseClickLeft(buttonYes) || HotKeyCloseWindow) break;
 
         // animation
-        if (Game::AnimateInfrequentDelay(Game::CASTLE_TAVERN_DELAY))
+        if (AnimateInfrequentDelay(Game::CASTLE_TAVERN_DELAY))
         {
             cursor.Hide();
             s20.Blit(dst_pt);

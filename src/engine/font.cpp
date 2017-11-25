@@ -115,21 +115,21 @@ Surface FontTTF::RenderUnicodeChar(u16 ch, const RGBA & clr, bool solid)
 
 #endif
 
-FontPSF::FontPSF(const std::string &fn, const Size &sz) : size(sz)
+FontPSF::FontPSF(const string &fn, const Size &sz) : size(sz)
 {
     buf = LoadFileToMem(fn);
     if (buf.empty())
     ERROR("empty buffer");
 }
 
-Surface FontPSF::RenderText(const std::string &msg, const RGBA &color) const
+Surface FontPSF::RenderText(const string &msg, const RGBA &color) const
 {
     Surface res;
 
     res.Set(msg.size() * size.w, size.h, false);
     int posx = 0;
 
-    for (std::string::const_iterator
+    for (string::const_iterator
                  it = msg.begin(); it != msg.end(); ++it)
     {
         // render char

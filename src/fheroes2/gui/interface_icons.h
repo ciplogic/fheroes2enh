@@ -72,7 +72,7 @@ namespace Interface
 
     void RedrawCastleIcon(const Castle &, s32, s32);
 
-    class HeroesIcons : public Interface::ListBox<HEROES>, public IconsBar
+    class HeroesIcons : public ListBox<HEROES>, public IconsBar
     {
     public:
         HeroesIcons(u32 count, const Surface &sf) : IconsBar(count, sf)
@@ -98,7 +98,7 @@ namespace Interface
         void RedrawBackground(const Point &);
     };
 
-    class CastleIcons : public Interface::ListBox<CASTLE>, public IconsBar
+    class CastleIcons : public ListBox<CASTLE>, public IconsBar
     {
     public:
         CastleIcons(u32 count, const Surface &sf) : IconsBar(count, sf)

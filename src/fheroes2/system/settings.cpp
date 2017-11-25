@@ -107,7 +107,7 @@ struct settings_t
     u32 id;
     const char *str;
 
-    bool operator==(const std::string &s) const
+    bool operator==(const string &s) const
     { return str && s == str; };
 
     bool operator==(u32 i) const
@@ -206,9 +206,9 @@ const settings_t settingsFHeroes2[] =
                 {0,                                          nullptr},
         };
 
-std::string Settings::GetVersion()
+string Settings::GetVersion()
 {
-    std::ostringstream os;
+    ostringstream os;
 
     os << static_cast<int>(MAJOR_VERSION) << "." << static_cast<int>(MINOR_VERSION) << "."
 #ifdef SVN_REVISION
@@ -255,10 +255,10 @@ Settings &Settings::Get()
     return conf;
 }
 
-bool Settings::Read(const std::string &filename)
+bool Settings::Read(const string &filename)
 {
     TinyConfig config('=', '#');
-    std::string sval;
+    string sval;
     int ival;
     LocalEvent &le = LocalEvent::Get();
 
@@ -468,13 +468,13 @@ bool Settings::Read(const std::string &filename)
         video_mode.w = 640;
         video_mode.h = 480;
 
-        std::string value = StringLower(sval);
+        string value = StringLower(sval);
         const size_t pos = value.find('x');
 
-        if (std::string::npos != pos)
+        if (string::npos != pos)
         {
-            std::string width(value.substr(0, pos));
-            std::string height(value.substr(pos + 1, value.length() - pos - 1));
+            string width(value.substr(0, pos));
+            string height(value.substr(pos + 1, value.length() - pos - 1));
 
             video_mode.w = GetInt(width);
             video_mode.h = GetInt(height);
@@ -550,7 +550,7 @@ void Settings::SetAutoVideoMode()
     PostLoad();
 }
 
-bool Settings::Save(const std::string &filename) const
+bool Settings::Save(const string &filename) const
 {
     if (filename.empty()) return false;
 
@@ -561,33 +561,33 @@ bool Settings::Save(const std::string &filename) const
     return true;
 }
 
-std::string Settings::String() const
+string Settings::String() const
 {
-    std::ostringstream os;
+    ostringstream os;
 
-    os << "# fheroes2 config, version: " << GetVersion() << std::endl;
-    os << "data = " << data_params << std::endl;
+    os << "# fheroes2 config, version: " << GetVersion() << endl;
+    os << "data = " << data_params << endl;
 
     for (ListDirs::const_iterator
                  it = maps_params.begin(); it != maps_params.end(); ++it)
-        os << "maps = " << *it << std::endl;
+        os << "maps = " << *it << endl;
 
     os << "videomode = ";
     if (video_mode.w && video_mode.h)
-        os << video_mode.w << "x" << video_mode.h << std::endl;
+        os << video_mode.w << "x" << video_mode.h << endl;
     else
-        os << "auto" << std::endl;
+        os << "auto" << endl;
 
     os <<
-       "sound = " << (opt_global.Modes(GLOBAL_SOUND) ? "on" : "off") << std::endl <<
+       "sound = " << (opt_global.Modes(GLOBAL_SOUND) ? "on" : "off") << endl <<
        "music = "
        << (opt_global.Modes(GLOBAL_MUSIC_CD) ? "cd" : (opt_global.Modes(GLOBAL_MUSIC_MIDI) ? "midi" : (opt_global.Modes(
-               GLOBAL_MUSIC_EXT) ? "ext" : "off"))) << std::endl <<
-       "sound volume = " << static_cast<int>(sound_volume) << std::endl <<
-       "music volume = " << static_cast<int>(music_volume) << std::endl <<
-       "fullscreen = " << (opt_global.Modes(GLOBAL_FULLSCREEN) ? "on" : "off") << std::endl <<
-       "alt resource = " << (opt_global.Modes(GLOBAL_ALTRESOURCE) ? "on" : "off") << std::endl <<
-       "debug = " << (debug ? "on" : "off") << std::endl;
+               GLOBAL_MUSIC_EXT) ? "ext" : "off"))) << endl <<
+       "sound volume = " << static_cast<int>(sound_volume) << endl <<
+       "music volume = " << static_cast<int>(music_volume) << endl <<
+       "fullscreen = " << (opt_global.Modes(GLOBAL_FULLSCREEN) ? "on" : "off") << endl <<
+       "alt resource = " << (opt_global.Modes(GLOBAL_ALTRESOURCE) ? "on" : "off") << endl <<
+       "debug = " << (debug ? "on" : "off") << endl;
 
 #ifdef WITH_TTF
     os <<
@@ -601,10 +601,10 @@ std::string Settings::String() const
 #endif
 
     if (video_driver.size())
-        os << "videodriver = " << video_driver << std::endl;
+        os << "videodriver = " << video_driver << endl;
 
     if (opt_global.Modes(GLOBAL_POCKETPC))
-        os << "pocket pc = on" << std::endl;
+        os << "pocket pc = on" << endl;
 
     return os.str();
 }
@@ -637,20 +637,20 @@ int Settings::GameDifficulty() const
 int Settings::CurrentColor() const
 { return players.current_color; }
 
-const std::string &Settings::SelectVideoDriver() const
+const string &Settings::SelectVideoDriver() const
 { return video_driver; }
 
 /* return fontname */
-const std::string &Settings::FontsNormal() const
+const string &Settings::FontsNormal() const
 { return font_normal; }
 
-const std::string &Settings::FontsSmall() const
+const string &Settings::FontsSmall() const
 { return font_small; }
 
-const std::string &Settings::ForceLang() const
+const string &Settings::ForceLang() const
 { return force_lang; }
 
-const std::string &Settings::MapsCharset() const
+const string &Settings::MapsCharset() const
 { return maps_charset; }
 
 int Settings::FontsNormalSize() const
@@ -672,7 +672,7 @@ void Settings::SetProgramPath(const char *argv0)
 
 ListDirs Settings::GetRootDirs()
 {
-    const Settings &conf = Settings::Get();
+    const Settings &conf = Get();
     ListDirs dirs;
 
     // from build
@@ -688,7 +688,7 @@ ListDirs Settings::GetRootDirs()
     dirs.push_back(System::GetDirname(conf.path_program));
 
     // from HOME
-    const std::string &home = System::GetHomeDirectory("fheroes2");
+    const string &home = System::GetHomeDirectory("fheroes2");
     if (!home.empty()) dirs.push_back(home);
     char cCurrentPath[FILENAME_MAX];
 
@@ -702,7 +702,7 @@ ListDirs Settings::GetRootDirs()
 }
 
 /* return list files */
-ListFiles Settings::GetListFiles(const std::string &prefix, const std::string &filter)
+ListFiles Settings::GetListFiles(const string &prefix, const string &filter)
 {
     const ListDirs dirs = GetRootDirs();
     ListFiles res;
@@ -712,7 +712,7 @@ ListFiles Settings::GetListFiles(const std::string &prefix, const std::string &f
 
     for (const auto& dir : dirs)
     {
-        std::string path = prefix.size() ? System::ConcatePath(dir, prefix) : dir;
+        string path = prefix.size() ? System::ConcatePath(dir, prefix) : dir;
 
         if (System::IsDirectory(path))
             res.ReadDir(path, filter, false);
@@ -723,18 +723,18 @@ ListFiles Settings::GetListFiles(const std::string &prefix, const std::string &f
     return res;
 }
 
-std::string Settings::GetLastFile(const std::string &prefix, const std::string &name)
+string Settings::GetLastFile(const string &prefix, const string &name)
 {
     const ListFiles &files = GetListFiles(prefix, name);
     return files.empty() ? name : files.back();
 }
 
-std::string Settings::GetLangDir()
+string Settings::GetLangDir()
 {
 #ifdef CONFIGURE_FHEROES2_LOCALEDIR
     return std::string(CONFIGURE_FHEROES2_LOCALEDIR);
 #else
-    std::string res;
+    string res;
     const ListDirs dirs = GetRootDirs();
 
     for (auto
@@ -748,14 +748,14 @@ std::string Settings::GetLangDir()
     return "";
 }
 
-std::string Settings::GetWriteableDir(const char *subdir)
+string Settings::GetWriteableDir(const char *subdir)
 {
     ListDirs dirs = GetRootDirs();
     dirs.Append(System::GetDataDirectories("fheroes2"));
 
     for (auto& dir : dirs)
     {
-        std::string dir_files = System::ConcatePath(dir, "files");
+        string dir_files = System::ConcatePath(dir, "files");
 
         // create files
         if (System::IsDirectory(dir, true) &&
@@ -765,7 +765,7 @@ std::string Settings::GetWriteableDir(const char *subdir)
         // create subdir
         if (System::IsDirectory(dir_files, true))
         {
-            std::string dir_subdir = System::ConcatePath(dir_files, subdir);
+            string dir_subdir = System::ConcatePath(dir_files, subdir);
 
             if (!System::IsDirectory(dir_subdir, true))
                 System::MakeDirectory(dir_subdir);
@@ -780,7 +780,7 @@ std::string Settings::GetWriteableDir(const char *subdir)
     return "";
 }
 
-std::string Settings::GetSaveDir()
+string Settings::GetSaveDir()
 {
     return GetWriteableDir("save");
 }
@@ -958,17 +958,17 @@ int Settings::GetPort() const
     return port;
 }
 
-const std::string &Settings::MapsFile() const
+const string &Settings::MapsFile() const
 {
     return current_maps_file.file;
 }
 
-const std::string &Settings::MapsName() const
+const string &Settings::MapsName() const
 {
     return current_maps_file.name;
 }
 
-const std::string &Settings::MapsDescription() const
+const string &Settings::MapsDescription() const
 {
     return current_maps_file.description;
 }
@@ -1139,7 +1139,7 @@ bool Settings::ExtModes(u32 f) const
 
 const char *Settings::ExtName(u32 f) const
 {
-    const settings_t *ptr = std::find(settingsFHeroes2,
+    const settings_t *ptr = find(settingsFHeroes2,
                                       ARRAY_COUNT_END(settingsFHeroes2) - 1, f);
 
     return ptr ? _(ptr->str) : nullptr;
@@ -1570,7 +1570,7 @@ void Settings::SetPosStatus(const Point &pt)
 
 void Settings::BinarySave() const
 {
-    const std::string fname = System::ConcatePath(GetSaveDir(), "fheroes2.bin");
+    const string fname = System::ConcatePath(GetSaveDir(), "fheroes2.bin");
 
     StreamFile fs;
     fs.setbigendian(true);
@@ -1587,7 +1587,7 @@ void Settings::BinarySave() const
 
 void Settings::BinaryLoad()
 {
-    std::string fname = System::ConcatePath(GetSaveDir(), "fheroes2.bin");
+    string fname = System::ConcatePath(GetSaveDir(), "fheroes2.bin");
 
     if (!System::IsFile(fname))
         fname = GetLastFile("", "fheroes2.bin");
@@ -1617,8 +1617,8 @@ u32 Settings::MemoryLimit() const
 
 bool Settings::FullScreen() const
 {
-    return System::isEmbededDevice() ||
-           opt_global.Modes(GLOBAL_FULLSCREEN);
+	auto isFullScreen = opt_global.Modes(GLOBAL_FULLSCREEN) && false;
+    return isFullScreen;
 }
 
 StreamBase &operator<<(StreamBase &msg, const Settings &conf)
@@ -1639,17 +1639,17 @@ StreamBase &operator<<(StreamBase &msg, const Settings &conf)
 
 StreamBase &operator>>(StreamBase &msg, Settings &conf)
 {
-    std::string lang;
+    string lang;
 
     msg >> lang;
 
     if (lang != "en" && lang != conf.force_lang && !conf.Unicode())
     {
-        std::string msg("This is an saved game is localized for lang = ");
+        string msg("This is an saved game is localized for lang = ");
         msg.append(lang);
         msg.append(", and most of the messages will be displayed incorrectly.\n \n");
         msg.append("(tip: set unicode = on)");
-        Dialog::Message("Warning!", msg, Font::BIG, Dialog::OK);
+        Message("Warning!", msg, Font::BIG, Dialog::OK);
     }
 
     int debug;

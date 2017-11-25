@@ -34,10 +34,10 @@ int ObjXlc1::GetPassable(u32 index)
     if (isShadow(index))
         return DIRECTION_ALL;
     else if (isAction(index) ||
-             ARRAY_COUNT_END(disabled) != std::find(disabled, ARRAY_COUNT_END(disabled), index))
+             ARRAY_COUNT_END(disabled) != find(disabled, ARRAY_COUNT_END(disabled), index))
         return 0;
 
-    return ARRAY_COUNT_END(restricted) != std::find(restricted, ARRAY_COUNT_END(restricted), index) ?
+    return ARRAY_COUNT_END(restricted) != find(restricted, ARRAY_COUNT_END(restricted), index) ?
            DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW : DIRECTION_ALL;
 }
 
@@ -50,7 +50,7 @@ bool ObjXlc1::isShadow(u32 index)
 {
     const u8 shadows[] = {1, 2, 59, 68, 72, 78, 79, 83, 84, 112, 116, 120, 124, 125, 129, 133};
 
-    return ARRAY_COUNT_END(shadows) != std::find(shadows, ARRAY_COUNT_END(shadows), index);
+    return ARRAY_COUNT_END(shadows) != find(shadows, ARRAY_COUNT_END(shadows), index);
 }
 
 int ObjXlc2::GetPassable(u32 index)
@@ -63,7 +63,7 @@ int ObjXlc2::GetPassable(u32 index)
              (110 < index && index < 136))
         return 0;
 
-    return ARRAY_COUNT_END(restricted) != std::find(restricted, ARRAY_COUNT_END(restricted), index) ?
+    return ARRAY_COUNT_END(restricted) != find(restricted, ARRAY_COUNT_END(restricted), index) ?
            DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW : DIRECTION_ALL;
 }
 
@@ -81,7 +81,7 @@ bool ObjXlc2::isShadow(u32 index)
     const u8 shadows[] = {2, 10, 47, 83};
 #endif
 
-    return ARRAY_COUNT_END(shadows) != std::find(shadows, ARRAY_COUNT_END(shadows), index);
+    return ARRAY_COUNT_END(shadows) != find(shadows, ARRAY_COUNT_END(shadows), index);
 }
 
 
@@ -105,7 +105,7 @@ bool ObjXlc3::isShadow(u32 index)
     const u8 shadows[] = {0, 9, 20, 29, 41, 59, 65, 71, 77, 83, 89, 95, 101,
                           108, 109, 112, 113, 116, 117, 120, 121, 124, 125, 128, 129, 132, 133, 136, 137};
 
-    return ARRAY_COUNT_END(shadows) != std::find(shadows, ARRAY_COUNT_END(shadows), index);
+    return ARRAY_COUNT_END(shadows) != find(shadows, ARRAY_COUNT_END(shadows), index);
 }
 
 int ObjXlc1::GetActionObject(u32 index)

@@ -60,7 +60,7 @@ const Rect &Interface::GameArea::GetRectMaps() const
 /* fixed src rect image */
 Rect Interface::GameArea::RectFixed(Point &dst, int rw, int rh) const
 {
-    std::pair<Rect, Point> res = Rect::Fixed4Blit(Rect(dst.x, dst.y, rw, rh), interface.GetGameArea().GetArea());
+    pair<Rect, Point> res = Rect::Fixed4Blit(Rect(dst.x, dst.y, rw, rh), interface.GetGameArea().GetArea());
     dst = res.second;
     return res.first;
 }

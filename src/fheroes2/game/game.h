@@ -73,9 +73,9 @@ namespace Game
 
     void Init();
 
-    const std::string &GetLastSavename();
+    const string &GetLastSavename();
 
-    void SetLastSavename(const std::string &);
+    void SetLastSavename(const string &);
 
     void SetLoadVersion(int);
 
@@ -271,7 +271,7 @@ namespace Game
 
     int GetActualKingdomColors();
 
-    void DialogPlayers(int color, std::string);
+    void DialogPlayers(int color, string);
 
     void SetCurrentMusic(int);
 
@@ -305,7 +305,7 @@ namespace Game
 
     void OpenCastleDialog(Castle &);
 
-    std::string GetEncodeString(const std::string &);
+    string GetEncodeString(const string &);
 
     namespace Editor
     {
@@ -322,7 +322,7 @@ namespace Game
 
     u32 GetStep4Player(u32, u32, u32);
 
-    std::string CountScoute(u32 count, int scoute, bool shorts = false);
+    string CountScoute(u32 count, int scoute, bool shorts = false);
 }
 
 #define HotKeyCloseWindow (Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT) || Game::HotKeyPressEvent(Game::EVENT_DEFAULT_READY))

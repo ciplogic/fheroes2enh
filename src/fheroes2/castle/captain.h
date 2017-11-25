@@ -56,7 +56,7 @@ public:
 
     s32 GetIndex() const;
 
-    const std::string &
+    const string &
     GetName() const;
 
     const Castle *

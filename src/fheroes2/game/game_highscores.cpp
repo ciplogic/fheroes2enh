@@ -50,8 +50,8 @@ struct hgs_t
 
     bool operator==(const hgs_t &) const;
 
-    std::string player;
-    std::string land;
+    string player;
+    string land;
     u32 localtime;
     u32 days;
     u32 rating;
@@ -83,19 +83,19 @@ public:
     HGSData()
     {}
 
-    bool Load(const std::string &);
+    bool Load(const string &);
 
-    bool Save(const std::string &);
+    bool Save(const string &);
 
-    void ScoreRegistry(const std::string &, const std::string &, u32, u32);
+    void ScoreRegistry(const string &, const string &, u32, u32);
 
     void RedrawList(s32, s32);
 
 private:
-    std::vector<hgs_t> list;
+    vector<hgs_t> list;
 };
 
-bool HGSData::Load(const std::string &fn)
+bool HGSData::Load(const string &fn)
 {
     ZStreamFile hdata;
     if (!hdata.read(fn)) return false;
@@ -114,7 +114,7 @@ bool HGSData::Load(const std::string &fn)
     return false;
 }
 
-bool HGSData::Save(const std::string &fn)
+bool HGSData::Save(const string &fn)
 {
     ZStreamFile hdata;
     hdata.setbigendian(true);
@@ -124,20 +124,20 @@ bool HGSData::Save(const std::string &fn)
     return true;
 }
 
-void HGSData::ScoreRegistry(const std::string &p, const std::string &m, u32 r, u32 s)
+void HGSData::ScoreRegistry(const string &p, const string &m, u32 r, u32 s)
 {
     hgs_t h;
 
     h.player = p;
     h.land = m;
-    h.localtime = std::time(nullptr);
+    h.localtime = time(nullptr);
     h.days = r;
     h.rating = s;
 
-    if (list.end() == std::find(list.begin(), list.end(), h))
+    if (list.end() == find(list.begin(), list.end(), h))
     {
         list.push_back(h);
-        std::sort(list.begin(), list.end(), RatingSort);
+        sort(list.begin(), list.end(), RatingSort);
         if (list.size() > HGS_MAX) list.resize(HGS_MAX);
     }
 }
@@ -156,10 +156,10 @@ void HGSData::RedrawList(s32 ox, s32 oy)
     else
         head.Blit(ox + 50, oy + 31);
 
-    std::sort(list.begin(), list.end(), RatingSort);
+    sort(list.begin(), list.end(), RatingSort);
 
-    std::vector<hgs_t>::const_iterator it1 = list.begin();
-    std::vector<hgs_t>::const_iterator it2 = list.end();
+    vector<hgs_t>::const_iterator it1 = list.begin();
+    vector<hgs_t>::const_iterator it2 = list.end();
 
     Text text;
     text.Set(conf.QVGA() ? Font::SMALL : Font::BIG);
@@ -204,7 +204,7 @@ int Game::HighScores(bool fill)
 
     HGSData hgs;
 
-    std::ostringstream stream;
+    ostringstream stream;
     stream << System::ConcatePath(conf.GetSaveDir(), "fheroes2.hgs");
 
     cursor.SetThemes(cursor.POINTER);
@@ -237,7 +237,7 @@ int Game::HighScores(bool fill)
 
     if (rating && (gameResult.GetResult() & GameOver::WINS))
     {
-        std::string player(_("Unknown Hero"));
+        string player(_("Unknown Hero"));
         Dialog::InputString(_("Your Name"), player);
         cursor.Hide();
         if (player.empty()) player = _("Unknown Hero");
@@ -256,7 +256,7 @@ int Game::HighScores(bool fill)
     {
         // key code info
         if (Settings::Get().Debug() == 0x12 && le.KeyPress())
-            Dialog::Message("Key Press:", GetString(le.KeyValue()), Font::SMALL, Dialog::OK);
+            Message("Key Press:", GetString(le.KeyValue()), Font::SMALL, Dialog::OK);
         le.MousePressLeft(buttonCampain) ? buttonCampain.PressDraw() : buttonCampain.ReleaseDraw();
         le.MousePressLeft(buttonExit) ? buttonExit.PressDraw() : buttonExit.ReleaseDraw();
 

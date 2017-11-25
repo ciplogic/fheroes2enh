@@ -32,7 +32,7 @@
 class SettingsListBox : public Interface::ListBox<u32>
 {
 public:
-    SettingsListBox(const Point &pt, bool f) : Interface::ListBox<u32>(pt), readonly(f)
+    SettingsListBox(const Point &pt, bool f) : ListBox<u32>(pt), readonly(f)
     {};
 
     void RedrawItem(const u32 &, s32, s32, bool);
@@ -152,13 +152,13 @@ void Dialog::ExtSettings(bool readonly)
     cursor.SetThemes(cursor.POINTER);
 
     const int window_h = conf.QVGA() ? 224 : 400;
-    Dialog::FrameBorder frameborder(Size(320, window_h));
+    FrameBorder frameborder(Size(320, window_h));
     const Rect &area = frameborder.GetArea();
 
     Text text("FHeroes2 Settings", Font::YELLOW_BIG);
     text.Blit(area.x + (area.w - text.w()) / 2, area.y + 6);
 
-    std::vector<u32> states;
+    vector<u32> states;
     states.reserve(64);
 
     states.push_back(Settings::GAME_SAVE_REWRITE_CONFIRM);
@@ -268,15 +268,15 @@ void Dialog::ExtSettings(bool readonly)
 
     LocalEvent &le = LocalEvent::Get();
 
-    ButtonGroups btnGroups(area, Dialog::OK | Dialog::CANCEL);
+    ButtonGroups btnGroups(area, OK | CANCEL);
     btnGroups.Draw();
 
     cursor.Show();
     display.Flip();
 
     // message loop
-    int result = Dialog::ZERO;
-    while (result == Dialog::ZERO && le.HandleEvents())
+    int result = ZERO;
+    while (result == ZERO && le.HandleEvents())
     {
         result = btnGroups.QueueEventProcessing();
 
@@ -291,7 +291,7 @@ void Dialog::ExtSettings(bool readonly)
     }
 
     // store
-    if (result == Dialog::OK)
+    if (result == OK)
     {
         le.SetTapMode(conf.ExtPocketTapMode());
         Settings::Get().BinarySave();

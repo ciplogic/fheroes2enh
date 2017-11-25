@@ -38,7 +38,7 @@
 
 void LoadZLogo();
 
-void SetVideoDriver(const std::string &);
+void SetVideoDriver(const string &);
 
 void SetTimidityEnvPath(const Settings &);
 
@@ -61,9 +61,9 @@ int PrintHelp(const char *basename)
     return EXIT_SUCCESS;
 }
 
-std::string GetCaption()
+string GetCaption()
 {
-    return std::string("Free Heroes II, version: " + Settings::GetVersion());
+    return string("Free Heroes II, version: " + Settings::GetVersion());
 }
 #ifdef __APPLE__
 int SDL_main(int argc, char **argv)
@@ -78,7 +78,7 @@ int main(int argc, char **argv)
     int test = 0;
 
     DEBUG(DBG_ALL, DBG_INFO, "Free Heroes II, " + conf.GetVersion());
-	std::vector<std::string> vArgv;
+	vector<string> vArgv;
 
 #ifndef WIN32
 	for (int i = 0; i<nArgs; i++)
@@ -145,7 +145,7 @@ int main(int argc, char **argv)
         try
 #endif
         {
-            std::atexit(SDL::Quit);
+            atexit(SDL::Quit);
 
             SetLangEnvPath(conf);
 
@@ -309,7 +309,7 @@ int TestBlitSpeed()
 void LoadZLogo()
 {
 #ifdef BUILD_RELEASE
-    std::string file = Settings::GetLastFile("image", "sdl_logo.png");
+    string file = Settings::GetLastFile("image", "sdl_logo.png");
     // SDL logo
     if (Settings::Get().ExtGameShowSDL() && !file.empty())
     {
@@ -350,13 +350,13 @@ void ReadConfigs()
 
 void InitHomeDir()
 {
-    const std::string home = System::GetHomeDirectory("fheroes2");
+    const string home = System::GetHomeDirectory("fheroes2");
 
     if (!home.empty())
     {
-        const std::string home_maps = System::ConcatePath(home, "maps");
-        const std::string home_files = System::ConcatePath(home, "files");
-        const std::string home_files_save = System::ConcatePath(home_files, "save");
+        const string home_maps = System::ConcatePath(home, "maps");
+        const string home_files = System::ConcatePath(home, "files");
+        const string home_files_save = System::ConcatePath(home_files, "save");
 
         if (!System::IsDirectory(home))
             System::MakeDirectory(home);
@@ -372,15 +372,15 @@ void InitHomeDir()
     }
 }
 
-void SetVideoDriver(const std::string &driver)
+void SetVideoDriver(const string &driver)
 {
     System::SetEnvironment("SDL_VIDEODRIVER", driver.c_str());
 }
 
 void SetTimidityEnvPath(const Settings &conf)
 {
-    const std::string prefix_timidity = System::ConcatePath("files", "timidity");
-    const std::string result = Settings::GetLastFile(prefix_timidity, "timidity.cfg");
+    const string prefix_timidity = System::ConcatePath("files", "timidity");
+    const string result = Settings::GetLastFile(prefix_timidity, "timidity.cfg");
 
     if (System::IsFile(result))
         System::SetEnvironment("TIMIDITY_PATH", System::GetDirname(result).c_str());

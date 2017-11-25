@@ -51,7 +51,7 @@ int PocketPC::SelectScenario(void)
     MapsFileInfoList all;
     if (!PrepareMapsFileInfoList(all, false))
     {
-        Dialog::Message(_("Warning"), _("No maps available!"), Font::BIG, Dialog::OK);
+        Message(_("Warning"), _("No maps available!"), Font::BIG, Dialog::OK);
         return Game::MAINMENU;
     }
 

@@ -201,10 +201,10 @@ void AIBattleLose(Heroes &hero, const Battle::Result &res, bool attacker, int co
 
         if (hero.isControlHuman())
         {
-            std::string msg = _("Hero %{name} also got a %{count} experience.");
+            string msg = _("Hero %{name} also got a %{count} experience.");
             StringReplace(msg, "%{name}", hero.GetName());
             StringReplace(msg, "%{count}", exp);
-            Dialog::Message("", msg, Font::BIG, Dialog::OK);
+            Message("", msg, Font::BIG, Dialog::OK);
         }
         hero.IncreaseExperience(exp);
     }
@@ -876,7 +876,7 @@ void AIToCaptureObject(Heroes &hero, u32 obj, s32 dst_index)
             tile.QuantitySetColor(hero.GetColor());
 
             if (MP2::OBJ_LIGHTHOUSE == obj)
-                Maps::ClearFog(dst_index, Game::GetViewDistance(Game::VIEW_LIGHT_HOUSE), hero.GetColor());
+                Maps::ClearFog(dst_index, GetViewDistance(Game::VIEW_LIGHT_HOUSE), hero.GetColor());
         }
     }
 
@@ -902,7 +902,7 @@ void AIToSign(Heroes &hero, u32 obj, s32 dst_index)
 
 void AIToObservationTower(Heroes &hero, u32 obj, s32 dst_index)
 {
-    Maps::ClearFog(dst_index, Game::GetViewDistance(Game::VIEW_OBSERVATION_TOWER), hero.GetColor());
+    Maps::ClearFog(dst_index, GetViewDistance(Game::VIEW_OBSERVATION_TOWER), hero.GetColor());
     hero.SetVisited(dst_index, Visit::GLOBAL);
     DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
@@ -2061,7 +2061,7 @@ void AI::HeroesMove(Heroes &hero)
                 if (hide_move)
                 {
                     hero.Move(true);
-                } else if (Game::AnimateInfrequentDelay(Game::CURRENT_AI_DELAY))
+                } else if (AnimateInfrequentDelay(Game::CURRENT_AI_DELAY))
                 {
                     cursor.Hide();
                     hero.Move();
@@ -2072,7 +2072,7 @@ void AI::HeroesMove(Heroes &hero)
                     display.Flip();
                 }
 
-                if (Game::AnimateInfrequentDelay(Game::MAPS_DELAY))
+                if (AnimateInfrequentDelay(Game::MAPS_DELAY))
                 {
                     u32 &frame = Game::MapsAnimationFrame();
                     ++frame;

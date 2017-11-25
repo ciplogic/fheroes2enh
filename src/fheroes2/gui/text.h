@@ -47,7 +47,7 @@ public:
     virtual ~TextInterface()
     {};
 
-    virtual void SetText(const std::string &) = 0;
+    virtual void SetText(const string &) = 0;
 
     virtual void SetFont(int) = 0;
 
@@ -71,9 +71,9 @@ public:
     TextAscii()
     {};
 
-    TextAscii(const std::string &, int = Font::BIG);
+    TextAscii(const string &, int = Font::BIG);
 
-    void SetText(const std::string &);
+    void SetText(const string &);
 
     void SetFont(int);
 
@@ -100,7 +100,7 @@ public:
     static int CharDescent(int ft);
 
 private:
-    std::string message;
+    string message;
 };
 
 #ifdef WITH_TTF
@@ -139,7 +139,7 @@ class Text
 public:
     Text();
 
-    Text(const std::string &, int ft = Font::BIG);
+    Text(const string &, int ft = Font::BIG);
 
 #ifdef WITH_TTF
     Text(const u16*, size_t, int ft = Font::BIG);
@@ -151,9 +151,9 @@ public:
 
     Text &operator=(const Text &);
 
-    void Set(const std::string &, int);
+    void Set(const string &, int);
 
-    void Set(const std::string &);
+    void Set(const string &);
 
     void Set(int);
 
@@ -173,9 +173,9 @@ public:
 
     void Blit(const Point &, Surface &sf = Display::Get()) const;
 
-    static u32 width(const std::string &, int ft, u32 start = 0, u32 count = 0);
+    static u32 width(const string &, int ft, u32 start = 0, u32 count = 0);
 
-    static u32 height(const std::string &, int ft, u32 width = 0);
+    static u32 height(const string &, int ft, u32 width = 0);
 
 protected:
     TextInterface *message;
@@ -188,18 +188,18 @@ class TextSprite : protected Text
 public:
     TextSprite();
 
-    TextSprite(const std::string &, int ft, const Point &pt);
+    TextSprite(const string &, int ft, const Point &pt);
 
-    TextSprite(const std::string &, int ft, s32, s32);
+    TextSprite(const string &, int ft, s32, s32);
 
     void SetPos(const Point &pt)
     { SetPos(pt.x, pt.y); }
 
     void SetPos(s32, s32);
 
-    void SetText(const std::string &);
+    void SetText(const string &);
 
-    void SetText(const std::string &, int);
+    void SetText(const string &, int);
 
     void SetFont(int);
 
@@ -228,11 +228,11 @@ class TextBox : protected Rect
 public:
     TextBox();
 
-    TextBox(const std::string &, int, u32 width);
+    TextBox(const string &, int, u32 width);
 
-    TextBox(const std::string &, int, const Rect &);
+    TextBox(const string &, int, const Rect &);
 
-    void Set(const std::string &, int, u32 width);
+    void Set(const string &, int, u32 width);
 
     void SetAlign(int type);
 
@@ -259,13 +259,13 @@ public:
     void Blit(const Point &, Surface &sf = Display::Get());
 
 private:
-    void Append(const std::string &, int, u32);
+    void Append(const string &, int, u32);
 
 #ifdef WITH_TTF
     void	Append(const std::vector<u16> &, int, u32);
 #endif
 
-    std::list<Text> messages;
+    list<Text> messages;
     int align;
 };
 

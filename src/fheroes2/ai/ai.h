@@ -92,7 +92,7 @@ namespace AI
 
     bool HeroesSkipFog();
 
-    std::string HeroesString(const Heroes &);
+    string HeroesString(const Heroes &);
 
     void CastleAdd(const Castle &);
 

@@ -30,11 +30,11 @@ namespace Maps
 
 namespace Game
 {
-    bool Save(const std::string &);
+    bool Save(const string &);
 
-    bool Load(const std::string &);
+    bool Load(const string &);
 
-    bool LoadSAV2FileInfo(const std::string &, Maps::FileInfo &);
+    bool LoadSAV2FileInfo(const string &, Maps::FileInfo &);
 }
 
 #endif

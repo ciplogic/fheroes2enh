@@ -128,9 +128,9 @@ Point Battle::Catapult::GetTargetPosition(int target)
     return res;
 }
 
-int Battle::Catapult::GetTarget(const std::vector<u32> &values) const
+int Battle::Catapult::GetTarget(const vector<u32> &values) const
 {
-    std::vector<u32> targets;
+    vector<u32> targets;
     targets.reserve(4);
 
     // check walls

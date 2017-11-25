@@ -212,7 +212,7 @@ bool ActionAccess::Action(ActionAccess *act, s32 index, Heroes &hero)
             return false;
 
         if (!act->message.empty())
-            Dialog::Message("", act->message, Font::BIG, Dialog::OK);
+            Message("", act->message, Font::BIG, Dialog::OK);
 
         if (hero.isControlAI() && !act->allowComputer)
             return false;
@@ -232,7 +232,7 @@ bool ActionDefault::Action(ActionDefault *act, s32 index, Heroes &hero)
     if (act)
     {
         if (!act->message.empty())
-            Dialog::Message("", act->message, Font::BIG, Dialog::OK);
+            Message("", act->message, Font::BIG, Dialog::OK);
         return act->enabled;
     }
 
@@ -271,7 +271,7 @@ bool ActionMessage::Action(ActionMessage *act, s32 index, Heroes &hero)
     if (act)
     {
         if (!act->message.empty())
-            Dialog::Message("", act->message, Font::BIG, Dialog::OK);
+            Message("", act->message, Font::BIG, Dialog::OK);
         return true;
     }
 

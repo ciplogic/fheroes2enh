@@ -36,12 +36,12 @@
 #include "game.h"
 #include "dialog.h"
 
-struct ValueColors : std::pair<int, int>
+struct ValueColors : pair<int, int>
 {
-    ValueColors() : std::pair<int, int>(0, 0)
+    ValueColors() : pair<int, int>(0, 0)
     {};
 
-    ValueColors(int v, int c) : std::pair<int, int>(v, c)
+    ValueColors(int v, int c) : pair<int, int>(v, c)
     {};
 
     bool IsValue(int v) const
@@ -52,10 +52,10 @@ struct ValueColors : std::pair<int, int>
     { return v1.first > v2.first; };
 };
 
-void UpdateValuesColors(std::vector<ValueColors> &v, int value, int color)
+void UpdateValuesColors(vector<ValueColors> &v, int value, int color)
 {
-    std::vector<ValueColors>::iterator it =
-            std::find_if(v.begin(), v.end(), std::bind2nd(std::mem_fun_ref(&ValueColors::IsValue), value));
+    vector<ValueColors>::iterator it =
+            find_if(v.begin(), v.end(), bind2nd(mem_fun_ref(&ValueColors::IsValue), value));
 
     if (it == v.end())
         v.push_back(ValueColors(value, color));
@@ -63,7 +63,7 @@ void UpdateValuesColors(std::vector<ValueColors> &v, int value, int color)
         (*it).second |= color;
 }
 
-void GetTownsInfo(std::vector<ValueColors> &v, const Colors &colors)
+void GetTownsInfo(vector<ValueColors> &v, const Colors &colors)
 {
     v.clear();
 
@@ -74,10 +74,10 @@ void GetTownsInfo(std::vector<ValueColors> &v, const Colors &colors)
         UpdateValuesColors(v, value, *color);
     }
 
-    std::sort(v.begin(), v.end(), ValueColors::SortValueGreat);
+    sort(v.begin(), v.end(), ValueColors::SortValueGreat);
 }
 
-void GetCastlesInfo(std::vector<ValueColors> &v, const Colors &colors)
+void GetCastlesInfo(vector<ValueColors> &v, const Colors &colors)
 {
     v.clear();
 
@@ -88,10 +88,10 @@ void GetCastlesInfo(std::vector<ValueColors> &v, const Colors &colors)
         UpdateValuesColors(v, value, *color);
     }
 
-    std::sort(v.begin(), v.end(), ValueColors::SortValueGreat);
+    sort(v.begin(), v.end(), ValueColors::SortValueGreat);
 }
 
-void GetHeroesInfo(std::vector<ValueColors> &v, const Colors &colors)
+void GetHeroesInfo(vector<ValueColors> &v, const Colors &colors)
 {
     v.clear();
 
@@ -102,10 +102,10 @@ void GetHeroesInfo(std::vector<ValueColors> &v, const Colors &colors)
         UpdateValuesColors(v, value, *color);
     }
 
-    std::sort(v.begin(), v.end(), ValueColors::SortValueGreat);
+    sort(v.begin(), v.end(), ValueColors::SortValueGreat);
 }
 
-void GetGoldsInfo(std::vector<ValueColors> &v, const Colors &colors)
+void GetGoldsInfo(vector<ValueColors> &v, const Colors &colors)
 {
     v.clear();
 
@@ -116,10 +116,10 @@ void GetGoldsInfo(std::vector<ValueColors> &v, const Colors &colors)
         UpdateValuesColors(v, value, *color);
     }
 
-    std::sort(v.begin(), v.end(), ValueColors::SortValueGreat);
+    sort(v.begin(), v.end(), ValueColors::SortValueGreat);
 }
 
-void GetWoodOreInfo(std::vector<ValueColors> &v, const Colors &colors)
+void GetWoodOreInfo(vector<ValueColors> &v, const Colors &colors)
 {
     v.clear();
 
@@ -131,10 +131,10 @@ void GetWoodOreInfo(std::vector<ValueColors> &v, const Colors &colors)
         UpdateValuesColors(v, value, *color);
     }
 
-    std::sort(v.begin(), v.end(), ValueColors::SortValueGreat);
+    sort(v.begin(), v.end(), ValueColors::SortValueGreat);
 }
 
-void GetGemsCrSlfMerInfo(std::vector<ValueColors> &v, const Colors &colors)
+void GetGemsCrSlfMerInfo(vector<ValueColors> &v, const Colors &colors)
 {
     v.clear();
 
@@ -147,10 +147,10 @@ void GetGemsCrSlfMerInfo(std::vector<ValueColors> &v, const Colors &colors)
         UpdateValuesColors(v, value, *color);
     }
 
-    std::sort(v.begin(), v.end(), ValueColors::SortValueGreat);
+    sort(v.begin(), v.end(), ValueColors::SortValueGreat);
 }
 
-void GetObelisksInfo(std::vector<ValueColors> &v, const Colors &colors)
+void GetObelisksInfo(vector<ValueColors> &v, const Colors &colors)
 {
     v.clear();
 
@@ -161,10 +161,10 @@ void GetObelisksInfo(std::vector<ValueColors> &v, const Colors &colors)
         UpdateValuesColors(v, value, *color);
     }
 
-    std::sort(v.begin(), v.end(), ValueColors::SortValueGreat);
+    sort(v.begin(), v.end(), ValueColors::SortValueGreat);
 }
 
-void GetArmyInfo(std::vector<ValueColors> &v, const Colors &colors)
+void GetArmyInfo(vector<ValueColors> &v, const Colors &colors)
 {
     v.clear();
 
@@ -175,10 +175,10 @@ void GetArmyInfo(std::vector<ValueColors> &v, const Colors &colors)
         UpdateValuesColors(v, value, *color);
     }
 
-    std::sort(v.begin(), v.end(), ValueColors::SortValueGreat);
+    sort(v.begin(), v.end(), ValueColors::SortValueGreat);
 }
 
-void GetIncomesInfo(std::vector<ValueColors> &v, const Colors &colors)
+void GetIncomesInfo(vector<ValueColors> &v, const Colors &colors)
 {
     v.clear();
 
@@ -189,10 +189,10 @@ void GetIncomesInfo(std::vector<ValueColors> &v, const Colors &colors)
         UpdateValuesColors(v, value, *color);
     }
 
-    std::sort(v.begin(), v.end(), ValueColors::SortValueGreat);
+    sort(v.begin(), v.end(), ValueColors::SortValueGreat);
 }
 
-void GetBestHeroArmyInfo(std::vector<ValueColors> &v, const Colors &colors)
+void GetBestHeroArmyInfo(vector<ValueColors> &v, const Colors &colors)
 {
     v.clear();
 
@@ -204,7 +204,7 @@ void GetBestHeroArmyInfo(std::vector<ValueColors> &v, const Colors &colors)
     }
 }
 
-void DrawFlags(const std::vector<ValueColors> &v, const Point &pos, u32 width, u32 count)
+void DrawFlags(const vector<ValueColors> &v, const Point &pos, u32 width, u32 count)
 {
     bool qvga = Settings::Get().QVGA();
 
@@ -230,7 +230,7 @@ void DrawFlags(const std::vector<ValueColors> &v, const Point &pos, u32 width, u
     }
 }
 
-void DrawHeroIcons(const std::vector<ValueColors> &v, const Point &pos, u32 width)
+void DrawHeroIcons(const vector<ValueColors> &v, const Point &pos, u32 width)
 {
     if (v.size())
     {
@@ -268,14 +268,14 @@ void Dialog::ThievesGuild(bool oracle)
     cursor.Hide();
     cursor.SetThemes(Cursor::POINTER);
 
-    Dialog::FrameBorder frameborder(Size(640, 480));
+    FrameBorder frameborder(Size(640, 480));
     const Point &cur_pt = frameborder.GetArea();
     Point dst_pt(cur_pt);
 
     const u32 count = oracle ? 0xFF : world.GetKingdom(Settings::Get().CurrentColor()).GetCountBuilding(
             BUILD_THIEVESGUILD);
 
-    std::vector<ValueColors> v;
+    vector<ValueColors> v;
     v.reserve(KINGDOMMAX);
     const Colors colors(Game::GetActualKingdomColors());
     const int textx = 185;

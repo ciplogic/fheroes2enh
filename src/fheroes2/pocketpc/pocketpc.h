@@ -55,7 +55,7 @@ namespace PocketPC
 
     void HeroesMeeting(Heroes &, Heroes &);
 
-    void KeyboardDialog(std::string &);
+    void KeyboardDialog(string &);
 
     u32 GetCursorAttackDialog(const Point &, int direction);
 

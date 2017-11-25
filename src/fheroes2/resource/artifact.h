@@ -203,7 +203,7 @@ public:
 
     const char *GetName() const;
 
-    std::string GetDescription() const;
+    string GetDescription() const;
 
     static int Rand(level_t);
 
@@ -211,7 +211,7 @@ public:
 
     static const char *GetScenario(const Artifact &);
 
-    static void UpdateStats(const std::string &);
+    static void UpdateStats(const string &);
 
 private:
     friend StreamBase &operator<<(StreamBase &, const Artifact &);
@@ -228,7 +228,7 @@ StreamBase &operator>>(StreamBase &, Artifact &);
 
 u32 GoldInsteadArtifact(int);
 
-class BagArtifacts : public std::vector<Artifact>
+class BagArtifacts : public vector<Artifact>
 {
 public:
     BagArtifacts();
@@ -253,7 +253,7 @@ public:
 
     u32 Count(const Artifact &) const;
 
-    std::string String() const;
+    string String() const;
 };
 
 #include "interface_itemsbar.h"
@@ -279,9 +279,9 @@ public:
 
     bool ActionBarPressRight(const Point &, Artifact &, const Rect &);
 
-    bool QueueEventProcessing(std::string * = nullptr);
+    bool QueueEventProcessing(string * = nullptr);
 
-    bool QueueEventProcessing(ArtifactsBar &, std::string * = nullptr);
+    bool QueueEventProcessing(ArtifactsBar &, string * = nullptr);
 
     bool ActionBarCursor(const Point &, Artifact &, const Rect &);
 
@@ -294,7 +294,7 @@ protected:
     bool use_mini_sprite;
     bool read_only;
     bool can_change;
-    std::string msg;
+    string msg;
 };
 
 #endif

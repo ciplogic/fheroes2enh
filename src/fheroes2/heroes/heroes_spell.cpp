@@ -66,7 +66,7 @@ bool ActionSpellSetGuardian(Heroes &, const Spell &, int mons);
 class CastleIndexListBox : public Interface::ListBox<s32>
 {
 public:
-    CastleIndexListBox(const Point &pt, int &res) : Interface::ListBox<s32>(pt), result(res)
+    CastleIndexListBox(const Point &pt, int &res) : ListBox<s32>(pt), result(res)
     {};
 
     void RedrawItem(const s32 &, s32, s32, bool);
@@ -123,16 +123,16 @@ void CastleIndexListBox::RedrawBackground(const Point &dst)
 
 bool Heroes::ActionSpellCast(const Spell &spell)
 {
-    std::string error;
+    string error;
 
     if (!CanMove())
     {
-        Dialog::Message("", _("Your hero is too tired to cast this spell today. Try again tomorrow."), Font::BIG,
+        Message("", _("Your hero is too tired to cast this spell today. Try again tomorrow."), Font::BIG,
                         Dialog::OK);
         return false;
     } else if (spell == Spell::NONE || spell.isCombat() || !CanCastSpell(spell, &error))
     {
-        if (error.size()) Dialog::Message("Error", error, Font::BIG, Dialog::OK);
+        if (error.size()) Message("Error", error, Font::BIG, Dialog::OK);
         return false;
     }
 
@@ -242,14 +242,14 @@ bool HeroesTownGate(Heroes &hero, const Castle *castle)
 void DialogSpellFailed(const Spell &spell)
 {
     // failed
-    std::string str = _("%{spell} failed!!!");
+    string str = _("%{spell} failed!!!");
     StringReplace(str, "%{spell}", spell.GetName());
-    Dialog::Message("", str, Font::BIG, Dialog::OK);
+    Message("", str, Font::BIG, Dialog::OK);
 }
 
 void DialogNotAvailable()
 {
-    Dialog::Message("", "Not available for current version", Font::BIG, Dialog::OK);
+    Message("", "Not available for current version", Font::BIG, Dialog::OK);
 }
 
 bool ActionSpellViewMines(Heroes &hero)
@@ -428,7 +428,7 @@ bool ActionSpellTownGate(Heroes &hero)
 
     if (!castle)
     {
-        Dialog::Message("", _("No avaialble town. Spell Failed!!!"), Font::BIG, Dialog::OK);
+        Message("", _("No avaialble town. Spell Failed!!!"), Font::BIG, Dialog::OK);
         return false;
     }
 
@@ -438,7 +438,7 @@ bool ActionSpellTownGate(Heroes &hero)
 bool ActionSpellTownPortal(Heroes &hero)
 {
     const Kingdom &kingdom = hero.GetKingdom();
-    std::vector<s32> castles;
+    vector<s32> castles;
 
     Display &display = Display::Get();
     Cursor &cursor = Cursor::Get();
@@ -452,7 +452,7 @@ bool ActionSpellTownPortal(Heroes &hero)
 
     if (castles.empty())
     {
-        Dialog::Message("", _("No avaialble town. Spell Failed!!!"), Font::BIG, Dialog::OK);
+        Message("", _("No avaialble town. Spell Failed!!!"), Font::BIG, Dialog::OK);
         return false;
     }
 
@@ -516,9 +516,9 @@ bool ActionSpellVisions(Heroes &hero)
             JoinCount join = Army::GetJoinSolution(hero, tile, troop);
 
             Funds cost;
-            std::string hdr, msg;
+            string hdr, msg;
 
-            hdr = std::string("%{count} ") + StringLower(troop.GetPluralName(join.second));
+            hdr = string("%{count} ") + StringLower(troop.GetPluralName(join.second));
             StringReplace(hdr, "%{count}", join.second);
 
             switch (join.first)
@@ -550,13 +550,13 @@ bool ActionSpellVisions(Heroes &hero)
                     break;
             }
 
-            Dialog::Message(hdr, msg, Font::BIG, Dialog::OK);
+            Message(hdr, msg, Font::BIG, Dialog::OK);
         }
     } else
     {
-        std::string msg = _("You must be within %{count} spaces of a monster for the Visions spell to work.");
+        string msg = _("You must be within %{count} spaces of a monster for the Visions spell to work.");
         StringReplace(msg, "%{count}", dist);
-        Dialog::Message("", msg, Font::BIG, Dialog::OK);
+        Message("", msg, Font::BIG, Dialog::OK);
         return false;
     }
 
@@ -571,7 +571,7 @@ bool ActionSpellSetGuardian(Heroes &hero, const Spell &spell, int mons)
 
     if (MP2::OBJ_MINES != tile.GetObject(false))
     {
-        Dialog::Message("",
+        Message("",
                         _("You must be standing on the entrance to a mine (sawmills and alchemists don't count) to cast this spell."),
                         Font::BIG, Dialog::OK);
         return false;

@@ -50,7 +50,7 @@ namespace Battle
 
 int GetCovr(int ground)
 {
-    std::vector<int> covrs;
+    vector<int> covrs;
 
     switch (ground)
     {
@@ -223,8 +223,8 @@ Battle::Arena::Arena(Army &a1, Army &a2, s32 index, bool local) :
         interface = new Interface(*this, index);
         board.SetArea(interface->GetArea());
 
-        std::for_each(army1->begin(), army1->end(), std::mem_fun(&Unit::InitContours));
-        std::for_each(army2->begin(), army2->end(), std::mem_fun(&Unit::InitContours));
+        for_each(army1->begin(), army1->end(), mem_fun(&Unit::InitContours));
+        for_each(army2->begin(), army2->end(), mem_fun(&Unit::InitContours));
 
         if (conf.Sound())
             AGG::PlaySound(M82::PREBATTL);
@@ -521,7 +521,7 @@ void Battle::Arena::CatapultAction()
     if (catapult)
     {
         u32 shots = catapult->GetShots();
-        std::vector<u32> values(CAT_MISS + 1, 0);
+        vector<u32> values(CAT_MISS + 1, 0);
 
         values[CAT_WALL1] = GetCastleTargetValue(CAT_WALL1);
         values[CAT_WALL2] = GetCastleTargetValue(CAT_WALL2);
@@ -555,7 +555,7 @@ Battle::Indexes Battle::Arena::GetPath(const Unit &b, const Position &dst)
     {
         if (IS_DEBUG(DBG_BATTLE, DBG_TRACE))
         {
-            std::stringstream ss;
+            stringstream ss;
             for (u32 ii = 0; ii < result.size(); ++ii) ss << result[ii] << ", ";
             DEBUG(DBG_BATTLE, DBG_TRACE, ss.str());
         }
@@ -606,26 +606,26 @@ int Battle::Arena::GetOppositeColor(int col) const
 
 Battle::Unit *Battle::Arena::GetTroopUID(u32 uid)
 {
-    Units::iterator it = std::find_if(army1->begin(), army1->end(),
-                                      std::bind2nd(std::mem_fun(&Unit::isUID), uid));
+    Units::iterator it = find_if(army1->begin(), army1->end(),
+                                      bind2nd(mem_fun(&Unit::isUID), uid));
 
     if (it != army1->end()) return *it;
 
-    it = std::find_if(army2->begin(), army2->end(),
-                      std::bind2nd(std::mem_fun(&Unit::isUID), uid));
+    it = find_if(army2->begin(), army2->end(),
+                      bind2nd(mem_fun(&Unit::isUID), uid));
 
     return it != army2->end() ? *it : nullptr;
 }
 
 const Battle::Unit *Battle::Arena::GetTroopUID(u32 uid) const
 {
-    Units::const_iterator it = std::find_if(army1->begin(), army1->end(),
-                                            std::bind2nd(std::mem_fun(&Unit::isUID), uid));
+    Units::const_iterator it = find_if(army1->begin(), army1->end(),
+                                            bind2nd(mem_fun(&Unit::isUID), uid));
 
     if (it != army1->end()) return *it;
 
-    it = std::find_if(army2->begin(), army2->end(),
-                      std::bind2nd(std::mem_fun(&Unit::isUID), uid));
+    it = find_if(army2->begin(), army2->end(),
+                      bind2nd(mem_fun(&Unit::isUID), uid));
 
     return it != army2->end() ? *it : nullptr;
 }
@@ -693,7 +693,7 @@ bool Battle::Arena::CanRetreatOpponent(int color) const
            world.GetKingdom(hero->GetColor()).GetCastles().size();
 }
 
-bool Battle::Arena::isDisableCastSpell(const Spell &spell, std::string *msg)
+bool Battle::Arena::isDisableCastSpell(const Spell &spell, string *msg)
 {
     const HeroBase *hero1 = army1->GetCommander();
     const HeroBase *hero2 = army2->GetCommander();
@@ -760,7 +760,7 @@ bool Battle::Arena::isDisableCastSpell(const Spell &spell, std::string *msg)
             for (Board::const_iterator
                          it = board.begin(); it != board.end(); ++it)
             {
-                const Battle::Unit *b = (*it).GetUnit();
+                const Unit *b = (*it).GetUnit();
 
                 if (b)
                 {
@@ -874,9 +874,9 @@ u32 Battle::Arena::GetCastleTargetValue(int target) const
     return 0;
 }
 
-std::vector<int> Battle::Arena::GetCastleTargets() const
+vector<int> Battle::Arena::GetCastleTargets() const
 {
-    std::vector<int> targets;
+    vector<int> targets;
     targets.reserve(8);
 
     // check walls
@@ -1101,8 +1101,8 @@ u32 Battle::Arena::GetObstaclesPenalty(const Unit &attacker, const Unit &defende
 
         if (indexes.size())
         {
-            std::sort(indexes.begin(), indexes.end());
-            indexes.resize(std::distance(indexes.begin(), std::unique(indexes.begin(), indexes.end())));
+            sort(indexes.begin(), indexes.end());
+            indexes.resize(distance(indexes.begin(), unique(indexes.begin(), indexes.end())));
         }
 
         for (Indexes::const_iterator

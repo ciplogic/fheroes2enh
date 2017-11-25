@@ -43,7 +43,7 @@ public:
 
     const char *GetName() const;
 
-    const std::string &GetDescription() const;
+    const string &GetDescription() const;
 
     void SetStatusMessage(StatusBar &) const;
 
@@ -55,18 +55,18 @@ public:
 
     bool DialogBuyBuilding(bool buttons) const;
 
-    static void UpdateCosts(const std::string &);
+    static void UpdateCosts(const string &);
 
     static payment_t GetCost(u32, int);
 
 private:
     void RedrawCaptain();
 
-    std::string GetConditionDescription() const;
+    string GetConditionDescription() const;
 
     const Castle &castle;
     u32 building;
-    std::string description;
+    string description;
     Rect area;
     int bcond;
 
@@ -97,7 +97,7 @@ public:
 protected:
     Castle &castle;
     Surface backsf;
-    std::vector<DwellingItem> content;
+    vector<DwellingItem> content;
 };
 
 #endif

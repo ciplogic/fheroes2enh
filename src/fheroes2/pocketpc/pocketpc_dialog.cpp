@@ -136,7 +136,7 @@ void RedrawTouchButton(const Surface &sf, const Rect &rt, const char *lb)
     }
 }
 
-void PocketPC::KeyboardDialog(std::string &str)
+void PocketPC::KeyboardDialog(string &str)
 {
     Cursor &cursor = Cursor::Get();
     Display &display = Display::Get();
@@ -317,7 +317,7 @@ void PocketPC::KeyboardDialog(std::string &str)
     // mainmenu loop
     while (le.HandleEvents())
     {
-        if (Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
+        if (HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
         {
             str.clear();
             break;

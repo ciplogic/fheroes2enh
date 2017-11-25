@@ -92,7 +92,7 @@ extern HWND SDL_Window;
 #include "tools.h"
 #include "dir.h"
 
-int System::MakeDirectory(const std::string &path)
+int System::MakeDirectory(const string &path)
 {
 #if defined(__SYMBIAN32__)
     return mkdir(path.c_str(), S_IRWXU);
@@ -103,14 +103,14 @@ int System::MakeDirectory(const std::string &path)
 #endif
 }
 
-std::string System::ConcatePath(const std::string &str1, const std::string &str2)
+string System::ConcatePath(const string &str1, const string &str2)
 {
-    return std::string(str1 + SEPARATOR + str2);
+    return string(str1 + SEPARATOR + str2);
 }
 
-std::string System::GetHomeDirectory(const std::string &prog)
+string System::GetHomeDirectory(const string &prog)
 {
-    std::string res;
+    string res;
 
 #if SDL_VERSION_ATLEAST(2, 0, 0)
     char* path = SDL_GetPrefPath("", prog.c_str());
@@ -118,15 +118,15 @@ std::string System::GetHomeDirectory(const std::string &prog)
     SDL_free(path);
 #endif
 
-    if (System::GetEnvironment("HOME"))
-        res = System::ConcatePath(System::GetEnvironment("HOME"), std::string(".").append(prog));
-    else if (System::GetEnvironment("APPDATA"))
-        res = System::ConcatePath(System::GetEnvironment("APPDATA"), prog);
+    if (GetEnvironment("HOME"))
+        res = ConcatePath(GetEnvironment("HOME"), string(".").append(prog));
+    else if (GetEnvironment("APPDATA"))
+        res = ConcatePath(GetEnvironment("APPDATA"), prog);
 
     return res;
 }
 
-ListDirs System::GetDataDirectories(const std::string &prog)
+ListDirs System::GetDataDirectories(const string &prog)
 {
     ListDirs dirs;
 
@@ -147,7 +147,7 @@ ListDirs System::GetDataDirectories(const std::string &prog)
     return dirs;
 }
 
-ListFiles System::GetListFiles(const std::string &prog, const std::string &prefix, const std::string &filter)
+ListFiles System::GetListFiles(const string &prog, const string &prefix, const string &filter)
 {
     ListFiles res;
 
@@ -182,16 +182,16 @@ ListFiles System::GetListFiles(const std::string &prog, const std::string &prefi
     return res;
 }
 
-std::string System::GetDirname(const std::string &str)
+string System::GetDirname(const string &str)
 {
     if (!str.empty())
     {
         size_t pos = str.rfind(SEPARATOR);
 
-        if (std::string::npos == pos)
-            return std::string(".");
+        if (string::npos == pos)
+            return string(".");
         else if (pos == 0)
-            return std::string("./");
+            return string("./");
         else if (pos == str.size() - 1)
             return GetDirname(str.substr(0, str.size() - 1));
         else
@@ -201,13 +201,13 @@ std::string System::GetDirname(const std::string &str)
     return str;
 }
 
-std::string System::GetBasename(const std::string &str)
+string System::GetBasename(const string &str)
 {
     if (!str.empty())
     {
         size_t pos = str.rfind(SEPARATOR);
 
-        if (std::string::npos == pos ||
+        if (string::npos == pos ||
             pos == 0)
             return str;
         else if (pos == str.size() - 1)
@@ -228,10 +228,22 @@ const char *System::GetEnvironment(const char *name)
 #endif
 }
 
+
+
+System::ScopeExit::ScopeExit(function<void()> action)
+	: _action(action)
+{
+}
+
+System::ScopeExit::~ScopeExit()
+{
+	_action();
+}
+
 int System::SetEnvironment(const char *name, const char *value)
 {
 #if defined(__MINGW32CE__) || defined(__MINGW32__)
-    std::string str(std::string(name) + "=" + std::string(value));
+    string str(string(name) + "=" + string(value));
     // SDL 1.2.12 (char *)
     return SDL_putenv(const_cast<char *>(str.c_str()));
 #else
@@ -244,15 +256,15 @@ void System::SetLocale(int category, const char *locale)
 #if defined(ANDROID)
     setlocale(category, locale);
 #else
-    std::setlocale(category, locale);
+    setlocale(category, locale);
 #endif
 }
 
-std::string System::GetMessageLocale(int length /* 1, 2, 3 */)
+string System::GetMessageLocale(int length /* 1, 2, 3 */)
 {
-    std::string locname;
+    string locname;
 #if defined(__MINGW32CE__) || defined(__MINGW32__)
-    char* clocale = std::setlocale(LC_MONETARY, nullptr);
+    char* clocale = setlocale(LC_MONETARY, nullptr);
 #elif defined(ANDROID)
     char* clocale = setlocale(LC_MESSAGES, nullptr);
 #else
@@ -267,7 +279,7 @@ std::string System::GetMessageLocale(int length /* 1, 2, 3 */)
         // 1: en
         if (length < 3)
         {
-            std::list<std::string> list = StringSplit(locname, length < 2 ? "_" : ".");
+            auto list = StringSplit(locname, length < 2 ? "_" : ".");
             return list.empty() ? locname : list.front();
         }
     }
@@ -323,49 +335,28 @@ size_t System::GetMemoryUsage()
 #endif
 }
 
-std::string System::GetTime()
+string System::GetTime()
 {
     time_t raw;
     struct tm *tmi;
     char buf[13] = {0};
 
-    std::time(&raw);
-    tmi = std::localtime(&raw);
+    time(&raw);
+    tmi = localtime(&raw);
 
-    std::strftime(buf, sizeof(buf) - 1, "%X", tmi);
+    strftime(buf, sizeof(buf) - 1, "%X", tmi);
 
-    return std::string(buf);
+    return string(buf);
 }
 
-bool System::IsFile(const std::string &name, bool writable)
+bool System::IsFile(const string &name, bool writable)
 {
-#if defined(ANDROID)
-    return writable ? 0 == access(name.c_str(), W_OK) : true;
-#else
-#ifdef WIN32
-	if ((_access(name.c_str(), 0)) == -1)
-	{
-		//file doesn't exist
-		return false;
-	}
-	if ((_access(name.c_str(), 2)) == -1)
-	{
-		return !writable;
-			
-	}
-	return true;
-#else
-	struct stat fs;
-
-	if (stat(name.c_str(), &fs) || !S_ISREG(fs.st_mode))
-		return false;
-    return writable ? 0 == access(name.c_str(), W_OK) : S_IRUSR & fs.st_mode;
-#endif
-#endif
+	ifstream f(name.c_str());
+	return f.good();
 }
 
 #ifdef WIN32
-bool dirExists(const std::string& dirName_in)
+bool dirExists(const string& dirName_in)
 {
 	DWORD ftyp = GetFileAttributesA(dirName_in.c_str());
 	if (ftyp == INVALID_FILE_ATTRIBUTES)
@@ -380,7 +371,7 @@ bool dirExists(const std::string& dirName_in)
 
 
 
-bool System::IsDirectory(const std::string &name, bool writable)
+bool System::IsDirectory(const string &name, bool writable)
 {
 #if defined (ANDROID)
     return writable ? 0 == access(name.c_str(), W_OK) : true;
@@ -399,7 +390,7 @@ bool System::IsDirectory(const std::string &name, bool writable)
 #endif
 }
 
-int System::Unlink(const std::string &file)
+int System::Unlink(const string &file)
 {
     return _unlink(file.c_str());
 }

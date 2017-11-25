@@ -31,7 +31,7 @@ class Artifact;
 
 class BagArtifacts;
 
-class SpellStorage : public std::vector<Spell>
+class SpellStorage : public vector<Spell>
 {
 public:
     SpellStorage();
@@ -50,7 +50,7 @@ public:
 
     bool isPresentSpell(const Spell &) const;
 
-    std::string String() const;
+    string String() const;
 };
 
 #endif

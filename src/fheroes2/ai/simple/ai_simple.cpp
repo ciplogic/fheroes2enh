@@ -73,5 +73,5 @@ void AI::Init()
 
 bool Queue::isPresent(s32 index) const
 {
-    return end() != std::find(begin(), end(), index);
+    return end() != find(begin(), end(), index);
 }

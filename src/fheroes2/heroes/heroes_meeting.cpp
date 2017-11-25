@@ -54,7 +54,7 @@ void Heroes::MeetingDialog(Heroes &heroes2)
     const Point cur_pt((display.w() - backSprite.w()) / 2, (display.h() - backSprite.h()) / 2);
     SpriteBack background(Rect(cur_pt, backSprite.w(), backSprite.h()));
     Point dst_pt(cur_pt);
-    std::string message;
+    string message;
 
     Rect src_rt(0, 0, 640, 480);
 
@@ -192,7 +192,7 @@ void Heroes::MeetingDialog(Heroes &heroes2)
 
     // scholar action
     if (Settings::Get().ExtWorldEyeEagleAsScholar())
-        Heroes::ScholarAction(*this, heroes2);
+        ScholarAction(*this, heroes2);
 
     LocalEvent &le = LocalEvent::Get();
 
@@ -298,13 +298,13 @@ void RedrawPrimarySkillInfo(const Point &cur_pt, PrimarySkillsBar *bar1, Primary
 }
 
 // spell_book.cpp
-struct HeroesCanTeachSpell : std::binary_function<const HeroBase *, Spell, bool>
+struct HeroesCanTeachSpell : binary_function<const HeroBase *, Spell, bool>
 {
     bool operator()(const HeroBase *hero, Spell spell) const
     { return hero->CanTeachSpell(spell); };
 };
 
-struct HeroesHaveSpell : std::binary_function<const HeroBase *, Spell, bool>
+struct HeroesHaveSpell : binary_function<const HeroBase *, Spell, bool>
 {
     bool operator()(const HeroBase *hero, Spell spell) const
     { return hero->HaveSpell(spell); };
@@ -353,35 +353,35 @@ void Heroes::ScholarAction(Heroes &hero1, Heroes &hero2)
     if (learn.size())
     {
         SpellStorage::iterator
-                res = std::remove_if(learn.begin(), learn.end(), std::bind1st(HeroesHaveSpell(), teacher));
-        learn.resize(std::distance(learn.begin(), res));
+                res = remove_if(learn.begin(), learn.end(), bind1st(HeroesHaveSpell(), teacher));
+        learn.resize(distance(learn.begin(), res));
     }
 
     if (learn.size())
     {
         SpellStorage::iterator
-                res = std::remove_if(learn.begin(), learn.end(),
-                                     std::not1(std::bind1st(HeroesCanTeachSpell(), teacher)));
-        learn.resize(std::distance(learn.begin(), res));
+                res = remove_if(learn.begin(), learn.end(),
+                                     not1(bind1st(HeroesCanTeachSpell(), teacher)));
+        learn.resize(distance(learn.begin(), res));
     }
 
     // remove_if for teach spells
     if (teach.size())
     {
         SpellStorage::iterator
-                res = std::remove_if(teach.begin(), teach.end(), std::bind1st(HeroesHaveSpell(), learner));
-        teach.resize(std::distance(teach.begin(), res));
+                res = remove_if(teach.begin(), teach.end(), bind1st(HeroesHaveSpell(), learner));
+        teach.resize(distance(teach.begin(), res));
     }
 
     if (teach.size())
     {
         SpellStorage::iterator
-                res = std::remove_if(teach.begin(), teach.end(),
-                                     std::not1(std::bind1st(HeroesCanTeachSpell(), teacher)));
-        teach.resize(std::distance(teach.begin(), res));
+                res = remove_if(teach.begin(), teach.end(),
+                                     not1(bind1st(HeroesCanTeachSpell(), teacher)));
+        teach.resize(distance(teach.begin(), res));
     }
 
-    std::string message, spells1, spells2;
+    string message, spells1, spells2;
 
     // learning
     for (SpellStorage::const_iterator
@@ -425,7 +425,7 @@ void Heroes::ScholarAction(Heroes &hero1, Heroes &hero2)
             StringReplace(message, "%{spells1}", spells1);
             StringReplace(message, "%{spells2}", spells2);
 
-            Dialog::Message(_("Scholar Ability"), message, Font::BIG, Dialog::OK);
+            Message(_("Scholar Ability"), message, Font::BIG, Dialog::OK);
         }
     }
 }

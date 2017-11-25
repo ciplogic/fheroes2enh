@@ -92,7 +92,7 @@ void RowSpells::Redraw()
                  it = coords.begin(); it != coords.end(); ++it)
     {
         const Rect &dst = (*it);
-        const Spell &spell = spells[std::distance(coords.begin(), it)];
+        const Spell &spell = spells[distance(coords.begin(), it)];
 
         // roll hide
         if (dst.w < roll_show.w() || spell == Spell::NONE)
@@ -113,7 +113,7 @@ void RowSpells::Redraw()
             {
                 icon.Blit(dst.x + 5 + (dst.w - icon.w()) / 2, dst.y + 40 - icon.h() / 2);
 
-                TextBox text(std::string(spell.GetName()) + " [" + GetString(spell.SpellPoint(nullptr)) + "]", Font::SMALL,
+                TextBox text(string(spell.GetName()) + " [" + GetString(spell.SpellPoint(nullptr)) + "]", Font::SMALL,
                              78);
                 text.Blit(dst.x + 18, dst.y + 62);
             }

@@ -62,12 +62,12 @@ namespace Color
     int FromInt(int);
 }
 
-class Colors : public std::vector<int>
+class Colors : public vector<int>
 {
 public:
     Colors(int = Color::ALL);
 
-    std::string String() const;
+    string String() const;
 };
 
 class Kingdom;

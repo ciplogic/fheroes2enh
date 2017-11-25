@@ -120,7 +120,7 @@ protected:
     Button btnDn;
 };
 
-bool Dialog::SelectCount(const std::string &header, u32 min, u32 max, u32 &cur, int step)
+bool Dialog::SelectCount(const string &header, u32 min, u32 max, u32 &cur, int step)
 {
     Display &display = Display::Get();
 
@@ -141,7 +141,7 @@ bool Dialog::SelectCount(const std::string &header, u32 min, u32 max, u32 &cur, 
     sel.SetPos(Point(pos.x + 80, pos.y + 30));
     sel.Redraw();
 
-    ButtonGroups btnGroups(box.GetArea(), Dialog::OK | Dialog::CANCEL);
+    ButtonGroups btnGroups(box.GetArea(), OK | CANCEL);
     btnGroups.Draw();
 
     text.Set("MAX", Font::SMALL);
@@ -155,8 +155,8 @@ bool Dialog::SelectCount(const std::string &header, u32 min, u32 max, u32 &cur, 
     display.Flip();
 
     // message loop
-    int result = Dialog::ZERO;
-    while (result == Dialog::ZERO && le.HandleEvents())
+    int result = ZERO;
+    while (result == ZERO && le.HandleEvents())
     {
         if (PressIntKey(min, max, cur))
         {
@@ -186,12 +186,12 @@ bool Dialog::SelectCount(const std::string &header, u32 min, u32 max, u32 &cur, 
         result = btnGroups.QueueEventProcessing();
     }
 
-    cur = result == Dialog::OK ? sel() : 0;
+    cur = result == OK ? sel() : 0;
 
-    return result == Dialog::OK;
+    return result == OK;
 }
 
-bool Dialog::InputString(const std::string &header, std::string &res)
+bool Dialog::InputString(const string &header, string &res)
 {
     const int system = Settings::Get().ExtGameEvilInterface() ? ICN::SYSTEME : ICN::SYSTEM;
 
@@ -257,10 +257,10 @@ bool Dialog::InputString(const std::string &header, std::string &res)
             redraw = true;
         }
 
-        if (Game::HotKeyPressEvent(Game::EVENT_DEFAULT_READY) ||
+        if (HotKeyPressEvent(Game::EVENT_DEFAULT_READY) ||
             (buttonOk.isEnable() && le.MouseClickLeft(buttonOk)))
             break;
-        else if (Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT) || le.MouseClickLeft(buttonCancel))
+        else if (HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT) || le.MouseClickLeft(buttonCancel))
         {
             res.clear();
             break;
@@ -323,7 +323,7 @@ int Dialog::ArmySplitTroop(int free_slots, u32 max, u32 &cur, bool savelast)
     SpriteMove ssp;
     Surface sp3, sp4, sp5;
 
-    std::vector<Rect> vrts(3);
+    vector<Rect> vrts(3);
 
     Rect &rt3 = vrts[0];
     Rect &rt4 = vrts[1];
@@ -369,17 +369,17 @@ int Dialog::ArmySplitTroop(int free_slots, u32 max, u32 &cur, bool savelast)
         ssp.DrawBorder(RGBA(0xC0, 0x2C, 0));
     }
 
-    ButtonGroups btnGroups(box.GetArea(), Dialog::OK | Dialog::CANCEL);
+    ButtonGroups btnGroups(box.GetArea(), OK | CANCEL);
     btnGroups.Draw();
 
     if (savelast)
-        text.Set(std::string("MAX") + " " + "(" + GetString(max) + ")", Font::SMALL);
+        text.Set(string("MAX") + " " + "(" + GetString(max) + ")", Font::SMALL);
     else
-        text.Set(std::string("MAX") + " " + "(" + GetString(max) + ")" + " " + "-" + " " + "1", Font::SMALL);
+        text.Set(string("MAX") + " " + "(" + GetString(max) + ")" + " " + "-" + " " + "1", Font::SMALL);
     const Rect rectMax(pos.x + 163, pos.y + 30, text.w(), text.h());
     text.Blit(rectMax.x, rectMax.y);
 
-    text.Set(std::string("MIN") + " " + "(" + GetString(min) + ")", Font::SMALL);
+    text.Set(string("MIN") + " " + "(" + GetString(min) + ")", Font::SMALL);
     const Rect rectMin(pos.x + 163, pos.y + 45, text.w(), text.h());
     text.Blit(rectMin.x, rectMin.y);
 
@@ -390,8 +390,8 @@ int Dialog::ArmySplitTroop(int free_slots, u32 max, u32 &cur, bool savelast)
     display.Flip();
 
     // message loop
-    int bres = Dialog::ZERO;
-    while (bres == Dialog::ZERO && le.HandleEvents())
+    int bres = ZERO;
+    while (bres == ZERO && le.HandleEvents())
     {
         if (PressIntKey(min, max, cur))
         {
@@ -409,7 +409,7 @@ int Dialog::ArmySplitTroop(int free_slots, u32 max, u32 &cur, bool savelast)
             redraw_count = true;
 
         if (ssp.isValid())
-            for (std::vector<Rect>::const_iterator
+            for (vector<Rect>::const_iterator
                          it = vrts.begin(); it != vrts.end(); ++it)
             {
                 if (le.MouseClickLeft(*it))
@@ -437,7 +437,7 @@ int Dialog::ArmySplitTroop(int free_slots, u32 max, u32 &cur, bool savelast)
 
     int result = 0;
 
-    if (bres == Dialog::OK)
+    if (bres == OK)
     {
         cur = sel();
 

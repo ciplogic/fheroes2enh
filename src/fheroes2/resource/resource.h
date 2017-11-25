@@ -106,7 +106,7 @@ public:
 
     void Reset();
 
-    std::string String() const;
+    string String() const;
 
     s32 wood;
     s32 mercury;

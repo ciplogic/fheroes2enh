@@ -49,7 +49,7 @@ namespace Battle
 
     class Command;
 
-    class Actions : public std::list<Command>
+    class Actions : public list<Command>
     {
     public:
         bool HaveCommand(u32) const;
@@ -131,7 +131,7 @@ namespace Battle
 
         void TargetsApplySpell(const HeroBase *, const Spell &, TargetsInfo &);
 
-        bool isDisableCastSpell(const Spell &, std::string *msg);
+        bool isDisableCastSpell(const Spell &, string *msg);
 
         bool GraveyardAllowResurrect(s32, const Spell &) const;
 
@@ -190,7 +190,7 @@ namespace Battle
 
         s32 GetFreePositionNearHero(int) const;
 
-        std::vector<int>
+        vector<int>
         GetCastleTargets() const;
 
         void ApplyActionRetreat(Command &);

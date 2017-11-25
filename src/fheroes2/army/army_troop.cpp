@@ -31,7 +31,7 @@
 #include "heroes_base.h"
 #include "army_troop.h"
 
-Troop::Troop() : Monster(Monster::UNKNOWN), count(0)
+Troop::Troop() : Monster(UNKNOWN), count(0)
 {
 }
 
@@ -82,13 +82,13 @@ void Troop::SetCount(u32 c)
 
 void Troop::Reset()
 {
-    id = Monster::UNKNOWN;
+    id = UNKNOWN;
     count = 0;
 }
 
 const char *Troop::GetName() const
 {
-    return Monster::GetPluralName(count);
+    return GetPluralName(count);
 }
 
 u32 Troop::GetCount() const
@@ -126,7 +126,7 @@ u32 Troop::GetStrength() const
 
     switch (GetID())
     {
-        case Monster::GHOST:
+        case GHOST:
             res *= 2;
             break;
 
@@ -162,22 +162,22 @@ bool Troop::isModes(u32) const
     return false;
 }
 
-std::string Troop::GetAttackString() const
+string Troop::GetAttackString() const
 {
     return GetString(GetAttack());
 }
 
-std::string Troop::GetDefenseString() const
+string Troop::GetDefenseString() const
 {
     return GetString(GetDefense());
 }
 
-std::string Troop::GetShotString() const
+string Troop::GetShotString() const
 {
     return GetString(GetShots());
 }
 
-std::string Troop::GetSpeedString() const
+string Troop::GetSpeedString() const
 {
     return Speed::String(GetSpeed());
 }
@@ -247,22 +247,22 @@ const Army *ArmyTroop::GetArmy() const
     return army;
 }
 
-std::string ArmyTroop::GetAttackString() const
+string ArmyTroop::GetAttackString() const
 {
     if (Troop::GetAttack() == GetAttack())
         return GetString(Troop::GetAttack());
 
-    std::ostringstream os;
+    ostringstream os;
     os << Troop::GetAttack() << " (" << GetAttack() << ")";
     return os.str();
 }
 
-std::string ArmyTroop::GetDefenseString() const
+string ArmyTroop::GetDefenseString() const
 {
     if (Troop::GetDefense() == GetDefense())
         return GetString(Troop::GetDefense());
 
-    std::ostringstream os;
+    ostringstream os;
     os << Troop::GetDefense() << " (" << GetDefense() << ")";
     return os.str();
 }

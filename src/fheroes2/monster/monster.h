@@ -230,7 +230,7 @@ public:
 
     static u32 GetCountFromHitPoints(const Monster &, u32);
 
-    static void UpdateStats(const std::string &);
+    static void UpdateStats(const string &);
 
     static float GetUpgradeRatio();
 

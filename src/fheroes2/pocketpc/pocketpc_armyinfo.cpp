@@ -104,7 +104,7 @@ int PocketPC::DialogArmyInfo(const Troop &troop, u32 flags)
 
         if (buttonUpgrade.isEnable() && le.MouseClickLeft(buttonUpgrade)) return Dialog::UPGRADE;
         else if (buttonDismiss.isEnable() && le.MouseClickLeft(buttonDismiss)) return Dialog::DISMISS;
-        else if (le.MouseClickLeft(buttonExit) || Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
+        else if (le.MouseClickLeft(buttonExit) || HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
             return Dialog::CANCEL;
     }
 

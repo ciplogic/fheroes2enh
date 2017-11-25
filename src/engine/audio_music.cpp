@@ -187,7 +187,7 @@ namespace Music
     {
         UNUSED = 0, PLAY = 0x01, PAUSE = 0x02, LOOP = 0x04
     };
-    std::string command;
+    string command;
 }
 
 struct info_t
@@ -195,7 +195,7 @@ struct info_t
     info_t() : status(0)
     {}
 
-    std::string file;
+    string file;
     int status;
 };
 
@@ -204,7 +204,7 @@ int callbackPlayMusic(void *ptr)
     if (ptr && System::ShellCommand(nullptr))
     {
         info_t *info = reinterpret_cast<info_t *>(ptr);
-        std::ostringstream os;
+        ostringstream os;
         os << Music::command << " " << info->file;
 
         info->status |= Music::PLAY;
@@ -223,12 +223,12 @@ int callbackPlayMusic(void *ptr)
     return -1;
 }
 
-struct play_t : std::pair<SDL::Thread, info_t>
+struct play_t : pair<SDL::Thread, info_t>
 {
     play_t()
     {}
 
-    bool operator==(const std::string &f) const
+    bool operator==(const string &f) const
     { return f == second.file; }
 
     void Run(const info_t &info)
@@ -249,7 +249,7 @@ struct play_t : std::pair<SDL::Thread, info_t>
 
     void RunMusicWrapper(const char *action)
     {
-        std::ostringstream os;
+        ostringstream os;
         os << System::GetEnvironment("MUSIC_WRAPPER") << " " << action << " " << second.file;
         System::ShellCommand(os.str().c_str());
     }
@@ -284,22 +284,22 @@ struct play_t : std::pair<SDL::Thread, info_t>
 
 namespace Music
 {
-    std::list<play_t> musics;
-    std::list<play_t>::iterator current = musics.end();
+    list<play_t> musics;
+    list<play_t>::iterator current = musics.end();
 }
 
-void Music::SetExtCommand(const std::string &cmd)
+void Music::SetExtCommand(const string &cmd)
 {
     command = cmd;
 }
 
-void Music::Play(const std::vector<u8> &v, bool loop)
+void Music::Play(const vector<u8> &v, bool loop)
 {
 }
 
-void Music::Play(const std::string &f, bool loop)
+void Music::Play(const string &f, bool loop)
 {
-    auto it = std::find(musics.begin(), musics.end(), f);
+    auto it = find(musics.begin(), musics.end(), f);
 
     // skip repeat
     if (it != musics.end())
@@ -320,9 +320,9 @@ void Music::Play(const std::string &f, bool loop)
 
     info_t info;
     info.file = f;
-    info.status = loop ? Music::LOOP : 0;
+    info.status = loop ? LOOP : 0;
 
-    it = std::find_if(musics.begin(), musics.end(), play_t::isFree);
+    it = find_if(musics.begin(), musics.end(), play_t::isFree);
 
     if (it == musics.end())
     {
@@ -368,8 +368,8 @@ void Music::Resume()
 
 bool Music::isPlaying()
 {
-    std::list<play_t>::iterator
-            it = std::find_if(musics.begin(), musics.end(), play_t::isPlaying);
+    list<play_t>::iterator
+            it = find_if(musics.begin(), musics.end(), play_t::isPlaying);
     return it != musics.end();
 }
 
@@ -380,8 +380,8 @@ bool Music::isPaused()
 
 void Music::Reset()
 {
-    std::list<play_t>::iterator
-            it = std::find_if(musics.begin(), musics.end(), play_t::isRunning);
+    list<play_t>::iterator
+            it = find_if(musics.begin(), musics.end(), play_t::isRunning);
 
     if (it != musics.end())
         (*it).Stop();

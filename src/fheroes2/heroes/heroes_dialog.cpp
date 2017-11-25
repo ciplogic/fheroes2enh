@@ -60,7 +60,7 @@ int Heroes::OpenDialog(bool readonly, bool fade)
     AGG::GetICN(ICN::HEROBKG, 0).Blit(dst_pt);
     AGG::GetICN(Settings::Get().ExtGameEvilInterface() ? ICN::HEROEXTE : ICN::HEROEXTG, 0).Blit(dst_pt);
 
-    std::string message;
+    string message;
 
     // portrait
     dst_pt.x = cur_pt.x + 49;
@@ -105,7 +105,7 @@ int Heroes::OpenDialog(bool readonly, bool fade)
     sprite1.Blit(dst_pt);
 
     const Rect rectSpreadArmyFormat(dst_pt, sprite1.w(), sprite1.h());
-    const std::string descriptionSpreadArmyFormat = _(
+    const string descriptionSpreadArmyFormat = _(
             "'Spread' combat formation spreads your armies from the top to the bottom of the battlefield, with at least one empty space between each army.");
     const Point army1_pt(dst_pt.x - 1, dst_pt.y - 1);
 
@@ -116,7 +116,7 @@ int Heroes::OpenDialog(bool readonly, bool fade)
     sprite2.Blit(dst_pt);
 
     const Rect rectGroupedArmyFormat(dst_pt, sprite2.w(), sprite2.h());
-    const std::string descriptionGroupedArmyFormat = _(
+    const string descriptionGroupedArmyFormat = _(
             "'Grouped' combat formation bunches your army together in the center of your side of the battlefield.");
     const Point army2_pt(dst_pt.x - 1, dst_pt.y - 1);
 
@@ -251,7 +251,7 @@ int Heroes::OpenDialog(bool readonly, bool fade)
         }
 
         // exit
-        if (le.MouseClickLeft(buttonExit) || Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT)) return Dialog::CANCEL;
+        if (le.MouseClickLeft(buttonExit) || HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT)) return Dialog::CANCEL;
 
         // heroes troops
         if (le.MouseCursor(selectArmy.GetArea()) &&

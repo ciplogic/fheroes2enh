@@ -61,7 +61,7 @@ Route::Path::Path(const Heroes &h)
 {
 }
 
-Route::Path::Path(const Path &p) : std::list<Step>(p), hero(p.hero), dst(p.dst), hide(p.hide)
+Route::Path::Path(const Path &p) : list<Step>(p), hero(p.hero), dst(p.dst), hide(p.hide)
 {
 }
 
@@ -460,9 +460,9 @@ s32 Route::Path::GetAllowStep() const
     return green;
 }
 
-std::string Route::Path::String() const
+string Route::Path::String() const
 {
-    std::ostringstream os;
+    ostringstream os;
 
     os << "from: " << hero->GetIndex() << ", to: " << GetLastIndex() <<
        ", obj: " << MP2::StringObject(world.GetTiles(dst).GetObject()) << ", dump: ";
@@ -499,14 +499,14 @@ bool StepIsPassable(const Route::Step &s, const Heroes *h)
 
 bool Route::Path::hasObstacle() const
 {
-    const_iterator it = std::find_if(begin(), end(), StepIsObstacle);
+    const_iterator it = find_if(begin(), end(), StepIsObstacle);
     return it != end() && (*it).GetIndex() != GetLastIndex();
 }
 
 void Route::Path::RescanObstacle()
 {
     // scan obstacle
-    iterator it = std::find_if(begin(), end(), StepIsObstacle);
+    iterator it = find_if(begin(), end(), StepIsObstacle);
 
     if (it != end() && (*it).GetIndex() != GetLastIndex())
     {
@@ -549,7 +549,7 @@ StreamBase &Route::operator<<(StreamBase &msg, const Step &step)
 
 StreamBase &Route::operator<<(StreamBase &msg, const Path &path)
 {
-    return msg << path.dst << path.hide << static_cast< std::list<Step> >(path);
+    return msg << path.dst << path.hide << static_cast< list<Step> >(path);
 }
 
 StreamBase &Route::operator>>(StreamBase &msg, Step &step)
@@ -559,6 +559,6 @@ StreamBase &Route::operator>>(StreamBase &msg, Step &step)
 
 StreamBase &Route::operator>>(StreamBase &msg, Path &path)
 {
-    std::list<Step> &base = path;
+    list<Step> &base = path;
     return msg >> path.dst >> path.hide >> base;
 }

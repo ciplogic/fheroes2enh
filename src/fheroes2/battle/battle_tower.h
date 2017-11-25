@@ -57,7 +57,7 @@ namespace Battle
 
         Point GetPortPosition() const;
 
-        static std::string GetInfo(const Castle &);
+        static string GetInfo(const Castle &);
 
     private:
         int type;

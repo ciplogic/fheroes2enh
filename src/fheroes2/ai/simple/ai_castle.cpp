@@ -172,7 +172,7 @@ void AI::CastleTurn(Castle &castle)
     // skip neutral town
     if (castle.GetColor() != Color::NONE)
     {
-        s32 range = Game::GetViewDistance(castle.isCastle() ? Game::VIEW_CASTLE : Game::VIEW_TOWN);
+        s32 range = GetViewDistance(castle.isCastle() ? Game::VIEW_CASTLE : Game::VIEW_TOWN);
         const Heroes *enemy = nullptr;
 
         // find enemy hero
@@ -218,7 +218,7 @@ void AI::CastleTurn(Castle &castle)
             }
 
             if (hero)
-                hero->SetModes(AI::HEROES_HUNTER);
+                hero->SetModes(HEROES_HUNTER);
         }
 
         // part III
@@ -237,7 +237,7 @@ void AI::CastleTurn(Castle &castle)
                 hero = castle.RecruitHero(rec.GetHero2());
 
             if (hero)
-                hero->SetModes(AI::HEROES_HUNTER | AI::HEROES_SCOUTER);
+                hero->SetModes(HEROES_HUNTER | HEROES_SCOUTER);
         }
     }
 }

@@ -34,6 +34,8 @@ struct Point;
 struct Rect;
 struct Size;
 
+using namespace std;
+
 class StreamBase
 {
 protected:
@@ -88,7 +90,7 @@ public:
 
     virtual void putLE16(u16) = 0;
 
-    virtual std::vector<u8>
+    virtual vector<u8>
     getRaw(size_t = 0 /* all data */) = 0;
 
     virtual void putRaw(const char *, size_t) = 0;
@@ -124,7 +126,7 @@ public:
 
     StreamBase &operator>>(float &);
 
-    StreamBase &operator>>(std::string &);
+    StreamBase &operator>>(string &);
 
     StreamBase &operator>>(Rect &);
 
@@ -150,7 +152,7 @@ public:
 
     StreamBase &operator<<(const float &);
 
-    StreamBase &operator<<(const std::string &);
+    StreamBase &operator<<(const string &);
 
     StreamBase &operator<<(const Rect &);
 
@@ -159,41 +161,41 @@ public:
     StreamBase &operator<<(const Size &);
 
     template<class Type1, class Type2>
-    StreamBase &operator>>(std::pair<Type1, Type2> &p)
+    StreamBase &operator>>(pair<Type1, Type2> &p)
     {
         return *this >> p.first >> p.second;
     }
 
     template<class Type>
-    StreamBase &operator>>(std::vector<Type> &v)
+    StreamBase &operator>>(vector<Type> &v)
     {
         const u32 size = get32();
         v.resize(size);
-        for (typename std::vector<Type>::iterator
+        for (typename vector<Type>::iterator
                      it = v.begin(); it != v.end(); ++it)
             *this >> *it;
         return *this;
     }
 
     template<class Type>
-    StreamBase &operator>>(std::list<Type> &v)
+    StreamBase &operator>>(list<Type> &v)
     {
         const u32 size = get32();
         v.resize(size);
-        for (typename std::list<Type>::iterator
+        for (typename list<Type>::iterator
                      it = v.begin(); it != v.end(); ++it)
             *this >> *it;
         return *this;
     }
 
     template<class Type1, class Type2>
-    StreamBase &operator>>(std::map<Type1, Type2> &v)
+    StreamBase &operator>>(map<Type1, Type2> &v)
     {
         const u32 size = get32();
         v.clear();
         for (u32 ii = 0; ii < size; ++ii)
         {
-            std::pair<Type1, Type2> pr;
+            pair<Type1, Type2> pr;
             *this >> pr;
             v.insert(pr);
         }
@@ -201,36 +203,36 @@ public:
     }
 
     template<class Type1, class Type2>
-    StreamBase &operator<<(const std::pair<Type1, Type2> &p)
+    StreamBase &operator<<(const pair<Type1, Type2> &p)
     {
         return *this << p.first << p.second;
     }
 
     template<class Type>
-    StreamBase &operator<<(const std::vector<Type> &v)
+    StreamBase &operator<<(const vector<Type> &v)
     {
         put32(static_cast<u32>(v.size()));
-        for (typename std::vector<Type>::const_iterator
+        for (typename vector<Type>::const_iterator
                      it = v.begin(); it != v.end(); ++it)
             *this << *it;
         return *this;
     }
 
     template<class Type>
-    StreamBase &operator<<(const std::list<Type> &v)
+    StreamBase &operator<<(const list<Type> &v)
     {
         put32(static_cast<u32>(v.size()));
-        for (typename std::list<Type>::const_iterator
+        for (typename list<Type>::const_iterator
                      it = v.begin(); it != v.end(); ++it)
             *this << *it;
         return *this;
     }
 
     template<class Type1, class Type2>
-    StreamBase &operator<<(const std::map<Type1, Type2> &v)
+    StreamBase &operator<<(const map<Type1, Type2> &v)
     {
         put32(static_cast<u32>(v.size()));
-        for (typename std::map<Type1, Type2>::const_iterator
+        for (typename map<Type1, Type2>::const_iterator
                      it = v.begin(); it != v.end(); ++it)
             *this << *it;
         return *this;
@@ -250,7 +252,7 @@ public:
 
     StreamBuf(const StreamBuf &);
 
-    StreamBuf(const std::vector<u8> &);
+    StreamBuf(const vector<u8> &);
 
     StreamBuf(const u8 *, size_t);
 
@@ -284,11 +286,11 @@ public:
 
     void putLE16(u16);
 
-    std::vector<u8> getRaw(size_t = 0 /* all data */);
+    vector<u8> getRaw(size_t = 0 /* all data */);
 
     void putRaw(const char *, size_t);
 
-    std::string toString(size_t = 0 /* all data */);
+    string toString(size_t = 0 /* all data */);
 
 protected:
     void reset();
@@ -331,7 +333,7 @@ public:
     StreamFile()
     {}
 
-    StreamFile(const std::string &, const char *mode);
+    StreamFile(const string &, const char *mode);
 
     ~StreamFile();
 
@@ -339,7 +341,7 @@ public:
 
     size_t tell() const;
 
-    bool open(const std::string &, const char *mode);
+    bool open(const string &, const char *mode);
 
     void close();
 
@@ -365,11 +367,11 @@ public:
 
     void putLE16(u16);
 
-    std::vector<u8> getRaw(size_t = 0 /* all data */);
+    vector<u8> getRaw(size_t = 0 /* all data */);
 
     void putRaw(const char *, size_t);
 
-    std::string toString(size_t = 0 /* all data */);
+    string toString(size_t = 0 /* all data */);
 
 protected:
     StreamFile &operator=(const StreamFile &)

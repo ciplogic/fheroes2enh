@@ -72,10 +72,10 @@ const char *GameOver::GetString(int cond)
     return cond_str[0];
 }
 
-std::string GameOver::GetActualDescription(int cond)
+string GameOver::GetActualDescription(int cond)
 {
     const Settings &conf = Settings::Get();
-    std::string msg;
+    string msg;
 
     if (WINS_ALL == cond || WINS_SIDE == cond)
         msg = GetString(WINS_ALL);
@@ -142,11 +142,11 @@ std::string GameOver::GetActualDescription(int cond)
 
     if (conf.ExtWorldStartHeroLossCond4Humans())
     {
-        const std::string names = world.GetKingdom(conf.CurrentColor()).GetNamesHeroStartCondLoss();
+        const string names = world.GetKingdom(conf.CurrentColor()).GetNamesHeroStartCondLoss();
 
         if (!names.empty())
         {
-            std::string str = std::string::npos == names.find(',') ? _("Lose the hero: %{name}.") : _(
+            string str = string::npos == names.find(',') ? _("Lose the hero: %{name}.") : _(
                     "Lose the heroes: %{name}.");
             StringReplace(str, "%{name}", names);
             msg.append("\n");
@@ -160,7 +160,7 @@ std::string GameOver::GetActualDescription(int cond)
 void GameOver::DialogWins(int cond)
 {
     const Settings &conf = Settings::Get();
-    std::string body;
+    string body;
 
     switch (cond)
     {
@@ -214,13 +214,13 @@ void GameOver::DialogWins(int cond)
 
     AGG::PlayMusic(MUS::VICTORY, false);
 
-    if (body.size()) Dialog::Message("", body, Font::BIG, Dialog::OK);
+    if (body.size()) Message("", body, Font::BIG, Dialog::OK);
 }
 
 void GameOver::DialogLoss(int cond)
 {
     const Settings &conf = Settings::Get();
-    std::string body;
+    string body;
 
     switch (cond)
     {
@@ -286,7 +286,7 @@ void GameOver::DialogLoss(int cond)
 
     AGG::PlayMusic(MUS::LOSTGAME, false);
 
-    if (body.size()) Dialog::Message("", body, Font::BIG, Dialog::OK);
+    if (body.size()) Message("", body, Font::BIG, Dialog::OK);
 }
 
 GameOver::Result &GameOver::Result::Get()
@@ -302,7 +302,7 @@ GameOver::Result::Result() : colors(0), result(0), continue_game(false)
 void GameOver::Result::Reset()
 {
     colors = Game::GetKingdomColors();
-    result = GameOver::COND_NONE;
+    result = COND_NONE;
 }
 
 void GameOver::Result::SetResult(int r)
@@ -341,13 +341,13 @@ int GameOver::Result::LocalCheckGameOver()
         // check normal wins
     if (Settings::Get().CurrentColor() & Players::HumanColors())
     {
-        if (GameOver::COND_NONE != (result = world.CheckKingdomWins(myKingdom)))
+        if (COND_NONE != (result = world.CheckKingdomWins(myKingdom)))
         {
-            GameOver::DialogWins(result);
+            DialogWins(result);
             res = Game::HIGHSCORES;
-        } else if (GameOver::COND_NONE != (result = world.CheckKingdomLoss(myKingdom)))
+        } else if (COND_NONE != (result = world.CheckKingdomLoss(myKingdom)))
         {
-            GameOver::DialogLoss(result);
+            DialogLoss(result);
             res = Game::MAINMENU;
         }
     }

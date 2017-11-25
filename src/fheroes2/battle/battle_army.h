@@ -30,7 +30,7 @@ namespace Battle
 {
     class Unit;
 
-    class Units : public std::vector<Unit *>
+    class Units : public vector<Unit *>
     {
     public:
         Units();
@@ -104,7 +104,7 @@ namespace Battle
 
     private:
         Army &army;
-        std::vector<u32> uids;
+        vector<u32> uids;
     };
 
     StreamBase &operator<<(StreamBase &, const Force &);

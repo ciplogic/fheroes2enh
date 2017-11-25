@@ -34,17 +34,17 @@
 
 void RedrawCurrentInfo(const Point &pos, u32 available, u32 result,
                        const payment_t &paymentMonster, const payment_t &paymentCosts, const Funds &funds,
-                       const std::string &label)
+                       const string &label)
 {
     Text text;
 
-    std::string str = _("Available: %{count}");
+    string str = _("Available: %{count}");
     StringReplace(str, "%{count}", available);
     text.Set(str, Font::SMALL);
     text.Blit(pos.x + 70 - text.w() / 2, pos.y + 130);
     text.Set(GetString(result), Font::BIG);
     text.Blit(pos.x + 167 - text.w() / 2, pos.y + 160);
-    const std::string sgold =
+    const string sgold =
             GetString(paymentCosts.gold) + " " + "(" + GetString(funds.gold - paymentCosts.gold) + ")";
     int rsext = paymentMonster.GetValidItems() & ~Resource::GOLD;
 
@@ -87,7 +87,7 @@ void RedrawStaticInfo(const Rect &pos, const Monster &monster, bool label)
 {
     Text text;
     Point dst_pt;
-    std::string str;
+    string str;
 
     const Sprite &box = AGG::GetICN(ICN::RECRBKG, 0);
     box.Blit(pos.x, pos.y);
@@ -309,7 +309,7 @@ Troop Dialog::RecruitMonster(const Monster &monster0, u32 available, bool ext)
     }
 
     const Funds &funds = kingdom.GetFunds();
-    std::string maxmin = SwitchMaxMinButtons(buttonMax, buttonMin, true);
+    string maxmin = SwitchMaxMinButtons(buttonMax, buttonMin, true);
     RedrawCurrentInfo(pos, available, result, paymentMonster, paymentCosts, funds, maxmin);
 
     buttonOk.Draw();
@@ -446,9 +446,9 @@ Troop Dialog::RecruitMonster(const Monster &monster0, u32 available, bool ext)
             redraw = false;
         }
 
-        if (le.MouseClickLeft(buttonOk) || Game::HotKeyPressEvent(Game::EVENT_DEFAULT_READY)) break;
+        if (le.MouseClickLeft(buttonOk) || HotKeyPressEvent(Game::EVENT_DEFAULT_READY)) break;
 
-        if (le.MouseClickLeft(buttonCancel) || Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
+        if (le.MouseClickLeft(buttonCancel) || HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
         {
             result = 0;
             break;
@@ -488,7 +488,7 @@ void Dialog::DwellingInfo(const Monster &monster, u32 available)
 
     Point dst_pt;
     Text text;
-    std::string str;
+    string str;
 
     // text recruit monster
     str = _("Recruit %{name}");

@@ -145,7 +145,7 @@ buildstats_t _builds[] = {
         {BUILD_NOTHING,      Race::NONE, {0,     0,  0,  0,  0,  0,  0}},
 };
 
-void BuildingInfo::UpdateCosts(const std::string &spec)
+void BuildingInfo::UpdateCosts(const string &spec)
 {
 #ifdef WITH_XML
     // parse buildings.xml
@@ -481,7 +481,7 @@ const char *BuildingInfo::GetName() const
     return Castle::GetStringBuilding(building, castle.GetRace());
 }
 
-const std::string &BuildingInfo::GetDescription() const
+const string &BuildingInfo::GetDescription() const
 {
     return description;
 }
@@ -493,7 +493,7 @@ bool BuildingInfo::QueueEventProcessing()
     if (le.MouseClickLeft(area))
     {
         if (bcond == ALREADY_BUILT)
-            Dialog::Message(GetName(), GetDescription(), Font::BIG, Dialog::OK);
+            Message(GetName(), GetDescription(), Font::BIG, Dialog::OK);
         else if (bcond == ALLOW_BUILD || bcond == REQUIRES_BUILD || bcond == LACK_RESOURCES)
         {
             const Point cursor = LocalEvent::Get().GetMouseCursor();
@@ -504,7 +504,7 @@ bool BuildingInfo::QueueEventProcessing()
             return DialogBuyBuilding(true);
         }
         else
-            Dialog::Message("", GetConditionDescription(), Font::BIG, Dialog::OK);
+            Message("", GetConditionDescription(), Font::BIG, Dialog::OK);
     } else if (le.MousePressRight(area))
     {
         if (bcond == ALREADY_BUILT)
@@ -526,11 +526,11 @@ bool BuildingInfo::DialogBuyBuilding(bool buttons) const
     Cursor &cursor = Cursor::Get();
     cursor.Hide();
 
-    std::string box1str = description;
+    string box1str = description;
 
     if (ALLOW_BUILD != bcond)
     {
-        const std::string &ext = GetConditionDescription();
+        const string &ext = GetConditionDescription();
 
         if (!ext.empty())
         {
@@ -542,7 +542,7 @@ bool BuildingInfo::DialogBuyBuilding(bool buttons) const
     TextBox box1(box1str, Font::BIG, BOXAREA_WIDTH);
 
     // prepare requires build string
-    std::string str;
+    string str;
     const u32 requires = castle.GetBuildingRequires(building);
     const char *sep = ", ";
 
@@ -636,11 +636,11 @@ bool BuildingInfo::DialogBuyBuilding(bool buttons) const
         le.MousePressLeft(button2) ? button2.PressDraw() : button2.ReleaseDraw();
 
         if (button1.isEnable() &&
-            (Game::HotKeyPressEvent(Game::EVENT_DEFAULT_READY) ||
+            (HotKeyPressEvent(Game::EVENT_DEFAULT_READY) ||
              le.MouseClickLeft(button1)))
             return true;
 
-        if (Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT) ||
+        if (HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT) ||
             le.MouseClickLeft(button2))
             break;
     }
@@ -666,9 +666,9 @@ const char *GetBuildConditionDescription(int bcond)
     return nullptr;
 }
 
-std::string BuildingInfo::GetConditionDescription() const
+string BuildingInfo::GetConditionDescription() const
 {
-    std::string res;
+    string res;
 
     switch (bcond)
     {
@@ -715,7 +715,7 @@ std::string BuildingInfo::GetConditionDescription() const
 
 void BuildingInfo::SetStatusMessage(StatusBar &bar) const
 {
-    std::string str;
+    string str;
 
     switch (bcond)
     {
@@ -797,7 +797,7 @@ bool DwellingsBar::ActionBarSingleClick(const Point &cursor, DwellingItem &dwl, 
     {
         castle.RecruitMonster(Dialog::RecruitMonster(dwl.mons, castle.GetDwellingLivedCount(dwl.type), true));
     } else if (!castle.isBuild(BUILD_CASTLE))
-        Dialog::Message("", GetBuildConditionDescription(NEED_CASTLE), Font::BIG, Dialog::OK);
+        Message("", GetBuildConditionDescription(NEED_CASTLE), Font::BIG, Dialog::OK);
     else
     {
         BuildingInfo dwelling(castle, static_cast<building_t>(dwl.type));

@@ -57,9 +57,9 @@ public:
     ZStreamFile()
     {}
 
-    bool read(const std::string &, size_t offset = 0);
+    bool read(const string &, size_t offset = 0);
 
-    bool write(const std::string &, bool append = false) const;
+    bool write(const string &, bool append = false) const;
 };
 
 #endif

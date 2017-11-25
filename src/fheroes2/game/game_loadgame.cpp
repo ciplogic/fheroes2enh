@@ -33,13 +33,13 @@
 int Game::LoadCampain()
 {
     VERBOSE("Load Campain Game: under construction.");
-    return Game::LOADGAME;
+    return LOADGAME;
 }
 
 int Game::LoadMulti()
 {
     VERBOSE("Load Multi Game: under construction.");
-    return Game::LOADGAME;
+    return LOADGAME;
 }
 
 int Game::LoadGame()
@@ -117,8 +117,8 @@ int Game::LoadStandard()
     cursor.Show();
     display.Flip();
 
-    std::string file = Dialog::SelectFileLoad();
-    if (file.empty() || !Game::Load(file)) return MAINMENU;
+    string file = Dialog::SelectFileLoad();
+    if (file.empty() || !Load(file)) return MAINMENU;
 
     return STARTGAME;
 }

@@ -39,7 +39,7 @@ class HeroBase;
 
 namespace Battle
 {
-    struct ModeDuration : public std::pair<u32, u32>
+    struct ModeDuration : public pair<u32, u32>
     {
         ModeDuration();
 
@@ -52,7 +52,7 @@ namespace Battle
         void DecreaseDuration();
     };
 
-    struct ModesAffected : public std::vector<ModeDuration>
+    struct ModesAffected : public vector<ModeDuration>
     {
         ModesAffected();
 
@@ -88,9 +88,9 @@ namespace Battle
 
         bool isBattle() const;
 
-        std::string GetShotString() const;
+        string GetShotString() const;
 
-        std::string GetSpeedString() const;
+        string GetSpeedString() const;
 
         u32 GetHitPointsLeft() const;
 
@@ -133,7 +133,7 @@ namespace Battle
         bool OutOfWalls() const;
 
 
-        std::string String(bool more = false) const;
+        string String(bool more = false) const;
 
         u32 GetUID() const;
 
@@ -185,7 +185,7 @@ namespace Battle
 
         bool ApplySpell(const Spell &, const HeroBase *hero, TargetInfo &);
 
-        bool AllowApplySpell(const Spell &, const HeroBase *hero, std::string *msg = nullptr) const;
+        bool AllowApplySpell(const Spell &, const HeroBase *hero, string *msg = nullptr) const;
 
         void PostAttackAction(Unit &);
 

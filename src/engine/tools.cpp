@@ -42,55 +42,58 @@ enum KeyMod
 };
 
 /* trim left right space */
-std::string StringTrim(std::string str)
+string StringTrim(string str)
 {
     if (str.empty())
         return str;
 
-    std::string::iterator iter;
+    string::iterator iter;
 
     // left
     iter = str.begin();
-    while (iter != str.end() && std::isspace(*iter)) ++iter;
+    while (iter != str.end() && isspace(*iter)) ++iter;
     if (iter != str.begin()) str.erase(str.begin(), iter);
+
+	if (str.empty())
+		return str;
 
     // right
     iter = str.end() - 1;
-    while (iter != str.begin() && std::isspace(*iter)) --iter;
+    while (iter != str.begin() && isspace(*iter)) --iter;
     if (iter != str.end() - 1) str.erase(iter + 1, str.end());
 
     return str;
 }
 
 /* convert to lower case */
-std::string StringLower(std::string str)
+string StringLower(string str)
 {
-    std::transform(str.begin(), str.end(), str.begin(), ::tolower);
+    transform(str.begin(), str.end(), str.begin(), ::tolower);
     return str;
 }
 
 /* convert to upper case */
-std::string StringUpper(std::string str)
+string StringUpper(string str)
 {
-    std::transform(str.begin(), str.end(), str.begin(), ::toupper);
+    transform(str.begin(), str.end(), str.begin(), ::toupper);
     return str;
 }
 
 /* int to string */
-std::string GetString(int value)
+string GetString(int value)
 {
-    std::ostringstream stream;
+    ostringstream stream;
     stream << value;
     return stream.str();
 }
 
-std::string GetStringShort(int value)
+string GetStringShort(int value)
 {
-    if (std::abs(value) > 1000)
+    if (abs(value) > 1000)
     {
-        std::ostringstream stream;
+        ostringstream stream;
 
-        if (std::abs(value) > 1000000)
+        if (abs(value) > 1000000)
             stream << value / 1000000 << "M";
         else
             stream << value / 1000 << "K";
@@ -101,38 +104,38 @@ std::string GetStringShort(int value)
     return GetString(value);
 }
 
-std::string GetString(double value, u8 prec)
+string GetString(double value, u8 prec)
 {
-    std::ostringstream stream;
-    stream << std::setprecision(prec) << value;
+    ostringstream stream;
+    stream << setprecision(prec) << value;
     return stream.str();
 }
 
-std::string GetString(const Point &pt)
+string GetString(const Point &pt)
 {
-    std::ostringstream os;
+    ostringstream os;
     os << "point: x(" << pt.x << "), y(" << pt.y << ")";
     return os.str();
 }
 
-std::string GetString(const Size &sz)
+string GetString(const Size &sz)
 {
-    std::ostringstream os;
+    ostringstream os;
     os << "size: w(" << sz.w << "), h(" << sz.h << ")";
     return os.str();
 }
 
-std::string GetString(const Rect &rt)
+string GetString(const Rect &rt)
 {
-    std::ostringstream os;
+    ostringstream os;
     os << "rect: x(" << rt.x << "), y(" << rt.y << "), w(" << rt.w << "), h(" << rt.h << ")";
     return os.str();
 }
 
-std::string GetHexString(int value, int width)
+string GetHexString(int value, int width)
 {
-    std::ostringstream stream;
-    stream << "0x" << std::setw(width) << std::setfill('0') << std::hex << value;
+    ostringstream stream;
+    stream << "0x" << setw(width) << setfill('0') << hex << value;
     return stream.str();
 }
 
@@ -146,31 +149,31 @@ int CountBits(u32 val)
     return res;
 }
 
-int GetInt(const std::string &str)
+int GetInt(const string &str)
 {
     int res = 0;
 
     // decimal
-    if (str.end() == std::find_if(str.begin(), str.end(), std::not1(std::ptr_fun<int, int>(std::isdigit))))
+    if (str.end() == find_if(str.begin(), str.end(), not1(std::ptr_fun<int, int>(isdigit))))
     {
-        std::istringstream ss(str);
+        istringstream ss(str);
         ss >> res;
     } else if (str.size() > 2 && (str.at(0) == '+' || str.at(0) == '-') &&
-               str.end() == std::find_if(str.begin() + 1, str.end(), std::not1(std::ptr_fun<int, int>(std::isdigit))))
+               str.end() == find_if(str.begin() + 1, str.end(), not1(std::ptr_fun<int, int>(isdigit))))
     {
-        std::istringstream ss(str);
+        istringstream ss(str);
         ss >> res;
     } else
         // hex
-    if (str.size() > 3 && str.at(0) == '0' && std::tolower(str.at(1)) == 'x' &&
-        str.end() == std::find_if(str.begin() + 2, str.end(), std::not1(std::ptr_fun<int, int>(std::isxdigit))))
+    if (str.size() > 3 && str.at(0) == '0' && tolower(str.at(1)) == 'x' &&
+        str.end() == find_if(str.begin() + 2, str.end(), not1(std::ptr_fun<int, int>(isxdigit))))
     {
-        std::istringstream ss(str);
-        ss >> std::hex >> res;
+        istringstream ss(str);
+        ss >> hex >> res;
     } else
         // str
     {
-        std::string lower = StringLower(str);
+        string lower = StringLower(str);
 
         if (lower == "on") return 1;
         else if (lower == "one") return 1;
@@ -187,26 +190,26 @@ int GetInt(const std::string &str)
     return res;
 }
 
-void StringReplace(std::string &dst, const char *pred, const std::string &src)
+void StringReplace(string &dst, const char *pred, const string &src)
 {
-    size_t pos = std::string::npos;
+    size_t pos = string::npos;
 
-    while (std::string::npos != (pos = dst.find(pred))) dst.replace(pos, std::strlen(pred), src);
+    while (string::npos != (pos = dst.find(pred))) dst.replace(pos, strlen(pred), src);
 }
 
-void StringReplace(std::string &dst, const char *pred, int value)
+void StringReplace(string &dst, const char *pred, int value)
 {
     StringReplace(dst, pred, GetString(value));
 }
 
-std::list<std::string> StringSplit(const std::string &str, const std::string &sep)
+vector<string> StringSplit(const string &str, const string &sep)
 {
-    std::list<std::string> list;
+	vector<string> list;
     size_t pos1 = 0;
-    size_t pos2 = std::string::npos;
+    size_t pos2 = string::npos;
 
     while (pos1 < str.size() &&
-           std::string::npos != (pos2 = str.find(sep, pos1)))
+           string::npos != (pos2 = str.find(sep, pos1)))
     {
         list.push_back(str.substr(pos1, pos2 - pos1));
         pos1 = pos2 + sep.size();
@@ -219,9 +222,9 @@ std::list<std::string> StringSplit(const std::string &str, const std::string &se
     return list;
 }
 
-std::string InsertString(const std::string &src, size_t pos, const char *c)
+string InsertString(const string &src, size_t pos, const char *c)
 {
-    std::string res = src;
+    string res = src;
 
     if (pos >= src.size())
         res.append(c);
@@ -232,12 +235,12 @@ std::string InsertString(const std::string &src, size_t pos, const char *c)
 }
 
 // from SDL_ttf
-std::vector<u16> StringUTF8_to_UNICODE(const std::string &utf8)
+vector<u16> StringUTF8_to_UNICODE(const string &utf8)
 {
-    std::vector<u16> unicode;
+    vector<u16> unicode;
     unicode.reserve(utf8.size());
 
-    for (std::string::const_iterator
+    for (string::const_iterator
                  it = utf8.begin(); it < utf8.end(); ++it)
     {
         u16 ch = static_cast<u8>(*it);
@@ -274,12 +277,12 @@ std::vector<u16> StringUTF8_to_UNICODE(const std::string &utf8)
     return unicode;
 }
 
-std::string StringUNICODE_to_UTF8(const std::vector<u16> &unicode)
+string StringUNICODE_to_UTF8(const vector<u16> &unicode)
 {
-    std::string utf8;
+    string utf8;
     utf8.reserve(2 * unicode.size());
 
-    for (std::vector<u16>::const_iterator
+    for (vector<u16>::const_iterator
                  it = unicode.begin(); it != unicode.end(); ++it)
     {
         if (*it < 128)
@@ -473,7 +476,7 @@ char CharFromKeySym(KeySym sym, u16 mod)
     return 0;
 }
 
-size_t InsertKeySym(std::string &res, size_t pos, KeySym sym, u16 mod)
+size_t InsertKeySym(string &res, size_t pos, KeySym sym, u16 mod)
 {
     switch (sym)
     {
@@ -656,7 +659,7 @@ KeySym KeySymFromChar(char c)
     return KEY_NONE;
 }
 
-bool SaveMemToFile(const std::vector<u8> &data, const std::string &file)
+bool SaveMemToFile(const vector<u8> &data, const string &file)
 {
     SDL_RWops *rw = SDL_RWFromFile(file.c_str(), "wb");
 
@@ -671,9 +674,9 @@ bool SaveMemToFile(const std::vector<u8> &data, const std::string &file)
     return true;
 }
 
-std::vector<u8> LoadFileToMem(const std::string &file)
+vector<u8> LoadFileToMem(const string &file)
 {
-    std::vector<u8> data;
+    vector<u8> data;
     SDL_RWops *rw = SDL_RWFromFile(file.c_str(), "rb");
 
     if (rw && SDL_RWseek(rw, 0, RW_SEEK_END) != -1)
@@ -807,7 +810,7 @@ std::string EncodeString(const std::string & str, const char* charset)
 }
 #else
 
-std::string cp1251_to_utf8(const std::string &in)
+string cp1251_to_utf8(const string &in)
 {
     const u32 table_1251[] = {
             0x82D0, 0x83D0, 0x9A80E2, 0x93D1, 0x9E80E2, 0xA680E2, 0xA080E2, 0xA180E2,
@@ -828,10 +831,10 @@ std::string cp1251_to_utf8(const std::string &in)
             0x88D1, 0x89D1, 0x8AD1, 0x8BD1, 0x8CD1, 0x8DD1, 0x8ED1, 0x8FD1
     };
 
-    std::string res;
+    string res;
     res.reserve(in.size() * 2 + 1);
 
-    for (std::string::const_iterator
+    for (string::const_iterator
                  it = in.begin(); it != in.end(); ++it)
     {
         if (*it & 0x80)
@@ -852,11 +855,11 @@ std::string cp1251_to_utf8(const std::string &in)
     return res;
 }
 
-std::string EncodeString(const std::string &str, const char *charset)
+string EncodeString(const string &str, const char *charset)
 {
     if (charset)
     {
-        if (0 == std::strcmp(charset, "cp1251"))
+        if (0 == strcmp(charset, "cp1251"))
             return cp1251_to_utf8(str);
     }
 
@@ -870,10 +873,10 @@ Points GetLinePoints(const Point &pt1, const Point &pt2, u16 step)
     Points res;
     res.reserve(10);
 
-    const u16 dx = std::abs(pt2.x - pt1.x);
-    const u16 dy = std::abs(pt2.y - pt1.y);
+    const u16 dx = abs(pt2.x - pt1.x);
+    const u16 dy = abs(pt2.y - pt1.y);
 
-    s16 ns = std::div((dx > dy ? dx : dy), 2).quot;
+    s16 ns = div((dx > dy ? dx : dy), 2).quot;
     Point pt(pt1);
 
     for (u16 i = 0; i <= (dx > dy ? dx : dy); ++i)
@@ -913,7 +916,7 @@ Points GetArcPoints(const Point &from, const Point &to, const Point &max, u16 st
     Point pt1, pt2;
 
     pt1 = from;
-    pt2 = Point(from.x + std::abs(max.x - from.x) / 2, from.y - std::abs(max.y - from.y) * 3 / 4);
+    pt2 = Point(from.x + abs(max.x - from.x) / 2, from.y - abs(max.y - from.y) * 3 / 4);
     const Points &pts1 = GetLinePoints(pt1, pt2, step);
     res.insert(res.end(), pts1.begin(), pts1.end());
 
@@ -923,7 +926,7 @@ Points GetArcPoints(const Point &from, const Point &to, const Point &max, u16 st
     res.insert(res.end(), pts2.begin(), pts2.end());
 
     pt1 = max;
-    pt2 = Point(max.x + std::abs(to.x - max.x) / 2, to.y - std::abs(to.y - max.y) * 3 / 4);
+    pt2 = Point(max.x + abs(to.x - max.x) / 2, to.y - abs(to.y - max.y) * 3 / 4);
     const Points &pts3 = GetLinePoints(pt1, pt2, step);
     res.insert(res.end(), pts3.begin(), pts3.end());
 
@@ -955,9 +958,9 @@ u32 decodeChar(int v)
     return 0;
 }
 
-std::vector<u8> decodeBase64(const std::string &src)
+vector<u8> decodeBase64(const string &src)
 {
-    std::vector<u8> res;
+    vector<u8> res;
 
     if (src.size() % 4 == 0)
     {
@@ -987,10 +990,10 @@ std::vector<u8> decodeBase64(const std::string &src)
     return res;
 }
 
-int CheckSum(const std::vector<u8> &v)
+int CheckSum(const vector<u8> &v)
 {
     u32 ret = 0;
-    std::vector<u8>::const_iterator it = v.begin();
+    vector<u8>::const_iterator it = v.begin();
 
     do
     {
@@ -1005,7 +1008,7 @@ int CheckSum(const std::vector<u8> &v)
     return ret;
 }
 
-int CheckSum(const std::string &str)
+int CheckSum(const string &str)
 {
     return CheckSum(std::vector<u8>(str.begin(), str.end()));
 }
