@@ -78,6 +78,7 @@ bool DoUpgradeOnPlusClick(const Point &cursor, ArmyTroop &troop, const Rect &pos
         troop.Upgrade();
         return true;
     }
+	return false;
 }
 
 void RedistributeArmy(ArmyTroop &troop1 /* from */, ArmyTroop &troop2 /* to */)

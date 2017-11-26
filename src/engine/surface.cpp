@@ -248,11 +248,13 @@ RGBA RGBA::unpack(int v)
     return RGBA(r, g, b, a);
 }
 
-Surface::Surface() : surface(nullptr)
+Surface::Surface() 
+: surface(nullptr)
 {
 }
 
-Surface::Surface(const Size &sz, bool amask) : surface(nullptr)
+Surface::Surface(const Size &sz, bool amask) 
+: surface(nullptr)
 {
     Set(sz.w, sz.h, amask);
 }
@@ -264,7 +266,7 @@ Surface::Surface(const Size &sz, const SurfaceFormat &fm) : surface(nullptr)
 
 Surface::Surface(const Surface &bs) : surface(nullptr)
 {
-    Set(bs, true);
+    Set(bs, false);
 }
 
 Surface::Surface(const string &file) : surface(nullptr)
@@ -276,26 +278,20 @@ Surface::Surface(SDL_Surface *sf) : surface(sf)
 {
 }
 
-Surface::Surface(const void *pixels, u32 width, u32 height, u32 bytes_per_pixel /* 1, 2, 3, 4 */, bool amask) : surface(
-        nullptr)
+Surface::Surface(const void *pixels, u32 width, u32 height, u32 bytes_per_pixel /* 1, 2, 3, 4 */, bool amask)
+: surface(nullptr)
 {
     SurfaceFormat fm = GetRGBAMask(8 * bytes_per_pixel);
 
     if (8 == fm.depth)
     {
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-        surface = SDL_CreateRGBSurface(0, width, height, fm.depth, fm.rmask, fm.gmask, fm.bmask, (amask ? fm.amask : 0));
-#else
+
         surface = SDL_CreateRGBSurface(SDL_SWSURFACE, width, height, fm.depth, fm.rmask, fm.gmask, fm.bmask,
-                                       (amask ? fm.amask : 0));
-#endif
+                                       amask ? fm.amask : 0);
     } else
     {
         surface = SDL_CreateRGBSurfaceFrom(const_cast<void *>(pixels), width, height, fm.depth, width * bytes_per_pixel,
                                            fm.rmask, fm.gmask, fm.bmask, amask ? fm.amask : 0);
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-        SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_NONE);
-#endif
     }
 
     if (!surface)
@@ -312,13 +308,20 @@ Surface::Surface(const void *pixels, u32 width, u32 height, u32 bytes_per_pixel 
 
 Surface::~Surface()
 {
-    if (!isDisplay()) FreeSurface(*this);
+	if (!isDisplay())
+	{
+		if (surface)
+		{
+			FreeSurface(*this);
+			surface = nullptr;
+		}
+	}
 }
 
 /* operator = */
 Surface &Surface::operator=(const Surface &bs)
 {
-    Set(bs, true);
+    Set(bs, false);
     return *this;
 }
 
@@ -855,26 +858,25 @@ bool Surface::isRefCopy() const
 
 void Surface::FreeSurface(Surface &sf)
 {
-    if (sf.surface)
-    {
-        if (sf.isRefCopy())
-        {
-            --sf.surface->refcount;
-            sf.surface = nullptr;
-        } else
-        {
-            // clear static palette
-            if (sf.surface->format && 8 == sf.surface->format->BitsPerPixel && pal_colors && pal_nums &&
-                sf.surface->format->palette && pal_colors == sf.surface->format->palette->colors)
-            {
-                sf.surface->format->palette->colors = nullptr;
-                sf.surface->format->palette->ncolors = 0;
-            }
+    if (!sf.surface)
+		return;
+	if (sf.isRefCopy())
+	{
+		--sf.surface->refcount;
+	} 
+	else
+	{
+		// clear static palette
+		if (sf.surface->format && 8 == sf.surface->format->BitsPerPixel && pal_colors && pal_nums &&
+			sf.surface->format->palette && pal_colors == sf.surface->format->palette->colors)
+		{
+			sf.surface->format->palette->colors = nullptr;
+			sf.surface->format->palette->ncolors = 0;
+		}
 
-            SDL_FreeSurface(sf.surface);
-            sf.surface = nullptr;
-        }
-    }
+		SDL_FreeSurface(sf.surface);
+	}
+	sf.surface = nullptr;
 }
 
 u32 Surface::GetMemoryUsage() const

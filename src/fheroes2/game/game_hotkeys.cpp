@@ -344,8 +344,10 @@ void Game::KeyboardGlobalFilter(int sym, int mod)
     Display &display = Display::Get();
 
     // system hotkeys
-    if (sym == key_events[EVENT_SYSTEM_FULLSCREEN])
-        display.ToggleFullScreen();
+	if (sym == key_events[EVENT_SYSTEM_FULLSCREEN])
+	{
+		display.ToggleFullScreen();
+	}
     else if (sym == key_events[EVENT_SYSTEM_SCREENSHOT])
     {
         ostringstream stream;
