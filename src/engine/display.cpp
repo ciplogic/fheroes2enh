@@ -148,13 +148,17 @@ void Display::Clear()
 /* hide system cursor */
 void Display::HideCursor()
 {
+#ifndef WIN32
     SDL_ShowCursor(SDL_DISABLE);
+#endif
 }
 
 /* show system cursor */
 void Display::ShowCursor()
 {
+#ifndef WIN32
     SDL_ShowCursor(SDL_ENABLE);
+#endif
 }
 
 void Display::Fade(const Surface &top, const Surface &back, const Point &pt, int level, int delay)

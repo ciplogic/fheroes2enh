@@ -501,8 +501,9 @@ void Troops::ArrangeForBattle(bool upgrade)
     {
         case 1:
         {
-            const Monster &m = *priority._items.back();
-            const u32 count = priority._items.back()->GetCount();
+	        Troop* mPtr = priority._items.back();
+            const Monster &m = *mPtr;
+            const u32 count = mPtr->GetCount();
 
             Clean();
 
