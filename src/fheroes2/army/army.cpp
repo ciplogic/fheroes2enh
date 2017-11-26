@@ -35,7 +35,6 @@
 #include "color.h"
 #include "luck.h"
 #include "morale.h"
-#include "speed.h"
 #include "castle.h"
 #include "heroes.h"
 #include "heroes_base.h"
@@ -144,7 +143,13 @@ Troops::Troops()
 
 Troops::~Troops()
 {
-    for (auto it : _items) delete it;
+	for (auto it : _items) {
+#ifndef WIN32
+		delete it;
+#endif
+		it = nullptr;
+	}
+	_items.clear();
 }
 
 size_t Troops::Size() const
@@ -862,7 +867,10 @@ Army::Army(const Maps::Tiles &t) : commander(nullptr), combat_format(true), colo
 
 Army::~Army()
 {
-    for (auto it = _items.begin(); it != _items.end(); ++it) delete *it;
+	for (auto it = _items.begin(); it != _items.end(); ++it) {
+		delete *it;
+		*it = nullptr;
+	}
     _items.clear();
 }
 

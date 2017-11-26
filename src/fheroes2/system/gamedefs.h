@@ -38,6 +38,7 @@
 #endif
 
 #include "translations.h"
+#include <memory>
 
 #define _(s)        Translation::gettext(s)
 #define _n(a, b, c)    Translation::ngettext(a,b,c)
@@ -71,5 +72,10 @@
 
 // ai/hero speed
 #define DEFAULT_SPEED_DELAY        5
+
+template <class T>
+using sp = shared_ptr<T>;
+template <class T>
+using up = unique_ptr<T>;
 
 #endif
