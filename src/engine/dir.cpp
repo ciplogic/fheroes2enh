@@ -93,9 +93,9 @@ void ListFiles::ReadDir(const string &path, const string &filter, bool sensitive
 }
 #endif
 
+#ifndef WIN32
 void ListFiles::ReadDir(const string &path, const string &filter, bool sensitive)
 {
-#ifndef WIN32
 	// read directory
 	DIR *dp = opendir(path.c_str());
 
@@ -130,9 +130,10 @@ void ListFiles::ReadDir(const string &path, const string &filter, bool sensitive
 		}
 		closedir(dp);
 	}
+}
+
 #endif
 
-}
 
 void ListDirs::Append(const vector<string> &dirs)
 {

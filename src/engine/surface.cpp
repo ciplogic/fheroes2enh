@@ -595,10 +595,11 @@ void Surface::SetPalette()
     if (isValid() &&
         pal_colors && pal_nums && surface->format->palette)
     {
-        if (surface->format->palette->colors &&
-            pal_colors != surface->format->palette->colors)
-            SDL_free(surface->format->palette->colors);
-
+#ifndef WIN32
+		if (surface->format->palette->colors &&
+			pal_colors != surface->format->palette->colors)
+			SDL_free(surface->format->palette->colors);
+#endif
         surface->format->palette->colors = pal_colors;
         surface->format->palette->ncolors = pal_nums;
     }
