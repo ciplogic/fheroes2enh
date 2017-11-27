@@ -263,6 +263,7 @@ string SelectFileListSimple(const string &header, const string &lastfile, bool e
     listbox.Redraw();
     RedrawExtraInfo(rt, header, filename, enter_field);
 
+    std::function<void()> actionClear = [&]()
     {
         Rect sourceRect(buttonOk.x + 61, btnTop, 40, buttonOk.h+4);
         Point destPoint(rt.x + 31, btnTop);
@@ -271,7 +272,9 @@ string SelectFileListSimple(const string &header, const string &lastfile, bool e
             display.Blit(sourceRect, destPoint, display);
             destPoint.x += sourceRect.w;
         }
-    }
+
+    };
+    actionClear();
 
     buttonOk.Draw();
     buttonCancel.Draw();
@@ -342,6 +345,7 @@ string SelectFileListSimple(const string &header, const string &lastfile, bool e
             } else
                 is_limit = RedrawExtraInfo(rt, header, filename, enter_field);
 
+            actionClear();
             buttonOk.Draw();
             buttonCancel.Draw();
             cursor.Show();
