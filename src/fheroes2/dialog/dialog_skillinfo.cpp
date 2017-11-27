@@ -88,7 +88,7 @@ void Dialog::SecondarySkillInfo(const string &header, const string &message, con
     {
         pt.x = box.GetArea().x + (box.GetArea().w - AGG::GetICN(system, 1).w()) / 2;
         pt.y = box.GetArea().y + box.GetArea().h - AGG::GetICN(system, 1).h();
-        button = new Button(pt.x, pt.y, system, 1, 2);
+        button = new Button(pt.x+70, pt.y, system, 1, 2);
     }
 
     if (button) (*button).Draw();
