@@ -191,7 +191,7 @@ void Dialog::PrimarySkillInfo(const string &header, const string &message, int s
 
     pt.x = box.GetArea().x + (box.GetArea().w - AGG::GetICN(system, 1).w()) / 2;
     pt.y = box.GetArea().y + box.GetArea().h - AGG::GetICN(system, 1).h();
-    Button button(pt.x, pt.y, system, 1, 2);
+    Button button(pt.x+70, pt.y, system, 1, 2);
 
     button.Draw();
 
