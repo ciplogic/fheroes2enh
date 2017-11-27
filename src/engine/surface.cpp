@@ -306,14 +306,12 @@ Surface::Surface(const void *pixels, u32 width, u32 height, u32 bytes_per_pixel 
 
 Surface::~Surface()
 {
-	if (!isDisplay())
-	{
-		if (surface)
-		{
-			FreeSurface(*this);
-			surface = nullptr;
-		}
-	}
+	if (isDisplay())
+        return;
+    if (!surface)
+        return;
+    FreeSurface(*this);
+    surface = nullptr;
 }
 
 /* operator = */

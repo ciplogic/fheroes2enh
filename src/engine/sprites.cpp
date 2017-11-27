@@ -23,6 +23,7 @@
 #include "sprites.h"
 
 SpritePos::SpritePos()
+: Surface()
 {
 }
 
