@@ -21,22 +21,16 @@
  ***************************************************************************/
 
 #include <string>
-#include <vector>
 #include "agg.h"
 #include "world.h"
-#include "button.h"
 #include "cursor.h"
 #include "settings.h"
-#include "castle.h"
 #include "dialog.h"
-#include "heroes.h"
 #include "text.h"
 #include "race.h"
 #include "game.h"
 #include "statusbar.h"
-#include "payment.h"
 #include "buildinginfo.h"
-#include "kingdom.h"
 
 int Castle::DialogBuyHero(const Heroes *hero)
 {
@@ -101,7 +95,7 @@ int Castle::DialogBuyHero(const Heroes *hero)
 
     dst_pt.x = box_rt.x;
     dst_pt.y = box_rt.y + box_rt.h - AGG::GetICN(system, 1).h();
-    Button button1(dst_pt.x, dst_pt.y, system, 1, 2);
+    Button button1(dst_pt.x+50, dst_pt.y, system, 1, 2);
 
     if (!AllowBuyHero(*hero))
     {

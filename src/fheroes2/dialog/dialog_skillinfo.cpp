@@ -24,7 +24,6 @@
 #include "text.h"
 #include "settings.h"
 #include "cursor.h"
-#include "profit.h"
 #include "button.h"
 #include "skill.h"
 #include "game.h"
