@@ -63,9 +63,9 @@ bool TinyConfig::Load(const string &cfile)
 
     auto rows = StringSplit(sf.toString(), "\n");
 
-    for (auto it = rows.begin(); it != rows.end(); ++it)
+    for (auto &row : rows)
     {
-        string str = StringTrim(*it);
+        string str = StringTrim(row);
         if (str.empty() || str[0] == comment) continue;
 
         size_t pos = str.find(separator);

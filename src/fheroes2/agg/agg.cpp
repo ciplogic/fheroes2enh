@@ -1753,7 +1753,7 @@ void AGG::PlayMusic(int mus, bool loop)
             }
         }
 
-        if (filename.size())
+        if (!filename.empty())
             Music::Play(filename, loop);
 
         DEBUG(DBG_ENGINE, DBG_INFO, MUS::GetString(mus));
@@ -1780,7 +1780,9 @@ void AGG::PlayMusic(int mus, bool loop)
             const string file = System::ConcatePath(Settings::GetWriteableDir("music"), mid);
 
             if (!System::IsFile(file))
+            {
                 SaveMemToFile(GetMID(xmi), file);
+            }
 
             Music::Play(file, loop);
 #endif

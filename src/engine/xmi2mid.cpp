@@ -378,9 +378,8 @@ struct MidEvents : public list<MidEvent>
                 if (delta2) delta -= delta2;
 
                 // decrease duration
-                for (list<meta_t>::iterator
-                             it = notesoff.begin(); it != notesoff.end(); it++)
-                    it->decrease_duration(delta);
+                for (auto &it : notesoff)
+                    it.decrease_duration(delta);
             }
 
             // interval
@@ -460,9 +459,8 @@ struct MidEvents : public list<MidEvent>
 
 StreamBuf &operator<<(StreamBuf &sb, const MidEvents &st)
 {
-    for (list<MidEvent>::const_iterator
-                 it = st.begin(); it != st.end(); ++it)
-        sb << *it;
+    for (const auto &it : st)
+        sb << it;
     return sb;
 }
 
@@ -510,17 +508,15 @@ struct MidTracks : list<MidTrack>
 
     MidTracks(const XMITracks &tracks)
     {
-        for (XMITracks::const_iterator
-                     it = tracks.begin(); it != tracks.end(); ++it)
-            push_back(MidTrack(*it));
+        for (const auto &track : tracks)
+            push_back(MidTrack(track));
     }
 };
 
 StreamBuf &operator<<(StreamBuf &sb, const MidTracks &st)
 {
-    for (list<MidTrack>::const_iterator
-                 it = st.begin(); it != st.end(); ++it)
-        sb << *it;
+    for (const auto &it : st)
+        sb << it;
     return sb;
 }
 
