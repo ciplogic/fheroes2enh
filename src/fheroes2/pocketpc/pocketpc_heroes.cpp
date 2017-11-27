@@ -31,7 +31,6 @@
 #include "army_bar.h"
 #include "world.h"
 #include "race.h"
-#include "kingdom.h"
 #include "pocketpc.h"
 
 int PocketPC::HeroesOpenDialog(Heroes &hero, bool readonly)

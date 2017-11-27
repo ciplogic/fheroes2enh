@@ -23,12 +23,8 @@
 #include <iostream>
 #include "agg.h"
 #include "world.h"
-#include "heroes.h"
-#include "direction.h"
-#include "maps.h"
 #include "game.h"
 #include "settings.h"
-#include "route.h"
 
 s32 Route::Step::GetIndex() const
 {

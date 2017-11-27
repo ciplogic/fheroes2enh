@@ -28,10 +28,8 @@
 #include "settings.h"
 #include "text.h"
 #include "world.h"
-#include "kingdom.h"
 #include "game.h"
 #include "dialog.h"
-#include "castle.h"
 #include "pocketpc.h"
 
 // dialog_thievesguild.cpp

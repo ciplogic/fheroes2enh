@@ -21,7 +21,6 @@
  ***************************************************************************/
 
 #include "cursor.h"
-#include "display.h"
 #include "statusbar.h"
 
 StatusBar::StatusBar()

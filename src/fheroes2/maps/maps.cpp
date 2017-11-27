@@ -23,12 +23,9 @@
 #include <algorithm>
 #include "world.h"
 #include "settings.h"
-#include "maps.h"
 #include "race.h"
 #include "game.h"
-#include "kingdom.h"
 #include "difficulty.h"
-#include "maps_tiles.h"
 
 struct ComparsionDistance
 {
@@ -261,10 +258,9 @@ Maps::Indexes Maps::GetAroundIndexes(s32 center)
     {
         const Directions directions = Direction::All();
 
-        for (Directions::const_iterator
-                     it = directions.begin(); it != directions.end(); ++it)
-            if (isValidDirection(center, *it))
-                result.push_back(GetDirectionIndex(center, *it));
+        for (int direction : directions)
+            if (isValidDirection(center, direction))
+                result.push_back(GetDirectionIndex(center, direction));
     }
 
     return result;

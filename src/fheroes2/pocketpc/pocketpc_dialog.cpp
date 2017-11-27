@@ -19,13 +19,11 @@
  ***************************************************************************/
 
 #include "agg.h"
-#include "engine.h"
 #include "cursor.h"
 #include "battle.h"
 #include "battle_board.h"
 #include "game.h"
 #include "text.h"
-#include "settings.h"
 #include "pocketpc.h"
 
 u32 PocketPC::GetCursorAttackDialog(const Point &dst, int allow)

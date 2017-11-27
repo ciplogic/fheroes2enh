@@ -21,7 +21,6 @@
  ***************************************************************************/
 
 #include "mp2.h"
-#include "icn.h"
 #include "direction.h"
 #include "objtown.h"
 

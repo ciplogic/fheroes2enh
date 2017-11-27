@@ -26,12 +26,9 @@
 #include <iostream>
 #include <iomanip>
 #include <cstring>
-#include <climits>
-#include <cctype>
 #include <functional>
 
 #include "types.h"
-#include "error.h"
 #include "system.h"
 #include "tools.h"
 

@@ -26,19 +26,15 @@
 #include <algorithm>
 #include <iterator>
 #include <ctime>
-#include <cctype>
 #include <sstream>
-#include <string>
 #include <agg/ColorTable.h>
 
 #include "system.h"
-#include "dir.h"
 #include "agg.h"
 #include "text.h"
 #include "button.h"
 #include "cursor.h"
 #include "settings.h"
-#include "maps_fileinfo.h"
 #include "interface_list.h"
 #include "pocketpc.h"
 #include "world.h"

@@ -25,7 +25,6 @@
 #include "system.h"
 #include "text.h"
 #include "maps.h"
-#include "race.h"
 #include "game.h"
 #include "tinyconfig.h"
 #include "difficulty.h"
@@ -1582,8 +1581,6 @@ void Settings::BinarySave() const
            pos_radr << pos_bttn << pos_icon << pos_stat;
     }
 }
-
-#include "dialog.h"
 
 void Settings::BinaryLoad()
 {

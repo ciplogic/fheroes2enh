@@ -26,7 +26,6 @@
 #include "button.h"
 #include "dialog.h"
 #include "settings.h"
-#include "pocketpc.h"
 #include "game_io.h"
 #include "game.h"
 

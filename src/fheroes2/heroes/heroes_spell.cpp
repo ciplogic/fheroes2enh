@@ -25,13 +25,8 @@
 #include "world.h"
 #include "agg.h"
 #include "cursor.h"
-#include "kingdom.h"
-#include "castle.h"
-#include "spell.h"
 #include "settings.h"
 #include "game_interface.h"
-#include "interface_list.h"
-#include "heroes.h"
 
 void DialogSpellFailed(const Spell &);
 

@@ -25,8 +25,6 @@
 #include "agg.h"
 #include "text.h"
 #include "settings.h"
-#include "pairs.h"
-#include "resource.h"
 
 Funds::Funds()
         : wood(0), mercury(0), ore(0), sulfur(0), crystal(0), gems(0), gold(0)

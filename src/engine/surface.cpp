@@ -29,8 +29,6 @@
 #include "surface.h"
 #include "error.h"
 #include "system.h"
-#include "localevent.h"
-#include "display.h"
 
 #ifdef WITH_IMAGE
 #include "SDL_image.h"

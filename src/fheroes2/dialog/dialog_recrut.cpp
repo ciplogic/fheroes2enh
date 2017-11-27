@@ -26,9 +26,6 @@
 #include "cursor.h"
 #include "payment.h"
 #include "world.h"
-#include "button.h"
-#include "kingdom.h"
-#include "monster.h"
 #include "game.h"
 #include "dialog.h"
 

@@ -22,8 +22,6 @@ must not be misrepresented as being the original software.
 distribution.
 */
 
-#include <ctype.h>
-
 #ifdef TIXML_USE_STL
 #include <sstream>
 #include <iostream>
@@ -54,7 +52,7 @@ void TiXmlBase::EncodeString(const TIXML_STRING &str, TIXML_STRING *outString)
 
     while (i < (int) str.length())
     {
-        unsigned char c = (unsigned char) str[i];
+        auto c = (unsigned char) str[i];
 
         if (c == '&'
             && i < ((int) str.length() - 2)

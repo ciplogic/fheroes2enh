@@ -29,8 +29,6 @@
 #include "game.h"
 #include "race.h"
 #include "dialog.h"
-#include "kingdom.h"
-#include "payment.h"
 #include "profit.h"
 #include "statusbar.h"
 #include "buildinginfo.h"

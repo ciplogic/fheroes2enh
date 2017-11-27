@@ -22,7 +22,6 @@
 
 #include "agg.h"
 #include "cursor.h"
-#include "text.h"
 #include "button.h"
 #include "dialog.h"
 #include "heroes.h"
@@ -30,7 +29,6 @@
 #include "heroes_indicator.h"
 #include "army_bar.h"
 #include "world.h"
-#include "kingdom.h"
 #include "pocketpc.h"
 
 void PocketPC::HeroesMeeting(Heroes &hero1, Heroes &hero2)

@@ -24,7 +24,6 @@
 #include "settings.h"
 #include "game.h"
 #include "game_interface.h"
-#include "interface_cpanel.h"
 
 Interface::ControlPanel::ControlPanel(Basic &basic) : interface(basic)
 {

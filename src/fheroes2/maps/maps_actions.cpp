@@ -22,10 +22,7 @@
 
 #include "world.h"
 #include "text.h"
-#include "players.h"
 #include "dialog.h"
-#include "heroes.h"
-#include "kingdom.h"
 #include "settings.h"
 #include "game.h"
 #include "maps_actions.h"

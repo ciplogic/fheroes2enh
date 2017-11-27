@@ -27,7 +27,6 @@
 #include <vector>
 
 #include "engine.h"
-#include "system.h"
 
 #define TAG_FORM    0x464F524D
 #define TAG_XDIR    0x58444952

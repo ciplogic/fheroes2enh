@@ -22,7 +22,6 @@
 
 #include <map>
 #include <list>
-#include <string>
 
 #include "engine.h"
 #include "serialize.h"

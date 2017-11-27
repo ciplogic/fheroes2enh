@@ -27,13 +27,9 @@
 
 #include "agg.h"
 
-#include "system.h"
-#include "font.h"
 #include "settings.h"
 #include "text.h"
-#include "engine.h"
 #include "artifact.h"
-#include "dir.h"
 #include "game.h"
 #include "palette_h2.h"
 

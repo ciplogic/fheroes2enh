@@ -22,17 +22,13 @@
 
 #include <algorithm>
 #include "army.h"
-#include "color.h"
-#include "cursor.h"
 #include "artifact.h"
 #include "settings.h"
 #include "heroes_base.h"
-#include "skill.h"
 #include "agg.h"
 #include "text.h"
 #include "dialog.h"
 #include "world.h"
-#include "kingdom.h"
 #include "game.h"
 #include "ai.h"
 #include "battle_arena.h"

@@ -24,15 +24,12 @@
 
 #include "agg.h"
 #include "castle.h"
-#include "heroes.h"
 #include "race.h"
 #include "cursor.h"
 #include "world.h"
 #include "settings.h"
-#include "kingdom.h"
 #include "game.h"
 #include "game_interface.h"
-#include "interface_icons.h"
 
 #define ICONS_WIDTH             46
 #define ICONS_HEIGHT            22

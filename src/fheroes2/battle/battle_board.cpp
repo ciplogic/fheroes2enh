@@ -26,7 +26,6 @@
 #include <algorithm>
 #include "world.h"
 #include "ground.h"
-#include "castle.h"
 #include "settings.h"
 #include "battle_arena.h"
 #include "battle_bridge.h"

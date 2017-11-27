@@ -27,10 +27,6 @@
 #include "cursor.h"
 #include "dialog.h"
 #include "settings.h"
-#include "resource.h"
-#include "castle.h"
-#include "heroes.h"
-#include "kingdom.h"
 #include "game.h"
 #include "text.h"
 

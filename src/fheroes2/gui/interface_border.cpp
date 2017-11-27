@@ -24,7 +24,6 @@
 #include "maps.h"
 #include "settings.h"
 #include "game_interface.h"
-#include "interface_border.h"
 
 void Interface::GameBorderRedraw()
 {

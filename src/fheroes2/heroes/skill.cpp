@@ -21,7 +21,6 @@
  ***************************************************************************/
 
 #include <sstream>
-#include <cstring>
 #include <algorithm>
 
 #include <functional>
@@ -30,15 +29,12 @@
 #include "race.h"
 #include "text.h"
 #include "agg.h"
-#include "cursor.h"
 #include "game.h"
 #include "dialog.h"
 #include "dialog_selectitems.h"
-#include "heroes.h"
 #include "settings.h"
 #include "skill_static.h"
 #include "game_static.h"
-#include "skill.h"
 
 namespace Skill
 {

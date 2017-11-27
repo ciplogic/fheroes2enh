@@ -33,13 +33,9 @@
 #include "dialog.h"
 #include "ground.h"
 #include "morale.h"
-#include "kingdom.h"
-#include "maps_tiles.h"
-#include "castle.h"
 #include "game_static.h"
 #include "ai.h"
 #include "battle_tower.h"
-#include "battle_board.h"
 #include "profit.h"
 
 Castle::Castle() : race(Race::NONE), building(0), captain(*this), army(nullptr)

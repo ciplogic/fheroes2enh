@@ -23,12 +23,9 @@
 #include <algorithm>
 
 #include "castle.h"
-#include "heroes.h"
-#include "cursor.h"
 #include "settings.h"
 #include "agg.h"
 #include "world.h"
-#include "kingdom.h"
 #include "game.h"
 #include "game_interface.h"
 

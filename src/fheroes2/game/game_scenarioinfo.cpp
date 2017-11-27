@@ -24,20 +24,15 @@
 #include <vector>
 #include <string>
 #include "agg.h"
-#include "gamedefs.h"
 #include "button.h"
 #include "cursor.h"
-#include "race.h"
 #include "settings.h"
-#include "maps_fileinfo.h"
 #include "dialog_selectscenario.h"
 #include "difficulty.h"
 #include "dialog.h"
 #include "text.h"
 #include "kingdom.h"
-#include "splitter.h"
 #include "world.h"
-#include "players.h"
 #include "pocketpc.h"
 #include "game.h"
 

@@ -25,11 +25,8 @@
 #include "speed.h"
 #include "settings.h"
 #include "game.h"
-#include "luck.h"
-#include "morale.h"
 #include "army.h"
 #include "heroes_base.h"
-#include "army_troop.h"
 
 Troop::Troop() : Monster(UNKNOWN), count(0)
 {

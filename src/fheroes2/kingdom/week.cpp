@@ -25,7 +25,6 @@
 #include "settings.h"
 #include "world.h"
 #include "game.h"
-#include "week.h"
 
 const char *Week::GetName() const
 {

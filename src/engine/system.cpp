@@ -25,8 +25,6 @@
 #include <ctime>
 #include <sstream>
 #include <fstream>
-#include <cctype>
-#include <cstdlib>
 #include <locale>
 
 #if defined(ANDROID)
@@ -76,10 +74,6 @@ extern HWND SDL_Window;
 #include <io.h>
 #endif
 
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <clocale>
-
 #if defined(__SYMBIAN32__)
 #define SEPARATOR '\\'
 #elif defined(__WIN32__)
@@ -90,7 +84,6 @@ extern HWND SDL_Window;
 
 #include "serialize.h"
 #include "tools.h"
-#include "dir.h"
 
 int System::MakeDirectory(const string &path)
 {

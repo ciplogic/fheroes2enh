@@ -21,10 +21,8 @@
  ***************************************************************************/
 
 #include <sstream>
-#include <string>
 
 #include "tools.h"
-#include "types.h"
 #include "system.h"
 #include "error.h"
 #include "display.h"

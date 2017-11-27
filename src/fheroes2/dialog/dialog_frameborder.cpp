@@ -21,7 +21,6 @@
  ***************************************************************************/
 
 #include "agg.h"
-#include "text.h"
 #include "settings.h"
 #include "cursor.h"
 #include "dialog.h"

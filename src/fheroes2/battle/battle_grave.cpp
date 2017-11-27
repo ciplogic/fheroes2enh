@@ -22,8 +22,6 @@
 
 #include <algorithm>
 #include "battle_troop.h"
-#include "battle_board.h"
-#include "battle_grave.h"
 
 Battle::Indexes Battle::Graveyard::GetClosedCells() const
 {

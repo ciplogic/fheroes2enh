@@ -28,14 +28,10 @@
 #include "dialog.h"
 #include "world.h"
 #include "cursor.h"
-#include "castle.h"
-#include "heroes.h"
 #include "game.h"
 #include "game_interface.h"
 #include "game_io.h"
 #include "game_over.h"
-#include "settings.h"
-#include "kingdom.h"
 #include "pocketpc.h"
 
 void Interface::Basic::ShowPathOrStartMoveHero(Heroes *hero, s32 dst_index)

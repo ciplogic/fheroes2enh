@@ -28,11 +28,6 @@
 #include "ground.h"
 #include "game.h"
 #include "game_interface.h"
-#include "kingdom.h"
-#include "maps_tiles.h"
-#include "castle.h"
-#include "direction.h"
-#include "heroes.h"
 
 bool ReflectSprite(int from);
 

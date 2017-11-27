@@ -23,12 +23,9 @@
 #include "agg.h"
 #include "settings.h"
 #include "world.h"
-#include "maps.h"
 #include "ground.h"
 #include "game.h"
 #include "game_interface.h"
-#include "route.h"
-#include "interface_gamearea.h"
 
 #define SCROLL_MIN    8
 #define SCROLL_MAX    TILEWIDTH

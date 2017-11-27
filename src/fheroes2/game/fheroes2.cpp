@@ -21,14 +21,10 @@
  ***************************************************************************/
 
 #include <iostream>
-#include <string>
-#include <cstdlib>
 
 #include "engine.h"
-#include "system.h"
 #include "gamedefs.h"
 #include "settings.h"
-#include "dir.h"
 #include "agg.h"
 #include "cursor.h"
 #include "game.h"

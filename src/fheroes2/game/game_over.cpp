@@ -25,8 +25,6 @@
 #include "game.h"
 #include "dialog.h"
 #include "world.h"
-#include "kingdom.h"
-#include "castle.h"
 #include "settings.h"
 #include "game_interface.h"
 #include "game_over.h"

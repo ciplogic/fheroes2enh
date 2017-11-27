@@ -22,25 +22,19 @@
 
 #include <algorithm>
 #include "settings.h"
-#include "tools.h"
 #include "army.h"
 #include "cursor.h"
 #include "castle.h"
 #include "world.h"
 #include "agg.h"
-#include "speed.h"
 #include "ground.h"
 #include "race.h"
-#include "army_troop.h"
-#include "spell_storage.h"
 #include "battle_arena.h"
-#include "battle_cell.h"
 #include "battle_army.h"
 #include "battle_troop.h"
 #include "battle_tower.h"
 #include "battle_catapult.h"
 #include "battle_bridge.h"
-#include "battle_command.h"
 #include "battle_interface.h"
 
 namespace Battle

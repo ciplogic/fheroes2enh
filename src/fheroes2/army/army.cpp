@@ -27,19 +27,11 @@
 #include "settings.h"
 #include "payment.h"
 #include "world.h"
-#include "kingdom.h"
-#include "maps_tiles.h"
 #include "text.h"
 #include "race.h"
 #include "game.h"
-#include "color.h"
 #include "luck.h"
 #include "morale.h"
-#include "castle.h"
-#include "heroes.h"
-#include "heroes_base.h"
-#include "tools.h"
-#include "army.h"
 
 enum armysize_t
 {

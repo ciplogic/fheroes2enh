@@ -21,7 +21,6 @@
  ***************************************************************************/
 
 #include <iterator>
-#include <cctype>
 #include <iostream>
 #include <algorithm>
 

@@ -28,9 +28,6 @@
  *******************************************************************************/
 
 #include "world.h"
-#include "kingdom.h"
-#include "heroes.h"
-#include "castle.h"
 #include "race.h"
 #include "game.h"
 #include "ai_simple.h"

@@ -20,17 +20,6 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include "gamedefs.h"
-#include "agg.h"
-#include "cursor.h"
-#include "game.h"
-#include "statusbar.h"
-#include "dialog.h"
-#include "monster.h"
-#include "button.h"
-#include "battle_troop.h"
-#include "army_troop.h"
-
 #ifndef BUILD_RELEASE
 
 void TestMonsterSprite(void)

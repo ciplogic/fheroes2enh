@@ -27,14 +27,12 @@
 #include <ctime>
 #include <sstream>
 #include "agg.h"
-#include "direction.h"
 #include "settings.h"
 #include "maps.h"
 #include "mp2.h"
 #include "world.h"
 #include "game.h"
 #include "dialog.h"
-#include "players.h"
 #include "game_interface.h"
 
 Interface::Basic::Basic() : gameArea(*this), radar(*this),

@@ -30,7 +30,6 @@
 #include "world.h"
 #include "maps_fileinfo.h"
 #include "settings.h"
-#include "players.h"
 
 namespace
 {

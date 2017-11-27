@@ -30,7 +30,6 @@
 #include "castle.h"
 #include "dialog.h"
 #include "kingdom.h"
-#include "heroes.h"
 #include "world.h"
 #include "race.h"
 #include "game.h"

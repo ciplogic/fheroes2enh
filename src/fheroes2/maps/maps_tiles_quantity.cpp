@@ -27,7 +27,6 @@
 #include "settings.h"
 #include "difficulty.h"
 #include "world.h"
-#include "maps_tiles.h"
 
 bool Maps::Tiles::QuantityIsValid() const
 {

@@ -32,20 +32,9 @@
 
 #include "settings.h"
 #include "kingdom.h"
-#include "castle.h"
-#include "army.h"
-#include "battle.h"
-#include "luck.h"
-#include "morale.h"
-#include "race.h"
 #include "difficulty.h"
 #include "world.h"
-#include "payment.h"
-#include "heroes.h"
-#include "cursor.h"
 #include "game_interface.h"
-#include "interface_gamearea.h"
-#include "maps_tiles.h"
 #include "ai_simple.h"
 
 #define HERO_MAX_SHEDULED_TASK 7

@@ -23,15 +23,11 @@
 #include <algorithm>
 #include "settings.h"
 #include "world.h"
-#include "kingdom.h"
-#include "spell.h"
 #include "battle_cell.h"
 #include "battle_troop.h"
-#include "battle_arena.h"
 #include "battle_tower.h"
 #include "battle_bridge.h"
 #include "battle_catapult.h"
-#include "battle_command.h"
 #include "battle_interface.h"
 
 void Battle::Arena::BattleProcess(Unit &attacker, Unit &defender, s32 dst, int dir)

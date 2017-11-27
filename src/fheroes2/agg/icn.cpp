@@ -25,16 +25,7 @@
 #include "agg.h"
 #include "settings.h"
 #include "heroes.h"
-#include "spell.h"
-#include "objcrck.h"
-#include "objdirt.h"
-#include "objdsrt.h"
-#include "objgras.h"
-#include "objlava.h"
-#include "objsnow.h"
-#include "objswmp.h"
 #include "race.h"
-#include "icn.h"
 
 namespace ICN
 {

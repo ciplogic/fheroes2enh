@@ -24,7 +24,6 @@
 
 #include "system.h"
 #include "tools.h"
-#include "audio_mixer.h"
 #include "audio_music.h"
 
 #ifdef WITH_MIXER
@@ -177,9 +176,7 @@ void Music::SetExtCommand(const std::string &)
 
 #else
 
-#include <list>
 #include <algorithm>
-#include "thread.h"
 
 namespace Music
 {

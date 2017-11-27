@@ -21,22 +21,14 @@
  ***************************************************************************/
 
 #include <string>
-#include <utility>
 #include <algorithm>
 #include "agg.h"
 #include "button.h"
 #include "world.h"
 #include "cursor.h"
 #include "settings.h"
-#include "resource.h"
-#include "castle.h"
-#include "heroes.h"
-#include "payment.h"
-#include "profit.h"
-#include "kingdom.h"
 #include "game.h"
 #include "race.h"
-#include "tools.h"
 #include "text.h"
 #include "dialog.h"
 #include "statusbar.h"

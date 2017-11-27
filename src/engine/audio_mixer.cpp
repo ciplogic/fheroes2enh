@@ -23,10 +23,6 @@
 #include <algorithm>
 
 #include "engine.h"
-#include "audio.h"
-#include "audio_cdrom.h"
-#include "audio_music.h"
-#include "audio_mixer.h"
 
 namespace Mixer
 {

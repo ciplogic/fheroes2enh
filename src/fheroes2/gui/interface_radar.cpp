@@ -28,9 +28,6 @@
 #include "game_interface.h"
 #include "ground.h"
 #include "world.h"
-#include "castle.h"
-#include "cursor.h"
-#include "interface_radar.h"
 
 #define RADARCOLOR    0x40    // index palette
 #define COLOR_DESERT    0x70

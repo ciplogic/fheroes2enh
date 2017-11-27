@@ -23,7 +23,6 @@
 #include "agg.h"
 #include "settings.h"
 #include "cursor.h"
-#include "sprite.h"
 
 /* constructor */
 Cursor::Cursor() : theme(NONE), offset_x(0), offset_y(0)

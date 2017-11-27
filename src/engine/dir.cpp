@@ -28,7 +28,6 @@
 
 #include "system.h"
 #include "tools.h"
-#include "dir.h"
 
 using namespace std;
 

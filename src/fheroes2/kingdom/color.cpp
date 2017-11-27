@@ -25,7 +25,6 @@
 #include "settings.h"
 #include "world.h"
 #include "game.h"
-#include "color.h"
 
 const char *Color::String(int color)
 {

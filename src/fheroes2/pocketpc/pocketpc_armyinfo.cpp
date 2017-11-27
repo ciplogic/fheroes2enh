@@ -28,7 +28,6 @@
 #include "game.h"
 #include "dialog.h"
 #include "army.h"
-#include "army_troop.h"
 #include "pocketpc.h"
 
 void DrawMonsterStats(const Point &, const Troop &);

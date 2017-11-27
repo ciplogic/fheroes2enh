@@ -22,7 +22,6 @@
 
 #include <sstream>
 #include "maps.h"
-#include "direction.h"
 
 string Direction::String(int direct)
 {

@@ -26,19 +26,13 @@
 #include "army.h"
 #include "heroes.h"
 #include "castle.h"
-#include "monster.h"
 #include "race.h"
 #include "ground.h"
 #include "interface_gamearea.h"
 #include "game_interface.h"
-#include "cursor.h"
 #include "world.h"
-#include "settings.h"
-#include "kingdom.h"
 #include "profit.h"
-#include "spell.h"
 #include "game.h"
-#include "dialog.h"
 
 string GetMinesIncomeString(int type)
 {

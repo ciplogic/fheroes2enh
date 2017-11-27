@@ -31,15 +31,9 @@
 #include "race.h"
 #include "world.h"
 #include "settings.h"
-#include "dir.h"
-#include "artifact.h"
 #include "game.h"
 #include "game_io.h"
 #include "game_over.h"
-#include "maps_fileinfo.h"
-
-#include "serialize.h"
-#include <functional>
 
 #define LENGTHNAME        16
 #define LENGTHDESCRIPTION    143

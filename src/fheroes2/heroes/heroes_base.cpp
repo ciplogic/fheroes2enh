@@ -21,7 +21,6 @@
  ***************************************************************************/
 
 #include <algorithm>
-#include <utility>
 #include <sstream>
 #include "artifact.h"
 #include "game.h"
@@ -29,10 +28,7 @@
 #include "color.h"
 #include "army.h"
 #include "world.h"
-#include "kingdom.h"
-#include "castle.h"
 #include "settings.h"
-#include "heroes_base.h"
 
 int ArtifactsModifiersResult(int type, const u8 *arts, u32 size, const HeroBase &base, string *strs)
 {

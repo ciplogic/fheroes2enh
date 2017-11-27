@@ -22,10 +22,7 @@
 
 #include <cstring>
 #include "castle.h"
-#include "artifact.h"
 #include "race.h"
-#include "skill.h"
-#include "settings.h"
 #include "profit.h"
 
 struct profitstats_t

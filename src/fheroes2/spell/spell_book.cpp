@@ -28,10 +28,8 @@
 #include "cursor.h"
 #include "dialog.h"
 #include "heroes_base.h"
-#include "skill.h"
 #include "dialog_selectitems.h"
 #include "settings.h"
-#include "spell_book.h"
 
 #define SPELL_PER_PAGE        6
 #define SPELL_PER_PAGE_SMALL    2

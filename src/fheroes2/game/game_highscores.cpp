@@ -23,8 +23,6 @@
 #include <algorithm>
 #include <sstream>
 #include <vector>
-#include <string>
-#include <cstring>
 #include <ctime>
 
 #include "system.h"

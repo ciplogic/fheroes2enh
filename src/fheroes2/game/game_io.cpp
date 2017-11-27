@@ -21,24 +21,17 @@
  ***************************************************************************/
 
 #include <sstream>
-#include <cstring>
 #include <ctime>
 #include "zzlib.h"
 #include "text.h"
 #include "settings.h"
 #include "kingdom.h"
-#include "heroes.h"
-#include "castle.h"
 #include "dialog.h"
-#include "army.h"
 #include "world.h"
 #include "interface_gamearea.h"
-#include "settings.h"
-#include "tools.h"
 #include "game.h"
 #include "game_over.h"
 #include "game_static.h"
-#include "monster.h"
 #include "game_io.h"
 
 static u16 SAV2ID2 = 0xFF02;

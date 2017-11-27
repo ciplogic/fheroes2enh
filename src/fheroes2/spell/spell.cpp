@@ -21,14 +21,11 @@
  ***************************************************************************/
 
 #include "heroes_base.h"
-#include "artifact.h"
 #include "settings.h"
 #include "race.h"
 #include "army.h"
-#include "resource.h"
 #include "game.h"
 #include "game_static.h"
-#include "spell.h"
 
 enum
 {

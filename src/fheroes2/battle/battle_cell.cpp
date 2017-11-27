@@ -24,7 +24,6 @@
 #include "army_troop.h"
 #include "battle_board.h"
 #include "battle_troop.h"
-#include "battle_cell.h"
 
 #define INFL 12
 

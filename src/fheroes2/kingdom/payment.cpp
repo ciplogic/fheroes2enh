@@ -22,10 +22,8 @@
 
 #include <cstring>
 #include "castle.h"
-#include "race.h"
 #include "buildinginfo.h"
 #include "settings.h"
-#include "payment.h"
 
 struct paymentstats_t
 {

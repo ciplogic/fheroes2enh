@@ -29,11 +29,8 @@
 #include "settings.h"
 #include "world.h"
 #include "game.h"
-#include "spell.h"
-#include "heroes.h"
 #include "dialog.h"
 #include "dialog_selectitems.h"
-#include "artifact.h"
 
 enum
 {

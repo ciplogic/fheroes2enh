@@ -27,11 +27,9 @@
 #include "settings.h"
 #include "dialog.h"
 #include "maps.h"
-#include "maps_fileinfo.h"
 #include "game.h"
 #include "dialog_selectscenario.h"
 #include "text.h"
-#include "tools.h"
 #include "pocketpc.h"
 
 int PocketPC::SelectScenario(void)

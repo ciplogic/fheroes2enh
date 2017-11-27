@@ -21,26 +21,18 @@
  ***************************************************************************/
 
 #include <functional>
-#include <algorithm>
 
 #include "settings.h"
 #include "kingdom.h"
-#include "castle.h"
-#include "army.h"
 #include "battle.h"
 #include "luck.h"
 #include "morale.h"
 #include "game.h"
 #include "race.h"
-#include "difficulty.h"
 #include "dialog.h"
 #include "world.h"
-#include "payment.h"
-#include "heroes.h"
 #include "cursor.h"
 #include "game_interface.h"
-#include "interface_gamearea.h"
-#include "maps_tiles.h"
 #include "ai.h"
 
 void AIToMonster(Heroes &hero, u32 obj, s32 dst_index);

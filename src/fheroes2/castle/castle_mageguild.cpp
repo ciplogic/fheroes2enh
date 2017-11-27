@@ -31,7 +31,6 @@
 #include "game.h"
 #include "race.h"
 #include "settings.h"
-#include "mageguild.h"
 #include "text.h"
 
 RowSpells::RowSpells(const Point &pos, const Castle &castle, int lvl)

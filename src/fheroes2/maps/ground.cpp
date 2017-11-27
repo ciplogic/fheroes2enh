@@ -21,7 +21,6 @@
  ***************************************************************************/
 
 #include "maps_tiles.h"
-#include "direction.h"
 #include "world.h"
 #include "ground.h"
 

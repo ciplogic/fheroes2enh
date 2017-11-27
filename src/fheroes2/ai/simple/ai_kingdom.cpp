@@ -30,15 +30,10 @@
 #include <functional>
 #include <algorithm>
 #include "game.h"
-#include "cursor.h"
-#include "engine.h"
 #include "game_interface.h"
-#include "interface_gamearea.h"
 #include "heroes.h"
 #include "castle.h"
 #include "world.h"
-#include "settings.h"
-#include "kingdom.h"
 #include "agg.h"
 #include "ai.h"
 #include "ai_simple.h"

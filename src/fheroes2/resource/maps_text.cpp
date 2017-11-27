@@ -7,8 +7,6 @@
  * http://sourceforge.net/projects/fheroes2
  */
 
-#include "gamedefs.h"
-
 #ifdef MAPS_MESSAGES
 
 const char* maps_messages[] = {

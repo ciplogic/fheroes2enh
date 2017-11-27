@@ -24,14 +24,10 @@
 #include "agg.h"
 #include "text.h"
 #include "world.h"
-#include "button.h"
 #include "cursor.h"
-#include "castle.h"
-#include "kingdom.h"
 #include "settings.h"
 #include "game.h"
 #include "dialog.h"
-#include "payment.h"
 
 int Dialog::BuyBoat(bool enable)
 {

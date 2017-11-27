@@ -26,16 +26,11 @@
 #include "button.h"
 #include "settings.h"
 #include "castle.h"
-#include "heroes.h"
 #include "world.h"
-#include "kingdom.h"
-#include "skill.h"
 #include "game.h"
-#include "army.h"
 #include "army_bar.h"
 #include "buildinginfo.h"
 #include "interface_icons.h"
-#include "interface_list.h"
 
 struct HeroRow
 {

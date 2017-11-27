@@ -26,13 +26,7 @@
 #include "cursor.h"
 #include "world.h"
 #include "settings.h"
-#include "kingdom.h"
-#include "castle.h"
-#include "heroes.h"
-#include "army.h"
-#include "resource.h"
 #include "game_interface.h"
-#include "interface_status.h"
 
 #define AITURN_REDRAW_EXPIRE 20
 #define RESOURCE_WINDOW_EXPIRE 2500
