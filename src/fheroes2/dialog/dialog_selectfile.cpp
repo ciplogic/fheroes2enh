@@ -40,6 +40,7 @@
 #include "world.h"
 #include "game.h"
 #include "dialog.h"
+#include "FileUtils.h"
 
 
 string SelectFileListSimple(const string &, const string &, bool);
@@ -79,7 +80,7 @@ void FileInfoListBox::RedrawItem(const Maps::FileInfo &info, s32 dstx, s32 dsty,
     strftime(short_date, ARRAY_COUNT(short_date) - 1, "%b %d, %H:%M", localtime(&timeval));
     string savname(System::GetBasename(info.file));
 
-    if (savname.size())
+    if (!savname.empty())
     {
         Text text;
         const size_t dotpos = savname.size() - 4;
@@ -135,20 +136,25 @@ string ResizeToShortName(const string &str)
 
 size_t GetInsertPosition(const string &name, s32 cx, s32 posx)
 {
-    if (name.size())
+    if (name.empty())
+        return 0;
+    s32 tw = Text::width(name, Font::SMALL);
+    if (cx <= posx) { return 0; }
+     if (cx >= posx + tw)
+        return name.size();
+    else
     {
-        s32 tw = Text::width(name, Font::SMALL);
-        if (cx <= posx)
-            return 0;
-        else if (cx >= posx + tw)
-            return name.size();
-        else
-        {
-            float cw = tw / name.size();
-            return static_cast<size_t>((cx - posx) / cw);
-        }
+        float cw = tw / name.size();
+        return static_cast<size_t>((cx - posx) / cw);
     }
-    return 0;
+}
+
+
+bool FileSortingByTime(const Maps::FileInfo &fi1, const Maps::FileInfo &fi2)
+{
+    long timeF1 = FileUtils::GetFileTime(fi1.file);
+    long timeF2 = FileUtils::GetFileTime(fi2.file);
+    return timeF1>timeF2;
 }
 
 MapsFileInfoList GetSortedMapsFileInfoList()
@@ -161,14 +167,9 @@ MapsFileInfoList GetSortedMapsFileInfoList()
     for (ListFiles::const_iterator itd = list1.begin(); itd != list1.end(); ++itd, ++ii)
         if (!list2[ii].ReadSAV(*itd))--ii;
     if (static_cast<size_t>(ii) != list2.size()) list2.resize(ii);
-    sort(list2.begin(), list2.end(), Maps::FileInfo::FileSorting);
+    sort(list2.begin(), list2.end(), FileSortingByTime);
 
     return list2;
-}
-
-bool IsPunct(char c)
-{
-    return true;
 }
 
 string Dialog::SelectFileSave()
@@ -176,7 +177,7 @@ string Dialog::SelectFileSave()
     const Settings &conf = Settings::Get();
     const string &name = conf.CurrentFileInfo().name;
 
-    string base = name.size() ? name : "newgame";
+    string base = !name.empty() ? name : "newgame";
     base.resize(distance(base.begin(), find_if(base.begin(), base.end(), ::ispunct)));
     replace_if(base.begin(), base.end(), ::isspace, '_');
     ostringstream os;
@@ -190,8 +191,8 @@ string Dialog::SelectFileSave()
 
 string Dialog::SelectFileLoad()
 {
-    const string &lastfile = Game::GetLastSavename();
-    return SelectFileListSimple(_("File to Load:"), (lastfile.size() ? lastfile : ""), false);
+    const string lastfile = Game::GetLastSavename();
+    return SelectFileListSimple(_("File to Load:"), (!lastfile.empty() ? lastfile : ""), false);
 }
 
 string SelectFileListSimple(const string &header, const string &lastfile, bool editor)
@@ -229,12 +230,12 @@ string SelectFileListSimple(const string &header, const string &lastfile, bool e
     string filename;
     size_t charInsertPos = 0;
 
-    if (lastfile.size())
+    if (!lastfile.empty())
     {
         filename = ResizeToShortName(lastfile);
         charInsertPos = filename.size();
 
-        MapsFileInfoList::iterator it = lists.begin();
+        auto it = lists.begin();
         for (; it != lists.end(); ++it) if ((*it).file == lastfile) break;
 
         if (it != lists.end())
@@ -290,7 +291,7 @@ string SelectFileListSimple(const string &header, const string &lastfile, bool e
 
         if ((buttonOk.isEnable() && le.MouseClickLeft(buttonOk)) || HotKeyPressEvent(Game::EVENT_DEFAULT_READY))
         {
-            if (filename.size())
+            if (!filename.empty())
                 result = System::ConcatePath(Settings::GetSaveDir(), filename + ".sav");
             else if (listbox.isSelected())
                 result = listbox.GetCurrent().file;
@@ -360,7 +361,7 @@ bool RedrawExtraInfo(const Point &dst, const string &header, const string &filen
     Text text(header, Font::BIG);
     text.Blit(dst.x + 175 - text.w() / 2, dst.y + 30);
 
-    if (filename.size())
+    if (!filename.empty())
     {
         text.Set(filename, Font::BIG);
         text.Blit(field.x, field.y + 1, field.w);

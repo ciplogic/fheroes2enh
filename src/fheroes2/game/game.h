@@ -73,7 +73,7 @@ namespace Game
 
     void Init();
 
-    const string &GetLastSavename();
+    string GetLastSavename();
 
     void SetLastSavename(const string &);
 

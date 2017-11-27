@@ -75,7 +75,7 @@ int Game::GetLoadVersion()
     return save_version;
 }
 
-const string &Game::GetLastSavename()
+string Game::GetLastSavename()
 {
     return last_name;
 }
@@ -113,11 +113,12 @@ int Game::Credits()
     str.append(AI::License());
     str.append("\n \n");
     str.append("Site project:\n");
-    str.append("http://sf.net/projects/fheroes2");
+    str.append("http://https://github.com/ciplogic/fheroes2enh");
     str.append("\n \n");
     str.append("Authors:\n");
-    str.append("Andrey Afletdinov, maintainer\n");
-    str.append("email: fheroes2 at gmail.com\n");
+    str.append("Ciprian Khlud, maintainer\n");
+    str.append("Andrey Afletdinov, (old)maintainer\n");
+    str.append("email: ciprian.mustiata at gmail.com\n");
 
     Message("Free Heroes II Engine", str, Font::SMALL, Dialog::OK);
 
@@ -215,19 +216,16 @@ void Game::EnvironmentSoundMixer()
         {
             for (s32 xx = abs_pt.x - 3; xx <= abs_pt.x + 3; ++xx)
             {
-                if (Maps::isValidAbsPoint(xx, yy))
-                {
-                    const u32 channel = GetMixerChannelFromObject(world.GetTiles(xx, yy));
-                    if (channel < reserved_vols.size())
-                    {
-                        // calculation volume
-                        const int length = max(abs(xx - abs_pt.x), abs(yy - abs_pt.y));
-                        const int volume =
-                                (2 < length ? 4 : (1 < length ? 8 : (0 < length ? 12 : 16))) * Mixer::MaxVolume() / 16;
+                if (!Maps::isValidAbsPoint(xx, yy))
+                    continue;
+                const u32 channel = GetMixerChannelFromObject(world.GetTiles(xx, yy));
+                if (channel >= reserved_vols.size()) continue;
+                // calculation volume
+                const int length = max(abs(xx - abs_pt.x), abs(yy - abs_pt.y));
+                const int volume =
+                        (2 < length ? 4 : (1 < length ? 8 : (0 < length ? 12 : 16))) * Mixer::MaxVolume() / 16;
 
-                        if (volume > reserved_vols[channel]) reserved_vols[channel] = volume;
-                    }
-                }
+                if (volume > reserved_vols[channel]) reserved_vols[channel] = volume;
             }
         }
 

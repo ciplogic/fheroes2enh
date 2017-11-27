@@ -366,7 +366,9 @@ set(SOURCE_FILES
         src/xmlccwrap/xmlccwrap.h
         src/fheroes2/agg/ColorTable.h
         src/fheroes2/gui/PlusIndicator.cpp
-        src/fheroes2/gui/PlusIndicator.h)
+        src/fheroes2/gui/PlusIndicator.h
+        src/fheroes2/dialog/FileUtils.cpp
+        src/fheroes2/dialog/FileUtils.h)
 
 add_executable(fheroes2 ${SOURCE_FILES})
 
