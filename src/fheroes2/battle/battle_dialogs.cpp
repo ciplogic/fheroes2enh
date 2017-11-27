@@ -273,8 +273,6 @@ void Battle::Arena::DialogBattleSummary(const Result &res) const
         sprite2.Blit(pos_rt.x + anime_ox + sprite2.x(), pos_rt.y + anime_oy + sprite2.y());
     }
 
-    Button btn_ok(pos_rt.x + 121, pos_rt.y + (conf.QVGA() ? 176 : 410),
-                  (conf.ExtGameEvilInterface() ? ICN::WINCMBBE : ICN::WINCMBTB), 0, 1);
 
     TextBox box(msg, Font::BIG, 270);
     box.Blit(pos_rt.x + 25, pos_rt.y + (conf.QVGA() ? 20 : 175));
@@ -307,7 +305,16 @@ void Battle::Arena::DialogBattleSummary(const Result &res) const
         text.Blit(pos_rt.x + (pos_rt.w - text.w()) / 2, pos_rt.y + (conf.QVGA() ? 135 : 360));
     }
 
+    Button btn_ok(pos_rt.x + 221, pos_rt.y + 410,
+                  (conf.ExtGameEvilInterface() ? ICN::WINCMBBE : ICN::WINCMBTB), 0, 1);
     btn_ok.Draw();
+    {
+        Rect sourceRect(pos_rt.x + 21, pos_rt.y + 410, btn_ok.w, btn_ok.h);
+        Point destPoint(pos_rt.x + 121, pos_rt.y + 410);
+        display.Blit(sourceRect, destPoint, display);
+        Point destPoint2(pos_rt.x + 41, pos_rt.y + 410);
+        display.Blit(sourceRect, destPoint2, display);
+    }
 
     cursor.Show();
     display.Flip();
