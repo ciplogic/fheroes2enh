@@ -29,6 +29,7 @@
 #include <cctype>
 #include <sstream>
 #include <string>
+#include <agg/ColorTable.h>
 
 #include "system.h"
 #include "dir.h"
@@ -216,9 +217,6 @@ string SelectFileListSimple(const string &header, const string &lastfile, bool e
     const Rect &rt = back.GetArea();
     const Rect enter_field(rt.x + 42, rt.y + (pocket ? 148 : 286), 260, 16);
 
-    Button buttonOk(rt.x + 34, rt.y + (pocket ? 176 : 315), ICN::REQUEST, 1, 2);
-    Button buttonCancel(rt.x + 244, rt.y + (pocket ? 176 : 315), ICN::REQUEST, 3, 4);
-
     bool edit_mode = false;
 
     MapsFileInfoList lists = GetSortedMapsFileInfoList();
@@ -249,6 +247,10 @@ string SelectFileListSimple(const string &header, const string &lastfile, bool e
             listbox.Unselect();
     }
 
+    int btnTop = rt.y +  315;
+    Button buttonOk(rt.x + 134, btnTop, ICN::REQUEST, 1, 2);
+    Button buttonCancel(rt.x + 244, btnTop, ICN::REQUEST, 3, 4);
+
     if (!editor && lists.empty())
         buttonOk.SetDisable(true);
 
@@ -260,6 +262,16 @@ string SelectFileListSimple(const string &header, const string &lastfile, bool e
 
     listbox.Redraw();
     RedrawExtraInfo(rt, header, filename, enter_field);
+
+    {
+        Rect sourceRect(buttonOk.x + 61, btnTop, 40, buttonOk.h+4);
+        Point destPoint(rt.x + 31, btnTop);
+        for(int step = 0; step<8; step++)
+        {
+            display.Blit(sourceRect, destPoint, display);
+            destPoint.x += sourceRect.w;
+        }
+    }
 
     buttonOk.Draw();
     buttonCancel.Draw();
