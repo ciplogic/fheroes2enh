@@ -212,7 +212,7 @@ void GameOver::DialogWins(int cond)
 
     AGG::PlayMusic(MUS::VICTORY, false);
 
-    if (body.size()) Message("", body, Font::BIG, Dialog::OK);
+    if (!body.empty()) Message("", body, Font::BIG, Dialog::OK);
 }
 
 void GameOver::DialogLoss(int cond)
@@ -284,7 +284,7 @@ void GameOver::DialogLoss(int cond)
 
     AGG::PlayMusic(MUS::LOSTGAME, false);
 
-    if (body.size()) Message("", body, Font::BIG, Dialog::OK);
+    if (!body.empty()) Message("", body, Font::BIG, Dialog::OK);
 }
 
 GameOver::Result &GameOver::Result::Get()
@@ -320,12 +320,11 @@ int GameOver::Result::LocalCheckGameOver()
 
     const Colors colors2(colors);
 
-    for (Colors::const_iterator
-                 it = colors2.begin(); it != colors2.end(); ++it)
-        if (!world.GetKingdom(*it).isPlay())
+    for (int it : colors2)
+        if (!world.GetKingdom(it).isPlay())
         {
-            Game::DialogPlayers(*it, _("%{color} has been vanquished!"));
-            colors &= (~*it);
+            Game::DialogPlayers(it, _("%{color} has been vanquished!"));
+            colors &= (~it);
         }
 
     int res = Game::CANCEL;
@@ -354,7 +353,7 @@ int GameOver::Result::LocalCheckGameOver()
     if (Game::CANCEL != res &&
         (Settings::Get().CurrentColor() & Players::HumanColors()) &&
         Settings::Get().ExtGameContinueAfterVictory() &&
-        (myKingdom.GetCastles().size() || myKingdom.GetHeroes().size()))
+        (!myKingdom.GetCastles().empty() || !myKingdom.GetHeroes().empty()))
     {
         if (Dialog::YES == Dialog::Message("", "Do you wish to continue the game?",
                                            Font::BIG, Dialog::YES | Dialog::NO))

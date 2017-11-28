@@ -63,21 +63,21 @@ int PocketPC::SelectScenario(void)
     large.reserve(all.size());
     xlarge.reserve(all.size());
 
-    for (auto cur = all.begin(); cur != all.end(); ++cur)
+    for (auto &cur : all)
     {
-        switch ((mapsize_t)(*cur).size_w)
+        switch ((mapsize_t) cur.size_w)
         {
             case mapsize_t::SMALL:
-                small.push_back(*cur);
+                small.push_back(cur);
                 break;
             case mapsize_t::MEDIUM:
-                medium.push_back(*cur);
+                medium.push_back(cur);
                 break;
             case mapsize_t::LARGE:
-                large.push_back(*cur);
+                large.push_back(cur);
                 break;
             case mapsize_t::XLARGE:
-                xlarge.push_back(*cur);
+                xlarge.push_back(cur);
                 break;
             default:
                 continue;

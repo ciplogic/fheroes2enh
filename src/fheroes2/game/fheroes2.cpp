@@ -122,7 +122,7 @@ int main(int argc, char **argv)
             }
     }
 
-    if (conf.SelectVideoDriver().size()) SetVideoDriver(conf.SelectVideoDriver());
+    if (!conf.SelectVideoDriver().empty()) SetVideoDriver(conf.SelectVideoDriver());
 
     // random init
     Rand::Init();

@@ -316,8 +316,6 @@ namespace Game
         int LoadMaps();
 
         int StartGame();
-
-        int StartGame();
     }
 
     u32 GetStep4Player(u32, u32, u32);

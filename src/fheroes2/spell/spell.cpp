@@ -562,7 +562,7 @@ Spell Spell::Rand(int lvl, bool adv)
             !(spells[sp].bits & SP_DISABLE))
             v.push_back(spell);
     }
-    return v.size() ? *Rand::Get(v) : Spell(NONE);
+    return !v.empty() ? *Rand::Get(v) : Spell(NONE);
 }
 
 Spell Spell::RandCombat(int lvl)

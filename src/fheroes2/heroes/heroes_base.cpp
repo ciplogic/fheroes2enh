@@ -254,9 +254,8 @@ void HeroBase::AppendSpellToBook(const Spell &spell, bool without_wisdom)
 
 void HeroBase::AppendSpellsToBook(const SpellStorage &spells, bool without_wisdom)
 {
-    for (SpellStorage::const_iterator
-                 it = spells.begin(); it != spells.end(); ++it)
-        AppendSpellToBook(*it, without_wisdom);
+    for (auto spell : spells)
+        AppendSpellToBook(spell, without_wisdom);
 }
 
 bool HeroBase::SpellBookActivate()

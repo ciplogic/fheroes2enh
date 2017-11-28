@@ -76,7 +76,7 @@ void MapObjects::add(MapObjectSimple *obj)
 
 MapObjectSimple *MapObjects::get(u32 uid)
 {
-    iterator it = find(uid);
+    auto it = find(uid);
     return it != end() ? (*it).second : nullptr;
 }
 
@@ -104,7 +104,7 @@ void MapObjects::remove(const Point &pos)
 
 void MapObjects::remove(u32 uid)
 {
-    iterator it = find(uid);
+    auto it = find(uid);
     if (it != end()) delete (*it).second;
     erase(it);
 }
@@ -176,7 +176,7 @@ u32 CapturedObjects::GetCountMines(int type, int col) const
 
 int CapturedObjects::GetColor(s32 index) const
 {
-    const_iterator it = find(index);
+    auto it = find(index);
     return it != end() ? (*it).second.GetColor() : Color::NONE;
 }
 
@@ -316,8 +316,8 @@ void World::NewMaps(u32 sw, u32 sh)
     vec_tiles.resize(w() * h());
 
     // init all tiles
-    for (MapsTiles::iterator
-                 it = vec_tiles.begin(); it != vec_tiles.end(); ++it)
+    for (auto
+         it = vec_tiles.begin(); it != vec_tiles.end(); ++it)
     {
         MP2::mp2tile_t mp2tile;
 
@@ -541,16 +541,14 @@ void World::NewWeek()
     if (1 < week)
     {
         // update week object
-        for (MapsTiles::iterator
-                     it = vec_tiles.begin(); it != vec_tiles.end(); ++it)
-            if (MP2::isWeekLife((*it).GetObject(false)) ||
-                MP2::OBJ_MONSTER == (*it).GetObject())
-                (*it).QuantityUpdate();
+        for (auto &vec_tile : vec_tiles)
+            if (MP2::isWeekLife(vec_tile.GetObject(false)) ||
+                MP2::OBJ_MONSTER == vec_tile.GetObject())
+                vec_tile.QuantityUpdate();
 
         // update gray towns
-        for (AllCastles::iterator
-                     it = vec_castles.begin(); it != vec_castles.end(); ++it)
-            if ((*it)->GetColor() == Color::NONE) (*it)->ActionNewWeek();
+        for (auto &vec_castle : vec_castles)
+            if (vec_castle->GetColor() == Color::NONE) vec_castle->ActionNewWeek();
     }
 
     // add events
@@ -573,9 +571,8 @@ void World::NewMonth()
         MonthOfMonstersAction(Monster(week_current.GetMonster()));
 
     // update gray towns
-    for (AllCastles::iterator
-                 it = vec_castles.begin(); it != vec_castles.end(); ++it)
-        if ((*it)->GetColor() == Color::NONE) (*it)->ActionNewMonth();
+    for (auto &vec_castle : vec_castles)
+        if (vec_castle->GetColor() == Color::NONE) vec_castle->ActionNewMonth();
 }
 
 void World::MonthOfMonstersAction(const Monster &mons)
@@ -593,10 +590,9 @@ void World::MonthOfMonstersAction(const Monster &mons)
         {
             const MapsIndexes &objv = Maps::GetObjectsPositions(objs);
 
-            for (MapsIndexes::const_iterator
-                         it = objv.begin(); it != objv.end(); ++it)
+            for (int it : objv)
             {
-                const MapsIndexes &obja = Maps::GetAroundIndexes(*it, dist);
+                const MapsIndexes &obja = Maps::GetAroundIndexes(it, dist);
                 excld.insert(excld.end(), obja.begin(), obja.end());
             }
         }
@@ -687,7 +683,7 @@ s32 World::NextTeleport(s32 index) const
     const MapsIndexes teleports = GetTeleportEndPoints(index);
     if (teleports.empty()) DEBUG(DBG_GAME, DBG_WARN, "not found");
 
-    return teleports.size() ? *Rand::Get(teleports) : index;
+    return !teleports.empty() ? *Rand::Get(teleports) : index;
 }
 
 MapsIndexes World::GetWhirlpoolEndPoints(s32 center) const
@@ -738,7 +734,7 @@ s32 World::NextWhirlpool(s32 index) const
     const MapsIndexes whilrpools = GetWhirlpoolEndPoints(index);
     if (whilrpools.empty()) DEBUG(DBG_GAME, DBG_WARN, "is full");
 
-    return whilrpools.size() ? *Rand::Get(whilrpools) : index;
+    return !whilrpools.empty() ? *Rand::Get(whilrpools) : index;
 }
 
 /* return message from sign */
@@ -789,7 +785,7 @@ int World::ColorCapturedObject(s32 index) const
 
 ListActions *World::GetListActions(s32 index)
 {
-    MapActions::iterator it = map_actions.find(index);
+    auto it = map_actions.find(index);
     return it != map_actions.end() ? &(*it).second : nullptr;
 }
 
@@ -875,8 +871,8 @@ EventsDate World::GetEventsDate(int color) const
 {
     EventsDate res;
 
-    for (auto it = vec_eventsday.begin(); it != vec_eventsday.end(); ++it)
-        if ((*it).isAllow(color, day)) res.push_back(*it);
+    for (const auto &it : vec_eventsday)
+        if (it.isAllow(color, day)) res.push_back(it);
 
     return res;
 }
@@ -902,16 +898,15 @@ u32 World::CountObeliskOnMaps()
 
 void World::ActionForMagellanMaps(int color)
 {
-    for (MapsTiles::iterator
-                 it = vec_tiles.begin(); it != vec_tiles.end(); ++it)
-        if ((*it).isWater()) (*it).ClearFog(color);
+    for (auto &vec_tile : vec_tiles)
+        if (vec_tile.isWater()) vec_tile.ClearFog(color);
 }
 
 void World::ActionToEyeMagi(int color) const
 {
     MapsIndexes vec_eyes = Maps::GetObjectPositions(MP2::OBJ_EYEMAGI, true);
 
-    if (vec_eyes.size())
+    if (!vec_eyes.empty())
     {
         for (MapsIndexes::const_iterator
                      it = vec_eyes.begin(); it != vec_eyes.end(); ++it)
@@ -922,7 +917,7 @@ void World::ActionToEyeMagi(int color) const
 MapEvent *World::GetMapEvent(const Point &pos)
 {
     list<MapObjectSimple *> res = map_objects.get(pos);
-    return res.size() ? static_cast<MapEvent *>(res.front()) : nullptr;
+    return !res.empty() ? static_cast<MapEvent *>(res.front()) : nullptr;
 }
 
 MapObjectSimple *World::GetMapObject(u32 uid)
@@ -1167,7 +1162,7 @@ StreamBase &operator>>(StreamBase &msg, MapObjects &objs)
         {
             case MP2::OBJ_EVENT:
             {
-                MapEvent *ptr = new MapEvent();
+                auto *ptr = new MapEvent();
                 msg >> *ptr;
                 objs[index] = ptr;
             }
@@ -1175,7 +1170,7 @@ StreamBase &operator>>(StreamBase &msg, MapObjects &objs)
 
             case MP2::OBJ_SPHINX:
             {
-                MapSphinx *ptr = new MapSphinx();
+                auto *ptr = new MapSphinx();
                 msg >> *ptr;
                 objs[index] = ptr;
             }
@@ -1183,7 +1178,7 @@ StreamBase &operator>>(StreamBase &msg, MapObjects &objs)
 
             case MP2::OBJ_SIGN:
             {
-                MapSign *ptr = new MapSign();
+                auto *ptr = new MapSign();
                 msg >> *ptr;
                 objs[index] = ptr;
             }
@@ -1191,7 +1186,7 @@ StreamBase &operator>>(StreamBase &msg, MapObjects &objs)
 
             case MP2::OBJ_RESOURCE:
             {
-                MapResource *ptr = new MapResource();
+                auto *ptr = new MapResource();
                 if (FORMAT_VERSION_3269 > Game::GetLoadVersion())
                     msg >> *static_cast<MapObjectSimple *>(ptr);
                 else
@@ -1202,7 +1197,7 @@ StreamBase &operator>>(StreamBase &msg, MapObjects &objs)
 
             case MP2::OBJ_ARTIFACT:
             {
-                MapArtifact *ptr = new MapArtifact();
+                auto *ptr = new MapArtifact();
                 if (FORMAT_VERSION_3269 > Game::GetLoadVersion())
                     msg >> *static_cast<MapObjectSimple *>(ptr);
                 else
@@ -1213,7 +1208,7 @@ StreamBase &operator>>(StreamBase &msg, MapObjects &objs)
 
             case MP2::OBJ_MONSTER:
             {
-                MapMonster *ptr = new MapMonster();
+                auto *ptr = new MapMonster();
                 if (FORMAT_VERSION_3269 > Game::GetLoadVersion())
                     msg >> *static_cast<MapObjectSimple *>(ptr);
                 else
@@ -1224,7 +1219,7 @@ StreamBase &operator>>(StreamBase &msg, MapObjects &objs)
 
             default:
             {
-                MapObjectSimple *ptr = new MapObjectSimple();
+                auto *ptr = new MapObjectSimple();
                 msg >> *ptr;
                 objs[index] = ptr;
             }

@@ -270,7 +270,7 @@ Funds MapArtifact::QuantityFunds() const
     switch (condition)
     {
         case 1:
-            return Funds(QuantityResourceCount());
+            return {QuantityResourceCount()};
         case 2:
             return Funds(Resource::GOLD, 2500) + Funds(QuantityResourceCount());
         case 3:
@@ -287,7 +287,7 @@ ResourceCount MapArtifact::QuantityResourceCount() const
     switch (condition)
     {
         case 1:
-            return ResourceCount(Resource::GOLD, 2000);
+            return {Resource::GOLD, 2000};
         case 2:
             return ResourceCount(extended, 3);
         case 3:

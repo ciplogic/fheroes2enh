@@ -253,16 +253,16 @@ StreamBase &operator<<(StreamBase &msg, const Puzzle &pzl)
 
     // orders
     msg << static_cast<u8>(ARRAY_COUNT(pzl.zone1_order));
-    for (u32 ii = 0; ii < ARRAY_COUNT(pzl.zone1_order); ++ii) msg << pzl.zone1_order[ii];
+    for (unsigned char ii : pzl.zone1_order) msg << ii;
 
     msg << static_cast<u8>(ARRAY_COUNT(pzl.zone2_order));
-    for (u32 ii = 0; ii < ARRAY_COUNT(pzl.zone2_order); ++ii) msg << pzl.zone2_order[ii];
+    for (unsigned char ii : pzl.zone2_order) msg << ii;
 
     msg << static_cast<u8>(ARRAY_COUNT(pzl.zone3_order));
-    for (u32 ii = 0; ii < ARRAY_COUNT(pzl.zone3_order); ++ii) msg << pzl.zone3_order[ii];
+    for (unsigned char ii : pzl.zone3_order) msg << ii;
 
     msg << static_cast<u8>(ARRAY_COUNT(pzl.zone4_order));
-    for (u32 ii = 0; ii < ARRAY_COUNT(pzl.zone4_order); ++ii) msg << pzl.zone4_order[ii];
+    for (unsigned char ii : pzl.zone4_order) msg << ii;
 
     return msg;
 }

@@ -89,47 +89,47 @@ StreamBase &operator>>(StreamBase &sb, ActionMessage &st)
     return sb >> static_cast<ActionSimple &>(st) >> st.message;
 }
 
-StreamBase &operator<<(StreamBase &sb, const ListActions &st)
+StreamBase &operator<<(StreamBase &sb, const ListActions &listActions)
 {
-    sb << static_cast<u32>(st.size());
-    for (ListActions::const_iterator it = st.begin(); it != st.end(); ++it)
+    sb << static_cast<u32>(listActions.size());
+    for (auto listAction : listActions)
     {
-        sb << (*it)->GetType();
+        sb << listAction->GetType();
 
-        switch ((*it)->GetType())
+        switch (listAction->GetType())
         {
             case ACTION_DEFAULT:
             {
-                const ActionDefault *ptr = static_cast<const ActionDefault *>(*it);
+                const auto *ptr = static_cast<const ActionDefault *>(listAction);
                 if (ptr) sb << *ptr;
             }
                 break;
             case ACTION_ACCESS:
             {
-                const ActionAccess *ptr = static_cast<const ActionAccess *>(*it);
+                const auto *ptr = static_cast<const ActionAccess *>(listAction);
                 if (ptr) sb << *ptr;
             }
                 break;
             case ACTION_MESSAGE:
             {
-                const ActionMessage *ptr = static_cast<const ActionMessage *>(*it);
+                const auto *ptr = static_cast<const ActionMessage *>(listAction);
                 if (ptr) sb << *ptr;
             }
                 break;
             case ACTION_RESOURCES:
             {
-                const ActionResources *ptr = static_cast<const ActionResources *>(*it);
+                const auto *ptr = static_cast<const ActionResources *>(listAction);
                 if (ptr) sb << *ptr;
             }
                 break;
             case ACTION_ARTIFACT:
             {
-                const ActionArtifact *ptr = static_cast<const ActionArtifact *>(*it);
+                const auto *ptr = static_cast<const ActionArtifact *>(listAction);
                 if (ptr) sb << *ptr;
             }
                 break;
             default:
-                sb << **it;
+                sb << *listAction;
                 break;
         }
     }
@@ -153,35 +153,35 @@ StreamBase &operator>>(StreamBase &sb, ListActions &st)
         {
             case ACTION_DEFAULT:
             {
-                ActionDefault *ptr = new ActionDefault();
+                auto *ptr = new ActionDefault();
                 sb >> *ptr;
                 st.push_back(ptr);
             }
                 break;
             case ACTION_ACCESS:
             {
-                ActionAccess *ptr = new ActionAccess();
+                auto *ptr = new ActionAccess();
                 sb >> *ptr;
                 st.push_back(ptr);
             }
                 break;
             case ACTION_MESSAGE:
             {
-                ActionMessage *ptr = new ActionMessage();
+                auto *ptr = new ActionMessage();
                 sb >> *ptr;
                 st.push_back(ptr);
             }
                 break;
             case ACTION_RESOURCES:
             {
-                ActionResources *ptr = new ActionResources();
+                auto *ptr = new ActionResources();
                 sb >> *ptr;
                 st.push_back(ptr);
             }
                 break;
             case ACTION_ARTIFACT:
             {
-                ActionArtifact *ptr = new ActionArtifact();
+                auto *ptr = new ActionArtifact();
                 sb >> *ptr;
                 st.push_back(ptr);
             }
@@ -189,7 +189,7 @@ StreamBase &operator>>(StreamBase &sb, ListActions &st)
 
             default:
             {
-                ActionSimple *ptr = new ActionSimple();
+                auto *ptr = new ActionSimple();
                 sb >> *ptr;
                 st.push_back(ptr);
             }

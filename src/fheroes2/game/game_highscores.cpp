@@ -43,7 +43,7 @@
 
 struct hgs_t
 {
-    hgs_t() : days(0), rating(0)
+    hgs_t() : localtime(0), days(0), rating(0)
     {};
 
     bool operator==(const hgs_t &) const;
@@ -208,7 +208,7 @@ int Game::HighScores(bool fill)
     cursor.SetThemes(cursor.POINTER);
     Mixer::Pause();
     AGG::PlayMusic(MUS::MAINMENU);
-    hgs.Load(stream.str().c_str());
+    hgs.Load(stream.str());
 
     const Sprite &back = AGG::GetICN(ICN::HSBKG, 0);
 
@@ -240,7 +240,7 @@ int Game::HighScores(bool fill)
         cursor.Hide();
         if (player.empty()) player = _("Unknown Hero");
         hgs.ScoreRegistry(player, Settings::Get().CurrentFileInfo().name, days, rating);
-        hgs.Save(stream.str().c_str());
+        hgs.Save(stream.str());
         hgs.RedrawList(top.x, top.y);
         buttonCampain.Draw();
         buttonExit.Draw();

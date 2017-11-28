@@ -166,11 +166,11 @@ void Game::UpdateBattleSpeed()
         DEBUG(DBG_GAME, DBG_INFO, "set battle speed: " << conf.BattleSpeed());
         ostringstream os;
 
-        for (u32 it = 0; it < ARRAY_COUNT(ids); ++it)
+        for (int id : ids)
         {
-            float tmp = delays[ids[it]]();
+            float tmp = delays[id]();
             tmp /= div;
-            delays[ids[it]] = static_cast<int>(tmp);
+            delays[id] = static_cast<int>(tmp);
             os << static_cast<int>(tmp) << ", ";
         }
 

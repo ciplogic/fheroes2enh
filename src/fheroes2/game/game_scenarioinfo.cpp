@@ -306,9 +306,9 @@ int Game::ScenarioInfo()
         }
     }
 
-    if (frameborder) delete frameborder;
-    if (rating) delete rating;
-    if (buttonSelectMaps) delete buttonSelectMaps;
+    delete frameborder;
+    delete rating;
+    delete buttonSelectMaps;
     delete buttonOk;
     delete buttonCancel;
 

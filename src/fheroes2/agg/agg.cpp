@@ -299,17 +299,15 @@ u32 AGG::ClearFreeObjects()
     u32 total = 0;
 
     // wav cache
-    for (map<int, vector<u8> >::iterator
-                 it = wav_cache.begin(); it != wav_cache.end(); ++it)
-        total += (*it).second.size();
+    for (auto &it : wav_cache)
+        total += it.second.size();
 
     DEBUG(DBG_ENGINE, DBG_INFO, "WAV" << " " << "memory: " << total);
     total = 0;
 
     // mus cache
-    for (map<int, vector<u8> >::iterator
-                 it = mid_cache.begin(); it != mid_cache.end(); ++it)
-        total += (*it).second.size();
+    for (auto &it : mid_cache)
+        total += it.second.size();
 
     DEBUG(DBG_ENGINE, DBG_INFO, "MID" << " " << "memory: " << total);
     total = 0;
@@ -330,11 +328,8 @@ u32 AGG::ClearFreeObjects()
 #endif
 
     // til cache
-    for (vector<til_cache_t>::iterator
-                 it = til_cache.begin(); it != til_cache.end(); ++it)
+    for (auto &tils : til_cache)
     {
-        til_cache_t &tils = *it;
-
         for (u32 jj = 0; jj < tils.count; ++jj)
             if (tils.sprites)
                 total += tils.sprites[jj].GetMemoryUsage();
@@ -345,11 +340,8 @@ u32 AGG::ClearFreeObjects()
     // icn cache
     u32 used = 0;
 
-    for (vector<icn_cache_t>::iterator
-                 it = icn_cache.begin(); it != icn_cache.end(); ++it)
+    for (auto &icns : icn_cache)
     {
-        icn_cache_t &icns = (*it);
-
         for (u32 jj = 0; jj < icns.count; ++jj)
         {
             if (icns.sprites)
@@ -423,11 +415,11 @@ bool AGG::ReadDataDir()
     ListFiles aggs = conf.GetListFiles("data", ".agg");
     const string &other_data = conf.GetDataParams();
 
-    if (other_data.size() && other_data != "data")
+    if (!other_data.empty() && other_data != "data")
         aggs.Append(conf.GetListFiles(other_data, ".agg"));
 
     // not found agg, exit
-    if (0 == aggs.size()) return false;
+    if (aggs.empty()) return false;
 
     // attach agg files
     for (ListFiles::const_iterator
@@ -448,7 +440,7 @@ const vector<u8> &AGG::ReadChunk(const string &key)
     if (heroes2x_agg.isGood())
     {
         const vector<u8> &buf = heroes2x_agg.Read(key);
-        if (buf.size()) return buf;
+        if (!buf.empty()) return buf;
     }
 
     return heroes2_agg.Read(key);
@@ -1384,30 +1376,29 @@ bool AGG::LoadOrgTIL(int til, u32 max)
 {
     const vector<u8> &body = ReadChunk(TIL::GetString(til));
 
-    if (body.size())
+    if (body.empty())
+        return false;
+    StreamBuf st(body);
+
+    u32 count = st.getLE16();
+    u32 width = st.getLE16();
+    u32 height = st.getLE16();
+
+    u32 tile_size = width * height;
+    u32 body_size = 6 + count * tile_size;
+
+    til_cache_t &v = til_cache[til];
+
+    // check size
+    if (body.size() == body_size && count <= max)
     {
-        StreamBuf st(body);
+        for (u32 ii = 0; ii < count; ++ii)
+            v.sprites[ii] = Surface(&body[6 + ii * tile_size], width, height, 1, false);
 
-        u32 count = st.getLE16();
-        u32 width = st.getLE16();
-        u32 height = st.getLE16();
-
-        u32 tile_size = width * height;
-        u32 body_size = 6 + count * tile_size;
-
-        til_cache_t &v = til_cache[til];
-
-        // check size
-        if (body.size() == body_size && count <= max)
-        {
-            for (u32 ii = 0; ii < count; ++ii)
-                v.sprites[ii] = Surface(&body[6 + ii * tile_size], width, height, 1, false);
-
-            return true;
-        } else
-        {
-            DEBUG(DBG_ENGINE, DBG_WARN, "size mismach" << ", skipping...");
-        }
+        return true;
+    } else
+    {
+        DEBUG(DBG_ENGINE, DBG_WARN, "size mismach" << ", skipping...");
     }
 
     return false;
@@ -1551,56 +1542,59 @@ void AGG::LoadWAV(int m82, vector<u8> &v)
     DEBUG(DBG_ENGINE, DBG_INFO, M82::GetString(m82));
     const vector<u8> &body = ReadChunk(M82::GetString(m82));
 
-    if (body.size())
-    {
+    if (body.empty())
+        return;
 #ifdef WITH_MIXER
-        // create WAV format
-        StreamBuf wavHeader(44);
-        wavHeader.putLE32(0x46464952);		// RIFF
-        wavHeader.putLE32(body.size() + 0x24);	// size
-        wavHeader.putLE32(0x45564157);		// WAVE
-        wavHeader.putLE32(0x20746D66);		// FMT
-        wavHeader.putLE32(0x10);		// size_t
-        wavHeader.putLE16(0x01);		// format
-        wavHeader.putLE16(0x01);		// channels
-        wavHeader.putLE32(22050);		// samples
-        wavHeader.putLE32(22050);		// byteper
-        wavHeader.putLE16(0x01);		// align
-        wavHeader.putLE16(0x08);		// bitsper
-        wavHeader.putLE32(0x61746164);		// DATA
-        wavHeader.putLE32(body.size());		// size
+    // create WAV format
+StreamBuf wavHeader(44);
+wavHeader.putLE32(0x46464952);		// RIFF
+wavHeader.putLE32(body.size() + 0x24);	// size
+wavHeader.putLE32(0x45564157);		// WAVE
+wavHeader.putLE32(0x20746D66);		// FMT
+wavHeader.putLE32(0x10);		// size_t
+wavHeader.putLE16(0x01);		// format
+wavHeader.putLE16(0x01);		// channels
+wavHeader.putLE32(22050);		// samples
+wavHeader.putLE32(22050);		// byteper
+wavHeader.putLE16(0x01);		// align
+wavHeader.putLE16(0x08);		// bitsper
+wavHeader.putLE32(0x61746164);		// DATA
+wavHeader.putLE32(body.size());		// size
 
-        v.reserve(body.size() + 44);
-        v.assign(wavHeader.data(), wavHeader.data() + 44);
-        v.insert(v.begin() + 44, body.begin(), body.end());
+v.reserve(body.size() + 44);
+v.assign(wavHeader.data(), wavHeader.data() + 44);
+v.insert(v.begin() + 44, body.begin(), body.end());
 #else
-        Audio::Spec wav_spec;
-        wav_spec.format = AUDIO_U8;
-        wav_spec.channels = 1;
-        wav_spec.freq = 22050;
+    Audio::Spec wav_spec;
+    wav_spec.format = AUDIO_U8;
+    wav_spec.channels = 1;
+    wav_spec.freq = 22050;
 
-        const Audio::Spec &hardware = Audio::GetHardwareSpec();
+    const Audio::Spec &hardware = Audio::GetHardwareSpec();
 
-        Audio::CVT cvt;
+    Audio::CVT cvt;
 
-        if (cvt.Build(wav_spec, hardware))
-        {
-            const u32 size = cvt.len_mult * body.size();
-
-            cvt.buf = new u8[size];
-            cvt.len = body.size();
-
-            memcpy(cvt.buf, &body[0], body.size());
-
-            cvt.Convert();
-
-            v.assign(cvt.buf, cvt.buf + size - 1);
-
-            delete[] cvt.buf;
-            cvt.buf = nullptr;
-        }
-#endif
+    if (!cvt.Build(wav_spec, hardware))
+    {
+        return;
     }
+    else
+    {
+        const u32 size = cvt.len_mult * body.size();
+
+        up<u8> upBuf(new u8[size]);
+        cvt.buf = upBuf.get();
+        cvt.len = body.size();
+
+        memcpy(cvt.buf, &body[0], body.size());
+
+        cvt.Convert();
+
+        v.assign(cvt.buf, cvt.buf + size - 1);
+
+        cvt.buf = nullptr;
+    }
+#endif
 }
 
 /* load XMI object */
@@ -1609,7 +1603,7 @@ void AGG::LoadMID(int xmi, vector<u8> &v)
     DEBUG(DBG_ENGINE, DBG_INFO, XMI::GetString(xmi));
     const vector<u8> &body = ReadChunk(XMI::GetString(xmi));
 
-    if (body.size())
+    if (!body.empty())
         v = Music::Xmi2Mid(body);
 }
 
@@ -1687,7 +1681,7 @@ void AGG::LoadLOOPXXSounds(const vector<int> &vols)
                         (*itl).sound = m82;
                         (*itl).channel = ch;
                     } else
-                        loop_sounds.push_back(loop_sound_t(m82, ch));
+                        loop_sounds.emplace_back(m82, ch);
 
                     DEBUG(DBG_ENGINE, DBG_INFO, M82::GetString(m82));
                 }
@@ -1960,7 +1954,7 @@ bool AGG::Init()
     for (u32 ii = 0; ii < ncolors; ++ii)
     {
         u32 index = ii * 3;
-        SDL_Color cols;
+        SDL_Color cols{};
 
         cols.r = kb_pal[index] << 2;
         cols.g = kb_pal[index + 1] << 2;
@@ -1978,23 +1972,17 @@ bool AGG::Init()
 
 void AGG::Quit()
 {
-    for (vector<icn_cache_t>::iterator
-                 it = icn_cache.begin(); it != icn_cache.end(); ++it)
+    for (auto &icns : icn_cache)
     {
-        icn_cache_t &icns = (*it);
-
-        if (icns.sprites)
-            delete[] icns.sprites;
+        delete[] icns.sprites;
         icns.sprites = nullptr;
-        if (icns.reflect) delete[] icns.reflect;
+        delete[] icns.reflect;
         icns.reflect = nullptr;
     }
 
-    for (vector<til_cache_t>::iterator
-                 it = til_cache.begin(); it != til_cache.end(); ++it)
+    for (auto &tils : til_cache)
     {
-        til_cache_t &tils = (*it);
-        if (tils.sprites) delete[] tils.sprites;
+        delete[] tils.sprites;
     }
 
     icn_cache.clear();

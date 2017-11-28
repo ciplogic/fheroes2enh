@@ -349,7 +349,7 @@ SpellStorage SpellBook::SetFilter(int filter, const HeroBase *hero) const
     // check on water: disable portal spells
     if (hero && hero->Modes(Heroes::SHIPMASTER))
     {
-        iterator itend = res.end();
+        auto itend = res.end();
         itend = remove(res.begin(), itend, Spell(Spell::TOWNGATE));
         itend = remove(res.begin(), itend, Spell(Spell::TOWNPORTAL));
         if (res.end() != itend)
@@ -405,7 +405,7 @@ SpellBookRedrawLists(const SpellStorage &spells, Rects &coords, const size_t cur
         bookmark_cmbt.Blit(cmbt_rt);
     bookmark_clos.Blit(clos_rt);
 
-    if (coords.size()) coords.clear();
+    if (!coords.empty()) coords.clear();
 
     SpellBookRedrawMP(info_rt, sp);
     SpellBookRedrawSpells(spells, coords, cur, pt.x, pt.y, hero);

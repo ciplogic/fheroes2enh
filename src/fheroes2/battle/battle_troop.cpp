@@ -260,14 +260,14 @@ Battle::ModesAffected::ModesAffected()
 
 u32 Battle::ModesAffected::GetMode(u32 mode) const
 {
-    const_iterator it = find_if(begin(), end(),
+    auto it = find_if(begin(), end(),
                                      bind2nd(mem_fun_ref(&ModeDuration::isMode), mode));
     return it == end() ? 0 : (*it).second;
 }
 
 void Battle::ModesAffected::AddMode(u32 mode, u32 duration)
 {
-    iterator it = find_if(begin(), end(), bind2nd(mem_fun_ref(&ModeDuration::isMode), mode));
+    auto it = find_if(begin(), end(), bind2nd(mem_fun_ref(&ModeDuration::isMode), mode));
     if (it == end())
         push_back(ModeDuration(mode, duration));
     else
@@ -276,7 +276,7 @@ void Battle::ModesAffected::AddMode(u32 mode, u32 duration)
 
 void Battle::ModesAffected::RemoveMode(u32 mode)
 {
-    iterator it = find_if(begin(), end(), bind2nd(mem_fun_ref(&ModeDuration::isMode), mode));
+    auto it = find_if(begin(), end(), bind2nd(mem_fun_ref(&ModeDuration::isMode), mode));
     if (it != end())
     {
         // erase(it)
@@ -292,7 +292,7 @@ void Battle::ModesAffected::DecreaseDuration()
 
 u32 Battle::ModesAffected::FindZeroDuration() const
 {
-    const_iterator it = find_if(begin(), end(), mem_fun_ref(&ModeDuration::isZeroDuration));
+    auto it = find_if(begin(), end(), mem_fun_ref(&ModeDuration::isZeroDuration));
     return it == end() ? 0 : (*it).first;
 }
 
@@ -588,10 +588,9 @@ bool Battle::Unit::isHandFighting() const
     {
         const Indexes around = Board::GetAroundIndexes(*this);
 
-        for (Indexes::const_iterator
-                     it = around.begin(); it != around.end(); ++it)
+        for (int it : around)
         {
-            const Unit *enemy = Board::GetCell(*it)->GetUnit();
+            const Unit *enemy = Board::GetCell(it)->GetUnit();
             if (enemy && enemy->GetColor() != GetColor()) return true;
         }
     }

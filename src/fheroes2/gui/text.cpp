@@ -612,9 +612,9 @@ void TextBox::Append(const string &msg, int ft, u32 width)
             if (pos3 != space) pos2 = space + 1;
 
             if (pos3 != space)
-                messages.push_back(Text(msg.substr(pos1 - msg.begin(), pos2 - pos1 - 1), ft));
+                messages.emplace_back(msg.substr(pos1 - msg.begin(), pos2 - pos1 - 1), ft);
             else
-                messages.push_back(Text(msg.substr(pos1 - msg.begin(), pos2 - pos1), ft));
+                messages.emplace_back(msg.substr(pos1 - msg.begin(), pos2 - pos1), ft);
 
             pos1 = pos2;
             space = pos3;
@@ -628,7 +628,7 @@ void TextBox::Append(const string &msg, int ft, u32 width)
     if (pos1 != pos2)
     {
         Rect::h += TextAscii::CharHeight(ft);
-        messages.push_back(Text(msg.substr(pos1 - msg.begin(), pos2 - pos1), ft));
+        messages.emplace_back(msg.substr(pos1 - msg.begin(), pos2 - pos1), ft);
     }
 }
 

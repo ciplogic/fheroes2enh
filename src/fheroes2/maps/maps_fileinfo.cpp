@@ -493,13 +493,12 @@ void Maps::FileInfo::FillUnions()
 
     const Colors colors(kingdom_colors);
 
-    for (Colors::const_iterator
-                 it = colors.begin(); it != colors.end(); ++it)
+    for (int color : colors)
     {
-        if (Color::GetIndex(*it) < wins1)
-            side1 |= *it;
+        if (Color::GetIndex(color) < wins1)
+            side1 |= color;
         else
-            side2 |= *it;
+            side2 |= color;
     }
 
     for (u32 ii = 0; ii < KINGDOMMAX; ++ii)
@@ -696,13 +695,11 @@ ListFiles GetMapsFiles(const char *suffix)
     ListFiles maps = conf.GetListFiles("maps", suffix);
     const ListDirs &list = conf.GetMapsParams();
 
-    if (!list.empty())
-    {
-        for (ListDirs::const_iterator
-                     it = list.begin(); it != list.end(); ++it)
-            if (*it != "maps")
-                maps.Append(conf.GetListFiles(*it, suffix));
-    }
+    if (list.empty())
+        return maps;
+    for (const auto &it : list)
+        if (it != "maps")
+            maps.Append(conf.GetListFiles(it, suffix));
 
     return maps;
 }
@@ -738,9 +735,9 @@ bool PrepareMapsFileInfoList(MapsFileInfoList &lists, bool multi)
     sort(lists.begin(), lists.end(), Maps::FileInfo::NameSorting);
     lists.resize(unique(lists.begin(), lists.end(), Maps::FileInfo::NameCompare) - lists.begin());
 
-    if (multi == false)
+    if (!multi)
     {
-        MapsFileInfoList::iterator it = remove_if(lists.begin(), lists.end(),
+        auto it = remove_if(lists.begin(), lists.end(),
                                                        mem_fun_ref(&Maps::FileInfo::isMultiPlayerMap));
         if (it != lists.begin()) lists.resize(distance(lists.begin(), it));
     }
@@ -749,14 +746,14 @@ bool PrepareMapsFileInfoList(MapsFileInfoList &lists, bool multi)
     if (conf.PreferablyCountPlayers())
     {
 
-        MapsFileInfoList::iterator it = remove_if(lists.begin(), lists.end(),
+        auto it = remove_if(lists.begin(), lists.end(),
                                                        not1(bind2nd(
                                                                mem_fun_ref(&Maps::FileInfo::isAllowCountPlayers),
                                                                conf.PreferablyCountPlayers())));
         if (it != lists.begin()) lists.resize(distance(lists.begin(), it));
     }
 
-    return lists.size();
+    return !lists.empty();
 }
 
 StreamBase &Maps::operator<<(StreamBase &msg, const FileInfo &fi)

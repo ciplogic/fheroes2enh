@@ -539,10 +539,10 @@ int Interface::Basic::StartGame()
     {
         if (!skip_turns) world.NewDay();
 
-        for (auto it = players.begin(); it != players.end(); ++it)
-            if (*it)
+        for (auto it : players)
+            if (it)
             {
-                const Player &player = (**it);
+                const Player &player = (*it);
                 Kingdom &kingdom = world.GetKingdom(player.GetColor());
 
                 if (!kingdom.isPlay() ||
@@ -955,7 +955,7 @@ int Interface::Basic::HumanTurn(bool isload)
     if (Game::ENDTURN == res)
     {
         // warning lost all town
-        if (myHeroes.size() && myCastles.empty() && Game::GetLostTownDays() < myKingdom.GetLostTownDays())
+        if (!myHeroes.empty() && myCastles.empty() && Game::GetLostTownDays() < myKingdom.GetLostTownDays())
         {
             Game::DialogPlayers(conf.CurrentColor(),
                                 _("%{color} player, you have lost your last town. If you do not conquer another town in next week, you will be eliminated."));

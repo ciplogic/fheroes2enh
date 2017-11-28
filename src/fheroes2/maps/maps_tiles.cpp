@@ -1233,9 +1233,8 @@ bool Exclude4LongObject(const Maps::TilesAddon &ta)
 
 bool HaveLongObjectUniq(const Maps::Addons &level, u32 uid)
 {
-    for (Maps::Addons::const_iterator
-                 it = level.begin(); it != level.end(); ++it)
-        if (!Exclude4LongObject(*it) && (*it).isUniq(uid)) return true;
+    for (const auto &it : level)
+        if (!Exclude4LongObject(it) && it.isUniq(uid)) return true;
     return false;
 }
 
@@ -1532,16 +1531,16 @@ void Maps::Tiles::RedrawBottom(Surface &dst, bool skip_objs) const
     if ((area.GetRectMaps() & mp) &&
         !addons_level1.empty())
     {
-        for (auto it = addons_level1.begin(); it != addons_level1.end(); ++it)
+        for (const auto &it : addons_level1)
         {
             // skip
             if (skip_objs &&
                 MP2::isRemoveObject(GetObject()) &&
-                FindObjectConst(GetObject()) == &(*it))
+                FindObjectConst(GetObject()) == &it)
                 continue;
 
-            const u8 &object = (*it).object;
-            const u8 &index = (*it).index;
+            const u8 &object = it.object;
+            const u8 &index = it.index;
             const int icn = MP2::GetICNObject(object);
 
             if (ICN::UNKNOWN != icn && ICN::MINIHERO != icn && ICN::MONS32 != icn)
@@ -1614,15 +1613,14 @@ void Maps::Tiles::RedrawMonster(Surface &dst) const
 
     // scan hero around
     const MapsIndexes &v = ScanAroundObject(GetIndex(), MP2::OBJ_HEROES);
-    for (MapsIndexes::const_iterator
-                 it = v.begin(); it != v.end(); ++it)
+    for (int it : v)
     {
-        const Tiles &tile = world.GetTiles(*it);
-        dst_index = *it;
+        const Tiles &tile = world.GetTiles(it);
+        dst_index = it;
 
         if (MP2::OBJ_HEROES != mp2_object ||
             // skip bottom, bottom_right, bottom_left with ground objects
-            ((DIRECTION_BOTTOM_ROW & Direction::Get(GetIndex(), *it)) &&
+            ((DIRECTION_BOTTOM_ROW & Direction::Get(GetIndex(), it)) &&
              MP2::isGroundObject(tile.GetObject(false))) ||
             // skip ground check
             (tile.isWater() != isWater()))
@@ -1727,13 +1725,12 @@ void Maps::Tiles::RedrawBottom4Hero(Surface &dst) const
     if ((area.GetRectMaps() & mp) &&
         !addons_level1.empty())
     {
-        for (Addons::const_iterator
-                     it = addons_level1.begin(); it != addons_level1.end(); ++it)
+        for (const auto &it : addons_level1)
         {
-            if (!SkipRedrawTileBottom4Hero(*it, tile_passable))
+            if (!SkipRedrawTileBottom4Hero(it, tile_passable))
             {
-                const u8 &object = (*it).object;
-                const u8 &index = (*it).index;
+                const u8 &object = it.object;
+                const u8 &index = it.index;
                 const int icn = MP2::GetICNObject(object);
 
                 const Sprite &sprite = AGG::GetICN(icn, index);
@@ -1778,13 +1775,12 @@ void Maps::Tiles::RedrawTop(Surface &dst, const TilesAddon *skip) const
 
     if (!addons_level2.empty())
     {
-        for (Addons::const_iterator
-                     it = addons_level2.begin(); it != addons_level2.end(); ++it)
+        for (const auto &it : addons_level2)
         {
-            if (skip && skip == &(*it)) continue;
+            if (skip && skip == &it) continue;
 
-            const u8 &object = (*it).object;
-            const u8 &index = (*it).index;
+            const u8 &object = it.object;
+            const u8 &index = it.index;
             const int icn = MP2::GetICNObject(object);
 
             if (ICN::UNKNOWN != icn && ICN::MINIHERO != icn && ICN::MONS32 != icn)
@@ -1811,13 +1807,12 @@ void Maps::Tiles::RedrawTop4Hero(Surface &dst, bool skip_ground) const
     if ((area.GetRectMaps() & mp) &&
         !addons_level2.empty())
     {
-        for (Addons::const_iterator
-                     it = addons_level2.begin(); it != addons_level2.end(); ++it)
+        for (const auto &it : addons_level2)
         {
-            if (skip_ground && MP2::isGroundObject((*it).object)) continue;
+            if (skip_ground && MP2::isGroundObject(it.object)) continue;
 
-            const u8 &object = (*it).object;
-            const u8 &index = (*it).index;
+            const u8 &object = it.object;
+            const u8 &index = it.index;
             const int icn = MP2::GetICNObject(object);
 
             if (ICN::HighlyObjectSprite(icn, index))
@@ -1901,11 +1896,11 @@ string Maps::Tiles::String() const
        "quantity 2      : " << static_cast<int>(quantity2) << endl <<
        "quantity 3      : " << GetQuantity3() << endl;
 
-    for (auto it = addons_level1.begin(); it != addons_level1.end(); ++it)
-        os << (*it).String(1);
+    for (const auto &it : addons_level1)
+        os << it.String(1);
 
-    for (auto it = addons_level2.begin(); it != addons_level2.end(); ++it)
-        os << (*it).String(2);
+    for (const auto &it : addons_level2)
+        os << it.String(2);
 
     os <<
        "----------------I--------" << endl;
@@ -1958,8 +1953,8 @@ string Maps::Tiles::String() const
             if (v.size())
             {
                 os << "protection      : ";
-                for (auto it = v.begin(); it != v.end(); ++it)
-                    os << *it << ", ";
+                for (int it : v)
+                    os << it << ", ";
                 os << endl;
             }
             break;
@@ -2538,9 +2533,8 @@ void Maps::Tiles::UpdateAbandoneMineSprite(Tiles &tile)
     {
         const int type = tile.QuantityResourceCount().first;
 
-        for (Addons::iterator
-                     it = tile.addons_level1.begin(); it != tile.addons_level1.end(); ++it)
-            TilesAddon::UpdateAbandoneMineLeftSprite(*it, type);
+        for (auto &it : tile.addons_level1)
+            TilesAddon::UpdateAbandoneMineLeftSprite(it, type);
 
         if (isValidDirection(tile.GetIndex(), Direction::RIGHT))
         {
@@ -2650,23 +2644,20 @@ void Maps::Tiles::UpdateRNDResourceSprite(Tiles &tile)
 
 void Maps::Tiles::UpdateStoneLightsSprite(Tiles &tile)
 {
-    for (Addons::iterator
-                 it = tile.addons_level1.begin(); it != tile.addons_level1.end(); ++it)
+    for (auto it = tile.addons_level1.begin(); it != tile.addons_level1.end(); ++it)
         tile.QuantitySetTeleportType(TilesAddon::UpdateStoneLightsSprite(*it));
 }
 
 void Maps::Tiles::UpdateFountainSprite(Tiles &tile)
 {
-    for (Addons::iterator
-                 it = tile.addons_level1.begin(); it != tile.addons_level1.end(); ++it)
-        TilesAddon::UpdateFountainSprite(*it);
+    for (auto &it : tile.addons_level1)
+        TilesAddon::UpdateFountainSprite(it);
 }
 
 void Maps::Tiles::UpdateTreasureChestSprite(Tiles &tile)
 {
-    for (Addons::iterator
-                 it = tile.addons_level1.begin(); it != tile.addons_level1.end(); ++it)
-        TilesAddon::UpdateTreasureChestSprite(*it);
+    for (auto &it : tile.addons_level1)
+        TilesAddon::UpdateTreasureChestSprite(it);
 }
 
 bool Maps::Tiles::isFog(int colors) const
@@ -2689,11 +2680,10 @@ void Maps::Tiles::RedrawFogs(Surface &dst, int color) const
     int around = 0;
     const Directions directions = Direction::All();
 
-    for (Directions::const_iterator
-                 it = directions.begin(); it != directions.end(); ++it)
-        if (!isValidDirection(GetIndex(), *it) ||
-            world.GetTiles(GetDirectionIndex(GetIndex(), *it)).isFog(color))
-            around |= *it;
+    for (int direction : directions)
+        if (!isValidDirection(GetIndex(), direction) ||
+            world.GetTiles(GetDirectionIndex(GetIndex(), direction)).isFog(color))
+            around |= direction;
 
     if (isFog(color)) around |= Direction::CENTER;
 

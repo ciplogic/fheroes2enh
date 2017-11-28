@@ -117,22 +117,22 @@ int Game::MainMenu()
     // mainmenu loop
     while (le.HandleEvents())
     {
-        for (u32 i = 0; i < ARRAY_COUNT(buttons); i++)
+        for (auto &button : buttons)
         {
-            buttons[i].wasOver = buttons[i].isOver;
+            button.wasOver = button.isOver;
 
-            if (le.MousePressLeft(buttons[i].button))
-                buttons[i].button.PressDraw();
-            else buttons[i].button.ReleaseDraw();
+            if (le.MousePressLeft(button.button))
+                button.button.PressDraw();
+            else button.button.ReleaseDraw();
 
-            buttons[i].isOver = le.MouseCursor(buttons[i].button);
+            button.isOver = le.MouseCursor(button.button);
 
-            if ((!buttons[i].isOver && buttons[i].wasOver) ||
-                (buttons[i].isOver && !buttons[i].wasOver))
+            if ((!button.isOver && button.wasOver) ||
+                (button.isOver && !button.wasOver))
             {
-                u32 frame = buttons[i].frame;
+                u32 frame = button.frame;
 
-                if (buttons[i].isOver && !buttons[i].wasOver)
+                if (button.isOver && !button.wasOver)
                     frame++;
 
                 cursor.Hide();

@@ -350,33 +350,33 @@ void Heroes::ScholarAction(Heroes &hero1, Heroes &hero2)
     SpellStorage learn = learner->spell_book.SetFilter(SpellBook::ALL);
 
     // remove_if for learn spells
-    if (learn.size())
+    if (!learn.empty())
     {
-        SpellStorage::iterator
-                res = remove_if(learn.begin(), learn.end(), bind1st(HeroesHaveSpell(), teacher));
+        auto
+        res = remove_if(learn.begin(), learn.end(), bind1st(HeroesHaveSpell(), teacher));
         learn.resize(distance(learn.begin(), res));
     }
 
-    if (learn.size())
+    if (!learn.empty())
     {
-        SpellStorage::iterator
-                res = remove_if(learn.begin(), learn.end(),
+        auto
+        res = remove_if(learn.begin(), learn.end(),
                                      not1(bind1st(HeroesCanTeachSpell(), teacher)));
         learn.resize(distance(learn.begin(), res));
     }
 
     // remove_if for teach spells
-    if (teach.size())
+    if (!teach.empty())
     {
-        SpellStorage::iterator
-                res = remove_if(teach.begin(), teach.end(), bind1st(HeroesHaveSpell(), learner));
+        auto
+        res = remove_if(teach.begin(), teach.end(), bind1st(HeroesHaveSpell(), learner));
         teach.resize(distance(teach.begin(), res));
     }
 
-    if (teach.size())
+    if (!teach.empty())
     {
-        SpellStorage::iterator
-                res = remove_if(teach.begin(), teach.end(),
+        auto
+        res = remove_if(teach.begin(), teach.end(),
                                      not1(bind1st(HeroesCanTeachSpell(), teacher)));
         teach.resize(distance(teach.begin(), res));
     }
@@ -388,7 +388,7 @@ void Heroes::ScholarAction(Heroes &hero1, Heroes &hero2)
                  it = learn.begin(); it != learn.end(); ++it)
     {
         teacher->AppendSpellToBook(*it);
-        if (spells1.size())
+        if (!spells1.empty())
             spells1.append(it + 1 == learn.end() ? _(" and ") : ", ");
         spells1.append((*it).GetName());
     }
@@ -398,7 +398,7 @@ void Heroes::ScholarAction(Heroes &hero1, Heroes &hero2)
                  it = teach.begin(); it != teach.end(); ++it)
     {
         learner->AppendSpellToBook(*it);
-        if (spells2.size())
+        if (!spells2.empty())
             spells2.append(it + 1 == teach.end() ? _(" and ") : ", ");
         spells2.append((*it).GetName());
     }
@@ -406,17 +406,17 @@ void Heroes::ScholarAction(Heroes &hero1, Heroes &hero2)
 
     if (teacher->isControlHuman() || learner->isControlHuman())
     {
-        if (spells1.size() && spells2.size())
+        if (!spells1.empty() && !spells2.empty())
             message = _(
                     "%{teacher}, whose %{level} %{scholar} knows many magical secrets, learns %{spells1} from %{learner}, and teaches %{spells2} to %{learner}.");
-        else if (spells1.size())
+        else if (!spells1.empty())
             message = _(
                     "%{teacher}, whose %{level} %{scholar} knows many magical secrets, learns %{spells1} from %{learner}.");
-        else if (spells2.size())
+        else if (!spells2.empty())
             message = _(
                     "%{teacher}, whose %{level} %{scholar} knows many magical secrets, teaches %{spells2} to %{learner}.");
 
-        if (message.size())
+        if (!message.empty())
         {
             StringReplace(message, "%{teacher}", teacher->GetName());
             StringReplace(message, "%{learner}", learner->GetName());

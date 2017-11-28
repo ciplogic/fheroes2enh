@@ -114,9 +114,8 @@ StreamBase &Battle::operator<<(StreamBase &msg, const TargetsInfo &ts)
 {
     msg << static_cast<u32>(ts.size());
 
-    for (TargetsInfo::const_iterator
-                 it = ts.begin(); it != ts.end(); ++it)
-        msg << *it;
+    for (const auto &t : ts)
+        msg << t;
 
     return msg;
 }
@@ -128,9 +127,8 @@ StreamBase &Battle::operator>>(StreamBase &msg, TargetsInfo &ts)
     msg >> size;
     ts.resize(size);
 
-    for (TargetsInfo::iterator
-                 it = ts.begin(); it != ts.end(); ++it)
-        msg >> *it;
+    for (auto &t : ts)
+        msg >> t;
 
     return msg;
 }
@@ -266,7 +264,7 @@ Battle::Arena::Arena(Army &a1, Army &a2, s32 index, bool local) :
     } else
         // set obstacles
     {
-        icn_covr = Maps::ScanAroundObject(index, MP2::OBJ_CRATER).size() ?
+        icn_covr = !Maps::ScanAroundObject(index, MP2::OBJ_CRATER).empty() ?
                    GetCovr(world.GetTiles(index).GetGround()) : ICN::UNKNOWN;
 
         if (icn_covr != ICN::UNKNOWN)
@@ -311,9 +309,9 @@ Battle::Arena::~Arena()
     if (towers[1]) delete towers[1];
     if (towers[2]) delete towers[2];
 
-    if (catapult) delete catapult;
-    if (interface) delete interface;
-    if (armies_order) delete armies_order;
+    delete catapult;
+    delete interface;
+    delete armies_order;
 }
 
 void Battle::Arena::TurnTroop(Unit *current_troop)
@@ -347,7 +345,7 @@ void Battle::Arena::TurnTroop(Unit *current_troop)
         }
 
         // apply task
-        while (actions.size())
+        while (!actions.empty())
         {
             // apply action
             ApplyAction(actions.front());
@@ -545,12 +543,12 @@ Battle::Indexes Battle::Arena::GetPath(const Unit &b, const Position &dst)
 {
     Indexes result = board.GetAStarPath(b, dst);
 
-    if (result.size())
+    if (!result.empty())
     {
         if (IS_DEBUG(DBG_BATTLE, DBG_TRACE))
         {
             stringstream ss;
-            for (u32 ii = 0; ii < result.size(); ++ii) ss << result[ii] << ", ";
+            for (int ii : result) ss << ii << ", ";
             DEBUG(DBG_BATTLE, DBG_TRACE, ss.str());
         }
     }
@@ -600,7 +598,7 @@ int Battle::Arena::GetOppositeColor(int col) const
 
 Battle::Unit *Battle::Arena::GetTroopUID(u32 uid)
 {
-    Units::iterator it = find_if(army1->begin(), army1->end(),
+    auto it = find_if(army1->begin(), army1->end(),
                                       bind2nd(mem_fun(&Unit::isUID), uid));
 
     if (it != army1->end()) return *it;
@@ -629,17 +627,16 @@ const Battle::Unit *Battle::Arena::GetEnemyMaxQuality(int my_color) const
     const Unit *res = nullptr;
     s32 quality = 0;
 
-    for (Board::const_iterator
-                 it = board.begin(); it != board.end(); ++it)
+    for (const auto &it : board)
     {
-        const Unit *enemy = (*it).GetUnit();
+        const Unit *enemy = it.GetUnit();
 
         if (enemy && enemy->GetColor() != my_color &&
-            (!enemy->isWide() || enemy->GetTailIndex() != (*it).GetIndex()) &&
-            quality < (*it).GetQuality())
+            (!enemy->isWide() || enemy->GetTailIndex() != it.GetIndex()) &&
+            quality < it.GetQuality())
         {
             res = enemy;
-            quality = (*it).GetQuality();
+            quality = it.GetQuality();
         }
     }
 
@@ -677,14 +674,14 @@ bool Battle::Arena::CanSurrenderOpponent(int color) const
     const HeroBase *hero1 = GetCommander(color, false); // enemy
     const HeroBase *hero2 = GetCommander(color, true);
     return hero1 && hero1->isHeroes() && hero2 &&
-           world.GetKingdom(hero2->GetColor()).GetCastles().size();
+            !world.GetKingdom(hero2->GetColor()).GetCastles().empty();
 }
 
 bool Battle::Arena::CanRetreatOpponent(int color) const
 {
     const HeroBase *hero = army1->GetColor() == color ? army1->GetCommander() : army2->GetCommander();
     return hero && hero->isHeroes() && nullptr == hero->inCastle() &&
-           world.GetKingdom(hero->GetColor()).GetCastles().size();
+            !world.GetKingdom(hero->GetColor()).GetCastles().empty();
 }
 
 bool Battle::Arena::isDisableCastSpell(const Spell &spell, string *msg)
@@ -1022,7 +1019,7 @@ Battle::Unit *Battle::Arena::CreateElemental(const Spell &spell)
 
 Battle::Unit *Battle::Arena::CreateMirrorImage(Unit &b, s32 pos)
 {
-    Unit *image = new Unit(b, pos, b.isReflect());
+    auto *image = new Unit(b, pos, b.isReflect());
 
     if (image)
     {
@@ -1070,13 +1067,12 @@ u32 Battle::Arena::GetObstaclesPenalty(const Unit &attacker, const Unit &defende
         // check castle walls defensed
         const Points points = GetLinePoints(attacker.GetBackPoint(), defender.GetBackPoint(), step);
 
-        for (Points::const_iterator
-                     it = points.begin(); it != points.end(); ++it)
+        for (auto point : points)
         {
-            if (0 == board[8].GetObject() && (board[8].GetPos() & *it)) return 0;
-            else if (0 == board[29].GetObject() && (board[29].GetPos() & *it)) return 0;
-            else if (0 == board[73].GetObject() && (board[73].GetPos() & *it)) return 0;
-            else if (0 == board[96].GetObject() && (board[96].GetPos() & *it)) return 0;
+            if (0 == board[8].GetObject() && (board[8].GetPos() & point)) return 0;
+            else if (0 == board[29].GetObject() && (board[29].GetPos() & point)) return 0;
+            else if (0 == board[73].GetObject() && (board[73].GetPos() & point)) return 0;
+            else if (0 == board[96].GetObject() && (board[96].GetPos() & point)) return 0;
         }
 
         result = 1;
@@ -1086,14 +1082,13 @@ u32 Battle::Arena::GetObstaclesPenalty(const Unit &attacker, const Unit &defende
         Indexes indexes;
         indexes.reserve(points.size());
 
-        for (Points::const_iterator
-                     it = points.begin(); it != points.end(); ++it)
+        for (auto point : points)
         {
-            const s32 index = board.GetIndexAbsPosition(*it);
+            const s32 index = board.GetIndexAbsPosition(point);
             if (Board::isValidIndex(index)) indexes.push_back(index);
         }
 
-        if (indexes.size())
+        if (!indexes.empty())
         {
             sort(indexes.begin(), indexes.end());
             indexes.resize(distance(indexes.begin(), unique(indexes.begin(), indexes.end())));

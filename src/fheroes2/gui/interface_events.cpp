@@ -110,7 +110,7 @@ void Interface::Basic::EventNextHero()
 
     if (GetFocusHeroes())
     {
-        KingdomHeroes::const_iterator it = find(myHeroes.begin(), myHeroes.end(),
+        auto it = find(myHeroes.begin(), myHeroes.end(),
                                                      GetFocusHeroes());
         ++it;
         if (it == myHeroes.end()) it = myHeroes.begin();
@@ -284,7 +284,7 @@ void Interface::Basic::EventNextTown()
     Kingdom &myKingdom = world.GetKingdom(Settings::Get().CurrentColor());
     KingdomCastles &myCastles = myKingdom.GetCastles();
 
-    if (myCastles.size())
+    if (!myCastles.empty())
     {
         if (GetFocusCastle())
         {
@@ -303,7 +303,7 @@ void Interface::Basic::EventNextTown()
 int Interface::Basic::EventSaveGame()
 {
     string filename = Dialog::SelectFileSave();
-    if (filename.size() && Game::Save(filename))
+    if (!filename.empty() && Game::Save(filename))
         Message("", _("Game saved successfully."), Font::BIG, Dialog::OK);
     return Game::CANCEL;
 }
@@ -372,10 +372,9 @@ int Interface::Basic::EventDigArtifact()
                     Kingdom &kingdom = world.GetKingdom(hero->GetColor());
                     const MapsIndexes obelisks = Maps::GetObjectPositions(MP2::OBJ_OBELISK, true);
 
-                    for (MapsIndexes::const_iterator
-                                 it = obelisks.begin(); it != obelisks.end(); ++it)
-                        if (!hero->isVisited(world.GetTiles(*it), Visit::GLOBAL))
-                            hero->SetVisited(*it, Visit::GLOBAL);
+                    for (int obelisk : obelisks)
+                        if (!hero->isVisited(world.GetTiles(obelisk), Visit::GLOBAL))
+                            hero->SetVisited(obelisk, Visit::GLOBAL);
 
                     kingdom.PuzzleMaps().Update(kingdom.CountVisitedObjects(MP2::OBJ_OBELISK),
                                                 world.CountObeliskOnMaps());

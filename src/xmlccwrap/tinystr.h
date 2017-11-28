@@ -116,7 +116,8 @@ public :
     // = operator
     TiXmlString &operator=(const TiXmlString &copy)
     {
-        return assign(copy.start(), copy.length());
+        assign(copy.start(), copy.length());
+        return *this;
     }
 
 

@@ -351,7 +351,7 @@ void Game::KeyboardGlobalFilter(int sym, int mod)
     else if (sym == key_events[EVENT_SYSTEM_SCREENSHOT])
     {
         ostringstream stream;
-        stream << System::ConcatePath(Settings::GetSaveDir(), "screenshot_") << time(0);
+        stream << System::ConcatePath(Settings::GetSaveDir(), "screenshot_") << time(nullptr);
 
 #ifndef WITH_IMAGE
         stream << ".bmp";

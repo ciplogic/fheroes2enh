@@ -32,11 +32,11 @@ distribution.
 #pragma warning( disable : 4786 )
 #endif
 
-#include <ctype.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <assert.h>
+#include <cctype>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <cassert>
 
 // Help out windows:
 #if defined( _DEBUG ) && !defined( DEBUG )
@@ -780,30 +780,30 @@ public:
     { return !firstChild; }
 
     virtual const TiXmlDocument *ToDocument() const
-    { return 0; } ///< Cast to a more defined type. Will return null if not of the requested type.
+    { return nullptr; } ///< Cast to a more defined type. Will return null if not of the requested type.
     virtual const TiXmlElement *ToElement() const
-    { return 0; } ///< Cast to a more defined type. Will return null if not of the requested type.
+    { return nullptr; } ///< Cast to a more defined type. Will return null if not of the requested type.
     virtual const TiXmlComment *ToComment() const
-    { return 0; } ///< Cast to a more defined type. Will return null if not of the requested type.
+    { return nullptr; } ///< Cast to a more defined type. Will return null if not of the requested type.
     virtual const TiXmlUnknown *ToUnknown() const
-    { return 0; } ///< Cast to a more defined type. Will return null if not of the requested type.
+    { return nullptr; } ///< Cast to a more defined type. Will return null if not of the requested type.
     virtual const TiXmlText *ToText() const
-    { return 0; } ///< Cast to a more defined type. Will return null if not of the requested type.
+    { return nullptr; } ///< Cast to a more defined type. Will return null if not of the requested type.
     virtual const TiXmlDeclaration *ToDeclaration() const
-    { return 0; } ///< Cast to a more defined type. Will return null if not of the requested type.
+    { return nullptr; } ///< Cast to a more defined type. Will return null if not of the requested type.
 
     virtual TiXmlDocument *ToDocument()
-    { return 0; } ///< Cast to a more defined type. Will return null if not of the requested type.
+    { return nullptr; } ///< Cast to a more defined type. Will return null if not of the requested type.
     virtual TiXmlElement *ToElement()
-    { return 0; } ///< Cast to a more defined type. Will return null if not of the requested type.
+    { return nullptr; } ///< Cast to a more defined type. Will return null if not of the requested type.
     virtual TiXmlComment *ToComment()
-    { return 0; } ///< Cast to a more defined type. Will return null if not of the requested type.
+    { return nullptr; } ///< Cast to a more defined type. Will return null if not of the requested type.
     virtual TiXmlUnknown *ToUnknown()
-    { return 0; } ///< Cast to a more defined type. Will return null if not of the requested type.
+    { return nullptr; } ///< Cast to a more defined type. Will return null if not of the requested type.
     virtual TiXmlText *ToText()
-    { return 0; } ///< Cast to a more defined type. Will return null if not of the requested type.
+    { return nullptr; } ///< Cast to a more defined type. Will return null if not of the requested type.
     virtual TiXmlDeclaration *ToDeclaration()
-    { return 0; } ///< Cast to a more defined type. Will return null if not of the requested type.
+    { return nullptr; } ///< Cast to a more defined type. Will return null if not of the requested type.
 
     /** Create an exact duplicate of this node and return it. The memory must be deleted
         by the caller.
@@ -881,8 +881,8 @@ public:
     /// Construct an empty attribute.
     TiXmlAttribute() : TiXmlBase()
     {
-        document = 0;
-        prev = next = 0;
+        document = nullptr;
+        prev = next = nullptr;
     }
 
 #ifdef TIXML_USE_STL
@@ -901,8 +901,8 @@ public:
     {
         name = _name;
         value = _value;
-        document = 0;
-        prev = next = 0;
+        document = nullptr;
+        prev = next = nullptr;
     }
 
     const char *Name() const
@@ -984,7 +984,7 @@ public:
     // Prints this Attribute to a FILE stream.
     virtual void Print(FILE *cfile, int depth) const
     {
-        Print(cfile, depth, 0);
+        Print(cfile, depth, nullptr);
     }
 
     void Print(FILE *cfile, int depth, TIXML_STRING *str) const;
@@ -1030,16 +1030,16 @@ public:
     void Remove(TiXmlAttribute *attribute);
 
     const TiXmlAttribute *First() const
-    { return (sentinel.next == &sentinel) ? 0 : sentinel.next; }
+    { return (sentinel.next == &sentinel) ? nullptr : sentinel.next; }
 
     TiXmlAttribute *First()
-    { return (sentinel.next == &sentinel) ? 0 : sentinel.next; }
+    { return (sentinel.next == &sentinel) ? nullptr : sentinel.next; }
 
     const TiXmlAttribute *Last() const
-    { return (sentinel.prev == &sentinel) ? 0 : sentinel.prev; }
+    { return (sentinel.prev == &sentinel) ? nullptr : sentinel.prev; }
 
     TiXmlAttribute *Last()
-    { return (sentinel.prev == &sentinel) ? 0 : sentinel.prev; }
+    { return (sentinel.prev == &sentinel) ? nullptr : sentinel.prev; }
 
     const TiXmlAttribute *Find(const char *_name) const;
 
@@ -1912,17 +1912,17 @@ public:
     /** Return the handle as a TiXmlElement. This may return null.
     */
     TiXmlElement *ToElement() const
-    { return ((node && node->ToElement()) ? node->ToElement() : 0); }
+    { return ((node && node->ToElement()) ? node->ToElement() : nullptr); }
 
     /**	Return the handle as a TiXmlText. This may return null.
     */
     TiXmlText *ToText() const
-    { return ((node && node->ToText()) ? node->ToText() : 0); }
+    { return ((node && node->ToText()) ? node->ToText() : nullptr); }
 
     /** Return the handle as a TiXmlUnknown. This may return null.
     */
     TiXmlUnknown *ToUnknown() const
-    { return ((node && node->ToUnknown()) ? node->ToUnknown() : 0); }
+    { return ((node && node->ToUnknown()) ? node->ToUnknown() : nullptr); }
 
     /** @deprecated use ToNode.
         Return the handle as a TiXmlNode. This may return null.
