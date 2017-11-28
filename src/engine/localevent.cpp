@@ -403,7 +403,7 @@ LocalEvent &LocalEvent::Get()
 
 bool LocalEvent::HandleEvents(bool delay)
 {
-    SDL_Event event;
+    SDL_Event event{};
 
     ResetModes(MOUSE_MOTION);
     ResetModes(KEY_PRESSED);

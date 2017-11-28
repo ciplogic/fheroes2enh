@@ -109,7 +109,8 @@ public :
     // = operator
     TiXmlString &operator=(const char *copy)
     {
-        return assign(copy, (size_type) strlen(copy));
+        assign(copy, (size_type) strlen(copy));
+        return *this;
     }
 
     // = operator

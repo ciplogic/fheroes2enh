@@ -85,12 +85,12 @@ int SDL_ToggleFS(SDL_Surface *surface)
 	if (IsFullScreen(surface))
 	{
 		// Swith to WINDOWED mode 
-		if ((surface = SDL_SetVideoMode(w,h, 0, flags -= SDL_FULLSCREEN)) == NULL) return 0;
+		if ((surface = SDL_SetVideoMode(w,h, 0, flags -= SDL_FULLSCREEN)) == nullptr) return 0;
 		return 1;
 	}
 
 	// Swith to FULLSCREEN mode 
-	if ((surface = SDL_SetVideoMode(w, h, 0, flags | SDL_FULLSCREEN)) == NULL) return 0;
+	if ((surface = SDL_SetVideoMode(w, h, 0, flags | SDL_FULLSCREEN)) == nullptr) return 0;
 	return 1;
 }
 
@@ -118,7 +118,7 @@ Size Display::GetMaxMode(bool rotate) const
     Size result;
     SDL_Rect **modes = SDL_ListModes(nullptr, SDL_ANYFORMAT);
 
-    if (modes == (SDL_Rect **) 0 ||
+    if (modes == (SDL_Rect **) nullptr ||
         modes == (SDL_Rect **) -1)
     {
         ERROR("GetMaxMode: " << "no modes available");

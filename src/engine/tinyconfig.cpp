@@ -101,7 +101,7 @@ void TinyConfig::Clear()
 
 void TinyConfig::AddEntry(const string &key, const string &val, bool uniq)
 {
-    iterator it = end();
+    auto it = end();
 
     if (uniq &&
         (end() != (it = find(ModifyKey(key)))))
@@ -112,7 +112,7 @@ void TinyConfig::AddEntry(const string &key, const string &val, bool uniq)
 
 void TinyConfig::AddEntry(const string &key, int val, bool uniq)
 {
-    iterator it = end();
+    auto it = end();
 
     if (uniq &&
         (end() != (it = find(ModifyKey(key)))))
