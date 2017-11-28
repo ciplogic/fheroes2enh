@@ -858,7 +858,10 @@ void Settings::SetScrollSpeed(int speed)
 
 /* return full screen */
 bool Settings::QVGA() const
-{ return video_mode.w && video_mode.h && (video_mode.w < 640 || video_mode.h < 480); }
+{
+	auto result = video_mode.w && video_mode.h && (video_mode.w < 640 || video_mode.h < 480);
+	return result;
+}
 
 bool Settings::UseAltResource() const
 { return opt_global.Modes(GLOBAL_ALTRESOURCE); }

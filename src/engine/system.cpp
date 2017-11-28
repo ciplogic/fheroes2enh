@@ -41,7 +41,6 @@
 #include <direct.h>
 #include <sys\stat.h>
 
-#define  __MINGW32CE__
 #endif
 
 #include <sys/stat.h>
@@ -236,7 +235,7 @@ System::ScopeExit::~ScopeExit()
 
 int System::SetEnvironment(const char *name, const char *value)
 {
-#if defined(__MINGW32CE__) || defined(__MINGW32__)
+#if defined(WIN32)
     string str(string(name) + "=" + string(value));
     // SDL 1.2.12 (char *)
     return SDL_putenv(const_cast<char *>(str.c_str()));
@@ -257,7 +256,7 @@ void System::SetLocale(int category, const char *locale)
 string System::GetMessageLocale(int length /* 1, 2, 3 */)
 {
     string locname;
-#if defined(__MINGW32CE__) || defined(__MINGW32__)
+#if defined(WIN32)
     char* clocale = setlocale(LC_MONETARY, nullptr);
 #elif defined(ANDROID)
     char* clocale = setlocale(LC_MESSAGES, nullptr);
@@ -293,7 +292,7 @@ int System::GetCommandOptions(int argc, vector<string> argv, const char *optstri
 
 char *System::GetOptionsArgument()
 {
-#if defined(__MINGW32CE__)
+#if defined(WIN32)
     return nullptr;
 #else
     return optarg;
@@ -510,16 +509,13 @@ bool System::isRunning()
 
 int System::ShellCommand(const char *cmd)
 {
-#if defined(__MINGW32CE__)
-    return cmd ? 0 : -1;
-#else
+	if (!cmd) { return -1; }
     return system(cmd);
-#endif
 }
 
 bool System::isEmbededDevice()
 {
-#if defined(__MINGW32CE__) || defined(ANDROID) || defined(__SYMBIAN32__)
+#if defined(ANDROID) || defined(__SYMBIAN32__)
     return true;
 #endif
     return false;

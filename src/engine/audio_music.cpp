@@ -198,6 +198,9 @@ struct info_t
 
 int callbackPlayMusic(void *ptr)
 {
+#if WIN32
+	return 0;
+#endif
     if (ptr && System::ShellCommand(nullptr))
     {
         info_t *info = reinterpret_cast<info_t *>(ptr);

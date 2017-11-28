@@ -24,10 +24,12 @@ namespace FileUtils
         struct stat result{};
         if (stat(filename.c_str(), &result) != 0)
             return 0;
-#ifndef __APPLE__
-        return result.st_mtim.tv_sec;
+#ifdef __APPLE__
+		return result.st_mtimespec.tv_sec; 
+#elif WIN32
+		return result.st_mtime;
 #else
-        return result.st_mtimespec.tv_sec;
+		return result.st_mtim.tv_sec;
 #endif
     }
 }

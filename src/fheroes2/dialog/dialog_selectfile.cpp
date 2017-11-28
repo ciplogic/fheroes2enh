@@ -27,7 +27,7 @@
 #include <iterator>
 #include <ctime>
 #include <sstream>
-#include <agg/ColorTable.h>
+#include "ColorTable.h"
 
 #include "system.h"
 #include "agg.h"
