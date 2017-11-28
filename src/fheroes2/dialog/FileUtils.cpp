@@ -8,8 +8,6 @@
 #include <sys/stat.h>
 #ifndef WIN32
 #include <unistd.h>
-#include <bits/stat.h>
-
 #else
 #endif
 
@@ -24,9 +22,12 @@ namespace FileUtils
     long GetFileTime(std::string filename)
     {
         struct stat result{};
-        if (stat(filename.c_str(), &result) == 0)
-        {
-            return result.st_mtim.tv_sec;
-        }
+        if (stat(filename.c_str(), &result) != 0)
+            return 0;
+#ifndef __APPLE__
+        return result.st_mtim.tv_sec;
+#else
+        return result.st_mtimespec.tv_sec;
+#endif
     }
 }

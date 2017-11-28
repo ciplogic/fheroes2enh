@@ -55,6 +55,7 @@
 #if !defined(WIN32)
 
 #include <unistd.h>
+#include <clocale>
 
 #endif
 

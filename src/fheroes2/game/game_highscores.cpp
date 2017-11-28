@@ -117,9 +117,8 @@ bool HGSData::Save(const string &fn)
     ZStreamFile hdata;
     hdata.setbigendian(true);
     hdata << static_cast<u16>(HGS_ID) << list;
-    if (hdata.fail() || !hdata.write(fn)) return false;
+    return !(hdata.fail() || !hdata.write(fn));
 
-    return true;
 }
 
 void HGSData::ScoreRegistry(const string &p, const string &m, u32 r, u32 s)
