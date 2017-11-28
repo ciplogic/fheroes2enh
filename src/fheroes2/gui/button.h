@@ -73,8 +73,7 @@ protected:
 class ButtonSprite : public Button
 {
 public:
-    ButtonSprite()
-    {}
+    ButtonSprite() = default;
 
 protected:
     Surface sf;

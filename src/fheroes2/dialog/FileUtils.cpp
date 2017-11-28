@@ -13,6 +13,7 @@
 #else
 #endif
 
+#include <cstdlib>
 
 #ifdef WIN32
 #define stat _stat
@@ -22,7 +23,7 @@ namespace FileUtils
 {
     long GetFileTime(std::string filename)
     {
-        struct stat result;
+        struct stat result{};
         if (stat(filename.c_str(), &result) == 0)
         {
             return result.st_mtim.tv_sec;

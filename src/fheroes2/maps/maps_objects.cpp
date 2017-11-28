@@ -138,7 +138,7 @@ void MapSphinx::LoadFromMP2(s32 index, StreamBuf st)
         {
             string answer = Game::GetEncodeString(st.toString(13));
 
-            if (count-- && answer.size())
+            if (count-- && !answer.empty())
                 answers.push_back(StringLower(answer));
         }
 

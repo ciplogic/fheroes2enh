@@ -29,7 +29,7 @@
 
 
 void Rand::Init()
-{ srand((u32) time(0)); }
+{ srand((u32) time(nullptr)); }
 
 u32 Rand::Get(u32 min, u32 max)
 {

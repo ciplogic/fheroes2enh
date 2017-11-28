@@ -28,7 +28,7 @@ namespace Audio
     static Spec hardware;
 }
 
-Audio::Spec::Spec()
+Audio::Spec::Spec() : SDL_AudioSpec()
 {
     freq = 0;
     format = 0;
@@ -40,7 +40,7 @@ Audio::Spec::Spec()
     userdata = nullptr;
 }
 
-Audio::CVT::CVT()
+Audio::CVT::CVT() : SDL_AudioCVT()
 {
     needed = 0;
     src_format = 0;

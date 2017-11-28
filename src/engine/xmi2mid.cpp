@@ -310,8 +310,8 @@ struct MidEvent
 
 StreamBuf &operator<<(StreamBuf &sb, const MidEvent &st)
 {
-    for (auto it = st.pack.begin(); it != st.pack.end(); ++it)
-        sb << *it;
+    for (unsigned char it : st.pack)
+        sb << it;
     sb << st.data[0];
     if (2 == st.data[3])
         sb << st.data[1] << st.data[2];
@@ -370,7 +370,7 @@ struct MidEvents : public list<MidEvent>
                 }
 
                 // remove end notes
-                while (notesoff.size() && notesoff.front().duration <= delta)
+                while (!notesoff.empty() && notesoff.front().duration <= delta)
                     notesoff.pop_front();
 
                 // fixed delta
@@ -426,7 +426,7 @@ struct MidEvents : public list<MidEvent>
                         {
                             push_back(MidEvent(delta, *ptr, *(ptr + 1), *(ptr + 2)));
                             pack_t pack = unpackValue(ptr + 3);
-                            notesoff.push_back(meta_t(*ptr - 0x10, *(ptr + 1), pack.first));
+                            notesoff.emplace_back(*ptr - 0x10, *(ptr + 1), pack.first);
                             ptr += 3 + pack.second;
                             delta = 0;
                         }

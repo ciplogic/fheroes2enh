@@ -1025,10 +1025,8 @@ bool World::LoadMapMP2(const string &filename)
     // read all addons
     vector<MP2::mp2addon_t> vec_mp2addons(fs.getLE32() /* count mp2addon_t */);
 
-    for (auto it = vec_mp2addons.begin(); it != vec_mp2addons.end(); ++it)
+    for (auto &mp2addon : vec_mp2addons)
     {
-        MP2::mp2addon_t &mp2addon = *it;
-
         mp2addon.indexAddon = fs.getLE16();
         mp2addon.objectNameN1 = fs.get() * 2;
         mp2addon.indexNameN1 = fs.get();
@@ -1428,7 +1426,7 @@ bool World::LoadMapMP2(const string &filename)
             // add event day
             if (SIZEOFMP2EVENT - 1 < pblock.size() && 1 == pblock[42])
             {
-                vec_eventsday.push_back(EventDate());
+                vec_eventsday.emplace_back();
                 vec_eventsday.back().LoadFromMP2(StreamBuf(pblock));
             }
                 // add rumors
@@ -1681,13 +1679,13 @@ void World::PostLoad()
     }
     vec_rumors.push_back(rumor);
 
-    vec_rumors.push_back(_("The truth is out there."));
-    vec_rumors.push_back(_("The dark side is stronger."));
-    vec_rumors.push_back(_("The end of the world is near."));
-    vec_rumors.push_back(_("The bones of Lord Slayer are buried in the foundation of the arena."));
-    vec_rumors.push_back(_("A Black Dragon will take out a Titan any day of the week."));
-    vec_rumors.push_back(_("He told her: Yada yada yada...  and then she said: Blah, blah, blah..."));
+    vec_rumors.emplace_back(_("The truth is out there."));
+    vec_rumors.emplace_back(_("The dark side is stronger."));
+    vec_rumors.emplace_back(_("The end of the world is near."));
+    vec_rumors.emplace_back(_("The bones of Lord Slayer are buried in the foundation of the arena."));
+    vec_rumors.emplace_back(_("A Black Dragon will take out a Titan any day of the week."));
+    vec_rumors.emplace_back(_("He told her: Yada yada yada...  and then she said: Blah, blah, blah..."));
 
-    vec_rumors.push_back(_("You can load the newest version of game from a site:\n http://sf.net/projects/fheroes2"));
-    vec_rumors.push_back(_("This game is now in beta development version. ;)"));
+    vec_rumors.emplace_back(_("You can load the newest version of game from a site:\n http://sf.net/projects/fheroes2"));
+    vec_rumors.emplace_back(_("This game is now in beta development version. ;)"));
 }

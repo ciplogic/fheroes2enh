@@ -211,8 +211,8 @@ ButtonGroups::ButtonGroups(const Rect &pos, u32 btns) : button1(nullptr), button
 
 ButtonGroups::~ButtonGroups()
 {
-    if (button1) delete button1;
-    if (button2) delete button2;
+    delete button1;
+    delete button2;
 }
 
 void ButtonGroups::Draw()

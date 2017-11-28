@@ -552,10 +552,10 @@ bool BuildingInfo::DialogBuyBuilding(bool buttons) const
         }
 
     // replace end sep
-    if (str.size())
+    if (!str.empty())
         str.replace(str.size() - strlen(sep), strlen(sep), ".");
 
-    bool requires_true = str.size();
+    bool requires_true = !str.empty();
     Text requires_text(_("Requires:"), Font::BIG);
     TextBox box2(str, Font::BIG, BOXAREA_WIDTH);
 

@@ -202,7 +202,7 @@ bool Dialog::InputString(const string &header, string &res)
     cursor.SetThemes(cursor.POINTER);
 
     //const bool pda = Settings::Get().PocketPC();
-    if (res.size()) res.clear();
+    if (!res.empty()) res.clear();
     res.reserve(48);
     size_t charInsertPos = 0;
 
@@ -293,7 +293,7 @@ bool Dialog::InputString(const string &header, string &res)
     cursor.SetThemes(oldcursor);
     cursor.Hide();
 
-    return res.size();
+    return !res.empty();
 }
 
 int Dialog::ArmySplitTroop(int free_slots, u32 max, u32 &cur, bool savelast)

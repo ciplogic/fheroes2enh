@@ -158,7 +158,7 @@ int Battle::Catapult::GetTarget(const vector<u32> &values) const
         if (values[CAT_TOWER3]) targets.push_back(CAT_TOWER3);
     }
 
-    if (targets.size())
+    if (!targets.empty())
     {
         // miss for 30%
         return cat_miss && 7 > Rand::Get(1, 20) ? CAT_MISS : (1 < targets.size() ? *Rand::Get(targets)

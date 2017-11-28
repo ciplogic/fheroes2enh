@@ -1585,7 +1585,7 @@ public:
 
     TiXmlDocument(const TiXmlDocument &copy);
 
-    void operator=(const TiXmlDocument &copy);
+    TiXmlDocument& operator=(const TiXmlDocument &copy);
 
     virtual ~TiXmlDocument()
     {}

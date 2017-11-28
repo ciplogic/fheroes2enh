@@ -150,12 +150,12 @@ void Castle::LoadFromMP2(StreamBuf st)
         Troop troops[5];
 
         // set monster id
-        for (u32 ii = 0; ii < ARRAY_COUNT(troops); ++ii)
-            troops[ii].SetMonster(st.get() + 1);
+        for (auto &troop : troops)
+            troop.SetMonster(st.get() + 1);
 
         // set count
-        for (u32 ii = 0; ii < ARRAY_COUNT(troops); ++ii)
-            troops[ii].SetCount(st.getLE16());
+        for (auto &troop : troops)
+            troop.SetCount(st.getLE16());
 
         army.Assign(troops, ARRAY_COUNT_END(troops));
         SetModes(CUSTOMARMY);
@@ -447,8 +447,8 @@ void Castle::ActionNewMonth()
     // population halved
     if (world.GetWeekType().GetType() == Week::PLAGUE)
     {
-        for (u32 ii = 0; ii < CASTLEMAXMONSTER; ++ii)
-            if (dwelling[ii]) dwelling[ii] /= 2;
+        for (unsigned int &ii : dwelling)
+            if (ii) ii /= 2;
     } else
         // Month Of
     if (world.GetWeekType().GetType() == Week::MONSTERS)
@@ -875,7 +875,7 @@ bool Castle::RecruitMonster(const Troop &troop)
             return false;
     }
 
-    Monster ms = troop;
+    const Monster &ms = troop;
     u32 count = troop.GetCount();
 
     // fix count
@@ -2465,14 +2465,14 @@ struct CastleHavePoint : public binary_function<const Castle *, const Point *, b
 
 Castle *VecCastles::Get(const Point &position) const
 {
-    const_iterator it = find_if(begin(), end(),
+    auto it = find_if(begin(), end(),
                                      bind2nd(CastleHavePoint(), &position));
     return end() != it ? *it : nullptr;
 }
 
 Castle *VecCastles::GetFirstCastle() const
 {
-    const_iterator it = find_if(begin(), end(),
+    auto it = find_if(begin(), end(),
                                      mem_fun(&Castle::isCastle));
     return end() != it ? *it : nullptr;
 }
@@ -2496,7 +2496,7 @@ AllCastles::~AllCastles()
 
 void AllCastles::Init()
 {
-    if (size())
+    if (!empty())
         clear();
 }
 
@@ -2529,8 +2529,8 @@ StreamBase &operator<<(StreamBase &msg, const Castle &castle)
         castle.mageguild <<
         static_cast<u32>(CASTLEMAXMONSTER);
 
-    for (u32 ii = 0; ii < CASTLEMAXMONSTER; ++ii)
-        msg << castle.dwelling[ii];
+    for (unsigned int ii : castle.dwelling)
+        msg << ii;
 
     return msg << castle.army;
 }
@@ -2579,11 +2579,10 @@ StreamBase &operator>>(StreamBase &msg, VecCastles &castles)
 
     castles.resize(size, nullptr);
 
-    for (AllCastles::iterator
-                 it = castles.begin(); it != castles.end(); ++it)
+    for (auto &castle : castles)
     {
         msg >> index;
-        *it = (index < 0 ? nullptr : world.GetCastle(Maps::GetPoint(index)));
+        castle = (index < 0 ? nullptr : world.GetCastle(Maps::GetPoint(index)));
     }
 
     return msg;

@@ -304,7 +304,7 @@ public:
     void PostFixLoad();
 
 private:
-    World() : Size(0, 0)
+    World() : Size(0, 0), day(0), week(0), month(0), heroes_cond_wins(0), heroes_cond_loss(0)
     {};
 
     void Defaults();

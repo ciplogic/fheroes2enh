@@ -348,10 +348,10 @@ void DrawBattleStats(const Point &dst, const Troop &b)
     // accumulate width
     u32 ow = 0;
 
-    for (u32 ii = 0; ii < ARRAY_COUNT(modes); ++ii)
-        if (b.isModes(modes[ii]))
+    for (unsigned int mode : modes)
+        if (b.isModes(mode))
         {
-            const Sprite &sprite = GetModesSprite(modes[ii]);
+            const Sprite &sprite = GetModesSprite(mode);
             if (sprite.isValid()) ow += sprite.w() + 4;
         }
 
@@ -361,24 +361,25 @@ void DrawBattleStats(const Point &dst, const Troop &b)
     Text text;
 
     // blit centered
-    for (u32 ii = 0; ii < ARRAY_COUNT(modes); ++ii)
-        if (b.isModes(modes[ii]))
+    for (unsigned int mode : modes)
+    {
+        if (!b.isModes(mode))
+            continue;
+        const Sprite &sprite1 = GetModesSprite(mode);
+        if (sprite1.isValid())
         {
-            const Sprite &sprite = GetModesSprite(modes[ii]);
-            if (sprite.isValid())
+            sprite1.Blit(ow, dst.y);
+
+            const u32 duration = b.GetAffectedDuration(mode);
+            if (duration)
             {
-                sprite.Blit(ow, dst.y);
-
-                const u32 duration = b.GetAffectedDuration(modes[ii]);
-                if (duration)
-                {
-                    text.Set(GetString(duration), Font::SMALL);
-                    text.Blit(ow + (sprite.w() - text.w()) / 2, dst.y + sprite.h() + 1);
-                }
-
-                ow += sprite.w() + 4;
+                text.Set(GetString(duration), Font::SMALL);
+                text.Blit(ow + (sprite1.w() - text.w()) / 2, dst.y + sprite1.h() + 1);
             }
+
+            ow += sprite1.w() + 4;
         }
+    }
 }
 
 int Dialog::ArmyJoinFree(const Troop &troop, Heroes &hero)

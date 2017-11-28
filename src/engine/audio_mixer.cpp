@@ -218,7 +218,7 @@ enum
 
 struct chunk_t
 {
-    chunk_t() : data(nullptr), length(0), position(0), volume1(0), state(0)
+    chunk_t() : data(nullptr), length(0), position(0), volume1(0), volume2(0), state(0)
     {};
 
     bool this_ptr(const chunk_t *ch) const
@@ -251,9 +251,8 @@ bool Mixer::PredicateIsFreeSound(const chunk_t &ch)
 
 void Mixer::AudioCallBack(void *unused, u8 *stream, int length)
 {
-    for (u8 ii = 0; ii < chunks.size(); ++ii)
+    for (auto &ch : chunks)
     {
-        chunk_t &ch = chunks[ii];
         if ((ch.state & MIX_PLAY) && ch.volume1)
         {
             if (ch.state & MIX_REDUCE)
@@ -346,11 +345,11 @@ u16 Mixer::Volume(int ch, s16 vol)
 
     if (ch < 0)
     {
-        for (u8 ii = 0; ii < chunks.size(); ++ii)
+        for (auto &chunk : chunks)
         {
             SDL_LockAudio();
-            chunks[ii].volume1 = vol;
-            chunks[ii].volume2 = vol;
+            chunk.volume1 = vol;
+            chunk.volume2 = vol;
             SDL_UnlockAudio();
         }
     } else if (ch < static_cast<int>(chunks.size()))
@@ -417,11 +416,11 @@ void Mixer::Pause(int ch)
 
         if (0 > ch)
         {
-            for (auto it = chunks.begin(); it != chunks.end(); ++it)
-                if ((*it).state & MIX_PLAY)
+            for (auto &chunk : chunks)
+                if (chunk.state & MIX_PLAY)
                 {
-                    paused.push_back((*it).data);
-                    (*it).state &= ~MIX_PLAY;
+                    paused.push_back(chunk.data);
+                    chunk.state &= ~MIX_PLAY;
                 }
         } else if (ch < static_cast<int>(chunks.size()))
             chunks[ch].state &= ~MIX_PLAY;
@@ -438,10 +437,10 @@ void Mixer::Resume(int ch)
 
         if (0 > ch)
         {
-            if (paused.size())
-                for (auto it = chunks.begin(); it != chunks.end(); ++it)
-                    if (paused.end() != find(paused.begin(), paused.end(), (*it).data))
-                        (*it).state |= MIX_PLAY;
+            if (!paused.empty())
+                for (auto &chunk : chunks)
+                    if (paused.end() != find(paused.begin(), paused.end(), chunk.data))
+                        chunk.state |= MIX_PLAY;
 
             paused.clear();
         } else if (ch < static_cast<int>(chunks.size()))
@@ -479,12 +478,12 @@ void Mixer::Reduce()
 {
     if (valid)
     {
-        for (auto it = chunks.begin(); it != chunks.end(); ++it)
+        for (auto &chunk : chunks)
         {
-            if ((*it).state & MIX_PLAY)
+            if (chunk.state & MIX_PLAY)
             {
                 SDL_LockAudio();
-                (*it).state |= MIX_REDUCE;
+                chunk.state |= MIX_REDUCE;
                 SDL_UnlockAudio();
             }
         }
@@ -495,13 +494,12 @@ void Mixer::Enhance()
 {
     if (valid)
     {
-        for (vector<chunk_t>::iterator
-                     it = chunks.begin(); it != chunks.end(); ++it)
+        for (auto &chunk : chunks)
         {
-            if ((*it).state & MIX_PLAY)
+            if (chunk.state & MIX_PLAY)
             {
                 SDL_LockAudio();
-                (*it).state |= MIX_ENHANCE;
+                chunk.state |= MIX_ENHANCE;
                 SDL_UnlockAudio();
             }
         }

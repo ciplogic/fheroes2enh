@@ -113,7 +113,7 @@ bool Mutex::Unlock() const
     return mutex ? 0 == SDL_mutexV(mutex) : false;
 }
 
-Timer::Timer() : id(0)
+Timer::Timer() : id(nullptr)
 {
 }
 
@@ -129,7 +129,7 @@ void Timer::Remove()
     if (id)
     {
         SDL_RemoveTimer(id);
-        id = 0;
+        id = nullptr;
     }
 }
 

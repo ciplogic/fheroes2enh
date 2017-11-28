@@ -69,9 +69,8 @@ s32 Battle::AIAreaSpellDst(const HeroBase &hero)
     {
         const Indexes around = Board::GetAroundIndexes(**it1);
 
-        for (Indexes::const_iterator
-                     it2 = around.begin(); it2 != around.end(); ++it2)
-            dstcount[*it2] += 1;
+        for (int it2 : around)
+            dstcount[it2] += 1;
     }
 
     // find max
@@ -84,14 +83,13 @@ s32 Battle::AIMaxQualityPosition(const Indexes &positions)
 {
     s32 res = -1;
 
-    for (Indexes::const_iterator
-                 it = positions.begin(); it != positions.end(); ++it)
-        if (Board::isValidIndex(*it))
+    for (int position : positions)
+        if (Board::isValidIndex(position))
         {
             if (res < 0)
-                res = *it;
-            else if (Board::GetCell(res)->GetQuality() < Board::GetCell(*it)->GetQuality())
-                res = *it;
+                res = position;
+            else if (Board::GetCell(res)->GetQuality() < Board::GetCell(position)->GetQuality())
+                res = position;
         }
 
     return res;
@@ -147,15 +145,14 @@ s32 Battle::AIShortDistance(s32 from, const Indexes &indexes)
     u32 len = MAXU16;
     s32 res = -1;
 
-    for (Indexes::const_iterator
-                 it = indexes.begin(); it != indexes.end(); ++it)
+    for (int indexe : indexes)
     {
-        const u32 length = Board::GetDistance(from, *it);
+        const u32 length = Board::GetDistance(from, indexe);
 
         if (len > length)
         {
             len = length;
-            res = *it;
+            res = indexe;
         }
     }
 
@@ -185,16 +182,15 @@ s32 Battle::AIAttackPosition(Arena &arena, const Unit &b, const Indexes &positio
             {
                 const Indexes around = Board::GetAroundIndexes(**it1);
 
-                for (Indexes::const_iterator
-                             it2 = around.begin(); it2 != around.end(); ++it2)
+                for (int it2 : around)
                 {
-                    const Unit *unit = Board::GetCell(*it2)->GetUnit();
+                    const Unit *unit = Board::GetCell(it2)->GetUnit();
                     if (unit && enemies.end() != find(enemies.begin(), enemies.end(), unit))
-                        results.push_back(*it2);
+                        results.push_back(it2);
                 }
             }
 
-            if (results.size())
+            if (!results.empty())
             {
                 // find passable results
                 Indexes passable = Arena::GetBoard()->GetPassableQualityPositions(b);
@@ -209,7 +205,7 @@ s32 Battle::AIAttackPosition(Arena &arena, const Unit &b, const Indexes &positio
                     results.resize(distance(results.begin(), it2));
 
                 // get max quality
-                if (results.size())
+                if (!results.empty())
                     res = AIMaxQualityPosition(results);
             }
         }
@@ -251,7 +247,7 @@ void AI::BattleTurn(Arena &arena, const Unit &b, Actions &a)
         if (b.Modes(SP_BERSERKER))
         {
             const Indexes positions = board->GetNearestTroopIndexes(b.GetHeadIndex(), nullptr);
-            if (positions.size()) move = *Rand::Get(positions);
+            if (!positions.empty()) move = *Rand::Get(positions);
         } else
         {
             if (BattleMagicTurn(arena, b, a, nullptr)) return; /* repeat turn: correct spell ability */
@@ -263,7 +259,7 @@ void AI::BattleTurn(Arena &arena, const Unit &b, Actions &a)
             const Indexes positions = board->GetPassableQualityPositions(b);
             attack = true;
 
-            if (positions.size())
+            if (!positions.empty())
                 move = AIAttackPosition(arena, b, positions);
         }
 
@@ -296,7 +292,7 @@ void AI::BattleTurn(Arena &arena, const Unit &b, Actions &a)
                     }
                 }
 
-                if (path.size())
+                if (!path.empty())
                 {
                     if (b.isWide())
                     {
@@ -359,7 +355,7 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
     // troop bad spell - clean
     {
         // sort strongest
-        Units::iterator it = find_if(friends.begin(), friends.end(),
+        auto it = find_if(friends.begin(), friends.end(),
                                           bind2nd(mem_fun(&Unit::Modes), IS_BAD_MAGIC));
         if (it != friends.end())
         {

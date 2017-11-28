@@ -491,9 +491,9 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForDamage(Unit &attacker, Unit &def
 
         const Indexes around = Board::GetAroundIndexes(attacker);
 
-        for (Indexes::const_iterator it = around.begin(); it != around.end(); ++it)
+        for (int it : around)
         {
-            if (nullptr != (enemy = Board::GetCell(*it)->GetUnit()) &&
+            if (nullptr != (enemy = Board::GetCell(it)->GetUnit()) &&
                 enemy != &defender && enemy->GetColor() != attacker.GetColor())
             {
                 res.defender = enemy;
@@ -508,9 +508,9 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForDamage(Unit &attacker, Unit &def
     {
         const Indexes around = Board::GetAroundIndexes(defender.GetHeadIndex());
 
-        for (Indexes::const_iterator it = around.begin(); it != around.end(); ++it)
+        for (int it : around)
         {
-            if (nullptr != (enemy = Board::GetCell(*it)->GetUnit()) && enemy != &defender)
+            if (nullptr != (enemy = Board::GetCell(it)->GetUnit()) && enemy != &defender)
             {
                 res.defender = enemy;
                 res.damage = attacker.GetDamage(*enemy);
@@ -616,10 +616,9 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForSpells(const HeroBase *hero, con
             {
                 const Indexes positions = Board::GetDistanceIndexes(dst, (spell == Spell::FIREBLAST ? 2 : 1));
 
-                for (Indexes::const_iterator
-                             it = positions.begin(); it != positions.end(); ++it)
+                for (int position : positions)
                 {
-                    Unit *target = GetTroopBoard(*it);
+                    Unit *target = GetTroopBoard(position);
                     if (target && target->AllowApplySpell(spell, hero))
                     {
                         res.defender = target;
@@ -647,10 +646,9 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForSpells(const HeroBase *hero, con
             case Spell::MASSSHIELD:
             case Spell::MASSSLOW:
             {
-                for (Board::iterator
-                             it = board.begin(); it != board.end(); ++it)
+                for (auto &it : board)
                 {
-                    target = (*it).GetUnit();
+                    target = it.GetUnit();
                     if (target && target->AllowApplySpell(spell, hero))
                     {
                         res.defender = target;

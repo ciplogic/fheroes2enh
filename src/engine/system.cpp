@@ -373,7 +373,7 @@ bool System::IsDirectory(const string &name, bool writable)
 #ifdef WIN32
 	return dirExists(name);
 	#else
-	struct stat fs;
+	struct stat fs{};
 
 	if (stat(name.c_str(), &fs) || !S_ISDIR(fs.st_mode))
 		return false;

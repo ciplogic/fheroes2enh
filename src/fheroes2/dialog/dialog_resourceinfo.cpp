@@ -47,10 +47,10 @@ int Dialog::ResourceInfo(const string &header, const string &message, const Fund
     FrameBox box(box1.h() + spacer + box2.h() + spacer + rbs.GetArea().h, true);
     Point pos = box.GetArea();
 
-    if (header.size()) box1.Blit(pos);
+    if (!header.empty()) box1.Blit(pos);
     pos.y += box1.h() + spacer;
 
-    if (message.size()) box2.Blit(pos);
+    if (!message.empty()) box2.Blit(pos);
     pos.y += box2.h() + spacer;
 
     rbs.SetPos(pos.x, pos.y);

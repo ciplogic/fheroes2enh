@@ -1986,10 +1986,9 @@ bool AIHeroesShowAnimation(const Heroes &hero)
     {
         const Colors vcolors(Players::HumanColors());
 
-        for (Colors::const_iterator
-                     it = vcolors.begin(); it != vcolors.end(); ++it)
+        for (int vcolor : vcolors)
         {
-            const Player *player = conf.GetPlayers().Get(*it);
+            const Player *player = conf.GetPlayers().Get(vcolor);
             if (player) colors |= player->GetFriends();
         }
     } else

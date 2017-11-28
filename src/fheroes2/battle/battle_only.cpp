@@ -447,7 +447,7 @@ bool Battle::Only::ChangeSettings()
         delete selectArmy2;
     }
 
-    if (cinfo2) delete cinfo2;
+    delete cinfo2;
 
     return result;
 }
