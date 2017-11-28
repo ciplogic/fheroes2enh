@@ -22,6 +22,10 @@
 
 #include "engine.h"
 
+#ifdef WITH_NET
+#include "sdlnet.h"
+#endif
+
 namespace Mixer
 {
     void Init();

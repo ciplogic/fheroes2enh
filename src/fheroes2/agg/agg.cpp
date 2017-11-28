@@ -72,7 +72,7 @@ namespace AGG
 
         const FAT &Fat(const string &key);
 
-        const vector<u8> &Read(const string &key);
+        const vector<u8> Read(const string &key);
 
     private:
         string filename;
@@ -179,12 +179,12 @@ namespace AGG
 
     bool ReadDataDir();
 
-    const vector<u8> &ReadICNChunk(int icn, u32);
+    const vector<u8> ReadICNChunk(int icn, u32);
 
-    const vector<u8> &ReadChunk(const string &);
+    const vector<u8> ReadChunk(const string &);
 }
 
-Sprite ICNSprite::CreateSprite(bool reflect, bool shadow) const
+sp<Sprite> ICNSprite::CreateSprite(bool reflect, bool shadow) const
 {
     Surface res(first.GetSize(), true);
     first.Blit(res);
@@ -192,7 +192,7 @@ Sprite ICNSprite::CreateSprite(bool reflect, bool shadow) const
     if (shadow && second.isValid())
         second.Blit(res);
 
-    return Sprite(reflect ? res.RenderReflect(2) : res, offset.x, offset.y);
+    return std::make_shared<Sprite>(reflect ? res.RenderReflect(2) : res, offset.x, offset.y);
 }
 
 bool ICNSprite::isValid() const
@@ -225,11 +225,16 @@ bool AGG::File::Open(const string &fname)
 
     for (u32 ii = 0; ii < count_items; ++ii)
     {
-        FAT &f = fat[names.toString(FATSIZENAME)];
-
-        f.crc = fats.getLE32();
-        f.offset = fats.getLE32();
-        f.size = fats.getLE32();
+		string itemName = names.toString(FATSIZENAME);
+        FAT f;
+		auto crc = fats.getLE32();
+		f.crc = crc;
+		auto offset = fats.getLE32();
+        f.offset = offset;
+		auto size= fats.getLE32();
+        f.size = size;
+		cout << crc << " " <<offset<<" " <<size<< endl;
+		fat[itemName] = f;
     }
 
     return !stream.fail();
@@ -266,7 +271,7 @@ string AGG::FAT::Info() const
 }
 
 /* read element to body */
-const vector<u8> &AGG::File::Read(const string &str)
+const vector<u8> AGG::File::Read(const string &str)
 {
     if (key != str)
     {
@@ -435,7 +440,7 @@ bool AGG::ReadDataDir()
     return heroes2_agg.isGood();
 }
 
-const vector<u8> &AGG::ReadChunk(const string &key)
+const vector<u8> AGG::ReadChunk(const string &key)
 {
     if (heroes2x_agg.isGood())
     {
@@ -881,7 +886,7 @@ void AGG::SaveICN(int icn)
 #endif
 }
 
-const vector<u8> &AGG::ReadICNChunk(int icn, u32 index)
+const vector<u8> AGG::ReadICNChunk(int icn, u32 index)
 {
     // hard fix artifact "ultimate stuff" sprite for loyalty version
     if (ICN::ARTIFACT == icn &&
@@ -1071,7 +1076,8 @@ bool AGG::LoadOrgICN(Sprite &sp, int icn, u32 index, bool reflect)
 
     if (icnSprite.isValid())
     {
-        sp = icnSprite.CreateSprite(reflect, !ICN::SkipLocalAlpha(icn));
+		auto picSp = icnSprite.CreateSprite(reflect, !ICN::SkipLocalAlpha(icn));
+		sp = *picSp;
         return true;
     }
 
@@ -1128,13 +1134,15 @@ bool AGG::LoadOrgICN(int icn, u32 index, bool reflect)
     {
         const vector<u8> &body = ReadChunk(ICN::GetString(icn));
 
-        if (!body.empty())
-        {
-            v.count = StreamBuf (body).getLE16();
-            v.sprites = new Sprite[v.count];
-            v.reflect = new Sprite[v.count];
-        } else
-            return false;
+        if (body.empty())
+	        return false;
+	    v.count = StreamBuf(body).getLE16();
+	    v.sprites = new Sprite[v.count];
+	    v.reflect = new Sprite[v.count];
+	    if (v.count == 0)
+	    {
+		    return true;
+	    }
     }
 
     Sprite &sp = reflect ? v.reflect[index] : v.sprites[index];

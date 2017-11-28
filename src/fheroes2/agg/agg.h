@@ -45,7 +45,7 @@ public:
 
     bool isValid() const;
 
-    Sprite CreateSprite(bool reflect, bool shadow) const;
+    sp<Sprite> CreateSprite(bool reflect, bool shadow) const;
 
     Surface First()
     { return first; }

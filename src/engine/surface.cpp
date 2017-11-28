@@ -272,8 +272,9 @@ Surface::Surface(const string &file) : surface(nullptr)
     Load(file);
 }
 
-Surface::Surface(SDL_Surface *sf) : surface(sf)
+Surface::Surface(SDL_Surface *sf) : surface(nullptr)
 {
+	Set(sf);
 }
 
 Surface::Surface(const void *pixels, u32 width, u32 height, u32 bytes_per_pixel /* 1, 2, 3, 4 */, bool amask)
@@ -344,17 +345,11 @@ void Surface::Set(const Surface &bs, bool refcopy)
 
     if (bs.isValid())
     {
-        if (refcopy)
-        {
-            surface = bs.surface;
-            if (surface) surface->refcount += 1;
-        } else
-        {
-            surface = SDL_ConvertSurface(bs.surface, bs.surface->format, bs.surface->flags);
+        surface = SDL_ConvertSurface(bs.surface, bs.surface->format, bs.surface->flags);
 
-            if (!surface)
-                Error::Except(__FUNCTION__, SDL_GetError());
-        }
+        if (!surface)
+            Error::Except(__FUNCTION__, SDL_GetError());
+        
     }
 }
 
@@ -856,22 +851,16 @@ void Surface::FreeSurface(Surface &sf)
 {
     if (!sf.surface)
 		return;
-	if (sf.isRefCopy())
-	{
-		--sf.surface->refcount;
-	} 
-	else
-	{
-		// clear static palette
-		if (sf.surface->format && 8 == sf.surface->format->BitsPerPixel && pal_colors && pal_nums &&
-			sf.surface->format->palette && pal_colors == sf.surface->format->palette->colors)
-		{
-			sf.surface->format->palette->colors = nullptr;
-			sf.surface->format->palette->ncolors = 0;
-		}
 
-		SDL_FreeSurface(sf.surface);
+	// clear static palette
+	if (sf.surface->format && 8 == sf.surface->format->BitsPerPixel && pal_colors && pal_nums &&
+		sf.surface->format->palette && pal_colors == sf.surface->format->palette->colors)
+	{
+		sf.surface->format->palette->colors = nullptr;
+		sf.surface->format->palette->ncolors = 0;
 	}
+
+	SDL_FreeSurface(sf.surface);
 	sf.surface = nullptr;
 }
 

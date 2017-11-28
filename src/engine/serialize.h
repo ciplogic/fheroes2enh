@@ -74,13 +74,13 @@ public:
 
     virtual void skip(size_t) = 0;
 
-    virtual int getBE16() = 0;
+    virtual u16 getBE16() = 0;
 
-    virtual int getLE16() = 0;
+    virtual u16 getLE16() = 0;
 
-    virtual int getBE32() = 0;
+    virtual u32 getBE32() = 0;
 
-    virtual int getLE32() = 0;
+    virtual u32 getLE32() = 0;
 
     virtual void putBE32(u32) = 0;
 
@@ -95,9 +95,9 @@ public:
 
     virtual void putRaw(const char *, size_t) = 0;
 
-    int get16();
+    u16 get16();
 
-    int get32();
+	u32 get32();
 
     void put16(u16);
 
@@ -270,13 +270,13 @@ public:
 
     void skip(size_t);
 
-    int getBE16();
+	u16 getBE16();
 
-    int getLE16();
+    u16 getLE16();
 
-    int getBE32();
+	u32 getBE32();
 
-    int getLE32();
+	u32 getLE32();
 
     void putBE32(u32);
 
@@ -351,13 +351,13 @@ public:
 
     void skip(size_t);
 
-    int getBE16();
+	u16 getBE16();
 
-    int getLE16();
+	u16 getLE16();
 
-    int getBE32();
+	u32 getBE32();
 
-    int getLE32();
+	u32 getLE32();
 
     void putBE32(u32);
 

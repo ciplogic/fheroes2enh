@@ -20,6 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
+#include "system.h"
 #ifdef WITH_NET
 
 #include <algorithm>
@@ -83,6 +84,8 @@ bool Network::Socket::Ready() const
 {
     return 0 < SDLNet_CheckSockets(sdset, 1) && 0 < SDLNet_SocketReady(sd);
 }
+#define ERROR_RECV 5 // any non zero ? // WEBOS
+#define ERROR_SEND 6 // any non zero ? // WEBOS
 
 bool Network::Socket::Recv(char *buf, int len)
 {
@@ -110,12 +113,32 @@ bool Network::Socket::Send(const char* buf, int len)
 
     return ! (status & ERROR_SEND);
 }
+template <typename T>
+T swap_endian(T u)
+{
+	static_assert (CHAR_BIT == 8, "CHAR_BIT != 8");
+
+	union
+	{
+		T u;
+		unsigned char u8[sizeof(T)];
+	} source, dest;
+
+	source.u = u;
+
+	for (size_t k = 0; k < sizeof(T); k++)
+		dest.u8[k] = source.u8[sizeof(T) - k - 1];
+
+	return dest.u;
+}
+
 
 bool Network::Socket::Recv32(u32 & v)
 {
     if(Recv(reinterpret_cast<char*>(&v), sizeof(v)))
     {
-        SwapBE32(v);
+		auto swappedV = swap_endian(v);
+        v = swappedV;
         return true;
     }
     return false;
@@ -125,7 +148,8 @@ bool Network::Socket::Recv16(u16 & v)
 {
     if(Recv(reinterpret_cast<char*>(&v), sizeof(v)))
     {
-        SwapBE16(v);
+		auto swappedV = swap_endian(v);
+		v = swappedV;
         return true;
     }
     return false;
@@ -133,8 +157,9 @@ bool Network::Socket::Recv16(u16 & v)
 
 bool Network::Socket::Send32(const u32 & v0)
 {
-    u32 v = v0;
-    SwapBE32(v);
+    u32 v = v0;		
+	auto swappedV = swap_endian(v);
+	v = swappedV;
 
     return Send(reinterpret_cast<char*>(&v), sizeof(v));
 }
@@ -142,8 +167,8 @@ bool Network::Socket::Send32(const u32 & v0)
 bool Network::Socket::Send16(const u16 & v0)
 {
     u16 v = v0;
-    SwapBE16(v);
-
+	auto swappedV = swap_endian(v);
+	v = swappedV;
     return Send(reinterpret_cast<char*>(&v), sizeof(v));
 }
 
