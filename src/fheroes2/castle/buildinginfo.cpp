@@ -570,7 +570,7 @@ bool BuildingInfo::DialogBuyBuilding(bool buttons) const
 
     Point dst_pt;
 
-    dst_pt.x = box_rt.x;
+    dst_pt.x = box_rt.x+50;
     dst_pt.y = box_rt.y + box_rt.h - AGG::GetICN(system, 1).h();
     Button button1(dst_pt.x, dst_pt.y, system, 1, 2);
 

@@ -59,7 +59,7 @@ namespace Interface
     class GameArea
     {
     public:
-        GameArea(Basic &);
+        explicit GameArea(Basic &);
 
         void Build();
 

@@ -28,7 +28,7 @@
  * 4/17/04 - IMG_SavePNG & IMG_SavePNG_RW - Philip D. Bober
  * 11/08/2004 - Compr fix, levels -1,1-7 now work - Tyler Montbriand
  */
-#include <stdlib.h>
+#include <cstdlib>
 #include <zlib.h>
 #include "SDL.h"
 #include "IMG_savepng.h"
@@ -56,7 +56,7 @@ int IMG_SavePNG(const char *file, SDL_Surface *surf,int compression){
 }
 
 static void png_write_data(png_structp png_ptr,png_bytep data, png_size_t length){
-    SDL_RWops *rp = (SDL_RWops*) png_get_io_ptr(png_ptr);
+    auto *rp = (SDL_RWops*) png_get_io_ptr(png_ptr);
     SDL_RWwrite(rp,data,1,length);
 }
 

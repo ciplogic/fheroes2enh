@@ -323,9 +323,9 @@ namespace Interface
         }
 
         virtual ~ItemsActionBar()
-        {}
+        = default;
 
-/*
+        /*
 	Item*		GetSelectedItem();
 	Rect*		GetSelectedPos();
 	s32		GetSelectedIndex();
@@ -507,7 +507,7 @@ namespace Interface
 
     public:
         ItemsScroll()
-        {}
+        = default;
     };
 }
 

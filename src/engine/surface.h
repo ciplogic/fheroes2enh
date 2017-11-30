@@ -86,13 +86,13 @@ public:
 
     Surface(const Size &, const SurfaceFormat &);
 
-    Surface(const std::string &);
+    explicit Surface(const std::string &);
 
     Surface(const void *pixels, u32 width, u32 height, u32 bytes_per_pixel /* 1, 2, 3, 4 */,
             bool amask);  /* agg: create raw tile */
     Surface(const Surface &);
 
-    Surface(SDL_Surface *);
+    explicit Surface(SDL_Surface *);
 
     Surface &operator=(const Surface &);
 

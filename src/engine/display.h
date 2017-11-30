@@ -31,7 +31,7 @@ class Texture;
 class Display : public Surface
 {
 public:
-    ~Display();
+    ~Display() override;
 
     static Display &Get();
 
@@ -67,15 +67,15 @@ public:
 
     static void ShowCursor();
 
-    Surface GetSurface() const;
+    Surface GetSurface() const override;
 
-    Surface GetSurface(const Rect &rt) const;
+    Surface GetSurface(const Rect &rt) const override;
 
 protected:
 
     friend class Texture;
 
-    bool isDisplay() const;
+    bool isDisplay() const override;
 
     Display();
 
@@ -121,7 +121,7 @@ protected:
 class Texture : public Surface
 {
 public:
-    Texture(const Surface &);
+    explicit Texture(const Surface &);
 };
 
 #endif

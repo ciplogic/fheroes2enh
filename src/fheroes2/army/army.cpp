@@ -130,8 +130,7 @@ string Army::SizeString(u32 size)
 }
 
 Troops::Troops()
-{
-}
+= default;
 
 Troops::~Troops()
 {

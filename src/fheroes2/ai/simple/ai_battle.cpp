@@ -64,8 +64,7 @@ s32 Battle::AIAreaSpellDst(const HeroBase &hero)
     Arena *arena = GetArena();
     Units enemies(arena->GetForce(hero.GetColor(), true), true);
 
-    for (Units::const_iterator
-                 it1 = enemies.begin(); it1 != enemies.end(); ++it1)
+    for (auto it1 = enemies.begin(); it1 != enemies.end(); ++it1)
     {
         const Indexes around = Board::GetAroundIndexes(**it1);
 
@@ -74,7 +73,7 @@ s32 Battle::AIAreaSpellDst(const HeroBase &hero)
     }
 
     // find max
-    map<s32, u32>::const_iterator max = max_element(dstcount.begin(), dstcount.end(), MaxDstCount);
+    auto max = max_element(dstcount.begin(), dstcount.end(), MaxDstCount);
 
     return max != dstcount.end() ? (*max).first : -1;
 }
@@ -168,7 +167,8 @@ s32 Battle::AIAttackPosition(Arena &arena, const Unit &b, const Indexes &positio
     if (b.isMultiCellAttack())
     {
         res = AIMaxQualityPosition(positions);
-    } else if (b.isDoubleCellAttack())
+    } else
+    if (b.isDoubleCellAttack())
     {
         Indexes results;
         results.reserve(12);
@@ -177,8 +177,7 @@ s32 Battle::AIAttackPosition(Arena &arena, const Unit &b, const Indexes &positio
 
         if (1 < enemies.size())
         {
-            for (Units::const_iterator
-                         it1 = enemies.begin(); it1 != enemies.end(); ++it1)
+            for (auto it1 = enemies.begin(); it1 != enemies.end(); ++it1)
             {
                 const Indexes around = Board::GetAroundIndexes(**it1);
 
@@ -194,10 +193,9 @@ s32 Battle::AIAttackPosition(Arena &arena, const Unit &b, const Indexes &positio
             {
                 // find passable results
                 Indexes passable = Arena::GetBoard()->GetPassableQualityPositions(b);
-                Indexes::iterator it2 = results.begin();
+                auto it2 = results.begin();
 
-                for (Indexes::const_iterator
-                             it = results.begin(); it != results.end(); ++it)
+                for (auto it = results.begin(); it != results.end(); ++it)
                     if (passable.end() != find(passable.begin(), passable.end(), *it))
                         *it2++ = *it;
 

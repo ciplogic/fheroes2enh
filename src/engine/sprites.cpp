@@ -62,9 +62,7 @@ u32 SpritePos::GetMemoryUsage() const
     return Surface::GetMemoryUsage() + sizeof(pos);
 }
 
-SpriteBack::SpriteBack()
-{
-}
+SpriteBack::SpriteBack() = default;
 
 u32 SpriteBack::GetMemoryUsage() const
 {

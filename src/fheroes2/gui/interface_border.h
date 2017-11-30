@@ -42,7 +42,7 @@ namespace Interface
 
         virtual void SavePosition() = 0;
 
-        void Redraw();
+        virtual void Redraw();
 
         bool QueueEventProcessing();
 

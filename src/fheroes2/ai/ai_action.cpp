@@ -2024,7 +2024,7 @@ void AI::HeroesMove(Heroes &hero)
     {
         hero.SetMove(true);
 
-        if (1)
+        if (true)
         {
             const Settings &conf = Settings::Get();
             Display &display = Display::Get();

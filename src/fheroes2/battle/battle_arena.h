@@ -223,8 +223,8 @@ namespace Battle
 
         Unit *CreateMirrorImage(Unit &, s32);
 
-        Force *army1;
-        Force *army2;
+        up<Force> army1;
+        up<Force> army2;
         Units *armies_order;
 
         const Castle *castle;

@@ -59,7 +59,7 @@ struct Size
 
     Size(u16, u16);
 
-    Size(const Point &);
+    explicit Size(const Point &);
 
     bool isEmpty() const;
 
@@ -85,7 +85,7 @@ struct Rect : Point, Size
 
     Rect(const Point &, const Size &);
 
-    Rect(const SDL_Rect &);
+    explicit Rect(const SDL_Rect &);
 
     Rect &operator=(const Point &);
 

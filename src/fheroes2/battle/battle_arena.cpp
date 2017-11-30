@@ -192,8 +192,8 @@ Battle::Arena::Arena(Army &a1, Army &a2, s32 index, bool local) :
     usage_spells.reserve(20);
 
     arena = this;
-    army1 = new Force(a1, false);
-    army2 = new Force(a2, true);
+    army1 = make_unique<Force>(a1, false);
+    army2 = make_unique<Force>(a2, true);
 
     // init castle (interface ahead)
     castle = world.GetCastle(Maps::GetPoint(index));
@@ -302,12 +302,9 @@ Battle::Arena::Arena(Army &a1, Army &a2, s32 index, bool local) :
 
 Battle::Arena::~Arena()
 {
-    delete army1;
-    delete army2;
-
-    if (towers[0]) delete towers[0];
-    if (towers[1]) delete towers[1];
-    if (towers[2]) delete towers[2];
+    delete towers[0];
+    delete towers[1];
+    delete towers[2];
 
     delete catapult;
     delete interface;
@@ -478,7 +475,7 @@ void Battle::Arena::Turns()
         if (army1->GetCommander()) result_game.exp2 += 500;
         if (army2->GetCommander()) result_game.exp1 += 500;
 
-        Force *army_loss = (result_game.army1 & RESULT_LOSS ? army1 : (result_game.army2 & RESULT_LOSS ? army2 : nullptr));
+        Force *army_loss = (result_game.army1 & RESULT_LOSS ? army1.get() : (result_game.army2 & RESULT_LOSS ? army2.get() : nullptr));
         result_game.killed = army_loss ? army_loss->GetDeadCounts() : 0;
     }
 }

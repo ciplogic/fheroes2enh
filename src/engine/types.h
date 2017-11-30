@@ -35,8 +35,8 @@ typedef Uint32 u32;
 #define MAXU16        0xFFFF
 #define MAXU32        0xFFFFFFFF
 
-#define ARRAY_COUNT(A)        sizeof(A) / sizeof(A[0])
-#define ARRAY_COUNT_END(A)    A + ARRAY_COUNT(A)
+#define ARRAY_COUNT(A)        (sizeof(A) / sizeof((A)[0]))
+#define ARRAY_COUNT_END(A)    (A + ARRAY_COUNT(A))
 
 #define DELAY(X)        SDL_Delay(X)
 
