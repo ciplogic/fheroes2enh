@@ -55,6 +55,7 @@
 
 #include <unistd.h>
 #include <clocale>
+#include <utility>
 
 #endif
 
@@ -219,18 +220,6 @@ const char *System::GetEnvironment(const char *name)
 #else
     return getenv(name);
 #endif
-}
-
-
-
-System::ScopeExit::ScopeExit(function<void()> action)
-	: _action(action)
-{
-}
-
-System::ScopeExit::~ScopeExit()
-{
-	_action();
 }
 
 int System::SetEnvironment(const char *name, const char *value)

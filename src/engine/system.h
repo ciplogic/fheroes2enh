@@ -51,14 +51,6 @@ namespace std
 
 namespace System
 {
-	struct ScopeExit
-	{
-		explicit ScopeExit(function<void()> action);
-		~ScopeExit();
-	private:
-		function<void()> _action;
-
-	};
     int SetEnvironment(const char *name, const char *value);
 
     const char *GetEnvironment(const char *name);

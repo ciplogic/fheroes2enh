@@ -92,19 +92,18 @@ void Castle::OpenTavern()
         if (le.MouseClickLeft(buttonYes) || HotKeyCloseWindow) break;
 
         // animation
-        if (AnimateInfrequentDelay(Game::CASTLE_TAVERN_DELAY))
+        if (!AnimateInfrequentDelay(Game::CASTLE_TAVERN_DELAY))
+            continue;
+        cursor.Hide();
+        s20.Blit(dst_pt);
+
+        if (const u32 index1 = ICN::AnimationFrame(tavwin, 0, frame++))
         {
-            cursor.Hide();
-            s20.Blit(dst_pt);
-
-            if (const u32 index = ICN::AnimationFrame(tavwin, 0, frame++))
-            {
-                const Sprite &s22 = AGG::GetICN(tavwin, index);
-                s22.Blit(dst_pt.x + s22.x(), dst_pt.y + s22.y());
-            }
-
-            cursor.Show();
-            display.Flip();
+            const Sprite &s22 = AGG::GetICN(tavwin, index1);
+            s22.Blit(dst_pt.x + s22.x(), dst_pt.y + s22.y());
         }
+
+        cursor.Show();
+        display.Flip();
     }
 }

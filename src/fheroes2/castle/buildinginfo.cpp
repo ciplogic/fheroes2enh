@@ -385,6 +385,7 @@ void BuildingInfo::RedrawCaptain()
             sprite_deny.Blit(dst_pt);
     }
 
+    if(allow_buy && bcond!=ALREADY_BUILT)
     {
         Text textPlus = {"+"};
         Rect pos(area.x+area.w-14, area.y+3, 10, 10);
