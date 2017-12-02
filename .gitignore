@@ -5,7 +5,6 @@ CMakeFiles
 /VisualStudio/FHeroes2Enh/Debug/
 .vs
 /libs/SDL/.*
-*.vcxproj.filters
 *.vcxproj.user
 *.ilk
 /DATA/*
