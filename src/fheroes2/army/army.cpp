@@ -130,8 +130,7 @@ string Army::SizeString(u32 size)
 }
 
 Troops::Troops()
-{
-}
+= default;
 
 Troops::~Troops()
 {
@@ -279,7 +278,7 @@ bool Troops::JoinTroop(const Monster &mons, u32 count)
 
 bool Troops::JoinTroop(const Troop &troop)
 {
-    return troop.isValid() ? JoinTroop(troop(), troop.GetCount()) : false;
+    return troop.isValid() && JoinTroop(troop(), troop.GetCount());
 }
 
 bool Troops::CanJoinTroops(const Troops &troops2) const
@@ -847,7 +846,7 @@ Army::Army(const Maps::Tiles &t) : commander(nullptr), combat_format(true), colo
                 }
             } else
             {
-                MapMonster *map_troop = static_cast<MapMonster *>(world.GetMapObject(t.GetObjectUID(MP2::OBJ_MONSTER)));
+                auto *map_troop = static_cast<MapMonster *>(world.GetMapObject(t.GetObjectUID(MP2::OBJ_MONSTER)));
                 Troop troop = map_troop ? map_troop->QuantityTroop() : t.QuantityTroop();
 
                 _items.at(0)->Set(troop);

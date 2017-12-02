@@ -111,8 +111,7 @@ void Game::AnimateResetDelay(int dl)
 
 bool Game::AnimateInfrequentDelay(int dl)
 {
-    return dl < LAST_DELAY && 0 < delays[dl]() ?
-           delays[dl].Trigger() : true;
+    return !(dl < LAST_DELAY && 0 < delays[dl]()) || delays[dl].Trigger();
 }
 
 void Game::UpdateHeroesMoveSpeed()

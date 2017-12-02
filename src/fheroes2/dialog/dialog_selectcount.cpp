@@ -96,16 +96,18 @@ public:
         {
             vcur += vcur + step <= vmax ? step : vmax - vcur;
             return true;
-        } else
-            // down
-        if ((le.MouseWheelDn(pos) ||
-             le.MouseClickLeft(btnDn)) && vmin < vcur)
-        {
-            vcur -= vmin + vcur >= step ? step : vcur;
-            return true;
         }
 
-        return false;
+        // down
+        if (!(le.MouseWheelDn(pos) ||
+              le.MouseClickLeft(btnDn)) || vmin >= vcur)
+        {
+            return false;
+        }
+        vcur -= vmin + vcur >= step ? step : vcur;
+        return true;
+
+
     }
 
 protected:

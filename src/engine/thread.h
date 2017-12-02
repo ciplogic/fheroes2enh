@@ -61,7 +61,7 @@ namespace SDL
     class Mutex
     {
     public:
-        Mutex(bool init = false);
+        explicit Mutex(bool init = false);
 
         Mutex(const Mutex &);
 

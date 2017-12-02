@@ -211,8 +211,7 @@ namespace Interface
         {
             const Point &cursor = LocalEvent::Get().GetMouseCursor();
 
-            return isItemsEmpty() ? false :
-                   ActionCursorItemIter(cursor, GetItemIterPos(cursor));
+            return !isItemsEmpty() && ActionCursorItemIter(cursor, GetItemIterPos(cursor));
         }
 
     protected:
@@ -323,9 +322,9 @@ namespace Interface
         }
 
         virtual ~ItemsActionBar()
-        {}
+        = default;
 
-/*
+        /*
 	Item*		GetSelectedItem();
 	Rect*		GetSelectedPos();
 	s32		GetSelectedIndex();
@@ -507,7 +506,7 @@ namespace Interface
 
     public:
         ItemsScroll()
-        {}
+        = default;
     };
 }
 

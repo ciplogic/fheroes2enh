@@ -37,8 +37,7 @@
 class ICNSprite : public pair<Surface, Surface> /* first: image with out alpha, second: shadow with alpha */
 {
 public:
-    ICNSprite()
-    {}
+    ICNSprite() = default;
 
     ICNSprite(const Surface &sf1, const Surface &sf2) : pair<Surface, Surface>(sf1, sf2)
     {}

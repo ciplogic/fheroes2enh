@@ -385,6 +385,7 @@ void BuildingInfo::RedrawCaptain()
             sprite_deny.Blit(dst_pt);
     }
 
+    if(allow_buy && bcond!=ALREADY_BUILT)
     {
         Text textPlus = {"+"};
         Rect pos(area.x+area.w-14, area.y+3, 10, 10);
@@ -570,7 +571,7 @@ bool BuildingInfo::DialogBuyBuilding(bool buttons) const
 
     Point dst_pt;
 
-    dst_pt.x = box_rt.x;
+    dst_pt.x = box_rt.x+50;
     dst_pt.y = box_rt.y + box_rt.h - AGG::GetICN(system, 1).h();
     Button button1(dst_pt.x, dst_pt.y, system, 1, 2);
 

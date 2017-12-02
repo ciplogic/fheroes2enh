@@ -336,7 +336,7 @@ struct MidEvents : public list<MidEvent>
     }
 
     MidEvents()
-    {}
+    = default;
 
     MidEvents(const XMITrack &t)
     {
@@ -503,7 +503,7 @@ struct MidTracks : list<MidTrack>
     }
 
     MidTracks()
-    {}
+    = default;
 
     MidTracks(const XMITracks &tracks)
     {

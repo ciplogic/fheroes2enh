@@ -155,13 +155,13 @@ struct mofile
             buf.seek(offset2);
             auto tags = StringSplit(buf.toString(length2), "\n");
 
-            for (auto it = tags.begin(); it != tags.end(); ++it)
+            for (auto &tag : tags)
             {
                 if (encoding.empty())
-                    encoding = get_tag(*it, tag1, sep1);
+                    encoding = get_tag(tag, tag1, sep1);
 
                 if (plural_forms.empty())
-                    plural_forms = get_tag(*it, tag2, sep2);
+                    plural_forms = get_tag(tag, tag2, sep2);
             }
         }
 

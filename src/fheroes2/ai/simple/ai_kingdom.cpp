@@ -153,7 +153,7 @@ void AI::KingdomTurn(Kingdom &kingdom)
     DEBUG(DBG_AI, DBG_INFO, Color::String(color) << ", size cache objects: " << ai.scans.size());
 
     // set capital
-    if (nullptr == ai.capital && castles.size())
+    if (nullptr == ai.capital && !castles.empty())
     {
         auto it = find_if(castles.begin(), castles.end(), Castle::PredicateIsCastle);
 
@@ -225,7 +225,7 @@ void AI::KingdomTurn(Kingdom &kingdom)
                               bind2nd(mem_fun(&Heroes::Modes), HEROES_HUNTER));
 
         // every time
-        if (0 == hunters && heroes.size())
+        if (0 == hunters && !heroes.empty())
         {
             auto it = find_if(heroes.begin(), heroes.end(),
                                                       not1(bind2nd(mem_fun(&Heroes::Modes),
@@ -238,8 +238,7 @@ void AI::KingdomTurn(Kingdom &kingdom)
             // each month
         if (world.BeginMonth() && 1 < world.CountDay())
         {
-            KingdomHeroes::iterator it =
-                    find_if(heroes.begin(), heroes.end(),
+            auto it = find_if(heroes.begin(), heroes.end(),
                                  bind2nd(mem_fun(&Heroes::Modes), HEROES_HUNTER));
 
             if (it != heroes.end() &&

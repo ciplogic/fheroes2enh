@@ -30,7 +30,7 @@
 
 #define IMG_COMPRESS_OFF 0
 #define IMG_COMPRESS_MAX 9
-#define IMG_COMPRESS_DEFAULT -1
+#define IMG_COMPRESS_DEFAULT (-1)
 
 #ifdef WITH_IMAGE
 /**

@@ -844,7 +844,7 @@ void Surface::Unlock() const
 
 bool Surface::isRefCopy() const
 {
-    return surface ? 1 < surface->refcount : false;
+    return surface != nullptr && 1 < surface->refcount;
 }
 
 void Surface::FreeSurface(Surface &sf)

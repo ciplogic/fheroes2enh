@@ -788,8 +788,8 @@ std::string EncodeString(const std::string & str, const char* charset)
     size_t inbytesleft = str.size();
     size_t outbytesleft = inbytesleft * 2 + 1;
     const char* inbuf = str.c_str();
-    char* outbuf1 = new char [outbytesleft];
-    char* outbuf2 = outbuf1;
+    up<char> outbuf2 (new char [outbytesleft]);
+    char* outbuf1 = outbuf2;
 
 #if defined(__FreeBSD__) || defined (__MINGW32__)  || defined (__MINGW64__)
     size_t reslen = iconv(cd, &inbuf, &inbytesleft, &outbuf1, &outbytesleft);
@@ -799,9 +799,7 @@ std::string EncodeString(const std::string & str, const char* charset)
     iconv_close(cd);
 
     if(reslen != (size_t)(-1))
-    res = std::string(outbuf2, outbuf1 - outbuf2);
-
-    delete [] outbuf2;
+        res = std::string(outbuf2, outbuf1 - outbuf2);
 
     return res;
 }
@@ -831,12 +829,11 @@ string cp1251_to_utf8(const string &in)
     string res;
     res.reserve(in.size() * 2 + 1);
 
-    for (string::const_iterator
-                 it = in.begin(); it != in.end(); ++it)
+    for (char it : in)
     {
-        if (*it & 0x80)
+        if (it & 0x80)
         {
-            const size_t index = *it & 0x7f;
+            const size_t index = it & 0x7f;
 
             if (index < ARRAY_COUNT(table_1251))
             {
@@ -846,7 +843,7 @@ string cp1251_to_utf8(const string &in)
                 if (v & 0xFFFF0000) res.append(1, v >> 16);
             }
         } else
-            res.append(1, *it);
+            res.append(1, it);
     }
 
     return res;

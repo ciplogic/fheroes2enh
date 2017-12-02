@@ -2020,65 +2020,63 @@ bool AIHeroesShowAnimation(const Heroes &hero)
 
 void AI::HeroesMove(Heroes &hero)
 {
-    if (hero.GetPath().isValid())
+    if (!hero.GetPath().isValid())
+        return;
+    hero.SetMove(true);
+
+    if (false)
+        return;
+    const Settings &conf = Settings::Get();
+    Display &display = Display::Get();
+    Cursor &cursor = Cursor::Get();
+    Interface::Basic &I = Interface::Basic::Get();
+
+    cursor.Hide();
+
+    if (0 != conf.AIMoveSpeed() && AIHeroesShowAnimation(hero))
     {
-        hero.SetMove(true);
+        cursor.Hide();
+        I.GetGameArea().SetCenter(hero.GetCenter());
+        I.Redraw(REDRAW_GAMEAREA);
+        cursor.Show();
+        display.Flip();
+    }
 
-        if (1)
+    while (LocalEvent::Get().HandleEvents())
+    {
+        if (hero.isFreeman() || !hero.isEnableMove()) break;
+
+        bool hide_move = (0 == conf.AIMoveSpeed()) ||
+                         (!IS_DEVEL() && !AIHeroesShowAnimation(hero));
+
+        if (hide_move)
         {
-            const Settings &conf = Settings::Get();
-            Display &display = Display::Get();
-            Cursor &cursor = Cursor::Get();
-            Interface::Basic &I = Interface::Basic::Get();
-
+            hero.Move(true);
+        } else if (AnimateInfrequentDelay(Game::CURRENT_AI_DELAY))
+        {
             cursor.Hide();
+            hero.Move();
 
-            if (0 != conf.AIMoveSpeed() && AIHeroesShowAnimation(hero))
-            {
-                cursor.Hide();
-                I.GetGameArea().SetCenter(hero.GetCenter());
-                I.Redraw(REDRAW_GAMEAREA);
-                cursor.Show();
-                display.Flip();
-            }
+            I.GetGameArea().SetCenter(hero.GetCenter());
+            I.Redraw(REDRAW_GAMEAREA);
+            cursor.Show();
+            display.Flip();
+        }
 
-            while (LocalEvent::Get().HandleEvents())
-            {
-                if (hero.isFreeman() || !hero.isEnableMove()) break;
-
-                bool hide_move = (0 == conf.AIMoveSpeed()) ||
-                                 (!IS_DEVEL() && !AIHeroesShowAnimation(hero));
-
-                if (hide_move)
-                {
-                    hero.Move(true);
-                } else if (AnimateInfrequentDelay(Game::CURRENT_AI_DELAY))
-                {
-                    cursor.Hide();
-                    hero.Move();
-
-                    I.GetGameArea().SetCenter(hero.GetCenter());
-                    I.Redraw(REDRAW_GAMEAREA);
-                    cursor.Show();
-                    display.Flip();
-                }
-
-                if (AnimateInfrequentDelay(Game::MAPS_DELAY))
-                {
-                    u32 &frame = Game::MapsAnimationFrame();
-                    ++frame;
-                    cursor.Hide();
-                    I.Redraw(REDRAW_GAMEAREA);
-                    cursor.Show();
-                    display.Flip();
-                }
-            }
-
-            bool hide_move = (0 == conf.AIMoveSpeed()) ||
-                             (!IS_DEVEL() && !AIHeroesShowAnimation(hero));
-
-            // 0.2 sec delay for show enemy hero position
-            if (!hero.isFreeman() && !hide_move) DELAY(200);
+        if (AnimateInfrequentDelay(Game::MAPS_DELAY))
+        {
+            u32 &frame = Game::MapsAnimationFrame();
+            ++frame;
+            cursor.Hide();
+            I.Redraw(REDRAW_GAMEAREA);
+            cursor.Show();
+            display.Flip();
         }
     }
+
+    bool hide_move = (0 == conf.AIMoveSpeed()) ||
+                     (!IS_DEVEL() && !AIHeroesShowAnimation(hero));
+
+    // 0.2 sec delay for show enemy hero position
+    if (!hero.isFreeman() && !hide_move) DELAY(200);
 }

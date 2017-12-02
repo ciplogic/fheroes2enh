@@ -75,23 +75,22 @@ Battle::Position Battle::Position::GetCorrect(const Unit &b, s32 head)
 
     result.first = Board::GetCell(head);
 
-    if (result.first && b.isWide())
+    if (!result.first || !b.isWide())
+        return result;
+    result.second = Board::GetCell(head, b.isReflect() ? RIGHT : LEFT);
+
+    if (!result.second ||
+        (result.second != b.GetPosition().GetHead() && !result.second->isPassable1(true)))
     {
-        result.second = Board::GetCell(head, b.isReflect() ? RIGHT : LEFT);
+        result.second = Board::GetCell(head, b.isReflect() ? LEFT : RIGHT);
 
-        if (!result.second ||
-            (result.second != b.GetPosition().GetHead() && !result.second->isPassable1(true)))
-        {
-            result.second = Board::GetCell(head, b.isReflect() ? LEFT : RIGHT);
+        if (!result.second)
+            result.second = Board::GetCell(head, b.isReflect() ? RIGHT : LEFT);
 
-            if (!result.second)
-                result.second = Board::GetCell(head, b.isReflect() ? RIGHT : LEFT);
-
-            if (result.second)
-                std::swap(result.first, result.second);
-            else
-                    DEBUG(DBG_BATTLE, DBG_WARN, "nullptr pointer, " << b.String() << ", dst: " << head);
-        }
+        if (result.second)
+            std::swap(result.first, result.second);
+        else
+                DEBUG(DBG_BATTLE, DBG_WARN, "nullptr pointer, " << b.String() << ", dst: " << head);
     }
 
     return result;
@@ -229,29 +228,28 @@ void Battle::Cell::SetUnit(Unit *val)
 
 bool Battle::Cell::isPassable4(const Unit &b, const Cell &from) const
 {
-    if (b.isWide())
+    if (!b.isWide())
+        return isPassable1(true);
+    const int dir = Board::GetDirection(from.index, index);
+
+    switch (dir)
     {
-        const int dir = Board::GetDirection(from.index, index);
-
-        switch (dir)
+        case BOTTOM_RIGHT:
+        case TOP_RIGHT:
+        case BOTTOM_LEFT:
+        case TOP_LEFT:
         {
-            case BOTTOM_RIGHT:
-            case TOP_RIGHT:
-            case BOTTOM_LEFT:
-            case TOP_LEFT:
-            {
-                bool reflect = (BOTTOM_LEFT | TOP_LEFT) & dir;
-                const Cell *tail = Board::GetCell(index, reflect ? RIGHT : LEFT);
-                return tail && tail->isPassable1(true) && isPassable1(true);
-            }
-
-            case LEFT:
-            case RIGHT:
-                return isPassable1(true) || index == b.GetTailIndex();
-
-            default:
-                break;
+            bool reflect = (BOTTOM_LEFT | TOP_LEFT) & dir;
+            const Cell *tail = Board::GetCell(index, reflect ? RIGHT : LEFT);
+            return tail && tail->isPassable1(true) && isPassable1(true);
         }
+
+        case LEFT:
+        case RIGHT:
+            return isPassable1(true) || index == b.GetTailIndex();
+
+        default:
+            break;
     }
 
     return isPassable1(true);
@@ -259,29 +257,27 @@ bool Battle::Cell::isPassable4(const Unit &b, const Cell &from) const
 
 bool Battle::Cell::isPassable3(const Unit &b, bool check_reflect) const
 {
-    if (b.isWide())
-    {
-        if (index == b.GetTailIndex() || index == b.GetHeadIndex()) return true;
+    if (!b.isWide())
+        return isPassable1(true);
+    if (index == b.GetTailIndex() || index == b.GetHeadIndex()) return true;
 
-        if (check_reflect)
-        {
-            const Cell *cell = Board::GetCell(index, b.isReflect() ? RIGHT : LEFT);
-            return cell &&
-                   (cell->isPassable1(true) || cell->index == b.GetTailIndex() || cell->index == b.GetHeadIndex()) &&
-                   isPassable1(true);
-        } else
-        {
-            Cell *left = Board::GetCell(index, LEFT);
-            Cell *right = Board::GetCell(index, RIGHT);
-            return ((left &&
-                     (left->isPassable1(true) || left->index == b.GetTailIndex() || left->index == b.GetHeadIndex())) ||
-                    (right && (right->isPassable1(true) || right->index == b.GetTailIndex() ||
-                               right->index == b.GetHeadIndex()))) &&
-                   isPassable1(true);
-        }
+    if (check_reflect)
+    {
+        const Cell *cell = Board::GetCell(index, b.isReflect() ? RIGHT : LEFT);
+        return cell &&
+               (cell->isPassable1(true) || cell->index == b.GetTailIndex() || cell->index == b.GetHeadIndex()) &&
+               isPassable1(true);
     }
 
-    return isPassable1(true);
+    Cell *left = Board::GetCell(index, LEFT);
+    Cell *right = Board::GetCell(index, RIGHT);
+    return ((left &&
+             (left->isPassable1(true) || left->index == b.GetTailIndex() || left->index == b.GetHeadIndex())) ||
+            (right && (right->isPassable1(true) || right->index == b.GetTailIndex() ||
+                       right->index == b.GetHeadIndex()))) &&
+           isPassable1(true);
+
+
 }
 
 bool Battle::Cell::isPassable1(bool check_troop) const

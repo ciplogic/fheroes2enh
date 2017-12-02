@@ -149,9 +149,8 @@ StreamBase &StreamBase::operator>>(string &v)
     u32 size = get32();
     v.resize(size);
 
-    for (string::iterator
-                 it = v.begin(); it != v.end(); ++it)
-        *it = get8();
+    for (char &it : v)
+        it = get8();
 
     return *this;
 }
@@ -234,7 +233,7 @@ StreamBase &StreamBase::operator<<(const u32 &v)
 
 StreamBase &StreamBase::operator<<(const float &v)
 {
-    s32 intpart = static_cast<s32>(v);
+    auto intpart = static_cast<s32>(v);
     float decpart = (v - intpart) * 100000000;
     return *this << intpart << static_cast<s32>(decpart);
 }
@@ -243,9 +242,8 @@ StreamBase &StreamBase::operator<<(const string &v)
 {
     put32(v.size());
 
-    for (string::const_iterator
-                 it = v.begin(); it != v.end(); ++it)
-        put8(*it);
+    for (char it : v)
+        put8(it);
 
     return *this;
 }
@@ -380,7 +378,7 @@ void StreamBuf::realloc(size_t sz)
     {
         if (sz < MINCAPACITY) sz = MINCAPACITY;
 
-        u8 *ptr = new u8[sz];
+        auto ptr = new u8[sz];
 
         fill(ptr, ptr + sz, 0);
         std::copy(itbeg, itput, ptr);
@@ -486,9 +484,8 @@ vector<u8> StreamBuf::getRaw(size_t sz)
 {
     vector<u8> v(sz ? sz : sizeg(), 0);
 
-    for (vector<u8>::iterator
-                 it = v.begin(); it != v.end(); ++it)
-        *this >> *it;
+    for (unsigned char &it : v)
+        *this >> it;
 
     return v;
 }
@@ -723,6 +720,6 @@ StreamBuf StreamFile::toStreamBuf(size_t sz)
 string StreamFile::toString(size_t sz)
 {
     const vector<u8> buf = getRaw(sz);
-    vector<u8>::const_iterator itend = find(buf.begin(), buf.end(), 0);
+    auto itend = find(buf.begin(), buf.end(), 0);
     return string(buf.begin(), itend != buf.end() ? itend : buf.end());
 }

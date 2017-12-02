@@ -967,7 +967,7 @@ bool MP2::isWaterObject(int obj)
     }
 
     // price loyalty: editor allow place other objects
-    return Settings::Get().PriceLoyaltyVersion() ? isGroundObject(obj) : false;
+    return Settings::Get().PriceLoyaltyVersion() && isGroundObject(obj);
 }
 
 bool MP2::isGroundObject(int obj)
@@ -1095,9 +1095,8 @@ bool MP2::isQuantityObject(int obj)
             break;
     }
 
-    if (isPickupObject(obj)) return true;
+    return isPickupObject(obj);
 
-    return false;
 }
 
 bool MP2::isCaptureObject(int obj)

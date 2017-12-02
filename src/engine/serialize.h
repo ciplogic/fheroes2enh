@@ -367,7 +367,7 @@ public:
 
     void putLE16(u16);
 
-    vector<u8> getRaw(size_t = 0 /* all data */);
+    vector<u8> getRaw(size_t /* all data */);
 
     void putRaw(const char *, size_t);
 

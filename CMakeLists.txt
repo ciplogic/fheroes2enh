@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.8)
 project(fheroes2)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 
 ADD_DEFINITIONS(-DBUILD_RELEASE -DWITH_ZLIB -DWITH_AI=simple -DWITH_IMAGE)
 

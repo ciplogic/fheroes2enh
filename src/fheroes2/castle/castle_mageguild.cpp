@@ -87,8 +87,7 @@ void RowSpells::Redraw()
     const Sprite &roll_show = AGG::GetICN(ICN::TOWNWIND, 0);
     const Sprite &roll_hide = AGG::GetICN(ICN::TOWNWIND, 1);
 
-    for (Rects::iterator
-                 it = coords.begin(); it != coords.end(); ++it)
+    for (auto it = coords.begin(); it != coords.end(); ++it)
     {
         const Rect &dst = (*it);
         const Spell &spell = spells[distance(coords.begin(), it)];
@@ -97,26 +96,26 @@ void RowSpells::Redraw()
         if (dst.w < roll_show.w() || spell == Spell::NONE)
         {
             roll_hide.Blit(dst);
+            continue;
         }
-            // roll show
+        // roll show
+        roll_show.Blit(dst);
+
+        const Sprite &icon = AGG::GetICN(ICN::SPELLS, spell.IndexSprite());
+
+        if (Settings::Get().QVGA())
+        {
+            icon.Blit(dst.x + 2 + (dst.w - icon.w()) / 2, dst.y + 20 - icon.h() / 2);
+        }
         else
         {
-            roll_show.Blit(dst);
+            icon.Blit(dst.x + 5 + (dst.w - icon.w()) / 2, dst.y + 40 - icon.h() / 2);
 
-            const Sprite &icon = AGG::GetICN(ICN::SPELLS, spell.IndexSprite());
-
-            if (Settings::Get().QVGA())
-            {
-                icon.Blit(dst.x + 2 + (dst.w - icon.w()) / 2, dst.y + 20 - icon.h() / 2);
-            } else
-            {
-                icon.Blit(dst.x + 5 + (dst.w - icon.w()) / 2, dst.y + 40 - icon.h() / 2);
-
-                TextBox text(string(spell.GetName()) + " [" + GetString(spell.SpellPoint(nullptr)) + "]", Font::SMALL,
-                             78);
-                text.Blit(dst.x + 18, dst.y + 62);
-            }
+            TextBox text(string(spell.GetName()) + " [" + GetString(spell.SpellPoint(nullptr)) + "]", Font::SMALL,
+                         78);
+            text.Blit(dst.x + 18, dst.y + 62);
         }
+
     }
 }
 
@@ -128,18 +127,16 @@ bool RowSpells::QueueEventProcessing()
 
     const s32 index = coords.GetIndex(le.GetMouseCursor());
 
-    if (0 <= index &&
-        (le.MouseClickLeft() || le.MousePressRight()))
-    {
-        const Spell &spell = spells[index];
+    if (0 > index || !(le.MouseClickLeft() || le.MousePressRight()))
+        return 0 <= index;
+    const Spell &spell = spells[index];
 
-        if (spell != Spell::NONE)
-        {
-            cursor.Hide();
-            Dialog::SpellInfo(spell, !le.MousePressRight());
-            cursor.Show();
-            display.Flip();
-        }
+    if (spell != Spell::NONE)
+    {
+        cursor.Hide();
+        Dialog::SpellInfo(spell, !le.MousePressRight());
+        cursor.Show();
+        display.Flip();
     }
 
     return 0 <= index;

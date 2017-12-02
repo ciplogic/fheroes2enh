@@ -143,8 +143,8 @@ void Castle::OpenWell()
                 u32 can_recruit;
                 string str;
 
-                for (vector<u32>::const_iterator
-                             it = alldwellings.begin(); it != alldwellings.end(); ++it)
+                for (auto it = alldwellings.begin(); it != alldwellings.end(); ++it)
+                {
                     if (0 != (can_recruit = HowManyRecruitMonster(*this, *it, total, cur)))
                     {
                         results.push_back(dwelling_t(*it, can_recruit));
@@ -155,6 +155,7 @@ void Castle::OpenWell()
                         str.append(GetString(can_recruit));
                         str.append("\n");
                     }
+                }
 
                 if (str.empty()) str = "None";
 

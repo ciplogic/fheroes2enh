@@ -64,17 +64,16 @@ s32 Battle::AIAreaSpellDst(const HeroBase &hero)
     Arena *arena = GetArena();
     Units enemies(arena->GetForce(hero.GetColor(), true), true);
 
-    for (Units::const_iterator
-                 it1 = enemies.begin(); it1 != enemies.end(); ++it1)
+    for (auto &enemie : enemies)
     {
-        const Indexes around = Board::GetAroundIndexes(**it1);
+        const Indexes around = Board::GetAroundIndexes(*enemie);
 
         for (int it2 : around)
             dstcount[it2] += 1;
     }
 
     // find max
-    map<s32, u32>::const_iterator max = max_element(dstcount.begin(), dstcount.end(), MaxDstCount);
+    auto max = max_element(dstcount.begin(), dstcount.end(), MaxDstCount);
 
     return max != dstcount.end() ? (*max).first : -1;
 }
@@ -168,7 +167,8 @@ s32 Battle::AIAttackPosition(Arena &arena, const Unit &b, const Indexes &positio
     if (b.isMultiCellAttack())
     {
         res = AIMaxQualityPosition(positions);
-    } else if (b.isDoubleCellAttack())
+    } else
+    if (b.isDoubleCellAttack())
     {
         Indexes results;
         results.reserve(12);
@@ -177,8 +177,7 @@ s32 Battle::AIAttackPosition(Arena &arena, const Unit &b, const Indexes &positio
 
         if (1 < enemies.size())
         {
-            for (Units::const_iterator
-                         it1 = enemies.begin(); it1 != enemies.end(); ++it1)
+            for (auto it1 = enemies.begin(); it1 != enemies.end(); ++it1)
             {
                 const Indexes around = Board::GetAroundIndexes(**it1);
 
@@ -194,12 +193,11 @@ s32 Battle::AIAttackPosition(Arena &arena, const Unit &b, const Indexes &positio
             {
                 // find passable results
                 Indexes passable = Arena::GetBoard()->GetPassableQualityPositions(b);
-                Indexes::iterator it2 = results.begin();
+                auto it2 = results.begin();
 
-                for (Indexes::const_iterator
-                             it = results.begin(); it != results.end(); ++it)
-                    if (passable.end() != find(passable.begin(), passable.end(), *it))
-                        *it2++ = *it;
+                for (int &result : results)
+                    if (passable.end() != find(passable.begin(), passable.end(), result))
+                        *it2++ = result;
 
                 if (it2 != results.end())
                     results.resize(distance(results.begin(), it2));
@@ -314,7 +312,7 @@ void AI::BattleTurn(Arena &arena, const Unit &b, Actions &a)
                     a.push_back(Command(MSG_BATTLE_MOVE, b.GetUID(), path.back()));
 
                     // archers move and short attack only
-                    attack = b.isArchers() ? false : true;
+                    attack = !b.isArchers();
                 }
             }
         } else
@@ -371,11 +369,11 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
         s32 dst = AIAreaSpellDst(*hero);
 
         if (Board::isValidIndex(dst))
-            for (u32 ii = 0; ii < ARRAY_COUNT(areasp); ++ii)
+            for (unsigned char ii : areasp)
             {
-                if (hero->CanCastSpell(areasp[ii]))
+                if (hero->CanCastSpell(ii))
                 {
-                    a.push_back(Command(MSG_BATTLE_CAST, areasp[ii], dst));
+                    a.push_back(Command(MSG_BATTLE_CAST, ii, dst));
                     return true;
                 }
             }
@@ -412,7 +410,7 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
     if (hero->HaveSpell(Spell::HASTE) && !enemy)
     {
         // sort strongest
-        Units::iterator it = find_if(friends.begin(), friends.end(),
+        auto it = find_if(friends.begin(), friends.end(),
                                           not1(bind2nd(mem_fun(&Unit::Modes), SP_HASTE)));
         if (it != friends.end() &&
             AIApplySpell(Spell::HASTE, *it, *hero, a))
@@ -421,7 +419,7 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
 
     // shield spell conditions
     {
-        Units::iterator it = find_if(enemies.begin(), enemies.end(),
+        auto it = find_if(enemies.begin(), enemies.end(),
                                           mem_fun(&Unit::isArchers));
 
         const Castle *castle = Arena::GetCastle();
@@ -450,7 +448,7 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
     // enemy army spell
     {
         // find mirror image or summon elem
-        Units::iterator it = find_if(enemies.begin(), enemies.end(),
+        auto it = find_if(enemies.begin(), enemies.end(),
                                           bind2nd(mem_fun(&Unit::Modes), CAP_MIRRORIMAGE | CAP_SUMMONELEM));
 
         if (it != enemies.end())

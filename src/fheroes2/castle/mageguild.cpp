@@ -68,30 +68,28 @@ SpellStorage MageGuild::GetSpells(int lvlmage, bool islibrary, int level) const
 {
     SpellStorage result;
 
-    if (lvlmage >= level)
-    {
-        result = general.GetSpells(level);
-        if (islibrary) result.Append(library.GetSpells(level));
-    }
+    if (lvlmage < level)
+        return result;
+    result = general.GetSpells(level);
+    if (islibrary) result.Append(library.GetSpells(level));
 
     return result;
 }
 
 void MageGuild::EducateHero(HeroBase &hero, int lvlmage, bool isLibraryBuild) const
 {
-    if (hero.HaveSpellBook() && lvlmage)
+    if (!hero.HaveSpellBook() || !lvlmage)
+        return;
+    SpellStorage spells;
+
+    for (s32 level = 1; level <= 5; ++level)
     {
-        SpellStorage spells;
-
-        for (s32 level = 1; level <= 5; ++level)
-            if (level <= lvlmage)
-            {
-                spells.Append(general.GetSpells(level));
-                if (isLibraryBuild) spells.Append(library.GetSpells(level));
-            }
-
-        hero.AppendSpellsToBook(spells);
+        if (level > lvlmage) continue;
+        spells.Append(general.GetSpells(level));
+        if (isLibraryBuild) spells.Append(library.GetSpells(level));
     }
+
+    hero.AppendSpellsToBook(spells);
 }
 
 Spell GetUniqueCombatSpellCompatibility(const SpellStorage &spells, int race, int lvl)
@@ -101,10 +99,10 @@ Spell GetUniqueCombatSpellCompatibility(const SpellStorage &spells, int race, in
     return spell;
 }
 
-Spell GetCombatSpellCompatibility(int race, int lvl)
+Spell GetCombatSpellCompatibility(int race, int level)
 {
-    Spell spell = Spell::RandCombat(lvl);
-    while (!spell.isRaceCompatible(race)) spell = Spell::RandCombat(lvl);
+    Spell spell = Spell::RandCombat(level);
+    while (!spell.isRaceCompatible(race)) spell = Spell::RandCombat(level);
     return spell;
 }
 
