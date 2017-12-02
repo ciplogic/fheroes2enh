@@ -55,8 +55,8 @@ void Maps::IndexesDistance::Assign(s32 from, const Indexes &indexes, int sort)
 {
     reserve(indexes.size());
 
-    for (auto it = indexes.begin(); it != indexes.end(); ++it)
-        push_back(IndexDistance(*it, GetApproximateDistance(from, *it)));
+    for (int indexe : indexes)
+        push_back(IndexDistance(indexe, GetApproximateDistance(from, indexe)));
 
     if (1 == sort)
         std::sort(begin(), end(), IndexDistance::Shortest);
@@ -383,12 +383,11 @@ Maps::Indexes Maps::GetObjectPositions(int obj, bool check_hero)
     if (check_hero && obj != MP2::OBJ_HEROES)
     {
         const Indexes &v = GetObjectPositions(MP2::OBJ_HEROES, false);
-        for (Indexes::const_iterator
-                     it = v.begin(); it != v.end(); ++it)
+        for (int it : v)
         {
-            const Heroes *hero = world.GetHeroes(GetPoint(*it));
+            const Heroes *hero = world.GetHeroes(GetPoint(it));
             if (hero && obj == hero->GetMapsObject())
-                results.push_back(*it);
+                results.push_back(it);
         }
     }
 
@@ -641,11 +640,10 @@ int Maps::TileIsCoast(s32 center, int filter)
     int result = 0;
     const Directions directions = Direction::All();
 
-    for (Directions::const_iterator
-                 it = directions.begin(); it != directions.end(); ++it)
-        if ((*it & filter) && isValidDirection(center, *it) &&
-            world.GetTiles(GetDirectionIndex(center, *it)).isWater())
-            result |= *it;
+    for (int direction : directions)
+        if ((direction & filter) && isValidDirection(center, direction) &&
+            world.GetTiles(GetDirectionIndex(center, direction)).isWater())
+            result |= direction;
 
     return result;
 }

@@ -181,9 +181,9 @@ void Interface::GameArea::Redraw(Surface &dst, int flag, const Rect &rt) const
 
         const bool skipfirst = hero->isEnableMove() && 45 > hero->GetSpriteIndex() && 2 < (hero->GetSpriteIndex() % 9);
 
-        Route::Path::const_iterator it1 = hero->GetPath().begin();
-        Route::Path::const_iterator it2 = hero->GetPath().end();
-        Route::Path::const_iterator it3 = it1;
+        auto it1 = hero->GetPath().begin();
+        auto it2 = hero->GetPath().end();
+        auto it3 = it1;
 
         for (; it1 != it2; ++it1)
         {
@@ -567,7 +567,7 @@ void Interface::GameArea::QueueEventProcessing()
                     s32 d2x = scrollStepX;
                     s32 d2y = scrollStepY;
 
-                    while (1)
+                    while (true)
                     {
                         if (d2x <= dx)
                         {
@@ -583,12 +583,13 @@ void Interface::GameArea::QueueEventProcessing()
                         if (d2y <= dy)
                         {
                             SetScroll(SCROLL_TOP);
-                            dy -= d2y;
+                            dy -= d2y;continue;
                         }
                         else if (-d2y >= dy)
                         {
                             SetScroll(SCROLL_BOTTOM);
                             dy += d2y;
+                            continue;
                         }
 
                         if (NeedScroll())
@@ -599,7 +600,9 @@ void Interface::GameArea::QueueEventProcessing()
                             interface.Redraw();
                             cursor.Show();
                             display.Flip();
-                        } else break;
+                            continue;
+                        }
+                        break;
                     }
                 }
             }

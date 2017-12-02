@@ -1070,10 +1070,8 @@ pair<int, int> Maps::TilesAddon::ColorRaceFromHeroSprite(const TilesAddon &ta)
 bool Maps::TilesAddon::ForceLevel1(const TilesAddon &ta)
 {
     // broken ship: left roc
-    if (ICN::OBJNWAT2 == MP2::GetICNObject(ta.object) && ta.index == 11)
-        return true;
+    return ICN::OBJNWAT2 == MP2::GetICNObject(ta.object) && ta.index == 11;
 
-    return false;
 }
 
 bool Maps::TilesAddon::ForceLevel2(const TilesAddon &ta)
@@ -1950,7 +1948,7 @@ string Maps::Tiles::String() const
         default:
         {
             const MapsIndexes &v = GetTilesUnderProtection(GetIndex());
-            if (v.size())
+            if (!v.empty())
             {
                 os << "protection      : ";
                 for (int it : v)
@@ -2052,10 +2050,8 @@ bool Maps::Tiles::isPassable(const Heroes *hero, int direct, bool skipfog) const
     if (!skipfog && isFog(Settings::Get().CurrentColor()))
         return false;
 
-    if (hero && !isPassable(*hero))
-        return false;
+    return !(hero && !isPassable(*hero)) && direct & tile_passable;
 
-    return direct & tile_passable;
 }
 
 void Maps::Tiles::SetObjectPassable(bool pass)
@@ -2094,7 +2090,7 @@ Maps::TilesAddon *Maps::Tiles::FindObject(int objs)
 
 const Maps::TilesAddon *Maps::Tiles::FindObjectConst(int objs) const
 {
-    auto it = addons_level1.size() ? addons_level1.begin() : addons_level1.end();
+    auto it = !addons_level1.empty() ? addons_level1.begin() : addons_level1.end();
 
     switch (objs)
     {

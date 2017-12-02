@@ -1872,9 +1872,8 @@ bool ICN::NeedMinify4PocketPC(int icn, u32 index)
             break;
     }
 
-    if (isBattleMonsterICN(icn)) return true;
+    return isBattleMonsterICN(icn);
 
-    return false;
 }
 
 u32 ICN::missile9(float dx, float dy)

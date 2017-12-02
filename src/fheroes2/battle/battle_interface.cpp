@@ -830,15 +830,14 @@ void Battle::ArmiesOrder::Redraw(const Unit *current)
 
         rects.clear();
 
-        for (Units::const_iterator
-                     it = orders->begin(); it != orders->end(); ++it)
-            if (*it && (*it)->isValid())
-            {
-                rects.push_back(UnitPos(*it, Rect(ox, oy, ow, ow)));
-                RedrawUnit(rects.back().second, **it, (**it).GetColor() == army_color2, current == *it);
-                ox += ow;
-                w += ow;
-            }
+        for (auto order : *orders)
+        {
+            if (!order || !order->isValid()) continue;
+            rects.push_back(UnitPos(order, Rect(ox, oy, ow, ow)));
+            RedrawUnit(rects.back().second, *order, (*order).GetColor() == army_color2, current == order);
+            ox += ow;
+            w += ow;
+        }
     }
 }
 
@@ -990,9 +989,9 @@ Battle::Interface::Interface(Arena &a, s32 center) : arena(a), icn_cbkg(ICN::UNK
 
 Battle::Interface::~Interface()
 {
-    if (listlog) delete listlog;
-    if (opponent1) delete opponent1;
-    if (opponent2) delete opponent2;
+    delete listlog;
+    delete opponent1;
+    delete opponent2;
 }
 
 void Battle::Interface::SetArmiesOrder(const Units *units)
@@ -1683,12 +1682,11 @@ void Battle::Interface::RedrawKilled()
     // redraw killed troop
     const Indexes cells = arena.GraveyardClosedCells();
 
-    for (Indexes::const_iterator
-                 it = cells.begin(); it != cells.end(); ++it)
+    for (int cell : cells)
     {
-        const Unit *b = arena.GraveyardLastTroop(*it);
+        const Unit *b = arena.GraveyardLastTroop(cell);
 
-        if (b && *it != b->GetTailIndex())
+        if (b && cell != b->GetTailIndex())
         {
             RedrawTroopSprite(*b);
         }
@@ -2319,11 +2317,8 @@ int Battle::Interface::GetAllowSwordDirection(u32 index)
     {
         const Indexes around = Board::GetAroundIndexes(index);
 
-        for (Indexes::const_iterator
-                     it = around.begin(); it != around.end(); ++it)
+        for (int from : around)
         {
-            const s32 from = *it;
-
             if (UNKNOWN != Board::GetCell(from)->GetDirection() ||
                 from == b_current->GetHeadIndex() ||
                 (b_current->isWide() && from == b_current->GetTailIndex()))
@@ -2635,7 +2630,7 @@ void Battle::Interface::RedrawActionAttackPart2(Unit &attacker, TargetsInfo &tar
     RedrawActionWincesKills(targets);
 
     // draw status for first defender
-    if (targets.size())
+    if (!targets.empty())
     {
         string msg = _("%{attacker} do %{damage} damage.");
         StringReplace(msg, "%{attacker}", attacker.GetName());
@@ -2679,18 +2674,17 @@ void Battle::Interface::RedrawActionAttackPart2(Unit &attacker, TargetsInfo &tar
     }
 
     // restore
-    for (TargetsInfo::iterator
-                 it = targets.begin(); it != targets.end(); ++it)
-        if ((*it).defender)
+    for (auto &it : targets)
+    {
+        if (!it.defender) continue;
+        TargetInfo &target1 = it;
+        if (!target1.defender->isValid())
         {
-            TargetInfo &target = *it;
-            if (!target.defender->isValid())
-            {
-                const animframe_t &frm = target.defender->GetFrameState(AS_KILL);
-                target.defender->SetFrame(frm.start + frm.count - 1);
-            } else
-                target.defender->ResetAnimFrame(AS_IDLE);
-        }
+            const animframe_t &frm = target1.defender->GetFrameState(AS_KILL);
+            target1.defender->SetFrame(frm.start + frm.count - 1);
+        } else
+            target1.defender->ResetAnimFrame(AS_IDLE);
+    }
     if (opponent1) opponent1->ResetAnimFrame(OP_IDLE);
     if (opponent2) opponent2->ResetAnimFrame(OP_IDLE);
     b_move = nullptr;
@@ -2708,40 +2702,40 @@ void Battle::Interface::RedrawActionWincesKills(TargetsInfo &targets)
     int py = (conf.QVGA() ? 20 : 50);
     int finish = 0;
 
-    for (TargetsInfo::iterator
-                 it = targets.begin(); it != targets.end(); ++it)
-        if ((*it).defender)
+    for (auto &it : targets)
+    {
+        if (!it.defender)
+            continue;
+        TargetInfo &target = it;
+
+        // kill animation
+        if (!target.defender->isValid())
         {
-            TargetInfo &target = *it;
+            target.defender->ResetAnimFrame(AS_KILL);
+            AGG::PlaySound(target.defender->M82Kill());
+            ++finish;
 
-            // kill animation
-            if (!target.defender->isValid())
+            // set opponent OP_SRRW animation
+            if (target.defender->GetColor() != Color::NONE)
             {
-                target.defender->ResetAnimFrame(AS_KILL);
-                AGG::PlaySound(target.defender->M82Kill());
-                ++finish;
-
-                // set opponent OP_SRRW animation
-                if (target.defender->GetColor() != Color::NONE)
-                {
-                    OpponentSprite *commander =
-                            target.defender->GetColor() == arena.GetArmyColor1() ? opponent1 : opponent2;
-                    if (commander) commander->ResetAnimFrame(OP_SRRW);
-                }
-            } else
-                // wince animation
-            if (target.damage)
-            {
-                // wnce animation
-                target.defender->ResetAnimFrame(AS_WNCE);
-                AGG::PlaySound(target.defender->M82Wnce());
-                ++finish;
-            } else
-                // have immunitet
-            {
-                AGG::PlaySound(M82::RSBRYFZL);
+                OpponentSprite *commander =
+                        target.defender->GetColor() == arena.GetArmyColor1() ? opponent1 : opponent2;
+                if (commander) commander->ResetAnimFrame(OP_SRRW);
             }
+        } else
+            // wince animation
+        if (target.damage)
+        {
+            // wnce animation
+            target.defender->ResetAnimFrame(AS_WNCE);
+            AGG::PlaySound(target.defender->M82Wnce());
+            ++finish;
+        } else
+            // have immunitet
+        {
+            AGG::PlaySound(M82::RSBRYFZL);
         }
+    }
 
     const Point &topleft = border.GetArea();
 
@@ -2751,33 +2745,32 @@ void Battle::Interface::RedrawActionWincesKills(TargetsInfo &targets)
     {
         CheckGlobalEvents(le);
 
-        if (Battle::AnimateInfrequentDelay(Game::BATTLE_FRAME_DELAY))
+        if (!Battle::AnimateInfrequentDelay(Game::BATTLE_FRAME_DELAY))
+            continue;
+        for (auto &it1 : targets)
         {
-            for (TargetsInfo::iterator
-                         it = targets.begin(); it != targets.end(); ++it)
-                if ((*it).defender)
-                {
-                    TargetInfo &target = *it;
-                    const Rect &pos = target.defender->GetRectPosition();
+            if (!it1.defender)
+                continue;
+            TargetInfo &target1 = it1;
+            const Rect &pos = target1.defender->GetRectPosition();
 
-                    cursor.Hide();
-                    Redraw();
+            cursor.Hide();
+            Redraw();
 
-                    // extended damage info
-                    if (conf.ExtBattleShowDamage() && target.killed &&
-                        (pos.y - py) > topleft.y)
-                    {
-                        string msg = "-" + GetString(target.killed);
-                        Text txt(msg, Font::YELLOW_SMALL);
-                        txt.Blit(pos.x + (pos.w - txt.w()) / 2, pos.y - py);
-                    }
+            // extended damage info
+            if (conf.ExtBattleShowDamage() && target1.killed &&
+                (pos.y - py) > topleft.y)
+            {
+                string msg = "-" + GetString(target1.killed);
+                Text txt(msg, Font::YELLOW_SMALL);
+                txt.Blit(pos.x + (pos.w - txt.w()) / 2, pos.y - py);
+            }
 
-                    cursor.Show();
-                    display.Flip();
-                    target.defender->IncreaseAnimFrame();
-                }
-            py += (conf.QVGA() ? 5 : 10);
+            cursor.Show();
+            display.Flip();
+            target1.defender->IncreaseAnimFrame();
         }
+        py += (conf.QVGA() ? 5 : 10);
     }
 
     DELAY(200);
@@ -2786,7 +2779,7 @@ void Battle::Interface::RedrawActionWincesKills(TargetsInfo &targets)
 void Battle::Interface::RedrawActionMove(Unit &b, const Indexes &path)
 {
     Cursor &cursor = Cursor::Get();
-    Indexes::const_iterator dst = path.begin();
+    auto dst = path.begin();
     Bridge *bridge = Arena::GetBridge();
 
     cursor.SetThemes(Cursor::WAR_NONE);
@@ -2915,7 +2908,7 @@ void Battle::Interface::RedrawActionSpellCastPart1(const Spell &spell, s32 dst, 
                                                    const string &name, const TargetsInfo &targets)
 {
     string msg;
-    Unit *target = targets.size() ? targets.front().defender : nullptr;
+    Unit *target = !targets.empty() ? targets.front().defender : nullptr;
 
     if (target && target->GetHeadIndex() == dst)
     {
@@ -2924,7 +2917,7 @@ void Battle::Interface::RedrawActionSpellCastPart1(const Spell &spell, s32 dst, 
     } else if (spell.isApplyWithoutFocusObject())
         msg = _("%{name} casts %{spell}.");
 
-    if (msg.size())
+    if (!msg.empty())
     {
         StringReplace(msg, "%{name}", name);
         StringReplace(msg, "%{spell}", spell.GetName());
@@ -3138,18 +3131,18 @@ void Battle::Interface::RedrawActionSpellCastPart2(const Spell &spell, TargetsIn
     status.SetMessage(" ", false);
 
     // restore
-    for (TargetsInfo::iterator
-                 it = targets.begin(); it != targets.end(); ++it)
-        if ((*it).defender)
+    for (auto &it : targets)
+    {
+        if (!it.defender)
+            continue;
+        TargetInfo &target = it;
+        if (!target.defender->isValid())
         {
-            TargetInfo &target = *it;
-            if (!target.defender->isValid())
-            {
-                const animframe_t &frm = target.defender->GetFrameState(AS_KILL);
-                target.defender->SetFrame(frm.start + frm.count - 1);
-            } else
-                target.defender->ResetAnimFrame(AS_IDLE);
-        }
+            const animframe_t &frm = target.defender->GetFrameState(AS_KILL);
+            target.defender->SetFrame(frm.start + frm.count - 1);
+        } else
+            target.defender->ResetAnimFrame(AS_IDLE);
+    }
     if (opponent1) opponent1->ResetAnimFrame(OP_IDLE);
     if (opponent2) opponent2->ResetAnimFrame(OP_IDLE);
     b_move = nullptr;
@@ -3243,11 +3236,14 @@ void Battle::Interface::RedrawActionLuck(Unit &b)
         }
 
         DELAY(400);
-    } else if (b.Modes(LUCK_BAD))
+        return;
+    }
+    if (b.Modes(LUCK_BAD))
     {
         string msg = _("Bad luck descends on the %{attacker}");
         StringReplace(msg, "%{attacker}", b.GetName());
         status.SetMessage(msg, true);
+        return;
     }
 }
 
@@ -3296,15 +3292,14 @@ void Battle::Interface::RedrawActionTowerPart1(Tower &tower, Unit &defender)
         CheckGlobalEvents(le);
 
         // fast draw
-        if (Battle::AnimateInfrequentDelay(Game::BATTLE_MISSILE_DELAY))
-        {
-            cursor.Hide();
-            Redraw();
-            missile.Blit((*pnt).x - missile.w(), (*pnt).y);
-            cursor.Show();
-            display.Flip();
-            ++pnt;
-        }
+        if (!Battle::AnimateInfrequentDelay(Game::BATTLE_MISSILE_DELAY))
+            continue;
+        cursor.Hide();
+        Redraw();
+        missile.Blit((*pnt).x - missile.w(), (*pnt).y);
+        cursor.Show();
+        display.Flip();
+        ++pnt;
     }
 }
 
@@ -3358,14 +3353,13 @@ void Battle::Interface::RedrawActionCatapult(int target)
     {
         CheckGlobalEvents(le);
 
-        if (Battle::AnimateInfrequentDelay(Game::BATTLE_CATAPULT_DELAY))
-        {
-            cursor.Hide();
-            Redraw();
-            cursor.Show();
-            display.Flip();
-            ++catapult_frame;
-        }
+        if (!Battle::AnimateInfrequentDelay(Game::BATTLE_CATAPULT_DELAY))
+            continue;
+        cursor.Hide();
+        Redraw();
+        cursor.Show();
+        display.Flip();
+        ++catapult_frame;
     }
 
     // boulder animation
@@ -3391,23 +3385,22 @@ void Battle::Interface::RedrawActionCatapult(int target)
     max.y += area.y;
 
     const Points points = GetArcPoints(pt1, pt2, max, missile.w());
-    Points::const_iterator pnt = points.begin();
+    auto pnt = points.begin();
 
     while (le.HandleEvents(false) && pnt != points.end())
     {
         CheckGlobalEvents(le);
 
-        if (Battle::AnimateInfrequentDelay(Game::BATTLE_CATAPULT2_DELAY))
-        {
-            if (catapult_frame < 9) ++catapult_frame;
+        if (!Battle::AnimateInfrequentDelay(Game::BATTLE_CATAPULT2_DELAY))
+            continue;
+        if (catapult_frame < 9) ++catapult_frame;
 
-            cursor.Hide();
-            Redraw();
-            missile.Blit(*pnt);
-            cursor.Show();
-            display.Flip();
-            ++pnt;
-        }
+        cursor.Hide();
+        Redraw();
+        missile.Blit(*pnt);
+        cursor.Show();
+        display.Flip();
+        ++pnt;
     }
 
     // clod
@@ -3419,19 +3412,18 @@ void Battle::Interface::RedrawActionCatapult(int target)
     {
         CheckGlobalEvents(le);
 
-        if (Battle::AnimateInfrequentDelay(Game::BATTLE_CATAPULT3_DELAY))
-        {
-            if (catapult_frame < 9) ++catapult_frame;
+        if (!Battle::AnimateInfrequentDelay(Game::BATTLE_CATAPULT3_DELAY))
+            continue;
+        if (catapult_frame < 9) ++catapult_frame;
 
-            cursor.Hide();
-            Redraw();
-            const Sprite &sprite = AGG::GetICN(icn, frame);
-            sprite.Blit(pt2.x + sprite.x(), pt2.y + sprite.y());
-            cursor.Show();
-            display.Flip();
+        cursor.Hide();
+        Redraw();
+        const Sprite &sprite = AGG::GetICN(icn, frame);
+        sprite.Blit(pt2.x + sprite.x(), pt2.y + sprite.y());
+        cursor.Show();
+        display.Flip();
 
-            ++frame;
-        }
+        ++frame;
     }
 
     catapult_frame = 0;
@@ -3444,52 +3436,50 @@ void Battle::Interface::RedrawActionArrowSpell(const Unit &target)
     Cursor &cursor = Cursor::Get();
     const HeroBase *current_commander = arena.GetCurrentCommander();
 
-    if (current_commander)
+    if (!current_commander)
+        return;
+    Point pt_from, pt_to;
+    const bool from_left = current_commander == opponent1->GetHero();
+
+    // is left position
+    if (from_left)
     {
-        Point pt_from, pt_to;
-        const bool from_left = current_commander == opponent1->GetHero();
+        const Rect &pos1 = opponent1->GetArea();
+        pt_from = Point(pos1.x + pos1.w, pos1.y + pos1.h / 2);
 
-        // is left position
-        if (from_left)
-        {
-            const Rect &pos1 = opponent1->GetArea();
-            pt_from = Point(pos1.x + pos1.w, pos1.y + pos1.h / 2);
+        const Rect &pos2 = target.GetRectPosition();
+        pt_to = Point(pos2.x, pos2.y);
+    } else
+    {
+        const Rect &pos = opponent2->GetArea();
+        pt_from = Point(pos.x, pos.y + pos.h / 2);
 
-            const Rect &pos2 = target.GetRectPosition();
-            pt_to = Point(pos2.x, pos2.y);
-        } else
-        {
-            const Rect &pos = opponent2->GetArea();
-            pt_from = Point(pos.x, pos.y + pos.h / 2);
+        const Rect &pos2 = target.GetRectPosition();
+        pt_to = Point(pos2.x + pos2.w, pos2.y);
+    }
 
-            const Rect &pos2 = target.GetRectPosition();
-            pt_to = Point(pos2.x + pos2.w, pos2.y);
-        }
+    const Sprite &missile = AGG::GetICN(ICN::ARCH_MSL,
+                                        GetMissIndex(ICN::ARCH_MSL, pt_from.x - pt_to.x, pt_from.y - pt_to.y),
+                                        pt_from.x > pt_to.x);
 
-        const Sprite &missile = AGG::GetICN(ICN::ARCH_MSL,
-                                            GetMissIndex(ICN::ARCH_MSL, pt_from.x - pt_to.x, pt_from.y - pt_to.y),
-                                            pt_from.x > pt_to.x);
+    const Points points = GetLinePoints(pt_from, pt_to, missile.w());
+    Points::const_iterator pnt = points.begin();
 
-        const Points points = GetLinePoints(pt_from, pt_to, missile.w());
-        Points::const_iterator pnt = points.begin();
+    cursor.SetThemes(Cursor::WAR_NONE);
+    AGG::PlaySound(M82::MAGCAROW);
 
-        cursor.SetThemes(Cursor::WAR_NONE);
-        AGG::PlaySound(M82::MAGCAROW);
+    while (le.HandleEvents(false) && pnt != points.end())
+    {
+        CheckGlobalEvents(le);
 
-        while (le.HandleEvents(false) && pnt != points.end())
-        {
-            CheckGlobalEvents(le);
-
-            if (Battle::AnimateInfrequentDelay(Game::BATTLE_MISSILE_DELAY))
-            {
-                cursor.Hide();
-                Redraw();
-                missile.Blit((*pnt).x - (from_left ? 0 : missile.w()), (*pnt).y);
-                cursor.Show();
-                display.Flip();
-                ++pnt;
-            }
-        }
+        if (!Battle::AnimateInfrequentDelay(Game::BATTLE_MISSILE_DELAY))
+            continue;
+        cursor.Hide();
+        Redraw();
+        missile.Blit((*pnt).x - (from_left ? 0 : missile.w()), (*pnt).y);
+        cursor.Show();
+        display.Flip();
+        ++pnt;
     }
 }
 
@@ -3515,15 +3505,14 @@ void Battle::Interface::RedrawActionTeleportSpell(Unit &target, s32 dst)
     {
         CheckGlobalEvents(le);
 
-        if (Battle::AnimateInfrequentDelay(Game::BATTLE_SPELL_DELAY))
-        {
-            cursor.Hide();
-            Redraw();
-            cursor.Show();
-            display.Flip();
+        if (!Battle::AnimateInfrequentDelay(Game::BATTLE_SPELL_DELAY))
+            continue;
+        cursor.Hide();
+        Redraw();
+        cursor.Show();
+        display.Flip();
 
-            b_current_alpha -= 20;
-        }
+        b_current_alpha -= 20;
     }
 
     b_current_alpha = 0;
@@ -3538,15 +3527,14 @@ void Battle::Interface::RedrawActionTeleportSpell(Unit &target, s32 dst)
     {
         CheckGlobalEvents(le);
 
-        if (Battle::AnimateInfrequentDelay(Game::BATTLE_SPELL_DELAY))
-        {
-            cursor.Hide();
-            Redraw();
-            cursor.Show();
-            display.Flip();
+        if (!Battle::AnimateInfrequentDelay(Game::BATTLE_SPELL_DELAY))
+            continue;
+        cursor.Hide();
+        Redraw();
+        cursor.Show();
+        display.Flip();
 
-            b_current_alpha += 20;
-        }
+        b_current_alpha += 20;
     }
 
     b_current_alpha = 255;
@@ -3576,15 +3564,14 @@ void Battle::Interface::RedrawActionSummonElementalSpell(const Unit &target)
     {
         CheckGlobalEvents(le);
 
-        if (Battle::AnimateInfrequentDelay(Game::BATTLE_SPELL_DELAY))
-        {
-            cursor.Hide();
-            Redraw();
-            cursor.Show();
-            display.Flip();
+        if (!Battle::AnimateInfrequentDelay(Game::BATTLE_SPELL_DELAY))
+            continue;
+        cursor.Hide();
+        Redraw();
+        cursor.Show();
+        display.Flip();
 
-            b_current_alpha += 20;
-        }
+        b_current_alpha += 20;
     }
 
     b_current_alpha = 255;
@@ -3614,20 +3601,19 @@ void Battle::Interface::RedrawActionMirrorImageSpell(const Unit &target, const P
     {
         CheckGlobalEvents(le);
 
-        if (Battle::AnimateInfrequentDelay(Game::BATTLE_SPELL_DELAY))
-        {
-            cursor.Hide();
+        if (!Battle::AnimateInfrequentDelay(Game::BATTLE_SPELL_DELAY))
+            continue;
+        cursor.Hide();
 
-            const Point &sp = GetTroopPosition(target, sprite);
+        const Point &sp = GetTroopPosition(target, sprite);
 
-            Redraw();
-            sprite.Blit(sp.x - rt1.x + (*pnt).x, sp.y - rt1.y + (*pnt).y);
+        Redraw();
+        sprite.Blit(sp.x - rt1.x + (*pnt).x, sp.y - rt1.y + (*pnt).y);
 
-            cursor.Show();
-            display.Flip();
+        cursor.Show();
+        display.Flip();
 
-            ++pnt;
-        }
+        ++pnt;
     }
 
     status.SetMessage(_("MirrorImage created"), true);
@@ -3644,9 +3630,8 @@ void Battle::Interface::RedrawActionChainLightningSpell(const TargetsInfo &targe
     // FIX: ChainLightning draw
     //AGG::PlaySound(targets.size() > 1 ? M82::CHAINLTE : M82::LIGHTBLT);
 
-    for (TargetsInfo::const_iterator
-                 it = targets.begin(); it != targets.end(); ++it)
-        RedrawTroopWithFrameAnimation(*(it->defender), ICN::SPARKS, M82::FromSpell(Spell::LIGHTNINGBOLT), true);
+    for (const auto &target : targets)
+        RedrawTroopWithFrameAnimation(*(target.defender), ICN::SPARKS, M82::FromSpell(Spell::LIGHTNINGBOLT), true);
 }
 
 void Battle::Interface::RedrawActionBloodLustSpell(Unit &target)
@@ -3676,18 +3661,17 @@ void Battle::Interface::RedrawActionBloodLustSpell(Unit &target)
     {
         CheckGlobalEvents(le);
 
-        if (Battle::AnimateInfrequentDelay(Game::BATTLE_SPELL_DELAY))
-        {
-            cursor.Hide();
-            sprite1.Blit(sprite2);
-            sprite3.SetAlphaMod(alpha);
-            sprite3.Blit(sprite2);
-            Redraw();
-            cursor.Show();
-            display.Flip();
+        if (!Battle::AnimateInfrequentDelay(Game::BATTLE_SPELL_DELAY))
+            continue;
+        cursor.Hide();
+        sprite1.Blit(sprite2);
+        sprite3.SetAlphaMod(alpha);
+        sprite3.Blit(sprite2);
+        Redraw();
+        cursor.Show();
+        display.Flip();
 
-            alpha += 10;
-        }
+        alpha += 10;
     }
 
     DELAY(100);
@@ -3741,17 +3725,16 @@ void Battle::Interface::RedrawActionColdRaySpell(Unit &target)
     {
         CheckGlobalEvents(le);
 
-        if (Battle::AnimateInfrequentDelay(Game::BATTLE_SPELL_DELAY))
-        {
-            cursor.Hide();
-            const Sprite &sprite = AGG::GetICN(icn, frame);
-            sprite.Blit((*pnt).x - sprite.w() / 2, (*pnt).y - sprite.h() / 2);
-            cursor.Show();
-            display.Flip();
+        if (!Battle::AnimateInfrequentDelay(Game::BATTLE_SPELL_DELAY))
+            continue;
+        cursor.Hide();
+        const Sprite &sprite = AGG::GetICN(icn, frame);
+        sprite.Blit((*pnt).x - sprite.w() / 2, (*pnt).y - sprite.h() / 2);
+        cursor.Show();
+        display.Flip();
 
-            ++frame;
-            ++pnt;
-        }
+        ++frame;
+        ++pnt;
     }
 
     RedrawTroopWithFrameAnimation(target, ICN::ICECLOUD, M82::UNKNOWN, true);
@@ -3773,14 +3756,13 @@ void Battle::Interface::RedrawActionResurrectSpell(Unit &target, const Spell &sp
         {
             CheckGlobalEvents(le);
 
-            if (Battle::AnimateInfrequentDelay(Game::BATTLE_SPELL_DELAY))
-            {
-                cursor.Hide();
-                Redraw();
-                cursor.Show();
-                display.Flip();
-                target.IncreaseAnimFrame();
-            }
+            if (!Battle::AnimateInfrequentDelay(Game::BATTLE_SPELL_DELAY))
+                continue;
+            cursor.Hide();
+            Redraw();
+            cursor.Show();
+            display.Flip();
+            target.IncreaseAnimFrame();
         }
 
         target.SetFrameStep(1);
@@ -3835,17 +3817,16 @@ void Battle::Interface::RedrawActionDisruptingRaySpell(Unit &target)
     {
         CheckGlobalEvents(le);
 
-        if (Battle::AnimateInfrequentDelay(Game::BATTLE_SPELL_DELAY))
-        {
-            cursor.Hide();
-            const Sprite &sprite = AGG::GetICN(icn, frame);
-            sprite.Blit((*pnt).x - sprite.w() / 2, (*pnt).y - sprite.h() / 2);
-            cursor.Show();
-            display.Flip();
+        if (!Battle::AnimateInfrequentDelay(Game::BATTLE_SPELL_DELAY))
+            continue;
+        cursor.Hide();
+        const Sprite &sprite = AGG::GetICN(icn, frame);
+        sprite.Blit((*pnt).x - sprite.w() / 2, (*pnt).y - sprite.h() / 2);
+        cursor.Show();
+        display.Flip();
 
-            ++frame;
-            ++pnt;
-        }
+        ++frame;
+        ++pnt;
     }
 
     // part 2
@@ -3859,16 +3840,15 @@ void Battle::Interface::RedrawActionDisruptingRaySpell(Unit &target)
     {
         CheckGlobalEvents(le);
 
-        if (Battle::AnimateInfrequentDelay(Game::BATTLE_DISRUPTING_DELAY))
-        {
-            cursor.Hide();
-            sprite2.SetPos(Point(sprite1.x() + ((frame % 2) ? -1 : 1), sprite1.y()));
-            Redraw();
-            cursor.Show();
-            display.Flip();
+        if (!Battle::AnimateInfrequentDelay(Game::BATTLE_DISRUPTING_DELAY))
+            continue;
+        cursor.Hide();
+        sprite2.SetPos(Point(sprite1.x() + ((frame % 2) ? -1 : 1), sprite1.y()));
+        Redraw();
+        cursor.Show();
+        display.Flip();
 
-            ++frame;
-        }
+        ++frame;
     }
 
     b_current = old_current;
@@ -3890,9 +3870,8 @@ void Battle::Interface::RedrawActionColdRingSpell(s32 dst, const TargetsInfo &ta
 
     // set WNCE
     b_current = nullptr;
-    for (TargetsInfo::const_iterator
-                 it = targets.begin(); it != targets.end(); ++it)
-        if ((*it).defender && (*it).damage) (*it).defender->ResetAnimFrame(AS_WNCE);
+    for (const auto &target : targets)
+        if (target.defender && target.damage) target.defender->ResetAnimFrame(AS_WNCE);
 
     if (M82::UNKNOWN != m82) AGG::PlaySound(m82);
 
@@ -3900,33 +3879,34 @@ void Battle::Interface::RedrawActionColdRingSpell(s32 dst, const TargetsInfo &ta
     {
         CheckGlobalEvents(le);
 
-        if (Battle::AnimateInfrequentDelay(Game::BATTLE_SPELL_DELAY))
+        if (!Battle::AnimateInfrequentDelay(Game::BATTLE_SPELL_DELAY)) continue;
+        cursor.Hide();
+        Redraw();
+
+        const Sprite &sprite1 = AGG::GetICN(icn, frame);
+        sprite1.Blit(center.x + center.w / 2 + sprite1.x(), center.y + center.h / 2 + sprite1.y());
+        const Sprite &sprite2 = AGG::GetICN(icn, frame, true);
+        sprite2.Blit(center.x + center.w / 2 - sprite2.w() - sprite2.x(), center.y + center.h / 2 + sprite2.y());
+        cursor.Show();
+        display.Flip();
+
+        for (const auto &target1 : targets)
         {
-            cursor.Hide();
-            Redraw();
-
-            const Sprite &sprite1 = AGG::GetICN(icn, frame);
-            sprite1.Blit(center.x + center.w / 2 + sprite1.x(), center.y + center.h / 2 + sprite1.y());
-            const Sprite &sprite2 = AGG::GetICN(icn, frame, true);
-            sprite2.Blit(center.x + center.w / 2 - sprite2.w() - sprite2.x(), center.y + center.h / 2 + sprite2.y());
-            cursor.Show();
-            display.Flip();
-
-            for (TargetsInfo::const_iterator
-                         it = targets.begin(); it != targets.end(); ++it)
-                if ((*it).defender && (*it).damage)
-                    (*it).defender->IncreaseAnimFrame(false);
-            ++frame;
+            if (target1.defender && target1.damage)
+            {
+                target1.defender->IncreaseAnimFrame(false);
+            }
         }
+        ++frame;
     }
 
-    for (TargetsInfo::const_iterator
-                 it = targets.begin(); it != targets.end(); ++it)
-        if ((*it).defender)
-        {
-            (*it).defender->ResetAnimFrame(AS_IDLE);
-            b_current = nullptr;
-        }
+    for (const auto &target : targets)
+    {
+        if (!target.defender)
+            continue;
+        target.defender->ResetAnimFrame(AS_IDLE);
+        b_current = nullptr;
+    }
 }
 
 void Battle::Interface::RedrawActionElementalStormSpell(const TargetsInfo &targets)
@@ -3946,9 +3926,9 @@ void Battle::Interface::RedrawActionElementalStormSpell(const TargetsInfo &targe
     cursor.SetThemes(Cursor::WAR_NONE);
 
     b_current = nullptr;
-    for (TargetsInfo::const_iterator
-                 it = targets.begin(); it != targets.end(); ++it)
-        if ((*it).defender && (*it).damage) (*it).defender->ResetAnimFrame(AS_WNCE);
+    for (const auto &target : targets)
+        if (target.defender && target.damage)
+            target.defender->ResetAnimFrame(AS_WNCE);
 
     if (M82::UNKNOWN != m82) AGG::PlaySound(m82);
 
@@ -3970,10 +3950,13 @@ void Battle::Interface::RedrawActionElementalStormSpell(const TargetsInfo &targe
             cursor.Show();
             display.Flip();
 
-            for (TargetsInfo::const_iterator
-                         it = targets.begin(); it != targets.end(); ++it)
-                if ((*it).defender && (*it).damage)
-                    (*it).defender->IncreaseAnimFrame(false);
+            for (const auto &target : targets)
+            {
+                if (target.defender && target.damage)
+                {
+                    target.defender->IncreaseAnimFrame(false);
+                }
+            }
             ++frame;
 
             if (frame == AGG::GetICNCount(icn) && repeat)
@@ -3985,13 +3968,13 @@ void Battle::Interface::RedrawActionElementalStormSpell(const TargetsInfo &targe
     }
 
 
-    for (TargetsInfo::const_iterator
-                 it = targets.begin(); it != targets.end(); ++it)
-        if ((*it).defender)
-        {
-            (*it).defender->ResetAnimFrame(AS_IDLE);
-            b_current = nullptr;
-        }
+    for (const auto &target : targets)
+    {
+        if (!target.defender)
+            continue;
+        target.defender->ResetAnimFrame(AS_IDLE);
+        b_current = nullptr;
+    }
 }
 
 void Battle::Interface::RedrawActionArmageddonSpell(const TargetsInfo &targets)
@@ -4020,19 +4003,18 @@ void Battle::Interface::RedrawActionArmageddonSpell(const TargetsInfo &targets)
     {
         CheckGlobalEvents(le);
 
-        if (Battle::AnimateInfrequentDelay(Game::BATTLE_SPELL_DELAY))
-        {
-            cursor.Hide();
-            Redraw();
-            sprite2.SetAlphaMod(alpha);
-            sprite1.Blit(area.x, area.y, display);
-            sprite2.Blit(area.x, area.y, display);
-            RedrawInterface();
-            cursor.Show();
-            display.Flip();
+        if (!Battle::AnimateInfrequentDelay(Game::BATTLE_SPELL_DELAY))
+            continue;
+        cursor.Hide();
+        Redraw();
+        sprite2.SetAlphaMod(alpha);
+        sprite1.Blit(area.x, area.y, display);
+        sprite2.Blit(area.x, area.y, display);
+        RedrawInterface();
+        cursor.Show();
+        display.Flip();
 
-            alpha += 10;
-        }
+        alpha += 10;
     }
 
     cursor.Hide();
@@ -4163,10 +4145,9 @@ void Battle::Interface::RedrawActionEarthQuakeSpell(const vector<int> &targets)
             cursor.Hide();
             Redraw();
 
-            for (vector<int>::const_iterator
-                         it = targets.begin(); it != targets.end(); ++it)
+            for (int target : targets)
             {
-                Point pt2 = Catapult::GetTargetPosition(*it);
+                Point pt2 = Catapult::GetTargetPosition(target);
 
                 if (Settings::Get().QVGA())
                 {
@@ -4176,8 +4157,8 @@ void Battle::Interface::RedrawActionEarthQuakeSpell(const vector<int> &targets)
                 pt2.x += area.x;
                 pt2.y += area.y;
 
-                const Sprite &sprite = AGG::GetICN(icn, frame);
-                sprite.Blit(pt2.x + sprite.x(), pt2.y + sprite.y());
+                const Sprite &spriteFrame = AGG::GetICN(icn, frame);
+                spriteFrame.Blit(pt2.x + spriteFrame.x(), pt2.y + spriteFrame.y());
             }
 
             cursor.Show();
@@ -4205,9 +4186,10 @@ void Battle::Interface::RedrawTargetsWithFrameAnimation(s32 dst, const TargetsIn
     cursor.SetThemes(Cursor::WAR_NONE);
 
     b_current = nullptr;
-    for (TargetsInfo::const_iterator
-                 it = targets.begin(); it != targets.end(); ++it)
-        if ((*it).defender && (*it).damage) (*it).defender->ResetAnimFrame(AS_WNCE);
+    for (const auto &target : targets)
+    {
+        if (target.defender && target.damage) target.defender->ResetAnimFrame(AS_WNCE);
+    }
 
     if (M82::UNKNOWN != m82) AGG::PlaySound(m82);
 
@@ -4215,29 +4197,29 @@ void Battle::Interface::RedrawTargetsWithFrameAnimation(s32 dst, const TargetsIn
     {
         CheckGlobalEvents(le);
 
-        if (Battle::AnimateInfrequentDelay(Game::BATTLE_SPELL_DELAY))
+        if (!Battle::AnimateInfrequentDelay(Game::BATTLE_SPELL_DELAY))
+            continue;
+        cursor.Hide();
+        Redraw();
+
+        const Sprite &sprite = AGG::GetICN(icn, frame);
+        sprite.Blit(center.x + center.w / 2 + sprite.x(), center.y + center.h / 2 + sprite.y());
+        cursor.Show();
+        display.Flip();
+
+        for (const auto &target1 : targets)
         {
-            cursor.Hide();
-            Redraw();
-
-            const Sprite &sprite = AGG::GetICN(icn, frame);
-            sprite.Blit(center.x + center.w / 2 + sprite.x(), center.y + center.h / 2 + sprite.y());
-            cursor.Show();
-            display.Flip();
-
-            for (TargetsInfo::const_iterator
-                         it = targets.begin(); it != targets.end(); ++it)
-                if ((*it).defender && (*it).damage)
-                    (*it).defender->IncreaseAnimFrame(false);
-            ++frame;
+            if (!target1.defender || !target1.damage)
+                continue;
+            target1.defender->IncreaseAnimFrame(false);
         }
+        ++frame;
     }
 
-    for (TargetsInfo::const_iterator
-                 it = targets.begin(); it != targets.end(); ++it)
-        if ((*it).defender)
+    for (const auto &target : targets)
+        if (target.defender)
         {
-            (*it).defender->ResetAnimFrame(AS_IDLE);
+            target.defender->ResetAnimFrame(AS_IDLE);
             b_current = nullptr;
         }
 }
@@ -4277,9 +4259,8 @@ void Battle::Interface::RedrawTargetsWithFrameAnimation(const TargetsInfo &targe
     b_current = nullptr;
 
     if (wnce)
-        for (TargetsInfo::const_iterator
-                     it = targets.begin(); it != targets.end(); ++it)
-            if ((*it).defender && (*it).damage) (*it).defender->ResetAnimFrame(AS_WNCE);
+        for (const auto &target : targets)
+            if (target.defender && target.damage) target.defender->ResetAnimFrame(AS_WNCE);
 
     if (M82::UNKNOWN != m82) AGG::PlaySound(m82);
 
@@ -4287,54 +4268,56 @@ void Battle::Interface::RedrawTargetsWithFrameAnimation(const TargetsInfo &targe
     {
         CheckGlobalEvents(le);
 
-        if (Battle::AnimateInfrequentDelay(Game::BATTLE_SPELL_DELAY))
+        if (!Battle::AnimateInfrequentDelay(Game::BATTLE_SPELL_DELAY))
+            continue;
+        cursor.Hide();
+        Redraw();
+
+        for (const auto &target : targets)
         {
-            cursor.Hide();
-            Redraw();
+            if (!target.defender)
+                continue;
+            const Rect &pos = target.defender->GetRectPosition();
+            bool reflect = false;
 
-            for (TargetsInfo::const_iterator
-                         it = targets.begin(); it != targets.end(); ++it)
-                if ((*it).defender)
-                {
-                    const Rect &pos = (*it).defender->GetRectPosition();
-                    bool reflect = false;
+            switch (icn)
+            {
+                case ICN::SHIELD:
+                    reflect = target.defender->isReflect();
+                    break;
+                default:
+                    break;
+            }
 
-                    switch (icn)
-                    {
-                        case ICN::SHIELD:
-                            reflect = (*it).defender->isReflect();
-                            break;
-                        default:
-                            break;
-                    }
+            const Sprite &sprite = AGG::GetICN(icn, frame, reflect);
+            const Point offset = RedrawTroopWithFrameAnimationOffset(icn, pos, sprite, target.defender->isWide(),
+                                                                     reflect, Settings::Get().QVGA());
+            const Point sprite_pos(offset.x + (reflect ? 0 : pos.w / 2), offset.y);
 
-                    const Sprite &sprite = AGG::GetICN(icn, frame, reflect);
-                    const Point offset = RedrawTroopWithFrameAnimationOffset(icn, pos, sprite, (*it).defender->isWide(),
-                                                                             reflect, Settings::Get().QVGA());
-                    const Point sprite_pos(offset.x + (reflect ? 0 : pos.w / 2), offset.y);
-
-                    sprite.Blit(sprite_pos);
-                }
-            cursor.Show();
-            display.Flip();
-
-            if (wnce)
-                for (TargetsInfo::const_iterator
-                             it = targets.begin(); it != targets.end(); ++it)
-                    if ((*it).defender && (*it).damage)
-                        (*it).defender->IncreaseAnimFrame(false);
-            ++frame;
+            sprite.Blit(sprite_pos);
         }
+        cursor.Show();
+        display.Flip();
+
+        if (wnce)
+            for (const auto &target : targets)
+            {
+                if (!target.defender || !target.damage)
+                    continue;
+                target.defender->IncreaseAnimFrame(false);
+            }
+        ++frame;
     }
 
-    if (wnce)
-        for (TargetsInfo::const_iterator
-                     it = targets.begin(); it != targets.end(); ++it)
-            if ((*it).defender)
-            {
-                (*it).defender->ResetAnimFrame(AS_IDLE);
-                b_current = nullptr;
-            }
+    if (!wnce)
+        return;
+    for (const auto &target1 : targets)
+    {
+        if (!target1.defender)
+            continue;
+        target1.defender->ResetAnimFrame(AS_IDLE);
+        b_current = nullptr;
+    }
 }
 
 void RedrawSparksEffects(const Point &src, const Point &dst)
@@ -4377,26 +4360,25 @@ void Battle::Interface::RedrawTroopWithFrameAnimation(Unit &b, int icn, int m82,
     {
         CheckGlobalEvents(le);
 
-        if (Battle::AnimateInfrequentDelay(Game::BATTLE_SPELL_DELAY))
-        {
-            cursor.Hide();
-            Redraw();
+        if (!Battle::AnimateInfrequentDelay(Game::BATTLE_SPELL_DELAY))
+            continue;
+        cursor.Hide();
+        Redraw();
 
-            const Sprite &sprite = AGG::GetICN(icn, frame, reflect);
-            const Point offset = RedrawTroopWithFrameAnimationOffset(icn, pos, sprite, b.isWide(), reflect,
-                                                                     Settings::Get().QVGA());
-            const Point sprite_pos(offset.x + (reflect ? 0 : pos.w / 2), offset.y);
+        const Sprite &sprite = AGG::GetICN(icn, frame, reflect);
+        const Point offset = RedrawTroopWithFrameAnimationOffset(icn, pos, sprite, b.isWide(), reflect,
+                                                                 Settings::Get().QVGA());
+        const Point sprite_pos(offset.x + (reflect ? 0 : pos.w / 2), offset.y);
 
-            if (icn == ICN::SPARKS)
-                RedrawSparksEffects(Point(rectArea.x + rectArea.w / 2, rectArea.y), sprite_pos);
+        if (icn == ICN::SPARKS)
+            RedrawSparksEffects(Point(rectArea.x + rectArea.w / 2, rectArea.y), sprite_pos);
 
-            sprite.Blit(sprite_pos);
-            cursor.Show();
-            display.Flip();
+        sprite.Blit(sprite_pos);
+        cursor.Show();
+        display.Flip();
 
-            if (pain) b.IncreaseAnimFrame(false);
-            ++frame;
-        }
+        if (pain) b.IncreaseAnimFrame(false);
+        ++frame;
     }
 
     if (pain)
@@ -4429,20 +4411,19 @@ void Battle::Interface::RedrawBridgeAnimation(bool down)
 
         CheckGlobalEvents(le);
 
-        if (Battle::AnimateInfrequentDelay(Game::BATTLE_BRIDGE_DELAY))
-        {
-            cursor.Hide();
-            Redraw();
-            const Sprite &sprite = AGG::GetICN(ICN::Get4Castle(Arena::GetCastle()->GetRace()), frame);
-            sprite.Blit(sprite.x() + topleft.x, sprite.y() + topleft.y);
-            cursor.Show();
-            display.Flip();
+        if (!Battle::AnimateInfrequentDelay(Game::BATTLE_BRIDGE_DELAY))
+            continue;
+        cursor.Hide();
+        Redraw();
+        const Sprite &sprite = AGG::GetICN(ICN::Get4Castle(Arena::GetCastle()->GetRace()), frame);
+        sprite.Blit(sprite.x() + topleft.x, sprite.y() + topleft.y);
+        cursor.Show();
+        display.Flip();
 
-            if (down)
-                --frame;
-            else
-                ++frame;
-        }
+        if (down)
+            --frame;
+        else
+            ++frame;
     }
 
     if (!down) AGG::PlaySound(M82::DRAWBRG);

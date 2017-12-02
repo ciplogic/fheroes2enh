@@ -227,7 +227,7 @@ class TiXmlBase
     friend class TiXmlDocument;
 
 public:
-    TiXmlBase() : userData(0)
+    TiXmlBase() : userData(nullptr)
     {}
 
     virtual ~TiXmlBase()
@@ -396,7 +396,7 @@ protected:
         } else
         {
             // Not valid text.
-            return 0;
+            return nullptr;
         }
     }
 
@@ -1635,7 +1635,7 @@ public:
         to use that encoding, regardless of what TinyXml might otherwise try to detect.
     */
     virtual const char *
-    Parse(const char *p, TiXmlParsingData *data = 0, TiXmlEncoding encoding = TIXML_DEFAULT_ENCODING);
+    Parse(const char *p, TiXmlParsingData *data = nullptr, TiXmlEncoding encoding = TIXML_DEFAULT_ENCODING);
 
     /** Get the root element -- the only top level element -- of the document.
         In well formed XML, there should only be one. TinyXml is tolerant of
@@ -1849,7 +1849,7 @@ class TiXmlHandle
 {
 public:
     /// Create a handle from any node (at any depth of the tree.) This can be a null pointer.
-    TiXmlHandle(TiXmlNode *_node)
+    explicit TiXmlHandle(TiXmlNode *_node)
     { this->node = _node; }
 
     /// Copy constructor

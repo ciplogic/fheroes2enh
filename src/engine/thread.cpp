@@ -105,12 +105,12 @@ void Mutex::Create()
 
 bool Mutex::Lock() const
 {
-    return mutex ? 0 == SDL_mutexP(mutex) : false;
+    return mutex != nullptr && 0 == SDL_mutexP(mutex);
 }
 
 bool Mutex::Unlock() const
 {
-    return mutex ? 0 == SDL_mutexV(mutex) : false;
+    return mutex != nullptr && 0 == SDL_mutexV(mutex);
 }
 
 Timer::Timer() : id(nullptr)
@@ -138,9 +138,7 @@ bool Timer::IsValid() const
     return id;
 }
 
-Time::Time()
-{
-}
+Time::Time() = default;
 
 void Time::Start()
 {

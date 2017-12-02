@@ -54,10 +54,10 @@ void Dialog::SecondarySkillInfo(const string &header, const string &message, con
     FrameBox box(box1.h() + spacer + box2.h() + spacer + border.h(), ok_button);
     Rect pos = box.GetArea();
 
-    if (header.size()) box1.Blit(pos);
+    if (!header.empty()) box1.Blit(pos);
     pos.y += box1.h() + spacer;
 
-    if (message.size()) box2.Blit(pos);
+    if (!message.empty()) box2.Blit(pos);
     pos.y += box2.h() + spacer;
 
     // blit sprite
@@ -110,7 +110,7 @@ void Dialog::SecondarySkillInfo(const string &header, const string &message, con
     }
 
     cursor.Hide();
-    if (button) delete button;
+    delete button;
 }
 
 void Dialog::PrimarySkillInfo(const string &header, const string &message, int skill)
@@ -161,10 +161,10 @@ void Dialog::PrimarySkillInfo(const string &header, const string &message, int s
     FrameBox box(box1.h() + spacer + box2.h() + spacer + border.h(), OK);
     Rect pos = box.GetArea();
 
-    if (header.size()) box1.Blit(pos);
+    if (!header.empty()) box1.Blit(pos);
     pos.y += box1.h() + spacer;
 
-    if (message.size()) box2.Blit(pos);
+    if (!message.empty()) box2.Blit(pos);
     pos.y += box2.h() + spacer;
 
     // blit sprite

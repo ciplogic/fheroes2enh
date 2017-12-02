@@ -41,10 +41,8 @@ bool CanUpgradeTroopButNoResources(Troop& troop, Army* army)
     {
         candidate = true;
     }
-    if(!candidate)
-        return false;
+    return candidate && !CanUpgradeTroop(troop, army);
 
-    return !CanUpgradeTroop(troop, army);
 }
 
 bool CanUpgradeTroop(Troop& troop, Army* army)
@@ -57,10 +55,8 @@ bool CanUpgradeTroop(Troop& troop, Army* army)
     {
         candidate = true;
     }
-    if(!candidate)
-        return false;
+    return candidate && world.GetKingdom(army->GetColor()).AllowPayment(troop.GetUpgradeCost());
 
-    return (world.GetKingdom(army->GetColor()).AllowPayment(troop.GetUpgradeCost()));
 }
 
 bool DoUpgradeOnPlusClick(const Point &cursor, ArmyTroop &troop, const Rect &pos, Army* army)

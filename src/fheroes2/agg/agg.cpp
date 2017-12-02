@@ -240,9 +240,7 @@ bool AGG::File::Open(const string &fname)
     return !stream.fail();
 }
 
-AGG::File::~File()
-{
-}
+AGG::File::~File() = default;
 
 bool AGG::File::isGood() const
 {

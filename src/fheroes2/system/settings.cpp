@@ -507,7 +507,7 @@ bool Settings::Read(const string &filename)
 #endif
     BinaryLoad();
 
-    if (video_driver.size())
+    if (!video_driver.empty())
         video_driver = StringLower(video_driver);
 
     if (video_mode.w && video_mode.h)
@@ -567,9 +567,8 @@ string Settings::String() const
     os << "# fheroes2 config, version: " << GetVersion() << endl;
     os << "data = " << data_params << endl;
 
-    for (ListDirs::const_iterator
-                 it = maps_params.begin(); it != maps_params.end(); ++it)
-        os << "maps = " << *it << endl;
+    for (const auto &maps_param : maps_params)
+        os << "maps = " << maps_param << endl;
 
     os << "videomode = ";
     if (video_mode.w && video_mode.h)
@@ -599,7 +598,7 @@ string Settings::String() const
     os << "lang = " << force_lang << std::endl;
 #endif
 
-    if (video_driver.size())
+    if (!video_driver.empty())
         os << "videodriver = " << video_driver << endl;
 
     if (opt_global.Modes(GLOBAL_POCKETPC))
@@ -706,12 +705,12 @@ ListFiles Settings::GetListFiles(const string &prefix, const string &filter)
     const ListDirs dirs = GetRootDirs();
     ListFiles res;
 
-    if (prefix.size() && System::IsDirectory(prefix))
+    if (!prefix.empty() && System::IsDirectory(prefix))
         res.ReadDir(prefix, filter, false);
 
     for (const auto& dir : dirs)
     {
-        string path = prefix.size() ? System::ConcatePath(dir, prefix) : dir;
+        string path = !prefix.empty() ? System::ConcatePath(dir, prefix) : dir;
 
         if (System::IsDirectory(path))
             res.ReadDir(path, filter, false);
