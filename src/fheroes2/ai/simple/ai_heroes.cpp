@@ -612,8 +612,8 @@ bool AI::HeroesGetTask(Heroes &hero)
     // random shuffle
     if (1 < task.size() && Rand::Get(1))
     {
-        Queue::iterator it1, it2;
-        it2 = it1 = task.begin();
+        Queue::iterator it1 = task.begin();
+        Queue::iterator it2 = it1;
         ++it2;
 
         swap(*it1, *it2);
@@ -644,20 +644,21 @@ bool AI::HeroesGetTask(Heroes &hero)
 
         DEBUG(DBG_AI, DBG_TRACE, hero.GetName() << ", route: " << hero.GetPath().String());
         return true;
-    } else if (hero.Modes(HEROES_WAITING))
-    {
-        hero.GetPath().Reset();
-        DEBUG(DBG_AI, DBG_TRACE, hero.GetName() << " say: unknown task., help my please..");
-
-        hero.ResetModes(HEROES_WAITING);
-        hero.SetModes(HEROES_STUPID);
-    } else
-    {
-        DEBUG(DBG_AI, DBG_TRACE, hero.GetName() << " say: waiting...");
-        hero.SetModes(HEROES_WAITING);
     }
+	if (hero.Modes(HEROES_WAITING))
+	{
+		hero.GetPath().Reset();
+		DEBUG(DBG_AI, DBG_TRACE, hero.GetName() << " say: unknown task., help my please..");
 
-    return false;
+		hero.ResetModes(HEROES_WAITING);
+		hero.SetModes(HEROES_STUPID);
+	} else
+	{
+		DEBUG(DBG_AI, DBG_TRACE, hero.GetName() << " say: waiting...");
+		hero.SetModes(HEROES_WAITING);
+	}
+
+	return false;
 }
 
 void AIHeroesTurn(Heroes *hero)

@@ -29,7 +29,7 @@
 #include "game_io.h"
 #include "pocketpc.h"
 
-int PocketPC::LoadGame(void)
+int PocketPC::LoadGame()
 {
     Cursor &cursor = Cursor::Get();
     Display &display = Display::Get();
@@ -49,7 +49,7 @@ int PocketPC::LoadGame(void)
     return Game::STARTGAME;
 }
 
-int PocketPC::MainMenu(void)
+int PocketPC::MainMenu()
 {
     Cursor &cursor = Cursor::Get();
     Display &display = Display::Get();
@@ -129,7 +129,7 @@ int PocketPC::MainMenu(void)
     return Game::QUITGAME;
 }
 
-int PocketPC::NewGame(void)
+int PocketPC::NewGame()
 {
     Cursor &cursor = Cursor::Get();
     Display &display = Display::Get();
@@ -197,7 +197,7 @@ int PocketPC::NewGame(void)
     return Game::QUITGAME;
 }
 
-int PocketPC::NewMulti(void)
+int PocketPC::NewMulti()
 {
     Cursor &cursor = Cursor::Get();
     Display &display = Display::Get();

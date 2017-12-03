@@ -84,7 +84,7 @@ bool SpellStorage::isPresentSpell(const Spell &spell) const
     return end() != find(begin(), end(), spell);
 }
 
-string SpellStorage::String(void) const
+string SpellStorage::String() const
 {
     ostringstream os;
 

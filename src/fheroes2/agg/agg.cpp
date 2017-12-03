@@ -219,8 +219,9 @@ bool AGG::File::Open(const string &fname)
     count_items = stream.getLE16();
     DEBUG(DBG_ENGINE, DBG_INFO, "load: " << filename << ", count items: " << count_items);
 
-    StreamBuf fats = stream.toStreamBuf(count_items * 4 * 3 /* crc, offset, size */);
-    stream.seek(size - FATSIZENAME * count_items);
+	auto vectorFats = stream.getRaw(count_items * 4 * 3 /* crc, offset, size */);
+	StreamBuf fats(vectorFats);
+	stream.seek(size - FATSIZENAME * count_items);
     StreamBuf names = stream.toStreamBuf(FATSIZENAME * count_items);
 
     for (u32 ii = 0; ii < count_items; ++ii)
@@ -271,30 +272,34 @@ string AGG::FAT::Info() const
 /* read element to body */
 const vector<u8> AGG::File::Read(const string &str)
 {
-    if (key != str)
-    {
-        map<string, FAT>::const_iterator it = fat.find(str);
+    if (key == str)
+	{
+		return body;
+	}
+	const auto it = fat.find(str);
 
-        if (it != fat.end())
-        {
-            const FAT &f = (*it).second;
-            key = str;
+	if (it == fat.end())
+	{
+		if (body.size())
+		{
+			body.clear();
+			key.clear();
+		}
+		return body;
+	}
 
-            if (f.size)
-            {
-                DEBUG(DBG_ENGINE, DBG_TRACE, key << ":\t" << f.Info());
+	const FAT& f = (*it).second;
+	key = str;
 
-                stream.seek(f.offset);
-                body = stream.getRaw(f.size);
-            }
-        } else if (body.size())
-        {
-            body.clear();
-            key.clear();
-        }
-    }
+	if (f.size)
+	{
+		DEBUG(DBG_ENGINE, DBG_TRACE, key << ":\t" << f.Info());
 
-    return body;
+		stream.seek(f.offset);
+		body = stream.getRaw(f.size);
+	}
+
+	return body;
 }
 
 u32 AGG::ClearFreeObjects()

@@ -68,9 +68,9 @@ class ScreenSwitch
 public:
     ScreenSwitch(const Castle &, const Rect &, bool);
 
-    void Redraw(void);
+    void Redraw();
 
-    bool QueueEventProcessing(void);
+    bool QueueEventProcessing();
 
     const Castle &castle;
     const Rect rtScreen1;
@@ -96,7 +96,7 @@ ScreenSwitch::ScreenSwitch(const Castle &cstl, const Rect &rt, bool ronly) :
 {
 }
 
-void ScreenSwitch::Redraw(void)
+void ScreenSwitch::Redraw()
 {
     AGG::GetICN(ICN::REQUESTS, 20).Blit(rtScreen1.x, rtScreen1.y);
 
@@ -116,7 +116,7 @@ void ScreenSwitch::Redraw(void)
     }
 }
 
-bool ScreenSwitch::QueueEventProcessing(void)
+bool ScreenSwitch::QueueEventProcessing()
 {
     LocalEvent &le = LocalEvent::Get();
     result = SCREENOUT;
