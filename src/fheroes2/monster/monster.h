@@ -158,15 +158,15 @@ public:
 
     virtual int GetRace() const;
 
-    virtual u32 GetDamageMin() const;
+    u32 GetDamageMin() const;
 
-    virtual u32 GetDamageMax() const;
+    u32 GetDamageMax() const;
 
-    virtual u32 GetShots() const;
+    u32 GetShots() const;
 
-    virtual u32 GetHitPoints() const;
+    u32 GetHitPoints() const;
 
-    virtual u32 GetSpeed() const;
+    u32 GetSpeed() const;
 
     u32 GetGrown() const;
 
@@ -174,13 +174,13 @@ public:
 
     u32 GetRNDSize(bool skip) const;
 
-    virtual const char *GetName() const;
+    const char *GetName() const;
 
     const char *GetMultiName() const;
 
     const char *GetPluralName(u32) const;
 
-    virtual bool isValid() const;
+    bool isValid() const;
 
     bool isElemental() const;
 
@@ -216,9 +216,9 @@ public:
 
     u32 GetSpriteIndex() const;
 
-    virtual payment_t GetCost() const;
+    payment_t GetCost() const;
 
-    virtual payment_t GetUpgradeCost() const;
+    payment_t GetUpgradeCost() const;
 
     u32 GetDwelling() const;
 

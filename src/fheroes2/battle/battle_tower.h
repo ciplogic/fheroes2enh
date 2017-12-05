@@ -41,17 +41,17 @@ namespace Battle
     public:
         Tower(const Castle &, int);
 
-        bool isValid() const override;
+        bool isValid() const;
 
-        int GetColor() const override;
+        int GetColor() const;
 
         u32 GetType() const;
 
         u32 GetBonus() const;
 
-        u32 GetAttack() const override;
+        u32 GetAttack() const;
 
-        const char *GetName() const override;
+        const char *GetName() const;
 
         void SetDestroy();
 

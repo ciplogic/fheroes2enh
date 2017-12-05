@@ -333,8 +333,8 @@ namespace Battle
         Button btn_wait;
         Status status;
 
-        up<OpponentSprite> opponent1;
-        up<OpponentSprite> opponent2;
+        OpponentSprite *opponent1;
+        OpponentSprite *opponent2;
 
         Rect rectBoard;
         Spell humanturn_spell;
@@ -356,7 +356,7 @@ namespace Battle
         Rect pocket_book;
         Rect main_tower;
 
-        up<StatusListBox> listlog;
+        StatusListBox *listlog;
         u32 turn;
 
         PopupDamageInfo popup;

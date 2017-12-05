@@ -75,7 +75,7 @@ int Heroes::OpenDialog(bool readonly, bool fade)
     primskill_bar.SetColRows(4, 1);
     primskill_bar.SetHSpace(6);
     primskill_bar.SetPos(cur_pt.x + 156, cur_pt.y + 31);
-    primskill_bar.Redraw(display);
+    primskill_bar.Redraw();
 
     // morale
     dst_pt.x = cur_pt.x + 514;
@@ -145,7 +145,7 @@ int Heroes::OpenDialog(bool readonly, bool fade)
     selectArmy.SetColRows(5, 1);
     selectArmy.SetPos(dst_pt.x, dst_pt.y);
     selectArmy.SetHSpace(6);
-    selectArmy.Redraw(display);
+    selectArmy.Redraw();
 
     // secskill
     SecondarySkillsBar secskill_bar(false);
@@ -153,7 +153,7 @@ int Heroes::OpenDialog(bool readonly, bool fade)
     secskill_bar.SetHSpace(5);
     secskill_bar.SetContent(secondary_skills.ToVector());
     secskill_bar.SetPos(cur_pt.x + 3, cur_pt.y + 233);
-    secskill_bar.Redraw(display);
+    secskill_bar.Redraw();
 
     dst_pt.x = cur_pt.x + 51;
     dst_pt.y = cur_pt.y + 308;
@@ -254,7 +254,7 @@ int Heroes::OpenDialog(bool readonly, bool fade)
         {
             cursor.Hide();
             if (selectArtifacts.isSelected()) selectArtifacts.ResetSelected();
-            selectArmy.Redraw(display);
+            selectArmy.Redraw();
             redrawMorale = true;
             redrawLuck = true;
         }

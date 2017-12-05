@@ -343,12 +343,14 @@ void Surface::Set(const Surface &bs, bool refcopy)
 {
     FreeSurface(*this);
 
-    if (!bs.isValid())return;
-    surface = SDL_ConvertSurface(bs.surface, bs.surface->format, bs.surface->flags);
+    if (bs.isValid())
+    {
+        surface = SDL_ConvertSurface(bs.surface, bs.surface->format, bs.surface->flags);
 
-    if (!surface)
-        Error::Except(__FUNCTION__, SDL_GetError());
-
+        if (!surface)
+            Error::Except(__FUNCTION__, SDL_GetError());
+        
+    }
 }
 
 void Surface::Set(u32 sw, u32 sh, bool amask)

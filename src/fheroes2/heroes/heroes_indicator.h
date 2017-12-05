@@ -32,7 +32,6 @@ class HeroesIndicator
 {
 public:
     HeroesIndicator(const Heroes &);
-    virtual ~HeroesIndicator(){}
 
     const Rect &GetArea() const;
 
@@ -63,8 +62,7 @@ private:
 class MoraleIndicator : public HeroesIndicator
 {
 public:
-    explicit MoraleIndicator(const Heroes &);
-    ~MoraleIndicator() override = default;
+    MoraleIndicator(const Heroes &);
 
     void Redraw();
 
