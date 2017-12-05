@@ -487,11 +487,11 @@ StreamBuf &operator<<(StreamBuf &sb, const MidTrack &st)
     return sb;
 }
 
-struct MidTracks : list<MidTrack>
+struct MidTracks : vector<MidTrack>
 {
     size_t count() const
     {
-        return list<MidTrack>::size();
+        return vector<MidTrack>::size();
     }
 
     size_t size() const

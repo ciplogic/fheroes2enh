@@ -33,8 +33,8 @@ namespace Interface
     class ItemsBar
     {
     protected:
-        typedef list<Item *> Items;
-        typedef typename list<Item *>::iterator ItemsIterator;
+        typedef vector<Item *> Items;
+        typedef typename vector<Item *>::iterator ItemsIterator;
         typedef pair<ItemsIterator, Rect> ItemIterPos;
 
         Items items;

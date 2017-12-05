@@ -211,9 +211,8 @@ public:
     StreamBase &operator<<(const vector<Type> &v)
     {
         put32(static_cast<u32>(v.size()));
-        for (typename vector<Type>::const_iterator
-                     it = v.begin(); it != v.end(); ++it)
-            *this << *it;
+        for (auto it : v)
+            *this << it;
         return *this;
     }
 
@@ -221,9 +220,8 @@ public:
     StreamBase &operator<<(const list<Type> &v)
     {
         put32(static_cast<u32>(v.size()));
-        for (typename list<Type>::const_iterator
-                     it = v.begin(); it != v.end(); ++it)
-            *this << *it;
+		for (auto it : v)
+			*this << it;
         return *this;
     }
 
