@@ -67,7 +67,7 @@ CastleDialog::CacheBuildings::CacheBuildings(const Castle &castle, const Point &
 
 const Rect &CastleDialog::CacheBuildings::GetRect(building_t b) const
 {
-    const_iterator it = find(begin(), end(), b);
+    auto it = find(begin(), end(), b);
     return it != end() ? (*it).coord : back().coord;
 }
 

@@ -50,10 +50,10 @@ struct HeroRow
 
     void Clear()
     {
-        if (armyBar) delete armyBar;
-        if (artifactsBar) delete artifactsBar;
-        if (secskillsBar) delete secskillsBar;
-        if (primskillsBar) delete primskillsBar;
+        delete armyBar;
+        delete artifactsBar;
+        delete secskillsBar;
+        delete primskillsBar;
     }
 
     void Init(Heroes *ptr)
@@ -94,32 +94,32 @@ class StatsHeroesList : public Interface::ListBox<HeroRow>
 public:
     StatsHeroesList(const Point &pt, KingdomHeroes &);
 
-    void RedrawItem(const HeroRow &, s32, s32, bool);
+    void RedrawItem(const HeroRow &, s32, s32, bool) override ;
 
-    void RedrawBackground(const Point &);
+    void RedrawBackground(const Point &) override;
 
-    void ActionCurrentUp()
-    {};
+    void ActionCurrentUp() override
+    {}
 
-    void ActionCurrentDn()
-    {};
+    void ActionCurrentDn() override
+    {}
 
-    void ActionListSingleClick(HeroRow &)
-    {};
+    void ActionListSingleClick(HeroRow &) override
+    {}
 
-    void ActionListDoubleClick(HeroRow &)
-    {};
+    void ActionListDoubleClick(HeroRow &) override
+    {}
 
-    void ActionListPressRight(HeroRow &)
-    {};
+    void ActionListPressRight(HeroRow &) override
+    {}
 
-    void ActionListSingleClick(HeroRow &, const Point &, s32, s32);
+    void ActionListSingleClick(HeroRow &, const Point &, s32, s32) override;
 
-    void ActionListDoubleClick(HeroRow &, const Point &, s32, s32);
+    void ActionListDoubleClick(HeroRow &, const Point &, s32, s32) override;
 
-    void ActionListPressRight(HeroRow &, const Point &, s32, s32);
+    void ActionListPressRight(HeroRow &, const Point &, s32, s32) override;
 
-    bool ActionListCursor(HeroRow &, const Point &, s32, s32);
+    bool ActionListCursor(HeroRow &, const Point &, s32, s32) override;
 };
 
 StatsHeroesList::StatsHeroesList(const Point &pt, KingdomHeroes &heroes) : ListBox<HeroRow>(pt)
@@ -138,8 +138,7 @@ StatsHeroesList::StatsHeroesList(const Point &pt, KingdomHeroes &heroes) : ListB
 
     content.resize(heroes.size());
 
-    for (KingdomHeroes::iterator
-                 it = heroes.begin(); it != heroes.end(); ++it)
+    for (auto it = heroes.begin(); it != heroes.end(); ++it)
         content[distance(heroes.begin(), it)].Init(*it);
 
     SetListContent(content);
@@ -195,43 +194,41 @@ bool StatsHeroesList::ActionListCursor(HeroRow &row, const Point &cursor, s32 ox
 
 void StatsHeroesList::RedrawItem(const HeroRow &row, s32 dstx, s32 dsty, bool current)
 {
-    if (row.hero)
-    {
-        Text text("", Font::SMALL);
-        const Sprite &back = AGG::GetICN(ICN::OVERVIEW, 10);
-        back.Blit(dstx, dsty);
+    if (!row.hero) return;
+    Text text("", Font::SMALL);
+    const Sprite &back = AGG::GetICN(ICN::OVERVIEW, 10);
+    back.Blit(dstx, dsty);
 
-        // base info
-        Interface::RedrawHeroesIcon(*row.hero, dstx + 5, dsty + 4);
+    // base info
+    Interface::RedrawHeroesIcon(*row.hero, dstx + 5, dsty + 4);
 
-        text.Set(GetString(row.hero->GetAttack()));
-        text.Blit(dstx + 90 - text.w(), dsty + 20);
+    text.Set(GetString(row.hero->GetAttack()));
+    text.Blit(dstx + 90 - text.w(), dsty + 20);
 
-        text.Set(GetString(row.hero->GetDefense()));
-        text.Blit(dstx + 125 - text.w(), dsty + 20);
+    text.Set(GetString(row.hero->GetDefense()));
+    text.Blit(dstx + 125 - text.w(), dsty + 20);
 
-        text.Set(GetString(row.hero->GetPower()));
-        text.Blit(dstx + 160 - text.w(), dsty + 20);
+    text.Set(GetString(row.hero->GetPower()));
+    text.Blit(dstx + 160 - text.w(), dsty + 20);
 
-        text.Set(GetString(row.hero->GetKnowledge()));
-        text.Blit(dstx + 195 - text.w(), dsty + 20);
+    text.Set(GetString(row.hero->GetKnowledge()));
+    text.Blit(dstx + 195 - text.w(), dsty + 20);
 
-        // primary skills info
-        const_cast<PrimarySkillsBar *>(row.primskillsBar)->SetPos(dstx + 56, dsty - 3);
-        const_cast<PrimarySkillsBar *>(row.primskillsBar)->Redraw();
+    // primary skills info
+    const_cast<PrimarySkillsBar *>(row.primskillsBar)->SetPos(dstx + 56, dsty - 3);
+    const_cast<PrimarySkillsBar *>(row.primskillsBar)->Redraw();
 
-        // secondary skills info
-        const_cast<SecondarySkillsBar *>(row.secskillsBar)->SetPos(dstx + 206, dsty + 3);
-        const_cast<SecondarySkillsBar *>(row.secskillsBar)->Redraw();
+    // secondary skills info
+    const_cast<SecondarySkillsBar *>(row.secskillsBar)->SetPos(dstx + 206, dsty + 3);
+    const_cast<SecondarySkillsBar *>(row.secskillsBar)->Redraw();
 
-        // artifacts info
-        const_cast<ArtifactsBar *>(row.artifactsBar)->SetPos(dstx + 348, dsty + 3);
-        const_cast<ArtifactsBar *>(row.artifactsBar)->Redraw();
+    // artifacts info
+    const_cast<ArtifactsBar *>(row.artifactsBar)->SetPos(dstx + 348, dsty + 3);
+    const_cast<ArtifactsBar *>(row.artifactsBar)->Redraw();
 
-        // army info
-        const_cast<ArmyBar *>(row.armyBar)->SetPos(dstx - 1, dsty + 30);
-        const_cast<ArmyBar *>(row.armyBar)->Redraw();
-    }
+    // army info
+    const_cast<ArmyBar *>(row.armyBar)->SetPos(dstx - 1, dsty + 30);
+    const_cast<ArmyBar *>(row.armyBar)->Redraw();
 }
 
 void StatsHeroesList::RedrawBackground(const Point &dst)
@@ -278,9 +275,9 @@ struct CstlRow
 
     void Clear()
     {
-        if (armyBarGuard) delete armyBarGuard;
-        if (armyBarGuest) delete armyBarGuest;
-        if (dwellingsBar) delete dwellingsBar;
+        delete armyBarGuard;
+        delete armyBarGuest;
+        delete dwellingsBar;
     }
 
     void Init(Castle *ptr)
@@ -318,32 +315,32 @@ class StatsCastlesList : public Interface::ListBox<CstlRow>
 public:
     StatsCastlesList(const Point &pt, KingdomCastles &);
 
-    void RedrawItem(const CstlRow &, s32, s32, bool);
+    void RedrawItem(const CstlRow &, s32, s32, bool) override;
 
-    void RedrawBackground(const Point &);
+    void RedrawBackground(const Point &) override;
 
-    void ActionCurrentUp()
+    void ActionCurrentUp() override
     {};
 
-    void ActionCurrentDn()
+    void ActionCurrentDn() override
     {};
 
-    void ActionListDoubleClick(CstlRow &)
+    void ActionListDoubleClick(CstlRow &) override
     {};
 
-    void ActionListSingleClick(CstlRow &)
+    void ActionListSingleClick(CstlRow &) override
     {};
 
-    void ActionListPressRight(CstlRow &)
+    void ActionListPressRight(CstlRow &) override
     {};
 
-    void ActionListSingleClick(CstlRow &, const Point &, s32, s32);
+    void ActionListSingleClick(CstlRow &, const Point &, s32, s32) override;
 
-    void ActionListDoubleClick(CstlRow &, const Point &, s32, s32);
+    void ActionListDoubleClick(CstlRow &, const Point &, s32, s32) override;
 
-    void ActionListPressRight(CstlRow &, const Point &, s32, s32);
+    void ActionListPressRight(CstlRow &, const Point &, s32, s32) override;
 
-    bool ActionListCursor(CstlRow &, const Point &, s32, s32);
+    bool ActionListCursor(CstlRow &, const Point &, s32, s32) override;
 };
 
 StatsCastlesList::StatsCastlesList(const Point &pt, KingdomCastles &castles) : ListBox<CstlRow>(pt)
@@ -362,8 +359,7 @@ StatsCastlesList::StatsCastlesList(const Point &pt, KingdomCastles &castles) : L
 
     content.resize(castles.size());
 
-    for (KingdomCastles::iterator
-                 it = castles.begin(); it != castles.end(); ++it)
+    for (auto it = castles.begin(); it != castles.end(); ++it)
         content[distance(castles.begin(), it)].Init(*it);
 
     SetListContent(content);
@@ -376,40 +372,37 @@ void StatsCastlesList::ActionListDoubleClick(CstlRow &row, const Point &cursor, 
 
 void StatsCastlesList::ActionListSingleClick(CstlRow &row, const Point &cursor, s32 ox, s32 oy)
 {
-    if (row.castle)
+    if (!row.castle) return;
+    // click castle icon
+    if (Rect(ox + 17, oy + 19, Interface::IconsBar::GetItemWidth(), Interface::IconsBar::GetItemHeight()) & cursor)
     {
-        // click castle icon
-        if (Rect(ox + 17, oy + 19, Interface::IconsBar::GetItemWidth(), Interface::IconsBar::GetItemHeight()) & cursor)
+        Game::OpenCastleDialog(*row.castle);
+        row.Init(row.castle);
+    } else
+        // click hero icon
+    if (Rect(ox + 82, oy + 19, Interface::IconsBar::GetItemWidth(), Interface::IconsBar::GetItemHeight()) & cursor)
+    {
+        Heroes *hero = row.castle->GetHeroes().GuardFirst();
+        if (hero)
         {
-            Game::OpenCastleDialog(*row.castle);
+            Game::OpenHeroesDialog(*hero);
             row.Init(row.castle);
-        } else
-            // click hero icon
-        if (Rect(ox + 82, oy + 19, Interface::IconsBar::GetItemWidth(), Interface::IconsBar::GetItemHeight()) & cursor)
-        {
-            Heroes *hero = row.castle->GetHeroes().GuardFirst();
-            if (hero)
-            {
-                Game::OpenHeroesDialog(*hero);
-                row.Init(row.castle);
-            }
         }
     }
 }
 
 void StatsCastlesList::ActionListPressRight(CstlRow &row, const Point &cursor, s32 ox, s32 oy)
 {
-    if (row.castle)
+    if (!row.castle)
+        return;
+    if ((Rect(ox + 17, oy + 19, Interface::IconsBar::GetItemWidth(), Interface::IconsBar::GetItemHeight()) &
+         cursor))
+        Dialog::QuickInfo(*row.castle);
+    else if (Rect(ox + 82, oy + 19, Interface::IconsBar::GetItemWidth(), Interface::IconsBar::GetItemHeight()) &
+             cursor)
     {
-        if ((Rect(ox + 17, oy + 19, Interface::IconsBar::GetItemWidth(), Interface::IconsBar::GetItemHeight()) &
-             cursor))
-            Dialog::QuickInfo(*row.castle);
-        else if (Rect(ox + 82, oy + 19, Interface::IconsBar::GetItemWidth(), Interface::IconsBar::GetItemHeight()) &
-                 cursor)
-        {
-            Heroes *hero = row.castle->GetHeroes().GuardFirst();
-            if (hero) Dialog::QuickInfo(*hero);
-        }
+        Heroes *hero = row.castle->GetHeroes().GuardFirst();
+        if (hero) Dialog::QuickInfo(*hero);
     }
 }
 
@@ -443,43 +436,41 @@ bool StatsCastlesList::ActionListCursor(CstlRow &row, const Point &cursor, s32 o
 
 void StatsCastlesList::RedrawItem(const CstlRow &row, s32 dstx, s32 dsty, bool current)
 {
-    if (row.castle)
+    if (!row.castle) return;
+    Text text("", Font::SMALL);
+    const Sprite &back = AGG::GetICN(ICN::OVERVIEW, 11);
+    back.Blit(dstx, dsty);
+
+    // base info
+    Interface::RedrawCastleIcon(*row.castle, dstx + 17, dsty + 19);
+
+    const Heroes *hero = row.castle->GetHeroes().GuardFirst();
+
+    if (hero)
     {
-        Text text("", Font::SMALL);
-        const Sprite &back = AGG::GetICN(ICN::OVERVIEW, 11);
-        back.Blit(dstx, dsty);
-
-        // base info
-        Interface::RedrawCastleIcon(*row.castle, dstx + 17, dsty + 19);
-
-        const Heroes *hero = row.castle->GetHeroes().GuardFirst();
-
-        if (hero)
-        {
-            Interface::RedrawHeroesIcon(*hero, dstx + 82, dsty + 19);
-            text.Set(hero->StringSkills("-"));
-            text.Blit(dstx + 104 - text.w() / 2, dsty + 43);
-        }
-
-        text.Set(row.castle->GetName());
-        text.Blit(dstx + 72 - text.w() / 2, dsty + 62);
-
-        // army info
-        if (row.armyBarGuard)
-        {
-            const_cast<ArmyBar *>(row.armyBarGuard)->SetPos(dstx + 146, row.armyBarGuest ? dsty : dsty + 20);
-            const_cast<ArmyBar *>(row.armyBarGuard)->Redraw();
-        }
-
-        if (row.armyBarGuest)
-        {
-            const_cast<ArmyBar *>(row.armyBarGuest)->SetPos(dstx + 146, row.armyBarGuard ? dsty + 41 : dsty + 20);
-            const_cast<ArmyBar *>(row.armyBarGuest)->Redraw();
-        }
-
-        const_cast<DwellingsBar *>(row.dwellingsBar)->SetPos(dstx + 349, dsty + 15);
-        const_cast<DwellingsBar *>(row.dwellingsBar)->Redraw();
+        Interface::RedrawHeroesIcon(*hero, dstx + 82, dsty + 19);
+        text.Set(hero->StringSkills("-"));
+        text.Blit(dstx + 104 - text.w() / 2, dsty + 43);
     }
+
+    text.Set(row.castle->GetName());
+    text.Blit(dstx + 72 - text.w() / 2, dsty + 62);
+
+    // army info
+    if (row.armyBarGuard)
+    {
+        const_cast<ArmyBar *>(row.armyBarGuard)->SetPos(dstx + 146, row.armyBarGuest ? dsty : dsty + 20);
+        const_cast<ArmyBar *>(row.armyBarGuard)->Redraw();
+    }
+
+    if (row.armyBarGuest)
+    {
+        const_cast<ArmyBar *>(row.armyBarGuest)->SetPos(dstx + 146, row.armyBarGuard ? dsty + 41 : dsty + 20);
+        const_cast<ArmyBar *>(row.armyBarGuest)->Redraw();
+    }
+
+    const_cast<DwellingsBar *>(row.dwellingsBar)->SetPos(dstx + 349, dsty + 15);
+    const_cast<DwellingsBar *>(row.dwellingsBar)->Redraw();
 }
 
 void StatsCastlesList::RedrawBackground(const Point &dst)

@@ -238,9 +238,9 @@ Rect Rects::GetRect() const
 {
     Rect res;
 
-    if (size())
+    if (!empty())
     {
-        const_iterator it = begin();
+        auto it = begin();
         res = *it;
 
         ++it;

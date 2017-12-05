@@ -48,10 +48,9 @@ namespace Interface
         ItemsBar() : colrows(0, 0), hspace(0), vspace(0)
         {}
 
-        virtual ~ItemsBar()
-        {}
+        virtual ~ItemsBar() = default;
 
-/*
+        /*
 	void		SetColRows(u32, u32);
 	void        	SetPos(s32, s32);
 	void        	SetItemSize(u32, u32);
@@ -168,7 +167,7 @@ namespace Interface
             return colrows;
         }
 
-        void Redraw(Surface &dstsf = Display::Get())
+        virtual void Redraw(Surface &dstsf = Display::Get())
         {
             Point dstpt(barsz);
 
@@ -384,7 +383,7 @@ namespace Interface
             return GetCurItemIter() != ItemsBar<Item>::GetEndItemIter();
         }
 
-        void ResetSelected()
+        virtual void ResetSelected()
         {
             topItem = ItemsBar<Item>::GetBeginItemIter();
             curItemPos = ItemIterPos(ItemsBar<Item>::items.end(), Rect());

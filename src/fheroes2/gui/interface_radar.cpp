@@ -371,49 +371,52 @@ void Interface::Radar::QueueEventProcessing()
         BorderWindow::QueueEventProcessing())
     {
         RedrawCursor();
-    } else
-        // move cursor
-    if (le.MouseCursor(area))
-    {
-        if (le.MouseClickLeft() || le.MousePressLeft())
-        {
-            const Point prev(gamearea.GetRectMaps());
-            const Point &pt = le.GetMouseCursor();
-
-            if (area & pt)
-            {
-                gamearea.SetCenter((pt.x - area.x) * world.w() / area.w, (pt.y - area.y) * world.h() / area.h);
-
-                if (prev != gamearea.GetRectMaps())
-                {
-                    Cursor::Get().Hide();
-                    RedrawCursor();
-                    gamearea.SetRedraw();
-                }
-            }
-        } else if (!conf.ExtPocketTapMode() && le.MousePressRight(GetRect()))
-            Dialog::Message(_("World Map"), _("A miniature view of the known world. Left click to move viewing area."),
-                            Font::BIG);
-        else if (!conf.QVGA())
-        {
-            const Rect &area = GetArea();
-            Size newSize(area.w, area.h);
-
-            if (le.MouseWheelUp())
-            {
-                if (area.w != world.w() ||
-                    area.h != world.h())
-                    newSize = Size(world.w(), world.h());
-            } else if (le.MouseWheelDn())
-            {
-                if (area.w != RADARWIDTH ||
-                    area.h != RADARWIDTH)
-                    newSize = Size(RADARWIDTH, RADARWIDTH);
-            }
-
-            ChangeAreaSize(newSize);
-        }
+        return;
     }
+        // move cursor
+    if (!le.MouseCursor(area))
+        return;
+    if (le.MouseClickLeft() || le.MousePressLeft())
+    {
+        const Point prev(gamearea.GetRectMaps());
+        const Point &pt = le.GetMouseCursor();
+
+        if (area & pt)
+        {
+            gamearea.SetCenter((pt.x - area.x) * world.w() / area.w, (pt.y - area.y) * world.h() / area.h);
+
+            if (prev != gamearea.GetRectMaps())
+            {
+                Cursor::Get().Hide();
+                RedrawCursor();
+                gamearea.SetRedraw();
+            }
+        }
+        return;
+    }
+    if (!conf.ExtPocketTapMode() && le.MousePressRight(GetRect()))
+    {
+        Dialog::Message(_("World Map"), _("A miniature view of the known world. Left click to move viewing area."),
+                        Font::BIG);
+        return;
+    }
+    if (conf.QVGA()) return;
+    const Rect &area1 = GetArea();
+    Size newSize(area1.w, area1.h);
+
+    if (le.MouseWheelUp())
+    {
+        if (area1.w != world.w() ||
+            area1.h != world.h())
+            newSize = Size(world.w(), world.h());
+    } else if (le.MouseWheelDn())
+    {
+        if (area1.w != RADARWIDTH ||
+            area1.h != RADARWIDTH)
+            newSize = Size(RADARWIDTH, RADARWIDTH);
+    }
+
+    ChangeAreaSize(newSize);
 }
 
 void Interface::Radar::ResetAreaSize()
@@ -423,13 +426,11 @@ void Interface::Radar::ResetAreaSize()
 
 void Interface::Radar::ChangeAreaSize(const Size &newSize)
 {
-    if (newSize != area)
-    {
-        const Rect &rect = GetRect();
-        Cursor::Get().Hide();
-        SetPosition(rect.x < 0 ? 0 : rect.x, rect.y < 0 ? 0 : rect.y, newSize.w, newSize.h);
-        Generate();
-        RedrawCursor();
-        interface.GetGameArea().SetRedraw();
-    }
+    if (newSize == area) return;
+    const Rect &rect = GetRect();
+    Cursor::Get().Hide();
+    SetPosition(rect.x < 0 ? 0 : rect.x, rect.y < 0 ? 0 : rect.y, newSize.w, newSize.h);
+    Generate();
+    RedrawCursor();
+    interface.GetGameArea().SetRedraw();
 }

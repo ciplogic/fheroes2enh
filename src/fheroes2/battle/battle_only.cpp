@@ -669,6 +669,6 @@ void Battle::Only::StartBattle()
             hero2->Recruit(player2.GetColor(), Point(5, 6));
         }
 
-        Loader(hero1->GetArmy(), (hero2 ? hero2->GetArmy() : monsters), hero1->GetIndex() + 1);
+        Loader(hero1->GetArmy(), hero2 ? hero2->GetArmy() : monsters, hero1->GetIndex() + 1);
     }
 }

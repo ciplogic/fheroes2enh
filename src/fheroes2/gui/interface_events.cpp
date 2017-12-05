@@ -65,40 +65,38 @@ void Interface::Basic::ShowPathOrStartMoveHero(Heroes *hero, s32 dst_index)
 
 void Interface::Basic::MoveHeroFromArrowKeys(Heroes &hero, int direct)
 {
-    if (Maps::isValidDirection(hero.GetIndex(), direct))
+    if (!Maps::isValidDirection(hero.GetIndex(), direct)) return;
+    s32 dst = Maps::GetDirectionIndex(hero.GetIndex(), direct);
+    const Maps::Tiles &tile = world.GetTiles(dst);
+    bool allow = false;
+
+    switch (tile.GetObject())
     {
-        s32 dst = Maps::GetDirectionIndex(hero.GetIndex(), direct);
-        const Maps::Tiles &tile = world.GetTiles(dst);
-        bool allow = false;
-
-        switch (tile.GetObject())
+        case MP2::OBJN_CASTLE:
         {
-            case MP2::OBJN_CASTLE:
+            const Castle *to_castle = world.GetCastle(hero.GetCenter());
+            if (to_castle)
             {
-                const Castle *to_castle = world.GetCastle(hero.GetCenter());
-                if (to_castle)
-                {
-                    dst = to_castle->GetIndex();
-                    allow = true;
-                }
-                break;
-            }
-
-            case MP2::OBJ_BOAT:
-            case MP2::OBJ_CASTLE:
-            case MP2::OBJ_HEROES:
-            case MP2::OBJ_MONSTER:
+                dst = to_castle->GetIndex();
                 allow = true;
-                break;
-
-            default:
-                allow = (tile.isPassable(&hero, Direction::CENTER, false) ||
-                         MP2::isActionObject(tile.GetObject(), hero.isShipMaster()));
-                break;
+            }
+            break;
         }
 
-        if (allow) ShowPathOrStartMoveHero(&hero, dst);
+        case MP2::OBJ_BOAT:
+        case MP2::OBJ_CASTLE:
+        case MP2::OBJ_HEROES:
+        case MP2::OBJ_MONSTER:
+            allow = true;
+            break;
+
+        default:
+            allow = (tile.isPassable(&hero, Direction::CENTER, false) ||
+                     MP2::isActionObject(tile.GetObject(), hero.isShipMaster()));
+            break;
     }
+
+    if (allow) ShowPathOrStartMoveHero(&hero, dst);
 }
 
 void Interface::Basic::EventNextHero()
@@ -146,15 +144,13 @@ void Interface::Basic::EventCastSpell()
 {
     Heroes *hero = GetFocusHeroes();
 
-    if (hero)
+    if (!hero) return;
+    const Spell spell = hero->OpenSpellBook(SpellBook::ADVN, true);
+    // apply cast spell
+    if (spell.isValid())
     {
-        const Spell spell = hero->OpenSpellBook(SpellBook::ADVN, true);
-        // apply cast spell
-        if (spell.isValid())
-        {
-            hero->ActionSpellCast(spell);
-            iconsPanel.SetRedraw();
-        }
+        hero->ActionSpellCast(spell);
+        iconsPanel.SetRedraw();
     }
 }
 
@@ -284,20 +280,18 @@ void Interface::Basic::EventNextTown()
     Kingdom &myKingdom = world.GetKingdom(Settings::Get().CurrentColor());
     KingdomCastles &myCastles = myKingdom.GetCastles();
 
-    if (!myCastles.empty())
+    if (myCastles.empty()) return;
+    if (GetFocusCastle())
     {
-        if (GetFocusCastle())
-        {
-            KingdomCastles::const_iterator it = find(myCastles.begin(), myCastles.end(),
-                                                          GetFocusCastle());
-            ++it;
-            if (it == myCastles.end()) it = myCastles.begin();
-            SetFocus(*it);
-        } else
-            ResetFocus(GameFocus::CASTLE);
+        KingdomCastles::const_iterator it = find(myCastles.begin(), myCastles.end(),
+                                                      GetFocusCastle());
+        ++it;
+        if (it == myCastles.end()) it = myCastles.begin();
+        SetFocus(*it);
+    } else
+        ResetFocus(GameFocus::CASTLE);
 
-        RedrawFocus();
-    }
+    RedrawFocus();
 }
 
 int Interface::Basic::EventSaveGame()
@@ -329,18 +323,16 @@ void Interface::Basic::EventSwitchHeroSleeping()
 {
     Heroes *hero = GetFocusHeroes();
 
-    if (hero)
+    if (!hero) return;
+    if (hero->Modes(Heroes::SLEEPER))
+        hero->ResetModes(Heroes::SLEEPER);
+    else
     {
-        if (hero->Modes(Heroes::SLEEPER))
-            hero->ResetModes(Heroes::SLEEPER);
-        else
-        {
-            hero->SetModes(Heroes::SLEEPER);
-            hero->GetPath().Reset();
-        }
-
-        SetRedraw(REDRAW_HEROES);
+        hero->SetModes(Heroes::SLEEPER);
+        hero->GetPath().Reset();
     }
+
+    SetRedraw(REDRAW_HEROES);
 }
 
 int Interface::Basic::EventDigArtifact()
@@ -441,112 +433,106 @@ void Interface::Basic::EventSwitchShowRadar()
 {
     Settings &conf = Settings::Get();
 
-    if (conf.ExtGameHideInterface())
+    if (!conf.ExtGameHideInterface()) return;
+    if (conf.ShowRadar())
     {
-        if (conf.ShowRadar())
-        {
-            conf.SetShowRadar(false);
-            gameArea.SetRedraw();
-        } else
-        {
-            if (conf.QVGA() && (conf.ShowIcons() || conf.ShowStatus() || conf.ShowButtons()))
-            {
-                conf.SetShowIcons(false);
-                conf.SetShowStatus(false);
-                conf.SetShowButtons(false);
-                gameArea.SetRedraw();
-            }
-            conf.SetShowRadar(true);
-            radar.SetRedraw();
-        }
+        conf.SetShowRadar(false);
+        gameArea.SetRedraw();
+        return;
     }
+
+    if (conf.QVGA() && (conf.ShowIcons() || conf.ShowStatus() || conf.ShowButtons()))
+    {
+        conf.SetShowIcons(false);
+        conf.SetShowStatus(false);
+        conf.SetShowButtons(false);
+        gameArea.SetRedraw();
+    }
+    conf.SetShowRadar(true);
+    radar.SetRedraw();
 }
 
 void Interface::Basic::EventSwitchShowButtons()
 {
     Settings &conf = Settings::Get();
 
-    if (conf.ExtGameHideInterface())
+    if (!conf.ExtGameHideInterface())
+        return;
+    if (conf.ShowButtons())
     {
-        if (conf.ShowButtons())
-        {
-            conf.SetShowButtons(false);
-            gameArea.SetRedraw();
-        } else
-        {
-            if (conf.QVGA() && (conf.ShowRadar() || conf.ShowStatus() || conf.ShowIcons()))
-            {
-                conf.SetShowIcons(false);
-                conf.SetShowStatus(false);
-                conf.SetShowRadar(false);
-                gameArea.SetRedraw();
-            }
-            conf.SetShowButtons(true);
-            buttonsArea.SetRedraw();
-        }
+        conf.SetShowButtons(false);
+        gameArea.SetRedraw();
+        return;
     }
+
+    if (conf.QVGA() && (conf.ShowRadar() || conf.ShowStatus() || conf.ShowIcons()))
+    {
+        conf.SetShowIcons(false);
+        conf.SetShowStatus(false);
+        conf.SetShowRadar(false);
+        gameArea.SetRedraw();
+    }
+    conf.SetShowButtons(true);
+    buttonsArea.SetRedraw();
 }
 
 void Interface::Basic::EventSwitchShowStatus()
 {
     Settings &conf = Settings::Get();
 
-    if (conf.ExtGameHideInterface())
+    if (!conf.ExtGameHideInterface())
+        return;
+    if (conf.ShowStatus())
     {
-        if (conf.ShowStatus())
-        {
-            conf.SetShowStatus(false);
-            gameArea.SetRedraw();
-        } else
-        {
-            if (conf.QVGA() && (conf.ShowRadar() || conf.ShowIcons() || conf.ShowButtons()))
-            {
-                conf.SetShowIcons(false);
-                conf.SetShowButtons(false);
-                conf.SetShowRadar(false);
-                gameArea.SetRedraw();
-            }
-            conf.SetShowStatus(true);
-            statusWindow.SetRedraw();
-        }
+        conf.SetShowStatus(false);
+        gameArea.SetRedraw();
+        return;
     }
+
+    if (conf.QVGA() && (conf.ShowRadar() || conf.ShowIcons() || conf.ShowButtons()))
+    {
+        conf.SetShowIcons(false);
+        conf.SetShowButtons(false);
+        conf.SetShowRadar(false);
+        gameArea.SetRedraw();
+    }
+    conf.SetShowStatus(true);
+    statusWindow.SetRedraw();
 }
 
 void Interface::Basic::EventSwitchShowIcons()
 {
     Settings &conf = Settings::Get();
 
-    if (conf.ExtGameHideInterface())
+    if (!conf.ExtGameHideInterface())
+        return;
+    if (conf.ShowIcons())
     {
-        if (conf.ShowIcons())
-        {
-            conf.SetShowIcons(false);
-            gameArea.SetRedraw();
-        } else
-        {
-            if (conf.QVGA() && (conf.ShowRadar() || conf.ShowStatus() || conf.ShowButtons()))
-            {
-                conf.SetShowButtons(false);
-                conf.SetShowRadar(false);
-                conf.SetShowStatus(false);
-                gameArea.SetRedraw();
-            }
-            conf.SetShowIcons(true);
-            iconsPanel.SetCurrentVisible();
-            iconsPanel.SetRedraw();
-        }
+        conf.SetShowIcons(false);
+        gameArea.SetRedraw();
+        return;
     }
+
+    if (conf.QVGA() && (conf.ShowRadar() || conf.ShowStatus() || conf.ShowButtons()))
+    {
+        conf.SetShowButtons(false);
+        conf.SetShowRadar(false);
+        conf.SetShowStatus(false);
+        gameArea.SetRedraw();
+    }
+    conf.SetShowIcons(true);
+    iconsPanel.SetCurrentVisible();
+    iconsPanel.SetRedraw();
 }
 
 void Interface::Basic::EventSwitchShowControlPanel()
 {
     Settings &conf = Settings::Get();
 
-    if (conf.ExtGameHideInterface())
-    {
-        conf.SetShowPanel(!conf.ShowControlPanel());
-        gameArea.SetRedraw();
-    }
+    if (!conf.ExtGameHideInterface())
+        return;
+    conf.SetShowPanel(!conf.ShowControlPanel());
+    gameArea.SetRedraw();
 }
 
 void Interface::Basic::EventKeyArrowPress(int dir)
@@ -554,42 +540,45 @@ void Interface::Basic::EventKeyArrowPress(int dir)
     Heroes *hero = GetFocusHeroes();
 
     // move hero
-    if (hero) MoveHeroFromArrowKeys(*hero, dir);
-    else
-        // scroll map
-        switch (dir)
-        {
-            case Direction::TOP_LEFT:
-                gameArea.SetScroll(SCROLL_TOP);
-                gameArea.SetScroll(SCROLL_LEFT);
-                break;
-            case Direction::TOP:
-                gameArea.SetScroll(SCROLL_TOP);
-                break;
-            case Direction::TOP_RIGHT:
-                gameArea.SetScroll(SCROLL_TOP);
-                gameArea.SetScroll(SCROLL_RIGHT);
-                break;
-            case Direction::RIGHT:
-                gameArea.SetScroll(SCROLL_RIGHT);
-                break;
-            case Direction::BOTTOM_RIGHT:
-                gameArea.SetScroll(SCROLL_BOTTOM);
-                gameArea.SetScroll(SCROLL_RIGHT);
-                break;
-            case Direction::BOTTOM:
-                gameArea.SetScroll(SCROLL_BOTTOM);
-                break;
-            case Direction::BOTTOM_LEFT:
-                gameArea.SetScroll(SCROLL_BOTTOM);
-                gameArea.SetScroll(SCROLL_LEFT);
-                break;
-            case Direction::LEFT:
-                gameArea.SetScroll(SCROLL_LEFT);
-                break;
-            default:
-                break;
-        }
+    if (hero) {
+        MoveHeroFromArrowKeys(*hero, dir);
+        return;
+    }
+
+    // scroll map
+    switch (dir)
+    {
+        case Direction::TOP_LEFT:
+            gameArea.SetScroll(SCROLL_TOP);
+            gameArea.SetScroll(SCROLL_LEFT);
+            break;
+        case Direction::TOP:
+            gameArea.SetScroll(SCROLL_TOP);
+            break;
+        case Direction::TOP_RIGHT:
+            gameArea.SetScroll(SCROLL_TOP);
+            gameArea.SetScroll(SCROLL_RIGHT);
+            break;
+        case Direction::RIGHT:
+            gameArea.SetScroll(SCROLL_RIGHT);
+            break;
+        case Direction::BOTTOM_RIGHT:
+            gameArea.SetScroll(SCROLL_BOTTOM);
+            gameArea.SetScroll(SCROLL_RIGHT);
+            break;
+        case Direction::BOTTOM:
+            gameArea.SetScroll(SCROLL_BOTTOM);
+            break;
+        case Direction::BOTTOM_LEFT:
+            gameArea.SetScroll(SCROLL_BOTTOM);
+            gameArea.SetScroll(SCROLL_LEFT);
+            break;
+        case Direction::LEFT:
+            gameArea.SetScroll(SCROLL_LEFT);
+            break;
+        default:
+            break;
+    }
 }
 
 void Interface::Basic::EventDebug1()

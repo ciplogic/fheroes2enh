@@ -24,8 +24,7 @@
 #include "statusbar.h"
 
 StatusBar::StatusBar()
-{
-}
+= default;
 
 void StatusBar::SetCenter(const Point &pt)
 {

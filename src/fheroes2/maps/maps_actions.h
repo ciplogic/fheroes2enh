@@ -40,8 +40,7 @@ public:
     ActionSimple(int v = 0) : uid(0), type(v)
     {}
 
-    virtual ~ActionSimple()
-    {}
+    virtual ~ActionSimple();
 
     int GetType() const
     { return type; }

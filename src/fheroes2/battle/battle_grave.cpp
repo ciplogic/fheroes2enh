@@ -49,23 +49,21 @@ void Battle::Graveyard::RemoveTroop(const Unit &b)
     Graveyard &map = *this;
     TroopUIDs &ids = map[b.GetHeadIndex()];
 
-    TroopUIDs::iterator it = std::find(ids.begin(), ids.end(), b.GetUID());
+    auto it = std::find(ids.begin(), ids.end(), b.GetUID());
     if (it != ids.end()) ids.erase(it);
 
-    if (b.isWide())
-    {
-        TroopUIDs &ids2 = map[b.GetTailIndex()];
+    if (!b.isWide()) return;
+    TroopUIDs &ids2 = map[b.GetTailIndex()];
 
-        it = std::find(ids2.begin(), ids2.end(), b.GetUID());
-        if (it != ids2.end()) ids2.erase(it);
-    }
+    it = std::find(ids2.begin(), ids2.end(), b.GetUID());
+    if (it != ids2.end()) ids2.erase(it);
 }
 
 u32 Battle::Graveyard::GetLastTroopUID(s32 index) const
 {
-    for (auto it = begin(); it != end(); ++it)
-        if (index == (*it).first && (*it).second.size())
-            return (*it).second.back();
+    for (auto troop: *this)
+        if (index == troop.first && !troop.second.empty())
+            return troop.second.back();
 
     return 0;
 }

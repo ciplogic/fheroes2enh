@@ -72,7 +72,7 @@ namespace AGG
 
         const FAT &Fat(const string &key);
 
-        const vector<u8> Read(const string &key);
+        const vector<u8> Read(const string &str);
 
     private:
         string filename;
@@ -280,7 +280,7 @@ const vector<u8> AGG::File::Read(const string &str)
 
 	if (it == fat.end())
 	{
-		if (body.size())
+		if (!body.empty())
 		{
 			body.clear();
 			key.clear();
@@ -981,7 +981,7 @@ ICNSprite AGG::RenderICNSprite(int icn, u32 index)
     u32 c = 0;
     Point pt(0, 0);
 
-    while (1)
+    while (true)
     {
         // 0x00 - end line
         if (0 == *buf)

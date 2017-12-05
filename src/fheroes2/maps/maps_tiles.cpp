@@ -2521,7 +2521,7 @@ void Maps::Tiles::RemoveJailSprite()
 
 void Maps::Tiles::UpdateAbandoneMineSprite(Tiles &tile)
 {
-    Addons::iterator it = find_if(tile.addons_level1.begin(), tile.addons_level1.end(),
+    auto it = find_if(tile.addons_level1.begin(), tile.addons_level1.end(),
                                        TilesAddon::isAbandoneMineSprite);
     u32 uniq = it != tile.addons_level1.end() ? (*it).uniq : 0;
 

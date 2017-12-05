@@ -148,7 +148,7 @@ SurfaceFormat GetRGBAMask(u32 bpp)
     return fm;
 }
 
-u32 GetPixel24(u8 *ptr)
+u32 GetPixel24(const u8 *ptr)
 {
     u32 color = 0;
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
@@ -192,7 +192,7 @@ RGBA::RGBA()
 #endif
 }
 
-RGBA::RGBA(int r, int g, int b, int a)
+RGBA::RGBA(int r, int g, int b, int a) noexcept
 {
     color.r = r;
     color.g = g;

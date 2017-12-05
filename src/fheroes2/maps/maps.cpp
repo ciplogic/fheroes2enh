@@ -443,8 +443,7 @@ bool Maps::IsNearTiles(s32 index1, s32 index2)
 
 bool Maps::TileIsUnderProtection(s32 center)
 {
-    return MP2::OBJ_MONSTER == world.GetTiles(center).GetObject() ? true :
-           GetTilesUnderProtection(center).size();
+    return MP2::OBJ_MONSTER == world.GetTiles(center).GetObject() || GetTilesUnderProtection(center).size();
 }
 
 Maps::Indexes Maps::GetTilesUnderProtection(s32 center)

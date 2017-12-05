@@ -37,6 +37,8 @@ StreamBase &operator>>(StreamBase &sb, ActionSimple &st)
     return sb >> st.type >> st.uid;
 }
 
+ActionSimple::~ActionSimple() = default;
+
 StreamBase &operator<<(StreamBase &sb, const ActionResources &st)
 {
     return sb << static_cast<const ActionSimple &>(st) << st.resources << st.message;

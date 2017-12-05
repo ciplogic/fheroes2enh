@@ -1014,7 +1014,7 @@ Monster Monster::Rand(level_t level)
         if (mons.GetLevel() == level) monsters.push_back(mons);
     }
 
-    return monsters.size() ? *Rand::Get(monsters) : UNKNOWN;
+    return !monsters.empty() ? *Rand::Get(monsters) : UNKNOWN;
 }
 
 u32 Monster::Rand4WeekOf()

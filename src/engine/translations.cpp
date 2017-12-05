@@ -264,7 +264,7 @@ namespace Translation
 
     bool setDomain(const char *domain)
     {
-        map<string, mofile>::iterator it = domains.find(domain);
+        auto it = domains.find(domain);
         if (it == domains.end())
             return false;
 

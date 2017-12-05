@@ -61,8 +61,7 @@ public:
     StreamBase() : flags(0)
     {}
 
-    virtual ~StreamBase()
-    {}
+    virtual ~StreamBase() = default;
 
     void setbigendian(bool);
 
@@ -248,15 +247,15 @@ class ZStreamBuf;
 class StreamBuf : public StreamBase
 {
 public:
-    StreamBuf(size_t = 0);
+    explicit StreamBuf(size_t = 0);
 
     StreamBuf(const StreamBuf &);
 
-    StreamBuf(const vector<u8> &);
+    explicit StreamBuf(const vector<u8> &);
 
     StreamBuf(const u8 *, size_t);
 
-    ~StreamBuf();
+    ~StreamBuf() override;
 
     StreamBuf &operator=(const StreamBuf &);
 
@@ -268,40 +267,40 @@ public:
 
     void seek(size_t);
 
-    void skip(size_t);
+    void skip(size_t) override;
 
-	u16 getBE16();
+	u16 getBE16() override;
 
-    u16 getLE16();
+    u16 getLE16() override;
 
-	u32 getBE32();
+	u32 getBE32() override;
 
-	u32 getLE32();
+	u32 getLE32() override;
 
-    void putBE32(u32);
+    void putBE32(u32) override;
 
-    void putLE32(u32);
+    void putLE32(u32) override;
 
-    void putBE16(u16);
+    void putBE16(u16) override;
 
-    void putLE16(u16);
+    void putLE16(u16) override;
 
-    vector<u8> getRaw(size_t = 0 /* all data */);
+    vector<u8> getRaw(size_t sz /* all data */) override;
 
-    void putRaw(const char *, size_t);
+    void putRaw(const char *, size_t) override;
 
     string toString(size_t = 0 /* all data */);
 
 protected:
     void reset();
 
-    size_t tellg() const;
+    size_t tellg() const override;
 
-    size_t tellp() const;
+    size_t tellp() const override;
 
-    size_t sizeg() const;
+    size_t sizeg() const override;
 
-    size_t sizep() const;
+    size_t sizep() const override;
 
     void copy(const StreamBuf &);
 
@@ -309,9 +308,9 @@ protected:
 
     void setfail();
 
-    int get8();
+    int get8() override;
 
-    void put8(char);
+    void put8(char) override;
 
 #ifdef WITH_ZLIB
 
@@ -330,12 +329,11 @@ class StreamFile : public StreamBase
     SDL_RWops *rw;
 
 public:
-    StreamFile()
-    {}
+    StreamFile() : rw(nullptr) {}
 
     StreamFile(const string &, const char *mode);
 
-    ~StreamFile();
+    ~StreamFile() override;
 
     size_t size() const;
 
@@ -349,27 +347,27 @@ public:
 
     void seek(size_t);
 
-    void skip(size_t);
+    void skip(size_t) override;
 
-	u16 getBE16();
+	u16 getBE16() override;
 
-	u16 getLE16();
+	u16 getLE16() override;
 
-	u32 getBE32();
+	u32 getBE32() override;
 
-	u32 getLE32();
+	u32 getLE32() override;
 
-    void putBE32(u32);
+    void putBE32(u32) override;
 
-    void putLE32(u32);
+    void putLE32(u32) override;
 
-    void putBE16(u16);
+    void putBE16(u16) override;
 
-    void putLE16(u16);
+    void putLE16(u16) override;
 
-    vector<u8> getRaw(size_t /* all data */);
+    vector<u8> getRaw(size_t /* all data */) override;
 
-    void putRaw(const char *, size_t);
+    void putRaw(const char *, size_t) override;
 
     string toString(size_t = 0 /* all data */);
 
@@ -377,17 +375,17 @@ protected:
     StreamFile &operator=(const StreamFile &)
     { return *this; }
 
-    size_t sizeg() const;
+    size_t sizeg() const override;
 
-    size_t sizep() const;
+    size_t sizep() const override;
 
-    size_t tellg() const;
+    size_t tellg() const override;
 
-    size_t tellp() const;
+    size_t tellp() const override;
 
-    int get8();
+    int get8() override;
 
-    void put8(char);
+    void put8(char) override;
 };
 
 #endif

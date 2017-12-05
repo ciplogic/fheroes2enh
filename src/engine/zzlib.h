@@ -37,7 +37,7 @@ class ZSurface : public Surface
 {
 public:
     ZSurface()
-    {}
+    = default;
 
     bool Load(int w, int h, int b, int pitch, u32 rmask, u32 gmask, u32 bmask, u32 amask, const u8 *p, size_t s);
 
@@ -55,7 +55,7 @@ class ZStreamFile : public StreamBuf
 {
 public:
     ZStreamFile()
-    {}
+    = default;
 
     bool read(const string &, size_t offset = 0);
 

@@ -965,9 +965,12 @@ void AIToWhirlpools(Heroes &hero, s32 index_from)
     Troop *troop = hero.GetArmy().GetWeakestTroop();
 
     if (troop && Rand::Get(1) && 1 < troop->GetCount())
-        troop->SetCount(Monster::GetCountFromHitPoints(troop->GetID(), troop->GetHitPoints() - troop->GetHitPoints() *
+    {
+        Monster monster(troop->GetID());
+        troop->SetCount(Monster::GetCountFromHitPoints(monster, troop->GetHitPoints() - troop->GetHitPoints() *
                                                                                                Game::GetWhirlpoolPercent() /
                                                                                                100));
+    }
 
     hero.GetPath().Reset();
     hero.ActionNewPosition();

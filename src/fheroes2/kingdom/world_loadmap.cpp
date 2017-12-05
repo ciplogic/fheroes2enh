@@ -1393,7 +1393,7 @@ bool World::LoadMapMP2(const string &filename)
                     // add sign or buttle
                     if (SIZEOFMP2SIGN - 1 < pblock.size() && 0x01 == pblock[0])
                     {
-                        MapSign *obj = new MapSign();
+                        auto *obj = new MapSign();
                         obj->LoadFromMP2(findobject, StreamBuf(pblock));
                         map_objects.add(obj);
                     }
@@ -1402,7 +1402,7 @@ bool World::LoadMapMP2(const string &filename)
                     // add event maps
                     if (SIZEOFMP2EVENT - 1 < pblock.size() && 0x01 == pblock[0])
                     {
-                        MapEvent *obj = new MapEvent();
+                        auto *obj = new MapEvent();
                         obj->LoadFromMP2(findobject, StreamBuf(pblock));
                         map_objects.add(obj);
                     }
@@ -1411,7 +1411,7 @@ bool World::LoadMapMP2(const string &filename)
                     // add riddle sphinx
                     if (SIZEOFMP2RIDDLE - 1 < pblock.size() && 0x00 == pblock[0])
                     {
-                        MapSphinx *obj = new MapSphinx();
+                        auto *obj = new MapSphinx();
                         obj->LoadFromMP2(findobject, StreamBuf(pblock));
                         map_objects.add(obj);
                     }
@@ -1591,7 +1591,7 @@ void World::PostLoad()
         // get first castle position
         Kingdom &kingdom = GetKingdom(Color::GetFirst(Players::HumanColors()));
 
-        if (kingdom.GetCastles().size())
+        if (!kingdom.GetCastles().empty())
         {
             const Castle *castle = kingdom.GetCastles().front();
             Heroes *hero = vec_heroes.Get(Heroes::SANDYSANDY);
@@ -1626,7 +1626,7 @@ void World::PostLoad()
                 pools.push_back(tile.GetIndex());
         }
 
-        if (pools.size())
+        if (!pools.empty())
         {
             const s32 pos = *Rand::Get(pools);
             ultimate_artifact.Set(pos, Artifact::Rand(Artifact::ART_ULTIMATE));

@@ -668,7 +668,7 @@ void Battle::Board::SetCobjObjects(const Maps::Tiles &tile)
                 break;
         }
 
-    if (objs.size() && 2 < Rand::Get(1, 10))
+    if (!objs.empty() && 2 < Rand::Get(1, 10))
     {
         // 80% 1 obj
         s32 dst = GetObstaclePosition();

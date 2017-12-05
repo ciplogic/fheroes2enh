@@ -716,14 +716,14 @@ void TiXmlElement::SetAttribute(const char *cname, const char *cvalue)
     const char *_value = cvalue;
 #endif
 
-    TiXmlAttribute *node = attributeSet.Find(_name);
+    auto node = attributeSet.Find(_name);
     if (node)
     {
         node->SetValue(_value);
         return;
     }
 
-    TiXmlAttribute *attrib = new TiXmlAttribute(cname, cvalue);
+    auto *attrib = new TiXmlAttribute(cname, cvalue);
     if (attrib)
     {
         attributeSet.Add(attrib);

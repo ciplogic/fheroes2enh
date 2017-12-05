@@ -368,8 +368,7 @@ void Music::Resume()
 
 bool Music::isPlaying()
 {
-    list<play_t>::iterator
-            it = find_if(musics.begin(), musics.end(), play_t::isPlaying);
+    auto it = find_if(musics.begin(), musics.end(), play_t::isPlaying);
     return it != musics.end();
 }
 
@@ -380,8 +379,7 @@ bool Music::isPaused()
 
 void Music::Reset()
 {
-    list<play_t>::iterator
-            it = find_if(musics.begin(), musics.end(), play_t::isRunning);
+    auto it = find_if(musics.begin(), musics.end(), play_t::isRunning);
 
     if (it != musics.end())
         (*it).Stop();

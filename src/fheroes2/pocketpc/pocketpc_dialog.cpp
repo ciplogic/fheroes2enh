@@ -370,7 +370,7 @@ void PocketPC::KeyboardDialog(string &str)
         else if (le.MouseClickLeft(rt_SL)) ch = '/';
         else if (le.MouseClickLeft(rt_SPACE)) ch = 0x20;
 
-        if (le.MouseClickLeft(rt_BACKSPACE) && str.size())
+        if (le.MouseClickLeft(rt_BACKSPACE) && !str.empty())
         {
             str.resize(str.size() - 1);
             redraw = true;

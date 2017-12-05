@@ -263,19 +263,19 @@ class ArtifactsBar : public Interface::ItemsActionBar<Artifact>
 public:
     ArtifactsBar(const Heroes *, bool mini, bool ro, bool change = false);
 
-    void RedrawBackground(const Rect &, Surface &);
+    void RedrawBackground(const Rect &, Surface &) override;
 
-    void RedrawItem(Artifact &, const Rect &, bool, Surface &);
+    void RedrawItem(Artifact &, const Rect &, bool, Surface &) override;
 
     void ResetSelected();
 
     void Redraw(Surface &dstsf = Display::Get());
 
-    bool ActionBarSingleClick(const Point &, Artifact &, const Rect &);
+    bool ActionBarSingleClick(const Point &, Artifact &, const Rect &) override;
 
-    bool ActionBarSingleClick(const Point &, Artifact &, const Rect &, Artifact &, const Rect &);
+    bool ActionBarSingleClick(const Point &, Artifact &, const Rect &, Artifact &, const Rect &) override;
 
-    bool ActionBarDoubleClick(const Point &, Artifact &, const Rect &);
+    bool ActionBarDoubleClick(const Point &, Artifact &, const Rect &) override;
 
     bool ActionBarPressRight(const Point &, Artifact &, const Rect &);
 
@@ -283,9 +283,9 @@ public:
 
     bool QueueEventProcessing(ArtifactsBar &, string * = nullptr);
 
-    bool ActionBarCursor(const Point &, Artifact &, const Rect &);
+    bool ActionBarCursor(const Point &, Artifact &, const Rect &) override;
 
-    bool ActionBarCursor(const Point &, Artifact &, const Rect &, Artifact &, const Rect &);
+    bool ActionBarCursor(const Point &, Artifact &, const Rect &, Artifact &, const Rect &) override;
 
 protected:
     const Heroes *hero;

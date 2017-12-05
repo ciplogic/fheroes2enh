@@ -248,7 +248,7 @@ const Heroes *Kingdom::GetFirstHeroStartCondLoss() const
 string Kingdom::GetNamesHeroStartCondLoss() const
 {
     string result;
-    for (KingdomHeroes::const_iterator
+    for (auto
                  it = heroes_cond_loss.begin(); it != heroes_cond_loss.end(); ++it)
     {
         result.append((*it)->GetName());
@@ -345,7 +345,7 @@ bool Kingdom::isVisited(const Maps::Tiles &tile) const
 
 bool Kingdom::isVisited(s32 index, int object) const
 {
-    list<IndexObject>::const_iterator it = find_if(visit_object.begin(), visit_object.end(),
+    auto it = find_if(visit_object.begin(), visit_object.end(),
                                                              bind2nd(mem_fun_ref(&IndexObject::isIndex),
                                                                           index));
     return visit_object.end() != it && (*it).isObject(object);
@@ -571,8 +571,7 @@ u32 Kingdom::GetArmiesStrength() const
 }
 
 Kingdoms::Kingdoms()
-{
-}
+= default;
 
 void Kingdoms::Init()
 {

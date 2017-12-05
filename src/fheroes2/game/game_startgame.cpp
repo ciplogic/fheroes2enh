@@ -265,14 +265,13 @@ void ShowEventDayDialog()
     Kingdom &myKingdom = world.GetKingdom(Settings::Get().CurrentColor());
     EventsDate events = world.GetEventsDate(myKingdom.GetColor());
 
-    for (EventsDate::const_iterator
-                 it = events.begin(); it != events.end(); ++it)
+    for (auto event: events)
     {
         AGG::PlayMusic(MUS::NEWS, false);
-        if ((*it).resource.GetValidItemsCount())
-            Dialog::ResourceInfo("", (*it).message, (*it).resource);
-        else if ((*it).message.size())
-            Message("", (*it).message, Font::BIG, Dialog::OK);
+        if (event.resource.GetValidItemsCount())
+            Dialog::ResourceInfo("", event.message, event.resource);
+        else if (event.message.size())
+            Message("", event.message, Font::BIG, Dialog::OK);
     }
 }
 

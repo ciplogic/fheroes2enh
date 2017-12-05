@@ -53,17 +53,16 @@ int Interface::StatusWindow::GetState() const
 
 u32 Interface::StatusWindow::ResetResourceStatus(u32 tick, void *ptr)
 {
-    if (ptr)
+    if (!ptr)
+        return 0;
+    StatusWindow *status = reinterpret_cast<StatusWindow *>(ptr);
+    if (STATUS_RESOURCE == status->state)
     {
-        StatusWindow *status = reinterpret_cast<StatusWindow *>(ptr);
-        if (STATUS_RESOURCE == status->state)
-        {
-            status->state = status->oldState;
-            Cursor::Get().Hide();
-            Basic::Get().SetRedraw(REDRAW_STATUS);
-        } else
-            status->timerShowLastResource.Remove();
-    }
+        status->state = status->oldState;
+        Cursor::Get().Hide();
+        Basic::Get().SetRedraw(REDRAW_STATUS);
+    } else
+        status->timerShowLastResource.Remove();
 
     return 0;
 }

@@ -33,29 +33,27 @@ void Interface::Basic::SetFocus(Heroes *hero)
 {
     Player *player = Settings::Get().GetPlayers().GetCurrent();
 
-    if (player)
+    if (!player) return;
+    Focus &focus = player->GetFocus();
+
+    if (focus.GetHeroes() && focus.GetHeroes() != hero)
     {
-        Focus &focus = player->GetFocus();
+        focus.GetHeroes()->SetMove(false);
+        focus.GetHeroes()->ShowPath(false);
+    }
 
-        if (focus.GetHeroes() && focus.GetHeroes() != hero)
-        {
-            focus.GetHeroes()->SetMove(false);
-            focus.GetHeroes()->ShowPath(false);
-        }
+    hero->RescanPath();
+    hero->ShowPath(true);
+    focus.Set(hero);
 
-        hero->RescanPath();
-        hero->ShowPath(true);
-        focus.Set(hero);
+    iconsPanel.Select(*hero);
+    gameArea.SetCenter(hero->GetCenter());
+    statusWindow.SetState(STATUS_ARMY);
 
-        iconsPanel.Select(*hero);
-        gameArea.SetCenter(hero->GetCenter());
-        statusWindow.SetState(STATUS_ARMY);
-
-        if (!Game::ChangeMusicDisabled())
-        {
-            AGG::PlayMusic(MUS::FromGround(world.GetTiles(hero->GetIndex()).GetGround()));
-            Game::EnvironmentSoundMixer();
-        }
+    if (!Game::ChangeMusicDisabled())
+    {
+        AGG::PlayMusic(MUS::FromGround(world.GetTiles(hero->GetIndex()).GetGround()));
+        Game::EnvironmentSoundMixer();
     }
 }
 
@@ -63,85 +61,81 @@ void Interface::Basic::SetFocus(Castle *castle)
 {
     Player *player = Settings::Get().GetPlayers().GetCurrent();
 
-    if (player)
+    if (!player) return;
+    Focus &focus = player->GetFocus();
+
+    if (focus.GetHeroes())
     {
-        Focus &focus = player->GetFocus();
-
-        if (focus.GetHeroes())
-        {
-            focus.GetHeroes()->SetMove(false);
-            focus.GetHeroes()->ShowPath(false);
-        }
-
-        focus.Set(castle);
-
-        iconsPanel.Select(*castle);
-        gameArea.SetCenter(castle->GetCenter());
-        statusWindow.SetState(STATUS_FUNDS);
-
-        AGG::PlayMusic(MUS::FromGround(world.GetTiles(castle->GetIndex()).GetGround()));
-        Game::EnvironmentSoundMixer();
+        focus.GetHeroes()->SetMove(false);
+        focus.GetHeroes()->ShowPath(false);
     }
+
+    focus.Set(castle);
+
+    iconsPanel.Select(*castle);
+    gameArea.SetCenter(castle->GetCenter());
+    statusWindow.SetState(STATUS_FUNDS);
+
+    AGG::PlayMusic(MUS::FromGround(world.GetTiles(castle->GetIndex()).GetGround()));
+    Game::EnvironmentSoundMixer();
 }
 
 void Interface::Basic::ResetFocus(int priority)
 {
     Player *player = Settings::Get().GetPlayers().GetCurrent();
 
-    if (player)
+    if (!player) return;
+    Focus &focus = player->GetFocus();
+    Kingdom &myKingdom = world.GetKingdom(player->GetColor());
+
+    iconsPanel.ResetIcons();
+
+    switch (priority)
     {
-        Focus &focus = player->GetFocus();
-        Kingdom &myKingdom = world.GetKingdom(player->GetColor());
-
-        iconsPanel.ResetIcons();
-
-        switch (priority)
+        case GameFocus::FIRSTHERO:
         {
-            case GameFocus::FIRSTHERO:
-            {
-                const KingdomHeroes &heroes = myKingdom.GetHeroes();
-                // skip sleeping
-                auto it =
-                        find_if(heroes.begin(), heroes.end(),
-                                     not1(bind2nd(mem_fun(&Heroes::Modes), Heroes::SLEEPER)));
+            const KingdomHeroes &heroes = myKingdom.GetHeroes();
+            // skip sleeping
+            auto it =
+                    find_if(heroes.begin(), heroes.end(),
+                            not1(bind2nd(mem_fun(&Heroes::Modes), Heroes::SLEEPER)));
 
-                if (it != heroes.end())
-                    SetFocus(*it);
-                else
-                    ResetFocus(GameFocus::CASTLE);
-            }
-                break;
-
-            case GameFocus::HEROES:
-                if (focus.GetHeroes() && focus.GetHeroes()->GetColor() == player->GetColor())
-                    SetFocus(focus.GetHeroes());
-                else if (!myKingdom.GetHeroes().empty())
-                    SetFocus(myKingdom.GetHeroes().front());
-                else if (!myKingdom.GetCastles().empty())
-                {
-                    iconsPanel.SetRedraw(ICON_HEROES);
-                    SetFocus(myKingdom.GetCastles().front());
-                } else
-                    focus.Reset();
-                break;
-
-            case GameFocus::CASTLE:
-                if (focus.GetCastle() && focus.GetCastle()->GetColor() == player->GetColor())
-                    SetFocus(focus.GetCastle());
-                else if (!myKingdom.GetCastles().empty())
-                    SetFocus(myKingdom.GetCastles().front());
-                else if (!myKingdom.GetHeroes().empty())
-                {
-                    iconsPanel.SetRedraw(ICON_CASTLES);
-                    SetFocus(myKingdom.GetHeroes().front());
-                } else
-                    focus.Reset();
-                break;
-
-            default:
-                focus.Reset();
-                break;
+            if (it != heroes.end())
+                SetFocus(*it);
+            else
+                ResetFocus(GameFocus::CASTLE);
         }
+            break;
+
+        case GameFocus::HEROES:
+            if (focus.GetHeroes() && focus.GetHeroes()->GetColor() == player->GetColor())
+                SetFocus(focus.GetHeroes());
+            else if (!myKingdom.GetHeroes().empty())
+                SetFocus(myKingdom.GetHeroes().front());
+            else if (!myKingdom.GetCastles().empty())
+            {
+                iconsPanel.SetRedraw(ICON_HEROES);
+                SetFocus(myKingdom.GetCastles().front());
+            } else
+                focus.Reset();
+            break;
+
+        case GameFocus::CASTLE:
+            if (focus.GetCastle() && focus.GetCastle()->GetColor() == player->GetColor())
+                SetFocus(focus.GetCastle());
+            else if (!myKingdom.GetCastles().empty())
+                SetFocus(myKingdom.GetCastles().front());
+            else if (!myKingdom.GetHeroes().empty())
+            {
+                iconsPanel.SetRedraw(ICON_CASTLES);
+                SetFocus(myKingdom.GetHeroes().front());
+            } else
+                focus.Reset();
+            break;
+
+        default:
+            focus.Reset();
+            break;
     }
 }
 

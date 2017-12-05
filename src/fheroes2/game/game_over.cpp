@@ -350,20 +350,17 @@ int GameOver::Result::LocalCheckGameOver()
     }
 
     // set: continue after victory
-    if (Game::CANCEL != res &&
-        (Settings::Get().CurrentColor() & Players::HumanColors()) &&
-        Settings::Get().ExtGameContinueAfterVictory() &&
-        (!myKingdom.GetCastles().empty() || !myKingdom.GetHeroes().empty()))
-    {
-        if (Dialog::YES == Dialog::Message("", "Do you wish to continue the game?",
-                                           Font::BIG, Dialog::YES | Dialog::NO))
-        {
-            continue_game = true;
-            if (res == Game::HIGHSCORES) Game::HighScores(false);
-            res = Game::CANCEL;
-            Interface::Basic::Get().SetRedraw(REDRAW_ALL);
-        }
-    }
+    if (Game::CANCEL == res || !(Settings::Get().CurrentColor() & Players::HumanColors()) ||
+        !Settings::Get().ExtGameContinueAfterVictory() ||
+        !(!myKingdom.GetCastles().empty() || !myKingdom.GetHeroes().empty()))
+        return res;
+    if (!(Dialog::YES == Dialog::Message("", "Do you wish to continue the game?",
+                                         Font::BIG, Dialog::YES | Dialog::NO)))
+        return res;
+    continue_game = true;
+    if (res == Game::HIGHSCORES) Game::HighScores(false);
+    res = Game::CANCEL;
+    Interface::Basic::Get().SetRedraw(REDRAW_ALL);
 
     return res;
 }

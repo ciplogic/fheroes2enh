@@ -75,31 +75,29 @@ void Interface::ButtonsArea::Redraw()
 {
     const Settings &conf = Settings::Get();
 
-    if (!conf.ExtGameHideInterface() || conf.ShowButtons())
-    {
-        const int icnbtn = Settings::Get().ExtGameEvilInterface() ? ICN::ADVEBTNS : ICN::ADVBTNS;
+    if (conf.ExtGameHideInterface() && !conf.ShowButtons()) return;
+    const int icnbtn = Settings::Get().ExtGameEvilInterface() ? ICN::ADVEBTNS : ICN::ADVBTNS;
 
-        if (conf.ExtGameHideInterface())
-            BorderWindow::Redraw();
+    if (conf.ExtGameHideInterface())
+        BorderWindow::Redraw();
 
-        buttonNextHero.SetSprite(icnbtn, 0, 1);
-        buttonMovement.SetSprite(icnbtn, 2, 3);
-        buttonKingdom.SetSprite(icnbtn, 4, 5);
-        buttonSpell.SetSprite(icnbtn, 6, 7);
-        buttonEndTur.SetSprite(icnbtn, 8, 9);
-        buttonAdventure.SetSprite(icnbtn, 10, 11);
-        buttonFile.SetSprite(icnbtn, 12, 13);
-        buttonSystem.SetSprite(icnbtn, 14, 15);
+    buttonNextHero.SetSprite(icnbtn, 0, 1);
+    buttonMovement.SetSprite(icnbtn, 2, 3);
+    buttonKingdom.SetSprite(icnbtn, 4, 5);
+    buttonSpell.SetSprite(icnbtn, 6, 7);
+    buttonEndTur.SetSprite(icnbtn, 8, 9);
+    buttonAdventure.SetSprite(icnbtn, 10, 11);
+    buttonFile.SetSprite(icnbtn, 12, 13);
+    buttonSystem.SetSprite(icnbtn, 14, 15);
 
-        buttonNextHero.Draw();
-        buttonMovement.Draw();
-        buttonKingdom.Draw();
-        buttonSpell.Draw();
-        buttonEndTur.Draw();
-        buttonAdventure.Draw();
-        buttonFile.Draw();
-        buttonSystem.Draw();
-    }
+    buttonNextHero.Draw();
+    buttonMovement.Draw();
+    buttonKingdom.Draw();
+    buttonSpell.Draw();
+    buttonEndTur.Draw();
+    buttonAdventure.Draw();
+    buttonFile.Draw();
+    buttonSystem.Draw();
 }
 
 int Interface::ButtonsArea::QueueEventProcessing()
