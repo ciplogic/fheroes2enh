@@ -310,7 +310,7 @@ int Castle::OpenDialog(bool readonly, bool fade)
     selectArmy1.SetColRows(5, 1);
     selectArmy1.SetPos(dst_pt.x, dst_pt.y);
     selectArmy1.SetHSpace(6);
-    selectArmy1.Redraw();
+    selectArmy1.Redraw(display);
 
     // portrait heroes or captain or sign
     dst_pt.x = cur_pt.x + 5;
@@ -331,7 +331,7 @@ int Castle::OpenDialog(bool readonly, bool fade)
     {
         heroes.Guest()->MovePointsScaleFixed();
         selectArmy2.SetArmy(&heroes.Guest()->GetArmy());
-        selectArmy2.Redraw();
+        selectArmy2.Redraw(display);
     }
 
     // resource
@@ -651,8 +651,8 @@ int Castle::OpenDialog(bool readonly, bool fade)
                                         selectArmy2.SetArmy(nullptr);
                                         cursor.Hide();
                                         RedrawIcons(*this, CastleHeroes(nullptr, heroes.Guard()), cur_pt);
-                                        selectArmy1.Redraw();
-                                        if (selectArmy2.isValid()) selectArmy2.Redraw();
+                                        selectArmy1.Redraw(display);
+                                        if (selectArmy2.isValid()) selectArmy2.Redraw(display);
                                         cursor.Show();
                                         display.Flip();
                                     }
@@ -707,8 +707,8 @@ int Castle::OpenDialog(bool readonly, bool fade)
         if (need_redraw)
         {
             cursor.Hide();
-            selectArmy1.Redraw();
-            if (selectArmy2.isValid()) selectArmy2.Redraw();
+            selectArmy1.Redraw(display);
+            if (selectArmy2.isValid()) selectArmy2.Redraw(display);
             CastleRedrawTownName(*this, cur_pt);
             RedrawResourcePanel(cur_pt);
             if (heroes.Guest() && heroes.Guard() && !readonly)

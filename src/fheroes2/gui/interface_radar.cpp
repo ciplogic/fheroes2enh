@@ -359,7 +359,7 @@ void Interface::Radar::RedrawCursor()
     }
 }
 
-void Interface::Radar::QueueEventProcessing()
+bool Interface::Radar::QueueEventProcessing()
 {
     GameArea &gamearea = interface.GetGameArea();
     Settings &conf = Settings::Get();
@@ -371,11 +371,11 @@ void Interface::Radar::QueueEventProcessing()
         BorderWindow::QueueEventProcessing())
     {
         RedrawCursor();
-        return;
+        return true;
     }
         // move cursor
     if (!le.MouseCursor(area))
-        return;
+        return true;
     if (le.MouseClickLeft() || le.MousePressLeft())
     {
         const Point prev(gamearea.GetRectMaps());
@@ -392,15 +392,15 @@ void Interface::Radar::QueueEventProcessing()
                 gamearea.SetRedraw();
             }
         }
-        return;
+        return true;
     }
     if (!conf.ExtPocketTapMode() && le.MousePressRight(GetRect()))
     {
         Dialog::Message(_("World Map"), _("A miniature view of the known world. Left click to move viewing area."),
                         Font::BIG);
-        return;
+        return true;
     }
-    if (conf.QVGA()) return;
+    if (conf.QVGA()) return true;
     const Rect &area1 = GetArea();
     Size newSize(area1.w, area1.h);
 
@@ -417,6 +417,7 @@ void Interface::Radar::QueueEventProcessing()
     }
 
     ChangeAreaSize(newSize);
+    return true;
 }
 
 void Interface::Radar::ResetAreaSize()

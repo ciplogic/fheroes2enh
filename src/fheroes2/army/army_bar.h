@@ -34,9 +34,9 @@ class ArmyBar : public Interface::ItemsActionBar<ArmyTroop>
 public:
     ArmyBar(Army *, bool mini, bool ro, bool change = false);
 
-    void RedrawBackground(const Rect &, Surface &);
+    void RedrawBackground(const Rect &, Surface &) override;
 
-    void RedrawItem(ArmyTroop &, const Rect &, bool, Surface &);
+    void RedrawItem(ArmyTroop &, const Rect &, bool, Surface &) override;
 
     void SetBackground(const Size &, const RGBA &);
 
@@ -44,23 +44,23 @@ public:
 
     bool isValid() const;
 
-    void ResetSelected();
+    void ResetSelected() override;
 
-    void Redraw(Surface &dstsf = Display::Get());
+    void Redraw(Surface &dstsf) override;
 
-    bool ActionBarSingleClick(const Point &, ArmyTroop &, const Rect &);
+    bool ActionBarSingleClick(const Point &, ArmyTroop &, const Rect &) override;
 
-    bool ActionBarSingleClick(const Point &, ArmyTroop &, const Rect &, ArmyTroop &, const Rect &);
+    bool ActionBarSingleClick(const Point &, ArmyTroop &, const Rect &, ArmyTroop &, const Rect &) override;
 
-    bool ActionBarDoubleClick(const Point &, ArmyTroop &, const Rect &);
+    bool ActionBarDoubleClick(const Point &, ArmyTroop &, const Rect &) override;
 
-    bool ActionBarPressRight(const Point &, ArmyTroop &, const Rect &);
+    bool ActionBarPressRight(const Point &, ArmyTroop &, const Rect &) override;
 
-    bool ActionBarPressRight(const Point &, ArmyTroop &, const Rect &, ArmyTroop &, const Rect &);
+    bool ActionBarPressRight(const Point &, ArmyTroop &, const Rect &, ArmyTroop &, const Rect &) override;
 
-    bool ActionBarCursor(const Point &, ArmyTroop &, const Rect &);
+    bool ActionBarCursor(const Point &, ArmyTroop &, const Rect &) override;
 
-    bool ActionBarCursor(const Point &, ArmyTroop &, const Rect &, ArmyTroop &, const Rect &);
+    bool ActionBarCursor(const Point &, ArmyTroop &, const Rect &, ArmyTroop &, const Rect &) override;
 
     bool QueueEventProcessing(string * = nullptr);
 

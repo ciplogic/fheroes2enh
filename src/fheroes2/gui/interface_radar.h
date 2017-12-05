@@ -32,24 +32,24 @@ namespace Interface
     class Radar : public BorderWindow
     {
     public:
-        Radar(Basic &);
+        explicit Radar(Basic &);
 
-        void SetPos(s32, s32);
+        void SetPos(s32, s32) override;
 
         void SetRedraw() const;
 
         void Build();
 
-        void Redraw();
+        void Redraw() override;
 
         void SetHide(bool);
 
         void ResetAreaSize();
 
-        void QueueEventProcessing();
+        bool QueueEventProcessing() override;
 
     private:
-        void SavePosition();
+        void SavePosition() override;
 
         void Generate();
 

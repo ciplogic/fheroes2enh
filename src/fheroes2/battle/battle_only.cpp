@@ -168,15 +168,15 @@ bool Battle::Only::ChangeSettings()
 
     moraleIndicator1->Redraw();
     luckIndicator1->Redraw();
-    primskill_bar1->Redraw();
-    secskill_bar1->Redraw();
+    primskill_bar1->Redraw(display);
+    secskill_bar1->Redraw(display);
     selectArtifacts1->Redraw();
 
     selectArmy1 = new ArmyBar(army1, true, false, true);
     selectArmy1->SetColRows(5, 1);
     selectArmy1->SetPos(cur_pt.x + 36, cur_pt.y + 267);
     selectArmy1->SetHSpace(2);
-    selectArmy1->Redraw();
+    selectArmy1->Redraw(display);
 
     if (hero2)
     {
@@ -185,9 +185,9 @@ bool Battle::Only::ChangeSettings()
 
         moraleIndicator2->Redraw();
         luckIndicator2->Redraw();
-        secskill_bar2->Redraw();
+        secskill_bar2->Redraw(display);
         selectArtifacts2->Redraw();
-        selectArmy2->Redraw();
+        selectArmy2->Redraw(display);
     }
 
     monsters.GetTroop(0)->Set(Monster::PEASANT, 100);
@@ -197,7 +197,7 @@ bool Battle::Only::ChangeSettings()
     selectArmy2->SetColRows(5, 1);
     selectArmy2->SetPos(cur_pt.x + 381, cur_pt.y + 267);
     selectArmy2->SetHSpace(2);
-    selectArmy2->Redraw();
+    selectArmy2->Redraw(display);
 
     bool exit = false;
     bool redraw = false;
@@ -411,17 +411,17 @@ bool Battle::Only::ChangeSettings()
             RedrawBaseInfo(cur_pt);
             moraleIndicator1->Redraw();
             luckIndicator1->Redraw();
-            secskill_bar1->Redraw();
+            secskill_bar1->Redraw(display);
             selectArtifacts1->Redraw();
-            selectArmy1->Redraw();
+            selectArmy1->Redraw(display);
             if (hero2)
             {
                 moraleIndicator2->Redraw();
                 luckIndicator2->Redraw();
-                secskill_bar2->Redraw();
+                secskill_bar2->Redraw(display);
                 selectArtifacts2->Redraw();
             }
-            selectArmy2->Redraw();
+            selectArmy2->Redraw(display);
             if (cinfo2) cinfo2->Redraw();
             buttonStart.Draw();
             cursor.Show();

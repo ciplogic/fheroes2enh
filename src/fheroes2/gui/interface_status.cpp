@@ -386,7 +386,7 @@ void Interface::StatusWindow::DrawBackground() const
         icnston.Blit(pos.x, pos.y);
 }
 
-void Interface::StatusWindow::QueueEventProcessing()
+bool Interface::StatusWindow::QueueEventProcessing()
 {
     Display &display = Display::Get();
     Cursor &cursor = Cursor::Get();
@@ -409,6 +409,7 @@ void Interface::StatusWindow::QueueEventProcessing()
         Dialog::Message(_("Status Window"),
                         _("This window provides information on the status of your hero or kingdom, and shows the date. Left click here to cycle throungh these windows."),
                         Font::BIG);
+    return true;
 }
 
 void Interface::StatusWindow::RedrawTurnProgress(u32 v)

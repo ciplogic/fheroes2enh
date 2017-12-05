@@ -270,6 +270,9 @@ namespace Battle
 
         static bool isHandFighting(const Unit &, const Unit &);
 
+    protected:
+
+        Position position;
     private:
         friend StreamBase &operator<<(StreamBase &, const Unit &);
 
@@ -287,7 +290,6 @@ namespace Battle
         s32 animframe;
         s32 animstep;
 
-        Position position;
         ModesAffected affected;
         Unit *mirror;
         Surface contours[4];

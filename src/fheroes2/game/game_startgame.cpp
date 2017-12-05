@@ -841,7 +841,7 @@ int Interface::Basic::HumanTurn(bool isload)
         {
             if (Cursor::POINTER != cursor.Themes())
                 cursor.SetThemes(Cursor::POINTER);
-            res = buttonsArea.QueueEventProcessing();
+            res = buttonsArea.EventProcessing();
         } else
             // cursor over status area
         if ((!conf.ExtGameHideInterface() || conf.ShowStatus()) &&

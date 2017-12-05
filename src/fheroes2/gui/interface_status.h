@@ -66,7 +66,7 @@ namespace Interface
 
         void RedrawTurnProgress(u32);
 
-        void QueueEventProcessing();
+        bool QueueEventProcessing();
 
         static void ResetTimer();
 

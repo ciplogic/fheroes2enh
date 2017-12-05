@@ -43,7 +43,7 @@ namespace Interface
 
         void Redraw();
 
-        int QueueEventProcessing();
+        int EventProcessing();
 
     private:
         Basic &interface;

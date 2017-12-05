@@ -1377,3 +1377,8 @@ StreamBase &operator>>(StreamBase &msg, Army &army)
 
     return msg;
 }
+
+u32 Army::UniqueCount(const Army &a)
+{
+    return a.GetUniqueCount();
+}

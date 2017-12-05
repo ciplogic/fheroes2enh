@@ -84,7 +84,7 @@ int PocketPC::HeroesOpenDialog(Heroes &hero, bool readonly)
     primskill_bar.SetHSpace(-1);
     primskill_bar.SetTextOff(0, -1);
     primskill_bar.SetPos(dst_rt.x + 74, dst_rt.y + 14);
-    primskill_bar.Redraw();
+    primskill_bar.Redraw(display);
 
     // sec skill
     backSprite.Blit(Rect(21, 198, 267, 36), dst_rt.x + 7, dst_rt.y + 57);
@@ -94,14 +94,14 @@ int PocketPC::HeroesOpenDialog(Heroes &hero, bool readonly)
     secskill_bar.SetHSpace(-1);
     secskill_bar.SetContent(hero.GetSecondarySkills().ToVector());
     secskill_bar.SetPos(dst_rt.x + 8, dst_rt.y + 58);
-    secskill_bar.Redraw();
+    secskill_bar.Redraw(display);
 
     // army bar
     ArmyBar selectArmy(&hero.GetArmy(), true, readonly);
     selectArmy.SetColRows(5, 1);
     selectArmy.SetPos(dst_rt.x + 51, dst_rt.y + 170);
     selectArmy.SetHSpace(-1);
-    selectArmy.Redraw();
+    selectArmy.Redraw(display);
 
     // art bar
     ArtifactsBar selectArtifacts(&hero, true, readonly);
@@ -179,7 +179,7 @@ int PocketPC::HeroesOpenDialog(Heroes &hero, bool readonly)
             if (selectArtifacts.isSelected()) selectArtifacts.ResetSelected();
             moraleIndicator.Redraw();
             luckIndicator.Redraw();
-            selectArmy.Redraw();
+            selectArmy.Redraw(display);
             cursor.Show();
             display.Flip();
         }

@@ -198,17 +198,18 @@ namespace Skill
 
         static int GetInitialSpell(int race);
 
+        int defense;
+        int attack;
+        int knowledge;
+        int power;
+
+        friend StreamBase &operator>>(StreamBase &, Primary &);
+
     protected:
         void LoadDefaults(int type, int race);
 
         friend StreamBase &operator<<(StreamBase &, const Primary &);
 
-        friend StreamBase &operator>>(StreamBase &, Primary &);
-
-        int attack;
-        int defense;
-        int power;
-        int knowledge;
     };
 
     StreamBase &operator<<(StreamBase &, const Primary &);

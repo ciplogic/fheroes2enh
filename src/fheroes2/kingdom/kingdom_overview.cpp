@@ -214,13 +214,14 @@ void StatsHeroesList::RedrawItem(const HeroRow &row, s32 dstx, s32 dsty, bool cu
     text.Set(GetString(row.hero->GetKnowledge()));
     text.Blit(dstx + 195 - text.w(), dsty + 20);
 
+    auto& display = Display::Get();
     // primary skills info
     const_cast<PrimarySkillsBar *>(row.primskillsBar)->SetPos(dstx + 56, dsty - 3);
-    const_cast<PrimarySkillsBar *>(row.primskillsBar)->Redraw();
+    const_cast<PrimarySkillsBar *>(row.primskillsBar)->Redraw(display);
 
     // secondary skills info
     const_cast<SecondarySkillsBar *>(row.secskillsBar)->SetPos(dstx + 206, dsty + 3);
-    const_cast<SecondarySkillsBar *>(row.secskillsBar)->Redraw();
+    const_cast<SecondarySkillsBar *>(row.secskillsBar)->Redraw(display);
 
     // artifacts info
     const_cast<ArtifactsBar *>(row.artifactsBar)->SetPos(dstx + 348, dsty + 3);
@@ -228,7 +229,7 @@ void StatsHeroesList::RedrawItem(const HeroRow &row, s32 dstx, s32 dsty, bool cu
 
     // army info
     const_cast<ArmyBar *>(row.armyBar)->SetPos(dstx - 1, dsty + 30);
-    const_cast<ArmyBar *>(row.armyBar)->Redraw();
+    const_cast<ArmyBar *>(row.armyBar)->Redraw(display);
 }
 
 void StatsHeroesList::RedrawBackground(const Point &dst)
@@ -437,6 +438,7 @@ bool StatsCastlesList::ActionListCursor(CstlRow &row, const Point &cursor, s32 o
 void StatsCastlesList::RedrawItem(const CstlRow &row, s32 dstx, s32 dsty, bool current)
 {
     if (!row.castle) return;
+    Display& display = Display::Get();
     Text text("", Font::SMALL);
     const Sprite &back = AGG::GetICN(ICN::OVERVIEW, 11);
     back.Blit(dstx, dsty);
@@ -460,17 +462,17 @@ void StatsCastlesList::RedrawItem(const CstlRow &row, s32 dstx, s32 dsty, bool c
     if (row.armyBarGuard)
     {
         const_cast<ArmyBar *>(row.armyBarGuard)->SetPos(dstx + 146, row.armyBarGuest ? dsty : dsty + 20);
-        const_cast<ArmyBar *>(row.armyBarGuard)->Redraw();
+        const_cast<ArmyBar *>(row.armyBarGuard)->Redraw(display);
     }
 
     if (row.armyBarGuest)
     {
         const_cast<ArmyBar *>(row.armyBarGuest)->SetPos(dstx + 146, row.armyBarGuard ? dsty + 41 : dsty + 20);
-        const_cast<ArmyBar *>(row.armyBarGuest)->Redraw();
+        const_cast<ArmyBar *>(row.armyBarGuest)->Redraw(display);
     }
 
     const_cast<DwellingsBar *>(row.dwellingsBar)->SetPos(dstx + 349, dsty + 15);
-    const_cast<DwellingsBar *>(row.dwellingsBar)->Redraw();
+    const_cast<DwellingsBar *>(row.dwellingsBar)->Redraw(display);
 }
 
 void StatsCastlesList::RedrawBackground(const Point &dst)

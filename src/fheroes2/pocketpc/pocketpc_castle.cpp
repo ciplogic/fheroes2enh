@@ -198,7 +198,7 @@ screen_t CastleOpenDialog1(Castle &castle, bool readonly)
     dwellingsBar.SetPos(dst_rt.x + 2, dst_rt.y + 34);
     dwellingsBar.SetColRows(6, 1);
     dwellingsBar.SetHSpace(2);
-    dwellingsBar.Redraw();
+    dwellingsBar.Redraw(display);
 
     RedrawIcons(castle, heroes, dst_rt);
 
@@ -210,7 +210,7 @@ screen_t CastleOpenDialog1(Castle &castle, bool readonly)
     selectArmy1.SetColRows(5, 1);
     selectArmy1.SetPos(dst_rt.x + 47, dst_rt.y + 79);
     selectArmy1.SetHSpace(2);
-    selectArmy1.Redraw();
+    selectArmy1.Redraw(display);
 
     ArmyBar selectArmy2(nullptr, true, readonly);
     selectArmy2.SetColRows(5, 1);
@@ -221,7 +221,7 @@ screen_t CastleOpenDialog1(Castle &castle, bool readonly)
     {
         heroes.Guest()->MovePointsScaleFixed();
         selectArmy2.SetArmy(&heroes.Guest()->GetArmy());
-        selectArmy2.Redraw();
+        selectArmy2.Redraw(display);
     }
 
     const Kingdom &kingdom = castle.GetKingdom();
@@ -298,9 +298,9 @@ screen_t CastleOpenDialog1(Castle &castle, bool readonly)
         } else if (!readonly && le.MouseCursor(dwellingsBar.GetArea()) && dwellingsBar.QueueEventProcessing())
         {
             cursor.Hide();
-            dwellingsBar.Redraw();
-            selectArmy1.Redraw();
-            if (selectArmy2.isValid()) selectArmy2.Redraw();
+            dwellingsBar.Redraw(display);
+            selectArmy1.Redraw(display);
+            if (selectArmy2.isValid()) selectArmy2.Redraw(display);
             RedrawResourceBar(Point(dst_rt.x + 4, dst_rt.y + 176), kingdom.GetFunds());
             cursor.Show();
             display.Flip();
@@ -317,8 +317,8 @@ screen_t CastleOpenDialog1(Castle &castle, bool readonly)
                 cursor.Hide();
                 RedrawResourceBar(Point(dst_rt.x + 4, dst_rt.y + 176), kingdom.GetFunds());
 
-                selectArmy1.Redraw();
-                if (selectArmy2.isValid()) selectArmy2.Redraw();
+                selectArmy1.Redraw(display);
+                if (selectArmy2.isValid()) selectArmy2.Redraw(display);
                 cursor.Show();
                 display.Flip();
             }
@@ -330,7 +330,7 @@ screen_t CastleOpenDialog1(Castle &castle, bool readonly)
                 cursor.Hide();
                 RedrawResourceBar(Point(dst_rt.x + 4, dst_rt.y + 176), kingdom.GetFunds());
 
-                selectArmy1.Redraw();
+                selectArmy1.Redraw(display);
                 cursor.Show();
                 display.Flip();
             }
@@ -402,8 +402,8 @@ screen_t CastleOpenDialog1(Castle &castle, bool readonly)
                     buttonMeeting.Draw();
                 }
 
-                selectArmy1.Redraw();
-                if (selectArmy2.isValid()) selectArmy2.Redraw();
+                selectArmy1.Redraw(display);
+                if (selectArmy2.isValid()) selectArmy2.Redraw(display);
 
                 cursor.Show();
                 display.Flip();
@@ -431,8 +431,8 @@ screen_t CastleOpenDialog1(Castle &castle, bool readonly)
             if (redraw)
             {
                 cursor.Hide();
-                selectArmy1.Redraw();
-                if (selectArmy2.isValid()) selectArmy2.Redraw();
+                selectArmy1.Redraw(display);
+                if (selectArmy2.isValid()) selectArmy2.Redraw(display);
                 cursor.Show();
                 display.Flip();
             }

@@ -167,7 +167,7 @@ namespace Interface
             return colrows;
         }
 
-        virtual void Redraw(Surface &dstsf = Display::Get())
+        virtual void Redraw(Surface &dstsf)
         {
             Point dstpt(barsz);
 
@@ -206,7 +206,7 @@ namespace Interface
             }
         }
 
-        bool QueueEventProcessing()
+        virtual bool QueueEventProcessing()
         {
             const Point &cursor = LocalEvent::Get().GetMouseCursor();
 

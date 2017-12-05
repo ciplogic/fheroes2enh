@@ -126,14 +126,14 @@ void Heroes::MeetingDialog(Heroes &heroes2)
     secskill_bar1.SetHSpace(-1);
     secskill_bar1.SetContent(secondary_skills.ToVector());
     secskill_bar1.SetPos(cur_pt.x + 22, cur_pt.y + 199);
-    secskill_bar1.Redraw();
+    secskill_bar1.Redraw(display);
 
     SecondarySkillsBar secskill_bar2;
     secskill_bar2.SetColRows(8, 1);
     secskill_bar2.SetHSpace(-1);
     secskill_bar2.SetContent(heroes2.GetSecondarySkills().ToVector());
     secskill_bar2.SetPos(cur_pt.x + 353, cur_pt.y + 199);
-    secskill_bar2.Redraw();
+    secskill_bar2.Redraw(display);
 
     // army
     dst_pt.x = cur_pt.x + 36;
@@ -143,7 +143,7 @@ void Heroes::MeetingDialog(Heroes &heroes2)
     selectArmy1.SetColRows(5, 1);
     selectArmy1.SetPos(dst_pt.x, dst_pt.y);
     selectArmy1.SetHSpace(2);
-    selectArmy1.Redraw();
+    selectArmy1.Redraw(display);
 
     dst_pt.x = cur_pt.x + 381;
     dst_pt.y = cur_pt.y + 267;
@@ -152,7 +152,7 @@ void Heroes::MeetingDialog(Heroes &heroes2)
     selectArmy2.SetColRows(5, 1);
     selectArmy2.SetPos(dst_pt.x, dst_pt.y);
     selectArmy2.SetHSpace(2);
-    selectArmy2.Redraw();
+    selectArmy2.Redraw(display);
 
     // artifact
     dst_pt.x = cur_pt.x + 23;
@@ -213,8 +213,8 @@ void Heroes::MeetingDialog(Heroes &heroes2)
             if (selectArtifacts1.isSelected()) selectArtifacts1.ResetSelected();
             else if (selectArtifacts2.isSelected()) selectArtifacts2.ResetSelected();
 
-            selectArmy1.Redraw();
-            selectArmy2.Redraw();
+            selectArmy1.Redraw(display);
+            selectArmy2.Redraw(display);
 
             moraleIndicator1.Redraw();
             moraleIndicator2.Redraw();
@@ -293,8 +293,9 @@ void RedrawPrimarySkillInfo(const Point &cur_pt, PrimarySkillsBar *bar1, Primary
     text.Set(_("Knowledge"));
     text.Blit(cur_pt.x + 320 - text.w() / 2, cur_pt.y + 160);
 
-    if (bar1) bar1->Redraw();
-    if (bar2) bar2->Redraw();
+    auto& display = Display::Get();
+    if (bar1) bar1->Redraw(display);
+    if (bar2) bar2->Redraw(display);
 }
 
 // spell_book.cpp

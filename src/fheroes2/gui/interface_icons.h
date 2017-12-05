@@ -42,7 +42,7 @@ namespace Interface
         IconsBar(u32 count, const Surface &sf) : iconsCount(count), marker(sf), show(true)
         {}
 
-        void SetShow(bool f)
+        virtual void SetShow(bool f)
         { show = f; };
 
         bool IsShow() const
@@ -80,22 +80,22 @@ namespace Interface
 
         void SetPos(s32, s32);
 
-        void SetShow(bool);
+        void SetShow(bool) override;
 
     protected:
-        void ActionCurrentUp();
+        void ActionCurrentUp() override;
 
-        void ActionCurrentDn();
+        void ActionCurrentDn() override;
 
-        void ActionListDoubleClick(HEROES &);
+        void ActionListDoubleClick(HEROES &) override;
 
-        void ActionListSingleClick(HEROES &);
+        void ActionListSingleClick(HEROES &) override;
 
-        void ActionListPressRight(HEROES &);
+        void ActionListPressRight(HEROES &) override;
 
-        void RedrawItem(const HEROES &, s32 ox, s32 oy, bool current);
+        void RedrawItem(const HEROES &, s32 ox, s32 oy, bool current) override;
 
-        void RedrawBackground(const Point &);
+        void RedrawBackground(const Point &) override;
     };
 
     class CastleIcons : public ListBox<CASTLE>, public IconsBar
@@ -106,22 +106,22 @@ namespace Interface
 
         void SetPos(s32, s32);
 
-        void SetShow(bool);
+        void SetShow(bool) override;
 
     protected:
-        void ActionCurrentUp();
+        void ActionCurrentUp() override;
 
-        void ActionCurrentDn();
+        void ActionCurrentDn() override;
 
-        void ActionListDoubleClick(CASTLE &);
+        void ActionListDoubleClick(CASTLE &) override;
 
-        void ActionListSingleClick(CASTLE &);
+        void ActionListSingleClick(CASTLE &) override;
 
-        void ActionListPressRight(CASTLE &);
+        void ActionListPressRight(CASTLE &) override;
 
-        void RedrawItem(const CASTLE &, s32 ox, s32 oy, bool current);
+        void RedrawItem(const CASTLE &, s32 ox, s32 oy, bool current) override;
 
-        void RedrawBackground(const Point &);
+        void RedrawBackground(const Point &) override;
     };
 
     class Basic;
@@ -129,19 +129,19 @@ namespace Interface
     class IconsPanel : public BorderWindow
     {
     public:
-        IconsPanel(Basic &);
+        explicit IconsPanel(Basic &);
 
-        void SetPos(s32, s32);
+        void SetPos(s32, s32) override;
 
-        void SavePosition();
+        void SavePosition() override;
 
         void SetRedraw() const;
 
         void SetRedraw(icons_t) const;
 
-        void Redraw();
+        void Redraw() override;
 
-        void QueueEventProcessing();
+        bool QueueEventProcessing() override;
 
         u32 CountIcons() const;
 

@@ -72,13 +72,13 @@ void PocketPC::HeroesMeeting(Heroes &hero1, Heroes &hero2)
     selectArmy1.SetColRows(5, 1);
     selectArmy1.SetPos(dst_rt.x + 68, dst_rt.y + 74);
     selectArmy1.SetHSpace(2);
-    selectArmy1.Redraw();
+    selectArmy1.Redraw(display);
 
     ArmyBar selectArmy2(&hero2.GetArmy(), true, false);
     selectArmy2.SetColRows(5, 1);
     selectArmy2.SetPos(dst_rt.x + 68, dst_rt.y + 119);
     selectArmy2.SetHSpace(2);
-    selectArmy2.Redraw();
+    selectArmy2.Redraw(display);
 
     const Rect rectExit(dst_rt.x + dst_rt.w - 25, dst_rt.y + (dst_rt.h - 25) / 2, 25, 25);
     AGG::GetICN(ICN::TOWNWIND, 12).Blit(rectExit.x + 4, rectExit.y + 4);
@@ -101,8 +101,8 @@ void PocketPC::HeroesMeeting(Heroes &hero1, Heroes &hero2)
             if (selectArtifacts1.isSelected()) selectArtifacts1.ResetSelected();
             else if (selectArtifacts2.isSelected()) selectArtifacts2.ResetSelected();
 
-            selectArmy1.Redraw();
-            selectArmy2.Redraw();
+            selectArmy1.Redraw(display);
+            selectArmy2.Redraw(display);
 
             cursor.Show();
             display.Flip();
