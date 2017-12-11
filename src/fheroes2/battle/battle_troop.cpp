@@ -297,7 +297,7 @@ u32 Battle::ModesAffected::FindZeroDuration() const
 }
 
 Battle::Unit::Unit(const Troop &t, s32 pos, bool ref) : ArmyTroop(nullptr, t),
-                                                        uid(World::GetUniq()), hp(t.GetHitPoints()),
+                                                        uid(World::GetUniq()), hp(Monster::GetHitPoints(t)),
                                                         count0(t.GetCount()), dead(0), shots(t.GetShots()),
                                                         disruptingray(0), reflect(ref), animstate(0), animframe(0),
                                                         animstep(1), mirror(nullptr), blindanswer(false)

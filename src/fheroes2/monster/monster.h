@@ -164,6 +164,8 @@ public:
 
     virtual u32 GetShots() const;
 
+    static u32 GetHitPoints(const Monster& m);
+
     virtual u32 GetHitPoints() const;
 
     virtual u32 GetSpeed() const;

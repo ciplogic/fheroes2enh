@@ -462,7 +462,7 @@ u32 Battle::Force::GetDeadHitPoints() const
 
     for (auto it : *this)
     {
-        res += static_cast<Monster *>(it)->GetHitPoints() * it->GetDead();
+        res += Monster::GetHitPoints(*it) * it->GetDead();
     }
 
     return res;
