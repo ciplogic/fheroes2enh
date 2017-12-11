@@ -55,22 +55,22 @@ public:
 
     virtual u32 GetCount() const;
 
-    u32 GetHitPoints() const override;
+    u32 GetHitPoints() const;
 
     Monster GetMonster() const;
 
-    u32 GetDamageMin() const override;
+    u32 GetDamageMin() const;
 
     u32 GetDamageMax() const;
 
     u32 GetStrength() const;
 
 
-    payment_t GetCost() const override;
+    payment_t GetCost() const;
 
-    payment_t GetUpgradeCost() const override;
+    payment_t GetUpgradeCost() const;
 
-    bool isValid() const override;
+    virtual bool isValid() const;
 
     virtual bool isBattle() const;
 
@@ -111,23 +111,23 @@ public:
 
     ArmyTroop &operator=(const Troop &);
 
-    u32 GetAttack() const override;
+    u32 GetAttack() const;
 
-    u32 GetDefense() const override;
+    u32 GetDefense() const;
 
-    int GetColor() const override;
+    int GetColor() const;
 
-    int GetMorale() const override;
+    int GetMorale() const;
 
-    int GetLuck() const override;
+    int GetLuck() const;
 
     void SetArmy(const Army &);
 
     const Army *GetArmy() const;
 
-    string GetAttackString() const override;
+    string GetAttackString() const;
 
-    string GetDefenseString() const override;
+    string GetDefenseString() const;
 
 protected:
     const Army *army;

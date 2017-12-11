@@ -44,7 +44,7 @@ namespace Interface
 
         virtual void Redraw();
 
-        virtual bool QueueEventProcessing();
+        bool QueueEventProcessing();
 
         const Rect &GetArea() const;
 

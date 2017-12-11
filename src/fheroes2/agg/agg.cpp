@@ -228,9 +228,13 @@ bool AGG::File::Open(const string &fname)
     {
 		string itemName = names.toString(FATSIZENAME);
         FAT f;
-		f.crc = fats.getLE32();
-        f.offset = fats.getLE32();
-        f.size = fats.getLE32();
+		auto crc = fats.getLE32();
+		f.crc = crc;
+		auto offset = fats.getLE32();
+        f.offset = offset;
+		auto size= fats.getLE32();
+        f.size = size;
+		cout << crc << " " <<offset<<" " <<size<< endl;
 		fat[itemName] = f;
     }
 
@@ -373,6 +377,8 @@ u32 AGG::ClearFreeObjects()
             }
         }
     }
+
+    DEBUG(DBG_ENGINE, DBG_INFO, "ICN" << " " << "memory: " << used);
 
     return total;
 }

@@ -200,83 +200,72 @@ struct XMIData
 
         // FORM XDIR
         sb >> group;
-        if (group.ID != TAG_FORM || group.type != TAG_XDIR)
+        if (group.ID == TAG_FORM && group.type == TAG_XDIR)
         {
-            ERROR("parse error: " << "form xdir");
-            return;
-        }
-
-
             // INFO
             sb >> iff;
-        if (iff.ID != TAG_INFO || iff.length != 2)
-        {
-            ERROR("parse error: " << "info");
-            return;
-        }
-
-        int numTracks = sb.getLE16();
-
-        // CAT XMID
-        sb >> group;
-        if (group.ID != TAG_CAT0 || group.type != TAG_XMID)
-        {
-            ERROR("parse error: " << "cat xmid");
-            return;
-        }
-
-
-        for (int track = 0; track < numTracks; ++track)
-        {
-            tracks.push_back(XMITrack());
-
-            vector<u8> &timb = tracks.back().timb;
-            vector<u8> &evnt = tracks.back().evnt;
-
-            sb >> group;
-            // FORM XMID
-            if (group.ID != TAG_FORM || group.type != TAG_XMID)
+            if (iff.ID == TAG_INFO && iff.length == 2)
             {
-                ERROR("unknown tag: " << group.ID << " (expected FORM), " << group.type << " (expected XMID)");
-                continue;
-            }
+                int numTracks = sb.getLE16();
 
-            sb >> iff;
-            // [TIMB]
-            if (iff.ID == TAG_TIMB)
-            {
-                timb = sb.getRaw(iff.length);
-                if (timb.size() != iff.length)
+                // CAT XMID
+                sb >> group;
+                if (group.ID == TAG_CAT0 && group.type == TAG_XMID)
                 {
-                    ERROR("parse error: " << "out of range");
-                    break;
-                }
-                sb >> iff;
-            }
+                    for (int track = 0; track < numTracks; ++track)
+                    {
+                        tracks.push_back(XMITrack());
 
-            // [RBRN]
-            if (iff.ID == TAG_RBRN)
-            {
-                sb.skip(iff.length);
-                sb >> iff;
-            }
+                        vector<u8> &timb = tracks.back().timb;
+                        vector<u8> &evnt = tracks.back().evnt;
 
-            // EVNT
-            if (iff.ID != TAG_EVNT)
-            {
-                ERROR("parse error: " << "evnt");
-                break;
-            }
+                        sb >> group;
+                        // FORM XMID
+                        if (group.ID == TAG_FORM && group.type == TAG_XMID)
+                        {
+                            sb >> iff;
+                            // [TIMB]
+                            if (iff.ID == TAG_TIMB)
+                            {
+                                timb = sb.getRaw(iff.length);
+                                if (timb.size() != iff.length)
+                                {
+                                    ERROR("parse error: " << "out of range");
+                                    break;
+                                }
+                                sb >> iff;
+                            }
 
-            evnt = sb.getRaw(iff.length);
+                            // [RBRN]
+                            if (iff.ID == TAG_RBRN)
+                            {
+                                sb.skip(iff.length);
+                                sb >> iff;
+                            }
 
-            if (evnt.size() != iff.length)
-            {
-                ERROR("parse error: " << "out of range");
-                break;
-            }
-        }
+                            // EVNT
+                            if (iff.ID != TAG_EVNT)
+                            {
+                                ERROR("parse error: " << "evnt");
+                                break;
+                            }
 
+                            evnt = sb.getRaw(iff.length);
+
+                            if (evnt.size() != iff.length)
+                            {
+                                ERROR("parse error: " << "out of range");
+                                break;
+                            }
+                        } else
+                        ERROR("unknown tag: " << group.ID << " (expected FORM), " << group.type << " (expected XMID)");
+                    }
+                } else
+                ERROR("parse error: " << "cat xmid");
+            } else
+            ERROR("parse error: " << "info");
+        } else
+        ERROR("parse error: " << "form xdir");
     }
 
     bool isvalid() const
@@ -331,11 +320,11 @@ StreamBuf &operator<<(StreamBuf &sb, const MidEvent &st)
     return sb;
 }
 
-struct MidEvents : public vector<MidEvent>
+struct MidEvents : public list<MidEvent>
 {
     size_t count() const
     {
-        return vector<MidEvent>::size();
+        return list<MidEvent>::size();
     }
 
     size_t size() const
@@ -405,63 +394,63 @@ struct MidEvents : public vector<MidEvent>
                 {
                     push_back(MidEvent(delta, *ptr, *(ptr + 1), *(ptr + 2)));
                     break;
-                }
-                switch (*ptr >> 4)
-                {
-                    // meta
-                    case 0x0F:
+                } else
+                    switch (*ptr >> 4)
                     {
-                        pack_t pack = unpackValue(ptr + 2);
-                        ptr += pack.first + pack.second + 1;
-                        delta = 0;
-                    }
-                        break;
+                        // meta
+                        case 0x0F:
+                        {
+                            pack_t pack = unpackValue(ptr + 2);
+                            ptr += pack.first + pack.second + 1;
+                            delta = 0;
+                        }
+                            break;
 
-                        // key pressure
-                    case 0x0A:
-                        // control change
-                    case 0x0B:
-                        // pitch bend
-                    case 0x0E:
-                    {
-                        push_back(MidEvent(delta, *ptr, *(ptr + 1), *(ptr + 2)));
-                        ptr += 3;
-                        delta = 0;
-                    }
-                        break;
+                            // key pressure
+                        case 0x0A:
+                            // control change
+                        case 0x0B:
+                            // pitch bend
+                        case 0x0E:
+                        {
+                            push_back(MidEvent(delta, *ptr, *(ptr + 1), *(ptr + 2)));
+                            ptr += 3;
+                            delta = 0;
+                        }
+                            break;
 
-                        // note off
-                    case 0x08:
-                        // note on
-                    case 0x09:
-                    {
-                        push_back(MidEvent(delta, *ptr, *(ptr + 1), *(ptr + 2)));
-                        pack_t pack = unpackValue(ptr + 3);
-                        notesoff.emplace_back(*ptr - 0x10, *(ptr + 1), pack.first);
-                        ptr += 3 + pack.second;
-                        delta = 0;
-                    }
-                        break;
+                            // note off
+                        case 0x08:
+                            // note on
+                        case 0x09:
+                        {
+                            push_back(MidEvent(delta, *ptr, *(ptr + 1), *(ptr + 2)));
+                            pack_t pack = unpackValue(ptr + 3);
+                            notesoff.emplace_back(*ptr - 0x10, *(ptr + 1), pack.first);
+                            ptr += 3 + pack.second;
+                            delta = 0;
+                        }
+                            break;
 
-                        // program change
-                    case 0x0C:
-                        // chanel pressure
-                    case 0x0D:
-                    {
-                        push_back(MidEvent(delta, *ptr, *(ptr + 1)));
-                        ptr += 2;
-                        delta = 0;
-                    }
-                        break;
+                            // program change
+                        case 0x0C:
+                            // chanel pressure
+                        case 0x0D:
+                        {
+                            push_back(MidEvent(delta, *ptr, *(ptr + 1)));
+                            ptr += 2;
+                            delta = 0;
+                        }
+                            break;
 
-                        // unused command
-                    default:
-                        push_back(MidEvent(0, 0xFF, 0x2F, 0));
-                        ERROR("unknown st: 0x" << std::setw(2) << std::setfill('0') << std::hex <<
-                                               static_cast<int>(*ptr) << ", ln: "
-                                               << static_cast<int>(&t.evnt[0] + t.evnt.size() - ptr));
-                        break;
-                }
+                            // unused command
+                        default:
+                            push_back(MidEvent(0, 0xFF, 0x2F, 0));
+                            ERROR("unknown st: 0x" << std::setw(2) << std::setfill('0') << std::hex <<
+                                                   static_cast<int>(*ptr) << ", ln: "
+                                                   << static_cast<int>(&t.evnt[0] + t.evnt.size() - ptr));
+                            break;
+                    }
             }
         }
     }

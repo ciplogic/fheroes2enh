@@ -187,7 +187,7 @@ bool Dialog::SetGuardian(Heroes &hero, Troop &troop, CapturedObject &co, bool re
     selectArmy.SetColRows(5, 1);
     selectArmy.SetPos(dst_pt.x, dst_pt.y);
     selectArmy.SetHSpace(2);
-    selectArmy.Redraw(display);
+    selectArmy.Redraw();
 
     // guardian
     dst_pt.x = area.x + 93;
@@ -245,7 +245,7 @@ bool Dialog::SetGuardian(Heroes &hero, Troop &troop, CapturedObject &co, bool re
             {
                 guardian.select = false;
                 cursor.Hide();
-                selectArmy.Redraw(display);
+                selectArmy.Redraw();
             }
         } else if (le.MouseCursor(moraleIndicator.GetArea()))
             MoraleIndicator::QueueEventProcessing(moraleIndicator);
@@ -308,7 +308,7 @@ bool Dialog::SetGuardian(Heroes &hero, Troop &troop, CapturedObject &co, bool re
             guardian.Redraw();
             moraleIndicator.Redraw();
             luckIndicator.Redraw();
-            selectArmy.Redraw(display);
+            selectArmy.Redraw();
             armySplit.Redraw(troop);
             cursor.Show();
             display.Flip();

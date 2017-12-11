@@ -120,6 +120,7 @@ namespace Battle
     public:
         Position() : pair<Cell *, Cell *>(nullptr, nullptr)
         {}
+
         void Set(s32 head, bool wide, bool reflect);
 
         void Swap();

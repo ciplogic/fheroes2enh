@@ -265,7 +265,7 @@ private:
     void	Append(const std::vector<u16> &, int, u32);
 #endif
 
-    list<Text> messages;
+    vector<Text> messages;
     int align;
 };
 

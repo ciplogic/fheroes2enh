@@ -684,8 +684,7 @@ void TextBox::Blit(s32 ax, s32 ay, Surface &sf)
     Rect::x = ax;
     Rect::y = ay;
 
-    for (list<Text>::const_iterator
-                 it = messages.begin(); it != messages.end(); ++it)
+    for (auto it = messages.begin(); it != messages.end(); ++it)
     {
         switch (align)
         {

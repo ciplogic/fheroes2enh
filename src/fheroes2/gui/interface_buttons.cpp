@@ -100,7 +100,7 @@ void Interface::ButtonsArea::Redraw()
     buttonSystem.Draw();
 }
 
-int Interface::ButtonsArea::EventProcessing()
+int Interface::ButtonsArea::QueueEventProcessing()
 {
     Settings &conf = Settings::Get();
     LocalEvent &le = LocalEvent::Get();
