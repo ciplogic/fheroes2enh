@@ -371,7 +371,7 @@ u32 Monster::GetShots() const
 
 u32 Monster::GetHitPoints() const
 {
-    return monsters[id].hp;
+    return Monster::GetHitPoints(*this);
 }
 
 u32 Monster::GetSpeed() const

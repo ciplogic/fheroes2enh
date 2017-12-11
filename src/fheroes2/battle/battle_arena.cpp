@@ -189,6 +189,7 @@ Battle::Arena::Arena(Army &a1, Army &a2, s32 index, bool local) :
         bridge(nullptr), interface(nullptr), icn_covr(ICN::UNKNOWN), current_turn(0), auto_battle(0), end_turn(false)
 {
     const Settings &conf = Settings::Get();
+	auto_battle = conf.QuickCombat();
     usage_spells.reserve(20);
 
     arena = this;
@@ -210,7 +211,7 @@ Battle::Arena::Arena(Army &a1, Army &a2, s32 index, bool local) :
     }
 
     // init interface
-    if (local)
+    if (local && !conf.QuickCombat())
     {
         interface = new Interface(*this, index);
         board.SetArea(interface->GetArea());
@@ -488,6 +489,11 @@ void Battle::Arena::RemoteTurn(const Unit &b, Actions &a)
 
 void Battle::Arena::HumanTurn(const Unit &b, Actions &a)
 {
+	if(Settings::Get().QuickCombat())
+	{
+		AI::BattleTurn(*this, b, a);
+		return;
+	}
     if (interface)
         interface->HumanTurn(b, a);
 }

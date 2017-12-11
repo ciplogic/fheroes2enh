@@ -31,6 +31,8 @@ typedef Sint16 s16;
 typedef Uint16 u16;
 typedef Sint32 s32;
 typedef Uint32 u32;
+typedef Sint64 s64;
+typedef Uint64 u64;
 
 #define MAXU16        0xFFFF
 #define MAXU32        0xFFFFFFFF

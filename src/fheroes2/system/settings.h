@@ -258,6 +258,7 @@ public:
     bool Sound() const;
 
     bool Music() const;
+	bool QuickCombat() const;
 
     bool ShowControlPanel() const;
 
@@ -614,6 +615,8 @@ private:
     string maps_charset;
     int size_normal;
     int size_small;
+
+	bool _isQuickCombat;
 
     Maps::FileInfo
             current_maps_file;

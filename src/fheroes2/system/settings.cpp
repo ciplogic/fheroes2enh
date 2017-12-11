@@ -318,6 +318,12 @@ bool Settings::Read(const string &filename)
         ++ptr;
     }
 
+	if(config.Exists("quickcombat"))
+	{
+		_isQuickCombat = config.IntParams("quickcombat");
+	}
+	
+
     // maps directories
     maps_params.Append(config.ListStr("maps"));
     std::sort(maps_params.begin(), maps_params.end());
@@ -799,6 +805,13 @@ bool Settings::Sound() const
 /* return music */
 bool Settings::Music() const
 { return opt_global.Modes(GLOBAL_MUSIC); }
+
+
+/* return music */
+bool Settings::QuickCombat() const
+{
+	return _isQuickCombat;
+}
 
 /* return move speed */
 int Settings::HeroesMoveSpeed() const
