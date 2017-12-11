@@ -365,6 +365,9 @@ u32 Monster::GetShots() const
 {
     return monsters[id].shots;
 }
+/*static*/ u32 Monster::GetHitPoints(const Monster& m){
+    return monsters[m.id].hp;
+}
 
 u32 Monster::GetHitPoints() const
 {
@@ -1582,7 +1585,7 @@ u32 Monster::GetCountFromHitPoints(const Monster &mons, u32 hp)
 {
     if (hp)
     {
-        const u32 hp1 = mons.GetHitPoints();
+        const u32 hp1 = Monster::GetHitPoints(mons);
         const u32 count = hp / hp1;
         return (count * hp1) < hp ? count + 1 : count;
     }

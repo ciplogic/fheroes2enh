@@ -533,8 +533,7 @@ int Castle::OpenDialog(bool readonly, bool fade)
             }
         }
 
-        for (CastleDialog::CacheBuildings::const_iterator
-                     it = cacheBuildings.begin(); it != cacheBuildings.end(); ++it)
+        for (auto it = cacheBuildings.begin(); it != cacheBuildings.end(); ++it)
         {
             if (BUILD_MAGEGUILD & (*it).id)
             {

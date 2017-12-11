@@ -517,7 +517,7 @@ void Route::Path::RescanObstacle()
 void Route::Path::RescanPassable()
 {
     // scan passable
-    iterator it = begin();
+    auto it = begin();
 
     for (; it != end(); ++it)
         if (!world.GetTiles((*it).GetFrom()).isPassable(nullptr, (*it).GetDirection(), false))

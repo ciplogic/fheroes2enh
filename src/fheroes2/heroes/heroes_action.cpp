@@ -1042,7 +1042,9 @@ void ActionToBoat(Heroes &hero, u32 obj, s32 dst_index)
     AGG::PlaySound(M82::KILLFADE);
     hero.GetPath().Hide();
     hero.FadeOut();
-    hero.ResetMovePoints();
+    hero.ApplyPenaltyMovement();
+    hero.ApplyPenaltyMovement();
+
     hero.Move2Dest(dst_index);
     hero.SetMapsObject(MP2::OBJ_ZERO);
     hero.SetShipMaster(true);
@@ -1057,7 +1059,9 @@ void ActionToCoast(Heroes &hero, u32 obj, s32 dst_index)
 
     Maps::Tiles &from = world.GetTiles(hero.GetIndex());
 
-    hero.ResetMovePoints();
+    hero.ApplyPenaltyMovement();
+    hero.ApplyPenaltyMovement();
+
     hero.Move2Dest(dst_index);
     from.SetObject(MP2::OBJ_BOAT);
     hero.SetShipMaster(false);
@@ -1072,7 +1076,7 @@ void ActionToCoast(Heroes &hero, u32 obj, s32 dst_index)
 void ActionToPickupResource(Heroes &hero, u32 obj, s32 dst_index)
 {
     Maps::Tiles &tile = world.GetTiles(dst_index);
-    MapResource *map_resource = static_cast<MapResource *>(world.GetMapObject(tile.GetObjectUID(obj)));
+    auto *map_resource = static_cast<MapResource *>(world.GetMapObject(tile.GetObjectUID(obj)));
 
     Game::PlayPickupSound();
     AnimationRemoveObject(tile);

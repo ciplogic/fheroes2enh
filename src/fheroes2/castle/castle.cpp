@@ -882,7 +882,7 @@ bool Castle::RecruitMonster(const Troop &troop)
     if (dwelling[dw_index] < count) count = dwelling[dw_index];
 
     // buy
-    const payment_t paymentCosts = ms.GetCost() * count;
+    const payment_t paymentCosts = troop.GetCost();
     Kingdom &kingdom = GetKingdom();
 
     if (!kingdom.AllowPayment(paymentCosts)) return false;

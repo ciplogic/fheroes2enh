@@ -1415,32 +1415,30 @@ bool Heroes::isFreeman() const
 
 void Heroes::SetFreeman(int reason)
 {
-    if (!isFreeman())
+    if (isFreeman()) return;
+    bool savepoints = false;
+    Kingdom &kingdom = GetKingdom();
+
+    if ((Battle::RESULT_RETREAT | Battle::RESULT_SURRENDER) & reason)
     {
-        bool savepoints = false;
-        Kingdom &kingdom = GetKingdom();
-
-        if ((Battle::RESULT_RETREAT | Battle::RESULT_SURRENDER) & reason)
-        {
-            if (Settings::Get().ExtHeroRememberPointsForRetreating()) savepoints = true;
-            kingdom.SetLastLostHero(*this);
-        }
-
-        if (!army.isValid() || (Battle::RESULT_RETREAT & reason)) army.Reset(false);
-        else if ((Battle::RESULT_LOSS & reason) && !(Battle::RESULT_SURRENDER & reason)) army.Reset(true);
-
-        if (GetColor() != Color::NONE) kingdom.RemoveHeroes(this);
-
-        SetColor(Color::NONE);
-        world.GetTiles(GetIndex()).SetHeroes(nullptr);
-        modes = 0;
-        SetIndex(-1);
-        move_point_scale = -1;
-        path.Reset();
-        SetMove(false);
-        SetModes(ACTION);
-        if (savepoints) SetModes(SAVEPOINTS);
+        if (Settings::Get().ExtHeroRememberPointsForRetreating()) savepoints = true;
+        kingdom.SetLastLostHero(*this);
     }
+
+    if (!army.isValid() || (Battle::RESULT_RETREAT & reason)) army.Reset(false);
+    else if ((Battle::RESULT_LOSS & reason) && !(Battle::RESULT_SURRENDER & reason)) army.Reset(true);
+
+    if (GetColor() != Color::NONE) kingdom.RemoveHeroes(this);
+
+    SetColor(Color::NONE);
+    world.GetTiles(GetIndex()).SetHeroes(nullptr);
+    modes = 0;
+    SetIndex(-1);
+    move_point_scale = -1;
+    path.Reset();
+    SetMove(false);
+    SetModes(ACTION);
+    if (savepoints) SetModes(SAVEPOINTS);
 }
 
 void Heroes::SetKillerColor(int col)
@@ -1516,8 +1514,7 @@ void Heroes::ActionNewPosition()
         GetPath().Hide();
 
         // first target
-        MapsIndexes::iterator it = find(targets.begin(), targets.end(),
-                                             GetPath().GetDestinedIndex());
+        auto it = find(targets.begin(), targets.end(), GetPath().GetDestinedIndex());
         if (it != targets.end())
         {
             RedrawGameAreaAndHeroAttackMonster(*this, *it);

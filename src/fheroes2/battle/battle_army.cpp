@@ -176,7 +176,7 @@ void Battle::Units::SortWeakest()
 
 Battle::Unit *Battle::Units::FindUID(u32 pid)
 {
-    iterator it = find_if(begin(), end(),
+    auto it = find_if(begin(), end(),
                                bind2nd(mem_fun(&Unit::isUID), pid));
 
     return it == end() ? nullptr : *it;
@@ -308,39 +308,33 @@ void Battle::Force::UpdateOrderUnits(const Force &army1, const Force &army2, Uni
     orders.clear();
     Unit *last = nullptr;
 
-    if (1)
+    Units units1(army1, true);
+    Units units2(army2, true);
+    units1.SortFastest(true);
+    units2.SortFastest(true);
+    while (nullptr !=
+       (last = ForceGetCurrentUnitPart(units1, units2, true, isUnitFirst(last, true, army2.GetColor()), true)))
+        orders.push_back(last);
+
+    if (!Settings::Get().ExtBattleSoftWait())
+        return;
+    Units units11(army1, true);
+    Units units21(army2, true);
+
+    if (Settings::Get().ExtBattleReverseWaitOrder())
     {
-        Units units1(army1, true);
-        Units units2(army2, true);
-
-        units1.SortFastest(true);
-        units2.SortFastest(true);
-
-        while (nullptr !=
-               (last = ForceGetCurrentUnitPart(units1, units2, true, isUnitFirst(last, true, army2.GetColor()), true)))
-            orders.push_back(last);
+        units11.SortFastest(true);
+        units21.SortFastest(true);
+    } else
+    {
+        units11.SortSlowest(true);
+        units21.SortSlowest(true);
     }
 
-    if (Settings::Get().ExtBattleSoftWait())
-    {
-        Units units1(army1, true);
-        Units units2(army2, true);
-
-        if (Settings::Get().ExtBattleReverseWaitOrder())
-        {
-            units1.SortFastest(true);
-            units2.SortFastest(true);
-        } else
-        {
-            units1.SortSlowest(true);
-            units2.SortSlowest(true);
-        }
-
-        while (nullptr !=
-               (last = ForceGetCurrentUnitPart(units1, units2, false, isUnitFirst(last, false, army2.GetColor()),
-                                               true)))
-            orders.push_back(last);
-    }
+    while (nullptr !=
+           (last = ForceGetCurrentUnitPart(units11, units21, false, isUnitFirst(last, false, army2.GetColor()),
+                                           true)))
+        orders.push_back(last);
 }
 
 Battle::Unit *Battle::Force::GetCurrentUnit(const Force &army1, const Force &army2, Unit *last, bool part1)
@@ -369,9 +363,8 @@ StreamBase &Battle::operator<<(StreamBase &msg, const Force &f)
 {
     msg << static_cast<const BitModes &>(f) << static_cast<u32>(f.size());
 
-    for (Force::const_iterator
-                 it = f.begin(); it != f.end(); ++it)
-        msg << (*it)->GetUID() << **it;
+    for (auto it : f)
+        msg << it->GetUID() << *it;
 
     return msg;
 }
