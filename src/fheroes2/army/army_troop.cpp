@@ -93,7 +93,7 @@ u32 Troop::GetCount() const
     return count;
 }
 
-u32 Troop::GetHitPoints() const
+u32 Troop::GetHitPointsTroop() const
 {
     return Monster::GetHitPoints(*this) * count;
 }

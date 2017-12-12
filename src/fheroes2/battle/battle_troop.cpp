@@ -427,7 +427,7 @@ u32 Battle::Unit::GetDead() const
 
 u32 Battle::Unit::GetHitPointsLeft() const
 {
-    return GetHitPoints() - (GetCount() - 1) * Monster::GetHitPoints();
+    return GetHitPointsTroop() - (GetCount() - 1) * Monster::GetHitPoints();
 }
 
 u32 Battle::Unit::GetAffectedDuration(u32 mod) const
@@ -609,7 +609,7 @@ bool Battle::Unit::isHandFighting(const Unit &a, const Unit &b)
 
 void Battle::Unit::NewTurn()
 {
-    if (isResurectLife()) hp = ArmyTroop::GetHitPoints();
+    if (isResurectLife()) hp = ArmyTroop::GetHitPointsTroop();
 
     ResetModes(TR_RESPONSED);
     ResetModes(TR_MOVED);
@@ -761,49 +761,57 @@ u32 Battle::Unit::GetDamage(const Unit &enemy) const
 
 u32 Battle::Unit::HowManyCanKill(const Unit &b) const
 {
-    return b.HowManyWillKilled((GetDamageMin(b) + GetDamageMax(b)) / 2);
+	u32 dmg = (GetDamageMin(b) + GetDamageMax(b)) / 2;
+    return b.HowManyWillKilled(dmg);
 }
 
-u32 Battle::Unit::HowManyWillKilled(u32 dmg) const
+u32 Battle::Unit::HowManyWillKilled(u32& dmg) const
 {
-    return dmg >= hp ? GetCount() : GetCount() - GetCountFromHitPoints(*this, hp - dmg);
+	int unitLife = Monster::GetHitPoints(*this);
+
+	int killTopUnit = dmg > hp ? 1 : 0;
+	if(killTopUnit)
+	{
+		dmg -= hp;
+	}
+	int unitsToKill = dmg / unitLife;
+	unitsToKill += killTopUnit;
+	dmg %= unitLife;
+	return unitsToKill;
 }
 
 u32 Battle::Unit::ApplyDamage(u32 dmg)
 {
-    if (dmg && GetCount())
-    {
-        u32 killed = HowManyWillKilled(dmg);
+    if (!dmg || !GetCount())
+		return 0;
+	u32 killed = HowManyWillKilled(dmg);
 
-        // kill mirror image (slave)
-        if (Modes(CAP_MIRRORIMAGE))
-        {
-            if (Arena::GetInterface()) Arena::GetInterface()->RedrawActionRemoveMirrorImage(*this);
-            mirror->ResetModes(CAP_MIRROROWNER);
-            dmg = hp;
-            killed = GetCount();
-            mirror = nullptr;
-        }
+	// kill mirror image (slave)
+	if (Modes(CAP_MIRRORIMAGE))
+	{
+		if (Arena::GetInterface()) Arena::GetInterface()->RedrawActionRemoveMirrorImage(*this);
+		mirror->ResetModes(CAP_MIRROROWNER);
+		dmg = hp;
+		killed = GetCount();
+		mirror = nullptr;
+	}
 
-        DEBUG(DBG_BATTLE, DBG_TRACE, dmg << " to " << String() << " and killed: " << killed);
+	DEBUG(DBG_BATTLE, DBG_TRACE, dmg << " to " << String() << " and killed: " << killed);
 
-        if (killed >= GetCount())
-        {
-            dead += GetCount();
-            SetCount(0);
-        } else
-        {
-            dead += killed;
-            SetCount(GetCount() - killed);
-        }
-        hp -= (dmg >= hp ? hp : dmg);
+ 	if (killed >= GetCount())
+	{
+		dead += GetCount();
+		SetCount(0);
+	} else
+	{
+		dead += killed;
+		SetCount(GetCount() - killed);
+	}
+	hp -= (dmg >= hp ? hp : dmg);
 
-        if (!isValid()) PostKilledAction();
+	if (!isValid()) PostKilledAction();
 
-        return killed;
-    }
-
-    return 0;
+	return killed;
 }
 
 void Battle::Unit::PostKilledAction()
@@ -860,7 +868,7 @@ u32 Battle::Unit::Resurrect(u32 points, bool allow_overflow, bool skip_dead)
     {
         resurrect -= GetCount() - count0;
         SetCount(count0);
-        hp = ArmyTroop::GetHitPoints();
+        hp = ArmyTroop::GetHitPointsTroop();
     }
 
     if (!skip_dead)
@@ -1240,8 +1248,9 @@ s32 Battle::Unit::GetScoreQuality(const Unit &defender) const
 
     // initial value: (hitpoints)
     const u32 &damage = (attacker.GetDamageMin(defender) + attacker.GetDamageMax(defender)) / 2;
-    const u32 &kills = defender.HowManyWillKilled(attacker.isTwiceAttack() ? damage * 2 : damage);
-    float res = kills * static_cast<Monster>(defender).GetHitPoints();
+	u32 dmg = attacker.isTwiceAttack() ? damage * 2 : damage;
+    const u32 &kills = defender.HowManyWillKilled(dmg);
+    float res = kills * Monster::GetHitPoints(defender);
     bool noscale = false;
 
     // attacker
@@ -1292,7 +1301,7 @@ s32 Battle::Unit::GetScoreQuality(const Unit &defender) const
     return static_cast<s32>(res) > 1 ? static_cast<u32>(res) : 1;
 }
 
-u32 Battle::Unit::GetHitPoints() const
+u32 Battle::Unit::GetHitPointsTroop() const
 {
     return hp;
 }
@@ -1638,7 +1647,7 @@ void Battle::Unit::SpellRestoreAction(const Spell &spell, u32 spoint, const Hero
             }
             // restore
             hp += (spell.Restore() * spoint);
-            if (hp > ArmyTroop::GetHitPoints()) hp = ArmyTroop::GetHitPoints();
+            if (hp > ArmyTroop::GetHitPointsTroop()) hp = ArmyTroop::GetHitPointsTroop();
             break;
 
         case Spell::RESURRECT:

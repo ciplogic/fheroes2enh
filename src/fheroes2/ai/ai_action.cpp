@@ -967,7 +967,7 @@ void AIToWhirlpools(Heroes &hero, s32 index_from)
     if (troop && Rand::Get(1) && 1 < troop->GetCount())
     {
         Monster monster(troop->GetID());
-        troop->SetCount(Monster::GetCountFromHitPoints(monster, troop->GetHitPoints() - troop->GetHitPoints() *
+        troop->SetCount(Monster::GetCountFromHitPoints(monster, troop->GetHitPointsTroop() - troop->GetHitPointsTroop() *
                                                                                                Game::GetWhirlpoolPercent() /
                                                                                                100));
     }

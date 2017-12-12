@@ -53,9 +53,9 @@ public:
 
     const char *GetName() const;
 
-    virtual u32 GetCount() const;
+    u32 GetCount() const;
 
-    u32 GetHitPoints() const;
+    u32 GetHitPointsTroop() const;
 
     Monster GetMonster() const;
 
@@ -70,25 +70,25 @@ public:
 
     payment_t GetUpgradeCost() const;
 
-    virtual bool isValid() const;
+    bool isValid() const;
 
     virtual bool isBattle() const;
 
-    virtual bool isModes(u32) const;
+    bool isModes(u32) const;
 
-    virtual string GetAttackString() const;
+    string GetAttackString() const;
 
-    virtual string GetDefenseString() const;
+    string GetDefenseString() const;
 
-    virtual string GetShotString() const;
+    string GetShotString() const;
 
-    virtual string GetSpeedString() const;
+    string GetSpeedString() const;
 
-    virtual u32 GetHitPointsLeft() const;
+    u32 GetHitPointsLeft() const;
 
-    virtual u32 GetSpeed() const;
+    u32 GetSpeed() const;
 
-    virtual u32 GetAffectedDuration(u32) const;
+    u32 GetAffectedDuration(u32) const;
 
 protected:
     friend StreamBase &operator<<(StreamBase &, const Troop &);

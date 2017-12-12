@@ -169,7 +169,7 @@ namespace Battle
 
         u32 GetDead() const;
 
-        u32 GetHitPoints() const;
+        u32 GetHitPointsTroop() const;
 
         u32 GetShots() const;
 
@@ -248,7 +248,7 @@ namespace Battle
 
         u32 HowManyCanKill(const Unit &) const;
 
-        u32 HowManyWillKilled(u32) const;
+        u32 HowManyWillKilled(u32&) const;
 
         void SetResponse();
 

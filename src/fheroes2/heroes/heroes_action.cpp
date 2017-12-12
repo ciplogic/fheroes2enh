@@ -2213,7 +2213,7 @@ void ActionToWhirlpools(Heroes &hero, u32 obj, s32 index_from)
         PlaySoundWarning;
         Message(_("A whirlpool engulfs your ship."), _("Some of your army has fallen overboard."), Font::BIG,
                         Dialog::OK);
-        troop->SetCount(Monster::GetCountFromHitPoints(troop->GetID(), troop->GetHitPoints() - troop->GetHitPoints() *
+        troop->SetCount(Monster::GetCountFromHitPoints(troop->GetID(), troop->GetHitPointsTroop() - troop->GetHitPointsTroop() *
                                                                                                Game::GetWhirlpoolPercent() /
                                                                                                100));
     }

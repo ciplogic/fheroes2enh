@@ -127,7 +127,7 @@ public:
 
     Monster(int race, u32 dw);
 
-    virtual ~Monster()
+    ~Monster()
     = default;
 
     bool operator<(const Monster &) const;
@@ -146,29 +146,29 @@ public:
 
     Monster GetDowngrade() const;
 
-    virtual u32 GetAttack() const;
+    u32 GetAttack() const;
 
-    virtual u32 GetDefense() const;
+    u32 GetDefense() const;
 
-    virtual int GetColor() const;
+    int GetColor() const;
 
-    virtual int GetMorale() const;
+    int GetMorale() const;
 
-    virtual int GetLuck() const;
+    int GetLuck() const;
 
-    virtual int GetRace() const;
+    int GetRace() const;
 
-    virtual u32 GetDamageMin() const;
+    u32 GetDamageMin() const;
 
-    virtual u32 GetDamageMax() const;
+    u32 GetDamageMax() const;
 
-    virtual u32 GetShots() const;
+    u32 GetShots() const;
 
     static u32 GetHitPoints(const Monster& m);
 
-    virtual u32 GetHitPoints() const;
+    u32 GetHitPoints() const;
 
-    virtual u32 GetSpeed() const;
+    u32 GetSpeed() const;
 
     u32 GetGrown() const;
 
@@ -176,13 +176,13 @@ public:
 
     u32 GetRNDSize(bool skip) const;
 
-    virtual const char *GetName() const;
+    const char *GetName() const;
 
     const char *GetMultiName() const;
 
     const char *GetPluralName(u32) const;
 
-    virtual bool isValid() const;
+    bool isValid() const;
 
     bool isElemental() const;
 
@@ -218,9 +218,9 @@ public:
 
     u32 GetSpriteIndex() const;
 
-    virtual payment_t GetCost() const;
+    payment_t GetCost() const;
 
-    virtual payment_t GetUpgradeCost() const;
+    payment_t GetUpgradeCost() const;
 
     u32 GetDwelling() const;
 

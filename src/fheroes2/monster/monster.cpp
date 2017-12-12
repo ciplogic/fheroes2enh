@@ -386,7 +386,7 @@ u32 Monster::GetGrown() const
 
 u32 Monster::GetRNDSize(bool skip_factor) const
 {
-    const u32 hps = (GetGrown() ? GetGrown() : 1) * GetHitPoints();
+    u32 hps = (GetGrown() ? GetGrown() : 1) * GetHitPoints();
     u32 res = Rand::Get(hps, hps + hps / 2);
 
     if (!skip_factor)

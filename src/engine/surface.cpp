@@ -812,10 +812,6 @@ void Surface::Blit(const Point &dpt, Surface &dst) const
 
 void Surface::SetAlphaMod(int level)
 {
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-    if(isValid())
-        SDL_SetSurfaceAlphaMod(surface, level);
-#else
     if (isValid())
     {
         if (amask())
@@ -829,7 +825,6 @@ void Surface::SetAlphaMod(int level)
 
         SDL_SetAlpha(surface, SDL_SRCALPHA, level);
     }
-#endif
 }
 
 void Surface::Lock() const
@@ -868,16 +863,17 @@ u32 Surface::GetMemoryUsage() const
 {
     u32 res = sizeof(surface);
 
-    if (surface)
-    {
-        res += sizeof(SDL_Surface) + sizeof(SDL_PixelFormat) + surface->pitch * surface->h;
+    if (!surface)
+	{
+		return res;
+	}
+	res += sizeof(SDL_Surface) + sizeof(SDL_PixelFormat) + surface->pitch * surface->h;
 
-        if (surface->format && surface->format->palette &&
-            (!pal_colors || pal_colors != surface->format->palette->colors))
-            res += sizeof(SDL_Palette) + surface->format->palette->ncolors * sizeof(SDL_Color);
-    }
+	if (surface->format && surface->format->palette &&
+		(!pal_colors || pal_colors != surface->format->palette->colors))
+		res += sizeof(SDL_Palette) + surface->format->palette->ncolors * sizeof(SDL_Color);
 
-    return res;
+	return res;
 }
 
 string Surface::Info() const
@@ -1079,13 +1075,12 @@ Surface Surface::RenderGrayScale() const
 {
     Surface res(GetSize(), GetFormat());
     const u32 colkey = GetColorKey();
-    u32 pixel = 0;
 
     res.Lock();
     for (int y = 0; y < h(); ++y)
         for (int x = 0; x < w(); ++x)
         {
-            pixel = GetPixel(x, y);
+            u32 pixel = GetPixel(x, y);
             if (0 == colkey || pixel != colkey)
             {
                 RGBA col = GetRGB(pixel);
@@ -1102,13 +1097,12 @@ Surface Surface::RenderSepia() const
 {
     Surface res(GetSize(), GetFormat());
     const u32 colkey = GetColorKey();
-    u32 pixel = 0;
 
     res.Lock();
     for (int x = 0; x < w(); x++)
         for (int y = 0; y < h(); y++)
         {
-            pixel = GetPixel(x, y);
+            u32 pixel = GetPixel(x, y);
             if (colkey == 0 || pixel != colkey)
             {
                 RGBA col = GetRGB(pixel);
@@ -1165,23 +1159,13 @@ Surface Surface::GetSurface(const Rect &rt) const
 
     Surface res(rt, fm);
 
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-    if(amask())
-    SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_NONE);
-#else
     if (amask())
         SDL_SetAlpha(surface, 0, 0);
-#endif
 
     Blit(rt, Point(0, 0), res);
 
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-    if(amask())
-    SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_BLEND);
-#else
     if (amask())
         SDL_SetAlpha(surface, SDL_SRCALPHA, 255);
-#endif
 
     return res;
 }
@@ -1209,13 +1193,13 @@ void swap(int* a , int*b)
 float absolute(float x )
 {
     if (x < 0) return -x;
-    else return x;
+	return x;
 }
 
 //returns integer part of a floating point number
 int iPartOfNumber(float x)
 {
-    return (int)x;
+    return static_cast<int>(x);
 }
 
 //rounds off a number
@@ -1284,8 +1268,7 @@ void Surface::drawAALine(int x0 , int y0 , int x1 , int y1, const RGBA& col)
     // main loop
     if (steep)
     {
-        int x;
-        for (x = xpxl1 ; x <=xpxl2 ; x++)
+	    for (int x = xpxl1 ; x <=xpxl2 ; x++)
         {
             // pixel coverage is determined by fractional
             // part of y co-ordinate
@@ -1299,8 +1282,7 @@ void Surface::drawAALine(int x0 , int y0 , int x1 , int y1, const RGBA& col)
     }
     else
     {
-        int x;
-        for (x = xpxl1 ; x <=xpxl2 ; x++)
+	    for (int x = xpxl1 ; x <=xpxl2 ; x++)
         {
             // pixel coverage is determined by fractional
             // part of y co-ordinate

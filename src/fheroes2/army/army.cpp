@@ -359,7 +359,7 @@ u32 Troops::GetHitPoints() const
     u32 res = 0;
 
     for (auto _item : _items)
-        if (_item->isValid()) res += _item->GetHitPoints();
+        if (_item->isValid()) res += _item->GetHitPointsTroop();
 
     return res;
 }
@@ -1277,7 +1277,7 @@ void Army::DrawMons32LineShort(const Troops &troops, s32 cx, s32 cy, u32 width, 
 JoinCount Army::GetJoinSolution(const Heroes &hero, const Maps::Tiles &tile, const Troop &troop)
 {
     MapMonster *map_troop = static_cast<MapMonster *>(world.GetMapObject(tile.GetObjectUID(MP2::OBJ_MONSTER)));
-    const u32 ratios = troop.isValid() ? hero.GetArmy().GetHitPoints() / troop.GetHitPoints() : 0;
+    const u32 ratios = troop.isValid() ? hero.GetArmy().GetHitPoints() / troop.GetHitPointsTroop() : 0;
     const bool check_free_stack = true; // (hero.GetArmy().GetCount() < hero.GetArmy().size() || hero.GetArmy().HasMonster(troop)); // set force, see Dialog::ArmyJoinWithCost, http://sourceforge.net/tracker/?func=detail&aid=3567985&group_id=96859&atid=616183
     const bool check_extra_condition = (!hero.HasArtifact(Artifact::HIDEOUS_MASK) &&
                                         Morale::NORMAL <= hero.GetMorale());
@@ -1296,7 +1296,7 @@ JoinCount Army::GetJoinSolution(const Heroes &hero, const Maps::Tiles &tile, con
         {
             // skill diplomacy
             const u32 to_join = Monster::GetCountFromHitPoints(troop,
-                                                               troop.GetHitPoints() *
+                                                               troop.GetHitPointsTroop() *
                                                                hero.GetSecondaryValues(Skill::Secondary::DIPLOMACY) /
                                                                100);
 
