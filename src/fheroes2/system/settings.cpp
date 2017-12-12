@@ -131,7 +131,8 @@ const settings_t settingsGeneral[] =
 // internal settings
 const settings_t settingsFHeroes2[] =
         {
-                {Settings::GAME_SAVE_REWRITE_CONFIRM,        _("game: always confirm for rewrite savefile"),},
+				{Settings::GAME_QUICKCOMBAT_ON,              _("game: quick combat on"), },
+				{Settings::GAME_SAVE_REWRITE_CONFIRM,        _("game: always confirm for rewrite savefile"),},
                 {Settings::GAME_ALSO_CONFIRM_AUTOSAVE,       _("game: also confirm autosave"),},
                 {Settings::GAME_REMEMBER_LAST_FOCUS,         _("game: remember last focus"),},
                 {Settings::GAME_BATTLE_SHOW_GRID,            _("game: battle show grid"),},
@@ -674,6 +675,11 @@ void Settings::SetProgramPath(const char *argv0)
     if (argv0) path_program = argv0;
 }
 
+void Settings::SwapQuickCombat()
+{
+	_isQuickCombat = !_isQuickCombat;
+}
+
 ListDirs Settings::GetRootDirs()
 {
     const Settings &conf = Get();
@@ -810,7 +816,7 @@ bool Settings::Music() const
 /* return music */
 bool Settings::QuickCombat() const
 {
-	return _isQuickCombat;
+	return ExtModes(Settings::GAME_QUICKCOMBAT_ON);
 }
 
 /* return move speed */
