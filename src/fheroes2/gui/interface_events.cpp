@@ -341,6 +341,7 @@ int Interface::Basic::EventDigArtifact()
 
     if (!hero)
     {
+        Message("", _("No hero is selected. Please select one hero"), Font::BIG, Dialog::OK);
         return Game::CANCEL;
     }
 
