@@ -25,6 +25,7 @@
 #include "system.h"
 #include "tools.h"
 #include "audio_music.h"
+#include "dialog.h"
 
 #ifdef WITH_MIXER
 #include "SDL_mixer.h"
