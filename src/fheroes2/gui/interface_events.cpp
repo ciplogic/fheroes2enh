@@ -339,55 +339,63 @@ int Interface::Basic::EventDigArtifact()
 {
     Heroes *hero = GetFocusHeroes();
 
-    if (hero)
+    if (!hero)
     {
-        if (hero->isShipMaster())
-            Message("", _("Try looking on land!!!"), Font::BIG, Dialog::OK);
-        else if (hero->GetMaxMovePoints() <= hero->GetMovePoints())
-        {
-            if (world.GetTiles(hero->GetIndex()).GoodForUltimateArtifact())
-            {
-                AGG::PlaySound(M82::DIGSOUND);
+        return Game::CANCEL;
+    }
 
-                hero->ResetMovePoints();
+    if (hero->isShipMaster())
+    {
+        Message("", _("Try looking on land!!!"), Font::BIG, Dialog::OK);
+        return Game::CANCEL;
+    }
 
-                if (world.DiggingForUltimateArtifact(hero->GetCenter()))
-                {
-                    AGG::PlaySound(M82::TREASURE);
-                    const Artifact &ultimate = world.GetUltimateArtifact().GetArtifact();
-                    hero->PickupArtifact(ultimate);
-                    string msg(_("After spending many hours digging here, you have uncovered the %{artifact}"));
-                    StringReplace(msg, "%{artifact}", ultimate.GetName());
-                    Dialog::ArtifactInfo(_("Congratulations!"), msg, ultimate());
+    if (hero->GetMaxMovePoints() > hero->GetMovePoints())
+    {
+        Message("", _("Digging for artifacts requires a whole day, try again tomorrow."), Font::BIG, Dialog::OK);
+        return Game::CANCEL;
+    }
+    if (!world.GetTiles(hero->GetIndex()).GoodForUltimateArtifact())
+    {
+        Message("", _("Try searching on clear ground."), Font::BIG, Dialog::OK);
+        return Game::CANCEL;
+    }
 
-                    // set all obelisks visited
-                    Kingdom &kingdom = world.GetKingdom(hero->GetColor());
-                    const MapsIndexes obelisks = Maps::GetObjectPositions(MP2::OBJ_OBELISK, true);
+    AGG::PlaySound(M82::DIGSOUND);
 
-                    for (int obelisk : obelisks)
-                        if (!hero->isVisited(world.GetTiles(obelisk), Visit::GLOBAL))
-                            hero->SetVisited(obelisk, Visit::GLOBAL);
+    hero->ResetMovePoints();
 
-                    kingdom.PuzzleMaps().Update(kingdom.CountVisitedObjects(MP2::OBJ_OBELISK),
-                                                world.CountObeliskOnMaps());
-                } else
-                    Message("", _("Nothing here. Where could it be?"), Font::BIG, Dialog::OK);
+    if (world.DiggingForUltimateArtifact(hero->GetCenter()))
+    {
+        AGG::PlaySound(M82::TREASURE);
+        const Artifact &ultimate = world.GetUltimateArtifact().GetArtifact();
+        hero->PickupArtifact(ultimate);
+        string msg(_("After spending many hours digging here, you have uncovered the %{artifact}"));
+        StringReplace(msg, "%{artifact}", ultimate.GetName());
+        Dialog::ArtifactInfo(_("Congratulations!"), msg, ultimate());
 
-                Cursor::Get().Hide();
-                iconsPanel.RedrawIcons(ICON_HEROES);
-                Cursor::Get().Show();
-                Display::Get().Flip();
+        // set all obelisks visited
+        Kingdom &kingdom = world.GetKingdom(hero->GetColor());
+        const MapsIndexes obelisks = Maps::GetObjectPositions(MP2::OBJ_OBELISK, true);
 
-                // check game over for ultimate artifact
-                return GameOver::Result::Get().LocalCheckGameOver();
-            } else
-                Message("", _("Try searching on clear ground."), Font::BIG, Dialog::OK);
-        }
+        for (int obelisk : obelisks)
+            if (!hero->isVisited(world.GetTiles(obelisk), Visit::GLOBAL))
+                hero->SetVisited(obelisk, Visit::GLOBAL);
+
+        kingdom.PuzzleMaps().Update(kingdom.CountVisitedObjects(MP2::OBJ_OBELISK),
+                                    world.CountObeliskOnMaps());
     } else
-        Message("", _("Digging for artifacts requires a whole day, try again tomorrow."), Font::BIG,
-                        Dialog::OK);
+        Message("", _("Nothing here. Where could it be?"), Font::BIG, Dialog::OK);
 
-    return Game::CANCEL;
+    Cursor::Get().Hide();
+    iconsPanel.RedrawIcons(ICON_HEROES);
+    Cursor::Get().Show();
+    Display::Get().Flip();
+
+    // check game over for ultimate artifact
+    return GameOver::Result::Get().LocalCheckGameOver();
+
+
 }
 
 void Interface::Basic::EventDefaultAction()

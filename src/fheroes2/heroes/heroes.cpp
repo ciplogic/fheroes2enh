@@ -1394,7 +1394,9 @@ bool Heroes::ApplyPenaltyMovement()
 
 void Heroes::ResetMovePoints()
 {
-    move_point = 0;
+    ApplyPenaltyMovement();
+    ApplyPenaltyMovement();
+    ApplyPenaltyMovement();
 }
 
 bool Heroes::MayStillMove() const
