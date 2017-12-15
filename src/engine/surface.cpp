@@ -182,53 +182,42 @@ void SetPixel24(u8 *ptr, u32 color)
 
 RGBA::RGBA()
 {
-    color.r = 0;
-    color.g = 0;
-    color.b = 0;
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-    color.a = 255;
-#else
-    color.unused = 255;
-#endif
+    color = 0;
 }
 
 RGBA::RGBA(int r, int g, int b, int a) noexcept
 {
-    color.r = r;
-    color.g = g;
-    color.b = b;
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-    color.a = a;
-#else
-    color.unused = a;
-#endif
+    color = ((r << 24) & 0xFF000000) |
+            ((g << 16) & 0x00FF0000) |
+            ((b << 8) & 0x0000FF00) |
+            (a & 0x000000FF);
 }
 
 int RGBA::r() const
 {
-    return color.r;
+    int red = (color >> 24) & 0x000000FF;
+    return red;
 }
 
 int RGBA::g() const
 {
-    return color.g;
+    int green = (color >> 16) & 0x000000FF;
+    return green;
 }
 
 int RGBA::b() const
 {
-    return color.b;
+    int blue = (color >> 8) & 0x000000FF;
+    return blue;
 }
 
 int RGBA::a() const
 {
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-    return color.a;
-#else
-    return color.unused;
-#endif
+    int alpha = color & 0x000000FF;
+    return alpha;
 }
 
-int RGBA::pack() const
+u32 RGBA::pack() const
 {
     return (((r() << 24) & 0xFF000000) |
             ((g() << 16) & 0x00FF0000) |
@@ -270,11 +259,6 @@ Surface::Surface(const Surface &bs) : surface(nullptr)
 Surface::Surface(const string &file) : surface(nullptr)
 {
     Load(file);
-}
-
-Surface::Surface(SDL_Surface *sf) : surface(nullptr)
-{
-	Set(sf);
 }
 
 Surface::Surface(const void *pixels, u32 width, u32 height, u32 bytes_per_pixel /* 1, 2, 3, 4 */, bool amask)

@@ -200,26 +200,25 @@ void Interface::BorderWindow::SetPosition(s32 px, s32 py, u32 pw, u32 ph)
 
 void Interface::BorderWindow::SetPosition(s32 px, s32 py)
 {
-    if (Settings::Get().ExtGameHideInterface())
-    {
-        Display &display = Display::Get();
-
-        if (px + area.w < 0) px = 0;
-        else if (px > display.w() - area.w + border.BorderWidth()) px = display.w() - area.w;
-
-        if (py + area.h < 0) py = 0;
-        else if (py > display.h() - area.h + border.BorderHeight()) py = display.h() - area.h;
-
-        area.x = px + border.BorderWidth();
-        area.y = py + border.BorderHeight();
-
-        border.SetPosition(px, py, area.w, area.h);
-        SavePosition();
-    } else
+    if (!Settings::Get().ExtGameHideInterface())
     {
         area.x = px;
         area.y = py;
+        return;
     }
+    Display &display = Display::Get();
+
+    if (px + area.w < 0) px = 0;
+    else if (px > display.w() - area.w + border.BorderWidth()) px = display.w() - area.w;
+
+    if (py + area.h < 0) py = 0;
+    else if (py > display.h() - area.h + border.BorderHeight()) py = display.h() - area.h;
+
+    area.x = px + border.BorderWidth();
+    area.y = py + border.BorderHeight();
+
+    border.SetPosition(px, py, area.w, area.h);
+    SavePosition();
 }
 
 bool Interface::BorderWindow::QueueEventProcessing()
@@ -227,44 +226,43 @@ bool Interface::BorderWindow::QueueEventProcessing()
     Settings &conf = Settings::Get();
     LocalEvent &le = LocalEvent::Get();
 
-    if (conf.ExtGameHideInterface() &&
-        le.MousePressLeft(border.GetTop()))
+    if (!conf.ExtGameHideInterface() || !le.MousePressLeft(border.GetTop()))
     {
-        Display &display = Display::Get();
-        Cursor &cursor = Cursor::Get();
+        return false;
+    }
+    Display &display = Display::Get();
+    Cursor &cursor = Cursor::Get();
 
-        const Point &mp = le.GetMouseCursor();
-        const Rect &pos = GetRect();
+    const Point &mp = le.GetMouseCursor();
+    const Rect &pos = GetRect();
 
-        SpriteMove moveIndicator(Surface(pos, false));
-        moveIndicator.DrawBorder(RGBA(0xD0, 0xC0, 0x48), false);
+    SpriteMove moveIndicator(Surface(pos, false));
+    moveIndicator.DrawBorder(RGBA(0xD0, 0xC0, 0x48), false);
 
-        const s32 ox = mp.x - pos.x;
-        const s32 oy = mp.y - pos.y;
+    const s32 ox = mp.x - pos.x;
+    const s32 oy = mp.y - pos.y;
 
-        cursor.Hide();
-        moveIndicator.Move(pos.x, pos.y);
-        moveIndicator.Redraw();
-        cursor.Show();
-        display.Flip();
+    cursor.Hide();
+    moveIndicator.Move(pos.x, pos.y);
+    moveIndicator.Redraw();
+    cursor.Show();
+    display.Flip();
 
-        while (le.HandleEvents() && le.MousePressLeft())
+    while (le.HandleEvents() && le.MousePressLeft())
+    {
+        if (le.MouseMotion())
         {
-            if (le.MouseMotion())
-            {
-                cursor.Hide();
-                moveIndicator.Move(mp.x - ox, mp.y - oy);
-                cursor.Show();
-                display.Flip();
-            }
+            cursor.Hide();
+            moveIndicator.Move(mp.x - ox, mp.y - oy);
+            cursor.Show();
+            display.Flip();
         }
-
-        cursor.Hide();
-        SetPos(mp.x - ox, mp.y - oy);
-        Basic::Get().SetRedraw(REDRAW_GAMEAREA);
-
-        return true;
     }
 
-    return false;
+    cursor.Hide();
+    SetPos(mp.x - ox, mp.y - oy);
+    Basic::Get().SetRedraw(REDRAW_GAMEAREA);
+
+    return true;
+
 }

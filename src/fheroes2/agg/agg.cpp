@@ -232,9 +232,8 @@ bool AGG::File::Open(const string &fname)
 		f.crc = crc;
 		auto offset = fats.getLE32();
         f.offset = offset;
-		auto size= fats.getLE32();
-        f.size = size;
-		cout << crc << " " <<offset<<" " <<size<< endl;
+		auto sizeChunk= fats.getLE32();
+        f.size = sizeChunk;
 		fat[itemName] = f;
     }
 

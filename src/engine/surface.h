@@ -37,9 +37,6 @@ public:
 
     RGBA(int r, int g, int b, int a = 255) noexcept;
 
-    SDL_Color operator()() const
-    { return color; }
-
     bool operator==(const RGBA &col) const
     { return pack() == col.pack(); }
 
@@ -54,12 +51,12 @@ public:
 
     int a() const;
 
-    int pack() const;
+    u32 pack() const;
 
     static RGBA unpack(int);
 
 protected:
-    SDL_Color color;
+    u32 color;
 };
 
 #define ColorBlack RGBA(0,0,0,255)
@@ -91,8 +88,6 @@ public:
     Surface(const void *pixels, u32 width, u32 height, u32 bytes_per_pixel /* 1, 2, 3, 4 */,
             bool amask);  /* agg: create raw tile */
     Surface(const Surface &);
-
-    explicit Surface(SDL_Surface *);
 
     Surface &operator=(const Surface &);
 
