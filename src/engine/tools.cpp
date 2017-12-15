@@ -31,6 +31,7 @@
 #include "types.h"
 #include "system.h"
 #include "tools.h"
+#include <SDL.h>
 
 enum KeyMod
 {
