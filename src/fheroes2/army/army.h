@@ -120,7 +120,7 @@ public:
 
     void DrawMons32LineWithScoute(s32, s32, u32, u32, u32, u32, bool) const;
 
-    void SplitTroopIntoFreeSlots(const Troop &, u32 slots);
+    void SplitTroopIntoFreeSlots(const Troop &, u32);
 
     vector<Troop *> _items;
 };

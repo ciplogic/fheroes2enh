@@ -28,6 +28,7 @@
 #include "types.h"
 #include "SDL.h"
 
+class QImage;
 struct Point;
 struct Rect;
 
@@ -254,5 +255,7 @@ protected:
     u32 GetPixel(int x, int y) const;
 	NativeSurface surface;
 };
+
+SDL_Surface* QImage_toSDLSurface(const QImage &sourceImage);
 
 #endif

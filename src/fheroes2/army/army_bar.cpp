@@ -93,10 +93,10 @@ void RedistributeArmy(ArmyTroop &troop1 /* from */, ArmyTroop &troop2 /* to */)
         const u32 free_slots = (army1 == army2 ? 1 : 0) + army2->Size() - army2->GetCount();
         const u32 max_count = save_last_troop ? troop1.GetCount() - 1 : troop1.GetCount();
         u32 redistr_count = troop1.GetCount() / 2;
-        const u32 slots = Dialog::ArmySplitTroop((free_slots > max_count ? max_count : free_slots), max_count,
+        const u32 slotCount = Dialog::ArmySplitTroop((free_slots > max_count ? max_count : free_slots), max_count,
                                                  redistr_count, save_last_troop);
 
-        switch (slots)
+        switch (slotCount)
         {
             case 3:
             case 4:
@@ -105,12 +105,12 @@ void RedistributeArmy(ArmyTroop &troop1 /* from */, ArmyTroop &troop2 /* to */)
                 {
                     const Troop troop(troop1, troop1.GetCount() - 1);
                     troop1.SetCount(1);
-                    const_cast<Army *>(army2)->SplitTroopIntoFreeSlots(troop, slots);
+                    const_cast<Army *>(army2)->SplitTroopIntoFreeSlots(troop, slotCount);
                 } else
                 {
                     const Troop troop(troop1);
                     troop1.Reset();
-                    const_cast<Army *>(army2)->SplitTroopIntoFreeSlots(troop, slots);
+                    const_cast<Army *>(army2)->SplitTroopIntoFreeSlots(troop, slotCount);
                 }
                 break;
 

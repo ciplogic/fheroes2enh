@@ -670,12 +670,12 @@ void Troops::DrawMons32LineWithScoute(s32 cx, s32 cy, u32 width, u32 first, u32 
     }
 }
 
-void Troops::SplitTroopIntoFreeSlots(const Troop &troop, u32 slots)
+void Troops::SplitTroopIntoFreeSlots(const Troop &troop, u32 slotCount)
 {
-    if (slots && slots <= (Size() - GetCount()))
+    if (slotCount && slotCount <= (Size() - GetCount()))
     {
-        u32 chunk = troop.GetCount() / slots;
-        u32 limits = slots;
+        u32 chunk = troop.GetCount() / slotCount;
+        u32 limits = slotCount;
         vector<vector<Troop*>::iterator> iters;
 
         for (auto it = _items.begin(); it != _items.end(); ++it)
@@ -686,7 +686,7 @@ void Troops::SplitTroopIntoFreeSlots(const Troop &troop, u32 slots)
                 --limits;
             }
 
-        u32 last = troop.GetCount() - chunk * slots;
+        u32 last = troop.GetCount() - chunk * slotCount;
 
         for (auto &iter : iters)
         {

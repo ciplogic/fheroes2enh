@@ -35,6 +35,8 @@
 #include "IMG_savepng.h"
 #endif
 
+#include <QtGui/QImage>
+
 namespace
 {
     u32 default_depth = 32;
@@ -42,6 +44,33 @@ namespace
     SDL_Color *pal_colors = nullptr;
     u32 pal_nums = 0;
 }
+
+SDL_Surface* QImage_toSDLSurface(const QImage &sourceImage)
+{
+	// Ensure that the source image is in the correct pixel format
+	QImage image = sourceImage;
+	if (image.format() != QImage::Format_ARGB32)
+		image = image.convertToFormat(QImage::Format_ARGB32);
+
+	// QImage stores each pixel in ARGB format
+	// Mask appropriately for the endianness
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+	Uint32 amask = 0x000000ff;
+	Uint32 rmask = 0x0000ff00;
+	Uint32 gmask = 0x00ff0000;
+	Uint32 bmask = 0xff000000;
+#else
+	Uint32 amask = 0xff000000;
+	Uint32 rmask = 0x00ff0000;
+	Uint32 gmask = 0x0000ff00;
+	Uint32 bmask = 0x000000ff;
+#endif
+
+	return SDL_CreateRGBSurfaceFrom((void*)image.constBits(),
+		image.width(), image.height(), image.depth(), image.bytesPerLine(),
+		rmask, gmask, bmask, amask);
+}
+
 
 SurfaceFormat GetRGBAMask(u32 bpp)
 {
