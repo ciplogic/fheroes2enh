@@ -22,13 +22,28 @@
 #ifndef H2SURFACE_H
 #define H2SURFACE_H
 
+#include <memory>
 #include <string>
 #include "rect.h"
 #include "types.h"
+#include "SDL.h"
 
 struct Point;
 struct Rect;
-struct SDL_Surface;
+
+struct NativeSurface
+{
+	SDL_Surface *surface;
+	NativeSurface()
+		: surface(nullptr)
+	{
+	}
+	~NativeSurface()
+	{
+		SDL_FreeSurface(surface);
+	}
+};
+
 
 class RGBA
 {
@@ -94,7 +109,7 @@ public:
     bool operator==(const Surface &) const;
 
     SDL_Surface *operator()() const
-    { return surface; }
+    { return surface.surface; }
 
     virtual ~Surface();
 
@@ -237,8 +252,7 @@ protected:
     u32 GetPixel1(s32 x, s32 y) const;
 
     u32 GetPixel(int x, int y) const;
-
-    SDL_Surface *surface;
+	NativeSurface surface;
 };
 
 #endif

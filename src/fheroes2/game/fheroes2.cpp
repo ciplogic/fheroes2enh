@@ -31,6 +31,7 @@
 //#include "test.h"
 #include "images_pack.h"
 #include "zzlib.h"
+#include <QCoreApplication>
 
 void LoadZLogo();
 
@@ -70,11 +71,17 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 int main(int argc, char **argv)
 #endif
 {
+
+
     Settings &conf = Settings::Get();
     int test = 0;
 
-    DEBUG(DBG_ALL, DBG_INFO, "Free Heroes II, " + conf.GetVersion());
+    DEBUG(DBG_ALL, DBG_INFO, "Free Heroes II Enhanced, " + conf.GetVersion());
 	vector<string> vArgv;
+
+	char* text = "fh2q";
+	int argfake = 0;
+	QCoreApplication a(argfake, &text);
 
 #ifndef WIN32
 	for (int i = 0; i<argc; i++)
@@ -82,6 +89,7 @@ int main(int argc, char **argv)
 		vArgv.emplace_back(argv[i]);
 	}
 #else   
+
 	LPWSTR *szArglist;
 	int nArgs;
 	wstring commandLine = GetCommandLineW();
@@ -171,14 +179,6 @@ int main(int argc, char **argv)
             //Ensure the mouse position is updated to prevent bad initial values.
             LocalEvent::Get().GetMouseCursor();
 
-#ifdef WITH_ZLIB
-            ZSurface zicons;
-            if (zicons.Load(_ptr_08067830.width, _ptr_08067830.height, _ptr_08067830.bpp, _ptr_08067830.pitch,
-                            _ptr_08067830.rmask, _ptr_08067830.gmask, _ptr_08067830.bmask, _ptr_08067830.amask,
-                            _ptr_08067830.zdata, sizeof(_ptr_08067830.zdata)))
-                display.SetIcons(zicons);
-#endif
-
             DEBUG(DBG_GAME, DBG_INFO, conf.String());
             DEBUG(DBG_GAME | DBG_ENGINE, DBG_INFO, display.GetInfo());
 
@@ -189,9 +189,6 @@ int main(int argc, char **argv)
             atexit(&AGG::Quit);
 
             conf.SetBlitSpeed(TestBlitSpeed());
-#ifdef WITH_ZLIB
-            LoadZLogo();
-#endif
 
             // init cursor
             Cursor::Get().SetThemes(Cursor::POINTER);
@@ -234,7 +231,9 @@ int main(int argc, char **argv)
                         rs = Game::NewHotSeat();
                         break;
 #ifdef NETWORK_ENABLE
-                        case Game::NEWNETWORK:     rs = Game::NewNetwork();		break;
+                    case Game::NEWNETWORK:   
+                		rs = Game::NewNetwork();		
+                		break;
 #endif
                     case Game::NEWBATTLEONLY:
                         rs = Game::NewBattleOnly();

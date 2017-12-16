@@ -87,13 +87,8 @@ void Game::SetLastSavename(const string &name)
 
 int Game::Testing(int t)
 {
-#ifndef BUILD_RELEASE
-    Test::Run(t);
-    return Game::QUITGAME;
-#else
     return MAINMENU;
-#endif
-}
+} 
 
 int Game::Credits()
 {

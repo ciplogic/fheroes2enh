@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -9,154 +9,68 @@
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug|x64">
-      <Configuration>Debug</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|x64">
-      <Configuration>Release</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{44565893-C329-4A99-AEDE-0167E3565389}</ProjectGuid>
-    <Keyword>Win32Proj</Keyword>
-    <RootNamespace>FHeroes2Enh</RootNamespace>
-    <WindowsTargetPlatformVersion>7.0</WindowsTargetPlatformVersion>
+    <ProjectGuid>{B12702AD-ABFB-343A-A199-8E24837244A3}</ProjectGuid>
+    <Keyword>Qt4VSv1.0</Keyword>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141_xp</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140_xp</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <ImportGroup Label="ExtensionSettings">
-  </ImportGroup>
-  <ImportGroup Label="Shared">
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>UNICODE;_UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;BUILD_RELEASE;WITH_AI=simple;WITH_IMAGE;WITH_MIXER;WITH_NET;NETWORK_ENABLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Optimization>Disabled</Optimization>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;BUILD_RELEASE;WITH_AI=simple;WITH_IMAGE;WITH_MIXER;WITH_NET;NETWORK_ENABLE;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Cs-Oss\fheroes2enh\libs\libpng\include;C:\Cs-Oss\fheroes2enh\libs\zlib\include\;C:\Cs-Oss\fheroes2enh\src\engine\;C:\Cs-Oss\fheroes2enh\src\fheroes2\agg;C:\Cs-Oss\fheroes2enh\libs\SDL\include\SDL;C:\Cs-Oss\fheroes2enh\src\fheroes2\ai\simple\;C:\Cs-Oss\fheroes2enh\src\fheroes2\ai\;C:\Cs-Oss\fheroes2enh\src\fheroes2\army;C:\Cs-Oss\fheroes2enh\src\fheroes2\battle;C:\Cs-Oss\fheroes2enh\src\fheroes2\castle;C:\Cs-Oss\fheroes2enh\src\fheroes2\dialog;C:\Cs-Oss\fheroes2enh\src\fheroes2\game;C:\Cs-Oss\fheroes2enh\src\fheroes2\gui;C:\Cs-Oss\fheroes2enh\src\fheroes2\heroes;C:\Cs-Oss\fheroes2enh\src\fheroes2\image;C:\Cs-Oss\fheroes2enh\src\fheroes2\kingdom;C:\Cs-Oss\fheroes2enh\src\fheroes2\maps;C:\Cs-Oss\fheroes2enh\src\fheroes2\monster;C:\Cs-Oss\fheroes2enh\src\fheroes2\objects;C:\Cs-Oss\fheroes2enh\src\fheroes2\resource;C:\Cs-Oss\fheroes2enh\src\fheroes2\spell;C:\Cs-Oss\fheroes2enh\src\fheroes2\system;C:\Cs-Oss\fheroes2enh\src\fheroes2\pocketpc\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <AdditionalIncludeDirectories>C:\Cs-Oss\fheroes2enh\libs\libpng\include;C:\Cs-Oss\fheroes2enh\libs\zlib\include\;C:\Cs-Oss\fheroes2enh\src\engine\;C:\Cs-Oss\fheroes2enh\src\fheroes2\agg;C:\Cs-Oss\fheroes2enh\libs\SDL\include\SDL;C:\Cs-Oss\fheroes2enh\src\fheroes2\ai\simple\;C:\Cs-Oss\fheroes2enh\src\fheroes2\ai\;C:\Cs-Oss\fheroes2enh\src\fheroes2\army;C:\Cs-Oss\fheroes2enh\src\fheroes2\battle;C:\Cs-Oss\fheroes2enh\src\fheroes2\castle;C:\Cs-Oss\fheroes2enh\src\fheroes2\dialog;C:\Cs-Oss\fheroes2enh\src\fheroes2\game;C:\Cs-Oss\fheroes2enh\src\fheroes2\gui;C:\Cs-Oss\fheroes2enh\src\fheroes2\heroes;C:\Cs-Oss\fheroes2enh\src\fheroes2\image;C:\Cs-Oss\fheroes2enh\src\fheroes2\kingdom;C:\Cs-Oss\fheroes2enh\src\fheroes2\maps;C:\Cs-Oss\fheroes2enh\src\fheroes2\monster;C:\Cs-Oss\fheroes2enh\src\fheroes2\objects;C:\Cs-Oss\fheroes2enh\src\fheroes2\resource;C:\Cs-Oss\fheroes2enh\src\fheroes2\spell;C:\Cs-Oss\fheroes2enh\src\fheroes2\system;C:\Cs-Oss\fheroes2enh\src\fheroes2\pocketpc\;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <MinimalRebuild>false</MinimalRebuild>
-      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
-    </ClCompile>
-    <Link>
-      <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Cs-Oss\fheroes2enh\libs\SDL\lib;C:\Cs-Oss\fheroes2enh\libs\libpng\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL.lib;libpng.lib;SDL_mixer.lib;SDL_image.lib;SDL_net.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>...\..\..\..\$(TargetName)$(TargetExt)</OutputFile>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
+      <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
+      <AdditionalLibraryDirectories>$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Widgetsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>UNICODE;_UNICODE;WIN32;WIN64;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;BUILD_RELEASE;WITH_AI=simple;WITH_IMAGE;WITH_MIXER;WITH_NET;NETWORK_ENABLE;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat />
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <AdditionalIncludeDirectories>C:\Cs-Oss\fheroes2enh\libs\libpng\include;C:\Cs-Oss\fheroes2enh\libs\zlib\include\;C:\Cs-Oss\fheroes2enh\src\engine\;C:\Cs-Oss\fheroes2enh\src\fheroes2\agg;C:\Cs-Oss\fheroes2enh\libs\SDL\include\SDL;C:\Cs-Oss\fheroes2enh\src\fheroes2\ai\simple\;C:\Cs-Oss\fheroes2enh\src\fheroes2\ai\;C:\Cs-Oss\fheroes2enh\src\fheroes2\army;C:\Cs-Oss\fheroes2enh\src\fheroes2\battle;C:\Cs-Oss\fheroes2enh\src\fheroes2\castle;C:\Cs-Oss\fheroes2enh\src\fheroes2\dialog;C:\Cs-Oss\fheroes2enh\src\fheroes2\game;C:\Cs-Oss\fheroes2enh\src\fheroes2\gui;C:\Cs-Oss\fheroes2enh\src\fheroes2\heroes;C:\Cs-Oss\fheroes2enh\src\fheroes2\image;C:\Cs-Oss\fheroes2enh\src\fheroes2\kingdom;C:\Cs-Oss\fheroes2enh\src\fheroes2\maps;C:\Cs-Oss\fheroes2enh\src\fheroes2\monster;C:\Cs-Oss\fheroes2enh\src\fheroes2\objects;C:\Cs-Oss\fheroes2enh\src\fheroes2\resource;C:\Cs-Oss\fheroes2enh\src\fheroes2\spell;C:\Cs-Oss\fheroes2enh\src\fheroes2\system;C:\Cs-Oss\fheroes2enh\src\fheroes2\pocketpc\;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <Optimization>Disabled</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>false</IntrinsicFunctions>
-      <SDLCheck>false</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);BUILD_RELEASE;WITH_AI=simple;WITH_IMAGE;WITH_MIXER;WITH_NET;NETWORK_ENABLE;_ITERATOR_DEBUG_LEVEL=0</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Cs-Oss\fheroes2enh\libs\libpng\include;C:\Cs-Oss\fheroes2enh\libs\zlib\include\;C:\Cs-Oss\fheroes2enh\src\engine\;C:\Cs-Oss\fheroes2enh\src\fheroes2\agg;C:\Cs-Oss\fheroes2enh\libs\SDL\include\SDL;C:\Cs-Oss\fheroes2enh\src\fheroes2\ai\simple\;C:\Cs-Oss\fheroes2enh\src\fheroes2\ai\;C:\Cs-Oss\fheroes2enh\src\fheroes2\army;C:\Cs-Oss\fheroes2enh\src\fheroes2\battle;C:\Cs-Oss\fheroes2enh\src\fheroes2\castle;C:\Cs-Oss\fheroes2enh\src\fheroes2\dialog;C:\Cs-Oss\fheroes2enh\src\fheroes2\game;C:\Cs-Oss\fheroes2enh\src\fheroes2\gui;C:\Cs-Oss\fheroes2enh\src\fheroes2\heroes;C:\Cs-Oss\fheroes2enh\src\fheroes2\image;C:\Cs-Oss\fheroes2enh\src\fheroes2\kingdom;C:\Cs-Oss\fheroes2enh\src\fheroes2\maps;C:\Cs-Oss\fheroes2enh\src\fheroes2\monster;C:\Cs-Oss\fheroes2enh\src\fheroes2\objects;C:\Cs-Oss\fheroes2enh\src\fheroes2\resource;C:\Cs-Oss\fheroes2enh\src\fheroes2\spell;C:\Cs-Oss\fheroes2enh\src\fheroes2\system;C:\Cs-Oss\fheroes2enh\src\fheroes2\pocketpc\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
-      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
-      <FloatingPointModel>Fast</FloatingPointModel>
+      <CallingConvention>Cdecl</CallingConvention>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL.lib;libpng.lib;SDL_mixer.lib;SDL_image.lib;SDL_net.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Cs-Oss\fheroes2enh\libs\SDL\lib;C:\Cs-Oss\fheroes2enh\libs\libpng\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>...\..\..\..\$(TargetName)$(TargetExt)</OutputFile>
-      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Cs-Oss\fheroes2enh\libs\SDL\lib;C:\Cs-Oss\fheroes2enh\libs\libpng\lib;$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <AdditionalDependencies>SDL.lib;libpng.lib;SDL_mixer.lib;SDL_image.lib;SDL_net.lib;qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -304,6 +218,7 @@
     <ClInclude Include="..\..\src\xmlccwrap\xmlccwrap.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="..\..\src\engine\audio.cpp" />
     <ClCompile Include="..\..\src\engine\audio_cdrom.cpp" />
     <ClCompile Include="..\..\src\engine\audio_mixer.cpp" />
@@ -495,9 +410,13 @@
     <ClCompile Include="..\..\src\fheroes2\system\gamedefs.cpp" />
     <ClCompile Include="..\..\src\fheroes2\system\players.cpp" />
     <ClCompile Include="..\..\src\fheroes2\system\settings.cpp" />
-    <ClCompile Include="..\..\src\fheroes2\test\test_monstersprite.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties MocDir=".\GeneratedFiles\$(ConfigurationName)" UicDir=".\GeneratedFiles" RccDir=".\GeneratedFiles" lupdateOptions="" lupdateOnBuild="0" lreleaseOptions="" Qt5Version_x0020_Win32="msvc2015" MocOptions="" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

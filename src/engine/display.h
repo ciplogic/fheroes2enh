@@ -48,9 +48,7 @@ public:
     void SetIcons(Surface &);
 
     void Flip();
-
-    void Present();
-
+	
     void Clear();
 
     void ToggleFullScreen();
