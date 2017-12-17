@@ -253,10 +253,3 @@ Surface Display::GetSurface() const
     return GetSurface(Rect(Point(0, 0), GetSize()));
 }
 
-
-Texture::Texture(const Surface &sf)
-{
-    Set(SDL_DisplayFormatAlpha(sf()));
-    //Set(SDL_DisplayFormat(sf()));
-}
-

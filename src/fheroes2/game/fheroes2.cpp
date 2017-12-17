@@ -32,10 +32,6 @@
 #include "images_pack.h"
 #include "zzlib.h"
 
-#ifdef WITH_QT
-#include <QCoreApplication>
-#endif
-
 void LoadZLogo();
 
 void SetVideoDriver(const string &);
@@ -82,12 +78,6 @@ int main(int argc, char **argv)
     DEBUG(DBG_ALL, DBG_INFO, "Free Heroes II Enhanced, " + conf.GetVersion());
 	vector<string> vArgv;
 
-
-#ifdef WITH_QT
-	char* text = "fh2q";
-	int argfake = 0;
-	QCoreApplication a(argfake, &text);
-#endif
 
 #ifndef WIN32
 	for (int i = 0; i<argc; i++)

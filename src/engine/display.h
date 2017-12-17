@@ -71,57 +71,9 @@ public:
 
 protected:
 
-    friend class Texture;
-
     bool isDisplay() const override;
 
     Display();
-
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-    SDL_Window*         window;
-    SDL_Renderer*	renderer;
-#endif
 };
-
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-class TextureTarget
-{
-public:
-    TextureTarget();
-
-    void Fill(const RGBA &);
-    void FillRect(const Rect &, const RGBA &);
-};
-
-class Texture
-{
-public:
-    Texture();
-    Texture(const Surface &);
-    Texture(const Texture &);
-    ~Texture();
-
-    Texture &	operator= (const Texture &);
-    Size	GetSize() const;
-
-    void	Blit(Display &) const;
-    void        Blit(s32 dx, s32 dy, Display &) const;
-    void        Blit(const Point & dstpt, Display &) const;
-    void        Blit(const Rect & srcrt, s32 dx, s32 dy, Display &) const;
-    void        Blit(const Rect & srcrt, const Point & dstpt, Display &) const;
-
-protected:
-    SDL_Texture*        texture;
-    int*		counter;
-};
-#else
-
-class Texture : public Surface
-{
-public:
-    explicit Texture(const Surface &);
-};
-
-#endif
 
 #endif
