@@ -158,7 +158,7 @@ void Button::Draw()
     if (localcursor) cursor.Show();
 }
 
-ButtonGroups::ButtonGroups(const Rect &pos, u32 btns) : button1(nullptr), button2(nullptr), result1(Dialog::ZERO),
+ButtonGroups::ButtonGroups(const Rect pos, u32 btns) : button1(nullptr), button2(nullptr), result1(Dialog::ZERO),
                                                         result2(Dialog::ZERO), buttons(btns)
 {
     Point pt;
@@ -170,11 +170,11 @@ ButtonGroups::ButtonGroups(const Rect &pos, u32 btns) : button1(nullptr), button
             //pt.x = pos.x;
             pt.x = pos.x + pos.w - AGG::GetICN(system, 5).w()- AGG::GetICN(system, 7).w() - 5;
             pt.y = pos.y + pos.h - AGG::GetICN(system, 5).h();
-            button1 = new Button(pt.x, pt.y, system, 5, 6);
+            button1 = std::make_unique<Button>(pt.x, pt.y, system, 5, 6);
             result1 = Dialog::YES;
             pt.x = pos.x + pos.w - AGG::GetICN(system, 7).w();
             pt.y = pos.y + pos.h - AGG::GetICN(system, 7).h();
-            button2 = new Button(pt.x, pt.y, system, 7, 8);
+            button2 = std::make_unique<Button>(pt.x, pt.y, system, 7, 8);
             result2 = Dialog::NO;
             break;
 
@@ -182,25 +182,25 @@ ButtonGroups::ButtonGroups(const Rect &pos, u32 btns) : button1(nullptr), button
             ///pt.x = pos.x;
             pt.x = pos.x + pos.w - AGG::GetICN(system, 1).w()- AGG::GetICN(system, 3).w() - 5;
             pt.y = pos.y + pos.h - AGG::GetICN(system, 1).h();
-            button1 = new Button(pt.x, pt.y, system, 1, 2);
+            button1 = std::make_unique<Button>(pt.x, pt.y, system, 1, 2);
             result1 = Dialog::OK;
             pt.x = pos.x + pos.w - AGG::GetICN(system, 3).w();
             pt.y = pos.y + pos.h - AGG::GetICN(system, 3).h();
-            button2 = new Button(pt.x, pt.y, system, 3, 4);
+            button2 = std::make_unique<Button>(pt.x, pt.y, system, 3, 4);
             result2 = Dialog::CANCEL;
             break;
 
         case Dialog::OK:
             pt.x = pos.x + (pos.w - AGG::GetICN(system, 1).w()) - 4;
             pt.y = pos.y + pos.h - AGG::GetICN(system, 1).h();
-            button1 = new Button(pt.x, pt.y, system, 1, 2);
+            button1 = std::make_unique<Button>(pt.x, pt.y, system, 1, 2);
             result1 = Dialog::OK;
             break;
 
         case Dialog::CANCEL:
             pt.x = pos.x + (pos.w - AGG::GetICN(system, 3).w()) - 4;
             pt.y = pos.y + pos.h - AGG::GetICN(system, 3).h();
-            button2 = new Button(pt.x, pt.y, system, 3, 4);
+            button2 = std::make_unique<Button>(pt.x, pt.y, system, 3, 4);
             result2 = Dialog::CANCEL;
             break;
 
@@ -211,8 +211,6 @@ ButtonGroups::ButtonGroups(const Rect &pos, u32 btns) : button1(nullptr), button
 
 ButtonGroups::~ButtonGroups()
 {
-    delete button1;
-    delete button2;
 }
 
 void ButtonGroups::Draw()

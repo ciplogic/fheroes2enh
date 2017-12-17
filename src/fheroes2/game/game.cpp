@@ -39,6 +39,11 @@
 #include "ai.h"
 #include "game.h"
 
+#ifdef WITH_QT
+#include <QImage>
+#include <QPainter>
+#endif
+
 namespace Game
 {
     u32 GetMixerChannelFromObject(const Maps::Tiles &);

@@ -194,7 +194,8 @@ namespace Interface
             splitter.RedrawCursor();
 
             ItemsIterator curt = top;
-            ItemsIterator last = top + maxItems < content->end() ? top + maxItems : content->end();
+			auto startIndex = top - content->begin();
+            ItemsIterator last = startIndex + maxItems < content->size() ? top + maxItems : content->end();
             for (; curt != last; ++curt)
                 RedrawItem(*curt, rtAreaItems.x, rtAreaItems.y + (curt - top) * rtAreaItems.h / maxItems, curt == cur);
         }
@@ -222,7 +223,9 @@ namespace Interface
 
         void SetCurrentVisible()
         {
-            if (top > cur || top + maxItems <= cur)
+			auto curIndex = cur - content->begin();
+			auto topIndex = top - content->begin();
+            if (topIndex > curIndex || topIndex + maxItems <= curIndex)
             {
                 top = cur + maxItems > content->end() ? content->end() - maxItems : cur;
                 if (top < content->begin()) top = content->begin();
@@ -327,28 +330,31 @@ namespace Interface
                 {
                     cursor.Hide();
 
-                    ItemsIterator pos = top + static_cast<size_t>(offset);
+					int curIndex = cur - content->begin();
+                	int topIndex = top - content->begin();
+					int posIndex = topIndex+ (int)offset;
 
-                    if (pos >= content->begin() && pos < content->end())
+                    if (posIndex >= 0 && posIndex < content->size())
                     {
-                        const s32 posy = rtAreaItems.y + (pos - top) * rtAreaItems.h / maxItems;
+                        const s32 posy = rtAreaItems.y + (posIndex - topIndex) * rtAreaItems.h / maxItems;
 
-                        if (ActionListCursor(*pos, le.GetMouseCursor(), rtAreaItems.x, posy))
+                        if (ActionListCursor((*content)[posIndex], le.GetMouseCursor(), rtAreaItems.x, posy))
                             return true;
 
                         if (le.MouseClickLeft(rtAreaItems))
                         {
-                            if (pos == cur)
+                            if (posIndex == curIndex)
                             {
                                 ActionListDoubleClick(*cur, le.GetMouseCursor(), rtAreaItems.x, posy);
                             } else
                             {
-                                cur = pos;
+                                cur = content->begin()+posIndex;
                                 ActionListSingleClick(*cur, le.GetMouseCursor(), rtAreaItems.x, posy);
                             }
                             return true;
                         } else if (le.MousePressRight(rtAreaItems))
                         {
+							auto pos = content->begin() + posIndex;
                             ActionListPressRight(*pos, le.GetMouseCursor(), rtAreaItems.x, posy);
                             return true;
                         }

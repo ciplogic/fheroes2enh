@@ -170,9 +170,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClInclude Include="..\..\src\engine\audio.h">
       <Filter>Header Files\engine</Filter>
     </ClInclude>

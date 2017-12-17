@@ -82,7 +82,7 @@ protected:
 class ButtonGroups
 {
 public:
-    ButtonGroups(const Rect &, u32);
+    ButtonGroups(const Rect, u32);
 
     ~ButtonGroups();
 
@@ -95,8 +95,8 @@ public:
     void DisableButton2(bool);
 
 protected:
-    Button *button1;
-    Button *button2;
+    unique_ptr<Button> button1;
+	unique_ptr<Button> button2;
     int result1;
     int result2;
     int buttons;

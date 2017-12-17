@@ -137,8 +137,20 @@ int Game::ScenarioInfo()
     Interface::PlayersInfo playersInfo(true, !conf.QVGA(), !conf.QVGA());
 
     // set first maps settings
-    if (reset_starting_settings)
-        conf.SetCurrentFileInfo(lists.front());
+	if (reset_starting_settings)
+	{
+		auto it = std::find_if(lists.begin(), lists.end(), [](auto & _map)
+		{
+			return _map.name == "Broken Alliance";
+		});
+		if(it!=lists.end())
+		{
+			conf.SetCurrentFileInfo(*it);
+		}
+		else {
+			conf.SetCurrentFileInfo(lists.front());
+		}
+	}
 
     playersInfo.UpdateInfo(players, pointOpponentInfo, pointClassInfo);
 

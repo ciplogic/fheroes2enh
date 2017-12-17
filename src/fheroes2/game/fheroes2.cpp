@@ -31,7 +31,10 @@
 //#include "test.h"
 #include "images_pack.h"
 #include "zzlib.h"
+
+#ifdef WITH_QT
 #include <QCoreApplication>
+#endif
 
 void LoadZLogo();
 
@@ -79,9 +82,12 @@ int main(int argc, char **argv)
     DEBUG(DBG_ALL, DBG_INFO, "Free Heroes II Enhanced, " + conf.GetVersion());
 	vector<string> vArgv;
 
+
+#ifdef WITH_QT
 	char* text = "fh2q";
 	int argfake = 0;
 	QCoreApplication a(argfake, &text);
+#endif
 
 #ifndef WIN32
 	for (int i = 0; i<argc; i++)
@@ -145,9 +151,6 @@ int main(int argc, char **argv)
         subsystem |= INIT_CDROM | INIT_AUDIO;
 #endif
     if (SDL::Init(subsystem))
-#ifndef ANDROID
-        try
-#endif
         {
             atexit(SDL::Quit);
 
@@ -265,12 +268,6 @@ int main(int argc, char **argv)
                 }
             }
         }
-#ifndef ANDROID
-        catch (Error::Exception &)
-        {
-            VERBOSE(std::endl << conf.String());
-        }
-#endif
     return EXIT_SUCCESS;
 }
 

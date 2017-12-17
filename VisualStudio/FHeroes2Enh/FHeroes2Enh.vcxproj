@@ -122,7 +122,7 @@
       <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
-      <SDLCheck>false</SDLCheck>
+      <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);BUILD_RELEASE;WITH_AI=simple;WITH_IMAGE;WITH_MIXER;WITH_NET;NETWORK_ENABLE;_ITERATOR_DEBUG_LEVEL=0</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>C:\Cs-Oss\fheroes2enh\libs\libpng\include;C:\Cs-Oss\fheroes2enh\libs\zlib\include\;C:\Cs-Oss\fheroes2enh\src\engine\;C:\Cs-Oss\fheroes2enh\src\fheroes2\agg;C:\Cs-Oss\fheroes2enh\libs\SDL\include\SDL;C:\Cs-Oss\fheroes2enh\src\fheroes2\ai\simple\;C:\Cs-Oss\fheroes2enh\src\fheroes2\ai\;C:\Cs-Oss\fheroes2enh\src\fheroes2\army;C:\Cs-Oss\fheroes2enh\src\fheroes2\battle;C:\Cs-Oss\fheroes2enh\src\fheroes2\castle;C:\Cs-Oss\fheroes2enh\src\fheroes2\dialog;C:\Cs-Oss\fheroes2enh\src\fheroes2\game;C:\Cs-Oss\fheroes2enh\src\fheroes2\gui;C:\Cs-Oss\fheroes2enh\src\fheroes2\heroes;C:\Cs-Oss\fheroes2enh\src\fheroes2\image;C:\Cs-Oss\fheroes2enh\src\fheroes2\kingdom;C:\Cs-Oss\fheroes2enh\src\fheroes2\maps;C:\Cs-Oss\fheroes2enh\src\fheroes2\monster;C:\Cs-Oss\fheroes2enh\src\fheroes2\objects;C:\Cs-Oss\fheroes2enh\src\fheroes2\resource;C:\Cs-Oss\fheroes2enh\src\fheroes2\spell;C:\Cs-Oss\fheroes2enh\src\fheroes2\system;C:\Cs-Oss\fheroes2enh\src\fheroes2\pocketpc\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WholeProgramOptimization>false</WholeProgramOptimization>
@@ -130,6 +130,7 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

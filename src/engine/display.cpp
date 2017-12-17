@@ -39,9 +39,9 @@ void Display::SetVideoMode(int w, int h, bool fullscreen)
     if (fullscreen)
         flags |= SDL_FULLSCREEN;
 
-	surface.surface = SDL_SetVideoMode(w, h, 0, flags);
+	surface = SDL_SetVideoMode(w, h, 0, flags);
 
-    if (!surface.surface)
+    if (!surface)
         Error::Except(__FUNCTION__, SDL_GetError());
 }
 
@@ -63,7 +63,7 @@ Size Display::GetSize() const
 
 void Display::Flip()
 {
-    SDL_Flip(surface.surface);
+    SDL_Flip(surface);
 }
 
 int IsFullScreen(SDL_Surface *surface)
@@ -91,10 +91,10 @@ int SDL_ToggleFS(SDL_Surface *surface)
 
 void Display::ToggleFullScreen()
 {
-	int result = SDL_WM_ToggleFullScreen(surface.surface);
+	int result = SDL_WM_ToggleFullScreen(surface);
 	if(result==0)
 	{
-		SDL_ToggleFS(surface.surface);
+		SDL_ToggleFS(surface);
 	}
 }
 

@@ -301,26 +301,24 @@ Rect::Rect(int x, int y, int w, int h)
 {
 }
 
-SDL_Rect SDLRect(s32 x, s32 y, u32 w, u32 h)
+void SDLRect(s32 x, s32 y, u32 w, u32 h, SDL_Rect& writeTo)
 {
-    SDL_Rect res;
+    SDL_Rect& res = writeTo;
 
     res.x = x;
     res.y = y;
     res.w = w;
     res.h = h;
 
-    return res;
 }
 
-SDL_Rect SDLRect(const Rect &rt2)
+void SDLRect(const Rect &rt2, SDL_Rect& writeTo)
 {
-    SDL_Rect res;
+	SDL_Rect& res = writeTo;
 
     res.x = rt2.x;
     res.y = rt2.y;
     res.w = rt2.w;
     res.h = rt2.h;
 
-    return res;
 }

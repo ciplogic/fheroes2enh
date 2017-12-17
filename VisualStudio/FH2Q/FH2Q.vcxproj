@@ -13,12 +13,12 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B12702AD-ABFB-343A-A199-8E24837244A3}</ProjectGuid>
     <Keyword>Qt4VSv1.0</Keyword>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>7.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v140_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -35,10 +35,11 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>UNICODE;_UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;BUILD_RELEASE;WITH_AI=simple;WITH_IMAGE;WITH_MIXER;WITH_NET;NETWORK_ENABLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>UNICODE;_UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;BUILD_RELEASE;WITH_AI=simple;WITH_IMAGE;WITH_MIXER;WITH_NET;WITH_QT;NETWORK_ENABLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -47,30 +48,34 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
-      <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>c:\Cs-Oss\fheroes2enh\FH2Q.exe </OutputFile>
+      <AdditionalLibraryDirectories>C:\Cs-Oss\fheroes2enh\libs\SDL\lib;C:\Cs-Oss\fheroes2enh\libs\libpng\lib;$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Widgetsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL.lib;libpng.lib;SDL_mixer.lib;SDL_image.lib;SDL_net.lib;qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>UNICODE;_UNICODE;WIN32;WIN64;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;BUILD_RELEASE;WITH_AI=simple;WITH_IMAGE;WITH_MIXER;WITH_NET;NETWORK_ENABLE;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DebugInformationFormat />
+      <PreprocessorDefinitions>UNICODE;_UNICODE;WIN32;WIN64;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;BUILD_RELEASE;WITH_AI=simple;WITH_IMAGE;WITH_MIXER;WITH_NET;WITH_QT;NETWORK_ENABLE;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <AdditionalIncludeDirectories>C:\Cs-Oss\fheroes2enh\libs\libpng\include;C:\Cs-Oss\fheroes2enh\libs\zlib\include\;C:\Cs-Oss\fheroes2enh\src\engine\;C:\Cs-Oss\fheroes2enh\src\fheroes2\agg;C:\Cs-Oss\fheroes2enh\libs\SDL\include\SDL;C:\Cs-Oss\fheroes2enh\src\fheroes2\ai\simple\;C:\Cs-Oss\fheroes2enh\src\fheroes2\ai\;C:\Cs-Oss\fheroes2enh\src\fheroes2\army;C:\Cs-Oss\fheroes2enh\src\fheroes2\battle;C:\Cs-Oss\fheroes2enh\src\fheroes2\castle;C:\Cs-Oss\fheroes2enh\src\fheroes2\dialog;C:\Cs-Oss\fheroes2enh\src\fheroes2\game;C:\Cs-Oss\fheroes2enh\src\fheroes2\gui;C:\Cs-Oss\fheroes2enh\src\fheroes2\heroes;C:\Cs-Oss\fheroes2enh\src\fheroes2\image;C:\Cs-Oss\fheroes2enh\src\fheroes2\kingdom;C:\Cs-Oss\fheroes2enh\src\fheroes2\maps;C:\Cs-Oss\fheroes2enh\src\fheroes2\monster;C:\Cs-Oss\fheroes2enh\src\fheroes2\objects;C:\Cs-Oss\fheroes2enh\src\fheroes2\resource;C:\Cs-Oss\fheroes2enh\src\fheroes2\spell;C:\Cs-Oss\fheroes2enh\src\fheroes2\system;C:\Cs-Oss\fheroes2enh\src\fheroes2\pocketpc\;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <Optimization>Disabled</Optimization>
       <CallingConvention>Cdecl</CallingConvention>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <OutputFile>...\..\..\..\$(TargetName)$(TargetExt)</OutputFile>
+      <OutputFile>c:\Cs-Oss\fheroes2enh\FH2Q.exe </OutputFile>
       <AdditionalLibraryDirectories>C:\Cs-Oss\fheroes2enh\libs\SDL\lib;C:\Cs-Oss\fheroes2enh\libs\libpng\lib;$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <AdditionalDependencies>SDL.lib;libpng.lib;SDL_mixer.lib;SDL_image.lib;SDL_net.lib;qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OptimizeReferences>false</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -218,7 +223,6 @@
     <ClInclude Include="..\..\src\xmlccwrap\xmlccwrap.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="..\..\src\engine\audio.cpp" />
     <ClCompile Include="..\..\src\engine\audio_cdrom.cpp" />
     <ClCompile Include="..\..\src\engine\audio_mixer.cpp" />
