@@ -74,20 +74,20 @@ int Game::ScenarioInfo()
     Point top, pointDifficultyInfo, pointOpponentInfo, pointClassInfo;
     Rect rectPanel;
     Button *buttonSelectMaps = nullptr;
-    Button *buttonOk = nullptr;
-    Button *buttonCancel = nullptr;
+    up<Button> buttonOk = nullptr;
+	up<Button> buttonCancel = nullptr;
 
     // vector coord difficulty
     Rects coordDifficulty;
     coordDifficulty.reserve(5);
 
     const Sprite &ngextra = AGG::GetICN(ICN::NGEXTRA, 62);
-    Dialog::FrameBorder *frameborder = nullptr;
+	up<Dialog::FrameBorder> frameborder = nullptr;
 
     // image background
     if (conf.QVGA())
     {
-        frameborder = new Dialog::FrameBorder(Size(380, 224));
+        frameborder = std::make_unique<Dialog::FrameBorder>(Size(380, 224));
         rectPanel = frameborder->GetArea();
 
         pointDifficultyInfo = Point(rectPanel.x + 4, rectPanel.y + 24);
@@ -100,10 +100,10 @@ int Game::ScenarioInfo()
         coordDifficulty.push_back(Rect(rectPanel.x + 231, rectPanel.y + 21, ngextra.w(), ngextra.h()));
         coordDifficulty.push_back(Rect(rectPanel.x + 308, rectPanel.y + 21, ngextra.w(), ngextra.h()));
 
-        buttonOk = new Button(rectPanel.x + rectPanel.w / 2 - 160, rectPanel.y + rectPanel.h - 30, ICN::NGEXTRA, 66,
-                              67);
-        buttonCancel = new Button(rectPanel.x + rectPanel.w / 2 + 60, rectPanel.y + rectPanel.h - 30, ICN::NGEXTRA, 68,
-                                  69);
+        buttonOk = up<Button>(new Button(rectPanel.x + rectPanel.w / 2 - 160, rectPanel.y + rectPanel.h - 30, ICN::NGEXTRA, 66,
+                              67));
+        buttonCancel = up<Button>(new Button(rectPanel.x + rectPanel.w / 2 + 60, rectPanel.y + rectPanel.h - 30, ICN::NGEXTRA, 68,
+                                  69));
 
         Text text;
         text.Set(conf.CurrentFileInfo().name, Font::BIG);
@@ -126,8 +126,8 @@ int Game::ScenarioInfo()
         coordDifficulty.push_back(Rect(rectPanel.x + 328, rectPanel.y + 91, ngextra.w(), ngextra.h()));
 
         buttonSelectMaps = new Button(rectPanel.x + 309, rectPanel.y + 45, ICN::NGEXTRA, 64, 65);
-        buttonOk = new Button(rectPanel.x + 31, rectPanel.y + 380, ICN::NGEXTRA, 66, 67);
-        buttonCancel = new Button(rectPanel.x + 287, rectPanel.y + 380, ICN::NGEXTRA, 68, 69);
+        buttonOk = up<Button>(new Button(rectPanel.x + 31, rectPanel.y + 380, ICN::NGEXTRA, 66, 67));
+        buttonCancel = up<Button>(new Button(rectPanel.x + 287, rectPanel.y + 380, ICN::NGEXTRA, 68, 69));
 
         back.Blit(top);
     }
@@ -318,12 +318,8 @@ int Game::ScenarioInfo()
         }
     }
 
-    delete frameborder;
     delete rating;
     delete buttonSelectMaps;
-    delete buttonOk;
-    delete buttonCancel;
-
     return result;
 }
 
