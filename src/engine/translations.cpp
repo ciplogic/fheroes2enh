@@ -73,7 +73,7 @@ struct mofile
 
     const char *ngettext(const char *str, size_t plural)
     {
-        map<u32, chunk>::const_iterator it = hash_offsets.find(crc32b(str));
+        auto it = hash_offsets.find(crc32b(str));
         if (it == hash_offsets.end())
             return str;
 

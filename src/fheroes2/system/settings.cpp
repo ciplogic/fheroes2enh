@@ -907,7 +907,10 @@ bool Settings::ShowStatus() const
 
 /* unicode support */
 bool Settings::Unicode() const
-{ return opt_global.Modes(GLOBAL_USEUNICODE); }
+{
+	return true;
+	return opt_global.Modes(GLOBAL_USEUNICODE);
+}
 
 /* pocketpc mode */
 bool Settings::PocketPC() const

@@ -34,6 +34,7 @@
 #include "castle_heroes.h"
 #include "maps_objects.h"
 #include "artifact_ultimate.h"
+#include <unordered_map>
 
 class Heroes;
 
@@ -49,14 +50,14 @@ class MapObjectSimple;
 
 class ActionSimple;
 
-struct ListActions : public list<ActionSimple *>
+struct ListActions : public vector<ActionSimple *>
 {
     ~ListActions();
 
     void clear();
 };
 
-struct MapObjects : public map<u32, MapObjectSimple *>
+struct MapObjects : public unordered_map<u32, MapObjectSimple *>
 {
     ~MapObjects();
 
@@ -64,8 +65,7 @@ struct MapObjects : public map<u32, MapObjectSimple *>
 
     void add(MapObjectSimple *);
 
-    list<MapObjectSimple *>
-    get(const Point &);
+    vector<MapObjectSimple *> get(const Point &);
 
     MapObjectSimple *get(u32 uid);
 

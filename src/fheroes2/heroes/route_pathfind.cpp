@@ -41,7 +41,7 @@ struct cell_t
     s32 parent;
 };
 
-int GetCurrentLength(map<s32, cell_t> &list, s32 from)
+int GetCurrentLength(unordered_map<s32, cell_t> &list, s32 from)
 {
     int res = 0;
     while (0 <= list[from].parent)
@@ -230,9 +230,9 @@ bool Route::Path::Find(s32 to, int limit)
     s32 cur = from;
     s32 alt = 0;
     s32 tmp = 0;
-    map<s32, cell_t> list;
-    map<s32, cell_t>::iterator it1 = list.begin();
-    map<s32, cell_t>::iterator it2 = list.end();
+    unordered_map<s32, cell_t> list;
+    auto it1 = list.begin();
+	auto it2 = list.end();
 
     list[cur].cost_g = 0;
     list[cur].cost_t = 0;

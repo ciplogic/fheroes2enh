@@ -105,6 +105,7 @@ Surface FontTTF::RenderChar(char ch, const RGBA & clr, bool solid)
 Surface FontTTF::RenderUnicodeText(const std::vector<u16> & msg, const RGBA & clr, bool solid)
 {
     SDL_Color fgColor = clr.packSdlColor();
+	solid = false;
     return Surface(solid ? TTF_RenderUNICODE_Solid(ptr, &msg[0], fgColor) :
                         TTF_RenderUNICODE_Blended(ptr, &msg[0], fgColor));
 }
@@ -113,7 +114,7 @@ Surface FontTTF::RenderUnicodeChar(u16 ch, const RGBA & clr, bool solid)
 {
     u16 buf[2] = { L'\0', L'\0' };
     buf[0] = ch;
-
+	solid = false;
     SDL_Color fgColor = clr.packSdlColor();
     return Surface(solid ? TTF_RenderUNICODE_Solid(ptr, buf, fgColor) :
                         TTF_RenderUNICODE_Blended(ptr, buf, fgColor));

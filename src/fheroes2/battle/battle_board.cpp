@@ -31,6 +31,7 @@
 #include "battle_bridge.h"
 #include "battle_troop.h"
 #include "game_static.h"
+#include <unordered_map>
 
 namespace Battle
 {
@@ -175,29 +176,28 @@ Battle::Indexes Battle::Board::GetAStarPath(const Unit &b, const Position &dst, 
 {
     const Castle *castle = Arena::GetCastle();
     const Bridge *bridge = Arena::GetBridge();
-    map<s32, bcell_t> list;
+    unordered_map<s32, bcell_t> listCells;
     s32 cur = b.GetHeadIndex();
 
-    list[cur].prnt = -1;
-    list[cur].cost = 0;
-    list[cur].open = false;
+    listCells[cur].prnt = -1;
+    listCells[cur].cost = 0;
+    listCells[cur].open = false;
 
 
     while (cur != dst.GetHead()->GetIndex())
     {
         const Cell &center = at(cur);
         Indexes around = b.isWide() ?
-                         GetMoveWideIndexes(cur, (0 > list[cur].prnt ? b.isReflect() : (RIGHT_SIDE & GetDirection(cur,
-                                                                                                                  list[cur].prnt))))
+                         GetMoveWideIndexes(cur, (0 > listCells[cur].prnt ? b.isReflect() : (RIGHT_SIDE & GetDirection(cur,
+                                                                                                                  listCells[cur].prnt))))
                                     :
                          GetAroundIndexes(cur);
 
-        for (Indexes::const_iterator
-                     it = around.begin(); it != around.end(); ++it)
+        for (auto it = around.begin(); it != around.end(); ++it)
         {
             Cell &cell = at(*it);
 
-            if (list[*it].open && cell.isPassable4(b, center) &&
+            if (listCells[*it].open && cell.isPassable4(b, center) &&
                 // check bridge
                 (!bridge || !isBridgeIndex(*it) || bridge->isPassable(b.GetColor())))
             {
@@ -207,26 +207,25 @@ Battle::Indexes Battle::Board::GetAStarPath(const Unit &b, const Position &dst, 
                                  (castle && castle->isBuild(BUILD_MOAT) && isMoatIndex(*it) ? 100 : 0);
 
                 // new cell
-                if (0 > list[*it].prnt)
+                if (0 > listCells[*it].prnt)
                 {
-                    list[*it].prnt = cur;
-                    list[*it].cost = cost + list[cur].cost;
+                    listCells[*it].prnt = cur;
+                    listCells[*it].cost = cost + listCells[cur].cost;
                 } else
                     // change parent
-                if (list[*it].cost > cost + list[cur].cost)
+                if (listCells[*it].cost > cost + listCells[cur].cost)
                 {
-                    list[*it].prnt = cur;
-                    list[*it].cost = cost + list[cur].cost;
+                    listCells[*it].prnt = cur;
+                    listCells[*it].cost = cost + listCells[cur].cost;
                 }
             }
         }
 
-        list[cur].open = false;
+        listCells[cur].open = false;
         s32 cost = MAXU16;
 
         // find min cost opens
-        for (map<s32, bcell_t>::const_iterator
-                     it = list.begin(); it != list.end(); ++it)
+        for (auto it = listCells.begin(); it != listCells.end(); ++it)
             if ((*it).second.open && cost > (*it).second.cost)
             {
                 cur = (*it).first;
@@ -246,7 +245,7 @@ Battle::Indexes Battle::Board::GetAStarPath(const Unit &b, const Position &dst, 
                isValidIndex(cur))
         {
             result.push_back(cur);
-            cur = list[cur].prnt;
+            cur = listCells[cur].prnt;
         }
 
         reverse(result.begin(), result.end());

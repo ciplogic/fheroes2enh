@@ -49,7 +49,7 @@ void ListActions::clear()
 {
     for (auto& it : *this)
         delete it;
-    list<ActionSimple *>::clear();
+	vector<ActionSimple *>::clear();
 }
 
 MapObjects::~MapObjects()
@@ -61,17 +61,15 @@ void MapObjects::clear()
 {
     for (auto& it : *this)
         delete it.second;
-    map<u32, MapObjectSimple *>::clear();
+    unordered_map<u32, MapObjectSimple *>::clear();
 }
 
 void MapObjects::add(MapObjectSimple *obj)
 {
-    if (obj)
-    {
-        map<u32, MapObjectSimple *> &map = *this;
-        if (map[obj->GetUID()]) delete map[obj->GetUID()];
-        map[obj->GetUID()] = obj;
-    }
+    if (!obj) return;
+	auto &map = *this;
+	if (map[obj->GetUID()]) delete map[obj->GetUID()];
+	map[obj->GetUID()] = obj;
 }
 
 MapObjectSimple *MapObjects::get(u32 uid)
@@ -80,9 +78,9 @@ MapObjectSimple *MapObjects::get(u32 uid)
     return it != end() ? (*it).second : nullptr;
 }
 
-list<MapObjectSimple *> MapObjects::get(const Point &pos)
+vector<MapObjectSimple *> MapObjects::get(const Point &pos)
 {
-    list<MapObjectSimple *> res;
+    vector<MapObjectSimple *> res;
     for (auto& it : *this)
         if (it.second && it.second->isPosition(pos))
             res.push_back(it.second);
@@ -97,21 +95,20 @@ void MapObjects::remove(const Point &pos)
         if (it.second && it.second->isPosition(pos))
             uids.push_back(it.second->GetUID());
 
-    for (vector<u32>::const_iterator
-                 it = uids.begin(); it != uids.end(); ++it)
-        remove(*it);
+    for (auto it : uids)
+        remove(it);
 }
 
 void MapObjects::remove(u32 uid)
 {
-    auto it = find(uid);
+	const auto it = find(uid);
     if (it != end()) delete (*it).second;
     erase(it);
 }
 
 CapturedObject &CapturedObjects::Get(s32 index)
 {
-    map<s32, CapturedObject> &my = *this;
+    auto &my = *this;
     return my[index];
 }
 
@@ -713,8 +710,7 @@ MapsIndexes World::GetWhirlpoolEndPoints(s32 center) const
 
         if (addon)
         {
-            for (map<s32, MapsIndexes>::const_iterator
-                         it = uniq_whirlpools.begin(); it != uniq_whirlpools.end(); ++it)
+            for (auto it = uniq_whirlpools.begin(); it != uniq_whirlpools.end(); ++it)
             {
                 const u32 &uniq = (*it).first;
                 if (uniq == addon->uniq) continue;
@@ -916,7 +912,7 @@ void World::ActionToEyeMagi(int color) const
 
 MapEvent *World::GetMapEvent(const Point &pos)
 {
-    list<MapObjectSimple *> res = map_objects.get(pos);
+    vector<MapObjectSimple *> res = map_objects.get(pos);
     return !res.empty() ? static_cast<MapEvent *>(res.front()) : nullptr;
 }
 

@@ -23,6 +23,7 @@
 #include <algorithm>
 #include <iostream>
 #include <map>
+#include <unordered_map>
 #include <vector>
 
 #include "agg.h"
@@ -76,7 +77,7 @@ namespace AGG
 
     private:
         string filename;
-        map<string, FAT> fat;
+        unordered_map<string, FAT> fat;
         u32 count_items;
         StreamFile stream;
         string key;
@@ -125,10 +126,10 @@ namespace AGG
     vector<icn_cache_t> icn_cache;
     vector<til_cache_t> til_cache;
 
-    map<int, vector<u8> > wav_cache;
-    map<int, vector<u8> > mid_cache;
+	unordered_map<int, vector<u8> > wav_cache;
+	unordered_map<int, vector<u8> > mid_cache;
     vector<loop_sound_t> loop_sounds;
-    map<u32, fnt_cache_t> fnt_cache;
+    unordered_map<u32, fnt_cache_t> fnt_cache;
 
     bool memlimit_usage = true;
 
@@ -321,8 +322,7 @@ u32 AGG::ClearFreeObjects()
 
 #ifdef WITH_TTF
     // fnt cache
-    for(std::map<u32, fnt_cache_t>::iterator
-    it = fnt_cache.begin(); it != fnt_cache.end(); ++it)
+    for(auto it = fnt_cache.begin(); it != fnt_cache.end(); ++it)
     {
     total += (*it).second.sfs[0].GetMemoryUsage();
     total += (*it).second.sfs[1].GetMemoryUsage();

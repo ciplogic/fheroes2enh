@@ -705,7 +705,7 @@ bool Interface::PlayersInfo::QueueEventProcessing()
 {
     Settings &conf = Settings::Get();
     LocalEvent &le = LocalEvent::Get();
-    Player *player = nullptr;
+    Player *player;
 
     if (le.MousePressRight())
     {
