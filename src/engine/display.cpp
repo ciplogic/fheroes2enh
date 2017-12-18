@@ -234,7 +234,7 @@ Display &Display::Get()
 
 bool Display::isDisplay() const
 {
-    return true;
+    return false;
 }
 
 Surface Display::GetSurface() const
