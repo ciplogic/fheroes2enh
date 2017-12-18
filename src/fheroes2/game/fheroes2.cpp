@@ -388,7 +388,7 @@ void SetLangEnvPath(const Settings &conf)
             Translation::setDomain("fheroes2");
     }
     else
-        ERROR("translation not found: " << mofile);
+        ERROR("translation not found: " + mofile);
     }
 #endif
     Translation::setStripContext('|');

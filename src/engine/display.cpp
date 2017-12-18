@@ -27,6 +27,8 @@
 #include "error.h"
 #include "display.h"
 
+#include <SDL.h>
+
 Display::Display() = default;
 
 

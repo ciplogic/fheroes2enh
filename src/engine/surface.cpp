@@ -217,6 +217,16 @@ int RGBA::a() const
     return alpha;
 }
 
+SDL_Color RGBA::packSdlColor() const
+{
+    SDL_Color resColor;
+    resColor.r = r();
+    resColor.g = g();
+    resColor.b = b();
+    resColor.unused = a();
+    return resColor;
+}
+
 u32 RGBA::pack() const
 {
     return (((r() << 24) & 0xFF000000) |
@@ -259,6 +269,11 @@ Surface::Surface(const Surface &bs) : surface(nullptr)
 Surface::Surface(const string &file) : surface(nullptr)
 {
     Load(file);
+}
+
+Surface::Surface(SDL_Surface *sf) : surface(nullptr)
+{
+    Set(sf);
 }
 
 Surface::Surface(const void *pixels, u32 width, u32 height, u32 bytes_per_pixel /* 1, 2, 3, 4 */, bool amask)
