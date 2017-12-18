@@ -194,6 +194,9 @@ public:
 
     void SetAlphaMod(int);
 
+	void Set(u32 sw, u32 sh, u32 bpp /* bpp: 8, 16, 24, 32 */, bool amask);
+
+	SDL_Surface *surface;
 protected:
     static void FreeSurface(Surface &);
 
@@ -211,8 +214,6 @@ protected:
     RGBA GetRGB(u32 pixel) const;
 
     void Set(const Surface &, bool refcopy);
-
-    void Set(u32 sw, u32 sh, u32 bpp /* bpp: 8, 16, 24, 32 */, bool amask);
 
     void Set(SDL_Surface *);
 
@@ -238,7 +239,6 @@ protected:
 
     u32 GetPixel(int x, int y) const;
 
-    SDL_Surface *surface;
 };
 
 #endif

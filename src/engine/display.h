@@ -72,6 +72,7 @@ public:
 protected:
 
     bool isDisplay() const override;
+	Surface displaySurface;
 
     Display();
 };
