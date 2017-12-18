@@ -52,6 +52,7 @@ public:
     int a() const;
 
     u32 pack() const;
+    SDL_Color packSdlColor() const;
 
     static RGBA unpack(int);
 
@@ -88,6 +89,7 @@ public:
     Surface(const void *pixels, u32 width, u32 height, u32 bytes_per_pixel /* 1, 2, 3, 4 */,
             bool amask);  /* agg: create raw tile */
     Surface(const Surface &);
+    explicit Surface(SDL_Surface *);
 
     Surface &operator=(const Surface &);
 
