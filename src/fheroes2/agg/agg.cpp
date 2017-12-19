@@ -20,6 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
+#define _CRT_SECURE_NO_WARNINGS
 #include <algorithm>
 #include <iostream>
 #include <map>
@@ -58,6 +59,7 @@ namespace AGG
         string Info() const;
     };
 
+
     class File
     {
     public:
@@ -79,7 +81,7 @@ namespace AGG
         string filename;
         unordered_map<string, FAT> fat;
         u32 count_items;
-        StreamFile stream;
+		BinaryFileReader stream;
         string key;
         vector<u8> body;
     };
@@ -217,23 +219,27 @@ bool AGG::File::Open(const string &fname)
     }
 
     const u32 size = stream.size();
+
     count_items = stream.getLE16();
     DEBUG(DBG_ENGINE, DBG_INFO, "load: " << filename << ", count items: " << count_items);
 
-	auto vectorFats = stream.getRaw(count_items * 4 * 3 /* crc, offset, size */);
-	StreamBuf fats(vectorFats);
 	stream.seek(size - FATSIZENAME * count_items);
-    StreamBuf names = stream.toStreamBuf(FATSIZENAME * count_items);
-
+	std::vector<std::string> vectorNames;
+	vectorNames.reserve(count_items);
+	for (u32 ii = 0; ii < count_items; ++ii)
+	{
+		vectorNames.push_back(stream.toString(FATSIZENAME));
+	}
+	stream.seek(2);
     for (u32 ii = 0; ii < count_items; ++ii)
     {
-		string itemName = names.toString(FATSIZENAME);
+		string itemName = vectorNames[ii];
         FAT f;
-		auto crc = fats.getLE32();
+		auto crc = stream.getLE32();
 		f.crc = crc;
-		auto offset = fats.getLE32();
+		auto offset = stream.getLE32();
         f.offset = offset;
-		auto sizeChunk= fats.getLE32();
+		auto sizeChunk= stream.getLE32();
         f.size = sizeChunk;
 		fat[itemName] = f;
     }
@@ -913,16 +919,27 @@ struct ICNHeader
     u32 offsetData;
 };
 
-StreamBuf &operator>>(StreamBuf &st, ICNHeader &icn)
+ByteVectorReader &operator>>(ByteVectorReader &st, ICNHeader &icn)
 {
     icn.offsetX = st.getLE16();
     icn.offsetY = st.getLE16();
     icn.width = st.getLE16();
     icn.height = st.getLE16();
-    icn.type = st.get();
+    icn.type = st.Get8();
     icn.offsetData = st.getLE32();
 
     return st;
+}
+StreamBuf &operator>>(StreamBuf &st, ICNHeader &icn)
+{
+	icn.offsetX = st.getLE16();
+	icn.offsetY = st.getLE16();
+	icn.width = st.getLE16();
+	icn.height = st.getLE16();
+	icn.type = st.get();
+	icn.offsetData = st.getLE32();
+
+	return st;
 }
 
 void AGG::RenderICNSprite(int icn, u32 index, const Rect &srt, const Point &dpt, Surface &sf)
@@ -931,11 +948,25 @@ void AGG::RenderICNSprite(int icn, u32 index, const Rect &srt, const Point &dpt,
     res.first.Blit(srt, dpt, sf);
 }
 
+std::string joinValues(const std::vector<u8>& body, int maxSize)
+{
+	std:string result = std::to_string(body.size())+ ": ";;
+	int maxIndex = std::min((int)body.size(), maxSize);
+	bool isFirst = true;
+
+	for(int i = 0;i<maxIndex; i++)
+	{
+		if (isFirst) { isFirst = false; }
+		else { result += ", "; }
+		result += std::to_string(body[i]);
+	}
+	return result;
+}
+
 ICNSprite AGG::RenderICNSprite(int icn, u32 index)
 {
     ICNSprite res;
-    const vector<u8> &body = ReadICNChunk(icn, index);
-
+    const vector<u8> body = ReadICNChunk(icn, index);
     if (body.empty())
     {
         DEBUG(DBG_ENGINE, DBG_WARN, "error: " << ICN::GetString(icn));
@@ -945,17 +976,18 @@ ICNSprite AGG::RenderICNSprite(int icn, u32 index)
     // prepare icn data
     DEBUG(DBG_ENGINE, DBG_TRACE, ICN::GetString(icn) << ", " << index);
 
-    StreamBuf st(body);
+	ByteVectorReader st(body);
+	//StreamBuf st(body);
 
     u32 count = st.getLE16();
     u32 blockSize = st.getLE32();
-    u32 sizeData = 0;
 
     if (index) st.skip(index * 13);
 
     ICNHeader header1;
     st >> header1;
 
+	u32 sizeData = 0;
     if (index + 1 != count)
     {
         ICNHeader header2;
@@ -1138,7 +1170,8 @@ bool AGG::LoadOrgICN(int icn, u32 index, bool reflect)
 
         if (body.empty())
 	        return false;
-	    v.count = StreamBuf(body).getLE16();
+		ByteVectorReader bvr(body);
+	    v.count = bvr.getLE16();
 	    v.sprites = new Sprite[v.count];
 	    v.reflect = new Sprite[v.count];
 	    if (v.count == 0)
@@ -1388,7 +1421,8 @@ bool AGG::LoadOrgTIL(int til, u32 max)
 
     if (body.empty())
         return false;
-    StreamBuf st(body);
+	ByteVectorReader st(body);
+	//StreamBuf st(body);
 
     u32 count = st.getLE16();
     u32 width = st.getLE16();

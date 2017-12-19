@@ -109,7 +109,7 @@ public:
 
     Castle *inCastle();
 
-    void LoadFromMP2(s32 map_index, int cl, int rc, StreamBuf);
+    void LoadFromMP2(s32 map_index, int cl, int rc, ByteVectorReader&);
 
     void PostLoad();
 

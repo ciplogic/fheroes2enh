@@ -266,7 +266,7 @@ Heroes::Heroes(int heroid, int rc) : HeroBase(HEROES, rc), ColorBase(Color::NONE
     move_point = GetMaxMovePoints();
 }
 
-void Heroes::LoadFromMP2(s32 map_index, int cl, int rc, StreamBuf st)
+void Heroes::LoadFromMP2(s32 map_index, int cl, int rc, ByteVectorReader& st)
 {
     // reset modes
     modes = 0;
@@ -336,12 +336,10 @@ void Heroes::LoadFromMP2(s32 map_index, int cl, int rc, StreamBuf st)
         SetModes(CUSTOMSKILLS);
         vector<Skill::Secondary> secs(8);
 
-        for (vector<Skill::Secondary>::iterator
-                     it = secs.begin(); it != secs.end(); ++it)
+        for (auto it = secs.begin(); it != secs.end(); ++it)
             (*it).SetSkill(st.get() + 1);
 
-        for (vector<Skill::Secondary>::iterator
-                     it = secs.begin(); it != secs.end(); ++it)
+        for (auto it = secs.begin(); it != secs.end(); ++it)
             (*it).SetLevel(st.get());
 
         secondary_skills = Skill::SecSkills();

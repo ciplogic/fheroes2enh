@@ -949,12 +949,14 @@ bool World::LoadMapMP2(const string &filename)
     Reset();
     Defaults();
 
-    StreamFile fs;
-    if (!fs.open(filename, "rb"))
+    BinaryFileReader fileReader;
+    if (!fileReader.open(filename, "rb"))
     {
         DEBUG(DBG_GAME | DBG_ENGINE, DBG_WARN, "file not found " << filename.c_str());
         Error::Except(__FUNCTION__, "load maps");
     }
+	auto vectorBytes = fileReader.getRaw(fileReader.size());
+	ByteVectorReader fs(vectorBytes);
 
     MapsIndexes vec_object; // index maps for OBJ_CASTLE, OBJ_HEROES, OBJ_SIGN, OBJ_BOTTLE, OBJ_EVENT
     vec_object.reserve(100);
@@ -1047,8 +1049,7 @@ bool World::LoadMapMP2(const string &filename)
     vec_tiles.resize(w() * h());
 
     // read all tiles
-    for (MapsTiles::iterator
-                 it = vec_tiles.begin(); it != vec_tiles.end(); ++it)
+    for (auto it = vec_tiles.begin(); it != vec_tiles.end(); ++it)
     {
         const size_t index = distance(vec_tiles.begin(), it);
         Maps::Tiles &tile = *it;
@@ -1255,8 +1256,7 @@ bool World::LoadMapMP2(const string &filename)
         size_t sizeblock = fs.getLE16();
         vector<u8> pblock = fs.getRaw(sizeblock);
 
-        for (MapsIndexes::const_iterator
-                     it_index = vec_object.begin(); it_index != vec_object.end() && findobject < 0; ++it_index)
+        for (auto it_index = vec_object.begin(); it_index != vec_object.end() && findobject < 0; ++it_index)
         {
             const Maps::Tiles &tile = vec_tiles[*it_index];
 
@@ -1349,7 +1349,8 @@ bool World::LoadMapMP2(const string &filename)
 
                         if (hero)
                         {
-                            hero->LoadFromMP2(findobject, Color::NONE, hero->GetRace(), StreamBuf(pblock));
+							ByteVectorReader bvr(pblock);
+                            hero->LoadFromMP2(findobject, Color::NONE, hero->GetRace(), bvr);
                             hero->SetModes(Heroes::JAIL);
                         }
                     }
@@ -1380,8 +1381,11 @@ bool World::LoadMapMP2(const string &filename)
                             if (!hero || !hero->isFreeman())
                                 hero = vec_heroes.GetFreeman(colorRace.second);
 
-                            if (hero)
-                                hero->LoadFromMP2(findobject, colorRace.first, colorRace.second, StreamBuf(pblock));
+							if (hero)
+							{
+								ByteVectorReader bvr(pblock);
+								hero->LoadFromMP2(findobject, colorRace.first, colorRace.second, bvr);
+							}
                         } else
                         {
                             DEBUG(DBG_GAME, DBG_WARN, "load heroes maximum");
