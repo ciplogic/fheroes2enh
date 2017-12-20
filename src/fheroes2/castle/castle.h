@@ -127,7 +127,7 @@ public:
     virtual ~Castle()
     {}
 
-    void LoadFromMP2(StreamBuf);
+    void LoadFromMP2(ByteVectorReader&);
 
     Captain &GetCaptain();
 

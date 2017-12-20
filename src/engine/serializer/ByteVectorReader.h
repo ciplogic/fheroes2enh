@@ -10,7 +10,6 @@ class ByteVectorReader
 	const std::vector<u8>& _data;
 	int _pos;
 public:
-
 	ByteVectorReader(const std::vector<u8>& data);
 
 	void skip(u32 sz);

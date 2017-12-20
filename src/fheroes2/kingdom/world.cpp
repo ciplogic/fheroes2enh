@@ -1288,50 +1288,54 @@ void World::PostFixLoad()
 
 void EventDate::LoadFromMP2(StreamBuf st)
 {
-    // id
-    if (0 == st.get())
-    {
-        // resource
-        resource.wood = st.getLE32();
-        resource.mercury = st.getLE32();
-        resource.ore = st.getLE32();
-        resource.sulfur = st.getLE32();
-        resource.crystal = st.getLE32();
-        resource.gems = st.getLE32();
-        resource.gold = st.getLE32();
+	// id
+	if (0 != st.get())
+	{
+		DEBUG(DBG_GAME, DBG_WARN, "unknown id");
+		return;
+	}
 
-        st.skip(2);
 
-        // allow computer
-        computer = st.getLE16();
+	// resource
+	resource.wood = st.getLE32();
+	resource.mercury = st.getLE32();
+	resource.ore = st.getLE32();
+	resource.sulfur = st.getLE32();
+	resource.crystal = st.getLE32();
+	resource.gems = st.getLE32();
+	resource.gold = st.getLE32();
 
-        // day of first occurent
-        first = st.getLE16();
+	st.skip(2);
 
-        // subsequent occurrences
-        subsequent = st.getLE16();
+	// allow computer
+	computer = st.getLE16();
 
-        st.skip(6);
+	// day of first occurent
+	first = st.getLE16();
 
-        colors = 0;
-        // blue
-        if (st.get()) colors |= Color::BLUE;
-        // green
-        if (st.get()) colors |= Color::GREEN;
-        // red
-        if (st.get()) colors |= Color::RED;
-        // yellow
-        if (st.get()) colors |= Color::YELLOW;
-        // orange
-        if (st.get()) colors |= Color::ORANGE;
-        // purple
-        if (st.get()) colors |= Color::PURPLE;
+	// subsequent occurrences
+	subsequent = st.getLE16();
 
-        // message
-        message = Game::GetEncodeString(st.toString());
-        DEBUG(DBG_GAME, DBG_INFO, "event" << ": " << message);
-    } else
-            DEBUG(DBG_GAME, DBG_WARN, "unknown id");
+	st.skip(6);
+
+	colors = 0;
+	// blue
+	if (st.get()) colors |= Color::BLUE;
+	// green
+	if (st.get()) colors |= Color::GREEN;
+	// red
+	if (st.get()) colors |= Color::RED;
+	// yellow
+	if (st.get()) colors |= Color::YELLOW;
+	// orange
+	if (st.get()) colors |= Color::ORANGE;
+	// purple
+	if (st.get()) colors |= Color::PURPLE;
+
+	// message
+	message = Game::GetEncodeString(st.toString());
+	DEBUG(DBG_GAME, DBG_INFO, "event" << ": " << message);
+
 }
 
 bool EventDate::isDeprecated(u32 date) const

@@ -1286,7 +1286,8 @@ bool World::LoadMapMP2(const string &filename)
                         Castle *castle = GetCastle(Maps::GetPoint(findobject));
                         if (castle)
                         {
-                            castle->LoadFromMP2(StreamBuf(pblock));
+							ByteVectorReader bvr(pblock);
+							castle->LoadFromMP2(bvr);
                             Maps::MinimizeAreaForCastle(castle->GetCenter());
                             map_captureobj.SetColor(tile.GetIndex(), castle->GetColor());
                         } else
@@ -1306,7 +1307,8 @@ bool World::LoadMapMP2(const string &filename)
                         Castle *castle = GetCastle(Maps::GetPoint(findobject));
                         if (castle)
                         {
-                            castle->LoadFromMP2(StreamBuf(pblock));
+							ByteVectorReader bvr(pblock);
+                            castle->LoadFromMP2(bvr);
                             Maps::UpdateRNDSpriteForCastle(castle->GetCenter(), castle->GetRace(), castle->isCastle());
                             Maps::MinimizeAreaForCastle(castle->GetCenter());
                             map_captureobj.SetColor(tile.GetIndex(), castle->GetColor());

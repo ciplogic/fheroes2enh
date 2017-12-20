@@ -51,7 +51,7 @@ Castle::Castle(s32 cx, s32 cy, int rc) : MapPosition(Point(cx, cy)), race(rc), b
     army.SetCommander(&captain);
 }
 
-void Castle::LoadFromMP2(StreamBuf st)
+void Castle::LoadFromMP2(ByteVectorReader& st)
 {
     switch (st.get())
     {
