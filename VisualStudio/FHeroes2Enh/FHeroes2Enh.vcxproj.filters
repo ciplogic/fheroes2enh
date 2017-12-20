@@ -157,6 +157,12 @@
     <Filter Include="Source Files\xmlccwrap">
       <UniqueIdentifier>674f94be-5f13-42ad-92a9-504077ca4704</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\engine\serializer">
+      <UniqueIdentifier>{1f1e46eb-c214-4860-9adb-75be94a5f23c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\engine\serializer">
+      <UniqueIdentifier>{f0dd8220-7913-4743-b6ec-c77340c13761}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\engine\audio.h">
@@ -584,6 +590,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\xmlccwrap\xmlccwrap.h">
       <Filter>Header Files\xmlccwrap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\engine\serializer\ByteVectorReader.h">
+      <Filter>Header Files\engine\serializer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1162,6 +1171,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\fheroes2\kingdom\color.cpp">
       <Filter>Source Files\fheroes2\kingdom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\serializer\ByteVectorReader.cpp">
+      <Filter>Source Files\engine\serializer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

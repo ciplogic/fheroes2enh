@@ -34,13 +34,7 @@
 #include "artifact.h"
 #include "game.h"
 #include "palette_h2.h"
-
-#ifdef WITH_ZLIB
-
-#include "images_pack.h"
-#include "zzlib.h"
-
-#endif
+#include "ByteVectorReader.h"
 
 #define FATSIZENAME    15
 

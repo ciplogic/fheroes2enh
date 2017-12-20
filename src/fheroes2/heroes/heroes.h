@@ -33,6 +33,7 @@
 #include "army.h"
 #include "gamedefs.h"
 #include "serialize.h"
+#include "ByteVectorReader.h"
 
 class Recruits;
 

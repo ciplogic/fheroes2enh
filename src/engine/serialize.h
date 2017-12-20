@@ -237,12 +237,6 @@ public:
 };
 
 
-#ifdef WITH_ZLIB
-
-class ZStreamBuf;
-
-#endif
-
 class StreamBuf : public StreamBase
 {
 public:
@@ -352,77 +346,6 @@ public:
 	u32 tell();
 };
 
-class ByteVectorReader
-{
-	const std::vector<u8>& _data;
-	int _pos;
-public:
-
-	ByteVectorReader(const std::vector<u8>& data)
-		: _data(data), _pos(0)
-	{
-	}
-
-	void skip(u32 sz)
-	{
-		_pos += sz;
-	}
-	u32 Get8()
-	{
-		u32 result = _data[_pos];
-		_pos++;
-		return result;
-	}
-
-	u32 getLE16()
-	{
-		u32 lo = Get8();
-		u32 hi = Get8();
-		return lo + (hi << 8);
-	}
-	u32 getLE32()
-	{
-		u32 lo = getLE16();
-		u32 hi = getLE16();
-		return lo + (hi << 16);
-	}
-
-	u32 getBE16()
-	{
-		u32 lo = Get8();
-		u32 hi = Get8();
-		return hi + (lo << 8);
-	}
-
-	u32 getBE32()
-	{
-		u32 lo = getBE16();
-		u32 hi = getBE16();
-		return hi + (lo << 16);
-	}
-
-	u32 size() { return _data.size(); }
-	void seek(u32 pos) { _pos = pos; }
-	u32 get() { return Get8(); }
-	u32 tell() { return _pos; }
-	vector<u8> getRaw(size_t sizeblock)
-	{
-		vector<u8> result;
-		result.reserve(sizeblock);
-		for(int i =0;i<sizeblock; i++)
-		{
-			result.push_back(get());
-		}
-		return result;
-	}
-
-	string toString(int sizeBlock)
-	{
-		auto raw = getRaw(sizeBlock);
-		std::string text = reinterpret_cast<char*>(raw.data());
-		return text;
-	}
-};
 
 class StreamFile : public StreamBase
 {
