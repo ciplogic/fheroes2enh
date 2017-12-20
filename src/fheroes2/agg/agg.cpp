@@ -1226,34 +1226,35 @@ Sprite AGG::GetICN(int icn, u32 index, bool reflect)
 {
     Sprite result;
 
-    if (icn < static_cast<int>(icn_cache.size()))
+    if (icn >= static_cast<int>(icn_cache.size()))
     {
-        icn_cache_t &v = icn_cache[icn];
+        return result;
+    }
+    icn_cache_t &v = icn_cache[icn];
 
-        // out of range?
-        if (v.count && index >= v.count)
-        {
-            DEBUG(DBG_ENGINE, DBG_WARN, ICN::GetString(icn) << ", " << "out of range: " << index);
-            index = 0;
-        }
+    // out of range?
+    if (v.count && index >= v.count)
+    {
+        DEBUG(DBG_ENGINE, DBG_WARN, ICN::GetString(icn) << ", " << "out of range: " << index);
+        index = 0;
+    }
 
-        // need load?
-        if (0 == v.count ||
-            ((reflect && (!v.reflect || !v.reflect[index].isValid())) || (!v.sprites || !v.sprites[index].isValid())))
-        {
-            CheckMemoryLimit();
-            LoadICN(icn, index, reflect);
-        }
+    // need load?
+    if (0 == v.count ||
+        ((reflect && (!v.reflect || !v.reflect[index].isValid())) || (!v.sprites || !v.sprites[index].isValid())))
+    {
+        CheckMemoryLimit();
+        LoadICN(icn, index, reflect);
+    }
 
-        result = reflect ? v.reflect[index] : v.sprites[index];
+    result = reflect ? v.reflect[index] : v.sprites[index];
 
-        // invalid sprite?
-        if (!result.isValid())
-        {
-            DEBUG(DBG_ENGINE, DBG_INFO,
-                  "invalid sprite: " << ICN::GetString(icn) << ", index: " << index << ", reflect: "
-                                     << (reflect ? "true" : "false"));
-        }
+    // invalid sprite?
+    if (!result.isValid())
+    {
+        DEBUG(DBG_ENGINE, DBG_INFO,
+            "invalid sprite: " << ICN::GetString(icn) << ", index: " << index << ", reflect: "
+            << (reflect ? "true" : "false"));
     }
 
     return result;

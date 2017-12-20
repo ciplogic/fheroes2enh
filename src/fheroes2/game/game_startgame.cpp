@@ -54,7 +54,6 @@ int Game::StartBattleOnly()
 
 int Game::StartGame()
 {
-    SetFixVideoMode();
     AI::Init();
 
     // cursor

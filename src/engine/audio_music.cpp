@@ -92,7 +92,7 @@ void Music::Play(Mix_Music* mix, u32 id, bool loop)
 
 void Music::Play(const std::vector<u8> & v, bool loop)
 {
-    if(Mixer::isValid() && v.size())
+    if(Mixer::isValid() && !v.empty())
     {
     u32 id = CheckSum(v);
         SDL_RWops* rwops = SDL_RWFromConstMem(&v[0], v.size());

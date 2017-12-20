@@ -161,17 +161,16 @@ bool ArmyBar::isValid() const
 
 void ArmyBar::SetBackground(const Size &sz, const RGBA &fillColor)
 {
-    if (use_mini_sprite)
-    {
-        SetItemSize(sz.w, sz.h);
+    if (!use_mini_sprite)
+        return;
+    SetItemSize(sz.w, sz.h);
 
-        backsf.Set(sz.w, sz.h, false);
-        backsf.Fill(fillColor);
-        backsf.DrawBorder(RGBA(0xd0, 0xc0, 0x48));
+    backsf.Set(sz.w, sz.h, false);
+    backsf.Fill(fillColor);
+    backsf.DrawBorder(RGBA(0xd0, 0xc0, 0x48));
 
-        spcursor.Set(sz.w, sz.h, true /* transparent */);
-        spcursor.DrawBorder(RGBA(0xc0, 0x2c, 0));
-    }
+    spcursor.Set(sz.w, sz.h, true /* transparent */);
+    spcursor.DrawBorder(RGBA(0xc0, 0x2c, 0));
 }
 
 void ArmyBar::RedrawBackground(const Rect &pos, Surface &dstsf)

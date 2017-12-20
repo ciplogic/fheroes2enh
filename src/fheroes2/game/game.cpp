@@ -178,54 +178,34 @@ u32 &Game::CastleAnimationFrame()
     return castle_animation_frame;
 }
 
-void Game::SetFixVideoMode()
-{
-    const Settings &conf = Settings::Get();
-
-    Size fixsize(conf.VideoMode());
-    Size mapSize = conf.MapsSize();
-
-    u32 max_x = Settings::Get().ExtGameHideInterface() ? mapSize.w * TILEWIDTH :
-                (6 + mapSize.w) * TILEWIDTH; // RADARWIDTH + 3 * BORDERWIDTH
-    u32 max_y = Settings::Get().ExtGameHideInterface() ? mapSize.h * TILEWIDTH :
-                (1 + mapSize.h) * TILEWIDTH; // 2 * BORDERWIDTH
-
-    if (conf.VideoMode().w > max_x) fixsize.w = max_x;
-    if (conf.VideoMode().h > max_y) fixsize.h = max_y;
-
-    Display::Get().SetVideoMode(fixsize.w, fixsize.h, conf.FullScreen());
-}
-
 /* play all sound from focus area game */
 void Game::EnvironmentSoundMixer()
 {
     const Point abs_pt(Interface::GetFocusCenter());
     const Settings &conf = Settings::Get();
 
-    if (conf.Sound())
+    if (!conf.Sound()) return;
+    fill(reserved_vols.begin(), reserved_vols.end(), 0);
+
+    // scan 4x4 square from focus
+    for (s32 yy = abs_pt.y - 3; yy <= abs_pt.y + 3; ++yy)
     {
-        fill(reserved_vols.begin(), reserved_vols.end(), 0);
-
-        // scan 4x4 square from focus
-        for (s32 yy = abs_pt.y - 3; yy <= abs_pt.y + 3; ++yy)
+        for (s32 xx = abs_pt.x - 3; xx <= abs_pt.x + 3; ++xx)
         {
-            for (s32 xx = abs_pt.x - 3; xx <= abs_pt.x + 3; ++xx)
-            {
-                if (!Maps::isValidAbsPoint(xx, yy))
-                    continue;
-                const u32 channel = GetMixerChannelFromObject(world.GetTiles(xx, yy));
-                if (channel >= reserved_vols.size()) continue;
-                // calculation volume
-                const int length = max(abs(xx - abs_pt.x), abs(yy - abs_pt.y));
-                const int volume =
-                        (2 < length ? 4 : (1 < length ? 8 : (0 < length ? 12 : 16))) * Mixer::MaxVolume() / 16;
+            if (!Maps::isValidAbsPoint(xx, yy))
+                continue;
+            const u32 channel = GetMixerChannelFromObject(world.GetTiles(xx, yy));
+            if (channel >= reserved_vols.size()) continue;
+            // calculation volume
+            const int length = max(abs(xx - abs_pt.x), abs(yy - abs_pt.y));
+            const int volume =
+                (2 < length ? 4 : (1 < length ? 8 : (0 < length ? 12 : 16))) * Mixer::MaxVolume() / 16;
 
-                if (volume > reserved_vols[channel]) reserved_vols[channel] = volume;
-            }
+            if (volume > reserved_vols[channel]) reserved_vols[channel] = volume;
         }
-
-        AGG::LoadLOOPXXSounds(reserved_vols);
     }
+
+    AGG::LoadLOOPXXSounds(reserved_vols);
 }
 
 u32 Game::GetMixerChannelFromObject(const Maps::Tiles &tile)
