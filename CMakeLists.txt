@@ -3,10 +3,11 @@ project(fheroes2)
 
 set(CMAKE_CXX_STANDARD 14)
 
-ADD_DEFINITIONS(-DBUILD_RELEASE -DWITH_ZLIB -DWITH_AI=simple -DWITH_IMAGE)
+ADD_DEFINITIONS(-DBUILD_RELEASE -DWITH_AI=simple -DWITH_IMAGE -DWITH_MIXER -DWITH_TTF)
 
 include_directories(
         src/engine
+        src/engine/serializer
         src/fheroes2
         src/fheroes2/ai
         src/fheroes2/simple
@@ -77,6 +78,8 @@ set(SOURCE_FILES
         src/engine/xmi2mid.cpp
         src/engine/zzlib.cpp
         src/engine/zzlib.h
+        src/engine/serializer/ByteVectorReader.cpp
+        src/engine/serializer/ByteVectorReader.h
         src/fheroes2/agg/agg.cpp
         src/fheroes2/agg/agg.h
         src/fheroes2/agg/icn.cpp
@@ -375,20 +378,17 @@ add_executable(fheroes2 ${SOURCE_FILES})
 
 INCLUDE(FindPkgConfig)
 
-#ZLib
-find_package( ZLIB REQUIRED )
-include_directories( ${ZLIB_INCLUDE_DIRS} )
-target_link_libraries(${PROJECT_NAME} ${ZLIB_LIBRARIES} )
-
 
 #SDL
 find_package(SDL REQUIRED)
 find_package(SDL_image REQUIRED)
 find_package(SDL_mixer REQUIRED)
+find_package(SDL_ttf REQUIRED)
 
 PKG_SEARCH_MODULE(SDL REQUIRED sdl)
 PKG_SEARCH_MODULE(SDLIMAGE REQUIRED SDL_image>=1.2)
 PKG_SEARCH_MODULE(SDLMIXER REQUIRED SDL_mixer>=1.2)
+PKG_SEARCH_MODULE(SDLTTF REQUIRED SDL_ttf>=1.2)
 
 INCLUDE_DIRECTORIES(${SDL_INCLUDE_DIRS} ${SDLIMAGE_INCLUDE_DIRS})
 
@@ -398,9 +398,9 @@ endif()
 
 
 if(LINUX)
-    TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${SDL_LIBRARY} ${SDLIMAGE_LIBRARY} ${SDLMIXER_IBRARY}  -lSDL -lpng)
+    TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${SDL_LIBRARY} ${SDLIMAGE_LIBRARY} ${SDLMIXER_LIBRARY} ${SDLTTF_LIBRARY} -lSDL -lpng)
 else()
-    TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${SDL_LIBRARY} ${SDLIMAGE_LIBRARY} ${SDLMIXER_IBRARY} -lSDLmain -lSDL  -lpng -Wl,-framework,Cocoa )
+    TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${SDL_LIBRARY} ${SDLIMAGE_LIBRARY} ${SDLMIXER_LIBRARY} ${SDLTTF_LIBRARY} -lSDLmain -lSDL  -lpng -Wl,-framework,Cocoa )
 endif()
 
 
@@ -408,5 +408,5 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 ")
 
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -ggdb -fno-omit-frame-pointer -O0 -std=c++11 ")
 
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -flto -std=c++14 ")
-set(CMAKE_LD_FLAGS_RELEASE "${CMAKE_LD_FLAGS_RELEASE} -flto -mtune=native")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -std=c++14 ")
+set(CMAKE_LD_FLAGS_RELEASE "${CMAKE_LD_FLAGS_RELEASE} -mtune=native")

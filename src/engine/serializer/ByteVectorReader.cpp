@@ -4,6 +4,7 @@ ByteVectorReader::ByteVectorReader(const std::vector<u8>& data)
 	: _data(data), _pos(0)
 {
 }
+
 void ByteVectorReader::skip(u32 sz)
 {
 	_pos += sz;
