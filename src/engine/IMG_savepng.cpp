@@ -33,10 +33,6 @@
 #include "SDL.h"
 #include "IMG_savepng.h"
 
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-// SDL2 also supported png, skipped...
-#else
-
 #ifdef WITH_IMAGE
 #include "png.h"
 
@@ -273,5 +269,4 @@ savedone: /* clean up and return */
     return ret;
 }
 
-#endif
 #endif

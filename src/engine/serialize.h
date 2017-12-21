@@ -325,26 +325,6 @@ protected:
     u8 *itend;
 };
 
-class BinaryFileReader
-{
-	FILE* _file;
-	u8 defaultBuf[4];
-public:
-	BinaryFileReader():_file(nullptr) {}
-	bool open(const string& cs, const char* rb);
-	void seek(u32 pos);
-	u32 size();
-	u32 getLE16();
-	u32 getLE32();
-	vector<u8> getRaw(u32 size);
-	StreamBuf toStreamBuf(u32 size);
-	string toString(int size);
-	bool fail() const;
-	int get();
-	u32 getBE32();
-	void skip(s32 pos);
-	u32 tell();
-};
 
 
 class StreamFile : public StreamBase

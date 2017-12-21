@@ -51,10 +51,7 @@ void Mixer::Init()
 {
     if(SDL::SubSystem(SDL_INIT_AUDIO))
     {
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-    Mix_Init(MIX_INIT_OGG|MIX_INIT_MP3|MIX_INIT_MOD);
-#endif
-    Audio::Spec & hardware = Audio::GetHardwareSpec();
+        Audio::Spec & hardware = Audio::GetHardwareSpec();
         hardware.freq = 22050;
         hardware.format = AUDIO_S16;
         hardware.channels = 2;
@@ -89,9 +86,6 @@ void Mixer::Quit()
     Mixer::Reset();
     valid = false;
     Mix_CloseAudio();
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-    Mix_Quit();
-#endif
     }
 }
 

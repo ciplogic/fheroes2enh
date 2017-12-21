@@ -51,50 +51,6 @@ SurfaceFormat GetRGBAMask(u32 bpp)
 
     switch (bpp)
     {
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-        case 32:
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-            fm.rmask = 0xff000000;
-            fm.gmask = 0x00ff0000;
-            fm.bmask = 0x0000ff00;
-            fm.amask = 0x000000ff;
-
-#else
-            fm.rmask = 0x000000ff;
-            fm.gmask = 0x0000ff00;
-            fm.bmask = 0x00ff0000;
-            fm.amask = 0xff000000;
-#endif
-            break;
-
-        case 24:
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-            fm.rmask = 0x00ff0000;
-            fm.gmask = 0x0000ff00;
-            fm.bmask = 0x000000ff;
-            fm.amask = 0x00000000;
-#else
-            fm.rmask = 0x000000ff;
-            fm.gmask = 0x0000ff00;
-            fm.bmask = 0x00ff0000;
-            fm.amask = 0x00000000;
-#endif
-            break;
-
-        case 16:
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-            fm.rmask = 0x00007c00;
-            fm.gmask = 0x000003e0;
-            fm.bmask = 0x0000001f;
-            fm.amask = 0x00000000;
-#else
-            fm.rmask = 0x0000001f;
-            fm.gmask = 0x000003e0;
-            fm.bmask = 0x00007c00;
-            fm.amask = 0x00000000;
-#endif
-            break;
-#else
         case 32:
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
             fm.rmask = 0xff000000;
@@ -136,7 +92,6 @@ SurfaceFormat GetRGBAMask(u32 bpp)
             fm.amask = 0x0000f000;
 #endif
             break;
-#endif
 
         default:
             fm.rmask = 0;
@@ -372,11 +327,7 @@ void Surface::Set(u32 sw, u32 sh, const SurfaceFormat &fm)
 {
     FreeSurface(*this);
 
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-    surface = SDL_CreateRGBSurface(0, sw, sh, fm.depth, fm.rmask, fm.gmask, fm.bmask, fm.amask);
-#else
     surface = SDL_CreateRGBSurface(SDL_SWSURFACE, sw, sh, fm.depth, fm.rmask, fm.gmask, fm.bmask, fm.amask);
-#endif
 
     if (!surface)
         Error::Except(__FUNCTION__, SDL_GetError());
@@ -388,12 +339,8 @@ void Surface::Set(u32 sw, u32 sh, const SurfaceFormat &fm)
         SetColorKey(fm.ckey);
     } else if (amask())
     {
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-        Fill(RGBA(0, 0, 0, 0)); // no color key only amask
-#else
         Fill(RGBA(fm.ckey.r(), fm.ckey.g(), fm.ckey.b(), 0));
         SetColorKey(fm.ckey);
-#endif
     } else if (fm.ckey.pack())
     {
         Fill(fm.ckey);
@@ -402,18 +349,10 @@ void Surface::Set(u32 sw, u32 sh, const SurfaceFormat &fm)
 
     if (amask())
     {
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-        SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_BLEND);
-#else
         SDL_SetAlpha(surface, SDL_SRCALPHA, 255);
-#endif
     } else
     {
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-        SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_NONE);
-#else
         SDL_SetAlpha(surface, 0, 0);
-#endif
     }
 }
 
@@ -440,12 +379,7 @@ void Surface::SetDefaultDepth(u32 depth)
         case 8:
         case 15:
         case 16:
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-            ERROR("switch to 32 bpp colors");
-            default_depth = 32;
-#else
             default_depth = depth;
-#endif
             break;
 
         case 32:
@@ -473,9 +407,6 @@ bool Surface::Load(const string &fn)
 
 #ifdef WITH_IMAGE
     surface = IMG_Load(fn.c_str());
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-    SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_NONE);
-#endif
 #else
     surface = SDL_LoadBMP(fn.c_str());
 #endif
@@ -491,11 +422,7 @@ bool Surface::Save(const string &fn) const
     int res = 0;
 
 #ifdef WITH_IMAGE
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-    res = IMG_SavePNG(surface, fn.c_str());
-#else
     res = IMG_SavePNG(fn.c_str(), surface, -1);
-#endif
 #else
     res = SDL_SaveBMP(surface, fn.c_str());
 #endif
@@ -531,17 +458,7 @@ u32 Surface::amask() const
 
 u32 Surface::alpha() const
 {
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-    if(isValid())
-    {
-        u8 alpha = 0;
-        SDL_GetSurfaceAlphaMod(surface, &alpha);
-        return alpha;
-    }
-    return 0;
-#else
     return isValid() ? surface->format->alpha : 0;
-#endif
 }
 
 SurfaceFormat Surface::GetFormat() const
@@ -600,26 +517,12 @@ void Surface::SetPalette()
 
 u32 Surface::GetColorKey() const
 {
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-    if(isValid() && ! amask())
-    {
-        u32 res = 0;
-        SDL_GetColorKey(surface, &res);
-        return res;
-    }
-    return 0;
-#else
     return isValid() && (surface->flags & SDL_SRCCOLORKEY) ? surface->format->colorkey : 0;
-#endif
 }
 
 void Surface::SetColorKey(const RGBA &color)
 {
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-    SDL_SetColorKey(surface, SDL_TRUE, MapRGB(color));
-#else
     SDL_SetColorKey(surface, SDL_SRCCOLORKEY, MapRGB(color));
-#endif
 }
 
 /* draw u32 pixel */
@@ -884,22 +787,15 @@ string Surface::Info() const
     if (isValid())
     {
         os <<
-           #if SDL_VERSION_ATLEAST(2, 0, 0)
-           "flags" << "(" << surface->flags << "), " <<
-           #else
            "flags" << "(" << surface->flags << ", " << (surface->flags & SDL_SRCALPHA ? "SRCALPHA" : "")
            << (surface->flags & SDL_SRCCOLORKEY ? "SRCCOLORKEY" : "") << "), " <<
-           #endif
            "w" << "(" << surface->w << "), " <<
            "h" << "(" << surface->h << "), " <<
            "size" << "(" << GetMemoryUsage() << "), " <<
            "bpp" << "(" << depth() << "), " <<
-           #if SDL_VERSION_ATLEAST(2, 0, 0)
-           #else
            "Amask" << "(" << "0x" << setw(8) << setfill('0') << hex << surface->format->Amask << "), " <<
            "colorkey" << "(" << "0x" << setw(8) << setfill('0') << surface->format->colorkey << "), "
            << dec <<
-           #endif
            "alpha" << "(" << alpha() << "), ";
     } else
         os << "invalid surface";

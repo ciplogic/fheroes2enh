@@ -610,6 +610,14 @@ StreamBase &operator<<(StreamBase &msg, const Funds &res)
                res.crystal << res.gems << res.gold;
 }
 
+void serializeTo(ByteVectorWriter &msg, Funds &res)
+{
+    msg.Add(res.wood).Add(res.mercury)
+        .Add(res.ore).Add(res.sulfur)
+        .Add(res.crystal).Add(res.gems)
+        .Add(res.gold);
+}
+
 StreamBase &operator>>(StreamBase &msg, Funds &res)
 {
     return msg >> res.wood >>
@@ -624,9 +632,18 @@ StreamBase &operator<<(StreamBase &msg, const cost_t &res)
                res.crystal << res.gems << res.gold;
 }
 
+void serializeTo(ByteVectorWriter &msg, cost_t &res)
+{
+    msg.Add(res.wood).Add(res.mercury)
+    .Add(res.ore).Add(res.sulfur)
+    .Add(res.crystal).Add(res.gems)
+    .Add(res.gold);
+}
+
 StreamBase &operator>>(StreamBase &msg, cost_t &res)
 {
     return msg >> res.wood >>
                res.mercury >> res.ore >> res.sulfur >>
                res.crystal >> res.gems >> res.gold;
 }
+

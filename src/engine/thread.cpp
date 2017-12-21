@@ -45,11 +45,7 @@ Thread &Thread::operator=(const Thread &)
 
 void Thread::Create(int (*fn)(void *), void *param)
 {
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-    thread = SDL_CreateThread(fn, "", param);
-#else
     thread = SDL_CreateThread(fn, param);
-#endif
 }
 
 int Thread::Wait()
@@ -62,11 +58,8 @@ int Thread::Wait()
 
 void Thread::Kill()
 {
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-#else
     if (thread) SDL_KillThread(thread);
     thread = nullptr;
-#endif
 }
 
 bool Thread::IsRun() const

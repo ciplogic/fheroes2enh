@@ -96,11 +96,9 @@ void Music::Play(const std::vector<u8> & v, bool loop)
     {
     u32 id = CheckSum(v);
         SDL_RWops* rwops = SDL_RWFromConstMem(&v[0], v.size());
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-        Mix_Music* mix = Mix_LoadMUS_RW(rwops, 0);
-#else
+
         Mix_Music* mix = Mix_LoadMUS_RW(rwops);
-#endif
+
         SDL_FreeRW(rwops);
         Music::Play(mix, id, loop);
     }

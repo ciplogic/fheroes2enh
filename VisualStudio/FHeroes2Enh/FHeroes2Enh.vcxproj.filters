@@ -594,6 +594,12 @@
     <ClInclude Include="..\..\src\engine\serializer\ByteVectorReader.h">
       <Filter>Header Files\engine\serializer</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\engine\serializer\BinaryFileReader.h">
+      <Filter>Header Files\engine\serializer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\engine\serializer\ByteVectorWriter.h">
+      <Filter>Header Files\engine\serializer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\engine\audio.cpp">
@@ -1173,6 +1179,12 @@
       <Filter>Source Files\fheroes2\kingdom</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\engine\serializer\ByteVectorReader.cpp">
+      <Filter>Source Files\engine\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\serializer\BinaryFileReader.cpp">
+      <Filter>Source Files\engine\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\serializer\ByteVectorWriter.cpp">
       <Filter>Source Files\engine\serializer</Filter>
     </ClCompile>
   </ItemGroup>

@@ -106,12 +106,6 @@ string System::GetHomeDirectory(const string &prog)
 {
     string res;
 
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-    char* path = SDL_GetPrefPath("", prog.c_str());
-    res = path;
-    SDL_free(path);
-#endif
-
     if (GetEnvironment("HOME"))
         res = ConcatePath(GetEnvironment("HOME"), string(".").append(prog));
     else if (GetEnvironment("APPDATA"))
@@ -512,16 +506,6 @@ bool System::isEmbededDevice()
 
 int System::GetRenderFlags()
 {
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-#if defined(__MINGW32CE__) || defined(__SYMBIAN32__)
-    return SDL_RENDERER_SOFTWARE;
-#endif
-#if defined(__WIN32__) || defined(ANDROID)
-    return SDL_RENDERER_ACCELERATED;
-#endif
-    return SDL_RENDERER_ACCELERATED;
-    //return SDL_RENDERER_SOFTWARE;
-#else
 #if defined(__MINGW32CE__) || defined(__SYMBIAN32__)
     return SDL_SWSURFACE;
 #endif
@@ -529,5 +513,4 @@ int System::GetRenderFlags()
     return SDL_HWSURFACE;
 #endif
     return SDL_SWSURFACE;
-#endif
 }

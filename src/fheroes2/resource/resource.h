@@ -24,6 +24,7 @@
 
 #include "gamedefs.h"
 #include "serialize.h"
+#include "ByteVectorWriter.h"
 
 struct cost_t
 {
@@ -39,11 +40,6 @@ struct cost_t
 #define COST_NONE { 0, 0, 0, 0, 0, 0 ,0 }
 
 class ResourceCount;
-
-#ifdef WITH_XML
-class TiXmlElement;
-void   LoadCostFromXMLElement(cost_t &, const TiXmlElement &);
-#endif
 
 namespace Resource
 {
@@ -118,11 +114,12 @@ public:
 };
 
 StreamBase &operator<<(StreamBase &, const cost_t &);
-
-StreamBase &operator>>(StreamBase &, cost_t &);
+void serializeTo(ByteVectorWriter &msg, cost_t &res);
 
 StreamBase &operator<<(StreamBase &, const Funds &);
+void serializeTo(ByteVectorWriter &msg, Funds &res);
 
+StreamBase &operator>>(StreamBase &, cost_t &);
 StreamBase &operator>>(StreamBase &, Funds &);
 
 namespace Resource

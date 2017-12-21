@@ -35,6 +35,7 @@
 #include "game.h"
 #include "palette_h2.h"
 #include "ByteVectorReader.h"
+#include "BinaryFileReader.h"
 
 #define FATSIZENAME    15
 

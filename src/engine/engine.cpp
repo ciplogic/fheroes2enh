@@ -62,10 +62,8 @@ bool SDL::Init(const u32 system)
     Network::Init();
 #endif
 
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-#else
     SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
-#endif
+
 
     System::CreateTrayIcon(true);
     System::PowerManagerOff(true);

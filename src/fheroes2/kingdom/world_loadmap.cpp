@@ -35,6 +35,7 @@
 #include "game.h"
 #include "world.h"
 #include "ai.h"
+#include "BinaryFileReader.h"
 
 namespace GameStatic
 {

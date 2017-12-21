@@ -94,6 +94,9 @@
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <BufferSecurityCheck>false</BufferSecurityCheck>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <StringPooling>true</StringPooling>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -101,6 +104,7 @@
       <AdditionalLibraryDirectories>C:\Cs-Oss\fheroes2enh\libs\SDL\lib;C:\Cs-Oss\fheroes2enh\libs\libpng\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL.lib;libpng.lib;SDL_mixer.lib;SDL_image.lib;SDL_net.lib;SDL_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>...\..\..\..\$(TargetName)$(TargetExt)</OutputFile>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -180,7 +184,9 @@
     <ClInclude Include="..\..\src\engine\rect.h" />
     <ClInclude Include="..\..\src\engine\sdlnet.h" />
     <ClInclude Include="..\..\src\engine\serialize.h" />
+    <ClInclude Include="..\..\src\engine\serializer\BinaryFileReader.h" />
     <ClInclude Include="..\..\src\engine\serializer\ByteVectorReader.h" />
+    <ClInclude Include="..\..\src\engine\serializer\ByteVectorWriter.h" />
     <ClInclude Include="..\..\src\engine\sprites.h" />
     <ClInclude Include="..\..\src\engine\surface.h" />
     <ClInclude Include="..\..\src\engine\system.h" />
@@ -325,7 +331,9 @@
     <ClCompile Include="..\..\src\engine\rect.cpp" />
     <ClCompile Include="..\..\src\engine\sdlnet.cpp" />
     <ClCompile Include="..\..\src\engine\serialize.cpp" />
+    <ClCompile Include="..\..\src\engine\serializer\BinaryFileReader.cpp" />
     <ClCompile Include="..\..\src\engine\serializer\ByteVectorReader.cpp" />
+    <ClCompile Include="..\..\src\engine\serializer\ByteVectorWriter.cpp" />
     <ClCompile Include="..\..\src\engine\sprites.cpp" />
     <ClCompile Include="..\..\src\engine\surface.cpp" />
     <ClCompile Include="..\..\src\engine\system.cpp" />

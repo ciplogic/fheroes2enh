@@ -30,9 +30,9 @@ public:
 	u32 get();
 	u32 tell() const;
 
-	std::vector<u8> getRaw(size_t sizeblock);
-	
+	std::vector<u8> getRaw(size_t sizeblock);	
 
 	std::string toString(int sizeBlock);
 };
+
 #endif

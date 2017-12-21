@@ -122,20 +122,7 @@ enum KeySym
     KEY_x = SDLK_x,
     KEY_y = SDLK_y,
     KEY_z = SDLK_z,
-
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-    KEY_PRINT		= SDLK_PRINTSCREEN,
-    KEY_KP0             = SDLK_KP_0,
-    KEY_KP1             = SDLK_KP_1,
-    KEY_KP2             = SDLK_KP_2,
-    KEY_KP3             = SDLK_KP_3,
-    KEY_KP4             = SDLK_KP_4,
-    KEY_KP5             = SDLK_KP_5,
-    KEY_KP6             = SDLK_KP_6,
-    KEY_KP7             = SDLK_KP_7,
-    KEY_KP8             = SDLK_KP_8,
-    KEY_KP9             = SDLK_KP_9,
-#else
+    
     KEY_PRINT = SDLK_PRINT,
     KEY_KP0 = SDLK_KP0,
     KEY_KP1 = SDLK_KP1,
@@ -147,7 +134,7 @@ enum KeySym
     KEY_KP7 = SDLK_KP7,
     KEY_KP8 = SDLK_KP8,
     KEY_KP9 = SDLK_KP9,
-#endif
+
 
     KEY_KP_PERIOD = SDLK_KP_PERIOD,
     KEY_KP_DIVIDE = SDLK_KP_DIVIDE,
@@ -317,13 +304,9 @@ private:
 
     void HandleKeyboardEvent(SDL_KeyboardEvent &);
 
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-    static int GlobalFilterEvents(void*, SDL_Event*);
-#else
-
     static int GlobalFilterEvents(const SDL_Event *);
 
-#endif
+
 
     enum flag_t
     {
