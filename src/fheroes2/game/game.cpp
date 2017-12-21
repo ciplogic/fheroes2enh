@@ -326,34 +326,6 @@ u32 Game::GetViewDistance(u32 d)
 
 void Game::UpdateGlobalDefines(const string &spec)
 {
-#ifdef WITH_XML
-    // parse profits.xml
-    TiXmlDocument doc;
-    const TiXmlElement* xml_globals = nullptr;
-
-    if(doc.LoadFile(spec.c_str()) &&
-    nullptr != (xml_globals = doc.FirstChildElement("globals")))
-    {
-    // starting_resource
-    KingdomUpdateStartingResource(xml_globals->FirstChildElement("starting_resource"));
-    // view_distance
-    OverViewUpdateStatic(xml_globals->FirstChildElement("view_distance"));
-    // kingdom
-    KingdomUpdateStatic(xml_globals->FirstChildElement("kingdom"));
-    // game_over
-    GameOverUpdateStatic(xml_globals->FirstChildElement("game_over"));
-    // whirlpool
-    WhirlpoolUpdateStatic(xml_globals->FirstChildElement("whirlpool"));
-    // heroes
-    HeroesUpdateStatic(xml_globals->FirstChildElement("heroes"));
-    // castle_extra_growth
-    CastleUpdateGrowth(xml_globals->FirstChildElement("castle_extra_growth"));
-    // monster upgrade ratio
-    MonsterUpdateStatic(xml_globals->FirstChildElement("monster_upgrade"));
-    }
-    else
-    VERBOSE(spec << ": " << doc.ErrorDesc());
-#endif
 }
 
 u32 Game::GetWhirlpoolPercent()

@@ -423,11 +423,7 @@ namespace Maps
         friend StreamBase &operator<<(StreamBase &, const Tiles &);
 
         friend StreamBase &operator>>(StreamBase &, Tiles &);
-
-#ifdef WITH_XML
-        friend TiXmlElement & operator>> (TiXmlElement &, Tiles &);
-#endif
-
+        
         Addons addons_level1;
         Addons addons_level2; // 16
 

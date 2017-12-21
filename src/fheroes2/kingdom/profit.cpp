@@ -62,29 +62,6 @@ profitstats_t _profits[] = {
 
 void ProfitConditions::UpdateCosts(const string &spec)
 {
-#ifdef WITH_XML
-    // parse profits.xml
-    TiXmlDocument doc;
-    const TiXmlElement* xml_profits = nullptr;
-
-    if(doc.LoadFile(spec.c_str()) &&
-        nullptr != (xml_profits = doc.FirstChildElement("profits")))
-    {
-    profitstats_t* ptr = &_profits[0];
-
-        while(ptr->id)
-        {
-            const TiXmlElement* xml_profit = xml_profits->FirstChildElement(ptr->id);
-
-            if(xml_profit)
-            LoadCostFromXMLElement(ptr->cost, *xml_profit);
-
-            ++ptr;
-        }
-    }
-    else
-    VERBOSE(spec << ": " << doc.ErrorDesc());
-#endif
 }
 
 payment_t ProfitConditions::FromBuilding(u32 building, int race)

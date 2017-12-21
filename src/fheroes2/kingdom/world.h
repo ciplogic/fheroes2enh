@@ -322,10 +322,6 @@ private:
 
     friend StreamBase &operator>>(StreamBase &, World &);
 
-#ifdef WITH_XML
-    friend TiXmlElement & operator>> (TiXmlElement &, World &);
-#endif
-
     MapsTiles vec_tiles;
     AllHeroes vec_heroes;
     AllCastles vec_castles;

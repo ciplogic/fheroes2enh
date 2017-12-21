@@ -44,46 +44,9 @@ paymentstats_t _payments[] = {
         {nullptr,                          {0,    0,  0, 0, 0, 0, 0}},
 };
 
-#ifdef WITH_XML
-void LoadCostFromXMLElement(cost_t & cost, const TiXmlElement & element)
-{
-    int value;
-
-    element.Attribute("gold", &value); cost.gold = value;
-    element.Attribute("wood", &value); cost.wood = value;
-    element.Attribute("mercury", &value); cost.mercury = value;
-    element.Attribute("ore", &value); cost.ore = value;
-    element.Attribute("sulfur", &value); cost.sulfur = value;
-    element.Attribute("crystal", &value); cost.crystal = value;
-    element.Attribute("gems", &value); cost.gems = value;
-}
-#endif
 
 void PaymentConditions::UpdateCosts(const string &spec)
 {
-#ifdef WITH_XML
-    // parse payments.xml
-    TiXmlDocument doc;
-    const TiXmlElement* xml_payments = nullptr;
-
-    if(doc.LoadFile(spec.c_str()) &&
-        nullptr != (xml_payments = doc.FirstChildElement("payments")))
-    {
-    paymentstats_t* ptr = &_payments[0];
-
-        while(ptr->id)
-        {
-            const TiXmlElement* xml_payment = xml_payments->FirstChildElement(ptr->id);
-
-            if(xml_payment)
-            LoadCostFromXMLElement(ptr->cost, *xml_payment);
-
-            ++ptr;
-        }
-    }
-    else
-    VERBOSE(spec << ": " << doc.ErrorDesc());
-#endif
 }
 
 payment_t PaymentConditions::BuyBuilding(int race, u32 build)

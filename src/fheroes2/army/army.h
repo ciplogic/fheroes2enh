@@ -227,10 +227,6 @@ protected:
 
     friend StreamBase &operator>>(StreamBase &, Army &);
 
-#ifdef WITH_XML
-    friend TiXmlElement & operator>> (TiXmlElement &, Army &);
-#endif
-
     HeroBase *commander;
     bool combat_format;
     int color;

@@ -37,16 +37,13 @@
 #include "png.h"
 
 int IMG_SavePNG(const char *file, SDL_Surface *surf,int compression){
-    SDL_RWops *fp;
-    int ret;
-
-    fp=SDL_RWFromFile(file,"wb");
+    SDL_RWops *fp = SDL_RWFromFile(file,"wb");
 
     if( fp == nullptr ) {
         return (-1);
     }
 
-    ret=IMG_SavePNG_RW(fp,surf,compression);
+    int ret = IMG_SavePNG_RW(fp,surf,compression);
     SDL_RWclose(fp);
     return ret;
 }

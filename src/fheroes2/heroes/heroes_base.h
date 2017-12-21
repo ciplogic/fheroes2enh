@@ -147,9 +147,6 @@ protected:
 
     friend StreamBase &operator>>(StreamBase &, HeroBase &);
 
-#ifdef WITH_XML
-    friend TiXmlElement & operator>> (TiXmlElement &, HeroBase &);
-#endif
 
     u32 magic_point;
     u32 move_point;

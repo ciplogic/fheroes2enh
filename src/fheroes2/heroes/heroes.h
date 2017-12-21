@@ -321,9 +321,6 @@ private:
 
     friend StreamBase &operator>>(StreamBase &, Heroes &);
 
-#ifdef WITH_XML
-    friend TiXmlElement & operator>> (TiXmlElement &, Heroes &);
-#endif
 
     friend class Recruits;
 
