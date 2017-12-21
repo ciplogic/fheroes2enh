@@ -184,7 +184,7 @@ string Dialog::SelectFileSave()
 
     os << System::ConcatePath(Settings::GetSaveDir(), base) <<
        // add postfix:
-       '_' << setw(4) << setfill('0') << world.CountDay() << ".sav";
+       '_' << setw(3) << setfill('0') << world.CountDay() << ".sav";
     string lastfile = os.str();
     return SelectFileListSimple(_("File to Save:"), lastfile, true);
 }

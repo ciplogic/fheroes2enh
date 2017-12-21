@@ -26,6 +26,7 @@
 #include "ground.h"
 #include "game.h"
 #include "game_interface.h"
+#include <chrono>
 
 #define SCROLL_MIN    8
 #define SCROLL_MAX    TILEWIDTH
@@ -124,39 +125,89 @@ void Interface::GameArea::BlitOnTile(Surface &dst, const Surface &src, s32 ox, s
     if (areaPosition & Rect(dstpt, src.w(), src.h()))
     {
         src.Blit(RectFixed(dstpt, src.w(), src.h()), dstpt, dst);
-    }
+    } 
 }
 
 void Interface::GameArea::Redraw(Surface &dst, int flag) const
 {
-    return Redraw(dst, flag, Rect(0, 0, rectMaps.w, rectMaps.h));
+	auto start = std::chrono::high_resolution_clock::now();
+
+    Redraw(dst, flag, Rect(0, 0, rectMaps.w, rectMaps.h));
+	auto elapsed = std::chrono::high_resolution_clock::now() - start;	
+	long long microseconds = std::chrono::duration_cast<std::chrono::microseconds>(elapsed).count();
+	cerr << microseconds;
+	
+}
+
+void Interface::GameArea::DrawHeroRoute(Surface& dst, int flag, const Rect& rt) const
+{
+	// route
+	const Heroes *hero = flag & LEVEL_HEROES ? GetFocusHeroes() : nullptr;
+
+	if (!hero || !hero->GetPath().isShow())
+		return;
+	//s32 from = hero->GetIndex();
+	s32 green = hero->GetPath().GetAllowStep();
+
+	const bool skipfirst = hero->isEnableMove() && 45 > hero->GetSpriteIndex() && 2 < (hero->GetSpriteIndex() % 9);
+
+	auto it1 = hero->GetPath().begin();
+	auto it2 = hero->GetPath().end();
+	auto it3 = it1;
+
+	for (; it1 != it2; ++it1)
+	{
+		const s32 &from = (*it1).GetIndex();
+		const Point mp = Maps::GetPoint(from);
+
+		++it3;
+		--green;
+
+		// is visible
+		if ((Rect(rectMaps.x + rt.x, rectMaps.y + rt.y, rt.w, rt.h) & mp) &&
+			// check skip first?
+			!(it1 == hero->GetPath().begin() && skipfirst))
+		{
+			const u32 index = (it3 == it2 ? 0 :
+				                   Route::Path::GetIndexSprite((*it1).GetDirection(), (*it3).GetDirection(),
+				                                               Maps::Ground::GetPenalty(from, Direction::CENTER,
+				                                                                        hero->GetLevelSkill(
+					                                                                        Skill::Secondary::PATHFINDING))));
+
+			Sprite &sprite = AGG::GetICN(0 > green ? ICN::ROUTERED : ICN::ROUTE, index);
+			sprite.SetAlphaMod(180);
+
+			BlitOnTile(dst, sprite, sprite.x() - 14, sprite.y(), mp);
+		}
+	}
 }
 
 void Interface::GameArea::Redraw(Surface &dst, int flag, const Rect &rt) const
 {
-    // tile
-    for (s32 oy = rt.y; oy < rt.y + rt.h; ++oy)
-        for (s32 ox = rt.x; ox < rt.x + rt.w; ++ox)
-            world.GetTiles(rectMaps.x + ox, rectMaps.y + oy).RedrawTile(dst);
+	// tile
+#pragma omp parallel for
+	for (s32 stepX = 0; stepX< rt.w; ++stepX)
+	{
+		auto ox = rt.x + stepX;
+		for (s32 oy = rt.y; oy < rt.y + rt.h; ++oy)
+		{
 
-    // bottom
-    if (flag & LEVEL_BOTTOM)
-        for (s32 oy = rt.y; oy < rt.y + rt.h; ++oy)
-            for (s32 ox = rt.x; ox < rt.x + rt.w; ++ox)
-                world.GetTiles(rectMaps.x + ox, rectMaps.y + oy).RedrawBottom(dst, !(flag & LEVEL_OBJECTS));
+			auto& currentTile = world.GetTiles(rectMaps.x + ox, rectMaps.y + oy);
+			currentTile.RedrawTile(dst);
 
-    // ext object
-    if (flag & LEVEL_OBJECTS)
-        for (s32 oy = rt.y; oy < rt.y + rt.h; ++oy)
-            for (s32 ox = rt.x; ox < rt.x + rt.w; ++ox)
-                world.GetTiles(rectMaps.x + ox, rectMaps.y + oy).RedrawObjects(dst);
+			// bottom
+			if (flag & LEVEL_BOTTOM)
+				currentTile.RedrawBottom(dst, !(flag & LEVEL_OBJECTS));
 
-    // top
-    if (flag & LEVEL_TOP)
-        for (s32 oy = rt.y; oy < rt.y + rt.h; ++oy)
-            for (s32 ox = rt.x; ox < rt.x + rt.w; ++ox)
-                world.GetTiles(rectMaps.x + ox, rectMaps.y + oy).RedrawTop(dst);
+			// ext object
+			if (flag & LEVEL_OBJECTS)
+				currentTile.RedrawObjects(dst);
 
+			// top
+			if (flag & LEVEL_TOP)
+				currentTile.RedrawTop(dst);
+		}
+	}
     // heroes
     for (s32 oy = rt.y; oy < rt.y + rt.h; ++oy)
         for (s32 ox = rt.x; ox < rt.x + rt.w; ++ox)
@@ -171,46 +222,7 @@ void Interface::GameArea::Redraw(Surface &dst, int flag, const Rect &rt) const
             }
         }
 
-    // route
-    const Heroes *hero = flag & LEVEL_HEROES ? GetFocusHeroes() : nullptr;
-
-    if (hero && hero->GetPath().isShow())
-    {
-        //s32 from = hero->GetIndex();
-        s32 green = hero->GetPath().GetAllowStep();
-
-        const bool skipfirst = hero->isEnableMove() && 45 > hero->GetSpriteIndex() && 2 < (hero->GetSpriteIndex() % 9);
-
-        auto it1 = hero->GetPath().begin();
-        auto it2 = hero->GetPath().end();
-        auto it3 = it1;
-
-        for (; it1 != it2; ++it1)
-        {
-            const s32 &from = (*it1).GetIndex();
-            const Point mp = Maps::GetPoint(from);
-
-            ++it3;
-            --green;
-
-            // is visible
-            if ((Rect(rectMaps.x + rt.x, rectMaps.y + rt.y, rt.w, rt.h) & mp) &&
-                // check skip first?
-                !(it1 == hero->GetPath().begin() && skipfirst))
-            {
-                const u32 index = (it3 == it2 ? 0 :
-                                   Route::Path::GetIndexSprite((*it1).GetDirection(), (*it3).GetDirection(),
-                                                               Maps::Ground::GetPenalty(from, Direction::CENTER,
-                                                                                        hero->GetLevelSkill(
-                                                                                                Skill::Secondary::PATHFINDING))));
-
-                Sprite &sprite = AGG::GetICN(0 > green ? ICN::ROUTERED : ICN::ROUTE, index);
-				sprite.SetAlphaMod(180);
-
-                BlitOnTile(dst, sprite, sprite.x() - 14, sprite.y(), mp);
-            }
-        }
-    }
+    DrawHeroRoute(dst, flag, rt);
     // redraw fog
     if (flag & LEVEL_FOG)
     {
@@ -362,49 +374,49 @@ Surface Interface::GameArea::GenerateUltimateArtifactAreaSurface(s32 index)
 {
     Surface sf;
 
-    if (Maps::isValidAbsIndex(index))
-    {
-        sf.Set(448, 448, false);
+    if (!Maps::isValidAbsIndex(index))
+	{
+		return sf;
+	}
+	sf.Set(448, 448, false);
 
-        GameArea &gamearea = Basic::Get().GetGameArea();
-        const Rect origPosition(gamearea.areaPosition);
-        gamearea.SetAreaPosition(0, 0, sf.w(), sf.h());
+	GameArea &gamearea = Basic::Get().GetGameArea();
+	const Rect origPosition(gamearea.areaPosition);
+	gamearea.SetAreaPosition(0, 0, sf.w(), sf.h());
 
-        const Rect &rectMaps = gamearea.GetRectMaps();
-        const Rect &areaPosition = gamearea.GetArea();
-        Point pt = Maps::GetPoint(index);
+	const Rect &rectMaps = gamearea.GetRectMaps();
+	const Rect &areaPosition = gamearea.GetArea();
+	Point pt = Maps::GetPoint(index);
 
-        gamearea.SetCenter(pt);
-        gamearea.Redraw(sf, LEVEL_BOTTOM | LEVEL_TOP);
+	gamearea.SetCenter(pt);
+	gamearea.Redraw(sf, LEVEL_BOTTOM | LEVEL_TOP);
 
-        // blit marker
-        for (u32 ii = 0; ii < rectMaps.h; ++ii)
-            if (index < Maps::GetIndexFromAbsPoint(rectMaps.x + rectMaps.w - 1, rectMaps.y + ii))
-            {
-                pt.y = ii;
-                break;
-            }
-        for (u32 ii = 0; ii < rectMaps.w; ++ii)
-            if (index == Maps::GetIndexFromAbsPoint(rectMaps.x + ii, rectMaps.y + pt.y))
-            {
-                pt.x = ii;
-                break;
-            }
-        const Sprite &marker = AGG::GetICN(ICN::ROUTE, 0);
-        const Point dst(areaPosition.x + pt.x * TILEWIDTH - gamearea.scrollOffset.x,
-                        areaPosition.y + pt.y * TILEWIDTH - gamearea.scrollOffset.y);
-        marker.Blit(dst.x, dst.y + 8, sf);
+	// blit marker
+	for (u32 ii = 0; ii < rectMaps.h; ++ii)
+		if (index < Maps::GetIndexFromAbsPoint(rectMaps.x + rectMaps.w - 1, rectMaps.y + ii))
+		{
+			pt.y = ii;
+			break;
+		}
+	for (u32 ii = 0; ii < rectMaps.w; ++ii)
+		if (index == Maps::GetIndexFromAbsPoint(rectMaps.x + ii, rectMaps.y + pt.y))
+		{
+			pt.x = ii;
+			break;
+		}
+	const Sprite &marker = AGG::GetICN(ICN::ROUTE, 0);
+	const Point dst(areaPosition.x + pt.x * TILEWIDTH - gamearea.scrollOffset.x,
+	                areaPosition.y + pt.y * TILEWIDTH - gamearea.scrollOffset.y);
+	marker.Blit(dst.x, dst.y + 8, sf);
 
-        sf = (Settings::Get().ExtGameEvilInterface() ? sf.RenderGrayScale() : sf.RenderSepia());
+	sf = (Settings::Get().ExtGameEvilInterface() ? sf.RenderGrayScale() : sf.RenderSepia());
 
-        if (Settings::Get().QVGA())
-            sf = Sprite::ScaleQVGASurface(sf);
+	if (Settings::Get().QVGA())
+		sf = Sprite::ScaleQVGASurface(sf);
 
-        gamearea.SetAreaPosition(origPosition.x, origPosition.y, origPosition.w, origPosition.h);
-    } else
-            DEBUG(DBG_ENGINE, DBG_WARN, "artifact not found");
+	gamearea.SetAreaPosition(origPosition.x, origPosition.y, origPosition.w, origPosition.h);
 
-    return sf;
+	return sf;
 }
 
 bool Interface::GameArea::NeedScroll() const

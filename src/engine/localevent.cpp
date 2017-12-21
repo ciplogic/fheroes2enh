@@ -436,8 +436,7 @@ bool LocalEvent::HandleEvents(bool delay)
 
                 // exit
             case SDL_QUIT:
-                Error::Except(__FUNCTION__, "SDL_QUIT");
-                return false;
+				exit(0);
 
             default:
                 break;
