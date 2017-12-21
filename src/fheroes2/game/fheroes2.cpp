@@ -71,7 +71,6 @@ int main(int argc, char **argv)
 #endif
 {
 
-
     Settings &conf = Settings::Get();
     int test = 0;
 

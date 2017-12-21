@@ -108,14 +108,14 @@ int Game::Credits()
     str.append(AI::License());
     str.append("\n \n");
     str.append("Site project:\n");
-    str.append("http://https://github.com/ciplogic/fheroes2enh");
+    str.append("https://github.com/ciplogic/fheroes2enh");
     str.append("\n \n");
     str.append("Authors:\n");
     str.append("Ciprian Khlud, maintainer\n");
     str.append("Andrey Afletdinov, (old)maintainer\n");
     str.append("email: ciprian.mustiata at gmail.com\n");
 
-    Message("Free Heroes II Engine", str, Font::SMALL, Dialog::OK);
+    Message("Free Heroes II Enhanced Engine", str, Font::SMALL, Dialog::OK);
 
     //VERBOSE("Credits: under construction.");
 
