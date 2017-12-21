@@ -1526,35 +1526,33 @@ void Maps::Tiles::RedrawBottom(Surface &dst, bool skip_objs) const
     const Interface::GameArea &area = Interface::Basic::Get().GetGameArea();
     const Point mp = GetPoint(GetIndex());
 
-    if ((area.GetRectMaps() & mp) &&
-        !addons_level1.empty())
-    {
-        for (const auto &it : addons_level1)
-        {
-            // skip
-            if (skip_objs &&
-                MP2::isRemoveObject(GetObject()) &&
-                FindObjectConst(GetObject()) == &it)
-                continue;
+    if (!(area.GetRectMaps() & mp) || addons_level1.empty())
+		return;
+	for (const auto &it : addons_level1)
+	{
+		// skip
+		if (skip_objs &&
+			MP2::isRemoveObject(GetObject()) &&
+			FindObjectConst(GetObject()) == &it)
+			continue;
 
-            const u8 &object = it.object;
-            const u8 &index = it.index;
-            const int icn = MP2::GetICNObject(object);
+		const u8 &object = it.object;
+		const u8 &index = it.index;
+		const int icn = MP2::GetICNObject(object);
 
-            if (ICN::UNKNOWN != icn && ICN::MINIHERO != icn && ICN::MONS32 != icn)
-            {
-                const Sprite &sprite = AGG::GetICN(icn, index);
-                area.BlitOnTile(dst, sprite, mp);
+		if (ICN::UNKNOWN == icn || ICN::MINIHERO == icn || ICN::MONS32 == icn)
+			continue;
+		const Sprite &sprite = AGG::GetICN(icn, index);
+		area.BlitOnTile(dst, sprite, mp);
 
-                // possible anime
-                if (u32 anime_index = ICN::AnimationFrame(icn, index, Game::MapsAnimationFrame(), quantity2))
-                {
-                    const Sprite &anime_sprite = AGG::GetICN(icn, anime_index);
-                    area.BlitOnTile(dst, anime_sprite, mp);
-                }
-            }
-        }
-    }
+		// possible anime
+		u32 anime_index = ICN::AnimationFrame(icn, index, Game::MapsAnimationFrame(), quantity2);
+		if (anime_index!=0)
+		{
+			const Sprite &anime_sprite = AGG::GetICN(icn, anime_index);
+			area.BlitOnTile(dst, anime_sprite, mp);
+		}
+	}
 }
 
 void Maps::Tiles::RedrawPassable(Surface &dst) const
@@ -1679,40 +1677,39 @@ bool SkipRedrawTileBottom4Hero(const Maps::TilesAddon &ta, int passable)
 {
     if (Maps::TilesAddon::isStream(ta) || Maps::TilesAddon::isRoad(ta))
         return true;
-    else
-        switch (MP2::GetICNObject(ta.object))
-        {
-            case ICN::UNKNOWN:
-            case ICN::MINIHERO:
-            case ICN::MONS32:
-                return true;
+	switch (MP2::GetICNObject(ta.object))
+	{
+	case ICN::UNKNOWN:
+	case ICN::MINIHERO:
+	case ICN::MONS32:
+		return true;
 
-            case ICN::OBJNWATR:
-                return ta.index >= 202 && ta.index <= 225; /* whirlpool */
+	case ICN::OBJNWATR:
+		return ta.index >= 202 && ta.index <= 225; /* whirlpool */
 
-            case ICN::OBJNTWBA:
-            case ICN::ROAD:
-            case ICN::STREAM:
-                return true;
+	case ICN::OBJNTWBA:
+	case ICN::ROAD:
+	case ICN::STREAM:
+		return true;
 
-            case ICN::OBJNCRCK:
-                return (ta.index == 58 || ta.index == 59 || ta.index == 64 || ta.index == 65 ||
-                        ta.index == 188 || ta.index == 189 || (passable & DIRECTION_TOP_ROW));
+	case ICN::OBJNCRCK:
+		return (ta.index == 58 || ta.index == 59 || ta.index == 64 || ta.index == 65 ||
+			ta.index == 188 || ta.index == 189 || (passable & DIRECTION_TOP_ROW));
 
-            case ICN::OBJNDIRT:
-            case ICN::OBJNDSRT:
-            case ICN::OBJNGRA2:
-            case ICN::OBJNGRAS:
-            case ICN::OBJNLAVA:
-            case ICN::OBJNSNOW:
-            case ICN::OBJNSWMP:
-                return (passable & DIRECTION_TOP_ROW);
+	case ICN::OBJNDIRT:
+	case ICN::OBJNDSRT:
+	case ICN::OBJNGRA2:
+	case ICN::OBJNGRAS:
+	case ICN::OBJNLAVA:
+	case ICN::OBJNSNOW:
+	case ICN::OBJNSWMP:
+		return (passable & DIRECTION_TOP_ROW);
 
-            default:
-                break;
-        }
+	default:
+		break;
+	}
 
-    return false;
+	return false;
 }
 
 void Maps::Tiles::RedrawBottom4Hero(Surface &dst) const
@@ -1720,29 +1717,26 @@ void Maps::Tiles::RedrawBottom4Hero(Surface &dst) const
     const Interface::GameArea &area = Interface::Basic::Get().GetGameArea();
     const Point mp = GetPoint(GetIndex());
 
-    if ((area.GetRectMaps() & mp) &&
-        !addons_level1.empty())
-    {
-        for (const auto &it : addons_level1)
-        {
-            if (!SkipRedrawTileBottom4Hero(it, tile_passable))
-            {
-                const u8 &object = it.object;
-                const u8 &index = it.index;
-                const int icn = MP2::GetICNObject(object);
+    if (!(area.GetRectMaps() & mp) || addons_level1.empty())
+		return;
+	for (const auto &it : addons_level1)
+	{
+		if (SkipRedrawTileBottom4Hero(it, tile_passable))
+			continue;
+		const u8 &object = it.object;
+		const u8 &index = it.index;
+		const int icn = MP2::GetICNObject(object);
 
-                const Sprite &sprite = AGG::GetICN(icn, index);
-                area.BlitOnTile(dst, sprite, mp);
-
-                // possible anime
-                if (u32 anime_index = ICN::AnimationFrame(icn, index, Game::MapsAnimationFrame(), quantity2))
-                {
-                    const Sprite &anime_sprite = AGG::GetICN(icn, anime_index);
-                    area.BlitOnTile(dst, anime_sprite, mp);
-                }
-            }
-        }
-    }
+		const Sprite &sprite = AGG::GetICN(icn, index);
+		area.BlitOnTile(dst, sprite, mp);
+		u32 anime_index = ICN::AnimationFrame(icn, index, Game::MapsAnimationFrame(), quantity2);
+		// possible anime
+		if (anime_index!=0)
+		{
+			const Sprite &anime_sprite = AGG::GetICN(icn, anime_index);
+			area.BlitOnTile(dst, anime_sprite, mp);
+		}
+	}
 }
 
 void Maps::Tiles::RedrawTop(Surface &dst, const TilesAddon *skip) const
@@ -1771,30 +1765,29 @@ void Maps::Tiles::RedrawTop(Surface &dst, const TilesAddon *skip) const
         }
     }
 
-    if (!addons_level2.empty())
-    {
-        for (const auto &it : addons_level2)
-        {
-            if (skip && skip == &it) continue;
+    if (addons_level2.empty())
+		return;
+	for (const auto &it : addons_level2)
+	{
+		if (skip && skip == &it) continue;
 
-            const u8 &object = it.object;
-            const u8 &index = it.index;
-            const int icn = MP2::GetICNObject(object);
+		const u8 &object = it.object;
+		const u8 &index = it.index;
+		const int icn = MP2::GetICNObject(object);
 
-            if (ICN::UNKNOWN != icn && ICN::MINIHERO != icn && ICN::MONS32 != icn)
-            {
-                const Sprite &sprite = AGG::GetICN(icn, index);
-                area.BlitOnTile(dst, sprite, mp);
+		if (ICN::UNKNOWN != icn && ICN::MINIHERO != icn && ICN::MONS32 != icn)
+		{
+			const Sprite &sprite = AGG::GetICN(icn, index);
+			area.BlitOnTile(dst, sprite, mp);
 
-                // possible anime
-                if (u32 anime_index = ICN::AnimationFrame(icn, index, Game::MapsAnimationFrame()))
-                {
-                    const Sprite &anime_sprite = AGG::GetICN(icn, anime_index);
-                    area.BlitOnTile(dst, anime_sprite, mp);
-                }
-            }
-        }
-    }
+			// possible anime
+			if (u32 anime_index = ICN::AnimationFrame(icn, index, Game::MapsAnimationFrame()))
+			{
+				const Sprite &anime_sprite = AGG::GetICN(icn, anime_index);
+				area.BlitOnTile(dst, anime_sprite, mp);
+			}
+		}
+	}
 }
 
 void Maps::Tiles::RedrawTop4Hero(Surface &dst, bool skip_ground) const
@@ -1802,31 +1795,28 @@ void Maps::Tiles::RedrawTop4Hero(Surface &dst, bool skip_ground) const
     const Interface::GameArea &area = Interface::Basic::Get().GetGameArea();
     const Point mp = GetPoint(GetIndex());
 
-    if ((area.GetRectMaps() & mp) &&
-        !addons_level2.empty())
-    {
-        for (const auto &it : addons_level2)
-        {
-            if (skip_ground && MP2::isGroundObject(it.object)) continue;
+    if (!(area.GetRectMaps() & mp) || addons_level2.empty())
+		return;
+	for (const auto &it : addons_level2)
+	{
+		if (skip_ground && MP2::isGroundObject(it.object)) continue;
 
-            const u8 &object = it.object;
-            const u8 &index = it.index;
-            const int icn = MP2::GetICNObject(object);
+		const u8 &object = it.object;
+		const u8 &index = it.index;
+		const int icn = MP2::GetICNObject(object);
 
-            if (ICN::HighlyObjectSprite(icn, index))
-            {
-                const Sprite &sprite = AGG::GetICN(icn, index);
-                area.BlitOnTile(dst, sprite, mp);
+		if (!ICN::HighlyObjectSprite(icn, index))
+			continue;
+		const Sprite &sprite = AGG::GetICN(icn, index);
+		area.BlitOnTile(dst, sprite, mp);
 
-                // possible anime
-                if (u32 anime_index = ICN::AnimationFrame(icn, index, Game::MapsAnimationFrame()))
-                {
-                    const Sprite &anime_sprite = AGG::GetICN(icn, anime_index);
-                    area.BlitOnTile(dst, anime_sprite, mp);
-                }
-            }
-        }
-    }
+		// possible anime
+		if (u32 anime_index = ICN::AnimationFrame(icn, index, Game::MapsAnimationFrame()))
+		{
+			const Sprite &anime_sprite = AGG::GetICN(icn, anime_index);
+			area.BlitOnTile(dst, anime_sprite, mp);
+		}
+	}
 }
 
 Maps::TilesAddon *Maps::Tiles::FindAddonICN1(int icn1)
@@ -1979,14 +1969,13 @@ string Maps::Tiles::String() const
 
 void Maps::Tiles::FixObject()
 {
-    if (MP2::OBJ_ZERO == mp2_object)
-    {
-        if (addons_level1.end() != find_if(addons_level1.begin(), addons_level1.end(), TilesAddon::isArtifact))
-            SetObject(MP2::OBJ_ARTIFACT);
-        else if (addons_level1.end() !=
-                 find_if(addons_level1.begin(), addons_level1.end(), TilesAddon::isResource))
-            SetObject(MP2::OBJ_RESOURCE);
-    }
+    if (MP2::OBJ_ZERO != mp2_object)
+		return;
+	if (addons_level1.end() != find_if(addons_level1.begin(), addons_level1.end(), TilesAddon::isArtifact))
+		SetObject(MP2::OBJ_ARTIFACT);
+	else if (addons_level1.end() !=
+		find_if(addons_level1.begin(), addons_level1.end(), TilesAddon::isResource))
+		SetObject(MP2::OBJ_RESOURCE);
 }
 
 bool Maps::Tiles::GoodForUltimateArtifact() const
@@ -2013,36 +2002,34 @@ bool Maps::Tiles::isPassable(const Heroes &hero) const
 
         if (MP2::OBJ_BOAT == GetObject())
             return false;
-    } else
-        // if(! hero->isShipMaster() &&
-    if (isWater())
-    {
-        switch (GetObject())
-        {
-            // fix shipwreck: place on water
-            case MP2::OBJ_SHIPWRECK:
-                // check later
-                break;
+		return true;
+    } 
+    if (!isWater())
+		return true;
+	switch (GetObject())
+	{
+		// fix shipwreck: place on water
+	case MP2::OBJ_SHIPWRECK:
+		// check later
+		break;
 
-                // for: meetings/attack hero
-            case MP2::OBJ_HEROES:
-            {
-                // scan ground
-                const MapsIndexes &v = GetAroundIndexes(GetIndex());
-                if (v.end() == find_if(v.begin(), v.end(),
-                                            not1(bind2nd(ptr_fun(&TileIsGround),
-                                                                   static_cast<int>(Ground::WATER)))))
-                    return false;
-            }
-                break;
+		// for: meetings/attack hero
+	case MP2::OBJ_HEROES:
+		{
+			// scan ground
+			const MapsIndexes &v = GetAroundIndexes(GetIndex());
+			if (v.end() == find_if(v.begin(), v.end(),
+			                       not1(bind2nd(ptr_fun(&TileIsGround),
+			                                    static_cast<int>(Ground::WATER)))))
+				return false;
+		}
+		break;
 
-            default:
-                // ! hero->isShipMaster() && isWater()
-                return false;
-        }
-    }
-
-    return true;
+	default:
+		// ! hero->isShipMaster() && isWater()
+		return false;
+	}
+	return true;
 }
 
 bool Maps::Tiles::isPassable(const Heroes *hero, int direct, bool skipfog) const

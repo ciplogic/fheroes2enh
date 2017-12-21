@@ -174,8 +174,7 @@ void Dialog::DrawSystemInfo(const Rects &rects)
     Display &display = Display::Get();
     Settings &conf = Settings::Get();
 
-    string str;
-    Text text;
+	Text text;
 
     Surface black(Size(65, 65), false);
     black.Fill(ColorBlack);
@@ -184,7 +183,7 @@ void Dialog::DrawSystemInfo(const Rects &rects)
     const Sprite &sprite1 = AGG::GetICN(ICN::SPANEL, conf.Sound() ? 1 : 0);
     const Rect &rect1 = rects[0];
     sprite1.Blit(rect1);
-    str = _("sound");
+    string str = _("sound");
     str.append(" ");
     if (conf.Sound() && conf.SoundVolume())
         str.append(GetString(conf.SoundVolume()));

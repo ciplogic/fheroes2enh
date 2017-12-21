@@ -424,7 +424,7 @@ int Game::GetActualKingdomColors()
 
 string Game::CountScoute(u32 count, int scoute, bool shorts)
 {
-    float infelicity = 0;
+	double infelicity = 0;
     string res;
 
     switch (scoute)

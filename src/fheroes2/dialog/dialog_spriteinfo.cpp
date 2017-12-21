@@ -31,12 +31,12 @@
 
 int Dialog::ArtifactInfo(const string &hdr, const string &msg, const Artifact &art, int buttons)
 {
-    const Sprite &border = AGG::GetICN(ICN::RESOURCE, 7);
+    Sprite &border = AGG::GetICN(ICN::RESOURCE, 7);
     const Sprite &artifact = AGG::GetICN(ICN::ARTIFACT, art.IndexSprite64());
     Surface image = border.GetSurface();
     border.Blit(image);
     artifact.Blit(5, 5, image);
-
+	border.SetAlphaMod(210);
     string ext = msg;
     ext.append("\n");
     ext.append(" ");
@@ -46,7 +46,7 @@ int Dialog::ArtifactInfo(const string &hdr, const string &msg, const Artifact &a
     return SpriteInfo(hdr, ext, image, buttons);
 }
 
-int Dialog::SpriteInfo(const string &header, const string &message, const Surface &sprite, int buttons)
+int Dialog::SpriteInfo(const string &header, const string &message, Surface &sprite, int buttons)
 {
     Display &display = Display::Get();
 

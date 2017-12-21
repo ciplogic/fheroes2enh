@@ -723,80 +723,75 @@ bool IsPriorityAndNotVisitAndNotPresent(const pair<s32, int> &indexObj, const He
 
 void AIHeroesEnd(Heroes *hero)
 {
-    if (hero)
-    {
-        AIHero &ai_hero = AIHeroes::Get(*hero);
-        AIKingdom &ai_kingdom = AIKingdoms::Get(hero->GetColor());
-        Queue &task = ai_hero.sheduled_visit;
-        IndexObjectMap &ai_objects = ai_kingdom.scans;
+    if (!hero)
+		return;
+	AIHero &ai_hero = AIHeroes::Get(*hero);
+	AIKingdom &ai_kingdom = AIKingdoms::Get(hero->GetColor());
+	Queue &task = ai_hero.sheduled_visit;
+	IndexObjectMap &ai_objects = ai_kingdom.scans;
 
-        if (hero->Modes(AI::HEROES_WAITING | AI::HEROES_STUPID))
-        {
-            ai_hero.Reset();
-            hero->ResetModes(AI::HEROES_WAITING | AI::HEROES_STUPID);
-        }
+	if (hero->Modes(AI::HEROES_WAITING | AI::HEROES_STUPID))
+	{
+		ai_hero.Reset();
+		hero->ResetModes(AI::HEROES_WAITING | AI::HEROES_STUPID);
+	}
 
-        IndexObjectMap::iterator it;
+	IndexObjectMap::iterator it;
 
-        while (true)
-        {
-            for (it = ai_objects.begin(); it != ai_objects.end(); ++it)
-                if (IsPriorityAndNotVisitAndNotPresent(*it, hero)) break;
+	while (true)
+	{
+		for (it = ai_objects.begin(); it != ai_objects.end(); ++it)
+			if (IsPriorityAndNotVisitAndNotPresent(*it, hero)) break;
 
-            if (ai_objects.end() == it) break;
+		if (ai_objects.end() == it) break;
 
-            DEBUG(DBG_AI, DBG_TRACE, hero->GetName() << ", added priority object: " <<
-                                                     MP2::StringObject((*it).second) << ", index: " << (*it).first);
-            task.push_front((*it).first);
-            ai_objects.erase((*it).first);
-        }
-    }
+		DEBUG(DBG_AI, DBG_TRACE, hero->GetName() << ", added priority object: " <<
+			MP2::StringObject((*it).second) << ", index: " << (*it).first);
+		task.push_front((*it).first);
+		ai_objects.erase((*it).first);
+	}
 }
 
 
 void AIHeroesSetHunterWithTarget(Heroes *hero, s32 dst)
 {
-    if (hero)
-    {
-        AIHero &ai_hero = AIHeroes::Get(*hero);
+    if (!hero)
+		return;
+	AIHero &ai_hero = AIHeroes::Get(*hero);
 
-        hero->SetModes(AI::HEROES_HUNTER);
+	hero->SetModes(AI::HEROES_HUNTER);
 
-        if (0 > ai_hero.primary_target)
-        {
-            ai_hero.primary_target = dst;
-        }
-    }
+	if (0 > ai_hero.primary_target)
+	{
+		ai_hero.primary_target = dst;
+	}
 }
 
 void AIHeroesCaptureNearestTown(Heroes *hero)
 {
-    if (hero)
-    {
-        AIHero &ai_hero = AIHeroes::Get(*hero);
+    if (!hero) return;
+	AIHero &ai_hero = AIHeroes::Get(*hero);
 
-        if (0 > ai_hero.primary_target)
-        {
-            const Maps::Indexes &castles = Maps::GetObjectPositions(hero->GetIndex(), MP2::OBJ_CASTLE, true);
+	if (0 <= ai_hero.primary_target)
+		return;
+	const Maps::Indexes &castles = Maps::GetObjectPositions(hero->GetIndex(), MP2::OBJ_CASTLE, true);
 
-            for (int it : castles)
-            {
-                const Castle *castle = world.GetCastle(Maps::GetPoint(it));
+	for (int it : castles)
+	{
+		const Castle *castle = world.GetCastle(Maps::GetPoint(it));
 
-                if (castle)
-                        DEBUG(DBG_AI, DBG_TRACE, hero->GetName() << ", to castle: " << castle->GetName());
+		if (castle)
+		DEBUG(DBG_AI, DBG_TRACE, hero->GetName() << ", to castle: " << castle->GetName());
 
-                if (castle &&
-                    Army::TroopsStrongerEnemyTroops(hero->GetArmy(), castle->GetArmy()))
-                {
-                    ai_hero.primary_target = it;
+		if (castle &&
+			Army::TroopsStrongerEnemyTroops(hero->GetArmy(), castle->GetArmy()))
+		{
+			ai_hero.primary_target = it;
 
-                    DEBUG(DBG_AI, DBG_INFO, Color::String(hero->GetColor()) <<
-                                                                            ", Hero " << hero->GetName()
-                                                                            << " set primary target: " << *it);
-                    break;
-                }
-            }
-        }
-    }
+			DEBUG(DBG_AI, DBG_INFO, Color::String(hero->GetColor()) <<
+				", Hero " << hero->GetName()
+				<< " set primary target: " << *it);
+			break;
+		}
+	}
 }

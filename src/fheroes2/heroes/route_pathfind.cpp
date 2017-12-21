@@ -20,7 +20,6 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <map>
 #include "maps.h"
 #include "ai.h"
 #include "world.h"
@@ -245,49 +244,45 @@ bool Route::Path::Find(s32 to, int limit)
     while (cur != to)
     {
         LocalEvent::Get().HandleEvents(false);
-        for (Directions::const_iterator
-                     it = directions.begin(); it != directions.end(); ++it)
+        for (auto& direction : directions)
         {
-            if (Maps::isValidDirection(cur, *it))
-            {
-                tmp = Maps::GetDirectionIndex(cur, *it);
+            if (!Maps::isValidDirection(cur, direction))
+		        continue;
+	        tmp = Maps::GetDirectionIndex(cur, direction);
 
-                if (list[tmp].open)
-                {
-                    const u32 costg = GetPenaltyFromTo(cur, tmp, *it, pathfinding);
+	        if (!list[tmp].open) continue;
+	        const u32 costg = GetPenaltyFromTo(cur, tmp, direction, pathfinding);
 
-                    // new
-                    if (-1 == list[tmp].parent)
-                    {
-                        if ((list[cur].passbl & *it) ||
-                            PassableFromToTile(*hero, cur, tmp, *it, to))
-                        {
-                            list[cur].passbl |= *it;
+	        // new
+	        if (-1 == list[tmp].parent)
+	        {
+		        if ((list[cur].passbl & direction) ||
+			        PassableFromToTile(*hero, cur, tmp, direction, to))
+		        {
+			        list[cur].passbl |= direction;
 
-                            list[tmp].direct = *it;
-                            list[tmp].cost_g = costg;
-                            list[tmp].parent = cur;
-                            list[tmp].open = 1;
-                            list[tmp].cost_d = 50 * Maps::GetApproximateDistance(tmp, to);
-                            list[tmp].cost_t = list[cur].cost_t + costg;
-                        }
-                    }
-                        // check alt
-                    else
-                    {
-                        if (list[tmp].cost_t > list[cur].cost_t + costg &&
-                            ((list[cur].passbl & *it) || PassableFromToTile(*hero, cur, tmp, *it, to)))
-                        {
-                            list[cur].passbl |= *it;
+			        list[tmp].direct = direction;
+			        list[tmp].cost_g = costg;
+			        list[tmp].parent = cur;
+			        list[tmp].open = 1;
+			        list[tmp].cost_d = 50 * Maps::GetApproximateDistance(tmp, to);
+			        list[tmp].cost_t = list[cur].cost_t + costg;
+		        }
+	        }
+		        // check alt
+	        else
+	        {
+		        if (list[tmp].cost_t > list[cur].cost_t + costg &&
+			        ((list[cur].passbl & direction) || PassableFromToTile(*hero, cur, tmp, direction, to)))
+		        {
+			        list[cur].passbl |= direction;
 
-                            list[tmp].direct = *it;
-                            list[tmp].parent = cur;
-                            list[tmp].cost_g = costg;
-                            list[tmp].cost_t = list[cur].cost_t + costg;
-                        }
-                    }
-                }
-            }
+			        list[tmp].direct = direction;
+			        list[tmp].parent = cur;
+			        list[tmp].cost_g = costg;
+			        list[tmp].cost_t = list[cur].cost_t + costg;
+		        }
+	        }
         }
 
         list[cur].open = 0;
@@ -303,21 +298,6 @@ bool Route::Path::Find(s32 to, int limit)
             if ((*it1).second.open)
             {
                 const cell_t &cell2 = (*it1).second;
-#ifdef WITH_DEBUG
-                if(IS_DEBUG(DBG_OTHER, DBG_TRACE) && cell2.cost_g != MAXU16)
-                {
-                int direct = Direction::Get(cur, (*it1).first);
-
-                if(Direction::UNKNOWN != direct)
-                {
-                    VERBOSE("\t\tdirect: " << Direction::String(direct) <<
-                        ", index: " << (*it1).first <<
-                        ", cost g: " << cell2.cost_g <<
-                        ", cost t: " << cell2.cost_t <<
-                        ", cost d: " << cell2.cost_d);
-                }
-                }
-#endif
 
                 if (cell2.cost_t + cell2.cost_d < tmp)
                 {
@@ -328,10 +308,7 @@ bool Route::Path::Find(s32 to, int limit)
 
         // not found, and exception
         if (MAXU16 == tmp || -1 == alt) break;
-#ifdef WITH_DEBUG
-        else
-        DEBUG(DBG_OTHER, DBG_TRACE, "select: " << alt);
-#endif
+
         cur = alt;
 
         if (0 < limit && GetCurrentLength(list, cur) > limit) break;

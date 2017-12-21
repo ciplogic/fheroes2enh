@@ -336,7 +336,7 @@ void Dialog::QuickInfo(const Maps::Tiles &tile)
     const int qwikinfo = ICN::QWIKINFO;
 
     // image box
-    const Sprite &box = AGG::GetICN(qwikinfo, 0);
+    Sprite &box = AGG::GetICN(qwikinfo, 0);
     const Interface::GameArea &gamearea = Interface::Basic::Get().GetGameArea();
     const Rect ar(BORDERWIDTH, BORDERWIDTH, gamearea.GetArea().w, gamearea.GetArea().h);
 
@@ -365,6 +365,8 @@ void Dialog::QuickInfo(const Maps::Tiles &tile)
         pos = Rect(mx - box.w(), my - box.h(), box.w(), box.h());
 
     SpriteBack back(pos);
+
+	box.SetAlphaMod(210);
     box.Blit(pos.x, pos.y);
 
     string name_object;

@@ -1227,11 +1227,11 @@ bool Army::TroopsStrongerEnemyTroops(const Troops &troops1, const Troops &troops
 
     const int a1 = troops1.GetAttack();
     const int d1 = troops1.GetDefense();
-    float r1 = 0;
+	double r1 = 0;
 
     const int a2 = troops2.GetAttack();
     const int d2 = troops2.GetDefense();
-    float r2 = 0;
+    double r2 = 0;
 
     if (a1 > d2)
         r1 = 1 + 0.1 * static_cast<float>(min(a1 - d2, 20));

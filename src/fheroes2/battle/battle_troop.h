@@ -181,7 +181,7 @@ namespace Battle
 
         u32 GetDamageMax(const Unit &) const;
 
-        u32 CalculateDamageUnit(const Unit &, float) const;
+        u32 CalculateDamageUnit(const Unit &, double) const;
 
         bool ApplySpell(const Spell &, const HeroBase *hero, TargetInfo &);
 

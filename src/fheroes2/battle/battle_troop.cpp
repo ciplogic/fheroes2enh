@@ -591,7 +591,7 @@ u32 Battle::Unit::GetDamageMax(const Unit &enemy) const
     return CalculateDamageUnit(enemy, ArmyTroop::GetDamageMax());
 }
 
-u32 Battle::Unit::CalculateDamageUnit(const Unit &enemy, float dmg) const
+u32 Battle::Unit::CalculateDamageUnit(const Unit &enemy, double dmg) const
 {
     if (isArchers())
     {
@@ -1159,7 +1159,7 @@ s32 Battle::Unit::GetScoreQuality(const Unit &defender) const
     const u32 &damage = (attacker.GetDamageMin(defender) + attacker.GetDamageMax(defender)) / 2;
 	u32 dmg = attacker.isTwiceAttack() ? damage * 2 : damage;
     const u32 &kills = defender.HowManyWillKilled(dmg);
-    float res = kills * Monster::GetHitPoints(defender);
+    double res = kills * Monster::GetHitPoints(defender);
     bool noscale = false;
 
     // attacker

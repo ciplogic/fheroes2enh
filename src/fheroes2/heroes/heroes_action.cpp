@@ -2927,7 +2927,7 @@ void ActionToTreeKnowledge(Heroes &hero, u32 obj, s32 dst_index)
         // free
         if (conditions)
         {
-            const Sprite &sprite = AGG::GetICN(ICN::EXPMRL, 4);
+            Sprite &sprite = AGG::GetICN(ICN::EXPMRL, 4);
             msg = _("Upon your approach, the tree opens its eyes in delight. \"Ahh, an adventurer! Allow me to teach you a little of what I have learned over the ages.\"");
             Dialog::SpriteInfo(MP2::StringObject(obj), msg, sprite);
         } else

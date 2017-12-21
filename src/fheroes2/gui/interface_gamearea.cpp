@@ -204,34 +204,13 @@ void Interface::GameArea::Redraw(Surface &dst, int flag, const Rect &rt) const
                                                                                         hero->GetLevelSkill(
                                                                                                 Skill::Secondary::PATHFINDING))));
 
-                const Sprite &sprite = AGG::GetICN(0 > green ? ICN::ROUTERED : ICN::ROUTE, index);
+                Sprite &sprite = AGG::GetICN(0 > green ? ICN::ROUTERED : ICN::ROUTE, index);
+				sprite.SetAlphaMod(180);
+
                 BlitOnTile(dst, sprite, sprite.x() - 14, sprite.y(), mp);
             }
         }
     }
-
-#ifdef WITH_DEBUG
-    if(IS_DEVEL())
-    {
-    // redraw grid
-    if(flag & LEVEL_ALL)
-    {
-        const RGBA col = RGBA(0x90, 0xA4, 0xE0);
-
-        for(s32 oy = rt.y; oy < rt.y + rt.h; ++oy)
-        for(s32 ox = rt.x; ox < rt.x + rt.w; ++ox)
-        {
-            const Point dstpt(rectMapsPosition.x + TILEWIDTH * ox,
-                rectMapsPosition.y + TILEWIDTH * oy);
-        if(areaPosition & dstpt)
-                dst.DrawPoint(dstpt, col);
-
-        world.GetTiles(rectMaps.x + ox, rectMaps.y + oy).RedrawPassable(dst);
-        }
-    }
-    }
-    else
-#endif
     // redraw fog
     if (flag & LEVEL_FOG)
     {
@@ -430,7 +409,7 @@ Surface Interface::GameArea::GenerateUltimateArtifactAreaSurface(s32 index)
 
 bool Interface::GameArea::NeedScroll() const
 {
-    return scrollDirection;
+    return scrollDirection!=0;
 }
 
 int Interface::GameArea::GetScrollCursor() const

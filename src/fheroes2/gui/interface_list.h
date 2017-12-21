@@ -223,8 +223,8 @@ namespace Interface
 
         void SetCurrentVisible()
         {
-			auto curIndex = cur - content->begin();
-			auto topIndex = top - content->begin();
+			int curIndex = cur - content->begin();
+			int topIndex = top - content->begin();
             if (topIndex > curIndex || topIndex + maxItems <= curIndex)
             {
                 top = cur + maxItems > content->end() ? content->end() - maxItems : cur;

@@ -160,7 +160,7 @@ const Rect &Interface::Basic::GetScrollBottom() const
 
 bool Interface::Basic::NeedRedraw() const
 {
-    return redraw;
+    return redraw!=0;
 }
 
 void Interface::Basic::SetRedraw(int f)

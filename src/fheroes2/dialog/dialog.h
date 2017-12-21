@@ -124,7 +124,7 @@ namespace Dialog
 
     void PrimarySkillInfo(const string &, const string &, int);
 
-    int SpriteInfo(const string &, const string &, const Surface &, int buttons = OK);
+    int SpriteInfo(const string &, const string &, Surface &, int buttons = OK);
 
     int ArtifactInfo(const string &, const string &, const Artifact &, int buttons = OK);
 
