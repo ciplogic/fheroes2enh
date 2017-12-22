@@ -42,7 +42,6 @@ void DrawBattleStats(const Point &, const Troop &);
 
 int Dialog::ArmyInfo(const Troop &troop, int flags)
 {
-    if (Settings::Get().QVGA()) return PocketPC::DialogArmyInfo(troop, flags);
     Display &display = Display::Get();
 
     const int viewarmy = Settings::Get().ExtGameEvilInterface() ? ICN::VIEWARME : ICN::VIEWARMY;
@@ -191,7 +190,6 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
 {
     Point dst_pt;
     Text text;
-    bool pda = Settings::Get().QVGA();
 
     // attack
     text.Set(string(_("Attack")) + ":");
@@ -208,7 +206,7 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
     // defense
     text.Set(string(_("Defense")) + ":");
     dst_pt.x = dst.x - text.w();
-    dst_pt.y += (pda ? 14 : 18);
+    dst_pt.y += 18;
     text.Blit(dst_pt);
 
     text.Set(troop.GetDefenseString());
@@ -222,7 +220,7 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
         message.append(":");
         text.Set(message);
         dst_pt.x = dst.x - text.w();
-        dst_pt.y += (pda ? 14 : 18);
+        dst_pt.y += (false ? 14 : 18);
         text.Blit(dst_pt);
 
         text.Set(troop.GetShotString());
@@ -233,7 +231,7 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
     // damage
     text.Set(string(_("Damage")) + ":");
     dst_pt.x = dst.x - text.w();
-    dst_pt.y += (pda ? 14 : 18);
+    dst_pt.y += (false ? 14 : 18);
     text.Blit(dst_pt);
 
     if (troop().GetDamageMin() != troop().GetDamageMax())
@@ -246,7 +244,7 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
     // hp
     text.Set(string(_("Hit Points")) + ":");
     dst_pt.x = dst.x - text.w();
-    dst_pt.y += (pda ? 14 : 18);
+    dst_pt.y += 18;
     text.Blit(dst_pt);
 
     text.Set(GetString(troop().GetHitPoints()));
@@ -257,7 +255,7 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
     {
         text.Set(string(_("Hit Points Left")) + ":");
         dst_pt.x = dst.x - text.w();
-        dst_pt.y += (pda ? 14 : 18);
+        dst_pt.y += 18;
         text.Blit(dst_pt);
 
         text.Set(GetString(troop.GetHitPointsLeft()));
@@ -268,7 +266,7 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
     // speed
     text.Set(string(_("Speed")) + ":");
     dst_pt.x = dst.x - text.w();
-    dst_pt.y += (pda ? 14 : 18);
+    dst_pt.y += 18;
     text.Blit(dst_pt);
 
     text.Set(troop.GetSpeedString());
@@ -278,7 +276,7 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
     // morale
     text.Set(string(_("Morale")) + ":");
     dst_pt.x = dst.x - text.w();
-    dst_pt.y += (pda ? 14 : 18);
+    dst_pt.y += 18;
     text.Blit(dst_pt);
 
     text.Set(Morale::String(troop.GetMorale()));
@@ -288,7 +286,7 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
     // luck
     text.Set(string(_("Luck")) + ":");
     dst_pt.x = dst.x - text.w();
-    dst_pt.y += (pda ? 14 : 18);
+    dst_pt.y += (false ? 14 : 18);
     text.Blit(dst_pt);
 
     text.Set(Luck::String(troop.GetLuck()));

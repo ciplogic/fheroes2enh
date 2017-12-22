@@ -42,7 +42,7 @@ int Dialog::ResourceInfo(const string &header, const string &message, const Fund
     TextBox box2(message, Font::BIG, BOXAREA_WIDTH);
     Resource::BoxSprite rbs(rs, BOXAREA_WIDTH);
 
-    const int spacer = Settings::Get().QVGA() ? 5 : 10;
+    const int spacer = 10;
 
     FrameBox box(box1.h() + spacer + box2.h() + spacer + rbs.GetArea().h, true);
     Point pos = box.GetArea();

@@ -29,7 +29,7 @@
 TextInterface::TextInterface(int ft) : font(ft)
 {
     const Settings &conf = Settings::Get();
-    if (conf.QVGA() && !conf.Unicode())
+    if (false && !conf.Unicode())
         ft == Font::YELLOW_BIG || ft == Font::YELLOW_SMALL ? font = Font::YELLOW_SMALL : font = Font::SMALL;
 }
 
@@ -45,10 +45,7 @@ void TextAscii::SetText(const string &msg)
 void TextAscii::SetFont(int ft)
 {
     const Settings &conf = Settings::Get();
-    if (conf.QVGA() && !conf.Unicode())
-        ft == Font::YELLOW_BIG || ft == Font::YELLOW_SMALL ? font = Font::YELLOW_SMALL : font = Font::SMALL;
-    else
-        font = ft;
+    font = ft;
 }
 
 void TextAscii::Clear()
@@ -233,8 +230,6 @@ void TextUnicode::SetText(const std::string & msg)
 void TextUnicode::SetFont(int ft)
 {
     const Settings & conf = Settings::Get();
-    if(conf.QVGA() && !conf.Unicode()) ft == Font::YELLOW_BIG || ft == Font::YELLOW_SMALL ? font = Font::YELLOW_SMALL : font = Font::SMALL;
-    else
     font = ft;
 }
 
@@ -255,8 +250,7 @@ int TextUnicode::CharWidth(int c, int f)
 
 int TextUnicode::CharHeight(int f)
 {
-    return Font::SMALL == f || Font::YELLOW_SMALL ?
-        (AGG::GetFontHeight(true) + 2) : (AGG::GetFontHeight(false) + 8);
+    return AGG::GetFontHeight(true) + 2;
 }
 
 int TextUnicode::CharAscent(int f)
@@ -589,9 +583,6 @@ void TextBox::SetAlign(int f)
 void TextBox::Append(const string &msg, int ft, u32 width)
 {
     const Settings &conf = Settings::Get();
-    if (conf.QVGA() && !conf.Unicode())
-        ft == Font::YELLOW_BIG || ft == Font::YELLOW_SMALL ? ft = Font::YELLOW_SMALL : ft = Font::SMALL;
-
     u32 www = 0;
     Rect::w = width;
 
@@ -636,7 +627,6 @@ void TextBox::Append(const string &msg, int ft, u32 width)
 void TextBox::Append(const std::vector<u16> & msg, int ft, u32 width)
 {
     const Settings & conf = Settings::Get();
-    if(conf.QVGA() && !conf.Unicode()) ft == Font::YELLOW_BIG || ft == Font::YELLOW_SMALL ? ft = Font::YELLOW_SMALL : ft = Font::SMALL;
 
     u32 www = 0;
     Rect::w = width;

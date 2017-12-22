@@ -1069,12 +1069,6 @@ void AGG::LoadICN(int icn, u32 index, bool reflect)
 #endif
         }
 
-        // pocketpc: scale sprites
-        if (Settings::Get().QVGA() && ICN::NeedMinify4PocketPC(icn, index))
-        {
-            Sprite &sp = reflect ? v.reflect[index] : v.sprites[index];
-            sp = Sprite::ScaleQVGASprite(sp);
-        }
     }
 }
 
@@ -1574,11 +1568,8 @@ void AGG::LoadTTFChar(u32 ch)
     fnt_cache[ch].sfs[1] = fonts[0].RenderUnicodeChar(ch, yellow, ! conf.FontSmallRenderBlended());
 
     // medium
-    if(!(conf.QVGA() && !conf.Unicode()))
-    {
     fnt_cache[ch].sfs[2] = fonts[1].RenderUnicodeChar(ch, white, ! conf.FontNormalRenderBlended());
     fnt_cache[ch].sfs[3] = fonts[1].RenderUnicodeChar(ch, yellow, ! conf.FontNormalRenderBlended());
-    }
 
     DEBUG(DBG_ENGINE, DBG_TRACE, "0x" << std::hex << ch);
 }

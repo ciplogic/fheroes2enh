@@ -50,11 +50,8 @@ void ScenarioListBox::RedrawItem(const Maps::FileInfo &info, s32 dstx, s32 dsty,
     Text text;
     int index = 19 + Color::Count(info.kingdom_colors);
 
-    if (!Settings::Get().QVGA())
-    {
-        dstx = dstx - 10;
-        dsty = dsty + 2;
-    }
+    dstx = dstx - 10;
+    dsty = dsty + 2;
 
     const Sprite &spriteCount = AGG::GetICN(ICN::REQUESTS, index);
     spriteCount.Blit(dstx, dsty);
@@ -106,67 +103,56 @@ void ScenarioListBox::ActionListDoubleClick(Maps::FileInfo &)
 
 void ScenarioListBox::RedrawBackground(const Point &dst)
 {
-    if (Settings::Get().QVGA())
+    AGG::GetICN(ICN::REQSBKG, 0).Blit(dst);
+    if (!content || cur == content->end()) return;
+    Text text;
+    const Maps::FileInfo &info = *cur;
+    int index = 19 + Color::Count(info.kingdom_colors);
+
+    const Sprite &spriteCount = AGG::GetICN(ICN::REQUESTS, index);
+    spriteCount.Blit(dst.x + 65, dst.y + 265);
+
+    switch ((mapsize_t)info.size_w)
     {
-        AGG::GetICN(ICN::STONEBAK, 0).Blit(Rect(17, 37, 266, 156), dst.x + 15, dst.y + 35);
-        AGG::GetICN(ICN::REQSBKG, 0).Blit(Rect(325, 70, 16, 100), dst.x + 283, dst.y + 55);
-        AGG::GetICN(ICN::REQSBKG, 0).Blit(Rect(325, 167, 16, 50), dst.x + 283, dst.y + 125);
-    } else
-    {
-        AGG::GetICN(ICN::REQSBKG, 0).Blit(dst);
-
-        if (content && cur != content->end())
-        {
-            Text text;
-            const Maps::FileInfo &info = *cur;
-            int index = 19 + Color::Count(info.kingdom_colors);
-
-            const Sprite &spriteCount = AGG::GetICN(ICN::REQUESTS, index);
-            spriteCount.Blit(dst.x + 65, dst.y + 265);
-
-            switch ((mapsize_t)info.size_w)
-            {
-                case mapsize_t::SMALL:
-                    index = 26;
-                    break;
-                case mapsize_t::MEDIUM:
-                    index = 27;
-                    break;
-                case mapsize_t::LARGE:
-                    index = 28;
-                    break;
-                case mapsize_t::XLARGE:
-                    index = 29;
-                    break;
-                default:
-                    index = 30;
-                    break;
-            }
-
-            const Sprite &spriteSize = AGG::GetICN(ICN::REQUESTS, index);
-            spriteSize.Blit(dst.x + 65 + spriteCount.w() + 2, dst.y + 265);
-
-            text.Set(info.name, Font::BIG);
-            text.Blit(dst.x + 190 - text.w() / 2, dst.y + 265);
-
-            index = 30 + info.conditions_wins;
-            const Sprite &spriteWins = AGG::GetICN(ICN::REQUESTS, index);
-            spriteWins.Blit(dst.x + 275, dst.y + 265);
-
-            index = 36 + info.conditions_loss;
-            const Sprite &spriteLoss = AGG::GetICN(ICN::REQUESTS, index);
-            spriteLoss.Blit(dst.x + 275 + spriteWins.w() + 2, dst.y + 265);
-
-            text.Set(_("Maps Difficulty:"), Font::BIG);
-            text.Blit(dst.x + 70, dst.y + 290);
-
-            text.Set(Difficulty::String(info.difficulty));
-            text.Blit(dst.x + 275 - text.w() / 2, dst.y + 290);
-
-            TextBox box(info.description, Font::BIG, 290);
-            box.Blit(dst.x + 45, dst.y + 320);
-        }
+        case mapsize_t::SMALL:
+            index = 26;
+            break;
+        case mapsize_t::MEDIUM:
+            index = 27;
+            break;
+        case mapsize_t::LARGE:
+            index = 28;
+            break;
+        case mapsize_t::XLARGE:
+            index = 29;
+            break;
+        default:
+            index = 30;
+            break;
     }
+
+    const Sprite &spriteSize = AGG::GetICN(ICN::REQUESTS, index);
+    spriteSize.Blit(dst.x + 65 + spriteCount.w() + 2, dst.y + 265);
+
+    text.Set(info.name, Font::BIG);
+    text.Blit(dst.x + 190 - text.w() / 2, dst.y + 265);
+
+    index = 30 + info.conditions_wins;
+    const Sprite &spriteWins = AGG::GetICN(ICN::REQUESTS, index);
+    spriteWins.Blit(dst.x + 275, dst.y + 265);
+
+    index = 36 + info.conditions_loss;
+    const Sprite &spriteLoss = AGG::GetICN(ICN::REQUESTS, index);
+    spriteLoss.Blit(dst.x + 275 + spriteWins.w() + 2, dst.y + 265);
+
+    text.Set(_("Maps Difficulty:"), Font::BIG);
+    text.Blit(dst.x + 70, dst.y + 290);
+
+    text.Set(Difficulty::String(info.difficulty));
+    text.Blit(dst.x + 275 - text.w() / 2, dst.y + 290);
+
+    TextBox box(info.description, Font::BIG, 290);
+    box.Blit(dst.x + 45, dst.y + 320);
 }
 
 const Maps::FileInfo *Dialog::SelectScenario(const MapsFileInfoList &all)

@@ -121,43 +121,27 @@ int Interface::ButtonsArea::QueueEventProcessing()
     {
     } else if (le.MouseClickLeft(buttonNextHero))
     {
-        // for QVGA: auto hide buttons after click
-        if (conf.QVGA()) conf.SetShowButtons(false);
         interface.EventNextHero();
     } else if (le.MouseClickLeft(buttonMovement))
     {
-        // for QVGA: auto hide buttons after click
-        if (conf.QVGA()) conf.SetShowButtons(false);
         interface.EventContinueMovement();
     } else if (le.MouseClickLeft(buttonKingdom))
     {
-        // for QVGA: auto hide buttons after click
-        if (conf.QVGA()) conf.SetShowButtons(false);
         interface.EventKingdomInfo();
     } else if (le.MouseClickLeft(buttonSpell))
     {
-        // for QVGA: auto hide buttons after click
-        if (conf.QVGA()) conf.SetShowButtons(false);
         interface.EventCastSpell();
     } else if (le.MouseClickLeft(buttonEndTur))
     {
-        // for QVGA: auto hide buttons after click
-        if (conf.QVGA()) conf.SetShowButtons(false);
         res = interface.EventEndTurn();
     } else if (le.MouseClickLeft(buttonAdventure))
     {
-        // for QVGA: auto hide buttons after click
-        if (conf.QVGA()) conf.SetShowButtons(false);
         res = interface.EventAdventureDialog();
     } else if (le.MouseClickLeft(buttonFile))
     {
-        // for QVGA: auto hide buttons after click
-        if (conf.QVGA()) conf.SetShowButtons(false);
         res = interface.EventFileDialog();
     } else if (le.MouseClickLeft(buttonSystem))
     {
-        // for QVGA: auto hide buttons after click
-        if (conf.QVGA()) conf.SetShowButtons(false);
         interface.EventSystemDialog();
     }
 

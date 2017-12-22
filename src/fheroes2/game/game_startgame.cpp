@@ -583,13 +583,6 @@ int Interface::Basic::StartGame()
                             statusWindow.Reset();
                             statusWindow.SetState(STATUS_AITURN);
 
-                            // for pocketpc: show status window
-                            if (conf.QVGA() && !conf.ShowStatus())
-                            {
-                                conf.SetShowStatus(true);
-                                statusWindow.SetRedraw();
-                            }
-
                             cursor.Hide();
                             cursor.SetThemes(Cursor::WAIT);
                             Redraw();
@@ -684,9 +677,7 @@ int Interface::Basic::HumanTurn(bool isload)
     if (!conf.ExtWorldOnlyFirstMonsterAttack()) myKingdom.HeroesActionNewPosition();
 
     // auto hide status
-    bool autohide_status = conf.QVGA() && conf.ShowStatus();
-    if (autohide_status) AnimateResetDelay(Game::AUTOHIDE_STATUS_DELAY);
-
+    bool autohide_status = false;
 
     // startgame loop
     while (Game::CANCEL == res && le.HandleEvents())

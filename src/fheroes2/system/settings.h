@@ -254,8 +254,6 @@ public:
 
     bool FullScreen() const;
 
-    bool QVGA() const;
-
     bool Sound() const;
 
     bool Music() const;

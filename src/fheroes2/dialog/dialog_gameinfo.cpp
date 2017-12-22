@@ -33,13 +33,6 @@
 
 void Dialog::GameInfo()
 {
-    // FIXME: QVGA version
-    if (Settings::Get().QVGA())
-    {
-        Message("", _("For the QVGA version is not available."), Font::SMALL, OK);
-        return;
-    }
-
     Display &display = Display::Get();
     Cursor &cursor = Cursor::Get();
     Settings &conf = Settings::Get();

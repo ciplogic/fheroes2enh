@@ -104,12 +104,6 @@ u32 GetPaletteIndexFromColor(int color)
 /* constructor */
 Interface::Radar::Radar(Basic &basic) : BorderWindow(Rect(0, 0, RADARWIDTH, RADARWIDTH)), interface(basic), hide(true)
 {
-    if (Settings::Get().QVGA())
-    {
-        // for QVGA set small radar, 1 pixel = 1 tile
-        if (RADARWIDTH > world.w() && RADARWIDTH > world.h())
-            SetPosition(0, 0, world.w(), world.h());
-    }
 }
 
 void Interface::Radar::SavePosition()
@@ -400,7 +394,6 @@ void Interface::Radar::QueueEventProcessing()
                         Font::BIG);
         return;
     }
-    if (conf.QVGA()) return;
     const Rect &area1 = GetArea();
     Size newSize(area1.w, area1.h);
 

@@ -78,7 +78,7 @@ void SettingsListBox::RedrawBackground(const Point &top)
 {
     const Settings &conf = Settings::Get();
 
-    const int window_h = conf.QVGA() ? 224 : 400;
+    const int window_h = false ? 224 : 400;
     const int ah = window_h - 54;
 
     AGG::GetICN(ICN::STONEBAK, 0).Blit(Rect(15, 25, 280, ah), top.x + 15, top.y + 25);
@@ -159,7 +159,7 @@ void Dialog::ExtSettings(bool readonly)
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
-    const int window_h = conf.QVGA() ? 224 : 400;
+    const int window_h = 400;
     FrameBorder frameborder(Size(320, window_h));
     const Rect &area = frameborder.GetArea();
 
@@ -179,11 +179,8 @@ void Dialog::ExtSettings(bool readonly)
     states.push_back(Settings::GAME_BATTLE_SHOW_MOVE_SHADOW);
     states.push_back(Settings::GAME_BATTLE_SHOW_DAMAGE);
 
-    if (!conf.QVGA())
-    {
-        states.push_back(Settings::GAME_CASTLE_FLASH_BUILDING);
-        states.push_back(Settings::GAME_HIDE_INTERFACE);
-    }
+    states.push_back(Settings::GAME_CASTLE_FLASH_BUILDING);
+    states.push_back(Settings::GAME_HIDE_INTERFACE);
 
     if (!conf.PocketPC())
         states.push_back(Settings::GAME_DYNAMIC_INTERFACE);
@@ -236,8 +233,7 @@ void Dialog::ExtSettings(bool readonly)
     states.push_back(Settings::HEROES_ALLOW_BANNED_SECSKILLS);
     states.push_back(Settings::HEROES_ARENA_ANY_SKILLS);
 
-    if (!conf.QVGA())
-        states.push_back(Settings::CASTLE_ALLOW_BUY_FROM_WELL);
+    states.push_back(Settings::CASTLE_ALLOW_BUY_FROM_WELL);
 
     states.push_back(Settings::CASTLE_ALLOW_GUARDIANS);
     states.push_back(Settings::CASTLE_MAGEGUILD_POINTS_TURN);

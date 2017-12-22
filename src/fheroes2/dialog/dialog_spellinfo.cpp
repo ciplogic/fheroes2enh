@@ -71,7 +71,7 @@ void Dialog::SpellInfo(const string &header, const string &message, const Spell 
     Text text(spell.GetName(), Font::SMALL);
 
     const Sprite &sprite = AGG::GetICN(ICN::SPELLS, spell.IndexSprite());
-    const int spacer = Settings::Get().QVGA() ? 5 : 10;
+    const int spacer = 10;
 
     FrameBox box(box1.h() + spacer + box2.h() + spacer + sprite.h() + 2 + text.h(), ok_button);
     Rect pos = box.GetArea();

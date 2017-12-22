@@ -64,7 +64,6 @@ Spell SpellBook::Open(const HeroBase &hero, int filt, bool canselect) const
 
     Display &display = Display::Get();
     Cursor &cursor = Cursor::Get();
-    bool small = Settings::Get().QVGA();
 
     const int oldcursor = cursor.Themes();
 
@@ -97,18 +96,18 @@ Spell SpellBook::Open(const HeroBase &hero, int filt, bool canselect) const
                    r_list.w() + l_list.w(), r_list.h() + 70);
     SpriteBack back(pos);
 
-    const Rect prev_list(pos.x + (small ? 15 : 30), pos.y + (small ? 4 : 8), (small ? 15 : 30), (small ? 12 : 25));
-    const Rect next_list(pos.x + (small ? 205 : 410), pos.y + (small ? 4 : 8), (small ? 15 : 30), (small ? 12 : 25));
+    const Rect prev_list(pos.x + 30, pos.y + 8, 30, 25);
+    const Rect next_list(pos.x + 410, pos.y + 8, 30, 25);
 
-    const Rect info_rt(pos.x + (small ? 64 : 125), pos.y + (small ? 137 : 275), bookmark_info.w(), bookmark_info.h());
-    const Rect advn_rt(pos.x + (small ? 135 : 270), pos.y + (small ? 135 : 270), bookmark_advn.w(), bookmark_advn.h());
-    const Rect cmbt_rt(pos.x + (small ? 152 : 304), pos.y + (small ? 138 : 278), bookmark_cmbt.w(), bookmark_cmbt.h());
-    const Rect clos_rt(pos.x + (small ? 210 : 420), pos.y + (small ? 142 : 284), bookmark_clos.w(), bookmark_clos.h());
+    const Rect info_rt(pos.x + 125, pos.y + 275, bookmark_info.w(), bookmark_info.h());
+    const Rect advn_rt(pos.x + 270, pos.y + 270, bookmark_advn.w(), bookmark_advn.h());
+    const Rect cmbt_rt(pos.x + 304, pos.y + 278, bookmark_cmbt.w(), bookmark_cmbt.h());
+    const Rect clos_rt(pos.x + 420, pos.y + 284, bookmark_clos.w(), bookmark_clos.h());
 
     Spell curspell(Spell::NONE);
 
     Rects coords;
-    coords.reserve(small ? SPELL_PER_PAGE_SMALL * 2 : SPELL_PER_PAGE * 2);
+    coords.reserve(SPELL_PER_PAGE * 2);
 
     SpellBookRedrawLists(spells2, coords, current_index, pos, hero.GetSpellPoints(), filt, hero);
     bool redraw = false;
@@ -123,12 +122,12 @@ Spell SpellBook::Open(const HeroBase &hero, int filt, bool canselect) const
     {
         if (le.MouseClickLeft(prev_list) && current_index)
         {
-            current_index -= small ? SPELL_PER_PAGE_SMALL * 2 : SPELL_PER_PAGE * 2;
+            current_index -= SPELL_PER_PAGE * 2;
             redraw = true;
         } else if (le.MouseClickLeft(next_list) &&
-                   spells2.size() > (current_index + (small ? SPELL_PER_PAGE_SMALL * 2 : SPELL_PER_PAGE * 2)))
+                   spells2.size() > (current_index + SPELL_PER_PAGE * 2))
         {
-            current_index += small ? SPELL_PER_PAGE_SMALL * 2 : SPELL_PER_PAGE * 2;
+            current_index += SPELL_PER_PAGE * 2;
             redraw = true;
         } else if ((le.MouseClickLeft(info_rt)) ||
                    (le.MousePressRight(info_rt)))
@@ -361,9 +360,7 @@ SpellStorage SpellBook::SetFilter(int filter, const HeroBase *hero) const
 
 void SpellBookRedrawMP(const Point &dst, u32 mp)
 {
-    bool small = Settings::Get().QVGA();
-
-    Point tp(dst.x + (small ? 5 : 11), dst.y + (small ? 1 : 9));
+    Point tp(dst.x + 11, dst.y + 9);
     if (0 == mp)
     {
         Text text("0", Font::SMALL);
@@ -374,7 +371,7 @@ void SpellBookRedrawMP(const Point &dst, u32 mp)
             {
                 Text text(GetString((mp % (i * 10)) / i), Font::SMALL);
                 text.Blit(tp.x - text.w() / 2, tp.y);
-                tp.y += (small ? -2 : 0) + text.h();
+                tp.y += 0 + text.h();
             }
 }
 
@@ -382,8 +379,6 @@ void
 SpellBookRedrawLists(const SpellStorage &spells, Rects &coords, const size_t cur, const Point &pt, u32 sp, int only,
                      const HeroBase &hero)
 {
-    bool small = Settings::Get().QVGA();
-
     const Sprite &r_list = AGG::GetICN(ICN::BOOK, 0);
     const Sprite &l_list = AGG::GetICN(ICN::BOOK, 0, true);
     const Sprite &bookmark_info = AGG::GetICN(ICN::BOOK, 6);
@@ -391,10 +386,10 @@ SpellBookRedrawLists(const SpellStorage &spells, Rects &coords, const size_t cur
     const Sprite &bookmark_cmbt = AGG::GetICN(ICN::BOOK, 4);
     const Sprite &bookmark_clos = AGG::GetICN(ICN::BOOK, 5);
 
-    const Rect info_rt(pt.x + (small ? 64 : 125), pt.y + (small ? 137 : 275), bookmark_info.w(), bookmark_info.h());
-    const Rect advn_rt(pt.x + (small ? 135 : 270), pt.y + (small ? 135 : 270), bookmark_advn.w(), bookmark_advn.h());
-    const Rect cmbt_rt(pt.x + (small ? 152 : 304), pt.y + (small ? 138 : 278), bookmark_cmbt.w(), bookmark_cmbt.h());
-    const Rect clos_rt(pt.x + (small ? 210 : 420), pt.y + (small ? 142 : 284), bookmark_clos.w(), bookmark_clos.h());
+    const Rect info_rt(pt.x + 125, pt.y + 275, bookmark_info.w(), bookmark_info.h());
+    const Rect advn_rt(pt.x + 270, pt.y + 270, bookmark_advn.w(), bookmark_advn.h());
+    const Rect cmbt_rt(pt.x + 304, pt.y + 278, bookmark_cmbt.w(), bookmark_cmbt.h());
+    const Rect clos_rt(pt.x + 420, pt.y + 284, bookmark_clos.w(), bookmark_clos.h());
 
     l_list.Blit(pt.x, pt.y);
     r_list.Blit(pt.x + l_list.w(), pt.y);
@@ -409,35 +404,24 @@ SpellBookRedrawLists(const SpellStorage &spells, Rects &coords, const size_t cur
 
     SpellBookRedrawMP(info_rt, sp);
     SpellBookRedrawSpells(spells, coords, cur, pt.x, pt.y, hero);
-    SpellBookRedrawSpells(spells, coords, cur + (small ? SPELL_PER_PAGE_SMALL : SPELL_PER_PAGE),
-                          pt.x + (small ? 110 : 220), pt.y, hero);
+    SpellBookRedrawSpells(spells, coords, cur + SPELL_PER_PAGE,
+                          pt.x + 220, pt.y, hero);
 }
 
 void
 SpellBookRedrawSpells(const SpellStorage &spells, Rects &coords, const size_t cur, s32 px, s32 py, const HeroBase &hero)
 {
-    bool small = Settings::Get().QVGA();
 
     s32 ox = 0;
     s32 oy = 0;
 
-    for (u32 ii = 0; ii < (small ? SPELL_PER_PAGE_SMALL : SPELL_PER_PAGE); ++ii)
+    for (u32 ii = 0; ii < SPELL_PER_PAGE; ++ii)
         if (spells.size() > cur + ii)
         {
-            if (small)
+            if (0 == (ii % (SPELL_PER_PAGE / 2)))
             {
-                if (0 == (ii % SPELL_PER_PAGE_SMALL))
-                {
-                    oy = 25;
-                    ox = 60;
-                }
-            } else
-            {
-                if (0 == (ii % (SPELL_PER_PAGE / 2)))
-                {
-                    oy = 50;
-                    ox += 80;
-                }
+                oy = 50;
+                ox += 80;
             }
 
             const Spell &spell = spells[ii + cur];
@@ -447,29 +431,28 @@ SpellBookRedrawSpells(const SpellStorage &spells, Rects &coords, const size_t cu
             icon.Blit(rect.x, rect.y);
 
             // multiple icons for mass spells
-            if (!small)
-                switch (spell())
-                {
-                    case Spell::MASSBLESS:
-                    case Spell::MASSCURE:
-                    case Spell::MASSHASTE:
-                    case Spell::MASSSLOW:
-                    case Spell::MASSCURSE:
-                    case Spell::MASSDISPEL:
-                    case Spell::MASSSHIELD:
-                        icon.Blit(rect.x - 10, rect.y + 8);
-                        icon.Blit(rect.x + 10, rect.y + 8);
-                        break;
+            switch (spell())
+            {
+                case Spell::MASSBLESS:
+                case Spell::MASSCURE:
+                case Spell::MASSHASTE:
+                case Spell::MASSSLOW:
+                case Spell::MASSCURSE:
+                case Spell::MASSDISPEL:
+                case Spell::MASSSHIELD:
+                    icon.Blit(rect.x - 10, rect.y + 8);
+                    icon.Blit(rect.x + 10, rect.y + 8);
+                    break;
 
-                    default:
-                        break;
-                }
+                default:
+                    break;
+            }
 
             TextBox box(string(spell.GetName()) + " [" + GetString(spell.SpellPoint(&hero)) + "]", Font::SMALL,
-                        (small ? 94 : 80));
-            box.Blit(px + ox - (small ? 47 : 40), py + oy + (small ? 22 : 25));
+                    80);
+            box.Blit(px + ox - 40, py + oy + 25);
 
-            oy += small ? 65 : 80;
+            oy += 80;
 
             coords.push_back(rect);
         }

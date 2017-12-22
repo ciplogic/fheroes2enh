@@ -44,7 +44,6 @@ int Game::MainMenu()
     Settings &conf = Settings::Get();
 
     conf.SetGameType(TYPE_MENU);
-    if (conf.QVGA()) return PocketPC::MainMenu();
 
     // cursor
     Cursor &cursor = Cursor::Get();

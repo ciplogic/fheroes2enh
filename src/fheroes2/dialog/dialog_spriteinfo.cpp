@@ -59,7 +59,7 @@ int Dialog::SpriteInfo(const string &header, const string &message, Surface &spr
 
     TextBox box1(header, Font::YELLOW_BIG, BOXAREA_WIDTH);
     TextBox box2(message, Font::BIG, BOXAREA_WIDTH);
-    const int spacer = Settings::Get().QVGA() ? 5 : 10;
+    const int spacer = 10;
 
     FrameBox box(box1.h() + spacer + box2.h() + spacer + sprite.h(), buttons);
     Rect pos = box.GetArea();

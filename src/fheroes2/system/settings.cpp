@@ -525,12 +525,6 @@ bool Settings::Read(const string &filename)
 
 void Settings::PostLoad()
 {
-    if (QVGA())
-    {
-        opt_global.SetModes(GLOBAL_POCKETPC);
-        ExtSetModes(GAME_HIDE_INTERFACE);
-    }
-
     if (opt_global.Modes(GLOBAL_POCKETPC))
         opt_global.SetModes(GLOBAL_FULLSCREEN);
     else
@@ -872,13 +866,6 @@ void Settings::SetScrollSpeed(int speed)
             scroll_speed = SCROLL_NORMAL;
             break;
     }
-}
-
-/* return full screen */
-bool Settings::QVGA() const
-{
-	auto result = video_mode.w && video_mode.h && (video_mode.w < 640 || video_mode.h < 480);
-	return result;
 }
 
 bool Settings::UseAltResource() const

@@ -40,15 +40,13 @@ Interface::Basic::Basic() : gameArea(*this), radar(*this),
 {
     Settings &conf = Settings::Get().Get();
     const Display &display = Display::Get();
-    const int scroll_width = conf.QVGA() ? 12 : BORDERWIDTH;
+    const int scroll_width = BORDERWIDTH;
 
     SetHideInterface(conf.ExtGameHideInterface());
 
     scrollLeft = Rect(0, 0, scroll_width, display.h());
     scrollRight = Rect(display.w() - scroll_width, 0, scroll_width, display.h());
-    scrollTop = conf.QVGA() ? Rect(0, 0, controlPanel.GetArea().x, scroll_width) : Rect(0, 0,
-                                                                                        display.w() - radar.GetArea().w,
-                                                                                        scroll_width);
+    scrollTop = Rect(0, 0,display.w() - radar.GetArea().w, scroll_width);
     scrollBottom = Rect(0, display.h() - scroll_width, display.w(), scroll_width);
 
     system_info.Set(Font::YELLOW_SMALL);
@@ -89,7 +87,7 @@ void Interface::Basic::SetHideInterface(bool f)
     Settings &conf = Settings::Get().Get();
     const Display &display = Display::Get();
     const u32 px = display.w() - BORDERWIDTH - RADARWIDTH;
-    const u32 scroll_width = conf.QVGA() ? 12 : BORDERWIDTH;
+    const u32 scroll_width =  BORDERWIDTH;
 
     conf.SetHideInterface(f);
 
@@ -103,16 +101,16 @@ void Interface::Basic::SetHideInterface(bool f)
         Point pos_stat = conf.PosStatus();
 
         if (0 == pos_radr.x && 0 == pos_radr.y)
-            pos_radr = Point(BORDERWIDTH, conf.QVGA() ? TILEWIDTH : BORDERWIDTH);
+            pos_radr = Point(BORDERWIDTH, BORDERWIDTH);
         if (0 == pos_icon.x && 0 == pos_icon.y)
-            pos_icon = Point(conf.QVGA() ? BORDERWIDTH : px - BORDERWIDTH,
-                             conf.QVGA() ? TILEWIDTH : radar.GetArea().y + radar.GetArea().h);
+            pos_icon = Point(px - BORDERWIDTH,
+                             radar.GetArea().y + radar.GetArea().h);
         if (0 == pos_bttn.x && 0 == pos_bttn.y)
-            pos_bttn = Point(conf.QVGA() ? BORDERWIDTH : px - BORDERWIDTH,
-                             conf.QVGA() ? TILEWIDTH : iconsPanel.GetArea().y + iconsPanel.GetArea().h);
+            pos_bttn = Point(px - BORDERWIDTH,
+                             iconsPanel.GetArea().y + iconsPanel.GetArea().h);
         if (0 == pos_stat.x && 0 == pos_stat.y)
-            pos_stat = Point(conf.QVGA() ? BORDERWIDTH : px - BORDERWIDTH,
-                             conf.QVGA() ? TILEWIDTH : buttonsArea.GetArea().y + buttonsArea.GetArea().h);
+            pos_stat = Point(px - BORDERWIDTH,
+                             buttonsArea.GetArea().y + buttonsArea.GetArea().h);
 
         controlPanel.SetPos(display.w() - controlPanel.GetArea().w - scroll_width, 0);
         radar.SetPos(pos_radr.x, pos_radr.y);

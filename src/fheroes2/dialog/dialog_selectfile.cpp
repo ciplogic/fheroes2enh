@@ -87,7 +87,7 @@ void FileInfoListBox::RedrawItem(const Maps::FileInfo &info, s32 dstx, s32 dsty,
         if (StringLower(savname.substr(dotpos)) == ".sav") savname.erase(dotpos);
 
         text.Set(savname, (current ? Font::YELLOW_BIG : Font::BIG));
-        text.Blit(dstx + 5, dsty, (Settings::Get().QVGA() ? 190 : 155));
+        text.Blit(dstx + 5, dsty, 155);
 
         text.Set(short_date, (current ? Font::YELLOW_BIG : Font::BIG));
         text.Blit(dstx + 265 - text.w(), dsty);
@@ -98,12 +98,7 @@ void FileInfoListBox::RedrawBackground(const Point &dst)
 {
     const Sprite &panel = AGG::GetICN(ICN::REQBKG, 0);
 
-    if (Settings::Get().QVGA())
-    {
-        panel.Blit(Rect(0, 0, panel.w(), 120), dst.x, dst.y);
-        panel.Blit(Rect(0, panel.h() - 120, panel.w(), 120), dst.x, dst.y + 224 - 120);
-    } else
-        panel.Blit(dst);
+    panel.Blit(dst);
 }
 
 void FileInfoListBox::ActionCurrentUp()
@@ -206,13 +201,12 @@ string SelectFileListSimple(const string &header, const string &lastfile, bool e
 
     const Sprite &sprite = AGG::GetICN(ICN::REQBKG, 0);
     Size panel(sprite.w(), sprite.h());
-    bool pocket = Settings::Get().QVGA();
-    if (pocket) panel = Size(sprite.w(), 224);
+    
 
     SpriteBack back(Rect((display.w() - panel.w) / 2, (display.h() - panel.h) / 2, panel.w, panel.h));
 
     const Rect &rt = back.GetArea();
-    const Rect enter_field(rt.x + 42, rt.y + (pocket ? 148 : 286), 260, 16);
+    const Rect enter_field(rt.x + 42, rt.y + 286, 260, 16);
 
     bool edit_mode = false;
 
@@ -221,10 +215,10 @@ string SelectFileListSimple(const string &header, const string &lastfile, bool e
 
     listbox.RedrawBackground(rt);
     listbox.SetScrollButtonUp(ICN::REQUESTS, 5, 6, Point(rt.x + 327, rt.y + 55));
-    listbox.SetScrollButtonDn(ICN::REQUESTS, 7, 8, Point(rt.x + 327, rt.y + (pocket ? 117 : 257)));
-    listbox.SetScrollSplitter(AGG::GetICN(ICN::ESCROLL, 3), Rect(rt.x + 328, rt.y + 73, 12, (pocket ? 40 : 180)));
-    listbox.SetAreaMaxItems(pocket ? 5 : 11);
-    listbox.SetAreaItems(Rect(rt.x + 40, rt.y + 55, 265, (pocket ? 78 : 215)));
+    listbox.SetScrollButtonDn(ICN::REQUESTS, 7, 8, Point(rt.x + 327, rt.y + 257));
+    listbox.SetScrollSplitter(AGG::GetICN(ICN::ESCROLL, 3), Rect(rt.x + 328, rt.y + 73, 12, 180));
+    listbox.SetAreaMaxItems(11);
+    listbox.SetAreaItems(Rect(rt.x + 40, rt.y + 55, 265, 215));
     listbox.SetListContent(lists);
 
     string filename;
@@ -313,7 +307,7 @@ string SelectFileListSimple(const string &header, const string &lastfile, bool e
             buttonOk.SetDisable(filename.empty());
             cursor.Hide();
         }
-        if ((le.KeyPress(KEY_DELETE) || (pocket && le.MousePressRight())) && listbox.isSelected())
+        if ((le.KeyPress(KEY_DELETE) || (false && le.MousePressRight())) && listbox.isSelected())
         {
             string msg(_("Are you sure you want to delete file:"));
             msg.append("\n \n");

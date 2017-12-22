@@ -100,12 +100,6 @@ Point Battle::Tower::GetPortPosition() const
             break;
     }
 
-    if (Settings::Get().QVGA())
-    {
-        res.x /= 2;
-        res.y /= 2;
-    }
-
     return res;
 }
 

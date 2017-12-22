@@ -535,7 +535,7 @@ bool BuildingInfo::DialogBuyBuilding(bool buttons) const
     Resource::BoxSprite rbs(PaymentConditions::BuyBuilding(castle.GetRace(), building), BOXAREA_WIDTH);
 
     const Sprite &window_icons = AGG::GetICN(ICN::BLDGXTRA, 0);
-    const int space = Settings::Get().QVGA() ? 5 : 10;
+    const int space = 10;
     Dialog::FrameBox box(space + window_icons.h() + space + box1.h() + space +
                          (requires_true ? requires_text.h() + box2.h() + space : 0) + rbs.GetArea().h, buttons);
     const Rect &box_rt = box.GetArea();

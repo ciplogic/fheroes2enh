@@ -119,19 +119,10 @@ Battle::Cell::Cell(s32 ii) : index(ii), object(0), direction(UNKNOWN), quality(0
 
 void Battle::Cell::SetArea(const Rect &area)
 {
-    if (Settings::Get().QVGA())
-    {
-        pos.x = area.x + 45 - (((index / ARENAW) % 2) ? CELLW2 / 2 : 0) + (CELLW2 - 1) * (index % ARENAW);
-        pos.y = (area.y + area.h - 188) + ((CELLH2 / 4) * 3) * (index / ARENAW);
-        pos.w = CELLW2;
-        pos.h = CELLH2;
-    } else
-    {
-        pos.x = area.x + 88 - (((index / ARENAW) % 2) ? CELLW / 2 : 0) + (CELLW - 1) * (index % ARENAW);
-        pos.y = area.y + 85 + ((CELLH / 4) * 3 - 1) * (index / ARENAW);
-        pos.w = CELLW;
-        pos.h = CELLH;
-    }
+    pos.x = area.x + 88 - (((index / ARENAW) % 2) ? CELLW / 2 : 0) + (CELLW - 1) * (index % ARENAW);
+    pos.y = area.y + 85 + ((CELLH / 4) * 3 - 1) * (index / ARENAW);
+    pos.w = CELLW;
+    pos.h = CELLH;
 
     // center
     coord[0] = Point(INFL * pos.x + INFL * pos.w / 2, INFL * pos.y + INFL * pos.h / 2);

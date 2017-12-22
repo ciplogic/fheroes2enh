@@ -62,18 +62,18 @@ RowSpells::RowSpells(const Point &pos, const Castle &castle, int lvl)
 
     for (u32 ii = 0; ii < count; ++ii)
         coords.push_back(
-                Rect(pos.x + coords.size() * (Settings::Get().QVGA() ? 72 : 110) - roll.w() / 2, pos.y, roll.w(),
+                Rect(pos.x + coords.size() * 110 - roll.w() / 2, pos.y, roll.w(),
                      roll.h()));
 
     if (castle.HaveLibraryCapability())
     {
         if (!hide && castle.isLibraryBuild())
             coords.push_back(
-                    Rect(pos.x + coords.size() * (Settings::Get().QVGA() ? 72 : 110) - roll_show.w() / 2, pos.y,
+                    Rect(pos.x + coords.size() * 110 - roll_show.w() / 2, pos.y,
                          roll_show.w(), roll_show.h()));
         else
             coords.push_back(
-                    Rect(pos.x + coords.size() * (Settings::Get().QVGA() ? 72 : 110) - roll_hide.w() / 2, pos.y,
+                    Rect(pos.x + coords.size() * 110 - roll_hide.w() / 2, pos.y,
                          roll_hide.w(), roll_hide.h()));
     }
 
@@ -103,18 +103,10 @@ void RowSpells::Redraw()
 
         const Sprite &icon = AGG::GetICN(ICN::SPELLS, spell.IndexSprite());
 
-        if (Settings::Get().QVGA())
-        {
-            icon.Blit(dst.x + 2 + (dst.w - icon.w()) / 2, dst.y + 20 - icon.h() / 2);
-        }
-        else
-        {
-            icon.Blit(dst.x + 5 + (dst.w - icon.w()) / 2, dst.y + 40 - icon.h() / 2);
-
-            TextBox text(string(spell.GetName()) + " [" + GetString(spell.SpellPoint(nullptr)) + "]", Font::SMALL,
-                         78);
-            text.Blit(dst.x + 18, dst.y + 62);
-        }
+        icon.Blit(dst.x + 5 + (dst.w - icon.w()) / 2, dst.y + 40 - icon.h() / 2);
+        TextBox text(string(spell.GetName()) + " [" + GetString(spell.SpellPoint(nullptr)) + "]", Font::SMALL,
+                 78);
+        text.Blit(dst.x + 18, dst.y + 62);
 
     }
 }

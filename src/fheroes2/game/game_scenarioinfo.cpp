@@ -44,7 +44,6 @@ void RedrawDifficultyInfo(const Point &dst, bool label = true);
 
 int Game::SelectScenario()
 {
-    if (Settings::Get().QVGA()) return PocketPC::SelectScenario();
     return SCENARIOINFO;
 }
 
@@ -85,7 +84,7 @@ int Game::ScenarioInfo()
 	up<Dialog::FrameBorder> frameborder = nullptr;
 
     // image background
-    if (conf.QVGA())
+    if (false)
     {
         frameborder = std::make_unique<Dialog::FrameBorder>(Size(380, 224));
         rectPanel = frameborder->GetArea();
@@ -134,7 +133,7 @@ int Game::ScenarioInfo()
 
     const bool reset_starting_settings = conf.MapsFile().empty() || !System::IsFile(conf.MapsFile());
     Players &players = conf.GetPlayers();
-    Interface::PlayersInfo playersInfo(true, !conf.QVGA(), !conf.QVGA());
+    Interface::PlayersInfo playersInfo(true, !false, !false);
 
     // set first maps settings
 	if (reset_starting_settings)
@@ -155,11 +154,11 @@ int Game::ScenarioInfo()
     playersInfo.UpdateInfo(players, pointOpponentInfo, pointClassInfo);
 
     RedrawScenarioStaticInfo(rectPanel);
-    RedrawDifficultyInfo(pointDifficultyInfo, !conf.QVGA());
+    RedrawDifficultyInfo(pointDifficultyInfo, !false);
 
     playersInfo.RedrawInfo();
 
-    TextSprite *rating = conf.QVGA() ? nullptr : new TextSprite();
+    TextSprite *rating = false ? nullptr : new TextSprite();
     if (rating)
     {
         rating->SetFont(Font::BIG);
@@ -216,7 +215,7 @@ int Game::ScenarioInfo()
 
                 cursor.Hide();
                 RedrawScenarioStaticInfo(rectPanel);
-                RedrawDifficultyInfo(pointDifficultyInfo, !conf.QVGA());
+                RedrawDifficultyInfo(pointDifficultyInfo, !false);
                 playersInfo.RedrawInfo();
                 if (rating) RedrawRatingInfo(*rating);
                 // default difficulty normal
@@ -261,7 +260,7 @@ int Game::ScenarioInfo()
                 cursor.Hide();
                 RedrawScenarioStaticInfo(rectPanel);
                 levelCursor.Redraw();
-                RedrawDifficultyInfo(pointDifficultyInfo, !conf.QVGA());
+                RedrawDifficultyInfo(pointDifficultyInfo, !false);
 
                 playersInfo.RedrawInfo();
                 if (rating) RedrawRatingInfo(*rating);
@@ -332,40 +331,18 @@ void RedrawScenarioStaticInfo(const Rect &rt)
 {
     Settings &conf = Settings::Get();
 
-    if (conf.QVGA())
-    {
-        const Sprite &background = AGG::GetICN(ICN::STONEBAK, 0);
-        background.Blit(Rect(0, 0, rt.w, rt.h), rt);
-
-        Text text;
-        text.Set(conf.CurrentFileInfo().name, Font::BIG);
-        text.Blit(rt.x + (rt.w - text.w()) / 2, rt.y + 5);
-    } else
-    {
-        // image panel
-        const Sprite &panel = AGG::GetICN(ICN::NGHSBKG, 0);
-        panel.Blit(rt);
-
-        // text scenario
-        Text text(_("Scenario:"), Font::BIG);
-        text.Blit(rt.x + (rt.w - text.w()) / 2, rt.y + 20);
-
-        // maps name
-        text.Set(conf.MapsName());
-        text.Blit(rt.x + (rt.w - text.w()) / 2, rt.y + 46);
-
-        // text game difficulty
-        text.Set(_("Game Difficulty:"));
-        text.Blit(rt.x + (rt.w - text.w()) / 2, rt.y + 75);
-
-        // text opponents
-        text.Set(_("Opponents:"), Font::BIG);
-        text.Blit(rt.x + (rt.w - text.w()) / 2, rt.y + 181);
-
-        // text class
-        text.Set(_("Class:"), Font::BIG);
-        text.Blit(rt.x + (rt.w - text.w()) / 2, rt.y + 262);
-    }
+    const Sprite &panel = AGG::GetICN(ICN::NGHSBKG, 0);
+    panel.Blit(rt);
+    Text text(_("Scenario:"), Font::BIG);
+    text.Blit(rt.x + (rt.w - text.w()) / 2, rt.y + 20);
+    text.Set(conf.MapsName());
+    text.Blit(rt.x + (rt.w - text.w()) / 2, rt.y + 46);
+    text.Set(_("Game Difficulty:"));
+    text.Blit(rt.x + (rt.w - text.w()) / 2, rt.y + 75);
+    text.Set(_("Opponents:"), Font::BIG);
+    text.Blit(rt.x + (rt.w - text.w()) / 2, rt.y + 181);
+    text.Set(_("Class:"), Font::BIG);
+    text.Blit(rt.x + (rt.w - text.w()) / 2, rt.y + 262);
 }
 
 void RedrawDifficultyInfo(const Point &dst, bool label)

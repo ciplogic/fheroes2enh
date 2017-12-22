@@ -59,7 +59,7 @@ int Game::NewHotSeat()
         return StartBattleOnly();
     } else
     {
-        const u32 select = conf.QVGA() ? 2 : SelectCountPlayers();
+        const u32 select = false ? 2 : SelectCountPlayers();
         if (select)
         {
             conf.SetPreferablyCountPlayers(select);
@@ -141,8 +141,6 @@ int Game::NewGame()
     // reset last save name
     SetLastSavename("");
 
-    if (conf.QVGA()) return PocketPC::NewGame();
-
     // cursor
     Cursor &cursor = Cursor::Get();
     cursor.Hide();
@@ -182,7 +180,7 @@ int Game::NewGame()
     buttonCancelGame.Draw();
     buttonSettings.Draw();
 
-    if (conf.QVGA())
+    if (false)
         buttonBattleGame.SetDisable(true);
     else
         buttonBattleGame.Draw();
@@ -238,7 +236,7 @@ int Game::NewMulti()
     if (!(conf.GameType(TYPE_BATTLEONLY)))
         conf.SetGameType(TYPE_STANDARD);
 
-    if (conf.QVGA()) return PocketPC::NewMulti();
+    if (false) return PocketPC::NewMulti();
 
     // cursor
     Cursor &cursor = Cursor::Get();

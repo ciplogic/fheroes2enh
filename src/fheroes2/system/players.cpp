@@ -693,7 +693,7 @@ void Interface::PlayersInfo::RedrawInfo(
         // "swap" sprite
 
         if (show_swap &&
-            !conf.QVGA() && (it + 1) != end())
+            !false && (it + 1) != end())
         {
             const Sprite &sprite3 = AGG::GetICN(ICN::ADVMCO, 8);
             sprite3.Blit(rect3.x, rect3.y);
@@ -794,8 +794,7 @@ bool Interface::PlayersInfo::QueueEventProcessing()
             }
         } else
             // change players
-        if (show_swap &&
-            !conf.QVGA() && nullptr != (player = GetFromOpponentChangeClick(le.GetMouseCursor())))
+        if (show_swap && nullptr != (player = GetFromOpponentChangeClick(le.GetMouseCursor())))
         {
             auto it = find(begin(), end(), player);
             if (it != end() && (it + 1) != end())

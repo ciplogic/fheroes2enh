@@ -407,9 +407,6 @@ Surface Interface::GameArea::GenerateUltimateArtifactAreaSurface(s32 index)
 
 	sf = (Settings::Get().ExtGameEvilInterface() ? sf.RenderGrayScale() : sf.RenderSepia());
 
-	if (Settings::Get().QVGA())
-		sf = Sprite::ScaleQVGASurface(sf);
-
 	gamearea.SetAreaPosition(origPosition.x, origPosition.y, origPosition.w, origPosition.h);
 
 	return sf;

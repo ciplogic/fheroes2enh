@@ -57,9 +57,6 @@ Dialog::FrameBox::FrameBox(int height, bool buttons)
     s32 posx = (display.w() - BOX_WIDTH) / 2;
     s32 posy = (display.h() - height_top_bottom - height_middle) / 2;
 
-    if (Settings::Get().QVGA() && height > display.h())
-        posy = display.h() - area.h - ((evil ? BOXE_TOP : BOX_TOP) - BOXAREA_TOP);
-
     background.Save(Rect(posx, posy, BOX_WIDTH, height_top_bottom + height_middle));
 
     area.x = posx + 36;

@@ -181,7 +181,7 @@ void ShowExtendedDialog(const Puzzle &pzl, const Surface &sf)
 
     Dialog::FrameBorder frameborder(gameArea.x + (gameArea.w - sf.w() - BORDERWIDTH * 2) / 2,
                                     gameArea.y + (gameArea.h - sf.h() - BORDERWIDTH * 2) / 2,
-                                    sf.w(), sf.h() + (Settings::Get().QVGA() ? 25 : 32));
+                                    sf.w(), sf.h() + 32);
 
     if (conf.ExtGameEvilInterface())
         display.FillRect(frameborder.GetArea(), RGBA(80, 80, 80));
@@ -190,7 +190,7 @@ void ShowExtendedDialog(const Puzzle &pzl, const Surface &sf)
     sf.Blit(frameborder.GetArea(), display);
 
     Button buttonExit(frameborder.GetArea().x + sf.w() / 2 - 40,
-                      frameborder.GetArea().y + sf.h() + (conf.QVGA() ? 0 : 5),
+                      frameborder.GetArea().y + sf.h() + 5,
                       (conf.ExtGameEvilInterface() ? ICN::LGNDXTRE : ICN::LGNDXTRA), 4, 5);
 
     buttonExit.Draw();
@@ -205,7 +205,6 @@ void ShowExtendedDialog(const Puzzle &pzl, const Surface &sf)
     {
         le.MousePressLeft(buttonExit) ? buttonExit.PressDraw() : buttonExit.ReleaseDraw();
         if (le.MouseClickLeft(buttonExit) || HotKeyCloseWindow) break;
-        if (conf.QVGA() && le.MouseClickLeft(frameborder.GetArea())) break;
     }
 }
 
@@ -234,10 +233,7 @@ void PuzzlesDraw(const Puzzle &pzl, const Surface &sf, s32 dstx, s32 dsty)
                 if (pzl.test(ii))
                     piece.SetAlphaMod(alpha);
 
-                if (Settings::Get().QVGA())
-                    piece.Blit(dstx + 8 + piece.x() - BORDERWIDTH, dsty + 8 + piece.y() - BORDERWIDTH);
-                else
-                    piece.Blit(dstx + piece.x() - BORDERWIDTH, dsty + piece.y() - BORDERWIDTH);
+                piece.Blit(dstx + piece.x() - BORDERWIDTH, dsty + piece.y() - BORDERWIDTH);
             }
             cursor.Show();
             display.Flip();

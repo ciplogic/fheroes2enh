@@ -165,8 +165,6 @@ void Interface::GameBorderRedraw()
 
 Interface::BorderWindow::BorderWindow(const Rect &rt) : area(rt)
 {
-    if (Settings::Get().QVGA())
-        border.SetBorder(6);
 }
 
 const Rect &Interface::BorderWindow::GetRect() const
@@ -182,12 +180,7 @@ const Rect &Interface::BorderWindow::GetArea() const
 
 void Interface::BorderWindow::Redraw()
 {
-    if (Settings::Get().QVGA())
-    {
-        const Surface &sf = AGG::GetICN(ICN::RESOURCE, 7);
-        Dialog::FrameBorder::RenderOther(sf, border.GetRect());
-    } else
-        Dialog::FrameBorder::RenderRegular(border.GetRect());
+    Dialog::FrameBorder::RenderRegular(border.GetRect());
 }
 
 void Interface::BorderWindow::SetPosition(s32 px, s32 py, u32 pw, u32 ph)

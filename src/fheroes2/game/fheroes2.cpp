@@ -302,10 +302,6 @@ void LoadZLogo()
             Surface black(display.GetSize(), false);
             black.Fill(ColorBlack);
 
-            // scale logo
-            if (Settings::Get().QVGA())
-                sf = Sprite::ScaleQVGASurface(sf);
-
             const Point offset((display.w() - sf.w()) / 2, (display.h() - sf.h()) / 2);
 
             display.Rise(sf, black, offset, 250, 500);

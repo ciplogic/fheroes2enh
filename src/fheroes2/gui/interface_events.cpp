@@ -132,10 +132,7 @@ void Interface::Basic::EventKingdomInfo()
 {
     Kingdom &myKingdom = world.GetKingdom(Settings::Get().CurrentColor());
 
-    if (Settings::Get().QVGA())
-        PocketPC::KingdomOverviewDialog(myKingdom);
-    else
-        myKingdom.OverviewDialog();
+    myKingdom.OverviewDialog();
 
     iconsPanel.SetRedraw();
 }
@@ -450,7 +447,7 @@ void Interface::Basic::EventSwitchShowRadar()
         return;
     }
 
-    if (conf.QVGA() && (conf.ShowIcons() || conf.ShowStatus() || conf.ShowButtons()))
+    if (false && (conf.ShowIcons() || conf.ShowStatus() || conf.ShowButtons()))
     {
         conf.SetShowIcons(false);
         conf.SetShowStatus(false);
@@ -474,13 +471,6 @@ void Interface::Basic::EventSwitchShowButtons()
         return;
     }
 
-    if (conf.QVGA() && (conf.ShowRadar() || conf.ShowStatus() || conf.ShowIcons()))
-    {
-        conf.SetShowIcons(false);
-        conf.SetShowStatus(false);
-        conf.SetShowRadar(false);
-        gameArea.SetRedraw();
-    }
     conf.SetShowButtons(true);
     buttonsArea.SetRedraw();
 }
@@ -498,13 +488,6 @@ void Interface::Basic::EventSwitchShowStatus()
         return;
     }
 
-    if (conf.QVGA() && (conf.ShowRadar() || conf.ShowIcons() || conf.ShowButtons()))
-    {
-        conf.SetShowIcons(false);
-        conf.SetShowButtons(false);
-        conf.SetShowRadar(false);
-        gameArea.SetRedraw();
-    }
     conf.SetShowStatus(true);
     statusWindow.SetRedraw();
 }
@@ -522,13 +505,6 @@ void Interface::Basic::EventSwitchShowIcons()
         return;
     }
 
-    if (conf.QVGA() && (conf.ShowRadar() || conf.ShowStatus() || conf.ShowButtons()))
-    {
-        conf.SetShowButtons(false);
-        conf.SetShowRadar(false);
-        conf.SetShowStatus(false);
-        gameArea.SetRedraw();
-    }
     conf.SetShowIcons(true);
     iconsPanel.SetCurrentVisible();
     iconsPanel.SetRedraw();

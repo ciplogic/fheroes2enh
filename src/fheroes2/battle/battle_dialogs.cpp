@@ -247,13 +247,13 @@ void Battle::Arena::DialogBattleSummary(const Result &res) const
 
     Rect pos_rt;
     pos_rt.x = (display.w() - dialog.w()) / 2;
-    pos_rt.y = (display.h() - (conf.QVGA() ? 224 : dialog.h())) / 2;
+    pos_rt.y = (display.h() - dialog.h()) / 2;
     pos_rt.w = dialog.w();
-    pos_rt.h = conf.QVGA() ? 224 : dialog.h();
+    pos_rt.h = dialog.h();
 
     SpriteBack back(pos_rt);
 
-    if (conf.QVGA())
+    if (false)
     {
         dialog.Blit(Rect(0, 232, pos_rt.w, 224), pos_rt.x, pos_rt.y);
         dialog.Blit(Rect(0, 0, pos_rt.w, 30), pos_rt.x, pos_rt.y);
@@ -263,45 +263,41 @@ void Battle::Arena::DialogBattleSummary(const Result &res) const
     const int anime_ox = 47;
     const int anime_oy = 36;
 
-    if (!conf.QVGA())
-    {
-        const Sprite &sprite1 = AGG::GetICN(icn_anim, 0);
-        const Sprite &sprite2 = AGG::GetICN(icn_anim, 1);
-
-        sprite1.Blit(pos_rt.x + anime_ox + sprite1.x(), pos_rt.y + anime_oy + sprite1.y());
-        sprite2.Blit(pos_rt.x + anime_ox + sprite2.x(), pos_rt.y + anime_oy + sprite2.y());
-    }
+    const Sprite &sprite1 = AGG::GetICN(icn_anim, 0);
+    const Sprite &sprite2 = AGG::GetICN(icn_anim, 1);
+    sprite1.Blit(pos_rt.x + anime_ox + sprite1.x(), pos_rt.y + anime_oy + sprite1.y());
+    sprite2.Blit(pos_rt.x + anime_ox + sprite2.x(), pos_rt.y + anime_oy + sprite2.y());
 
 
     TextBox box(msg, Font::BIG, 270);
-    box.Blit(pos_rt.x + 25, pos_rt.y + (conf.QVGA() ? 20 : 175));
+    box.Blit(pos_rt.x + 25, pos_rt.y + 175);
 
     // battlefield casualties
     Text text(_("Battlefield Casualties"), Font::SMALL);
-    text.Blit(pos_rt.x + (pos_rt.w - text.w()) / 2, pos_rt.y + (conf.QVGA() ? 58 : 270));
+    text.Blit(pos_rt.x + (pos_rt.w - text.w()) / 2, pos_rt.y + 270);
 
     // attacker
     text.Set(_("Attacker"), Font::SMALL);
-    text.Blit(pos_rt.x + (pos_rt.w - text.w()) / 2, pos_rt.y + (conf.QVGA() ? 70 : 285));
+    text.Blit(pos_rt.x + (pos_rt.w - text.w()) / 2, pos_rt.y + 285);
 
     if (killed1.isValid())
-        Army::DrawMons32Line(killed1, pos_rt.x + 25, pos_rt.y + (conf.QVGA() ? 83 : 303), 270);
+        Army::DrawMons32Line(killed1, pos_rt.x + 25, pos_rt.y + 303, 270);
     else
     {
         text.Set("None", Font::SMALL);
-        text.Blit(pos_rt.x + (pos_rt.w - text.w()) / 2, pos_rt.y + (conf.QVGA() ? 80 : 300));
+        text.Blit(pos_rt.x + (pos_rt.w - text.w()) / 2, pos_rt.y + 300);
     }
 
     // defender
     text.Set(_("Defender"), Font::SMALL);
-    text.Blit(pos_rt.x + (pos_rt.w - text.w()) / 2, pos_rt.y + (conf.QVGA() ? 120 : 345));
+    text.Blit(pos_rt.x + (pos_rt.w - text.w()) / 2, pos_rt.y + 345);
 
     if (killed2.isValid())
-        Army::DrawMons32Line(killed2, pos_rt.x + 25, pos_rt.y + (conf.QVGA() ? 138 : 363), 270);
+        Army::DrawMons32Line(killed2, pos_rt.x + 25, pos_rt.y + 363, 270);
     else
     {
         text.Set("None", Font::SMALL);
-        text.Blit(pos_rt.x + (pos_rt.w - text.w()) / 2, pos_rt.y + (conf.QVGA() ? 135 : 360));
+        text.Blit(pos_rt.x + (pos_rt.w - text.w()) / 2, pos_rt.y + 360);
     }
 
     Button btn_ok(pos_rt.x + 221, pos_rt.y + 410,
@@ -328,7 +324,7 @@ void Battle::Arena::DialogBattleSummary(const Result &res) const
         if (HotKeyCloseWindow || le.MouseClickLeft(btn_ok)) break;
 
         // animation
-        if (!conf.QVGA() && AnimateInfrequentDelay(Game::BATTLE_DIALOG_DELAY))
+        if (AnimateInfrequentDelay(Game::BATTLE_DIALOG_DELAY))
         {
             if (0 == frame || 1 != ICN::AnimationFrame(icn_anim, 1, frame))
             {
@@ -442,15 +438,12 @@ int Battle::Arena::DialogBattleHero(const HeroBase &hero, bool buttons) const
     btnSurrender.Draw();
     btnClose.Draw();
 
-    if (!conf.QVGA())
-    {
-        Surface shadow(btnCast, false);
-        shadow.Fill(ColorBlack);
-        shadow.SetAlphaMod(80);
-        if (btnCast.isDisable()) shadow.Blit(btnCast, display);
-        if (btnRetreat.isDisable()) shadow.Blit(btnRetreat, display);
-        if (btnSurrender.isDisable()) shadow.Blit(btnSurrender, display);
-    }
+    Surface shadow(btnCast, false);
+    shadow.Fill(ColorBlack);
+    shadow.SetAlphaMod(80);
+    if (btnCast.isDisable()) shadow.Blit(btnCast, display);
+    if (btnRetreat.isDisable()) shadow.Blit(btnRetreat, display);
+    if (btnSurrender.isDisable()) shadow.Blit(btnSurrender, display);
 
     int result = 0;
 

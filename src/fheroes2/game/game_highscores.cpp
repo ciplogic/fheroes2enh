@@ -147,7 +147,7 @@ void HGSData::RedrawList(s32 ox, s32 oy)
     back.Blit(ox, oy);
 
     const Sprite &head = AGG::GetICN(ICN::HISCORE, 6);
-    if (conf.QVGA())
+    if (false)
         head.Blit(ox + 25, oy + 15);
     else
         head.Blit(ox + 50, oy + 31);
@@ -158,25 +158,25 @@ void HGSData::RedrawList(s32 ox, s32 oy)
     vector<hgs_t>::const_iterator it2 = list.end();
 
     Text text;
-    text.Set(conf.QVGA() ? Font::SMALL : Font::BIG);
+    text.Set(false ? Font::SMALL : Font::BIG);
 
     for (; it1 != it2 && (it1 - list.begin() < HGS_MAX); ++it1)
     {
         const hgs_t &hgs = *it1;
 
         text.Set(hgs.player);
-        text.Blit(ox + (conf.QVGA() ? 45 : 88), oy + (conf.QVGA() ? 33 : 70));
+        text.Blit(ox + (false ? 45 : 88), oy + (false ? 33 : 70));
 
         text.Set(hgs.land);
-        text.Blit(ox + (conf.QVGA() ? 170 : 260), oy + (conf.QVGA() ? 33 : 70));
+        text.Blit(ox + (false ? 170 : 260), oy + (false ? 33 : 70));
 
         text.Set(GetString(hgs.days));
-        text.Blit(ox + (conf.QVGA() ? 250 : 420), oy + (conf.QVGA() ? 33 : 70));
+        text.Blit(ox + (false ? 250 : 420), oy + (false ? 33 : 70));
 
         text.Set(GetString(hgs.rating));
-        text.Blit(ox + (conf.QVGA() ? 270 : 480), oy + (conf.QVGA() ? 33 : 70));
+        text.Blit(ox + (false ? 270 : 480), oy + (false ? 33 : 70));
 
-        oy += conf.QVGA() ? 20 : 40;
+        oy += false ? 20 : 40;
     }
 }
 
@@ -217,8 +217,8 @@ int Game::HighScores(bool fill)
 
     LocalEvent &le = LocalEvent::Get();
 
-    Button buttonCampain(top.x + (conf.QVGA() ? 0 : 9), top.y + (conf.QVGA() ? 100 : 315), ICN::HISCORE, 0, 1);
-    Button buttonExit(top.x + back.w() - (conf.QVGA() ? 27 : 36), top.y + (conf.QVGA() ? 100 : 315), ICN::HISCORE, 4,
+    Button buttonCampain(top.x + 9, top.y + 315, ICN::HISCORE, 0, 1);
+    Button buttonExit(top.x + back.w() - 36, top.y + 315, ICN::HISCORE, 4,
                       5);
 
     buttonCampain.Draw();

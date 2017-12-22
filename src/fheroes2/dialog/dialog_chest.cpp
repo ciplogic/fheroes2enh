@@ -52,7 +52,7 @@ Dialog::SelectGoldOrExp(const string &header, const string &message, u32 gold, u
     text.Set(GetString(gold) + " " + "(" + "total: " +
              GetString(world.GetKingdom(hero.GetColor()).GetFunds().Get(Resource::GOLD)) + ")", Font::SMALL);
 
-    const int spacer = Settings::Get().QVGA() ? 5 : 10;
+    const int spacer = 10;
     FrameBox box(box1.h() + spacer + box2.h() + spacer + sprite_expr.h() + 2 + text.h(), true);
 
     pt.x = box.GetArea().x + box.GetArea().w / 2 - AGG::GetICN(system, 9).w() - 20;

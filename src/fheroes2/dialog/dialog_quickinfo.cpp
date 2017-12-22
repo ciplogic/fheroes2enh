@@ -572,11 +572,6 @@ void Dialog::QuickInfo(const Castle &castle)
         // bottom right
         cur_rt = Rect(mx - box.w(), my - box.h(), box.w(), box.h());
 
-    if (Settings::Get().QVGA())
-    {
-        cur_rt = Rect((display.w() - box.w()) / 2, (display.h() - box.h()) / 2, box.w(), box.h());
-    }
-
 	box.SetAlphaMod(210);
     SpriteBack back(cur_rt);
     box.Blit(cur_rt.x, cur_rt.y);
@@ -768,10 +763,6 @@ void Dialog::QuickInfo(const Heroes &hero)
         // bottom right
         cur_rt = Rect(mx - box.w(), my - box.h(), box.w(), box.h());
 
-    if (Settings::Get().QVGA())
-    {
-        cur_rt = Rect((display.w() - box.w()) / 2, (display.h() - box.h()) / 2, box.w(), box.h());
-    }
 
 	box.SetAlphaMod(210);
     SpriteBack back(cur_rt);

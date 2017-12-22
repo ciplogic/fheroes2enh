@@ -184,9 +184,6 @@ void Interface::CastleIcons::ActionListDoubleClick(CASTLE &item)
     if (item)
     {
         Game::OpenCastleDialog(*item);
-
-        // for QVGA: auto hide icons after click
-        if (Settings::Get().QVGA()) Settings::Get().SetShowIcons(false);
     }
 }
 
@@ -198,9 +195,6 @@ void Interface::CastleIcons::ActionListSingleClick(CASTLE &item)
 
         I.SetFocus(item);
         I.RedrawFocus();
-
-        // for QVGA: auto hide icons after click
-        if (Settings::Get().QVGA()) Settings::Get().SetShowIcons(false);
     }
 }
 
@@ -283,8 +277,6 @@ void Interface::HeroesIcons::ActionListDoubleClick(HEROES &item)
         } else
             Game::OpenHeroesDialog(*item);
 
-        // for QVGA: auto hide icons after click
-        if (Settings::Get().QVGA()) Settings::Get().SetShowIcons(false);
     }
 }
 
@@ -297,8 +289,7 @@ void Interface::HeroesIcons::ActionListSingleClick(HEROES &item)
         I.SetFocus(item);
         I.RedrawFocus();
 
-        // for QVGA: auto hide icons after click
-        if (Settings::Get().QVGA()) Settings::Get().SetShowIcons(false);
+
     }
 }
 

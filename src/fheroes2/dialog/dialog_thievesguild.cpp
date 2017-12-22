@@ -192,22 +192,19 @@ void GetBestHeroArmyInfo(vector<ValueColors> &v, const Colors &colors)
 
 void DrawFlags(const vector<ValueColors> &v, const Point &pos, u32 width, u32 count)
 {
-    bool qvga = Settings::Get().QVGA();
 
     for (u32 ii = 0; ii < count; ++ii)
     {
         const u32 chunk = width / count;
         if (ii >= v.size()) continue;
 	    const Colors colors(v[ii].second);
-	    const u32 sw = qvga ? AGG::GetICN(ICN::MISC6, 7).w() : AGG::GetICN(ICN::FLAG32, 1).w();
+	    const u32 sw = AGG::GetICN(ICN::FLAG32, 1).w();
 	    s32 px = pos.x + chunk / 2 + ii * chunk - (colors.size() * sw) / 2;
 
 	    for (auto color : colors)
 	    {
-		    const Sprite &flag = qvga ?
-			                         AGG::GetICN(ICN::MISC6, Color::GetIndex(color) + 7) :
-			                         AGG::GetICN(ICN::FLAG32, Color::GetIndex(color) * 2 + 1);
-		    flag.Blit(px, (qvga ? pos.y + 2 : pos.y));
+		    const Sprite &flag = AGG::GetICN(ICN::FLAG32, Color::GetIndex(color) * 2 + 1);
+		    flag.Blit(px, pos.y);
 		    px = px + sw;
 	    }
     }
@@ -233,12 +230,6 @@ void DrawHeroIcons(const vector<ValueColors> &v, const Point &pos, u32 width)
 
 void Dialog::ThievesGuild(bool oracle)
 {
-    if (Settings::Get().QVGA())
-    {
-        PocketPC::ThievesGuild(oracle);
-        return;
-    }
-
     Display &display = Display::Get();
 
     // cursor
