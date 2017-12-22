@@ -65,14 +65,15 @@ Rect Interface::GameArea::RectFixed(Point &dst, int rw, int rh) const
 
 void Interface::GameArea::Build()
 {
+    Display& display = Display::Get();
     if (Settings::Get().ExtGameHideInterface())
         SetAreaPosition(0, 0,
-                        Display::Get().w(),
-                        Display::Get().h());
+                        display.w(),
+                        display.h());
     else
         SetAreaPosition(BORDERWIDTH, BORDERWIDTH,
-                        Display::Get().w() - RADARWIDTH - 3 * BORDERWIDTH,
-                        Display::Get().h() - 2 * BORDERWIDTH);
+                        display.w() - RADARWIDTH - 3 * BORDERWIDTH,
+                        display.h() - 2 * BORDERWIDTH);
 }
 
 void Interface::GameArea::SetAreaPosition(s32 x, s32 y, u32 w, u32 h)
@@ -132,10 +133,10 @@ void Interface::GameArea::Redraw(Surface &dst, int flag) const
 {
 	auto start = std::chrono::high_resolution_clock::now();
 
-    Redraw(dst, flag, Rect(0, 0, rectMaps.w, rectMaps.h));
 	auto elapsed = std::chrono::high_resolution_clock::now() - start;	
+    Redraw(dst, flag, Rect(0, 0, rectMaps.w, rectMaps.h));
 	long long microseconds = std::chrono::duration_cast<std::chrono::microseconds>(elapsed).count();
-	cerr << microseconds;
+ 	cerr << microseconds;
 	
 }
 
@@ -185,14 +186,13 @@ void Interface::GameArea::DrawHeroRoute(Surface& dst, int flag, const Rect& rt) 
 void Interface::GameArea::Redraw(Surface &dst, int flag, const Rect &rt) const
 {
 	// tile
-#pragma omp parallel for
 	for (s32 stepX = 0; stepX< rt.w; ++stepX)
 	{
-		auto ox = rt.x + stepX;
-		for (s32 oy = rt.y; oy < rt.y + rt.h; ++oy)
+		auto ox = rt.x + rectMaps.x + stepX;
+		for (s32 stepY = 0; stepY < rt.h; ++stepY)
 		{
-
-			auto& currentTile = world.GetTiles(rectMaps.x + ox, rectMaps.y + oy);
+            auto oy = rt.y +rectMaps.y + stepY;
+			auto& currentTile = world.GetTiles( ox, oy);
 			currentTile.RedrawTile(dst);
 
 			// bottom

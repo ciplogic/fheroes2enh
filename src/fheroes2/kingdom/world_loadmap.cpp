@@ -157,7 +157,7 @@ bool World::LoadMapMP2(const string &filename)
         const size_t index = distance(vec_tiles.begin(), it);
         Maps::Tiles &tile = *it;
 
-        MP2::mp2tile_t mp2tile;
+        MP2::mp2tile_t mp2tile{};
 
         mp2tile.tileIndex = fs.getLE16();
         mp2tile.objectName1 = fs.get();
