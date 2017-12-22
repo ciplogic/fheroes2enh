@@ -80,6 +80,10 @@ set(SOURCE_FILES
         src/engine/zzlib.h
         src/engine/serializer/ByteVectorReader.cpp
         src/engine/serializer/ByteVectorReader.h
+        src/engine/serializer/BinaryFileReader.cpp
+        src/engine/serializer/BinaryFileReader.h
+        src/engine/serializer/ByteVectorWriter.cpp
+        src/engine/serializer/ByteVectorWriter.h
         src/fheroes2/agg/agg.cpp
         src/fheroes2/agg/agg.h
         src/fheroes2/agg/icn.cpp
@@ -404,9 +408,9 @@ else()
 endif()
 
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 ")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 ")
 
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -ggdb -fno-omit-frame-pointer -O0 -std=c++11 ")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -ggdb -fno-omit-frame-pointer -O0 ")
 
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -std=c++14 ")
-set(CMAKE_LD_FLAGS_RELEASE "${CMAKE_LD_FLAGS_RELEASE} -mtune=native")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -flto")
+set(CMAKE_LD_FLAGS_RELEASE "${CMAKE_LD_FLAGS_RELEASE} -mtune=native -flto")

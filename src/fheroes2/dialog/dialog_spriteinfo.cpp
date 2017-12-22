@@ -31,7 +31,8 @@
 
 int Dialog::ArtifactInfo(const string &hdr, const string &msg, const Artifact &art, int buttons)
 {
-    Sprite &border = AGG::GetICN(ICN::RESOURCE, 7);
+    Sprite borderInfo = AGG::GetICN(ICN::RESOURCE, 7);
+    Sprite &border = borderInfo;
     const Sprite &artifact = AGG::GetICN(ICN::ARTIFACT, art.IndexSprite64());
     Surface image = border.GetSurface();
     border.Blit(image);

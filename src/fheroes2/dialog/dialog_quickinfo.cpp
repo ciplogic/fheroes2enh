@@ -336,7 +336,8 @@ void Dialog::QuickInfo(const Maps::Tiles &tile)
     const int qwikinfo = ICN::QWIKINFO;
 
     // image box
-    Sprite &box = AGG::GetICN(qwikinfo, 0);
+    auto boxInfo= AGG::GetICN(qwikinfo, 0);
+    Sprite &box = boxInfo;
     const Interface::GameArea &gamearea = Interface::Basic::Get().GetGameArea();
     const Rect ar(BORDERWIDTH, BORDERWIDTH, gamearea.GetArea().w, gamearea.GetArea().h);
 
@@ -542,7 +543,8 @@ void Dialog::QuickInfo(const Castle &castle)
     const int qwiktown = ICN::QWIKTOWN;
 
     // image box
-    Sprite &box = AGG::GetICN(qwiktown, 0);
+    auto boxInfo= AGG::GetICN(qwiktown, 0);
+    Sprite &box = boxInfo;
     const Interface::GameArea &gamearea = Interface::Basic::Get().GetGameArea();
     const Rect ar(BORDERWIDTH, BORDERWIDTH, gamearea.GetArea().w, gamearea.GetArea().h);
 
@@ -737,7 +739,8 @@ void Dialog::QuickInfo(const Heroes &hero)
     const int qwikhero = ICN::QWIKHERO;
 
     // image box
-    Sprite &box = AGG::GetICN(qwikhero, 0);
+    auto boxInfo= AGG::GetICN(qwikhero, 0);
+    Sprite &box =boxInfo;
     const Interface::GameArea &gamearea = Interface::Basic::Get().GetGameArea();
     const Rect ar(BORDERWIDTH, BORDERWIDTH, gamearea.GetArea().w, gamearea.GetArea().h);
 

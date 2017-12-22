@@ -2927,7 +2927,7 @@ void ActionToTreeKnowledge(Heroes &hero, u32 obj, s32 dst_index)
         // free
         if (conditions)
         {
-            Sprite &sprite = AGG::GetICN(ICN::EXPMRL, 4);
+            Sprite sprite = AGG::GetICN(ICN::EXPMRL, 4);
             msg = _("Upon your approach, the tree opens its eyes in delight. \"Ahh, an adventurer! Allow me to teach you a little of what I have learned over the ages.\"");
             Dialog::SpriteInfo(MP2::StringObject(obj), msg, sprite);
         } else
@@ -2944,7 +2944,8 @@ void ActionToTreeKnowledge(Heroes &hero, u32 obj, s32 dst_index)
                 msg.append(_("(Just bury it around my roots.)"));
                 StringReplace(msg, "%{res}", Resource::String(rc.first));
                 StringReplace(msg, "%{count}", rc.second);
-                conditions = Dialog::YES == Dialog::SpriteInfo(MP2::StringObject(obj), msg, AGG::GetICN(ICN::EXPMRL, 4),
+                auto spriteIcn = AGG::GetICN(ICN::EXPMRL, 4);
+                conditions = Dialog::YES == Dialog::SpriteInfo(MP2::StringObject(obj), msg, spriteIcn,
                                                                Dialog::YES | Dialog::NO);
             } else
             {

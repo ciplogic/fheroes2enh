@@ -131,12 +131,7 @@ void Interface::GameArea::BlitOnTile(Surface &dst, const Surface &src, s32 ox, s
 
 void Interface::GameArea::Redraw(Surface &dst, int flag) const
 {
-	auto start = std::chrono::high_resolution_clock::now();
-
-	auto elapsed = std::chrono::high_resolution_clock::now() - start;	
     Redraw(dst, flag, Rect(0, 0, rectMaps.w, rectMaps.h));
-	long long microseconds = std::chrono::duration_cast<std::chrono::microseconds>(elapsed).count();
- 	cerr << microseconds;
 	
 }
 
@@ -175,7 +170,7 @@ void Interface::GameArea::DrawHeroRoute(Surface& dst, int flag, const Rect& rt) 
 				                                                                        hero->GetLevelSkill(
 					                                                                        Skill::Secondary::PATHFINDING))));
 
-			Sprite &sprite = AGG::GetICN(0 > green ? ICN::ROUTERED : ICN::ROUTE, index);
+			Sprite sprite = AGG::GetICN(0 > green ? ICN::ROUTERED : ICN::ROUTE, index);
 			sprite.SetAlphaMod(180);
 
 			BlitOnTile(dst, sprite, sprite.x() - 14, sprite.y(), mp);
