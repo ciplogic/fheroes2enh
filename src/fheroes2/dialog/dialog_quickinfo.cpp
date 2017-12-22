@@ -542,7 +542,7 @@ void Dialog::QuickInfo(const Castle &castle)
     const int qwiktown = ICN::QWIKTOWN;
 
     // image box
-    const Sprite &box = AGG::GetICN(qwiktown, 0);
+    Sprite &box = AGG::GetICN(qwiktown, 0);
     const Interface::GameArea &gamearea = Interface::Basic::Get().GetGameArea();
     const Rect ar(BORDERWIDTH, BORDERWIDTH, gamearea.GetArea().w, gamearea.GetArea().h);
 
@@ -575,6 +575,7 @@ void Dialog::QuickInfo(const Castle &castle)
         cur_rt = Rect((display.w() - box.w()) / 2, (display.h() - box.h()) / 2, box.w(), box.h());
     }
 
+	box.SetAlphaMod(210);
     SpriteBack back(cur_rt);
     box.Blit(cur_rt.x, cur_rt.y);
 
@@ -736,7 +737,7 @@ void Dialog::QuickInfo(const Heroes &hero)
     const int qwikhero = ICN::QWIKHERO;
 
     // image box
-    const Sprite &box = AGG::GetICN(qwikhero, 0);
+    Sprite &box = AGG::GetICN(qwikhero, 0);
     const Interface::GameArea &gamearea = Interface::Basic::Get().GetGameArea();
     const Rect ar(BORDERWIDTH, BORDERWIDTH, gamearea.GetArea().w, gamearea.GetArea().h);
 
@@ -769,6 +770,7 @@ void Dialog::QuickInfo(const Heroes &hero)
         cur_rt = Rect((display.w() - box.w()) / 2, (display.h() - box.h()) / 2, box.w(), box.h());
     }
 
+	box.SetAlphaMod(210);
     SpriteBack back(cur_rt);
     box.Blit(cur_rt.x, cur_rt.y);
 

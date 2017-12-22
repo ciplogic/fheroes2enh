@@ -186,13 +186,14 @@ void Interface::GameArea::DrawHeroRoute(Surface& dst, int flag, const Rect& rt) 
 void Interface::GameArea::Redraw(Surface &dst, int flag, const Rect &rt) const
 {
 	// tile
-	for (s32 stepX = 0; stepX< rt.w; ++stepX)
+
+	for (s32 stepY = 0; stepY < rt.h; ++stepY)
 	{
-		auto ox = rt.x + rectMaps.x + stepX;
-		for (s32 stepY = 0; stepY < rt.h; ++stepY)
+		auto oy = rt.y + rectMaps.y + stepY;
+		for (s32 stepX = 0; stepX < rt.w; ++stepX)
 		{
-            auto oy = rt.y +rectMaps.y + stepY;
-			auto& currentTile = world.GetTiles( ox, oy);
+			auto ox = rt.x + rectMaps.x + stepX;
+			auto& currentTile = world.GetTiles(ox, oy);
 			currentTile.RedrawTile(dst);
 
 			// bottom

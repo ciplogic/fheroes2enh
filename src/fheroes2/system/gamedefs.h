@@ -25,7 +25,7 @@
 #include "engine.h"
 
 #define MAJOR_VERSION 0
-#define MINOR_VERSION 8
+#define MINOR_VERSION 9
 
 #define GCC_VERSION (__GNUC__ * 10000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__)
 

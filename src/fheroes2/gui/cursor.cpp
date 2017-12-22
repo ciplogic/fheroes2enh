@@ -248,6 +248,7 @@ void Cursor::SetOffset(int name)
 
 void Cursor::Show()
 {
+	SetAlphaMod(210);
     if (!Settings::Get().ExtPocketHideCursor()) SpriteMove::Show();
 }
 

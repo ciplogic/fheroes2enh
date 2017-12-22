@@ -87,15 +87,4 @@ and dropping SDL 1.2 would be really nice to have feature
 make sure you understand that section of code before rewriting it. Make 
 sure that the code is more readable than it was before.
 
-- if some code is hard to understand, imagine that no one supported that 
-code anymore:
-
-```C++
-remove_if(bind2nd(mem_fun_ref(&TilesAddon::isUniq), uniq));
-```
-Should be able to be rewritten with a lambda.
-
-Even more, following on StackOverflow, it may show to you glitches that maybe
-the original authors missed them completely.
-
-https://stackoverflow.com/questions/4478636/stdremove-if-lambda-not-removing-anything-from-the-collection
+- if some code is hard to understand, rewrite it to be a bit more readable.

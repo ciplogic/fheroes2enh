@@ -1160,7 +1160,6 @@ bool AGG::LoadOrgTIL(int til, u32 max)
     if (body.empty())
         return false;
 	ByteVectorReader st(body);
-	//StreamBuf st(body);
 
     u32 count = st.getLE16();
     u32 width = st.getLE16();
