@@ -396,12 +396,11 @@ int Dialog::ArmyJoinFree(const Troop &troop, Heroes &hero)
 
     TextBox textbox(message, Font::BIG, BOXAREA_WIDTH);
     const int buttons = YES | NO;
-    int posy = 0;
 
-    FrameBox box(10 + textbox.h() + 10, buttons);
+	FrameBox box(10 + textbox.h() + 10, buttons);
     const Rect &pos = box.GetArea();
 
-    posy = pos.y + 10;
+    int posy = pos.y + 10;
     textbox.Blit(pos.x, posy);
 
     ButtonGroups btnGroups(pos, buttons);

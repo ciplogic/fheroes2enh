@@ -2093,6 +2093,36 @@ StreamBase &operator>>(StreamBase &msg, Heroes &hero)
     return msg;
 }
 
+void Heroes::ReadFrom(ByteVectorReader &msg)
+{
+	auto& hero = *this;
+	HeroBase &base = hero;
+	ColorBase &col = hero;
+	base.ReadFrom(msg);
+	msg >>
+		hero.name; 
+	msg>>
+		col >>
+		hero.killer_color >>
+		hero.experience >>
+		hero.move_point_scale >>
+		hero.secondary_skills >>
+		hero.army >>
+		hero.hid >>
+		hero.portrait >>
+		hero.race >>
+		hero.save_maps_object >>
+		hero.path >>
+		hero.direction >>
+		hero.sprite_index >>
+		hero.patrol_center >>
+		hero.patrol_square >>
+		hero.visit_object;
+
+	hero.army.SetCommander(&hero);
+}
+
+
 StreamBase &operator<<(StreamBase &msg, const AllHeroes &heroes)
 {
     msg << static_cast<u32>(heroes.size());

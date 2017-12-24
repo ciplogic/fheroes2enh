@@ -37,6 +37,8 @@
 #include "battle_army.h"
 #include "world.h"
 
+using namespace Dialog;
+
 namespace Battle
 {
     void GetSummaryParams(int res1, int res2, const HeroBase &, u32 exp, int &, string &);
@@ -193,7 +195,7 @@ void Battle::GetSummaryParams(int res1, int res2, const HeroBase &hero, u32 exp,
     }
 }
 
-void Battle::Arena::DialogBattleSummary(const Result &res) const
+void Battle::Arena::DialogBattleSummary(const Result &res)
 {
     Display &display = Display::Get();
     Cursor &cursor = Cursor::Get();
@@ -253,12 +255,7 @@ void Battle::Arena::DialogBattleSummary(const Result &res) const
 
     SpriteBack back(pos_rt);
 
-    if (false)
-    {
-        dialog.Blit(Rect(0, 232, pos_rt.w, 224), pos_rt.x, pos_rt.y);
-        dialog.Blit(Rect(0, 0, pos_rt.w, 30), pos_rt.x, pos_rt.y);
-    } else
-        dialog.Blit(pos_rt.x, pos_rt.y);
+    dialog.Blit(pos_rt.x, pos_rt.y);
 
     const int anime_ox = 47;
     const int anime_oy = 36;
@@ -299,29 +296,33 @@ void Battle::Arena::DialogBattleSummary(const Result &res) const
         text.Set("None", Font::SMALL);
         text.Blit(pos_rt.x + (pos_rt.w - text.w()) / 2, pos_rt.y + 360);
     }
+	Rect btnRect(pos_rt);
+	btnRect.x -= 18;
+	btnRect.y -= 22;
 
-    Button btn_ok(pos_rt.x + 221, pos_rt.y + 410,
-                  (conf.ExtGameEvilInterface() ? ICN::WINCMBBE : ICN::WINCMBTB), 0, 1);
-    btn_ok.Draw();
-    {
-        Rect sourceRect(pos_rt.x + 21, pos_rt.y + 410, btn_ok.w, btn_ok.h);
-        Point destPoint(pos_rt.x + 121, pos_rt.y + 410);
-        display.Blit(sourceRect, destPoint, display);
-        Point destPoint2(pos_rt.x + 41, pos_rt.y + 410);
-        display.Blit(sourceRect, destPoint2, display);
-    }
-
-    cursor.Show();
+	Point textPos = pos_rt;
+	textPos.x += 36;
+	textPos.y += 410;
+	Text textFight(_("Fight: "), Font::BIG);
+	textFight.Blit(textPos);
+	ButtonGroups btnGroups(btnRect, YES|NO);
+	btnGroups.Draw();
+	cursor.Show();
     display.Flip();
 
     u32 frame = 0;
 
     while (le.HandleEvents())
     {
-        le.MousePressLeft(btn_ok) ? btn_ok.PressDraw() : btn_ok.ReleaseDraw();
-
+        //le.MousePressLeft(btn_ok) ? btn_ok.PressDraw() : btn_ok.ReleaseDraw();
+		auto result = btnGroups.QueueEventProcessing();
+		if(Dialog::YES == result)
+		{
+			res.fightAgain = FightResultType::FightAgain;
+			break;
+		}
         // exit
-        if (HotKeyCloseWindow || le.MouseClickLeft(btn_ok)) break;
+        if (HotKeyCloseWindow || result!=Dialog::ZERO) break;
 
         // animation
         if (AnimateInfrequentDelay(Game::BATTLE_DIALOG_DELAY))

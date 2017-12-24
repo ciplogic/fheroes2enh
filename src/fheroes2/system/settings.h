@@ -257,6 +257,7 @@ public:
     bool Sound() const;
 
     bool Music() const;
+	void SetQuickCombat(bool value);
 	bool QuickCombat() const;
 
     bool ShowControlPanel() const;

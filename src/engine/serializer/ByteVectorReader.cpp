@@ -1,4 +1,5 @@
 #include "ByteVectorReader.h"
+#include "rect.h"
 
 ByteVectorReader::ByteVectorReader(const std::vector<u8>& data)
 	: _data(data), _pos(0)
@@ -81,4 +82,42 @@ std::string ByteVectorReader::toString(int sizeBlock)
 	auto raw = getRaw(sizeBlock);
 	std::string text = reinterpret_cast<char*>(raw.data());
 	return text;
+}
+
+ByteVectorReader & operator>>(ByteVectorReader & msg, u32 & val)
+{
+	val = msg.getLE32();
+	return msg;
+}
+
+ByteVectorReader & operator>>(ByteVectorReader & msg, bool &v)
+{
+	v = msg.Get8();
+	return msg;
+}
+
+ByteVectorReader & operator>>(ByteVectorReader & msg, std::string &v)
+{
+	u32 size = msg.getLE32();
+	v.resize(size);
+
+	for (char &it : v)
+		it = msg.Get8();
+
+	return msg;
+}
+
+ByteVectorReader & operator>>(ByteVectorReader &msg, s16 &val)
+{
+	val = msg.getLE16();
+	return msg;
+}
+ByteVectorReader & operator>>(ByteVectorReader &msg, s32 &val)
+{
+	val = msg.getLE32();
+	return msg;
+}
+ByteVectorReader & operator>>(ByteVectorReader & msg, Point &v)
+{
+	return msg >> v.x >> v.y;
 }

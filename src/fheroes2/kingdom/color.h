@@ -25,6 +25,7 @@
 #include <vector>
 #include "gamedefs.h"
 #include "serialize.h"
+#include "ByteVectorReader.h"
 
 namespace BarrierColor
 {
@@ -78,7 +79,8 @@ class ColorBase
 
     friend StreamBase &operator<<(StreamBase &, const ColorBase &);
 
-    friend StreamBase &operator>>(StreamBase &, ColorBase &);
+    friend StreamBase &operator>>(StreamBase &, ColorBase &); 
+	friend ByteVectorReader &operator>>(ByteVectorReader &msg, ColorBase &col);
 
 public:
     ColorBase(int col = Color::NONE) : color(col)
@@ -100,4 +102,5 @@ StreamBase &operator<<(StreamBase &, const ColorBase &);
 
 StreamBase &operator>>(StreamBase &, ColorBase &);
 
+ByteVectorReader &operator>>(ByteVectorReader &msg, ColorBase &col);
 #endif

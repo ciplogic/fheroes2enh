@@ -753,6 +753,31 @@ void Heroes::Action(s32 dst_index)
         }
 }
 
+Battle::Result BattleHeroWithMonster(Heroes& hero, Army&army, s32 dst_index)
+{
+	Battle::Result res;
+	StreamBuf armyBuf, heroArmyBuf;
+	armyBuf << army; 
+	armyBuf.seek(0);
+	auto armyVec = armyBuf.getRaw(0);
+	heroArmyBuf << hero;
+	heroArmyBuf.seek(0);
+	auto heroVec = heroArmyBuf.getRaw(0);
+
+	do {
+		res = Battle::Loader(hero.GetArmy(), army, dst_index);
+		if (res.fightAgain == Battle::FightResultType::FightAgain) {
+			Settings::Get().SetQuickCombat(false);
+			StreamBuf bvr(armyVec);
+			bvr >> army;
+			StreamBuf heroArmyReader(heroVec);
+			heroArmyReader >> hero;
+		}
+	} while (res.fightAgain == Battle::FightResultType::FightAgain);
+	Settings::Get().SetQuickCombat(true);
+	return res;
+}
+
 void ActionToMonster(Heroes &hero, u32 obj, s32 dst_index)
 {
     bool destroy = false;
@@ -820,8 +845,9 @@ void ActionToMonster(Heroes &hero, u32 obj, s32 dst_index)
     if (JOIN_NONE == join.first)
     {
         DEBUG(DBG_GAME, DBG_INFO, hero.GetName() << " attack monster " << troop.GetName());
-        Army army(tile);
-        Battle::Result res = Battle::Loader(hero.GetArmy(), army, dst_index);
+		
+		Army army(tile);
+		Battle::Result res = BattleHeroWithMonster(hero, army, dst_index);
 
         if (res.AttackerWins())
         {

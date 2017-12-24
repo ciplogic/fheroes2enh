@@ -41,6 +41,7 @@ public:
     void SetIndex(s32);
 
     bool isPosition(const Point &) const;
+	void ReadFrom(ByteVectorReader & msg);
 
 protected:
     friend StreamBase &operator<<(StreamBase &, const MapPosition &);

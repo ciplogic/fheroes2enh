@@ -233,6 +233,11 @@ void Artifact::UpdateStats(const string &spec)
 {
 }
 
+void Artifact::ReadFrom(ByteVectorReader & msg)
+{
+	msg >> id >> ext;
+}
+
 Artifact::Artifact(int art) : id(art < UNKNOWN ? art : UNKNOWN), ext(0)
 {
 }

@@ -1355,6 +1355,30 @@ StreamBase &operator<<(StreamBase &msg, const Army &army)
     return msg << army.combat_format << army.color;
 }
 
+
+ByteVectorReader &operator>>(ByteVectorReader &msg, Army &army)
+{
+	u32 armysz;
+	msg >> armysz;
+
+	for (auto &_item : army._items)
+		msg >> *_item;
+
+	msg >> army.combat_format >> army.color;
+
+	// set army
+	for (auto it = army._items.begin(); it != army._items.end(); ++it)
+	{
+		auto *troop = dynamic_cast<ArmyTroop *>(*it);
+		if (troop) troop->SetArmy(army);
+	}
+
+	// set later from owner (castle, heroes)
+	army.commander = nullptr;
+
+	return msg;
+}
+
 StreamBase &operator>>(StreamBase &msg, Army &army)
 {
     u32 armysz;

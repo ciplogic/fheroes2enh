@@ -51,6 +51,12 @@ namespace Battle
         RESULT_LOSS = 0x01, RESULT_RETREAT = 0x02, RESULT_SURRENDER = 0x04, RESULT_WINS = 0x80
     };
 
+	enum class FightResultType
+	{
+		Accept,
+		FightAgain
+	};
+
     struct Result
     {
         u32 army1;
@@ -58,8 +64,9 @@ namespace Battle
         u32 exp1;
         u32 exp2;
         u32 killed;
+	    mutable FightResultType fightAgain;
 
-        Result() : army1(0), army2(0), exp1(0), exp2(0), killed(0)
+	    Result() : army1(0), army2(0), exp1(0), exp2(0), killed(0), fightAgain(FightResultType::Accept)
         {}
 
         bool AttackerWins() const;

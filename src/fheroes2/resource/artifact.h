@@ -24,6 +24,7 @@
 
 #include <vector>
 #include "gamedefs.h"
+#include "ByteVectorReader.h"
 
 class Spell;
 
@@ -212,6 +213,8 @@ public:
     static const char *GetScenario(const Artifact &);
 
     static void UpdateStats(const string &);
+
+	void ReadFrom(ByteVectorReader& msg);
 
 private:
     friend StreamBase &operator<<(StreamBase &, const Artifact &);

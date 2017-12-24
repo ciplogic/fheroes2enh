@@ -25,6 +25,7 @@
 
 #include <string>
 #include "monster.h"
+#include "ByteVectorReader.h"
 
 class Army;
 
@@ -94,6 +95,7 @@ protected:
     friend StreamBase &operator<<(StreamBase &, const Troop &);
 
     friend StreamBase &operator>>(StreamBase &, Troop &);
+	friend ByteVectorReader &operator>>(ByteVectorReader &msg, Troop &troop);
 
     u32 count;
 };
@@ -101,6 +103,7 @@ protected:
 StreamBase &operator<<(StreamBase &, const Troop &);
 
 StreamBase &operator>>(StreamBase &, Troop &);
+ByteVectorReader &operator>>(ByteVectorReader &msg, Troop &troop);
 
 class ArmyTroop : public Troop
 {

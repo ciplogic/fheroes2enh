@@ -24,6 +24,7 @@
 
 #include "payment.h"
 #include "gamedefs.h"
+#include "ByteVectorReader.h"
 
 class HeroBase;
 
@@ -194,12 +195,13 @@ public:
     static void UpdateStats(const string &);
 
     static u32 CalculateDimensionDoorDistance(u32 current_sp, u32 total_hp);
+	void ReadFrom(ByteVectorReader &msg);
 
 private:
     friend StreamBase &operator<<(StreamBase &, const Spell &);
 
     friend StreamBase &operator>>(StreamBase &, Spell &);
-
+	
     int id;
 };
 

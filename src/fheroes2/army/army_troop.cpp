@@ -269,6 +269,11 @@ StreamBase &operator<<(StreamBase &msg, const Troop &troop)
     return msg << troop.id << troop.count;
 }
 
+ByteVectorReader &operator>>(ByteVectorReader &msg, Troop &troop)
+{
+	return msg >> troop.id >> troop.count;
+}
+
 StreamBase &operator>>(StreamBase &msg, Troop &troop)
 {
     return msg >> troop.id >> troop.count;

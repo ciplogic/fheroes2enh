@@ -27,6 +27,7 @@
 #include "mp2.h"
 #include "color.h"
 #include "resource.h"
+#include "ByteVectorReader.h"
 
 class IndexDistance : public pair<s32, u32>
 {
@@ -63,6 +64,7 @@ public:
 };
 
 StreamBase &operator>>(StreamBase &, IndexObject &);
+ByteVectorReader &operator>>(ByteVectorReader &, IndexObject &);
 
 class ObjectColor : public pair<int, int>
 {

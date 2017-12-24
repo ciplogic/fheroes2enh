@@ -69,3 +69,8 @@ bool MapPosition::isPosition(const Point &pt) const
 {
     return pt == center;
 }
+
+void MapPosition::ReadFrom(ByteVectorReader & msg)
+{
+	msg >> center;
+}

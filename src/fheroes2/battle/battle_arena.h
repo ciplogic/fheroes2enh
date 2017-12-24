@@ -113,7 +113,7 @@ namespace Battle
         const SpellStorage &
         GetUsageSpells() const;
 
-        void DialogBattleSummary(const Result &) const;
+        void DialogBattleSummary(const Result &);
 
         int DialogBattleHero(const HeroBase &, bool) const;
 

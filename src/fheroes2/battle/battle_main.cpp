@@ -70,9 +70,6 @@ Battle::Result Battle::Loader(Army &army1, Army &army2, s32 mapsindex)
     AGG::ResetMixer();
     bool local = army1.isControlHuman() || army2.isControlHuman();
 
-#ifdef WITH_DEBUG
-    if(IS_DEBUG(DBG_BATTLE, DBG_TRACE)) local = true;
-#endif
 
     Arena arena(army1, army2, mapsindex, local);
 

@@ -196,6 +196,30 @@ void HeroBase::LoadDefaults(int type, int race)
     }
 }
 
+void HeroBase::ReadFrom(ByteVectorReader & msg)
+{
+	auto& hero = *this;
+	
+	auto& skillPrimary = static_cast<Skill::Primary &>(hero);
+	skillPrimary.ReadFrom(msg);
+	auto& mapPos = static_cast<MapPosition &>(hero);
+	mapPos.ReadFrom(msg);
+	msg >>
+		// modes
+		hero.modes >>
+		hero.magic_point >> hero.move_point;
+
+	msg.readToVec(hero.spell_book); 
+		msg.readToVec(hero.bag_artifacts);
+
+	if (FORMAT_VERSION_3269 > Game::GetLoadVersion())
+	{
+		if (hero.bag_artifacts.size() < HEROESMAXARTIFACT)
+			hero.bag_artifacts.resize(HEROESMAXARTIFACT, Artifact::UNKNOWN);
+	}
+
+}
+
 HeroBase::HeroBase() : magic_point(0), move_point(0), spell_book()
 {
 }

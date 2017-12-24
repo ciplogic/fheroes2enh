@@ -749,3 +749,8 @@ StreamBase &operator>>(StreamBase &msg, Spell &spell)
 {
     return msg >> spell.id;
 }
+
+void Spell::ReadFrom(ByteVectorReader &msg)
+{
+	msg >> this->id;
+}

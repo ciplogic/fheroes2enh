@@ -29,6 +29,8 @@
 #include "gamedefs.h"
 #include "serialize.h"
 
+#include "ByteVectorReader.h"
+
 void StringAppendModifiers(string &, int);
 
 class Spell;
@@ -120,6 +122,7 @@ namespace Skill
     };
 
     StreamBase &operator>>(StreamBase &, Secondary &);
+	ByteVectorReader &operator>>(ByteVectorReader &, Secondary &);
 
     class SecSkills : protected vector<Secondary>
     {
@@ -151,11 +154,13 @@ namespace Skill
         friend StreamBase &operator<<(StreamBase &, const SecSkills &);
 
         friend StreamBase &operator>>(StreamBase &, SecSkills &);
+		friend ByteVectorReader &operator>>(ByteVectorReader &, SecSkills &);
     };
 
     StreamBase &operator<<(StreamBase &, const SecSkills &);
 
     StreamBase &operator>>(StreamBase &, SecSkills &);
+	ByteVectorReader &operator>>(ByteVectorReader &, SecSkills &);
 
     class Primary
     {
@@ -197,6 +202,8 @@ namespace Skill
         static string StringDescription(int, const Heroes *);
 
         static int GetInitialSpell(int race);
+
+		void ReadFrom(ByteVectorReader & msg);
 
     protected:
         void LoadDefaults(int type, int race);

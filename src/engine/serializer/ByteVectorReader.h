@@ -2,8 +2,11 @@
 #define ByteVectorReader_H
 
 #include "types.h"
+#include <list>
 #include <vector>
 #include <string>
+
+struct Point;
 
 class ByteVectorReader
 {
@@ -33,6 +36,50 @@ public:
 	std::vector<u8> getRaw(size_t sizeblock);	
 
 	std::string toString(int sizeBlock);
+
+	template<class Type>
+	void readToVec(std::vector<Type> &v)
+	{
+		const u32 size = getLE32();
+		v.resize(size);
+		for (typename vector<Type>::iterator
+			it = v.begin(); it != v.end(); ++it)
+			it->ReadFrom(*this);
+	}
+
+	template<class Type>
+	ByteVectorReader &operator>>(std::vector<Type> &v)
+	{
+		const u32 size = getLE32();
+		v.resize(size);
+		for (typename std::vector<Type>::iterator
+			it = v.begin(); it != v.end(); ++it)
+			*this >> *it;
+		return *this;
+	}
+
+	template<class Type>
+	ByteVectorReader &operator>>(std::list<Type> &v)
+	{
+		const u32 size = getLE32();
+		v.resize(size);
+		for (typename std::list<Type>::iterator
+			it = v.begin(); it != v.end(); ++it)
+			*this >> *it;
+		return *this;
+	}
+
 };
+
+
+
+ByteVectorReader & operator>>(ByteVectorReader &msg, s16 &val);
+
+ByteVectorReader &operator>>(ByteVectorReader &, u32 &);
+ByteVectorReader &operator>>(ByteVectorReader &, s32 &);
+
+ByteVectorReader & operator>>(ByteVectorReader & msg, bool &);
+ByteVectorReader & operator>>(ByteVectorReader & msg, std::string &v);
+ByteVectorReader & operator>>(ByteVectorReader & msg, Point &v);
 
 #endif

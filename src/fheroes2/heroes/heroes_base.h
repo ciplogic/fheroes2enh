@@ -142,11 +142,12 @@ public:
 
     void LoadDefaults(int type, int race);
 
+	void ReadFrom(ByteVectorReader &msg);
+
 protected:
     friend StreamBase &operator<<(StreamBase &, const HeroBase &);
 
     friend StreamBase &operator>>(StreamBase &, HeroBase &);
-
 
     u32 magic_point;
     u32 move_point;

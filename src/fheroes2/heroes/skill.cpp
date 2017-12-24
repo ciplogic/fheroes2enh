@@ -34,6 +34,7 @@
 #include "dialog_selectitems.h"
 #include "settings.h"
 #include "skill_static.h"
+#include "ByteVectorReader.h"
 #include "game_static.h"
 
 namespace Skill
@@ -113,6 +114,12 @@ int Skill::Primary::GetInitialSpell(int race)
 {
     const stats_t *ptr = GameStatic::GetSkillStats(race);
     return ptr ? ptr->initial_spell : 0;
+}
+
+void Skill::Primary::ReadFrom(ByteVectorReader & msg)
+{
+	auto& skill = *this;
+	msg >> skill.attack >> skill.defense >> skill.knowledge >> skill.power;
 }
 
 int Skill::Primary::LevelUp(int race, int level)
@@ -1065,6 +1072,12 @@ StreamBase &Skill::operator>>(StreamBase &sb, Secondary &st)
     return sb >> st.first >> st.second;
 }
 
+ByteVectorReader &Skill::operator>>(ByteVectorReader &sb, Secondary &st)
+{
+	return sb >> st.first >> st.second;
+}
+
+
 StreamBase &Skill::operator<<(StreamBase &sb, const SecSkills &ss)
 {
     const vector<Secondary> &v = ss;
@@ -1082,4 +1095,18 @@ StreamBase &Skill::operator>>(StreamBase &sb, SecSkills &ss)
             v.resize(HEROESMAXSKILL);
     }
     return sb;
+}
+
+
+ByteVectorReader &Skill::operator>>(ByteVectorReader &sb, SecSkills &ss)
+{
+	vector<Secondary> &v = ss;
+	sb >> v;
+
+	if (FORMAT_VERSION_3255 > Game::GetLoadVersion())
+	{
+		if (v.size() > HEROESMAXSKILL)
+			v.resize(HEROESMAXSKILL);
+	}
+	return sb;
 }

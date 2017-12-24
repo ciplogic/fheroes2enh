@@ -316,6 +316,8 @@ public:
 
     static void ScholarAction(Heroes &, Heroes &);
 
+	void ReadFrom(ByteVectorReader&);
+
 private:
     friend StreamBase &operator<<(StreamBase &, const Heroes &);
 

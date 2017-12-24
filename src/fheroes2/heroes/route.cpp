@@ -552,9 +552,21 @@ StreamBase &Route::operator>>(StreamBase &msg, Step &step)
 {
     return msg >> step.from >> step.direction >> step.penalty;
 }
+ByteVectorReader &Route::operator>>(ByteVectorReader &msg, Step &step)
+{
+	return msg >> step.from >> step.direction >> step.penalty;
+}
+
 
 StreamBase &Route::operator>>(StreamBase &msg, Path &path)
 {
     list<Step> &base = path;
     return msg >> path.dst >> path.hide >> base;
+}
+
+
+ByteVectorReader &Route::operator>>(ByteVectorReader &msg, Path &path)
+{
+	list<Step> &base = path;
+	return msg >> path.dst >> path.hide >> base;
 }
