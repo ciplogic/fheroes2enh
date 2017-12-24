@@ -768,10 +768,10 @@ Battle::Result BattleHeroWithMonster(Heroes& hero, Army&army, s32 dst_index)
 		res = Battle::Loader(hero.GetArmy(), army, dst_index);
 		if (res.fightAgain == Battle::FightResultType::FightAgain) {
 			Settings::Get().SetQuickCombat(false);
-			StreamBuf bvr(armyVec);
+			ByteVectorReader bvr(armyVec);
 			bvr >> army;
-			StreamBuf heroArmyReader(heroVec);
-			heroArmyReader >> hero;
+			ByteVectorReader heroArmyReader(heroVec);
+			hero.ReadFrom(heroArmyReader);
 		}
 	} while (res.fightAgain == Battle::FightResultType::FightAgain);
 	Settings::Get().SetQuickCombat(true);
@@ -1010,8 +1010,9 @@ void ActionToCastle(Heroes &hero, u32 obj, s32 dst_index)
             Heroes *defender = heroes.GuardFirst();
             castle->ActionPreBattle();
 
-            // new battle
-            Battle::Result res = Battle::Loader(hero.GetArmy(), army, dst_index);
+			// new battle
+            //Battle::Result res = Battle::Loader(hero.GetArmy(), army, dst_index);
+			Battle::Result res = BattleHeroWithMonster(hero, army, dst_index);
 
             castle->ActionAfterBattle(res.AttackerWins());
 
