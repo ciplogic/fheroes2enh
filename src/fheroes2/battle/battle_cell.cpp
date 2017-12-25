@@ -89,8 +89,6 @@ Battle::Position Battle::Position::GetCorrect(const Unit &b, s32 head)
 
         if (result.second)
             std::swap(result.first, result.second);
-        else
-                DEBUG(DBG_BATTLE, DBG_WARN, "nullptr pointer, " << b.String() << ", dst: " << head);
     }
 
     return result;

@@ -549,7 +549,6 @@ castle size: T and B - sprite, S - shadow, XX - center
             break;
 
         default:
-            DEBUG(DBG_GAME, DBG_WARN, "incorrect object" << ", index: " << GetIndexFromAbsPoint(center.x, center.y));
             return;
     }
 

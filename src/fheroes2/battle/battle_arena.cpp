@@ -317,8 +317,6 @@ void Battle::Arena::TurnTroop(Unit *current_troop)
     Actions actions;
     end_turn = false;
 
-    DEBUG(DBG_BATTLE, DBG_TRACE, current_troop->String(true));
-
     while (!end_turn)
     {
         // bad morale
@@ -389,7 +387,6 @@ void Battle::Arena::Turns()
     const Settings &conf = Settings::Get();
 
     ++current_turn;
-    DEBUG(DBG_BATTLE, DBG_TRACE, current_turn);
 
     if (interface && conf.Music() && !Music::isPlaying())
         AGG::PlayMusic(MUS::GetBattleRandom(), false);
@@ -483,7 +480,6 @@ void Battle::Arena::Turns()
 
 void Battle::Arena::RemoteTurn(const Unit &b, Actions &a)
 {
-    DEBUG(DBG_BATTLE, DBG_WARN, "switch to AI turn");
     AI::BattleTurn(*this, b, a);
 }
 
@@ -545,16 +541,6 @@ void Battle::Arena::CatapultAction()
 Battle::Indexes Battle::Arena::GetPath(const Unit &b, const Position &dst)
 {
     Indexes result = board.GetAStarPath(b, dst);
-
-    if (!result.empty())
-    {
-        if (IS_DEBUG(DBG_BATTLE, DBG_TRACE))
-        {
-            stringstream ss;
-            for (int ii : result) ss << ii << ", ";
-            DEBUG(DBG_BATTLE, DBG_TRACE, ss.str());
-        }
-    }
 
     return result;
 }
@@ -958,7 +944,6 @@ Battle::Unit *Battle::Arena::CreateElemental(const Spell &spell)
 
     if (0 > pos || !hero)
     {
-        DEBUG(DBG_BATTLE, DBG_WARN, "internal error");
         return nullptr;
     }
 
@@ -987,7 +972,6 @@ Battle::Unit *Battle::Arena::CreateElemental(const Spell &spell)
 
     if (!affect)
     {
-        DEBUG(DBG_BATTLE, DBG_WARN, "other elemental summon");
         return nullptr;
     }
 
@@ -995,11 +979,9 @@ Battle::Unit *Battle::Arena::CreateElemental(const Spell &spell)
 
     if (!mons.isValid())
     {
-        DEBUG(DBG_BATTLE, DBG_WARN, "unknown id");
         return nullptr;
     }
 
-    DEBUG(DBG_BATTLE, DBG_TRACE, mons.GetName() << ", position: " << pos);
     u32 count = spell.ExtraValue() * hero->GetPower();
     u32 acount = hero->HasArtifact(Artifact::BOOK_ELEMENTS);
     if (acount) count *= acount * 2;
@@ -1014,7 +996,6 @@ Battle::Unit *Battle::Arena::CreateElemental(const Spell &spell)
         army.push_back(elem);
     } else
     {
-        DEBUG(DBG_BATTLE, DBG_WARN, "is nullptr");
     }
 
     return elem;
@@ -1023,21 +1004,16 @@ Battle::Unit *Battle::Arena::CreateElemental(const Spell &spell)
 Battle::Unit *Battle::Arena::CreateMirrorImage(Unit &b, s32 pos)
 {
     auto *image = new Unit(b, pos, b.isReflect());
+	    
+    b.SetMirror(image);
+    image->SetArmy(*b.GetArmy());
+    image->SetMirror(&b);
+    image->SetModes(CAP_MIRRORIMAGE);
+    if (interface) image->InitContours();
+    b.SetModes(CAP_MIRROROWNER);
 
-    if (image)
-    {
-        b.SetMirror(image);
-        image->SetArmy(*b.GetArmy());
-        image->SetMirror(&b);
-        image->SetModes(CAP_MIRRORIMAGE);
-        if (interface) image->InitContours();
-        b.SetModes(CAP_MIRROROWNER);
-
-        GetCurrentForce().push_back(image);
-    } else
-    {
-        DEBUG(DBG_BATTLE, DBG_WARN, "internal error");
-    }
+    GetCurrentForce().push_back(image);
+   
 
     return image;
 }

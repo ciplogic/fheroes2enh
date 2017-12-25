@@ -209,14 +209,12 @@ bool AGG::File::Open(const string &fname)
 
     if (!stream.open(filename, "rb"))
     {
-        DEBUG(DBG_ENGINE, DBG_WARN, "error read file: " << filename << ", skipping...");
         return false;
     }
 
     const u32 size = stream.size();
 
     count_items = stream.getLE16();
-    DEBUG(DBG_ENGINE, DBG_INFO, "load: " << filename << ", count items: " << count_items);
 
 	stream.seek(size - FATSIZENAME * count_items);
 	std::vector<std::string> vectorNames;
@@ -294,8 +292,6 @@ const vector<u8> AGG::File::Read(const string &str)
 
 	if (f.size)
 	{
-		DEBUG(DBG_ENGINE, DBG_TRACE, key << ":\t" << f.Info());
-
 		stream.seek(f.offset);
 		body = stream.getRaw(f.size);
 	}
@@ -311,14 +307,12 @@ u32 AGG::ClearFreeObjects()
     for (auto &it : wav_cache)
         total += it.second.size();
 
-    DEBUG(DBG_ENGINE, DBG_INFO, "WAV" << " " << "memory: " << total);
     total = 0;
 
     // mus cache
     for (auto &it : mid_cache)
         total += it.second.size();
 
-    DEBUG(DBG_ENGINE, DBG_INFO, "MID" << " " << "memory: " << total);
     total = 0;
 
 #ifdef WITH_TTF
@@ -331,7 +325,6 @@ u32 AGG::ClearFreeObjects()
     total += (*it).second.sfs[3].GetMemoryUsage();
     }
 
-    DEBUG(DBG_ENGINE, DBG_INFO, "FNT" << " " << "memory: " << total);
     total = 0;
 #endif
 
@@ -342,7 +335,6 @@ u32 AGG::ClearFreeObjects()
             if (tils.sprites)
                 total += tils.sprites[jj].GetMemoryUsage();
     }
-    DEBUG(DBG_ENGINE, DBG_INFO, "TIL" << " " << "memory: " << total);
     total = 0;
 
     // icn cache
@@ -377,8 +369,6 @@ u32 AGG::ClearFreeObjects()
             }
         }
     }
-
-    DEBUG(DBG_ENGINE, DBG_INFO, "ICN" << " " << "memory: " << used);
 
     return total;
 }
@@ -507,7 +497,6 @@ bool AGG::LoadExtICN(int icn, u32 index, bool reflect)
     if (0 == count) return false;
 
     icn_cache_t &v = icn_cache[icn];
-    DEBUG(DBG_ENGINE, DBG_TRACE, ICN::GetString(icn) << ", " << index);
 
     if (nullptr == v.sprites)
     {
@@ -826,13 +815,9 @@ ICNSprite AGG::RenderICNSprite(int icn, u32 index)
     const vector<u8> body = ReadICNChunk(icn, index);
     if (body.empty())
     {
-        DEBUG(DBG_ENGINE, DBG_WARN, "error: " << ICN::GetString(icn));
         return res;
     }
-
-    // prepare icn data
-    DEBUG(DBG_ENGINE, DBG_TRACE, ICN::GetString(icn) << ", " << index);
-
+	
 	ByteVectorReader st(body);
 	//StreamBuf st(body);
 
@@ -946,7 +931,6 @@ ICNSprite AGG::RenderICNSprite(int icn, u32 index)
         }
         if (buf >= max)
         {
-            DEBUG(DBG_ENGINE, DBG_WARN, "out of range: " << buf - max);
             break;
         }
     }
@@ -974,48 +958,6 @@ bool AGG::LoadOrgICN(Sprite &sp, int icn, u32 index, bool reflect)
 
     return false;
 }
-
-/*
-bool AGG::LoadOrgICN(Sprite & sp, int icn, u32 index, bool reflect)
-{
-    const std::vector<u8> & body = ReadICNChunk(icn, index);
-
-    if(body.size())
-    {
-	// loading original
-	DEBUG(DBG_ENGINE, DBG_TRACE, ICN::GetString(icn) << ", " << index);
-
-	StreamBuf st(body);
-
-	u32 count = st.getLE16();
-	u32 blockSize = st.getLE32();
-	u32 sizeData = 0;
-
-	if(index) st.skip(index * 13);
-
-	ICNHeader header1;
-	st >> header1;
-
-	if(index + 1 != count)
-	{
-	    ICNHeader header2;
-	    st >> header2;
-	    sizeData = header2.offsetData - header1.offsetData;
-	}
-	else
-	    sizeData = blockSize - header1.offsetData;
-
-	sp = Sprite::CreateICN(icn ,header1, &body[6 + header1.offsetData], sizeData, reflect);
-	Sprite::AddonExtensionModify(sp, icn, index);
-
-	return true;
-    }
-
-    DEBUG(DBG_ENGINE, DBG_WARN, "error: " << ICN::GetString(icn));
-
-    return false;
-}
-*/
 
 bool AGG::LoadOrgICN(int icn, u32 index, bool reflect)
 {
@@ -1064,9 +1006,6 @@ void AGG::LoadICN(int icn, u32 index, bool reflect)
                 if (!LoadOrgICN(icn, index, reflect))
                     Error::Except(__FUNCTION__, "load icn");
             }
-#ifdef DEBUG
-            if (Settings::Get().UseAltResource()) SaveICN(icn);
-#endif
         }
 
     }
@@ -1086,7 +1025,6 @@ Sprite AGG::GetICN(int icn, u32 index, bool reflect)
     // out of range?
     if (v.count && index >= v.count)
     {
-        DEBUG(DBG_ENGINE, DBG_WARN, ICN::GetString(icn) << ", " << "out of range: " << index);
         index = 0;
     }
 
@@ -1100,14 +1038,7 @@ Sprite AGG::GetICN(int icn, u32 index, bool reflect)
 
     result = reflect ? v.reflect[index] : v.sprites[index];
 
-    // invalid sprite?
-    if (!result.isValid())
-    {
-        DEBUG(DBG_ENGINE, DBG_INFO,
-            "invalid sprite: " << ICN::GetString(icn) << ", index: " << index << ", reflect: "
-            << (reflect ? "true" : "false"));
-    }
-
+    
     return result;
 }
 
@@ -1173,7 +1104,6 @@ bool AGG::LoadOrgTIL(int til, u32 max)
         return true;
     } else
     {
-        DEBUG(DBG_ENGINE, DBG_WARN, "size mismach" << ", skipping...");
     }
 
     return false;
@@ -1186,7 +1116,6 @@ void AGG::LoadTIL(int til)
 
     if (!v.sprites)
     {
-        DEBUG(DBG_ENGINE, DBG_INFO, TIL::GetString(til));
         u32 max = 0;
 
         switch (til)
@@ -1215,9 +1144,6 @@ void AGG::LoadTIL(int til)
             if (!LoadOrgTIL(til, max))
                 Error::Except(__FUNCTION__, "load til");
 
-#ifdef DEBUG
-            if (conf.UseAltResource()) SaveTIL(til);
-#endif
         }
     }
 }
@@ -1254,7 +1180,6 @@ Surface AGG::GetTIL(int til, u32 index, u32 shape)
 
         if (index2 >= v.count)
         {
-            DEBUG(DBG_ENGINE, DBG_WARN, TIL::GetString(til) << ", " << "out of range: " << index);
             index2 = 0;
         }
 
@@ -1266,14 +1191,8 @@ Surface AGG::GetTIL(int til, u32 index, u32 shape)
 
             if (src.isValid())
                 surface = src.RenderReflect(shape);
-            else
-                    DEBUG(DBG_ENGINE, DBG_WARN, "is nullptr");
         }
 
-        if (!surface.isValid())
-        {
-            DEBUG(DBG_ENGINE, DBG_WARN, "invalid sprite: " << TIL::GetString(til) << ", index: " << index);
-        }
 
         result = surface;
     }
@@ -1308,13 +1227,11 @@ void AGG::LoadWAV(int m82, vector<u8> &v)
 
     if(v.size())
     {
-        DEBUG(DBG_ENGINE, DBG_INFO, sound);
         return;
     }
     }
 #endif
 
-    DEBUG(DBG_ENGINE, DBG_INFO, M82::GetString(m82));
     const vector<u8> &body = ReadChunk(M82::GetString(m82));
 
     if (body.empty())
@@ -1375,7 +1292,6 @@ v.insert(v.begin() + 44, body.begin(), body.end());
 /* load XMI object */
 void AGG::LoadMID(int xmi, vector<u8> &v)
 {
-    DEBUG(DBG_ENGINE, DBG_INFO, XMI::GetString(xmi));
     const vector<u8> &body = ReadChunk(XMI::GetString(xmi));
 
     if (!body.empty())
@@ -1458,7 +1374,6 @@ void AGG::LoadLOOPXXSounds(const vector<int> &vols)
                     } else
                         loop_sounds.emplace_back(m82, ch);
 
-                    DEBUG(DBG_ENGINE, DBG_INFO, M82::GetString(m82));
                 }
             }
         }
@@ -1472,7 +1387,6 @@ void AGG::PlaySound(int m82)
 
     if (conf.Sound())
     {
-        DEBUG(DBG_ENGINE, DBG_INFO, M82::GetString(m82));
         const vector<u8> &v = GetWAV(m82);
         int ch = Mixer::Play(&v[0], v.size(), -1, false);
         Mixer::Pause(ch);
@@ -1510,9 +1424,6 @@ void AGG::PlayMusic(int mus, bool loop)
 
                 if (!System::IsFile(filename))
                 {
-                    DEBUG(DBG_ENGINE, DBG_WARN,
-                          "error read file: " << Settings::GetLastFile(prefix_music, MUS::GetString(mus))
-                                              << ", skipping...");
                     filename.clear();
                 }
             }
@@ -1521,13 +1432,11 @@ void AGG::PlayMusic(int mus, bool loop)
         if (!filename.empty())
             Music::Play(filename, loop);
 
-        DEBUG(DBG_ENGINE, DBG_INFO, MUS::GetString(mus));
     } else
 #ifdef WITH_AUDIOCD
         if(conf.MusicCD() && Cdrom::isValid())
         {
             Cdrom::Play(mus, loop);
-            DEBUG(DBG_ENGINE, DBG_INFO, "cd track " << static_cast<int>(mus));
         }
         else
 #endif
@@ -1552,26 +1461,23 @@ void AGG::PlayMusic(int mus, bool loop)
             Music::Play(file, loop);
 #endif
         }
-        DEBUG(DBG_ENGINE, DBG_INFO, XMI::GetString(xmi));
     }
 }
 
 #ifdef WITH_TTF
 void AGG::LoadTTFChar(u32 ch)
 {
-    const Settings & conf = Settings::Get();
-    const RGBA white(0xFF, 0xFF, 0xFF);
-    const RGBA yellow(0xFF, 0xFF, 0x00);
+	const Settings & conf = Settings::Get();
+	const RGBA white(0xFF, 0xFF, 0xFF);
+	const RGBA yellow(0xFF, 0xFF, 0x00);
 
-    // small
-    fnt_cache[ch].sfs[0] = fonts[0].RenderUnicodeChar(ch, white, ! conf.FontSmallRenderBlended());
-    fnt_cache[ch].sfs[1] = fonts[0].RenderUnicodeChar(ch, yellow, ! conf.FontSmallRenderBlended());
+	// small
+	fnt_cache[ch].sfs[0] = fonts[0].RenderUnicodeChar(ch, white, !conf.FontSmallRenderBlended());
+	fnt_cache[ch].sfs[1] = fonts[0].RenderUnicodeChar(ch, yellow, !conf.FontSmallRenderBlended());
 
-    // medium
-    fnt_cache[ch].sfs[2] = fonts[1].RenderUnicodeChar(ch, white, ! conf.FontNormalRenderBlended());
-    fnt_cache[ch].sfs[3] = fonts[1].RenderUnicodeChar(ch, yellow, ! conf.FontNormalRenderBlended());
-
-    DEBUG(DBG_ENGINE, DBG_TRACE, "0x" << std::hex << ch);
+	// medium
+	fnt_cache[ch].sfs[2] = fonts[1].RenderUnicodeChar(ch, white, !conf.FontNormalRenderBlended());
+	fnt_cache[ch].sfs[3] = fonts[1].RenderUnicodeChar(ch, yellow, !conf.FontNormalRenderBlended());
 }
 
 void AGG::LoadFNT()
@@ -1580,7 +1486,6 @@ void AGG::LoadFNT()
 
     if(! conf.Unicode())
     {
-    DEBUG(DBG_ENGINE, DBG_INFO, "use bitmap fonts");
     }
     else
     if(fnt_cache.empty())
@@ -1594,13 +1499,9 @@ void AGG::LoadFNT()
 
     if(fnt_cache.empty())
     {
-        DEBUG(DBG_ENGINE, DBG_INFO, "use bitmap fonts");
     }
     else
     {
-            DEBUG(DBG_ENGINE, DBG_INFO, "normal fonts " << conf.FontsNormal());
-            DEBUG(DBG_ENGINE, DBG_INFO, "small fonts " << conf.FontsSmall());
-        DEBUG(DBG_ENGINE, DBG_INFO, "preload english charsets");
     }
     }
 }
@@ -1634,15 +1535,12 @@ Surface AGG::GetUnicodeLetter(u32 ch, u32 ft)
 
 void AGG::LoadFNT()
 {
-    DEBUG(DBG_ENGINE, DBG_INFO, "use bitmap fonts");
 }
 
 #endif
 
 Surface AGG::GetLetter(u32 ch, u32 ft)
 {
-    if (ch < 0x21) DEBUG(DBG_ENGINE, DBG_WARN, "unknown letter");
-
     switch (ft)
     {
         case Font::YELLOW_BIG:
@@ -1693,7 +1591,6 @@ bool AGG::Init()
     // read data dir
     if (!ReadDataDir())
     {
-        DEBUG(DBG_ENGINE, DBG_WARN, "data files not found");
         //ShowError();
         //return false;
     }
@@ -1708,7 +1605,6 @@ bool AGG::Init()
 
     if(conf.Unicode())
     {
-        DEBUG(DBG_ENGINE, DBG_INFO, "fonts: " << font1 << ", " << font2);
     if(!fonts[1].Open(font1, conf.FontsNormalSize()) ||
        !fonts[0].Open(font2, conf.FontsSmallSize())) conf.SetUnicode(false);
     }

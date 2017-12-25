@@ -54,11 +54,7 @@ void Kingdom::Init(int clr)
         castles.reserve(15);
 
         UpdateStartingResource();
-    } else
-    {
-        DEBUG(DBG_GAME, DBG_INFO,
-              "Kingdom: unknown player: " << Color::String(color) << "(" << static_cast<int>(color) << ")");
-    }
+    } 
 }
 
 void Kingdom::clear()
@@ -189,7 +185,6 @@ void Kingdom::ActionNewWeek()
         if (IS_DEVEL() && isControlHuman())
         {
             Funds gift(20, 20, 10, 10, 10, 10, 5000);
-            DEBUG(DBG_GAME, DBG_INFO, "debug gift: " << gift.String());
             resource += gift;
         }
     }

@@ -279,9 +279,6 @@ void Castle::PostLoad()
     SetModes(ALLOWBUILD);
 
     // end
-    DEBUG(DBG_GAME, DBG_INFO,
-          (building & BUILD_CASTLE ? "castle" : "town") << ": " << name << ", color: " << Color::String(GetColor())
-                                                        << ", race: " << Race::String(race));
 }
 
 Captain &Castle::GetCaptain()
@@ -832,8 +829,6 @@ Heroes *Castle::RecruitHero(Heroes *hero)
     if (Settings::Get().ExtCastleOneHeroHiredEveryWeek())
         SetModes(DISABLEHIRES);
 
-    DEBUG(DBG_GAME, DBG_INFO, name << ", recruit: " << hero->GetName());
-
     return hero;
 }
 
@@ -902,8 +897,6 @@ bool Castle::RecruitMonster(const Troop &troop)
     kingdom.OddFundsResource(paymentCosts);
     dwelling[dw_index] -= count;
 
-    DEBUG(DBG_GAME, DBG_INFO, name << " recruit: " << ms.GetMultiName() << "(" << count << ")");
-
     return true;
 }
 
@@ -957,8 +950,6 @@ bool Castle::RecruitMonsterFromDwelling(u32 dw, u32 count)
 
     kingdom.OddFundsResource(paymentCosts);
     dwelling[dw_index] -= count;
-
-    DEBUG(DBG_GAME, DBG_INFO, name << " recruit: " << ms.GetMultiName() << "(" << count << ")");
 
     return true;
 }
@@ -1434,7 +1425,6 @@ bool Castle::BuyBuilding(u32 build)
     // disable day build
     ResetModes(ALLOWBUILD);
 
-    DEBUG(DBG_GAME, DBG_INFO, name << " build " << GetStringBuilding(build, race));
     return true;
 }
 
@@ -1566,7 +1556,6 @@ int Castle::GetICNBoat(int race)
             break;
     }
 
-    DEBUG(DBG_GAME, DBG_WARN, "return unknown");
     return ICN::UNKNOWN;
 }
 
@@ -1935,10 +1924,6 @@ int Castle::GetICNBuilding(u32 build, int race)
                 break;
         }
     }
-
-    DEBUG(DBG_GAME, DBG_WARN, "return unknown" << ", race: " <<
-                                               Race::String(race) << ", build: "
-                                               << Castle::GetStringBuilding(build, race) << ", " << build);
 
     return ICN::UNKNOWN;
 }

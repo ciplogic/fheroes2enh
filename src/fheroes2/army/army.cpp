@@ -268,7 +268,6 @@ bool Troops::JoinTroop(const Monster &mons, u32 count)
             else
                 (*it)->Set(mons, count);
 
-            DEBUG(DBG_GAME, DBG_INFO, std::dec << count << " " << (*it)->GetName());
             return true;
         }
     }
@@ -904,7 +903,6 @@ int Army::GetRace() const
 
     if (races.empty())
     {
-        DEBUG(DBG_GAME, DBG_WARN, "empty");
         return Race::NONE;
     }
 
@@ -1249,8 +1247,6 @@ bool Army::TroopsStrongerEnemyTroops(const Troops &troops1, const Troops &troops
     const float h1 = troops1.GetHitPoints();
     const float h2 = troops2.GetHitPoints();
 
-    DEBUG(DBG_AI, DBG_TRACE, "r1: " << r1 << ", s1: " << s1 << ", h1: " << h1 \
- << ", r2: " << r2 << ", s2: " << s2 << ", h2: " << h2);
 
     r1 *= s1 / h2;
     r2 *= s2 / h1;

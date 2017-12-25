@@ -291,8 +291,6 @@ bool Route::Path::Find(s32 to, int limit)
         alt = -1;
         tmp = MAXU16;
 
-        DEBUG(DBG_OTHER, DBG_TRACE, "route, from: " << cur);
-
         // find minimal cost
         for (; it1 != it2; ++it1)
             if ((*it1).second.open)
@@ -322,10 +320,7 @@ bool Route::Path::Find(s32 to, int limit)
             push_front(Step(list[cur].parent, list[cur].direct, list[cur].cost_g));
             cur = list[cur].parent;
         }
-    } else
-    {
-        DEBUG(DBG_OTHER, DBG_TRACE, "not found" << ", from:" << from << ", to: " << to);
-    }
+    } 
 
     return !empty();
 }

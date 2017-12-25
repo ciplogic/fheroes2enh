@@ -705,7 +705,6 @@ u32 Battle::Unit::ApplyDamage(u32 dmg)
 		mirror = nullptr;
 	}
 
-	DEBUG(DBG_BATTLE, DBG_TRACE, dmg << " to " << String() << " and killed: " << killed);
 
  	if (killed >= GetCount())
 	{
@@ -759,7 +758,6 @@ void Battle::Unit::PostKilledAction()
     if (head) head->SetUnit(nullptr);
     if (tail) tail->SetUnit(nullptr);
 
-    DEBUG(DBG_BATTLE, DBG_TRACE, String() << ", is dead...");
     // possible also..
 }
 
@@ -818,14 +816,12 @@ u32 Battle::Unit::ApplyDamage(Unit &enemy, u32 dmg)
         {
             case GHOST:
                 resurrect = killed * static_cast<Monster>(enemy).GetHitPoints();
-                DEBUG(DBG_BATTLE, DBG_TRACE, String() << ", enemy: " << enemy.String() << " resurrect: " << resurrect);
                 // grow troop
                 enemy.Resurrect(resurrect, true, false);
                 break;
 
             case VAMPIRE_LORD:
                 resurrect = killed * Monster::GetHitPoints();
-                DEBUG(DBG_BATTLE, DBG_TRACE, String() << ", enemy: " << enemy.String() << " resurrect: " << resurrect);
                 // restore hit points
                 enemy.Resurrect(resurrect, false, false);
                 break;
@@ -923,9 +919,6 @@ bool Battle::Unit::AllowApplySpell(const Spell &spell, const HeroBase *hero, str
 bool Battle::Unit::ApplySpell(const Spell &spell, const HeroBase *hero, TargetInfo &target)
 {
     if (!AllowApplySpell(spell, hero)) return false;
-
-    DEBUG(DBG_BATTLE, DBG_TRACE, spell.GetName() << " to " << String());
-
     u32 spoint = hero ? hero->GetPower() : 3;
 
     if (spell.isDamage())

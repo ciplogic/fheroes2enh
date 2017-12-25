@@ -488,23 +488,10 @@ bool Settings::Read(const string &filename)
         {
             video_mode.w = 0;
             video_mode.h = 0;
-        } else DEBUG(DBG_ENGINE, DBG_WARN, "unknown video mode: " << value);
+        }
     }
 
-#ifdef WITHOUT_MOUSE
-    ival = config.IntParams("emulate mouse");
-    if(ival)
-    {
-    le.SetEmulateMouse(ival);
 
-    ival = config.IntParams("emulate mouse step");
-        if(ival) le.SetEmulateMouseStep(ival);
-    }
-#endif
-
-#ifndef WITH_TTF
-    opt_global.ResetModes(GLOBAL_USEUNICODE);
-#endif
 
     if (font_normal.empty() || font_small.empty()) opt_global.ResetModes(GLOBAL_USEUNICODE);
 
@@ -778,9 +765,6 @@ string Settings::GetWriteableDir(const char *subdir)
                 return dir_subdir;
         }
     }
-
-    DEBUG(DBG_GAME, DBG_WARN, "writable directory not found");
-
     return "";
 }
 

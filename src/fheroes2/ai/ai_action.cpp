@@ -457,17 +457,13 @@ void AIToHeroes(Heroes &hero, u32 obj, s32 dst_index)
     if (hero.GetColor() == other_hero->GetColor() ||
         (conf.ExtUnionsAllowHeroesMeetings() && Players::isFriends(hero.GetColor(), other_hero->GetColor())))
     {
-        DEBUG(DBG_AI, DBG_INFO, hero.GetName() << " meeting " << other_hero->GetName());
         AIMeeting(hero, *other_hero);
     } else if (hero.isFriends(other_hero->GetColor()))
     {
-        DEBUG(DBG_AI, DBG_INFO, hero.GetName() << " disable meeting");
     } else if (!hero.AllowBattle(true))
     {
-        DEBUG(DBG_AI, DBG_INFO, hero.GetName() << " currently can not allow battle");
     } else if (!other_hero->AllowBattle(false))
     {
-        DEBUG(DBG_AI, DBG_INFO, other_hero->GetName() << " currently can not allow battle");
     } else
     {
         Castle *other_hero_castle = other_hero->inCastle();
@@ -479,9 +475,7 @@ void AIToHeroes(Heroes &hero, u32 obj, s32 dst_index)
 
         //bool disable_auto_move = hero.isShipMaster() || other_hero->isShipMaster() ||
         //                    other_hero_castle || world.GetTiles(hero.GetIndex()).GetObject(false) == MP2::OBJ_STONELIGHTS;
-
-        DEBUG(DBG_AI, DBG_INFO, hero.GetName() << " attack enemy hero " << other_hero->GetName());
-
+		
         // new battle
         Battle::Result res = Battle::Loader(hero.GetArmy(), other_hero->GetArmy(), dst_index);
 
@@ -524,13 +518,11 @@ void AIToCastle(Heroes &hero, u32 obj, s32 dst_index)
     if (hero.GetColor() == castle->GetColor() ||
         (conf.ExtUnionsAllowCastleVisiting() && Players::isFriends(hero.GetColor(), castle->GetColor())))
     {
-        DEBUG(DBG_AI, DBG_INFO, hero.GetName() << " goto castle " << castle->GetName());
         castle->MageGuildEducateHero(hero);
         hero.SetVisited(dst_index);
     }
     if (hero.isFriends(castle->GetColor()))
     {
-        DEBUG(DBG_AI, DBG_INFO, hero.GetName() << " disable visiting");
     } else
     {
         CastleHeroes heroes = castle->GetHeroes();
@@ -547,8 +539,6 @@ void AIToCastle(Heroes &hero, u32 obj, s32 dst_index)
 
         if (army.isValid())
         {
-            DEBUG(DBG_AI, DBG_INFO, hero.GetName() << " attack enemy castle " << castle->GetName());
-
             Heroes *defender = heroes.GuardFirst();
             castle->ActionPreBattle();
 
@@ -583,8 +573,6 @@ void AIToCastle(Heroes &hero, u32 obj, s32 dst_index)
             }
         } else
         {
-            DEBUG(DBG_AI, DBG_INFO, hero.GetName() << " capture enemy castle " << castle->GetName());
-
             castle->GetKingdom().RemoveCastle(castle);
             hero.GetKingdom().AddCastle(castle);
             world.CaptureObject(dst_index, hero.GetColor());
@@ -619,7 +607,6 @@ void AIToMonster(Heroes &hero, u32 obj, s32 dst_index)
         // join if ranged or flying monsters present
         if (hero.GetArmy().HasMonster(troop()) || troop.isArchers() || troop.isFly())
         {
-            DEBUG(DBG_AI, DBG_INFO, hero.GetName() << " join monster " << troop.GetName());
             hero.GetArmy().JoinTroop(troop);
             destroy = true;
         } else
@@ -632,9 +619,6 @@ void AIToMonster(Heroes &hero, u32 obj, s32 dst_index)
         if (hero.GetArmy().HasMonster(troop()) || troop.isArchers() || troop.isFly())
         {
             u32 gold = troop.GetCost().gold;
-            DEBUG(DBG_AI, DBG_INFO,
-                  hero.GetName() << " join monster " << troop.GetName() << ", count: " << join.second << ", cost: "
-                                 << gold);
             hero.GetArmy().JoinTroop(troop(), join.second);
             hero.GetKingdom().OddFundsResource(Funds(Resource::GOLD, gold));
             destroy = true;
@@ -647,7 +631,6 @@ void AIToMonster(Heroes &hero, u32 obj, s32 dst_index)
     // fight
     if (JOIN_NONE == join.first)
     {
-        DEBUG(DBG_AI, DBG_INFO, hero.GetName() << " attack monster " << troop.GetName());
         Army army(tile);
         Battle::Result res = Battle::Loader(hero.GetArmy(), army, dst_index);
 
@@ -717,8 +700,6 @@ void AIToPickupResource(Heroes &hero, u32 obj, s32 dst_index)
     tile.QuantityReset();
     if (map_resource) world.RemoveMapObject(map_resource);
     hero.GetPath().Reset();
-
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName() << " pickup small resource");
 }
 
 void AIToTreasureChest(Heroes &hero, u32 obj, s32 dst_index)
@@ -757,8 +738,6 @@ void AIToTreasureChest(Heroes &hero, u32 obj, s32 dst_index)
 
     tile.RemoveObjectSprite();
     tile.QuantityReset();
-
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToObjectResource(Heroes &hero, u32 obj, s32 dst_index)
@@ -774,8 +753,6 @@ void AIToObjectResource(Heroes &hero, u32 obj, s32 dst_index)
 
     tile.QuantityReset();
     hero.SetVisited(dst_index, Visit::GLOBAL);
-
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToSkeleton(Heroes &hero, u32 obj, s32 dst_index)
@@ -797,8 +774,6 @@ void AIToSkeleton(Heroes &hero, u32 obj, s32 dst_index)
     }
 
     hero.SetVisitedWideTile(dst_index, obj, Visit::GLOBAL);
-
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToWagon(Heroes &hero, u32 obj, s32 dst_index)
@@ -818,8 +793,6 @@ void AIToWagon(Heroes &hero, u32 obj, s32 dst_index)
     }
 
     hero.SetVisited(dst_index, Visit::GLOBAL);
-
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToCaptureObject(Heroes &hero, u32 obj, s32 dst_index)
@@ -871,8 +844,6 @@ void AIToCaptureObject(Heroes &hero, u32 obj, s32 dst_index)
                 Maps::ClearFog(dst_index, GetViewDistance(Game::VIEW_LIGHT_HOUSE), hero.GetColor());
         }
     }
-
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName() << " captured: " << MP2::StringObject(obj));
 }
 
 void AIToFlotSam(Heroes &hero, u32 obj, s32 dst_index)
@@ -882,21 +853,17 @@ void AIToFlotSam(Heroes &hero, u32 obj, s32 dst_index)
     hero.GetKingdom().AddFundsResource(tile.QuantityFunds());
     tile.RemoveObjectSprite();
     tile.QuantityReset();
-
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToSign(Heroes &hero, u32 obj, s32 dst_index)
 {
     hero.SetVisited(dst_index, Visit::LOCAL);
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToObservationTower(Heroes &hero, u32 obj, s32 dst_index)
 {
     Maps::ClearFog(dst_index, GetViewDistance(Game::VIEW_OBSERVATION_TOWER), hero.GetColor());
     hero.SetVisited(dst_index, Visit::GLOBAL);
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToMagellanMaps(Heroes &hero, u32 obj, s32 dst_index)
@@ -911,8 +878,6 @@ void AIToMagellanMaps(Heroes &hero, u32 obj, s32 dst_index)
         world.ActionForMagellanMaps(hero.GetColor());
         kingdom.OddFundsResource(payment);
     }
-
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToTeleports(Heroes &hero, s32 index_from)
@@ -922,7 +887,6 @@ void AIToTeleports(Heroes &hero, s32 index_from)
 
     if (index_from == index_to)
     {
-        DEBUG(DBG_AI, DBG_WARN, "action unsuccessfully...");
         return;
     }
 
@@ -937,16 +901,14 @@ void AIToTeleports(Heroes &hero, s32 index_from)
             // lose battle
             if (hero.isFreeman())
                 return;
-            else if (!other_hero->isFreeman())
-                    DEBUG(DBG_GAME, DBG_WARN, "is busy...");
+			if (!other_hero->isFreeman()) {
+			}
         }
     }
 
     hero.Move2Dest(index_to, true);
     hero.GetPath().Reset();
     hero.ActionNewPosition();
-
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToWhirlpools(Heroes &hero, s32 index_from)
@@ -956,7 +918,6 @@ void AIToWhirlpools(Heroes &hero, s32 index_from)
 
     if (index_from == index_to)
     {
-        DEBUG(DBG_AI, DBG_WARN, "action unsuccessfully...");
         return;
     }
 
@@ -974,8 +935,6 @@ void AIToWhirlpools(Heroes &hero, s32 index_from)
 
     hero.GetPath().Reset();
     hero.ActionNewPosition();
-
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToPrimarySkillObject(Heroes &hero, u32 obj, s32 dst_index)
@@ -1031,8 +990,6 @@ void AIToPrimarySkillObject(Heroes &hero, u32 obj, s32 dst_index)
         // fix double action tile
         hero.SetVisitedWideTile(dst_index, obj);
     }
-
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToExperienceObject(Heroes &hero, u32 obj, s32 dst_index)
@@ -1056,8 +1013,6 @@ void AIToExperienceObject(Heroes &hero, u32 obj, s32 dst_index)
         hero.SetVisited(dst_index);
         hero.IncreaseExperience(exp);
     }
-
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToWitchsHut(Heroes &hero, u32 obj, s32 dst_index)
@@ -1070,7 +1025,6 @@ void AIToWitchsHut(Heroes &hero, u32 obj, s32 dst_index)
         hero.LearnSkill(skill);
 
     hero.SetVisited(dst_index);
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToShrine(Heroes &hero, u32 obj, s32 dst_index)
@@ -1089,14 +1043,12 @@ void AIToShrine(Heroes &hero, u32 obj, s32 dst_index)
         hero.AppendSpellToBook(spell);
         hero.SetVisited(dst_index);
     }
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToGoodLuckObject(Heroes &hero, u32 obj, s32 dst_index)
 {
     // check already visited
     if (!hero.isVisited(obj)) hero.SetVisited(dst_index);
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToGoodMoraleObject(Heroes &hero, u32 obj, s32 dst_index)
@@ -1126,7 +1078,6 @@ void AIToGoodMoraleObject(Heroes &hero, u32 obj, s32 dst_index)
         hero.SetVisitedWideTile(dst_index, obj);
     }
 
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToMagicWell(Heroes &hero, u32 obj, s32 dst_index)
@@ -1140,8 +1091,6 @@ void AIToMagicWell(Heroes &hero, u32 obj, s32 dst_index)
         hero.SetVisited(dst_index);
         hero.SetSpellPoints(max);
     }
-
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToArtesianSpring(Heroes &hero, u32 obj, s32 dst_index)
@@ -1159,8 +1108,6 @@ void AIToArtesianSpring(Heroes &hero, u32 obj, s32 dst_index)
             // fix double action tile
             hero.SetVisitedWideTile(dst_index, obj, Visit::LOCAL);
     }
-
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToXanadu(Heroes &hero, u32 obj, s32 dst_index)
@@ -1181,8 +1128,6 @@ void AIToXanadu(Heroes &hero, u32 obj, s32 dst_index)
         hero.IncreasePrimarySkill(Skill::Primary::POWER);
         hero.SetVisited(dst_index);
     }
-
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToEvent(Heroes &hero, u32 obj, s32 dst_index)
@@ -1204,8 +1149,6 @@ void AIToEvent(Heroes &hero, u32 obj, s32 dst_index)
             world.RemoveMapObject(event_maps);
         }
     }
-
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToUpgradeArmyObject(Heroes &hero, u32 obj, s32 dst_index)
@@ -1233,8 +1176,6 @@ void AIToUpgradeArmyObject(Heroes &hero, u32 obj, s32 dst_index)
         default:
             break;
     }
-
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToPoorMoraleObject(Heroes &hero, u32 obj, s32 dst_index)
@@ -1273,8 +1214,6 @@ void AIToPoorMoraleObject(Heroes &hero, u32 obj, s32 dst_index)
         hero.SetVisited(dst_index);
         hero.SetVisited(dst_index, Visit::GLOBAL);
     }
-
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToPoorLuckObject(Heroes &hero, u32 obj, s32 dst_index)
@@ -1312,8 +1251,6 @@ void AIToPoorLuckObject(Heroes &hero, u32 obj, s32 dst_index)
         hero.SetVisited(dst_index, Visit::LOCAL);
         hero.SetVisited(dst_index, Visit::GLOBAL);
     }
-
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToObelisk(Heroes &hero, u32 obj, s32 dst_index)
@@ -1324,8 +1261,6 @@ void AIToObelisk(Heroes &hero, u32 obj, s32 dst_index)
         Kingdom &kingdom = hero.GetKingdom();
         kingdom.PuzzleMaps().Update(kingdom.CountVisitedObjects(MP2::OBJ_OBELISK), world.CountObeliskOnMaps());
     }
-
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToTreeKnowledge(Heroes &hero, u32 obj, s32 dst_index)
@@ -1345,8 +1280,6 @@ void AIToTreeKnowledge(Heroes &hero, u32 obj, s32 dst_index)
             hero.IncreaseExperience(hero.GetExperienceFromLevel(hero.GetLevel()) - hero.GetExperience());
         }
     }
-
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 
@@ -1370,8 +1303,6 @@ void AIToDaemonCave(Heroes &hero, u32 obj, s32 dst_index)
 
         tile.QuantityReset();
     }
-
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToDwellingJoinMonster(Heroes &hero, u32 obj, s32 dst_index)
@@ -1380,8 +1311,6 @@ void AIToDwellingJoinMonster(Heroes &hero, u32 obj, s32 dst_index)
     const Troop &troop = tile.QuantityTroop();
 
     if (troop.isValid() && hero.GetArmy().JoinTroop(troop)) tile.MonsterSetCount(0);
-
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToDwellingRecruitMonster(Heroes &hero, u32 obj, s32 dst_index)
@@ -1407,8 +1336,6 @@ void AIToDwellingRecruitMonster(Heroes &hero, u32 obj, s32 dst_index)
             }
         }
     }
-
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToStables(Heroes &hero, u32 obj, s32 dst_index)
@@ -1421,8 +1348,6 @@ void AIToStables(Heroes &hero, u32 obj, s32 dst_index)
     }
 
     if (hero.GetArmy().HasMonster(Monster::CAVALRY)) hero.GetArmy().UpgradeMonsters(Monster::CAVALRY);
-
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToAbandoneMine(Heroes &hero, u32 obj, s32 dst_index)
@@ -1440,8 +1365,6 @@ void AIToBarrier(Heroes &hero, u32 obj, s32 dst_index)
         tile.RemoveObjectSprite();
         tile.SetObject(MP2::OBJ_ZERO);
     }
-
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToTravellersTent(Heroes &hero, u32 obj, s32 dst_index)
@@ -1450,8 +1373,6 @@ void AIToTravellersTent(Heroes &hero, u32 obj, s32 dst_index)
     Kingdom &kingdom = hero.GetKingdom();
 
     kingdom.SetVisitTravelersTent(tile.QuantityColor());
-
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToShipwreckSurvivor(Heroes &hero, u32 obj, s32 dst_index)
@@ -1465,8 +1386,6 @@ void AIToShipwreckSurvivor(Heroes &hero, u32 obj, s32 dst_index)
 
     tile.RemoveObjectSprite();
     tile.QuantityReset();
-
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToArtifact(Heroes &hero, u32 obj, s32 dst_index)
@@ -1531,8 +1450,6 @@ void AIToArtifact(Heroes &hero, u32 obj, s32 dst_index)
             if (map_artifact) world.RemoveMapObject(map_artifact);
         }
     }
-
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToBoat(Heroes &hero, u32 obj, s32 dst_index)
@@ -1556,8 +1473,6 @@ void AIToBoat(Heroes &hero, u32 obj, s32 dst_index)
     hero.GetPath().Reset();
 
     AI::HeroesClearTask(hero);
-
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIToCoast(Heroes &hero, u32 obj, s32 dst_index)
@@ -1573,8 +1488,6 @@ void AIToCoast(Heroes &hero, u32 obj, s32 dst_index)
     hero.GetPath().Reset();
 
     AI::HeroesClearTask(hero);
-
-    DEBUG(DBG_AI, DBG_INFO, hero.GetName());
 }
 
 void AIMeeting(Heroes &hero1, Heroes &hero2)

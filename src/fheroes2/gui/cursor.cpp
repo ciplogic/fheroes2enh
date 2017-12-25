@@ -53,17 +53,14 @@ bool Cursor::SetThemes(int name, bool force)
         {
             case 0x3000:
                 Set(AGG::GetICN(ICN::SPELCO, 0xFF & name), true);
-                DEBUG(DBG_ENGINE, DBG_TRACE, ICN::GetString(ICN::SPELCO) << ", " << (name & 0xFF));
                 break;
 
             case 0x2000:
                 Set(AGG::GetICN(ICN::CMSECO, 0xFF & name), true);
-                DEBUG(DBG_ENGINE, DBG_TRACE, ICN::GetString(ICN::CMSECO) << ", " << (name & 0xFF));
                 break;
 
             case 0x1000:
                 Set(AGG::GetICN(ICN::ADVMCO, 0xFF & name), true);
-                DEBUG(DBG_ENGINE, DBG_TRACE, ICN::GetString(ICN::ADVMCO) << ", " << (name & 0xFF));
                 break;
 
             default:

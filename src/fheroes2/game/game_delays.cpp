@@ -162,7 +162,6 @@ void Game::UpdateBattleSpeed()
         const int ids[] = {BATTLE_FRAME_DELAY, BATTLE_MISSILE_DELAY, BATTLE_SPELL_DELAY, BATTLE_DISRUPTING_DELAY,
                            BATTLE_CATAPULT_DELAY, BATTLE_CATAPULT2_DELAY, BATTLE_CATAPULT3_DELAY, BATTLE_BRIDGE_DELAY};
 
-        DEBUG(DBG_GAME, DBG_INFO, "set battle speed: " << conf.BattleSpeed());
         ostringstream os;
 
         for (int id : ids)
@@ -172,7 +171,5 @@ void Game::UpdateBattleSpeed()
             delays[id] = static_cast<int>(tmp);
             os << static_cast<int>(tmp) << ", ";
         }
-
-        DEBUG(DBG_GAME, DBG_INFO, "set battle delays: " << os.str());
     }
 }

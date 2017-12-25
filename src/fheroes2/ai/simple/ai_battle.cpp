@@ -155,7 +155,6 @@ s32 Battle::AIShortDistance(s32 from, const Indexes &indexes)
         }
     }
 
-    DEBUG(DBG_BATTLE, DBG_TRACE, res);
 
     return res;
 }
@@ -323,10 +322,7 @@ void AI::BattleTurn(Arena &arena, const Unit &b, Actions &a)
     {
         if (attack)
             a.push_back(Command(MSG_BATTLE_ATTACK, b.GetUID(), enemy->GetUID(), enemy->GetHeadIndex(), 0));
-    } else
-    {
-        DEBUG(DBG_BATTLE, DBG_TRACE, "enemy: " << "is nullptr" << ", board: " << board->AllUnitsInfo());
-    }
+    } 
 
     // end action
     a.push_back(Command(MSG_BATTLE_END_TURN, b.GetUID()));

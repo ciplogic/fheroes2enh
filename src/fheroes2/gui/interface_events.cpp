@@ -48,7 +48,6 @@ void Interface::Basic::ShowPathOrStartMoveHero(Heroes *hero, s32 dst_index)
         hero->ResetModes(Heroes::SLEEPER);
         hero->SetMove(false);
         path.Calculate(dst_index);
-        DEBUG(DBG_GAME, DBG_TRACE, hero->GetName() << ", route: " << path.String());
         gameArea.SetRedraw();
         cursor.SetThemes(GetCursorTileIndex(dst_index));
     }

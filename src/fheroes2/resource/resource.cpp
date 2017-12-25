@@ -38,34 +38,30 @@ Funds::Funds(s32 _ore, s32 _wood, s32 _mercury, s32 _sulfur, s32 _crystal, s32 _
 
 Funds::Funds(int rs, u32 count) : wood(0), mercury(0), ore(0), sulfur(0), crystal(0), gems(0), gold(0)
 {
-    switch (rs)
-    {
-        case Resource::ORE:
-            ore = count;
-            break;
-        case Resource::WOOD:
-            wood = count;
-            break;
-        case Resource::MERCURY:
-            mercury = count;
-            break;
-        case Resource::SULFUR:
-            sulfur = count;
-            break;
-        case Resource::GEMS:
-            gems = count;
-            break;
-        case Resource::CRYSTAL:
-            crystal = count;
-            break;
-        case Resource::GOLD:
-            gold = count;
-            break;
-
-        default:
-            DEBUG(DBG_GAME, DBG_WARN, "unknown resource");
-            break;
-    }
+	switch (rs)
+	{
+	case Resource::ORE:
+		ore = count;
+		break;
+	case Resource::WOOD:
+		wood = count;
+		break;
+	case Resource::MERCURY:
+		mercury = count;
+		break;
+	case Resource::SULFUR:
+		sulfur = count;
+		break;
+	case Resource::GEMS:
+		gems = count;
+		break;
+	case Resource::CRYSTAL:
+		crystal = count;
+		break;
+	case Resource::GOLD:
+		gold = count;
+		break;
+	}
 }
 
 Funds::Funds(const cost_t &cost)
@@ -363,8 +359,6 @@ u32 Resource::GetIndexSprite(int resource)
             return 11;
         case GOLD:
             return 13;
-        default:
-            DEBUG(DBG_GAME, DBG_WARN, "unknown resource");
     }
 
     return 0;
@@ -415,8 +409,6 @@ u32 Resource::GetIndexSprite2(int resource)
             return 5;
         case GOLD:
             return 6;
-        default:
-            DEBUG(DBG_GAME, DBG_WARN, "unknown resource");
     }
 
     return 0;

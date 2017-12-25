@@ -93,15 +93,11 @@ StreamBase &operator>>(StreamBase &msg, Battle::Only &b)
     b.hero1 = world.GetHeroes(id);
     if (b.hero1)
         msg >> *b.hero1;
-    else
-            DEBUG(DBG_NETWORK, DBG_WARN, "unknown id");
 
     msg >> id;
     b.hero2 = world.GetHeroes(id);
     if (b.hero2)
         msg >> *b.hero2;
-    else
-            DEBUG(DBG_NETWORK, DBG_WARN, "unknown id");
 
     msg >>
         b.player1 >> b.player2;

@@ -119,7 +119,6 @@ Sprite SpriteHero(const Heroes &hero, int index, bool reflect, bool rotate)
                 break;
 
             default:
-                DEBUG(DBG_GAME, DBG_WARN, "unknown race");
                 break;
         }
 
@@ -153,7 +152,6 @@ Sprite SpriteHero(const Heroes &hero, int index, bool reflect, bool rotate)
                 break;
 
             default:
-                DEBUG(DBG_GAME, DBG_WARN, "unknown direction");
                 break;
         }
 
@@ -187,7 +185,6 @@ Sprite SpriteFlag(const Heroes &hero, int index, bool reflect, bool rotate)
             break;
 
         default:
-            DEBUG(DBG_GAME, DBG_WARN, "unknown color");
             break;
     }
 
@@ -221,7 +218,6 @@ Sprite SpriteFlag(const Heroes &hero, int index, bool reflect, bool rotate)
                 break;
 
             default:
-                DEBUG(DBG_GAME, DBG_WARN, "unknown direction");
                 break;
         }
 
@@ -261,7 +257,6 @@ Sprite SpriteShad(const Heroes &hero, int index)
             break;
 
         default:
-            DEBUG(DBG_GAME, DBG_WARN, "unknown direction");
             break;
     }
 
@@ -300,7 +295,6 @@ Sprite SpriteFroth(const Heroes &hero, int index, bool reflect)
             break;
 
         default:
-            DEBUG(DBG_GAME, DBG_WARN, "unknown direction");
             break;
     }
 

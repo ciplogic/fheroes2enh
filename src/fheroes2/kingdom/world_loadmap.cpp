@@ -55,7 +55,6 @@ bool World::LoadMapMP2(const string &filename)
     BinaryFileReader fileReader;
     if (!fileReader.open(filename, "rb"))
     {
-        DEBUG(DBG_GAME | DBG_ENGINE, DBG_WARN, "file not found " << filename.c_str());
         Error::Except(__FUNCTION__, "load maps");
     }
 	auto vectorBytes = fileReader.getRaw(fileReader.size());
@@ -120,7 +119,6 @@ bool World::LoadMapMP2(const string &filename)
 
     if (Size::w == 0 || Size::h == 0 || Size::w != Size::h)
     {
-        DEBUG(DBG_GAME, DBG_WARN, "incrrect maps size");
         return false;
     }
 
@@ -144,7 +142,6 @@ bool World::LoadMapMP2(const string &filename)
     }
 
     const u32 endof_addons = fs.tell();
-    DEBUG(DBG_GAME, DBG_INFO, "read all tiles addons, tellg: " << endof_addons);
 
     // offset data
     fs.seek(MP2OFFSETDATA);
@@ -199,7 +196,6 @@ bool World::LoadMapMP2(const string &filename)
         {
             if (vec_mp2addons.size() <= offsetAddonsBlock)
             {
-                DEBUG(DBG_GAME, DBG_WARN, "index out of range");
                 break;
             }
             tile.AddonsPushLevel1(vec_mp2addons[offsetAddonsBlock]);
@@ -210,7 +206,6 @@ bool World::LoadMapMP2(const string &filename)
         tile.AddonsSort();
     }
 
-    DEBUG(DBG_GAME, DBG_INFO, "read all tiles, tellg: " << fs.tell());
 
     // after addons
     fs.seek(endof_addons);
@@ -264,15 +259,12 @@ bool World::LoadMapMP2(const string &filename)
                 break;
 
             default:
-                DEBUG(DBG_GAME, DBG_WARN,
-                      "castle block: " << "unknown id: " << id << ", maps index: " << cx + cy * w());
                 break;
         }
         // preload in to capture objects cache
         map_captureobj.Set(Maps::GetIndexFromAbsPoint(cx, cy), MP2::OBJ_CASTLE, Color::NONE);
     }
 
-    DEBUG(DBG_GAME, DBG_INFO, "read coord castles, tellg: " << fs.tell());
     fs.seek(endof_addons + (72 * 3));
 
     // cood resource kingdoms
@@ -321,13 +313,10 @@ bool World::LoadMapMP2(const string &filename)
                 map_captureobj.Set(Maps::GetIndexFromAbsPoint(cx, cy), MP2::OBJ_ABANDONEDMINE, Color::NONE);
                 break;
             default:
-                DEBUG(DBG_GAME, DBG_WARN,
-                      "kingdom block: " << "unknown id: " << id << ", maps index: " << cx + cy * w());
                 break;
         }
     }
 
-    DEBUG(DBG_GAME, DBG_INFO, "read coord other resource, tellg: " << fs.tell());
     fs.seek(endof_addons + (72 * 3) + (144 * 3));
 
     // byte: num obelisks (01 default)
@@ -383,7 +372,7 @@ bool World::LoadMapMP2(const string &filename)
                     // add castle
                     if (SIZEOFMP2CASTLE != pblock.size())
                     {
-                        DEBUG(DBG_GAME, DBG_WARN, "read castle: " << "incorrect size block: " << pblock.size());
+                        
                     } else
                     {
                         Castle *castle = GetCastle(Maps::GetPoint(findobject));
@@ -393,10 +382,7 @@ bool World::LoadMapMP2(const string &filename)
 							castle->LoadFromMP2(bvr);
                             Maps::MinimizeAreaForCastle(castle->GetCenter());
                             map_captureobj.SetColor(tile.GetIndex(), castle->GetColor());
-                        } else
-                        {
-                            DEBUG(DBG_GAME, DBG_WARN, "load castle: " << "not found, index: " << findobject);
-                        }
+                        } 
                     }
                     break;
                 case MP2::OBJ_RNDTOWN:
@@ -404,7 +390,6 @@ bool World::LoadMapMP2(const string &filename)
                     // add rnd castle
                     if (SIZEOFMP2CASTLE != pblock.size())
                     {
-                        DEBUG(DBG_GAME, DBG_WARN, "read castle: " << "incorrect size block: " << pblock.size());
                     } else
                     {
                         Castle *castle = GetCastle(Maps::GetPoint(findobject));
@@ -417,7 +402,6 @@ bool World::LoadMapMP2(const string &filename)
                             map_captureobj.SetColor(tile.GetIndex(), castle->GetColor());
                         } else
                         {
-                            DEBUG(DBG_GAME, DBG_WARN, "load castle: " << "not found, index: " << findobject);
                         }
                     }
                     break;
@@ -425,7 +409,6 @@ bool World::LoadMapMP2(const string &filename)
                     // add jail
                     if (SIZEOFMP2HEROES != pblock.size())
                     {
-                        DEBUG(DBG_GAME, DBG_WARN, "read heroes: " << "incorrect size block: " << pblock.size());
                     } else
                     {
                         int race = Race::KNGT;
@@ -464,7 +447,6 @@ bool World::LoadMapMP2(const string &filename)
                     // add heroes
                     if (SIZEOFMP2HEROES != pblock.size())
                     {
-                        DEBUG(DBG_GAME, DBG_WARN, "read heroes: " << "incorrect size block: " << pblock.size());
                     } else if (nullptr != (addon = tile.FindObjectConst(MP2::OBJ_HEROES)))
                     {
                         pair<int, int> colorRace = Maps::TilesAddon::ColorRaceFromHeroSprite(*addon);
@@ -491,10 +473,7 @@ bool World::LoadMapMP2(const string &filename)
 								ByteVectorReader bvr(pblock);
 								hero->LoadFromMP2(findobject, colorRace.first, colorRace.second, bvr);
 							}
-                        } else
-                        {
-                            DEBUG(DBG_GAME, DBG_WARN, "load heroes maximum");
-                        }
+                        } 
                     }
                     break;
                 case MP2::OBJ_SIGN:
@@ -544,20 +523,17 @@ bool World::LoadMapMP2(const string &filename)
                 if (pblock[8])
                 {
                     vec_rumors.push_back(Game::GetEncodeString(StreamBuf(&pblock[8], pblock.size() - 8).toString()));
-                    DEBUG(DBG_GAME, DBG_INFO, "add rumors: " << vec_rumors.back());
                 }
             }
         }
             // debug
         else
         {
-            DEBUG(DBG_GAME, DBG_WARN, "read maps: unknown block addons, size: " << pblock.size());
         }
     }
 
     PostLoad();
 
-    DEBUG(DBG_GAME, DBG_INFO, "end load");
     return true;
 }
 

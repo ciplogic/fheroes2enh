@@ -648,7 +648,6 @@ MapsIndexes World::GetTeleportEndPoints(s32 center) const
 
         if (2 > result.size())
         {
-            DEBUG(DBG_GAME, DBG_WARN, "is empty");
             result.clear();
         } else
         {
@@ -678,8 +677,7 @@ MapsIndexes World::GetTeleportEndPoints(s32 center) const
 s32 World::NextTeleport(s32 index) const
 {
     const MapsIndexes teleports = GetTeleportEndPoints(index);
-    if (teleports.empty()) DEBUG(DBG_GAME, DBG_WARN, "not found");
-
+   
     return !teleports.empty() ? *Rand::Get(teleports) : index;
 }
 
@@ -700,7 +698,6 @@ MapsIndexes World::GetWhirlpoolEndPoints(s32 center) const
 
         if (2 > uniq_whirlpools.size())
         {
-            DEBUG(DBG_GAME, DBG_WARN, "is empty");
             return MapsIndexes();
         }
 
@@ -728,7 +725,7 @@ MapsIndexes World::GetWhirlpoolEndPoints(s32 center) const
 s32 World::NextWhirlpool(s32 index) const
 {
     const MapsIndexes whilrpools = GetWhirlpoolEndPoints(index);
-    if (whilrpools.empty()) DEBUG(DBG_GAME, DBG_WARN, "is full");
+    
 
     return !whilrpools.empty() ? *Rand::Get(whilrpools) : index;
 }
@@ -1291,7 +1288,6 @@ void EventDate::LoadFromMP2(StreamBuf st)
 	// id
 	if (0 != st.get())
 	{
-		DEBUG(DBG_GAME, DBG_WARN, "unknown id");
 		return;
 	}
 
@@ -1334,7 +1330,6 @@ void EventDate::LoadFromMP2(StreamBuf st)
 
 	// message
 	message = Game::GetEncodeString(st.toString());
-	DEBUG(DBG_GAME, DBG_INFO, "event" << ": " << message);
 
 }
 

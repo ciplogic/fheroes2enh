@@ -81,7 +81,6 @@ namespace Game
 
 bool Game::Save(const string &fn)
 {
-    DEBUG(DBG_GAME, DBG_INFO, fn);
     const bool autosave = (System::GetBasename(fn) == "autosave.sav");
     const Settings &conf = Settings::Get();
 
@@ -99,7 +98,6 @@ bool Game::Save(const string &fn)
 
     if (!fs.open(fn, "wb"))
     {
-        DEBUG(DBG_GAME, DBG_INFO, fn << ", error open");
         return false;
     }
 
@@ -123,7 +121,6 @@ bool Game::Save(const string &fn)
 
 bool Game::Load(const string &fn)
 {
-    DEBUG(DBG_GAME, DBG_INFO, fn);
     Settings &conf = Settings::Get();
     // loading info
     ShowLoadMapsText();
@@ -133,7 +130,6 @@ bool Game::Load(const string &fn)
 
     if (!fs.open(fn, "rb"))
     {
-        DEBUG(DBG_GAME, DBG_INFO, fn << ", error open");
         return false;
     }
 
@@ -144,7 +140,6 @@ bool Game::Load(const string &fn)
     // check version sav file
     if (savid != SAV2ID2 && savid != SAV2ID3)
     {
-        DEBUG(DBG_GAME, DBG_INFO, fn << ", incorrect SAV2ID");
         return false;
     }
 
@@ -160,7 +155,6 @@ bool Game::Load(const string &fn)
 #ifndef WITH_ZLIB
     if(header.status & HeaderSAV::IS_COMPRESS)
     {
-    DEBUG(DBG_GAME, DBG_INFO, fn << ", zlib: unsupported");
     return false;
     }
 #endif
@@ -170,7 +164,6 @@ bool Game::Load(const string &fn)
 
     if (!fz.read(fn, offset))
     {
-        DEBUG(DBG_GAME, DBG_INFO, ", uncompress: error");
         return false;
     }
 
@@ -193,8 +186,6 @@ bool Game::Load(const string &fn)
         Message("Error", os.str(), Font::BIG, Dialog::OK);
         return false;
     }
-
-    DEBUG(DBG_GAME, DBG_TRACE, "load version: " << binver);
     SetLoadVersion(binver);
     u16 end_check = 0;
 
@@ -205,7 +196,6 @@ bool Game::Load(const string &fn)
 
     if (fz.fail() || (end_check != SAV2ID2 && end_check != SAV2ID3))
     {
-        DEBUG(DBG_GAME, DBG_WARN, "invalid load file: " << fn);
         return false;
     }
 
@@ -224,7 +214,6 @@ bool Game::LoadSAV2FileInfo(const string &fn, Maps::FileInfo &finfo)
 
     if (!fs.open(fn, "rb"))
     {
-        DEBUG(DBG_GAME, DBG_INFO, fn << ", error open");
         return false;
     }
 
@@ -235,7 +224,6 @@ bool Game::LoadSAV2FileInfo(const string &fn, Maps::FileInfo &finfo)
     // check version sav file
     if (savid != SAV2ID2 && savid != SAV2ID3)
     {
-        DEBUG(DBG_GAME, DBG_INFO, fn << ", incorrect SAV2ID");
         return false;
     }
 
@@ -254,7 +242,6 @@ bool Game::LoadSAV2FileInfo(const string &fn, Maps::FileInfo &finfo)
     // check: compress game data
     if(header.status & HeaderSAV::IS_COMPRESS)
     {
-    DEBUG(DBG_GAME, DBG_INFO, fn << ", zlib: unsupported");
     return false;
     }
 #endif

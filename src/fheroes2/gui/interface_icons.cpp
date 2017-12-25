@@ -78,8 +78,6 @@ void Interface::RedrawCastleIcon(const Castle &castle, s32 sx, s32 sy)
         case Race::NECR:
             index_sprite = castle.isCastle() ? 14 : 20;
             break;
-        default:
-            DEBUG(DBG_ENGINE, DBG_WARN, "unknown race");
     }
 
     AGG::GetICN(evil ? ICN::LOCATORE : ICN::LOCATORS, index_sprite).Blit(sx, sy);

@@ -609,7 +609,6 @@ void Dialog::QuickInfo(const Castle &castle)
             index = (castle.isCastle() ? 14 : 20);
             break;
         default:
-            DEBUG(DBG_GAME, DBG_WARN, "unknown race");
             return;
     }
 

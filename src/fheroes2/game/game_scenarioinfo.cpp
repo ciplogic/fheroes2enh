@@ -236,8 +236,6 @@ int Game::ScenarioInfo()
             // click ok
         if (HotKeyPressEvent(EVENT_DEFAULT_READY) || le.MouseClickLeft(*buttonOk))
         {
-            DEBUG(DBG_GAME, DBG_INFO, "select maps: " << conf.MapsFile() << \
-            ", difficulty: " << Difficulty::String(conf.GameDifficulty()));
             result = STARTGAME;
             break;
         } else if (le.MouseClickLeft(rectPanel))
@@ -313,7 +311,6 @@ int Game::ScenarioInfo()
         } else
         {
             result = MAINMENU;
-            DEBUG(DBG_GAME, DBG_WARN, conf.MapsFile() << ", " << "unknown map format");
         }
     }
 

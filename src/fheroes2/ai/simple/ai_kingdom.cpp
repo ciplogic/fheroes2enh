@@ -73,11 +73,6 @@ void AIKingdom::Reset()
 
 void IndexObjectMap::DumpObjects(const IndexDistance &id)
 {
-    const_iterator it = find(id.first);
-
-    if (it != end())
-            DEBUG(DBG_AI, DBG_TRACE, MP2::StringObject((*it).second) \
- << ", maps index: " << id.first << ", dist: " << id.second);
 }
 
 void WorldStoreObjects(int color, IndexObjectMap &store)
@@ -136,9 +131,7 @@ void AI::KingdomTurn(Kingdom &kingdom)
         kingdom.LossPostActions();
         return;
     }
-
-    DEBUG(DBG_AI, DBG_INFO, Color::String(kingdom.GetColor()) << " funds: " << kingdom.GetFunds().String());
-
+	
     if (!Settings::Get().MusicMIDI()) AGG::PlayMusic(MUS::COMPUTER);
 
     Interface::StatusWindow &status = Interface::Basic::Get().GetStatusWindow();
@@ -150,7 +143,6 @@ void AI::KingdomTurn(Kingdom &kingdom)
     // scan map
     ai.scans.clear();
     WorldStoreObjects(color, ai.scans);
-    DEBUG(DBG_AI, DBG_INFO, Color::String(color) << ", size cache objects: " << ai.scans.size());
 
     // set capital
     if (nullptr == ai.capital && !castles.empty())
@@ -285,6 +277,4 @@ void AI::KingdomTurn(Kingdom &kingdom)
 
     // turn indicator
     status.RedrawTurnProgress(9);
-
-    DEBUG(DBG_AI, DBG_INFO, Color::String(color) << " moved");
 }

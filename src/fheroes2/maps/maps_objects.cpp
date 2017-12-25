@@ -89,9 +89,8 @@ void MapEvent::LoadFromMP2(s32 index, StreamBuf st)
 
         // message
         message = Game::GetEncodeString(st.toString());
-        DEBUG(DBG_GAME, DBG_INFO, "event" << ": " << message);
-    } else
-            DEBUG(DBG_GAME, DBG_WARN, "unknown id");
+       
+    } 
 }
 
 void MapEvent::SetVisited(int color)
@@ -146,9 +145,7 @@ void MapSphinx::LoadFromMP2(s32 index, StreamBuf st)
         message = Game::GetEncodeString(st.toString());
 
         valid = true;
-        DEBUG(DBG_GAME, DBG_INFO, "sphinx" << ": " << message);
-    } else
-            DEBUG(DBG_GAME, DBG_WARN, "unknown id");
+    } 
 }
 
 bool MapSphinx::AnswerCorrect(const string &answer)
@@ -226,7 +223,6 @@ void MapSign::LoadFromMP2(s32 index, StreamBuf st)
 
     SetIndex(index);
     message = Game::GetEncodeString(message);
-    DEBUG(DBG_GAME, DBG_INFO, "sign" << ": " << message);
 }
 
 StreamBase &operator<<(StreamBase &msg, const MapSign &obj)

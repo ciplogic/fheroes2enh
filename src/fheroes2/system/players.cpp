@@ -278,15 +278,12 @@ void Players::Init(int colors)
         push_back(new Player(vcolor));
         _players[Color::GetIndex(vcolor)] = back();
     }
-
-    DEBUG(DBG_GAME, DBG_INFO, "Players: " << String());
 }
 
 void Players::Init(const Maps::FileInfo &fi)
 {
     if (!fi.kingdom_colors)
     {
-        DEBUG(DBG_GAME, DBG_INFO, "Players: " << "unknown colors");
         return;
     }
     clear();
@@ -315,8 +312,6 @@ void Players::Init(const Maps::FileInfo &fi)
 
     if (first)
         first->SetControl(CONTROL_HUMAN);
-
-    DEBUG(DBG_GAME, DBG_INFO, "Players: " << String());
 }
 
 Player *Players::Get(int color)
@@ -418,8 +413,6 @@ void Players::SetStartGame()
 
     current_color = Color::NONE;
     human_colors = Color::NONE;
-
-    DEBUG(DBG_GAME, DBG_INFO, String());
 }
 
 int Players::HumanColors()

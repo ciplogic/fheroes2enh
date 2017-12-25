@@ -624,8 +624,6 @@ Artifact Artifact::FromMP2IndexSprite(u32 index)
     else if (0xA9 == index) return Artifact(Rand(ART_LEVEL2));
     else if (0xAB == index) return Rand(ART_LEVEL3);
 
-    DEBUG(DBG_GAME, DBG_WARN, "unknown index: " << static_cast<int>(index));
-
     return Artifact(UNKNOWN);
 }
 
@@ -929,7 +927,6 @@ bool ArtifactsBar::ActionBarDoubleClick(const Point &cursor, Artifact &art, cons
 
         if (!spell.isValid())
         {
-            DEBUG(DBG_GAME, DBG_WARN, "invalid spell");
         } else if (hero->CanLearnSpell(spell))
         {
             payment_t cost = spell.GetCost();

@@ -74,7 +74,6 @@ int main(int argc, char **argv)
     Settings &conf = Settings::Get();
     int test = 0;
 
-    DEBUG(DBG_ALL, DBG_INFO, "Free Heroes II Enhanced, " + conf.GetVersion());
 	vector<string> vArgv;
 
 
@@ -171,8 +170,6 @@ int main(int argc, char **argv)
             //Ensure the mouse position is updated to prevent bad initial values.
             LocalEvent::Get().GetMouseCursor();
 
-            DEBUG(DBG_GAME, DBG_INFO, conf.String());
-            DEBUG(DBG_GAME | DBG_ENGINE, DBG_INFO, display.GetInfo());
 
             // read data dir
             if (!AGG::Init())
@@ -283,7 +280,6 @@ int TestBlitSpeed()
     t.Stop();
 
     int res = t.Get();
-    DEBUG(DBG_GAME | DBG_ENGINE, DBG_INFO, res);
     return res;
 }
 

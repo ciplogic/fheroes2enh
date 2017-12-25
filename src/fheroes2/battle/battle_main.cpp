@@ -72,10 +72,7 @@ Battle::Result Battle::Loader(Army &army1, Army &army2, s32 mapsindex)
 
 
     Arena arena(army1, army2, mapsindex, local);
-
-    DEBUG(DBG_BATTLE, DBG_INFO, "army1 " << army1.String());
-    DEBUG(DBG_BATTLE, DBG_INFO, "army2 " << army2.String());
-
+	
     while (arena.BattleValid())
         arena.Turns();
 
@@ -137,8 +134,6 @@ Battle::Result Battle::Loader(Army &army1, Army &army2, s32 mapsindex)
         hero_wins->GetLevelSkill(Skill::Secondary::NECROMANCY))
         NecromancySkillAction(*hero_wins, result.killed, hero_wins->isControlHuman());
 
-    DEBUG(DBG_BATTLE, DBG_INFO, "army1 " << army1.String());
-    DEBUG(DBG_BATTLE, DBG_INFO, "army2 " << army1.String());
 
     // update army
     if (army1.GetCommander() && army1.GetCommander()->isHeroes())
@@ -153,10 +148,7 @@ Battle::Result Battle::Loader(Army &army1, Army &army2, s32 mapsindex)
         // hard reset army
         if (!army2.isValid() || (result.army2 & RESULT_RETREAT)) army2.Reset(false);
     }
-
-    DEBUG(DBG_BATTLE, DBG_INFO, "army1: " << (result.army1 & RESULT_WINS ? "wins" : "loss") << ", army2: "
-                                          << (result.army2 & RESULT_WINS ? "wins" : "loss"));
-
+	
     return result;
 }
 
@@ -283,8 +275,6 @@ void Battle::NecromancySkillAction(HeroBase &hero, u32 killed, bool local)
 
         Dialog::SpriteInfo("", msg, sf1);
     }
-
-    DEBUG(DBG_BATTLE, DBG_TRACE, "raise: " << count << mons.GetMultiName());
 }
 
 u32 Battle::Result::AttackerResult() const

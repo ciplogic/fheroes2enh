@@ -192,7 +192,6 @@ bool Heroes::ActionSpellCast(const Spell &spell)
 
     if (apply)
     {
-        DEBUG(DBG_GAME, DBG_INFO, GetName() << " cast spell: " << spell.GetName());
         SpellCasted(spell);
         return true;
     }
@@ -330,7 +329,6 @@ bool ActionSpellSummonBoat(Heroes &hero)
 
     if (boats.empty())
     {
-        DEBUG(DBG_GAME, DBG_WARN, "free boat: " << "not found");
     } else
     {
         const s32 &src = boats.front();

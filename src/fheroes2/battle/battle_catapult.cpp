@@ -70,14 +70,12 @@ u32 Battle::Catapult::GetDamage(int target, u32 value) const
                 if (cat_first == 100 || cat_first >= Rand::Get(1, 100))
                 {
                     // value = value;
-                    DEBUG(DBG_BATTLE, DBG_TRACE, "from one blow capability");
                 } else
                     value = 1;
             }
             break;
 
         case CAT_MISS:
-            DEBUG(DBG_BATTLE, DBG_TRACE, "miss!");
             break;
 
         default:
@@ -164,8 +162,6 @@ int Battle::Catapult::GetTarget(const vector<u32> &values) const
         return cat_miss && 7 > Rand::Get(1, 20) ? CAT_MISS : (1 < targets.size() ? *Rand::Get(targets)
                                                                                  : targets.front());
     }
-
-    DEBUG(DBG_BATTLE, DBG_TRACE, "target not found..");
 
     return 0;
 }

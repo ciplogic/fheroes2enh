@@ -92,11 +92,7 @@ enum
     SCROLL_FAST2 = 32
 };
 
-#ifdef WITH_DEBUG
-#define DEBUG(x, y, z) if(IS_DEBUG(x, y)) { COUT(System::GetTime() << ": [" << StringDebug(x) << "]\t" << __FUNCTION__ << ":  " << z); }
-#else
-#define DEBUG(x, y, z)
-#endif
+
 #define IS_DEVEL() IS_DEBUG(DBG_DEVEL, DBG_INFO)
 
 bool IS_DEBUG(int name, int level);

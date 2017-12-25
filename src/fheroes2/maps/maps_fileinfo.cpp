@@ -197,8 +197,6 @@ bool Maps::FileInfo::ReadSAV(const string &filename)
 
 bool Maps::FileInfo::ReadMAP(const string &filename)
 {
-    DEBUG(DBG_GAME, DBG_WARN, filename << ", " << "unsupported map format");
-
     return false;
 }
 
@@ -209,7 +207,6 @@ bool Maps::FileInfo::ReadMP2(const string &filename)
 
     if (!fs.open(filename, "rb"))
     {
-        DEBUG(DBG_GAME, DBG_WARN, "file not found " << filename);
         return false;
     }
 
@@ -223,7 +220,6 @@ bool Maps::FileInfo::ReadMP2(const string &filename)
     // magic byte
     if (fs.getBE32() != 0x5C000000)
     {
-        DEBUG(DBG_GAME, DBG_WARN, "incorrect maps file " << filename);
         return false;
     }
 

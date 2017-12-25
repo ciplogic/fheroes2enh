@@ -114,9 +114,6 @@ void Splitter::MoveIndex(int num)
 {
     if (num > max || num < min)
     {
-        DEBUG(DBG_ENGINE, DBG_WARN,
-              "out of range" << ": " << num << ", min: " << min << ", max: " << max << ", cur: " << cur << ", step: "
-                             << step);
     } else
     {
         cur = num;

@@ -547,9 +547,6 @@ int Interface::Basic::StartGame()
                     (skip_turns && !player.isColor(conf.CurrentColor())))
                     continue;
 
-                DEBUG(DBG_GAME, DBG_INFO, std::endl << world.DateString() << ", " << "color: " <<
-                                                    Color::String(player.GetColor()) << ", resource: "
-                                                    << kingdom.GetFunds().String());
 
                 radar.SetHide(true);
                 radar.SetRedraw();
@@ -1042,8 +1039,7 @@ void Interface::Basic::MouseCursorAreaPressRight(s32 index_maps)
         Settings &conf = Settings::Get();
         Maps::Tiles &tile = world.GetTiles(index_maps);
 
-        DEBUG(DBG_DEVEL, DBG_INFO, std::endl << tile.String());
-
+        
         if (!IS_DEVEL() && tile.isFog(conf.CurrentColor()))
             Dialog::QuickInfo(tile);
         else

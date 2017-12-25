@@ -2205,7 +2205,7 @@ const Maps::TilesAddon *Maps::Tiles::FindObjectConst(int objs) const
             break;
 
         default:
-            if (addons_level1.size() > 1) DEBUG(DBG_GAME, DBG_WARN, "FIXME for: " << MP2::StringObject(objs));
+            //FIXME for: " << MP2::StringObject(objs));
             break;
     }
 
@@ -2381,7 +2381,6 @@ void Maps::Tiles::FixedPreload(Tiles &tile)
                     tile.SetObject(newobj);
                 else
                 {
-                    DEBUG(DBG_GAME, DBG_WARN, "index: " << tile.GetIndex());
                 }
             }
                 break;
@@ -2588,7 +2587,6 @@ void Maps::Tiles::UpdateRNDArtifactSprite(Tiles &tile)
 
     if (!art.isValid())
     {
-        DEBUG(DBG_GAME, DBG_INFO, "unknown artifact");
     } else if (addon)
     {
         addon->index = index;

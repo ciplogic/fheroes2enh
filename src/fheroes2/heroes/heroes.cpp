@@ -306,7 +306,6 @@ void Heroes::LoadFromMP2(s32 map_index, int cl, int rc, ByteVectorReader& st)
 
         if (UNKNOWN <= portrait)
         {
-            DEBUG(DBG_GAME, DBG_WARN, "custom portrait incorrect: " << portrait);
             portrait = hid;
         }
 
@@ -415,7 +414,6 @@ void Heroes::PostLoad()
         AI::HeroesPostLoad(*this);
     }
 
-    DEBUG(DBG_GAME, DBG_INFO, name << ", color: " << Color::String(GetColor()) << ", race: " << Race::String(race));
 }
 
 int Heroes::GetID() const
@@ -690,7 +688,6 @@ bool Heroes::Recruit(int cl, const Point &pt)
 {
     if (GetColor() != Color::NONE)
     {
-        DEBUG(DBG_GAME, DBG_WARN, "not freeman");
         return false;
     }
 
@@ -1281,7 +1278,6 @@ int Heroes::GetRangeRouteDays(s32 dst) const
     // approximate distance, this restriction calculation
     if ((4 * max / 100) < Maps::GetApproximateDistance(GetIndex(), dst))
     {
-        DEBUG(DBG_GAME, DBG_INFO, "distance limit");
         return 0;
     }
 
@@ -1299,8 +1295,7 @@ int Heroes::GetRangeRouteDays(s32 dst) const
         if (max >= total) return 3;
 
         return 4;
-    } else
-            DEBUG(DBG_GAME, DBG_INFO, "iteration limit: " << limit);
+    } 
 
     return 0;
 }
@@ -1318,7 +1313,6 @@ int Heroes::LevelUpPrimarySkill()
 {
     int skill = Primary::LevelUp(race, GetLevel());
 
-    DEBUG(DBG_GAME, DBG_INFO, "for " << GetName() << ", up " << Skill::Primary::String(skill));
     return skill;
 }
 
@@ -1328,8 +1322,6 @@ void Heroes::LevelUpSecondarySkill(int primary, bool autoselect)
     Skill::Secondary sec2;
 
     secondary_skills.FindSkillsForLevelUp(race, sec1, sec2);
-    DEBUG(DBG_GAME, DBG_INFO, GetName() << " select " << Skill::Secondary::String(sec1.Skill()) <<
-                                        " or " << Skill::Secondary::String(sec2.Skill()));
     Skill::Secondary *selected = nullptr;
 
     if (autoselect)
@@ -1354,7 +1346,6 @@ void Heroes::LevelUpSecondarySkill(int primary, bool autoselect)
     // level up sec. skill
     if (selected)
     {
-        DEBUG(DBG_GAME, DBG_INFO, GetName() << ", selected: " << Skill::Secondary::String(selected->Skill()));
         vector<Skill::Secondary>::iterator it;
 
         Skill::Secondary *secs = secondary_skills.FindSkill(selected->Skill());
@@ -1977,7 +1968,6 @@ Heroes *AllHeroes::GetFreeman(int race) const
     // not found, all heroes busy
     if (freeman_heroes.empty())
     {
-        DEBUG(DBG_GAME, DBG_WARN, "freeman not found, all heroes busy.");
         return nullptr;
     }
 

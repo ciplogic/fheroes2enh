@@ -312,11 +312,9 @@ void Heroes::ScholarAction(Heroes &hero1, Heroes &hero2)
 {
     if (!hero1.HaveSpellBook() || !hero2.HaveSpellBook())
     {
-        DEBUG(DBG_GAME, DBG_INFO, "spell_book disabled");
         return;
     } else if (!Settings::Get().ExtWorldEyeEagleAsScholar())
     {
-        DEBUG(DBG_GAME, DBG_WARN, "EyeEagleAsScholar settings disabled");
         return;
     }
 
@@ -339,7 +337,6 @@ void Heroes::ScholarAction(Heroes &hero1, Heroes &hero2)
         scholar = scholar2;
     } else
     {
-        DEBUG(DBG_GAME, DBG_WARN, "Eagle Eye skill not found");
         return;
     }
 

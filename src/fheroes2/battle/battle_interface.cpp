@@ -2149,7 +2149,6 @@ void Battle::Interface::HumanCastSpellTurn(const Unit &b, Actions &a, string &ms
         {
             if (!Board::isValidIndex(index_pos))
             {
-                DEBUG(DBG_BATTLE, DBG_WARN, "dst: " << "out of range");
                 return;
             }
 
@@ -2162,9 +2161,6 @@ void Battle::Interface::HumanCastSpellTurn(const Unit &b, Actions &a, string &ms
                 StringReplace(str, "%{spell}", humanturn_spell.GetName());
                 listlog->AddMessage(str);
             }
-
-            DEBUG(DBG_BATTLE, DBG_TRACE, humanturn_spell.GetName() << ", dst: " << index_pos);
-
             if (Cursor::SP_TELEPORT == cursor.Themes())
             {
                 if (0 > teleport_src)

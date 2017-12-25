@@ -120,8 +120,6 @@ void Battle::Board::SetEnemyQuality(const Unit &b)
 
             if (unit->isWide())
                 GetCell(unit->GetTailIndex())->SetQuality(score);
-
-            DEBUG(DBG_BATTLE, DBG_TRACE, score << " for " << unit->String());
         }
     }
 }
@@ -302,13 +300,6 @@ Battle::Indexes Battle::Board::GetAStarPath(const Unit &b, const Position &dst, 
         }
     }
 
-    if (debug && result.empty())
-    {
-        DEBUG(DBG_BATTLE, DBG_WARN, "path not found: " << b.String() << ", dst: " <<
-                                                       "(head: " << dst.GetHead()->GetIndex() << ", tail: "
-                                                       << (dst.GetTail() ? dst.GetTail()->GetIndex() : -1) << ")");
-    }
-
     return result;
 }
 
@@ -333,16 +324,6 @@ Battle::Indexes Battle::Board::GetPassableQualityPositions(const Unit &b)
     for (auto& it : *this)
         if (it.isPassable3(b, false) && it.GetQuality())
             result.push_back(it.GetIndex());
-
-    if (IS_DEBUG(DBG_BATTLE, DBG_TRACE))
-    {
-        stringstream ss;
-        if (result.empty()) ss << "empty";
-        else
-            for (Indexes::const_iterator it = result.begin(); it != result.end(); ++it) ss << *it << ", ";
-        DEBUG(DBG_BATTLE, DBG_TRACE, ss.str());
-    }
-
     return result;
 }
 
