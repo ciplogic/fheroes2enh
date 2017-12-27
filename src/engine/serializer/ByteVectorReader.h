@@ -42,9 +42,8 @@ public:
 	{
 		const u32 size = getLE32();
 		v.resize(size);
-		for (typename vector<Type>::iterator
-			it = v.begin(); it != v.end(); ++it)
-			it->ReadFrom(*this);
+		for (auto& it : v)
+			it.ReadFrom(*this);
 	}
 
 	template<class Type>
@@ -52,9 +51,8 @@ public:
 	{
 		const u32 size = getLE32();
 		v.resize(size);
-		for (typename std::vector<Type>::iterator
-			it = v.begin(); it != v.end(); ++it)
-			*this >> *it;
+		for (auto& it : v)
+			*this >> it;
 		return *this;
 	}
 
@@ -63,9 +61,8 @@ public:
 	{
 		const u32 size = getLE32();
 		v.resize(size);
-		for (typename std::list<Type>::iterator
-			it = v.begin(); it != v.end(); ++it)
-			*this >> *it;
+		for (auto& it : v)
+			*this >> it;
 		return *this;
 	}
 

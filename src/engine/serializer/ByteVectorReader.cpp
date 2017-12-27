@@ -70,7 +70,7 @@ std::vector<u8> ByteVectorReader::getRaw(size_t sizeblock)
 {
 	std::vector<u8> result;
 	result.reserve(sizeblock);
-	for (int i = 0; i<sizeblock; i++)
+	for (u32 i = 0; i<sizeblock; i++)
 	{
 		result.push_back(get());
 	}

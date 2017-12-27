@@ -22,9 +22,11 @@
 #ifndef H2ERROR_H
 #define H2ERROR_H
 
+#include <exception>
+
 struct Error
 {
-    class Exception
+    class Exception : std::exception
     {
     };
 
