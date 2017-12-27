@@ -26,7 +26,6 @@
 #include "gamedefs.h"
 #include "settings.h"
 #include "maps_tiles.h"
-#include "ground.h"
 #include "world.h"
 #include "agg.h"
 #include "cursor.h"
@@ -92,13 +91,11 @@ int Game::Testing(int t)
 
 int Game::Credits()
 {
-    const Settings &conf = Settings::Get();
-
     string str;
     str.reserve(200);
 
     str.append("version: ");
-    str.append(conf.GetVersion());
+    str.append(Settings::GetVersion());
     str.append("\n \n");
     str.append("This program is distributed under the terms of the GPL v2.");
     str.append("\n");

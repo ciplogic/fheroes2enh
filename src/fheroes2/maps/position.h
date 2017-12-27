@@ -29,6 +29,7 @@ class MapPosition
 {
 public:
     MapPosition(const Point & = Point(-1, -1));
+	~MapPosition();
 
     bool operator==(s32) const;
 

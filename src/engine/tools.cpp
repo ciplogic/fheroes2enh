@@ -80,9 +80,7 @@ string StringUpper(string str)
 /* int to string */
 string GetString(int value)
 {
-    ostringstream stream;
-    stream << value;
-    return stream.str();
+	return std::to_string(value);
 }
 
 string GetStringShort(int value)

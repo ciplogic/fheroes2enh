@@ -22,11 +22,8 @@
 #ifndef H2DISPLAY_H
 #define H2DISPLAY_H
 
-#include <string>
 #include "surface.h"
 using namespace std;
-
-class Texture;
 
 class Display : public Surface
 {
@@ -71,7 +68,6 @@ public:
 
 protected:
 
-    bool isDisplay() const override;
 	Surface displaySurface;
 
     Display();

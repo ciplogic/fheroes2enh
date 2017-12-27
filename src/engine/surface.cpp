@@ -239,30 +239,21 @@ Surface::Surface(const void *pixels, u32 width, u32 height, u32 bytes_per_pixel 
     if (8 == fm.depth)
     {
 
-        surface = SDL_CreateRGBSurface(SDL_SWSURFACE, width, height, fm.depth, fm.rmask, fm.gmask, fm.bmask,
+        surface = SDL_CreateRGBSurface(SDL_HWSURFACE, width, height, fm.depth, fm.rmask, fm.gmask, fm.bmask,
                                        amask ? fm.amask : 0);
+    	SetPalette();
+        Lock();
+        memcpy(surface->pixels, pixels, width * height);
+        Unlock();
     } else
     {
         surface = SDL_CreateRGBSurfaceFrom(const_cast<void *>(pixels), width, height, fm.depth, width * bytes_per_pixel,
                                            fm.rmask, fm.gmask, fm.bmask, amask ? fm.amask : 0);
     }
-
-    if (!surface)
-        Error::Except(__FUNCTION__, SDL_GetError());
-
-    if (8 == fm.depth)
-    {
-        SetPalette();
-        Lock();
-        memcpy(surface->pixels, pixels, width * height);
-        Unlock();
-    }
 }
 
 Surface::~Surface()
 {
-	if (isDisplay())
-        return;
     if (!surface)
         return;
     FreeSurface(*this);
@@ -327,7 +318,7 @@ void Surface::Set(u32 sw, u32 sh, const SurfaceFormat &fm)
 {
     FreeSurface(*this);
 
-    surface = SDL_CreateRGBSurface(SDL_SWSURFACE, sw, sh, fm.depth, fm.rmask, fm.gmask, fm.bmask, fm.amask);
+    surface = SDL_CreateRGBSurface(SDL_HWSURFACE, sw, sh, fm.depth, fm.rmask, fm.gmask, fm.bmask, fm.amask);
 
     if (!surface)
         Error::Except(__FUNCTION__, SDL_GetError());
@@ -405,11 +396,7 @@ bool Surface::Load(const string &fn)
 {
     FreeSurface(*this);
 
-#ifdef WITH_IMAGE
     surface = IMG_Load(fn.c_str());
-#else
-    surface = SDL_LoadBMP(fn.c_str());
-#endif
 
     if (!surface)
     ERROR(SDL_GetError());
@@ -421,11 +408,7 @@ bool Surface::Save(const string &fn) const
 {
     int res = 0;
 
-#ifdef WITH_IMAGE
     res = IMG_SavePNG(fn.c_str(), surface, -1);
-#else
-    res = SDL_SaveBMP(surface, fn.c_str());
-#endif
 
     if (0 != res)
     {
@@ -684,8 +667,7 @@ void Surface::Blit(const Rect &srt, const Point &dpt, Surface &dst) const
 	SDL_Rect srcrect;
 	SDLRect(srt, srcrect);
 
-    if (!dst.isDisplay() &&
-        amask() && dst.amask())
+    if (amask() && dst.amask())
     {
         SDL_SetAlpha(surface, 0, 0);
         SDL_BlitSurface(surface, &srcrect, dst.surface, &dstrect);
@@ -806,11 +788,6 @@ string Surface::Info() const
 void Surface::Swap(Surface &sf1, Surface &sf2)
 {
     swap(sf1.surface, sf2.surface);
-}
-
-bool Surface::isDisplay() const
-{
-    return false;
 }
 
 Surface Surface::RenderScale(const Size &size) const
@@ -1046,14 +1023,7 @@ Surface Surface::GetSurface() const
 Surface Surface::GetSurface(const Rect &rt) const
 {
     SurfaceFormat fm = GetFormat();
-
-    if (isDisplay())
-    {
-        Surface res(rt, fm);
-        Blit(rt, Point(0, 0), res);
-        return res;
-    }
-
+	
     Surface res(rt, fm);
 
     if (amask())

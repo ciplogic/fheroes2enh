@@ -23,11 +23,12 @@
 #include "maps.h"
 #include "world.h"
 #include "game.h"
-#include "settings.h"
 
 MapPosition::MapPosition(const Point &pt) : center(pt)
 {
 }
+
+MapPosition::~MapPosition() = default;
 
 bool MapPosition::operator==(s32 index) const
 {

@@ -84,8 +84,9 @@ class ColorBase
 public:
     ColorBase(int col = Color::NONE) : color(col)
     {}
+	virtual ~ColorBase(){}
 
-    bool operator==(int) const;
+	bool operator==(int) const;
 
     bool isFriends(int) const;
 

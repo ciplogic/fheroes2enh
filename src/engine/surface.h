@@ -178,7 +178,7 @@ public:
 
     Surface RenderChangeColor(const RGBA &, const RGBA &) const;
 
-    Surface RenderSurface(const Rect &srt, const Size &) const;
+    Surface RenderSurface(const Rect &srcrt, const Size &) const;
 
     Surface RenderSurface(const Size &) const;
 
@@ -201,8 +201,6 @@ public:
 	SDL_Surface *surface;
 protected:
     static void FreeSurface(Surface &);
-
-    virtual bool isDisplay() const;
 
     void Lock() const;
 

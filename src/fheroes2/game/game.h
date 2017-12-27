@@ -26,6 +26,8 @@
 #include <string>
 #include "types.h"
 
+using namespace std;
+
 class Surface;
 
 class Kingdom;

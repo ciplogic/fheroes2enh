@@ -202,8 +202,9 @@ public:
     void DrawImageCastle(const Point &pt);
 
     int OpenDialog(bool readonly = false, bool fade = false);
+	void DrawCastleFundsAtPos(Display& display, const Funds& resource, Rect src_rt) const;
 
-    int GetAttackModificator(string *) const;
+	int GetAttackModificator(string *) const;
 
     int GetDefenseModificator(string *) const;
 

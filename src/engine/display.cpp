@@ -233,12 +233,6 @@ Display &Display::Get()
     return inside;
 }
 
-
-bool Display::isDisplay() const
-{
-    return false;
-}
-
 Surface Display::GetSurface() const
 {
     return GetSurface(Rect(Point(0, 0), GetSize()));

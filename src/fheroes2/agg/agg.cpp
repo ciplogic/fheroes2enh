@@ -1079,7 +1079,7 @@ void AGG::SaveTIL(int til)
 
 bool AGG::LoadOrgTIL(int til, u32 max)
 {
-    const vector<u8> &body = ReadChunk(TIL::GetString(til));
+    vector<u8> body = ReadChunk(TIL::GetString(til));
 
     if (body.empty())
         return false;

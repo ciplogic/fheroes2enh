@@ -54,12 +54,12 @@ public:
     bool isVertical() const;
 
     int GetCurrent() const
-    { return cur; };
+    { return cur; }
 
-    int GetStep() const
-    { return step; };
+	int GetStep() const
+    { return step; }
 
-    int Max() const
+	int Max() const
     { return max; };
 
     int Min() const
