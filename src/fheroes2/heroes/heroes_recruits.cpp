@@ -21,8 +21,6 @@
  ***************************************************************************/
 
 #include "world.h"
-#include "game.h"
-#include "settings.h"
 
 Recruits::Recruits() : pair<int, int>(Heroes::UNKNOWN, Heroes::UNKNOWN)
 {

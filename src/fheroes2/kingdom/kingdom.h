@@ -22,8 +22,6 @@
 #ifndef H2KINGDOM_H
 #define H2KINGDOM_H
 
-#include <vector>
-#include <map>
 #include "payment.h"
 #include "puzzle.h"
 #include "mp2.h"

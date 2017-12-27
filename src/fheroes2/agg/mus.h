@@ -23,7 +23,8 @@
 #ifndef H2MUS_H
 #define H2MUS_H
 
-#include "gamedefs.h"
+#include <string>
+using namespace std;
 
 namespace MUS
 {
@@ -77,7 +78,7 @@ namespace MUS
         UNKNOWN
     };
 
-    const string GetString(int, bool shortname = false);
+    const std::string GetString(int, bool shortname = false);
 
     int FromGround(int);
 

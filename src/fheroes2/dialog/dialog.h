@@ -23,7 +23,6 @@
 #define H2DIALOG_H
 
 #include <string>
-#include <list>
 #include <vector>
 #include "gamedefs.h"
 

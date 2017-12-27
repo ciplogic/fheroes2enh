@@ -22,6 +22,8 @@
 
 #include "xmi.h"
 
+#include "mus.h"
+
 namespace XMI
 {
     const struct

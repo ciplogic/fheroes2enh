@@ -20,7 +20,6 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include "mp2.h"
 #include "world.h"
 #include "agg.h"
 #include "text.h"

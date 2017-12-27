@@ -24,7 +24,6 @@
 #define H2GAMEINTERFACE_H
 
 #include "gamedefs.h"
-#include "interface_border.h"
 #include "interface_radar.h"
 #include "interface_buttons.h"
 #include "interface_icons.h"

@@ -20,10 +20,8 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <climits>
 #include <algorithm>
 #include <iterator>
-#include <sstream>
 #include "rect.h"
 
 Point::Point() : x(0), y(0)
@@ -132,9 +130,7 @@ bool Size::isEmpty() const
     return 0 == w && 0 == h;
 }
 
-Rect::Rect()
-{
-}
+Rect::Rect() = default;
 
 Rect::Rect(const Point &pt, u16 rw, u16 rh) : Point(pt), Size(rw, rh)
 {

@@ -22,7 +22,6 @@
 
 #include <cstdlib>
 #include <ctime>
-#include <iterator>
 
 #include "system.h"
 #include "rand.h"

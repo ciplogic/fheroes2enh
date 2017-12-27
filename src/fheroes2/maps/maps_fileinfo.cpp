@@ -24,6 +24,10 @@
 #include <locale>
 #endif
 
+#include "gamedefs.h"
+
+#include <string>
+#include <iosfwd>
 #include <cstring>
 #include <algorithm>
 #include "difficulty.h"
@@ -38,11 +42,11 @@
 #define LENGTHNAME        16
 #define LENGTHDESCRIPTION    143
 
-template<typename CharType>
-bool AlphabeticalCompare(const basic_string<CharType> &lhs, const basic_string<CharType> &rhs)
+using namespace std;
+
+bool AlphabeticalCompare(const std::string &lhs, const std::string &rhs)
 {
-    return std::use_facet<collate<CharType> >(locale()).compare(lhs.data(), lhs.data() + lhs.size(),
-                                                                          rhs.data(), rhs.data() + rhs.size()) == -1;
+    return lhs < rhs;
 }
 
 namespace Editor

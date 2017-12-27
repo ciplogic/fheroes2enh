@@ -25,10 +25,11 @@
 #include "game.h"
 #include "game_interface.h"
 
-Interface::ControlPanel::ControlPanel(Basic &basic) : interface(basic)
+Interface::ControlPanel::ControlPanel(Basic &basic) 
+    : interface(basic)
 {
-    w = 180;
-    h = 36;
+    _area.w = 180;
+    _area.h = 36;
 
     rt_radr.w = 36;
     rt_radr.h = 36;
@@ -65,35 +66,35 @@ void Interface::ControlPanel::ResetTheme()
 
 const Rect &Interface::ControlPanel::GetArea()
 {
-    return *this;
+    return _area;
 }
 
 void Interface::ControlPanel::SetPos(s32 ox, s32 oy)
 {
-    x = ox;
-    y = oy;
+    _area.x = ox;
+    _area.y = oy;
 
-    rt_radr.x = x;
-    rt_radr.y = y;
-    rt_icon.x = x + 36;
-    rt_icon.y = y;
-    rt_bttn.x = x + 72;
-    rt_bttn.y = y;
-    rt_stat.x = x + 108;
-    rt_stat.y = y;
-    rt_quit.x = x + 144;
-    rt_quit.y = y;
+    rt_radr.x = _area.x;
+    rt_radr.y = _area.y;
+    rt_icon.x = _area.x + 36;
+    rt_icon.y = _area.y;
+    rt_bttn.x = _area.x + 72;
+    rt_bttn.y = _area.y;
+    rt_stat.x = _area.x + 108;
+    rt_stat.y = _area.y;
+    rt_quit.x = _area.x + 144;
+    rt_quit.y = _area.y;
 }
 
 void Interface::ControlPanel::Redraw()
 {
     Display &display = Display::Get();
 
-    btn_radr.Blit(x, y, display);
-    btn_icon.Blit(x + 36, y, display);
-    btn_bttn.Blit(x + 72, y, display);
-    btn_stat.Blit(x + 108, y, display);
-    btn_quit.Blit(x + 144, y, display);
+    btn_radr.Blit(_area.x, _area.y, display);
+    btn_icon.Blit(_area.x + 36, _area.y, display);
+    btn_bttn.Blit(_area.x + 72, _area.y, display);
+    btn_stat.Blit(_area.x + 108, _area.y, display);
+    btn_quit.Blit(_area.x + 144, _area.y, display);
 }
 
 int Interface::ControlPanel::QueueEventProcessing()

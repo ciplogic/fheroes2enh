@@ -23,8 +23,6 @@
 #ifndef SDLNET_H
 #define SDLNET_H
 
-#include <string>
-#include <iostream>
 #include "types.h"
 
 #ifdef WITH_NET
@@ -41,10 +39,10 @@ namespace Network
     {
     public:
     Socket();
-    Socket(const TCPsocket);
+    Socket(TCPsocket);
     ~Socket();
 
-    void		Assign(const TCPsocket);
+    void		Assign(TCPsocket);
 
     bool		Ready() const;
 

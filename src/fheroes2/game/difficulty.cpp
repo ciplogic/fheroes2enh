@@ -21,6 +21,7 @@
  ***************************************************************************/
 
 #include "difficulty.h"
+#include "gamedefs.h"
 
 const char *Difficulty::String(int difficulty)
 {

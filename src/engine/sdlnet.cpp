@@ -24,7 +24,6 @@
 #ifdef WITH_NET
 
 #include <algorithm>
-#include <cstring>
 #include "sdlnet.h"
 
 
@@ -202,9 +201,7 @@ void Network::Socket::Close()
     }
 }
 
-Network::Server::Server()
-{
-}
+Network::Server::Server() = default;
 
 TCPsocket Network::Server::Accept()
 {

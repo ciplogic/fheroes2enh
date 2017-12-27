@@ -40,6 +40,7 @@
 #include "battle_bridge.h"
 #include "battle_catapult.h"
 #include "battle_interface.h"
+#include "battle_command.h"
 
 #define  ARMYORDERW    40
 

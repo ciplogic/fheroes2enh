@@ -87,9 +87,8 @@ struct AIHero
     u32 fix_loop;
 };
 
-struct AIHeroes : public vector<AIHero>
+struct AIHeroes : vector<AIHero>
 {
-public:
     static AIHero &Get(const Heroes &);
 
     static void Reset();

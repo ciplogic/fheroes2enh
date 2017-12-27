@@ -23,7 +23,6 @@
 #define H2COLOR_H
 
 #include <vector>
-#include "gamedefs.h"
 #include "serialize.h"
 #include "ByteVectorReader.h"
 

@@ -135,8 +135,9 @@ Troops::Troops()
 Troops::~Troops()
 {
 	for (auto it : _items) {
-
+#ifndef WIN32
 		delete it;
+#endif
 		it = nullptr;
 	}
 	_items.clear();

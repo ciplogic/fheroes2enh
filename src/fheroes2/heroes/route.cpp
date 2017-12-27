@@ -20,8 +20,6 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <iostream>
-#include "agg.h"
 #include "world.h"
 #include "game.h"
 #include "settings.h"

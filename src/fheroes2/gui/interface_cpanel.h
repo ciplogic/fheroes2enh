@@ -29,7 +29,7 @@ namespace Interface
 {
     class Basic;
 
-    class ControlPanel : protected Rect
+    class ControlPanel 
     {
     public:
         ControlPanel(Basic &);
@@ -45,6 +45,7 @@ namespace Interface
         const Rect &GetArea();
 
     private:
+        Rect _area;
         Basic &interface;
 
         Surface btn_radr;

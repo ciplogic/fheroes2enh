@@ -135,8 +135,9 @@ Troops::Troops()
 Troops::~Troops()
 {
 	for (auto it : _items) {
-
+#ifndef WIN32
 		delete it;
+#endif
 		it = nullptr;
 	}
 	_items.clear();
@@ -470,16 +471,17 @@ Troops Troops::GetOptimized() const
     result._items.reserve(_items.size());
 
     for (auto _item : _items)
-    {
-        if (!_item->isValid()) continue;
-        auto it2 = find_if(result._items.begin(), result._items.end(),
-                           bind2nd(mem_fun(&Troop::isMonster), _item->GetID()));
+        if (_item->isValid())
+        {
+            auto it2 = find_if(result._items.begin(), result._items.end(),
+                                        bind2nd(mem_fun(&Troop::isMonster), _item->GetID()));
 
-        if (it2 == result._items.end())
-            result._items.push_back(new Troop(*_item));
-        else
-            (*it2)->SetCount((*it2)->GetCount() + _item->GetCount());
-    }
+            if (it2 == result._items.end())
+                result._items.push_back(new Troop(*_item));
+            else
+                (*it2)->SetCount((*it2)->GetCount() + _item->GetCount());
+        }
+
     return result;
 }
 
@@ -556,10 +558,10 @@ void Troops::JoinStrongest(Troops &troops2, bool save_last)
     if (this == &troops2)
         return;
 
-    auto priority = GetOptimized();
+    Troops priority = GetOptimized();
     priority._items.reserve(ARMYMAXTROOPS * 2);
 
-    auto priority2 = troops2.GetOptimized();
+    Troops priority2 = troops2.GetOptimized();
     priority.Insert(priority2);
 
     Clean();
@@ -635,32 +637,32 @@ void Troops::KeepOnlyWeakest(Troops &troops2, bool save_last)
 
 void Troops::DrawMons32LineWithScoute(s32 cx, s32 cy, u32 width, u32 first, u32 count, u32 scoute, bool shorts) const
 {
-    if (!isValid()) return;
-    if (0 == count) count = GetCount();
-
-    const u32 chunk = width / count;
-    cx += chunk / 2;
-
-    Text text;
-    text.Set(Font::SMALL);
-
-    for (auto _item : _items)
+    if (isValid())
     {
-        if (!_item->isValid())
-            continue;
-        if (0 == first && count)
-        {
-            const Sprite &monster = AGG::GetICN(ICN::MONS32, _item->GetSpriteIndex());
+        if (0 == count) count = GetCount();
 
-            monster.Blit(cx - monster.w() / 2, cy + 30 - monster.h());
-            text.Set(Game::CountScoute(_item->GetCount(), scoute, shorts));
-            text.Blit(cx - text.w() / 2, cy + 28);
+        const u32 chunk = width / count;
+        cx += chunk / 2;
 
-            cx += chunk;
-            --count;
-        }
-        else
-            --first;
+        Text text;
+        text.Set(Font::SMALL);
+
+        for (auto _item : _items)
+            if (_item->isValid())
+            {
+                if (0 == first && count)
+                {
+                    const Sprite &monster = AGG::GetICN(ICN::MONS32, _item->GetSpriteIndex());
+
+                    monster.Blit(cx - monster.w() / 2, cy + 30 - monster.h());
+                    text.Set(Game::CountScoute(_item->GetCount(), scoute, shorts));
+                    text.Blit(cx - text.w() / 2, cy + 28);
+
+                    cx += chunk;
+                    --count;
+                } else
+                    --first;
+            }
     }
 }
 

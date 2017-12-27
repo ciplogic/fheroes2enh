@@ -22,10 +22,7 @@
 #ifndef H2DIR_H
 #define H2DIR_H
 
-#include <list>
 #include <string>
-#include <locale>
-#include <codecvt>
 #include <vector>
 
 using namespace std;

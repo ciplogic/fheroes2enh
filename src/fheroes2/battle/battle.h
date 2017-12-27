@@ -24,10 +24,6 @@
 #define H2BATTLE_H
 
 #include <vector>
-#include <utility>
-#include "icn.h"
-#include "m82.h"
-#include "gamedefs.h"
 #include "army.h"
 
 namespace Battle

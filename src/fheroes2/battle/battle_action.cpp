@@ -23,6 +23,7 @@
 #include <algorithm>
 #include "settings.h"
 #include "world.h"
+#include "battle_command.h"
 #include "battle_cell.h"
 #include "battle_troop.h"
 #include "battle_tower.h"

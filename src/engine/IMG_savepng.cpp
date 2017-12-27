@@ -54,18 +54,16 @@ static void png_write_data(png_structp png_ptr,png_bytep data, png_size_t length
 }
 
 int IMG_SavePNG_RW(SDL_RWops *src, SDL_Surface *surf,int compression){
-    png_structp png_ptr;
-    png_infop info_ptr;
     SDL_PixelFormat *fmt=nullptr;
     SDL_Surface *tempsurf=nullptr;
-    int ret,funky_format;
     unsigned int i;
     Uint8 used_alpha, temp_alpha = 0;
-    png_colorp palette;
     Uint8 *palette_alpha=nullptr;
     png_byte **row_pointers=nullptr;
-    png_ptr=nullptr;info_ptr=nullptr;palette=nullptr;ret=-1;
-    funky_format=0;
+    png_structp png_ptr = nullptr;png_infop info_ptr = nullptr;
+    png_colorp palette = nullptr;
+    int ret = -1;
+    int funky_format = 0;
 
     if( !src || !surf) {
         goto savedone; /* Nothing to do. */

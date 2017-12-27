@@ -23,7 +23,6 @@
 #define H2TILES_H
 
 #include <list>
-#include <functional>
 #include "gamedefs.h"
 #include "direction.h"
 #include "serialize.h"

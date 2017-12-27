@@ -4,18 +4,16 @@
 
 #include "FileUtils.h"
 
-#include <sys/types.h>
 #include <sys/stat.h>
 #ifndef WIN32
+#include <sys/types.h>
 #include <unistd.h>
 #else
+
+#define stat _stat
 #endif
 
 #include <cstdlib>
-
-#ifdef WIN32
-#define stat _stat
-#endif
 
 namespace FileUtils
 {

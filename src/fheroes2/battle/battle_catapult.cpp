@@ -22,9 +22,7 @@
 
 #include "artifact.h"
 #include "skill.h"
-#include "settings.h"
 #include "heroes_base.h"
-#include "battle_command.h"
 #include "battle_catapult.h"
 
 Battle::Catapult::Catapult(const HeroBase &hero, bool fortification) : cat_shots(1), cat_first(20),

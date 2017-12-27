@@ -24,10 +24,7 @@
 
 #include "display.h"
 
-SpritePos::SpritePos()
-: Surface()
-{
-}
+SpritePos::SpritePos() = default;
 
 SpritePos::SpritePos(const Surface &sf, const Point &pt) : Surface(sf), pos(pt)
 {

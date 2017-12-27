@@ -136,11 +136,10 @@ Surface FontPSF::RenderText(const string &msg, const RGBA &color) const
     res.Set(msg.size() * size.w, size.h, false);
     int posx = 0;
 
-    for (string::const_iterator
-                 it = msg.begin(); it != msg.end(); ++it)
+    for (auto it : msg)
     {
         // render char
-        u32 offsetx = *it * size.w * size.h / 8; // bits -> byte
+        u32 offsetx = it * size.w * size.h / 8; // bits -> byte
 
         for (u32 yy = 0; yy < size.h; ++yy)
         {

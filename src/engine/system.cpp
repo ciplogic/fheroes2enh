@@ -83,7 +83,6 @@ extern HWND SDL_Window;
 #define SEPARATOR '/'
 #endif
 
-#include "serialize.h"
 #include "tools.h"
 
 int System::MakeDirectory(const string &path)

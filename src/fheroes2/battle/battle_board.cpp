@@ -31,6 +31,7 @@
 #include "battle_bridge.h"
 #include "battle_troop.h"
 #include "game_static.h"
+#include "icn.h"
 #include <unordered_map>
 
 namespace Battle

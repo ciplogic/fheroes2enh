@@ -21,7 +21,6 @@
  ***************************************************************************/
 
 #include <string>
-#include <algorithm>
 #include "agg.h"
 #include "button.h"
 #include "world.h"
@@ -33,7 +32,6 @@
 #include "dialog.h"
 #include "statusbar.h"
 #include "army_bar.h"
-#include "pocketpc.h"
 
 void CastleRedrawTownName(const Castle &castle, const Point &dst);
 

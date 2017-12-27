@@ -24,9 +24,7 @@
 #define H2GAME_H
 
 #include <string>
-#include "rect.h"
 #include "types.h"
-#include "gamedefs.h"
 
 class Surface;
 
@@ -37,6 +35,8 @@ class Player;
 class Heroes;
 
 class Castle;
+
+using namespace std;
 
 namespace Game
 {
@@ -271,7 +271,7 @@ namespace Game
 
     int GetActualKingdomColors();
 
-    void DialogPlayers(int color, string);
+    void DialogPlayers(int color, std::string);
 
     void SetCurrentMusic(int);
 
@@ -305,7 +305,7 @@ namespace Game
 
     void OpenCastleDialog(Castle &);
 
-    string GetEncodeString(const string &);
+    string GetEncodeString(const std::string &);
 
     namespace Editor
     {

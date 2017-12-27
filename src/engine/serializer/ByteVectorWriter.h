@@ -3,7 +3,6 @@
 
 #include "types.h"
 #include <vector>
-#include <string>
 
 class ByteVectorWriter
 {

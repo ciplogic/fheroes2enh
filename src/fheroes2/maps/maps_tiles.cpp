@@ -21,7 +21,6 @@
  ***************************************************************************/
 
 #include <list>
-#include <iostream>
 #include <iomanip>
 #include <algorithm>
 #include "agg.h"
@@ -47,68 +46,6 @@
 
 u8 monster_animation_cicle[] = {0, 1, 2, 1, 0, 3, 4, 5, 4, 3};
 
-#ifdef WITH_DEBUG
-Surface PassableViewSurface(int passable)
-{
-    const u32 w = 31;
-    const u32 h = 31;
-    const RGBA colr = RGBA(0xC0,0x2C,0);
-    const RGBA colg = RGBA(0x90,0xC0,0);
-    Surface sf(Size(w, h), true);
-
-    if(0 == passable || Direction::CENTER == passable)
-    sf.DrawBorder(colr);
-    else
-    if(DIRECTION_ALL == passable)
-    sf.DrawBorder(colg);
-    else
-    {
-    sf.Set(w, h, false);
-
-        for(u32 i = 0; i < w; ++i)
-        {
-        if(i < 10)
-        {
-            sf.DrawPoint(Point(i, 0), (passable & Direction::TOP_LEFT ? colg : colr));
-            sf.DrawPoint(Point(i, h - 1), (passable & Direction::BOTTOM_LEFT ? colg : colr));
-        }
-        else
-        if(i < 21)
-        {
-            sf.DrawPoint(Point(i, 0), (passable & Direction::TOP ? colg : colr));
-            sf.DrawPoint(Point(i, h - 1), (passable & Direction::BOTTOM ? colg : colr));
-            }
-        else
-        {
-        sf.DrawPoint(Point(i, 0), (passable & Direction::TOP_RIGHT ? colg : colr));
-            sf.DrawPoint(Point(i, h - 1), (passable & Direction::BOTTOM_RIGHT ? colg : colr));
-        }
-    }
-
-        for(u32 i = 0; i < h; ++i)
-        {
-        if(i < 10)
-        {
-            sf.DrawPoint(Point(0, i), (passable & Direction::TOP_LEFT ? colg : colr));
-            sf.DrawPoint(Point(w - 1, i), (passable & Direction::TOP_RIGHT ? colg : colr));
-        }
-        else
-        if(i < 21)
-        {
-            sf.DrawPoint(Point(0, i), (passable & Direction::LEFT ? colg : colr));
-            sf.DrawPoint(Point(w - 1, i), (passable & Direction::RIGHT ? colg : colr));
-            }
-        else
-        {
-        sf.DrawPoint(Point(0, i), (passable & Direction::BOTTOM_LEFT ? colg : colr));
-            sf.DrawPoint(Point(w - 1, i), (passable & Direction::BOTTOM_RIGHT ? colg : colr));
-        }
-    }
-    }
-
-    return sf;
-}
-#endif
 
 Maps::TilesAddon::TilesAddon() : uniq(0), level(0), object(0), index(0), tmp(0)
 {

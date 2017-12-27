@@ -26,7 +26,6 @@
 #endif
 
 #include <string>
-#include <sstream>
 #include <iomanip>
 #include <iostream>
 #include <algorithm>
@@ -516,52 +515,6 @@ void StreamBuf::seek(size_t sz)
 {
     itget = itbeg + sz < itend ? itbeg + sz : itend;
 }
-
-/*
-std::ostream & operator<< (std::ostream & os, StreamBuf & sb)
-{
-    const u32 count = sb.sizeg();
-
-    os.unsetf(std::ios::skipws);
-    sb.bigendian() ? StreamBase::putBE32(os, count) : StreamBase::putLE32(os, count);
-
-    if(os.write((char*) sb.itget, count))
-	sb.itget += count;
-
-    return os;
-}
-
-size_t available_count(std::istream & is)
-{
-    const size_t curpos = is.tellg();
-    is.seekg(0, std::ios_base::end);
-    const size_t sizeis = is.tellg();
-    is.seekg(curpos, std::ios_base::beg);
-    return sizeis  > curpos ? sizeis - curpos : 0;
-}
-
-std::istream & operator>> (std::istream & is, StreamBuf & sb)
-{
-    is.unsetf(std::ios::skipws);
-    const u32 count = sb.bigendian() ? StreamBase::getBE32(is) : StreamBase::getLE32(is);
-
-    if(count > available_count(is))
-    {
-	sb.setfail();
-	return is;
-    }
-
-    if(sb.sizep() < count)
-	sb.realloc(count);
-
-    if(is.read((char*) sb.itput, count))
-	sb.itput += count;
-    else
-	sb.setfail();
-
-    return is;
-}
-*/
 
 StreamFile::StreamFile(const string &fn, const char *mode)
 {

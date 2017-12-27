@@ -147,16 +147,17 @@ void Music::Resume()
 
 void Music::Reset()
 {
-    if(music)
+    if(!music)
+        return;
+    if (fadeout)
     {
-        if(fadeout)
-            while(!Mix_FadeOutMusic(fadeout) && Mix_PlayingMusic()) SDL_Delay(50);
-        else
+        while (!Mix_FadeOutMusic(fadeout) && Mix_PlayingMusic()) SDL_Delay(50);
+    }
+    else
         Mix_HaltMusic();
 
-        Mix_FreeMusic(music);
-        music = nullptr;
-    }
+    Mix_FreeMusic(music);
+    music = nullptr;
 }
 
 bool Music::isPlaying()

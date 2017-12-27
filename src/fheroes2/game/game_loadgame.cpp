@@ -23,7 +23,6 @@
 #include "gamedefs.h"
 #include "agg.h"
 #include "cursor.h"
-#include "button.h"
 #include "dialog.h"
 #include "settings.h"
 #include "game_io.h"

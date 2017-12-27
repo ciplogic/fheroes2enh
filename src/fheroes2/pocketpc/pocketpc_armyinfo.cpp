@@ -22,7 +22,6 @@
 
 #include "agg.h"
 #include "cursor.h"
-#include "settings.h"
 #include "text.h"
 #include "button.h"
 #include "game.h"

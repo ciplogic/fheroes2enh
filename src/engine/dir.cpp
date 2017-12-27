@@ -26,6 +26,8 @@
 #include <Windows.h>
 #endif
 
+#include <locale>
+#include <codecvt>
 #include "system.h"
 #include "tools.h"
 

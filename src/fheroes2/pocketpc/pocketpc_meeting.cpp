@@ -22,11 +22,9 @@
 
 #include "agg.h"
 #include "cursor.h"
-#include "button.h"
 #include "dialog.h"
 #include "heroes.h"
 #include "game.h"
-#include "heroes_indicator.h"
 #include "army_bar.h"
 #include "world.h"
 #include "pocketpc.h"
