@@ -9,11 +9,10 @@ BinaryFileReader::BinaryFileReader()
 
 BinaryFileReader::~BinaryFileReader()
 {
-    if(_file)
-    {
-        fclose(_file);
-        _file = nullptr;
-    }
+    if(!_file)
+		return;
+	fclose(_file);
+	_file = nullptr;
 }
 
 bool BinaryFileReader::open(const string& cs, const char* rb)

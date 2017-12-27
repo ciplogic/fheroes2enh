@@ -600,6 +600,9 @@
     <ClInclude Include="..\..\src\engine\serializer\ByteVectorWriter.h">
       <Filter>Header Files\engine\serializer</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\engine\TimeUtils.h">
+      <Filter>Header Files\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\engine\audio.cpp">
@@ -1186,6 +1189,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\engine\serializer\ByteVectorWriter.cpp">
       <Filter>Source Files\engine\serializer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\TimeUtills.cpp">
+      <Filter>Source Files\engine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

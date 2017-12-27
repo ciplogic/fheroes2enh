@@ -65,7 +65,7 @@ struct MapEvent : public MapObjectSimple
 {
     MapEvent();
 
-    void LoadFromMP2(s32 index, StreamBuf);
+    void LoadFromMP2(s32 index, ByteVectorReader&);
 
     bool isAllow(int color) const;
 
@@ -89,7 +89,7 @@ struct MapSphinx : public MapObjectSimple
 {
     MapSphinx();
 
-    void LoadFromMP2(s32 index, StreamBuf);
+    void LoadFromMP2(s32 index, ByteVectorReader&);
 
     bool AnswerCorrect(const string &answer);
 
@@ -112,7 +112,7 @@ struct MapSign : public MapObjectSimple
 
     MapSign(s32 index, const string &);
 
-    void LoadFromMP2(s32 index, StreamBuf);
+    void LoadFromMP2(s32 index, ByteVectorReader&);
 
     string message;
 };

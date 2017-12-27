@@ -68,12 +68,16 @@ u32 ByteVectorReader::tell() const
 
 std::vector<u8> ByteVectorReader::getRaw(size_t sizeblock)
 {
-	std::vector<u8> result;
-	result.reserve(sizeblock);
-	for (u32 i = 0; i<sizeblock; i++)
+	if (sizeblock == 0)
 	{
-		result.push_back(get());
+		sizeblock = size() - tell();
 	}
+	auto start = _data.begin()+_pos;
+	auto endPos = start + sizeblock;
+		
+	std::vector<u8> result;
+	result.assign(start, endPos);
+	_pos += sizeblock;
 	return result;
 }
 

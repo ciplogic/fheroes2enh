@@ -22,7 +22,6 @@
 
 #include <algorithm>
 #include "color.h"
-#include "dialog.h"
 #include "settings.h"
 #include "mp2.h"
 #include "game.h"
@@ -46,7 +45,7 @@ MapEvent::MapEvent() : MapObjectSimple(MP2::OBJ_EVENT), computer(false), cancel(
 {
 }
 
-void MapEvent::LoadFromMP2(s32 index, StreamBuf st)
+void MapEvent::LoadFromMP2(s32 index, ByteVectorReader& st)
 {
     // id
     if (1 == st.get())
@@ -88,7 +87,7 @@ void MapEvent::LoadFromMP2(s32 index, StreamBuf st)
         if (st.get()) colors |= Color::PURPLE;
 
         // message
-        message = Game::GetEncodeString(st.toString());
+        message = Game::GetEncodeString(st.toString(0));
        
     } 
 }
@@ -110,7 +109,7 @@ MapSphinx::MapSphinx() : MapObjectSimple(MP2::OBJ_SPHINX), valid(false)
 {
 }
 
-void MapSphinx::LoadFromMP2(s32 index, StreamBuf st)
+void MapSphinx::LoadFromMP2(s32 index, ByteVectorReader& st)
 {
     // id
     if (0 == st.get())
@@ -142,7 +141,7 @@ void MapSphinx::LoadFromMP2(s32 index, StreamBuf st)
         }
 
         // message
-        message = Game::GetEncodeString(st.toString());
+        message = Game::GetEncodeString(st.toString(0));
 
         valid = true;
     } 
@@ -216,10 +215,10 @@ MapSign::MapSign(s32 index, const string &msg) : MapObjectSimple(MP2::OBJ_SIGN)
     message = msg;
 }
 
-void MapSign::LoadFromMP2(s32 index, StreamBuf st)
+void MapSign::LoadFromMP2(s32 index, ByteVectorReader& st)
 {
     st.skip(9);
-    message = st.toString();
+    message = st.toString(0);
 
     SetIndex(index);
     message = Game::GetEncodeString(message);

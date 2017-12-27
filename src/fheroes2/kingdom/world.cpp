@@ -1097,44 +1097,44 @@ StreamBase &operator>>(StreamBase &msg, CapturedObject &obj)
 StreamBase &operator<<(StreamBase &msg, const MapObjects &objs)
 {
     msg << static_cast<u32>(objs.size());
-    for (auto it = objs.begin(); it != objs.end(); ++it)
-        if ((*it).second)
-        {
-            const MapObjectSimple &obj = *(*it).second;
-            msg << (*it).first << obj.GetType();
+	for (const auto & it : objs)
+	{
+		if (!it.second)
+			continue;
+		const MapObjectSimple &obj = *it.second;
+		msg << it.first << obj.GetType();
 
-            switch (obj.GetType())
-            {
-                case MP2::OBJ_EVENT:
-                    msg << static_cast<const MapEvent &>(obj);
-                    break;
+		switch (obj.GetType())
+		{
+		case MP2::OBJ_EVENT:
+			msg << static_cast<const MapEvent &>(obj);
+			break;
 
-                case MP2::OBJ_SPHINX:
-                    msg << static_cast<const MapSphinx &>(obj);
-                    break;
+		case MP2::OBJ_SPHINX:
+			msg << static_cast<const MapSphinx &>(obj);
+			break;
 
-                case MP2::OBJ_SIGN:
-                    msg << static_cast<const MapSign &>(obj);
-                    break;
+		case MP2::OBJ_SIGN:
+			msg << static_cast<const MapSign &>(obj);
+			break;
 
-                case MP2::OBJ_RESOURCE:
-                    msg << static_cast<const MapResource &>(obj);
-                    break;
+		case MP2::OBJ_RESOURCE:
+			msg << static_cast<const MapResource &>(obj);
+			break;
 
-                case MP2::OBJ_ARTIFACT:
-                    msg << static_cast<const MapArtifact &>(obj);
-                    break;
+		case MP2::OBJ_ARTIFACT:
+			msg << static_cast<const MapArtifact &>(obj);
+			break;
 
-                case MP2::OBJ_MONSTER:
-                    msg << static_cast<const MapMonster &>(obj);
-                    break;
+		case MP2::OBJ_MONSTER:
+			msg << static_cast<const MapMonster &>(obj);
+			break;
 
-                default:
-                    msg << obj;
-                    break;
-            }
-        }
-
+		default:
+			msg << obj;
+			break;
+		}
+	}
     return msg;
 }
 
@@ -1283,7 +1283,7 @@ void World::PostFixLoad()
 {
 }
 
-void EventDate::LoadFromMP2(StreamBuf st)
+void EventDate::LoadFromMP2(ByteVectorReader& st)
 {
 	// id
 	if (0 != st.get())
@@ -1329,7 +1329,7 @@ void EventDate::LoadFromMP2(StreamBuf st)
 	if (st.get()) colors |= Color::PURPLE;
 
 	// message
-	message = Game::GetEncodeString(st.toString());
+	message = Game::GetEncodeString(st.toString(0));
 
 }
 

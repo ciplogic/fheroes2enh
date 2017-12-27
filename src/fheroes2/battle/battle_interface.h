@@ -28,6 +28,8 @@
 #include "dialog.h"
 #include "text.h"
 #include "battle_board.h"
+#include "sprite.h"
+#include "spell.h"
 
 namespace Battle
 {

@@ -136,7 +136,7 @@ struct EventDate
     EventDate() : computer(false), first(0), subsequent(0), colors(0)
     {}
 
-    void LoadFromMP2(StreamBuf);
+    void LoadFromMP2(ByteVectorReader&);
 
     bool isAllow(int color, u32 date) const;
 
@@ -154,9 +154,10 @@ StreamBase &operator<<(StreamBase &, const EventDate &);
 
 StreamBase &operator>>(StreamBase &, EventDate &);
 
-typedef list<string> Rumors;
+typedef vector<string> Rumors;
 typedef list<EventDate> EventsDate;
 typedef vector<Maps::Tiles> MapsTiles;
+
 
 
 class World : protected Size

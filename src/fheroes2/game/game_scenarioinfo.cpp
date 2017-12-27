@@ -49,88 +49,63 @@ int Game::SelectScenario()
 
 int Game::ScenarioInfo()
 {
-    Settings &conf = Settings::Get();
+	Settings &conf = Settings::Get();
 
-    AGG::PlayMusic(MUS::MAINMENU);
+	AGG::PlayMusic(MUS::MAINMENU);
 
-    MapsFileInfoList lists;
-    if (!PrepareMapsFileInfoList(lists, (conf.GameType(TYPE_MULTI))))
-    {
-        Message(_("Warning"), _("No maps available!"), Font::BIG, Dialog::OK);
-        return MAINMENU;
-    }
+	MapsFileInfoList lists;
+	if (!PrepareMapsFileInfoList(lists, (conf.GameType(TYPE_MULTI))))
+	{
+		Message(_("Warning"), _("No maps available!"), Font::BIG, Dialog::OK);
+		return MAINMENU;
+	}
 
-    int result = QUITGAME;
-    LocalEvent &le = LocalEvent::Get();
+	int result = QUITGAME;
+	LocalEvent &le = LocalEvent::Get();
 
-    // cursor
-    Cursor &cursor = Cursor::Get();
-    cursor.Hide();
-    cursor.SetThemes(cursor.POINTER);
+	// cursor
+	Cursor &cursor = Cursor::Get();
+	cursor.Hide();
+	cursor.SetThemes(cursor.POINTER);
 
-    Display &display = Display::Get();
+	Display &display = Display::Get();
 
-    Point top, pointDifficultyInfo, pointOpponentInfo, pointClassInfo;
-    Rect rectPanel;
-    Button *buttonSelectMaps = nullptr;
-    up<Button> buttonOk = nullptr;
+	Point top, pointDifficultyInfo, pointOpponentInfo, pointClassInfo;
+	Rect rectPanel;
+	up<Button> buttonSelectMaps = nullptr;
+	up<Button> buttonOk = nullptr;
 	up<Button> buttonCancel = nullptr;
 
-    // vector coord difficulty
-    Rects coordDifficulty;
-    coordDifficulty.reserve(5);
+	// vector coord difficulty
+	Rects coordDifficulty;
+	coordDifficulty.reserve(5);
 
-    const Sprite &ngextra = AGG::GetICN(ICN::NGEXTRA, 62);
+	const Sprite &ngextra = AGG::GetICN(ICN::NGEXTRA, 62);
 	up<Dialog::FrameBorder> frameborder = nullptr;
 
-    // image background
-    if (false)
-    {
-        frameborder = std::make_unique<Dialog::FrameBorder>(Size(380, 224));
-        rectPanel = frameborder->GetArea();
+	// image background
+	{
+		const Sprite &panel = AGG::GetICN(ICN::NGHSBKG, 0);
+		const Sprite &back = AGG::GetICN(ICN::HEROES, 0);
+		const Point top((display.w() - back.w()) / 2, (display.h() - back.h()) / 2);
 
-        pointDifficultyInfo = Point(rectPanel.x + 4, rectPanel.y + 24);
-        pointOpponentInfo = Point(rectPanel.x + 4, rectPanel.y + 94);
-        pointClassInfo = Point(rectPanel.x + 4, rectPanel.y + 148);
+		rectPanel = Rect(top.x + 204, top.y + 32, panel.w(), panel.h());
+		pointDifficultyInfo = Point(rectPanel.x + 24, rectPanel.y + 93);
+		pointOpponentInfo = Point(rectPanel.x + 24, rectPanel.y + 202);
+		pointClassInfo = Point(rectPanel.x + 24, rectPanel.y + 282);
 
-        coordDifficulty.push_back(Rect(rectPanel.x + 1, rectPanel.y + 21, ngextra.w(), ngextra.h()));
-        coordDifficulty.push_back(Rect(rectPanel.x + 78, rectPanel.y + 21, ngextra.w(), ngextra.h()));
-        coordDifficulty.push_back(Rect(rectPanel.x + 154, rectPanel.y + 21, ngextra.w(), ngextra.h()));
-        coordDifficulty.push_back(Rect(rectPanel.x + 231, rectPanel.y + 21, ngextra.w(), ngextra.h()));
-        coordDifficulty.push_back(Rect(rectPanel.x + 308, rectPanel.y + 21, ngextra.w(), ngextra.h()));
+		coordDifficulty.push_back(Rect(rectPanel.x + 21, rectPanel.y + 91, ngextra.w(), ngextra.h()));
+		coordDifficulty.push_back(Rect(rectPanel.x + 98, rectPanel.y + 91, ngextra.w(), ngextra.h()));
+		coordDifficulty.push_back(Rect(rectPanel.x + 174, rectPanel.y + 91, ngextra.w(), ngextra.h()));
+		coordDifficulty.push_back(Rect(rectPanel.x + 251, rectPanel.y + 91, ngextra.w(), ngextra.h()));
+		coordDifficulty.push_back(Rect(rectPanel.x + 328, rectPanel.y + 91, ngextra.w(), ngextra.h()));
 
-        buttonOk = up<Button>(new Button(rectPanel.x + rectPanel.w / 2 - 160, rectPanel.y + rectPanel.h - 30, ICN::NGEXTRA, 66,
-                              67));
-        buttonCancel = up<Button>(new Button(rectPanel.x + rectPanel.w / 2 + 60, rectPanel.y + rectPanel.h - 30, ICN::NGEXTRA, 68,
-                                  69));
+		buttonSelectMaps = make_unique<Button>(rectPanel.x + 309, rectPanel.y + 45, ICN::NGEXTRA, 64, 65);
+		buttonOk = up<Button>(new Button(rectPanel.x + 31, rectPanel.y + 380, ICN::NGEXTRA, 66, 67));
+		buttonCancel = up<Button>(new Button(rectPanel.x + 287, rectPanel.y + 380, ICN::NGEXTRA, 68, 69));
 
-        Text text;
-        text.Set(conf.CurrentFileInfo().name, Font::BIG);
-        text.Blit(rectPanel.x + (rectPanel.w - text.w()) / 2, rectPanel.y + 5);
-    } else
-    {
-        const Sprite &panel = AGG::GetICN(ICN::NGHSBKG, 0);
-        const Sprite &back = AGG::GetICN(ICN::HEROES, 0);
-        const Point top((display.w() - back.w()) / 2, (display.h() - back.h()) / 2);
-
-        rectPanel = Rect(top.x + 204, top.y + 32, panel.w(), panel.h());
-        pointDifficultyInfo = Point(rectPanel.x + 24, rectPanel.y + 93);
-        pointOpponentInfo = Point(rectPanel.x + 24, rectPanel.y + 202);
-        pointClassInfo = Point(rectPanel.x + 24, rectPanel.y + 282);
-
-        coordDifficulty.push_back(Rect(rectPanel.x + 21, rectPanel.y + 91, ngextra.w(), ngextra.h()));
-        coordDifficulty.push_back(Rect(rectPanel.x + 98, rectPanel.y + 91, ngextra.w(), ngextra.h()));
-        coordDifficulty.push_back(Rect(rectPanel.x + 174, rectPanel.y + 91, ngextra.w(), ngextra.h()));
-        coordDifficulty.push_back(Rect(rectPanel.x + 251, rectPanel.y + 91, ngextra.w(), ngextra.h()));
-        coordDifficulty.push_back(Rect(rectPanel.x + 328, rectPanel.y + 91, ngextra.w(), ngextra.h()));
-
-        buttonSelectMaps = new Button(rectPanel.x + 309, rectPanel.y + 45, ICN::NGEXTRA, 64, 65);
-        buttonOk = up<Button>(new Button(rectPanel.x + 31, rectPanel.y + 380, ICN::NGEXTRA, 66, 67));
-        buttonCancel = up<Button>(new Button(rectPanel.x + 287, rectPanel.y + 380, ICN::NGEXTRA, 68, 69));
-
-        back.Blit(top);
-    }
-
+		back.Blit(top);
+	}
     const bool reset_starting_settings = conf.MapsFile().empty() || !System::IsFile(conf.MapsFile());
     Players &players = conf.GetPlayers();
     Interface::PlayersInfo playersInfo(true, !false, !false);
@@ -158,7 +133,7 @@ int Game::ScenarioInfo()
 
     playersInfo.RedrawInfo();
 
-    TextSprite *rating = false ? nullptr : new TextSprite();
+    up<TextSprite> rating (new TextSprite());
     if (rating)
     {
         rating->SetFont(Font::BIG);
@@ -308,14 +283,13 @@ int Game::ScenarioInfo()
                 result = world.LoadMapMP2(conf.MapsFile()) ? STARTGAME : MAINMENU;
             else if (ext == "map")
                 result = world.LoadMapMAP(conf.MapsFile()) ? STARTGAME : MAINMENU;
+			
         } else
         {
             result = MAINMENU;
         }
     }
 
-    delete rating;
-    delete buttonSelectMaps;
     return result;
 }
 

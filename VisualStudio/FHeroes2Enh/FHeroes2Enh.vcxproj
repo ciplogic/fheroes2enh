@@ -192,6 +192,7 @@
     <ClInclude Include="..\..\src\engine\surface.h" />
     <ClInclude Include="..\..\src\engine\system.h" />
     <ClInclude Include="..\..\src\engine\thread.h" />
+    <ClInclude Include="..\..\src\engine\TimeUtils.h" />
     <ClInclude Include="..\..\src\engine\tinyconfig.h" />
     <ClInclude Include="..\..\src\engine\tools.h" />
     <ClInclude Include="..\..\src\engine\translations.h" />
@@ -339,6 +340,7 @@
     <ClCompile Include="..\..\src\engine\surface.cpp" />
     <ClCompile Include="..\..\src\engine\system.cpp" />
     <ClCompile Include="..\..\src\engine\thread.cpp" />
+    <ClCompile Include="..\..\src\engine\TimeUtills.cpp" />
     <ClCompile Include="..\..\src\engine\tinyconfig.cpp" />
     <ClCompile Include="..\..\src\engine\tools.cpp" />
     <ClCompile Include="..\..\src\engine\translations.cpp" />
