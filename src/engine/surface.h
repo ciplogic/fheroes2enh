@@ -219,15 +219,15 @@ protected:
 
     void SetPalette();
 
-    void SetPixel4(s32 x, s32 y, u32 color);
+    void SetPixel4(s32 x, s32 y, u32 color) const;
 
-    void SetPixel3(s32 x, s32 y, u32 color);
+    void SetPixel3(s32 x, s32 y, u32 color) const;
 
-    void SetPixel2(s32 x, s32 y, u32 color);
+    void SetPixel2(s32 x, s32 y, u32 color) const;
 
-    void SetPixel1(s32 x, s32 y, u32 color);
+    void SetPixel1(s32 x, s32 y, u32 color) const;
 
-    void SetPixel(int x, int y, u32);
+    void SetPixel(int x, int y, u32) const;
 
     u32 GetPixel4(s32 x, s32 y) const;
 

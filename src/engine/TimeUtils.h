@@ -7,6 +7,6 @@
 unsigned long long
 GetTickCount();
 
-void TimeAction(std::string messsage, std::function<void()> runAction);
+void TimeAction(std::string message, std::function<void()>& runAction);
 
 #endif

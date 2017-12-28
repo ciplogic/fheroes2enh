@@ -46,10 +46,10 @@ public:
 
     sp<Sprite> CreateSprite(bool reflect, bool shadow) const;
 
-    Surface First()
+    Surface First() const
     { return first; }
 
-    Surface Second()
+    Surface Second() const
     { return second; }
 
     Point offset;

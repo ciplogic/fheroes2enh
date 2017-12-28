@@ -1126,17 +1126,17 @@ u32 Battle::Arena::GetObstaclesPenalty(const Unit &attacker, const Unit &defende
     return result;
 }
 
-Battle::Force &Battle::Arena::GetForce1()
+Battle::Force &Battle::Arena::GetForce1() const
 {
     return *army1;
 }
 
-Battle::Force &Battle::Arena::GetForce2()
+Battle::Force &Battle::Arena::GetForce2() const
 {
     return *army2;
 }
 
-Battle::Force &Battle::Arena::GetForce(int color, bool invert)
+Battle::Force &Battle::Arena::GetForce(int color, bool invert) const
 {
     if (army1->GetColor() == color)
         return invert ? *army2 : *army1;
@@ -1144,7 +1144,7 @@ Battle::Force &Battle::Arena::GetForce(int color, bool invert)
     return invert ? *army1 : *army2;
 }
 
-Battle::Force &Battle::Arena::GetCurrentForce()
+Battle::Force &Battle::Arena::GetCurrentForce() const
 {
     return GetForce(current_color, false);
 }

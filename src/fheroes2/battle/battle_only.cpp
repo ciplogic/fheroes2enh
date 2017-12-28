@@ -37,7 +37,7 @@
 
 void RedrawPrimarySkillInfo(const Point &, PrimarySkillsBar *, PrimarySkillsBar *); /* heroes_meeting.cpp */
 
-void Battle::ControlInfo::Redraw()
+void Battle::ControlInfo::Redraw() const
 {
     const Sprite &cell = AGG::GetICN(ICN::CELLWIN, 1);
     const Sprite &mark = AGG::GetICN(ICN::CELLWIN, 2);
@@ -602,7 +602,7 @@ void Battle::Only::UpdateHero2(const Point &cur_pt)
     }
 }
 
-void Battle::Only::RedrawBaseInfo(const Point &top)
+void Battle::Only::RedrawBaseInfo(const Point &top) const
 {
     Display &display = Display::Get();
 

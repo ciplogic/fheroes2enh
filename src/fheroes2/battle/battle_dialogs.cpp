@@ -195,7 +195,7 @@ void Battle::GetSummaryParams(int res1, int res2, const HeroBase &hero, u32 exp,
     }
 }
 
-void Battle::Arena::DialogBattleSummary(const Result &res)
+void Battle::Arena::DialogBattleSummary(const Result &res) const
 {
     Display &display = Display::Get();
     Cursor &cursor = Cursor::Get();

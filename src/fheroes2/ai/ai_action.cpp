@@ -57,9 +57,9 @@ void AIToObservationTower(Heroes &hero, u32 obj, s32 dst_index);
 
 void AIToMagellanMaps(Heroes &hero, u32 obj, s32 dst_index);
 
-void AIToTeleports(Heroes &hero, s32 dst_index);
+void AIToTeleports(Heroes &hero, s32 index_from);
 
-void AIToWhirlpools(Heroes &hero, s32 dst_index);
+void AIToWhirlpools(Heroes &hero, s32 index_from);
 
 void AIToPrimarySkillObject(Heroes &hero, u32 obj, s32 dst_index);
 
@@ -1277,7 +1277,7 @@ void AIToTreeKnowledge(Heroes &hero, u32 obj, s32 dst_index)
             if (funds.GetValidItemsCount())
                 hero.GetKingdom().OddFundsResource(funds);
             hero.SetVisited(dst_index);
-            hero.IncreaseExperience(hero.GetExperienceFromLevel(hero.GetLevel()) - hero.GetExperience());
+            hero.IncreaseExperience(Heroes::GetExperienceFromLevel(hero.GetLevel()) - hero.GetExperience());
         }
     }
 }
@@ -1940,8 +1940,6 @@ void AI::HeroesMove(Heroes &hero)
         return;
     hero.SetMove(true);
 
-    if (false)
-        return;
     const Settings &conf = Settings::Get();
     Display &display = Display::Get();
     Cursor &cursor = Cursor::Get();

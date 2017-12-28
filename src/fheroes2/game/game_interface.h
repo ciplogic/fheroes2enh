@@ -125,7 +125,7 @@ namespace Interface
 
         int EventSaveGame();
 
-        void EventPuzzleMaps();
+        static void EventPuzzleMaps();
 
         void EventGameInfo();
 
@@ -149,13 +149,13 @@ namespace Interface
 
         void EventSwitchShowIcons();
 
-        void EventSwitchShowControlPanel();
+        void EventSwitchShowControlPanel() const;
 
         void EventDebug1();
 
         void EventDebug2();
 
-        int EventLoadGame();
+        static bool EventLoadGame();
 
         int EventAdventureDialog();
 

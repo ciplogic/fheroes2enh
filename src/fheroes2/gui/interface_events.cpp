@@ -298,7 +298,7 @@ int Interface::Basic::EventSaveGame()
     return Game::CANCEL;
 }
 
-int Interface::Basic::EventLoadGame()
+bool Interface::Basic::EventLoadGame()
 {
     return Dialog::YES ==
            Dialog::Message("", _("Are you sure you want to load a new game? (Your current game will be lost)"),
@@ -509,7 +509,7 @@ void Interface::Basic::EventSwitchShowIcons()
     iconsPanel.SetRedraw();
 }
 
-void Interface::Basic::EventSwitchShowControlPanel()
+void Interface::Basic::EventSwitchShowControlPanel() const
 {
     Settings &conf = Settings::Get();
 

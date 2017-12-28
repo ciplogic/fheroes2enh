@@ -30,7 +30,7 @@
 #include "game.h"
 #include "text.h"
 
-void Castle::OpenTavern()
+void Castle::OpenTavern() const
 {
     const string &header = _("A generous tip for the barkeep yields the following rumor:");
     const int system = (Settings::Get().ExtGameEvilInterface() ? ICN::SYSTEME : ICN::SYSTEM);

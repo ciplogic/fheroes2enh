@@ -84,13 +84,13 @@ namespace Battle
 
         const HeroBase *GetCurrentCommander() const;
 
-        Force &GetForce1();
+        Force &GetForce1() const;
 
-        Force &GetForce2();
+        Force &GetForce2() const;
 
-        Force &GetForce(int color, bool invert = false);
+        Force &GetForce(int color, bool invert = false) const;
 
-        Force &GetCurrentForce();
+        Force &GetCurrentForce() const;
 
         int GetArmyColor1() const;
 
@@ -113,7 +113,7 @@ namespace Battle
         const SpellStorage &
         GetUsageSpells() const;
 
-        void DialogBattleSummary(const Result &);
+        void DialogBattleSummary(const Result &) const;
 
         int DialogBattleHero(const HeroBase &, bool) const;
 

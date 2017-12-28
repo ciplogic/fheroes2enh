@@ -199,7 +199,7 @@ public:
 
     void ActionAfterBattle(bool attacker_wins);
 
-    void DrawImageCastle(const Point &pt);
+    void DrawImageCastle(const Point &pt) const;
 
     int OpenDialog(bool readonly = false, bool fade = false);
 	void DrawCastleFundsAtPos(Display& display, const Funds& resource, Rect src_rt) const;
@@ -226,7 +226,7 @@ public:
 
     bool AllowBuyBoat() const;
 
-    bool BuyBoat();
+    bool BuyBoat() const;
 
     u32 GetBuildingRequires(u32) const;
 
@@ -285,7 +285,7 @@ private:
 
     u32 OpenTown();
 
-    void OpenTavern();
+    void OpenTavern() const;
 
     void OpenThievesGuild();
 

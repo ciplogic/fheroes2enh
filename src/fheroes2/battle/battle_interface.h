@@ -230,7 +230,7 @@ namespace Battle
 
         void RedrawCoverStatic(Surface &);
 
-        void RedrawLowObjects(s32, Surface &) const;
+        static void RedrawLowObjects(s32, Surface &);
 
         void RedrawHighObjects(s32) const;
 
@@ -286,7 +286,7 @@ namespace Battle
 
         void RedrawTargetsWithFrameAnimation(const TargetsInfo &, int, int, bool);
 
-        bool IdleTroopsAnimation();
+        bool IdleTroopsAnimation() const;
 
         void CheckGlobalEvents(LocalEvent &);
 
@@ -310,9 +310,9 @@ namespace Battle
 
         int GetBattleCursor(string &);
 
-        int GetBattleSpellCursor(string &);
+        int GetBattleSpellCursor(string &) const;
 
-        int GetAllowSwordDirection(u32);
+        int GetAllowSwordDirection(u32) const;
 
         void CreateDamageInfoPopup(s32, s32, const Unit &, const Unit &);
 

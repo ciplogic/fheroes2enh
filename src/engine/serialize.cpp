@@ -140,7 +140,7 @@ StreamBase &StreamBase::operator>>(float &v)
     s32 intpart;
     s32 decpart;
     *this >> intpart >> decpart;
-    v = intpart + decpart / 100000000;
+    v = intpart + decpart / 100000000.0;
     return *this;
 }
 

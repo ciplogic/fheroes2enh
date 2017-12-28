@@ -21,7 +21,7 @@ bool BinaryFileReader::open(const string& cs, const char* rb)
     return _file != nullptr;
 }
 
-void BinaryFileReader::seek(u32 pos)
+void BinaryFileReader::seek(u32 pos) const
 {
     fseek(_file, pos, SEEK_SET);
 }
@@ -60,7 +60,7 @@ vector<u8> BinaryFileReader::getRaw(u32 size) const
     return res;
 }
 
-string BinaryFileReader::toString(int size)
+string BinaryFileReader::toString(int size) const
 {
     up<char> data(new char[size]);
     fread(data.get(), 1, size, _file);
@@ -90,12 +90,12 @@ u32 BinaryFileReader::getBE32()
     return result;
 }
 
-void BinaryFileReader::skip(s32 pos)
+void BinaryFileReader::skip(s32 pos) const
 {
     fseek(_file, pos, SEEK_CUR);
 }
 
-u32 BinaryFileReader::tell()
+u32 BinaryFileReader::tell() const
 {
     return ftell(_file);
 }

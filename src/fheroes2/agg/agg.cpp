@@ -409,11 +409,11 @@ bool AGG::ReadDataDir()
 {
     Settings &conf = Settings::Get();
 
-    ListFiles aggs = conf.GetListFiles("data", ".agg");
+    ListFiles aggs = Settings::GetListFiles("data", ".agg");
     const string &other_data = conf.GetDataParams();
 
     if (!other_data.empty() && other_data != "data")
-        aggs.Append(conf.GetListFiles(other_data, ".agg"));
+        aggs.Append(Settings::GetListFiles(other_data, ".agg"));
 
     // not found agg, exit
     if (aggs.empty()) return false;
@@ -787,10 +787,10 @@ StreamBuf &operator>>(StreamBuf &st, ICNHeader &icn)
 	return st;
 }
 
-void AGG::RenderICNSprite(int icn, u32 index, const Rect &srt, const Point &dpt, Surface &sf)
+void AGG::RenderICNSprite(int icn, u32 index, const Rect &srt, const Point &dpt, Surface &dst)
 {
     ICNSprite res = RenderICNSprite(icn, index);
-    res.first.Blit(srt, dpt, sf);
+    res.first.Blit(srt, dpt, dst);
 }
 
 std::string joinValues(const std::vector<u8>& body, int maxSize)

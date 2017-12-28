@@ -509,28 +509,28 @@ void Surface::SetColorKey(const RGBA &color)
 }
 
 /* draw u32 pixel */
-void Surface::SetPixel4(s32 x, s32 y, u32 color)
+void Surface::SetPixel4(s32 x, s32 y, u32 color) const
 {
     u32 *bufp = static_cast<u32 *>(surface->pixels) + y * (surface->pitch >> 2) + x;
     *bufp = color;
 }
 
 /* draw u24 pixel */
-void Surface::SetPixel3(s32 x, s32 y, u32 color)
+void Surface::SetPixel3(s32 x, s32 y, u32 color) const
 {
     u8 *bufp = static_cast<u8 *>(surface->pixels) + y * surface->pitch + x * 3;
     SetPixel24(bufp, color);
 }
 
 /* draw u16 pixel */
-void Surface::SetPixel2(s32 x, s32 y, u32 color)
+void Surface::SetPixel2(s32 x, s32 y, u32 color) const
 {
     u16 *bufp = static_cast<u16 *>(surface->pixels) + y * (surface->pitch >> 1) + x;
     *bufp = static_cast<u16>(color);
 }
 
 /* draw u8 pixel */
-void Surface::SetPixel1(s32 x, s32 y, u32 color)
+void Surface::SetPixel1(s32 x, s32 y, u32 color) const
 {
     u8 *bufp = static_cast<u8 *>(surface->pixels) + y * surface->pitch + x;
     *bufp = static_cast<u8>(color);
@@ -538,7 +538,7 @@ void Surface::SetPixel1(s32 x, s32 y, u32 color)
 
 /* draw pixel */
 
-void Surface::SetPixel(int x, int y, u32 pixel)
+void Surface::SetPixel(int x, int y, u32 pixel) const
 {
     if (x < w() && y < h())
     {

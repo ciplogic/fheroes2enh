@@ -1533,7 +1533,7 @@ void Battle::Interface::RedrawCastle3(const Castle &castle) const
     sprite.Blit(topleft.x + sprite.x(), topleft.y + sprite.y());
 }
 
-void Battle::Interface::RedrawLowObjects(s32 cell_index, Surface &dst) const
+void Battle::Interface::RedrawLowObjects(s32 cell_index, Surface &dst)
 {
     const Cell *cell = Board::GetCell(cell_index);
     Sprite sprite;
@@ -1767,7 +1767,7 @@ int Battle::Interface::GetBattleCursor(string &status)
     return Cursor::WAR_NONE;
 }
 
-int Battle::Interface::GetBattleSpellCursor(string &status)
+int Battle::Interface::GetBattleSpellCursor(string &status) const
 {
     status.clear();
 
@@ -2297,7 +2297,7 @@ void Battle::Interface::ButtonSkipAction(Actions &a)
     }
 }
 
-int Battle::Interface::GetAllowSwordDirection(u32 index)
+int Battle::Interface::GetAllowSwordDirection(u32 index) const
 {
     int res = 0;
 
@@ -4401,24 +4401,22 @@ void Battle::Interface::RedrawBridgeAnimation(bool down)
     if (!down) AGG::PlaySound(M82::DRAWBRG);
 }
 
-bool Battle::Interface::IdleTroopsAnimation()
+bool Battle::Interface::IdleTroopsAnimation() const
 {
-    bool res = false;
-
     // set animation
     if (Battle::AnimateInfrequentDelay(Game::BATTLE_IDLE_DELAY))
     {
-        if (arena.GetForce1().SetIdleAnimation()) res = true;
-        if (arena.GetForce2().SetIdleAnimation()) res = true;
+        if (arena.GetForce1().SetIdleAnimation()) return  true;
+        if (arena.GetForce2().SetIdleAnimation()) return true;
     } else
         // next animation
     if (Battle::AnimateInfrequentDelay(Game::BATTLE_IDLE2_DELAY))
     {
-        if (arena.GetForce1().NextIdleAnimation()) res = true;
-        if (arena.GetForce2().NextIdleAnimation()) res = true;
+        if (arena.GetForce1().NextIdleAnimation()) return true;
+        if (arena.GetForce2().NextIdleAnimation()) return true;
     }
 
-    return res;
+    return false;
 }
 
 void Battle::Interface::CheckGlobalEvents(LocalEvent &le)

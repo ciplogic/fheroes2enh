@@ -13,18 +13,18 @@ public:
     BinaryFileReader();
     ~BinaryFileReader();
     bool open(const std::string& cs, const char* rb);
-    void seek(u32 pos);
+    void seek(u32 pos) const;
     u32 size();
     u32 getLE16();
     u32 getLE32();
     std::vector<u8> getRaw(u32 size) const;
     
-    std::string toString(int size);
+    std::string toString(int size) const;
     bool fail() const;
     int get();
     u32 getBE32();
-    void skip(s32 pos);
-    u32 tell();
+    void skip(s32 pos) const;
+    u32 tell() const;
 };
 
 #endif

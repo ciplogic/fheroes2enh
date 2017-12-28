@@ -196,7 +196,7 @@ public:
 
     int GetMoraleModificator(string *) const;
 
-    int GetLuckModificator(string *) const;
+    static int GetLuckModificator(string *);
 
     u32 ActionToSirens();
 

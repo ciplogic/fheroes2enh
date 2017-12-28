@@ -909,7 +909,7 @@ int Army::GetLuck() const
     return GetCommander() ? GetCommander()->GetLuck() : GetLuckModificator(nullptr);
 }
 
-int Army::GetLuckModificator(string *strs) const
+int Army::GetLuckModificator(string *strs)
 {
     return Luck::NORMAL;
 }

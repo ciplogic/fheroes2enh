@@ -44,9 +44,9 @@ namespace Battle
 
         void SetPassable(const Unit &);
 
-        bool AllowUp() const;
+        static bool AllowUp();
 
-        bool NeedDown(const Unit &, s32) const;
+        static bool NeedDown(const Unit &, s32);
 
         bool isPassable(int) const;
 

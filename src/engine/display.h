@@ -36,13 +36,13 @@ public:
 
     string GetInfo() const;
 
-    Size GetMaxMode(bool enable_rotate) const;
+    Size GetMaxMode(bool rotate) const;
 
     void SetVideoMode(int w, int h, bool);
 
-    void SetCaption(const char *);
+    static void SetCaption(const char *);
 
-    void SetIcons(Surface &);
+    static void SetIcons(Surface &);
 
     void Flip();
 	

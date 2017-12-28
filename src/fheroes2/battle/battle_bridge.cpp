@@ -50,12 +50,12 @@ void Battle::Bridge::SetDown(bool f)
     down = f;
 }
 
-bool Battle::Bridge::AllowUp() const
+bool Battle::Bridge::AllowUp()
 {
     return nullptr == Board::GetCell(49)->GetUnit() && nullptr == Board::GetCell(50)->GetUnit();
 }
 
-bool Battle::Bridge::NeedDown(const Unit &b, s32 pos2) const
+bool Battle::Bridge::NeedDown(const Unit &b, s32 pos2)
 {
     const s32 pos1 = b.GetHeadIndex();
 

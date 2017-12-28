@@ -47,7 +47,7 @@ namespace Battle
                                                  rtLocal(pt.x, pt.y, 24, 24), rtAI(pt.x + 75, pt.y, 24, 24)
         {};
 
-        void Redraw();
+        void Redraw() const;
 
         int result;
 
@@ -110,7 +110,7 @@ namespace Battle
 
         bool ChangeSettings();
 
-        void RedrawBaseInfo(const Point &);
+        void RedrawBaseInfo(const Point &) const;
 
         void StartBattle();
 

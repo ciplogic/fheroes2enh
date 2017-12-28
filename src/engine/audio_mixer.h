@@ -48,13 +48,13 @@ namespace Mixer
 
     u16 MaxVolume();
 
-    u16 Volume(int ch, s16 = -1);
+    u16 Volume(int channel, s16 = -1);
 
     void Pause(int ch = -1);
 
-    void Resume(int ch = -1);
+    void Resume(int channel = -1);
 
-    void Stop(int ch = -1);
+    void Stop(int channel = -1);
 
     void Reset();
 

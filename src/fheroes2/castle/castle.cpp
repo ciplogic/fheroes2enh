@@ -1429,11 +1429,11 @@ bool Castle::BuyBuilding(u32 build)
 }
 
 /* draw image castle to position */
-void Castle::DrawImageCastle(const Point &pt)
+void Castle::DrawImageCastle(const Point &pt) const
 {
     const Maps::Tiles &tile = world.GetTiles(GetIndex());
 
-    u32 index = 0;
+    u32 index;
     Point dst_pt;
 
     // draw ground
@@ -2292,7 +2292,7 @@ bool Castle::AllowBuyBoat() const
     return (HaveNearlySea() && GetKingdom().AllowPayment(PaymentConditions::BuyBoat()) && !PresentBoat());
 }
 
-bool Castle::BuyBoat()
+bool Castle::BuyBoat() const
 {
     if (!AllowBuyBoat()) return false;
     if (isControlHuman()) AGG::PlaySound(M82::BUILDTWN);
