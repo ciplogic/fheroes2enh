@@ -72,9 +72,9 @@ int Game::ScenarioInfo()
 
 	Point top, pointDifficultyInfo, pointOpponentInfo, pointClassInfo;
 	Rect rectPanel;
-	up<Button> buttonSelectMaps = nullptr;
-	up<Button> buttonOk = nullptr;
-	up<Button> buttonCancel = nullptr;
+	up<Button> buttonSelectMaps;
+	up<Button> buttonOk;
+	up<Button> buttonCancel;
 
 	// vector coord difficulty
 	Rects coordDifficulty;
@@ -101,8 +101,8 @@ int Game::ScenarioInfo()
 		coordDifficulty.push_back(Rect(rectPanel.x + 328, rectPanel.y + 91, ngextra.w(), ngextra.h()));
 
 		buttonSelectMaps = make_unique<Button>(rectPanel.x + 309, rectPanel.y + 45, ICN::NGEXTRA, 64, 65);
-		buttonOk = up<Button>(new Button(rectPanel.x + 31, rectPanel.y + 380, ICN::NGEXTRA, 66, 67));
-		buttonCancel = up<Button>(new Button(rectPanel.x + 287, rectPanel.y + 380, ICN::NGEXTRA, 68, 69));
+		buttonOk = std::make_unique<Button>(rectPanel.x + 31, rectPanel.y + 380, ICN::NGEXTRA, 66, 67);
+		buttonCancel = std::make_unique<Button>(rectPanel.x + 287, rectPanel.y + 380, ICN::NGEXTRA, 68, 69);
 
 		back.Blit(top);
 	}
