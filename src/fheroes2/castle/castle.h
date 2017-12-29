@@ -199,7 +199,7 @@ public:
 
     void ActionAfterBattle(bool attacker_wins);
 
-    void DrawImageCastle(const Point &pt) const;
+    void DrawImageCastle(const Point &);
 
     int OpenDialog(bool readonly = false, bool fade = false);
 	void DrawCastleFundsAtPos(Display& display, const Funds& resource, Rect src_rt) const;
