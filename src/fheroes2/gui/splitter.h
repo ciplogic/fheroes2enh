@@ -24,6 +24,8 @@
 
 #include "gamedefs.h"
 
+#include "sprites.h"
+
 class Splitter : protected SpriteMove
 {
 public:

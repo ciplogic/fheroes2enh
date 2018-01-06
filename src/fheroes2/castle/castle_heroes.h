@@ -25,7 +25,6 @@
 
 #include <utility>
 #include <algorithm>
-#include "gamedefs.h"
 #include "heroes.h"
 
 class CastleHeroes : protected pair<Heroes *, Heroes *>

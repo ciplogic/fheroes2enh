@@ -24,10 +24,7 @@
 
 #include "types.h"
 #include "font.h"
-#include "sprites.h"
 #include "error.h"
-#include "rect.h"
-#include "surface.h"
 #include "rand.h"
 #include "translations.h"
 

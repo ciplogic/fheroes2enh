@@ -24,6 +24,8 @@
 
 #include "gamedefs.h"
 
+#include "sprites.h"
+
 class Cursor : public SpriteMove
 {
 public:

@@ -24,6 +24,8 @@
 
 #include "gamedefs.h"
 
+#include "sprites.h"
+
 class Sprite : public SpritePos
 {
 public:

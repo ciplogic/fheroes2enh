@@ -27,6 +27,7 @@
 #include "ByteVectorReader.h"
 #include "interface_itemsbar.h"
 #include "display.h"
+#include "sprites.h"
 
 class Spell;
 

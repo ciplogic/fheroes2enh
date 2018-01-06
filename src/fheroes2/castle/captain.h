@@ -56,11 +56,9 @@ public:
 
     s32 GetIndex() const;
 
-    const string &
-    GetName() const;
+    const string &GetName() const;
 
-    const Castle *
-    inCastle() const;
+    const Castle *inCastle() const;
 
     int GetLevelSkill(int) const;
 

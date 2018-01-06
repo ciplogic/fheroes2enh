@@ -27,8 +27,6 @@
 #include "mageguild.h"
 #include "captain.h"
 #include "army.h"
-#include "bitmodes.h"
-#include "heroes.h"
 #include "sprite.h"
 #include "castle_heroes.h"
 #include "position.h"

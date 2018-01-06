@@ -25,21 +25,9 @@
 
 #include "gamedefs.h"
 
-class Heroes;
-
-class Castle;
-
-class Troop;
-
-class Kingdom;
-
 namespace PocketPC
 {
-
-
     u32 GetCursorAttackDialog(const Point &, int direction);
-
-
 }
 
 #endif
