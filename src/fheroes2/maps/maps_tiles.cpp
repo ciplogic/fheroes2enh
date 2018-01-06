@@ -1932,13 +1932,9 @@ bool Maps::Tiles::isPassable(const Heroes &hero) const
 {
     if (hero.isShipMaster())
     {
-        if (!isWater())
-            return false;
+        return isWater() && MP2::OBJ_BOAT != GetObject();
 
-        if (MP2::OBJ_BOAT == GetObject())
-            return false;
-		return true;
-    } 
+    }
     if (!isWater())
 		return true;
 	switch (GetObject())

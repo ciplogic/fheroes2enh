@@ -272,7 +272,7 @@ void Interface::Radar::RedrawObjects(int color)
 #else
             const bool &show_tile = !tile.isFog(color);
 #endif
-            RGBA color(0, 0, 0);
+            RGBA rgba(0, 0, 0);
 
             if (show_tile)
             {
@@ -281,7 +281,7 @@ void Interface::Radar::RedrawObjects(int color)
                     case MP2::OBJ_HEROES:
                     {
                         const Heroes *hero = world.GetHeroes(tile.GetCenter());
-                        if (hero) color = AGG::GetPaletteColor(GetPaletteIndexFromColor(hero->GetColor()));
+                        if (hero) rgba = AGG::GetPaletteColor(GetPaletteIndexFromColor(hero->GetColor()));
                     }
                         break;
 
@@ -289,7 +289,7 @@ void Interface::Radar::RedrawObjects(int color)
                     case MP2::OBJN_CASTLE:
                     {
                         const Castle *castle = world.GetCastle(tile.GetCenter());
-                        if (castle) color = AGG::GetPaletteColor(GetPaletteIndexFromColor(castle->GetColor()));
+                        if (castle) rgba = AGG::GetPaletteColor(GetPaletteIndexFromColor(castle->GetColor()));
                     }
                         break;
 
@@ -303,7 +303,7 @@ void Interface::Radar::RedrawObjects(int color)
                         //case MP2::OBJN_MINES:
                     case MP2::OBJ_SAWMILL:
                         //case MP2::OBJN_SAWMILL:
-                        color = AGG::GetPaletteColor(GetPaletteIndexFromColor(tile.QuantityColor()));
+                        rgba = AGG::GetPaletteColor(GetPaletteIndexFromColor(tile.QuantityColor()));
                         break;
 
                     default:
@@ -317,10 +317,10 @@ void Interface::Radar::RedrawObjects(int color)
 
             if (sw > 1)
             {
-                sf.Fill(color);
+                sf.Fill(rgba);
                 sf.Blit(dstx, dsty, display);
             } else if (dstx < display.w() && dsty < display.h())
-                display.DrawPoint(Point(dstx, dsty), color);
+                display.DrawPoint(Point(dstx, dsty), rgba);
         }
     }
 }

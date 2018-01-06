@@ -220,7 +220,7 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
         message.append(":");
         text.Set(message);
         dst_pt.x = dst.x - text.w();
-        dst_pt.y += (false ? 14 : 18);
+        dst_pt.y += 18;
         text.Blit(dst_pt);
 
         text.Set(troop.GetShotString());
@@ -231,7 +231,7 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
     // damage
     text.Set(string(_("Damage")) + ":");
     dst_pt.x = dst.x - text.w();
-    dst_pt.y += (false ? 14 : 18);
+    dst_pt.y += 18;
     text.Blit(dst_pt);
 
     if (troop().GetDamageMin() != troop().GetDamageMax())
@@ -286,7 +286,7 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
     // luck
     text.Set(string(_("Luck")) + ":");
     dst_pt.x = dst.x - text.w();
-    dst_pt.y += (false ? 14 : 18);
+    dst_pt.y += 18;
     text.Blit(dst_pt);
 
     text.Set(Luck::String(troop.GetLuck()));

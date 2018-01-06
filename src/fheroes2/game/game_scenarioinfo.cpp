@@ -108,7 +108,7 @@ int Game::ScenarioInfo()
 	}
     const bool reset_starting_settings = conf.MapsFile().empty() || !System::IsFile(conf.MapsFile());
     Players &players = conf.GetPlayers();
-    Interface::PlayersInfo playersInfo(true, !false, !false);
+    Interface::PlayersInfo playersInfo(true, true, true);
 
     // set first maps settings
 	if (reset_starting_settings)
@@ -129,7 +129,7 @@ int Game::ScenarioInfo()
     playersInfo.UpdateInfo(players, pointOpponentInfo, pointClassInfo);
 
     RedrawScenarioStaticInfo(rectPanel);
-    RedrawDifficultyInfo(pointDifficultyInfo, !false);
+    RedrawDifficultyInfo(pointDifficultyInfo, true);
 
     playersInfo.RedrawInfo();
 
@@ -190,7 +190,7 @@ int Game::ScenarioInfo()
 
                 cursor.Hide();
                 RedrawScenarioStaticInfo(rectPanel);
-                RedrawDifficultyInfo(pointDifficultyInfo, !false);
+                RedrawDifficultyInfo(pointDifficultyInfo, true);
                 playersInfo.RedrawInfo();
                 if (rating) RedrawRatingInfo(*rating);
                 // default difficulty normal
@@ -233,7 +233,7 @@ int Game::ScenarioInfo()
                 cursor.Hide();
                 RedrawScenarioStaticInfo(rectPanel);
                 levelCursor.Redraw();
-                RedrawDifficultyInfo(pointDifficultyInfo, !false);
+                RedrawDifficultyInfo(pointDifficultyInfo, true);
 
                 playersInfo.RedrawInfo();
                 if (rating) RedrawRatingInfo(*rating);

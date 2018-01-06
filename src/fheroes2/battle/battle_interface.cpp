@@ -211,19 +211,9 @@ Surface DrawHexagonShadow()
 {
     int l, w, h;
 
-    if (false)
-    {
-        //r = 11;
-        l = 7;
-        w = 23;
-        h = 26;
-    } else
-    {
-        //r = 22;
-        l = 13;
-        w = 45;
-        h = 52;
-    }
+    l = 13;
+    w = 45;
+    h = 52;
 
     Surface sf(Size(w, h), true);
     RGBA shadow = RGBA(0, 0, 0, 0x30);
@@ -387,40 +377,18 @@ Battle::OpponentSprite::OpponentSprite(const Rect &area, const HeroBase *b, bool
 {
     ResetAnimFrame(OP_IDLE);
 
-    if (false)
+    if (reflect)
     {
-        if (reflect)
-        {
-            pos.x = area.x + area.w - 40;
-            pos.y = area.y + 50;
-        } else
-        {
-            pos.x = area.x + 5;
-            pos.y = area.y + 50;
-        }
-
-        const Sprite &sprite = AGG::GetICN(icn, animframe, reflect);
-
-        pos.w = sprite.w();
-        pos.h = sprite.h();
+        pos.x = area.x + area.w - 60;
+        pos.y = area.y + 50;
     } else
     {
-
-        if (reflect)
-        {
-            pos.x = area.x + area.w - 60;
-            pos.y = area.y + 50;
-        } else
-        {
-            pos.x = area.x + 5;
-            pos.y = area.y + 50;
-        }
-
-        const Sprite &sprite = AGG::GetICN(icn, animframe, reflect);
-
-        pos.w = sprite.w();
-        pos.h = sprite.h();
+        pos.x = area.x + 5;
+        pos.y = area.y + 50;
     }
+    const Sprite &sprite = AGG::GetICN(icn, animframe, reflect);
+    pos.w = sprite.w();
+    pos.h = sprite.h();
 }
 
 int Battle::OpponentSprite::GetColor() const
@@ -631,8 +599,8 @@ void Battle::Status::Redraw()
     back1.Blit(x, y);
     back2.Blit(x, y + back1.h());
 
-    if (bar1.Size()) bar1.Blit(x + (back1.w() - bar1.w()) / 2, y + (false ? -1 : 3));
-    if (bar2.Size()) bar2.Blit(x + (back2.w() - bar2.w()) / 2, y + back1.h() + (false ? -3 : 0));
+    if (bar1.Size()) bar1.Blit(x + (back1.w() - bar1.w()) / 2, y + 3);
+    if (bar2.Size()) bar2.Blit(x + (back2.w() - bar2.w()) / 2, y + back1.h() + 0);
 }
 
 const string &Battle::Status::GetMessage() const
@@ -816,7 +784,7 @@ Battle::Interface::Interface(Arena &a, s32 center) : arena(a), icn_cbkg(ICN::UNK
         light = true;
         icn_frng = ICN::FRNG0001;
     }
-    if (false || conf.ExtPocketLowMemory()) icn_frng = ICN::UNKNOWN;
+    if (conf.ExtPocketLowMemory()) icn_frng = ICN::UNKNOWN;
 
     // hexagon
     sf_hexagon = DrawHexagon((light ? RGBA(0x78, 0x94, 0) : RGBA(0x38, 0x48, 0)));
@@ -827,46 +795,24 @@ Battle::Interface::Interface(Arena &a, s32 center) : arena(a), icn_cbkg(ICN::UNK
     const Rect &area = border.GetArea();
 
 
-    if (false)
-    {
-        btn_auto.SetSprite(ICN::BATTLEAUTO, 0, 1);
-        btn_settings.SetSprite(ICN::BATTLESETS, 0, 1);
-
-        btn_auto.SetPos(area.x, area.y);
-        btn_settings.SetPos(area.x, area.y + area.h - btn_settings.h);
-    } else
-    {
-        btn_auto.SetSprite(ICN::TEXTBAR, 4, 5);
-        btn_settings.SetSprite(ICN::TEXTBAR, 6, 7);
-
-        btn_auto.SetPos(area.x, area.y + area.h - btn_settings.h - btn_auto.h);
-        btn_settings.SetPos(area.x, area.y + area.h - btn_settings.h);
-    }
+    btn_auto.SetSprite(ICN::TEXTBAR, 4, 5);
+    btn_settings.SetSprite(ICN::TEXTBAR, 6, 7);
+    btn_auto.SetPos(area.x, area.y + area.h - btn_settings.h - btn_auto.h);
+    btn_settings.SetPos(area.x, area.y + area.h - btn_settings.h);
 
     if (conf.ExtBattleSoftWait())
     {
-        if (false)
-        {
-            btn_wait.SetSprite(ICN::BATTLEWAIT, 0, 1);
-            btn_skip.SetSprite(ICN::BATTLESKIP, 0, 1);
-
-            btn_wait.SetPos(area.x + area.w - btn_wait.w, area.y);
-            btn_skip.SetPos(area.x + area.w - btn_skip.w, area.y + area.h - btn_skip.h);
-        } else
-        {
-            btn_wait.SetSprite(ICN::BATTLEWAIT, 0, 1);
-            btn_skip.SetSprite(ICN::BATTLESKIP, 0, 1);
-
-            btn_wait.SetPos(area.x + area.w - btn_wait.w, area.y + area.h - btn_skip.h - btn_wait.h);
-            btn_skip.SetPos(area.x + area.w - btn_skip.w, area.y + area.h - btn_skip.h);
-        }
+        btn_wait.SetSprite(ICN::BATTLEWAIT, 0, 1);
+        btn_skip.SetSprite(ICN::BATTLESKIP, 0, 1);
+        btn_wait.SetPos(area.x + area.w - btn_wait.w, area.y + area.h - btn_skip.h - btn_wait.h);
+        btn_skip.SetPos(area.x + area.w - btn_skip.w, area.y + area.h - btn_skip.h);
     } else
     {
         btn_skip.SetSprite(ICN::TEXTBAR, 0, 1);
         btn_skip.SetPos(area.x + area.w - btn_skip.w, area.y + area.h - btn_skip.h);
     }
 
-    status.SetPosition(area.x + btn_settings.w, (false ? btn_settings.y : btn_auto.y));
+    status.SetPosition(area.x + btn_settings.w, btn_auto.y);
 
     if (!conf.ExtPocketLowMemory())
         listlog = new StatusListBox();
@@ -922,8 +868,7 @@ void Battle::Interface::Redraw()
     if (castle) RedrawCastle3(*castle);
     RedrawArmies();
     RedrawInterface();
-    if (!false) armies_order.Redraw(b_current);
-    if (false) RedrawPocketControls();
+    armies_order.Redraw(b_current);
 }
 
 void Battle::Interface::RedrawInterface()
@@ -938,7 +883,7 @@ void Battle::Interface::RedrawInterface()
     if (conf.ExtBattleSoftWait()) btn_wait.Draw();
     btn_skip.Draw();
 
-    if (!false && !conf.ExtPocketLowMemory())
+    if (!conf.ExtPocketLowMemory())
         popup.Redraw(rectBoard.x + rectBoard.w + 60, rectBoard.y + rectBoard.h);
 
     if (listlog && listlog->isOpenLog())
@@ -993,7 +938,7 @@ void Battle::Interface::RedrawOpponents() const
 
 void Battle::Interface::RedrawOpponentsFlags() const
 {
-    if (!false && opponent1)
+    if (opponent1 != nullptr)
     {
         int icn = ICN::UNKNOWN;
 
@@ -1026,7 +971,7 @@ void Battle::Interface::RedrawOpponentsFlags() const
         flag.Blit(opponent1->GetArea().x + 38 - flag.w(), opponent1->GetArea().y + 5);
     }
 
-    if (!false && opponent2)
+    if (opponent2 != nullptr)
     {
         int icn = ICN::UNKNOWN;
 
@@ -1160,19 +1105,11 @@ void Battle::Interface::RedrawTroopCount(const Unit &b) const
     s32 sx = 0;
     s32 sy = 0;
 
-    if (false)
-    {
-        sy = rt.y + rt.h - bar.h();
-        sx = rt.x + (rt.w - bar.w()) / 2;
-    } else
-    {
-        sy = rt.y + rt.h - bar.h() - 5;
-
-        if (b.isReflect())
-            sx = rt.x + 3;
-        else
-            sx = rt.x + rt.w - bar.w() - 3;
-    }
+    sy = rt.y + rt.h - bar.h() - 5;
+    if (b.isReflect())
+        sx = rt.x + 3;
+    else
+        sx = rt.x + rt.w - bar.w() - 3;
 
     bar.Blit(sx, sy);
 
@@ -1406,7 +1343,7 @@ void Battle::Interface::RedrawCastle2(const Castle &castle, s32 cell_index) cons
         if (castle.isBuild(BUILD_LEFTTURRET) && ltower)
             index = ltower->isValid() ? 18 : 19;
 
-        AGG::GetICN(icn_castle, index).Blit(topleft.x + (false ? 207 : 415), topleft.y + (false ? 20 : 40));
+        AGG::GetICN(icn_castle, index).Blit(topleft.x + 415, topleft.y + 40);
     } else if (85 == cell_index)
     {
         const Tower *rtower = Arena::GetTower(TWR_RIGHT);
@@ -1415,16 +1352,16 @@ void Battle::Interface::RedrawCastle2(const Castle &castle, s32 cell_index) cons
         if (castle.isBuild(BUILD_RIGHTTURRET) && rtower)
             index = rtower->isValid() ? 18 : 19;
 
-        AGG::GetICN(icn_castle, index).Blit(topleft.x + (false ? 207 : 415),
-                                            topleft.y + (false ? 145 : 290));
+        AGG::GetICN(icn_castle, index).Blit(topleft.x + 415,
+                                            topleft.y + 290);
     } else
         // castle towers
     if (40 == cell_index)
-        AGG::GetICN(icn_castle, 17).Blit(topleft.x + (false ? 187 : 375), topleft.y + (false ? 60 : 120));
+        AGG::GetICN(icn_castle, 17).Blit(topleft.x + 375, topleft.y + 120);
     else
         // castle towers
     if (62 == cell_index)
-        AGG::GetICN(icn_castle, 17).Blit(topleft.x + (false ? 187 : 375), topleft.y + (false ? 102 : 205));
+        AGG::GetICN(icn_castle, 17).Blit(topleft.x + 375, topleft.y + 205);
 }
 
 void Battle::Interface::RedrawCastle3(const Castle &castle) const
@@ -1468,7 +1405,7 @@ void Battle::Interface::RedrawLowObjects(s32 cell_index, Surface &dst)
     {
         //const Point & topleft = border.GetArea();
         const Rect &pt = cell->GetPos();
-        sprite.Blit(pt.x + pt.w / 2 + sprite.x(), pt.y + pt.h + sprite.y() - (false ? 5 : 10), dst);
+        sprite.Blit(pt.x + pt.w / 2 + sprite.x(), pt.y + pt.h + sprite.y() - 10, dst);
     }
 }
 
@@ -1569,7 +1506,7 @@ void Battle::Interface::RedrawHighObjects(s32 cell_index) const
     {
         //const Point & topleft = border.GetArea();
         const Rect &pt = cell->GetPos();
-        sprite.Blit(pt.x + pt.w / 2 + sprite.x(), pt.y + pt.h + sprite.y() - (false ? 5 : 10));
+        sprite.Blit(pt.x + pt.w / 2 + sprite.x(), pt.y + pt.h + sprite.y() - 10);
     }
 }
 
@@ -2653,7 +2590,7 @@ void Battle::Interface::RedrawActionWincesKills(TargetsInfo &targets)
             display.Flip();
             target1.defender->IncreaseAnimFrame();
         }
-        py += (false ? 5 : 10);
+        py += 10;
     }
 
     DELAY(200);
@@ -3069,65 +3006,65 @@ void Battle::Interface::RedrawActionMonsterSpellCastStatus(const Unit &attacker,
 
 void Battle::Interface::RedrawActionLuck(Unit &b)
 {
-    if (b.Modes(LUCK_GOOD))
+    if (!b.Modes(LUCK_GOOD))
     {
-        string msg = _("Good luck shines on the  %{attacker}");
-        StringReplace(msg, "%{attacker}", b.GetName());
-        status.SetMessage(msg, true);
-
-        Display &display = Display::Get();
-        Cursor &cursor = Cursor::Get();
-        LocalEvent &le = LocalEvent::Get();
-
-        const int m82 = M82::GOODLUCK;
-        const Sprite &sunbow = AGG::GetICN(ICN::EXPMRL, 0);
-
-        const Rect &pos = b.GetRectPosition();
-
-        const monstersprite_t &msi = b.GetMonsterSprite();
-        const Sprite &troop = AGG::GetICN(msi.icn_file, msi.frm_idle.start, b.isReflect());
-
-        int width = 2;
-
-        Rect src(0, 0, width, sunbow.h());
-        src.x = (sunbow.w() - src.w) / 2;
-
-        cursor.SetThemes(Cursor::WAR_NONE);
-
-        if (M82::UNKNOWN != m82) AGG::PlaySound(m82);
-
-        while (le.HandleEvents() && width < sunbow.w())
+        if (b.Modes(LUCK_BAD))
         {
-            CheckGlobalEvents(le);
-
-            if (Battle::AnimateInfrequentDelay(Game::BATTLE_MISSILE_DELAY))
-            {
-                cursor.Hide();
-                Redraw();
-
-                sunbow.Blit(src, pos.x + (pos.w - src.w) / 2,
-                            pos.y + pos.h - troop.h() - src.h);
-
-                cursor.Show();
-                display.Flip();
-
-                src.w = width;
-                src.x = (sunbow.w() - src.w) / 2;
-
-                width += 3;
-            }
+            string msg = _("Bad luck descends on the %{attacker}");
+            StringReplace(msg, "%{attacker}", b.GetName());
+            status.SetMessage(msg, true);
+            return;
         }
+        return;
+    }
+    string msg = _("Good luck shines on the  %{attacker}");
+    StringReplace(msg, "%{attacker}", b.GetName());
+    status.SetMessage(msg, true);
 
-        DELAY(400);
-        return;
-    }
-    if (b.Modes(LUCK_BAD))
+    Display &display = Display::Get();
+    Cursor &cursor = Cursor::Get();
+    LocalEvent &le = LocalEvent::Get();
+
+    const int m82 = M82::GOODLUCK;
+    const Sprite &sunbow = AGG::GetICN(ICN::EXPMRL, 0);
+
+    const Rect &pos = b.GetRectPosition();
+
+    const monstersprite_t &msi = b.GetMonsterSprite();
+    const Sprite &troop = AGG::GetICN(msi.icn_file, msi.frm_idle.start, b.isReflect());
+
+    int width = 2;
+
+    Rect src(0, 0, width, sunbow.h());
+    src.x = (sunbow.w() - src.w) / 2;
+
+    cursor.SetThemes(Cursor::WAR_NONE);
+
+    if (M82::UNKNOWN != m82) AGG::PlaySound(m82);
+
+    while (le.HandleEvents() && width < sunbow.w())
     {
-        string msg = _("Bad luck descends on the %{attacker}");
-        StringReplace(msg, "%{attacker}", b.GetName());
-        status.SetMessage(msg, true);
-        return;
+        CheckGlobalEvents(le);
+
+        if (Battle::AnimateInfrequentDelay(Game::BATTLE_MISSILE_DELAY))
+        {
+            cursor.Hide();
+            Redraw();
+
+            sunbow.Blit(src, pos.x + (pos.w - src.w) / 2,
+                        pos.y + pos.h - troop.h() - src.h);
+
+            cursor.Show();
+            display.Flip();
+
+            src.w = width;
+            src.x = (sunbow.w() - src.w) / 2;
+
+            width += 3;
+        }
     }
+
+    DELAY(400);
 }
 
 void Battle::Interface::RedrawActionMorale(Unit &b, bool good)

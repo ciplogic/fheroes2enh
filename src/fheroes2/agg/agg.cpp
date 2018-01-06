@@ -32,12 +32,12 @@
 #include "text.h"
 #include "artifact.h"
 #include "game.h"
-#include "palette_h2.h"
 #include "ByteVectorReader.h"
 #include "BinaryFileReader.h"
 
 #include "system.h"
 #include "tools.h"
+#include "palette_h2.h"
 
 #define FATSIZENAME    15
 
@@ -577,16 +577,13 @@ bool AGG::LoadExtICN(int icn, u32 index, bool reflect)
                 break;
 
             case ICN::BATTLESKIP:
-                if (false)
-                    LoadOrgICN(sprite, ICN::TEXTBAR, index, false);
-                else
-                {
-                    LoadOrgICN(sprite, ICN::TEXTBAR, 4 + index, false);
-                    // clean
-                    GetICN(ICN::SYSTEM, 11 + index).Blit(Rect(3, 8, 43, 14), 3, 1, sprite);
-                    // skip
-                    GetICN(ICN::TEXTBAR, index).Blit(Rect(3, 8, 43, 14), 3, 0, sprite);
-                }
+            {
+                LoadOrgICN(sprite, ICN::TEXTBAR, 4 + index, false);
+                // clean
+                GetICN(ICN::SYSTEM, 11 + index).Blit(Rect(3, 8, 43, 14), 3, 1, sprite);
+                // skip
+                GetICN(ICN::TEXTBAR, index).Blit(Rect(3, 8, 43, 14), 3, 0, sprite);
+            }
                 break;
 
             case ICN::BATTLEAUTO:
@@ -606,18 +603,15 @@ bool AGG::LoadExtICN(int icn, u32 index, bool reflect)
                 break;
 
             case ICN::BATTLEWAIT:
-                if (false)
-                    LoadOrgICN(sprite, ICN::ADVBTNS, 8 + index, false);
-                else
-                {
-                    LoadOrgICN(sprite, ICN::TEXTBAR, 4 + index, false);
-                    // clean
-                    GetICN(ICN::SYSTEM, 11 + index).Blit(Rect(3, 8, 43, 14), 3, 1, sprite);
-                    // wait
-                    Surface dst = Sprite::ScaleQVGASurface(
-                            GetICN(ICN::ADVBTNS, 8 + index).GetSurface(Rect(5, 4, 28, 28)));
-                    dst.Blit((sprite.w() - dst.w()) / 2, 2, sprite);
-                }
+            {
+                LoadOrgICN(sprite, ICN::TEXTBAR, 4 + index, false);
+                // clean
+                GetICN(ICN::SYSTEM, 11 + index).Blit(Rect(3, 8, 43, 14), 3, 1, sprite);
+                // wait
+                Surface dst = Sprite::ScaleQVGASurface(
+                        GetICN(ICN::ADVBTNS, 8 + index).GetSurface(Rect(5, 4, 28, 28)));
+                dst.Blit((sprite.w() - dst.w()) / 2, 2, sprite);
+            }
                 break;
 
             case ICN::BOAT12:
@@ -1620,21 +1614,8 @@ bool AGG::Init()
 
     til_cache.resize(TIL::LASTTIL);
 
-    // load palette
-    u32 ncolors = ARRAY_COUNT(kb_pal) / 3;
-    pal_colors.reserve(ncolors);
+    fillPalette(pal_colors);
 
-    for (u32 ii = 0; ii < ncolors; ++ii)
-    {
-        u32 index = ii * 3;
-        SDL_Color cols{};
-
-        cols.r = kb_pal[index] << 2;
-        cols.g = kb_pal[index + 1] << 2;
-        cols.b = kb_pal[index + 2] << 2;
-
-        pal_colors.push_back(cols);
-    }
     Surface::SetDefaultPalette(&pal_colors[0], pal_colors.size());
 
     // load font

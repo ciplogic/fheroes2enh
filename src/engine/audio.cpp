@@ -25,7 +25,7 @@
 
 namespace Audio
 {
-    static Spec hardware;
+    Spec hardware;
 }
 
 Audio::Spec::Spec() : SDL_AudioSpec()

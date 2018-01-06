@@ -33,7 +33,7 @@ namespace Interface
     class BorderWindow
     {
     public:
-        BorderWindow(const Rect &);
+        explicit BorderWindow(const Rect &);
 
         virtual ~BorderWindow()
         {}

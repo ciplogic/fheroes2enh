@@ -27,6 +27,7 @@ include_directories(
         src/fheroes2/objects
         src/fheroes2/resource
         src/fheroes2/spell
+        src/tools
         src/fheroes2/system)
 
 set(SOURCE_FILES
@@ -69,7 +70,6 @@ set(SOURCE_FILES
         src/engine/thread.cpp
         src/engine/thread.h
         src/engine/tinyconfig.cpp
-        src/engine/tinyconfig.h
         src/engine/tools.cpp
         src/engine/tools.h
         src/engine/translations.cpp
@@ -92,7 +92,6 @@ set(SOURCE_FILES
         src/fheroes2/agg/m82.h
         src/fheroes2/agg/mus.cpp
         src/fheroes2/agg/mus.h
-        src/fheroes2/agg/palette_h2.h
         src/fheroes2/agg/sprite.cpp
         src/fheroes2/agg/sprite.h
         src/fheroes2/agg/til.cpp
@@ -360,22 +359,13 @@ set(SOURCE_FILES
         src/fheroes2/system/players.h
         src/fheroes2/system/settings.cpp
         src/fheroes2/system/settings.h
-        src/fheroes2/test/test.cpp
-        src/fheroes2/test/test.h
-        src/fheroes2/test/test_monstersprite.cpp
         src/tools/palette_h2.h
-        src/xmlccwrap/tinystr.cpp
-        src/xmlccwrap/tinystr.h
-        src/xmlccwrap/tinyxml.cpp
-        src/xmlccwrap/tinyxml.h
-        src/xmlccwrap/tinyxmlerror.cpp
-        src/xmlccwrap/tinyxmlparser.cpp
-        src/xmlccwrap/xmlccwrap.h
+        src/tools/palette_h2.cpp
         src/fheroes2/agg/ColorTable.h
         src/fheroes2/gui/PlusIndicator.cpp
         src/fheroes2/gui/PlusIndicator.h
         src/fheroes2/dialog/FileUtils.cpp
-        src/fheroes2/dialog/FileUtils.h)
+        src/fheroes2/dialog/FileUtils.h src/tools/palette_h2.cpp)
 
 add_executable(fheroes2 ${SOURCE_FILES})
 

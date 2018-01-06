@@ -472,7 +472,7 @@ bool LocalEvent::MouseMotion() const
 
 bool LocalEvent::MouseMotion(const Rect &rt) const
 {
-    return modes & MOUSE_MOTION ? rt & mouse_cu : false;
+    return (modes & MOUSE_MOTION) != 0 && rt & mouse_cu;
 }
 
 bool LocalEvent::MousePressLeft() const

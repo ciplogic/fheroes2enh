@@ -59,7 +59,7 @@ int Game::NewHotSeat()
         return StartBattleOnly();
     } else
     {
-        const u32 select = false ? 2 : SelectCountPlayers();
+        const u32 select = SelectCountPlayers();
         if (select)
         {
             conf.SetPreferablyCountPlayers(select);

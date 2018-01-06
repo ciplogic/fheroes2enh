@@ -147,10 +147,7 @@ void HGSData::RedrawList(s32 ox, s32 oy)
     back.Blit(ox, oy);
 
     const Sprite &head = AGG::GetICN(ICN::HISCORE, 6);
-    if (false)
-        head.Blit(ox + 25, oy + 15);
-    else
-        head.Blit(ox + 50, oy + 31);
+    head.Blit(ox + 50, oy + 31);
 
     sort(list.begin(), list.end(), RatingSort);
 
@@ -158,25 +155,25 @@ void HGSData::RedrawList(s32 ox, s32 oy)
     vector<hgs_t>::const_iterator it2 = list.end();
 
     Text text;
-    text.Set(false ? Font::SMALL : Font::BIG);
+    text.Set(Font::BIG);
 
     for (; it1 != it2 && (it1 - list.begin() < HGS_MAX); ++it1)
     {
         const hgs_t &hgs = *it1;
 
         text.Set(hgs.player);
-        text.Blit(ox + (false ? 45 : 88), oy + (false ? 33 : 70));
+        text.Blit(ox + 88, oy + 70);
 
         text.Set(hgs.land);
-        text.Blit(ox + (false ? 170 : 260), oy + (false ? 33 : 70));
+        text.Blit(ox + 260, oy + 70);
 
         text.Set(GetString(hgs.days));
-        text.Blit(ox + (false ? 250 : 420), oy + (false ? 33 : 70));
+        text.Blit(ox + 420, oy + 70);
 
         text.Set(GetString(hgs.rating));
-        text.Blit(ox + (false ? 270 : 480), oy + (false ? 33 : 70));
+        text.Blit(ox + 480, oy + 70);
 
-        oy += false ? 20 : 40;
+        oy += 40;
     }
 }
 

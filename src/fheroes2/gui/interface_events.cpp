@@ -446,13 +446,6 @@ void Interface::Basic::EventSwitchShowRadar()
         return;
     }
 
-    if (false && (conf.ShowIcons() || conf.ShowStatus() || conf.ShowButtons()))
-    {
-        conf.SetShowIcons(false);
-        conf.SetShowStatus(false);
-        conf.SetShowButtons(false);
-        gameArea.SetRedraw();
-    }
     conf.SetShowRadar(true);
     radar.SetRedraw();
 }

@@ -30,9 +30,6 @@
 
 TextInterface::TextInterface(int ft) : font(ft)
 {
-    const Settings &conf = Settings::Get();
-    if (false && !conf.Unicode())
-        ft == Font::YELLOW_BIG || ft == Font::YELLOW_SMALL ? font = Font::YELLOW_SMALL : font = Font::SMALL;
 }
 
 TextAscii::TextAscii(const string &msg, int ft) : TextInterface(ft), message(msg)

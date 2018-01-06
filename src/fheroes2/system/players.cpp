@@ -685,8 +685,7 @@ void Interface::PlayersInfo::RedrawInfo(
 
         // "swap" sprite
 
-        if (show_swap &&
-            !false && (it + 1) != end())
+        if (show_swap && (it + 1) != end())
         {
             const Sprite &sprite3 = AGG::GetICN(ICN::ADVMCO, 8);
             sprite3.Blit(rect3.x, rect3.y);

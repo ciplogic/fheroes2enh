@@ -78,7 +78,7 @@ void SettingsListBox::RedrawBackground(const Point &top)
 {
     const Settings &conf = Settings::Get();
 
-    const int window_h = false ? 224 : 400;
+    const int window_h = 400;
     const int ah = window_h - 54;
 
     AGG::GetICN(ICN::STONEBAK, 0).Blit(Rect(15, 25, 280, ah), top.x + 15, top.y + 25);
@@ -182,8 +182,7 @@ void Dialog::ExtSettings(bool readonly)
     states.push_back(Settings::GAME_CASTLE_FLASH_BUILDING);
     states.push_back(Settings::GAME_HIDE_INTERFACE);
 
-    if (!false)
-        states.push_back(Settings::GAME_DYNAMIC_INTERFACE);
+    states.push_back(Settings::GAME_DYNAMIC_INTERFACE);
 
     states.push_back(Settings::GAME_AUTOSAVE_ON);
 	states.push_back(Settings::GAME_QUICKCOMBAT_ON);
