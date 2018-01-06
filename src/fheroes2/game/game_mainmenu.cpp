@@ -30,6 +30,7 @@
 #include "pocketpc.h"
 #include "game.h"
 #include "localevent.h"
+#include "mus.h"
 
 #define NEWGAME_DEFAULT 1
 #define LOADGAME_DEFAULT 5

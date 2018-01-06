@@ -22,6 +22,7 @@
 
 #include <vector>
 #include <algorithm>
+#include "mus.h"
 
 #ifdef AI
 #undef AI

@@ -330,15 +330,7 @@ set(SOURCE_FILES
         src/fheroes2/objects/trees.cpp
         src/fheroes2/objects/trees.h
         src/fheroes2/pocketpc/pocketpc.h
-        src/fheroes2/pocketpc/pocketpc_armyinfo.cpp
-        src/fheroes2/pocketpc/pocketpc_castle.cpp
         src/fheroes2/pocketpc/pocketpc_dialog.cpp
-        src/fheroes2/pocketpc/pocketpc_heroes.cpp
-        src/fheroes2/pocketpc/pocketpc_kingdom.cpp
-        src/fheroes2/pocketpc/pocketpc_mainmenu.cpp
-        src/fheroes2/pocketpc/pocketpc_meeting.cpp
-        src/fheroes2/pocketpc/pocketpc_selectscenario.cpp
-        src/fheroes2/pocketpc/pocketpc_thievesguild.cpp
         src/fheroes2/resource/artifact.cpp
         src/fheroes2/resource/artifact.h
         src/fheroes2/resource/artifact_ultimate.cpp

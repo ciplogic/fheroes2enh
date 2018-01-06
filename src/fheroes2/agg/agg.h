@@ -28,9 +28,6 @@
 
 #include "gamedefs.h"
 #include "icn.h"
-#include "til.h"
-#include "mus.h"
-#include "xmi.h"
 #include "sprite.h"
 
 class ICNSprite : public pair<Surface, Surface> /* first: image with out alpha, second: shadow with alpha */

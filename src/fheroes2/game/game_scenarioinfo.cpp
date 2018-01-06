@@ -35,6 +35,7 @@
 #include "world.h"
 #include "pocketpc.h"
 #include "game.h"
+#include "mus.h"
 
 void RedrawScenarioStaticInfo(const Rect &);
 

@@ -39,6 +39,9 @@
 #include "system.h"
 #include "tools.h"
 #include "palette_h2.h"
+#include "til.h"
+#include "xmi.h"
+#include "mus.h"
 
 #define FATSIZENAME    15
 

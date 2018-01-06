@@ -41,6 +41,7 @@
 #include "system.h"
 #include "tools.h"
 #include "m82.h"
+#include "mus.h"
 
 namespace Battle
 {

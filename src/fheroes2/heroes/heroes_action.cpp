@@ -32,6 +32,7 @@
 #include "maps_actions.h"
 #include "ai.h"
 #include "m82.h"
+#include "mus.h"
 
 #define PlayMusicReplacement(m82) if(MUS::FromMapObject(obj) == MUS::UNKNOWN) \
                                       AGG::PlaySound(m82)

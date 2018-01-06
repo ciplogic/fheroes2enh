@@ -36,6 +36,7 @@
 #include "battle_arena.h"
 #include "battle_army.h"
 #include "world.h"
+#include "mus.h"
 
 using namespace Dialog;
 

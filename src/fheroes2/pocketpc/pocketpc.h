@@ -35,33 +35,11 @@ class Kingdom;
 
 namespace PocketPC
 {
-    int MainMenu();
 
-    int NewGame();
-
-    int NewMulti();
-
-    int SelectScenario();
-
-    int ScenarioInfo();
-
-    int LoadGame();
-
-    int HeroesOpenDialog(Heroes &, bool);
-
-    int CastleOpenDialog(Castle &, bool);
-
-    int DialogArmyInfo(const Troop &, u32);
-
-    void HeroesMeeting(Heroes &, Heroes &);
-
-    void KeyboardDialog(string &);
 
     u32 GetCursorAttackDialog(const Point &, int direction);
 
-    void ThievesGuild(bool oracle);
 
-    void KingdomOverviewDialog(const Kingdom &);
 }
 
 #endif

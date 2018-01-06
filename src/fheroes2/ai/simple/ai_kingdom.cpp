@@ -37,6 +37,7 @@
 #include "agg.h"
 #include "ai.h"
 #include "ai_simple.h"
+#include "mus.h"
 
 void AICastleTurn(Castle *);
 

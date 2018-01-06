@@ -38,6 +38,7 @@
 #include "ai.h"
 #include "game.h"
 #include "m82.h"
+#include "mus.h"
 
 namespace Game
 {
