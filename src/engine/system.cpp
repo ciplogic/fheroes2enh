@@ -85,7 +85,7 @@ extern HWND SDL_Window;
 
 #include "tools.h"
 
-int System::MakeDirectory(const string &path)
+int System::MakeDirectory(const std::string &path)
 {
 #if defined(__SYMBIAN32__)
     return mkdir(path.c_str(), S_IRWXU);
@@ -96,24 +96,24 @@ int System::MakeDirectory(const string &path)
 #endif
 }
 
-string System::ConcatePath(const string &str1, const string &str2)
+std::string System::ConcatePath(const std::string &str1, const std::string &str2)
 {
-    return string(str1 + SEPARATOR + str2);
+    return std::string(str1 + SEPARATOR + str2);
 }
 
-string System::GetHomeDirectory(const string &prog)
+std::string System::GetHomeDirectory(const std::string &prog)
 {
-    string res;
+    std::string res;
 
     if (GetEnvironment("HOME"))
-        res = ConcatePath(GetEnvironment("HOME"), string(".").append(prog));
+        res = ConcatePath(GetEnvironment("HOME"), std::string(".").append(prog));
     else if (GetEnvironment("APPDATA"))
         res = ConcatePath(GetEnvironment("APPDATA"), prog);
 
     return res;
 }
 
-ListDirs System::GetDataDirectories(const string &prog)
+ListDirs System::GetDataDirectories(const std::string &prog)
 {
     ListDirs dirs;
 
@@ -134,7 +134,7 @@ ListDirs System::GetDataDirectories(const string &prog)
     return dirs;
 }
 
-ListFiles System::GetListFiles(const string &prog, const string &prefix, const string &filter)
+ListFiles System::GetListFiles(const std::string &prog, const std::string &prefix, const std::string &filter)
 {
     ListFiles res;
 
@@ -169,16 +169,16 @@ ListFiles System::GetListFiles(const string &prog, const string &prefix, const s
     return res;
 }
 
-string System::GetDirname(const string &str)
+std::string System::GetDirname(const std::string &str)
 {
     if (!str.empty())
     {
         size_t pos = str.rfind(SEPARATOR);
 
-        if (string::npos == pos)
-            return string(".");
+        if (std::string::npos == pos)
+            return std::string(".");
         else if (pos == 0)
-            return string("./");
+            return std::string("./");
         else if (pos == str.size() - 1)
             return GetDirname(str.substr(0, str.size() - 1));
         else
@@ -188,13 +188,13 @@ string System::GetDirname(const string &str)
     return str;
 }
 
-string System::GetBasename(const string &str)
+std::string System::GetBasename(const std::string &str)
 {
     if (!str.empty())
     {
         size_t pos = str.rfind(SEPARATOR);
 
-        if (string::npos == pos ||
+        if (std::string::npos == pos ||
             pos == 0)
             return str;
         else if (pos == str.size() - 1)
@@ -235,9 +235,9 @@ void System::SetLocale(int category, const char *locale)
 #endif
 }
 
-string System::GetMessageLocale(int length /* 1, 2, 3 */)
+std::string System::GetMessageLocale(int length /* 1, 2, 3 */)
 {
-    string locname;
+    std::string locname;
 #if defined(WIN32)
     char* clocale = setlocale(LC_MONETARY, nullptr);
 #elif defined(ANDROID)
@@ -262,7 +262,7 @@ string System::GetMessageLocale(int length /* 1, 2, 3 */)
     return locname;
 }
 
-int System::GetCommandOptions(int argc, vector<string> argv, const char *optstring)
+int System::GetCommandOptions(int argc, std::vector<std::string> argv, const char *optstring)
 {
 #if defined(__MINGW32CE__)
     return -1;
@@ -311,7 +311,7 @@ size_t System::GetMemoryUsage()
 #endif
 }
 
-string System::GetTime()
+std::string System::GetTime()
 {
     time_t raw;
     struct tm *tmi;
@@ -322,12 +322,12 @@ string System::GetTime()
 
     strftime(buf, sizeof(buf) - 1, "%X", tmi);
 
-    return string(buf);
+    return std::string(buf);
 }
 
-bool System::IsFile(const string &name, bool writable)
+bool System::IsFile(const std::string &name, bool writable)
 {
-	ifstream f(name.c_str());
+    std::ifstream f(name.c_str());
 	return f.good();
 }
 
@@ -345,8 +345,7 @@ bool dirExists(const string& dirName_in)
 #endif
 
 
-
-bool System::IsDirectory(const string &name, bool writable)
+bool System::IsDirectory(const std::string &name, bool writable)
 {
 #if defined (ANDROID)
     return writable ? 0 == access(name.c_str(), W_OK) : true;
@@ -365,7 +364,7 @@ bool System::IsDirectory(const string &name, bool writable)
 #endif
 }
 
-int System::Unlink(const string &file)
+int System::Unlink(const std::string &file)
 {
 #ifdef WIN32
     return _unlink(file.c_str());

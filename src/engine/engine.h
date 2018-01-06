@@ -34,11 +34,11 @@
 
 namespace SDL
 {
-    bool Init(const u32 system = INIT_VIDEO);
+    bool Init(u32 system = INIT_VIDEO);
 
     void Quit();
 
-    bool SubSystem(const u32 system);
+    bool SubSystem(u32 system);
 }
 
 #endif

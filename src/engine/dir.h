@@ -25,7 +25,6 @@
 #include <string>
 #include <vector>
 
-using namespace std;
 #ifdef WIN32
 
 wstring s2ws(const string& str);
@@ -33,16 +32,16 @@ wstring s2ws(const string& str);
 string ws2s(const wstring& wstr);
 #endif
 
-struct ListFiles : vector<string>
+struct ListFiles : std::vector<std::string>
 {
     void Append(const ListFiles &);
 
-    void ReadDir(const string &path, const string &filter = "", bool sensitive = true);
+    void ReadDir(const std::string &path, const std::string &filter = "", bool sensitive = true);
 };
 
-struct ListDirs : vector<string>
+struct ListDirs : std::vector<std::string>
 {
-    void Append(const vector<string> &);
+    void Append(const std::vector<std::string> &);
 };
 
 #endif

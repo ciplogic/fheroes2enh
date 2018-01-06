@@ -40,12 +40,12 @@ enum KeyMod
 };
 
 /* trim left right space */
-string StringTrim(string str)
+std::string StringTrim(std::string str)
 {
     if (str.empty())
         return str;
 
-    string::iterator iter;
+    std::string::iterator iter;
 
     // left
     iter = str.begin();
@@ -64,30 +64,30 @@ string StringTrim(string str)
 }
 
 /* convert to lower case */
-string StringLower(string str)
+std::string StringLower(std::string str)
 {
-    transform(str.begin(), str.end(), str.begin(), ::tolower);
+    std::transform(str.begin(), str.end(), str.begin(), ::tolower);
     return str;
 }
 
 /* convert to upper case */
-string StringUpper(string str)
+std::string StringUpper(std::string str)
 {
-    transform(str.begin(), str.end(), str.begin(), ::toupper);
+    std::transform(str.begin(), str.end(), str.begin(), ::toupper);
     return str;
 }
 
 /* int to string */
-string GetString(int value)
+std::string GetString(int value)
 {
 	return std::to_string(value);
 }
 
-string GetStringShort(int value)
+std::string GetStringShort(int value)
 {
     if (abs(value) > 1000)
     {
-        ostringstream stream;
+        std::ostringstream stream;
 
         if (abs(value) > 1000000)
             stream << value / 1000000 << "M";
@@ -100,38 +100,38 @@ string GetStringShort(int value)
     return GetString(value);
 }
 
-string GetString(double value, u8 prec)
+std::string GetString(double value, u8 prec)
 {
-    ostringstream stream;
-    stream << setprecision(prec) << value;
+    std::ostringstream stream;
+    stream << std::setprecision(prec) << value;
     return stream.str();
 }
 
-string GetString(const Point &pt)
+std::string GetString(const Point &pt)
 {
-    ostringstream os;
+    std::ostringstream os;
     os << "point: x(" << pt.x << "), y(" << pt.y << ")";
     return os.str();
 }
 
-string GetString(const Size &sz)
+std::string GetString(const Size &sz)
 {
-    ostringstream os;
+    std::ostringstream os;
     os << "size: w(" << sz.w << "), h(" << sz.h << ")";
     return os.str();
 }
 
-string GetString(const Rect &rt)
+std::string GetString(const Rect &rt)
 {
-    ostringstream os;
+    std::ostringstream os;
     os << "rect: x(" << rt.x << "), y(" << rt.y << "), w(" << rt.w << "), h(" << rt.h << ")";
     return os.str();
 }
 
-string GetHexString(int value, int width)
+std::string GetHexString(int value, int width)
 {
-    ostringstream stream;
-    stream << "0x" << setw(width) << setfill('0') << hex << value;
+    std::ostringstream stream;
+    stream << "0x" << std::setw(width) << std::setfill('0') << std::hex << value;
     return stream.str();
 }
 
@@ -145,31 +145,31 @@ int CountBits(u32 val)
     return res;
 }
 
-int GetInt(const string &str)
+int GetInt(const std::string &str)
 {
     int res = 0;
 
     // decimal
     if (str.end() == find_if(str.begin(), str.end(), not1(std::ptr_fun<int, int>(isdigit))))
     {
-        istringstream ss(str);
+        std::istringstream ss(str);
         ss >> res;
     } else if (str.size() > 2 && (str.at(0) == '+' || str.at(0) == '-') &&
                str.end() == find_if(str.begin() + 1, str.end(), not1(std::ptr_fun<int, int>(isdigit))))
     {
-        istringstream ss(str);
+        std::istringstream ss(str);
         ss >> res;
     } else
         // hex
     if (str.size() > 3 && str.at(0) == '0' && tolower(str.at(1)) == 'x' &&
         str.end() == find_if(str.begin() + 2, str.end(), not1(std::ptr_fun<int, int>(isxdigit))))
     {
-        istringstream ss(str);
-        ss >> hex >> res;
+        std::istringstream ss(str);
+        ss >> std::hex >> res;
     } else
         // str
     {
-        string lower = StringLower(str);
+        std::string lower = StringLower(str);
 
         if (lower == "on") return 1;
         else if (lower == "one") return 1;
@@ -186,26 +186,26 @@ int GetInt(const string &str)
     return res;
 }
 
-void StringReplace(string &dst, const char *pred, const string &src)
+void StringReplace(std::string &dst, const char *pred, const std::string &src)
 {
-    size_t pos = string::npos;
+    size_t pos = std::string::npos;
 
-    while (string::npos != (pos = dst.find(pred))) dst.replace(pos, strlen(pred), src);
+    while (std::string::npos != (pos = dst.find(pred))) dst.replace(pos, strlen(pred), src);
 }
 
-void StringReplace(string &dst, const char *pred, int value)
+void StringReplace(std::string &dst, const char *pred, int value)
 {
     StringReplace(dst, pred, GetString(value));
 }
 
-vector<string> StringSplit(const string &str, const string &sep)
+std::vector<std::string> StringSplit(const std::string &str, const std::string &sep)
 {
-	vector<string> list;
+    std::vector<std::string> list;
     size_t pos1 = 0;
-    size_t pos2 = string::npos;
+    size_t pos2 = std::string::npos;
 
     while (pos1 < str.size() &&
-           string::npos != (pos2 = str.find(sep, pos1)))
+           std::string::npos != (pos2 = str.find(sep, pos1)))
     {
         list.push_back(str.substr(pos1, pos2 - pos1));
         pos1 = pos2 + sep.size();
@@ -218,9 +218,9 @@ vector<string> StringSplit(const string &str, const string &sep)
     return list;
 }
 
-string InsertString(const string &src, size_t pos, const char *c)
+std::string InsertString(const std::string &src, size_t pos, const char *c)
 {
-    string res = src;
+    std::string res = src;
 
     if (pos >= src.size())
         res.append(c);
@@ -231,12 +231,12 @@ string InsertString(const string &src, size_t pos, const char *c)
 }
 
 // from SDL_ttf
-vector<u16> StringUTF8_to_UNICODE(const string &utf8)
+std::vector<u16> StringUTF8_to_UNICODE(const std::string &utf8)
 {
-    vector<u16> unicode;
+    std::vector<u16> unicode;
     unicode.reserve(utf8.size());
 
-    for (string::const_iterator
+    for (std::string::const_iterator
                  it = utf8.begin(); it < utf8.end(); ++it)
     {
         u16 ch = static_cast<u8>(*it);
@@ -273,12 +273,12 @@ vector<u16> StringUTF8_to_UNICODE(const string &utf8)
     return unicode;
 }
 
-string StringUNICODE_to_UTF8(const vector<u16> &unicode)
+std::string StringUNICODE_to_UTF8(const std::vector<u16> &unicode)
 {
-    string utf8;
+    std::string utf8;
     utf8.reserve(2 * unicode.size());
 
-    for (vector<u16>::const_iterator
+    for (std::vector<u16>::const_iterator
                  it = unicode.begin(); it != unicode.end(); ++it)
     {
         if (*it < 128)
@@ -472,7 +472,7 @@ char CharFromKeySym(KeySym sym, u16 mod)
     return 0;
 }
 
-size_t InsertKeySym(string &res, size_t pos, KeySym sym, u16 mod)
+size_t InsertKeySym(std::string &res, size_t pos, KeySym sym, u16 mod)
 {
     switch (sym)
     {
@@ -655,7 +655,7 @@ KeySym KeySymFromChar(char c)
     return KEY_NONE;
 }
 
-bool SaveMemToFile(const vector<u8> &data, const string &file)
+bool SaveMemToFile(const std::vector<u8> &data, const std::string &file)
 {
     SDL_RWops *rw = SDL_RWFromFile(file.c_str(), "wb");
 
@@ -670,9 +670,9 @@ bool SaveMemToFile(const vector<u8> &data, const string &file)
     return true;
 }
 
-vector<u8> LoadFileToMem(const string &file)
+std::vector<u8> LoadFileToMem(const std::string &file)
 {
-    vector<u8> data;
+    std::vector<u8> data;
     SDL_RWops *rw = SDL_RWFromFile(file.c_str(), "rb");
 
     if (rw && SDL_RWseek(rw, 0, RW_SEEK_END) != -1)
@@ -804,7 +804,7 @@ std::string EncodeString(const std::string & str, const char* charset)
 }
 #else
 
-string cp1251_to_utf8(const string &in)
+std::string cp1251_to_utf8(const std::string &in)
 {
     const u32 table_1251[] = {
             0x82D0, 0x83D0, 0x9A80E2, 0x93D1, 0x9E80E2, 0xA680E2, 0xA080E2, 0xA180E2,
@@ -825,7 +825,7 @@ string cp1251_to_utf8(const string &in)
             0x88D1, 0x89D1, 0x8AD1, 0x8BD1, 0x8CD1, 0x8DD1, 0x8ED1, 0x8FD1
     };
 
-    string res;
+    std::string res;
     res.reserve(in.size() * 2 + 1);
 
     for (char it : in)
@@ -848,7 +848,7 @@ string cp1251_to_utf8(const string &in)
     return res;
 }
 
-string EncodeString(const string &str, const char *charset)
+std::string EncodeString(const std::string &str, const char *charset)
 {
     if (charset)
     {
@@ -951,9 +951,9 @@ u32 decodeChar(int v)
     return 0;
 }
 
-vector<u8> decodeBase64(const string &src)
+std::vector<u8> decodeBase64(const std::string &src)
 {
-    vector<u8> res;
+    std::vector<u8> res;
 
     if (src.size() % 4 == 0)
     {
@@ -983,10 +983,10 @@ vector<u8> decodeBase64(const string &src)
     return res;
 }
 
-int CheckSum(const vector<u8> &v)
+int CheckSum(const std::vector<u8> &v)
 {
     u32 ret = 0;
-    vector<u8>::const_iterator it = v.begin();
+    std::vector<u8>::const_iterator it = v.begin();
 
     do
     {
@@ -1001,7 +1001,7 @@ int CheckSum(const vector<u8> &v)
     return ret;
 }
 
-int CheckSum(const string &str)
+int CheckSum(const std::string &str)
 {
     return CheckSum(std::vector<u8>(str.begin(), str.end()));
 }

@@ -55,37 +55,37 @@ namespace System
 
     const char *GetEnvironment(const char *name);
 
-    int MakeDirectory(const string &);
+    int MakeDirectory(const std::string &);
 
-    string ConcatePath(const string &, const string &);
+    std::string ConcatePath(const std::string &, const std::string &);
 
-    ListDirs GetDataDirectories(const string &);
+    ListDirs GetDataDirectories(const std::string &);
 
-    ListFiles GetListFiles(const string &, const string &, const string &);
+    ListFiles GetListFiles(const std::string &, const std::string &, const std::string &);
 
-    string GetHomeDirectory(const string &);
+    std::string GetHomeDirectory(const std::string &);
 
-    string GetDirname(const string &);
+    std::string GetDirname(const std::string &);
 
-    string GetBasename(const string &);
+    std::string GetBasename(const std::string &);
 
-    string GetTime();
+    std::string GetTime();
 
     void SetLocale(int, const char *);
 
-    string GetMessageLocale(int /* 3: en_us.utf-8, 2: en_us, 1: en */);
+    std::string GetMessageLocale(int /* 3: en_us.utf-8, 2: en_us, 1: en */);
 
     size_t GetMemoryUsage();
 
-    int GetCommandOptions(int argc, vector<string> argv, const char *optstring);
+    int GetCommandOptions(int argc, std::vector<std::string> argv, const char *optstring);
 
     char *GetOptionsArgument();
 
-    bool IsFile(const string &name, bool writable = false);
+    bool IsFile(const std::string &name, bool writable = false);
 
-    bool IsDirectory(const string &name, bool writable = false);
+    bool IsDirectory(const std::string &name, bool writable = false);
 
-    int Unlink(const string &);
+    int Unlink(const std::string &);
 
     bool isEmbededDevice();
 

@@ -221,7 +221,7 @@ Surface::Surface(const Surface &bs) : surface(nullptr)
     Set(bs, false);
 }
 
-Surface::Surface(const string &file) : surface(nullptr)
+Surface::Surface(const std::string &file) : surface(nullptr)
 {
     Load(file);
 }
@@ -392,7 +392,7 @@ bool Surface::isValid() const
     return surface && surface->format;
 }
 
-bool Surface::Load(const string &fn)
+bool Surface::Load(const std::string &fn)
 {
     FreeSurface(*this);
 
@@ -404,7 +404,7 @@ bool Surface::Load(const string &fn)
     return surface;
 }
 
-bool Surface::Save(const string &fn) const
+bool Surface::Save(const std::string &fn) const
 {
     int res = 0;
 
@@ -562,7 +562,7 @@ void Surface::SetPixel(int x, int y, u32 pixel) const
         }
     } else
     {
-        ostringstream os;
+        std::ostringstream os;
         os << "out of range: " << "x: " << x << ", " << "y: " << y << ", " << "width: " << w() << ", " << "height: "
            << h();
         Error::Except(__FUNCTION__, os.str().c_str());
@@ -762,9 +762,9 @@ u32 Surface::GetMemoryUsage() const
 	return res;
 }
 
-string Surface::Info() const
+std::string Surface::Info() const
 {
-    ostringstream os;
+    std::ostringstream os;
 
     if (isValid())
     {
@@ -775,9 +775,9 @@ string Surface::Info() const
            "h" << "(" << surface->h << "), " <<
            "size" << "(" << GetMemoryUsage() << "), " <<
            "bpp" << "(" << depth() << "), " <<
-           "Amask" << "(" << "0x" << setw(8) << setfill('0') << hex << surface->format->Amask << "), " <<
-           "colorkey" << "(" << "0x" << setw(8) << setfill('0') << surface->format->colorkey << "), "
-           << dec <<
+           "Amask" << "(" << "0x" << std::setw(8) << std::setfill('0') << std::hex << surface->format->Amask << "), " <<
+           "colorkey" << "(" << "0x" << std::setw(8) << std::setfill('0') << surface->format->colorkey << "), "
+           << std::dec <<
            "alpha" << "(" << alpha() << "), ";
     } else
         os << "invalid surface";
@@ -787,7 +787,7 @@ string Surface::Info() const
 
 void Surface::Swap(Surface &sf1, Surface &sf2)
 {
-    swap(sf1.surface, sf2.surface);
+    std::swap(sf1.surface, sf2.surface);
 }
 
 Surface Surface::RenderScale(const Size &size) const

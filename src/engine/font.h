@@ -60,7 +60,7 @@ public:
     Surface RenderUnicodeChar(u16, const RGBA &, bool solid /* or blended */);
 
 protected:
-    TTF_Font *ptr;
+    TTF_Font *ptr{};
 
 private:
     FontTTF(const FontTTF &) {}
