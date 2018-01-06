@@ -35,7 +35,7 @@ int ObjGras::GetPassable(u32 index)
 
     if (isShadow(index))
         return DIRECTION_ALL;
-    else if (isAction(index) ||
+    if (isAction(index) ||
              ARRAY_COUNT_END(disabled) != find(disabled, ARRAY_COUNT_END(disabled), index))
         return 0;
 
@@ -87,10 +87,8 @@ int ObjGras::GetActionObject(u32 index)
         case 30:
             return MP2::OBJ_FAERIERING;
         default:
-            break;
+            return MP2::OBJ_ZERO;
     }
-
-    return MP2::OBJ_ZERO;
 }
 
 int ObjGra2::GetActionObject(u32 index)
@@ -117,8 +115,6 @@ int ObjGra2::GetActionObject(u32 index)
         case 129:
             return MP2::OBJ_OBELISK;
         default:
-            break;
+            return MP2::OBJ_ZERO;
     }
-
-    return MP2::OBJ_ZERO;
 }

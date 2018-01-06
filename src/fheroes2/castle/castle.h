@@ -345,7 +345,7 @@ namespace CastleDialog
     void RedrawBuildingSpriteToArea(const Sprite &, s32, s32, const Rect &);
 }
 
-struct VecCastles : public vector<Castle *>
+struct VecCastles : vector<Castle *>
 {
     Castle *Get(const Point &) const;
 
@@ -354,7 +354,7 @@ struct VecCastles : public vector<Castle *>
     void ChangeColors(int, int);
 };
 
-struct AllCastles : public VecCastles
+struct AllCastles : VecCastles
 {
     AllCastles();
 

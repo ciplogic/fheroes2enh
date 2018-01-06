@@ -29,7 +29,6 @@
 #include "artifact.h"
 #include "position.h"
 #include "pairs.h"
-#include "gamedefs.h"
 
 class MapObjectSimple : public MapPosition
 {
@@ -61,7 +60,7 @@ StreamBase &operator<<(StreamBase &, const MapObjectSimple &);
 
 StreamBase &operator>>(StreamBase &, MapObjectSimple &);
 
-struct MapEvent : public MapObjectSimple
+struct MapEvent : MapObjectSimple
 {
     MapEvent();
 
@@ -85,7 +84,7 @@ StreamBase &operator>>(StreamBase &, MapEvent &);
 
 typedef list<string> RiddleAnswers;
 
-struct MapSphinx : public MapObjectSimple
+struct MapSphinx : MapObjectSimple
 {
     MapSphinx();
 
@@ -106,7 +105,7 @@ StreamBase &operator<<(StreamBase &, const MapSphinx &);
 
 StreamBase &operator>>(StreamBase &, MapSphinx &);
 
-struct MapSign : public MapObjectSimple
+struct MapSign : MapObjectSimple
 {
     MapSign();
 
@@ -121,7 +120,7 @@ StreamBase &operator<<(StreamBase &, const MapSign &);
 
 StreamBase &operator>>(StreamBase &, MapSign &);
 
-struct MapResource : public MapObjectSimple
+struct MapResource : MapObjectSimple
 {
     MapResource();
 
@@ -132,7 +131,7 @@ StreamBase &operator<<(StreamBase &, const MapResource &);
 
 StreamBase &operator>>(StreamBase &, MapResource &);
 
-struct MapArtifact : public MapObjectSimple
+struct MapArtifact : MapObjectSimple
 {
     MapArtifact();
 
@@ -149,7 +148,7 @@ StreamBase &operator<<(StreamBase &, const MapArtifact &);
 
 StreamBase &operator>>(StreamBase &, MapArtifact &);
 
-struct MapMonster : public MapObjectSimple
+struct MapMonster : MapObjectSimple
 {
     MapMonster();
 

@@ -181,7 +181,7 @@ void Dialog::ExtSettings(bool readonly)
     states.push_back(Settings::GAME_CASTLE_FLASH_BUILDING);
     states.push_back(Settings::GAME_HIDE_INTERFACE);
 
-    if (!conf.PocketPC())
+    if (!false)
         states.push_back(Settings::GAME_DYNAMIC_INTERFACE);
 
     states.push_back(Settings::GAME_AUTOSAVE_ON);
@@ -248,14 +248,6 @@ void Dialog::ExtSettings(bool readonly)
     states.push_back(Settings::BATTLE_MAGIC_TROOP_RESIST);
     states.push_back(Settings::BATTLE_SKIP_INCREASE_DEFENSE);
     states.push_back(Settings::BATTLE_REVERSE_WAIT_ORDER);
-
-    if (conf.PocketPC())
-    {
-        states.push_back(Settings::POCKETPC_HIDE_CURSOR);
-        states.push_back(Settings::POCKETPC_TAP_MODE);
-        states.push_back(Settings::POCKETPC_LOW_MEMORY);
-        states.push_back(Settings::POCKETPC_DRAG_DROP_SCROLL);
-    }
 
     SettingsListBox listbox(area, readonly);
 

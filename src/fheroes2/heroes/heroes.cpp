@@ -1631,19 +1631,22 @@ void Heroes::Move2Dest(const s32 &dst_index, bool skip_action /* false */)
 
 Surface Heroes::GetPortrait(int id, int type)
 {
-    if (UNKNOWN != id)
-        switch (type)
-        {
-            case PORT_BIG:
-                return AGG::GetICN(ICN::PORTxxxx(id), 0);
-            case PORT_MEDIUM:
-                return SANDYSANDY > id ? AGG::GetICN(ICN::PORTMEDI, id + 1) : AGG::GetICN(ICN::PORTMEDI,
-                                                                                                  BAX + 1);
-            case PORT_SMALL:
-                return SANDYSANDY > id ? AGG::GetICN(ICN::MINIPORT, id) : AGG::GetICN(ICN::MINIPORT, BAX);
-            default:
-                break;
-        }
+    if (UNKNOWN == id)
+    {
+        return Surface();
+    }
+    switch (type)
+    {
+    case PORT_BIG:
+        return AGG::GetICN(ICN::PORTxxxx(id), 0);
+    case PORT_MEDIUM:
+        return SANDYSANDY > id ? AGG::GetICN(ICN::PORTMEDI, id + 1) : AGG::GetICN(ICN::PORTMEDI,
+            BAX + 1);
+    case PORT_SMALL:
+        return SANDYSANDY > id ? AGG::GetICN(ICN::MINIPORT, id) : AGG::GetICN(ICN::MINIPORT, BAX);
+    default:
+        break;
+    }
 
     return Surface();
 }
@@ -1773,7 +1776,7 @@ string Heroes::String() const
     return os.str();
 }
 
-struct InCastleAndGuardian : public binary_function<const Castle *, Heroes *, bool>
+struct InCastleAndGuardian : binary_function<const Castle *, Heroes *, bool>
 {
     bool operator()(const Castle *castle, Heroes *hero) const
     {
@@ -1783,7 +1786,7 @@ struct InCastleAndGuardian : public binary_function<const Castle *, Heroes *, bo
     }
 };
 
-struct InCastleNotGuardian : public binary_function<const Castle *, Heroes *, bool>
+struct InCastleNotGuardian : binary_function<const Castle *, Heroes *, bool>
 {
     bool operator()(const Castle *castle, Heroes *hero) const
     {
@@ -1791,7 +1794,7 @@ struct InCastleNotGuardian : public binary_function<const Castle *, Heroes *, bo
     }
 };
 
-struct InJailMode : public binary_function<s32, Heroes *, bool>
+struct InJailMode : binary_function<s32, Heroes *, bool>
 {
     bool operator()(s32 index, Heroes *hero) const
     {

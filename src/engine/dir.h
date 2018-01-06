@@ -33,14 +33,14 @@ wstring s2ws(const string& str);
 string ws2s(const wstring& wstr);
 #endif
 
-struct ListFiles : public vector<string>
+struct ListFiles : vector<string>
 {
     void Append(const ListFiles &);
 
     void ReadDir(const string &path, const string &filter = "", bool sensitive = true);
 };
 
-struct ListDirs : public vector<string>
+struct ListDirs : vector<string>
 {
     void Append(const vector<string> &);
 };

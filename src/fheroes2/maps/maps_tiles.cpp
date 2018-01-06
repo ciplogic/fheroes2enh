@@ -104,38 +104,38 @@ int Maps::TilesAddon::GetLoyaltyObject(const TilesAddon &addon)
     {
         case ICN::X_LOC1:
             if (addon.index == 3) return MP2::OBJ_ALCHEMYTOWER;
-            else if (addon.index < 3) return MP2::OBJN_ALCHEMYTOWER;
-            else if (70 == addon.index) return MP2::OBJ_ARENA;
-            else if (3 < addon.index && addon.index < 72) return MP2::OBJN_ARENA;
-            else if (77 == addon.index) return MP2::OBJ_BARROWMOUNDS;
-            else if (71 < addon.index && addon.index < 78) return MP2::OBJN_BARROWMOUNDS;
-            else if (94 == addon.index) return MP2::OBJ_EARTHALTAR;
-            else if (77 < addon.index && addon.index < 112) return MP2::OBJN_EARTHALTAR;
-            else if (118 == addon.index) return MP2::OBJ_AIRALTAR;
-            else if (111 < addon.index && addon.index < 120) return MP2::OBJN_AIRALTAR;
-            else if (127 == addon.index) return MP2::OBJ_FIREALTAR;
-            else if (119 < addon.index && addon.index < 129) return MP2::OBJN_FIREALTAR;
-            else if (135 == addon.index) return MP2::OBJ_WATERALTAR;
-            else if (128 < addon.index && addon.index < 137) return MP2::OBJN_WATERALTAR;
+            if (addon.index < 3) return MP2::OBJN_ALCHEMYTOWER;
+            if (70 == addon.index) return MP2::OBJ_ARENA;
+            if (3 < addon.index && addon.index < 72) return MP2::OBJN_ARENA;
+            if (77 == addon.index) return MP2::OBJ_BARROWMOUNDS;
+            if (71 < addon.index && addon.index < 78) return MP2::OBJN_BARROWMOUNDS;
+            if (94 == addon.index) return MP2::OBJ_EARTHALTAR;
+            if (77 < addon.index && addon.index < 112) return MP2::OBJN_EARTHALTAR;
+            if (118 == addon.index) return MP2::OBJ_AIRALTAR;
+            if (111 < addon.index && addon.index < 120) return MP2::OBJN_AIRALTAR;
+            if (127 == addon.index) return MP2::OBJ_FIREALTAR;
+            if (119 < addon.index && addon.index < 129) return MP2::OBJN_FIREALTAR;
+            if (135 == addon.index) return MP2::OBJ_WATERALTAR;
+            if (128 < addon.index && addon.index < 137) return MP2::OBJN_WATERALTAR;
             break;
 
         case ICN::X_LOC2:
             if (addon.index == 4) return MP2::OBJ_STABLES;
-            else if (addon.index < 4) return MP2::OBJN_STABLES;
-            else if (addon.index == 9) return MP2::OBJ_JAIL;
-            else if (4 < addon.index && addon.index < 10) return MP2::OBJN_JAIL;
-            else if (addon.index == 37) return MP2::OBJ_MERMAID;
-            else if (9 < addon.index && addon.index < 47) return MP2::OBJN_MERMAID;
-            else if (addon.index == 101) return MP2::OBJ_SIRENS;
-            else if (46 < addon.index && addon.index < 111) return MP2::OBJN_SIRENS;
-            else if (110 < addon.index && addon.index < 136) return MP2::OBJ_REEFS;
+            if (addon.index < 4) return MP2::OBJN_STABLES;
+            if (addon.index == 9) return MP2::OBJ_JAIL;
+            if (4 < addon.index && addon.index < 10) return MP2::OBJN_JAIL;
+            if (addon.index == 37) return MP2::OBJ_MERMAID;
+            if (9 < addon.index && addon.index < 47) return MP2::OBJN_MERMAID;
+            if (addon.index == 101) return MP2::OBJ_SIRENS;
+            if (46 < addon.index && addon.index < 111) return MP2::OBJN_SIRENS;
+            if (110 < addon.index && addon.index < 136) return MP2::OBJ_REEFS;
             break;
 
         case ICN::X_LOC3:
             if (addon.index == 30) return MP2::OBJ_HUTMAGI;
-            else if (addon.index < 32) return MP2::OBJN_HUTMAGI;
-            else if (addon.index == 50) return MP2::OBJ_EYEMAGI;
-            else if (31 < addon.index && addon.index < 59) return MP2::OBJN_EYEMAGI;
+            if (addon.index < 32) return MP2::OBJN_HUTMAGI;
+            if (addon.index == 50) return MP2::OBJ_EYEMAGI;
+            if (31 < addon.index && addon.index < 59) return MP2::OBJN_EYEMAGI;
             // fix
             break;
 
@@ -318,27 +318,27 @@ bool Maps::TilesAddon::isRoad(int direct) const
                 13 == index ||
                 26 == index)
                 return direct & (Direction::TOP | Direction::BOTTOM);
-            else if (2 == index ||
+            if (2 == index ||
                      21 == index ||
                      28 == index)
                 return direct & (Direction::LEFT | Direction::RIGHT);
-            else if (17 == index ||
+            if (17 == index ||
                      29 == index)
                 return direct & (Direction::TOP_LEFT | Direction::BOTTOM_RIGHT);
-            else if (18 == index ||
+            if (18 == index ||
                      30 == index)
                 return direct & (Direction::TOP_RIGHT | Direction::BOTTOM_LEFT);
-            else if (3 == index)
+            if (3 == index)
                 return direct & (Direction::TOP | Direction::BOTTOM | Direction::LEFT | Direction::RIGHT);
-            else if (6 == index) return direct & (Direction::TOP | Direction::BOTTOM | Direction::RIGHT);
-            else if (7 == index) return direct & (Direction::TOP | Direction::RIGHT);
-            else if (9 == index) return direct & (Direction::BOTTOM | Direction::RIGHT);
-            else if (12 == index) return direct & (Direction::BOTTOM | Direction::LEFT);
-            else if (14 == index) return direct & (Direction::TOP | Direction::BOTTOM | Direction::LEFT);
-            else if (16 == index) return direct & (Direction::TOP | Direction::LEFT);
-            else if (19 == index) return direct & (Direction::TOP_LEFT | Direction::BOTTOM_RIGHT);
-            else if (20 == index) return direct & (Direction::TOP_RIGHT | Direction::BOTTOM_LEFT);
-            else break;
+            if (6 == index) return direct & (Direction::TOP | Direction::BOTTOM | Direction::RIGHT);
+            if (7 == index) return direct & (Direction::TOP | Direction::RIGHT);
+            if (9 == index) return direct & (Direction::BOTTOM | Direction::RIGHT);
+            if (12 == index) return direct & (Direction::BOTTOM | Direction::LEFT);
+            if (14 == index) return direct & (Direction::TOP | Direction::BOTTOM | Direction::LEFT);
+            if (16 == index) return direct & (Direction::TOP | Direction::LEFT);
+            if (19 == index) return direct & (Direction::TOP_LEFT | Direction::BOTTOM_RIGHT);
+            if (20 == index) return direct & (Direction::TOP_RIGHT | Direction::BOTTOM_LEFT);
+            break;
 
             // castle and tower (gate)
         case ICN::OBJNTOWN:
@@ -355,8 +355,6 @@ bool Maps::TilesAddon::isRoad(int direct) const
                 173 == index ||
                 189 == index)
                 return direct & (Direction::TOP | Direction::BOTTOM);
-            else break;
-
             break;
             // castle lands (gate)
         case ICN::OBJNTWBA:
@@ -369,7 +367,7 @@ bool Maps::TilesAddon::isRoad(int direct) const
                 67 == index ||
                 77 == index)
                 return direct & (Direction::TOP | Direction::BOTTOM);
-            else break;
+            break;
 
         default:
             break;

@@ -31,7 +31,6 @@ int ObjTown::GetPassable(u32 index0)
     // 13, 29, 45, 61, 77, 93, 109, 125, 141, 157, 173, 189
     if (13 == index || 29 == index)
         return Direction::CENTER | Direction::BOTTOM;
-    else
         // town/castle
     if ((5 < index && index < 13) || (13 < index && index < 16) ||
         (21 < index && index < 29) || (29 < index))

@@ -309,7 +309,7 @@ bool isNeedStayFrontObject(const Heroes &hero, const Maps::Tiles &next)
 
         return (castle &&
                 !hero.isFriends(castle->GetColor()));
-    } else
+    } 
         // to coast action
     if (hero.isShipMaster() &&
         next.GetObject() == MP2::OBJ_COAST)

@@ -102,11 +102,11 @@ int Color::FromInt(int col)
 int Color::GetFirst(int colors)
 {
     if (colors & BLUE) return BLUE;
-    else if (colors & GREEN) return GREEN;
-    else if (colors & RED) return RED;
-    else if (colors & YELLOW) return YELLOW;
-    else if (colors & ORANGE) return ORANGE;
-    else if (colors & PURPLE) return PURPLE;
+    if (colors & GREEN) return GREEN;
+    if (colors & RED) return RED;
+    if (colors & YELLOW) return YELLOW;
+    if (colors & ORANGE) return ORANGE;
+    if (colors & PURPLE) return PURPLE;
 
     return NONE;
 }

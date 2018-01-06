@@ -574,7 +574,7 @@ bool AGG::LoadExtICN(int icn, u32 index, bool reflect)
                 break;
 
             case ICN::BATTLESKIP:
-                if (conf.PocketPC())
+                if (false)
                     LoadOrgICN(sprite, ICN::TEXTBAR, index, false);
                 else
                 {
@@ -603,7 +603,7 @@ bool AGG::LoadExtICN(int icn, u32 index, bool reflect)
                 break;
 
             case ICN::BATTLEWAIT:
-                if (conf.PocketPC())
+                if (false)
                     LoadOrgICN(sprite, ICN::ADVBTNS, 8 + index, false);
                 else
                 {

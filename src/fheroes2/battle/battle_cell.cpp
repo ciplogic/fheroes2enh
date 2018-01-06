@@ -139,17 +139,17 @@ Battle::direction_t Battle::Cell::GetTriangleDirection(const Point &dst) const
 
     if (pt == coord[0])
         return CENTER;
-    else if (pt.inABC(coord[0], coord[1], coord[2]))
+    if (pt.inABC(coord[0], coord[1], coord[2]))
         return TOP_LEFT;
-    else if (pt.inABC(coord[0], coord[2], coord[3]))
+    if (pt.inABC(coord[0], coord[2], coord[3]))
         return TOP_RIGHT;
-    else if (pt.inABC(coord[0], coord[3], coord[4]))
+    if (pt.inABC(coord[0], coord[3], coord[4]))
         return RIGHT;
-    else if (pt.inABC(coord[0], coord[4], coord[5]))
+    if (pt.inABC(coord[0], coord[4], coord[5]))
         return BOTTOM_RIGHT;
-    else if (pt.inABC(coord[0], coord[5], coord[6]))
+    if (pt.inABC(coord[0], coord[5], coord[6]))
         return BOTTOM_LEFT;
-    else if (pt.inABC(coord[0], coord[1], coord[6]))
+    if (pt.inABC(coord[0], coord[1], coord[6]))
         return LEFT;
 
     return UNKNOWN;

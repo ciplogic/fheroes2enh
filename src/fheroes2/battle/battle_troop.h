@@ -39,7 +39,7 @@ class HeroBase;
 
 namespace Battle
 {
-    struct ModeDuration : public pair<u32, u32>
+    struct ModeDuration : pair<u32, u32>
     {
         ModeDuration();
 

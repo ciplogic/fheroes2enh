@@ -36,13 +36,13 @@
 
 using namespace std;
 
-struct dwelling_t : public pair<u32, u32>
+struct dwelling_t : pair<u32, u32>
 {
     dwelling_t(u32 type, u32 count) : pair<u32, u32>(type, count)
     {};
 };
 
-struct dwellings_t : public vector<dwelling_t>
+struct dwellings_t : vector<dwelling_t>
 {
     dwellings_t()
     { reserve(6); };

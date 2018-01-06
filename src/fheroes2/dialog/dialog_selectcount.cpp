@@ -253,12 +253,6 @@ bool Dialog::InputString(const string &header, string &res)
         buttonOk.isEnable() && le.MousePressLeft(buttonOk) ? buttonOk.PressDraw() : buttonOk.ReleaseDraw();
         le.MousePressLeft(buttonCancel) ? buttonCancel.PressDraw() : buttonCancel.ReleaseDraw();
 
-        if (Settings::Get().PocketPC() && le.MousePressLeft(text_rt))
-        {
-            PocketPC::KeyboardDialog(res);
-            redraw = true;
-        }
-
         if (HotKeyPressEvent(Game::EVENT_DEFAULT_READY) ||
             (buttonOk.isEnable() && le.MouseClickLeft(buttonOk)))
             break;

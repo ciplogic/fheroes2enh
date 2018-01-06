@@ -63,7 +63,7 @@ StreamBase &operator<<(StreamBase &, const ActionSimple &);
 
 StreamBase &operator>>(StreamBase &, ActionSimple &);
 
-struct ActionMessage : public ActionSimple
+struct ActionMessage : ActionSimple
 {
     string message;
 
@@ -73,7 +73,7 @@ struct ActionMessage : public ActionSimple
     static bool Action(ActionMessage *, s32, Heroes &);
 };
 
-struct ActionDefault : public ActionSimple
+struct ActionDefault : ActionSimple
 {
     bool enabled;
     string message;
@@ -84,7 +84,7 @@ struct ActionDefault : public ActionSimple
     static bool Action(ActionDefault *, s32, Heroes &);
 };
 
-struct ActionAccess : public ActionSimple
+struct ActionAccess : ActionSimple
 {
     int allowPlayers;
     bool allowComputer;
@@ -98,7 +98,7 @@ struct ActionAccess : public ActionSimple
     static bool Action(ActionAccess *, s32, Heroes &);
 };
 
-struct ActionArtifact : public ActionSimple
+struct ActionArtifact : ActionSimple
 {
     Artifact artifact;
     string message;
@@ -109,7 +109,7 @@ struct ActionArtifact : public ActionSimple
     static bool Action(ActionArtifact *, s32, Heroes &);
 };
 
-struct ActionResources : public ActionSimple
+struct ActionResources : ActionSimple
 {
     Funds resources;
     string message;

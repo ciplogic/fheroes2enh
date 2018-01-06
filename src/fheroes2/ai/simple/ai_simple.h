@@ -37,7 +37,7 @@
 #include "pairs.h"
 #include "ai.h"
 
-struct IndexObjectMap : public map<s32, int>
+struct IndexObjectMap : map<s32, int>
 {
     void DumpObjects(const IndexDistance &id);
 };

@@ -27,12 +27,12 @@
 
 namespace Audio
 {
-    struct Spec : public SDL_AudioSpec
+    struct Spec : SDL_AudioSpec
     {
         Spec();
     };
 
-    struct CVT : public SDL_AudioCVT
+    struct CVT : SDL_AudioCVT
     {
         CVT();
 

@@ -697,8 +697,7 @@ screen_t CastleOpenDialog4(Castle &castle, bool readonly)
     {
         if (!readonly && screenSwitch.QueueEventProcessing() && SCREEN4 != screenSwitch.result)
             return screenSwitch.result;
-        else
-            // exit
+        // exit
         if (le.MouseClickLeft(rectExit) || HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT)) break;
 
         if (le.MouseCursor(building1.GetArea()) && building1.QueueEventProcessing())
@@ -707,31 +706,31 @@ screen_t CastleOpenDialog4(Castle &castle, bool readonly)
             castle.BuyBuilding(building1());
             return SCREEN1;
         }
-        else if (le.MouseCursor(building2.GetArea()) && building2.QueueEventProcessing())
+        if (le.MouseCursor(building2.GetArea()) && building2.QueueEventProcessing())
         {
             AGG::PlaySound(M82::BUILDTWN);
             castle.BuyBuilding(building2());
             return SCREEN1;
         }
-        else if (le.MouseCursor(building3.GetArea()) && building3.QueueEventProcessing())
+        if (le.MouseCursor(building3.GetArea()) && building3.QueueEventProcessing())
         {
             AGG::PlaySound(M82::BUILDTWN);
             castle.BuyBuilding(building3());
             return SCREEN1;
         }
-        else if (le.MouseCursor(building4.GetArea()) && building4.QueueEventProcessing())
+        if (le.MouseCursor(building4.GetArea()) && building4.QueueEventProcessing())
         {
             AGG::PlaySound(M82::BUILDTWN);
             castle.BuyBuilding(building4());
             return SCREEN1;
         }
-        else if (le.MouseCursor(building5.GetArea()) && building5.QueueEventProcessing())
+        if (le.MouseCursor(building5.GetArea()) && building5.QueueEventProcessing())
         {
             AGG::PlaySound(M82::BUILDTWN);
             castle.BuyBuilding(building5());
             return SCREEN1;
         }
-        else if (le.MouseCursor(building6.GetArea()) && building6.QueueEventProcessing())
+        if (le.MouseCursor(building6.GetArea()) && building6.QueueEventProcessing())
         {
             AGG::PlaySound(M82::BUILDTWN);
             castle.BuyBuilding(building6());
@@ -790,10 +789,9 @@ screen_t CastleOpenDialog5(Castle &castle, bool readonly)
     {
         if (!readonly && screenSwitch.QueueEventProcessing() && SCREEN5 != screenSwitch.result)
             return screenSwitch.result;
-        else
-            // exit
+        // exit
         if (le.MouseClickLeft(rectExit) || HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT)) break;
-        else if (need_buy_book && le.MouseClickLeft(book_pos))
+        if (need_buy_book && le.MouseClickLeft(book_pos))
         {
             const_cast<Heroes *>(hero)->BuySpellBook(&castle);
             return SCREEN1;
@@ -911,8 +909,7 @@ screen_t CastleOpenDialog6(Castle &castle, bool readonly)
     {
         if (!readonly && screenSwitch.QueueEventProcessing() && SCREEN6 != screenSwitch.result)
             return screenSwitch.result;
-        else
-            // exit
+        // exit
         if (le.MouseClickLeft(rectExit) || HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT)) break;
         else if (hero1 && le.MouseClickLeft(rectRecruit1) &&
                  Dialog::OK == castle.DialogBuyHero(hero1))

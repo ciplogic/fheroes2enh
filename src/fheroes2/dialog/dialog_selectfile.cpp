@@ -296,8 +296,6 @@ string SelectFileListSimple(const string &header, const string &lastfile, bool e
         {
             edit_mode = true;
             charInsertPos = GetInsertPosition(filename, le.GetMouseCursor().x, enter_field.x);
-            if (Settings::Get().PocketPC())
-                PocketPC::KeyboardDialog(filename);
             buttonOk.SetDisable(filename.empty());
             cursor.Hide();
         } else if (edit_mode && le.KeyPress() &&

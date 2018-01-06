@@ -32,7 +32,7 @@ namespace Battle
 {
     class Unit;
 
-    struct TroopUIDs : public vector<u32>
+    struct TroopUIDs : vector<u32>
     {
         TroopUIDs()
         { reserve(4); }

@@ -121,22 +121,16 @@ const Battle::Unit *Battle::AIGetEnemyAbroadMaxQuality(const Unit &b)
 {
     const Unit *res1 = AIGetEnemyAbroadMaxQuality(b.GetHeadIndex(), b.GetColor());
 
-    if (b.isWide())
-    {
-        const Unit *res2 = AIGetEnemyAbroadMaxQuality(b.GetTailIndex(), b.GetColor());
+    if (!b.isWide())
+        return res1;
+    const Unit *res2 = AIGetEnemyAbroadMaxQuality(b.GetTailIndex(), b.GetColor());
 
-        if (!res1) return res2;
-        else if (!res2) return res1;
-        else
-        {
-            const s32 &quality1 = res1->GetPosition().GetHead()->GetQuality();
-            const s32 &quality2 = res2->GetPosition().GetHead()->GetQuality();
+    if (!res1) return res2;
+    if (!res2) return res1;
+    const s32 &quality1 = res1->GetPosition().GetHead()->GetQuality();
+    const s32 &quality2 = res2->GetPosition().GetHead()->GetQuality();
 
-            return quality1 > quality2 ? res1 : res2;
-        }
-    }
-
-    return res1;
+    return quality1 > quality2 ? res1 : res2;
 }
 
 s32 Battle::AIShortDistance(s32 from, const Indexes &indexes)

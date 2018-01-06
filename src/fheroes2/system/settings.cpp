@@ -449,23 +449,6 @@ bool Settings::Read(const string &filename)
     sval = config.StrParams("videodriver");
     if (!sval.empty()) video_driver = sval;
 
-    // pocketpc
-    if (PocketPC())
-    {
-        ival = config.IntParams("pointer offset x");
-        if (ival) le.SetMouseOffsetX(ival);
-
-        ival = config.IntParams("pointer offset y");
-        if (ival) le.SetMouseOffsetY(ival);
-
-        ival = config.IntParams("tap delay");
-        if (ival) le.SetTapDelayForRightClickEmulation(ival);
-
-        sval = config.StrParams("pointer rotate fix");
-        if (!sval.empty())
-            System::SetEnvironment("GAPI_POINTER_FIX", sval.c_str());
-    }
-
     // videomode
     sval = config.StrParams("videomode");
     if (!sval.empty())
@@ -533,7 +516,7 @@ void Settings::PostLoad()
 
 void Settings::SetAutoVideoMode()
 {
-    video_mode = Display::Get().GetMaxMode(PocketPC());
+    video_mode = Display::Get().GetMaxMode(false);
     PostLoad();
 }
 
