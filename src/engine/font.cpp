@@ -23,6 +23,9 @@
 #include "font.h"
 #include "engine.h"
 
+#include "system.h"
+#include "tools.h"
+
 #ifdef WITH_TTF
 
 #include <SDL_ttf.h>

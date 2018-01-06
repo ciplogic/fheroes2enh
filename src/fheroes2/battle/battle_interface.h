@@ -30,6 +30,7 @@
 #include "battle_board.h"
 #include "sprite.h"
 #include "spell.h"
+#include "localevent.h"
 
 namespace Battle
 {

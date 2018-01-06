@@ -28,6 +28,9 @@
 #include "game.h"
 #include "dialog.h"
 
+#include "system.h"
+#include "tools.h"
+
 int Dialog::AdventureOptions(bool enabledig)
 {
     Display &display = Display::Get();

@@ -27,6 +27,7 @@
 #include "button.h"
 #include "resource.h"
 #include "dialog.h"
+#include "localevent.h"
 
 int Dialog::ResourceInfo(const string &header, const string &message, const Funds &rs, int buttons)
 {

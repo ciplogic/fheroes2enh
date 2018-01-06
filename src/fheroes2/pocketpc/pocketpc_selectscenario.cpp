@@ -31,6 +31,7 @@
 #include "dialog_selectscenario.h"
 #include "text.h"
 #include "pocketpc.h"
+#include "localevent.h"
 
 int PocketPC::SelectScenario()
 {

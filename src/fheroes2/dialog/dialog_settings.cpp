@@ -27,6 +27,7 @@
 #include "button.h"
 #include "dialog.h"
 #include "interface_list.h"
+#include "localevent.h"
 
 class SettingsListBox : public Interface::ListBox<u32>
 {

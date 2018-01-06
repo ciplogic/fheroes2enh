@@ -33,6 +33,9 @@
 #include "zzlib.h"
 #include "display.h"
 
+#include "system.h"
+#include "tools.h"
+
 void LoadZLogo();
 
 void SetVideoDriver(const string &);

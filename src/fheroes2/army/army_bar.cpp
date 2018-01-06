@@ -31,6 +31,9 @@
 #include "army_bar.h"
 #include "ColorTable.h"
 
+#include "system.h"
+#include "tools.h"
+
 bool CanUpgradeTroopButNoResources(Troop& troop, Army* army)
 {
     const Castle *castle = army->inCastle();

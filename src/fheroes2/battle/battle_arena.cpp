@@ -37,6 +37,9 @@
 #include "battle_bridge.h"
 #include "battle_interface.h"
 #include "battle_command.h"
+#include "localevent.h"
+#include "system.h"
+#include "tools.h"
 
 namespace Battle
 {

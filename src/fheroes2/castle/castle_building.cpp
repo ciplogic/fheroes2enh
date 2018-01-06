@@ -28,6 +28,7 @@
 #include "race.h"
 #include "text.h"
 #include "game.h"
+#include "localevent.h"
 
 void CastleRedrawTownName(const Castle &, const Point &);
 

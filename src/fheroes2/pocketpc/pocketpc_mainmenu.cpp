@@ -28,6 +28,7 @@
 #include "game.h"
 #include "game_io.h"
 #include "pocketpc.h"
+#include "localevent.h"
 
 int PocketPC::LoadGame()
 {

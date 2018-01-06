@@ -25,7 +25,6 @@
 
 #include <ostream>
 #include <string>
-#include <list>
 #include <vector>
 #include <map>
 

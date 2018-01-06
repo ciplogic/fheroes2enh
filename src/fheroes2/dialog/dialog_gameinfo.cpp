@@ -30,6 +30,8 @@
 #include "game_over.h"
 #include "difficulty.h"
 #include "dialog.h"
+#include "system.h"
+#include "tools.h"
 
 void Dialog::GameInfo()
 {

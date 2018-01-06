@@ -31,6 +31,7 @@
 #include "settings.h"
 #include "game.h"
 #include "game_interface.h"
+#include "localevent.h"
 
 namespace Game
 {

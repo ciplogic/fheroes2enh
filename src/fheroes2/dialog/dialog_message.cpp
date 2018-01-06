@@ -26,6 +26,7 @@
 #include "cursor.h"
 #include "button.h"
 #include "dialog.h"
+#include "localevent.h"
 
 int Dialog::Message(const string &header, const string &message, int ft, int buttons)
 {

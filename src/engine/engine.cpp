@@ -22,6 +22,9 @@
 
 #include "engine.h"
 
+#include "system.h"
+#include "tools.h"
+
 #ifdef WITH_NET
 #include "sdlnet.h"
 #endif

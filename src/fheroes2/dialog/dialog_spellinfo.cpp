@@ -29,6 +29,9 @@
 #include "game.h"
 #include "dialog.h"
 
+#include "system.h"
+#include "tools.h"
+
 void Dialog::SpellInfo(const Spell &spell, bool ok_button)
 {
     string msg = spell.GetDescription();

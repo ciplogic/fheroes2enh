@@ -24,6 +24,9 @@
 
 #include "engine.h"
 
+#include "system.h"
+#include "tools.h"
+
 namespace Mixer
 {
     void Init();

@@ -24,6 +24,7 @@
 #define H2INTERFACE_GAMEAREA_H
 
 #include "gamedefs.h"
+#include "thread.h"
 
 class Sprite;
 

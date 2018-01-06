@@ -28,6 +28,9 @@
 #include "game.h"
 #include "dialog.h"
 
+#include "system.h"
+#include "tools.h"
+
 namespace Dialog
 {
     void DrawSystemInfo(const Rects &);

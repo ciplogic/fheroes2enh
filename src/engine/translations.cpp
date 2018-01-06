@@ -21,11 +21,11 @@
  ***************************************************************************/
 
 #include <map>
-#include <list>
 
 #include "engine.h"
 #include "serialize.h"
 #include "system.h"
+#include "tools.h"
 
 struct chunk
 {

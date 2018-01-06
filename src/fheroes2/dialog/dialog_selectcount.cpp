@@ -25,9 +25,12 @@
 #include "settings.h"
 #include "cursor.h"
 #include "button.h"
-#include "pocketpc.h"
 #include "game.h"
 #include "dialog.h"
+
+#include "system.h"
+#include "tools.h"
+#include "localevent.h"
 
 class SelectValue : public Rect
 {

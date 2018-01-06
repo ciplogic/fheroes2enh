@@ -29,6 +29,8 @@
 #include "army.h"
 #include "pocketpc.h"
 
+#include "tools.h"
+
 void DrawMonsterStats(const Point &, const Troop &);
 
 void DrawBattleStats(const Point &, const Troop &);

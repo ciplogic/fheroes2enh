@@ -34,6 +34,9 @@
 #include "buildinginfo.h"
 #include "ColorTable.h"
 
+#include "system.h"
+#include "tools.h"
+
 struct buildstats_t
 {
     u32 id2;

@@ -29,12 +29,12 @@
 #include "morale.h"
 #include "luck.h"
 #include "army.h"
-#include "skill.h"
 #include "dialog.h"
 #include "game.h"
-#include "pocketpc.h"
 #include "battle.h"
 #include "world.h"
+#include "system.h"
+#include "tools.h"
 
 void DrawMonsterStats(const Point &, const Troop &);
 

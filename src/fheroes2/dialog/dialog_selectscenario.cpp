@@ -31,6 +31,8 @@
 #include "game.h"
 #include "dialog_selectscenario.h"
 
+#include "system.h"
+#include "tools.h"
 void LossConditionInfo(const Maps::FileInfo &);
 
 void VictoryConditionInfo(const Maps::FileInfo &);

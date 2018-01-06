@@ -25,6 +25,7 @@
 #include "game.h"
 #include "text.h"
 #include "pocketpc.h"
+#include "localevent.h"
 
 u32 PocketPC::GetCursorAttackDialog(const Point &dst, int allow)
 {

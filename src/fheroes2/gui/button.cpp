@@ -27,6 +27,7 @@
 #include "dialog.h"
 #include "button.h"
 #include "display.h"
+#include "localevent.h"
 
 enum
 {

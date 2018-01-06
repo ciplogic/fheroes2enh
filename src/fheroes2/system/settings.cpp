@@ -31,6 +31,9 @@
 #include "dialog.h"
 #include "settings.h"
 
+#include "system.h"
+#include "tools.h"
+
 #ifdef WIN32
 #define WINDOWS
 #endif

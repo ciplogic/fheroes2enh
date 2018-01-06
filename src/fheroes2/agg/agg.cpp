@@ -36,6 +36,9 @@
 #include "ByteVectorReader.h"
 #include "BinaryFileReader.h"
 
+#include "system.h"
+#include "tools.h"
+
 #define FATSIZENAME    15
 
 namespace AGG
