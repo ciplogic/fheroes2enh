@@ -35,6 +35,7 @@
 #include "ByteVectorReader.h"
 #include "BinaryFileReader.h"
 
+#include "m82.h"
 #include "system.h"
 #include "tools.h"
 #include "palette_h2.h"
@@ -1113,37 +1114,36 @@ void AGG::LoadTIL(int til)
 {
     til_cache_t &v = til_cache[til];
 
-    if (!v.sprites)
+    if (v.sprites != nullptr)
+        return;
+    u32 max = 0;
+
+    switch (til)
     {
-        u32 max = 0;
+        case TIL::CLOF32:
+            max = 4;
+            break;
+        case TIL::GROUND32:
+            max = 432;
+            break;
+        case TIL::STON:
+            max = 36;
+            break;
+        default:
+            break;
+    }
 
-        switch (til)
-        {
-            case TIL::CLOF32:
-                max = 4;
-                break;
-            case TIL::GROUND32:
-                max = 432;
-                break;
-            case TIL::STON:
-                max = 36;
-                break;
-            default:
-                break;
-        }
+    v.count = max * 4;  // rezerve for rotate sprites
+    v.sprites = new Surface[v.count];
 
-        v.count = max * 4;  // rezerve for rotate sprites
-        v.sprites = new Surface[v.count];
+    const Settings &conf = Settings::Get();
 
-        const Settings &conf = Settings::Get();
+    // load from images dir
+    if (!conf.UseAltResource() || !LoadAltTIL(til, max))
+    {
+        if (!LoadOrgTIL(til, max))
+            Error::Except(__FUNCTION__, "load til");
 
-        // load from images dir
-        if (!conf.UseAltResource() || !LoadAltTIL(til, max))
-        {
-            if (!LoadOrgTIL(til, max))
-                Error::Except(__FUNCTION__, "load til");
-
-        }
     }
 }
 
@@ -1207,27 +1207,25 @@ void AGG::LoadWAV(int m82, vector<u8> &v)
 
     if(conf.UseAltResource())
     {
-    std::string name = StringLower(M82::GetString(m82));
-    std::string prefix_sounds = System::ConcatePath("files", "sounds");
+        std::string name = StringLower(M82::GetString(m82));
+        std::string prefix_sounds = System::ConcatePath("files", "sounds");
 
-    // ogg
-    StringReplace(name, ".82m", ".ogg");
-    std::string sound = Settings::GetLastFile(prefix_sounds, name);
-    v = LoadFileToMem(sound);
-
-    if(v.empty())
-    {
-        // find mp3
-        StringReplace(name, ".82m", ".mp3");
-        sound = Settings::GetLastFile(prefix_sounds, name);
-
+        // ogg
+        StringReplace(name, ".82m", ".ogg");
+        std::string sound = Settings::GetLastFile(prefix_sounds, name);
         v = LoadFileToMem(sound);
-    }
 
-    if(v.size())
-    {
-        return;
-    }
+        if (v.empty())
+        {
+            // find mp3
+            StringReplace(name, ".82m", ".mp3");
+            sound = Settings::GetLastFile(prefix_sounds, name);
+
+            v = LoadFileToMem(sound);
+        }
+
+        if (!v.empty()) return;
+
     }
 #endif
 

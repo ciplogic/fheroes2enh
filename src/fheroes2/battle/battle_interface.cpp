@@ -41,6 +41,7 @@
 #include "battle_catapult.h"
 #include "battle_interface.h"
 #include "battle_command.h"
+#include "m82.h"
 
 #define  ARMYORDERW    40
 

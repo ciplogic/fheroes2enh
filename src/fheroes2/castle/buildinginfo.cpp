@@ -36,6 +36,7 @@
 
 #include "system.h"
 #include "tools.h"
+#include "m82.h"
 
 struct buildstats_t
 {

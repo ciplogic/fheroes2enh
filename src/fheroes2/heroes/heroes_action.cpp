@@ -31,6 +31,7 @@
 #include "profit.h"
 #include "maps_actions.h"
 #include "ai.h"
+#include "m82.h"
 
 #define PlayMusicReplacement(m82) if(MUS::FromMapObject(obj) == MUS::UNKNOWN) \
                                       AGG::PlaySound(m82)

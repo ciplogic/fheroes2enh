@@ -33,6 +33,7 @@
 #include "game_io.h"
 #include "game_over.h"
 #include "pocketpc.h"
+#include "m82.h"
 
 void Interface::Basic::ShowPathOrStartMoveHero(Heroes *hero, s32 dst_index)
 {

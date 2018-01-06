@@ -34,6 +34,7 @@
 #include "battle_interface.h"
 #include "battle_troop.h"
 #include "game_static.h"
+#include "m82.h"
 
 namespace Battle
 {

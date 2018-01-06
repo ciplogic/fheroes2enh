@@ -38,6 +38,7 @@
 #include "game_interface.h"
 #include "game_static.h"
 #include "ai.h"
+#include "m82.h"
 
 const char *Heroes::GetName(int id)
 {

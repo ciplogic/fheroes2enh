@@ -28,6 +28,7 @@
 #include "ground.h"
 #include "game.h"
 #include "game_interface.h"
+#include "m82.h"
 
 bool ReflectSprite(int from);
 

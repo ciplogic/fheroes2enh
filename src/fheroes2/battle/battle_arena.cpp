@@ -40,6 +40,7 @@
 #include "localevent.h"
 #include "system.h"
 #include "tools.h"
+#include "m82.h"
 
 namespace Battle
 {

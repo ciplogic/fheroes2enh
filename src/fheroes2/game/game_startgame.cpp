@@ -38,6 +38,7 @@
 #include "game_io.h"
 #include "game_over.h"
 #include "battle_only.h"
+#include "m82.h"
 
 int Game::StartBattleOnly()
 {

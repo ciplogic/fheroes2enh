@@ -37,6 +37,7 @@
 #include "game_static.h"
 #include "ai.h"
 #include "game.h"
+#include "m82.h"
 
 namespace Game
 {

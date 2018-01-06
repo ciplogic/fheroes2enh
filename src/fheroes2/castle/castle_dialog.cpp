@@ -32,6 +32,7 @@
 #include "dialog.h"
 #include "statusbar.h"
 #include "army_bar.h"
+#include "m82.h"
 
 void CastleRedrawTownName(const Castle &castle, const Point &dst);
 

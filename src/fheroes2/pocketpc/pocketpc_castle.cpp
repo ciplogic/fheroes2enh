@@ -37,6 +37,7 @@
 #include "buildinginfo.h"
 #include "profit.h"
 #include "pocketpc.h"
+#include "m82.h"
 
 void RedrawTownSprite(const Rect &, const Castle &);
 
