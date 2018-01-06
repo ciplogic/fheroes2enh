@@ -34,6 +34,7 @@
 #include "maps_actions.h"
 #include "ai.h"
 #include "world.h"
+#include "rand.h"
 
 namespace GameStatic
 {

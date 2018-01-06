@@ -31,6 +31,7 @@
 #include "game.h"
 #include "dialog.h"
 #include "dialog_selectitems.h"
+#include "rand.h"
 
 enum
 {

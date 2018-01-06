@@ -40,10 +40,10 @@ int ObjDsrt::GetPassable(u32 index)
     if (isShadow(index))
         return DIRECTION_ALL;
     else if (isAction(index) ||
-             ARRAY_COUNT_END(disabled) != find(disabled, ARRAY_COUNT_END(disabled), index))
+             ARRAY_COUNT_END(disabled) != std::find(disabled, ARRAY_COUNT_END(disabled), index))
         return 0;
 
-    return ARRAY_COUNT_END(restricted) != find(restricted, ARRAY_COUNT_END(restricted), index) ?
+    return ARRAY_COUNT_END(restricted) != std::find(restricted, ARRAY_COUNT_END(restricted), index) ?
            DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW : DIRECTION_ALL;
 }
 
@@ -56,7 +56,7 @@ bool ObjDsrt::isShadow(u32 index)
 {
     const u8 shadows[] = {11, 13, 16, 19, 23, 25, 27, 29, 33, 35, 38, 41, 44, 46, 47,
                           50, 52, 54, 71, 75, 77, 80, 86, 103, 115, 118};
-    return ARRAY_COUNT_END(shadows) != find(shadows, ARRAY_COUNT_END(shadows), index);
+    return ARRAY_COUNT_END(shadows) != std::find(shadows, ARRAY_COUNT_END(shadows), index);
 }
 
 int ObjDsrt::GetActionObject(u32 index)

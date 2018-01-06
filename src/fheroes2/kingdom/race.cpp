@@ -23,6 +23,7 @@
 #include "engine.h"
 #include "gamedefs.h"
 #include "race.h"
+#include "rand.h"
 
 const char *Race::String(int race)
 {

@@ -28,13 +28,12 @@
 #include "agg.h"
 #include "cursor.h"
 #include "game.h"
-//#include "test.h"
 #include "images_pack.h"
 #include "zzlib.h"
 #include "display.h"
-
 #include "system.h"
 #include "tools.h"
+#include "rand.h"
 
 void LoadZLogo();
 

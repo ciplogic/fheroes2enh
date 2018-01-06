@@ -42,6 +42,7 @@
 #include "til.h"
 #include "xmi.h"
 #include "mus.h"
+#include "font.h"
 
 #define FATSIZENAME    15
 

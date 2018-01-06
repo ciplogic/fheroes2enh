@@ -23,11 +23,11 @@
 #include <sstream>
 #include "maps.h"
 
-string Direction::String(int direct)
+std::string Direction::String(int direct)
 {
     const char *str_direct[] = {"unknown", "center", "top", "top right", "right", "bottom right", "bottom",
                                 "bottom left", "left", "top left"};
-    ostringstream os;
+    std::ostringstream os;
 
     if (direct & CENTER)
         os << str_direct[1] << ",";
@@ -48,7 +48,7 @@ string Direction::String(int direct)
     if (direct & TOP_LEFT)
         os << str_direct[9] << ",";
 
-    const string &res = os.str();
+    const std::string &res = os.str();
 
     return res.empty() ? str_direct[0] : res;
 }

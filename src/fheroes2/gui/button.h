@@ -95,8 +95,8 @@ public:
     void DisableButton2(bool);
 
 protected:
-    unique_ptr<Button> button1;
-	unique_ptr<Button> button2;
+    std::unique_ptr<Button> button1;
+	std::unique_ptr<Button> button2;
     int result1;
     int result2;
     int buttons;

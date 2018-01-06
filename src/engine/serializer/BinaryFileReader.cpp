@@ -15,7 +15,7 @@ BinaryFileReader::~BinaryFileReader()
 	_file = nullptr;
 }
 
-bool BinaryFileReader::open(const string& cs, const char* rb)
+bool BinaryFileReader::open(const std::string& cs, const char* rb)
 {
     _file = fopen(cs.c_str(), rb);
     return _file != nullptr;

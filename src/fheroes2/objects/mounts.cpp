@@ -42,7 +42,7 @@ int ObjMnts1::GetPassable(int icn, u32 index)
         (25 == index || 43 == index || 44 == index || 53 == index || 54 == index || 78 == index))
         return 0;
 
-    return ARRAY_COUNT_END(disabled2) != find(disabled2, ARRAY_COUNT_END(disabled2), index) ?
+    return ARRAY_COUNT_END(disabled2) != std::find(disabled2, ARRAY_COUNT_END(disabled2), index) ?
            0 : DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW;
 }
 
@@ -57,7 +57,7 @@ int ObjMnts2::GetPassable(int icn, u32 index)
         (73 == index || 84 == index || 86 == index))
         return 0;
 
-    return ARRAY_COUNT_END(disabled1) != find(disabled1, ARRAY_COUNT_END(disabled1), index) ?
+    return ARRAY_COUNT_END(disabled1) != std::find(disabled1, ARRAY_COUNT_END(disabled1), index) ?
            0 : DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW;
 }
 
@@ -84,12 +84,12 @@ int ObjMnts2::GetActionObject(u32 index)
 bool ObjMnts1::isShadow(u32 index)
 {
     const u8 shadows1[] = {0, 5, 11, 17, 21, 26, 32, 38, 42, 45, 49, 52, 55, 59, 62, 65, 68, 71, 74, 75, 79, 80};
-    return ARRAY_COUNT_END(shadows1) != find(shadows1, ARRAY_COUNT_END(shadows1), index);
+    return ARRAY_COUNT_END(shadows1) != std::find(shadows1, ARRAY_COUNT_END(shadows1), index);
 }
 
 bool ObjMnts2::isShadow(u32 index)
 {
     const u8 shadows2[] = {0, 5, 11, 17, 21, 26, 32, 38, 42, 46, 47, 53, 57, 58, 62,
                            68, 72, 75, 79, 82, 85, 89, 92, 95, 98, 101, 104, 105, 109, 110};
-    return ARRAY_COUNT_END(shadows2) != find(shadows2, ARRAY_COUNT_END(shadows2), index);
+    return ARRAY_COUNT_END(shadows2) != std::find(shadows2, ARRAY_COUNT_END(shadows2), index);
 }

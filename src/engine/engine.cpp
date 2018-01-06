@@ -22,8 +22,10 @@
 
 #include "engine.h"
 
+#include "rand.h"
 #include "system.h"
 #include "tools.h"
+#include "font.h"
 
 #ifdef WITH_NET
 #include "sdlnet.h"

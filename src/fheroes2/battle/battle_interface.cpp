@@ -42,6 +42,7 @@
 #include "battle_interface.h"
 #include "battle_command.h"
 #include "m82.h"
+#include "rand.h"
 
 #define  ARMYORDERW    40
 

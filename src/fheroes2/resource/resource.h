@@ -25,6 +25,7 @@
 #include "gamedefs.h"
 #include "serialize.h"
 #include "ByteVectorWriter.h"
+#include "rect.h"
 
 struct cost_t
 {

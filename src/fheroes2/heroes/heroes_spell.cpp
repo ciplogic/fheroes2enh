@@ -28,6 +28,7 @@
 #include "settings.h"
 #include "game_interface.h"
 #include "m82.h"
+#include "rand.h"
 
 void DialogSpellFailed(const Spell &);
 

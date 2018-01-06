@@ -30,6 +30,7 @@
 #include "battle_bridge.h"
 #include "battle_catapult.h"
 #include "battle_interface.h"
+#include "rand.h"
 
 void Battle::Arena::BattleProcess(Unit &attacker, Unit &defender, s32 dst, int dir)
 {

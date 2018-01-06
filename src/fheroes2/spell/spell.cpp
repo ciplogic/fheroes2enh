@@ -26,6 +26,7 @@
 #include "army.h"
 #include "game.h"
 #include "game_static.h"
+#include "rand.h"
 
 enum
 {

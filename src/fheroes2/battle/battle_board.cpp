@@ -33,6 +33,7 @@
 #include "game_static.h"
 #include "icn.h"
 #include <unordered_map>
+#include "rand.h"
 
 namespace Battle
 {

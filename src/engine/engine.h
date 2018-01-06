@@ -23,9 +23,7 @@
 #define H2ENGINE_H
 
 #include "types.h"
-#include "font.h"
 #include "error.h"
-#include "rand.h"
 #include "translations.h"
 
 

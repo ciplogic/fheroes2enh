@@ -33,7 +33,7 @@ class Castle;
 
 class IndexDistance;
 
-class MapsIndexes : public vector<s32>
+class MapsIndexes : public std::vector<s32>
 {
 };
 
@@ -52,7 +52,7 @@ namespace Maps
 
     typedef MapsIndexes Indexes;
 
-    class IndexesDistance : public vector<IndexDistance>
+    class IndexesDistance : public std::vector<IndexDistance>
     {
         void Assign(s32, const Indexes &, int sort /* 0: none, 1: short first, 2: long first */);
 

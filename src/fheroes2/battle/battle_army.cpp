@@ -25,6 +25,7 @@
 #include "settings.h"
 #include "heroes.h"
 #include "battle_troop.h"
+#include "rand.h"
 
 #define CAPACITY 16
 

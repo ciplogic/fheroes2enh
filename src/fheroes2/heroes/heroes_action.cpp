@@ -33,6 +33,7 @@
 #include "ai.h"
 #include "m82.h"
 #include "mus.h"
+#include "rand.h"
 
 #define PlayMusicReplacement(m82) if(MUS::FromMapObject(obj) == MUS::UNKNOWN) \
                                       AGG::PlaySound(m82)

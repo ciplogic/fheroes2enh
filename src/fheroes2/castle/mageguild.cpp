@@ -23,6 +23,7 @@
 #include <algorithm>
 #include "castle.h"
 #include "settings.h"
+#include "rand.h"
 
 Spell GetUniqueCombatSpellCompatibility(const SpellStorage &, int race, int level);
 

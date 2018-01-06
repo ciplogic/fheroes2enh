@@ -23,6 +23,7 @@
 #define H2GAMEDEFS_H
 
 #include "engine.h"
+#include <memory>
 
 #define MAJOR_VERSION 0
 #define MINOR_VERSION 9
@@ -64,8 +65,8 @@
 #define DEFAULT_SPEED_DELAY        5
 
 template <class T>
-using sp = shared_ptr<T>;
+using sp = std::shared_ptr<T>;
 template <class T>
-using up = unique_ptr<T>;
+using up = std::unique_ptr<T>;
 
 #endif

@@ -26,8 +26,10 @@
 #include "race.h"
 #include "ground.h"
 #include "mus.h"
+#include "rect.h"
 #include "settings.h"
 #include "mp2.h"
+#include "rand.h"
 
 namespace MUS
 {

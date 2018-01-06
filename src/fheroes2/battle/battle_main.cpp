@@ -33,6 +33,7 @@
 #include "ai.h"
 #include "battle_arena.h"
 #include "battle_army.h"
+#include "rand.h"
 
 namespace Battle
 {

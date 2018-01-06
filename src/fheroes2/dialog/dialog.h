@@ -92,9 +92,9 @@ namespace Dialog
 
     int SystemOptions();
 
-    string SelectFileLoad();
+    std::string SelectFileLoad();
 
-    string SelectFileSave();
+    std::string SelectFileSave();
 
     // show info cell maps
     void QuickInfo(const Maps::Tiles &);
@@ -103,38 +103,38 @@ namespace Dialog
 
     void QuickInfo(const Heroes &);
 
-    int Message(const string &, const string &, int ft,
+    int Message(const std::string &, const std::string &, int ft,
                 int buttons = 0 /* buttons: OK : CANCEL : OK|CANCEL : YES|NO */);
 
     void ExtSettings(bool);
 
-    int LevelUpSelectSkill(const string &, const string &, const Skill::Secondary &, const Skill::Secondary &,
+    int LevelUpSelectSkill(const std::string &, const std::string &, const Skill::Secondary &, const Skill::Secondary &,
                            Heroes &);
 
-    bool SelectGoldOrExp(const string &, const string &, u32 gold, u32 expr, const Heroes &);
+    bool SelectGoldOrExp(const std::string &, const std::string &, u32 gold, u32 expr, const Heroes &);
 
     void SpellInfo(const Spell &, bool ok_button = true);
 
-    void SpellInfo(const string &, const string &, const Spell &, bool ok_button = true);
+    void SpellInfo(const std::string &, const std::string &, const Spell &, bool ok_button = true);
 
     void SecondarySkillInfo(const Skill::Secondary &, const bool ok_button = true);
 
     void
-    SecondarySkillInfo(const string &, const string &, const Skill::Secondary &, const bool ok_button = true);
+    SecondarySkillInfo(const std::string &, const std::string &, const Skill::Secondary &, const bool ok_button = true);
 
-    void PrimarySkillInfo(const string &, const string &, int);
+    void PrimarySkillInfo(const std::string &, const std::string &, int);
 
-    int SpriteInfo(const string &, const string &, Surface &, int buttons = OK);
+    int SpriteInfo(const std::string &, const std::string &, Surface &, int buttons = OK);
 
-    int ArtifactInfo(const string &, const string &, const Artifact &, int buttons = OK);
+    int ArtifactInfo(const std::string &, const std::string &, const Artifact &, int buttons = OK);
 
-    int ResourceInfo(const string &, const string &, const Funds &, int buttons = OK);
+    int ResourceInfo(const std::string &, const std::string &, const Funds &, int buttons = OK);
 
     int SelectSkillFromArena();
 
-    bool SelectCount(const string &, u32 min, u32 max, u32 &res, int step = 1);
+    bool SelectCount(const std::string &, u32 min, u32 max, u32 &res, int step = 1);
 
-    bool InputString(const string &, string &);
+    bool InputString(const std::string &, std::string &);
 
     Troop RecruitMonster(const Monster &, u32 available, bool);
 

@@ -39,6 +39,7 @@
 #include "game_static.h"
 #include "ai.h"
 #include "m82.h"
+#include "rand.h"
 
 const char *Heroes::GetName(int id)
 {

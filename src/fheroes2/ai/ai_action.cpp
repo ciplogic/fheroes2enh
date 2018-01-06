@@ -34,6 +34,7 @@
 #include "cursor.h"
 #include "game_interface.h"
 #include "ai.h"
+#include "rand.h"
 
 void AIToMonster(Heroes &hero, u32 obj, s32 dst_index);
 

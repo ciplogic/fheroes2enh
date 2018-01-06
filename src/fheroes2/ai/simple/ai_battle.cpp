@@ -29,6 +29,8 @@
 
 #include <algorithm>
 #include <functional>
+
+#include "rand.h"
 #include "settings.h"
 #include "heroes.h"
 #include "castle.h"

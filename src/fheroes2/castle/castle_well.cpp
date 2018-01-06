@@ -33,6 +33,7 @@
 #include "game.h"
 #include "world.h"
 #include "text.h"
+#include "rand.h"
 
 using namespace std;
 

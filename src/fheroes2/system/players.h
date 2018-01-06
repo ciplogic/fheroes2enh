@@ -28,6 +28,7 @@
 #include "bitmodes.h"
 #include "color.h"
 #include "gamedefs.h"
+#include "rect.h"
 
 namespace Maps
 {
@@ -35,7 +36,6 @@ namespace Maps
 }
 
 class Castle;
-
 class Heroes;
 
 // control_t

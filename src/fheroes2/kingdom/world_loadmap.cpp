@@ -36,6 +36,7 @@
 #include "world.h"
 #include "ai.h"
 #include "BinaryFileReader.h"
+#include "rand.h"
 
 namespace GameStatic
 {

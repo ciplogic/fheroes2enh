@@ -25,6 +25,8 @@
 
 #include "gamedefs.h"
 #include "thread.h"
+#include "rect.h"
+#include "surface.h"
 
 class Sprite;
 

@@ -32,6 +32,7 @@
 #include "game.h"
 #include "luck.h"
 #include "morale.h"
+#include "rand.h"
 
 enum armysize_t
 {

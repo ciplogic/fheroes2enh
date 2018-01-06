@@ -24,6 +24,7 @@
 #include "skill.h"
 #include "heroes_base.h"
 #include "battle_catapult.h"
+#include "rand.h"
 
 Battle::Catapult::Catapult(const HeroBase &hero, bool fortification) : cat_shots(1), cat_first(20),
                                                                        cat_miss(true) /*, cat_fort(fortification) */

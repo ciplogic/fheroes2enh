@@ -36,6 +36,7 @@
 #include "world.h"
 #include "game_interface.h"
 #include "ai_simple.h"
+#include "rand.h"
 
 #define HERO_MAX_SHEDULED_TASK 7
 

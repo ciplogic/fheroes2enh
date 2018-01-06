@@ -27,7 +27,7 @@
 
 #include "gamedefs.h"
 
-typedef vector<int> Directions;
+typedef std::vector<int> Directions;
 
 namespace Direction
 {
@@ -45,7 +45,7 @@ namespace Direction
         CENTER = 0x0100
     };
 
-    string String(int);
+    std::string String(int);
 
     int Get(s32 from, s32 to);
 

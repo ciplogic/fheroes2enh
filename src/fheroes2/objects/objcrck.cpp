@@ -38,10 +38,10 @@ int ObjCrck::GetPassable(u32 index)
     if (184 == index)
         return Direction::CENTER | Direction::BOTTOM_RIGHT | DIRECTION_TOP_ROW;
     if (isAction(index) ||
-             ARRAY_COUNT_END(disabled) != find(disabled, ARRAY_COUNT_END(disabled), index))
+             ARRAY_COUNT_END(disabled) != std::find(disabled, ARRAY_COUNT_END(disabled), index))
         return 0;
 
-    return ARRAY_COUNT_END(restricted) != find(restricted, ARRAY_COUNT_END(restricted), index) ?
+    return ARRAY_COUNT_END(restricted) != std::find(restricted, ARRAY_COUNT_END(restricted), index) ?
            DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW : DIRECTION_ALL;
 }
 
@@ -54,7 +54,7 @@ bool ObjCrck::isShadow(u32 index)
 {
     const u8 shadows[] = {0, 2, 9, 12, 13, 15, 20, 23, 28, 33, 36, 39,
                           45, 48, 51, 54, 56, 73, 75, 79, 190, 201, 237};
-    return ARRAY_COUNT_END(shadows) != find(shadows, ARRAY_COUNT_END(shadows), index);
+    return ARRAY_COUNT_END(shadows) != std::find(shadows, ARRAY_COUNT_END(shadows), index);
 }
 
 int ObjCrck::GetActionObject(u32 index)

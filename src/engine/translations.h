@@ -23,6 +23,8 @@
 #ifndef H2TRANSLATIONS_H
 #define H2TRANSLATIONS_H
 
+#include <string>
+
 namespace Translation
 {
     bool bindDomain(const char *domain, const char *file);
@@ -33,7 +35,7 @@ namespace Translation
 
     const char *gettext(const char *str);
 
-    const char *gettext(const string &str);
+    const char *gettext(const std::string &str);
 
     const char *dgettext(const char *domain, const char *str);
 

@@ -25,6 +25,7 @@
 #include "settings.h"
 #include "world.h"
 #include "game.h"
+#include "rand.h"
 
 const char *Week::GetName() const
 {

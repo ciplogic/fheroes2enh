@@ -35,6 +35,7 @@
 #include "battle_troop.h"
 #include "game_static.h"
 #include "m82.h"
+#include "rand.h"
 
 namespace Battle
 {
