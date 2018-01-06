@@ -34,6 +34,7 @@
 #include "world.h"
 #include "text.h"
 #include "rand.h"
+#include "icn.h"
 
 using namespace std;
 

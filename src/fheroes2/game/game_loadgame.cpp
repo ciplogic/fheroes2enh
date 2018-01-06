@@ -28,6 +28,7 @@
 #include "game_io.h"
 #include "game.h"
 #include "display.h"
+#include "icn.h"
 
 int Game::LoadCampain()
 {

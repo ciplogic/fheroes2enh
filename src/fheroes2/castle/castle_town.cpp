@@ -31,6 +31,7 @@
 #include "game.h"
 #include "statusbar.h"
 #include "buildinginfo.h"
+#include "icn.h"
 
 int Castle::DialogBuyHero(const Heroes *hero)
 {

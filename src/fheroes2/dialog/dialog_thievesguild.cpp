@@ -28,7 +28,7 @@
 #include "cursor.h"
 #include "settings.h"
 #include "world.h"
-#include "pocketpc.h"
+#include "icn.h"
 #include "game.h"
 #include "dialog.h"
 

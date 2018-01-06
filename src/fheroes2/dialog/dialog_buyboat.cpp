@@ -28,6 +28,7 @@
 #include "settings.h"
 #include "game.h"
 #include "dialog.h"
+#include "icn.h"
 
 int Dialog::BuyBoat(bool enable)
 {

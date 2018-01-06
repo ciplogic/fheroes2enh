@@ -29,6 +29,7 @@
 #include "settings.h"
 #include "game.h"
 #include "text.h"
+#include "icn.h"
 
 void Castle::OpenTavern() const
 {

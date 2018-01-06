@@ -40,8 +40,7 @@
 #include "mus.h"
 #include "audio.h"
 #include "audio_mixer.h"
-#include "audio_music.h"
-#include "audio_cdrom.h"
+#include "icn.h"
 
 #define HGS_ID    0xF1F3
 #define HGS_MAX    10

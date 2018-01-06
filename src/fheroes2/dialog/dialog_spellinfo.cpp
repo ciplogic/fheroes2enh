@@ -28,6 +28,7 @@
 #include "spell.h"
 #include "game.h"
 #include "dialog.h"
+#include "icn.h"
 
 #include "system.h"
 #include "tools.h"

@@ -31,6 +31,7 @@
 #include "game.h"
 #include "dialog.h"
 #include "marketplace.h"
+#include "icn.h"
 
 void RedrawFromResource(const Point &, const Funds &);
 
