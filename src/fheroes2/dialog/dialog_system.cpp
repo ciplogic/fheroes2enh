@@ -34,6 +34,7 @@
 #include "audio_mixer.h"
 #include "audio_music.h"
 #include "audio_cdrom.h"
+#include "icn.h"
 
 namespace Dialog
 {

@@ -30,6 +30,7 @@
 #include "heroes_base.h"
 #include "dialog_selectitems.h"
 #include "settings.h"
+#include "icn.h"
 
 #define SPELL_PER_PAGE        6
 #define SPELL_PER_PAGE_SMALL    2

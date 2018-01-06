@@ -26,6 +26,7 @@
 #include "text.h"
 #include "pocketpc.h"
 #include "localevent.h"
+#include "icn.h"
 
 u32 PocketPC::GetCursorAttackDialog(const Point &dst, int allow)
 {

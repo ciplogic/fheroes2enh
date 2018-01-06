@@ -28,6 +28,7 @@
 #include "world.h"
 #include "game.h"
 #include "dialog.h"
+#include "icn.h"
 
 s32 GetIndexClickRects(const Rects &rects)
 {

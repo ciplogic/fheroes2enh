@@ -25,6 +25,7 @@
 #include "cursor.h"
 #include "dialog.h"
 #include "display.h"
+#include "icn.h"
 
 #define  ANGLEWIDTH 44
 

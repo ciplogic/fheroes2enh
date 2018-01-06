@@ -34,6 +34,7 @@
 #include "battle_arena.h"
 #include "battle_army.h"
 #include "rand.h"
+#include "icn.h"
 
 namespace Battle
 {

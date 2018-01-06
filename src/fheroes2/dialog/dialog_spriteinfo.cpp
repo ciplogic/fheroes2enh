@@ -28,6 +28,7 @@
 #include "artifact.h"
 #include "game.h"
 #include "dialog.h"
+#include "icn.h"
 
 int Dialog::ArtifactInfo(const string &hdr, const string &msg, const Artifact &art, int buttons)
 {

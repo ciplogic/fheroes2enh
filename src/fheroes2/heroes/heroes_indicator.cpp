@@ -28,6 +28,7 @@
 #include "morale.h"
 #include "heroes.h"
 #include "heroes_indicator.h"
+#include "icn.h"
 
 const char *MoraleString(int morale)
 {

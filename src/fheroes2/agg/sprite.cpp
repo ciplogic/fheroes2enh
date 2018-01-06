@@ -23,6 +23,7 @@
 #include "agg.h"
 #include "cursor.h"
 #include "display.h"
+#include "icn.h"
 
 bool SkipLocalAlpha(int icn)
 {

@@ -23,7 +23,6 @@
 #include "system.h"
 #ifdef WITH_NET
 
-#include <algorithm>
 #include "sdlnet.h"
 
 

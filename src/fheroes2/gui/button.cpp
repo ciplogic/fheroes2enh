@@ -28,6 +28,7 @@
 #include "button.h"
 #include "display.h"
 #include "localevent.h"
+#include "icn.h"
 
 enum
 {

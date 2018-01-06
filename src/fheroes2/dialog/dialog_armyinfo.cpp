@@ -35,6 +35,7 @@
 #include "world.h"
 #include "system.h"
 #include "tools.h"
+#include "icn.h"
 
 void DrawMonsterStats(const Point &, const Troop &);
 

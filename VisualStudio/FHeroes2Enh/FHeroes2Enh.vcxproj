@@ -89,8 +89,8 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;BUILD_RELEASE;WITH_AI=simple;WITH_IMAGE;WITH_MIXER;WITH_NET;NETWORK_ENABLE;WITH_TTF;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Cs-Oss\fheroes2enh\src\engine\serializer;C:\Cs-Oss\fheroes2enh\libs\libpng\include;C:\Cs-Oss\fheroes2enh\libs\zlib\include\;C:\Cs-Oss\fheroes2enh\src\engine\;C:\Cs-Oss\fheroes2enh\src\fheroes2\agg;C:\Cs-Oss\fheroes2enh\libs\SDL\include\SDL;C:\Cs-Oss\fheroes2enh\src\fheroes2\ai\simple\;C:\Cs-Oss\fheroes2enh\src\fheroes2\ai\;C:\Cs-Oss\fheroes2enh\src\fheroes2\army;C:\Cs-Oss\fheroes2enh\src\fheroes2\battle;C:\Cs-Oss\fheroes2enh\src\fheroes2\castle;C:\Cs-Oss\fheroes2enh\src\fheroes2\dialog;C:\Cs-Oss\fheroes2enh\src\fheroes2\game;C:\Cs-Oss\fheroes2enh\src\fheroes2\gui;C:\Cs-Oss\fheroes2enh\src\fheroes2\heroes;C:\Cs-Oss\fheroes2enh\src\fheroes2\image;C:\Cs-Oss\fheroes2enh\src\fheroes2\kingdom;C:\Cs-Oss\fheroes2enh\src\fheroes2\maps;C:\Cs-Oss\fheroes2enh\src\fheroes2\monster;C:\Cs-Oss\fheroes2enh\src\fheroes2\objects;C:\Cs-Oss\fheroes2enh\src\fheroes2\resource;C:\Cs-Oss\fheroes2enh\src\fheroes2\spell;C:\Cs-Oss\fheroes2enh\src\fheroes2\system;C:\Cs-Oss\fheroes2enh\src\fheroes2\pocketpc\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>c:\Cs-Oss\fheroes2enh\src\tools\;C:\Cs-Oss\fheroes2enh\src\engine\serializer;C:\Cs-Oss\fheroes2enh\libs\libpng\include;C:\Cs-Oss\fheroes2enh\libs\zlib\include\;C:\Cs-Oss\fheroes2enh\src\engine\;C:\Cs-Oss\fheroes2enh\src\fheroes2\agg;C:\Cs-Oss\fheroes2enh\libs\SDL\include\SDL;C:\Cs-Oss\fheroes2enh\src\fheroes2\ai\simple\;C:\Cs-Oss\fheroes2enh\src\fheroes2\ai\;C:\Cs-Oss\fheroes2enh\src\fheroes2\army;C:\Cs-Oss\fheroes2enh\src\fheroes2\battle;C:\Cs-Oss\fheroes2enh\src\fheroes2\castle;C:\Cs-Oss\fheroes2enh\src\fheroes2\dialog;C:\Cs-Oss\fheroes2enh\src\fheroes2\game;C:\Cs-Oss\fheroes2enh\src\fheroes2\gui;C:\Cs-Oss\fheroes2enh\src\fheroes2\heroes;C:\Cs-Oss\fheroes2enh\src\fheroes2\image;C:\Cs-Oss\fheroes2enh\src\fheroes2\kingdom;C:\Cs-Oss\fheroes2enh\src\fheroes2\maps;C:\Cs-Oss\fheroes2enh\src\fheroes2\monster;C:\Cs-Oss\fheroes2enh\src\fheroes2\objects;C:\Cs-Oss\fheroes2enh\src\fheroes2\resource;C:\Cs-Oss\fheroes2enh\src\fheroes2\spell;C:\Cs-Oss\fheroes2enh\src\fheroes2\system;C:\Cs-Oss\fheroes2enh\src\fheroes2\pocketpc\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <BufferSecurityCheck>false</BufferSecurityCheck>
@@ -130,7 +130,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);BUILD_RELEASE;WITH_AI=simple;WITH_IMAGE;WITH_MIXER;WITH_NET;WITH_TTF;NETWORK_ENABLE;_ITERATOR_DEBUG_LEVEL=0</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Cs-Oss\fheroes2enh\libs\libpng\include;C:\Cs-Oss\fheroes2enh\libs\zlib\include\;C:\Cs-Oss\fheroes2enh\src\engine\;C:\Cs-Oss\fheroes2enh\src\fheroes2\agg;C:\Cs-Oss\fheroes2enh\libs\SDL\include\SDL;C:\Cs-Oss\fheroes2enh\src\fheroes2\ai\simple\;C:\Cs-Oss\fheroes2enh\src\fheroes2\ai\;C:\Cs-Oss\fheroes2enh\src\fheroes2\army;C:\Cs-Oss\fheroes2enh\src\fheroes2\battle;C:\Cs-Oss\fheroes2enh\src\fheroes2\castle;C:\Cs-Oss\fheroes2enh\src\fheroes2\dialog;C:\Cs-Oss\fheroes2enh\src\fheroes2\game;C:\Cs-Oss\fheroes2enh\src\fheroes2\gui;C:\Cs-Oss\fheroes2enh\src\fheroes2\heroes;C:\Cs-Oss\fheroes2enh\src\fheroes2\image;C:\Cs-Oss\fheroes2enh\src\fheroes2\kingdom;C:\Cs-Oss\fheroes2enh\src\fheroes2\maps;C:\Cs-Oss\fheroes2enh\src\fheroes2\monster;C:\Cs-Oss\fheroes2enh\src\fheroes2\objects;C:\Cs-Oss\fheroes2enh\src\fheroes2\resource;C:\Cs-Oss\fheroes2enh\src\fheroes2\spell;C:\Cs-Oss\fheroes2enh\src\fheroes2\system;C:\Cs-Oss\fheroes2enh\src\fheroes2\pocketpc\;C:\Cs-Oss\fheroes2enh\src\engine\serializer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>c:\Cs-Oss\fheroes2enh\src\tools\;C:\Cs-Oss\fheroes2enh\libs\libpng\include;C:\Cs-Oss\fheroes2enh\libs\zlib\include\;C:\Cs-Oss\fheroes2enh\src\engine\;C:\Cs-Oss\fheroes2enh\src\fheroes2\agg;C:\Cs-Oss\fheroes2enh\libs\SDL\include\SDL;C:\Cs-Oss\fheroes2enh\src\fheroes2\ai\simple\;C:\Cs-Oss\fheroes2enh\src\fheroes2\ai\;C:\Cs-Oss\fheroes2enh\src\fheroes2\army;C:\Cs-Oss\fheroes2enh\src\fheroes2\battle;C:\Cs-Oss\fheroes2enh\src\fheroes2\castle;C:\Cs-Oss\fheroes2enh\src\fheroes2\dialog;C:\Cs-Oss\fheroes2enh\src\fheroes2\game;C:\Cs-Oss\fheroes2enh\src\fheroes2\gui;C:\Cs-Oss\fheroes2enh\src\fheroes2\heroes;C:\Cs-Oss\fheroes2enh\src\fheroes2\image;C:\Cs-Oss\fheroes2enh\src\fheroes2\kingdom;C:\Cs-Oss\fheroes2enh\src\fheroes2\maps;C:\Cs-Oss\fheroes2enh\src\fheroes2\monster;C:\Cs-Oss\fheroes2enh\src\fheroes2\objects;C:\Cs-Oss\fheroes2enh\src\fheroes2\resource;C:\Cs-Oss\fheroes2enh\src\fheroes2\spell;C:\Cs-Oss\fheroes2enh\src\fheroes2\system;C:\Cs-Oss\fheroes2enh\src\fheroes2\pocketpc\;C:\Cs-Oss\fheroes2enh\src\engine\serializer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
@@ -494,15 +494,7 @@
     <ClCompile Include="..\..\src\fheroes2\objects\objwatr.cpp" />
     <ClCompile Include="..\..\src\fheroes2\objects\objxloc.cpp" />
     <ClCompile Include="..\..\src\fheroes2\objects\trees.cpp" />
-    <ClCompile Include="..\..\src\fheroes2\pocketpc\pocketpc_armyinfo.cpp" />
-    <ClCompile Include="..\..\src\fheroes2\pocketpc\pocketpc_castle.cpp" />
     <ClCompile Include="..\..\src\fheroes2\pocketpc\pocketpc_dialog.cpp" />
-    <ClCompile Include="..\..\src\fheroes2\pocketpc\pocketpc_heroes.cpp" />
-    <ClCompile Include="..\..\src\fheroes2\pocketpc\pocketpc_kingdom.cpp" />
-    <ClCompile Include="..\..\src\fheroes2\pocketpc\pocketpc_mainmenu.cpp" />
-    <ClCompile Include="..\..\src\fheroes2\pocketpc\pocketpc_meeting.cpp" />
-    <ClCompile Include="..\..\src\fheroes2\pocketpc\pocketpc_selectscenario.cpp" />
-    <ClCompile Include="..\..\src\fheroes2\pocketpc\pocketpc_thievesguild.cpp" />
     <ClCompile Include="..\..\src\fheroes2\resource\artifact.cpp" />
     <ClCompile Include="..\..\src\fheroes2\resource\artifact_ultimate.cpp" />
     <ClCompile Include="..\..\src\fheroes2\resource\maps_text.cpp" />
@@ -513,7 +505,7 @@
     <ClCompile Include="..\..\src\fheroes2\system\gamedefs.cpp" />
     <ClCompile Include="..\..\src\fheroes2\system\players.cpp" />
     <ClCompile Include="..\..\src\fheroes2\system\settings.cpp" />
-    <ClCompile Include="..\..\src\fheroes2\test\test_monstersprite.cpp" />
+    <ClCompile Include="..\..\src\tools\palette_h2.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

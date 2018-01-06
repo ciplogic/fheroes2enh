@@ -142,9 +142,6 @@
     <Filter Include="Header Files\fheroes2\test">
       <UniqueIdentifier>ba389f12-d3ec-4860-9cac-0a3821a3b2fc</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\fheroes2\test">
-      <UniqueIdentifier>34eeff7d-e5b5-43fe-9e63-116f0641799a</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\tools">
       <UniqueIdentifier>31cd2fad-297b-48f9-8ffc-bcf933f85bbc</UniqueIdentifier>
     </Filter>
@@ -1118,31 +1115,7 @@
     <ClCompile Include="..\..\src\fheroes2\objects\trees.cpp">
       <Filter>Source Files\fheroes2\objects</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\fheroes2\pocketpc\pocketpc_armyinfo.cpp">
-      <Filter>Source Files\fheroes2\pocketpc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\fheroes2\pocketpc\pocketpc_castle.cpp">
-      <Filter>Source Files\fheroes2\pocketpc</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\fheroes2\pocketpc\pocketpc_dialog.cpp">
-      <Filter>Source Files\fheroes2\pocketpc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\fheroes2\pocketpc\pocketpc_heroes.cpp">
-      <Filter>Source Files\fheroes2\pocketpc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\fheroes2\pocketpc\pocketpc_kingdom.cpp">
-      <Filter>Source Files\fheroes2\pocketpc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\fheroes2\pocketpc\pocketpc_mainmenu.cpp">
-      <Filter>Source Files\fheroes2\pocketpc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\fheroes2\pocketpc\pocketpc_meeting.cpp">
-      <Filter>Source Files\fheroes2\pocketpc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\fheroes2\pocketpc\pocketpc_selectscenario.cpp">
-      <Filter>Source Files\fheroes2\pocketpc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\fheroes2\pocketpc\pocketpc_thievesguild.cpp">
       <Filter>Source Files\fheroes2\pocketpc</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\fheroes2\resource\artifact.cpp">
@@ -1175,9 +1148,6 @@
     <ClCompile Include="..\..\src\fheroes2\system\settings.cpp">
       <Filter>Source Files\fheroes2\system</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\fheroes2\test\test_monstersprite.cpp">
-      <Filter>Source Files\fheroes2\test</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\fheroes2\kingdom\color.cpp">
       <Filter>Source Files\fheroes2\kingdom</Filter>
     </ClCompile>
@@ -1192,6 +1162,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\engine\TimeUtills.cpp">
       <Filter>Source Files\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tools\palette_h2.cpp">
+      <Filter>Source Files\fheroes2\system</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

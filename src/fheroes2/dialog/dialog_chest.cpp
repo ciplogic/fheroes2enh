@@ -28,6 +28,7 @@
 #include "world.h"
 #include "game.h"
 #include "dialog.h"
+#include "icn.h"
 
 bool
 Dialog::SelectGoldOrExp(const string &header, const string &message, u32 gold, u32 expr, const Heroes &hero)

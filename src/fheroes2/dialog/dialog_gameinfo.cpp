@@ -32,6 +32,7 @@
 #include "dialog.h"
 #include "system.h"
 #include "tools.h"
+#include "icn.h"
 
 void Dialog::GameInfo()
 {

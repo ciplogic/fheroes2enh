@@ -27,7 +27,6 @@
 #include <utility>
 
 #include "gamedefs.h"
-#include "icn.h"
 #include "sprite.h"
 
 class ICNSprite : public std::pair<Surface, Surface> /* first: image with out alpha, second: shadow with alpha */

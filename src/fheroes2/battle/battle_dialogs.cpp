@@ -20,6 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
+#include "icn.h"
 #include "engine.h"
 #include "cursor.h"
 #include "settings.h"

@@ -28,6 +28,7 @@
 #include "heroes.h"
 #include "game.h"
 #include "dialog.h"
+#include "icn.h"
 
 void DialogPrimaryOnly(const string &name, const string &primary)
 {

@@ -27,23 +27,16 @@
 #include <fstream>
 #include <locale>
 
-#if defined(ANDROID)
-#include <clocale>
-#endif
 
 #include "SDL.h"
 #include "system.h"
 
 #if defined(WIN32)
 
-#include <windows.h>
-#include <shellapi.h>
+#include <Windows.h>
 #include <direct.h>
-#include <sys\stat.h>
-
 #endif
 
-#include <sys/stat.h>
 
 #if defined(WIN32) || defined(WIN64)
  // Copied from linux libc sys/stat.h:
@@ -53,6 +46,7 @@
 
 #if !defined(WIN32)
 
+#include <sys/stat.h>
 #include <unistd.h>
 #include <clocale>
 #include <utility>
@@ -218,7 +212,7 @@ const char *System::GetEnvironment(const char *name)
 int System::SetEnvironment(const char *name, const char *value)
 {
 #if defined(WIN32)
-    string str(string(name) + "=" + string(value));
+    std::string str(std::string(name) + "=" + std::string(value));
     // SDL 1.2.12 (char *)
     return SDL_putenv(const_cast<char *>(str.c_str()));
 #else
@@ -332,7 +326,7 @@ bool System::IsFile(const std::string &name, bool writable)
 }
 
 #ifdef WIN32
-bool dirExists(const string& dirName_in)
+bool dirExists(const std::string& dirName_in)
 {
 	DWORD ftyp = GetFileAttributesA(dirName_in.c_str());
 	if (ftyp == INVALID_FILE_ATTRIBUTES)

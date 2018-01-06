@@ -24,6 +24,7 @@
 #include <functional>
 
 #include "agg.h"
+#include "icn.h"
 #include "settings.h"
 #include "payment.h"
 #include "world.h"

@@ -35,6 +35,7 @@
 #include "m82.h"
 #include "mus.h"
 #include "bitmodes.h"
+#include "icn.h"
 
 void CastleRedrawTownName(const Castle &castle, const Point &dst);
 

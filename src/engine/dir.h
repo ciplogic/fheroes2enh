@@ -27,9 +27,9 @@
 
 #ifdef WIN32
 
-wstring s2ws(const string& str);
+std::wstring s2ws(const std::string& str);
 
-string ws2s(const wstring& wstr);
+std::string ws2s(const std::wstring& wstr);
 #endif
 
 struct ListFiles : std::vector<std::string>

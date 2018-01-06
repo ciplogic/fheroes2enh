@@ -39,6 +39,7 @@
 #include "profit.h"
 #include "m82.h"
 #include "rand.h"
+#include "icn.h"
 
 Castle::Castle() : race(Race::NONE), building(0), captain(*this), army(nullptr)
 {

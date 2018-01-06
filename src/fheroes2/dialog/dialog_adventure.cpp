@@ -30,6 +30,7 @@
 
 #include "system.h"
 #include "tools.h"
+#include "icn.h"
 
 int Dialog::AdventureOptions(bool enabledig)
 {

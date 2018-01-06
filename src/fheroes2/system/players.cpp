@@ -30,6 +30,7 @@
 #include "world.h"
 #include "maps_fileinfo.h"
 #include "settings.h"
+#include "icn.h"
 
 namespace
 {

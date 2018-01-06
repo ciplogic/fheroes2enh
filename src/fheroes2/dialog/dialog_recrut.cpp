@@ -28,6 +28,7 @@
 #include "world.h"
 #include "game.h"
 #include "dialog.h"
+#include "icn.h"
 
 void RedrawCurrentInfo(const Point &pos, u32 available, u32 result,
                        const payment_t &paymentMonster, const payment_t &paymentCosts, const Funds &funds,

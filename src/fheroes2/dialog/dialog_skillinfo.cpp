@@ -28,6 +28,7 @@
 #include "skill.h"
 #include "game.h"
 #include "dialog.h"
+#include "icn.h"
 
 void Dialog::SecondarySkillInfo(const Skill::Secondary &skill, const bool ok_button)
 {

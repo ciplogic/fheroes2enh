@@ -33,7 +33,7 @@
 #include "heroes_indicator.h"
 #include "army_bar.h"
 #include "statusbar.h"
-#include "pocketpc.h"
+#include "icn.h"
 
 /* readonly: false, fade: false */
 int Heroes::OpenDialog(bool readonly, bool fade)

@@ -21,6 +21,7 @@
  ***************************************************************************/
 
 #include "agg.h"
+#include "icn.h"
 #include "cursor.h"
 #include "settings.h"
 #include "race.h"

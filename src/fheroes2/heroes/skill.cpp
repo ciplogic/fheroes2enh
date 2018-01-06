@@ -37,6 +37,7 @@
 #include "ByteVectorReader.h"
 #include "game_static.h"
 #include "rand.h"
+#include "icn.h"
 
 namespace Skill
 {

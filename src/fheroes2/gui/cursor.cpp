@@ -24,6 +24,7 @@
 #include "settings.h"
 #include "cursor.h"
 #include "display.h"
+#include "icn.h"
 
 /* constructor */
 Cursor::Cursor() : theme(NONE), offset_x(0), offset_y(0)

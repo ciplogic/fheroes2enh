@@ -23,8 +23,7 @@
 #define H2BUTTON_H
 
 #include "gamedefs.h"
-
-class Surface;
+#include "surface.h"
 
 class Button : public Rect
 {

@@ -28,6 +28,7 @@
 #include "dialog.h"
 #include "display.h"
 #include "localevent.h"
+#include "icn.h"
 
 int Dialog::FileOptions()
 {

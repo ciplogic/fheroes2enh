@@ -25,6 +25,7 @@
 #include "morale.h"
 #include "race.h"
 #include "agg.h"
+#include "icn.h"
 
 Captain::Captain(Castle &cstl) : HeroBase(CAPTAIN, cstl.GetRace()), home(cstl)
 {

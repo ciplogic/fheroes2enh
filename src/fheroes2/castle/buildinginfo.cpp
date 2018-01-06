@@ -33,6 +33,7 @@
 #include "statusbar.h"
 #include "buildinginfo.h"
 #include "ColorTable.h"
+#include "icn.h"
 
 #include "system.h"
 #include "tools.h"

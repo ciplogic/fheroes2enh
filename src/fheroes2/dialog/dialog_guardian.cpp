@@ -30,6 +30,7 @@
 #include "world.h"
 #include "game.h"
 #include "dialog.h"
+#include "icn.h"
 
 class ArmyCell : public Rect
 {

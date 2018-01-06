@@ -29,7 +29,6 @@
 
 #include <functional>
 #include <algorithm>
-#include "game.h"
 #include "game_interface.h"
 #include "heroes.h"
 #include "castle.h"

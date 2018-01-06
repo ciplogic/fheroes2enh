@@ -25,6 +25,7 @@
 #include "settings.h"
 #include "dialog.h"
 #include "display.h"
+#include "icn.h"
 
 #define BUTTON_HEIGHT   40
 #define BOX_WIDTH       306

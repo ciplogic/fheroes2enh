@@ -32,6 +32,7 @@
 #include "dialog.h"
 #include "dialog_selectitems.h"
 #include "rand.h"
+#include "icn.h"
 
 enum
 {

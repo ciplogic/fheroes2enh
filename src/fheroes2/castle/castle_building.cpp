@@ -29,6 +29,7 @@
 #include "text.h"
 #include "game.h"
 #include "localevent.h"
+#include "icn.h"
 
 void CastleRedrawTownName(const Castle &, const Point &);
 
