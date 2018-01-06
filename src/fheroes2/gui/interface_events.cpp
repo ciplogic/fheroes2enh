@@ -34,6 +34,10 @@
 #include "game_over.h"
 #include "pocketpc.h"
 #include "m82.h"
+#include "audio.h"
+#include "audio_mixer.h"
+#include "audio_music.h"
+#include "audio_cdrom.h"
 
 void Interface::Basic::ShowPathOrStartMoveHero(Heroes *hero, s32 dst_index)
 {

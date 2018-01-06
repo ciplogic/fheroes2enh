@@ -28,6 +28,11 @@
 
 #include "engine.h"
 
+#include "audio.h"
+#include "audio_mixer.h"
+#include "audio_music.h"
+#include "audio_cdrom.h"
+
 #define TAG_FORM    0x464F524D
 #define TAG_XDIR    0x58444952
 #define    TAG_INFO    0x494E464F

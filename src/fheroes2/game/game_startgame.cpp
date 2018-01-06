@@ -23,6 +23,10 @@
 #include <vector>
 #include <algorithm>
 #include "mus.h"
+#include "audio.h"
+#include "audio_mixer.h"
+#include "audio_music.h"
+#include "audio_cdrom.h"
 
 #ifdef AI
 #undef AI

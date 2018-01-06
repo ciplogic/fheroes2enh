@@ -34,6 +34,10 @@
 #include "system.h"
 #include "tools.h"
 #include "rand.h"
+#include "audio.h"
+#include "audio_mixer.h"
+#include "audio_music.h"
+#include "audio_cdrom.h"
 
 void LoadZLogo();
 

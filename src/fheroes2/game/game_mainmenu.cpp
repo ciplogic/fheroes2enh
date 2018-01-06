@@ -31,6 +31,10 @@
 #include "game.h"
 #include "localevent.h"
 #include "mus.h"
+#include "audio.h"
+#include "audio_mixer.h"
+#include "audio_music.h"
+#include "audio_cdrom.h"
 
 #define NEWGAME_DEFAULT 1
 #define LOADGAME_DEFAULT 5

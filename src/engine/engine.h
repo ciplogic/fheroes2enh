@@ -27,11 +27,6 @@
 #include "translations.h"
 
 
-#include "audio.h"
-#include "audio_mixer.h"
-#include "audio_music.h"
-#include "audio_cdrom.h"
-
 #define INIT_VIDEO    SDL_INIT_VIDEO
 #define INIT_AUDIO    SDL_INIT_AUDIO
 #define INIT_TIMER    SDL_INIT_TIMER

@@ -33,6 +33,10 @@
 
 #include "system.h"
 #include "tools.h"
+#include "audio.h"
+#include "audio_mixer.h"
+#include "audio_music.h"
+#include "audio_cdrom.h"
 
 #ifdef WIN32
 #define WINDOWS

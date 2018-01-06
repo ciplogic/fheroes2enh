@@ -31,6 +31,10 @@
 #include "world.h"
 #include "game.h"
 #include "mus.h"
+#include "audio.h"
+#include "audio_mixer.h"
+#include "audio_music.h"
+#include "audio_cdrom.h"
 
 int Game::NewStandard()
 {
