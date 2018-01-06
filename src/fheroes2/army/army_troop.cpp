@@ -27,6 +27,7 @@
 #include "game.h"
 #include "army.h"
 #include "heroes_base.h"
+#include "tools.h"
 
 Troop::Troop() : Monster(UNKNOWN), count(0)
 {

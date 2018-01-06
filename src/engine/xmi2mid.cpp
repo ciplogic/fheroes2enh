@@ -40,6 +40,7 @@
 #define TAG_MTRK    0x4D54726B
 
 #include "serialize.h"
+#include "system.h"
 
 struct pack_t : public pair<u32, u32> /* delta offset */
 {

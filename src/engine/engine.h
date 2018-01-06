@@ -23,17 +23,17 @@
 #define H2ENGINE_H
 
 #include "types.h"
+#include "font.h"
 #include "sprites.h"
-#include "display.h"
 #include "localevent.h"
 #include "error.h"
 #include "rect.h"
 #include "surface.h"
 #include "rand.h"
-#include "font.h"
-#include "tools.h"
 #include "translations.h"
+
 #include "system.h"
+#include "tools.h"
 
 #include "audio.h"
 #include "audio_mixer.h"

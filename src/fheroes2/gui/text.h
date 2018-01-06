@@ -26,6 +26,8 @@
 #include <string>
 #include <vector>
 #include "gamedefs.h"
+#include "display.h"
+#include "sprites.h"
 
 namespace Font
 {

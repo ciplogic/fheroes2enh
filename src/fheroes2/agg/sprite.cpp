@@ -22,6 +22,7 @@
 
 #include "agg.h"
 #include "cursor.h"
+#include "display.h"
 
 bool SkipLocalAlpha(int icn)
 {

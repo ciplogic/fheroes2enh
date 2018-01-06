@@ -27,6 +27,7 @@
 #include "settings.h"
 #include "game_io.h"
 #include "game.h"
+#include "display.h"
 
 int Game::LoadCampain()
 {

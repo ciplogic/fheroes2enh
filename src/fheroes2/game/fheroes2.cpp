@@ -31,6 +31,7 @@
 //#include "test.h"
 #include "images_pack.h"
 #include "zzlib.h"
+#include "display.h"
 
 void LoadZLogo();
 

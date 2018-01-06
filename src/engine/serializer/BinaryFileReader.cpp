@@ -51,16 +51,16 @@ u32 BinaryFileReader::getLE32()
     return result;
 }
 
-vector<u8> BinaryFileReader::getRaw(u32 size) const
+std::vector<u8> BinaryFileReader::getRaw(u32 size) const
 {
     up<u8> data(new u8[size]);
     fread(data.get(), 1, size, _file);
-    vector<u8> res;
+    std::vector<u8> res;
     res.assign(data.get(), data.get() + size);
     return res;
 }
 
-string BinaryFileReader::toString(int size) const
+std::string BinaryFileReader::toString(int size) const
 {
     up<char> data(new char[size]);
     fread(data.get(), 1, size, _file);

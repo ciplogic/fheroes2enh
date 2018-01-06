@@ -25,6 +25,8 @@
 #include <vector>
 #include "gamedefs.h"
 #include "ByteVectorReader.h"
+#include "interface_itemsbar.h"
+#include "display.h"
 
 class Spell;
 
@@ -259,7 +261,6 @@ public:
     string String() const;
 };
 
-#include "interface_itemsbar.h"
 
 class ArtifactsBar : public Interface::ItemsActionBar<Artifact>
 {

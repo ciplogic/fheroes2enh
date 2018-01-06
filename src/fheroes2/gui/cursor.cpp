@@ -23,6 +23,7 @@
 #include "agg.h"
 #include "settings.h"
 #include "cursor.h"
+#include "display.h"
 
 /* constructor */
 Cursor::Cursor() : theme(NONE), offset_x(0), offset_y(0)
@@ -81,12 +82,11 @@ void Cursor::Redraw(s32 x, s32 y)
 {
     Cursor &cur = Get();
 
-    if (cur.isVisible())
-    {
-        cur.Move(x, y);
+    if (!cur.isVisible())
+        return;
+    cur.Move(x, y);
 
-        Display::Get().Flip();
-    }
+    Display::Get().Flip();
 }
 
 /* move cursor */

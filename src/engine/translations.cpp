@@ -25,6 +25,7 @@
 
 #include "engine.h"
 #include "serialize.h"
+#include "system.h"
 
 struct chunk
 {

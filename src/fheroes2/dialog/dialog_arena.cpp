@@ -28,6 +28,7 @@
 #include "skill.h"
 #include "game.h"
 #include "dialog.h"
+#include "sprite.h"
 
 void InfoSkillClear(const Rect &, const Rect &, const Rect &, const Rect &);
 
