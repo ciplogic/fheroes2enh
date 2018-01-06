@@ -615,14 +615,14 @@ u32 GetTradeCosts(int rs_from, int rs_to, bool tradingPost)
                 // sale uncostly
                 case Resource::GOLD:
                     if (1 == markets) return SALE_UNCOSTLY1;
-                    else if (2 == markets) return SALE_UNCOSTLY2;
-                    else if (3 == markets) return SALE_UNCOSTLY3;
-                    else if (4 == markets) return SALE_UNCOSTLY4;
-                    else if (5 == markets) return SALE_UNCOSTLY5;
-                    else if (6 == markets) return SALE_UNCOSTLY6;
-                    else if (7 == markets) return SALE_UNCOSTLY7;
-                    else if (8 == markets) return SALE_UNCOSTLY8;
-                    else if (8 < markets) return SALE_UNCOSTLY9;
+                    if (2 == markets) return SALE_UNCOSTLY2;
+                    if (3 == markets) return SALE_UNCOSTLY3;
+                    if (4 == markets) return SALE_UNCOSTLY4;
+                    if (5 == markets) return SALE_UNCOSTLY5;
+                    if (6 == markets) return SALE_UNCOSTLY6;
+                    if (7 == markets) return SALE_UNCOSTLY7;
+                    if (8 == markets) return SALE_UNCOSTLY8;
+                    if (8 < markets) return SALE_UNCOSTLY9;
                     break;
 
                     // change uncostly to costly
@@ -631,28 +631,28 @@ u32 GetTradeCosts(int rs_from, int rs_to, bool tradingPost)
                 case Resource::CRYSTAL:
                 case Resource::GEMS:
                     if (1 == markets) return UNCOSTLY_COSTLY1;
-                    else if (2 == markets) return UNCOSTLY_COSTLY2;
-                    else if (3 == markets) return UNCOSTLY_COSTLY3;
-                    else if (4 == markets) return UNCOSTLY_COSTLY4;
-                    else if (5 == markets) return UNCOSTLY_COSTLY5;
-                    else if (6 == markets) return UNCOSTLY_COSTLY6;
-                    else if (7 == markets) return UNCOSTLY_COSTLY7;
-                    else if (8 == markets) return UNCOSTLY_COSTLY8;
-                    else if (8 < markets) return UNCOSTLY_COSTLY9;
+                    if (2 == markets) return UNCOSTLY_COSTLY2;
+                    if (3 == markets) return UNCOSTLY_COSTLY3;
+                    if (4 == markets) return UNCOSTLY_COSTLY4;
+                    if (5 == markets) return UNCOSTLY_COSTLY5;
+                    if (6 == markets) return UNCOSTLY_COSTLY6;
+                    if (7 == markets) return UNCOSTLY_COSTLY7;
+                    if (8 == markets) return UNCOSTLY_COSTLY8;
+                    if (8 < markets) return UNCOSTLY_COSTLY9;
                     break;
 
                     // change uncostly to uncostly
                 case Resource::WOOD:
                 case Resource::ORE:
                     if (1 == markets) return COSTLY_COSTLY1;
-                    else if (2 == markets) return COSTLY_COSTLY2;
-                    else if (3 == markets) return COSTLY_COSTLY3;
-                    else if (4 == markets) return COSTLY_COSTLY4;
-                    else if (5 == markets) return COSTLY_COSTLY5;
-                    else if (6 == markets) return COSTLY_COSTLY6;
-                    else if (7 == markets) return COSTLY_COSTLY7;
-                    else if (8 == markets) return COSTLY_COSTLY8;
-                    else if (8 < markets) return COSTLY_COSTLY9;
+                    if (2 == markets) return COSTLY_COSTLY2;
+                    if (3 == markets) return COSTLY_COSTLY3;
+                    if (4 == markets) return COSTLY_COSTLY4;
+                    if (5 == markets) return COSTLY_COSTLY5;
+                    if (6 == markets) return COSTLY_COSTLY6;
+                    if (7 == markets) return COSTLY_COSTLY7;
+                    if (8 == markets) return COSTLY_COSTLY8;
+                    if (8 < markets) return COSTLY_COSTLY9;
                     break;
             }
             break;
@@ -668,14 +668,14 @@ u32 GetTradeCosts(int rs_from, int rs_to, bool tradingPost)
                 // sale costly
                 case Resource::GOLD:
                     if (1 == markets) return SALE_COSTLY1;
-                    else if (2 == markets) return SALE_COSTLY2;
-                    else if (3 == markets) return SALE_COSTLY3;
-                    else if (4 == markets) return SALE_COSTLY4;
-                    else if (5 == markets) return SALE_COSTLY5;
-                    else if (6 == markets) return SALE_COSTLY6;
-                    else if (7 == markets) return SALE_COSTLY7;
-                    else if (8 == markets) return SALE_COSTLY8;
-                    else if (8 < markets) return SALE_COSTLY9;
+                    if (2 == markets) return SALE_COSTLY2;
+                    if (3 == markets) return SALE_COSTLY3;
+                    if (4 == markets) return SALE_COSTLY4;
+                    if (5 == markets) return SALE_COSTLY5;
+                    if (6 == markets) return SALE_COSTLY6;
+                    if (7 == markets) return SALE_COSTLY7;
+                    if (8 == markets) return SALE_COSTLY8;
+                    if (8 < markets) return SALE_COSTLY9;
                     break;
 
                     // change costly to costly
@@ -684,28 +684,28 @@ u32 GetTradeCosts(int rs_from, int rs_to, bool tradingPost)
                 case Resource::CRYSTAL:
                 case Resource::GEMS:
                     if (1 == markets) return COSTLY_COSTLY1;
-                    else if (2 == markets) return COSTLY_COSTLY2;
-                    else if (3 == markets) return COSTLY_COSTLY3;
-                    else if (4 == markets) return COSTLY_COSTLY4;
-                    else if (5 == markets) return COSTLY_COSTLY5;
-                    else if (6 == markets) return COSTLY_COSTLY6;
-                    else if (7 == markets) return COSTLY_COSTLY7;
-                    else if (8 == markets) return COSTLY_COSTLY8;
-                    else if (8 < markets) return COSTLY_COSTLY9;
+                    if (2 == markets) return COSTLY_COSTLY2;
+                    if (3 == markets) return COSTLY_COSTLY3;
+                    if (4 == markets) return COSTLY_COSTLY4;
+                    if (5 == markets) return COSTLY_COSTLY5;
+                    if (6 == markets) return COSTLY_COSTLY6;
+                    if (7 == markets) return COSTLY_COSTLY7;
+                    if (8 == markets) return COSTLY_COSTLY8;
+                    if (8 < markets) return COSTLY_COSTLY9;
                     break;
 
                     // change costly to uncostly
                 case Resource::WOOD:
                 case Resource::ORE:
                     if (1 == markets) return COSTLY_UNCOSTLY1;
-                    else if (2 == markets) return COSTLY_UNCOSTLY2;
-                    else if (3 == markets) return COSTLY_UNCOSTLY3;
-                    else if (4 == markets) return COSTLY_UNCOSTLY4;
-                    else if (5 == markets) return COSTLY_UNCOSTLY5;
-                    else if (6 == markets) return COSTLY_UNCOSTLY6;
-                    else if (7 == markets) return COSTLY_UNCOSTLY7;
-                    else if (8 == markets) return COSTLY_UNCOSTLY8;
-                    else if (8 < markets) return COSTLY_UNCOSTLY9;
+                    if (2 == markets) return COSTLY_UNCOSTLY2;
+                    if (3 == markets) return COSTLY_UNCOSTLY3;
+                    if (4 == markets) return COSTLY_UNCOSTLY4;
+                    if (5 == markets) return COSTLY_UNCOSTLY5;
+                    if (6 == markets) return COSTLY_UNCOSTLY6;
+                    if (7 == markets) return COSTLY_UNCOSTLY7;
+                    if (8 == markets) return COSTLY_UNCOSTLY8;
+                    if (8 < markets) return COSTLY_UNCOSTLY9;
                     break;
             }
             break;
@@ -724,28 +724,28 @@ u32 GetTradeCosts(int rs_from, int rs_to, bool tradingPost)
                 case Resource::CRYSTAL:
                 case Resource::GEMS:
                     if (1 == markets) return BUY_COSTLY1;
-                    else if (2 == markets) return BUY_COSTLY2;
-                    else if (3 == markets) return BUY_COSTLY3;
-                    else if (4 == markets) return BUY_COSTLY4;
-                    else if (5 == markets) return BUY_COSTLY5;
-                    else if (6 == markets) return BUY_COSTLY6;
-                    else if (7 == markets) return BUY_COSTLY7;
-                    else if (8 == markets) return BUY_COSTLY8;
-                    else if (8 < markets) return BUY_COSTLY9;
+                    if (2 == markets) return BUY_COSTLY2;
+                    if (3 == markets) return BUY_COSTLY3;
+                    if (4 == markets) return BUY_COSTLY4;
+                    if (5 == markets) return BUY_COSTLY5;
+                    if (6 == markets) return BUY_COSTLY6;
+                    if (7 == markets) return BUY_COSTLY7;
+                    if (8 == markets) return BUY_COSTLY8;
+                    if (8 < markets) return BUY_COSTLY9;
                     break;
 
                     // buy uncostly
                 case Resource::WOOD:
                 case Resource::ORE:
                     if (1 == markets) return BUY_UNCOSTLY1;
-                    else if (2 == markets) return BUY_UNCOSTLY2;
-                    else if (3 == markets) return BUY_UNCOSTLY3;
-                    else if (4 == markets) return BUY_UNCOSTLY4;
-                    else if (5 == markets) return BUY_UNCOSTLY5;
-                    else if (6 == markets) return BUY_UNCOSTLY6;
-                    else if (7 == markets) return BUY_UNCOSTLY7;
-                    else if (8 == markets) return BUY_UNCOSTLY8;
-                    else if (8 < markets) return BUY_UNCOSTLY9;
+                    if (2 == markets) return BUY_UNCOSTLY2;
+                    if (3 == markets) return BUY_UNCOSTLY3;
+                    if (4 == markets) return BUY_UNCOSTLY4;
+                    if (5 == markets) return BUY_UNCOSTLY5;
+                    if (6 == markets) return BUY_UNCOSTLY6;
+                    if (7 == markets) return BUY_UNCOSTLY7;
+                    if (8 == markets) return BUY_UNCOSTLY8;
+                    if (8 < markets) return BUY_UNCOSTLY9;
                     break;
             }
             break;

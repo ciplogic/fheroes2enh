@@ -855,6 +855,7 @@ ICNSprite AGG::RenderICNSprite(int icn, u32 index)
 
     while (true)
     {
+		auto cur = *buf;
         // 0x00 - end line
         if (0 == *buf)
         {
@@ -872,6 +873,7 @@ ICNSprite AGG::RenderICNSprite(int icn, u32 index)
                 sf1.DrawPoint(pt, GetPaletteColor(*buf));
                 ++pt.x;
                 ++buf;
+
             }
         } else
             // 0x80 - end data
@@ -890,10 +892,11 @@ ICNSprite AGG::RenderICNSprite(int icn, u32 index)
         {
             ++buf;
             c = *buf % 4 ? *buf % 4 : *(++buf);
+
             if (sf1.depth() == 8) // skip alpha
             {
-                while (c--)
-                { ++pt.x; }
+				pt.x += c;
+				c = 0;
             } else
             {
                 if (!sf2.isValid()) sf2.Set(sz.w, sz.h, true);

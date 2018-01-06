@@ -180,10 +180,7 @@ int Game::NewGame()
     buttonCancelGame.Draw();
     buttonSettings.Draw();
 
-    if (false)
-        buttonBattleGame.SetDisable(true);
-    else
-        buttonBattleGame.Draw();
+    buttonBattleGame.Draw();
 
     cursor.Show();
     display.Flip();
@@ -235,8 +232,6 @@ int Game::NewMulti()
 
     if (!(conf.GameType(TYPE_BATTLEONLY)))
         conf.SetGameType(TYPE_STANDARD);
-
-    if (false) return PocketPC::NewMulti();
 
     // cursor
     Cursor &cursor = Cursor::Get();

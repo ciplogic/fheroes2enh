@@ -80,13 +80,12 @@ void Mixer::Init()
 
 void Mixer::Quit()
 {
-    if(SDL::SubSystem(SDL_INIT_AUDIO) && valid)
-    {
+    if(!SDL::SubSystem(SDL_INIT_AUDIO) || !valid)
+        return;
     Music::Reset();
     Mixer::Reset();
     valid = false;
     Mix_CloseAudio();
-    }
 }
 
 void Mixer::SetChannels(u8 num)
@@ -124,30 +123,28 @@ int Mixer::Play(chunk_t* sample, int channel, bool loop)
 
 int Mixer::Play(const char* file, int channel, bool loop)
 {
-    if(valid)
+    if(!valid)
     {
+        return -1;
+    }
     chunk_t* sample = LoadWAV(file);
-    if(sample)
-    {
-        Mix_ChannelFinished(FreeChannel);
-        return Play(sample, channel, loop);
-    }
-    }
-    return -1;
+    if(!sample)
+        return -1;
+    Mix_ChannelFinished(FreeChannel);
+    return Play(sample, channel, loop);
 }
 
 int Mixer::Play(const u8* ptr, u32 size, int channel, bool loop)
 {
-    if(valid && ptr)
+    if(!valid || !ptr)
     {
+        return -1;
+    }
     chunk_t* sample = LoadWAV(ptr, size);
-    if(sample)
-    {
-        Mix_ChannelFinished(FreeChannel);
-        return Play(sample, channel, loop);
-    }
-    }
-    return -1;
+    if(!sample)
+        return -1;
+    Mix_ChannelFinished(FreeChannel);
+    return Play(sample, channel, loop);
 }
 
 u16 Mixer::MaxVolume()

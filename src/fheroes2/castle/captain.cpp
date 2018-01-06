@@ -65,11 +65,11 @@ int Captain::GetMorale() const
 
     // result
     if (result < Morale::AWFUL) return Morale::TREASON;
-    else if (result < Morale::POOR) return Morale::AWFUL;
-    else if (result < Morale::NORMAL) return Morale::POOR;
-    else if (result < Morale::GOOD) return Morale::NORMAL;
-    else if (result < Morale::GREAT) return Morale::GOOD;
-    else if (result < Morale::BLOOD) return Morale::GREAT;
+    if (result < Morale::POOR) return Morale::AWFUL;
+    if (result < Morale::NORMAL) return Morale::POOR;
+    if (result < Morale::GOOD) return Morale::NORMAL;
+    if (result < Morale::GREAT) return Morale::GOOD;
+    if (result < Morale::BLOOD) return Morale::GREAT;
 
     return Morale::BLOOD;
 }
@@ -83,11 +83,11 @@ int Captain::GetLuck() const
 
     // result
     if (result < Luck::AWFUL) return Luck::CURSED;
-    else if (result < Luck::BAD) return Luck::AWFUL;
-    else if (result < Luck::NORMAL) return Luck::BAD;
-    else if (result < Luck::GOOD) return Luck::NORMAL;
-    else if (result < Luck::GREAT) return Luck::GOOD;
-    else if (result < Luck::IRISH) return Luck::GREAT;
+    if (result < Luck::BAD) return Luck::AWFUL;
+    if (result < Luck::NORMAL) return Luck::BAD;
+    if (result < Luck::GOOD) return Luck::NORMAL;
+    if (result < Luck::GREAT) return Luck::GOOD;
+    if (result < Luck::IRISH) return Luck::GREAT;
 
     return Luck::IRISH;
 }

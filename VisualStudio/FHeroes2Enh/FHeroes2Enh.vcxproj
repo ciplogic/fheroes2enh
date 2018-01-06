@@ -23,7 +23,7 @@
     <ProjectGuid>{44565893-C329-4A99-AEDE-0167E3565389}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>FHeroes2Enh</RootNamespace>
-    <WindowsTargetPlatformVersion>7.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -35,7 +35,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140_xp</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -149,7 +149,7 @@
       <AdditionalDependencies>SDL.lib;libpng.lib;SDL_mixer.lib;SDL_image.lib;SDL_net.lib;SDL_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\Cs-Oss\fheroes2enh\libs\SDL\lib;C:\Cs-Oss\fheroes2enh\libs\libpng\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>...\..\..\..\$(TargetName)$(TargetExt)</OutputFile>
-      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

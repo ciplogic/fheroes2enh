@@ -79,8 +79,6 @@ int PocketPC::SelectScenario()
             case mapsize_t::XLARGE:
                 xlarge.push_back(cur);
                 break;
-            default:
-                continue;
         }
     }
 

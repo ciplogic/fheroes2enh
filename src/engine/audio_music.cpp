@@ -92,32 +92,30 @@ void Music::Play(Mix_Music* mix, u32 id, bool loop)
 
 void Music::Play(const std::vector<u8> & v, bool loop)
 {
-    if(Mixer::isValid() && !v.empty())
-    {
+    if(!Mixer::isValid() || v.empty())
+        return;
     u32 id = CheckSum(v);
-        SDL_RWops* rwops = SDL_RWFromConstMem(&v[0], v.size());
+    SDL_RWops* rwops = SDL_RWFromConstMem(&v[0], v.size());
 
-        Mix_Music* mix = Mix_LoadMUS_RW(rwops);
+    Mix_Music* mix = Mix_LoadMUS_RW(rwops);
 
-        SDL_FreeRW(rwops);
-        Music::Play(mix, id, loop);
-    }
+    SDL_FreeRW(rwops);
+    Music::Play(mix, id, loop);
 }
 
 void Music::Play(const std::string & file, bool loop)
 {
-    if(Mixer::isValid())
-    {
+    if(!Mixer::isValid())
+        return;
     u32 id = CheckSum(file);
     Mix_Music* mix = Mix_LoadMUS(file.c_str());
 
     if(! mix)
     {
-            ERROR(Mix_GetError());
+        ERROR(Mix_GetError());
     }
     else
         Music::Play(mix, id, loop);
-    }
 }
 
 void Music::SetFadeIn(int f)

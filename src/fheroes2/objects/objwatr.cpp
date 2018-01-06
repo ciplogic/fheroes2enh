@@ -27,22 +27,17 @@
 
 int ObjWat2::GetPassable(u32 index)
 {
-#if (__GNUC__ == 4 && __GNUC_MINOR__ == 4)
-    // fixed: array subscript is above array bounds
-    const u8 disabled[] = { 11, 12, 19, 22, 255 };
-#else
     const u8 disabled[] = {11, 12, 19, 22};
-#endif
     const u8 restricted[] = {2, 20};
 
     if (isShadow(index))
         return DIRECTION_ALL;
-    else if (10 == index)
+    if (10 == index)
         return Direction::CENTER | Direction::TOP | Direction::LEFT | Direction::TOP_LEFT;
-    else if (22 == index)
+    if (22 == index)
         return DIRECTION_CENTER_ROW | Direction::BOTTOM | Direction::BOTTOM_LEFT;
-    else if (isAction(index) ||
-             ARRAY_COUNT_END(disabled) != find(disabled, ARRAY_COUNT_END(disabled), index))
+    if (isAction(index) ||
+        ARRAY_COUNT_END(disabled) != find(disabled, ARRAY_COUNT_END(disabled), index))
         return 0;
 
     return ARRAY_COUNT_END(restricted) != find(restricted, ARRAY_COUNT_END(restricted), index) ?
@@ -51,12 +46,7 @@ int ObjWat2::GetPassable(u32 index)
 
 int ObjWatr::GetPassable(u32 index)
 {
-#if (__GNUC__ == 4 && __GNUC_MINOR__ == 4)
-    // fixed: array subscript is above array bounds
-    const u8 disabled[] = { 11, 12, 19, 22, 255 };
-#else
     const u8 disabled[] = {11, 12, 19, 22};
-#endif
     const u8 restricted[] = {69, 182, 183, 185, 186, 187, 248};
 
     if (isShadow(index))
@@ -81,12 +71,7 @@ bool ObjWatr::isAction(u32 index)
 
 bool ObjWatr::isShadow(u32 index)
 {
-#if (__GNUC__ == 4 && __GNUC_MINOR__ == 4)
-    // fixed: array subscript is above array bounds
-    const u8 shadows [] = { 12, 38, 52, 55, 118, 166, 188, 240, 255 };
-#else
     const u8 shadows[] = {12, 38, 52, 55, 118, 166, 188, 240};
-#endif
 
     return ARRAY_COUNT_END(shadows) != find(shadows, ARRAY_COUNT_END(shadows), index);
 }

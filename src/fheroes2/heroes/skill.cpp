@@ -681,19 +681,19 @@ int Skill::SecondaryGetWeightSkillFromRace(int race, int skill)
     if (!ptr)
         return 0;
     if (skill == Secondary::PATHFINDING) return ptr->mature_secondary.pathfinding;
-    else if (skill == Secondary::ARCHERY) return ptr->mature_secondary.archery;
-    else if (skill == Secondary::LOGISTICS) return ptr->mature_secondary.logistics;
-    else if (skill == Secondary::SCOUTING) return ptr->mature_secondary.scouting;
-    else if (skill == Secondary::DIPLOMACY) return ptr->mature_secondary.diplomacy;
-    else if (skill == Secondary::NAVIGATION) return ptr->mature_secondary.navigation;
-    else if (skill == Secondary::LEADERSHIP) return ptr->mature_secondary.leadership;
-    else if (skill == Secondary::WISDOM) return ptr->mature_secondary.wisdom;
-    else if (skill == Secondary::MYSTICISM) return ptr->mature_secondary.mysticism;
-    else if (skill == Secondary::LUCK) return ptr->mature_secondary.luck;
-    else if (skill == Secondary::BALLISTICS) return ptr->mature_secondary.ballistics;
-    else if (skill == Secondary::EAGLEEYE) return ptr->mature_secondary.eagleeye;
-    else if (skill == Secondary::NECROMANCY) return ptr->mature_secondary.necromancy;
-    else if (skill == Secondary::ESTATES) return ptr->mature_secondary.estates;
+    if (skill == Secondary::ARCHERY) return ptr->mature_secondary.archery;
+    if (skill == Secondary::LOGISTICS) return ptr->mature_secondary.logistics;
+    if (skill == Secondary::SCOUTING) return ptr->mature_secondary.scouting;
+    if (skill == Secondary::DIPLOMACY) return ptr->mature_secondary.diplomacy;
+    if (skill == Secondary::NAVIGATION) return ptr->mature_secondary.navigation;
+    if (skill == Secondary::LEADERSHIP) return ptr->mature_secondary.leadership;
+    if (skill == Secondary::WISDOM) return ptr->mature_secondary.wisdom;
+    if (skill == Secondary::MYSTICISM) return ptr->mature_secondary.mysticism;
+    if (skill == Secondary::LUCK) return ptr->mature_secondary.luck;
+    if (skill == Secondary::BALLISTICS) return ptr->mature_secondary.ballistics;
+    if (skill == Secondary::EAGLEEYE) return ptr->mature_secondary.eagleeye;
+    if (skill == Secondary::NECROMANCY) return ptr->mature_secondary.necromancy;
+    if (skill == Secondary::ESTATES) return ptr->mature_secondary.estates;
 
     return 0;
 }
@@ -852,101 +852,94 @@ void PrimarySkillsBar::RedrawBackground(const Rect &pos, Surface &dstsf)
 
 void PrimarySkillsBar::RedrawItem(int &skill, const Rect &pos, Surface &dstsf)
 {
-    if (Skill::Primary::UNKNOWN != skill)
+    if (Skill::Primary::UNKNOWN == skill)
+        return;
+    if (use_mini_sprite)
     {
-        if (use_mini_sprite)
-        {
-            const Sprite &backSprite = AGG::GetICN(ICN::SWAPWIN, 0);
-            const int ww = 32;
-            Text text("", Font::SMALL);
-            const Point dstpt(pos.x + (pos.w - ww) / 2, pos.y + (pos.h - ww) / 2);
+        const Sprite &backSprite = AGG::GetICN(ICN::SWAPWIN, 0);
+        const int ww = 32;
+        Text text("", Font::SMALL);
+        const Point dstpt(pos.x + (pos.w - ww) / 2, pos.y + (pos.h - ww) / 2);
 
+        switch (skill)
+        {
+        case Skill::Primary::ATTACK:
+            backSprite.Blit(Rect(217, 52, ww, ww), dstpt, dstsf);
+            if (hero) text.Set(GetString(hero->GetAttack()));
+            break;
+
+        case Skill::Primary::DEFENSE:
+            backSprite.Blit(Rect(217, 85, ww, ww), dstpt, dstsf);
+            if (hero) text.Set(GetString(hero->GetDefense()));
+            break;
+
+        case Skill::Primary::POWER:
+            backSprite.Blit(Rect(217, 118, ww, ww), dstpt, dstsf);
+            if (hero) text.Set(GetString(hero->GetPower()));
+            break;
+
+        case Skill::Primary::KNOWLEDGE:
+            backSprite.Blit(Rect(217, 151, ww, ww), dstpt, dstsf);
+            if (hero) text.Set(GetString(hero->GetKnowledge()));
+            break;
+
+        default:
+            break;
+        }
+
+        if (hero) text.Blit(pos.x + (pos.w + toff.x - text.w()) / 2, pos.y + pos.h + toff.y, dstsf);
+    } else
+    {
+        const Sprite &sprite = AGG::GetICN(ICN::PRIMSKIL, skill - 1);
+        sprite.Blit(pos.x + (pos.w - sprite.w()) / 2, pos.y + (pos.h - sprite.h()) / 2, dstsf);
+
+        Text text(Skill::Primary::String(skill), Font::SMALL);
+        text.Blit(pos.x + (pos.w - text.w()) / 2, pos.y + 3, dstsf);
+
+        if (hero)
+        {
             switch (skill)
             {
-                case Skill::Primary::ATTACK:
-                    backSprite.Blit(Rect(217, 52, ww, ww), dstpt, dstsf);
-                    if (hero) text.Set(GetString(hero->GetAttack()));
-                    break;
+            case Skill::Primary::ATTACK:
+                text.Set(GetString(hero->GetAttack()), Font::BIG);
+                break;
 
-                case Skill::Primary::DEFENSE:
-                    backSprite.Blit(Rect(217, 85, ww, ww), dstpt, dstsf);
-                    if (hero) text.Set(GetString(hero->GetDefense()));
-                    break;
+            case Skill::Primary::DEFENSE:
+                text.Set(GetString(hero->GetDefense()), Font::BIG);
+                break;
 
-                case Skill::Primary::POWER:
-                    backSprite.Blit(Rect(217, 118, ww, ww), dstpt, dstsf);
-                    if (hero) text.Set(GetString(hero->GetPower()));
-                    break;
+            case Skill::Primary::POWER:
+                text.Set(GetString(hero->GetPower()), Font::BIG);
+                break;
 
-                case Skill::Primary::KNOWLEDGE:
-                    backSprite.Blit(Rect(217, 151, ww, ww), dstpt, dstsf);
-                    if (hero) text.Set(GetString(hero->GetKnowledge()));
-                    break;
+            case Skill::Primary::KNOWLEDGE:
+                text.Set(GetString(hero->GetKnowledge()), Font::BIG);
+                break;
 
-                default:
-                    break;
+            default:
+                break;
             }
 
-            if (hero) text.Blit(pos.x + (pos.w + toff.x - text.w()) / 2, pos.y + pos.h + toff.y, dstsf);
-        } else
-        {
-            const Sprite &sprite = AGG::GetICN(ICN::PRIMSKIL, skill - 1);
-            sprite.Blit(pos.x + (pos.w - sprite.w()) / 2, pos.y + (pos.h - sprite.h()) / 2, dstsf);
-
-            Text text(Skill::Primary::String(skill), Font::SMALL);
-            text.Blit(pos.x + (pos.w - text.w()) / 2, pos.y + 3, dstsf);
-
-            if (hero)
-            {
-                switch (skill)
-                {
-                    case Skill::Primary::ATTACK:
-                        text.Set(GetString(hero->GetAttack()), Font::BIG);
-                        break;
-
-                    case Skill::Primary::DEFENSE:
-                        text.Set(GetString(hero->GetDefense()), Font::BIG);
-                        break;
-
-                    case Skill::Primary::POWER:
-                        text.Set(GetString(hero->GetPower()), Font::BIG);
-                        break;
-
-                    case Skill::Primary::KNOWLEDGE:
-                        text.Set(GetString(hero->GetKnowledge()), Font::BIG);
-                        break;
-
-                    default:
-                        break;
-                }
-
-                text.Blit(pos.x + (pos.w - text.w()) / 2, pos.y + pos.h - text.h() - 3, dstsf);
-            }
+            text.Blit(pos.x + (pos.w - text.w()) / 2, pos.y + pos.h - text.h() - 3, dstsf);
         }
     }
 }
 
 bool PrimarySkillsBar::ActionBarSingleClick(const Point &cursor, int &skill, const Rect &pos)
 {
-    if (Skill::Primary::UNKNOWN != skill)
-    {
-        Message(Skill::Primary::String(skill), Skill::Primary::StringDescription(skill, hero), Font::BIG,
-                        Dialog::OK);
-        return true;
-    }
-
-    return false;
+    if (Skill::Primary::UNKNOWN == skill)
+        return false;
+    Message(Skill::Primary::String(skill), Skill::Primary::StringDescription(skill, hero), Font::BIG,
+            Dialog::OK);
+    return true;
 }
 
 bool PrimarySkillsBar::ActionBarPressRight(const Point &cursor, int &skill, const Rect &pos)
 {
-    if (Skill::Primary::UNKNOWN != skill)
-    {
-        Dialog::Message(Skill::Primary::String(skill), Skill::Primary::StringDescription(skill, hero), Font::BIG);
-        return true;
-    }
-
-    return false;
+    if (Skill::Primary::UNKNOWN == skill)
+        return false;
+    Dialog::Message(Skill::Primary::String(skill), Skill::Primary::StringDescription(skill, hero), Font::BIG);
+    return true;
 }
 
 bool PrimarySkillsBar::ActionBarCursor(const Point &cursor, int &skill, const Rect &pos)
@@ -992,25 +985,24 @@ void SecondarySkillsBar::RedrawBackground(const Rect &pos, Surface &dstsf)
 
 void SecondarySkillsBar::RedrawItem(Skill::Secondary &skill, const Rect &pos, Surface &dstsf)
 {
-    if (skill.isValid())
-    {
-        const Sprite &sprite = use_mini_sprite ?
+    if (!skill.isValid())
+        return;
+    const Sprite &sprite = use_mini_sprite ?
                                AGG::GetICN(ICN::MINISS, skill.GetIndexSprite2()) : AGG::GetICN(ICN::SECSKILL,
                                                                                                skill.GetIndexSprite1());
-        sprite.Blit(pos.x + (pos.w - sprite.w()) / 2, pos.y + (pos.h - sprite.h()) / 2, dstsf);
+    sprite.Blit(pos.x + (pos.w - sprite.w()) / 2, pos.y + (pos.h - sprite.h()) / 2, dstsf);
 
-        if (use_mini_sprite)
-        {
-            Text text(GetString(skill.Level()), Font::SMALL);
-            text.Blit(pos.x + (pos.w - text.w()) - 3, pos.y + pos.h - 12, dstsf);
-        } else
-        {
-            Text text(Skill::Secondary::String(skill.Skill()), Font::SMALL);
-            text.Blit(pos.x + (pos.w - text.w()) / 2, pos.y + 3, dstsf);
+    if (use_mini_sprite)
+    {
+        Text text(GetString(skill.Level()), Font::SMALL);
+        text.Blit(pos.x + (pos.w - text.w()) - 3, pos.y + pos.h - 12, dstsf);
+    } else
+    {
+        Text text(Skill::Secondary::String(skill.Skill()), Font::SMALL);
+        text.Blit(pos.x + (pos.w - text.w()) / 2, pos.y + 3, dstsf);
 
-            text.Set(Skill::Level::String(skill.Level()));
-            text.Blit(pos.x + (pos.w - text.w()) / 2, pos.y + 50, dstsf);
-        }
+        text.Set(Skill::Level::String(skill.Level()));
+        text.Blit(pos.x + (pos.w - text.w()) / 2, pos.y + 50, dstsf);
     }
 }
 
@@ -1020,15 +1012,17 @@ bool SecondarySkillsBar::ActionBarSingleClick(const Point &cursor, Skill::Second
     {
         Dialog::SecondarySkillInfo(skill, true);
         return true;
-    } else if (can_change)
+    } 
+    if (!can_change)
     {
-        Skill::Secondary alt = Dialog::SelectSecondarySkill();
+        return false;
+    }
+    Skill::Secondary alt = Dialog::SelectSecondarySkill();
 
-        if (alt.isValid())
-        {
-            skill = alt;
-            return true;
-        }
+    if (alt.isValid())
+    {
+        skill = alt;
+        return true;
     }
 
     return false;
@@ -1036,16 +1030,13 @@ bool SecondarySkillsBar::ActionBarSingleClick(const Point &cursor, Skill::Second
 
 bool SecondarySkillsBar::ActionBarPressRight(const Point &cursor, Skill::Secondary &skill, const Rect &pos)
 {
-    if (skill.isValid())
-    {
-        if (can_change)
-            skill.Reset();
-        else
-            Dialog::SecondarySkillInfo(skill, false);
-        return true;
-    }
-
-    return false;
+    if (!skill.isValid())
+        return false;
+    if (can_change)
+        skill.Reset();
+    else
+        Dialog::SecondarySkillInfo(skill, false);
+    return true;
 }
 
 bool SecondarySkillsBar::ActionBarCursor(const Point &cursor, Skill::Secondary &skill, const Rect &pos)
