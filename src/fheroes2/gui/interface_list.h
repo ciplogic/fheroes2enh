@@ -32,6 +32,7 @@
 #include "cursor.h"
 #include "sprite.h"
 #include "gamedefs.h"
+#include "localevent.h"
 
 namespace Interface
 {

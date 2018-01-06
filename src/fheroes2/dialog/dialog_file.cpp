@@ -26,6 +26,8 @@
 #include "settings.h"
 #include "game.h"
 #include "dialog.h"
+#include "display.h"
+#include "localevent.h"
 
 int Dialog::FileOptions()
 {
