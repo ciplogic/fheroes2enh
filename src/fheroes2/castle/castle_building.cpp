@@ -331,7 +331,7 @@ void CastleRedrawBuildingExtended(const Castle &castle, const Point &dst_pt, u32
         // boat
         if (castle.PresentBoat())
         {
-            const int icn2 = castle.GetICNBoat(castle.GetRace());
+            const int icn2 = Castle::GetICNBoat(castle.GetRace());
 
             const Sprite &sprite40 = AGG::GetICN(icn2, 0);
             CastleDialog::RedrawBuildingSpriteToArea(sprite40, dst_pt.x + sprite40.x(), dst_pt.y + sprite40.y(), max);

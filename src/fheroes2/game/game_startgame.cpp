@@ -74,7 +74,7 @@ int Game::StartGame()
 
 void Game::DialogPlayers(int color, string str)
 {
-	const Player* player = Settings::Get().GetPlayers().Get(color);
+	const Player* player = Players::Get(color);
 	StringReplace(str, "%{color}", (player ? player->GetName() : Color::String(color)));
 
 	const Sprite& border = AGG::GetICN(ICN::BRCREST, 6);
@@ -675,7 +675,7 @@ int Interface::Basic::HumanTurn(bool isload)
 
 		// autosave
 		if (conf.ExtGameAutosaveOn() && conf.ExtGameAutosaveBeginOfDay())
-			Game::Save(System::ConcatePath(conf.GetSaveDir(), "autosave.sav"));
+			Game::Save(System::ConcatePath(Settings::GetSaveDir(), "autosave.sav"));
 	}
 
 	// check game over
@@ -981,7 +981,7 @@ int Interface::Basic::HumanTurn(bool isload)
 		}
 
 		if (conf.ExtGameAutosaveOn() && !conf.ExtGameAutosaveBeginOfDay())
-			Game::Save(System::ConcatePath(conf.GetSaveDir(), "autosave.sav"));
+			Game::Save(System::ConcatePath(Settings::GetSaveDir(), "autosave.sav"));
 	}
 
 	return res;

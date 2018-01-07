@@ -2321,7 +2321,7 @@ void ActionToCaptureObject(Heroes &hero, u32 obj, s32 dst_index)
             // update abandone mine
             if (obj == MP2::OBJ_ABANDONEDMINE)
             {
-                tile.UpdateAbandoneMineSprite(tile);
+                Maps::Tiles::UpdateAbandoneMineSprite(tile);
                 hero.SetMapsObject(MP2::OBJ_MINES);
             }
 
@@ -2924,7 +2924,7 @@ void ActionToTreeKnowledge(Heroes &hero, u32 obj, s32 dst_index)
         {
             hero.GetKingdom().OddFundsResource(funds);
             hero.SetVisited(dst_index);
-            hero.IncreaseExperience(hero.GetExperienceFromLevel(hero.GetLevel()) - hero.GetExperience());
+            hero.IncreaseExperience(Heroes::GetExperienceFromLevel(hero.GetLevel()) - hero.GetExperience());
         }
     }
 }

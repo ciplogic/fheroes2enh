@@ -406,9 +406,7 @@ bool Surface::Load(const std::string &fn)
 
 bool Surface::Save(const std::string &fn) const
 {
-    int res = 0;
-
-    res = IMG_SavePNG(fn.c_str(), surface, -1);
+    int res = IMG_SavePNG(fn.c_str(), surface, -1);
 
     if (0 != res)
     {

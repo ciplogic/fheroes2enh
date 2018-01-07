@@ -310,7 +310,7 @@ private:
     string name;
 
     MageGuild mageguild;
-    u32 dwelling[CASTLEMAXMONSTER];
+    u32 dwelling[CASTLEMAXMONSTER] {};
     Army army;
 };
 

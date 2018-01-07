@@ -647,13 +647,13 @@ void Battle::Only::StartBattle()
     players.Init(player1.GetColor() | player2.GetColor());
     world.InitKingdoms();
 
-    players.SetPlayerRace(player1.GetColor(), player1.GetRace());
-    players.SetPlayerRace(player2.GetColor(), player2.GetRace());
+    Players::SetPlayerRace(player1.GetColor(), player1.GetRace());
+    Players::SetPlayerRace(player2.GetColor(), player2.GetRace());
 
     conf.SetCurrentColor(player1.GetColor());
 
-    players.SetPlayerControl(player1.GetColor(), player1.GetControl());
-    players.SetPlayerControl(player2.GetColor(), player2.GetControl());
+    Players::SetPlayerControl(player1.GetColor(), player1.GetControl());
+    Players::SetPlayerControl(player2.GetColor(), player2.GetControl());
 
     if (hero1)
     {

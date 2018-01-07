@@ -108,7 +108,7 @@ Sprite GetActualSpriteBuilding(const Castle &castle, u32 build)
             break;
     }
 
-    return AGG::GetICN(castle.GetICNBuilding(build, castle.GetRace()), index);
+    return AGG::GetICN(Castle::GetICNBuilding(build, castle.GetRace()), index);
 }
 
 building_t GetCurrentFlash(const Castle &castle, CastleDialog::CacheBuildings &cache)

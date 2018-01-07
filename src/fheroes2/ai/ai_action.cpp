@@ -831,7 +831,7 @@ void AIToCaptureObject(Heroes &hero, u32 obj, s32 dst_index)
             // update abandone mine
             if (obj == MP2::OBJ_ABANDONEDMINE)
             {
-                tile.UpdateAbandoneMineSprite(tile);
+                Maps::Tiles::UpdateAbandoneMineSprite(tile);
                 hero.SetMapsObject(MP2::OBJ_MINES);
             }
 
@@ -1902,15 +1902,14 @@ bool AIHeroesShowAnimation(const Heroes &hero)
     if (conf.GameType() & Game::TYPE_HOTSEAT)
     {
         const Colors vcolors(Players::HumanColors());
-
         for (int vcolor : vcolors)
         {
-            const Player *player = conf.GetPlayers().Get(vcolor);
+            const Player *player = Players::Get(vcolor);
             if (player) colors |= player->GetFriends();
         }
     } else
     {
-        const Player *player = conf.GetPlayers().Get(Players::HumanColors());
+        const Player *player = Players::Get(Players::HumanColors());
         if (player) colors = player->GetFriends();
     }
 
