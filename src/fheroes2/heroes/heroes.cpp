@@ -647,11 +647,11 @@ int Heroes::GetMoraleWithModificators(string *strs) const
 
     // result
     if (result < Morale::AWFUL) return Morale::TREASON;
-    else if (result < Morale::POOR) return Morale::AWFUL;
-    else if (result < Morale::NORMAL) return Morale::POOR;
-    else if (result < Morale::GOOD) return Morale::NORMAL;
-    else if (result < Morale::GREAT) return Morale::GOOD;
-    else if (result < Morale::BLOOD) return Morale::GREAT;
+    if (result < Morale::POOR) return Morale::AWFUL;
+    if (result < Morale::NORMAL) return Morale::POOR;
+    if (result < Morale::GOOD) return Morale::NORMAL;
+    if (result < Morale::GREAT) return Morale::GOOD;
+    if (result < Morale::BLOOD) return Morale::GREAT;
 
     return Morale::BLOOD;
 }
@@ -676,11 +676,11 @@ int Heroes::GetLuckWithModificators(string *strs) const
     result += ObjectVisitedModifiersResult(MDF_LUCK, objs, ARRAY_COUNT(objs), *this, strs);
 
     if (result < Luck::AWFUL) return Luck::CURSED;
-    else if (result < Luck::BAD) return Luck::AWFUL;
-    else if (result < Luck::NORMAL) return Luck::BAD;
-    else if (result < Luck::GOOD) return Luck::NORMAL;
-    else if (result < Luck::GREAT) return Luck::GOOD;
-    else if (result < Luck::IRISH) return Luck::GREAT;
+    if (result < Luck::BAD) return Luck::AWFUL;
+    if (result < Luck::NORMAL) return Luck::BAD;
+    if (result < Luck::GOOD) return Luck::NORMAL;
+    if (result < Luck::GREAT) return Luck::GOOD;
+    if (result < Luck::IRISH) return Luck::GREAT;
 
     return Luck::IRISH;
 }
@@ -857,7 +857,13 @@ bool Heroes::isVisited(const Maps::Tiles &tile, Visit::type_t type) const
 
     if (Visit::GLOBAL == type) return GetKingdom().isVisited(index, object);
 
-    return visit_object.end() != find(visit_object.begin(), visit_object.end(), IndexObject(index, object));
+	IndexObject valueToFind(index, object);
+	auto findIt = std::find_if(visit_object.begin(), visit_object.end(), 
+		[&](const IndexObject& item) {
+		return item.Value == valueToFind.Value;
+		});
+	
+    return visit_object.end() != findIt;
 }
 
 /* return true if object visited */
@@ -1760,7 +1766,7 @@ string Heroes::String() const
         os << "visit objects   : ";
         for (list<IndexObject>::const_iterator
                      it = visit_object.begin(); it != visit_object.end(); ++it)
-            os << MP2::StringObject((*it).second) << "(" << (*it).first << "), ";
+            os << MP2::StringObject((*it).Value.second) << "(" << (*it).Value.first << "), ";
         os << endl;
     }
 

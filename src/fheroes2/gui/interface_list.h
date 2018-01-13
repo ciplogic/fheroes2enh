@@ -226,7 +226,7 @@ namespace Interface
         {
 			int curIndex = cur - content->begin();
 			int topIndex = top - content->begin();
-            if (topIndex > curIndex || topIndex + maxItems <= curIndex)
+            if (topIndex > curIndex || ((int)(topIndex + maxItems)) <= curIndex)
             {
                 top = cur + maxItems > content->end() ? content->end() - maxItems : cur;
                 if (top < content->begin()) top = content->begin();
@@ -325,7 +325,7 @@ namespace Interface
 
             if (content->size())
             {
-                float offset = (le.GetMouseCursor().y - rtAreaItems.y) * maxItems / rtAreaItems.h;
+                double offset = (double)((le.GetMouseCursor().y - rtAreaItems.y) * maxItems / rtAreaItems.h);
 
                 if (offset >= 0)
                 {
@@ -335,7 +335,7 @@ namespace Interface
                 	int topIndex = top - content->begin();
 					int posIndex = topIndex+ (int)offset;
 
-                    if (posIndex >= 0 && posIndex < content->size())
+                    if (posIndex >= 0 && posIndex < (int)content->size())
                     {
                         const s32 posy = rtAreaItems.y + (posIndex - topIndex) * rtAreaItems.h / maxItems;
 

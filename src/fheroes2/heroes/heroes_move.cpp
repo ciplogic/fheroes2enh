@@ -511,7 +511,8 @@ bool Heroes::MoveStep(bool fast)
             MoveStep(*this, index_from, index_to, true);
 
         return true;
-    } else if (0 == sprite_index % 9)
+    } 
+	if (0 == sprite_index % 9)
     {
         if (index_to == index_dst && isNeedStayFrontObject(*this, world.GetTiles(index_to)))
         {

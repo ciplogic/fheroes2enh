@@ -331,8 +331,8 @@ bool ArmyBar::ActionBarCursor(const Point &cursor, ArmyTroop &troop, const Rect 
             Cursor::Get().Show();
             Display::Get().Flip();
             DELAY(1);
-        };
-        ArmyTroop *troop_r = GetItem(le.GetMouseReleaseLeft());
+        }
+	    ArmyTroop *troop_r = GetItem(le.GetMouseReleaseLeft());
 
         if (troop_r && !troop_r->isValid())
         {

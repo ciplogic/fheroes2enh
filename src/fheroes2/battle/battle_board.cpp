@@ -45,10 +45,10 @@ namespace Battle
     bool WideDifficultDirection(int where, int whereto)
     {
         return
-                ((TOP_LEFT == where) && (whereto & (LEFT | TOP_RIGHT))) ||
-                ((TOP_RIGHT == where) && (whereto & (RIGHT | TOP_LEFT))) ||
-                ((BOTTOM_LEFT == where) && (whereto & (LEFT | BOTTOM_RIGHT))) ||
-                ((BOTTOM_RIGHT == where) && (whereto & (RIGHT | BOTTOM_LEFT)));
+            ((TOP_LEFT == where) && (whereto & (LEFT | TOP_RIGHT))) ||
+            ((TOP_RIGHT == where) && (whereto & (RIGHT | TOP_LEFT))) ||
+            ((BOTTOM_LEFT == where) && (whereto & (LEFT | BOTTOM_RIGHT))) ||
+            ((BOTTOM_RIGHT == where) && (whereto & (RIGHT | BOTTOM_LEFT)));
     }
 }
 

@@ -15,7 +15,7 @@ namespace FileUtils
     }
 
     long GetFileTime(std::string filename);
-};
+}
 
 
 #endif //FHEROES2_FILEUTILS_H

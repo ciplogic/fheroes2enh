@@ -46,36 +46,33 @@ int Cursor::Themes()
 /* set cursor theme */
 bool Cursor::SetThemes(int name, bool force)
 {
-    if (force || theme != name)
-    {
-        if (isVisible()) Hide();
-        theme = name;
+    if (!force && theme == name)
+		return false;
+	if (isVisible()) Hide();
+	theme = name;
 
-        switch (0xF000 & name)
-        {
-            case 0x3000:
-                Set(AGG::GetICN(ICN::SPELCO, 0xFF & name), true);
-                break;
+	switch (0xF000 & name)
+	{
+	case 0x3000:
+		Set(AGG::GetICN(ICN::SPELCO, 0xFF & name), true);
+		break;
 
-            case 0x2000:
-                Set(AGG::GetICN(ICN::CMSECO, 0xFF & name), true);
-                break;
+	case 0x2000:
+		Set(AGG::GetICN(ICN::CMSECO, 0xFF & name), true);
+		break;
 
-            case 0x1000:
-                Set(AGG::GetICN(ICN::ADVMCO, 0xFF & name), true);
-                break;
+	case 0x1000:
+		Set(AGG::GetICN(ICN::ADVMCO, 0xFF & name), true);
+		break;
 
-            default:
-                // default Cursor::POINTER
-                Set(AGG::GetICN(ICN::ADVMCO, 0), true);
-                break;
-        }
+	default:
+		// default Cursor::POINTER
+		Set(AGG::GetICN(ICN::ADVMCO, 0), true);
+		break;
+	}
 
-        SetOffset(name);
-        return true;
-    }
-
-    return false;
+	SetOffset(name);
+	return true;
 }
 
 /* redraw cursor wrapper for local event */

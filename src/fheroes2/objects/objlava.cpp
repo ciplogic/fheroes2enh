@@ -29,7 +29,7 @@ int ObjLav2::GetPassable(u32 index)
 {
     if (isShadow(index))
         return DIRECTION_ALL;
-    else if (isAction(index))
+    if (isAction(index))
         return 0;
 
     return DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW;
@@ -42,12 +42,7 @@ bool ObjLav2::isAction(u32 index)
 
 bool ObjLav2::isShadow(u32 index)
 {
-#if (__GNUC__ == 4 && __GNUC_MINOR__ == 4)
-    // fixed: array subscript is above array bounds
-    const u8 shadows[] = { 0, 7, 14, 29, 33, 44, 55, 78, 255 };
-#else
     const u8 shadows[] = {0, 7, 14, 29, 33, 44, 55, 78};
-#endif
     return ARRAY_COUNT_END(shadows) != std::find(shadows, ARRAY_COUNT_END(shadows), index);
 }
 
@@ -55,7 +50,7 @@ int ObjLav3::GetPassable(u32 index)
 {
     if (isShadow(index))
         return DIRECTION_ALL;
-    else if (isAction(index))
+    if (isAction(index))
         return 0;
 
     return DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW;

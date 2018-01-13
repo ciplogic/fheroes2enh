@@ -389,10 +389,34 @@ bool LocalEvent::HandleEvents(bool delay)
 
     ResetModes(MOUSE_MOTION);
     ResetModes(KEY_PRESSED);
+	std::vector<SDL_Event> eventList;
 
-    while (SDL_PollEvent(&event))
-    {
-        switch (event.type)
+	while (SDL_PollEvent(&event))
+	{
+		eventList.push_back(event);
+	}
+	std::vector<SDL_Event> eventListCleared;
+	int lastPosMouse = -1;
+	for (auto& event : eventList)
+	{
+		if (event.type == SDL_MOUSEMOTION)
+		{
+			if (lastPosMouse == -1)
+			{
+				lastPosMouse = eventListCleared.size();
+				eventListCleared.push_back(event);
+
+				continue;
+			}
+			continue;
+		}
+		eventListCleared.push_back(event);
+	}
+
+	for (auto& event : eventListCleared)
+
+	{
+		switch (event.type)
         {
 
             case SDL_ACTIVEEVENT:

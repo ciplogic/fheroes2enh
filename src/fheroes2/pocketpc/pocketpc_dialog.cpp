@@ -83,11 +83,11 @@ u32 PocketPC::GetCursorAttackDialog(const Point &dst, int allow)
     while (le.HandleEvents() && !le.MouseClickLeft());
 
     if ((allow & Battle::BOTTOM_LEFT) && (rt_tright & le.GetMouseCursor())) return Cursor::SWORD_TOPRIGHT;
-    else if ((allow & Battle::LEFT) && (rt_right & le.GetMouseCursor())) return Cursor::SWORD_RIGHT;
-    else if ((allow & Battle::TOP_LEFT) && (rt_bright & le.GetMouseCursor())) return Cursor::SWORD_BOTTOMRIGHT;
-    else if ((allow & Battle::BOTTOM_RIGHT) && (rt_tleft & le.GetMouseCursor())) return Cursor::SWORD_TOPLEFT;
-    else if ((allow & Battle::RIGHT) && (rt_left & le.GetMouseCursor())) return Cursor::SWORD_LEFT;
-    else if ((allow & Battle::TOP_RIGHT) && (rt_bleft & le.GetMouseCursor())) return Cursor::SWORD_BOTTOMLEFT;
+    if ((allow & Battle::LEFT) && (rt_right & le.GetMouseCursor())) return Cursor::SWORD_RIGHT;
+    if ((allow & Battle::TOP_LEFT) && (rt_bright & le.GetMouseCursor())) return Cursor::SWORD_BOTTOMRIGHT;
+    if ((allow & Battle::BOTTOM_RIGHT) && (rt_tleft & le.GetMouseCursor())) return Cursor::SWORD_TOPLEFT;
+    if ((allow & Battle::RIGHT) && (rt_left & le.GetMouseCursor())) return Cursor::SWORD_LEFT;
+    if ((allow & Battle::TOP_RIGHT) && (rt_bleft & le.GetMouseCursor())) return Cursor::SWORD_BOTTOMLEFT;
 
     return Cursor::WAR_INFO;
 }

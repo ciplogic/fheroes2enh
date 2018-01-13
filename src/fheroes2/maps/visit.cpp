@@ -24,13 +24,13 @@
 #include "visit.h"
 
 bool Visit::isDayLife(const IndexObject &visit)
-{ return MP2::isDayLife(visit.second); }
+{ return MP2::isDayLife(visit.Value.second); }
 
 bool Visit::isWeekLife(const IndexObject &visit)
-{ return MP2::isWeekLife(visit.second); }
+{ return MP2::isWeekLife(visit.Value.second); }
 
 bool Visit::isMonthLife(const IndexObject &visit)
-{ return MP2::isMonthLife(visit.second); }
+{ return MP2::isMonthLife(visit.Value.second); }
 
 bool Visit::isBattleLife(const IndexObject &visit)
-{ return MP2::isBattleLife(visit.second); }
+{ return MP2::isBattleLife(visit.Value.second); }

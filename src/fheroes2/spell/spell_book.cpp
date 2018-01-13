@@ -55,7 +55,7 @@ bool SpellBookSortingSpell(const Spell &spell1, const Spell &spell2)
             (string(spell1.GetName()) < string(spell2.GetName())));
 }
 
-Spell SpellBook::Open(const HeroBase &hero, int filt, bool canselect) const
+Spell SpellBook::Open(const HeroBase &hero, int filter, bool canselect) const
 {
     if (!hero.HaveSpellBook())
     {
@@ -71,8 +71,8 @@ Spell SpellBook::Open(const HeroBase &hero, int filt, bool canselect) const
     const Sprite &r_list = AGG::GetICN(ICN::BOOK, 0);
     const Sprite &l_list = AGG::GetICN(ICN::BOOK, 0, true);
 
-    int filter = filt;
-    SpellStorage spells2 = SetFilter(filter, &hero);
+    int filterLocal = filter;
+    SpellStorage spells2 = SetFilter(filterLocal, &hero);
 
     if (canselect && spells2.empty())
     {
@@ -110,7 +110,7 @@ Spell SpellBook::Open(const HeroBase &hero, int filt, bool canselect) const
     Rects coords;
     coords.reserve(SPELL_PER_PAGE * 2);
 
-    SpellBookRedrawLists(spells2, coords, current_index, pos, hero.GetSpellPoints(), filt, hero);
+    SpellBookRedrawLists(spells2, coords, current_index, pos, hero.GetSpellPoints(), filter, hero);
     bool redraw = false;
 
     cursor.Show();
@@ -139,17 +139,17 @@ Spell SpellBook::Open(const HeroBase &hero, int filt, bool canselect) const
             Message("", str, Font::BIG, Dialog::OK);
             cursor.Show();
             display.Flip();
-        } else if (le.MouseClickLeft(advn_rt) && filter != ADVN && filt != CMBT)
+        } else if (le.MouseClickLeft(advn_rt) && filterLocal != ADVN && filter != CMBT)
         {
-            filter = ADVN;
+            filterLocal = ADVN;
             current_index = 0;
-            spells2 = SetFilter(filter, &hero);
+            spells2 = SetFilter(filterLocal, &hero);
             redraw = true;
-        } else if (le.MouseClickLeft(cmbt_rt) && filter != CMBT && filt != ADVN)
+        } else if (le.MouseClickLeft(cmbt_rt) && filterLocal != CMBT && filter != ADVN)
         {
-            filter = CMBT;
+            filterLocal = CMBT;
             current_index = 0;
-            spells2 = SetFilter(filter, &hero);
+            spells2 = SetFilter(filterLocal, &hero);
             redraw = true;
         } else if (le.MouseClickLeft(clos_rt) ||
                    HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
@@ -211,7 +211,7 @@ Spell SpellBook::Open(const HeroBase &hero, int filt, bool canselect) const
         if (redraw)
         {
             cursor.Hide();
-            SpellBookRedrawLists(spells2, coords, current_index, pos, hero.GetSpellPoints(), filt, hero);
+            SpellBookRedrawLists(spells2, coords, current_index, pos, hero.GetSpellPoints(), filter, hero);
             cursor.Show();
             display.Flip();
             redraw = false;

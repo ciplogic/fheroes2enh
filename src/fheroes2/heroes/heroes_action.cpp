@@ -2133,7 +2133,7 @@ void ActionToTeleports(Heroes &hero, s32 index_from)
         // lose battle
         if (hero.isFreeman())
             return;
-		else if (!other_hero->isFreeman())
+		if (!other_hero->isFreeman())
 		{
 		}
     }

@@ -482,7 +482,7 @@ int Interface::Basic::GetCursorFocusHeroes(const Heroes& from_hero, const Maps::
 	default:
 		if (from_hero.Modes(Heroes::GUARDIAN))
 			return Cursor::POINTER;
-		else if (MP2::isGroundObject(tile.GetObject()))
+		if (MP2::isGroundObject(tile.GetObject()))
 		{
 			bool protection = (MP2::isPickupObject(tile.GetObject())
 				                   ? false

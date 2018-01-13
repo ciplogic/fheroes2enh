@@ -300,12 +300,12 @@ int Monster::GetLuck() const
 int Monster::GetRace() const
 {
     if (UNKNOWN == id) return Race::NONE;
-    else if (GOBLIN > id) return Race::KNGT;
-    else if (SPRITE > id) return Race::BARB;
-    else if (CENTAUR > id) return Race::SORC;
-    else if (HALFLING > id) return Race::WRLK;
-    else if (SKELETON > id) return Race::WZRD;
-    else if (ROGUE > id) return Race::NECR;
+    if (GOBLIN > id) return Race::KNGT;
+    if (SPRITE > id) return Race::BARB;
+    if (CENTAUR > id) return Race::SORC;
+    if (HALFLING > id) return Race::WRLK;
+    if (SKELETON > id) return Race::WZRD;
+    if (ROGUE > id) return Race::NECR;
 
     return Race::NONE;
 }
@@ -1542,14 +1542,11 @@ payment_t Monster::GetUpgradeCost() const
 
 u32 Monster::GetCountFromHitPoints(const Monster &mons, u32 hp)
 {
-    if (hp)
-    {
-        const u32 hp1 = Monster::GetHitPoints(mons);
-        const u32 count = hp / hp1;
-        return (count * hp1) < hp ? count + 1 : count;
-    }
-
-    return 0;
+    if (!hp)
+		return 0;
+	const u32 hp1 = Monster::GetHitPoints(mons);
+	const u32 count = hp / hp1;
+	return (count * hp1) < hp ? count + 1 : count;
 }
 
 MonsterStaticData &MonsterStaticData::Get()

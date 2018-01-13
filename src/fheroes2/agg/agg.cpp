@@ -81,7 +81,7 @@ namespace AGG
 
         const FAT &Fat(const string &key);
 
-        const vector<u8> Read(const string &str);
+	    vector<u8> Read(const string &str);
 
     private:
         string filename;
@@ -188,9 +188,9 @@ namespace AGG
 
     bool ReadDataDir();
 
-    const vector<u8> ReadICNChunk(int icn, u32);
+	vector<u8> ReadICNChunk(int icn, u32);
 
-    const vector<u8> ReadChunk(const string &);
+	vector<u8> ReadChunk(const string &);
 }
 
 sp<Sprite> ICNSprite::CreateSprite(bool reflect, bool shadow) const
@@ -280,7 +280,7 @@ string AGG::FAT::Info() const
 }
 
 /* read element to body */
-const vector<u8> AGG::File::Read(const string &str)
+vector<u8> AGG::File::Read(const string &str)
 {
     if (key == str)
 	{
@@ -444,7 +444,7 @@ bool AGG::ReadDataDir()
     return heroes2_agg.isGood();
 }
 
-const vector<u8> AGG::ReadChunk(const string &key)
+vector<u8> AGG::ReadChunk(const string &key)
 {
     if (heroes2x_agg.isGood())
     {
@@ -745,7 +745,7 @@ void AGG::SaveICN(int icn)
 {
 }
 
-const vector<u8> AGG::ReadICNChunk(int icn, u32 index)
+vector<u8> AGG::ReadICNChunk(int icn, u32 index)
 {
     // hard fix artifact "ultimate stuff" sprite for loyalty version
     if (ICN::ARTIFACT == icn &&
@@ -801,7 +801,7 @@ void AGG::RenderICNSprite(int icn, u32 index, const Rect &srt, const Point &dpt,
 
 std::string joinValues(const std::vector<u8>& body, int maxSize)
 {
-	std:string result = std::to_string(body.size())+ ": ";;
+	std:string result = std::to_string(body.size())+ ": ";
 	int maxIndex = std::min((int)body.size(), maxSize);
 	bool isFirst = true;
 

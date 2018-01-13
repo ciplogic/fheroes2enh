@@ -68,12 +68,12 @@ bool IS_DEBUG(int name, int level)
 const char *StringDebug(int name)
 {
     if (name & DBG_ENGINE) return "DBG_ENGINE";
-    else if (name & DBG_GAME) return "DBG_GAME";
-    else if (name & DBG_BATTLE) return "DBG_BATTLE";
-    else if (name & DBG_AI) return "DBG_AI";
-    else if (name & DBG_NETWORK) return "DBG_NETWORK";
-    else if (name & DBG_OTHER) return "DBG_OTHER";
-    else if (name & DBG_DEVEL) return "DBG_DEVEL";
+    if (name & DBG_GAME) return "DBG_GAME";
+    if (name & DBG_BATTLE) return "DBG_BATTLE";
+    if (name & DBG_AI) return "DBG_AI";
+    if (name & DBG_NETWORK) return "DBG_NETWORK";
+    if (name & DBG_OTHER) return "DBG_OTHER";
+    if (name & DBG_DEVEL) return "DBG_DEVEL";
     return "";
 }
 

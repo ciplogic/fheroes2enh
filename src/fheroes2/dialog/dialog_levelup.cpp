@@ -172,9 +172,9 @@ int DialogSelectSecondary(const string &name, const string &primary, const Skill
         le.MousePressLeft(button_hero) ? button_hero.PressDraw() : button_hero.ReleaseDraw();
 
         if (le.MouseClickLeft(button_learn1) || HotKeyPressEvent(Game::EVENT_DEFAULT_LEFT)) return sec1.Skill();
-        else if (le.MouseClickLeft(button_learn2) || HotKeyPressEvent(Game::EVENT_DEFAULT_RIGHT))
+        if (le.MouseClickLeft(button_learn2) || HotKeyPressEvent(Game::EVENT_DEFAULT_RIGHT))
             return sec2.Skill();
-        else if (le.MouseClickLeft(button_hero) || HotKeyPressEvent(Game::EVENT_DEFAULT_READY))
+        if (le.MouseClickLeft(button_hero) || HotKeyPressEvent(Game::EVENT_DEFAULT_READY))
         {
             hero.OpenDialog(true /* read only */, false);
             cursor.Show();

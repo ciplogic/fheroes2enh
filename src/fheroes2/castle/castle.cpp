@@ -482,10 +482,10 @@ void Castle::ChangeColor(int cl)
 int Castle::GetLevelMageGuild() const
 {
     if (building & BUILD_MAGEGUILD5) return 5;
-    else if (building & BUILD_MAGEGUILD4) return 4;
-    else if (building & BUILD_MAGEGUILD3) return 3;
-    else if (building & BUILD_MAGEGUILD2) return 2;
-    else if (building & BUILD_MAGEGUILD1) return 1;
+    if (building & BUILD_MAGEGUILD4) return 4;
+    if (building & BUILD_MAGEGUILD3) return 3;
+    if (building & BUILD_MAGEGUILD2) return 2;
+    if (building & BUILD_MAGEGUILD1) return 1;
 
     return 0;
 }

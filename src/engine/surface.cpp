@@ -871,7 +871,8 @@ Surface Surface::RenderRotate(int parm /* 0: none, 1 : 90 CW, 2: 90 CCW, 3: 180 
             }
         res.Unlock();
         return res;
-    } else if (parm == 3)
+    } 
+	if (parm == 3)
         return RenderReflect(3);
 
     return RenderReflect(0);
@@ -908,37 +909,38 @@ Surface Surface::RenderContour(const RGBA &color) const
 
     res.Lock();
     for (int y = 0; y < trf.h(); ++y)
-        for (int x = 0; x < trf.w(); ++x)
-            if (fake2 == trf.GetPixel(x, y))
-            {
-                if (0 == x || 0 == y ||
-                    trf.w() - 1 == x || trf.h() - 1 == y)
-                    res.SetPixel(x, y, pixel);
-                else
-                {
-                    if (0 < x)
-                    {
-                        RGBA col = trf.GetRGB(trf.GetPixel(x - 1, y));
-                        if ((clkey0 && col == clkey) || col.a() < 200) res.SetPixel(x - 1, y, pixel);
-                    }
-                    if (trf.w() - 1 > x)
-                    {
-                        RGBA col = trf.GetRGB(trf.GetPixel(x + 1, y));
-                        if ((clkey0 && col == clkey) || col.a() < 200) res.SetPixel(x + 1, y, pixel);
-                    }
+		for (int x = 0; x < trf.w(); ++x)
+		{
+			if (fake2 != trf.GetPixel(x, y))
+				continue;
+			if (0 == x || 0 == y ||
+			trf.w() - 1 == x || trf.h() - 1 == y)
+			{
+				res.SetPixel(x, y, pixel);
+				continue;
+			}
+			if (0 < x)
+			{
+				RGBA col = trf.GetRGB(trf.GetPixel(x - 1, y));
+				if ((clkey0 && col == clkey) || col.a() < 200) res.SetPixel(x - 1, y, pixel);
+			}
+			if (trf.w() - 1 > x)
+			{
+				RGBA col = trf.GetRGB(trf.GetPixel(x + 1, y));
+				if ((clkey0 && col == clkey) || col.a() < 200) res.SetPixel(x + 1, y, pixel);
+			}
 
-                    if (0 < y)
-                    {
-                        RGBA col = trf.GetRGB(trf.GetPixel(x, y - 1));
-                        if ((clkey0 && col == clkey) || col.a() < 200) res.SetPixel(x, y - 1, pixel);
-                    }
-                    if (trf.h() - 1 > y)
-                    {
-                        RGBA col = trf.GetRGB(trf.GetPixel(x, y + 1));
-                        if ((clkey0 && col == clkey) || col.a() < 200) res.SetPixel(x, y + 1, pixel);
-                    }
-                }
-            }
+			if (0 < y)
+			{
+				RGBA col = trf.GetRGB(trf.GetPixel(x, y - 1));
+				if ((clkey0 && col == clkey) || col.a() < 200) res.SetPixel(x, y - 1, pixel);
+			}
+			if (trf.h() - 1 > y)
+			{
+				RGBA col = trf.GetRGB(trf.GetPixel(x, y + 1));
+				if ((clkey0 && col == clkey) || col.a() < 200) res.SetPixel(x, y + 1, pixel);
+			}
+		}
     res.Unlock();
     return res;
 }

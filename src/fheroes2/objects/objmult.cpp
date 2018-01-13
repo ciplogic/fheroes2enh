@@ -31,7 +31,7 @@ int ObjMult::GetPassable(u32 index)
 
     if (isShadow(index))
         return DIRECTION_ALL;
-    else if (isAction(index))
+    if (isAction(index))
         return 0;
 
     return ARRAY_COUNT_END(restricted) != std::find(restricted, ARRAY_COUNT_END(restricted), index) ?

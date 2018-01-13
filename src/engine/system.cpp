@@ -184,20 +184,16 @@ std::string System::GetDirname(const std::string &str)
 
 std::string System::GetBasename(const std::string &str)
 {
-    if (!str.empty())
-    {
-        size_t pos = str.rfind(SEPARATOR);
+    if (str.empty())
+		return str;
+	size_t pos = str.rfind(SEPARATOR);
 
-        if (std::string::npos == pos ||
-            pos == 0)
-            return str;
-        else if (pos == str.size() - 1)
-            return GetBasename(str.substr(0, str.size() - 1));
-        else
-            return str.substr(pos + 1);
-    }
-
-    return str;
+	if (std::string::npos == pos ||
+		pos == 0)
+		return str;
+	if (pos == str.size() - 1)
+		return GetBasename(str.substr(0, str.size() - 1));
+	return str.substr(pos + 1);
 }
 
 const char *System::GetEnvironment(const char *name)

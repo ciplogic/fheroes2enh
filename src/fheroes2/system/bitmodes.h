@@ -35,7 +35,8 @@ class BitModes
 {
 public:
     BitModes() : modes(0)
-    {};
+    {}
+
 	virtual ~BitModes(){}
 
     u32 operator()() const

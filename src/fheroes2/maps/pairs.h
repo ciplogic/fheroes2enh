@@ -33,7 +33,7 @@ class IndexDistance : public pair<s32, u32>
 {
 public:
     IndexDistance() : pair<s32, u32>(-1, 0)
-    {};
+    {}
 
     IndexDistance(s32 i, u32 d) : pair<s32, u32>(i, d)
     {};
@@ -47,24 +47,26 @@ public:
 
 StreamBase &operator>>(StreamBase &, IndexDistance &);
 
-class IndexObject : public pair<s32, int>
+class IndexObject 
 {
 public:
-    IndexObject() : pair<s32, int>(-1, MP2::OBJ_ZERO)
+	pair<s32, int> Value;
+    IndexObject() : Value(-1, MP2::OBJ_ZERO)
     {};
 
-    IndexObject(s32 index, int object) : pair<s32, int>(index, object)
+    IndexObject(s32 index, int object) : Value(index, object)
     {};
 
     bool isIndex(s32 index) const
-    { return index == first; };
+    { return index == Value.first; };
 
     bool isObject(int object) const
-    { return object == second; };
+    { return object == Value.second; };
 };
 
 StreamBase &operator>>(StreamBase &, IndexObject &);
 ByteVectorReader &operator>>(ByteVectorReader &, IndexObject &);
+StreamBase &operator<<(StreamBase &, IndexObject &);
 
 class ObjectColor : public pair<int, int>
 {

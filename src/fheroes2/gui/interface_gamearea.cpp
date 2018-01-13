@@ -569,7 +569,7 @@ void Interface::GameArea::QueueEventProcessing()
                             SetScroll(SCROLL_TOP);
                             dy -= d2y;continue;
                         }
-                        else if (-d2y >= dy)
+                        if (-d2y >= dy)
                         {
                             SetScroll(SCROLL_BOTTOM);
                             dy += d2y;

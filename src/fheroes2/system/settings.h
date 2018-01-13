@@ -575,7 +575,7 @@ public:
     const string &GetDataParams() const
     { return data_params; }
 
-    const ListDirs GetMapsParams() const
+	ListDirs GetMapsParams() const
     { return maps_params; }
 
 protected:

@@ -470,7 +470,7 @@ namespace Interface
 
                 if (ActionBarCursor(cursor, **iterPos1.first, iterPos1.second, **iterPos2.first, iterPos2.second))
                     return true;
-                else if (le.MouseClickLeft(iterPos1.second))
+                if (le.MouseClickLeft(iterPos1.second))
                 {
                     if (ActionBarSingleClick(cursor, **iterPos1.first, iterPos1.second, **iterPos2.first,
                                              iterPos2.second))
@@ -480,7 +480,7 @@ namespace Interface
 
                     other.ResetSelected();
                     return true;
-                } else if (le.MousePressRight(iterPos1.second))
+                } if (le.MousePressRight(iterPos1.second))
                 {
                     other.ResetSelected();
                     return ActionBarPressRight(cursor, **iterPos1.first, iterPos1.second, **iterPos2.first,

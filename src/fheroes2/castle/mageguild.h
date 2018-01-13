@@ -34,7 +34,7 @@ class MageGuild
 {
 public:
     MageGuild()
-    {};
+    {}
 
     void Builds(int race, bool libraryCap);
 

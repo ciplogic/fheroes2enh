@@ -171,18 +171,21 @@ bool StatsHeroesList::ActionListCursor(HeroRow &row, const Point &cursor, s32 ox
         if (row.artifactsBar->isSelected()) row.artifactsBar->ResetSelected();
         Cursor::Get().Hide();
         return true;
-    } else if ((row.artifactsBar->GetArea() & cursor) &&
+    } 
+	if ((row.artifactsBar->GetArea() & cursor) &&
                row.artifactsBar->QueueEventProcessing())
     {
         if (row.armyBar->isSelected()) row.armyBar->ResetSelected();
         Cursor::Get().Hide();
         return true;
-    } else if ((row.primskillsBar->GetArea() & cursor) &&
+    } 
+	if ((row.primskillsBar->GetArea() & cursor) &&
                row.primskillsBar->QueueEventProcessing())
     {
         Cursor::Get().Hide();
         return true;
-    } else if ((row.secskillsBar->GetArea() & cursor) &&
+    } 
+	if ((row.secskillsBar->GetArea() & cursor) &&
                row.secskillsBar->QueueEventProcessing())
     {
         Cursor::Get().Hide();

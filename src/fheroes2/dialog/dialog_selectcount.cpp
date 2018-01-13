@@ -261,12 +261,12 @@ bool Dialog::InputString(const string &header, string &res)
         if (HotKeyPressEvent(Game::EVENT_DEFAULT_READY) ||
             (buttonOk.isEnable() && le.MouseClickLeft(buttonOk)))
             break;
-        else if (HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT) || le.MouseClickLeft(buttonCancel))
+        if (HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT) || le.MouseClickLeft(buttonCancel))
         {
             res.clear();
             break;
         }
-        else if (le.KeyPress())
+        if (le.KeyPress())
         {
             charInsertPos = InsertKeySym(res, charInsertPos, le.KeyValue(), le.KeyMod());
             redraw = true;

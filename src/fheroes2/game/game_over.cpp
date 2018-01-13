@@ -83,8 +83,8 @@ string GameOver::GetActualDescription(int cond)
         const Castle *town = world.GetCastle(conf.WinsMapsPositionObject());
         if (town)
         {
-            msg = town->isCastle() ? _("Capture the castle '%{name}'") : _("Capture the town '%{name}'");;
-            StringReplace(msg, "%{name}", town->GetName());
+            msg = town->isCastle() ? _("Capture the castle '%{name}'") : _("Capture the town '%{name}'");
+	        StringReplace(msg, "%{name}", town->GetName());
         }
     } else if (WINS_HERO & cond)
     {

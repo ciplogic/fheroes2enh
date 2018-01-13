@@ -242,7 +242,7 @@ int ButtonGroups::QueueEventProcessing()
         }
 
         if (HotKeyPressEvent(Game::EVENT_DEFAULT_LEFT)) return result1;
-        else if (HotKeyPressEvent(Game::EVENT_DEFAULT_RIGHT)) return result2;
+        if (HotKeyPressEvent(Game::EVENT_DEFAULT_RIGHT)) return result2;
     } else
         // one button
     {

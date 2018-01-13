@@ -1849,9 +1849,9 @@ bool Battle::Unit::isFinishAnimFrame() const
 {
     if (0 == GetFrameState().count)
         return true;
-    else if (animstep < 0)
+    if (animstep < 0)
         return animframe <= GetFrameState().start;
-    else if (animstep > 0)
+    if (animstep > 0)
         return animframe >= GetFrameState().start + GetFrameState().count - 1;
 
     return true;
@@ -2202,7 +2202,7 @@ int Battle::Unit::GetColor() const
 {
     if (Modes(SP_BERSERKER))
         return 0;
-    else if (Modes(SP_HYPNOTIZE))
+    if (Modes(SP_HYPNOTIZE))
         return GetArena()->GetOppositeColor(GetArmyColor());
 
     // default

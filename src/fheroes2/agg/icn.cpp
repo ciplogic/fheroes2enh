@@ -1879,14 +1879,14 @@ bool ICN::NeedMinify4PocketPC(int icn, u32 index)
 u32 ICN::missile9(float dx, float dy)
 {
     if (0 == dx) return dy > 0 ? 0 : 8;
-    else if (0 == dy) return 4;
+    if (0 == dy) return 4;
 
-    const float tan = fabs(dy / dx);
+    const auto tan = fabs(dy / dx);
 
     // tan 30: 0 - 30
     if (0.577 >= tan) return dy > 0 ? 3 : 5;
-    else
-        // tan 60: 90 - 60
+    
+	// tan 60: 90 - 60
     if (1.732 <= tan) return dy > 0 ? 1 : 7;
 
     // tan 45: 30 - 60
@@ -1896,7 +1896,7 @@ u32 ICN::missile9(float dx, float dy)
 u32 ICN::missile7(float dx, float dy)
 {
     if (0 == dx) return dy > 0 ? 0 : 6;
-    else if (0 == dy) return 3;
+    if (0 == dy) return 3;
 
     const float tan = fabs(dy / dx);
 

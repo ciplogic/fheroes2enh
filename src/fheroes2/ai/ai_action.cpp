@@ -1870,8 +1870,8 @@ bool AI::HeroesValidObject(const Heroes &hero, s32 index)
             {
                 if (hero.GetColor() == hero2->GetColor()) return true;
                     // FIXME: AI skip visiting alliance
-                else if (hero.isFriends(hero2->GetColor())) return false;
-                else if (hero2->AllowBattle(false) &&
+                if (hero.isFriends(hero2->GetColor())) return false;
+                if (hero2->AllowBattle(false) &&
                          Army::TroopsStrongerEnemyTroops(army, hero2->GetArmy()))
                     return true;
             }
