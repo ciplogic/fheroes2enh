@@ -48,7 +48,7 @@ public:
 	
     void Clear();
 
-    void ToggleFullScreen();
+    void ToggleFullScreen() const;
 
     void Fade(int delay = 500);
 

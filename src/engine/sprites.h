@@ -61,7 +61,7 @@ public:
 
     void Save(const Rect &);
 
-    void Restore();
+    void Restore() const;
 
     void Destroy();
 

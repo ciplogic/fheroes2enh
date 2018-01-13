@@ -82,7 +82,7 @@ int SDL_ToggleFS(SDL_Surface *surface)
 	return 1;
 }
 
-void Display::ToggleFullScreen()
+void Display::ToggleFullScreen() const
 {
 	int result = SDL_WM_ToggleFullScreen(surface);
 	if(result==0)

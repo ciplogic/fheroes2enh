@@ -152,9 +152,9 @@ public:
     void DrawLineAa(const Point &, const Point &, const RGBA &);
     void DrawLine(const Point &, const Point &, const RGBA &);
 
-    void DrawPoint(const Point &, const RGBA &);
+    void DrawPoint(const Point &, const RGBA &) const;
 
-    void DrawRect(const Rect &, const RGBA &);
+    void DrawRect(const Rect &, const RGBA &) const;
 
     void DrawBorder(const RGBA &, bool solid = true);
 

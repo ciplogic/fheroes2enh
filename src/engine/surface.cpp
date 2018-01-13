@@ -1225,14 +1225,14 @@ void Surface::DrawLine(const Point &p1, const Point &p2, const RGBA &color)
     Unlock();
 }
 
-void Surface::DrawPoint(const Point &pt, const RGBA &color)
+void Surface::DrawPoint(const Point &pt, const RGBA &color) const
 {
     Lock();
     SetPixel(pt.x, pt.y, MapRGB(color));
     Unlock();
 }
 
-void Surface::DrawRect(const Rect &rt, const RGBA &color)
+void Surface::DrawRect(const Rect &rt, const RGBA &color) const
 {
     const u32 pixel = MapRGB(color);
 

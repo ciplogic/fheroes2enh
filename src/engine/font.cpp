@@ -61,7 +61,7 @@ bool FontTTF::Open(const std::string & filename, int size)
     return ptr;
 }
 
-void FontTTF::SetStyle(int style)
+void FontTTF::SetStyle(int style) const
 {
     TTF_SetFontStyle(ptr, style);
 }
@@ -86,7 +86,7 @@ int FontTTF::LineSkip() const
     return TTF_FontLineSkip(ptr);
 }
 
-Surface FontTTF::RenderText(const std::string & msg, const RGBA & clr, bool solid)
+Surface FontTTF::RenderText(const std::string & msg, const RGBA & clr, bool solid) const
 {
     SDL_Color fgColor = clr.packSdlColor();
     auto* paintedSurface = solid ? TTF_RenderUTF8_Solid(ptr, msg.c_str(), fgColor) :
@@ -94,7 +94,7 @@ Surface FontTTF::RenderText(const std::string & msg, const RGBA & clr, bool soli
     return Surface(paintedSurface);
 }
     
-Surface FontTTF::RenderChar(char ch, const RGBA & clr, bool solid)
+Surface FontTTF::RenderChar(char ch, const RGBA & clr, bool solid) const
 {
     char buf[2] = { '\0', '\0' };
     buf[0] = ch;
@@ -104,7 +104,7 @@ Surface FontTTF::RenderChar(char ch, const RGBA & clr, bool solid)
     return Surface(paintedSurface);
 }
 
-Surface FontTTF::RenderUnicodeText(const std::vector<u16> & msg, const RGBA & clr, bool solid)
+Surface FontTTF::RenderUnicodeText(const std::vector<u16> & msg, const RGBA & clr, bool solid) const
 {
     SDL_Color fgColor = clr.packSdlColor();
 	solid = false;
@@ -112,7 +112,7 @@ Surface FontTTF::RenderUnicodeText(const std::vector<u16> & msg, const RGBA & cl
                         TTF_RenderUNICODE_Blended(ptr, &msg[0], fgColor));
 }
 
-Surface FontTTF::RenderUnicodeChar(u16 ch, const RGBA & clr, bool solid)
+Surface FontTTF::RenderUnicodeChar(u16 ch, const RGBA & clr, bool solid) const
 {
     u16 buf[2] = { L'\0', L'\0' };
     buf[0] = ch;

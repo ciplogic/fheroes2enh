@@ -47,17 +47,17 @@ public:
 
     bool Open(const std::string &, int size);
     bool isValid() const;
-    void SetStyle(int);
+    void SetStyle(int) const;
 
     int Height() const;
     int Ascent() const;
     int Descent() const;
     int LineSkip() const;
 
-    Surface RenderText(const std::string &, const RGBA &, bool solid /* or blended */);
-    Surface RenderChar(char, const RGBA &, bool solid /* or blended */);
-    Surface RenderUnicodeText(const std::vector<u16> &, const RGBA &, bool solid /* or blended */);
-    Surface RenderUnicodeChar(u16, const RGBA &, bool solid /* or blended */);
+    Surface RenderText(const std::string &, const RGBA &, bool solid /* or blended */) const;
+    Surface RenderChar(char, const RGBA &, bool solid /* or blended */) const;
+    Surface RenderUnicodeText(const std::vector<u16> &, const RGBA &, bool solid /* or blended */) const;
+    Surface RenderUnicodeChar(u16, const RGBA &, bool solid /* or blended */) const;
 
 protected:
     TTF_Font *ptr{};
