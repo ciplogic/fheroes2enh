@@ -545,6 +545,16 @@ void LocalEvent::HandleKeyboardEvent(SDL_KeyboardEvent &event)
 
 void LocalEvent::HandleMouseMotionEvent(const SDL_MouseMotionEvent &motion)
 {
+    LocalEvent &le = Get();
+    // redraw cursor
+    if (le.redraw_cursor_func)
+    {
+        if (le.modes & MOUSE_OFFSET)
+            (*(le.redraw_cursor_func))(motion.x + le.mouse_st.x, motion.y + le.mouse_st.y);
+        else
+            (*(le.redraw_cursor_func))(motion.x, motion.y);
+    }
+
     mouse_state = motion.state;
     SetModes(MOUSE_MOTION);
     mouse_cu.x = motion.x;
@@ -842,19 +852,6 @@ void LocalEvent::SetGlobalFilterKeysEvents(void (*pf)(int, int))
 int LocalEvent::GlobalFilterEvents(const SDL_Event *event)
 {
     LocalEvent &le = Get();
-
-    // motion
-    if ((le.modes & GLOBAL_FILTER) && SDL_MOUSEMOTION == event->type)
-    {
-        // redraw cursor
-        if (le.redraw_cursor_func)
-        {
-            if (le.modes & MOUSE_OFFSET)
-                (*(le.redraw_cursor_func))(event->motion.x + le.mouse_st.x, event->motion.y + le.mouse_st.y);
-            else
-                (*(le.redraw_cursor_func))(event->motion.x, event->motion.y);
-        }
-    }
 
     // key
     if ((le.modes & GLOBAL_FILTER) && SDL_KEYDOWN == event->type)
