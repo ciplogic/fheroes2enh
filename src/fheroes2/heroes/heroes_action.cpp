@@ -34,10 +34,9 @@
 #include "m82.h"
 #include "mus.h"
 #include "rand.h"
-#include "audio.h"
 #include "audio_mixer.h"
-#include "audio_music.h"
-#include "audio_cdrom.h"
+
+#include "icn.h"
 
 #define PlayMusicReplacement(m82) if(MUS::FromMapObject(obj) == MUS::UNKNOWN) \
                                       AGG::PlaySound(m82)

@@ -33,7 +33,8 @@
 #include "text.h"
 #include "kingdom.h"
 #include "world.h"
-#include "pocketpc.h"
+
+#include "icn.h"
 #include "game.h"
 #include "mus.h"
 

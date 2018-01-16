@@ -30,6 +30,8 @@
 #include "m82.h"
 #include "rand.h"
 
+#include "icn.h"
+
 void DialogSpellFailed(const Spell &);
 
 void DialogNotAvailable();

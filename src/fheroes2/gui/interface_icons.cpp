@@ -22,6 +22,8 @@
 
 #include <algorithm>
 
+#include "icn.h"
+
 #include "agg.h"
 #include "castle.h"
 #include "race.h"

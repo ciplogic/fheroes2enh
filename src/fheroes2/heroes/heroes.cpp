@@ -40,6 +40,7 @@
 #include "ai.h"
 #include "m82.h"
 #include "rand.h"
+#include "icn.h"
 
 const char *Heroes::GetName(int id)
 {

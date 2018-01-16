@@ -22,7 +22,8 @@
 
 #include <cmath>
 #include <algorithm>
-#include "engine.h"
+
+#include "icn.h"
 #include "cursor.h"
 #include "agg.h"
 #include "settings.h"

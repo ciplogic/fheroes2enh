@@ -26,6 +26,7 @@
 #include "cursor.h"
 #include "world.h"
 #include "settings.h"
+#include "icn.h"
 #include "game_interface.h"
 
 #define AITURN_REDRAW_EXPIRE 20

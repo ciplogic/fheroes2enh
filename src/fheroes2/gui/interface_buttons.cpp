@@ -26,6 +26,7 @@
 #include "game.h"
 #include "game_interface.h"
 #include "localevent.h"
+#include "icn.h"
 
 Interface::ButtonsArea::ButtonsArea(Basic &basic) : BorderWindow(Rect(0, 0, 144, 72)), interface(basic)
 {

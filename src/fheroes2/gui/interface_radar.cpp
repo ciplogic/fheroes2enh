@@ -28,6 +28,8 @@
 #include "game_interface.h"
 #include "ground.h"
 #include "world.h"
+#include "icn.h"
+
 
 #define RADARCOLOR    0x40    // index palette
 #define COLOR_DESERT    0x70

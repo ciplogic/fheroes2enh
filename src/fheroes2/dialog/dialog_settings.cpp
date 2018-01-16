@@ -29,6 +29,8 @@
 #include "interface_list.h"
 #include "localevent.h"
 
+#include "icn.h"
+
 class SettingsListBox : public Interface::ListBox<u32>
 {
 public:

@@ -25,6 +25,7 @@
 #include "game.h"
 #include "game_interface.h"
 #include "localevent.h"
+#include "icn.h"
 
 Interface::ControlPanel::ControlPanel(Basic &basic) 
     : interface(basic)

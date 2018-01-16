@@ -33,7 +33,7 @@
 #include "heroes.h"
 #include "army_bar.h"
 #include "heroes_indicator.h"
-#include "pocketpc.h"
+#include "icn.h"
 #include "game.h"
 #include "game_interface.h"
 

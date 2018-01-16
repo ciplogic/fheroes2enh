@@ -25,8 +25,7 @@
 #include "mus.h"
 #include "audio.h"
 #include "audio_mixer.h"
-#include "audio_music.h"
-#include "audio_cdrom.h"
+#include "icn.h"
 
 #ifdef AI
 #undef AI
@@ -44,6 +43,7 @@
 #include "game_over.h"
 #include "battle_only.h"
 #include "m82.h"
+#include "settings.h"
 
 int Game::StartBattleOnly()
 {

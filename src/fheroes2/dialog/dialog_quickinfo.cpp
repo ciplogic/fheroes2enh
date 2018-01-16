@@ -33,6 +33,8 @@
 #include "world.h"
 #include "profit.h"
 #include "game.h"
+#include "icn.h"
+#include "settings.h"
 
 string GetMinesIncomeString(int type)
 {

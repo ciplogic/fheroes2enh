@@ -32,6 +32,8 @@
 #include "buildinginfo.h"
 #include "interface_icons.h"
 
+#include "icn.h"
+
 struct HeroRow
 {
     Heroes *hero;

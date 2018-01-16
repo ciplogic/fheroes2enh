@@ -31,6 +31,7 @@
 #include "game.h"
 #include "game_interface.h"
 #include "mounts.h"
+#include "icn.h"
 #include "trees.h"
 #include "objxloc.h"
 #include "objtown.h"
