@@ -124,6 +124,7 @@ set(SOURCE_FILES
         src/fheroes2/battle/battle_bridge.h
         src/fheroes2/battle/battle_catapult.cpp
         src/fheroes2/battle/battle_catapult.h
+        src/fheroes2/battle/battle_catapult_types.h
         src/fheroes2/battle/battle_cell.cpp
         src/fheroes2/battle/battle_cell.h
         src/fheroes2/battle/battle_command.cpp
@@ -357,7 +358,7 @@ set(SOURCE_FILES
         src/fheroes2/gui/PlusIndicator.cpp
         src/fheroes2/gui/PlusIndicator.h
         src/fheroes2/dialog/FileUtils.cpp
-        src/fheroes2/dialog/FileUtils.h src/tools/palette_h2.cpp)
+        src/fheroes2/dialog/FileUtils.h src/tools/palette_h2.cpp src/fheroes2/dialog/plus_sign_addon.cpp src/fheroes2/dialog/plus_sign_addon.h)
 
 add_executable(fheroes2 ${SOURCE_FILES})
 

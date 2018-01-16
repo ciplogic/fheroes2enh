@@ -20,6 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
+#include "plus_sign_addon.h"
 #include "agg.h"
 #include "icn.h"
 #include "cursor.h"
@@ -251,21 +252,13 @@ void ArmyBar::RedrawItem(ArmyTroop &troop, const Rect &pos, bool selected, Surfa
             }
             if(CanUpgradeTroop(troop, army))
             {
-                Text textPlus = {"+"};
-                Surface greenUp(Size(textPlus.w() + 4, textPlus.h()+4), false);
-                greenUp.Fill(ColorsTable::Green);
-                const Point ptPlus(pos.x + pos.w - greenUp.w() - 1, pos.y + 2);
-                greenUp.Blit(ptPlus.x, ptPlus.y, dstsf);
-                textPlus.Blit(ptPlus.x + 2, ptPlus.y + 1, dstsf);
+                PlusSignAddon plusSignAddon;
+                plusSignAddon.draw(pos.x + pos.w, pos.y, true);
             }
             if(CanUpgradeTroopButNoResources(troop, army))
             {
-                Text textPlus = {"+"};
-                Surface greenUp(Size(textPlus.w() + 4, textPlus.h()+4), false);
-                greenUp.Fill(ColorsTable::Gray);
-                const Point ptPlus(pos.x + pos.w - greenUp.w() - 1, pos.y + 2);
-                greenUp.Blit(ptPlus.x, ptPlus.y, dstsf);
-                textPlus.Blit(ptPlus.x + 2, ptPlus.y + 1, dstsf);
+                PlusSignAddon plusSignAddon;
+                plusSignAddon.draw(pos.x + pos.w, pos.y, false);
             }
 
         } else

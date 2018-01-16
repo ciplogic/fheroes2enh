@@ -232,6 +232,7 @@
     <ClInclude Include="..\..\src\fheroes2\castle\mageguild.h" />
     <ClInclude Include="..\..\src\fheroes2\castle\marketplace.h" />
     <ClInclude Include="..\..\src\fheroes2\dialog\dialog.h" />
+    <ClInclude Include="..\..\src\fheroes2\dialog\plus_sign_addon.h" />
     <ClInclude Include="..\..\src\fheroes2\dialog\dialog_selectitems.h" />
     <ClInclude Include="..\..\src\fheroes2\dialog\dialog_selectscenario.h" />
     <ClInclude Include="..\..\src\fheroes2\dialog\FileUtils.h" />
@@ -414,6 +415,7 @@
     <ClCompile Include="..\..\src\fheroes2\dialog\dialog_spriteinfo.cpp" />
     <ClCompile Include="..\..\src\fheroes2\dialog\dialog_system.cpp" />
     <ClCompile Include="..\..\src\fheroes2\dialog\dialog_thievesguild.cpp" />
+    <ClCompile Include="..\..\src\fheroes2\dialog\plus_sign_addon.cpp" />
     <ClCompile Include="..\..\src\fheroes2\dialog\FileUtils.cpp" />
     <ClCompile Include="..\..\src\fheroes2\game\difficulty.cpp" />
     <ClCompile Include="..\..\src\fheroes2\game\fheroes2.cpp" />

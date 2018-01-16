@@ -39,6 +39,8 @@
 #include "tools.h"
 #include "m82.h"
 
+#include "plus_sign_addon.h"
+
 struct buildstats_t
 {
     u32 id2;
@@ -364,13 +366,8 @@ void BuildingInfo::RedrawCaptain()
 
     if(allow_buy && bcond!=ALREADY_BUILT)
     {
-        Text textPlus = {"+"};
-        Rect pos(area.x+area.w-14, area.y+3, 10, 10);
-        Surface greenUp(Size(textPlus.w() + 4, textPlus.h()+4), false);
-        greenUp.Fill(ColorsTable::Green);
-        const Point ptPlus(pos.x + pos.w - greenUp.w() - 1, pos.y + 2);
-        greenUp.Blit(ptPlus.x, ptPlus.y, Display::Get());
-        textPlus.Blit(ptPlus.x + 2, ptPlus.y + 1, Display::Get());
+        PlusSignAddon plusSignAddon;
+        plusSignAddon.draw(area.x + area.w, area.y, true);
     }
 }
 
@@ -440,13 +437,8 @@ void BuildingInfo::Redraw()
 
         if(canBuildQuick)
         {
-            Text textPlus = {"+"};
-            Rect pos(area.x+120, area.y+3, 10, 10);
-            Surface greenUp(Size(textPlus.w() + 4, textPlus.h()+4), false);
-            greenUp.Fill(ColorsTable::Green);
-            const Point ptPlus(pos.x + pos.w - greenUp.w() - 1, pos.y + 2);
-            greenUp.Blit(ptPlus.x, ptPlus.y, Display::Get());
-            textPlus.Blit(ptPlus.x + 2, ptPlus.y + 1, Display::Get());
+            PlusSignAddon plusSignAddon;
+            plusSignAddon.draw(area.x + 132, area.y, true);
         }
     }
 }
