@@ -552,7 +552,7 @@ int Interface::Basic::StartGame()
 	{
 		if (!skip_turns) world.NewDay();
 
-		for (auto it : players)
+		for (auto it : players._items)
 			if (it)
 			{
 				const Player& player = (*it);

@@ -140,7 +140,7 @@ bool Player::isName(const string &str) const
 
 bool Player::isPlay() const
 {
-    return Modes(ST_INGAME);
+    return _bitModes.Modes(ST_INGAME);
 }
 
 void Player::SetFriends(int f)
@@ -170,7 +170,7 @@ void Player::SetRace(int r)
 
 void Player::SetPlay(bool f)
 {
-    if (f) SetModes(ST_INGAME); else ResetModes(ST_INGAME);
+    if (f) _bitModes.SetModes(ST_INGAME); else _bitModes.ResetModes(ST_INGAME);
 }
 
 StreamBase &operator<<(StreamBase &msg, const Focus &focus)
@@ -216,7 +216,7 @@ StreamBase &operator>>(StreamBase &msg, Focus &focus)
 
 StreamBase &operator<<(StreamBase &msg, const Player &player)
 {
-    const BitModes &modes = player;
+    const BitModes &modes = player._bitModes;
 
     return msg <<
                modes <<
@@ -231,7 +231,7 @@ StreamBase &operator<<(StreamBase &msg, const Player &player)
 
 StreamBase &operator>>(StreamBase &msg, Player &player)
 {
-    BitModes &modes = player;
+    BitModes &modes = player._bitModes;
 
     return msg >>
                modes >>
@@ -246,7 +246,7 @@ StreamBase &operator>>(StreamBase &msg, Player &player)
 
 Players::Players() : current_color(0)
 {
-    reserve(KINGDOMMAX);
+	_items.reserve(KINGDOMMAX);
 }
 
 Players::~Players()
@@ -256,10 +256,10 @@ Players::~Players()
 
 void Players::clear()
 {
-    for (auto& it : *this)
+    for (auto& it : _items)
         delete it;
 
-    vector<Player *>::clear();
+	_items.clear();
 
     for (u32 ii = 0; ii < KINGDOMMAX + 1; ++ii)
         _players[ii] = nullptr;
@@ -276,8 +276,8 @@ void Players::Init(int colors)
 
     for (int vcolor : vcolors)
     {
-        push_back(new Player(vcolor));
-        _players[Color::GetIndex(vcolor)] = back();
+		_items.push_back(new Player(vcolor));
+        _players[Color::GetIndex(vcolor)] = _items.back();
     }
 }
 
@@ -307,8 +307,8 @@ void Players::Init(const Maps::FileInfo &fi)
         if (!first && (player->GetControl() & CONTROL_HUMAN))
             first = player;
 
-        push_back(player);
-        _players[Color::GetIndex(vcolor)] = back();
+		_items.push_back(player);
+        _players[Color::GetIndex(vcolor)] = _items.back();
     }
 
     if (first)
@@ -346,7 +346,7 @@ int Players::GetColors(int control, bool strong) const
 {
     int res = 0;
 
-    for (auto it : *this)
+    for (auto it : _items)
         if (control == 0xFF ||
             (strong && it->GetControl() == control) ||
             (!strong && (it->GetControl() & control)))
@@ -359,7 +359,7 @@ int Players::GetActualColors() const
 {
     int res = 0;
 
-    for (auto it : *this)
+    for (auto it : _items)
         if (it->isPlay()) res |= it->GetColor();
 
     return res;
@@ -407,10 +407,10 @@ void Players::SetPlayerInGame(int color, bool f)
 
 void Players::SetStartGame()
 {
-    for_each(begin(), end(), bind2nd(mem_fun(&Player::SetPlay), true));
-    for_each(begin(), end(), ptr_fun(&PlayerFocusReset));
-    for_each(begin(), end(), ptr_fun(&PlayerFixRandomRace));
-    for_each(begin(), end(), ptr_fun(&PlayerFixMultiControl));
+    for_each(_items.begin(), _items.end(), bind2nd(mem_fun(&Player::SetPlay), true));
+    for_each(_items.begin(), _items.end(), ptr_fun(&PlayerFocusReset));
+    for_each(_items.begin(), _items.end(), ptr_fun(&PlayerFixRandomRace));
+    for_each(_items.begin(), _items.end(), ptr_fun(&PlayerFixMultiControl));
 
     current_color = Color::NONE;
     human_colors = Color::NONE;
@@ -444,7 +444,7 @@ string Players::String() const
     ostringstream os;
     os << "Players: ";
 
-    for (auto it : *this)
+    for (auto it : _items)
     {
         os << Color::String(it->GetColor()) << "(" << Race::String(it->GetRace()) << ", ";
 
@@ -481,7 +481,7 @@ StreamBase &operator<<(StreamBase &msg, const Players &players)
 {
     msg << players.GetColors() << players.current_color;
 
-    for (auto player : players)
+    for (auto player : players._items)
         msg << (*player);
 
     return msg;
@@ -501,7 +501,7 @@ StreamBase &operator>>(StreamBase &msg, Players &players)
         Player *player = new Player();
         msg >> *player;
         _players[Color::GetIndex(player->GetColor())] = player;
-        players.push_back(player);
+        players._items.push_back(player);
     }
 
     return msg;
@@ -523,15 +523,15 @@ void Interface::PlayersInfo::UpdateInfo(Players &players, const Point &pt1, cons
 
     clear();
 
-    for (auto it = players.begin(); it != players.end(); ++it)
+    for (auto it = players._items.begin(); it != players._items.end(); ++it)
     {
-        const u32 current = distance(players.begin(), it);
+        const u32 current = distance(players._items.begin(), it);
         PlayerInfo info;
 
         info.player = *it;
-        info.rect1 = Rect(pt1.x + Game::GetStep4Player(current, sprite.w(), players.size()), pt1.y, sprite.w(),
+        info.rect1 = Rect(pt1.x + Game::GetStep4Player(current, sprite.w(), players._items.size()), pt1.y, sprite.w(),
                           sprite.h());
-        info.rect2 = Rect(pt2.x + Game::GetStep4Player(current, sprite.w(), players.size()), pt2.y, sprite.w(),
+        info.rect2 = Rect(pt2.x + Game::GetStep4Player(current, sprite.w(), players._items.size()), pt2.y, sprite.w(),
                           sprite.h());
 
         push_back(info);
@@ -793,10 +793,10 @@ bool Interface::PlayersInfo::QueueEventProcessing()
             if (it != end() && (it + 1) != end())
             {
                 Players &players = conf.GetPlayers();
-                auto it1 = find(players.begin(), players.end(), (*it).player);
-                auto it2 = find(players.begin(), players.end(), (*(it + 1)).player);
+                auto it1 = find(players._items.begin(), players._items.end(), (*it).player);
+                auto it2 = find(players._items.begin(), players._items.end(), (*(it + 1)).player);
 
-                if (it1 != players.end() && it2 != players.end())
+                if (it1 != players._items.end() && it2 != players._items.end())
                 {
                     std::swap((*it).player, (*(it + 1)).player);
                     std::swap(*it1, *it2);

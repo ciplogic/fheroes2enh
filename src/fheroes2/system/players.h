@@ -87,8 +87,7 @@ struct Control
 {
     virtual int GetControl() const = 0;
 
-    virtual            ~Control()
-    {}
+    virtual ~Control() = default;
 
     bool isControlAI() const;
 
@@ -99,14 +98,11 @@ struct Control
     bool isControlLocal() const;
 };
 
-class Player : public BitModes, public Control
+class Player : public Control
 {
 public:
     Player(int col = Color::NONE);
-
-    virtual ~Player()
-    {}
-
+	
     bool isID(u32) const;
 
     bool isColor(int) const;
@@ -142,6 +138,7 @@ public:
     Focus &GetFocus();
 
     const Focus &GetFocus() const;
+	BitModes _bitModes;
 
 protected:
     friend StreamBase &operator<<(StreamBase &, const Player &);
@@ -161,7 +158,7 @@ StreamBase &operator<<(StreamBase &, const Player &);
 
 StreamBase &operator>>(StreamBase &, Player &);
 
-class Players : public vector<Player *>
+class Players  
 {
 public:
     Players();
@@ -208,6 +205,7 @@ public:
 
     static int FriendColors();
 
+	vector<Player *> _items;
     int current_color;
 };
 
