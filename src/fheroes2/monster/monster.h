@@ -127,7 +127,7 @@ public:
 
     Monster(int race, u32 dw);
 
-    ~Monster()
+	virtual ~Monster()
     = default;
 
     bool operator<(const Monster &) const;

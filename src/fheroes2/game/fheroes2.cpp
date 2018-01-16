@@ -380,7 +380,7 @@ void SetLangEnvPath(const Settings &conf)
 
     ListFiles translations = Settings::GetListFiles(System::ConcatePath("files", "lang"), mofile);
 
-    if(translations.size())
+    if(!translations.empty())
     {
             if(Translation::bindDomain("fheroes2", translations.back().c_str()))
             Translation::setDomain("fheroes2");

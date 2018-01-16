@@ -65,10 +65,10 @@ int Dialog::SpriteInfo(const string &header, const string &message, Surface &spr
     FrameBox box(box1.h() + spacer + box2.h() + spacer + sprite.h(), buttons);
     Rect pos = box.GetArea();
 
-    if (header.size()) box1.Blit(pos);
+    if (!header.empty()) box1.Blit(pos);
     pos.y += box1.h() + spacer;
 
-    if (message.size()) box2.Blit(pos);
+    if (!message.empty()) box2.Blit(pos);
     pos.y += box2.h() + spacer;
 
     // blit sprite

@@ -235,7 +235,7 @@ s32 GetRandomHeroesPosition(Heroes &hero, u32 scoute)
             res.push_back(*it);
     }
 
-    const s32 result = res.size() ? *Rand::Get(res) : -1;
+    const s32 result = !res.empty() ? *Rand::Get(res) : -1;
 
     return result;
 }

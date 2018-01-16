@@ -1452,7 +1452,7 @@ void AGG::PlayMusic(int mus, bool loop)
         {
 #ifdef WITH_MIXER
             const std::vector<u8> & v = GetMID(xmi);
-            if(v.size()) Music::Play(v, loop);
+            if(!v.empty()) Music::Play(v, loop);
 #else
             string mid = XMI::GetString(xmi);
             StringReplace(mid, ".XMI", ".MID");

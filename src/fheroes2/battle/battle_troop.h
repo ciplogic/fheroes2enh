@@ -82,7 +82,7 @@ namespace Battle
     public:
         Unit(const Troop &, s32 pos, bool reflect);
 
-        ~Unit();
+	    virtual ~Unit();
 
         bool isModes(u32) const;
 

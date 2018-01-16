@@ -41,11 +41,11 @@ int Dialog::Message(const string &header, const string &message, int ft, int but
     TextBox textbox1(header, Font::YELLOW_BIG, BOXAREA_WIDTH);
     TextBox textbox2(message, ft, BOXAREA_WIDTH);
 
-    FrameBox box(10 + (header.size() ? textbox1.h() + 10 : 0) + textbox2.h(), buttons);
+    FrameBox box(10 + (!header.empty() ? textbox1.h() + 10 : 0) + textbox2.h(), buttons);
     const Rect &pos = box.GetArea();
 
-    if (header.size()) textbox1.Blit(pos.x, pos.y + 10);
-    if (message.size()) textbox2.Blit(pos.x, pos.y + 10 + (header.size() ? textbox1.h() : 0) + 10);
+    if (!header.empty()) textbox1.Blit(pos.x, pos.y + 10);
+    if (!message.empty()) textbox2.Blit(pos.x, pos.y + 10 + (!header.empty() ? textbox1.h() : 0) + 10);
 
     LocalEvent &le = LocalEvent::Get();
 

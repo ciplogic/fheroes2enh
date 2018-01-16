@@ -71,7 +71,7 @@ void Battle::Arena::BattleProcess(Unit &attacker, Unit &defender, s32 dst, int d
         const string name(attacker.GetName());
         targets = GetTargetsForSpells(attacker.GetCommander(), spell, defender.GetHeadIndex());
 
-        if (targets.size())
+        if (!targets.empty())
         {
             if (interface) interface->RedrawActionSpellCastPart1(spell, defender.GetHeadIndex(), nullptr, name, targets);
 

@@ -251,7 +251,7 @@ Battle::Indexes Battle::Board::GetAStarPath(const Unit &b, const Position &dst, 
         reverse(result.begin(), result.end());
 
         // correct wide position
-        if (b.isWide() && result.size())
+        if (b.isWide() && !result.empty())
         {
             const s32 head = dst.GetHead()->GetIndex();
             const s32 tail = dst.GetTail()->GetIndex();
@@ -362,7 +362,7 @@ Battle::Indexes Battle::Board::GetNearestTroopIndexes(s32 pos, const Indexes *bl
                                    bind2nd(IndexDistanceEqualDistance(), dists.front().second)));
     }
 
-    if (dists.size())
+    if (!dists.empty())
     {
         result.reserve(dists.size());
         for (vector<IndexDistance>::const_iterator
@@ -997,7 +997,7 @@ Battle::Indexes Battle::Board::GetDistanceIndexes(s32 center, u32 radius)
         st.insert(center);
         abroad.push_back(center);
 
-        while (abroad.size() && radius)
+        while (!abroad.empty() && radius)
         {
             set<s32> tm = st;
 
