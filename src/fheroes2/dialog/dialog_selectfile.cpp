@@ -30,7 +30,6 @@
 
 #include "icn.h"
 
-
 #include "system.h"
 #include "agg.h"
 #include "text.h"
@@ -38,7 +37,6 @@
 #include "cursor.h"
 #include "settings.h"
 #include "interface_list.h"
-#include "pocketpc.h"
 #include "world.h"
 #include "game.h"
 #include "dialog.h"
@@ -307,7 +305,7 @@ string SelectFileListSimple(const string &header, const string &lastfile, bool e
             buttonOk.SetDisable(filename.empty());
             cursor.Hide();
         }
-        if ((le.KeyPress(KEY_DELETE) || (false && le.MousePressRight())) && listbox.isSelected())
+        if ((le.KeyPress(KEY_DELETE)) && listbox.isSelected())
         {
             string msg(_("Are you sure you want to delete file:"));
             msg.append("\n \n");

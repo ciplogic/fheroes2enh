@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2SPRITES_H
-#define H2SPRITES_H
+#pragma once
 
 #include "surface.h"
 
@@ -111,5 +110,3 @@ protected:
     SpriteBack background;
     u32 mode;
 };
-
-#endif

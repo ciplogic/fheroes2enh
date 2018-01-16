@@ -47,9 +47,7 @@ bool SkipLocalAlpha(int icn)
     return false;
 }
 
-Sprite::Sprite()
-{
-}
+Sprite::Sprite() = default;
 
 Sprite::Sprite(const Surface &sf, s32 ox, s32 oy) : SpritePos(sf, Point(ox, oy))
 {

@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2TIL_H
-#define H2TIL_H
+#pragma once
 
 class Surface;
 
@@ -39,4 +38,3 @@ namespace TIL
     const char *GetString(int);
 }
 
-#endif

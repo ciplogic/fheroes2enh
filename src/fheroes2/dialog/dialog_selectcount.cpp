@@ -32,7 +32,6 @@
 #include "tools.h"
 #include "icn.h"
 #include "localevent.h"
-#include "icn.h"
 
 class SelectValue : public Rect
 {

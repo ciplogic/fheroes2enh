@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2TYPES_H
-#define H2TYPES_H
+#pragma once
 
 #include "SDL.h"
 
@@ -62,4 +61,3 @@ using namespace std;
 #define PATH_MAX 		255
 #endif
 
-#endif

@@ -249,9 +249,6 @@
     <ClInclude Include="..\..\src\fheroes2\agg\mus.h">
       <Filter>Header Files\fheroes2\agg</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\fheroes2\agg\palette_h2.h">
-      <Filter>Header Files\fheroes2\agg</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\fheroes2\agg\sprite.h">
       <Filter>Header Files\fheroes2\agg</Filter>
     </ClInclude>
@@ -599,6 +596,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\engine\TimeUtils.h">
       <Filter>Header Files\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\fheroes2\dialog\plus_sign_addon.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1165,6 +1165,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\tools\palette_h2.cpp">
       <Filter>Source Files\fheroes2\system</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\fheroes2\dialog\plus_sign_addon.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

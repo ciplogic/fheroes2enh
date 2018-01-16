@@ -19,8 +19,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef H2SURFACE_H
-#define H2SURFACE_H
+#pragma once
 
 #include <string>
 #include "rect.h"
@@ -238,7 +237,4 @@ protected:
     u32 GetPixel1(s32 x, s32 y) const;
 
     u32 GetPixel(int x, int y) const;
-
 };
-
-#endif

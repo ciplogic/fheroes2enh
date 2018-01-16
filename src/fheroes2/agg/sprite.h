@@ -22,8 +22,6 @@
 #ifndef H2SPRITE_H
 #define H2SPRITE_H
 
-#include "gamedefs.h"
-
 #include "sprites.h"
 
 class Sprite : public SpritePos

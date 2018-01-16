@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2MUS_H
-#define H2MUS_H
+#pragma once
 
 #include <string>
 using namespace std;
@@ -88,5 +87,3 @@ namespace MUS
 
     int GetBattleRandom();
 }
-
-#endif

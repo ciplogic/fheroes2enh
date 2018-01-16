@@ -19,8 +19,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef H2TOOLS_H
-#define H2TOOLS_H
+#pragma once
 
 #include <string>
 #include <vector>
@@ -91,5 +90,3 @@ std::vector<u8> LoadFileToMem(const std::string &);
 Points GetLinePoints(const Point &pt1, const Point &pt2, u16 step);
 
 Points GetArcPoints(const Point &from, const Point &to, const Point &max, u16 step);
-
-#endif

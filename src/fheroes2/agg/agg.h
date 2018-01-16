@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2AGG_H
-#define H2AGG_H
+#pragma once
 
 #include <vector>
 #include <utility>
@@ -85,5 +84,3 @@ namespace AGG
 
     void RenderICNSprite(int icn, u32 index, const Rect &srt, const Point &dpt, Surface &dst);
 }
-
-#endif

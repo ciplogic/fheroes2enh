@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2SERIALIZE_H
-#define H2SERIALIZE_H
+#pragma once
 
 #include <map>
 #include <list>
@@ -390,5 +389,3 @@ protected:
 
     void put8(char) override;
 };
-
-#endif

@@ -20,27 +20,13 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2SYSTEM_H
-#define H2SYSTEM_H
+#pragma once
 
 #include <sstream>
 #include <iostream>
 #include <string>
-#include <list>
 
-#if defined(__SYMBIAN32__)
-#define VERBOSE(x)
-#elif defined(ANDROID)
-#include <android/log.h>
-namespace std
-{
-    static const char* android_endl = "\n";
-}
-#define endl android_endl
-#define COUT(x) { std::ostringstream osss; osss << x; __android_log_print(ANDROID_LOG_INFO, "SDLHeroes2", "%s", osss.str().c_str()); }
-#else
 #define COUT(x) { std::cerr << x << std::endl; }
-#endif
 
 #define VERBOSE(x) { COUT(System::GetTime() << ": [VERBOSE]\t" << __FUNCTION__ << ":  " << x); }
 #define ERROR(x) { COUT(System::GetTime() << ": [ERROR]\t" << __FUNCTION__ << ":  " << x); }
@@ -99,5 +85,3 @@ namespace System
 
     int GetRenderFlags();
 }
-
-#endif

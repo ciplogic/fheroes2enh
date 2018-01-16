@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2ICN_H
-#define H2ICN_H
+#pragma once
 
 #include "gamedefs.h"
 
@@ -941,5 +940,3 @@ namespace ICN
 
     int Get4Castle(int race);
 }
-
-#endif

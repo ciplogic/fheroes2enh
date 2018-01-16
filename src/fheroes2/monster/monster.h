@@ -20,8 +20,8 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2MONSTER_H
-#define H2MONSTER_H
+#pragma once
+
 
 #include <string>
 #include "payment.h"
@@ -256,4 +256,3 @@ StreamBase &operator<<(StreamBase &, const MonsterStaticData &);
 
 StreamBase &operator>>(StreamBase &, MonsterStaticData &);
 
-#endif

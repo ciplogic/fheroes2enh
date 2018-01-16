@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2M82_H
-#define H2M82_H
+#pragma once
 
 #include "gamedefs.h"
 
@@ -353,5 +352,3 @@ namespace M82
 
     int GetLOOP00XX(int);
 }
-
-#endif

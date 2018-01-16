@@ -2731,54 +2731,53 @@ void ActionToUpgradeArmyObject(Heroes &hero, u32 obj, s32 dst_index)
             break;
     }
 
-    if (mons.size())
+    if (mons.empty())
     {
-        // composite sprite
-        u32 ox = 0;
-        const Sprite &br = AGG::GetICN(ICN::STRIP, 12);
-        Surface sf(Size(br.w() * mons.size() + (mons.size() - 1) * 4, br.h()), false);
-
-        for (vector<Monster>::const_iterator
-                     it = mons.begin(); it != mons.end(); ++it)
-        {
-            br.Blit(ox, 0, sf);
-            switch (Monster(*it).GetRace())
-            {
-                case Race::KNGT:
-                    AGG::GetICN(ICN::STRIP, 4).Blit(ox + 6, 6, sf);
-                    break;
-                case Race::BARB:
-                    AGG::GetICN(ICN::STRIP, 5).Blit(ox + 6, 6, sf);
-                    break;
-                case Race::SORC:
-                    AGG::GetICN(ICN::STRIP, 6).Blit(ox + 6, 6, sf);
-                    break;
-                case Race::WRLK:
-                    AGG::GetICN(ICN::STRIP, 7).Blit(ox + 6, 6, sf);
-                    break;
-                case Race::WZRD:
-                    AGG::GetICN(ICN::STRIP, 8).Blit(ox + 6, 6, sf);
-                    break;
-                case Race::NECR:
-                    AGG::GetICN(ICN::STRIP, 9).Blit(ox + 6, 6, sf);
-                    break;
-                default:
-                    AGG::GetICN(ICN::STRIP, 10).Blit(ox + 6, 6, sf);
-                    break;
-            }
-            const Sprite &mon = AGG::GetICN((*it).GetUpgrade().ICNMonh(), 0);
-            mon.Blit(ox + 6 + mon.x(), 6 + mon.y(), sf);
-            ox += br.w() + 4;
-        }
-        Dialog::SpriteInfo(MP2::StringObject(obj), msg1, sf);
-
-        if (Settings::Get().ExtHeroRecalculateMovement())
-            hero.RecalculateMovePoints();
-    } else
-    {
-        PlaySoundFailure;
-        Message(MP2::StringObject(obj), msg2, Font::BIG, Dialog::OK);
+	    PlaySoundFailure;
+	    Message(MP2::StringObject(obj), msg2, Font::BIG, Dialog::OK);
+		return;
     }
+	// composite sprite
+	u32 ox = 0;
+	const Sprite &br = AGG::GetICN(ICN::STRIP, 12);
+	Surface sf(Size(br.w() * mons.size() + (mons.size() - 1) * 4, br.h()), false);
+
+	for (vector<Monster>::const_iterator
+	     it = mons.begin(); it != mons.end(); ++it)
+	{
+		br.Blit(ox, 0, sf);
+		switch (Monster(*it).GetRace())
+		{
+		case Race::KNGT:
+			AGG::GetICN(ICN::STRIP, 4).Blit(ox + 6, 6, sf);
+			break;
+		case Race::BARB:
+			AGG::GetICN(ICN::STRIP, 5).Blit(ox + 6, 6, sf);
+			break;
+		case Race::SORC:
+			AGG::GetICN(ICN::STRIP, 6).Blit(ox + 6, 6, sf);
+			break;
+		case Race::WRLK:
+			AGG::GetICN(ICN::STRIP, 7).Blit(ox + 6, 6, sf);
+			break;
+		case Race::WZRD:
+			AGG::GetICN(ICN::STRIP, 8).Blit(ox + 6, 6, sf);
+			break;
+		case Race::NECR:
+			AGG::GetICN(ICN::STRIP, 9).Blit(ox + 6, 6, sf);
+			break;
+		default:
+			AGG::GetICN(ICN::STRIP, 10).Blit(ox + 6, 6, sf);
+			break;
+		}
+		const Sprite &mon = AGG::GetICN((*it).GetUpgrade().ICNMonh(), 0);
+		mon.Blit(ox + 6 + mon.x(), 6 + mon.y(), sf);
+		ox += br.w() + 4;
+	}
+	Dialog::SpriteInfo(MP2::StringObject(obj), msg1, sf);
+
+	if (Settings::Get().ExtHeroRecalculateMovement())
+		hero.RecalculateMovePoints();
 }
 
 void ActionToMagellanMaps(Heroes &hero, u32 obj, s32 dst_index)
@@ -2826,7 +2825,7 @@ void ActionToEvent(Heroes &hero, u32 obj, s32 dst_index)
             hero.GetKingdom().AddFundsResource(event_maps->resources);
             PlaySoundSuccess;
             Dialog::ResourceInfo("", event_maps->message, event_maps->resources);
-        } else if (event_maps->message.size())
+        } else if (!event_maps->message.empty())
             Message("", event_maps->message, Font::BIG, Dialog::OK);
 
         const Artifact &art = event_maps->artifact;
@@ -3210,58 +3209,63 @@ void ActionToSphinx(Heroes &hero, u32 obj, s32 dst_index)
     Maps::Tiles &tile = world.GetTiles(dst_index);
     MapSphinx *riddle = static_cast<MapSphinx *>(world.GetMapObject(tile.GetObjectUID(obj)));
 
-    if (riddle && riddle->valid)
-    {
-        if (Dialog::YES == Dialog::Message("",
-                                           _("\"I have a riddle for you,\" the Sphinx says. \"Answer correctly, and you shall be rewarded. Answer incorrectly, and you shall be eaten. Do you accept the challenge?\""),
-                                           Font::BIG, Dialog::YES | Dialog::NO))
-        {
-            string header(_("The Sphinx asks you the following riddle: %{riddle}. Your answer?"));
-            StringReplace(header, "%{riddle}", riddle->message);
-            string answer;
-            Dialog::InputString(header, answer);
-            if (riddle->AnswerCorrect(answer))
-            {
-                const Funds &res = riddle->resources;
-                const Artifact art = riddle->artifact;
-                const string say = _(
-                        "Looking somewhat disappointed, the Sphinx sighs. You've answered my riddle so here's your reward. Now begone.");
-                const u32 count = res.GetValidItemsCount();
+	if (!riddle || !riddle->valid)
+	{
+		Message(MP2::StringObject(obj),
+			_("You come across a giant Sphinx. The Sphinx remains strangely quiet."), Font::BIG,
+			Dialog::OK);
+		return;
+	}
+	if (Dialog::YES !=
+		Dialog::Message("",
+			_("\"I have a riddle for you,\" the Sphinx says. \"Answer correctly, and you shall be rewarded. Answer incorrectly, and you shall be eaten. Do you accept the challenge?\""),
+			Font::BIG, Dialog::YES | Dialog::NO))
+	{
+		return;
+	}
+	string header(_("The Sphinx asks you the following riddle: %{riddle}. Your answer?"));
+	StringReplace(header, "%{riddle}", riddle->message);
+	string answer;
+	Dialog::InputString(header, answer);
+	if (riddle->AnswerCorrect(answer))
+	{
+		const Funds& res = riddle->resources;
+		const Artifact art = riddle->artifact;
+		const string say = _(
+			"Looking somewhat disappointed, the Sphinx sighs. You've answered my riddle so here's your reward. Now begone.");
+		const u32 count = res.GetValidItemsCount();
 
-                if (count)
-                {
-                    if (1 == count && res.gold && art.isValid())
-                        DialogWithArtifactAndGold("", say, art, res.gold);
-                    else
-                    {
-                        Dialog::ResourceInfo("", say, res);
-                        if (art.isValid()) Dialog::ArtifactInfo("", say, art);
-                    }
-                } else if (art.isValid()) Dialog::ArtifactInfo("", say, art);
+		if (count)
+		{
+			if (1 == count && res.gold && art.isValid())
+				DialogWithArtifactAndGold("", say, art, res.gold);
+			else
+			{
+				Dialog::ResourceInfo("", say, res);
+				if (art.isValid()) Dialog::ArtifactInfo("", say, art);
+			}
+		}
+		else if (art.isValid()) Dialog::ArtifactInfo("", say, art);
 
-                riddle->SetQuiet();
-                hero.SetVisited(dst_index, Visit::GLOBAL);
+		riddle->SetQuiet();
+		hero.SetVisited(dst_index, Visit::GLOBAL);
 
-                if (art.isValid())
-                    hero.PickupArtifact(art);
+		if (art.isValid())
+			hero.PickupArtifact(art);
 
-                if (count)
-                    hero.GetKingdom().AddFundsResource(res);
-            } else
-            {
-                Message("",
-                                _("\"You guessed incorrectly,\" the Sphinx says, smiling. The Sphinx swipes at you with a paw, knocking you to the ground. Another blow makes the world go black, and you know no more."),
-                                Font::BIG, Dialog::OK);
-                Battle::Result res;
-                res.army1 = Battle::RESULT_LOSS;
-                BattleLose(hero, res, true);
-            }
-        }
-    } else
-        Message(MP2::StringObject(obj),
-                        _("You come across a giant Sphinx. The Sphinx remains strangely quiet."), Font::BIG,
-                        Dialog::OK);
-
+		if (count)
+			hero.GetKingdom().AddFundsResource(res);
+	}
+	else
+	{
+		Message("",
+		        _("\"You guessed incorrectly,\" the Sphinx says, smiling. The Sphinx swipes at you with a paw, knocking you to the ground. Another blow makes the world go black, and you know no more."
+		        ),
+		        Font::BIG, Dialog::OK);
+		Battle::Result res;
+		res.army1 = Battle::RESULT_LOSS;
+		BattleLose(hero, res, true);
+	}
 }
 
 void ActionToBarrier(Heroes &hero, u32 obj, s32 dst_index)

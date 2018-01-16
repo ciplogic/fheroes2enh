@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2XMI_H
-#define H2XMI_H
+#pragma once
 
 namespace XMI
 {
@@ -51,5 +50,3 @@ namespace XMI
 
     int FromMUS(int);
 }
-
-#endif

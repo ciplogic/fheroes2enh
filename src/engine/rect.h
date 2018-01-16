@@ -19,8 +19,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef H2RECT_H
-#define H2RECT_H
+#pragma once
 
 #include <vector>
 #include <utility>
@@ -121,5 +120,3 @@ struct Rects : std::vector<Rect>
 
     Rect GetRect() const;
 };
-
-#endif
