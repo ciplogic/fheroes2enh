@@ -1624,6 +1624,38 @@ StreamBase &operator<<(StreamBase &msg, const Settings &conf)
                conf.players;
 }
 
+ByteVectorReader &operator>>(ByteVectorReader &msg, Settings &conf)
+{
+	string lang;
+
+	msg >> lang;
+
+	if (lang != "en" && lang != conf.force_lang && !conf.Unicode())
+	{
+		string msg("This is an saved game is localized for lang = ");
+		msg.append(lang);
+		msg.append(", and most of the messages will be displayed incorrectly.\n \n");
+		msg.append("(tip: set unicode = on)");
+		Message("Warning!", msg, Font::BIG, Dialog::OK);
+	}
+
+	int debug;
+	u32 opt_game = 0; // skip: settings
+
+					  // map file
+	msg >> conf.current_maps_file >>
+		conf.game_difficulty >> conf.game_type >>
+		conf.preferably_count_players >> debug >>
+		opt_game >> conf.opt_world >> conf.opt_battle >> conf.opt_addons >>
+		conf.players;
+
+#ifndef WITH_DEBUG
+	conf.debug = debug;
+#endif
+
+	return msg;
+}
+
 StreamBase &operator>>(StreamBase &msg, Settings &conf)
 {
     string lang;

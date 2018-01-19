@@ -111,6 +111,15 @@ ByteVectorReader &ByteVectorReader::operator>>(Size &v)
 	return *this >> v.w >> v.h;
 }
 
+ByteVectorReader& ByteVectorReader::operator>>(float& v)
+{
+	s32 intpart;
+	s32 decpart;
+	*this >> intpart >> decpart;
+	v = intpart + decpart / 100000000.0;
+	return *this;
+}
+
 ByteVectorReader & operator>>(ByteVectorReader & msg, u32 & val)
 {
 	val = msg.get32();

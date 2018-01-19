@@ -23,6 +23,7 @@
 #ifndef H2SETTINGS_H
 #define H2SETTINGS_H
 
+#include "ByteVectorReader.h"
 #include <list>
 #include <vector>
 #include <iomanip>
@@ -586,7 +587,8 @@ protected:
 private:
     friend StreamBase &operator<<(StreamBase &, const Settings &);
 
-    friend StreamBase &operator>>(StreamBase &, Settings &);
+	friend StreamBase &operator>>(StreamBase &, Settings &);
+    friend ByteVectorReader &operator>>(ByteVectorReader &, Settings &);
 
     Settings();
 
@@ -645,5 +647,6 @@ private:
 StreamBase &operator<<(StreamBase &, const Settings &);
 
 StreamBase &operator>>(StreamBase &, Settings &);
+ByteVectorReader &operator>>(ByteVectorReader &, Settings &);
 
 #endif

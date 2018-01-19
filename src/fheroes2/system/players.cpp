@@ -541,6 +541,25 @@ StreamBase &operator>>(StreamBase &msg, Players &players)
 
     return msg;
 }
+ByteVectorReader &operator>>(ByteVectorReader &msg, Players &players)
+{
+	int colors, current;
+	msg >> colors >> current;
+
+	players.clear();
+	players.current_color = current;
+	const Colors vcolors(colors);
+
+	for (u32 ii = 0; ii < vcolors.size(); ++ii)
+	{
+		Player *player = new Player();
+		msg >> *player;
+		_players[Color::GetIndex(player->GetColor())] = player;
+		players._items.push_back(player);
+	}
+
+	return msg;
+}
 
 bool Interface::PlayerInfo::operator==(const Player *p) const
 {

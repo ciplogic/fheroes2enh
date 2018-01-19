@@ -219,7 +219,9 @@ bool Game::Load(const string &fn)
 
     fz >> world >> settings >>
 		gameOverResult >> gameStatic >> monsterData >> end_check;
-	//*bfz >> world;
+	
+	//*bfz >> world>>settings >>
+		//gameOverResult >> gameStatic >> monsterData >> end_check;
     World::Get().PostFixLoad();
 
     if (fz.fail() || (end_check != SAV2ID2 && end_check != SAV2ID3))

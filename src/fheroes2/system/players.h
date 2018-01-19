@@ -23,6 +23,7 @@
 #ifndef H2PLAYERS_H
 #define H2PLAYERS_H
 
+#include "ByteVectorReader.h"
 #include <string>
 #include <vector>
 #include "bitmodes.h"
@@ -214,6 +215,7 @@ public:
 StreamBase &operator<<(StreamBase &, const Players &);
 
 StreamBase &operator>>(StreamBase &, Players &);
+ByteVectorReader &operator>>(ByteVectorReader &, Players &);
 
 namespace Interface
 {

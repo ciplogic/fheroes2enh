@@ -23,6 +23,7 @@
 #ifndef H2GAMEOVER_H
 #define H2GAMEOVER_H
 
+#include "ByteVectorReader.h"
 #include <string>
 
 namespace GameOver
@@ -73,6 +74,8 @@ namespace GameOver
 
         friend StreamBase &operator>>(StreamBase &, Result &);
 
+		friend ByteVectorReader &operator>>(ByteVectorReader & , Result & );
+
         Result();
 
         int colors;
@@ -83,6 +86,7 @@ namespace GameOver
     StreamBase &operator<<(StreamBase &, const Result &);
 
     StreamBase &operator>>(StreamBase &, Result &);
+	ByteVectorReader &operator>>(ByteVectorReader &, Result &);
 }
 
 #endif

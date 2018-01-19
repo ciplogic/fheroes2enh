@@ -46,6 +46,10 @@ public:
 	void setBigEndian(int value);
 	ByteVectorReader& operator>>(Size& v);
 
+
+
+	ByteVectorReader &operator>>(float &v);
+
 	template<class Type>
 	void readToVec(std::vector<Type> &v)
 	{
