@@ -1112,32 +1112,31 @@ void Army::Reset(bool soft)
 {
     Clean();
 
-    if (commander && commander->isHeroes())
-    {
-        const Monster mons1(commander->GetRace(), DWELLING_MONSTER1);
+    if (!commander || !commander->isHeroes())
+		return;
+	const Monster mons1(commander->GetRace(), DWELLING_MONSTER1);
 
-        if (soft)
-        {
-            const Monster mons2(commander->GetRace(), DWELLING_MONSTER2);
+	if (soft)
+	{
+		const Monster mons2(commander->GetRace(), DWELLING_MONSTER2);
 
-            switch (Rand::Get(1, 3))
-            {
-                case 1:
-                    JoinTroop(mons1, 3 * mons1.GetGrown());
-                    break;
-                case 2:
-                    JoinTroop(mons2, mons2.GetGrown() + mons2.GetGrown() / 2);
-                    break;
-                default:
-                    JoinTroop(mons1, 2 * mons1.GetGrown());
-                    JoinTroop(mons2, mons2.GetGrown());
-                    break;
-            }
-        } else
-        {
-            JoinTroop(mons1, 1);
-        }
-    }
+		switch (Rand::Get(1, 3))
+		{
+		case 1:
+			JoinTroop(mons1, 3 * mons1.GetGrown());
+			break;
+		case 2:
+			JoinTroop(mons2, mons2.GetGrown() + mons2.GetGrown() / 2);
+			break;
+		default:
+			JoinTroop(mons1, 2 * mons1.GetGrown());
+			JoinTroop(mons2, mons2.GetGrown());
+			break;
+		}
+	} else
+	{
+		JoinTroop(mons1, 1);
+	}
 }
 
 void Army::SetCommander(HeroBase *c)
