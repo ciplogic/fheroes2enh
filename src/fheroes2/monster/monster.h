@@ -22,7 +22,7 @@
 
 #pragma once
 
-
+#include "ByteVectorReader.h"
 #include <string>
 #include "payment.h"
 #include "gamedefs.h"
@@ -251,6 +251,7 @@ struct MonsterStaticData
 StreamBase &operator<<(StreamBase &, const Monster &);
 
 StreamBase &operator>>(StreamBase &, Monster &);
+ByteVectorReader &operator>>(ByteVectorReader &, Monster &);
 
 StreamBase &operator<<(StreamBase &, const MonsterStaticData &);
 

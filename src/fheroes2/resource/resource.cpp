@@ -631,3 +631,10 @@ StreamBase &operator>>(StreamBase &msg, cost_t &res)
                res.crystal >> res.gems >> res.gold;
 }
 
+ByteVectorReader &operator>>(ByteVectorReader &msg, cost_t &res)
+{
+	return msg >> res.wood >>
+		res.mercury >> res.ore >> res.sulfur >>
+		res.crystal >> res.gems >> res.gold;
+}
+

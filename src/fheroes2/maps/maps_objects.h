@@ -19,9 +19,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef H2MAPS_OBJECTS_H
-#define H2MAPS_OBJECTS_H
 
+#pragma once
+
+
+#include "ByteVectorReader.h"
 #include <vector>
 #include <string>
 #include "resource.h"
@@ -106,6 +108,7 @@ struct MapSphinx : MapObjectSimple
 StreamBase &operator<<(StreamBase &, const MapSphinx &);
 
 StreamBase &operator>>(StreamBase &, MapSphinx &);
+ByteVectorReader &operator>>(ByteVectorReader&, MapSphinx &);
 
 struct MapSign : MapObjectSimple
 {
@@ -121,6 +124,7 @@ struct MapSign : MapObjectSimple
 StreamBase &operator<<(StreamBase &, const MapSign &);
 
 StreamBase &operator>>(StreamBase &, MapSign &);
+ByteVectorReader &operator>>(ByteVectorReader&, MapSign &);
 
 struct MapResource : MapObjectSimple
 {
@@ -173,5 +177,5 @@ struct MapMonster : MapObjectSimple
 StreamBase &operator<<(StreamBase &, const MapMonster &);
 
 StreamBase &operator>>(StreamBase &, MapMonster &);
+ByteVectorReader &operator>>(ByteVectorReader &, MapMonster &);
 
-#endif

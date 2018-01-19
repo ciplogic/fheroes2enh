@@ -49,7 +49,7 @@ public:
 	template<class Type>
 	void readToVec(std::vector<Type> &v)
 	{
-		const u32 size = getLE32();
+		const u32 size = get32();
 		v.resize(size);
 		for (auto& it : v)
 			it.ReadFrom(*this);
@@ -58,7 +58,7 @@ public:
 	template<class Type>
 	ByteVectorReader &operator>>(std::vector<Type> &v)
 	{
-		const u32 size = getLE32();
+		const u32 size = get32();
 		v.resize(size);
 		for (auto& it : v)
 			*this >> it;
@@ -68,7 +68,7 @@ public:
 	template<class Type>
 	ByteVectorReader &operator>>(std::list<Type> &v)
 	{
-		const u32 size = getLE32();
+		const u32 size = get32();
 		v.resize(size);
 		for (auto& it : v)
 			*this >> it;

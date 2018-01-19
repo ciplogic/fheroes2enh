@@ -19,8 +19,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef H2TILES_H
-#define H2TILES_H
+
+#pragma once
+
 
 #include <list>
 #include "gamedefs.h"
@@ -30,6 +31,7 @@
 #include "artifact.h"
 #include "army_troop.h"
 #include "resource.h"
+#include "ByteVectorReader.h"
 
 class Sprite;
 
@@ -422,6 +424,7 @@ namespace Maps
         friend StreamBase &operator<<(StreamBase &, const Tiles &);
 
         friend StreamBase &operator>>(StreamBase &, Tiles &);
+		friend ByteVectorReader &operator>>(ByteVectorReader &, Tiles &);
         
         Addons addons_level1;
         Addons addons_level2; // 16
@@ -447,8 +450,10 @@ namespace Maps
     StreamBase &operator<<(StreamBase &, const Tiles &);
 
     StreamBase &operator>>(StreamBase &, TilesAddon &);
+	ByteVectorReader &operator>>(ByteVectorReader &, TilesAddon &);
 
     StreamBase &operator>>(StreamBase &, Tiles &);
+	ByteVectorReader &operator>>(ByteVectorReader &, Tiles &);
 }
 
-#endif
+

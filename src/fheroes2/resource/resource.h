@@ -120,6 +120,8 @@ StreamBase &operator<<(StreamBase &, const Funds &);
 void serializeTo(ByteVectorWriter &msg, Funds &res);
 
 StreamBase &operator>>(StreamBase &, cost_t &);
+ByteVectorReader &operator>>(ByteVectorReader &, cost_t &);
+
 StreamBase &operator>>(StreamBase &, Funds &);
 ByteVectorReader &operator>>(ByteVectorReader &, Funds &);
 

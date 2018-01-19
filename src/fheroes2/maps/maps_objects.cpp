@@ -222,6 +222,18 @@ StreamBase &operator>>(StreamBase &msg, MapSphinx &obj)
                obj.valid;
 }
 
+
+ByteVectorReader &operator>>(ByteVectorReader&msg, MapSphinx &obj)
+{
+	return msg >>
+		static_cast<MapObjectSimple &>(obj) >>
+		obj.resources >>
+		obj.artifact >>
+		obj.answers >>
+		obj.message >>
+		obj.valid;
+}
+
 MapSign::MapSign() : MapObjectSimple(MP2::OBJ_SIGN)
 {
 }
@@ -255,6 +267,13 @@ StreamBase &operator>>(StreamBase &msg, MapSign &obj)
                obj.message;
 }
 
+ByteVectorReader &operator>>(ByteVectorReader &msg, MapSign &obj)
+{
+	return msg >>
+		static_cast<MapObjectSimple &>(obj) >>
+		obj.message;
+}
+
 MapResource::MapResource() : MapObjectSimple(MP2::OBJ_RESOURCE)
 {
 }
@@ -271,6 +290,13 @@ StreamBase &operator>>(StreamBase &msg, MapResource &obj)
     return msg >>
                static_cast<MapObjectSimple &>(obj) >>
                obj.resource;
+}
+
+ByteVectorReader &operator>>(ByteVectorReader &msg, MapResource &obj)
+{
+	return msg >>
+		static_cast<MapObjectSimple &>(obj) >>
+		obj.resource;
 }
 
 MapArtifact::MapArtifact() : MapObjectSimple(MP2::OBJ_ARTIFACT), condition(0), extended(0)
@@ -324,6 +350,12 @@ StreamBase &operator>>(StreamBase &msg, MapArtifact &obj)
                static_cast<MapObjectSimple &>(obj) >>
                obj.artifact >> obj.condition >> obj.extended;
 }
+ByteVectorReader &operator>>(ByteVectorReader &msg, MapArtifact &obj)
+{
+	return msg >>
+		static_cast<MapObjectSimple &>(obj) >>
+		obj.artifact >> obj.condition >> obj.extended;
+}
 
 MapMonster::MapMonster() : MapObjectSimple(MP2::OBJ_MONSTER), condition(0), count(0)
 {
@@ -366,4 +398,11 @@ StreamBase &operator>>(StreamBase &msg, MapMonster &obj)
     return msg >>
                static_cast<MapObjectSimple &>(obj) >>
                obj.monster >> obj.condition >> obj.count;
+}
+
+ByteVectorReader &operator>>(ByteVectorReader &msg, MapMonster &obj)
+{
+	return msg >>
+		static_cast<MapObjectSimple &>(obj) >>
+		obj.monster >> obj.condition >> obj.count;
 }

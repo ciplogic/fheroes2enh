@@ -1095,6 +1095,11 @@ StreamBase &operator>>(StreamBase &msg, CapturedObject &obj)
     return msg >> obj.objcol >> obj.guardians >> obj.split;
 }
 
+ByteVectorReader& operator>>(ByteVectorReader&msg, CapturedObject &obj)
+{
+	return msg >> obj.objcol >> obj.guardians >> obj.split;
+}
+
 StreamBase &operator<<(StreamBase &msg, const MapObjects &objs)
 {
     msg << static_cast<u32>(objs.size());
