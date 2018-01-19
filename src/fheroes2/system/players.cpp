@@ -213,6 +213,26 @@ StreamBase &operator>>(StreamBase &msg, Focus &focus)
 
     return msg;
 }
+ByteVectorReader &operator>>(ByteVectorReader &msg, Focus &focus)
+{
+	s32 index;
+	msg >> focus.first >> index;
+
+	switch (focus.first)
+	{
+	case FOCUS_HEROES:
+		focus.second = world.GetHeroes(Maps::GetPoint(index));
+		break;
+	case FOCUS_CASTLE:
+		focus.second = world.GetCastle(Maps::GetPoint(index));
+		break;
+	default:
+		focus.second = nullptr;
+		break;
+	}
+
+	return msg;
+}
 
 StreamBase &operator<<(StreamBase &msg, const Player &player)
 {
@@ -242,6 +262,21 @@ StreamBase &operator>>(StreamBase &msg, Player &player)
                player.friends >>
                player.name >>
                player.focus;
+}
+
+ByteVectorReader& operator>>(ByteVectorReader&msg, Player &player)
+{
+	BitModes &modes = player._bitModes;
+
+	return msg >>
+		modes >>
+		player.id >>
+		player.control >>
+		player.color >>
+		player.race >>
+		player.friends >>
+		player.name >>
+		player.focus;
 }
 
 Players::Players() : current_color(0)

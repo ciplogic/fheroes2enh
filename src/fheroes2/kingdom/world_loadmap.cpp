@@ -525,7 +525,10 @@ bool World::LoadMapMP2(const string &filename)
             {
                 if (pblock[8])
                 {
-                    vec_rumors.push_back(Game::GetEncodeString(StreamBuf(&pblock[8], pblock.size() - 8).toString()));
+
+					StreamBuf bvr(&pblock[8], pblock.size() - 8);
+					std::string valueRumor = bvr.toString();
+                    vec_rumors.push_back(Game::GetEncodeString(valueRumor));
                 }
             }
         }

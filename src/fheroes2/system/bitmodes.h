@@ -24,6 +24,7 @@
 #define H2BITMODES_H
 
 #include "gamedefs.h"
+#include "ByteVectorReader.h"
 
 #define MODES_ALL 0xFFFFFFFF
 
@@ -58,6 +59,7 @@ protected:
     friend StreamBase &operator<<(StreamBase &, const BitModes &);
 
     friend StreamBase &operator>>(StreamBase &, BitModes &);
+	friend ByteVectorReader &operator>>(ByteVectorReader &, BitModes &);
 
     u32 modes;
 };
@@ -65,5 +67,6 @@ protected:
 StreamBase &operator<<(StreamBase &, const BitModes &);
 
 StreamBase &operator>>(StreamBase &, BitModes &);
+ByteVectorReader &operator>>(ByteVectorReader &, BitModes &);
 
 #endif

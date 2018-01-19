@@ -144,6 +144,7 @@ protected:
     friend StreamBase &operator<<(StreamBase &, const Player &);
 
     friend StreamBase &operator>>(StreamBase &, Player &);
+	friend ByteVectorReader &operator>>(ByteVectorReader &, Player &);
 
     int control;
     int color;
@@ -157,6 +158,7 @@ protected:
 StreamBase &operator<<(StreamBase &, const Player &);
 
 StreamBase &operator>>(StreamBase &, Player &);
+ByteVectorReader &operator>>(ByteVectorReader &, Player &);
 
 class Players  
 {

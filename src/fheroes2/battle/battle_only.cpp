@@ -86,6 +86,26 @@ StreamBase &operator<<(StreamBase &msg, const Battle::Only &b)
                b.player1 << b.player2;
 }
 
+ByteVectorReader& operator>>(ByteVectorReader&msg, Battle::Only &b)
+{
+	int id = 0;
+
+	msg >> id;
+	b.hero1 = world.GetHeroes(id);
+	if (b.hero1)
+		msg >> *b.hero1;
+
+	msg >> id;
+	b.hero2 = world.GetHeroes(id);
+	if (b.hero2)
+		msg >> *b.hero2;
+
+	msg >>
+		b.player1 >> b.player2;
+
+	return msg;
+}
+
 StreamBase &operator>>(StreamBase &msg, Battle::Only &b)
 {
     int id = 0;

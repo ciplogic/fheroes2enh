@@ -33,3 +33,9 @@ StreamBase &operator>>(StreamBase &msg, BitModes &b)
 {
     return msg >> b.modes;
 }
+
+
+ByteVectorReader &operator>>(ByteVectorReader &msg, BitModes &b)
+{
+	return msg >> b.modes;
+}

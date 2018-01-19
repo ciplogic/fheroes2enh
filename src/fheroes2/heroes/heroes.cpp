@@ -2066,6 +2066,33 @@ enum deprecated_t
     SCOUTER = 0x00000020,
     STUPID = 0x00000040
 };
+ByteVectorReader &operator>>(ByteVectorReader &msg, Heroes &hero)
+{
+	HeroBase &base = hero;
+	ColorBase &col = hero;
+
+	msg >> base >>
+		hero.name >>
+		col >>
+		hero.killer_color >>
+		hero.experience >>
+		hero.move_point_scale >>
+		hero.secondary_skills >>
+		hero.army >>
+		hero.hid >>
+		hero.portrait >>
+		hero.race >>
+		hero.save_maps_object >>
+		hero.path >>
+		hero.direction >>
+		hero.sprite_index >>
+		hero.patrol_center >>
+		hero.patrol_square >>
+		hero.visit_object;
+
+	hero.army.SetCommander(&hero);
+	return msg;
+}
 
 StreamBase &operator>>(StreamBase &msg, Heroes &hero)
 {
