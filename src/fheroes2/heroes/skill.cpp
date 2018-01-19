@@ -812,6 +812,11 @@ StreamBase &Skill::operator>>(StreamBase &msg, Primary &skill)
     return msg >> skill.attack >> skill.defense >> skill.knowledge >> skill.power;
 }
 
+ByteVectorReader &Skill::operator>>(ByteVectorReader &msg, Primary &skill)
+{
+	return msg >> skill.attack >> skill.defense >> skill.knowledge >> skill.power;
+}
+
 Surface GetBarBackgroundSprite()
 {
     const Rect rt(26, 21, 32, 32);

@@ -41,6 +41,11 @@ StreamBase &operator>>(StreamBase &msg, MapObjectSimple &obj)
     return msg >> obj.type >> obj.uid >> static_cast<MapPosition &>(obj);
 }
 
+ByteVectorReader &operator>>(ByteVectorReader &msg, MapObjectSimple &obj)
+{
+	return msg >> obj.type >> obj.uid >> static_cast<MapPosition &>(obj);
+}
+
 MapEvent::MapEvent() : MapObjectSimple(MP2::OBJ_EVENT), computer(false), cancel(true), colors(0)
 {
 }
@@ -181,6 +186,18 @@ StreamBase &operator>>(StreamBase &msg, MapEvent &obj)
                obj.cancel >>
                obj.colors >>
                obj.message;
+}
+
+ByteVectorReader &operator>>(ByteVectorReader &msg, MapEvent &obj)
+{
+	return msg >>
+		static_cast<MapObjectSimple &>(obj) >>
+		obj.resources >>
+		obj.artifact >>
+		obj.computer >>
+		obj.cancel >>
+		obj.colors >>
+		obj.message;
 }
 
 StreamBase &operator<<(StreamBase &msg, const MapSphinx &obj)

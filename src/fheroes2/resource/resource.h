@@ -23,6 +23,7 @@
 
 #include "serialize.h"
 #include "ByteVectorWriter.h"
+#include "ByteVectorReader.h"
 #include "rect.h"
 
 struct cost_t
@@ -120,6 +121,7 @@ void serializeTo(ByteVectorWriter &msg, Funds &res);
 
 StreamBase &operator>>(StreamBase &, cost_t &);
 StreamBase &operator>>(StreamBase &, Funds &);
+ByteVectorReader &operator>>(ByteVectorReader &, Funds &);
 
 namespace Resource
 {

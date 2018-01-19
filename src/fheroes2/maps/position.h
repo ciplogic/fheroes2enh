@@ -25,6 +25,8 @@
 
 #include "gamedefs.h"
 
+#include "ByteVectorReader.h"
+
 class MapPosition
 {
 public:
@@ -48,6 +50,7 @@ protected:
     friend StreamBase &operator<<(StreamBase &, const MapPosition &);
 
     friend StreamBase &operator>>(StreamBase &, MapPosition &);
+	friend ByteVectorReader &operator>>(ByteVectorReader &, MapPosition &);
 
     Point center;
 };
@@ -55,5 +58,6 @@ protected:
 StreamBase &operator<<(StreamBase &, const MapPosition &);
 
 StreamBase &operator>>(StreamBase &, MapPosition &);
+ByteVectorReader &operator>>(ByteVectorReader &, MapPosition &);
 
 #endif

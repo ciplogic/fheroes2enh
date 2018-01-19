@@ -1138,8 +1138,93 @@ StreamBase &operator<<(StreamBase &msg, const MapObjects &objs)
 	}
     return msg;
 }
-
 StreamBase &operator>>(StreamBase &msg, MapObjects &objs)
+{
+    u32 size = 0;
+    msg >> size;
+
+    objs.clear();
+
+    for (u32 ii = 0; ii < size; ++ii)
+    {
+        s32 index;
+        int type;
+        msg >> index >> type;
+
+        switch (type)
+        {
+            case MP2::OBJ_EVENT:
+            {
+                auto *ptr = new MapEvent();
+                msg >> *ptr;
+                objs[index] = ptr;
+            }
+                break;
+
+            case MP2::OBJ_SPHINX:
+            {
+                auto *ptr = new MapSphinx();
+                msg >> *ptr;
+                objs[index] = ptr;
+            }
+                break;
+
+            case MP2::OBJ_SIGN:
+            {
+                auto *ptr = new MapSign();
+                msg >> *ptr;
+                objs[index] = ptr;
+            }
+                break;
+
+            case MP2::OBJ_RESOURCE:
+            {
+                auto *ptr = new MapResource();
+                if (FORMAT_VERSION_3269 > Game::GetLoadVersion())
+                    msg >> *static_cast<MapObjectSimple *>(ptr);
+                else
+                    msg >> *ptr;
+                objs[index] = ptr;
+            }
+                break;
+
+            case MP2::OBJ_ARTIFACT:
+            {
+                auto *ptr = new MapArtifact();
+                if (FORMAT_VERSION_3269 > Game::GetLoadVersion())
+                    msg >> *static_cast<MapObjectSimple *>(ptr);
+                else
+                    msg >> *ptr;
+                objs[index] = ptr;
+            }
+                break;
+
+            case MP2::OBJ_MONSTER:
+            {
+                auto *ptr = new MapMonster();
+                if (FORMAT_VERSION_3269 > Game::GetLoadVersion())
+                    msg >> *static_cast<MapObjectSimple *>(ptr);
+                else
+                    msg >> *ptr;
+                objs[index] = ptr;
+            }
+                break;
+
+            default:
+            {
+                auto *ptr = new MapObjectSimple();
+                msg >> *ptr;
+                objs[index] = ptr;
+            }
+                break;
+        }
+    }
+
+    return msg;
+}
+
+
+ByteVectorReader &operator>>(ByteVectorReader &msg, MapObjects &objs)
 {
     u32 size = 0;
     msg >> size;

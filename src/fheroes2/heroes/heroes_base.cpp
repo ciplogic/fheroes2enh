@@ -548,3 +548,22 @@ StreamBase &operator>>(StreamBase &msg, HeroBase &hero)
 
     return msg;
 }
+
+ByteVectorReader &operator>>(ByteVectorReader &msg, HeroBase &hero)
+{
+	msg >>
+		static_cast<Skill::Primary &>(hero) >>
+		static_cast<MapPosition &>(hero) >>
+		// modes
+		hero.modes >>
+		hero.magic_point >> hero.move_point >>
+		hero.spell_book >> hero.bag_artifacts;
+
+	if (FORMAT_VERSION_3269 > Game::GetLoadVersion())
+	{
+		if (hero.bag_artifacts.size() < HEROESMAXARTIFACT)
+			hero.bag_artifacts.resize(HEROESMAXARTIFACT, Artifact::UNKNOWN);
+	}
+
+	return msg;
+}

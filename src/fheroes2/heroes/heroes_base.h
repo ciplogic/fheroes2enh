@@ -31,6 +31,8 @@
 #include "position.h"
 #include "players.h"
 
+#include "ByteVectorReader.h"
+
 class Army;
 
 class Castle;
@@ -148,6 +150,7 @@ protected:
     friend StreamBase &operator<<(StreamBase &, const HeroBase &);
 
     friend StreamBase &operator>>(StreamBase &, HeroBase &);
+	friend ByteVectorReader &operator>>(ByteVectorReader &, HeroBase &);
 
     u32 magic_point;
     u32 move_point;
@@ -167,5 +170,6 @@ struct HeroHasArtifact : public binary_function<const HeroBase *, Artifact, bool
 StreamBase &operator<<(StreamBase &, const HeroBase &);
 
 StreamBase &operator>>(StreamBase &, HeroBase &);
+ByteVectorReader &operator>>(ByteVectorReader &, HeroBase &);
 
 #endif

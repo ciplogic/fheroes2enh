@@ -211,6 +211,7 @@ namespace Skill
         friend StreamBase &operator<<(StreamBase &, const Primary &);
 
         friend StreamBase &operator>>(StreamBase &, Primary &);
+		friend ByteVectorReader &operator>>(ByteVectorReader &, Primary &);
 
         int attack;
         int defense;
@@ -221,6 +222,7 @@ namespace Skill
     StreamBase &operator<<(StreamBase &, const Primary &);
 
     StreamBase &operator>>(StreamBase &, Primary &);
+	ByteVectorReader &operator>>(ByteVectorReader &, Primary &);
 }
 
 #include "interface_itemsbar.h"

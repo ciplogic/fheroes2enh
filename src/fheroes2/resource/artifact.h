@@ -223,6 +223,7 @@ private:
     friend StreamBase &operator<<(StreamBase &, const Artifact &);
 
     friend StreamBase &operator>>(StreamBase &, Artifact &);
+	friend ByteVectorReader &operator>>(ByteVectorReader &, Artifact &);
 
     int id;
     int ext;
@@ -231,6 +232,7 @@ private:
 StreamBase &operator<<(StreamBase &, const Artifact &);
 
 StreamBase &operator>>(StreamBase &, Artifact &);
+ByteVectorReader &operator>>(ByteVectorReader &, Artifact &);
 
 u32 GoldInsteadArtifact(int);
 

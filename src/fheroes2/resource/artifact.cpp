@@ -702,6 +702,11 @@ StreamBase &operator>>(StreamBase &msg, Artifact &art)
     return msg >> art.id >> art.ext;
 }
 
+ByteVectorReader &operator>>(ByteVectorReader &msg, Artifact &art)
+{
+	return msg >> art.id >> art.ext;
+}
+
 BagArtifacts::BagArtifacts() : vector<Artifact>(HEROESMAXARTIFACT, Artifact::UNKNOWN)
 {
 }

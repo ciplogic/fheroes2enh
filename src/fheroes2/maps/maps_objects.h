@@ -51,6 +51,7 @@ protected:
     friend StreamBase &operator<<(StreamBase &, const MapObjectSimple &);
 
     friend StreamBase &operator>>(StreamBase &, MapObjectSimple &);
+	friend ByteVectorReader &operator>>(ByteVectorReader &, MapObjectSimple &);
 
     u32 uid;
     int type;
@@ -59,6 +60,7 @@ protected:
 StreamBase &operator<<(StreamBase &, const MapObjectSimple &);
 
 StreamBase &operator>>(StreamBase &, MapObjectSimple &);
+ByteVectorReader &operator>>(ByteVectorReader &, MapObjectSimple &);
 
 struct MapEvent : MapObjectSimple
 {
