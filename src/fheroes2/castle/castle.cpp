@@ -2549,6 +2549,31 @@ StreamBase &operator>>(StreamBase &msg, Castle &castle)
     return msg;
 }
 
+ByteVectorReader &operator>>(ByteVectorReader &msg, Castle &castle)
+{
+	ColorBase &color = castle;
+	u32 dwellingcount;
+
+	msg >>
+		static_cast<MapPosition &>(castle) >>
+		castle.modes >>
+		castle.race >>
+		castle.building >>
+		castle.captain >>
+		color >>
+		castle.name >>
+		castle.mageguild;
+
+	msg >> dwellingcount;
+	for (u32 ii = 0; ii < dwellingcount; ++ii)
+		msg >> castle.dwelling[ii];
+
+	msg >> castle.army;
+	castle.army.SetCommander(&castle.captain);
+
+	return msg;
+}
+
 StreamBase &operator<<(StreamBase &msg, const VecCastles &castles)
 {
     msg << static_cast<u32>(castles.size());
@@ -2576,6 +2601,23 @@ StreamBase &operator>>(StreamBase &msg, VecCastles &castles)
     return msg;
 }
 
+ByteVectorReader &operator>>(ByteVectorReader &msg, VecCastles &castles)
+{
+	s32 index;
+	u32 size;
+	msg >> size;
+
+	castles.resize(size, nullptr);
+
+	for (auto &castle : castles)
+	{
+		msg >> index;
+		castle = (index < 0 ? nullptr : world.GetCastle(Maps::GetPoint(index)));
+	}
+
+	return msg;
+}
+
 StreamBase &operator<<(StreamBase &msg, const AllCastles &castles)
 {
     msg << static_cast<u32>(castles.size());
@@ -2601,6 +2643,23 @@ StreamBase &operator>>(StreamBase &msg, AllCastles &castles)
     }
 
     return msg;
+}
+
+ByteVectorReader &operator>>(ByteVectorReader &msg, AllCastles &castles)
+{
+	u32 size;
+	msg >> size;
+
+	castles.clear();
+	castles.resize(size, nullptr);
+
+	for (auto& castle : castles)
+	{
+		castle = new Castle();
+		msg >> *castle;
+	}
+
+	return msg;
 }
 
 void Castle::SwapCastleHeroes(CastleHeroes &heroes)

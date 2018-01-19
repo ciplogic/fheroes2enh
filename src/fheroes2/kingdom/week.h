@@ -20,8 +20,8 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2WEEK_H
-#define H2WEEK_H
+#pragma once
+
 
 #include "monster.h"
 
@@ -75,5 +75,4 @@ struct Week : pair<int, int>
 };
 
 StreamBase &operator>>(StreamBase &, Week &);
-
-#endif
+ByteVectorReader &operator>>(ByteVectorReader &sb, Week &st);

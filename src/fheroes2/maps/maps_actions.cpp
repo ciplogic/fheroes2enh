@@ -37,6 +37,11 @@ StreamBase &operator>>(StreamBase &sb, ActionSimple &st)
     return sb >> st.type >> st.uid;
 }
 
+ByteVectorReader &operator>>(ByteVectorReader &sb, ActionSimple &st)
+{
+	return sb >> st.type >> st.uid;
+}
+
 ActionSimple::~ActionSimple() = default;
 
 StreamBase &operator<<(StreamBase &sb, const ActionResources &st)
@@ -200,6 +205,69 @@ StreamBase &operator>>(StreamBase &sb, ListActions &st)
     }
 
     return sb;
+}
+
+ByteVectorReader &operator>>(ByteVectorReader &sb, ListActions &st)
+{
+	u32 size = 0;
+	sb >> size;
+
+	st.clear();
+
+	for (u32 ii = 0; ii < size; ++ii)
+	{
+		int type;
+		sb >> type;
+
+		switch (type)
+		{
+		case ACTION_DEFAULT:
+		{
+			auto *ptr = new ActionDefault();
+			sb >> *ptr;
+			st.push_back(ptr);
+		}
+		break;
+		case ACTION_ACCESS:
+		{
+			auto *ptr = new ActionAccess();
+			sb >> *ptr;
+			st.push_back(ptr);
+		}
+		break;
+		case ACTION_MESSAGE:
+		{
+			auto *ptr = new ActionMessage();
+			sb >> *ptr;
+			st.push_back(ptr);
+		}
+		break;
+		case ACTION_RESOURCES:
+		{
+			auto *ptr = new ActionResources();
+			sb >> *ptr;
+			st.push_back(ptr);
+		}
+		break;
+		case ACTION_ARTIFACT:
+		{
+			auto *ptr = new ActionArtifact();
+			sb >> *ptr;
+			st.push_back(ptr);
+		}
+		break;
+
+		default:
+		{
+			auto *ptr = new ActionSimple();
+			sb >> *ptr;
+			st.push_back(ptr);
+		}
+		break;
+		}
+	}
+
+	return sb;
 }
 
 bool ActionAccess::Action(ActionAccess *act, s32 index, Heroes &hero)

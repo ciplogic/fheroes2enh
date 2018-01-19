@@ -19,11 +19,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef H2MAPSFILEINFO_H
-#define H2MAPSFILEINFO_H
+
+#pragma once
+
 
 #include <vector>
 #include "gamedefs.h"
+#include "ByteVectorReader.h"
 
 namespace Maps
 {
@@ -125,10 +127,9 @@ namespace Maps
     StreamBase &operator<<(StreamBase &, const FileInfo &);
 
     StreamBase &operator>>(StreamBase &, FileInfo &);
+	ByteVectorReader &operator>>(ByteVectorReader &, FileInfo &);
 }
 
 typedef vector<Maps::FileInfo> MapsFileInfoList;
 
 bool PrepareMapsFileInfoList(MapsFileInfoList &, bool multi);
-
-#endif

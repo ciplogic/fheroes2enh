@@ -816,6 +816,17 @@ StreamBase &operator>>(StreamBase &msg, Kingdoms &obj)
     return msg;
 }
 
+ByteVectorReader &operator>>(ByteVectorReader &msg, Kingdoms &obj)
+{
+	u32 kingdomscount;
+	msg >> kingdomscount; // FIXME: check kingdomscount
+
+	for (u32 ii = 0; ii < kingdomscount; ++ii)
+		msg >> obj.kingdoms[ii];
+
+	return msg;
+}
+
 StreamBase &operator>>(StreamBase &sb, LastLoseHero &st)
 {
     return sb >> st.first >> st.second;

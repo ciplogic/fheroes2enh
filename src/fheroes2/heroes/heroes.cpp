@@ -2178,3 +2178,20 @@ StreamBase &operator>>(StreamBase &msg, AllHeroes &heroes)
 
     return msg;
 }
+
+ByteVectorReader &operator>>(ByteVectorReader &msg, AllHeroes &heroes)
+{
+	u32 size;
+	msg >> size;
+
+	heroes.clear();
+	heroes.resize(size, nullptr);
+
+	for (auto& heroe : heroes)
+	{
+		heroe = new Heroes();
+		msg >> *heroe;
+	}
+
+	return msg;
+}

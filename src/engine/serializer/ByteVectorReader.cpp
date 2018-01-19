@@ -32,6 +32,18 @@ u32 ByteVectorReader::getLE32()
 	return lo + (hi << 16);
 }
 
+u16 ByteVectorReader::get16()
+{
+	u16 value = _isBigEndian ? getBE16() : getLE16();
+	return value;
+}
+
+u32 ByteVectorReader::get32()
+{
+	u32 value = _isBigEndian?getBE32():getLE32();
+	return value;
+}
+
 u32 ByteVectorReader::getBE16()
 {
 	u32 lo = Get8();
@@ -88,9 +100,20 @@ std::string ByteVectorReader::toString(int sizeBlock)
 	return text;
 }
 
+void ByteVectorReader::setBigEndian(int value)
+{
+	_isBigEndian = value;
+}
+
+
+ByteVectorReader &ByteVectorReader::operator>>(Size &v)
+{
+	return *this >> v.w >> v.h;
+}
+
 ByteVectorReader & operator>>(ByteVectorReader & msg, u32 & val)
 {
-	val = msg.getLE32();
+	val = msg.get32();
 	return msg;
 }
 
@@ -102,7 +125,7 @@ ByteVectorReader & operator>>(ByteVectorReader & msg, bool &v)
 
 ByteVectorReader & operator>>(ByteVectorReader & msg, std::string &v)
 {
-	u32 size = msg.getLE32();
+	u32 size = msg.get32();
 	v.resize(size);
 
 	for (char &it : v)
@@ -111,14 +134,35 @@ ByteVectorReader & operator>>(ByteVectorReader & msg, std::string &v)
 	return msg;
 }
 
+ByteVectorReader & operator>>(ByteVectorReader &msg, u8 &val)
+{
+	val = msg.Get8();
+	return msg;
+}
+
+ByteVectorReader & operator>>(ByteVectorReader &msg, s8 &val)
+{
+	val = msg.Get8();
+	return msg;
+}
+ByteVectorReader & operator>>(ByteVectorReader &msg, char &val)
+{
+	val = msg.Get8();
+	return msg;
+}
+ByteVectorReader & operator>>(ByteVectorReader &msg, u16 &val)
+{
+	val = msg.get16();
+	return msg;
+}
 ByteVectorReader & operator>>(ByteVectorReader &msg, s16 &val)
 {
-	val = msg.getLE16();
+	val = msg.get16();
 	return msg;
 }
 ByteVectorReader & operator>>(ByteVectorReader &msg, s32 &val)
 {
-	val = msg.getLE32();
+	val = msg.get32();
 	return msg;
 }
 ByteVectorReader & operator>>(ByteVectorReader & msg, Point &v)

@@ -9,10 +9,7 @@ BinaryFileReader::BinaryFileReader()
 
 BinaryFileReader::~BinaryFileReader()
 {
-    if(!_file)
-		return;
-	fclose(_file);
-	_file = nullptr;
+	close();
 }
 
 bool BinaryFileReader::open(const std::string& cs, const char* rb)
@@ -98,4 +95,26 @@ void BinaryFileReader::skip(s32 pos) const
 u32 BinaryFileReader::tell() const
 {
     return ftell(_file);
+}
+
+void BinaryFileReader::close()
+{
+	if (!_file)
+		return;
+	fclose(_file);
+	_file = nullptr;
+}
+
+std::vector<u8> readFileBytes(std::string fileName)
+{
+	std::vector<u8> result;
+	BinaryFileReader reader;
+	if(!reader.open(fileName, "rb"))
+	{
+		return result;
+	}
+	int fileSize = reader.size();
+	reader.seek(0);
+	result = reader.getRaw(fileSize);
+	return result;
 }

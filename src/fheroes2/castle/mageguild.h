@@ -25,6 +25,7 @@
 
 #include "gamedefs.h"
 #include "spell_storage.h"
+#include "ByteVectorReader.h"
 
 class Castle;
 
@@ -45,7 +46,8 @@ public:
 private:
     friend StreamBase &operator<<(StreamBase &, const MageGuild &);
 
-    friend StreamBase &operator>>(StreamBase &, MageGuild &);
+	friend StreamBase &operator>>(StreamBase &, MageGuild &);
+    friend ByteVectorReader &operator>>(ByteVectorReader &, MageGuild &);
 
     SpellStorage general;
     SpellStorage library;
@@ -54,6 +56,7 @@ private:
 StreamBase &operator<<(StreamBase &, const MageGuild &);
 
 StreamBase &operator>>(StreamBase &, MageGuild &);
+ByteVectorReader &operator>>(ByteVectorReader &, MageGuild &);
 
 class RowSpells
 {

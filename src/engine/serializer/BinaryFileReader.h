@@ -1,5 +1,5 @@
-#ifndef BinaryFileReader_H
-#define BinaryFileReader_H
+#pragma once
+
 
 #include "types.h"
 #include <vector>
@@ -25,6 +25,8 @@ public:
     u32 getBE32();
     void skip(s32 pos) const;
     u32 tell() const;
+
+	void close();
 };
 
-#endif
+std::vector<u8> readFileBytes(std::string fileName);

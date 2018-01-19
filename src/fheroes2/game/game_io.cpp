@@ -33,6 +33,8 @@
 #include "game_over.h"
 #include "game_static.h"
 #include "game_io.h"
+#include "ByteVectorReader.h"
+#include "BinaryFileReader.h"
 
 static u16 SAV2ID2 = 0xFF02;
 static u16 SAV2ID3 = 0xFF03;
@@ -77,6 +79,10 @@ namespace Game
     {
         return msg >> hdr.status >> hdr.info;
     }
+	ByteVectorReader &operator>>(ByteVectorReader &msg, HeaderSAV &hdr)
+	{
+		return msg >> hdr.status >> hdr.info;
+	}
 }
 
 bool Game::Save(const string &fn)
@@ -119,22 +125,26 @@ bool Game::Save(const string &fn)
     return !fz.fail() && fz.write(fn, true);
 }
 
+//#define OLDMETHOD
+
 bool Game::Load(const string &fn)
 {
     Settings &conf = Settings::Get();
     // loading info
     ShowLoadMapsText();
 
-    StreamFile fs;
-    fs.setbigendian(true);
-
-    if (!fs.open(fn, "rb"))
-    {
-        return false;
-    }
-
+	auto fileVector = readFileBytes(fn);
+	if (fileVector.empty())
+	{
+		return false;
+	}
+	ByteVectorReader byteFs(fileVector);
+	byteFs.setBigEndian(true);
     char major, minor;
-    fs >> major >> minor;
+
+	byteFs >> major >> minor;
+
+
     const u16 savid = (static_cast<u16>(major) << 8) | static_cast<u16>(minor);
 
     // check version sav file
@@ -148,22 +158,37 @@ bool Game::Load(const string &fn)
     HeaderSAV header;
 
     // read raw info
-    fs >> strver >> binver >> header;
-    size_t offset = fs.tell();
-    fs.close();
+	byteFs >> strver >> binver >> header;
+	size_t offset = byteFs.tell();
+
 
     if(header.status & HeaderSAV::IS_COMPRESS)
     {
 		return false;
     }
 
-    ZStreamFile fz;
+	ZStreamFile fz;
+
     fz.setbigendian(true);
 
     if (!fz.read(fn, offset))
     {
         return false;
     }
+	fileVector = readFileBytes(fn);
+	if (fileVector.empty())
+	{
+		return false;
+	}
+	sp<ByteVectorReader> bfz = make_shared<ByteVectorReader>(fileVector);
+	{
+    	bfz->setBigEndian(true);
+		bfz->seek(offset);
+		int size = bfz->get32();
+		fileVector = bfz->getRaw(size);
+		bfz = make_shared<ByteVectorReader>(fileVector);
+		bfz->setBigEndian(true);
+	}
 
 	if ((header.status & HeaderSAV::IS_LOYALTY) && !conf.PriceLoyaltyVersion())
 	{
@@ -171,6 +196,8 @@ bool Game::Load(const string &fn)
 	}
 
     fz >> binver;
+
+	*bfz >> binver;
 
     // check version: false
     if (binver > CURRENT_FORMAT_VERSION || binver < LAST_FORMAT_VERSION)
@@ -192,7 +219,7 @@ bool Game::Load(const string &fn)
 
     fz >> world >> settings >>
 		gameOverResult >> gameStatic >> monsterData >> end_check;
-
+	//*bfz >> world;
     World::Get().PostFixLoad();
 
     if (fz.fail() || (end_check != SAV2ID2 && end_check != SAV2ID3))

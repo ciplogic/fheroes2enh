@@ -54,6 +54,7 @@ protected:
     friend StreamBase &operator<<(StreamBase &, const ActionSimple &);
 
     friend StreamBase &operator>>(StreamBase &, ActionSimple &);
+	friend ByteVectorReader &operator>>(ByteVectorReader&, ActionSimple &);
 
     u32 uid;
     int type;
@@ -62,6 +63,7 @@ protected:
 StreamBase &operator<<(StreamBase &, const ActionSimple &);
 
 StreamBase &operator>>(StreamBase &, ActionSimple &);
+ByteVectorReader &operator>>(ByteVectorReader &, ActionSimple &);
 
 struct ActionMessage : ActionSimple
 {

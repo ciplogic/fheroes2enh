@@ -24,6 +24,7 @@
 #include <vector>
 #include <map>
 #include <string>
+#include "ByteVectorReader.h"
 #include "gamedefs.h"
 #include "maps.h"
 #include "maps_tiles.h"
@@ -152,6 +153,7 @@ struct EventDate
 StreamBase &operator<<(StreamBase &, const EventDate &);
 
 StreamBase &operator>>(StreamBase &, EventDate &);
+ByteVectorReader &operator>>(ByteVectorReader &, EventDate &);
 
 typedef vector<string> Rumors;
 typedef list<EventDate> EventsDate;
@@ -321,6 +323,7 @@ private:
     friend StreamBase &operator<<(StreamBase &, const World &);
 
     friend StreamBase &operator>>(StreamBase &, World &);
+	friend ByteVectorReader &operator>>(ByteVectorReader &, World &);
 
     MapsTiles vec_tiles;
     AllHeroes vec_heroes;
@@ -359,6 +362,7 @@ StreamBase &operator>>(StreamBase &, World &);
 StreamBase &operator<<(StreamBase &, const ListActions &);
 
 StreamBase &operator>>(StreamBase &, ListActions &);
+ByteVectorReader &operator>>(ByteVectorReader &, ListActions &);
 
 StreamBase &operator<<(StreamBase &, const MapObjects &);
 

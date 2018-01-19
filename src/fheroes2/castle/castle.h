@@ -30,6 +30,7 @@
 #include "sprite.h"
 #include "castle_heroes.h"
 #include "position.h"
+#include "ByteVectorReader.h"
 
 class Heroes;
 namespace Maps
@@ -301,6 +302,8 @@ private:
     friend StreamBase &operator<<(StreamBase &, const Castle &);
 
     friend StreamBase &operator>>(StreamBase &, Castle &);
+	friend ByteVectorReader &operator>>(ByteVectorReader &, Castle &);
+
 
 
     int race;
@@ -368,13 +371,17 @@ struct AllCastles : VecCastles
 StreamBase &operator<<(StreamBase &, const VecCastles &);
 
 StreamBase &operator>>(StreamBase &, VecCastles &);
+ByteVectorReader &operator>>(ByteVectorReader &, VecCastles &);
+
 
 StreamBase &operator<<(StreamBase &, const AllCastles &);
 
 StreamBase &operator>>(StreamBase &, AllCastles &);
+ByteVectorReader &operator>>(ByteVectorReader &, AllCastles &);
 
 StreamBase &operator<<(StreamBase &, const Castle &);
 
 StreamBase &operator>>(StreamBase &, Castle &);
+ByteVectorReader &operator>>(ByteVectorReader &, Castle &);
 
 #endif

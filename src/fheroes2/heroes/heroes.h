@@ -20,8 +20,8 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2HEROES_H
-#define H2HEROES_H
+#pragma once
+
 
 #include <string>
 #include <vector>
@@ -407,5 +407,5 @@ StreamBase &operator>>(StreamBase &, Heroes &);
 StreamBase &operator<<(StreamBase &, const AllHeroes &);
 
 StreamBase &operator>>(StreamBase &, AllHeroes &);
+ByteVectorReader &operator>>(ByteVectorReader &msg, AllHeroes &heroes);
 
-#endif
