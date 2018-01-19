@@ -94,3 +94,13 @@ StreamBase &operator>>(StreamBase &msg, UltimateArtifact &ultimate)
 
     return msg;
 }
+
+ByteVectorReader &operator>>(ByteVectorReader &msg, UltimateArtifact &ultimate)
+{
+	Artifact &artifact = ultimate;
+	msg >> artifact >> ultimate.index >> ultimate.isfound;
+
+	ultimate.MakeSurface();
+
+	return msg;
+}

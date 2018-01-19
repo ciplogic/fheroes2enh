@@ -25,8 +25,6 @@
 
 #include "serialize.h"
 
-
-
 class ZStreamFile : public StreamBuf
 {
 public:

@@ -152,12 +152,10 @@ bool Game::Load(const string &fn)
     size_t offset = fs.tell();
     fs.close();
 
-#ifndef WITH_ZLIB
     if(header.status & HeaderSAV::IS_COMPRESS)
     {
-    return false;
+		return false;
     }
-#endif
 
     ZStreamFile fz;
     fz.setbigendian(true);
@@ -167,13 +165,11 @@ bool Game::Load(const string &fn)
         return false;
     }
 
-    if ((header.status & HeaderSAV::IS_LOYALTY) &&
-        !conf.PriceLoyaltyVersion())
-        Message("Warning",
-                        _("This file is saved in the \"Price Loyalty\" version.\nSome items may be unavailable."),
-                        Font::BIG, Dialog::OK);
+	if ((header.status & HeaderSAV::IS_LOYALTY) && !conf.PriceLoyaltyVersion())
+	{
+		Message("Warning", _("This file is saved in the \"Price Loyalty\" version.\nSome items may be unavailable."), Font::BIG, Dialog::OK);
+	}
 
-    //SaveMemToFile(std::vector<u8>(fz.data(), fz.data() + fz.size()), "gdata.bin");
     fz >> binver;
 
     // check version: false
@@ -188,9 +184,14 @@ bool Game::Load(const string &fn)
     }
     SetLoadVersion(binver);
     u16 end_check = 0;
+	auto& world = World::Get();
+	auto& settings = Settings::Get();
+	auto& gameOverResult= GameOver::Result::Get();
+	auto& gameStatic = GameStatic::Data::Get();
+	auto& monsterData = MonsterStaticData::Get();
 
-    fz >> World::Get() >> Settings::Get() >>
-       GameOver::Result::Get() >> GameStatic::Data::Get() >> MonsterStaticData::Get() >> end_check;
+    fz >> world >> settings >>
+		gameOverResult >> gameStatic >> monsterData >> end_check;
 
     World::Get().PostFixLoad();
 

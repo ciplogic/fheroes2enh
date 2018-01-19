@@ -25,6 +25,7 @@
 
 #include "gamedefs.h"
 #include "artifact.h"
+#include "ByteVectorReader.h"
 
 class Artifact;
 
@@ -52,7 +53,8 @@ public:
 private:
     friend StreamBase &operator<<(StreamBase &, const UltimateArtifact &);
 
-    friend StreamBase &operator>>(StreamBase &, UltimateArtifact &);
+	friend StreamBase &operator>>(StreamBase &, UltimateArtifact &);
+	friend ByteVectorReader &operator>>(ByteVectorReader &, UltimateArtifact &);
 
     void MakeSurface();
 
@@ -64,5 +66,6 @@ private:
 StreamBase &operator<<(StreamBase &, const UltimateArtifact &);
 
 StreamBase &operator>>(StreamBase &, UltimateArtifact &);
+ByteVectorReader &operator>>(ByteVectorReader &, UltimateArtifact &);
 
 #endif

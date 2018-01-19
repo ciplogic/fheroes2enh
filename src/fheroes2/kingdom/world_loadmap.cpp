@@ -525,9 +525,9 @@ bool World::LoadMapMP2(const string &filename)
             {
                 if (pblock[8])
                 {
-
-					StreamBuf bvr(&pblock[8], pblock.size() - 8);
-					std::string valueRumor = bvr.toString();
+					std::vector<u8> subBlock(pblock.begin() + 8, pblock.end());
+					ByteVectorReader bvr(subBlock);
+					std::string valueRumor = bvr.toString(subBlock.size());
                     vec_rumors.push_back(Game::GetEncodeString(valueRumor));
                 }
             }
