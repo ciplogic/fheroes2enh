@@ -795,6 +795,23 @@ StreamBase &operator>>(StreamBase &msg, Kingdom &kingdom)
                kingdom.visited_tents_colors >>
                kingdom.heroes_cond_loss;
 }
+ByteVectorReader &operator>>(ByteVectorReader &msg, Kingdom &kingdom)
+{
+	return msg >>
+		kingdom.modes >>
+		kingdom.color >>
+		kingdom.resource >>
+		kingdom.lost_town_days >>
+		kingdom.castles >>
+		kingdom.heroes >>
+		kingdom.recruits >>
+		kingdom.lost_hero >>
+		kingdom.visit_object >>
+		kingdom.puzzle_maps >>
+		kingdom.visited_tents_colors >>
+		kingdom.heroes_cond_loss;
+}
+
 
 StreamBase &operator<<(StreamBase &msg, const Kingdoms &obj)
 {

@@ -37,6 +37,7 @@
 #include "game_static.h"
 #include "m82.h"
 #include "rand.h"
+#include "battle_army.h"
 
 namespace Battle
 {
@@ -1027,6 +1028,33 @@ StreamBase &Battle::operator>>(StreamBase &msg, Unit &b)
     b.mirror = GetArena()->GetTroopUID(uid);
 
     return msg;
+}
+
+ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, Unit &b)
+{
+	s32 head = -1;
+	u32 uid = 0;
+
+	msg >>
+		b.modes >>
+		b.id >>
+		b.count >>
+		b.uid >>
+		b.hp >>
+		b.count0 >>
+		b.dead >>
+		b.shots >>
+		b.disruptingray >>
+		b.reflect >>
+		head >>
+		uid >>
+		b.affected >>
+		b.blindanswer;
+
+	b.position.Set(head, b.isWide(), b.isReflect());
+	b.mirror = GetArena()->GetTroopUID(uid);
+
+	return msg;
 }
 
 bool Battle::Unit::AllowResponse() const

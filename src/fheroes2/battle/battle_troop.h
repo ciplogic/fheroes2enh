@@ -28,8 +28,10 @@
 #include "bitmodes.h"
 #include "sprite.h"
 #include "battle.h"
-#include "battle_army.h"
+#include "ByteVectorReader.h"
 #include "battle_arena.h"
+
+#include "battle_army.h"
 
 class Sprite;
 
@@ -273,6 +275,7 @@ namespace Battle
     private:
         friend StreamBase &operator<<(StreamBase &, const Unit &);
 
+		friend ByteVectorReader &operator>>(ByteVectorReader &, Unit &);
         friend StreamBase &operator>>(StreamBase &, Unit &);
 
         u32 uid;
@@ -298,6 +301,7 @@ namespace Battle
     StreamBase &operator<<(StreamBase &, const Unit &);
 
     StreamBase &operator>>(StreamBase &, Unit &);
+	ByteVectorReader &operator>>(ByteVectorReader &, Unit &);
 }
 
 #endif

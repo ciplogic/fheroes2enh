@@ -121,6 +121,19 @@ StreamBase &Battle::operator>>(StreamBase &msg, TargetInfo &t)
     return msg;
 }
 
+
+ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, TargetInfo &t)
+{
+	u32 uid = 0;
+
+	msg >> uid >>
+		t.damage >> t.killed >> t.resist;
+
+	t.defender = uid ? GetArena()->GetTroopUID(uid) : nullptr;
+
+	return msg;
+}
+
 StreamBase &Battle::operator<<(StreamBase &msg, const TargetsInfo &ts)
 {
     msg << static_cast<u32>(ts.size());
@@ -142,6 +155,18 @@ StreamBase &Battle::operator>>(StreamBase &msg, TargetsInfo &ts)
         msg >> t;
 
     return msg;
+}
+ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, TargetsInfo &ts)
+{
+	u32 size = 0;
+
+	msg >> size;
+	ts.resize(size);
+
+	for (auto &t : ts)
+		msg >> t;
+
+	return msg;
 }
 
 bool Battle::TargetInfo::operator==(const TargetInfo &ta) const
@@ -922,6 +947,25 @@ StreamBase &Battle::operator>>(StreamBase &msg, Arena &a)
     if (hero2 && type == hero2->GetType()) msg >> *hero2;
 
     return msg;
+}
+
+
+ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, Arena &a)
+{
+	msg >> a.current_turn >> a.board >>
+		*a.army1 >> *a.army2;
+
+	int type;
+	HeroBase *hero1 = a.army1->GetCommander();
+	HeroBase *hero2 = a.army2->GetCommander();
+
+	msg >> type;
+	if (hero1 && type == hero1->GetType()) msg >> *hero1;
+
+	msg >> type;
+	if (hero2 && type == hero2->GetType()) msg >> *hero2;
+
+	return msg;
 }
 
 const HeroBase *Battle::Arena::GetCommander(int color, bool invert) const

@@ -35,6 +35,7 @@
 #include "game_io.h"
 #include "ByteVectorReader.h"
 #include "BinaryFileReader.h"
+#include <chrono>
 
 static u16 SAV2ID2 = 0xFF02;
 static u16 SAV2ID3 = 0xFF03;
@@ -216,13 +217,12 @@ bool Game::Load(const string &fn)
 	auto& gameOverResult= GameOver::Result::Get();
 	auto& gameStatic = GameStatic::Data::Get();
 	auto& monsterData = MonsterStaticData::Get();
-
-    fz >> world >> settings >>
-		gameOverResult >> gameStatic >> monsterData >> end_check;
 	
-	//*bfz >> world>>settings >>
-		//gameOverResult >> gameStatic >> monsterData >> end_check;
-    World::Get().PostFixLoad();
+	*bfz >> world>>settings >>
+		gameOverResult >> gameStatic 
+		>> monsterData 
+		>> end_check;
+	World::Get().PostFixLoad();
 
     if (fz.fail() || (end_check != SAV2ID2 && end_check != SAV2ID3))
     {

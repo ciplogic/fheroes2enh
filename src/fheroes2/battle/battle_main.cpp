@@ -328,3 +328,8 @@ StreamBase &Battle::operator>>(StreamBase &msg, Result &res)
 {
     return msg >> res.army1 >> res.army2 >> res.exp1 >> res.exp2 >> res.killed;
 }
+
+ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, Result &res)
+{
+	return msg >> res.army1 >> res.army2 >> res.exp1 >> res.exp2 >> res.killed;
+}

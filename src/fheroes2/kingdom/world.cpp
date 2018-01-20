@@ -1340,25 +1340,24 @@ StreamBase &operator<<(StreamBase &msg, const World &w)
 
 StreamBase &operator>>(StreamBase &msg, World &w)
 {
-    Size &sz = w;
+	Size &sz = w;
 
-    msg >> sz >>
-        w.vec_tiles >>
-        w.vec_heroes >>
-        w.vec_castles >>
-        w.vec_kingdoms >>
-        w.vec_rumors >>
-        w.vec_eventsday >>
-        w.map_captureobj >>
-        w.ultimate_artifact >>
-        w.day >> w.week >> w.month >>
-        w.week_current >>
-        w.week_next >>
-        w.heroes_cond_wins >>
-        w.heroes_cond_loss >>
-        w.map_actions >>
-        w.map_objects;
-
+	msg >> sz;
+	msg >> w.vec_tiles;
+	msg >> w.vec_heroes;
+	msg >> w.vec_castles;
+	msg >> w.vec_kingdoms;
+	msg >> w.vec_rumors;
+	msg >> w.vec_eventsday;
+	msg >> w.map_captureobj;
+	msg >> w.ultimate_artifact;
+	msg >> w.day >> w.week >> w.month;
+	msg >> w.week_current;
+	msg >> w.week_next;
+	msg >> w.heroes_cond_wins;
+	msg >> w.heroes_cond_loss;
+	msg >> w.map_actions;
+	msg >> w.map_objects;
     // update tile passable
     for_each(w.vec_tiles.begin(), w.vec_tiles.end(),
                   mem_fun_ref(&Maps::Tiles::UpdatePassable));
@@ -1374,22 +1373,22 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, World &w)
 {
 	Size &sz = w;
 
-	msg >> sz >>
-		w.vec_tiles >>
-		w.vec_heroes >>
-		w.vec_castles >>
-		w.vec_kingdoms >>
-		w.vec_rumors >>
-		w.vec_eventsday >>
-		w.map_captureobj >>
-		w.ultimate_artifact >>
-		w.day >> w.week >> w.month >>
-		w.week_current >>
-		w.week_next >>
-		w.heroes_cond_wins >>
-		w.heroes_cond_loss >>
-		w.map_actions >>
-		w.map_objects;
+	msg >> sz;
+	msg >> w.vec_tiles;
+	msg >> w.vec_heroes;
+	msg >> w.vec_castles;
+	msg >> w.vec_kingdoms;
+	msg >> w.vec_rumors;
+	msg >> w.vec_eventsday;
+	msg >> w.map_captureobj;
+	msg >> w.ultimate_artifact;
+	msg >> w.day >> w.week >> w.month;
+	msg >> w.week_current;
+	msg >> w.week_next;
+	msg >> w.heroes_cond_wins;
+	msg >> w.heroes_cond_loss;
+	msg >> w.map_actions;
+	msg >> w.map_objects;
 
 	// update tile passable
 	for_each(w.vec_tiles.begin(), w.vec_tiles.end(),

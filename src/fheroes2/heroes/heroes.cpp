@@ -2032,6 +2032,23 @@ StreamBase &operator>>(StreamBase &msg, VecHeroes &heroes)
     return msg;
 }
 
+ByteVectorReader &operator>>(ByteVectorReader &msg, VecHeroes &heroes)
+{
+	u32 size;
+	msg >> size;
+
+	heroes.resize(size, nullptr);
+
+	for (auto& heroe : heroes)
+	{
+		u32 hid;
+		msg >> hid;
+		heroe = (hid != Heroes::UNKNOWN ? world.GetHeroes(hid) : nullptr);
+	}
+
+	return msg;
+}
+
 StreamBase &operator<<(StreamBase &msg, const Heroes &hero)
 {
     const HeroBase &base = hero;

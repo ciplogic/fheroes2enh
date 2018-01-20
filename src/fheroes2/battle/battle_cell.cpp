@@ -297,3 +297,11 @@ StreamBase &Battle::operator>>(StreamBase &msg, Cell &c)
     c.troop = GetArena()->GetTroopUID(uid);
     return msg;
 }
+
+ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, Cell &c)
+{
+	u32 uid = 0;
+	msg >> c.index >> c.object >> c.direction >> c.quality >> uid;
+	c.troop = GetArena()->GetTroopUID(uid);
+	return msg;
+}

@@ -399,10 +399,12 @@ struct AllHeroes : public VecHeroes
 StreamBase &operator<<(StreamBase &, const VecHeroes &);
 
 StreamBase &operator>>(StreamBase &, VecHeroes &);
+ByteVectorReader &operator>>(ByteVectorReader &, VecHeroes &);
 
 StreamBase &operator<<(StreamBase &, const Heroes &);
 
 StreamBase &operator>>(StreamBase &, Heroes &);
+ByteVectorReader &operator>>(ByteVectorReader &, Heroes &);
 
 StreamBase &operator<<(StreamBase &, const AllHeroes &);
 

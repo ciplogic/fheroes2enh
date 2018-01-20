@@ -53,8 +53,13 @@ u32 ByteVectorReader::getBE16()
 
 u32 ByteVectorReader::getBE32()
 {
-	u32 lo = getBE16();
-	u32 hi = getBE16();
+	u32 lo1 = Get8();
+	u32 hi1 = Get8();
+
+	u32 lo2 = Get8();
+	u32 hi2 = Get8();
+	u32 lo = hi1 + (lo1 << 8);
+	u32 hi = hi2 + (lo2 << 8);
 	return hi + (lo << 16);
 }
 

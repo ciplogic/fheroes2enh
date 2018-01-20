@@ -20,11 +20,11 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2PUZZLE_H
-#define H2PUZZLE_H
+#pragma once
 
 #include <bitset>
 #include "gamedefs.h"
+#include "ByteVectorReader.h"
 
 #define PUZZLETILES    48
 
@@ -48,5 +48,4 @@ public:
 StreamBase &operator<<(StreamBase &, const Puzzle &);
 
 StreamBase &operator>>(StreamBase &, Puzzle &);
-
-#endif
+ByteVectorReader &operator>>(ByteVectorReader &, Puzzle &);

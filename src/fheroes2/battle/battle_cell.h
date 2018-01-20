@@ -25,6 +25,7 @@
 
 #include "gamedefs.h"
 #include "battle.h"
+#include "ByteVectorReader.h"
 
 #define CELLW 45
 #define CELLH 52
@@ -101,6 +102,7 @@ namespace Battle
         friend StreamBase &operator<<(StreamBase &, const Cell &);
 
         friend StreamBase &operator>>(StreamBase &, Cell &);
+		friend ByteVectorReader &operator>>(ByteVectorReader &, Cell &);
 
         s32 index;
         Rect pos;

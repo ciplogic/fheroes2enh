@@ -387,6 +387,24 @@ StreamBase &Battle::operator>>(StreamBase &msg, Force &f)
     return msg;
 }
 
+
+ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, Force &f)
+{
+	u32 size = 0;
+	u32 uid = 0;
+
+	msg >> static_cast<BitModes &>(f) >> size;
+
+	for (u32 ii = 0; ii < size; ++ii)
+	{
+		msg >> uid;
+		Unit *b = f.FindUID(uid);
+		if (b) msg >> *b;
+	}
+
+	return msg;
+}
+
 Troops Battle::Force::GetKilledTroops() const
 {
     Troops killed;
@@ -475,12 +493,11 @@ void Battle::Force::SyncArmyCount()
     {
         Troop *troop = army.GetTroop(index);
 
-        if (troop && troop->isValid())
-        {
-            const Unit *unit = FindUID(uids.at(index));
+        if (!troop || !troop->isValid())
+		    continue;
+	    const Unit *unit = FindUID(uids.at(index));
 
-            if (unit && unit->GetDead())
-                troop->SetCount(unit->GetDead() > troop->GetCount() ? 0 : troop->GetCount() - unit->GetDead());
-        }
+	    if (unit && unit->GetDead())
+		    troop->SetCount(unit->GetDead() > troop->GetCount() ? 0 : troop->GetCount() - unit->GetDead());
     }
 }

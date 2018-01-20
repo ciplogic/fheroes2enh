@@ -20,11 +20,12 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2BATTLE_ARENA_H
-#define H2BATTLE_ARENA_H
+#pragma once
+
 
 #include <list>
 
+#include "ByteVectorReader.h"
 #include "gamedefs.h"
 #include "ai.h"
 #include "spell_storage.h"
@@ -175,6 +176,7 @@ namespace Battle
         friend StreamBase &operator<<(StreamBase &, const Arena &);
 
         friend StreamBase &operator>>(StreamBase &, Arena &);
+		friend ByteVectorReader &operator>>(ByteVectorReader &, Arena &);
 
         void RemoteTurn(const Unit &, Actions &);
 
@@ -254,6 +256,6 @@ namespace Battle
     StreamBase &operator<<(StreamBase &, const Arena &);
 
     StreamBase &operator>>(StreamBase &, Arena &);
+	ByteVectorReader &operator>>(ByteVectorReader &, Arena &);
 }
 
-#endif

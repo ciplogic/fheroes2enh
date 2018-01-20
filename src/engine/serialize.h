@@ -37,7 +37,7 @@ using namespace std;
 
 class StreamBase
 {
-protected:
+public:
     size_t flags;
 
     virtual int get8() = 0;
@@ -56,7 +56,6 @@ protected:
 
     void setfail(bool);
 
-public:
     StreamBase() : flags(0)
     {}
 

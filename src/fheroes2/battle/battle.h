@@ -20,10 +20,10 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2BATTLE_H
-#define H2BATTLE_H
+#pragma once
 
 #include <vector>
+#include "ByteVectorReader.h"
 #include "army.h"
 
 namespace Battle
@@ -81,6 +81,7 @@ namespace Battle
     StreamBase &operator<<(StreamBase &, const Result &);
 
     StreamBase &operator>>(StreamBase &, Result &);
+	ByteVectorReader &operator>>(ByteVectorReader&, Result &);
 
     Result Loader(Army &, Army &, s32);
 
@@ -156,6 +157,7 @@ namespace Battle
     StreamBase &operator<<(StreamBase &, const TargetInfo &);
 
     StreamBase &operator>>(StreamBase &, TargetInfo &);
+	ByteVectorReader &operator>>(ByteVectorReader &, TargetInfo &);
 
     struct TargetsInfo : public vector<TargetInfo>
     {
@@ -166,6 +168,7 @@ namespace Battle
     StreamBase &operator<<(StreamBase &, const TargetsInfo &);
 
     StreamBase &operator>>(StreamBase &, TargetsInfo &);
+	ByteVectorReader &operator>>(ByteVectorReader &, TargetsInfo &);
 
     enum stats_t
     {
@@ -216,4 +219,3 @@ namespace Battle
     };
 }
 
-#endif
