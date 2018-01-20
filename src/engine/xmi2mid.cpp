@@ -320,11 +320,11 @@ StreamBuf &operator<<(StreamBuf &sb, const MidEvent &st)
     return sb;
 }
 
-struct MidEvents : public list<MidEvent>
+struct MidEvents : public vector<MidEvent>
 {
     size_t count() const
     {
-        return list<MidEvent>::size();
+        return vector<MidEvent>::size();
     }
 
     size_t size() const
@@ -394,63 +394,63 @@ struct MidEvents : public list<MidEvent>
                 {
                     push_back(MidEvent(delta, *ptr, *(ptr + 1), *(ptr + 2)));
                     break;
-                } else
-                    switch (*ptr >> 4)
-                    {
-                        // meta
-                        case 0x0F:
-                        {
-                            pack_t pack = unpackValue(ptr + 2);
-                            ptr += pack.first + pack.second + 1;
-                            delta = 0;
-                        }
-                            break;
+                }
+	            switch (*ptr >> 4)
+	            {
+		            // meta
+	            case 0x0F:
+		            {
+			            pack_t pack = unpackValue(ptr + 2);
+			            ptr += pack.first + pack.second + 1;
+			            delta = 0;
+		            }
+		            break;
 
-                            // key pressure
-                        case 0x0A:
-                            // control change
-                        case 0x0B:
-                            // pitch bend
-                        case 0x0E:
-                        {
-                            push_back(MidEvent(delta, *ptr, *(ptr + 1), *(ptr + 2)));
-                            ptr += 3;
-                            delta = 0;
-                        }
-                            break;
+		            // key pressure
+	            case 0x0A:
+		            // control change
+	            case 0x0B:
+		            // pitch bend
+	            case 0x0E:
+		            {
+			            push_back(MidEvent(delta, *ptr, *(ptr + 1), *(ptr + 2)));
+			            ptr += 3;
+			            delta = 0;
+		            }
+		            break;
 
-                            // note off
-                        case 0x08:
-                            // note on
-                        case 0x09:
-                        {
-                            push_back(MidEvent(delta, *ptr, *(ptr + 1), *(ptr + 2)));
-                            pack_t pack = unpackValue(ptr + 3);
-                            notesoff.emplace_back(*ptr - 0x10, *(ptr + 1), pack.first);
-                            ptr += 3 + pack.second;
-                            delta = 0;
-                        }
-                            break;
+		            // note off
+	            case 0x08:
+		            // note on
+	            case 0x09:
+		            {
+			            push_back(MidEvent(delta, *ptr, *(ptr + 1), *(ptr + 2)));
+			            pack_t pack = unpackValue(ptr + 3);
+			            notesoff.emplace_back(*ptr - 0x10, *(ptr + 1), pack.first);
+			            ptr += 3 + pack.second;
+			            delta = 0;
+		            }
+		            break;
 
-                            // program change
-                        case 0x0C:
-                            // chanel pressure
-                        case 0x0D:
-                        {
-                            push_back(MidEvent(delta, *ptr, *(ptr + 1)));
-                            ptr += 2;
-                            delta = 0;
-                        }
-                            break;
+		            // program change
+	            case 0x0C:
+		            // chanel pressure
+	            case 0x0D:
+		            {
+			            push_back(MidEvent(delta, *ptr, *(ptr + 1)));
+			            ptr += 2;
+			            delta = 0;
+		            }
+		            break;
 
-                            // unused command
-                        default:
-                            push_back(MidEvent(0, 0xFF, 0x2F, 0));
-                            ERROR("unknown st: 0x" << std::setw(2) << std::setfill('0') << std::hex <<
-                                                   static_cast<int>(*ptr) << ", ln: "
-                                                   << static_cast<int>(&t.evnt[0] + t.evnt.size() - ptr));
-                            break;
-                    }
+		            // unused command
+	            default:
+		            push_back(MidEvent(0, 0xFF, 0x2F, 0));
+		            ERROR("unknown st: 0x" << std::setw(2) << std::setfill('0') << std::hex <<
+			            static_cast<int>(*ptr) << ", ln: "
+			            << static_cast<int>(&t.evnt[0] + t.evnt.size() - ptr));
+		            break;
+	            }
             }
         }
     }

@@ -50,6 +50,12 @@
 
 #define FATSIZENAME    15
 
+namespace
+{
+	vector<SDL_Color> pal_colors;
+	vector<u32> pal_colors_u32;
+}
+
 namespace AGG
 {
     class FAT
@@ -141,7 +147,6 @@ namespace AGG
 
     bool memlimit_usage = true;
 
-    vector<SDL_Color> pal_colors;
 
 #ifdef WITH_TTF
     FontTTF*			fonts; /* small, medium */
@@ -858,7 +863,7 @@ ICNSprite AGG::RenderICNSprite(int icn, u32 index)
 
     u32 c = 0;
     Point pt(0, 0);
-
+	sf1.Lock();
     while (true)
     {
 		auto cur = *buf;
@@ -876,7 +881,8 @@ ICNSprite AGG::RenderICNSprite(int icn, u32 index)
             ++buf;
             while (c-- && buf < max)
             {
-                sf1.DrawPoint(pt, GetPaletteColor(*buf));
+				DrawPointFast(sf1, pt.x, pt.y, *buf);
+                //sf1.DrawPoint(pt, GetPaletteColor(*buf));
                 ++pt.x;
                 ++buf;
 
@@ -922,7 +928,8 @@ ICNSprite AGG::RenderICNSprite(int icn, u32 index)
             ++buf;
             while (c--)
             {
-                sf1.DrawPoint(pt, GetPaletteColor(*buf));
+				DrawPointFast(sf1, pt.x, pt.y, *buf);
+                //sf1.DrawPoint(pt, GetPaletteColor(*buf));
                 ++pt.x;
             }
             ++buf;
@@ -932,7 +939,8 @@ ICNSprite AGG::RenderICNSprite(int icn, u32 index)
             ++buf;
             while (c--)
             {
-                sf1.DrawPoint(pt, GetPaletteColor(*buf));
+				DrawPointFast(sf1, pt.x, pt.y, *buf);
+                //sf1.DrawPoint(pt, GetPaletteColor(*buf));
                 ++pt.x;
             }
             ++buf;
@@ -949,7 +957,7 @@ ICNSprite AGG::RenderICNSprite(int icn, u32 index)
     {
         res.first.RenderContour(RGBA(0, 0x84, 0xe0)).Blit(-1, -1, res.first);
     }
-
+	sf1.Unlock();
     return res;
 }
 
@@ -998,25 +1006,22 @@ void AGG::LoadICN(int icn, u32 index, bool reflect)
     icn_cache_t &v = icn_cache[icn];
 
     // need load
-    if ((reflect && (!v.reflect || (index < v.count && !v.reflect[index].isValid()))) ||
-        (!reflect && (!v.sprites || (index < v.count && !v.sprites[index].isValid()))))
-    {
-        const Settings &conf = Settings::Get();
+    if ((!reflect || v.reflect 
+		&& (index >= v.count || v.reflect[index].isValid())) 
+		&& (reflect || v.sprites && 
+		(index >= v.count || v.sprites[index].isValid())))
+		return;
+	const Settings &conf = Settings::Get();
 
-        // load from images dir
-        if (!conf.UseAltResource() ||
-            !LoadAltICN(icn, index, reflect))
-        {
-            // load modify sprite
-            if (!LoadExtICN(icn, index, reflect))
-            {
-                //load origin sprite
-                if (!LoadOrgICN(icn, index, reflect))
-                    Error::Except(__FUNCTION__, "load icn");
-            }
-        }
-
-    }
+	// load from images dir
+	if (conf.UseAltResource() && LoadAltICN(icn, index, reflect))
+		return;
+	// load modify sprite
+	if (LoadExtICN(icn, index, reflect))
+		return;
+	//load origin sprite
+	if (!LoadOrgICN(icn, index, reflect))
+		Error::Except(__FUNCTION__, "load icn");
 }
 
 /* return ICN sprite */
@@ -1078,7 +1083,6 @@ int AGG::PutICN(const Sprite &sprite, bool init_reflect)
 
 bool AGG::LoadAltTIL(int til, u32 max)
 {
-
     return false;
 }
 
@@ -1620,7 +1624,7 @@ bool AGG::Init()
 
     til_cache.resize(TIL::LASTTIL);
 
-    fillPalette(pal_colors);
+    fillPalette(pal_colors, pal_colors_u32);
 
     Surface::SetDefaultPalette(&pal_colors[0], pal_colors.size());
 
@@ -1662,4 +1666,10 @@ RGBA AGG::GetPaletteColor(u32 index)
 {
     return index < pal_colors.size() ?
            RGBA(pal_colors[index].r, pal_colors[index].g, pal_colors[index].b) : RGBA(0, 0, 0);
+}
+
+void AGG::DrawPointFast(Surface& srf, int x, int y, u8 palette)
+{
+	auto palColor = pal_colors_u32[palette];
+	srf.SetPixel4(x, y, palColor);
 }

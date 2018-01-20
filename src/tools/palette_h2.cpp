@@ -4,6 +4,8 @@
 
 #include <types.h>
 #include "palette_h2.h"
+#include "surface.h"
+
 namespace {
 
     const unsigned char kb_pal[] = {
@@ -58,7 +60,7 @@ namespace {
     };
 }
 
-void fillPalette(std::vector<SDL_Color> &pal_colors)
+void fillPalette(std::vector<SDL_Color> &pal_colors, std::vector<u32> &pal_colors_u32)
 {
 
     u32 ncolors = ARRAY_COUNT(kb_pal) / 3;
@@ -68,11 +70,16 @@ void fillPalette(std::vector<SDL_Color> &pal_colors)
     {
         u32 index = ii * 3;
         SDL_Color cols{};
-
-        cols.r = kb_pal[index] << 2;
-        cols.g = kb_pal[index + 1] << 2;
-        cols.b = kb_pal[index + 2] << 2;
+		u32 r = kb_pal[index] << 2;
+		u32 g = kb_pal[index + 1] << 2;
+		u32 b = kb_pal[index+2] << 2;
+        cols.r = r;
+        cols.g = g;
+        cols.b = b;
 
         pal_colors.push_back(cols);
+
+		RGBA rgba(cols.r, cols.g, cols.b);
+		pal_colors_u32.push_back( RGBA::packRgba(r,g,b,255));
     }
 }

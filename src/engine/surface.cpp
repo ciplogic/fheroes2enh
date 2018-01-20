@@ -973,20 +973,23 @@ Surface Surface::RenderSepia() const
     const u32 colkey = GetColorKey();
 
     res.Lock();
-    for (int x = 0; x < w(); x++)
-        for (int y = 0; y < h(); y++)
+	int width = w();
+	int height = h();
+	for (int y = 0; y < height; y++)
+		for (int x = 0; x < width; x++)
         {
-            u32 pixel = GetPixel(x, y);
+            u32 pixel = GetPixel4(x, y);
             if (colkey == 0 || pixel != colkey)
             {
                 RGBA col = GetRGB(pixel);
                 //Numbers derived from http://blogs.techrepublic.com.com/howdoi/?p=120
-#define CLAMP255(val) std::min<u16>((val), 255)
-                int outR = CLAMP255(static_cast<u16>(col.r() * 0.693f + col.g() * 0.769f + col.b() * 0.189f));
-                int outG = CLAMP255(static_cast<u16>(col.r() * 0.449f + col.g() * 0.686f + col.b() * 0.168f));
-                int outB = CLAMP255(static_cast<u16>(col.r() * 0.272f + col.g() * 0.534f + col.b() * 0.131f));
-                pixel = res.MapRGB(RGBA(outR, outG, outB, col.a()));
-                res.SetPixel(x, y, pixel);
+#define CLAMP255(val) std::min<u32>((val), 255)
+				u32 outR = CLAMP255(static_cast<u32>(col.r() * 0.693f + col.g() * 0.769f + col.b() * 0.189f));
+				u32 outG = CLAMP255(static_cast<u32>(col.r() * 0.449f + col.g() * 0.686f + col.b() * 0.168f));
+				u32 outB = CLAMP255(static_cast<u32>(col.r() * 0.272f + col.g() * 0.534f + col.b() * 0.131f));
+                
+				u32 outPixel = RGBA::packRgba(outR, outG, outB, col.a());
+                res.SetPixel4(x, y, outPixel);
 #undef CLAMP255
             }
         }

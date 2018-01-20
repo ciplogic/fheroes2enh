@@ -1019,12 +1019,13 @@ bool Maps::TilesAddon::ForceLevel2(const TilesAddon &ta)
 /* Maps::Addons */
 void Maps::Addons::Remove(u32 uniq)
 {
-    /*
-    erase(std::remove_if(begin(), end(),
-	    std::bind2nd(std::mem_fun_ref(&Maps::TilesAddon::isUniq), uniq)),
-	    end());
-    */
-    remove_if(bind2nd(mem_fun_ref(&TilesAddon::isUniq), uniq));
+	Addons clean;
+	for(auto& addon : *this)
+	{
+		if(!addon.isUniq(uniq))
+			clean.push_back(addon);
+	}
+	*this = clean;
 }
 
 u32 PackTileSpriteIndex(u32 index, u32 shape) /* index max: 0x3FFF, shape value: 0, 1, 2, 3 */
@@ -1407,8 +1408,10 @@ void Maps::Tiles::AddonsPushLevel2(const TilesAddon &ta)
 
 void Maps::Tiles::AddonsSort()
 {
-    if (!addons_level1.empty()) addons_level1.sort(TilesAddon::PredicateSortRules1);
-    if (!addons_level2.empty()) addons_level2.sort(TilesAddon::PredicateSortRules2);
+    if (!addons_level1.empty()) 
+		std::sort(addons_level1.begin(), addons_level1.end(), TilesAddon::PredicateSortRules1);
+    if (!addons_level2.empty())
+		std::sort(addons_level2.begin(), addons_level2.end(), TilesAddon::PredicateSortRules2);
 }
 
 int Maps::Tiles::GetGround() const
@@ -2895,7 +2898,9 @@ StreamBase &Maps::operator>>(StreamBase &msg, TilesAddon &ta)
 
 ByteVectorReader& Maps::operator>>(ByteVectorReader&msg, TilesAddon &ta)
 {
-	return msg >> ta.level >> ta.uniq >> ta.object >> ta.index >> ta.tmp;
+	msg >> ta.level; 
+	ta.uniq = msg.getBE32();
+	return msg >> ta.object >> ta.index >> ta.tmp;
 }
 
 StreamBase &Maps::operator<<(StreamBase &msg, const Tiles &tile)

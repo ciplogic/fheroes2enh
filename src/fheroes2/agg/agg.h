@@ -80,6 +80,8 @@ namespace AGG
 
     RGBA GetPaletteColor(u32 index);
 
+	void DrawPointFast(Surface&srf, int x, int y, u8 color);
+
     ICNSprite RenderICNSprite(int, u32);
 
     void RenderICNSprite(int icn, u32 index, const Rect &srt, const Point &dpt, Surface &dst);

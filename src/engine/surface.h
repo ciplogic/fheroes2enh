@@ -55,9 +55,15 @@ public:
 
     static RGBA unpack(int);
 
+	static u32 packRgba(u32 r, u32 g, u32 b, u32 a = 255)
+	{
+		return r + (g << 8) + (b << 16) + (a << 24);
+	}
+
 protected:
     u32 color;
 };
+
 
 #define ColorBlack RGBA(0,0,0,255)
 
@@ -197,13 +203,14 @@ public:
 
 	void Set(u32 sw, u32 sh, u32 bpp /* bpp: 8, 16, 24, 32 */, bool amask);
 
+	void Lock() const;
+
+	void SetPixel4(s32 x, s32 y, u32 color) const;
+	void Unlock() const;
 	SDL_Surface *surface;
 protected:
     static void FreeSurface(Surface &);
 
-    void Lock() const;
-
-    void Unlock() const;
 
     //void SetColorMod(const RGBA &);
     //void SetBlendMode(int);
@@ -218,7 +225,6 @@ protected:
 
     void SetPalette();
 
-    void SetPixel4(s32 x, s32 y, u32 color) const;
 
     void SetPixel3(s32 x, s32 y, u32 color) const;
 

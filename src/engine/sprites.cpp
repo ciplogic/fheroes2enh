@@ -165,21 +165,19 @@ void SpriteMove::Move(int ax, int ay)
 
 void SpriteMove::Hide()
 {
-    if (isVisible())
-    {
-        background.Restore();
-        mode &= ~(_VISIBLE);
-    }
+    if (!isVisible())
+		return;
+	background.Restore();
+	mode &= ~(_VISIBLE);
 }
 
 void SpriteMove::Show(const Point &pos)
 {
-    if (!isVisible() && isValid())
-    {
-        background.Save(Rect(pos, GetSize()));
-        Blit(GetPos(), Display::Get());
-        mode |= _VISIBLE;
-    }
+    if (isVisible() || !isValid())
+		return;
+	background.Save(Rect(pos, GetSize()));
+	Blit(GetPos(), Display::Get());
+	mode |= _VISIBLE;
 }
 
 void SpriteMove::Redraw()
