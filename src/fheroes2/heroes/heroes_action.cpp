@@ -758,30 +758,56 @@ void Heroes::Action(s32 dst_index)
                 break;
         }
 }
+namespace {
+	Battle::Result BattleHeroWithMonster(Heroes& hero, Army&army, s32 dst_index)
+	{
+		Battle::Result res;
+		StreamBuf armyBuf, heroArmyBuf;
+		armyBuf << army;
+		armyBuf.seek(0);
+		auto armyVec = armyBuf.getRaw(0);
+		heroArmyBuf << hero;
+		heroArmyBuf.seek(0);
+		auto heroVec = heroArmyBuf.getRaw(0);
 
-Battle::Result BattleHeroWithMonster(Heroes& hero, Army&army, s32 dst_index)
-{
-	Battle::Result res;
-	StreamBuf armyBuf, heroArmyBuf;
-	armyBuf << army; 
-	armyBuf.seek(0);
-	auto armyVec = armyBuf.getRaw(0);
-	heroArmyBuf << hero;
-	heroArmyBuf.seek(0);
-	auto heroVec = heroArmyBuf.getRaw(0);
+		do {
+			res = Battle::Loader(hero.GetArmy(), army, dst_index);
+			if (res.fightAgain == Battle::FightResultType::FightAgain) {
+				Settings::Get().SetQuickCombat(false);
+				ByteVectorReader bvr(armyVec);
+				bvr >> army;
+				ByteVectorReader heroArmyReader(heroVec);
+				hero.ReadFrom(heroArmyReader);
+			}
+		} while (res.fightAgain == Battle::FightResultType::FightAgain);
+		Settings::Get().SetQuickCombat(true);
+		return res;
+	}
 
-	do {
-		res = Battle::Loader(hero.GetArmy(), army, dst_index);
-		if (res.fightAgain == Battle::FightResultType::FightAgain) {
-			Settings::Get().SetQuickCombat(false);
-			ByteVectorReader bvr(armyVec);
-			bvr >> army;
-			ByteVectorReader heroArmyReader(heroVec);
-			hero.ReadFrom(heroArmyReader);
-		}
-	} while (res.fightAgain == Battle::FightResultType::FightAgain);
-	Settings::Get().SetQuickCombat(true);
-	return res;
+	Battle::Result BattleHeroWithHero(Heroes& hero, Heroes&other_hero, s32 dst_index)
+	{
+		Battle::Result res;
+		StreamBuf armyBuf, heroArmyBuf;
+		armyBuf << other_hero;
+		armyBuf.seek(0);
+		auto armyVec = armyBuf.getRaw(0);
+		heroArmyBuf << hero;
+		heroArmyBuf.seek(0);
+		auto heroVec = heroArmyBuf.getRaw(0);
+
+		do {
+			res = Battle::Loader(hero.GetArmy(), other_hero.GetArmy(), dst_index);
+			if (res.fightAgain == Battle::FightResultType::FightAgain) {
+				Settings::Get().SetQuickCombat(false);
+				ByteVectorReader bvr(armyVec);
+				bvr >> other_hero;
+				ByteVectorReader heroArmyReader(heroVec);
+				hero.ReadFrom(heroArmyReader);
+			}
+		} while (res.fightAgain == Battle::FightResultType::FightAgain);
+		Settings::Get().SetQuickCombat(true);
+		return res;
+	}
 }
 
 void ActionToMonster(Heroes &hero, u32 obj, s32 dst_index)
@@ -935,7 +961,7 @@ void ActionToHeroes(Heroes &hero, u32 obj, s32 dst_index)
                                  world.GetTiles(hero.GetIndex()).GetObject(false) == MP2::OBJ_STONELIGHTS;
 
         // new battle
-        Battle::Result res = Battle::Loader(hero.GetArmy(), other_hero->GetArmy(), dst_index);
+		Battle::Result res = BattleHeroWithHero(hero, *other_hero, dst_index);
 
         // loss defender
         if (!res.DefenderWins())
