@@ -119,7 +119,7 @@ namespace AGG
 
     struct fnt_cache_t
     {
-        Surface sfs[4]; /* small_white, small_yellow, medium_white, medium_yellow */
+        Surface sfs[6]; /* small_white, small_yellow, medium_white, medium_yellow */
     };
 
     struct loop_sound_t
@@ -1473,12 +1473,12 @@ void AGG::PlayMusic(int mus, bool loop)
     }
 }
 
-#ifdef WITH_TTF
 void AGG::LoadTTFChar(u32 ch)
 {
 	const Settings & conf = Settings::Get();
 	const RGBA white(0xFF, 0xFF, 0xFF);
 	const RGBA yellow(0xFF, 0xFF, 0x00);
+	const RGBA gray(0x7F, 0x7F, 0x7F);
 
 	// small
 	fnt_cache[ch].sfs[0] = fonts[0].RenderUnicodeChar(ch, white, !conf.FontSmallRenderBlended());
@@ -1487,32 +1487,23 @@ void AGG::LoadTTFChar(u32 ch)
 	// medium
 	fnt_cache[ch].sfs[2] = fonts[1].RenderUnicodeChar(ch, white, !conf.FontNormalRenderBlended());
 	fnt_cache[ch].sfs[3] = fonts[1].RenderUnicodeChar(ch, yellow, !conf.FontNormalRenderBlended());
+	// gray
+	fnt_cache[ch].sfs[4] = fonts[0].RenderUnicodeChar(ch, gray, !conf.FontSmallRenderBlended());
+	fnt_cache[ch].sfs[5] = fonts[1].RenderUnicodeChar(ch, gray, !conf.FontNormalRenderBlended());
 }
 
 void AGG::LoadFNT()
 {
     const Settings & conf = Settings::Get();
 
-    if(! conf.Unicode())
-    {
-    }
-    else
-    if(fnt_cache.empty())
-    {
-    const std::string letters = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
-    std::vector<u16> unicode = StringUTF8_to_UNICODE(letters);
+	if (!fnt_cache.empty())
+		return;
+	const std::string letters =
+		"!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+	std::vector<u16> unicode = StringUTF8_to_UNICODE(letters);
 
-    for(std::vector<u16>::const_iterator
-        it = unicode.begin(); it != unicode.end(); ++it)
-        LoadTTFChar(*it);
-
-    if(fnt_cache.empty())
-    {
-    }
-    else
-    {
-    }
-    }
+	for (auto it = unicode.begin(); it != unicode.end(); ++it)
+		LoadTTFChar(*it);
 }
 
 u32 AGG::GetFontHeight(bool small)
@@ -1530,23 +1521,19 @@ Surface AGG::GetUnicodeLetter(u32 ch, u32 ft)
 
     if(!fnt_cache[ch].sfs[0].isValid()) LoadTTFChar(ch);
 
-    switch(ft)
-    {
-    case Font::YELLOW_SMALL: return fnt_cache[ch].sfs[1];
-    case Font::BIG:		 return fnt_cache[ch].sfs[2];
-    case Font::YELLOW_BIG:	 return fnt_cache[ch].sfs[3];
-    default: break;
-    }
+	const auto& surfaces = fnt_cache[ch].sfs;
+	switch (ft)
+	{
+	case Font::YELLOW_SMALL: return surfaces[1];
+	case Font::BIG:		 return surfaces[2];
+	case Font::YELLOW_BIG:	 return surfaces[3];
+	case Font::SHADDOW:	 return surfaces[4];
+	case Font::SHADDOW_BIG:	 return surfaces[5];
+	default: break;
+	}
 
-    return fnt_cache[ch].sfs[0];
+    return surfaces[0];
 }
-#else
-
-void AGG::LoadFNT()
-{
-}
-
-#endif
 
 Surface AGG::GetLetter(u32 ch, u32 ft)
 {
@@ -1577,22 +1564,6 @@ void AGG::ResetMixer()
 
 void AGG::ShowError()
 {
-#ifdef WITH_ZLIB
-    ZSurface zerr;
-    if (zerr.Load(_ptr_080721d0.width, _ptr_080721d0.height, _ptr_080721d0.bpp, _ptr_080721d0.pitch,
-                  _ptr_080721d0.rmask, _ptr_080721d0.gmask, _ptr_080721d0.bmask, _ptr_080721d0.amask,
-                  _ptr_080721d0.zdata, sizeof(_ptr_080721d0.zdata)))
-    {
-        Display &display = Display::Get();
-        LocalEvent &le = LocalEvent::Get();
-
-        display.Fill(ColorBlack);
-        zerr.Blit((display.w() - zerr.w()) / 2, (display.h() - zerr.h()) / 2, display);
-        display.Flip();
-
-        while (le.HandleEvents() && !le.KeyPress() && !le.MouseClickLeft());
-    }
-#endif
 }
 
 bool AGG::Init()
@@ -1604,7 +1575,6 @@ bool AGG::Init()
         //return false;
     }
 
-#ifdef WITH_TTF
     Settings & conf = Settings::Get();
     const std::string prefix_fonts = System::ConcatePath("files", "fonts");
     const std::string font1 = Settings::GetLastFile(prefix_fonts, conf.FontsNormal());
@@ -1617,7 +1587,6 @@ bool AGG::Init()
     if(!fonts[1].Open(font1, conf.FontsNormalSize()) ||
        !fonts[0].Open(font2, conf.FontsSmallSize())) conf.SetUnicode(false);
     }
-#endif
 
     icn_cache.reserve(ICN::LASTICN + 256);
     icn_cache.resize(ICN::LASTICN);

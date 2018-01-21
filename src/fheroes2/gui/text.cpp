@@ -292,7 +292,7 @@ int TextUnicode::h() const
 int TextUnicode::h(int width) const
 {
     if(message.empty()) return 0;
-    else
+    
     if(0 == width || w() <= width) return CharHeight(font);
 
     int res = 0;
@@ -326,27 +326,28 @@ void TextUnicode::Blit(s32 ax, s32 ay, int maxw, Surface & dst)
 {
     const s32 sx = ax;
 
-    for(std::vector<u16>::const_iterator
-    it = message.begin(); it != message.end(); ++it)
-    {
-    if(maxw && (ax - sx) >= maxw) break;
+	for (auto & it : message)
+	{
+		if (maxw && (ax - sx) >= maxw) break;
 
-    // end string
-    if(0 == *it) continue;
+		// end string
+		if (0 == it) continue;
 
-    // space or unknown letter
-    if(*it < 0x0021)
-    {
-        ax += CharWidth(*it, font);
-        continue;
-    }
+		// space or unknown letter
+		if (it < 0x0021)
+		{
+			ax += CharWidth(it, font);
+			continue;
+		}
 
-    const Surface & sprite = AGG::GetUnicodeLetter(*it, font);
-    if(!sprite.isValid()) return;
+		const Surface & sprite = AGG::GetUnicodeLetter(it, font);
+		if (!sprite.isValid()) return;
 
-    sprite.Blit(ax, ay, dst);
-    ax += sprite.w();
-    }
+		const Surface & shaddow = AGG::GetUnicodeLetter(it, font==4 || font==2? Font::SHADDOW_BIG: Font::SHADDOW);
+		shaddow.Blit(ax+2, ay + 2, dst);
+		sprite.Blit(ax, ay, dst);
+		ax += sprite.w();
+	}
 }
 
 #endif
@@ -354,39 +355,25 @@ void TextUnicode::Blit(s32 ax, s32 ay, int maxw, Surface & dst)
 
 Text::Text() : message(nullptr), gw(0), gh(0)
 {
-#ifdef WITH_TTF
-    if(Settings::Get().Unicode())
     message = static_cast<TextInterface*>(new TextUnicode());
-    else
-#endif
-    message = static_cast<TextInterface *>(new TextAscii());
 }
 
 Text::Text(const string &msg, int ft) : message(nullptr), gw(0), gh(0)
 {
-#ifdef WITH_TTF
-    if(Settings::Get().Unicode())
     message = static_cast<TextInterface*>(new TextUnicode(msg, ft));
-    else
-#endif
-    message = static_cast<TextInterface *>(new TextAscii(msg, ft));
-
+ 
     gw = message->w();
     gh = message->h();
 }
 
-#ifdef WITH_TTF
 Text::Text(const u16* pt, size_t sz, int ft) : message(nullptr), gw(0), gh(0)
 {
-    if(Settings::Get().Unicode() && pt)
-    {
-        message = static_cast<TextInterface*>(new TextUnicode(pt, sz, ft));
+    if(!pt) return;
+	message = static_cast<TextInterface*>(new TextUnicode(pt, sz, ft));
 
-    gw = message->w();
-    gh = message->h();
-    }
+	gw = message->w();
+	gh = message->h();
 }
-#endif
 
 Text::~Text()
 {
@@ -395,13 +382,8 @@ Text::~Text()
 
 Text::Text(const Text &t)
 {
-#ifdef WITH_TTF
-    if(Settings::Get().Unicode())
     message = static_cast<TextInterface*>(new TextUnicode(static_cast<TextUnicode &>(*t.message)));
-    else
-#endif
-    message = static_cast<TextInterface *>(new TextAscii(static_cast<TextAscii &>(*t.message)));
-
+ 
     gw = t.gw;
     gh = t.gh;
 }
@@ -409,12 +391,7 @@ Text::Text(const Text &t)
 Text &Text::operator=(const Text &t)
 {
     delete message;
-#ifdef WITH_TTF
-    if(Settings::Get().Unicode())
     message = static_cast<TextInterface*>(new TextUnicode(static_cast<TextUnicode &>(*t.message)));
-    else
-#endif
-    message = static_cast<TextInterface *>(new TextAscii(static_cast<TextAscii &>(*t.message)));
 
     gw = t.gw;
     gh = t.gh;
