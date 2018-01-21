@@ -240,7 +240,12 @@ int Battle::Force::GetControl() const
 
 bool Battle::Force::isValid() const
 {
-    return end() != find_if(begin(), end(), mem_fun(&Unit::isValid));
+	for(auto& it:*this)
+	{
+		if (it->isValid())
+			return true;
+	}
+    return false;
 }
 
 u32 Battle::Force::GetSurrenderCost() const
