@@ -344,7 +344,7 @@ void TextUnicode::Blit(s32 ax, s32 ay, int maxw, Surface & dst)
 		if (!sprite.isValid()) return;
 
 		const Surface & shaddow = AGG::GetUnicodeLetter(it, font==4 || font==2? Font::SHADDOW_BIG: Font::SHADDOW);
-		shaddow.Blit(ax+2, ay + 2, dst);
+		shaddow.Blit(ax+1, ay + 1, dst);
 		sprite.Blit(ax, ay, dst);
 		ax += sprite.w();
 	}
