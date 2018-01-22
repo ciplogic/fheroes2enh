@@ -287,30 +287,25 @@ string AGG::FAT::Info() const
 /* read element to body */
 vector<u8> AGG::File::Read(const string &str)
 {
-    if (key == str)
-	{
-		return body;
-	}
 	const auto it = fat.find(str);
 
 	if (it == fat.end())
 	{
-		if (!body.empty())
-		{
-			body.clear();
-			key.clear();
-		}
-		return body;
+		vector<u8> emptyBuf;
+		return emptyBuf;
 	}
 
 	const FAT& f = (*it).second;
 	key = str;
 
-	if (f.size)
+	if (!f.size)
 	{
-		stream.seek(f.offset);
-		body = stream.getRaw(f.size);
+		vector<u8> emptyBuf;
+		return emptyBuf;
 	}
+	stream.seek(f.offset);
+	vector<u8> body = stream.getRaw(f.size);
+	
 
 	return body;
 }
@@ -832,6 +827,10 @@ ICNSprite AGG::RenderICNSprite(int icn, u32 index)
 	//StreamBuf st(body);
 
     u32 count = st.getLE16();
+	if (index >= count)
+	{
+		return res;
+	}
     u32 blockSize = st.getLE32();
 
     if (index) st.skip(index * 13);

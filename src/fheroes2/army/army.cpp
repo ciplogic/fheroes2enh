@@ -1199,18 +1199,15 @@ u32 Army::ActionToSirens()
 {
     u32 res = 0;
 
-    for (auto &_item : _items)
-        if (_item->isValid())
-        {
-            const u32 kill = _item->GetCount() * 30 / 100;
+	for (auto &_item : _items)
+	{
+		if (!_item->isValid()) continue;
+		const u32 kill = _item->GetCount() * 30 / 100;
 
-            if (kill)
-            {
-                _item->SetCount(_item->GetCount() - kill);
-                res += kill * static_cast<Monster *>(_item.get())->GetHitPoints();
-            }
-        }
-
+		if (!kill) continue;
+		_item->SetCount(_item->GetCount() - kill);
+		res += kill * static_cast<Monster *>(_item.get())->GetHitPoints();
+	}
     return res;
 }
 
@@ -1283,7 +1280,7 @@ JoinCount Army::GetJoinSolution(const Heroes &hero, const Maps::Tiles &tile, con
     {
         if (join_free || join_force)
             return JoinCount(JOIN_FREE, troop.GetCount());
-        else if (hero.HasSecondarySkill(Skill::Secondary::DIPLOMACY))
+        if (hero.HasSecondarySkill(Skill::Secondary::DIPLOMACY))
         {
             // skill diplomacy
             const u32 to_join = Monster::GetCountFromHitPoints(troop,
