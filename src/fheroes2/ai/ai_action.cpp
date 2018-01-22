@@ -544,7 +544,7 @@ void AIToCastle(Heroes &hero, u32 obj, s32 dst_index)
             castle->ActionPreBattle();
 
             // new battle
-            Battle::Result res = Battle::Loader(hero.GetArmy(), army, dst_index);
+            Battle::Result res = BattleHeroWithHero(hero, *defender, dst_index);
 
             castle->ActionAfterBattle(res.AttackerWins());
 

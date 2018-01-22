@@ -197,26 +197,25 @@ void Battle::EagleEyeSkillAction(HeroBase &hero, const SpellStorage &spells, boo
     // filter spells
     for (auto sp : spells)
     {
-        if (!hero.HaveSpell(sp))
-        {
-            switch (eagleeye.Level())
-            {
-                case Skill::Level::BASIC:
-                    // 20%
-                    if (3 > sp.Level() && eagleeye.GetValues() >= Rand::Get(1, 100)) new_spells.push_back(sp);
-                    break;
-                case Skill::Level::ADVANCED:
-                    // 30%
-                    if (4 > sp.Level() && eagleeye.GetValues() >= Rand::Get(1, 100)) new_spells.push_back(sp);
-                    break;
-                case Skill::Level::EXPERT:
-                    // 40%
-                    if (5 > sp.Level() && eagleeye.GetValues() >= Rand::Get(1, 100)) new_spells.push_back(sp);
-                    break;
-                default:
-                    break;
-            }
-        }
+        if (hero.HaveSpell(sp))
+		    continue;
+	    switch (eagleeye.Level())
+	    {
+	    case Skill::Level::BASIC:
+		    // 20%
+		    if (3 > sp.Level() && eagleeye.GetValues() >= Rand::Get(1, 100)) new_spells.push_back(sp);
+		    break;
+	    case Skill::Level::ADVANCED:
+		    // 30%
+		    if (4 > sp.Level() && eagleeye.GetValues() >= Rand::Get(1, 100)) new_spells.push_back(sp);
+		    break;
+	    case Skill::Level::EXPERT:
+		    // 40%
+		    if (5 > sp.Level() && eagleeye.GetValues() >= Rand::Get(1, 100)) new_spells.push_back(sp);
+		    break;
+	    default:
+		    break;
+	    }
     }
 
     // add new spell
@@ -322,11 +321,6 @@ bool Battle::Result::DefenderWins() const
 StreamBase &Battle::operator<<(StreamBase &msg, const Result &res)
 {
     return msg << res.army1 << res.army2 << res.exp1 << res.exp2 << res.killed;
-}
-
-StreamBase &Battle::operator>>(StreamBase &msg, Result &res)
-{
-    return msg >> res.army1 >> res.army2 >> res.exp1 >> res.exp2 >> res.killed;
 }
 
 ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, Result &res)

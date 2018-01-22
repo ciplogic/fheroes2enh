@@ -34,6 +34,7 @@
 #include "gamedefs.h"
 #include "serialize.h"
 #include "ByteVectorReader.h"
+#include "battle.h"
 
 class Recruits;
 
@@ -394,7 +395,11 @@ struct AllHeroes : public VecHeroes
     Heroes *FromJail(s32) const;
 
     bool HaveTwoFreemans() const;
+
 };
+
+Battle::Result BattleHeroWithMonster(Heroes& hero, Army&army, s32 dst_index);
+Battle::Result BattleHeroWithHero(Heroes& hero, Heroes&other_hero, s32 dst_index);
 
 StreamBase &operator<<(StreamBase &, const VecHeroes &);
 

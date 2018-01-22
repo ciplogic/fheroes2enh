@@ -685,7 +685,14 @@ void Battle::Only::StartBattle()
             hero2->SetSpellPoints(hero2->GetMaxSpellPoints());
             hero2->Recruit(player2.GetColor(), Point(5, 6));
         }
-
-        Loader(hero1->GetArmy(), hero2 ? hero2->GetArmy() : monsters, hero1->GetIndex() + 1);
+		if(hero2)
+		{
+			BattleHeroWithHero(*hero1, *hero2, hero1->GetIndex() + 1);
+		}
+		else
+		{
+			BattleHeroWithMonster(*hero1, monsters, hero1->GetIndex() + 1);
+		}
+        
     }
 }

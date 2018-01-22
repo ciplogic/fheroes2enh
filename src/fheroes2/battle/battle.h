@@ -80,7 +80,6 @@ namespace Battle
 
     StreamBase &operator<<(StreamBase &, const Result &);
 
-    StreamBase &operator>>(StreamBase &, Result &);
 	ByteVectorReader &operator>>(ByteVectorReader&, Result &);
 
     Result Loader(Army &, Army &, s32);

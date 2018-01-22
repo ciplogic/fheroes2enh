@@ -758,56 +758,56 @@ void Heroes::Action(s32 dst_index)
                 break;
         }
 }
-namespace {
-	Battle::Result BattleHeroWithMonster(Heroes& hero, Army&army, s32 dst_index)
-	{
-		Battle::Result res;
-		StreamBuf armyBuf, heroArmyBuf;
-		armyBuf << army;
-		armyBuf.seek(0);
-		auto armyVec = armyBuf.getRaw(0);
-		heroArmyBuf << hero;
-		heroArmyBuf.seek(0);
-		auto heroVec = heroArmyBuf.getRaw(0);
 
-		do {
-			res = Battle::Loader(hero.GetArmy(), army, dst_index);
-			if (res.fightAgain == Battle::FightResultType::FightAgain) {
-				Settings::Get().SetQuickCombat(false);
-				ByteVectorReader bvr(armyVec);
-				bvr >> army;
-				ByteVectorReader heroArmyReader(heroVec);
-				hero.ReadFrom(heroArmyReader);
-			}
-		} while (res.fightAgain == Battle::FightResultType::FightAgain);
-		Settings::Get().SetQuickCombat(true);
-		return res;
-	}
+Battle::Result BattleHeroWithMonster(Heroes& hero, Army&army, s32 dst_index)
+{
+	Battle::Result res;
+	StreamBuf armyBuf, heroArmyBuf;
+	armyBuf << army;
+	armyBuf.seek(0);
+	auto armyVec = armyBuf.getRaw(0);
+	heroArmyBuf << hero;
+	heroArmyBuf.seek(0);
+	auto heroVec = heroArmyBuf.getRaw(0);
 
-	Battle::Result BattleHeroWithHero(Heroes& hero, Heroes&other_hero, s32 dst_index)
-	{
-		Battle::Result res;
-		StreamBuf armyBuf, heroArmyBuf;
-		armyBuf << other_hero;
-		armyBuf.seek(0);
-		auto armyVec = armyBuf.getRaw(0);
-		heroArmyBuf << hero;
-		heroArmyBuf.seek(0);
-		auto heroVec = heroArmyBuf.getRaw(0);
+	do {
+		res = Battle::Loader(hero.GetArmy(), army, dst_index);
+		if (res.fightAgain == Battle::FightResultType::FightAgain) {
+			Settings::Get().SetQuickCombat(false);
+			ByteVectorReader bvr(armyVec);
+			bvr >> army;
+			ByteVectorReader heroArmyReader(heroVec);
+			hero.ReadFrom(heroArmyReader);
+		}
+	} while (res.fightAgain == Battle::FightResultType::FightAgain);
+	Settings::Get().SetQuickCombat(true);
+	return res;
+}
 
-		do {
-			res = Battle::Loader(hero.GetArmy(), other_hero.GetArmy(), dst_index);
-			if (res.fightAgain == Battle::FightResultType::FightAgain) {
-				Settings::Get().SetQuickCombat(false);
-				ByteVectorReader bvr(armyVec);
-				bvr >> other_hero;
-				ByteVectorReader heroArmyReader(heroVec);
-				hero.ReadFrom(heroArmyReader);
-			}
-		} while (res.fightAgain == Battle::FightResultType::FightAgain);
-		Settings::Get().SetQuickCombat(true);
-		return res;
-	}
+	
+Battle::Result BattleHeroWithHero(Heroes& hero, Heroes&other_hero, s32 dst_index)
+{
+	Battle::Result res;
+	StreamBuf armyBuf, heroArmyBuf;
+	armyBuf << other_hero;
+	armyBuf.seek(0);
+	auto armyVec = armyBuf.getRaw(0);
+	heroArmyBuf << hero;
+	heroArmyBuf.seek(0);
+	auto heroVec = heroArmyBuf.getRaw(0);
+
+	do {
+		res = Battle::Loader(hero.GetArmy(), other_hero.GetArmy(), dst_index);
+		if (res.fightAgain == Battle::FightResultType::FightAgain) {
+			Settings::Get().SetQuickCombat(false);
+			ByteVectorReader bvr(armyVec);
+			bvr >> other_hero;
+			ByteVectorReader heroArmyReader(heroVec);
+			hero.ReadFrom(heroArmyReader);
+		}
+	} while (res.fightAgain == Battle::FightResultType::FightAgain);
+	Settings::Get().SetQuickCombat(true);
+	return res;
 }
 
 void ActionToMonster(Heroes &hero, u32 obj, s32 dst_index)
@@ -1027,7 +1027,6 @@ void ActionToCastle(Heroes &hero, u32 obj, s32 dst_index)
             castle->ActionPreBattle();
 
 			// new battle
-            //Battle::Result res = Battle::Loader(hero.GetArmy(), army, dst_index);
 			Battle::Result res = BattleHeroWithMonster(hero, army, dst_index);
 
             castle->ActionAfterBattle(res.AttackerWins());
@@ -1516,7 +1515,7 @@ void ActionToPoorLuckObject(Heroes &hero, u32 obj, s32 dst_index)
             // battle
             Army army(tile);
 
-            Battle::Result res = Battle::Loader(hero.GetArmy(), army, dst_index);
+            Battle::Result res = BattleHeroWithMonster(hero, army, dst_index);
             if (res.AttackerWins())
             {
                 PlaySoundSuccess;
@@ -1703,7 +1702,7 @@ void ActionToPoorMoraleObject(Heroes &hero, u32 obj, s32 dst_index)
 
             Army army(tile);
 
-            Battle::Result res = Battle::Loader(hero.GetArmy(), army, dst_index);
+            Battle::Result res = BattleHeroWithMonster(hero, army, dst_index);
             if (res.AttackerWins())
             {
                 hero.IncreaseExperience(res.GetExperienceAttacker());
@@ -1991,7 +1990,7 @@ void ActionToArtifact(Heroes &hero, u32 obj, s32 dst_index)
             if (battle)
             {
                 // new battle
-                Battle::Result res = Battle::Loader(hero.GetArmy(), army, dst_index);
+                Battle::Result res = BattleHeroWithMonster(hero, army, dst_index);
                 if (res.AttackerWins())
                 {
                     hero.IncreaseExperience(res.GetExperienceAttacker());
@@ -2322,7 +2321,7 @@ void ActionToCaptureObject(Heroes &hero, u32 obj, s32 dst_index)
             Army army(tile);
             const Monster &mons = tile.QuantityMonster();
 
-            Battle::Result result = Battle::Loader(hero.GetArmy(), army, dst_index);
+            Battle::Result result = BattleHeroWithMonster(hero, army, dst_index);
 
             if (result.AttackerWins())
             {
@@ -2574,7 +2573,7 @@ void ActionToDwellingBattleMonster(Heroes &hero, u32 obj, s32 dst_index)
         if (Dialog::YES == Dialog::Message(MP2::StringObject(obj), str_warn, Font::BIG, Dialog::YES | Dialog::NO))
         {
             // new battle
-            Battle::Result res = Battle::Loader(hero.GetArmy(), army, dst_index);
+            Battle::Result res = BattleHeroWithMonster(hero, army, dst_index);
             if (res.AttackerWins())
             {
                 hero.IncreaseExperience(res.GetExperienceAttacker());
@@ -2986,7 +2985,7 @@ void ActionToDaemonCave(Heroes &hero, u32 obj, s32 dst_index)
                 Army army(tile);
                 gold = 2500;
 
-                Battle::Result res = Battle::Loader(hero.GetArmy(), army, dst_index);
+                Battle::Result res = BattleHeroWithMonster(hero, army, dst_index);
                 if (res.AttackerWins())
                 {
                     hero.IncreaseExperience(res.GetExperienceAttacker());
