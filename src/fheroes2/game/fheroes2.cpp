@@ -38,6 +38,7 @@
 #include "audio_mixer.h"
 #include "audio_music.h"
 #include "audio_cdrom.h"
+#include "icn.h"
 
 void LoadZLogo();
 
@@ -62,6 +63,45 @@ int PrintHelp(const char *basename)
     COUT("  -h\tprint this help and exit");
 
     return EXIT_SUCCESS;
+}
+
+void extractFrames()
+{
+
+	for (int icnId = 1; icnId<ICN::LASTICN; icnId++)
+	{
+		bool canContinue = false;
+		int frameId = 0;
+		do {
+			ICNSprite sprite;
+			try {
+				sprite = AGG::RenderICNSprite(icnId, frameId);
+			}
+			catch (...)
+			{
+				break;
+			}
+			frameId++;
+			stringstream sstr;
+			sstr << "out/frame" << icnId << "_" << frameId;
+			auto firstName = sstr.str();
+			if (sprite.isValid())
+			{
+				if (sprite.first.isValid())
+				{
+					auto finalNameFront = firstName + ".png";
+					sprite.first.Save(finalNameFront);
+				}
+				if (sprite.Second().isValid())
+				{
+					auto finalNameFront = firstName + "_back.png";
+					sprite.Second().Save(finalNameFront);
+				}
+			}
+
+			canContinue = sprite.isValid();
+		} while (canContinue);
+	}
 }
 
 string GetCaption()
@@ -132,7 +172,7 @@ int main(int argc, char **argv)
     }
 
     if (!conf.SelectVideoDriver().empty()) SetVideoDriver(conf.SelectVideoDriver());
-
+	
     // random init
     Rand::Init();
     if (conf.Music()) SetTimidityEnvPath(conf);
@@ -183,7 +223,7 @@ int main(int argc, char **argv)
                 return EXIT_FAILURE;
 
             atexit(&AGG::Quit);
-
+			//extractFrames();
             conf.SetBlitSpeed(TestBlitSpeed());
 
             // init cursor
