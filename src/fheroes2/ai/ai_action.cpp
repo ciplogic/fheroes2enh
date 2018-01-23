@@ -544,7 +544,14 @@ void AIToCastle(Heroes &hero, u32 obj, s32 dst_index)
             castle->ActionPreBattle();
 
             // new battle
-            Battle::Result res = BattleHeroWithHero(hero, *defender, dst_index);
+			Battle::Result res;
+			if (defender)
+			{
+				res = BattleHeroWithHero(hero, *defender, dst_index);
+			}else
+			{
+				res = BattleHeroWithMonster(hero, army, dst_index);
+			}
 
             castle->ActionAfterBattle(res.AttackerWins());
 

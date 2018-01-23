@@ -2002,14 +2002,22 @@ void Maps::Tiles::SetObjectPassable(bool pass)
 /* check road */
 bool Maps::Tiles::isRoad(int direct) const
 {
-    return addons_level1.end() != find_if(addons_level1.begin(), addons_level1.end(),
-                                               bind2nd(mem_fun_ref(&TilesAddon::isRoad), direct));
+	for(const auto& addon: addons_level1)
+	{
+		if(addon.isRoad(direct))
+			return true;
+	}
+	return false;
 }
 
 bool Maps::Tiles::isStream() const
 {
-    return addons_level1.end() != find_if(addons_level1.begin(), addons_level1.end(),
-                                               TilesAddon::isStream);
+	for (const auto& addon : addons_level1)
+	{
+		if (TilesAddon::isStream(addon))
+			return true;
+	}
+	return false;
 }
 
 Maps::TilesAddon *Maps::Tiles::FindObject(int objs)

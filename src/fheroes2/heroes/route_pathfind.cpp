@@ -50,7 +50,6 @@ int GetCurrentLength(map<s32, cell_t> &list, s32 from)
     }
     return res;
 }
-
 bool CheckMonsterProtectionAndNotDst(const s32 &to, const s32 &dst)
 {
     const MapsIndexes &monsters = Maps::GetTilesUnderProtection(to);
@@ -223,7 +222,83 @@ u32 GetPenaltyFromTo(s32 from, s32 to, int direct, int pathfinding)
 }
 namespace
 {
-	map<s32, cell_t> pathPointsMap;
+
+	struct  RowInMap
+	{
+		int Key;
+		cell_t Value;
+		int Hash;
+		int PrevIndex;
+	};
+	struct PathMap
+	{
+		
+		std::vector<s32> _jumpTable;
+		std::vector<RowInMap> _rows;
+		int _sizePow2;
+		int mask;
+		void clear()
+		{
+			mask = (1 << _sizePow2) - 1;
+			_jumpTable.resize(1 << _sizePow2,-1);
+			_rows.clear();
+		}
+
+		PathMap(int sizePow2 = 10)
+		{
+			_sizePow2 = sizePow2;
+			clear();
+		}
+
+		int hashInt(int key)
+		{
+			return (key >> 4) * 31 + (key >> 3) * 7 + (key >> 5) * 7 + (key >> 6) * 13;
+		}
+
+		cell_t& get(int key)
+		{
+			int hash = hashInt(key);
+			int maskedHash = hash & mask;
+			RowInMap row;
+			row.Key = key;
+			row.Hash = hash;
+			int indexToSearch = _jumpTable[maskedHash];
+			if(indexToSearch == -1)
+			{
+				row.PrevIndex = -1;
+			} else
+			{
+				do {
+					auto & rowRef = _rows[indexToSearch];
+					if (rowRef.Key == key)
+					{
+						return rowRef.Value;
+					
+					}
+					indexToSearch = rowRef.PrevIndex;
+				} while (indexToSearch != -1);
+				row.PrevIndex = _jumpTable[maskedHash];
+			}
+
+			_jumpTable[maskedHash] = _rows.size();
+			_rows.push_back(row);
+			return _rows.back().Value;
+		}
+	};
+	//map<s32, cell_t> pathPointsMap;
+	PathMap pathPointsMap2;
+
+	int GetCurrentLength(PathMap &list, s32 from)
+	{
+		int res = 0;
+		while (0 <= list.get(from).parent)
+		{
+			from = list.get(from).parent;
+			++res;
+		}
+		return res;
+	}
+
 }
 
 bool Route::Path::Find(s32 to, int limit)
