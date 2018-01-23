@@ -240,7 +240,10 @@ namespace
 		void clear()
 		{
 			mask = (1 << _sizePow2) - 1;
-			_jumpTable.resize(1 << _sizePow2,-1);
+			_jumpTable.clear();
+			_jumpTable.reserve(mask + 1);
+			for (int i = 0; i <= mask; i++)
+				_jumpTable[i] = -1;
 			_rows.clear();
 		}
 
@@ -285,7 +288,6 @@ namespace
 			return _rows.back().Value;
 		}
 	};
-	//map<s32, cell_t> pathPointsMap;
 	PathMap pathPointsMap2;
 
 	int GetCurrentLength(PathMap &list, s32 from)
@@ -309,15 +311,17 @@ bool Route::Path::Find(s32 to, int limit)
     s32 cur = from;
     s32 alt = 0;
     s32 tmp = 0;
-	pathPointsMap.clear();
-    auto it1 = pathPointsMap.begin();
-	auto it2 = pathPointsMap.end();
 	
-    pathPointsMap[cur].cost_g = 0;
-    pathPointsMap[cur].cost_t = 0;
-    pathPointsMap[cur].parent = -1;
-    pathPointsMap[cur].open = 0;
+	pathPointsMap2.clear();
+	auto it1_2 = pathPointsMap2._rows.begin();
+	auto it2_2 = pathPointsMap2._rows.end();
 
+
+	pathPointsMap2.get(cur).cost_g = 0;
+	pathPointsMap2.get(cur).cost_t = 0;
+	pathPointsMap2.get(cur).parent = -1;
+	pathPointsMap2.get(cur).open = 0;
+	
     const Directions directions = Direction::All();
     clear();
 
@@ -330,69 +334,81 @@ bool Route::Path::Find(s32 to, int limit)
             if (!Maps::isValidDirection(cur, direction, wSize))
 		        continue;
 	        tmp = Maps::GetDirectionIndex(cur, direction);
-			auto& tmpItem = pathPointsMap[tmp];
-			auto& curItem = pathPointsMap[cur];
+			auto& tmpItem2 = pathPointsMap2.get(tmp);
+			auto& curItem2 = pathPointsMap2.get(cur);
 
-	        if (!tmpItem.open) continue;
+	        if (!tmpItem2.open) continue;
 	        const u32 costg = GetPenaltyFromTo(cur, tmp, direction, pathfinding);
 
 	        // new
-	        if (-1 == tmpItem.parent)
+	        if (-1 == tmpItem2.parent)
 	        {
-		        if ((curItem.passbl & direction) ||
+		        if ((curItem2.passbl & direction) ||
 			        PassableFromToTile(*hero, cur, tmp, direction, to))
 		        {
-			        curItem.passbl |= direction;
+					curItem2.passbl |= direction;
 
-					tmpItem.direct = direction;
-					tmpItem.cost_g = costg;
-					tmpItem.parent = cur;
-					tmpItem.open = 1;
-					tmpItem.cost_d = 50 * Maps::GetApproximateDistance(tmp, to);
-					tmpItem.cost_t = curItem.cost_t + costg;
+					tmpItem2.direct = direction;
+					tmpItem2.cost_g = costg;
+					tmpItem2.parent = cur;
+					tmpItem2.open = 1;
+					tmpItem2.cost_d = 50 * Maps::GetApproximateDistance(tmp, to);
+					tmpItem2.cost_t = curItem2.cost_t + costg;
+
+					curItem2.passbl |= direction;
+
+					tmpItem2.direct = direction;
+					tmpItem2.cost_g = costg;
+					tmpItem2.parent = cur;
+					tmpItem2.open = 1;
+					tmpItem2.cost_d = 50 * Maps::GetApproximateDistance(tmp, to);
+					tmpItem2.cost_t = curItem2.cost_t + costg;
 		        }
 	        }
 		        // check alt
 	        else
 	        {
-		        if (tmpItem.cost_t > curItem.cost_t + costg &&
-			        ((curItem.passbl & direction) || PassableFromToTile(*hero, cur, tmp, direction, to)))
-		        {
-			        curItem.passbl |= direction;
 
-			        tmpItem.direct = direction;
-			        tmpItem.parent = cur;
-			        tmpItem.cost_g = costg;
-			        tmpItem.cost_t = curItem.cost_t + costg;
-		        }
+				if (tmpItem2.cost_t > curItem2.cost_t + costg &&
+					((curItem2.passbl & direction) || PassableFromToTile(*hero, cur, tmp, direction, to)))
+				{
+					curItem2.passbl |= direction;
+
+					tmpItem2.direct = direction;
+					tmpItem2.parent = cur;
+					tmpItem2.cost_g = costg;
+					tmpItem2.cost_t = curItem2.cost_t + costg;
+				}
 	        }
         }
 
-        pathPointsMap[cur].open = 0;
 
-        it1 = pathPointsMap.begin();
+		pathPointsMap2.get(cur).open = 0;
+
+        it1_2 = pathPointsMap2._rows.begin();
         alt = -1;
         tmp = MAXU16;
 
-        // find minimal cost
-        for (; it1 != it2; ++it1)
-            if ((*it1).second.open)
-            {
-                const cell_t &cell2 = (*it1).second;
+		// find minimal cost
+		it2_2 = pathPointsMap2._rows.end();
+		for (; it1_2 != it2_2; ++it1_2)
+			if ((*it1_2).Value.open)
+			{
+				const cell_t &cell2 = (*it1_2).Value;
 
-                if (cell2.cost_t + cell2.cost_d < tmp)
-                {
-                    tmp = cell2.cost_t + cell2.cost_d;
-                    alt = (*it1).first;
-                }
-            }
-
+				if (cell2.cost_t + cell2.cost_d < tmp)
+				{
+					tmp = cell2.cost_t + cell2.cost_d;
+					alt = (*it1_2).Key;
+				}
+			}
         // not found, and exception
         if (MAXU16 == tmp || -1 == alt) break;
 
         cur = alt;
 
-        if (0 < limit && GetCurrentLength(pathPointsMap, cur) > limit) break;
+        //if (0 < limit && GetCurrentLength(pathPointsMap, cur) > limit) break;
+		if (0 < limit && GetCurrentLength(pathPointsMap2, cur) > limit) break;
     }
 
     // save path
@@ -400,10 +416,10 @@ bool Route::Path::Find(s32 to, int limit)
     {
         while (cur != from)
         {
-            push_front(Step(pathPointsMap[cur].parent, pathPointsMap[cur].direct, pathPointsMap[cur].cost_g));
-            cur = pathPointsMap[cur].parent;
+			auto& curItem2 = pathPointsMap2.get(cur);
+            push_front(Step(curItem2.parent, curItem2.direct, curItem2.cost_g));
+            cur = curItem2.parent;
         }
     } 
-
     return !empty();
 }
