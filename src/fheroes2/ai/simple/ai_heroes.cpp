@@ -183,7 +183,8 @@ bool AIHeroesPriorityObject(const Heroes &hero, s32 index)
 
 s32 FindUncharteredTerritory(Heroes &hero, u32 scoute)
 {
-    Maps::Indexes v = Maps::GetAroundIndexes(hero.GetIndex(), scoute, true);
+	Maps::Indexes v;
+	Maps::GetAroundIndexes(hero.GetIndex(), scoute, true, v);
     Maps::Indexes res;
 
     v.resize(distance(v.begin(),
@@ -214,7 +215,8 @@ s32 FindUncharteredTerritory(Heroes &hero, u32 scoute)
 
 s32 GetRandomHeroesPosition(Heroes &hero, u32 scoute)
 {
-    Maps::Indexes v = Maps::GetAroundIndexes(hero.GetIndex(), scoute, true);
+	Maps::Indexes v;
+	Maps::GetAroundIndexes(hero.GetIndex(), scoute, true, v);
     Maps::Indexes res;
 
     v.resize(distance(v.begin(),

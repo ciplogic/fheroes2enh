@@ -169,11 +169,14 @@ void AI::KingdomTurn(Kingdom &kingdom)
     status.RedrawTurnProgress(1);
 
     // castles AI turn
-    for_each(castles.begin(), castles.end(), AICastleTurn);
+	for_each(castles.begin(), castles.end(), [](auto* castle) {AICastleTurn(castle); });
 
     // need capture town?
     if (castles.empty())
-        for_each(heroes.begin(), heroes.end(), AIHeroesCaptureNearestTown);
+        for_each(heroes.begin(), heroes.end(), [](auto* castle)
+    {
+	    AIHeroesCaptureNearestTown(castle);
+    });
 
     // buy hero in capital
     if (ai.capital && ai.capital->isCastle())
@@ -271,10 +274,10 @@ void AI::KingdomTurn(Kingdom &kingdom)
     status.RedrawTurnProgress(2);
 
     // heroes turns
-    for_each(heroes.begin(), heroes.end(), ptr_fun(&AIHeroesTurn));
+	for_each(heroes.begin(), heroes.end(), [](Heroes* hero) {AIHeroesTurn(hero); });
     //std::for_each(heroes.begin(), heroes.end(), std::bind2nd(std::mem_fun(&Heroes::ResetModes), AI::HEROES_STUPID|AI::HEROES_WAITING));
-    for_each(heroes.begin(), heroes.end(), ptr_fun(&AIHeroesTurn));
-    for_each(heroes.begin(), heroes.end(), ptr_fun(&AIHeroesEnd));
+	for_each(heroes.begin(), heroes.end(), [](Heroes* hero) {AIHeroesTurn(hero); });
+	for_each(heroes.begin(), heroes.end(), [](Heroes* hero) {AIHeroesEnd(hero); });
 
     // turn indicator
     status.RedrawTurnProgress(9);

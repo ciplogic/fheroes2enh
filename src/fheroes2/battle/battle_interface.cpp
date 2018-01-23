@@ -735,7 +735,9 @@ Battle::Interface::Interface(Arena &a, s32 center) : arena(a), icn_cbkg(ICN::UNK
                        arenah);
 
     // cover
-    bool trees = !Maps::ScanAroundObject(center, MP2::OBJ_TREES).empty();
+	MapsIndexes treeIndices;
+	Maps::ScanAroundObject(center, MP2::OBJ_TREES, treeIndices);
+    bool trees = !treeIndices.empty();
     const Maps::Tiles &tile = world.GetTiles(center);
     bool grave = MP2::OBJ_GRAVEYARD == tile.GetObject(false);
     bool light = true;

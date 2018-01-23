@@ -318,9 +318,9 @@ bool ActionSpellSummonBoat(Heroes &hero)
 
     // find water
     s32 dst_water = -1;
-    const MapsIndexes &v = Maps::ScanAroundObject(center, MP2::OBJ_ZERO);
-    for (MapsIndexes::const_iterator
-                 it = v.begin(); it != v.end(); ++it)
+	MapsIndexes v;
+	Maps::ScanAroundObject(center, MP2::OBJ_ZERO,v);
+    for (auto it = v.begin(); it != v.end(); ++it)
     {
         if (world.GetTiles(*it).isWater())
         {

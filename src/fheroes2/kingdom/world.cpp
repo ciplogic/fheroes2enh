@@ -584,20 +584,20 @@ void World::MonthOfMonstersAction(const Monster &mons)
         const u32 dist = 2;
         const u8 objs[] = {MP2::OBJ_MONSTER, MP2::OBJ_HEROES, MP2::OBJ_CASTLE, MP2::OBJN_CASTLE, 0};
 
+		MapsIndexes obja;
         // create exclude list
         {
             const MapsIndexes &objv = Maps::GetObjectsPositions(objs);
 
             for (int it : objv)
             {
-                const MapsIndexes &obja = Maps::GetAroundIndexes(it, dist);
+            	Maps::GetAroundIndexes(it, dist, true, obja);
                 excld.insert(excld.end(), obja.begin(), obja.end());
             }
         }
 
         // create valid points
-        for (MapsTiles::const_iterator
-                     it = vec_tiles.begin(); it != vec_tiles.end(); ++it)
+        for (auto it = vec_tiles.begin(); it != vec_tiles.end(); ++it)
         {
             const Maps::Tiles &tile = *it;
 
@@ -607,7 +607,7 @@ void World::MonthOfMonstersAction(const Monster &mons)
                 excld.end() == find(excld.begin(), excld.end(), tile.GetIndex()))
             {
                 tiles.push_back(tile.GetIndex());
-                const MapsIndexes &obja = Maps::GetAroundIndexes(tile.GetIndex(), dist);
+            	Maps::GetAroundIndexes(tile.GetIndex(), dist, true, obja);
                 excld.insert(excld.end(), obja.begin(), obja.end());
             }
         }
@@ -617,9 +617,8 @@ void World::MonthOfMonstersAction(const Monster &mons)
         random_shuffle(tiles.begin(), tiles.end());
         if (tiles.size() > maxc) tiles.resize(maxc);
 
-        for (MapsIndexes::const_iterator
-                     it = tiles.begin(); it != tiles.end(); ++it)
-            Maps::Tiles::PlaceMonsterOnTile(vec_tiles[*it], mons, 0 /* random */);
+        for (auto& tile : tiles)
+            Maps::Tiles::PlaceMonsterOnTile(vec_tiles[tile], mons, 0 /* random */);
     }
 }
 

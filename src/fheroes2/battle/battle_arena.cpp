@@ -301,7 +301,9 @@ Battle::Arena::Arena(Army &a1, Army &a2, s32 index, bool local) :
     } else
         // set obstacles
     {
-        icn_covr = !Maps::ScanAroundObject(index, MP2::OBJ_CRATER).empty() ?
+		MapsIndexes mapIndexes;
+		Maps::ScanAroundObject(index, MP2::OBJ_CRATER, mapIndexes);
+        icn_covr = !mapIndexes.empty() ?
                    GetCovr(world.GetTiles(index).GetGround()) : ICN::UNKNOWN;
 
         if (icn_covr != ICN::UNKNOWN)

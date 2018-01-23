@@ -417,8 +417,8 @@ void Interface::StatusWindow::RedrawTurnProgress(u32 v)
     turn_progress = v;
     SetRedraw();
 
-    Cursor::Get().Hide();
+    //Cursor::Get().Hide();
     interface.Redraw();
-    Cursor::Get().Show();
-    Display::Get().Flip();
+    //Cursor::Get().Show();
+    //Display::Get().Flip();
 }

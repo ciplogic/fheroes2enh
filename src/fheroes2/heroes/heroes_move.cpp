@@ -424,10 +424,11 @@ void Heroes::Redraw(Surface &dst, s32 dx, s32 dy, bool with_shadow) const
 
     tile.RedrawTop(dst);
 
-    if (Maps::isValidDirection(centerIndex, Direction::TOP))
+	Size wSize(world.w(), world.h());
+    if (Maps::isValidDirection(centerIndex, Direction::TOP, wSize))
         world.GetTiles(Maps::GetDirectionIndex(centerIndex, Direction::TOP)).RedrawTop4Hero(dst, skip_ground);
 
-    if (Maps::isValidDirection(centerIndex, Direction::BOTTOM))
+    if (Maps::isValidDirection(centerIndex, Direction::BOTTOM, wSize))
     {
         Maps::Tiles &tile_bottom = world.GetTiles(Maps::GetDirectionIndex(centerIndex, Direction::BOTTOM));
         tile_bottom.RedrawBottom4Hero(dst);
@@ -438,16 +439,16 @@ void Heroes::Redraw(Surface &dst, s32 dx, s32 dy, bool with_shadow) const
     {
         if (Direction::BOTTOM != direction &&
             Direction::TOP != direction &&
-            Maps::isValidDirection(centerIndex, direction))
+            Maps::isValidDirection(centerIndex, direction, wSize))
         {
-            if (Maps::isValidDirection(Maps::GetDirectionIndex(centerIndex, direction), Direction::BOTTOM))
+            if (Maps::isValidDirection(Maps::GetDirectionIndex(centerIndex, direction), Direction::BOTTOM, wSize))
             {
                 Maps::Tiles &tile_dir_bottom = world.GetTiles(
                         Maps::GetDirectionIndex(Maps::GetDirectionIndex(centerIndex, direction), Direction::BOTTOM));
                 tile_dir_bottom.RedrawBottom4Hero(dst);
                 tile_dir_bottom.RedrawTop(dst);
             }
-            if (Maps::isValidDirection(Maps::GetDirectionIndex(centerIndex, direction), Direction::TOP))
+            if (Maps::isValidDirection(Maps::GetDirectionIndex(centerIndex, direction), Direction::TOP, wSize))
             {
                 Maps::Tiles &tile_dir_top = world.GetTiles(
                         Maps::GetDirectionIndex(Maps::GetDirectionIndex(centerIndex, direction), Direction::TOP));
@@ -455,7 +456,7 @@ void Heroes::Redraw(Surface &dst, s32 dx, s32 dy, bool with_shadow) const
             }
         }
 
-        if (Maps::isValidDirection(centerIndex, Direction::BOTTOM))
+        if (Maps::isValidDirection(centerIndex, Direction::BOTTOM, wSize))
         {
             Maps::Tiles &tile_bottom = world.GetTiles(Maps::GetDirectionIndex(centerIndex, Direction::BOTTOM));
 
@@ -464,7 +465,7 @@ void Heroes::Redraw(Surface &dst, s32 dx, s32 dy, bool with_shadow) const
         }
     }
 
-    if (Maps::isValidDirection(centerIndex, direction))
+    if (Maps::isValidDirection(centerIndex, direction, wSize))
     {
         if (Direction::TOP == direction)
             world.GetTiles(Maps::GetDirectionIndex(centerIndex, direction)).RedrawTop4Hero(dst, skip_ground);

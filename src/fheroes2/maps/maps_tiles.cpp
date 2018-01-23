@@ -1181,7 +1181,8 @@ bool TopObjectDisable(const Maps::TilesAddon &ta)
 
 bool Maps::Tiles::isLongObject(int direction)
 {
-    if (isValidDirection(GetIndex(), direction))
+	Size wSize(world.w(), world.h());
+    if (isValidDirection(GetIndex(), direction, wSize))
     {
         Tiles &tile = world.GetTiles(GetDirectionIndex(GetIndex(), direction));
 
@@ -1215,6 +1216,7 @@ void Maps::Tiles::UpdatePassable()
         return;
     }
 
+	Size wSize(world.w(), world.h());
     // on ground
     if (MP2::OBJ_HEROES != mp2_object && !isWater())
     {
@@ -1269,7 +1271,7 @@ void Maps::Tiles::UpdatePassable()
 #endif
         }
 
-        if (isValidDirection(GetIndex(), Direction::TOP))
+        if (isValidDirection(GetIndex(), Direction::TOP, wSize))
         {
             Tiles &top = world.GetTiles(GetDirectionIndex(GetIndex(), Direction::TOP));
             // fix: rocs on water
@@ -1287,7 +1289,7 @@ void Maps::Tiles::UpdatePassable()
 
     // fix bottom border: disable passable for all no action objects
     if (tile_passable &&
-        !isValidDirection(GetIndex(), Direction::BOTTOM) &&
+        !isValidDirection(GetIndex(), Direction::BOTTOM, wSize) &&
         !emptyobj &&
         !MP2::isActionObject(obj, isWater()))
     {
@@ -1313,7 +1315,7 @@ void Maps::Tiles::UpdatePassable()
     }
 
     // fix top passable
-    if (isValidDirection(GetIndex(), Direction::TOP))
+    if (isValidDirection(GetIndex(), Direction::TOP, wSize))
     {
         Tiles &top = world.GetTiles(GetDirectionIndex(GetIndex(), Direction::TOP));
 
@@ -1332,7 +1334,7 @@ void Maps::Tiles::UpdatePassable()
     }
 
     // fix corners
-    if (isValidDirection(GetIndex(), Direction::LEFT))
+    if (isValidDirection(GetIndex(), Direction::LEFT, wSize))
     {
         Tiles &left = world.GetTiles(GetDirectionIndex(GetIndex(), Direction::LEFT));
 
@@ -1548,7 +1550,8 @@ void Maps::Tiles::RedrawMonster(Surface &dst) const
     if (!(area.GetRectMaps() & mp)) return;
 
     // scan hero around
-    const MapsIndexes &v = ScanAroundObject(GetIndex(), MP2::OBJ_HEROES);
+	MapsIndexes v;
+	ScanAroundObject(GetIndex(), MP2::OBJ_HEROES, v);
     for (int it : v)
     {
         const Tiles &tile = world.GetTiles(it);
@@ -1953,10 +1956,13 @@ bool Maps::Tiles::isPassable(const Heroes &hero) const
 	case MP2::OBJ_HEROES:
 		{
 			// scan ground
-			const MapsIndexes &v = GetAroundIndexes(GetIndex());
+			MapsIndexes v;
+			GetAroundIndexes(GetIndex(), v);
 			if (v.end() == find_if(v.begin(), v.end(),
-			                       not1(bind2nd(ptr_fun(&TileIsGround),
-			                                    static_cast<int>(Ground::WATER)))))
+				[](int it) {
+				return TileIsGround(it, static_cast<int>(Ground::WATER));
+			}));
+				
 				return false;
 		}
 		break;
@@ -2218,8 +2224,9 @@ void Maps::Tiles::CaptureFlags32(int obj, int col)
 
         case MP2::OBJ_ALCHEMYLAB:
         {
+			Size wSize(world.w(), world.h());
             index += 21;
-            if (isValidDirection(GetIndex(), Direction::TOP))
+            if (isValidDirection(GetIndex(), Direction::TOP, wSize))
             {
                 Tiles &tile = world.GetTiles(GetDirectionIndex(GetIndex(), Direction::TOP));
                 tile.CorrectFlags32(index, true);
@@ -2230,7 +2237,8 @@ void Maps::Tiles::CaptureFlags32(int obj, int col)
         case MP2::OBJ_SAWMILL:
         {
             index += 28;
-            if (isValidDirection(GetIndex(), Direction::TOP_RIGHT))
+			Size wSize(world.w(), world.h());
+            if (isValidDirection(GetIndex(), Direction::TOP_RIGHT, wSize))
             {
                 Tiles &tile = world.GetTiles(GetDirectionIndex(GetIndex(), Direction::TOP_RIGHT));
                 tile.CorrectFlags32(index, true);
@@ -2241,14 +2249,15 @@ void Maps::Tiles::CaptureFlags32(int obj, int col)
         case MP2::OBJ_CASTLE:
         {
             index *= 2;
-            if (isValidDirection(GetIndex(), Direction::LEFT))
+			Size wSize(world.w(), world.h());
+            if (isValidDirection(GetIndex(), Direction::LEFT, wSize))
             {
                 Tiles &tile = world.GetTiles(GetDirectionIndex(GetIndex(), Direction::LEFT));
                 tile.CorrectFlags32(index, true);
             }
 
             index += 1;
-            if (isValidDirection(GetIndex(), Direction::RIGHT))
+            if (isValidDirection(GetIndex(), Direction::RIGHT, wSize))
             {
                 Tiles &tile = world.GetTiles(GetDirectionIndex(GetIndex(), Direction::RIGHT));
                 tile.CorrectFlags32(index, true);
@@ -2378,8 +2387,9 @@ void Maps::Tiles::RemoveObjectSprite()
 
     if (addon)
     {
+		Size wSize(world.w(), world.h());
         // remove shadow sprite from left cell
-        if (isValidDirection(GetIndex(), Direction::LEFT))
+        if (isValidDirection(GetIndex(), Direction::LEFT, wSize))
             world.GetTiles(GetDirectionIndex(GetIndex(), Direction::LEFT)).Remove(addon->uniq);
 
         Remove(addon->uniq);
@@ -2392,8 +2402,9 @@ void Maps::Tiles::RemoveBarrierSprite()
 
     if (addon)
     {
+		Size wSize(world.w(), world.h());
         // remove left sprite
-        if (isValidDirection(GetIndex(), Direction::LEFT))
+        if (isValidDirection(GetIndex(), Direction::LEFT, wSize))
         {
             const s32 left = GetDirectionIndex(GetIndex(), Direction::LEFT);
             world.GetTiles(left).Remove(addon->uniq);
@@ -2409,19 +2420,20 @@ void Maps::Tiles::RemoveJailSprite()
 
     if (addon)
     {
+		Size wSize(world.w(), world.h());
         // remove left sprite
-        if (isValidDirection(GetIndex(), Direction::LEFT))
+        if (isValidDirection(GetIndex(), Direction::LEFT, wSize))
         {
             const s32 left = GetDirectionIndex(GetIndex(), Direction::LEFT);
             world.GetTiles(left).Remove(addon->uniq);
 
             // remove left left sprite
-            if (isValidDirection(left, Direction::LEFT))
+            if (isValidDirection(left, Direction::LEFT, wSize))
                 world.GetTiles(GetDirectionIndex(left, Direction::LEFT)).Remove(addon->uniq);
         }
 
         // remove top sprite
-        if (isValidDirection(GetIndex(), Direction::TOP))
+        if (isValidDirection(GetIndex(), Direction::TOP, wSize))
         {
             const s32 top = GetDirectionIndex(GetIndex(), Direction::TOP);
             world.GetTiles(top).Remove(addon->uniq);
@@ -2429,7 +2441,7 @@ void Maps::Tiles::RemoveJailSprite()
             world.GetTiles(top).FixObject();
 
             // remove top left sprite
-            if (isValidDirection(top, Direction::LEFT))
+            if (isValidDirection(top, Direction::LEFT, wSize))
             {
                 world.GetTiles(GetDirectionIndex(top, Direction::LEFT)).Remove(addon->uniq);
                 world.GetTiles(GetDirectionIndex(top, Direction::LEFT)).SetObject(MP2::OBJ_ZERO);
@@ -2447,6 +2459,7 @@ void Maps::Tiles::UpdateAbandoneMineSprite(Tiles &tile)
                                        TilesAddon::isAbandoneMineSprite);
     u32 uniq = it != tile.addons_level1.end() ? (*it).uniq : 0;
 
+	Size wSize(world.w(), world.h());
     if (uniq)
     {
         const int type = tile.QuantityResourceCount().first;
@@ -2454,7 +2467,7 @@ void Maps::Tiles::UpdateAbandoneMineSprite(Tiles &tile)
         for (auto &it : tile.addons_level1)
             TilesAddon::UpdateAbandoneMineLeftSprite(it, type);
 
-        if (isValidDirection(tile.GetIndex(), Direction::RIGHT))
+        if (isValidDirection(tile.GetIndex(), Direction::RIGHT, wSize))
         {
             Tiles &tile2 = world.GetTiles(GetDirectionIndex(tile.GetIndex(), Direction::RIGHT));
             TilesAddon *mines = tile2.FindAddonLevel1(uniq);
@@ -2464,24 +2477,24 @@ void Maps::Tiles::UpdateAbandoneMineSprite(Tiles &tile)
         }
     }
 
-    if (isValidDirection(tile.GetIndex(), Direction::LEFT))
+    if (isValidDirection(tile.GetIndex(), Direction::LEFT, wSize))
     {
         Tiles &tile2 = world.GetTiles(GetDirectionIndex(tile.GetIndex(), Direction::LEFT));
         if (tile2.GetObject() == MP2::OBJN_ABANDONEDMINE) tile2.SetObject(MP2::OBJN_MINES);
     }
 
-    if (isValidDirection(tile.GetIndex(), Direction::TOP))
+    if (isValidDirection(tile.GetIndex(), Direction::TOP, wSize))
     {
         Tiles &tile2 = world.GetTiles(GetDirectionIndex(tile.GetIndex(), Direction::TOP));
         if (tile2.GetObject() == MP2::OBJN_ABANDONEDMINE) tile2.SetObject(MP2::OBJN_MINES);
 
-        if (isValidDirection(tile2.GetIndex(), Direction::LEFT))
+        if (isValidDirection(tile2.GetIndex(), Direction::LEFT, wSize))
         {
             Tiles &tile3 = world.GetTiles(GetDirectionIndex(tile2.GetIndex(), Direction::LEFT));
             if (tile3.GetObject() == MP2::OBJN_ABANDONEDMINE) tile3.SetObject(MP2::OBJN_MINES);
         }
 
-        if (isValidDirection(tile2.GetIndex(), Direction::RIGHT))
+        if (isValidDirection(tile2.GetIndex(), Direction::RIGHT, wSize))
         {
             Tiles &tile3 = world.GetTiles(GetDirectionIndex(tile2.GetIndex(), Direction::RIGHT));
             if (tile3.GetObject() == MP2::OBJN_ABANDONEDMINE) tile3.SetObject(MP2::OBJN_MINES);
@@ -2528,8 +2541,9 @@ void Maps::Tiles::UpdateRNDArtifactSprite(Tiles &tile)
         addon->index = index;
         tile.SetObject(MP2::OBJ_ARTIFACT);
 
+		Size wSize(world.w(), world.h());
         // replace shadow artifact
-        if (isValidDirection(tile.GetIndex(), Direction::LEFT))
+        if (isValidDirection(tile.GetIndex(), Direction::LEFT, wSize))
         {
             Tiles &left_tile = world.GetTiles(GetDirectionIndex(tile.GetIndex(), Direction::LEFT));
             TilesAddon *shadow = left_tile.FindAddonLevel1(addon->uniq);
@@ -2543,20 +2557,19 @@ void Maps::Tiles::UpdateRNDResourceSprite(Tiles &tile)
 {
     TilesAddon *addon = tile.FindObject(MP2::OBJ_RNDRESOURCE);
 
-    if (addon)
-    {
-        addon->index = Resource::GetIndexSprite(Resource::Rand());
-        tile.SetObject(MP2::OBJ_RESOURCE);
+    if (!addon) return;
+	addon->index = Resource::GetIndexSprite(Resource::Rand());
+	tile.SetObject(MP2::OBJ_RESOURCE);
 
-        // replace shadow artifact
-        if (isValidDirection(tile.GetIndex(), Direction::LEFT))
-        {
-            Tiles &left_tile = world.GetTiles(GetDirectionIndex(tile.GetIndex(), Direction::LEFT));
-            TilesAddon *shadow = left_tile.FindAddonLevel1(addon->uniq);
+	Size wSize(world.w(), world.h());
+	// replace shadow artifact
+	if (isValidDirection(tile.GetIndex(), Direction::LEFT, wSize))
+	{
+		Tiles &left_tile = world.GetTiles(GetDirectionIndex(tile.GetIndex(), Direction::LEFT));
+		TilesAddon *shadow = left_tile.FindAddonLevel1(addon->uniq);
 
-            if (shadow) shadow->index = addon->index - 1;
-        }
-    }
+		if (shadow) shadow->index = addon->index - 1;
+	}
 }
 
 void Maps::Tiles::UpdateStoneLightsSprite(Tiles &tile)
@@ -2595,10 +2608,11 @@ void Maps::Tiles::RedrawFogs(Surface &dst, int color) const
 
     // get direction around foga
     int around = 0;
-    const Directions directions = Direction::All();
+    const Directions& directions = Direction::All();
 
+	Size wSize(world.w(), world.h());
     for (int direction : directions)
-        if (!isValidDirection(GetIndex(), direction) ||
+        if (!isValidDirection(GetIndex(), direction, wSize) ||
             world.GetTiles(GetDirectionIndex(GetIndex(), direction)).isFog(color))
             around |= direction;
 

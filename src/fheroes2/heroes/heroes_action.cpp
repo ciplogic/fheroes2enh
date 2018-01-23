@@ -352,7 +352,8 @@ void AnimationRemoveObject(Maps::Tiles &tile)
     Cursor &cursor = Cursor::Get();
     Display &display = Display::Get();
 
-    const MapsIndexes &heroes = Maps::ScanAroundObject(tile.GetIndex(), MP2::OBJ_HEROES);
+	MapsIndexes heroes;
+	Maps::ScanAroundObject(tile.GetIndex(), MP2::OBJ_HEROES, heroes);
     const Surface &stile = tile.GetTileSurface();
     Surface sobj(stile.GetSize(), true);
 
@@ -912,8 +913,9 @@ void ActionToMonster(Heroes &hero, u32 obj, s32 dst_index)
             tile.MonsterSetCount(0);
             tile.SetObject(MP2::OBJ_ZERO);
 
+			Size wSize(world.w(), world.h());
             // remove shadow from left cell
-            if (Maps::isValidDirection(dst_index, Direction::LEFT))
+            if (Maps::isValidDirection(dst_index, Direction::LEFT,wSize))
                 world.GetTiles(Maps::GetDirectionIndex(dst_index, Direction::LEFT)).Remove(uniq);
         }
 

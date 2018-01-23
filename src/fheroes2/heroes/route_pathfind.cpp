@@ -40,7 +40,7 @@ struct cell_t
     s32 parent;
 };
 
-int GetCurrentLength(unordered_map<s32, cell_t> &list, s32 from)
+int GetCurrentLength(map<s32, cell_t> &list, s32 from)
 {
     int res = 0;
     while (0 <= list[from].parent)
@@ -172,36 +172,37 @@ bool PassableFromToTile(const Heroes &hero, s32 from, const s32 &to, int direct,
     if (hero.isShipMaster() &&
         (direct & (Direction::TOP_LEFT | Direction::TOP_RIGHT | Direction::BOTTOM_RIGHT | Direction::BOTTOM_LEFT)))
     {
+		Size wSize(world.w(), world.h());
         switch (direct)
         {
             case Direction::TOP_LEFT:
-                if ((Maps::isValidDirection(from, Direction::TOP) &&
+                if ((Maps::isValidDirection(from, Direction::TOP, wSize) &&
                      !world.GetTiles(Maps::GetDirectionIndex(from, Direction::TOP)).isWater()) ||
-                    (Maps::isValidDirection(from, Direction::LEFT) &&
+                    (Maps::isValidDirection(from, Direction::LEFT, wSize) &&
                      !world.GetTiles(Maps::GetDirectionIndex(from, Direction::LEFT)).isWater()))
                     return false;
                 break;
 
             case Direction::TOP_RIGHT:
-                if ((Maps::isValidDirection(from, Direction::TOP) &&
+                if ((Maps::isValidDirection(from, Direction::TOP, wSize) &&
                      !world.GetTiles(Maps::GetDirectionIndex(from, Direction::TOP)).isWater()) ||
-                    (Maps::isValidDirection(from, Direction::RIGHT) &&
+                    (Maps::isValidDirection(from, Direction::RIGHT, wSize) &&
                      !world.GetTiles(Maps::GetDirectionIndex(from, Direction::RIGHT)).isWater()))
                     return false;
                 break;
 
             case Direction::BOTTOM_RIGHT:
-                if ((Maps::isValidDirection(from, Direction::BOTTOM) &&
+                if ((Maps::isValidDirection(from, Direction::BOTTOM, wSize) &&
                      !world.GetTiles(Maps::GetDirectionIndex(from, Direction::BOTTOM)).isWater()) ||
-                    (Maps::isValidDirection(from, Direction::RIGHT) &&
+                    (Maps::isValidDirection(from, Direction::RIGHT, wSize) &&
                      !world.GetTiles(Maps::GetDirectionIndex(from, Direction::RIGHT)).isWater()))
                     return false;
                 break;
 
             case Direction::BOTTOM_LEFT:
-                if ((Maps::isValidDirection(from, Direction::BOTTOM) &&
+                if ((Maps::isValidDirection(from, Direction::BOTTOM, wSize) &&
                      !world.GetTiles(Maps::GetDirectionIndex(from, Direction::BOTTOM)).isWater()) ||
-                    (Maps::isValidDirection(from, Direction::LEFT) &&
+                    (Maps::isValidDirection(from, Direction::LEFT, wSize) &&
                      !world.GetTiles(Maps::GetDirectionIndex(from, Direction::LEFT)).isWater()))
                     return false;
                 break;
@@ -220,6 +221,10 @@ u32 GetPenaltyFromTo(s32 from, s32 to, int direct, int pathfinding)
     const u32 cost2 = Maps::Ground::GetPenalty(to, Direction::Reflect(direct), pathfinding); // penalty: for [tmp] in
     return (cost1 + cost2) >> 1;
 }
+namespace
+{
+	map<s32, cell_t> pathPointsMap;
+}
 
 bool Route::Path::Find(s32 to, int limit)
 {
@@ -229,65 +234,68 @@ bool Route::Path::Find(s32 to, int limit)
     s32 cur = from;
     s32 alt = 0;
     s32 tmp = 0;
-    unordered_map<s32, cell_t> list;
-    auto it1 = list.begin();
-	auto it2 = list.end();
-
-    list[cur].cost_g = 0;
-    list[cur].cost_t = 0;
-    list[cur].parent = -1;
-    list[cur].open = 0;
+	pathPointsMap.clear();
+    auto it1 = pathPointsMap.begin();
+	auto it2 = pathPointsMap.end();
+	
+    pathPointsMap[cur].cost_g = 0;
+    pathPointsMap[cur].cost_t = 0;
+    pathPointsMap[cur].parent = -1;
+    pathPointsMap[cur].open = 0;
 
     const Directions directions = Direction::All();
     clear();
 
+	Size wSize(world.w(), world.h());
+	LocalEvent::Get().HandleEvents(false);
     while (cur != to)
     {
-        LocalEvent::Get().HandleEvents(false);
         for (auto& direction : directions)
         {
-            if (!Maps::isValidDirection(cur, direction))
+            if (!Maps::isValidDirection(cur, direction, wSize))
 		        continue;
 	        tmp = Maps::GetDirectionIndex(cur, direction);
+			auto& tmpItem = pathPointsMap[tmp];
+			auto& curItem = pathPointsMap[cur];
 
-	        if (!list[tmp].open) continue;
+	        if (!tmpItem.open) continue;
 	        const u32 costg = GetPenaltyFromTo(cur, tmp, direction, pathfinding);
 
 	        // new
-	        if (-1 == list[tmp].parent)
+	        if (-1 == tmpItem.parent)
 	        {
-		        if ((list[cur].passbl & direction) ||
+		        if ((curItem.passbl & direction) ||
 			        PassableFromToTile(*hero, cur, tmp, direction, to))
 		        {
-			        list[cur].passbl |= direction;
+			        curItem.passbl |= direction;
 
-			        list[tmp].direct = direction;
-			        list[tmp].cost_g = costg;
-			        list[tmp].parent = cur;
-			        list[tmp].open = 1;
-			        list[tmp].cost_d = 50 * Maps::GetApproximateDistance(tmp, to);
-			        list[tmp].cost_t = list[cur].cost_t + costg;
+					tmpItem.direct = direction;
+					tmpItem.cost_g = costg;
+					tmpItem.parent = cur;
+					tmpItem.open = 1;
+					tmpItem.cost_d = 50 * Maps::GetApproximateDistance(tmp, to);
+					tmpItem.cost_t = curItem.cost_t + costg;
 		        }
 	        }
 		        // check alt
 	        else
 	        {
-		        if (list[tmp].cost_t > list[cur].cost_t + costg &&
-			        ((list[cur].passbl & direction) || PassableFromToTile(*hero, cur, tmp, direction, to)))
+		        if (tmpItem.cost_t > curItem.cost_t + costg &&
+			        ((curItem.passbl & direction) || PassableFromToTile(*hero, cur, tmp, direction, to)))
 		        {
-			        list[cur].passbl |= direction;
+			        curItem.passbl |= direction;
 
-			        list[tmp].direct = direction;
-			        list[tmp].parent = cur;
-			        list[tmp].cost_g = costg;
-			        list[tmp].cost_t = list[cur].cost_t + costg;
+			        tmpItem.direct = direction;
+			        tmpItem.parent = cur;
+			        tmpItem.cost_g = costg;
+			        tmpItem.cost_t = curItem.cost_t + costg;
 		        }
 	        }
         }
 
-        list[cur].open = 0;
+        pathPointsMap[cur].open = 0;
 
-        it1 = list.begin();
+        it1 = pathPointsMap.begin();
         alt = -1;
         tmp = MAXU16;
 
@@ -309,7 +317,7 @@ bool Route::Path::Find(s32 to, int limit)
 
         cur = alt;
 
-        if (0 < limit && GetCurrentLength(list, cur) > limit) break;
+        if (0 < limit && GetCurrentLength(pathPointsMap, cur) > limit) break;
     }
 
     // save path
@@ -317,8 +325,8 @@ bool Route::Path::Find(s32 to, int limit)
     {
         while (cur != from)
         {
-            push_front(Step(list[cur].parent, list[cur].direct, list[cur].cost_g));
-            cur = list[cur].parent;
+            push_front(Step(pathPointsMap[cur].parent, pathPointsMap[cur].direct, pathPointsMap[cur].cost_g));
+            cur = pathPointsMap[cur].parent;
         }
     } 
 

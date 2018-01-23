@@ -66,7 +66,8 @@ void Interface::Basic::ShowPathOrStartMoveHero(Heroes *hero, s32 dst_index)
 
 void Interface::Basic::MoveHeroFromArrowKeys(Heroes &hero, int direct)
 {
-    if (!Maps::isValidDirection(hero.GetIndex(), direct)) return;
+	Size wSize(world.w(), world.h());
+    if (!Maps::isValidDirection(hero.GetIndex(), direct, wSize)) return;
     s32 dst = Maps::GetDirectionIndex(hero.GetIndex(), direct);
     const Maps::Tiles &tile = world.GetTiles(dst);
     bool allow = false;
@@ -210,7 +211,7 @@ int Interface::Basic::EventFileDialog()
             return Game::QUITGAME;
 
         case Game::LOADGAME:
-            return EventLoadGame();
+            return EventLoadGame()?Game::LOADGAME:Game::NEWGAME;
 
         case Game::SAVEGAME:
             return EventSaveGame();

@@ -125,7 +125,7 @@ u32 Maps::Ground::GetPenalty(s32 index, int direct, u32 level)
     }
 
     if (direct & (Direction::TOP_RIGHT | Direction::BOTTOM_RIGHT | Direction::BOTTOM_LEFT | Direction::TOP_LEFT))
-        result += result * 55 / 100;
+        result = result * 155 / 100;
 
     return result;
 }

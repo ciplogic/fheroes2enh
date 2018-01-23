@@ -43,7 +43,9 @@ struct ComparsionDistance
 
 Maps::IndexesDistance::IndexesDistance(s32 from, s32 center, u32 dist, int sort)
 {
-    Assign(from, GetAroundIndexes(center, dist, sort), sort);
+	MapsIndexes results;
+	GetAroundIndexes(center, dist, sort, results);
+    Assign(from, results, sort);
 }
 
 Maps::IndexesDistance::IndexesDistance(s32 from, const Indexes &indexes, int sort)
@@ -166,38 +168,6 @@ s32 Maps::GetDirectionIndex(s32 from, int vector)
     return -1;
 }
 
-// check bound
-bool Maps::isValidDirection(s32 from, int vector)
-{
-    switch (vector)
-    {
-        case Direction::TOP:
-            return (from >= world.w());
-        case Direction::RIGHT:
-            return ((from % world.w()) < (world.w() - 1));
-        case Direction::BOTTOM:
-            return (from < world.w() * (world.h() - 1));
-        case Direction::LEFT:
-            return (from % world.w());
-
-        case Direction::TOP_RIGHT:
-            return isValidDirection(from, Direction::TOP) && isValidDirection(from, Direction::RIGHT);
-
-        case Direction::BOTTOM_RIGHT:
-            return isValidDirection(from, Direction::BOTTOM) && isValidDirection(from, Direction::RIGHT);
-
-        case Direction::BOTTOM_LEFT:
-            return isValidDirection(from, Direction::BOTTOM) && isValidDirection(from, Direction::LEFT);
-
-        case Direction::TOP_LEFT:
-            return isValidDirection(from, Direction::TOP) && isValidDirection(from, Direction::LEFT);
-
-        default:
-            break;
-    }
-
-    return false;
-}
 
 Point Maps::GetPoint(s32 index)
 {
@@ -248,30 +218,26 @@ Maps::Indexes Maps::GetAllIndexes()
     return result;
 }
 
-Maps::Indexes Maps::GetAroundIndexes(s32 center)
+void Maps::GetAroundIndexes(s32 center, Indexes& result)
 {
-    Indexes result;
-    result.reserve(8);
-
+	result.clear();
     if (!isValidAbsIndex(center))
 	{
-		return result;
+		return;
 	}
-	const Directions directions = Direction::All();
+	const auto& directions = Direction::All();
 
+	Size wSize(world.w(), world.h());
 	for (int direction : directions)
 	{
-		if (isValidDirection(center, direction))
+		if (isValidDirection(center, direction, wSize))
 			result.push_back(GetDirectionIndex(center, direction));
 	}
-
-	return result;
 }
 
-Maps::Indexes Maps::GetAroundIndexes(s32 center, int dist, bool sort)
+void Maps::GetAroundIndexes(s32 center, int dist, bool sort, Maps::Indexes&results)
 {
-    Indexes results;
-    results.reserve(dist * 12);
+    results.clear();
 
     const Point cp = GetPoint(center);
 
@@ -285,7 +251,7 @@ Maps::Indexes Maps::GetAroundIndexes(s32 center, int dist, bool sort)
     if (sort)
         std::sort(results.begin(), results.end(), ComparsionDistance(center));
 
-    return results;
+    return;
 }
 
 Maps::Indexes Maps::GetDistanceIndexes(s32 center, int dist)
@@ -354,25 +320,29 @@ void Maps::ClearFog(s32 index, int scoute, int color)
 
 Maps::Indexes Maps::ScanAroundObjects(s32 center, const u8 *objs)
 {
-    Indexes results = GetAroundIndexes(center);
+	Indexes results;
+    GetAroundIndexes(center, results);
     return MapsIndexesFilteredObjects(results, objs);
 }
 
-Maps::Indexes Maps::ScanAroundObject(s32 center, int obj)
+
+void Maps::ScanAroundObject(s32 center, int obj, MapsIndexes &resultsScan)
 {
-    Indexes results = GetAroundIndexes(center);
-    return MapsIndexesFilteredObject(results, obj);
+	GetAroundIndexes(center, resultsScan);
+    MapsIndexesFilteredObject(resultsScan, obj);
 }
 
 Maps::Indexes Maps::ScanAroundObject(s32 center, u32 dist, int obj)
 {
-    Indexes results = GetAroundIndexes(center, dist, true);
+	Indexes results;
+	GetAroundIndexes(center, dist, true, results);
     return MapsIndexesFilteredObject(results, obj);
 }
 
 Maps::Indexes Maps::ScanAroundObjects(s32 center, u32 dist, const u8 *objs)
 {
-    Indexes results = GetAroundIndexes(center, dist, true);
+	Indexes results;
+	GetAroundIndexes(center, dist, true, results);
     return MapsIndexesFilteredObjects(results, objs);
 }
 
@@ -447,20 +417,24 @@ bool Maps::TileIsUnderProtection(s32 center)
 {
     return MP2::OBJ_MONSTER == world.GetTiles(center).GetObject() || !GetTilesUnderProtection(center).empty();
 }
-
+namespace
+{
+	Maps::Indexes tilesIndexesUnderProtection;
+}
 Maps::Indexes Maps::GetTilesUnderProtection(s32 center)
 {
-    Indexes indexes = ScanAroundObject(center, MP2::OBJ_MONSTER);
+	
+	ScanAroundObject(center, MP2::OBJ_MONSTER, tilesIndexesUnderProtection);
 
-    indexes.resize(distance(indexes.begin(),
-                                 remove_if(indexes.begin(), indexes.end(),
+    tilesIndexesUnderProtection.resize(distance(tilesIndexesUnderProtection.begin(),
+                                 remove_if(tilesIndexesUnderProtection.begin(), tilesIndexesUnderProtection.end(),
                                                 not1(bind1st(ptr_fun(&MapsTileIsUnderProtection),
                                                                        center)))));
 
     if (MP2::OBJ_MONSTER == world.GetTiles(center).GetObject())
-        indexes.push_back(center);
+        tilesIndexesUnderProtection.push_back(center);
 
-    return indexes;
+    return tilesIndexesUnderProtection;
 }
 
 u32 Maps::GetApproximateDistance(s32 index1, s32 index2)
@@ -638,10 +612,11 @@ void Maps::UpdateSpritesFromTownToCastle(const Point &center)
 int Maps::TileIsCoast(s32 center, int filter)
 {
     int result = 0;
-    const Directions directions = Direction::All();
+    const auto& directions = Direction::All();
 
+	Size wSize(world.w(), world.h());
     for (int direction : directions)
-        if ((direction & filter) && isValidDirection(center, direction) &&
+        if ((direction & filter) && isValidDirection(center, direction, wSize) &&
             world.GetTiles(GetDirectionIndex(center, direction)).isWater())
             result |= direction;
 
