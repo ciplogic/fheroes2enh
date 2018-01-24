@@ -426,10 +426,18 @@ Maps::Indexes Maps::GetTilesUnderProtection(s32 center)
 	
 	ScanAroundObject(center, MP2::OBJ_MONSTER, tilesIndexesUnderProtection);
 
-    tilesIndexesUnderProtection.resize(distance(tilesIndexesUnderProtection.begin(),
-                                 remove_if(tilesIndexesUnderProtection.begin(), tilesIndexesUnderProtection.end(),
-                                                not1(bind1st(ptr_fun(&MapsTileIsUnderProtection),
-                                                                       center)))));
+	if (!tilesIndexesUnderProtection.empty()) 
+	{
+		auto removeIt = remove_if(
+			tilesIndexesUnderProtection.begin(), tilesIndexesUnderProtection.end(),
+			[&](auto& it)
+		{
+			return !MapsTileIsUnderProtection(it, center);
+		});
+		int distVal = distance(tilesIndexesUnderProtection.begin(),
+			removeIt);
+		tilesIndexesUnderProtection.resize(distVal);
+	}
 
     if (MP2::OBJ_MONSTER == world.GetTiles(center).GetObject())
         tilesIndexesUnderProtection.push_back(center);
