@@ -74,7 +74,7 @@ void Dialog::SpellInfo(const string &header, const string &message, const Spell 
     TextBox box2(message, Font::BIG, BOXAREA_WIDTH);
     Text text(spell.GetName(), Font::SMALL);
 
-    auto &sprite = AGG::GetICN(ICN::SPELLS, spell.IndexSprite());
+    const auto &sprite = AGG::GetICN(ICN::SPELLS, spell.IndexSprite());
 
     const int spacer = 10;
 
