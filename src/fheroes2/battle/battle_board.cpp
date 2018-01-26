@@ -191,7 +191,7 @@ Battle::Indexes Battle::Board::GetAStarPath(const Unit &b, const Position &dst, 
         {
             Cell &cell = at(*it);
 
-            if (!listCells[*it].open || !cell.isPassable4(b, center) || bridge && isBridgeIndex(*it) && !bridge->isPassable(b.GetColor()))
+            if (!listCells[*it].open || !cell.isPassable4(b, center) || (bridge && isBridgeIndex(*it)) && !bridge->isPassable(b.GetColor()))
 		        continue;
 	        const s32 cost = 100 * GetDistance(*it, dst.GetHead()->GetIndex()) +
 		        (b.isWide() && WideDifficultDirection(center.GetDirection(), GetDirection(*it, cur))

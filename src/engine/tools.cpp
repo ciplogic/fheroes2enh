@@ -45,10 +45,8 @@ std::string StringTrim(std::string str)
     if (str.empty())
         return str;
 
-    std::string::iterator iter;
-
-    // left
-    iter = str.begin();
+	// left
+	auto iter = str.begin();
     while (iter != str.end() && isspace(*iter)) ++iter;
     if (iter != str.begin()) str.erase(str.begin(), iter);
 
@@ -85,19 +83,16 @@ std::string GetString(int value)
 
 std::string GetStringShort(int value)
 {
-    if (abs(value) > 1000)
-    {
-        std::ostringstream stream;
+    if (abs(value) <= 1000)
+		return GetString(value);
+	std::ostringstream stream;
 
-        if (abs(value) > 1000000)
-            stream << value / 1000000 << "M";
-        else
-            stream << value / 1000 << "K";
+	if (abs(value) > 1000000)
+		stream << value / 1000000 << "M";
+	else
+		stream << value / 1000 << "K";
 
-        return stream.str();
-    }
-
-    return GetString(value);
+	return stream.str();
 }
 
 std::string GetString(double value, u8 prec)
@@ -172,15 +167,15 @@ int GetInt(const std::string &str)
         std::string lower = StringLower(str);
 
         if (lower == "on") return 1;
-        else if (lower == "one") return 1;
-        else if (lower == "two") return 2;
-        else if (lower == "three") return 3;
-        else if (lower == "four") return 4;
-        else if (lower == "five") return 5;
-        else if (lower == "six") return 6;
-        else if (lower == "seven") return 7;
-        else if (lower == "eight") return 8;
-        else if (lower == "nine") return 9;
+        if (lower == "one") return 1;
+        if (lower == "two") return 2;
+        if (lower == "three") return 3;
+        if (lower == "four") return 4;
+        if (lower == "five") return 5;
+        if (lower == "six") return 6;
+        if (lower == "seven") return 7;
+        if (lower == "eight") return 8;
+        if (lower == "nine") return 9;
     }
 
     return res;

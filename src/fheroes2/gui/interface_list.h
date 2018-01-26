@@ -280,35 +280,40 @@ namespace Interface
                 UpdateSplitterRange();
                 splitter.MoveIndex(top - content->begin());
                 return true;
-            } else if (useHotkeys && le.KeyPress(KEY_UP) && (cur > content->begin()))
+            } 
+			if (useHotkeys && le.KeyPress(KEY_UP) && (cur > content->begin()))
             {
                 cursor.Hide();
                 --cur;
                 SetCurrentVisible();
                 ActionCurrentUp();
                 return true;
-            } else if (useHotkeys && le.KeyPress(KEY_DOWN) && (cur < (content->end() - 1)))
+            } 
+			if (useHotkeys && le.KeyPress(KEY_DOWN) && (cur < (content->end() - 1)))
             {
                 cursor.Hide();
                 ++cur;
                 SetCurrentVisible();
                 ActionCurrentDn();
                 return true;
-            } else if ((le.MouseWheelUp(rtAreaItems) || le.MouseWheelUp(splitter.GetRect())) &&
+            } 
+			if ((le.MouseWheelUp(rtAreaItems) || le.MouseWheelUp(splitter.GetRect())) &&
                        (top > content->begin()))
             {
                 cursor.Hide();
                 --top;
                 splitter.Backward();
                 return true;
-            } else if ((le.MouseWheelDn(rtAreaItems) || le.MouseWheelDn(splitter.GetRect())) &&
+            } 
+			if ((le.MouseWheelDn(rtAreaItems) || le.MouseWheelDn(splitter.GetRect())) &&
                        (top < (content->end() - maxItems)))
             {
                 cursor.Hide();
                 ++top;
                 splitter.Forward();
                 return true;
-            } else if (le.MousePressLeft(splitter.GetRect()) && (content->size() > maxItems))
+            } 
+			if (le.MousePressLeft(splitter.GetRect()) && (content->size() > maxItems))
             {
                 cursor.Hide();
                 UpdateSplitterRange();
@@ -320,7 +325,7 @@ namespace Interface
                 return true;
             }
 
-            if (content->size())
+            if (!content->empty())
             {
                 double offset = (double)((le.GetMouseCursor().y - rtAreaItems.y) * maxItems / rtAreaItems.h);
 

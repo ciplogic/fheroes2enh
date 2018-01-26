@@ -254,10 +254,10 @@ namespace Interface
 
                 if (ActionBarCursor(cursor, **iterPos.first, iterPos.second))
                     return true;
-                else if (le.MouseClickLeft(iterPos.second))
-                    return ActionBarSingleClick(cursor, **iterPos.first, iterPos.second);
-                else if (le.MousePressRight(iterPos.second))
-                    return ActionBarPressRight(cursor, **iterPos.first, iterPos.second);
+				if (le.MouseClickLeft(iterPos.second))
+					return ActionBarSingleClick(cursor, **iterPos.first, iterPos.second);
+				if (le.MousePressRight(iterPos.second))
+					return ActionBarPressRight(cursor, **iterPos.first, iterPos.second);
             }
 
             return false;

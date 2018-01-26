@@ -689,11 +689,19 @@ s32 Battle::Arena::GetFreePositionNearHero(int color) const
     if (army1->GetColor() == color) cells = cells1;
     else if (army2->GetColor() == color) cells = cells2;
 
-    if (cells)
-        for (u32 ii = 0; ii < 3; ++ii)
-            if (board[cells[ii]].isPassable1(true) && nullptr == board[cells[ii]].GetUnit()) return cells[ii];
-
-    return -1;
+    if (!cells)
+	{
+		return -1;
+	}
+	for (u32 ii = 0; ii < 3; ++ii)
+	{
+		if (board[cells[ii]].isPassable1(true)
+			&& nullptr == board[cells[ii]].GetUnit())
+		{
+			return cells[ii];
+		}
+	}
+	return -1;
 }
 
 bool Battle::Arena::CanSurrenderOpponent(int color) const
@@ -1107,9 +1115,9 @@ u32 Battle::Arena::GetObstaclesPenalty(const Unit &attacker, const Unit &defende
         for (auto point : points)
         {
             if (0 == board[8].GetObject() && (board[8].GetPos() & point)) return 0;
-            else if (0 == board[29].GetObject() && (board[29].GetPos() & point)) return 0;
-            else if (0 == board[73].GetObject() && (board[73].GetPos() & point)) return 0;
-            else if (0 == board[96].GetObject() && (board[96].GetPos() & point)) return 0;
+            if (0 == board[29].GetObject() && (board[29].GetPos() & point)) return 0;
+            if (0 == board[73].GetObject() && (board[73].GetPos() & point)) return 0;
+            if (0 == board[96].GetObject() && (board[96].GetPos() & point)) return 0;
         }
 
         result = 1;

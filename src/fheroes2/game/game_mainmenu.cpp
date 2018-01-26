@@ -132,26 +132,24 @@ int Game::MainMenu()
 
             button.isOver = le.MouseCursor(button.button);
 
-            if ((!button.isOver && button.wasOver) ||
-                (button.isOver && !button.wasOver))
-            {
-                u32 frame = button.frame;
+            if ((button.isOver || !button.wasOver) && (!button.isOver || button.wasOver))
+		        continue;
+	        u32 frame = button.frame;
 
-                if (button.isOver && !button.wasOver)
-                    frame++;
+	        if (button.isOver && !button.wasOver)
+		        frame++;
 
-                cursor.Hide();
-                const Sprite &sprite = AGG::GetICN(ICN::BTNSHNGL, frame);
-                sprite.Blit(top.x + sprite.x(), top.y + sprite.y());
-                cursor.Show();
-            }
+	        cursor.Hide();
+	        const Sprite &sprite = AGG::GetICN(ICN::BTNSHNGL, frame);
+	        sprite.Blit(top.x + sprite.x(), top.y + sprite.y());
+	        cursor.Show();
         }
 
         if (HotKeyPressEvent(EVENT_BUTTON_NEWGAME) || le.MouseClickLeft(buttonNewGame)) return NEWGAME;
-        else if (HotKeyPressEvent(EVENT_BUTTON_LOADGAME) || le.MouseClickLeft(buttonLoadGame)) return LOADGAME;
-        else if (HotKeyPressEvent(EVENT_BUTTON_HIGHSCORES) || le.MouseClickLeft(buttonHighScores)) return HIGHSCORES;
-        else if (HotKeyPressEvent(EVENT_BUTTON_CREDITS) || le.MouseClickLeft(buttonCredits)) return CREDITS;
-        else if (HotKeyPressEvent(EVENT_DEFAULT_EXIT) || le.MouseClickLeft(buttonQuit))
+        if (HotKeyPressEvent(EVENT_BUTTON_LOADGAME) || le.MouseClickLeft(buttonLoadGame)) return LOADGAME;
+        if (HotKeyPressEvent(EVENT_BUTTON_HIGHSCORES) || le.MouseClickLeft(buttonHighScores)) return HIGHSCORES;
+        if (HotKeyPressEvent(EVENT_BUTTON_CREDITS) || le.MouseClickLeft(buttonCredits)) return CREDITS;
+        if (HotKeyPressEvent(EVENT_DEFAULT_EXIT) || le.MouseClickLeft(buttonQuit))
         {
             if (conf.ExtGameUseFade()) display.Fade();
             return QUITGAME;
@@ -170,15 +168,14 @@ int Game::MainMenu()
         else if (le.MousePressRight(buttonNewGame))
             Dialog::Message(_("New Game"), _("Start a single or multi-player game."), Font::BIG);
 
-        if (AnimateInfrequentDelay(MAIN_MENU_DELAY))
-        {
-            cursor.Hide();
-            const Sprite &lantern12 = AGG::GetICN(ICN::SHNGANIM,
-                                                  AnimationFrame(ICN::SHNGANIM, 0, lantern_frame++));
-            lantern12.Blit(top.x + lantern12.x(), top.y + lantern12.y());
-            cursor.Show();
-            display.Flip();
-        }
+        if (!AnimateInfrequentDelay(MAIN_MENU_DELAY))
+		    continue;
+	    cursor.Hide();
+	    const Sprite &lantern12 = AGG::GetICN(ICN::SHNGANIM,
+	                                          AnimationFrame(ICN::SHNGANIM, 0, lantern_frame++));
+	    lantern12.Blit(top.x + lantern12.x(), top.y + lantern12.y());
+	    cursor.Show();
+	    display.Flip();
     }
 
     return QUITGAME;

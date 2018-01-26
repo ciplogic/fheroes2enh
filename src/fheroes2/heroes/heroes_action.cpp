@@ -451,36 +451,35 @@ void Heroes::Action(s32 dst_index)
     }
 
     /* new format map only */
-    ListActions *list = world.GetListActions(dst_index);
+    ListActions *listActions = world.GetListActions(dst_index);
     bool cancel_default = false;
 
-    if (list)
+    if (listActions)
     {
-        for (ListActions::const_iterator
-                     it = list->begin(); it != list->end(); ++it)
+        for (auto & it : *listActions)
         {
-            switch ((*it)->GetType())
+            switch (it->GetType())
             {
                 case ACTION_ACCESS:
-                    if (!ActionAccess::Action(static_cast<ActionAccess *>(*it), dst_index, *this))
+                    if (!ActionAccess::Action(static_cast<ActionAccess *>(it), dst_index, *this))
                         cancel_default = true;
                     break;
 
                 case ACTION_DEFAULT:
-                    if (!ActionDefault::Action(static_cast<ActionDefault *>(*it), dst_index, *this))
+                    if (!ActionDefault::Action(static_cast<ActionDefault *>(it), dst_index, *this))
                         cancel_default = true;
                     break;
 
                 case ACTION_MESSAGE:
-                    ActionMessage::Action(static_cast<ActionMessage *>(*it), dst_index, *this);
+                    ActionMessage::Action(static_cast<ActionMessage *>(it), dst_index, *this);
                     break;
 
                 case ACTION_RESOURCES:
-                    ActionResources::Action(static_cast<ActionResources *>(*it), dst_index, *this);
+                    ActionResources::Action(static_cast<ActionResources *>(it), dst_index, *this);
                     break;
 
                 case ACTION_ARTIFACT:
-                    ActionArtifact::Action(static_cast<ActionArtifact *>(*it), dst_index, *this);
+                    ActionArtifact::Action(static_cast<ActionArtifact *>(it), dst_index, *this);
                     break;
 
                 default:

@@ -20,10 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2AI_H
-#define H2AI_H
-
-#include "gamedefs.h"
+#pragma once
 
 class Castle;
 
@@ -32,6 +29,7 @@ class HeroBase;
 class Heroes;
 
 class Kingdom;
+
 namespace Battle
 {
     class Arena;
@@ -108,5 +106,3 @@ namespace AI
 
     const char *License();
 }
-
-#endif

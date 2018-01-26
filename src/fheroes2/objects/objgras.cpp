@@ -60,7 +60,7 @@ int ObjGra2::GetPassable(u32 index)
     const u8 restricted[] = {2, 3, 6, 8, 22, 59};
     if (isShadow(index))
         return DIRECTION_ALL;
-    else if (isAction(index))
+    if (isAction(index))
         return 0;
 
     return ARRAY_COUNT_END(restricted) != std::find(restricted, ARRAY_COUNT_END(restricted), index) ?

@@ -353,22 +353,17 @@ private:
 
 StreamBase &operator<<(StreamBase &, const CapturedObject &);
 
-StreamBase &operator>>(StreamBase &, CapturedObject &);
 ByteVectorReader &operator>>(ByteVectorReader &, CapturedObject &);
 
 StreamBase &operator<<(StreamBase &, const World &);
 
-StreamBase &operator>>(StreamBase &, World &);
 ByteVectorReader &operator>>(ByteVectorReader &, World &);
 
 StreamBase &operator<<(StreamBase &, const ListActions &);
 
-StreamBase &operator>>(StreamBase &, ListActions &);
 ByteVectorReader &operator>>(ByteVectorReader &, ListActions &);
 
 StreamBase &operator<<(StreamBase &, const MapObjects &);
-
-StreamBase &operator>>(StreamBase &, MapObjects &);
 ByteVectorReader &operator>>(ByteVectorReader &, MapObjects &);
 
 extern World &world;

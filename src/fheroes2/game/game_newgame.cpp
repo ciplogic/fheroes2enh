@@ -60,16 +60,14 @@ int Game::NewHotSeat()
         conf.SetPreferablyCountPlayers(2);
         world.NewMaps(10, 10);
         return StartBattleOnly();
-    } else
-    {
-        const u32 select = SelectCountPlayers();
-        if (select)
-        {
-            conf.SetPreferablyCountPlayers(select);
-            return SELECTSCENARIO;
-        }
     }
-    return MAINMENU;
+	const u32 select = SelectCountPlayers();
+	if (select)
+	{
+		conf.SetPreferablyCountPlayers(select);
+		return SELECTSCENARIO;
+	}
+	return MAINMENU;
 }
 
 int Game::NewCampain()

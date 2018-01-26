@@ -74,7 +74,8 @@ void Dialog::SpellInfo(const string &header, const string &message, const Spell 
     TextBox box2(message, Font::BIG, BOXAREA_WIDTH);
     Text text(spell.GetName(), Font::SMALL);
 
-    const Sprite &sprite = AGG::GetICN(ICN::SPELLS, spell.IndexSprite());
+    auto &sprite = AGG::GetICN(ICN::SPELLS, spell.IndexSprite());
+
     const int spacer = 10;
 
     FrameBox box(box1.h() + spacer + box2.h() + spacer + sprite.h() + 2 + text.h(), ok_button);
@@ -88,6 +89,7 @@ void Dialog::SpellInfo(const string &header, const string &message, const Spell 
 
     // blit sprite
     pos.x = box.GetArea().x + (pos.w - sprite.w()) / 2;
+	
     sprite.Blit(pos.x, pos.y);
 
     // small text
@@ -104,7 +106,7 @@ void Dialog::SpellInfo(const string &header, const string &message, const Spell 
     {
         pt.x = box.GetArea().x + (box.GetArea().w - AGG::GetICN(system, 1).w()) / 2;
         pt.y = box.GetArea().y + box.GetArea().h - AGG::GetICN(system, 1).h();
-        button = new Button(pt.x, pt.y, system, 1, 2);
+        button = new Button(pt.x+70, pt.y, system, 1, 2);
     }
 
     if (button) (*button).Draw();

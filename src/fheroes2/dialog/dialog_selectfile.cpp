@@ -137,11 +137,8 @@ size_t GetInsertPosition(const string &name, s32 cx, s32 posx)
     if (cx <= posx) { return 0; }
      if (cx >= posx + tw)
         return name.size();
-    else
-    {
-        float cw = tw / name.size();
-        return static_cast<size_t>((cx - posx) / cw);
-    }
+	float cw = tw / name.size();
+	return static_cast<size_t>((cx - posx) / cw);
 }
 
 
@@ -159,7 +156,7 @@ MapsFileInfoList GetSortedMapsFileInfoList()
 
     MapsFileInfoList list2(list1.size());
     int ii = 0;
-    for (ListFiles::const_iterator itd = list1.begin(); itd != list1.end(); ++itd, ++ii)
+    for (auto itd = list1.begin(); itd != list1.end(); ++itd, ++ii)
         if (!list2[ii].ReadSAV(*itd))--ii;
     if (static_cast<size_t>(ii) != list2.size()) list2.resize(ii);
     sort(list2.begin(), list2.end(), FileSortingByTime);

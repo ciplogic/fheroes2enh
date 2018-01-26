@@ -241,7 +241,7 @@ s32 Interface::Basic::GetDimensionDoorDestination(s32 from, u32 distance, bool w
 
         // exit
         if (le.MousePressRight()) break;
-        else if (le.MouseClickLeft() && valid) return dst;
+        if (le.MouseClickLeft() && valid) return dst;
 
         // redraw cursor
         if (!cursor.isVisible())

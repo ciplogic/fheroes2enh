@@ -83,7 +83,7 @@ int ObjXlc3::GetPassable(u32 index)
 {
     if (isShadow(index))
         return DIRECTION_ALL;
-    else if (isAction(index))
+    if (isAction(index))
         return 0;
 
     return DIRECTION_ALL;

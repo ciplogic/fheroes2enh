@@ -27,12 +27,10 @@
 #include "resource.h"
 #include "settings.h"
 #include "kingdom.h"
-#include "game_static.h"
 #include "ground.h"
 #include "game.h"
 #include "game_over.h"
 #include "maps_actions.h"
-#include "ai.h"
 #include "world.h"
 #include "rand.h"
 

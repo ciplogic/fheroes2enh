@@ -668,7 +668,7 @@ void Battle::ArmiesOrder::RedrawUnit(const Rect &pos, const Unit &unit, bool rev
     const Sprite &mons32 = AGG::GetICN(ICN::MONS32, unit.GetSpriteIndex(), revert);
 
     // background
-    display.FillRect(pos, RGBA(0x33, 0x33, 0x33));
+    display.FillRect(pos, RGBA(0x33, 0x33, 0x13));
     // mons32 sprite
     mons32.Blit(pos.x + (pos.w - mons32.w()) / 2, pos.y + pos.h - mons32.h() - (mons32.h() + 3 < pos.h ? 3 : 0),
                 display);
@@ -2058,16 +2058,16 @@ void Battle::Interface::FadeArena()
 
 int Battle::GetIndexIndicator(const Unit &b)
 {
-    // yellow
-    if (b.Modes(IS_GREEN_STATUS) && b.Modes(IS_RED_STATUS)) return 13;
-    else
-        // green
-    if (b.Modes(IS_GREEN_STATUS)) return 12;
-    else
-        // red
-    if (b.Modes(IS_RED_STATUS)) return 14;
+	// yellow
+	if (b.Modes(IS_GREEN_STATUS) && b.Modes(IS_RED_STATUS)) return 13;
 
-    return 10;
+	// green
+	if (b.Modes(IS_GREEN_STATUS)) return 12;
+
+	// red
+	if (b.Modes(IS_RED_STATUS)) return 14;
+
+	return 10;
 }
 
 void Battle::Interface::EventShowOptions()
@@ -2120,11 +2120,10 @@ void Battle::Interface::ButtonWaitAction(Actions &a)
 
     le.MousePressLeft(btn_wait) ? btn_wait.PressDraw() : btn_wait.ReleaseDraw();
 
-    if (le.MouseClickLeft(btn_wait) && b_current)
-    {
-        a.push_back(Command(MSG_BATTLE_SKIP, b_current->GetUID(), false));
-        humanturn_exit = true;
-    }
+    if (!le.MouseClickLeft(btn_wait) || !b_current)
+		return;
+	a.push_back(Command(MSG_BATTLE_SKIP, b_current->GetUID(), false));
+	humanturn_exit = true;
 }
 
 void Battle::Interface::ButtonSkipAction(Actions &a)
@@ -2133,33 +2132,33 @@ void Battle::Interface::ButtonSkipAction(Actions &a)
 
     le.MousePressLeft(btn_skip) ? btn_skip.PressDraw() : btn_skip.ReleaseDraw();
 
-    if (le.MouseClickLeft(btn_skip) && b_current)
-    {
-        a.push_back(Command(MSG_BATTLE_SKIP, b_current->GetUID(), true));
-        humanturn_exit = true;
-    }
+    if (!le.MouseClickLeft(btn_skip) || !b_current)
+		return;
+	a.push_back(Command(MSG_BATTLE_SKIP, b_current->GetUID(), true));
+	humanturn_exit = true;
 }
 
 int Battle::Interface::GetAllowSwordDirection(u32 index) const
 {
     int res = 0;
 
-    if (b_current)
-    {
-        const Indexes around = Board::GetAroundIndexes(index);
+    if (!b_current)
+	{
+		return res;
+	}
+	const Indexes around = Board::GetAroundIndexes(index);
 
-        for (int from : around)
-        {
-            if (UNKNOWN != Board::GetCell(from)->GetDirection() ||
-                from == b_current->GetHeadIndex() ||
-                (b_current->isWide() && from == b_current->GetTailIndex()))
-            {
-                res |= Board::GetDirection(index, from);
-            }
-        }
-    }
+	for (int from : around)
+	{
+		if (UNKNOWN != Board::GetCell(from)->GetDirection() ||
+			from == b_current->GetHeadIndex() ||
+			(b_current->isWide() && from == b_current->GetTailIndex()))
+		{
+			res |= Board::GetDirection(index, from);
+		}
+	}
 
-    return res;
+	return res;
 }
 
 void Battle::Interface::MousePressRightBoardAction(u32 themes, const Cell &cell, Actions &a)
@@ -2167,34 +2166,33 @@ void Battle::Interface::MousePressRightBoardAction(u32 themes, const Cell &cell,
     const s32 index = cell.GetIndex();
     const Unit *b = cell.GetUnit();
 
-    if (b)
-    {
-        const Settings &conf = Settings::Get();
-        const int allow = GetAllowSwordDirection(index);
+    if (!b)
+		return;
+	const Settings &conf = Settings::Get();
+	const int allow = GetAllowSwordDirection(index);
 
-        if (arena.GetCurrentColor() == b->GetColor() || !conf.ExtPocketTapMode() || !allow)
-            ArmyInfo(*b, Dialog::READONLY);
-        else
-        {
-            int res = PocketPC::GetCursorAttackDialog(cell.GetPos(), allow);
+	if (arena.GetCurrentColor() == b->GetColor() || !conf.ExtPocketTapMode() || !allow)
+	{
+		ArmyInfo(*b, Dialog::READONLY);
+		return;
+	}
+	int res = PocketPC::GetCursorAttackDialog(cell.GetPos(), allow);
 
-            switch (res)
-            {
-                case Cursor::SWORD_TOPLEFT:
-                case Cursor::SWORD_TOPRIGHT:
-                case Cursor::SWORD_RIGHT:
-                case Cursor::SWORD_BOTTOMRIGHT:
-                case Cursor::SWORD_BOTTOMLEFT:
-                case Cursor::SWORD_LEFT:
-                    MouseLeftClickBoardAction(res, cell, a);
-                    break;
+	switch (res)
+	{
+	case Cursor::SWORD_TOPLEFT:
+	case Cursor::SWORD_TOPRIGHT:
+	case Cursor::SWORD_RIGHT:
+	case Cursor::SWORD_BOTTOMRIGHT:
+	case Cursor::SWORD_BOTTOMLEFT:
+	case Cursor::SWORD_LEFT:
+		MouseLeftClickBoardAction(res, cell, a);
+		break;
 
-                default:
-                    Dialog::ArmyInfo(*b, Dialog::READONLY | Dialog::BUTTONS);
-                    break;
-            }
-        }
-    }
+	default:
+		Dialog::ArmyInfo(*b, Dialog::READONLY | Dialog::BUTTONS);
+		break;
+	}
 }
 
 void Battle::Interface::MouseLeftClickBoardAction(u32 themes, const Cell &cell, Actions &a)
@@ -2231,67 +2229,68 @@ void Battle::Interface::MouseLeftClickBoardAction(u32 themes, const Cell &cell, 
         }
     }
 
-    if (b_current)
-        switch (themes)
-        {
-            case Cursor::WAR_FLY:
-            case Cursor::WAR_MOVE:
-                a.push_back(Command(MSG_BATTLE_MOVE, b_current->GetUID(), index));
-                a.push_back(Command(MSG_BATTLE_END_TURN, b_current->GetUID()));
-                humanturn_exit = true;
-                break;
+	if (!b_current)
+		return;
+	switch (themes)
+	{
+	case Cursor::WAR_FLY:
+	case Cursor::WAR_MOVE:
+		a.push_back(Command(MSG_BATTLE_MOVE, b_current->GetUID(), index));
+		a.push_back(Command(MSG_BATTLE_END_TURN, b_current->GetUID()));
+		humanturn_exit = true;
+		break;
 
-            case Cursor::SWORD_TOPLEFT:
-            case Cursor::SWORD_TOPRIGHT:
-            case Cursor::SWORD_RIGHT:
-            case Cursor::SWORD_BOTTOMRIGHT:
-            case Cursor::SWORD_BOTTOMLEFT:
-            case Cursor::SWORD_LEFT:
-            {
-                const Unit *enemy = b;
-                const int dir = GetDirectionFromCursorSword(themes);
+	case Cursor::SWORD_TOPLEFT:
+	case Cursor::SWORD_TOPRIGHT:
+	case Cursor::SWORD_RIGHT:
+	case Cursor::SWORD_BOTTOMRIGHT:
+	case Cursor::SWORD_BOTTOMLEFT:
+	case Cursor::SWORD_LEFT:
+		{
+			const Unit *enemy = b;
+			const int dir = GetDirectionFromCursorSword(themes);
 
-                if (enemy && Board::isValidDirection(index, dir))
-                {
-                    const s32 move = Board::GetIndexDirection(index, dir);
+			if (enemy && Board::isValidDirection(index, dir))
+			{
+				const s32 move = Board::GetIndexDirection(index, dir);
 
-                    if (b_current->GetHeadIndex() != move)
-                        a.push_back(Command(MSG_BATTLE_MOVE, b_current->GetUID(), move));
-                    a.push_back(Command(MSG_BATTLE_ATTACK, b_current->GetUID(), enemy->GetUID(), index,
-                                        Board::GetReflectDirection(dir)));
-                    a.push_back(Command(MSG_BATTLE_END_TURN, b_current->GetUID()));
-                    humanturn_exit = true;
-                }
-                break;
-            }
+				if (b_current->GetHeadIndex() != move)
+					a.push_back(Command(MSG_BATTLE_MOVE, b_current->GetUID(), move));
+				a.push_back(Command(MSG_BATTLE_ATTACK, b_current->GetUID(), enemy->GetUID(), index,
+				                    Board::GetReflectDirection(dir)));
+				a.push_back(Command(MSG_BATTLE_END_TURN, b_current->GetUID()));
+				humanturn_exit = true;
+			}
+			break;
+		}
 
-            case Cursor::WAR_BROKENARROW:
-            case Cursor::WAR_ARROW:
-            {
-                const Unit *enemy = b;
+	case Cursor::WAR_BROKENARROW:
+	case Cursor::WAR_ARROW:
+		{
+			const Unit *enemy = b;
 
-                if (enemy)
-                {
-                    a.push_back(Command(MSG_BATTLE_ATTACK, b_current->GetUID(), enemy->GetUID(), index, 0));
-                    a.push_back(Command(MSG_BATTLE_END_TURN, b_current->GetUID()));
-                    humanturn_exit = true;
-                }
-                break;
-            }
+			if (enemy)
+			{
+				a.push_back(Command(MSG_BATTLE_ATTACK, b_current->GetUID(), enemy->GetUID(), index, 0));
+				a.push_back(Command(MSG_BATTLE_END_TURN, b_current->GetUID()));
+				humanturn_exit = true;
+			}
+			break;
+		}
 
-            case Cursor::WAR_INFO:
-            {
-                if (b)
-                {
-                    Dialog::ArmyInfo(*b, Dialog::BUTTONS | Dialog::READONLY);
-                    humanturn_redraw = true;
-                }
-                break;
-            }
+	case Cursor::WAR_INFO:
+		{
+			if (b)
+			{
+				Dialog::ArmyInfo(*b, Dialog::BUTTONS | Dialog::READONLY);
+				humanturn_redraw = true;
+			}
+			break;
+		}
 
-            default:
-                break;
-        }
+	default:
+		break;
+	}
 }
 
 void Battle::Interface::RedrawTroopFrameAnimation(Unit &b)
@@ -2304,15 +2303,14 @@ void Battle::Interface::RedrawTroopFrameAnimation(Unit &b)
     {
         CheckGlobalEvents(le);
 
-        if (Battle::AnimateInfrequentDelay(Game::BATTLE_FRAME_DELAY))
-        {
-            cursor.Hide();
-            Redraw();
-            cursor.Show();
-            display.Flip();
-            if (b.isFinishAnimFrame()) break;
-            b.IncreaseAnimFrame();
-        }
+        if (!Battle::AnimateInfrequentDelay(Game::BATTLE_FRAME_DELAY))
+		    continue;
+	    cursor.Hide();
+	    Redraw();
+	    cursor.Show();
+	    display.Flip();
+	    if (b.isFinishAnimFrame()) break;
+	    b.IncreaseAnimFrame();
     }
 }
 
@@ -2549,7 +2547,9 @@ void Battle::Interface::RedrawActionWincesKills(TargetsInfo &targets)
             if (target.defender->GetColor() != Color::NONE)
             {
                 OpponentSprite *commander =
-                        target.defender->GetColor() == arena.GetArmyColor1() ? opponent1 : opponent2;
+                        target.defender->GetColor() == arena.GetArmyColor1()
+            			? opponent1 
+            			: opponent2;
                 if (commander) commander->ResetAnimFrame(OP_SRRW);
             }
         } else

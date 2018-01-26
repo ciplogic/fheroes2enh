@@ -28,7 +28,9 @@
 
 
 void Rand::Init()
-{ srand((u32) time(nullptr)); }
+{
+	srand((u32)time(nullptr));
+}
 
 u32 Rand::Get(u32 min, u32 max)
 {
@@ -65,30 +67,31 @@ size_t Rand::Queue::Size() const
 
 s32 Rand::Queue::Get()
 {
-    iterator it;
-
     // get max
-    it = begin();
+    
     u32 max = 0;
-    for (; it != end(); ++it) max += (*it).second;
+    for (auto & it : *this) 
+		max += it.second;
 
     // set weight (from 100)
-    it = begin();
-    for (; it != end(); ++it) (*it).second = 100 * (*it).second / max;
+    
+    for (auto & it : *this) 
+		it.second = 100 * it.second / max;
 
     // get max
     max = 0;
-    it = begin();
-    for (; it != end(); ++it) max += (*it).second;
+    
+    for (auto & it : *this) 
+		max += it.second;
 
     u8 rand = Rand::Get(max);
     u8 amount = 0;
 
-    it = begin();
-    for (; it != end(); ++it)
+    
+    for (auto & it : *this)
     {
-        amount += (*it).second;
-        if (rand <= amount) return (*it).first;
+        amount += it.second;
+        if (rand <= amount) return it.first;
     }
 
     ERROR("weight not found, return 0");

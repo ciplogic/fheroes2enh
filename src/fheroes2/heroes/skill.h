@@ -26,7 +26,6 @@
 #include <string>
 #include <vector>
 #include <utility>
-#include "gamedefs.h"
 #include "serialize.h"
 
 #include "ByteVectorReader.h"

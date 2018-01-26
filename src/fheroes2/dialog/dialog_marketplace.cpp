@@ -261,7 +261,6 @@ void Dialog::Marketplace(bool fromTradingPost)
 
     const string &header_to = _("Available Trades");
 
-    Funds fundsTo;
     int resourceTo = 0;
     const Point pt2(138 + pos_rt.x, pos_rt.y + 190);
     Rects rectsTo;

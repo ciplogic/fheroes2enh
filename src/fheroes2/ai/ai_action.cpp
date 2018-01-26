@@ -1607,25 +1607,25 @@ bool AI::HeroesValidObject(const Heroes &hero, s32 index)
             if (hero.IsFullBagArtifacts()) return false;
 
             if (hero.isShipMaster()) return false;
-            else
-                // 1,2,3 - 2000g, 2500g+3res, 3000g+5res
+            
+        	// 1,2,3 - 2000g, 2500g+3res, 3000g+5res
             if (1 <= variants && 3 >= variants)
             {
                 return kingdom.AllowPayment(tile.QuantityFunds());
-            } else
-                // 4,5 - need have skill wisard or leadership,
+            } 
+        	// 4,5 - need have skill wisard or leadership,
             if (3 < variants && 6 > variants)
             {
                 return hero.HasSecondarySkill(tile.QuantitySkill().Skill());
-            } else
-                // 6 - 50 rogues, 7 - 1 gin, 8,9,10,11,12,13 - 1 monster level4
+            } 
+        	// 6 - 50 rogues, 7 - 1 gin, 8,9,10,11,12,13 - 1 monster level4
             if (5 < variants && 14 > variants)
             {
                 Army enemy(tile);
                 return !enemy.isValid() || Army::TroopsStrongerEnemyTroops(army, enemy);
-            } else
-                // other
-                return true;
+            } 
+        	// other
+            return true;
         }
             break;
 
@@ -1858,31 +1858,32 @@ bool AI::HeroesValidObject(const Heroes &hero, s32 index)
         case MP2::OBJ_CASTLE:
         {
             const Castle *castle = world.GetCastle(Maps::GetPoint(index));
-            if (castle)
-            {
-                if (hero.GetColor() == castle->GetColor())
-                    return nullptr == castle->GetHeroes().Guest() && !hero.isVisited(tile);
-                else
-                    // FIXME: AI skip visiting alliance
-                if (hero.isFriends(castle->GetColor())) return false;
-                else if (Army::TroopsStrongerEnemyTroops(army, castle->GetActualArmy())) return true;
-            }
-            break;
+            if (!castle)
+	        {
+				break;
+	        }
+	        if (hero.GetColor() == castle->GetColor())
+		        return nullptr == castle->GetHeroes().Guest() && !hero.isVisited(tile);
+	        // FIXME: AI skip visiting alliance
+	        if (hero.isFriends(castle->GetColor())) return false;
+	        if (Army::TroopsStrongerEnemyTroops(army, castle->GetActualArmy())) return true;
+	        break;
         }
 
         case MP2::OBJ_HEROES:
         {
             const Heroes *hero2 = tile.GetHeroes();
-            if (hero2)
+            if (!hero2)
             {
-                if (hero.GetColor() == hero2->GetColor()) return true;
-                    // FIXME: AI skip visiting alliance
-                if (hero.isFriends(hero2->GetColor())) return false;
-                if (hero2->AllowBattle(false) &&
-                         Army::TroopsStrongerEnemyTroops(army, hero2->GetArmy()))
-                    return true;
+	            break;
             }
-            break;
+	        if (hero.GetColor() == hero2->GetColor()) return true;
+	        // FIXME: AI skip visiting alliance
+	        if (hero.isFriends(hero2->GetColor())) return false;
+	        if (hero2->AllowBattle(false) &&
+		        Army::TroopsStrongerEnemyTroops(army, hero2->GetArmy()))
+		        return true;
+	        break;
         }
 
         case MP2::OBJ_BOAT:
@@ -1923,22 +1924,19 @@ bool AIHeroesShowAnimation(const Heroes &hero)
     // get result
     const s32 index_from = hero.GetIndex();
 
-    if (colors && Maps::isValidAbsIndex(index_from))
-    {
-        const Maps::Tiles &tile_from = world.GetTiles(index_from);
+    if (!colors || !Maps::isValidAbsIndex(index_from))
+		return false;
+	const Maps::Tiles &tile_from = world.GetTiles(index_from);
 
-        if (hero.GetPath().isValid())
-        {
-            const s32 index_to = Maps::GetDirectionIndex(index_from, hero.GetPath().GetFrontDirection());
-            const Maps::Tiles &tile_to = world.GetTiles(index_to);
+	if (hero.GetPath().isValid())
+	{
+		const s32 index_to = Maps::GetDirectionIndex(index_from, hero.GetPath().GetFrontDirection());
+		const Maps::Tiles &tile_to = world.GetTiles(index_to);
 
-            return !tile_from.isFog(colors) && !tile_to.isFog(colors);
-        }
+		return !tile_from.isFog(colors) && !tile_to.isFog(colors);
+	}
 
-        return !tile_from.isFog(colors);
-    }
-
-    return false;
+	return !tile_from.isFog(colors);
 }
 
 void AI::HeroesMove(Heroes &hero)

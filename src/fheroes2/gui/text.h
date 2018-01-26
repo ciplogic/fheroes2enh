@@ -213,9 +213,9 @@ public:
 
     bool isShow() const;
 
-    int w();
+    int w() const;
 
-    int h();
+    int h() const;
 
     const Rect &
     GetRect() const;

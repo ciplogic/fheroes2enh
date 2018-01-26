@@ -51,7 +51,7 @@ int ObjWatr::GetPassable(u32 index)
 
     if (isShadow(index))
         return DIRECTION_ALL;
-    else if (isAction(index) ||
+    if (isAction(index) ||
              ARRAY_COUNT_END(disabled) != std::find(disabled, ARRAY_COUNT_END(disabled), index))
         return 0;
 

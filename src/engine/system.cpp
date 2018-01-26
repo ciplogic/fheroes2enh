@@ -165,21 +165,17 @@ ListFiles System::GetListFiles(const std::string &prog, const std::string &prefi
 
 std::string System::GetDirname(const std::string &str)
 {
-    if (!str.empty())
-    {
-        size_t pos = str.rfind(SEPARATOR);
+    if (str.empty())
+		return str;
+	size_t pos = str.rfind(SEPARATOR);
 
-        if (std::string::npos == pos)
-            return std::string(".");
-        else if (pos == 0)
-            return std::string("./");
-        else if (pos == str.size() - 1)
-            return GetDirname(str.substr(0, str.size() - 1));
-        else
-            return str.substr(0, pos);
-    }
-
-    return str;
+	if (std::string::npos == pos)
+		return std::string(".");
+	if (pos == 0)
+		return std::string("./");
+	if (pos == str.size() - 1)
+		return GetDirname(str.substr(0, str.size() - 1));
+	return str.substr(0, pos);
 }
 
 std::string System::GetBasename(const std::string &str)

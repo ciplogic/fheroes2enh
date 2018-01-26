@@ -410,7 +410,7 @@ int Interface::Basic::GetCursorFocusHeroes(const Heroes& from_hero, const Maps::
 
 	if (from_hero.Modes(Heroes::ENABLEMOVE))
 		return Cursor::Get().Themes();
-	else if (from_hero.isShipMaster())
+	if (from_hero.isShipMaster())
 		return GetCursorFocusShipmaster(from_hero, tile);
 
 	switch (tile.GetObject())
@@ -418,11 +418,11 @@ int Interface::Basic::GetCursorFocusHeroes(const Heroes& from_hero, const Maps::
 	case MP2::OBJ_MONSTER:
 		if (from_hero.Modes(Heroes::GUARDIAN))
 			return Cursor::POINTER;
-		else
-			// for direct monster attack
-			return Direction::UNKNOWN != Direction::Get(from_hero.GetIndex(), tile.GetIndex())
-				       ? Cursor::FIGHT
-				       : Cursor::DistanceThemes(Cursor::FIGHT, from_hero.GetRangeRouteDays(tile.GetIndex()));
+
+		// for direct monster attack
+		return Direction::UNKNOWN != Direction::Get(from_hero.GetIndex(), tile.GetIndex())
+			? Cursor::FIGHT
+			: Cursor::DistanceThemes(Cursor::FIGHT, from_hero.GetRangeRouteDays(tile.GetIndex()));
 		break;
 
 	case MP2::OBJN_CASTLE:
@@ -553,68 +553,68 @@ int Interface::Basic::StartGame()
 		if (!skip_turns) world.NewDay();
 
 		for (auto it : players._items)
-			if (it)
+		{
+			if (!it)
+				continue;
+			const Player& player = (*it);
+			Kingdom& kingdom = world.GetKingdom(player.GetColor());
+
+			if (!kingdom.isPlay() ||
+				(skip_turns && !player.isColor(conf.CurrentColor())))
+				continue;
+
+
+			radar.SetHide(true);
+			radar.SetRedraw();
+			conf.SetCurrentColor(player.GetColor());
+			world.ClearFog(player.GetColor());
+			kingdom.ActionBeforeTurn();
+
+			switch (kingdom.GetControl())
 			{
-				const Player& player = (*it);
-				Kingdom& kingdom = world.GetKingdom(player.GetColor());
-
-				if (!kingdom.isPlay() ||
-					(skip_turns && !player.isColor(conf.CurrentColor())))
-					continue;
-
-
-				radar.SetHide(true);
-				radar.SetRedraw();
-				conf.SetCurrentColor(player.GetColor());
-				world.ClearFog(player.GetColor());
-				kingdom.ActionBeforeTurn();
-
-				switch (kingdom.GetControl())
+			case CONTROL_HUMAN:
+				if (conf.GameType(Game::TYPE_HOTSEAT))
 				{
-				case CONTROL_HUMAN:
-					if (conf.GameType(Game::TYPE_HOTSEAT))
-					{
-						cursor.Hide();
-						iconsPanel.HideIcons();
-						statusWindow.Reset();
-						SetRedraw(REDRAW_GAMEAREA | REDRAW_STATUS | REDRAW_ICONS);
-						Redraw();
-						display.Flip();
-						Game::DialogPlayers(player.GetColor(), _("%{color} player's turn"));
-					}
-					iconsPanel.SetRedraw();
-					iconsPanel.ShowIcons();
-					res = HumanTurn(skip_turns);
-					if (skip_turns) skip_turns = false;
-					break;
-
-					// CONTROL_AI turn
-				default:
-					if (res == Game::ENDTURN)
-					{
-						statusWindow.Reset();
-						statusWindow.SetState(STATUS_AITURN);
-
-						cursor.Hide();
-						cursor.SetThemes(Cursor::WAIT);
-						Redraw();
-						cursor.Show();
-						display.Flip();
-
-						AI::KingdomTurn(kingdom);
-					}
-					break;
+					cursor.Hide();
+					iconsPanel.HideIcons();
+					statusWindow.Reset();
+					SetRedraw(REDRAW_GAMEAREA | REDRAW_STATUS | REDRAW_ICONS);
+					Redraw();
+					display.Flip();
+					Game::DialogPlayers(player.GetColor(), _("%{color} player's turn"));
 				}
+				iconsPanel.SetRedraw();
+				iconsPanel.ShowIcons();
+				res = HumanTurn(skip_turns);
+				if (skip_turns) skip_turns = false;
+				break;
 
-				if (res != Game::ENDTURN) break;
+				// CONTROL_AI turn
+			default:
+				if (res == Game::ENDTURN)
+				{
+					statusWindow.Reset();
+					statusWindow.SetState(STATUS_AITURN);
 
-				res = gameResult.LocalCheckGameOver();
+					cursor.Hide();
+					cursor.SetThemes(Cursor::WAIT);
+					Redraw();
+					cursor.Show();
+					display.Flip();
 
-				if (Game::CANCEL != res)
-					break;
-				res = Game::ENDTURN;
+					AI::KingdomTurn(kingdom);
+				}
+				break;
 			}
 
+			if (res != Game::ENDTURN) break;
+
+			res = gameResult.LocalCheckGameOver();
+
+			if (Game::CANCEL != res)
+				break;
+			res = Game::ENDTURN;
+		}
 		//DELAY(10);
 	}
 
@@ -786,9 +786,9 @@ int Interface::Basic::HumanTurn(bool isload)
 																							else if (HotKeyPressEvent(Game::EVENT_SCROLLRIGHT)) gameArea.SetScroll(SCROLL_RIGHT);
 																							else if (HotKeyPressEvent(Game::EVENT_SCROLLUP)) gameArea.SetScroll(SCROLL_TOP);
 																							else if (HotKeyPressEvent(Game::EVENT_SCROLLDOWN)) gameArea.SetScroll(SCROLL_BOTTOM);
-																								// default action
+																							// default action
 																							else if (HotKeyPressEvent(Game::EVENT_DEFAULTACTION)) EventDefaultAction();
-																								// open focus
+																							// open focus
 																							else if (HotKeyPressEvent(Game::EVENT_OPENFOCUS)) EventOpenFocus();
 		}
 

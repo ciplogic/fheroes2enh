@@ -858,7 +858,8 @@ ICNSprite AGG::RenderICNSprite(int icn, u32 index)
     Surface &sf2 = res.second;
 
     sf1.Set(sz.w, sz.h, false);
-    RGBA shadow = RGBA(0, 0, 0, 0x40);
+
+	u32 shadowCol = RGBA::packRgba(0, 0, 0, 0x40);
 
     u32 c = 0;
     Point pt(0, 0);
@@ -881,7 +882,6 @@ ICNSprite AGG::RenderICNSprite(int icn, u32 index)
             while (c-- && buf < max)
             {
 				DrawPointFast(sf1, pt.x, pt.y, *buf);
-                //sf1.DrawPoint(pt, GetPaletteColor(*buf));
                 ++pt.x;
                 ++buf;
 
@@ -910,10 +910,14 @@ ICNSprite AGG::RenderICNSprite(int icn, u32 index)
 				c = 0;
             } else
             {
-                if (!sf2.isValid()) sf2.Set(sz.w, sz.h, true);
+				if (!sf2.isValid())
+				{
+					sf2.Set(sz.w, sz.h, true);
+					sf2.Lock();
+				}
                 while (c--)
                 {
-                    sf2.DrawPoint(pt, shadow);
+					sf2.SetPixel4(pt.x, pt.y, shadowCol);
                     ++pt.x;
                 }
             }
@@ -928,7 +932,6 @@ ICNSprite AGG::RenderICNSprite(int icn, u32 index)
             while (c--)
             {
 				DrawPointFast(sf1, pt.x, pt.y, *buf);
-                //sf1.DrawPoint(pt, GetPaletteColor(*buf));
                 ++pt.x;
             }
             ++buf;
@@ -939,7 +942,6 @@ ICNSprite AGG::RenderICNSprite(int icn, u32 index)
             while (c--)
             {
 				DrawPointFast(sf1, pt.x, pt.y, *buf);
-                //sf1.DrawPoint(pt, GetPaletteColor(*buf));
                 ++pt.x;
             }
             ++buf;
@@ -957,6 +959,10 @@ ICNSprite AGG::RenderICNSprite(int icn, u32 index)
         res.first.RenderContour(RGBA(0, 0x84, 0xe0)).Blit(-1, -1, res.first);
     }
 	sf1.Unlock();
+	if(sf2.isValid())
+	{
+		sf2.Unlock();
+	}
     return res;
 }
 

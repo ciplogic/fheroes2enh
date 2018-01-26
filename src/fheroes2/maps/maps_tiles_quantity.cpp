@@ -186,15 +186,17 @@ Artifact Maps::Tiles::QuantityArtifact() const
             return Artifact(quantity1);
 
         case MP2::OBJ_ARTIFACT:
-            if (QuantityVariant() == 15)
-            {
-                Artifact art(Artifact::SPELL_SCROLL);
-                art.SetSpell(QuantitySpell().GetID());
-                return art;
-            } else
-                return Artifact(quantity1);
+	        {
+		        if (QuantityVariant() == 15)
+		        {
+			        Artifact art(Artifact::SPELL_SCROLL);
+			        art.SetSpell(QuantitySpell().GetID());
+			        return art;
+		        }
+		        return Artifact(quantity1);
+	        }
 
-        default:
+    default:
             break;
     }
 
@@ -1030,11 +1032,10 @@ int Maps::Tiles::MonsterJoinCondition() const
 void Maps::Tiles::MonsterSetJoinCondition(int cond)
 {
     TilesAddon *addon = FindObject(MP2::OBJ_MONSTER);
-    if (addon)
-    {
-        addon->tmp &= 0xFC;
-        addon->tmp |= (cond & 0x03);
-    }
+    if (!addon)
+		return;
+	addon->tmp &= 0xFC;
+	addon->tmp |= (cond & 0x03);
 }
 
 void Maps::Tiles::MonsterSetFixedCount()

@@ -619,12 +619,12 @@ int Artifact::Rand(level_t lvl)
 Artifact Artifact::FromMP2IndexSprite(u32 index)
 {
     if (0xA2 > index) return Artifact((index - 1) / 2);
-    else if (Settings::Get().PriceLoyaltyVersion() && 0xAB < index && 0xCE > index) return Artifact((index - 1) / 2);
-    else if (0xA3 == index) return Artifact(Rand(ART_LEVEL123));
-    else if (0xA4 == index) return Artifact(Rand(ART_ULTIMATE));
-    else if (0xA7 == index) return Artifact(Rand(ART_LEVEL1));
-    else if (0xA9 == index) return Artifact(Rand(ART_LEVEL2));
-    else if (0xAB == index) return Rand(ART_LEVEL3);
+    if (Settings::Get().PriceLoyaltyVersion() && 0xAB < index && 0xCE > index) return Artifact((index - 1) / 2);
+    if (0xA3 == index) return Artifact(Rand(ART_LEVEL123));
+    if (0xA4 == index) return Artifact(Rand(ART_ULTIMATE));
+    if (0xA7 == index) return Artifact(Rand(ART_LEVEL1));
+    if (0xA9 == index) return Artifact(Rand(ART_LEVEL2));
+    if (0xAB == index) return Rand(ART_LEVEL3);
 
     return Artifact(UNKNOWN);
 }

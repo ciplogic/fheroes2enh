@@ -108,7 +108,7 @@ int TextAscii::h() const
 int TextAscii::h(int width) const
 {
     if (message.empty()) return 0;
-    else if (0 == width || w() <= width) return CharHeight(font);
+    if (0 == width || w() <= width) return CharHeight(font);
 
     int res = 0;
     int www = 0;
@@ -450,41 +450,26 @@ void Text::Blit(s32 ax, s32 ay, int maxw, Surface &dst) const
 
 u32 Text::width(const string &str, int ft, u32 start, u32 count)
 {
-#ifdef WITH_TTF
-    if(Settings::Get().Unicode())
-    {
-    TextUnicode text(str, ft);
-    return text.w(start, count);
-    }
-    else
-#endif
-    {
-        TextAscii text(str, ft);
-        return text.w(start, count);
-    }
-
-    return 0;
+	if (Settings::Get().Unicode())
+	{
+		TextUnicode text(str, ft);
+		return text.w(start, count);
+	}
+	TextAscii text(str, ft);
+	return text.w(start, count);
 }
 
 u32 Text::height(const string &str, int ft, u32 width)
 {
-    if (!str.empty())
-    {
-#ifdef WITH_TTF
-        if(Settings::Get().Unicode())
-        {
-            TextUnicode text(str, ft);
-            return text.h(width);
-        }
-        else
-#endif
-        {
-            TextAscii text(str, ft);
-            return text.h(width);
-        }
-    }
-
-    return 0;
+	if (str.empty())
+		return 0;
+	if (Settings::Get().Unicode())
+	{
+		TextUnicode text(str, ft);
+		return text.h(width);
+	}
+	TextAscii text(str, ft);
+	return text.h(width);
 }
 
 TextBox::TextBox() : align(ALIGN_CENTER)
@@ -508,27 +493,27 @@ void TextBox::Set(const string &msg, int ft, u32 width)
     if (msg.empty()) return;
 
 #ifdef WITH_TTF
-    if(Settings::Get().Unicode())
-    {
-    std::vector<u16> unicode = StringUTF8_to_UNICODE(msg);
+	if (Settings::Get().Unicode())
+	{
+		std::vector<u16> unicode = StringUTF8_to_UNICODE(msg);
 
-        const u16 sep = '\n';
-        std::vector<u16> substr;
-        substr.reserve(msg.size());
-        std::vector<u16>::iterator pos1 = unicode.begin();
-        std::vector<u16>::iterator pos2;
-        while(unicode.end() != (pos2 = std::find(pos1, unicode.end(), sep)))
-        {
-            substr.assign(pos1, pos2);
-        Append(substr, ft, width);
-            pos1 = pos2 + 1;
-        }
-        if(pos1 < unicode.end())
-        {
-            substr.assign(pos1, unicode.end());
-        Append(substr, ft, width);
-    }
-    }
+		const u16 sep = '\n';
+		std::vector<u16> substr;
+		substr.reserve(msg.size());
+		std::vector<u16>::iterator pos1 = unicode.begin();
+		std::vector<u16>::iterator pos2;
+		while (unicode.end() != (pos2 = std::find(pos1, unicode.end(), sep)))
+		{
+			substr.assign(pos1, pos2);
+			Append(substr, ft, width);
+			pos1 = pos2 + 1;
+		}
+		if (pos1 < unicode.end())
+		{
+			substr.assign(pos1, unicode.end());
+			Append(substr, ft, width);
+		}
+	}
     else
 #endif
     {
@@ -612,30 +597,30 @@ void TextBox::Append(const std::vector<u16> & msg, int ft, u32 width)
     std::vector<u16>::const_iterator pos3 = msg.end();
     std::vector<u16>::const_iterator space = pos2;
 
-    while(pos2 < pos3)
-    {
-        if(TextUnicode::isspace(*pos2)) space = pos2;
-    u32 char_w = TextUnicode::CharWidth(*pos2, ft);
+	while (pos2 < pos3)
+	{
+		if (TextUnicode::isspace(*pos2)) space = pos2;
+		u32 char_w = TextUnicode::CharWidth(*pos2, ft);
 
-    if(www + char_w >= width)
-    {
-        www = 0;
-        Rect::h += TextUnicode::CharHeight(ft);
-        if(pos3 != space) pos2 = space + 1;
+		if (www + char_w >= width)
+		{
+			www = 0;
+			Rect::h += TextUnicode::CharHeight(ft);
+			if (pos3 != space) pos2 = space + 1;
 
-        if(pos3 != space)
-        messages.push_back(Text(&msg.at(pos1 - msg.begin()), pos2 - pos1 - 1, ft));
-        else
-        messages.push_back(Text(&msg.at(pos1 - msg.begin()), pos2 - pos1, ft));
+			if (pos3 != space)
+				messages.push_back(Text(&msg.at(pos1 - msg.begin()), pos2 - pos1 - 1, ft));
+			else
+				messages.push_back(Text(&msg.at(pos1 - msg.begin()), pos2 - pos1, ft));
 
-        pos1 = pos2;
-        space = pos3;
-        continue;
-    }
+			pos1 = pos2;
+			space = pos3;
+			continue;
+		}
 
-        www += char_w;
-        ++pos2;
-    }
+		www += char_w;
+		++pos2;
+	}
 
     if(pos1 != pos2)
     {
@@ -729,12 +714,12 @@ void TextSprite::SetPos(s32 ax, s32 ay)
     back.Save(Rect(ax, ay, gw, gh + 5));
 }
 
-int TextSprite::w()
+int TextSprite::w() const
 {
     return back.GetSize().w;
 }
 
-int TextSprite::h()
+int TextSprite::h() const
 {
     return back.GetSize().h;
 }
