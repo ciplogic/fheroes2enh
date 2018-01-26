@@ -91,7 +91,7 @@ public:
 		v.clear();
 		for (u32 ii = 0; ii < size; ++ii)
 		{
-			pair<Type1, Type2> pr;
+			std::pair<Type1, Type2> pr;
 			*this >> pr;
 			v.insert(pr);
 		}
