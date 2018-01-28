@@ -24,3 +24,6 @@ CMakeFiles
 /FH2Q.exe
 /VisualStudio/FHeroes2Enh/x64/*
 /out/
+.idea
+obj
+/src/FH2Setup/FH2Setup/bin/*
