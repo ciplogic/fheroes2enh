@@ -20,7 +20,7 @@ namespace Installer
             var za = new ZipArchive(zipStream, ZipArchiveMode.Read);
             foreach (var zipArchiveEntry in za.Entries)
             {
-                var words = zipArchiveEntry.Name.Split('/');
+                var words = zipArchiveEntry.FullName.Split('/');
                 if (words.Length < 2)
                     continue;
                 Directory.CreateDirectory(Path.Combine(outFolder, words[0]));
@@ -31,7 +31,7 @@ namespace Installer
 
                 using (var childStream = zipArchiveEntry.Open())
                 {
-                    using (Stream file = File.Create(Path.Combine(outFolder, zipArchiveEntry.Name)))
+                    using (Stream file = File.Create(Path.Combine(outFolder, zipArchiveEntry.FullName)))
                     {
                         CopyStream(childStream, file);
                     }
