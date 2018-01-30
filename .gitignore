@@ -27,3 +27,5 @@ CMakeFiles
 .idea
 obj
 /src/FH2Setup/FH2Setup/bin/*
+/src/Installer/Installer/bin/*
+/VisualStudio/FHeroes2Enh/packages/*

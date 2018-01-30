@@ -247,7 +247,7 @@ void ArmyBar::RedrawItem(ArmyTroop &troop, const Rect &pos, bool selected, Surfa
 	{
 		{
 			Surface black(Size(text.w() + 6, text.h() + 2), false);
-			black.Fill(RGBA(120, 127, 25, 255));
+			black.Fill(RGBA(55, 55, 187, 255));
 			Rect area{ 0,0, black.w() - 1,black.h() - 1 };
 			black.DrawRect(area, RGBA(255, 255, 0));
 			const Point pt(pos.x + pos.w - black.w() - 1, pos.y + pos.h - black.h() - 1);

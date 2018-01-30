@@ -1959,9 +1959,9 @@ bool Maps::Tiles::isPassable(const Heroes &hero) const
 			if (v.end() == find_if(v.begin(), v.end(),
 				[](int it) {
 				return TileIsGround(it, static_cast<int>(Ground::WATER));
-			}));
-				
+			})){
 				return false;
+            }
 		}
 		break;
 
