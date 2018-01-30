@@ -168,8 +168,7 @@ public:
     {
         const u32 size = get32();
         v.resize(size);
-        for (typename vector<Type>::iterator
-                     it = v.begin(); it != v.end(); ++it)
+        for (auto it = v.begin(); it != v.end(); ++it)
             *this >> *it;
         return *this;
     }
@@ -179,8 +178,7 @@ public:
     {
         const u32 size = get32();
         v.resize(size);
-        for (typename list<Type>::iterator
-                     it = v.begin(); it != v.end(); ++it)
+        for (auto it = v.begin(); it != v.end(); ++it)
             *this >> *it;
         return *this;
     }

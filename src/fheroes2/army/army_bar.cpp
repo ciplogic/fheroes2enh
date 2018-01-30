@@ -188,85 +188,88 @@ void ArmyBar::RedrawBackground(const Rect &pos, Surface &dstsf)
 
 void ArmyBar::RedrawItem(ArmyTroop &troop, const Rect &pos, bool selected, Surface &dstsf)
 {
-    if (troop.isValid())
-    {
-        Text text(GetString(troop.GetCount()), (use_mini_sprite ? Font::SMALL : Font::BIG));
+    if (!troop.isValid())
+		return;
+	Text text(GetString(troop.GetCount()), (use_mini_sprite ? Font::SMALL : Font::BIG));
 
-        if (use_mini_sprite)
-        {
-            const Sprite &mons32 = AGG::GetICN(ICN::MONS32, troop.GetSpriteIndex());
-            Rect srcrt(0, 0, mons32.w(), mons32.h());
+	if (use_mini_sprite)
+	{
+		const Sprite &mons32 = AGG::GetICN(ICN::MONS32, troop.GetSpriteIndex());
+		Rect srcrt(0, 0, mons32.w(), mons32.h());
 
-            if (mons32.w() > pos.w)
-            {
-                srcrt.x = (mons32.w() - pos.w) / 2;
-                srcrt.w = pos.w;
-            }
+		if (mons32.w() > pos.w)
+		{
+			srcrt.x = (mons32.w() - pos.w) / 2;
+			srcrt.w = pos.w;
+		}
 
-            if (mons32.h() > pos.h)
-            {
-                srcrt.y = (mons32.h() - pos.h) / 2;
-                srcrt.h = pos.h;
-            }
+		if (mons32.h() > pos.h)
+		{
+			srcrt.y = (mons32.h() - pos.h) / 2;
+			srcrt.h = pos.h;
+		}
 
-            mons32.Blit(srcrt, pos.x + (pos.w - mons32.w()) / 2, pos.y + pos.h - mons32.h() - 1, dstsf);
-        } else
-        {
-            switch (troop.GetRace())
-            {
-                case Race::KNGT:
-                    AGG::GetICN(ICN::STRIP, 4).Blit(pos, dstsf);
-                    break;
-                case Race::BARB:
-                    AGG::GetICN(ICN::STRIP, 5).Blit(pos, dstsf);
-                    break;
-                case Race::SORC:
-                    AGG::GetICN(ICN::STRIP, 6).Blit(pos, dstsf);
-                    break;
-                case Race::WRLK:
-                    AGG::GetICN(ICN::STRIP, 7).Blit(pos, dstsf);
-                    break;
-                case Race::WZRD:
-                    AGG::GetICN(ICN::STRIP, 8).Blit(pos, dstsf);
-                    break;
-                case Race::NECR:
-                    AGG::GetICN(ICN::STRIP, 9).Blit(pos, dstsf);
-                    break;
-                default:
-                    AGG::GetICN(ICN::STRIP, 10).Blit(pos, dstsf);
-                    break;
-            }
+		mons32.Blit(srcrt, pos.x + (pos.w - mons32.w()) / 2, pos.y + pos.h - mons32.h() - 1, dstsf);
+	} else
+	{
+		switch (troop.GetRace())
+		{
+		case Race::KNGT:
+			AGG::GetICN(ICN::STRIP, 4).Blit(pos, dstsf);
+			break;
+		case Race::BARB:
+			AGG::GetICN(ICN::STRIP, 5).Blit(pos, dstsf);
+			break;
+		case Race::SORC:
+			AGG::GetICN(ICN::STRIP, 6).Blit(pos, dstsf);
+			break;
+		case Race::WRLK:
+			AGG::GetICN(ICN::STRIP, 7).Blit(pos, dstsf);
+			break;
+		case Race::WZRD:
+			AGG::GetICN(ICN::STRIP, 8).Blit(pos, dstsf);
+			break;
+		case Race::NECR:
+			AGG::GetICN(ICN::STRIP, 9).Blit(pos, dstsf);
+			break;
+		default:
+			AGG::GetICN(ICN::STRIP, 10).Blit(pos, dstsf);
+			break;
+		}
 
-            const Sprite &spmonh = AGG::GetICN(troop.ICNMonh(), 0);
-            spmonh.Blit(pos.x + spmonh.x(), pos.y + spmonh.y(), dstsf);
-        }
+		const Sprite &spmonh = AGG::GetICN(troop.ICNMonh(), 0);
+		spmonh.Blit(pos.x + spmonh.x(), pos.y + spmonh.y(), dstsf);
+	}
 
-        if (!use_mini_sprite)
-        {
-            {
-                Surface black(Size(text.w() + 4, text.h()), false);
-                black.Fill(ColorBlack);
-                const Point pt(pos.x + pos.w - black.w() - 1, pos.y + pos.h - black.h() - 1);
-                black.Blit(pt.x, pt.y, dstsf);
-                text.Blit(pt.x + 2, pt.y + 1, dstsf);
-            }
-            if(CanUpgradeTroop(troop, army))
-            {
-                PlusSignAddon plusSignAddon;
-                plusSignAddon.draw(pos.x + pos.w, pos.y, true);
-            }
-            if(CanUpgradeTroopButNoResources(troop, army))
-            {
-                PlusSignAddon plusSignAddon;
-                plusSignAddon.draw(pos.x + pos.w, pos.y, false);
-            }
+	if (use_mini_sprite)
+		text.Blit(pos.x + pos.w - text.w() - 3, pos.y + pos.h - text.h() - 1, dstsf);
+	else
+	{
+		{
+			Surface black(Size(text.w() + 6, text.h() + 2), false);
+			black.Fill(RGBA(120, 127, 25, 255));
+			Rect area{ 0,0, black.w() - 1,black.h() - 1 };
+			black.DrawRect(area, RGBA(255, 255, 0));
+			const Point pt(pos.x + pos.w - black.w() - 1, pos.y + pos.h - black.h() - 1);
+			black.SetAlphaMod(200);
+			black.Blit(pt.x, pt.y, dstsf);
+			text.Blit(pt.x + 1, pt.y + 0, dstsf);
 
-        } else
-            text.Blit(pos.x + pos.w - text.w() - 3, pos.y + pos.h - text.h() - 1, dstsf);
+		}
+		if (CanUpgradeTroop(troop, army))
+		{
+			PlusSignAddon plusSignAddon;
+			plusSignAddon.draw(pos.x + pos.w, pos.y, true);
+		}
+		if (CanUpgradeTroopButNoResources(troop, army))
+		{
+			PlusSignAddon plusSignAddon;
+			plusSignAddon.draw(pos.x + pos.w, pos.y, false);
+		}
+	}
 
-        if (selected)
-            spcursor.Move(pos.x, pos.y);
-    }
+	if (selected)
+		spcursor.Move(pos.x, pos.y);
 }
 
 void ArmyBar::ResetSelected()
