@@ -405,8 +405,9 @@ bool LocalEvent::HandleEvents(bool delay)
 			{
 				lastPosMouse = eventListCleared.size();
 				eventListCleared.push_back(event);
-
-				continue;
+			} else
+			{
+                eventListCleared[lastPosMouse] = event;
 			}
 			continue;
 		}
