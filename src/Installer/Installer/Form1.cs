@@ -2,6 +2,7 @@
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
+using Installer.Commons;
 
 namespace Installer
 {

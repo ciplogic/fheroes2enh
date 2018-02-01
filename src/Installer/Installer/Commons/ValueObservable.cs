@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Installer.UserControls
+namespace Installer.Commons
 {
     public class ValueObservable<T>
     {
         public T Value
         {
-            get { return _value; }
-            set { this.Change(value); }
+            get => _value;
+            set => Change(value);
         }
 
-        List<Action<T>> _actionList = new List<Action<T>>();
+        readonly List<Action<T>> _actionList = new List<Action<T>>();
         private T _value;
 
         public ValueObservable(T initialValue)

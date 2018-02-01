@@ -65,31 +65,8 @@
     <Compile Include="UserControls\InstallOptionsUserControl.Designer.cs">
       <DependentUpon>InstallOptionsUserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\ValueObservable.cs" />
-    <Compile Include="UserControls\ViewModels\InstallOptionsViewModel.cs" />
-    <Compile Include="UserControls\ViewModels\MainWindowViewModel.cs" />
-    <Compile Include="UserControls\InstallOptionsView.xaml.cs">
-      <DependentUpon>InstallOptionsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\StartupView.xaml.cs">
-      <DependentUpon>StartupView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ZipExtractorUtilies.cs" />
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="Commons\BaseViewModel.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="UserControls\InstallOptionsView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\StartupView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
+    <Compile Include="Commons\ValueObservable.cs" />
+    <Compile Include="Commons\ZipExtractorUtilies.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -124,6 +101,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="UserControls\ViewModels\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

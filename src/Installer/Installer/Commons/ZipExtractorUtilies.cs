@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.IO.Compression;
 
-namespace Installer
+namespace Installer.Commons
 {
     class ZipExtractorUtilies
     {
