@@ -20,15 +20,19 @@ namespace Installer.Commons
             var za = new ZipArchive(zipStream, ZipArchiveMode.Read);
             foreach (var zipArchiveEntry in za.Entries)
             {
-                var words = zipArchiveEntry.FullName.Split('/');
-                if (words.Length < 2)
-                    continue;
-                Directory.CreateDirectory(Path.Combine(outFolder, words[0]));
+                var targetFile = Path.Combine(outFolder, zipArchiveEntry.FullName);
+                var fileInfo = new FileInfo(targetFile);
+                if (!fileInfo.Directory.Exists)
+                {
+                    Directory.CreateDirectory(fileInfo.DirectoryName);
+                }
+
             }
 
             foreach (var zipArchiveEntry in za.Entries)
             {
-
+                if(zipArchiveEntry.Length==0)
+                    continue;
                 using (var childStream = zipArchiveEntry.Open())
                 {
                     using (Stream file = File.Create(Path.Combine(outFolder, zipArchiveEntry.FullName)))
