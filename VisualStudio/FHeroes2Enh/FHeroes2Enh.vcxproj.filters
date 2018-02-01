@@ -1167,7 +1167,7 @@
       <Filter>Source Files\fheroes2\system</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\fheroes2\dialog\plus_sign_addon.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\tools</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
