@@ -225,7 +225,6 @@ public:
 protected:
     friend StreamBase &operator<<(StreamBase &, const Army &);
 
-    friend StreamBase &operator>>(StreamBase &, Army &); 
 	friend ByteVectorReader &operator>>(ByteVectorReader &msg, Army &army);
 
     HeroBase *commander;
@@ -239,6 +238,6 @@ private:
 
 StreamBase &operator<<(StreamBase &, const Army &);
 
-StreamBase &operator>>(StreamBase &, Army &);
+ByteVectorReader &operator>>(ByteVectorReader &, Army &);
 
 #endif

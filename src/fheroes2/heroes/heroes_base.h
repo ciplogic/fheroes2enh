@@ -168,8 +168,6 @@ struct HeroHasArtifact : public binary_function<const HeroBase *, Artifact, bool
 };
 
 StreamBase &operator<<(StreamBase &, const HeroBase &);
-
-StreamBase &operator>>(StreamBase &, HeroBase &);
 ByteVectorReader &operator>>(ByteVectorReader &, HeroBase &);
 
 #endif

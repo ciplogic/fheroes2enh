@@ -697,11 +697,6 @@ StreamBase &operator<<(StreamBase &msg, const Artifact &art)
     return msg << art.id << art.ext;
 }
 
-StreamBase &operator>>(StreamBase &msg, Artifact &art)
-{
-    return msg >> art.id >> art.ext;
-}
-
 ByteVectorReader &operator>>(ByteVectorReader &msg, Artifact &art)
 {
 	return msg >> art.id >> art.ext;

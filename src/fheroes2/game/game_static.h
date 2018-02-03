@@ -43,7 +43,6 @@ namespace GameStatic
 
     StreamBase &operator<<(StreamBase &, const Data &);
 
-    StreamBase &operator>>(StreamBase &, Data &);
 	ByteVectorReader &operator>>(ByteVectorReader &, Data &);
 
     u32 GetLostOnWhirlpoolPercent();

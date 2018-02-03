@@ -370,18 +370,15 @@ struct AllCastles : VecCastles
 
 StreamBase &operator<<(StreamBase &, const VecCastles &);
 
-StreamBase &operator>>(StreamBase &, VecCastles &);
 ByteVectorReader &operator>>(ByteVectorReader &, VecCastles &);
 
 
 StreamBase &operator<<(StreamBase &, const AllCastles &);
 
-StreamBase &operator>>(StreamBase &, AllCastles &);
 ByteVectorReader &operator>>(ByteVectorReader &, AllCastles &);
 
 StreamBase &operator<<(StreamBase &, const Castle &);
 
-StreamBase &operator>>(StreamBase &, Castle &);
 ByteVectorReader &operator>>(ByteVectorReader &, Castle &);
 
 #endif

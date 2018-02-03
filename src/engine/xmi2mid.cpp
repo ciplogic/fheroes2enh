@@ -24,6 +24,7 @@
 #include <iomanip>
 #include <list>
 #include <vector>
+#include <map>
 
 #include "audio_music.h"
 
@@ -38,8 +39,11 @@
 #define TAG_MTHD    0x4D546864
 #define TAG_MTRK    0x4D54726B
 
-#include "serialize.h"
 #include "system.h"
+#include "serialize.h"
+#include "ByteVectorReader.h"
+
+using namespace std;
 
 struct pack_t : public pair<u32, u32> /* delta offset */
 {
@@ -134,12 +138,14 @@ struct IFFChunkHeader
 
 };
 
-StreamBuf &operator>>(StreamBuf &sb, IFFChunkHeader &st)
+
+ByteVectorReader &operator>>(ByteVectorReader &sb, IFFChunkHeader &st)
 {
     st.ID = sb.getBE32();
     st.length = sb.getBE32();
     return sb;
 }
+
 
 StreamBuf &operator<<(StreamBuf &sb, const IFFChunkHeader &st)
 {
@@ -176,6 +182,13 @@ StreamBuf &operator>>(StreamBuf &sb, GroupChunkHeader &st)
     st.type = sb.getBE32();
     return sb;
 }
+ByteVectorReader &operator>>(ByteVectorReader &sb, GroupChunkHeader &st)
+{
+    st.ID = sb.getBE32();
+    st.length = sb.getBE32();
+    st.type = sb.getBE32();
+    return sb;
+}
 
 struct XMITrack
 {
@@ -193,7 +206,8 @@ struct XMIData
 
     XMIData(const vector<u8> &buf)
     {
-        StreamBuf sb(buf);
+        //StreamBuf sb(buf);
+        ByteVectorReader sb(buf);
 
         GroupChunkHeader group;
         IFFChunkHeader iff;

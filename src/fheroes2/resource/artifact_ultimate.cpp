@@ -85,16 +85,6 @@ StreamBase &operator<<(StreamBase &msg, const UltimateArtifact &ultimate)
     return msg << static_cast<Artifact>(ultimate) << ultimate.index << ultimate.isfound;
 }
 
-StreamBase &operator>>(StreamBase &msg, UltimateArtifact &ultimate)
-{
-    Artifact &artifact = ultimate;
-    msg >> artifact >> ultimate.index >> ultimate.isfound;
-
-    ultimate.MakeSurface();
-
-    return msg;
-}
-
 ByteVectorReader &operator>>(ByteVectorReader &msg, UltimateArtifact &ultimate)
 {
 	Artifact &artifact = ultimate;

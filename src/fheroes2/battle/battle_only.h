@@ -120,8 +120,6 @@ namespace Battle
 
         static Only &Get();
 
-        static Recruits GetHeroesFromStreamBuf(StreamBuf &);
-
         Only();
     };
 }

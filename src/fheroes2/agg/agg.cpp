@@ -781,18 +781,6 @@ ByteVectorReader &operator>>(ByteVectorReader &st, ICNHeader &icn)
 
     return st;
 }
-StreamBuf &operator>>(StreamBuf &st, ICNHeader &icn)
-{
-	icn.offsetX = st.getLE16();
-	icn.offsetY = st.getLE16();
-	icn.width = st.getLE16();
-	icn.height = st.getLE16();
-	icn.type = st.get();
-	icn.offsetData = st.getLE32();
-
-	return st;
-}
-
 void AGG::RenderICNSprite(int icn, u32 index, const Rect &srt, const Point &dpt, Surface &dst)
 {
     ICNSprite res = RenderICNSprite(icn, index);

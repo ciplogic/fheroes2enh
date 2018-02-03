@@ -285,7 +285,7 @@ StreamBuf::StreamBuf(const StreamBuf &st) : itbeg(nullptr), itget(nullptr), itpu
 {
     copy(st);
 }
-
+/*
 StreamBuf::StreamBuf(const vector<u8> &buf) : itbeg(nullptr), itget(nullptr), itput(nullptr), itend(nullptr)
 {
     itbeg = (u8 *) &buf[0];
@@ -293,13 +293,15 @@ StreamBuf::StreamBuf(const vector<u8> &buf) : itbeg(nullptr), itget(nullptr), it
     itget = itbeg;
     itput = itend;
     setconstbuf(true);
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-    setbigendian(true); /* default: hardware endian */
+ #if SDL_BYTEORDER == SDL_BIG_ENDIAN
+    setbigendian(true);
 #else
-    setbigendian(false); /* default: hardware endian */
+    setbigendian(false);
 #endif
 }
+*/
 
+/*
 StreamBuf::StreamBuf(const u8 *buf, size_t bufsz) : itbeg(nullptr), itget(nullptr), itput(nullptr), itend(nullptr)
 {
     itbeg = const_cast<u8 *>(buf);
@@ -308,12 +310,12 @@ StreamBuf::StreamBuf(const u8 *buf, size_t bufsz) : itbeg(nullptr), itget(nullpt
     itput = itend;
     setconstbuf(true);
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
-    setbigendian(true); /* default: hardware endian */
+    setbigendian(true);
 #else
-    setbigendian(false); /* default: hardware endian */
+    setbigendian(false);
 #endif
 }
-
+*/
 StreamBuf &StreamBuf::operator=(const StreamBuf &st)
 {
     if (&st != this) copy(st);

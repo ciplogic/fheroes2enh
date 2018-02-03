@@ -240,10 +240,6 @@ public:
 
     StreamBuf(const StreamBuf &);
 
-    explicit StreamBuf(const vector<u8> &);
-
-    StreamBuf(const u8 *, size_t);
-
     ~StreamBuf() override;
 
     StreamBuf &operator=(const StreamBuf &);

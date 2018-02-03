@@ -148,13 +148,6 @@ StreamBase &operator<<(StreamBase &msg, const monstats_t &obj)
                obj.shots << obj.cost;
 }
 
-StreamBase &operator>>(StreamBase &msg, monstats_t &obj)
-{
-    return msg >> obj.attack >> obj.defense >>
-               obj.damageMin >> obj.damageMax >>
-               obj.hp >> obj.speed >> obj.grown >>
-               obj.shots >> obj.cost;
-}
 ByteVectorReader &operator>>(ByteVectorReader &msg, monstats_t &obj)
 {
 	return msg >> obj.attack >> obj.defense >>
@@ -172,17 +165,6 @@ StreamBase &operator<<(StreamBase &msg, const MonsterStaticData &obj)
         msg << monsters[ii];
     return msg;
 }
-
-StreamBase &operator>>(StreamBase &msg, MonsterStaticData &obj)
-{
-    u32 monsters_size;
-    msg >> monsters_size;
-
-    for (u32 ii = 0; ii < monsters_size; ++ii)
-        msg >> monsters[ii];
-    return msg;
-}
-
 ByteVectorReader &operator>>(ByteVectorReader &msg, MonsterStaticData &obj)
 {
 	u32 monsters_size;

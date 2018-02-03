@@ -52,7 +52,6 @@ public:
 protected:
     friend StreamBase &operator<<(StreamBase &, const MapObjectSimple &);
 
-    friend StreamBase &operator>>(StreamBase &, MapObjectSimple &);
 	friend ByteVectorReader &operator>>(ByteVectorReader &, MapObjectSimple &);
 
     u32 uid;
@@ -60,8 +59,6 @@ protected:
 };
 
 StreamBase &operator<<(StreamBase &, const MapObjectSimple &);
-
-StreamBase &operator>>(StreamBase &, MapObjectSimple &);
 ByteVectorReader &operator>>(ByteVectorReader &, MapObjectSimple &);
 
 struct MapEvent : MapObjectSimple
@@ -84,7 +81,7 @@ struct MapEvent : MapObjectSimple
 
 StreamBase &operator<<(StreamBase &, const MapEvent &);
 
-StreamBase &operator>>(StreamBase &, MapEvent &);
+ByteVectorReader &operator>>(ByteVectorReader &, MapEvent &);
 
 typedef list<string> RiddleAnswers;
 
@@ -123,7 +120,6 @@ struct MapSign : MapObjectSimple
 
 StreamBase &operator<<(StreamBase &, const MapSign &);
 
-StreamBase &operator>>(StreamBase &, MapSign &);
 ByteVectorReader &operator>>(ByteVectorReader&, MapSign &);
 
 struct MapResource : MapObjectSimple
@@ -135,7 +131,7 @@ struct MapResource : MapObjectSimple
 
 StreamBase &operator<<(StreamBase &, const MapResource &);
 
-StreamBase &operator>>(StreamBase &, MapResource &);
+ByteVectorReader &operator>>(ByteVectorReader &, MapResource &);
 
 struct MapArtifact : MapObjectSimple
 {
@@ -152,7 +148,7 @@ struct MapArtifact : MapObjectSimple
 
 StreamBase &operator<<(StreamBase &, const MapArtifact &);
 
-StreamBase &operator>>(StreamBase &, MapArtifact &);
+ByteVectorReader &operator>>(ByteVectorReader &, MapArtifact &);
 
 struct MapMonster : MapObjectSimple
 {
@@ -176,6 +172,5 @@ struct MapMonster : MapObjectSimple
 
 StreamBase &operator<<(StreamBase &, const MapMonster &);
 
-StreamBase &operator>>(StreamBase &, MapMonster &);
 ByteVectorReader &operator>>(ByteVectorReader &, MapMonster &);
 

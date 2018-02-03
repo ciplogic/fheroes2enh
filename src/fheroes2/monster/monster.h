@@ -250,11 +250,9 @@ struct MonsterStaticData
 
 StreamBase &operator<<(StreamBase &, const Monster &);
 
-StreamBase &operator>>(StreamBase &, Monster &);
 ByteVectorReader &operator>>(ByteVectorReader &, Monster &);
 
 StreamBase &operator<<(StreamBase &, const MonsterStaticData &);
 
-StreamBase &operator>>(StreamBase &, MonsterStaticData &);
 ByteVectorReader &operator>>(ByteVectorReader &, MonsterStaticData &);
 

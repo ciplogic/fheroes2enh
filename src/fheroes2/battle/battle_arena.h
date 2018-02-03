@@ -255,7 +255,6 @@ namespace Battle
 
     StreamBase &operator<<(StreamBase &, const Arena &);
 
-    StreamBase &operator>>(StreamBase &, Arena &);
 	ByteVectorReader &operator>>(ByteVectorReader &, Arena &);
 }
 

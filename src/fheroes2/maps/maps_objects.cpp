@@ -36,10 +36,6 @@ StreamBase &operator<<(StreamBase &msg, const MapObjectSimple &obj)
 
 }
 
-StreamBase &operator>>(StreamBase &msg, MapObjectSimple &obj)
-{
-    return msg >> obj.type >> obj.uid >> static_cast<MapPosition &>(obj);
-}
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, MapObjectSimple &obj)
 {
@@ -176,18 +172,6 @@ StreamBase &operator<<(StreamBase &msg, const MapEvent &obj)
                obj.message;
 }
 
-StreamBase &operator>>(StreamBase &msg, MapEvent &obj)
-{
-    return msg >>
-               static_cast<MapObjectSimple &>(obj) >>
-               obj.resources >>
-               obj.artifact >>
-               obj.computer >>
-               obj.cancel >>
-               obj.colors >>
-               obj.message;
-}
-
 ByteVectorReader &operator>>(ByteVectorReader &msg, MapEvent &obj)
 {
 	return msg >>
@@ -210,18 +194,6 @@ StreamBase &operator<<(StreamBase &msg, const MapSphinx &obj)
                obj.message <<
                obj.valid;
 }
-
-StreamBase &operator>>(StreamBase &msg, MapSphinx &obj)
-{
-    return msg >>
-               static_cast<MapObjectSimple &>(obj) >>
-               obj.resources >>
-               obj.artifact >>
-               obj.answers >>
-               obj.message >>
-               obj.valid;
-}
-
 
 ByteVectorReader &operator>>(ByteVectorReader&msg, MapSphinx &obj)
 {
@@ -260,13 +232,6 @@ StreamBase &operator<<(StreamBase &msg, const MapSign &obj)
                obj.message;
 }
 
-StreamBase &operator>>(StreamBase &msg, MapSign &obj)
-{
-    return msg >>
-               static_cast<MapObjectSimple &>(obj) >>
-               obj.message;
-}
-
 ByteVectorReader &operator>>(ByteVectorReader &msg, MapSign &obj)
 {
 	return msg >>
@@ -282,13 +247,6 @@ StreamBase &operator<<(StreamBase &msg, const MapResource &obj)
 {
     return msg <<
                static_cast<const MapObjectSimple &>(obj) <<
-               obj.resource;
-}
-
-StreamBase &operator>>(StreamBase &msg, MapResource &obj)
-{
-    return msg >>
-               static_cast<MapObjectSimple &>(obj) >>
                obj.resource;
 }
 
@@ -344,12 +302,6 @@ StreamBase &operator<<(StreamBase &msg, const MapArtifact &obj)
                obj.artifact << obj.condition << obj.extended;
 }
 
-StreamBase &operator>>(StreamBase &msg, MapArtifact &obj)
-{
-    return msg >>
-               static_cast<MapObjectSimple &>(obj) >>
-               obj.artifact >> obj.condition >> obj.extended;
-}
 ByteVectorReader &operator>>(ByteVectorReader &msg, MapArtifact &obj)
 {
 	return msg >>
@@ -391,13 +343,6 @@ StreamBase &operator<<(StreamBase &msg, const MapMonster &obj)
     return msg <<
                static_cast<const MapObjectSimple &>(obj) <<
                obj.monster << obj.condition << obj.count;
-}
-
-StreamBase &operator>>(StreamBase &msg, MapMonster &obj)
-{
-    return msg >>
-               static_cast<MapObjectSimple &>(obj) >>
-               obj.monster >> obj.condition >> obj.count;
 }
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, MapMonster &obj)

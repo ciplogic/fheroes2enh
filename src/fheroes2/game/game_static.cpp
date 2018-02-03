@@ -254,54 +254,6 @@ StreamBase &GameStatic::operator<<(StreamBase &msg, const Data &obj)
     return msg;
 }
 
-StreamBase &GameStatic::operator>>(StreamBase &msg, Data &obj)
-{
-	msg >>
-		whirlpool_lost_percent >>
-		kingdom_max_heroes >>
-		castle_grown_well >>
-		castle_grown_wel2 >>
-		castle_grown_week_of >>
-		castle_grown_month_of >>
-		heroes_spell_points_day >>
-		gameover_lost_days >>
-		spell_dd_distance >>
-		spell_dd_sp >>
-		spell_dd_hp;
-
-	u8 array_size = 0;
-
-	msg >> array_size;
-	for (u32 ii = 0; ii < array_size; ++ii)
-		msg >> overview_distance[ii];
-
-	msg >> array_size;
-	for (u32 ii = 0; ii < array_size; ++ii)
-		msg >> kingdom_starting_resource[ii];
-
-	msg >> array_size;
-	for (u32 ii = 0; ii < array_size; ++ii)
-		msg >> mageguild_restore_spell_points_day[ii];
-
-	msg >> array_size;
-	for (u32 ii = 0; ii < array_size; ++ii)
-		msg >> objects_mod[ii];
-
-	msg >> monster_upgrade_ratio >> uniq;
-
-	msg >> array_size;
-	for (u32 ii = 0; ii < array_size; ++ii)
-		msg >> Skill::_stats[ii];
-
-	msg >> array_size;
-	for (u32 ii = 0; ii < array_size; ++ii)
-		msg >> Skill::_values[ii];
-
-	msg >> Skill::_from_witchs_hut;
-
-	return msg;
-}
-
 ByteVectorReader &GameStatic::operator>>(ByteVectorReader &msg, Data &obj)
 {
     msg >>

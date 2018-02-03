@@ -779,22 +779,6 @@ StreamBase &operator<<(StreamBase &msg, const Kingdom &kingdom)
                kingdom.heroes_cond_loss;
 }
 
-StreamBase &operator>>(StreamBase &msg, Kingdom &kingdom)
-{
-    return msg >>
-               kingdom.modes >>
-               kingdom.color >>
-               kingdom.resource >>
-               kingdom.lost_town_days >>
-               kingdom.castles >>
-               kingdom.heroes >>
-               kingdom.recruits >>
-               kingdom.lost_hero >>
-               kingdom.visit_object >>
-               kingdom.puzzle_maps >>
-               kingdom.visited_tents_colors >>
-               kingdom.heroes_cond_loss;
-}
 ByteVectorReader &operator>>(ByteVectorReader &msg, Kingdom &kingdom)
 {
 	return msg >>
@@ -822,16 +806,6 @@ StreamBase &operator<<(StreamBase &msg, const Kingdoms &obj)
     return msg;
 }
 
-StreamBase &operator>>(StreamBase &msg, Kingdoms &obj)
-{
-    u32 kingdomscount;
-    msg >> kingdomscount; // FIXME: check kingdomscount
-
-    for (u32 ii = 0; ii < kingdomscount; ++ii)
-        msg >> obj.kingdoms[ii];
-
-    return msg;
-}
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, Kingdoms &obj)
 {

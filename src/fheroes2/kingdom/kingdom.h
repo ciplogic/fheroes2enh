@@ -271,7 +271,6 @@ public:
 private:
     friend StreamBase &operator<<(StreamBase &, const Kingdoms &);
 
-    friend StreamBase &operator>>(StreamBase &, Kingdoms &);
 	friend ByteVectorReader &operator>>(ByteVectorReader &, Kingdoms &);
 
     Kingdom kingdoms[KINGDOMMAX + 1];
@@ -279,12 +278,10 @@ private:
 
 StreamBase &operator<<(StreamBase &, const Kingdom &);
 
-StreamBase &operator>>(StreamBase &, Kingdom &);
 ByteVectorReader &operator>>(ByteVectorReader &, Kingdom &);
 
 StreamBase &operator<<(StreamBase &, const Kingdoms &);
 
-StreamBase &operator>>(StreamBase &, Kingdoms &);
 ByteVectorReader &operator>>(ByteVectorReader &, Kingdoms &);
 
 #endif

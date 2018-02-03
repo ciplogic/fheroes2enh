@@ -152,7 +152,6 @@ struct EventDate
 
 StreamBase &operator<<(StreamBase &, const EventDate &);
 
-StreamBase &operator>>(StreamBase &, EventDate &);
 ByteVectorReader &operator>>(ByteVectorReader &, EventDate &);
 
 typedef vector<string> Rumors;

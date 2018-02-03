@@ -2111,34 +2111,6 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, Heroes &hero)
 	return msg;
 }
 
-StreamBase &operator>>(StreamBase &msg, Heroes &hero)
-{
-    HeroBase &base = hero;
-    ColorBase &col = hero;
-
-    msg >> base >>
-        hero.name >>
-        col >>
-        hero.killer_color >>
-        hero.experience >>
-        hero.move_point_scale >>
-        hero.secondary_skills >>
-        hero.army >>
-        hero.hid >>
-        hero.portrait >>
-        hero.race >>
-        hero.save_maps_object >>
-        hero.path >>
-        hero.direction >>
-        hero.sprite_index >>
-        hero.patrol_center >>
-        hero.patrol_square >>
-        hero.visit_object;
-
-    hero.army.SetCommander(&hero);
-    return msg;
-}
-
 void Heroes::ReadFrom(ByteVectorReader &msg)
 {
 	auto& hero = *this;
@@ -2175,23 +2147,6 @@ StreamBase &operator<<(StreamBase &msg, const AllHeroes &heroes)
 
     for (auto heroe : heroes)
         msg << *heroe;
-
-    return msg;
-}
-
-StreamBase &operator>>(StreamBase &msg, AllHeroes &heroes)
-{
-    u32 size;
-    msg >> size;
-
-    heroes.clear();
-    heroes.resize(size, nullptr);
-
-    for (auto& heroe : heroes)
-    {
-        heroe = new Heroes();
-        msg >> *heroe;
-    }
 
     return msg;
 }

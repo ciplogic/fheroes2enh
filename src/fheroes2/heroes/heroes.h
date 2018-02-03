@@ -402,17 +402,11 @@ Battle::Result BattleHeroWithMonster(Heroes& hero, Army&army, s32 dst_index);
 Battle::Result BattleHeroWithHero(Heroes& hero, Heroes&other_hero, s32 dst_index);
 
 StreamBase &operator<<(StreamBase &, const VecHeroes &);
-
-StreamBase &operator>>(StreamBase &, VecHeroes &);
 ByteVectorReader &operator>>(ByteVectorReader &, VecHeroes &);
 
 StreamBase &operator<<(StreamBase &, const Heroes &);
-
-StreamBase &operator>>(StreamBase &, Heroes &);
 ByteVectorReader &operator>>(ByteVectorReader &, Heroes &);
 
 StreamBase &operator<<(StreamBase &, const AllHeroes &);
-
-StreamBase &operator>>(StreamBase &, AllHeroes &);
 ByteVectorReader &operator>>(ByteVectorReader &msg, AllHeroes &heroes);
 

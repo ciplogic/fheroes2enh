@@ -32,11 +32,6 @@ StreamBase &operator<<(StreamBase &sb, const ActionSimple &st)
     return sb << st.type << st.uid;
 }
 
-StreamBase &operator>>(StreamBase &sb, ActionSimple &st)
-{
-    return sb >> st.type >> st.uid;
-}
-
 ByteVectorReader &operator>>(ByteVectorReader &sb, ActionSimple &st)
 {
 	return sb >> st.type >> st.uid;
@@ -49,17 +44,12 @@ StreamBase &operator<<(StreamBase &sb, const ActionResources &st)
     return sb << static_cast<const ActionSimple &>(st) << st.resources << st.message;
 }
 
-StreamBase &operator>>(StreamBase &sb, ActionResources &st)
-{
-    return sb >> static_cast<ActionSimple &>(st) >> st.resources >> st.message;
-}
-
 StreamBase &operator<<(StreamBase &sb, const ActionArtifact &st)
 {
     return sb << static_cast<const ActionSimple &>(st) << st.artifact << st.message;
 }
 
-StreamBase &operator>>(StreamBase &sb, ActionArtifact &st)
+ByteVectorReader &operator>>(ByteVectorReader &sb, ActionArtifact &st)
 {
     return sb >> static_cast<ActionSimple &>(st) >> st.artifact >> st.message;
 }
@@ -70,7 +60,7 @@ StreamBase &operator<<(StreamBase &sb, const ActionAccess &st)
               << st.cancelAfterFirstVisit << st.message;
 }
 
-StreamBase &operator>>(StreamBase &sb, ActionAccess &st)
+ByteVectorReader &operator>>(ByteVectorReader &sb, ActionAccess &st)
 {
     return sb >> static_cast<ActionSimple &>(st) >> st.allowPlayers >> st.allowComputer >> st.cancelAfterFirstVisit
               >> st.message;
@@ -81,7 +71,7 @@ StreamBase &operator<<(StreamBase &sb, const ActionDefault &st)
     return sb << static_cast<const ActionSimple &>(st) << st.enabled << st.message;
 }
 
-StreamBase &operator>>(StreamBase &sb, ActionDefault &st)
+ByteVectorReader &operator>>(ByteVectorReader &sb, ActionDefault &st)
 {
     return sb >> static_cast<ActionSimple &>(st) >> st.enabled >> st.message;
 }
@@ -91,7 +81,7 @@ StreamBase &operator<<(StreamBase &sb, const ActionMessage &st)
     return sb << static_cast<const ActionSimple &>(st) << st.message;
 }
 
-StreamBase &operator>>(StreamBase &sb, ActionMessage &st)
+ByteVectorReader &operator>>(ByteVectorReader &sb, ActionMessage &st)
 {
     return sb >> static_cast<ActionSimple &>(st) >> st.message;
 }
