@@ -124,7 +124,6 @@ set(SOURCE_FILES
         src/fheroes2/battle/battle_bridge.h
         src/fheroes2/battle/battle_catapult.cpp
         src/fheroes2/battle/battle_catapult.h
-        src/fheroes2/battle/battle_catapult_types.h
         src/fheroes2/battle/battle_cell.cpp
         src/fheroes2/battle/battle_cell.h
         src/fheroes2/battle/battle_command.cpp
