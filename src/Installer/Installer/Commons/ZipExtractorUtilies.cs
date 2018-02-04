@@ -5,6 +5,7 @@ namespace Installer.Commons
 {
     class ZipExtractorUtilies
     {
+
         public static void CopyStream(Stream input, Stream output)
         {
             byte[] buffer = new byte[8 * 1024];
@@ -21,12 +22,7 @@ namespace Installer.Commons
             foreach (var zipArchiveEntry in za.Entries)
             {
                 var targetFile = Path.Combine(outFolder, zipArchiveEntry.FullName);
-                var fileInfo = new FileInfo(targetFile);
-                if (!fileInfo.Directory.Exists)
-                {
-                    Directory.CreateDirectory(fileInfo.DirectoryName);
-                }
-
+                CreateDirectoryForFile(targetFile);
             }
 
             foreach (var zipArchiveEntry in za.Entries)
@@ -43,5 +39,13 @@ namespace Installer.Commons
             }
         }
 
+        public static void CreateDirectoryForFile(string targetFile)
+        {
+            var fileInfo = new FileInfo(targetFile);
+            if (!fileInfo.Directory.Exists)
+            {
+                Directory.CreateDirectory(fileInfo.DirectoryName);
+            }
+        }
     }
 }

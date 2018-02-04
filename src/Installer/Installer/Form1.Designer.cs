@@ -30,6 +30,7 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.installButton = new System.Windows.Forms.Button();
+            this.licensesInstallCheck = new System.Windows.Forms.CheckBox();
             this.installOptionsUserControl1 = new Installer.UserControls.InstallOptionsUserControl();
             this.SuspendLayout();
             // 
@@ -54,6 +55,17 @@
             this.installButton.UseVisualStyleBackColor = true;
             this.installButton.Click += new System.EventHandler(this.button1_Click);
             // 
+            // licensesInstallCheck
+            // 
+            this.licensesInstallCheck.AutoSize = true;
+            this.licensesInstallCheck.Location = new System.Drawing.Point(17, 249);
+            this.licensesInstallCheck.Name = "licensesInstallCheck";
+            this.licensesInstallCheck.Size = new System.Drawing.Size(117, 17);
+            this.licensesInstallCheck.TabIndex = 3;
+            this.licensesInstallCheck.Text = "Agree with licenses";
+            this.licensesInstallCheck.UseVisualStyleBackColor = true;
+            this.licensesInstallCheck.CheckedChanged += new System.EventHandler(this.licensesInstallCheck_CheckedChanged);
+            // 
             // installOptionsUserControl1
             // 
             this.installOptionsUserControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -69,11 +81,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(562, 278);
+            this.Controls.Add(this.licensesInstallCheck);
             this.Controls.Add(this.installOptionsUserControl1);
             this.Controls.Add(this.installButton);
             this.Controls.Add(this.label1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Free Heroes 2 Enhanced Installer";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -84,5 +99,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button installButton;
         private UserControls.InstallOptionsUserControl installOptionsUserControl1;
+        private System.Windows.Forms.CheckBox licensesInstallCheck;
     }
 }
