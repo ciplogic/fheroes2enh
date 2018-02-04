@@ -265,8 +265,7 @@ Settings &Settings::Get()
 bool Settings::Read(const string &filename)
 {
     TinyConfig config('=', '#');
-    string sval;
-    int ival;
+	int ival;
     LocalEvent &le = LocalEvent::Get();
 
     if (!config.Load(filename)) return false;
@@ -338,7 +337,7 @@ bool Settings::Read(const string &filename)
     std::unique(maps_params.begin(), maps_params.end());
 
     // data
-    sval = config.StrParams("data");
+    string sval = config.StrParams("data");
     if (!sval.empty()) data_params = sval;
 
     if (Unicode())
@@ -715,13 +714,13 @@ string Settings::GetLangDir()
 #ifdef CONFIGURE_FHEROES2_LOCALEDIR
     return std::string(CONFIGURE_FHEROES2_LOCALEDIR);
 #else
-    string res;
+    
     const ListDirs dirs = GetRootDirs();
 
     for (auto
          it = dirs.rbegin(); it != dirs.rend(); ++it)
     {
-        res = System::ConcatePath(System::ConcatePath(*it, "files"), "lang");
+		string res = System::ConcatePath(System::ConcatePath(*it, "files"), "lang");
         if (System::IsDirectory(res)) return res;
     }
 #endif

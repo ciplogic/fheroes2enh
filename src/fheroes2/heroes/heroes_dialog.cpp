@@ -53,16 +53,14 @@ int Heroes::OpenDialog(bool readonly, bool fade)
     AGG::GetICN(ICN::HEROBKG, 0).Blit(dst_pt);
     AGG::GetICN(Settings::Get().ExtGameEvilInterface() ? ICN::HEROEXTE : ICN::HEROEXTG, 0).Blit(dst_pt);
 
-    string message;
-
-    // portrait
+	// portrait
     dst_pt.x = cur_pt.x + 49;
     dst_pt.y = cur_pt.y + 31;
     const Rect portPos(dst_pt.x, dst_pt.y, 101, 93);
     PortraitRedraw(dst_pt.x, dst_pt.y, PORT_BIG, display);
 
     // name
-    message = _("%{name} the %{race} ( Level %{level} )");
+    string message = _("%{name} the %{race} ( Level %{level} )");
     StringReplace(message, "%{name}", name);
     StringReplace(message, "%{race}", Race::String(race));
     StringReplace(message, "%{level}", GetLevel());

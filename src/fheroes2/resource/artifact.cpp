@@ -751,10 +751,9 @@ bool BagArtifacts::isFull() const
 
 bool BagArtifacts::MakeBattleGarb()
 {
-    iterator it1, it2, it3;
-    it1 = find(begin(), end(), Artifact(Artifact::BREASTPLATE_ANDURAN));
-    it2 = find(begin(), end(), Artifact(Artifact::HELMET_ANDURAN));
-    it3 = find(begin(), end(), Artifact(Artifact::SWORD_ANDURAN));
+    iterator it1 = find(begin(), end(), Artifact(Artifact::BREASTPLATE_ANDURAN));
+	iterator it2 = find(begin(), end(), Artifact(Artifact::HELMET_ANDURAN));
+	iterator it3 = find(begin(), end(), Artifact(Artifact::SWORD_ANDURAN));
     if (it1 == end() || it2 == end() || it3 == end()) return false;
 
     *it1 = Artifact::UNKNOWN;

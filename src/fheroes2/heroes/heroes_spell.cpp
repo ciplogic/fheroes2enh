@@ -502,20 +502,18 @@ bool ActionSpellVisions(Heroes &hero)
     const u32 dist = hero.GetVisionsDistance();
     const MapsIndexes &monsters = Maps::ScanAroundObject(hero.GetIndex(), dist, MP2::OBJ_MONSTER);
 
-    if (monsters.size())
+    if (!monsters.empty())
     {
-        for (MapsIndexes::const_iterator
-                     it = monsters.begin(); it != monsters.end(); ++it)
+        for (auto monster : monsters)
         {
-            const Maps::Tiles &tile = world.GetTiles(*it);
+            const Maps::Tiles &tile = world.GetTiles(monster);
             MapMonster *map_troop = static_cast<MapMonster *>(world.GetMapObject(tile.GetObjectUID(MP2::OBJ_MONSTER)));
             Troop troop = map_troop ? map_troop->QuantityTroop() : tile.QuantityTroop();
             JoinCount join = Army::GetJoinSolution(hero, tile, troop);
 
-            Funds cost;
-            string hdr, msg;
+            string msg;
 
-            hdr = string("%{count} ") + StringLower(troop.GetPluralName(join.second));
+			string hdr = string("%{count} ") + StringLower(troop.GetPluralName(join.second));
             StringReplace(hdr, "%{count}", join.second);
 
             switch (join.first)

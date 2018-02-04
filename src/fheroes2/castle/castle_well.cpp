@@ -58,11 +58,10 @@ u32 HowManyRecruitMonster(const Castle &castle, u32 dw, const Funds &add, Funds 
     if (!castle.GetArmy().CanJoinTroop(ms)) return 0;
 
     u32 count = castle.GetDwellingLivedCount(dw);
-    payment_t payment;
 
-    while (count)
+	while (count)
     {
-        payment = ms.GetCost() * count;
+        payment_t payment = ms.GetCost() * count;
         res = payment;
         payment += add;
         if (kingdom.AllowPayment(payment)) break;
@@ -315,8 +314,7 @@ void Castle::WellRedrawInfoArea(const Point &cur_pt)
         dst_pt.y = pt.y + 16;
         text.Blit(dst_pt);
         // attack
-        string str;
-        str = string(_("Attack")) + ": " + GetString(monster.GetAttack());
+        string str = string(_("Attack")) + ": " + GetString(monster.GetAttack());
         text.Set(str);
         dst_pt.x = pt.x + 268 - text.w() / 2;
         dst_pt.y = pt.y + 22;

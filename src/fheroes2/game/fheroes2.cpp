@@ -131,11 +131,10 @@ int main(int argc, char **argv)
 	}
 #else   
 
-	LPWSTR *szArglist;
 	int nArgs;
 	wstring commandLine = GetCommandLineW();
 
-	szArglist = CommandLineToArgvW(commandLine.c_str(), &nArgs);
+	LPWSTR *szArglist = CommandLineToArgvW(commandLine.c_str(), &nArgs);
 	for (int i = 0; i<nArgs; i++)
 	{
 		vArgv.emplace_back(ws2s(szArglist[i]));

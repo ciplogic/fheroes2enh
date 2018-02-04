@@ -194,12 +194,10 @@ bool CursorAttack(u32 theme)
 
 Surface DrawHexagon(const RGBA &color)
 {
-    int r, l, w, h;
-
-    r = 22;
-    l = 13;
-    w = CELLW;
-    h = CELLH;
+	int r = 22;
+    int l = 13;
+    int w = CELLW;
+    int h = CELLH;
 
     Surface sf(Size(w, h), false);
 
@@ -217,11 +215,9 @@ Surface DrawHexagon(const RGBA &color)
 
 Surface DrawHexagonShadow()
 {
-    int l, w, h;
-
-    l = 13;
-    w = 45;
-    h = 52;
+	int l = 13;
+	int w = 45;
+	int h = 52;
 
     Surface sf(Size(w, h), true);
     RGBA shadow = RGBA(0, 0, 0, 0x30);
@@ -4428,61 +4424,59 @@ void Battle::PopupDamageInfo::Reset()
 
 void Battle::PopupDamageInfo::Redraw(int maxw, int maxh)
 {
-    if (redraw)
-    {
-        Cursor::Get().Hide();
+    if (!redraw)
+		return;
+	Cursor::Get().Hide();
 
-        Text text1, text2;
-        string str;
+	Text text1, text2;
 
-        u32 tmp1 = attacker->GetDamageMin(*defender);
-        u32 tmp2 = attacker->GetDamageMax(*defender);
+	u32 tmp1 = attacker->GetDamageMin(*defender);
+	u32 tmp2 = attacker->GetDamageMax(*defender);
 
-        str = tmp1 == tmp2 ? _("Damage: %{max}") : _("Damage: %{min} - %{max}");
+	string str = tmp1 == tmp2 ? _("Damage: %{max}") : _("Damage: %{min} - %{max}");
 
-        StringReplace(str, "%{min}", tmp1);
-        StringReplace(str, "%{max}", tmp2);
+	StringReplace(str, "%{min}", tmp1);
+	StringReplace(str, "%{max}", tmp2);
 
-        text1.Set(str, Font::SMALL);
+	text1.Set(str, Font::SMALL);
 
-        tmp1 = defender->HowManyWillKilled(tmp1);
-        tmp2 = defender->HowManyWillKilled(tmp2);
+	tmp1 = defender->HowManyWillKilled(tmp1);
+	tmp2 = defender->HowManyWillKilled(tmp2);
 
-        if (tmp1 > defender->GetCount()) tmp1 = defender->GetCount();
-        if (tmp2 > defender->GetCount()) tmp2 = defender->GetCount();
+	if (tmp1 > defender->GetCount()) tmp1 = defender->GetCount();
+	if (tmp2 > defender->GetCount()) tmp2 = defender->GetCount();
 
-        str = tmp1 == tmp2 ? _("Perish: %{max}") : _("Perish: %{min} - %{max}");
+	str = tmp1 == tmp2 ? _("Perish: %{max}") : _("Perish: %{min} - %{max}");
 
-        StringReplace(str, "%{min}", tmp1);
-        StringReplace(str, "%{max}", tmp2);
+	StringReplace(str, "%{min}", tmp1);
+	StringReplace(str, "%{max}", tmp2);
 
-        text2.Set(str, Font::SMALL);
+	text2.Set(str, Font::SMALL);
 
-        int tw = 5 + (text1.w() > text2.w() ? text1.w() : text2.w());
-        int th = (text1.h() + text2.h());
+	int tw = 5 + (text1.w() > text2.w() ? text1.w() : text2.w());
+	int th = (text1.h() + text2.h());
 
-        const Rect &area = GetArea();
-        const Rect &rect = GetRect();
-        const Rect &pos = cell->GetPos();
+	const Rect &area = GetArea();
+	const Rect &rect = GetRect();
+	const Rect &pos = cell->GetPos();
 
-        int tx = rect.x;
-        int ty = rect.y;
+	int tx = rect.x;
+	int ty = rect.y;
 
-        if (rect.x + rect.w > maxw)
-        {
-            tx = maxw - rect.w - 5;
-            ty = pos.y - pos.h;
-        }
+	if (rect.x + rect.w > maxw)
+	{
+		tx = maxw - rect.w - 5;
+		ty = pos.y - pos.h;
+	}
 
-        if (rect.x != tx || rect.y != ty || area.w != tw || area.h != th)
-            SetPosition(tx, ty, tw, th);
+	if (rect.x != tx || rect.y != ty || area.w != tw || area.h != th)
+		SetPosition(tx, ty, tw, th);
 
-        const Sprite &sf = AGG::GetICN(ICN::CELLWIN, 1);
-        RenderOther(sf, GetRect());
+	const Sprite &sf = AGG::GetICN(ICN::CELLWIN, 1);
+	RenderOther(sf, GetRect());
 
-        text1.Blit(area.x, area.y);
-        text2.Blit(area.x, area.y + area.h / 2);
-    }
+	text1.Blit(area.x, area.y);
+	text2.Blit(area.x, area.y + area.h / 2);
 }
 
 bool Battle::Interface::NetworkTurn(Result &result)

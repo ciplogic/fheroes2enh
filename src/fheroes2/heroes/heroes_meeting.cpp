@@ -52,9 +52,8 @@ void Heroes::MeetingDialog(Heroes &heroes2)
     const Point cur_pt((display.w() - backSprite.w()) / 2, (display.h() - backSprite.h()) / 2);
     SpriteBack background(Rect(cur_pt, backSprite.w(), backSprite.h()));
     Point dst_pt(cur_pt);
-    string message;
 
-    Rect src_rt(0, 0, 640, 480);
+	Rect src_rt(0, 0, 640, 480);
 
     // background
     dst_pt.x = cur_pt.x;
@@ -62,7 +61,7 @@ void Heroes::MeetingDialog(Heroes &heroes2)
     backSprite.Blit(src_rt, dst_pt);
 
     // header
-    message = _("%{name1} meets %{name2}");
+    string message = _("%{name1} meets %{name2}");
     StringReplace(message, "%{name1}", GetName());
     StringReplace(message, "%{name2}", heroes2.GetName());
     Text text(message, Font::BIG);

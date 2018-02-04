@@ -232,9 +232,9 @@ void Battle::Arena::ApplyActionMove(Command &cmd)
 
     if (!b || !b->isValid() || !cell || !cell->isPassable3(*b, false))
 		return;
-	Position pos1, pos2;
+	Position pos2;
 	const s32 head = b->GetHeadIndex();
-	pos1 = Position::GetCorrect(*b, dst);
+	Position pos1 = Position::GetCorrect(*b, dst);
 
 	// force check fly
 	if (static_cast<ArmyTroop *>(b)->isFly())

@@ -234,10 +234,10 @@ int Castle::OpenDialog(bool readonly, bool fade)
 
     const Point &cur_pt = background.GetArea();
     Point dst_pt(cur_pt);
-    string msg_date, msg_status;
+    string msg_status;
 
     // date string
-    msg_date = _("Month: %{month}, Week: %{week}, Day: %{day}");
+    string msg_date = _("Month: %{month}, Week: %{week}, Day: %{day}");
     StringReplace(msg_date, "%{month}", world.GetMonth());
     StringReplace(msg_date, "%{week}", world.GetWeek());
     StringReplace(msg_date, "%{day}", world.GetDay());

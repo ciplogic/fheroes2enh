@@ -696,19 +696,18 @@ void Surface::Blit(const Point &dpt, Surface &dst) const
 
 void Surface::SetAlphaMod(int level)
 {
-    if (isValid())
-    {
-        if (amask())
-        {
-            Surface res(GetSize(), false);
-            SDL_SetAlpha(surface, 0, 0);
-            Blit(res);
-            SDL_SetAlpha(surface, SDL_SRCALPHA, 255);
-            Set(res, true);
-        }
+    if (!isValid())
+		return;
+	if (amask())
+	{
+		Surface res(GetSize(), false);
+		SDL_SetAlpha(surface, 0, 0);
+		Blit(res);
+		SDL_SetAlpha(surface, SDL_SRCALPHA, 255);
+		Set(res, true);
+	}
 
-        SDL_SetAlpha(surface, SDL_SRCALPHA, level);
-    }
+	SDL_SetAlpha(surface, SDL_SRCALPHA, level);
 }
 
 void Surface::Lock() const

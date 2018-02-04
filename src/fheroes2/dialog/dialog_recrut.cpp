@@ -85,9 +85,8 @@ void RedrawStaticInfo(const Rect &pos, const Monster &monster, bool label)
 {
     Text text;
     Point dst_pt;
-    string str;
 
-    const Sprite &box = AGG::GetICN(ICN::RECRBKG, 0);
+	const Sprite &box = AGG::GetICN(ICN::RECRBKG, 0);
     box.Blit(pos.x, pos.y);
 
     payment_t paymentMonster = monster.GetCost();
@@ -105,7 +104,7 @@ void RedrawStaticInfo(const Rect &pos, const Monster &monster, bool label)
     text.Blit(dst_pt);
 
     // text recruit monster
-    str = _("Recruit %{name}");
+    string str = _("Recruit %{name}");
     StringReplace(str, "%{name}", monster.GetMultiName());
     text.Set(str, Font::BIG);
     dst_pt.x = pos.x + (pos.w - text.w()) / 2;

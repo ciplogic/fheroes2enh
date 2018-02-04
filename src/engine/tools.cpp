@@ -902,10 +902,9 @@ Points GetLinePoints(const Point &pt1, const Point &pt2, u16 step)
 Points GetArcPoints(const Point &from, const Point &to, const Point &max, u16 step)
 {
     Points res;
-    Point pt1, pt2;
-
-    pt1 = from;
-    pt2 = Point(from.x + abs(max.x - from.x) / 2, from.y - abs(max.y - from.y) * 3 / 4);
+    
+	Point pt1 = from;
+	Point pt2 = Point(from.x + abs(max.x - from.x) / 2, from.y - abs(max.y - from.y) * 3 / 4);
     const Points &pts1 = GetLinePoints(pt1, pt2, step);
     res.insert(res.end(), pts1.begin(), pts1.end());
 
