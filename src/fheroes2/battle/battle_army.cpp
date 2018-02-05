@@ -194,11 +194,11 @@ Battle::Unit *Battle::Units::FindMode(u32 mod)
 
 Battle::Force::Force(Army &parent, bool opposite) : army(parent)
 {
-    uids.reserve(army.Size());
+    uids.reserve(army.m_troops.Size());
 
-    for (u32 index = 0; index < army.Size(); ++index)
+    for (u32 index = 0; index < army.m_troops.Size(); ++index)
     {
-        const Troop *troop = army.GetTroop(index);
+        const Troop *troop = army.m_troops.GetTroop(index);
         const u32 position = army.isSpreadFormat() ? index * 22 : 22 + index * 11;
         u32 uid = 0;
 
@@ -494,9 +494,9 @@ u32 Battle::Force::GetDeadHitPoints() const
 
 void Battle::Force::SyncArmyCount()
 {
-    for (u32 index = 0; index < army.Size(); ++index)
+    for (u32 index = 0; index < army.m_troops.Size(); ++index)
     {
-        Troop *troop = army.GetTroop(index);
+        Troop *troop = army.m_troops.GetTroop(index);
 
         if (!troop || !troop->isValid())
 		    continue;

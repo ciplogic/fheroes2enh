@@ -351,7 +351,8 @@ bool ActionSpellSummonBoat(Heroes &hero)
 
 bool ActionSpellDimensionDoor(Heroes &hero)
 {
-    const u32 distance = Spell::CalculateDimensionDoorDistance(hero.GetPower(), hero.GetArmy().GetHitPoints());
+    const u32 distance = Spell::CalculateDimensionDoorDistance(
+        hero.GetPower(), hero.GetArmy().m_troops.GetHitPoints());
 
     Interface::Basic &I = Interface::Basic::Get();
     Cursor &cursor = Cursor::Get();

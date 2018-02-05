@@ -664,7 +664,7 @@ void Dialog::QuickInfo(const Castle &castle)
     text.Blit(dst_pt);
 
     //
-    u32 count = castle.GetArmy().GetCount();
+    u32 count = castle.GetArmy().m_troops.GetCount();
     const Settings &conf = Settings::Get();
 
     const Heroes *from_hero = Interface::GetFocusHeroes();
@@ -703,10 +703,10 @@ void Dialog::QuickInfo(const Castle &castle)
         text.Blit(dst_pt);
     } else if (castle.isFriends(conf.CurrentColor()))
         // show all
-        Army::DrawMons32Line(castle.GetArmy(), cur_rt.x - 5, cur_rt.y + 100, 192);
+        Army::DrawMons32Line(castle.GetArmy().m_troops, cur_rt.x - 5, cur_rt.y + 100, 192);
     else
         // show limited
-        Army::DrawMons32LineWithScoute(castle.GetArmy(), cur_rt.x - 5, cur_rt.y + 100, 192, 0, 0,
+        Army::DrawMons32LineWithScoute(castle.GetArmy().m_troops, cur_rt.x - 5, cur_rt.y + 100, 192, 0, 0,
                                        (from_hero && from_hero->CanScouteTile(castle.GetIndex())
                                         ? from_hero->GetSecondaryValues(Skill::Secondary::SCOUTING)
                                         : Skill::Level::NONE));
@@ -934,10 +934,10 @@ void Dialog::QuickInfo(const Heroes &hero)
 
     if (hero.isFriends(conf.CurrentColor()))
         // show all
-        Army::DrawMons32Line(hero.GetArmy(), cur_rt.x - 5, cur_rt.y + 114, 160);
+        Army::DrawMons32Line(hero.GetArmy().m_troops, cur_rt.x - 5, cur_rt.y + 114, 160);
     else
         // show limited
-        Army::DrawMons32LineWithScoute(hero.GetArmy(), cur_rt.x - 5, cur_rt.y + 114, 160, 0, 0,
+        Army::DrawMons32LineWithScoute(hero.GetArmy().m_troops, cur_rt.x - 5, cur_rt.y + 114, 160, 0, 0,
                                        (from_hero && from_hero->CanScouteTile(hero.GetIndex())
                                         ? from_hero->GetSecondaryValues(Skill::Secondary::SCOUTING)
                                         : Skill::Level::NONE));

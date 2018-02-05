@@ -538,7 +538,7 @@ void AIToCastle(Heroes &hero, u32 obj, s32 dst_index)
         Army &army = castle->GetActualArmy();
         //bool allow_enter = false;
 
-        if (army.isValid())
+        if (army.m_troops.isValid())
         {
             Heroes *defender = heroes.GuardFirst();
             castle->ActionPreBattle();
@@ -613,9 +613,9 @@ void AIToMonster(Heroes &hero, u32 obj, s32 dst_index)
     if (JOIN_FREE == join.first)
     {
         // join if ranged or flying monsters present
-        if (hero.GetArmy().HasMonster(troop()) || troop.isArchers() || troop.isFly())
+        if (hero.GetArmy().m_troops.HasMonster(troop()) || troop.isArchers() || troop.isFly())
         {
-            hero.GetArmy().JoinTroop(troop);
+            hero.GetArmy().m_troops.JoinTroop(troop);
             destroy = true;
         } else
             join.first = JOIN_NONE;
@@ -624,10 +624,10 @@ void AIToMonster(Heroes &hero, u32 obj, s32 dst_index)
     if (JOIN_COST == join.first)
     {
         // join if archers or fly or present
-        if (hero.GetArmy().HasMonster(troop()) || troop.isArchers() || troop.isFly())
+        if (hero.GetArmy().m_troops.HasMonster(troop()) || troop.isArchers() || troop.isFly())
         {
             u32 gold = troop.GetCost().gold;
-            hero.GetArmy().JoinTroop(troop(), join.second);
+            hero.GetArmy().m_troops.JoinTroop(troop(), join.second);
             hero.GetKingdom().OddFundsResource(Funds(Resource::GOLD, gold));
             destroy = true;
         } else
@@ -652,12 +652,12 @@ void AIToMonster(Heroes &hero, u32 obj, s32 dst_index)
             AIBattleLose(hero, res, true);
             if (Settings::Get().ExtWorldSaveMonsterBattle())
             {
-                tile.MonsterSetCount(army.GetCountMonsters(troop()));
+                tile.MonsterSetCount(army.m_troops.GetCountMonsters(troop()));
                 if (tile.MonsterJoinConditionFree()) tile.MonsterSetJoinCondition(Monster::JOIN_CONDITION_MONEY);
 
                 if (map_troop)
                 {
-                    map_troop->count = army.GetCountMonsters(troop());
+                    map_troop->count = army.m_troops.GetCountMonsters(troop());
                     if (map_troop->JoinConditionFree()) map_troop->condition = Monster::JOIN_CONDITION_MONEY;
                 }
             }
@@ -816,7 +816,7 @@ void AIToCaptureObject(Heroes &hero, u32 obj, s32 dst_index)
         {
             const Troop &troop = tile.QuantityTroop();
             Army army;
-            army.JoinTroop(troop);
+            army.m_troops.JoinTroop(troop);
             army.SetColor(tile.QuantityColor());
 
             Battle::Result result = Battle::Loader(hero.GetArmy(), army, dst_index);
@@ -829,7 +829,7 @@ void AIToCaptureObject(Heroes &hero, u32 obj, s32 dst_index)
                 capture = false;
                 AIBattleLose(hero, result, true);
                 if (Settings::Get().ExtWorldSaveMonsterBattle())
-                    tile.MonsterSetCount(army.GetCountMonsters(troop.GetMonster()));
+                    tile.MonsterSetCount(army.m_troops.GetCountMonsters(troop.GetMonster()));
             }
         }
 
@@ -931,7 +931,7 @@ void AIToWhirlpools(Heroes &hero, s32 index_from)
 
     hero.Move2Dest(index_to, true);
 
-    Troop *troop = hero.GetArmy().GetWeakestTroop();
+    Troop *troop = hero.GetArmy().m_troops.GetWeakestTroop();
 
     if (troop && Rand::Get(1) && 1 < troop->GetCount())
     {
@@ -1164,21 +1164,21 @@ void AIToUpgradeArmyObject(Heroes &hero, u32 obj, s32 dst_index)
     switch (obj)
     {
         case MP2::OBJ_HILLFORT:
-            if (hero.GetArmy().HasMonster(Monster::DWARF))
-                hero.GetArmy().UpgradeMonsters(Monster::DWARF);
-            if (hero.GetArmy().HasMonster(Monster::ORC))
-                hero.GetArmy().UpgradeMonsters(Monster::ORC);
-            if (hero.GetArmy().HasMonster(Monster::OGRE))
-                hero.GetArmy().UpgradeMonsters(Monster::OGRE);
+            if (hero.GetArmy().m_troops.HasMonster(Monster::DWARF))
+                hero.GetArmy().m_troops.UpgradeMonsters(Monster::DWARF);
+            if (hero.GetArmy().m_troops.HasMonster(Monster::ORC))
+                hero.GetArmy().m_troops.UpgradeMonsters(Monster::ORC);
+            if (hero.GetArmy().m_troops.HasMonster(Monster::OGRE))
+                hero.GetArmy().m_troops.UpgradeMonsters(Monster::OGRE);
             break;
 
         case MP2::OBJ_FREEMANFOUNDRY:
-            if (hero.GetArmy().HasMonster(Monster::PIKEMAN))
-                hero.GetArmy().UpgradeMonsters(Monster::PIKEMAN);
-            if (hero.GetArmy().HasMonster(Monster::SWORDSMAN))
-                hero.GetArmy().UpgradeMonsters(Monster::SWORDSMAN);
-            if (hero.GetArmy().HasMonster(Monster::IRON_GOLEM))
-                hero.GetArmy().UpgradeMonsters(Monster::IRON_GOLEM);
+            if (hero.GetArmy().m_troops.HasMonster(Monster::PIKEMAN))
+                hero.GetArmy().m_troops.UpgradeMonsters(Monster::PIKEMAN);
+            if (hero.GetArmy().m_troops.HasMonster(Monster::SWORDSMAN))
+                hero.GetArmy().m_troops.UpgradeMonsters(Monster::SWORDSMAN);
+            if (hero.GetArmy().m_troops.HasMonster(Monster::IRON_GOLEM))
+                hero.GetArmy().m_troops.UpgradeMonsters(Monster::IRON_GOLEM);
             break;
 
         default:
@@ -1318,7 +1318,7 @@ void AIToDwellingJoinMonster(Heroes &hero, u32 obj, s32 dst_index)
     Maps::Tiles &tile = world.GetTiles(dst_index);
     const Troop &troop = tile.QuantityTroop();
 
-    if (troop.isValid() && hero.GetArmy().JoinTroop(troop)) tile.MonsterSetCount(0);
+    if (troop.isValid() && hero.GetArmy().m_troops.JoinTroop(troop)) tile.MonsterSetCount(0);
 }
 
 void AIToDwellingRecruitMonster(Heroes &hero, u32 obj, s32 dst_index)
@@ -1331,7 +1331,7 @@ void AIToDwellingRecruitMonster(Heroes &hero, u32 obj, s32 dst_index)
         Kingdom &kingdom = hero.GetKingdom();
         const payment_t paymentCosts = troop.GetCost();
 
-        if (kingdom.AllowPayment(paymentCosts) && hero.GetArmy().JoinTroop(troop))
+        if (kingdom.AllowPayment(paymentCosts) && hero.GetArmy().m_troops.JoinTroop(troop))
         {
             tile.MonsterSetCount(0);
             kingdom.OddFundsResource(paymentCosts);
@@ -1355,7 +1355,8 @@ void AIToStables(Heroes &hero, u32 obj, s32 dst_index)
         hero.IncreaseMovePoints(400);
     }
 
-    if (hero.GetArmy().HasMonster(Monster::CAVALRY)) hero.GetArmy().UpgradeMonsters(Monster::CAVALRY);
+    if (hero.GetArmy().m_troops.HasMonster(Monster::CAVALRY)) 
+        hero.GetArmy().m_troops.UpgradeMonsters(Monster::CAVALRY);
 }
 
 void AIToAbandoneMine(Heroes &hero, u32 obj, s32 dst_index)
@@ -1563,7 +1564,7 @@ bool AI::HeroesValidObject(const Heroes &hero, s32 index)
                 if (tile.CaptureObjectIsProtection())
                 {
                     Army enemy(tile);
-                    return !enemy.isValid() || Army::TroopsStrongerEnemyTroops(army, enemy);
+                    return !enemy.m_troops.isValid() || Army::TroopsStrongerEnemyTroops(army.m_troops, enemy.m_troops);
                 } else
                     return true;
             }
@@ -1586,7 +1587,7 @@ bool AI::HeroesValidObject(const Heroes &hero, s32 index)
                     if (tile.CaptureObjectIsProtection())
                     {
                         Army enemy(tile);
-                        return !enemy.isValid() || Army::TroopsStrongerEnemyTroops(army, enemy);
+                        return !enemy.m_troops.isValid() || Army::TroopsStrongerEnemyTroops(army.m_troops, enemy.m_troops);
                     } else
                         return true;
                 }
@@ -1622,7 +1623,8 @@ bool AI::HeroesValidObject(const Heroes &hero, s32 index)
             if (5 < variants && 14 > variants)
             {
                 Army enemy(tile);
-                return !enemy.isValid() || Army::TroopsStrongerEnemyTroops(army, enemy);
+                return !enemy.m_troops.isValid() 
+                || Army::TroopsStrongerEnemyTroops(army.m_troops, enemy.m_troops);
             } 
         	// other
             return true;
@@ -1739,7 +1741,7 @@ bool AI::HeroesValidObject(const Heroes &hero, s32 index)
         {
             const Troop &troop = tile.QuantityTroop();
             if (troop.isValid() &&
-                (army.HasMonster(troop()) ||
+                (army.m_troops.HasMonster(troop()) ||
                  (!army.isFullHouse() && (troop.isArchers() || troop.isFly()))))
                 return true;
             break;
@@ -1760,7 +1762,7 @@ bool AI::HeroesValidObject(const Heroes &hero, s32 index)
             const payment_t paymentCosts = troop.GetCost();
 
             if (troop.isValid() && kingdom.AllowPayment(paymentCosts) &&
-                (army.HasMonster(troop()) ||
+                (army.m_troops.HasMonster(troop()) ||
                  (!army.isFullHouse() && (troop.isArchers() || troop.isFly()))))
                 return true;
             break;
@@ -1778,7 +1780,7 @@ bool AI::HeroesValidObject(const Heroes &hero, s32 index)
                 const payment_t paymentCosts = troop.GetCost();
 
                 if (troop.isValid() && kingdom.AllowPayment(paymentCosts) &&
-                    (army.HasMonster(troop()) ||
+                    (army.m_troops.HasMonster(troop()) ||
                      (!army.isFullHouse())))
                     return true;
             }
@@ -1792,7 +1794,7 @@ bool AI::HeroesValidObject(const Heroes &hero, s32 index)
             const payment_t paymentCosts = troop.GetCost();
 
             if (troop.isValid() && kingdom.AllowPayment(paymentCosts) &&
-                (army.HasMonster(troop()) ||
+                (army.m_troops.HasMonster(troop()) ||
                  (!army.isFullHouse())))
                 return true;
             break;
@@ -1800,23 +1802,23 @@ bool AI::HeroesValidObject(const Heroes &hero, s32 index)
 
             // upgrade army
         case MP2::OBJ_HILLFORT:
-            if (army.HasMonster(Monster::DWARF) ||
-                army.HasMonster(Monster::ORC) ||
-                army.HasMonster(Monster::OGRE))
+            if (army.m_troops.HasMonster(Monster::DWARF) ||
+                army.m_troops.HasMonster(Monster::ORC) ||
+                army.m_troops.HasMonster(Monster::OGRE))
                 return true;
             break;
 
             // upgrade army
         case MP2::OBJ_FREEMANFOUNDRY:
-            if (army.HasMonster(Monster::PIKEMAN) ||
-                army.HasMonster(Monster::SWORDSMAN) ||
-                army.HasMonster(Monster::IRON_GOLEM))
+            if (army.m_troops.HasMonster(Monster::PIKEMAN) ||
+                army.m_troops.HasMonster(Monster::SWORDSMAN) ||
+                army.m_troops.HasMonster(Monster::IRON_GOLEM))
                 return true;
             break;
 
             // loyalty obj
         case MP2::OBJ_STABLES:
-            if (army.HasMonster(Monster::CAVALRY) ||
+            if (army.m_troops.HasMonster(Monster::CAVALRY) ||
                 !hero.isVisited(tile))
                 return true;
             break;
@@ -1833,7 +1835,8 @@ bool AI::HeroesValidObject(const Heroes &hero, s32 index)
                 tile.QuantityIsValid())
             {
                 Army enemy(tile);
-                return enemy.isValid() && Army::TroopsStrongerEnemyTroops(army, enemy);
+                return enemy.m_troops.isValid() 
+                && Army::TroopsStrongerEnemyTroops(army.m_troops, enemy.m_troops);
             }
             break;
 
@@ -1846,7 +1849,8 @@ bool AI::HeroesValidObject(const Heroes &hero, s32 index)
         case MP2::OBJ_MONSTER:
         {
             Army enemy(tile);
-            return !enemy.isValid() || Army::TroopsStrongerEnemyTroops(army, enemy);
+            return !enemy.m_troops.isValid() 
+                || Army::TroopsStrongerEnemyTroops(army.m_troops, enemy.m_troops);
         }
             break;
 
@@ -1866,7 +1870,7 @@ bool AI::HeroesValidObject(const Heroes &hero, s32 index)
 		        return nullptr == castle->GetHeroes().Guest() && !hero.isVisited(tile);
 	        // FIXME: AI skip visiting alliance
 	        if (hero.isFriends(castle->GetColor())) return false;
-	        if (Army::TroopsStrongerEnemyTroops(army, castle->GetActualArmy())) return true;
+	        if (Army::TroopsStrongerEnemyTroops(army.m_troops, castle->GetActualArmy().m_troops)) return true;
 	        break;
         }
 
@@ -1881,7 +1885,7 @@ bool AI::HeroesValidObject(const Heroes &hero, s32 index)
 	        // FIXME: AI skip visiting alliance
 	        if (hero.isFriends(hero2->GetColor())) return false;
 	        if (hero2->AllowBattle(false) &&
-		        Army::TroopsStrongerEnemyTroops(army, hero2->GetArmy()))
+		        Army::TroopsStrongerEnemyTroops(army.m_troops, hero2->GetArmy().m_troops))
 		        return true;
 	        break;
         }

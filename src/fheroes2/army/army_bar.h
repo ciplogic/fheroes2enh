@@ -20,14 +20,11 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2ARMYBAR_H
-#define H2ARMYBAR_H
+#pragma once
 
 #include "army_troop.h"
 #include "interface_itemsbar.h"
-#include "gamedefs.h"
-
-class Army;
+#include "army.h"
 
 class ArmyBar : public Interface::ItemsActionBar<ArmyTroop>
 {
@@ -76,5 +73,3 @@ protected:
     string msg;
 };
 bool CanUpgradeTroop(Troop& troop, Army* army);
-
-#endif

@@ -408,7 +408,8 @@ int Dialog::ArmyJoinFree(const Troop &troop, Heroes &hero)
     Button btnHeroes(pos.x + pos.w / 2 - 20, pos.y + pos.h - 35,
                      (conf.ExtGameEvilInterface() ? ICN::ADVEBTNS : ICN::ADVBTNS), 0, 1);
 
-    if (hero.GetArmy().GetCount() < hero.GetArmy().Size() || hero.GetArmy().HasMonster(troop))
+    if (hero.GetArmy().m_troops.GetCount() < hero.GetArmy().m_troops.Size() 
+        || hero.GetArmy().m_troops.HasMonster(troop))
         btnHeroes.SetDisable(true);
     else
     {
@@ -440,7 +441,7 @@ int Dialog::ArmyJoinFree(const Troop &troop, Heroes &hero)
         {
             hero.OpenDialog(false, false);
 
-            if (hero.GetArmy().GetCount() < hero.GetArmy().Size())
+            if (hero.GetArmy().m_troops.GetCount() < hero.GetArmy().m_troops.Size())
             {
                 btnGroups.DisableButton1(false);
                 btnGroups.Draw();
@@ -545,7 +546,8 @@ int Dialog::ArmyJoinWithCost(const Troop &troop, u32 join, u32 gold, Heroes &her
         }
     }
 
-    if (hero.GetArmy().GetCount() < hero.GetArmy().Size() || hero.GetArmy().HasMonster(troop))
+    if (hero.GetArmy().m_troops.GetCount() < hero.GetArmy().m_troops.Size() 
+        || hero.GetArmy().m_troops.HasMonster(troop))
         btnHeroes.SetDisable(true);
     else
     {
@@ -607,7 +609,7 @@ int Dialog::ArmyJoinWithCost(const Troop &troop, u32 join, u32 gold, Heroes &her
         {
             hero.OpenDialog(false, false);
 
-            if (hero.GetArmy().GetCount() < hero.GetArmy().Size())
+            if (hero.GetArmy().m_troops.GetCount() < hero.GetArmy().m_troops.Size())
             {
                 btnGroups.DisableButton1(false);
                 btnGroups.Draw();

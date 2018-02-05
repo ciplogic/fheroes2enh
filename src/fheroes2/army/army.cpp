@@ -291,10 +291,10 @@ bool Troops::CanJoinTroops(const Troops &troops2) const
         return false;
 
     Army troops1;
-    troops1.Insert(*this);
+    troops1.m_troops.Insert(*this);
 
     for (auto it : troops2._items)
-        if ((it)->isValid() && !troops1.JoinTroop(*it)) return false;
+        if ((it)->isValid() && !troops1.m_troops.JoinTroop(*it)) return false;
 
     return true;
 }
@@ -702,14 +702,14 @@ void Troops::SplitTroopIntoFreeSlots(const Troop &troop, u32 slotCount)
 
 Army::Army(HeroBase *s) : commander(s), combat_format(true), color(Color::NONE)
 {
-    _items.reserve(ARMYMAXTROOPS);
-    for (u32 ii = 0; ii < ARMYMAXTROOPS; ++ii) _items.push_back(std::make_shared<ArmyTroop>(this));
+    m_troops._items.reserve(ARMYMAXTROOPS);
+    for (u32 ii = 0; ii < ARMYMAXTROOPS; ++ii) m_troops._items.push_back(std::make_shared<ArmyTroop>(this));
 }
 
 Army::Army(const Maps::Tiles &t) : commander(nullptr), combat_format(true), color(Color::NONE)
 {
-    _items.reserve(ARMYMAXTROOPS);
-    for (u32 ii = 0; ii < ARMYMAXTROOPS; ++ii) _items.push_back(std::make_shared<ArmyTroop>(this));
+    m_troops._items.reserve(ARMYMAXTROOPS);
+    for (u32 ii = 0; ii < ARMYMAXTROOPS; ++ii) m_troops._items.push_back(std::make_shared<ArmyTroop>(this));
 
     if (MP2::isCaptureObject(t.GetObject()))
         color = t.QuantityColor();
@@ -717,59 +717,59 @@ Army::Army(const Maps::Tiles &t) : commander(nullptr), combat_format(true), colo
     switch (t.GetObject(false))
     {
         case MP2::OBJ_PYRAMID:
-            _items.at(0)->Set(Monster::ROYAL_MUMMY, 10);
-            _items.at(1)->Set(Monster::VAMPIRE_LORD, 10);
-            _items.at(2)->Set(Monster::ROYAL_MUMMY, 10);
-            _items.at(3)->Set(Monster::VAMPIRE_LORD, 10);
-            _items.at(4)->Set(Monster::ROYAL_MUMMY, 10);
+            m_troops._items.at(0)->Set(Monster::ROYAL_MUMMY, 10);
+            m_troops._items.at(1)->Set(Monster::VAMPIRE_LORD, 10);
+            m_troops._items.at(2)->Set(Monster::ROYAL_MUMMY, 10);
+            m_troops._items.at(3)->Set(Monster::VAMPIRE_LORD, 10);
+            m_troops._items.at(4)->Set(Monster::ROYAL_MUMMY, 10);
             break;
 
         case MP2::OBJ_GRAVEYARD:
-            _items.at(0)->Set(Monster::MUTANT_ZOMBIE, 100);
-            ArrangeForBattle(false);
+            m_troops._items.at(0)->Set(Monster::MUTANT_ZOMBIE, 100);
+            m_troops.ArrangeForBattle(false);
             break;
 
         case MP2::OBJ_SHIPWRECK:
-            _items.at(0)->Set(Monster::GHOST, t.GetQuantity2());
-            ArrangeForBattle(false);
+            m_troops._items.at(0)->Set(Monster::GHOST, t.GetQuantity2());
+            m_troops.ArrangeForBattle(false);
             break;
 
         case MP2::OBJ_DERELICTSHIP:
-            _items.at(0)->Set(Monster::SKELETON, 200);
-            ArrangeForBattle(false);
+            m_troops._items.at(0)->Set(Monster::SKELETON, 200);
+            m_troops.ArrangeForBattle(false);
             break;
 
         case MP2::OBJ_ARTIFACT:
             switch (t.QuantityVariant())
             {
                 case 6:
-                    _items.at(0)->Set(Monster::ROGUE, 50);
+                    m_troops._items.at(0)->Set(Monster::ROGUE, 50);
                     break;
                 case 7:
-                    _items.at(0)->Set(Monster::GENIE, 1);
+                    m_troops._items.at(0)->Set(Monster::GENIE, 1);
                     break;
                 case 8:
-                    _items.at(0)->Set(Monster::PALADIN, 1);
+                    m_troops._items.at(0)->Set(Monster::PALADIN, 1);
                     break;
                 case 9:
-                    _items.at(0)->Set(Monster::CYCLOPS, 1);
+                    m_troops._items.at(0)->Set(Monster::CYCLOPS, 1);
                     break;
                 case 10:
-                    _items.at(0)->Set(Monster::PHOENIX, 1);
+                    m_troops._items.at(0)->Set(Monster::PHOENIX, 1);
                     break;
                 case 11:
-                    _items.at(0)->Set(Monster::GREEN_DRAGON, 1);
+                    m_troops._items.at(0)->Set(Monster::GREEN_DRAGON, 1);
                     break;
                 case 12:
-                    _items.at(0)->Set(Monster::TITAN, 1);
+                    m_troops._items.at(0)->Set(Monster::TITAN, 1);
                     break;
                 case 13:
-                    _items.at(0)->Set(Monster::BONE_DRAGON, 1);
+                    m_troops._items.at(0)->Set(Monster::BONE_DRAGON, 1);
                     break;
                 default:
                     break;
             }
-            ArrangeForBattle(false);
+            m_troops.ArrangeForBattle(false);
             break;
 
             //case MP2::OBJ_ABANDONEDMINE:
@@ -778,32 +778,32 @@ Army::Army(const Maps::Tiles &t) : commander(nullptr), combat_format(true), colo
             //    break;
 
         case MP2::OBJ_CITYDEAD:
-            _items.at(0)->Set(Monster::ZOMBIE, 20);
-           _items.at(1)->Set(Monster::VAMPIRE_LORD, 5);
-           _items.at(2)->Set(Monster::POWER_LICH, 5);
-           _items.at(3)->Set(Monster::VAMPIRE_LORD, 5);
-           _items.at(4)->Set(Monster::ZOMBIE, 20);
+            m_troops._items.at(0)->Set(Monster::ZOMBIE, 20);
+            m_troops._items.at(1)->Set(Monster::VAMPIRE_LORD, 5);
+            m_troops._items.at(2)->Set(Monster::POWER_LICH, 5);
+            m_troops._items.at(3)->Set(Monster::VAMPIRE_LORD, 5);
+            m_troops._items.at(4)->Set(Monster::ZOMBIE, 20);
             break;
 
         case MP2::OBJ_TROLLBRIDGE:
-            _items.at(0)->Set(Monster::TROLL, 4);
-           _items.at(1)->Set(Monster::WAR_TROLL, 4);
-           _items.at(2)->Set(Monster::TROLL, 4);
-           _items.at(3)->Set(Monster::WAR_TROLL, 4);
-           _items.at(4)->Set(Monster::TROLL, 4);
+            m_troops._items.at(0)->Set(Monster::TROLL, 4);
+            m_troops._items.at(1)->Set(Monster::WAR_TROLL, 4);
+            m_troops._items.at(2)->Set(Monster::TROLL, 4);
+            m_troops._items.at(3)->Set(Monster::WAR_TROLL, 4);
+            m_troops._items.at(4)->Set(Monster::TROLL, 4);
             break;
 
         case MP2::OBJ_DRAGONCITY:
-            _items.at(0)->Set(Monster::GREEN_DRAGON, 3);
-           _items.at(1)->Set(Monster::RED_DRAGON, 2);
-           _items.at(2)->Set(Monster::BLACK_DRAGON, 1);
+            m_troops._items.at(0)->Set(Monster::GREEN_DRAGON, 3);
+            m_troops._items.at(1)->Set(Monster::RED_DRAGON, 2);
+           m_troops._items.at(2)->Set(Monster::BLACK_DRAGON, 1);
             break;
 
         case MP2::OBJ_DAEMONCAVE:
-            _items.at(0)->Set(Monster::EARTH_ELEMENT, 2);
-           _items.at(1)->Set(Monster::EARTH_ELEMENT, 2);
-           _items.at(2)->Set(Monster::EARTH_ELEMENT, 2);
-           _items.at(3)->Set(Monster::EARTH_ELEMENT, 2);
+            m_troops._items.at(0)->Set(Monster::EARTH_ELEMENT, 2);
+            m_troops._items.at(1)->Set(Monster::EARTH_ELEMENT, 2);
+            m_troops._items.at(2)->Set(Monster::EARTH_ELEMENT, 2);
+            m_troops._items.at(3)->Set(Monster::EARTH_ELEMENT, 2);
             break;
 
         default:
@@ -816,32 +816,32 @@ Army::Army(const Maps::Tiles &t) : commander(nullptr), combat_format(true), colo
                 {
                     case 3:
                         if (3 > troop.GetCount())
-                            _items.at(0)->Set(co.GetTroop());
+                            m_troops._items.at(0)->Set(co.GetTroop());
                         else
                         {
-                            _items.at(0)->Set(troop(), troop.GetCount() / 3);
-                           _items.at(4)->Set(troop(), troop.GetCount() / 3);
-                           _items.at(2)->Set(troop(), troop.GetCount() - _items.at(4)->GetCount() - _items.at(0)->GetCount());
+                            m_troops._items.at(0)->Set(troop(), troop.GetCount() / 3);
+                            m_troops._items.at(4)->Set(troop(), troop.GetCount() / 3);
+                            m_troops._items.at(2)->Set(troop(), troop.GetCount() - m_troops._items.at(4)->GetCount() - m_troops._items.at(0)->GetCount());
                         }
                         break;
 
                     case 5:
                         if (5 > troop.GetCount())
-                            _items.at(0)->Set(co.GetTroop());
+                            m_troops._items.at(0)->Set(co.GetTroop());
                         else
                         {
-                            _items.at(0)->Set(troop(), troop.GetCount() / 5);
-                           _items.at(1)->Set(troop(), troop.GetCount() / 5);
-                           _items.at(3)->Set(troop(), troop.GetCount() / 5);
-                           _items.at(4)->Set(troop(), troop.GetCount() / 5);
-                           _items.at(2)->Set(troop(),
-                                       troop.GetCount() - _items.at(0)->GetCount() - _items.at(1)->GetCount() - _items.at(3)->GetCount() -
-                                      _items.at(4)->GetCount());
+                            m_troops._items.at(0)->Set(troop(), troop.GetCount() / 5);
+                            m_troops._items.at(1)->Set(troop(), troop.GetCount() / 5);
+                            m_troops._items.at(3)->Set(troop(), troop.GetCount() / 5);
+                            m_troops._items.at(4)->Set(troop(), troop.GetCount() / 5);
+                            m_troops._items.at(2)->Set(troop(),
+                                       troop.GetCount() - m_troops._items.at(0)->GetCount() - m_troops._items.at(1)->GetCount() - m_troops._items.at(3)->GetCount() -
+                                m_troops._items.at(4)->GetCount());
                         }
                         break;
 
                     default:
-                        _items.at(0)->Set(co.GetTroop());
+                        m_troops._items.at(0)->Set(co.GetTroop());
                         break;
                 }
             } else
@@ -849,8 +849,8 @@ Army::Army(const Maps::Tiles &t) : commander(nullptr), combat_format(true), colo
                 auto *map_troop = static_cast<MapMonster *>(world.GetMapObject(t.GetObjectUID(MP2::OBJ_MONSTER)));
                 Troop troop = map_troop ? map_troop->QuantityTroop() : t.QuantityTroop();
 
-                _items.at(0)->Set(troop);
-                ArrangeForBattle(!Settings::Get().ExtWorldSaveMonsterBattle());
+                m_troops._items.at(0)->Set(troop);
+                m_troops.ArrangeForBattle(!Settings::Get().ExtWorldSaveMonsterBattle());
             }
             break;
     }
@@ -858,12 +858,12 @@ Army::Army(const Maps::Tiles &t) : commander(nullptr), combat_format(true), colo
 
 Army::~Army()
 {
-    _items.clear();
+    m_troops._items.clear();
 }
 
 bool Army::isFullHouse() const
 {
-    return GetCount() == _items.size();
+    return m_troops.GetCount() == m_troops._items.size();
 }
 
 void Army::SetSpreadFormat(bool f)
@@ -889,9 +889,9 @@ void Army::SetColor(int cl)
 int Army::GetRace() const
 {
     vector<int> races;
-    races.reserve(_items.size());
+    races.reserve(m_troops._items.size());
 
-    for (auto _item : _items)
+    for (auto _item : m_troops._items)
         if (_item->isValid()) races.push_back(_item->GetRace());
 
     sort(races.begin(), races.end());
@@ -936,7 +936,7 @@ int Army::GetMoraleModificator(string *strs) const
     u32 count_bomg = 0;
     bool ghost_present = false;
 
-    for (const auto _item : _items)
+    for (const auto _item : m_troops._items)
         if (_item->isValid())
         {
             switch (_item->GetRace())
@@ -1004,7 +1004,7 @@ int Army::GetMoraleModificator(string *strs) const
         ++count;
         r = Race::NONE;
     }
-    const u32 uniq_count = GetUniqueCount();
+    const u32 uniq_count = m_troops.GetUniqueCount();
 
     switch (count)
     {
@@ -1083,7 +1083,7 @@ u32 Army::GetAttack() const
     u32 res = 0;
     u32 count = 0;
 
-    for (const auto _item : _items)
+    for (const auto _item : m_troops._items)
         if (_item->isValid())
         {
             res += _item->GetAttack();
@@ -1098,7 +1098,7 @@ u32 Army::GetDefense() const
     u32 res = 0;
     u32 count = 0;
 
-    for (auto _item : _items)
+    for (auto _item : m_troops._items)
         if (_item->isValid())
         {
             res += _item->GetDefense();
@@ -1110,7 +1110,7 @@ u32 Army::GetDefense() const
 
 void Army::Reset(bool soft)
 {
-    Clean();
+    m_troops.Clean();
 
     if (!commander || !commander->isHeroes())
 		return;
@@ -1123,19 +1123,19 @@ void Army::Reset(bool soft)
 		switch (Rand::Get(1, 3))
 		{
 		case 1:
-			JoinTroop(mons1, 3 * mons1.GetGrown());
+            m_troops.JoinTroop(mons1, 3 * mons1.GetGrown());
 			break;
 		case 2:
-			JoinTroop(mons2, mons2.GetGrown() + mons2.GetGrown() / 2);
+            m_troops.JoinTroop(mons2, mons2.GetGrown() + mons2.GetGrown() / 2);
 			break;
 		default:
-			JoinTroop(mons1, 2 * mons1.GetGrown());
-			JoinTroop(mons2, mons2.GetGrown());
+            m_troops.JoinTroop(mons1, 2 * mons1.GetGrown());
+            m_troops.JoinTroop(mons2, mons2.GetGrown());
 			break;
 		}
 	} else
 	{
-		JoinTroop(mons1, 1);
+        m_troops.JoinTroop(mons1, 1);
 	}
 }
 
@@ -1175,7 +1175,7 @@ string Army::String() const
 
     os << ": ";
 
-    for (auto _item : _items)
+    for (auto _item : m_troops._items)
         if (_item->isValid())
             os << dec << _item->GetCount() << " " << _item->GetName() << ", ";
 
@@ -1185,21 +1185,21 @@ string Army::String() const
 void Army::JoinStrongestFromArmy(Army &army2)
 {
     bool save_last = army2.commander && army2.commander->isHeroes();
-    JoinStrongest(army2, save_last);
+    m_troops.JoinStrongest(army2.m_troops, save_last);
 }
 
 void Army::KeepOnlyWeakestTroops(Army &army2)
 {
 
     bool save_last = commander && commander->isHeroes();
-    KeepOnlyWeakest(army2, save_last);
+    m_troops.KeepOnlyWeakest(army2.m_troops, save_last);
 }
 
 u32 Army::ActionToSirens()
 {
     u32 res = 0;
 
-	for (auto &_item : _items)
+	for (auto &_item : m_troops._items)
 	{
 		if (!_item->isValid()) continue;
 		const u32 kill = _item->GetCount() * 30 / 100;
@@ -1265,7 +1265,7 @@ void Army::DrawMons32LineShort(const Troops &troops, s32 cx, s32 cy, u32 width, 
 JoinCount Army::GetJoinSolution(const Heroes &hero, const Maps::Tiles &tile, const Troop &troop)
 {
     MapMonster *map_troop = static_cast<MapMonster *>(world.GetMapObject(tile.GetObjectUID(MP2::OBJ_MONSTER)));
-    const u32 ratios = troop.isValid() ? hero.GetArmy().GetHitPoints() / troop.GetHitPointsTroop() : 0;
+    const u32 ratios = troop.isValid() ? hero.GetArmy().m_troops.GetHitPoints() / troop.GetHitPointsTroop() : 0;
     const bool check_free_stack = true; // (hero.GetArmy().GetCount() < hero.GetArmy().size() || hero.GetArmy().HasMonster(troop)); // set force, see Dialog::ArmyJoinWithCost, http://sourceforge.net/tracker/?func=detail&aid=3567985&group_id=96859&atid=616183
     const bool check_extra_condition = (!hero.HasArtifact(Artifact::HIDEOUS_MASK) &&
                                         Morale::NORMAL <= hero.GetMorale());
@@ -1329,15 +1329,15 @@ void Army::SwapTroops(Troop &t1, Troop &t2)
 
 bool Army::SaveLastTroop() const
 {
-    return commander && commander->isHeroes() && 1 == GetCount();
+    return commander && commander->isHeroes() && 1 == m_troops.GetCount();
 }
 
 StreamBase &operator<<(StreamBase &msg, const Army &army)
 {
-    msg << static_cast<u32>(army._items.size());
+    msg << static_cast<u32>(army.m_troops._items.size());
 
     // Army: fixed size
-    for (auto _item : army._items)
+    for (auto _item : army.m_troops._items)
         msg << *_item;
 
     return msg << army.combat_format << army.color;
@@ -1349,13 +1349,13 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, Army &army)
 	u32 armysz;
 	msg >> armysz;
 
-	for (auto &_item : army._items)
+	for (auto &_item : army.m_troops._items)
 		msg >> *_item;
 
 	msg >> army.combat_format >> army.color;
 
 	// set army
-	for (auto it = army._items.begin(); it != army._items.end(); ++it)
+	for (auto it = army.m_troops._items.begin(); it != army.m_troops._items.end(); ++it)
 	{
 		auto *troop = dynamic_cast<ArmyTroop *>(it->get());
 		if (troop) troop->SetArmy(army);

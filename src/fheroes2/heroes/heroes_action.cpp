@@ -399,7 +399,7 @@ void AnimationRemoveObject(Maps::Tiles &tile)
 
 void RecruitMonsterFromTile(Heroes &hero, Maps::Tiles &tile, const string &msg, const Troop &troop, bool remove)
 {
-    if (!hero.GetArmy().CanJoinTroop(troop))
+    if (!hero.GetArmy().m_troops.CanJoinTroop(troop))
         Message(msg, _("You are unable to recruit at this time, your ranks are full."), Font::BIG, Dialog::OK);
     else
     {
@@ -420,7 +420,7 @@ void RecruitMonsterFromTile(Heroes &hero, Maps::Tiles &tile, const string &msg, 
             const payment_t paymentCosts = troop().GetCost() * recruit;
             hero.GetKingdom().OddFundsResource(paymentCosts);
 
-            hero.GetArmy().JoinTroop(troop(), recruit);
+            hero.GetArmy().m_troops.JoinTroop(troop(), recruit);
             hero.MovePointsScaleFixed();
 
             if (Settings::Get().ExtHeroRecalculateMovement())
@@ -827,7 +827,7 @@ void ActionToMonster(Heroes &hero, u32 obj, s32 dst_index)
     {
         if (Dialog::YES == Dialog::ArmyJoinFree(troop, hero))
         {
-            hero.GetArmy().JoinTroop(troop);
+            hero.GetArmy().m_troops.JoinTroop(troop);
             statusWindow.SetRedraw();
         } else
         {
@@ -843,7 +843,7 @@ void ActionToMonster(Heroes &hero, u32 obj, s32 dst_index)
 
         if (Dialog::YES == Dialog::ArmyJoinWithCost(troop, join.second, gold, hero))
         {
-            hero.GetArmy().JoinTroop(troop(), join.second);
+            hero.GetArmy().m_troops.JoinTroop(troop(), join.second);
             hero.GetKingdom().OddFundsResource(Funds(Resource::GOLD, gold));
             statusWindow.SetRedraw();
         } else
@@ -884,13 +884,13 @@ void ActionToMonster(Heroes &hero, u32 obj, s32 dst_index)
             BattleLose(hero, res, true);
             if (Settings::Get().ExtWorldSaveMonsterBattle())
             {
-                tile.MonsterSetCount(army.GetCountMonsters(troop()));
+                tile.MonsterSetCount(army.m_troops.GetCountMonsters(troop()));
                 // reset "can join"
                 if (tile.MonsterJoinConditionFree()) tile.MonsterSetJoinCondition(Monster::JOIN_CONDITION_MONEY);
 
                 if (map_troop)
                 {
-                    map_troop->count = army.GetCountMonsters(troop());
+                    map_troop->count = army.m_troops.GetCountMonsters(troop());
                     if (map_troop->JoinConditionFree()) map_troop->condition = Monster::JOIN_CONDITION_MONEY;
                 }
             }
@@ -1022,7 +1022,7 @@ void ActionToCastle(Heroes &hero, u32 obj, s32 dst_index)
         Army &army = castle->GetActualArmy();
         bool allow_enter = false;
 
-        if (army.isValid())
+        if (army.m_troops.isValid())
         {
             Heroes *defender = heroes.GuardFirst();
             castle->ActionPreBattle();
@@ -1970,7 +1970,7 @@ void ActionToArtifact(Heroes &hero, u32 obj, s32 dst_index)
         {
             bool battle = true;
             Army army(tile);
-            Troop *troop = army.GetFirstValid();
+            Troop *troop = army.m_troops.GetFirstValid();
 
             PlaySoundWarning;
 
@@ -2213,7 +2213,7 @@ void ActionToWhirlpools(Heroes &hero, u32 obj, s32 index_from)
     hero.GetPath().Hide();
     hero.FadeIn();
 
-    Troop *troop = hero.GetArmy().GetWeakestTroop();
+    Troop *troop = hero.GetArmy().m_troops.GetWeakestTroop();
 
     if (troop && Rand::Get(1) && 1 < troop->GetCount())
     {
@@ -2332,7 +2332,7 @@ void ActionToCaptureObject(Heroes &hero, u32 obj, s32 dst_index)
                 capture = false;
                 BattleLose(hero, result, true);
                 if (Settings::Get().ExtWorldSaveMonsterBattle())
-                    tile.MonsterSetCount(army.GetCountMonsters(mons));
+                    tile.MonsterSetCount(army.m_troops.GetCountMonsters(mons));
             }
         }
 
@@ -2396,13 +2396,13 @@ void ActionToDwellingJoinMonster(Heroes &hero, u32 obj, s32 dst_index)
 
         if (Dialog::YES == Dialog::Message(MP2::StringObject(obj), message, Font::BIG, Dialog::YES | Dialog::NO))
         {
-            if (!hero.GetArmy().CanJoinTroop(troop))
+            if (!hero.GetArmy().m_troops.CanJoinTroop(troop))
                 Message(troop.GetName(), _("You are unable to recruit at this time, your ranks are full."),
                                 Font::BIG, Dialog::OK);
             else
             {
                 tile.MonsterSetCount(0);
-                hero.GetArmy().JoinTroop(troop);
+                hero.GetArmy().m_troops.JoinTroop(troop);
                 hero.MovePointsScaleFixed();
 
                 if (Settings::Get().ExtHeroRecalculateMovement())
@@ -2696,9 +2696,9 @@ void ActionToXanadu(Heroes &hero, u32 obj, s32 dst_index)
 
 bool ActionToUpgradeArmy(Army &army, const Monster &mons, string &str1, string &str2)
 {
-    if (army.HasMonster(mons))
+    if (army.m_troops.HasMonster(mons))
     {
-        army.UpgradeMonsters(mons);
+        army.m_troops.UpgradeMonsters(mons);
         if (str1.size()) str1 += ", ";
         str1 += mons.GetMultiName();
         if (str2.size()) str2 += ", ";
@@ -3104,7 +3104,7 @@ void ActionToAlchemistsTower(Heroes &hero, u32 obj, s32 dst_index)
 
 void ActionToStables(Heroes &hero, u32 obj, s32 dst_index)
 {
-    const bool cavalry = hero.GetArmy().HasMonster(Monster::CAVALRY);
+    const bool cavalry = hero.GetArmy().m_troops.HasMonster(Monster::CAVALRY);
     const bool visited = hero.isVisited(obj);
     string body;
 
@@ -3133,7 +3133,7 @@ void ActionToStables(Heroes &hero, u32 obj, s32 dst_index)
         hero.IncreaseMovePoints(400);
     }
 
-    if (cavalry) hero.GetArmy().UpgradeMonsters(Monster::CAVALRY);
+    if (cavalry) hero.GetArmy().m_troops.UpgradeMonsters(Monster::CAVALRY);
 
     Message("", body, Font::BIG, Dialog::OK);
 

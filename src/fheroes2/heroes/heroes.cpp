@@ -237,9 +237,9 @@ Heroes::Heroes(int heroid, int rc) : HeroBase(HEROES, rc), ColorBase(Color::NONE
             break;
 
         case SANDYSANDY:
-            army.Clean();
-            army.JoinTroop(Monster::BLACK_DRAGON, 2);
-            army.JoinTroop(Monster::RED_DRAGON, 3);
+            army.m_troops.Clean();
+            army.m_troops.JoinTroop(Monster::BLACK_DRAGON, 2);
+            army.m_troops.JoinTroop(Monster::RED_DRAGON, 3);
 
             secondary_skills = Skill::SecSkills();
             secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::PATHFINDING, Skill::Level::ADVANCED));
@@ -293,7 +293,7 @@ void Heroes::LoadFromMP2(s32 map_index, int cl, int rc, ByteVectorReader& st)
         for (u32 ii = 0; ii < ARRAY_COUNT(troops); ++ii)
             troops[ii].SetCount(st.getLE16());
 
-        army.Assign(troops, ARRAY_COUNT_END(troops));
+        army.m_troops.Assign(troops, ARRAY_COUNT_END(troops));
     } else
         st.skip(15);
 
@@ -384,7 +384,7 @@ void Heroes::PostLoad()
     save_maps_object = MP2::OBJ_ZERO;
 
     // fix zero army
-    if (!army.isValid())
+    if (!army.m_troops.isValid())
         army.Reset(true);
     else
         SetModes(CUSTOMARMY);
@@ -574,7 +574,7 @@ u32 Heroes::GetMaxMovePoints() const
         if (isVisited(MP2::OBJ_LIGHTHOUSE)) point += 500;
     } else
     {
-        Troop *troop = const_cast<Army &>(army).GetSlowestTroop();
+        Troop *troop = const_cast<Army &>(army).m_troops.GetSlowestTroop();
 
         if (troop)
             switch (troop->GetSpeed())
@@ -636,7 +636,7 @@ int Heroes::GetMoraleWithModificators(string *strs) const
     // bonus artifact
     result += GetMoraleModificator(strs);
 
-    if (army.AllTroopsIsRace(Race::NECR)) return Morale::NORMAL;
+    if (army.m_troops.AllTroopsIsRace(Race::NECR)) return Morale::NORMAL;
 
     // bonus leadership
     result += Skill::GetLeadershipModifiers(GetLevelSkill(Skill::Secondary::LEADERSHIP), strs);
@@ -705,7 +705,7 @@ bool Heroes::Recruit(int cl, const Point &pt)
         if (!Modes(SAVEPOINTS)) move_point = GetMaxMovePoints();
         MovePointsScaleFixed();
 
-        if (!army.isValid()) army.Reset(false);
+        if (!army.m_troops.isValid()) army.Reset(false);
 
         tiles.SetHeroes(this);
         kingdom.AddHeroes(this);
@@ -1425,7 +1425,7 @@ void Heroes::SetFreeman(int reason)
         kingdom.SetLastLostHero(*this);
     }
 
-    if (!army.isValid() || (Battle::RESULT_RETREAT & reason)) army.Reset(false);
+    if (!army.m_troops.isValid() || (Battle::RESULT_RETREAT & reason)) army.Reset(false);
     else if ((Battle::RESULT_LOSS & reason) && !(Battle::RESULT_SURRENDER & reason)) army.Reset(true);
 
     if (GetColor() != Color::NONE) kingdom.RemoveHeroes(this);

@@ -177,7 +177,7 @@ bool Battle::Only::ChangeSettings()
         selectArmy2->Redraw();
     }
 
-    monsters.GetTroop(0)->Set(Monster::PEASANT, 100);
+    monsters.m_troops.GetTroop(0)->Set(Monster::PEASANT, 100);
     army2 = hero2 ? &hero2->GetArmy() : &monsters;
 
     selectArmy2 = new ArmyBar(army2, true, false, true);

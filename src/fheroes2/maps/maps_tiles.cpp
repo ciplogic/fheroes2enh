@@ -2350,7 +2350,7 @@ bool Maps::Tiles::CaptureObjectIsProtection() const
 		return QuantityTroop().isValid();
 	Castle* castle = world.GetCastle(GetCenter());
 	if (castle)
-		return castle->GetArmy().isValid();
+		return castle->GetArmy().m_troops.isValid();
 
 	return false;
 }

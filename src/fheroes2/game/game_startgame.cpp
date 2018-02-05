@@ -442,7 +442,7 @@ int Interface::Basic::GetCursorFocusHeroes(const Heroes& from_hero, const Maps::
 					return Cursor::DistanceThemes(Cursor::ACTION, from_hero.GetRangeRouteDays(castle->GetIndex()));
 				if (from_hero.isFriends(castle->GetColor()))
 					return conf.ExtUnionsAllowCastleVisiting() ? Cursor::ACTION : Cursor::POINTER;
-				if (castle->GetActualArmy().isValid())
+				if (castle->GetActualArmy().m_troops.isValid())
 					return Cursor::DistanceThemes(Cursor::FIGHT, from_hero.GetRangeRouteDays(castle->GetIndex()));
 				return Cursor::DistanceThemes(Cursor::ACTION, from_hero.GetRangeRouteDays(castle->GetIndex()));
 			}

@@ -160,7 +160,7 @@ void Castle::LoadFromMP2(ByteVectorReader& st)
         for (auto &troop : troops)
             troop.SetCount(st.getLE16());
 
-        army.Assign(troops, ARRAY_COUNT_END(troops));
+        army.m_troops.Assign(troops, ARRAY_COUNT_END(troops));
         SetModes(CUSTOMARMY);
     } else
         st.skip(15);
@@ -770,7 +770,7 @@ bool Castle::AllowBuyHero(const Heroes &hero, string *msg)
         // allow recruit with auto move guest to guard
         if (Settings::Get().ExtCastleAllowGuardians() && !heroes.Guard())
         {
-            if (!heroes.Guest()->GetArmy().CanJoinTroops(army))
+            if (!heroes.Guest()->GetArmy().m_troops.CanJoinTroops(army.m_troops))
             {
                 if (msg) *msg = _("Cannot recruit - guest to guard automove error.");
                 return false;
@@ -886,11 +886,11 @@ bool Castle::RecruitMonster(const Troop &troop)
     if (!kingdom.AllowPayment(paymentCosts)) return false;
 
     // first: guard army join
-    if (!GetArmy().JoinTroop(ms, count))
+    if (!GetArmy().m_troops.JoinTroop(ms, count))
     {
         CastleHeroes heroes = world.GetHeroes(*this);
 
-        if (!heroes.Guest() || !heroes.Guest()->GetArmy().JoinTroop(ms, count))
+        if (!heroes.Guest() || !heroes.Guest()->GetArmy().m_troops.JoinTroop(ms, count))
         {
             Message("", _("There is no room in the garrison for this army."), Font::BIG, Dialog::OK);
             return false;
@@ -949,7 +949,7 @@ bool Castle::RecruitMonsterFromDwelling(u32 dw, u32 count)
     // may be guardian present
     Army &army2 = GetArmy();
 
-    if (!kingdom.AllowPayment(paymentCosts) || !army2.JoinTroop(ms, count)) return false;
+    if (!kingdom.AllowPayment(paymentCosts) || !army2.m_troops.JoinTroop(ms, count)) return false;
 
     kingdom.OddFundsResource(paymentCosts);
     dwelling[dw_index] -= count;
@@ -2255,7 +2255,7 @@ void Castle::RecruitAllMonster()
     // skip recruit: AI with customization of empty army
     if (Modes(CUSTOMARMY) &&
         isControlAI() &&
-        !army.isValid() && !army.HasMonster(Monster(Monster::UNKNOWN)))
+        !army.m_troops.isValid() && !army.m_troops.HasMonster(Monster(Monster::UNKNOWN)))
         skip_recruit = true;
 
     if (!skip_recruit)
@@ -2395,25 +2395,25 @@ void Castle::JoinRNDArmy()
     switch (Rand::Get(1, 4))
     {
         case 1:
-            army.JoinTroop(mon1, mon1.GetRNDSize(false) * 3);
-            army.JoinTroop(mon2, mon2.GetRNDSize(false));
+            army.m_troops.JoinTroop(mon1, mon1.GetRNDSize(false) * 3);
+            army.m_troops.JoinTroop(mon2, mon2.GetRNDSize(false));
             break;
 
         case 2:
-            army.JoinTroop(mon1, mon1.GetRNDSize(false) * 2);
-            army.JoinTroop(mon2, mon2.GetRNDSize(false) * 2);
+            army.m_troops.JoinTroop(mon1, mon1.GetRNDSize(false) * 2);
+            army.m_troops.JoinTroop(mon2, mon2.GetRNDSize(false) * 2);
             break;
 
         case 3:
 
-            army.JoinTroop(mon1, mon1.GetRNDSize(false) * 2);
-            army.JoinTroop(mon2, mon2.GetRNDSize(false));
-            army.JoinTroop(mon3, mon3.GetRNDSize(false) * 2 / 3);
+            army.m_troops.JoinTroop(mon1, mon1.GetRNDSize(false) * 2);
+            army.m_troops.JoinTroop(mon2, mon2.GetRNDSize(false));
+            army.m_troops.JoinTroop(mon3, mon3.GetRNDSize(false) * 2 / 3);
             break;
 
         default:
-            army.JoinTroop(mon1, mon1.GetRNDSize(false));
-            army.JoinTroop(mon3, mon3.GetRNDSize(false));
+            army.m_troops.JoinTroop(mon1, mon1.GetRNDSize(false));
+            army.m_troops.JoinTroop(mon3, mon3.GetRNDSize(false));
             break;
     }
 }
@@ -2426,7 +2426,7 @@ void Castle::ActionPreBattle()
     {
         CastleHeroes heroes = world.GetHeroes(*this);
         Heroes *hero = heroes.GuardFirst();
-        if (hero && army.isValid())
+        if (hero && army.m_troops.isValid())
             hero->GetArmy().JoinStrongestFromArmy(army);
     }
 }
@@ -2435,7 +2435,7 @@ void Castle::ActionAfterBattle(bool attacker_wins)
 {
     if (attacker_wins)
     {
-        army.Clean();
+        army.m_troops.Clean();
         ResetModes(CUSTOMARMY);
     }
 
@@ -2629,7 +2629,7 @@ void Castle::SwapCastleHeroes(CastleHeroes &heroes)
         heroes.Guest()->SetModes(Heroes::GUARDIAN);
         heroes.Guest()->ResetModes(Heroes::SLEEPER);
         heroes.Swap();
-        heroes.Guard()->GetArmy().JoinTroops(army);
+        heroes.Guard()->GetArmy().m_troops.JoinTroops(army.m_troops);
 
         world.GetTiles(center.x, center.y).SetHeroes(nullptr);
 

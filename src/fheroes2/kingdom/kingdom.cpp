@@ -35,7 +35,7 @@
 
 bool HeroesStrongestArmy(const Heroes *h1, const Heroes *h2)
 {
-    return h1 && h2 && Army::TroopsStrongerEnemyTroops(h2->GetArmy(), h1->GetArmy());
+    return h1 && h2 && Army::TroopsStrongerEnemyTroops(h2->GetArmy().m_troops, h1->GetArmy().m_troops);
 }
 
 Kingdom::Kingdom() : color(Color::NONE), lost_town_days(0), visited_tents_colors(0)
@@ -557,10 +557,10 @@ u32 Kingdom::GetArmiesStrength() const
     u32 res = 0;
 
     for (auto heroe : heroes)
-        res += (*heroe).GetArmy().GetStrength();
+        res += (*heroe).GetArmy().m_troops.GetStrength();
 
     for (auto castle : castles)
-        res += (*castle).GetArmy().GetStrength();
+        res += (*castle).GetArmy().m_troops.GetStrength();
 
     return res;
 }

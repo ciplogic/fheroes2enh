@@ -161,7 +161,7 @@ void Interface::StatusWindow::NextState()
         const Castle *castle = GetFocusCastle();
 
         // skip empty army for castle
-        if (castle && !castle->GetArmy().isValid()) NextState();
+        if (castle && !castle->GetArmy().m_troops.isValid()) NextState();
     }
 }
 
@@ -275,19 +275,19 @@ void Interface::StatusWindow::DrawArmyInfo(int oh) const
     if (armies)
     {
         const Rect &pos = GetArea();
-        u32 count = armies->GetCount();
+        u32 count = armies->m_troops.GetCount();
 
         if (4 > count)
         {
-            Army::DrawMons32LineShort(*armies, pos.x, pos.y + 20 + oh, 144, 0, 0);
+            Army::DrawMons32LineShort(armies->m_troops, pos.x, pos.y + 20 + oh, 144, 0, 0);
         } else if (5 > count)
         {
-            Army::DrawMons32LineShort(*armies, pos.x, pos.y + 15 + oh, 110, 0, 2);
-            Army::DrawMons32LineShort(*armies, pos.x + 20, pos.y + 30 + oh, 120, 2, 2);
+            Army::DrawMons32LineShort(armies->m_troops, pos.x, pos.y + 15 + oh, 110, 0, 2);
+            Army::DrawMons32LineShort(armies->m_troops, pos.x + 20, pos.y + 30 + oh, 120, 2, 2);
         } else
         {
-            Army::DrawMons32LineShort(*armies, pos.x, pos.y + 15 + oh, 140, 0, 3);
-            Army::DrawMons32LineShort(*armies, pos.x + 10, pos.y + 30 + oh, 120, 3, 2);
+            Army::DrawMons32LineShort(armies->m_troops, pos.x, pos.y + 15 + oh, 140, 0, 3);
+            Army::DrawMons32LineShort(armies->m_troops, pos.x + 10, pos.y + 30 + oh, 120, 3, 2);
         }
     }
 }

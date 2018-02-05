@@ -114,7 +114,7 @@ void AI::HeroesPreBattle(HeroBase &hero)
 {
     Castle *castle = world.GetCastle(hero.GetCenter());
     if (castle && hero.GetType() != HeroBase::CAPTAIN)
-        hero.GetArmy().JoinTroops(castle->GetArmy());
+        hero.GetArmy().m_troops.JoinTroops(castle->GetArmy().m_troops);
 }
 
 void AI::HeroesAfterBattle(HeroBase &hero)
@@ -146,7 +146,7 @@ bool AIHeroesPriorityObject(const Heroes &hero, s32 index)
             {
                 // maybe need join army
                 return hero.Modes(AI::HEROES_HUNTER) &&
-                       castle->GetArmy().isValid() &&
+                       castle->GetArmy().m_troops.isValid() &&
                        !hero.isVisited(world.GetTiles(castle->GetIndex()));
             } else if (!hero.isFriends(castle->GetColor()))
                 return AI::HeroesValidObject(hero, index);
@@ -390,7 +390,7 @@ bool AI::HeroesGetTask(Heroes &hero)
     if (castle)
     {
         castle->RecruitAllMonster();
-        hero.GetArmy().UpgradeTroops(*castle);
+        hero.GetArmy().m_troops.UpgradeTroops(*castle);
 
         // recruit army
         if (hero.Modes(HEROES_HUNTER))
@@ -703,7 +703,7 @@ void AIHeroesCaptureNearestTown(Heroes *hero)
 		const Castle *castle = world.GetCastle(Maps::GetPoint(it));
 
 		if (castle &&
-			Army::TroopsStrongerEnemyTroops(hero->GetArmy(), castle->GetArmy()))
+			Army::TroopsStrongerEnemyTroops(hero->GetArmy().m_troops, castle->GetArmy().m_troops))
 		{
 			ai_hero.primary_target = it;
 

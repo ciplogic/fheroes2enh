@@ -141,14 +141,14 @@ Battle::Result Battle::Loader(Army &army1, Army &army2, s32 mapsindex)
     if (army1.GetCommander() && army1.GetCommander()->isHeroes())
     {
         // hard reset army
-        if (!army1.isValid() || (result.army1 & RESULT_RETREAT)) army1.Reset(false);
+        if (!army1.m_troops.isValid() || (result.army1 & RESULT_RETREAT)) army1.Reset(false);
     }
 
     // update army
     if (army2.GetCommander() && army2.GetCommander()->isHeroes())
     {
         // hard reset army
-        if (!army2.isValid() || (result.army2 & RESULT_RETREAT)) army2.Reset(false);
+        if (!army2.m_troops.isValid() || (result.army2 & RESULT_RETREAT)) army2.Reset(false);
     }
 	
     return result;
@@ -239,7 +239,7 @@ void Battle::NecromancySkillAction(HeroBase &hero, u32 killed, bool local)
     Army &army = hero.GetArmy();
 
     if (0 == killed ||
-        (army.isFullHouse() && !army.HasMonster(Monster::SKELETON)))
+        (army.isFullHouse() && !army.m_troops.HasMonster(Monster::SKELETON)))
         return;
 
     // check necromancy shrine build
@@ -259,7 +259,7 @@ void Battle::NecromancySkillAction(HeroBase &hero, u32 killed, bool local)
 
     const Monster mons(Monster::SKELETON);
     const u32 count = Monster::GetCountFromHitPoints(Monster::SKELETON, mons.GetHitPoints() * killed * percent / 100);
-    army.JoinTroop(mons, count);
+    army.m_troops.JoinTroop(mons, count);
 
     if (local)
     {

@@ -139,9 +139,10 @@ struct JoinCount : pair<int, u32>
     {}
 };
 
-class Army : public Troops, public Control
+class Army : public Control
 {
 public:
+    Troops m_troops;
     static string SizeString(u32);
 
     static string TroopSizeString(const Troop &);

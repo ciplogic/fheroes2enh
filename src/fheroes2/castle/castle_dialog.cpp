@@ -401,7 +401,7 @@ int Castle::OpenDialog(bool readonly, bool fade)
                 // move hero to guardian
             if (heroes.Guest() && !heroes.Guard() && le.MouseClickLeft(rectSign1))
             {
-                if (!heroes.Guest()->GetArmy().CanJoinTroops(army))
+                if (!heroes.Guest()->GetArmy().m_troops.CanJoinTroops(army.m_troops))
                 {
                     // FIXME: correct message
                     Message(_("Join Error"), _("Army is full"), Font::BIG, Dialog::OK);
