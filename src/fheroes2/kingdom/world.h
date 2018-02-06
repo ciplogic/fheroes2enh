@@ -34,6 +34,7 @@
 #include "castle_heroes.h"
 #include "maps_objects.h"
 #include "artifact_ultimate.h"
+#include "maps_actions.h"
 #include <unordered_map>
 
 class Heroes;
@@ -48,9 +49,8 @@ class Radar;
 
 class MapObjectSimple;
 
-class ActionSimple;
 
-struct ListActions : public vector<sp<ActionSimple>>
+struct ListActions : public vector<up<ActionSimple>>
 {
 };
 

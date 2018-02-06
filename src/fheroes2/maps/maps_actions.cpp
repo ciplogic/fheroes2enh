@@ -89,7 +89,7 @@ ByteVectorReader &operator>>(ByteVectorReader &sb, ActionMessage &st)
 StreamBase &operator<<(StreamBase &sb, const ListActions &listActions)
 {
     sb << static_cast<u32>(listActions.size());
-    for (auto listAction : listActions)
+    for (const auto& listAction : listActions)
     {
         sb << listAction->GetType();
 
@@ -149,43 +149,43 @@ ByteVectorReader &operator>>(ByteVectorReader &sb, ListActions &st)
 		{
 		case ACTION_DEFAULT:
 		{
-			auto ptr = std::make_shared<ActionDefault>();
+			auto ptr = std::make_unique<ActionDefault>();
 			sb >> *ptr;
-			st.push_back(ptr);
+			st.push_back(std::move(ptr));
 		}
 		break;
 		case ACTION_ACCESS:
 		{
-			auto ptr = std::make_shared<ActionAccess>();
+			auto ptr = std::make_unique<ActionAccess>();
 			sb >> *ptr;
-			st.push_back(ptr);
+			st.push_back(std::move(ptr));
 		}
 		break;
 		case ACTION_MESSAGE:
 		{
-			auto ptr = std::make_shared<ActionMessage>();
+			auto ptr = std::make_unique<ActionMessage>();
 			sb >> *ptr;
-			st.push_back(ptr);
+			st.push_back(std::move(ptr));
 		}
 		break;
 		case ACTION_RESOURCES:
 		{
-			auto ptr = std::make_shared<ActionResources>();
+			auto ptr = std::make_unique<ActionResources>();
 			sb >> *ptr;
-			st.push_back(ptr);
+			st.push_back(std::move(ptr));
 		}
 		break;
 		case ACTION_ARTIFACT:
 		{
-			auto ptr = std::make_shared<ActionArtifact>();
+			auto ptr = std::make_unique<ActionArtifact>();
 			sb >> *ptr;
-			st.push_back(ptr);
+			st.push_back(std::move(ptr));
 		}
 		break;
 
 		default:
 		{
-			auto ptr = std::make_shared<ActionSimple>();
+			auto ptr = std::make_unique<ActionSimple>();
 			sb >> *ptr;
 			st.push_back(ptr);
 		}

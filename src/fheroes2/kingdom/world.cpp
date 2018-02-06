@@ -764,7 +764,7 @@ int World::ColorCapturedObject(s32 index) const
 
 ListActions *World::GetListActions(s32 index)
 {
-    auto it = map_actions.find(index);
+    const auto it = map_actions.find(index);
     return it != map_actions.end() ? &(*it).second : nullptr;
 }
 
