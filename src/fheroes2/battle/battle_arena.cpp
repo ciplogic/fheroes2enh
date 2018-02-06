@@ -176,7 +176,7 @@ Battle::Graveyard *Battle::Arena::GetGraveyard()
 
 Battle::Interface *Battle::Arena::GetInterface()
 {
-    return arena->interface;
+    return arena->interface.get();
 }
 
 Battle::Tower *Battle::Arena::GetTower(int type)
@@ -184,11 +184,11 @@ Battle::Tower *Battle::Arena::GetTower(int type)
     switch (type)
     {
         case TWR_LEFT:
-            return arena->towers[0];
+            return arena->towers[0].get();
         case TWR_CENTER:
-            return arena->towers[1];
+            return arena->towers[1].get();
         case TWR_RIGHT:
-            return arena->towers[2];
+            return arena->towers[2].get();
         default:
             break;
     }
@@ -224,7 +224,7 @@ Battle::Arena::Arena(Army &a1, Army &a2, s32 index, bool local) :
     // init interface
     if (local && !conf.QuickCombat())
     {
-        interface = new Interface(*this, index);
+        interface = std::make_unique<Interface>(*this, index);
         board.SetArea(interface->GetArea());
 
         for_each(army1->begin(), army1->end(), mem_fun(&Unit::InitContours));
@@ -233,9 +233,9 @@ Battle::Arena::Arena(Army &a1, Army &a2, s32 index, bool local) :
         if (conf.Sound())
             AGG::PlaySound(M82::PREBATTL);
 
-        armies_order = new Units();
+        armies_order = std::make_unique<Units>();
         armies_order->reserve(25);
-        interface->SetArmiesOrder(armies_order);
+        interface->SetArmiesOrder(armies_order.get());
     }
 
 
@@ -246,11 +246,17 @@ Battle::Arena::Arena(Army &a1, Army &a2, s32 index, bool local) :
     if (castle)
     {
         // init
-        towers[0] = castle->isBuild(BUILD_LEFTTURRET) ? new Tower(*castle, TWR_LEFT) : nullptr;
-        towers[1] = new Tower(*castle, TWR_CENTER);
-        towers[2] = castle->isBuild(BUILD_RIGHTTURRET) ? new Tower(*castle, TWR_RIGHT) : nullptr;
+        towers[0] = castle->isBuild(BUILD_LEFTTURRET) 
+            ? std::make_unique<Tower>(*castle, TWR_LEFT)
+            : nullptr;
+        towers[1] = std::make_unique<Tower>(*castle, TWR_CENTER);
+        towers[2] = castle->isBuild(BUILD_RIGHTTURRET) 
+            ? std::make_unique<Tower>(*castle, TWR_RIGHT)
+            : nullptr;
         bool fortification = (Race::KNGT == castle->GetRace()) && castle->isBuild(BUILD_SPEC);
-        catapult = army1->GetCommander() ? new Catapult(*army1->GetCommander(), fortification) : nullptr;
+        catapult = army1->GetCommander() 
+            ? std::make_unique<Catapult>(*army1->GetCommander(), fortification)
+            : nullptr;
         bridge = new Bridge();
 
         // catapult cell
@@ -316,13 +322,6 @@ Battle::Arena::Arena(Army &a1, Army &a2, s32 index, bool local) :
 
 Battle::Arena::~Arena()
 {
-    delete towers[0];
-    delete towers[1];
-    delete towers[2];
-
-    delete catapult;
-    delete interface;
-    delete armies_order;
 }
 
 void Battle::Arena::TurnTroop(Unit *current_troop)

@@ -1603,13 +1603,13 @@ void AGG::Quit()
         delete[] icns.reflect;
         icns.reflect = nullptr;
     }
+    icn_cache.clear();
 
     for (auto &tils : til_cache)
     {
         delete[] tils.sprites;
     }
 
-    icn_cache.clear();
     til_cache.clear();
     wav_cache.clear();
     mid_cache.clear();

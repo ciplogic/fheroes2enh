@@ -227,16 +227,16 @@ namespace Battle
 
         up<Force> army1;
         up<Force> army2;
-        Units *armies_order;
+        up<Units> armies_order;
 
         const Castle *castle;
         int current_color;
 
-        Tower *towers[3];
-        Catapult *catapult;
+        up<Tower>towers[3];
+        up<Catapult> catapult;
         Bridge *bridge;
 
-        Interface *interface;
+        up<Interface> interface;
         Result result_game;
 
         Graveyard graveyard;

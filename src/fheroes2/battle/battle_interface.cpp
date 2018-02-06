@@ -821,15 +821,19 @@ Battle::Interface::Interface(Arena &a, s32 center) : arena(a), icn_cbkg(ICN::UNK
     status.SetPosition(area.x + btn_settings.w, btn_auto.y);
 
     if (!conf.ExtPocketLowMemory())
-        listlog = new StatusListBox();
+        listlog = std::make_unique<StatusListBox>();
 
     if (listlog)
         listlog->SetPosition(area.x, area.y + area.h - 36);
-    status.SetLogs(listlog);
+    status.SetLogs(listlog.get());
 
     // opponents
-    opponent1 = arena.GetCommander1() ? new OpponentSprite(area, arena.GetCommander1(), false) : nullptr;
-    opponent2 = arena.GetCommander2() ? new OpponentSprite(area, arena.GetCommander2(), true) : nullptr;
+    opponent1 = arena.GetCommander1()
+        ? std::make_unique<OpponentSprite>(area, arena.GetCommander1(), false)
+        : nullptr;
+    opponent2 = arena.GetCommander2()
+        ? std::make_unique<OpponentSprite>(area, arena.GetCommander2(), true)
+        : nullptr;
 
     if (Arena::GetCastle())
         main_tower = Rect(area.x + 570, area.y + 145, 70, 70);
@@ -837,9 +841,6 @@ Battle::Interface::Interface(Arena &a, s32 center) : arena(a), icn_cbkg(ICN::UNK
 
 Battle::Interface::~Interface()
 {
-    delete listlog;
-    delete opponent1;
-    delete opponent2;
 }
 
 void Battle::Interface::SetArmiesOrder(const Units *units)
@@ -2544,8 +2545,8 @@ void Battle::Interface::RedrawActionWincesKills(TargetsInfo &targets)
             {
                 OpponentSprite *commander =
                         target.defender->GetColor() == arena.GetArmyColor1()
-            			? opponent1 
-            			: opponent2;
+            			? opponent1.get() 
+            			: opponent2.get();
                 if (commander) commander->ResetAnimFrame(OP_SRRW);
             }
         } else
@@ -2754,7 +2755,9 @@ void Battle::Interface::RedrawActionSpellCastPart1(const Spell &spell, s32 dst, 
     // set spell cast animation
     if (caster)
     {
-        OpponentSprite *opponent = caster->GetColor() == arena.GetArmyColor1() ? opponent1 : opponent2;
+        OpponentSprite *opponent = caster->GetColor() == arena.GetArmyColor1() 
+            ? opponent1.get() 
+            : opponent2.get();
         if (opponent)
         {
             opponent->ResetAnimFrame(OP_CAST);
