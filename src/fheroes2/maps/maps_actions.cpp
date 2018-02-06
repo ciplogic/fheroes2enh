@@ -133,6 +133,21 @@ StreamBase &operator<<(StreamBase &sb, const ListActions &listActions)
 
     return sb;
 }
+
+ByteVectorReader &operator>>(ByteVectorReader &sb, MapActions &v)
+{
+    const u32 size = sb.get32();
+    v.clear();
+    for (u32 ii = 0; ii < size; ++ii)
+    {
+        s32 key;
+        ListActions listActions;
+        sb >> key;
+        sb >> listActions;
+        v.insert(std::make_pair(key, std::move(listActions)));
+    }
+    return sb;
+}
 ByteVectorReader &operator>>(ByteVectorReader &sb, ListActions &st)
 {
 	u32 size = 0;
@@ -187,7 +202,7 @@ ByteVectorReader &operator>>(ByteVectorReader &sb, ListActions &st)
 		{
 			auto ptr = std::make_unique<ActionSimple>();
 			sb >> *ptr;
-			st.push_back(ptr);
+            st.push_back(std::move(ptr));
 		}
 		break;
 		}

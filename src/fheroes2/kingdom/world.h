@@ -155,8 +155,6 @@ typedef vector<string> Rumors;
 typedef list<EventDate> EventsDate;
 typedef vector<Maps::Tiles> MapsTiles;
 
-
-
 class World : protected Size
 {
 public:
@@ -357,6 +355,7 @@ ByteVectorReader &operator>>(ByteVectorReader &, World &);
 
 StreamBase &operator<<(StreamBase &, const ListActions &);
 
+ByteVectorReader &operator>>(ByteVectorReader &, MapActions &);
 ByteVectorReader &operator>>(ByteVectorReader &, ListActions &);
 
 StreamBase &operator<<(StreamBase &, const MapObjects &);
