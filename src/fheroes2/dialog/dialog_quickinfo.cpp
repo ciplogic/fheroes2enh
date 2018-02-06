@@ -112,20 +112,19 @@ string ShowResourceInfo(const Maps::Tiles &tile, bool show, int scoute)
 {
     string str = MP2::StringObject(tile.GetObject());
 
-    if (show)
+    if (!show)
+        return str;
+    const ResourceCount &rc = tile.QuantityResourceCount();
+
+    str.append("\n(");
+    str.append(Resource::String(rc.first));
+
+    if (scoute)
     {
-        const ResourceCount &rc = tile.QuantityResourceCount();
-
-        str.append("\n(");
-        str.append(Resource::String(rc.first));
-
-        if (scoute)
-        {
-            str.append(": ");
-            str.append(Game::CountScoute(rc.second, scoute));
-        }
-        str.append(")");
+        str.append(": ");
+        str.append(Game::CountScoute(rc.second, scoute));
     }
+    str.append(")");
 
     return str;
 }
@@ -134,17 +133,16 @@ string ShowDwellingInfo(const Maps::Tiles &tile, int scoute)
 {
     string str = MP2::StringObject(tile.GetObject());
 
-    if (scoute)
+    if (!scoute)
+        return str;
+    str.append("\n");
+    const Troop &troop = tile.QuantityTroop();
+    if (troop.isValid())
     {
-        str.append("\n");
-        const Troop &troop = tile.QuantityTroop();
-        if (troop.isValid())
-        {
-            str.append(_("(available: %{count})"));
-            StringReplace(str, "%{count}", Game::CountScoute(troop.GetCount(), scoute));
-        } else
-            str.append("(empty)");
-    }
+        str.append(_("(available: %{count})"));
+        StringReplace(str, "%{count}", Game::CountScoute(troop.GetCount(), scoute));
+    } else
+        str.append("(empty)");
 
     return str;
 }
@@ -169,18 +167,17 @@ string ShowShrineInfo(const Maps::Tiles &tile, const Heroes *hero, int scoute)
             break;
     }
 
-    if (show)
+    if (!show)
+        return str;
+    const Spell &spell = tile.QuantitySpell();
+    str.append("\n(");
+    str.append(spell.GetName());
+    str.append(")");
+    if (hero && hero->HaveSpell(spell))
     {
-        const Spell &spell = tile.QuantitySpell();
         str.append("\n(");
-        str.append(spell.GetName());
+        str.append(_("already learned"));
         str.append(")");
-        if (hero && hero->HaveSpell(spell))
-        {
-            str.append("\n(");
-            str.append(_("already learned"));
-            str.append(")");
-        }
     }
 
     return str;
@@ -190,27 +187,25 @@ string ShowWitchHutInfo(const Maps::Tiles &tile, const Heroes *hero, bool show)
 {
     string str = MP2::StringObject(tile.GetObject());
 
-    if (show)
-    {
-        const Skill::Secondary &skill = tile.QuantitySkill();
-        str.append("\n(");
-        str.append(Skill::Secondary::String(skill.Skill()));
-        str.append(")");
+    if (!show)
+        return str;
+    const Skill::Secondary &skill = tile.QuantitySkill();
+    str.append("\n(");
+    str.append(Skill::Secondary::String(skill.Skill()));
+    str.append(")");
 
-        if (hero)
-        {
-            if (hero->HasSecondarySkill(skill.Skill()))
-            {
-                str.append("\n(");
-                str.append(_("already knows this skill"));
-                str.append(")");
-            } else if (hero->HasMaxSecondarySkill())
-            {
-                str.append("\n(");
-                str.append(_("already has max skills"));
-                str.append(")");
-            }
-        }
+    if (!hero)
+        return str;
+    if (hero->HasSecondarySkill(skill.Skill()))
+    {
+        str.append("\n(");
+        str.append(_("already knows this skill"));
+        str.append(")");
+    } else if (hero->HasMaxSecondarySkill())
+    {
+        str.append("\n(");
+        str.append(_("already has max skills"));
+        str.append(")");
     }
 
     return str;
@@ -231,11 +226,10 @@ string ShowLocalVisitTileInfo(const Maps::Tiles &tile, const Heroes *hero)
 string ShowLocalVisitObjectInfo(const Maps::Tiles &tile, const Heroes *hero)
 {
     string str = MP2::StringObject(tile.GetObject());
-    if (hero)
-    {
-        str.append("\n");
-        str.append(hero->isVisited(tile.GetObject()) ? _("(already visited)") : _("(not visited)"));
-    }
+    if (!hero)
+        return str;
+    str.append("\n");
+    str.append(hero->isVisited(tile.GetObject()) ? _("(already visited)") : _("(not visited)"));
 
     return str;
 }
@@ -281,20 +275,18 @@ string ShowGroundInfo(const Maps::Tiles &tile, bool show, const Heroes *hero)
 {
     string str = Maps::Ground::String(tile.GetGround());
 
-    if (show && hero)
+    if (!show || !hero)
+        return str;
+    int dir = Direction::Get(hero->GetIndex(), tile.GetIndex());
+    if (!(dir != Direction::UNKNOWN))
+        return str;
+    u32 cost = Maps::Ground::GetPenalty(tile.GetIndex(), Direction::Reflect(dir),
+                                        hero->GetLevelSkill(Skill::Secondary::PATHFINDING));
+    if (cost)
     {
-        int dir = Direction::Get(hero->GetIndex(), tile.GetIndex());
-        if (dir != Direction::UNKNOWN)
-        {
-            u32 cost = Maps::Ground::GetPenalty(tile.GetIndex(), Direction::Reflect(dir),
-                                                hero->GetLevelSkill(Skill::Secondary::PATHFINDING));
-            if (cost)
-            {
-                str.append("\n");
-                str.append(_("penalty: %{cost}"));
-                StringReplace(str, "%{cost}", cost);
-            }
-        }
+        str.append("\n");
+        str.append(_("penalty: %{cost}"));
+        StringReplace(str, "%{cost}", cost);
     }
 
     return str;

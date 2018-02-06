@@ -71,11 +71,6 @@ namespace Skill
         return msg << obj.basic << obj.advanced << obj.expert;
     }
 
-    StreamBase &operator>>(StreamBase &msg, level_t &obj)
-    {
-        return msg >> obj.basic >> obj.advanced >> obj.expert;
-    }
-
     ByteVectorReader &operator>>(ByteVectorReader &msg, level_t &obj)
     {
         return msg >> obj.basic >> obj.advanced >> obj.expert;
@@ -124,13 +119,6 @@ namespace Skill
                    << obj.mature_secondary;
     }
 
-    StreamBase &operator>>(StreamBase &msg, stats_t &obj)
-    {
-        return msg >> obj.captain_primary >> obj.initial_primary >> obj.initial_book >> obj.initial_spell >>
-                   obj.initial_secondary >> obj.over_level >> obj.mature_primary_under >> obj.mature_primary_over
-                   >> obj.mature_secondary;
-    }
-
     ByteVectorReader &operator>>(ByteVectorReader &msg, stats_t &obj)
     {
         return msg >> obj.captain_primary >> obj.initial_primary >> obj.initial_book >> obj.initial_spell >>
@@ -141,11 +129,6 @@ namespace Skill
     StreamBase &operator<<(StreamBase &msg, const values_t &obj)
     {
         return msg << obj.values;
-    }
-
-    StreamBase &operator>>(StreamBase &msg, values_t &obj)
-    {
-        return msg >> obj.values;
     }
 
     ByteVectorReader &operator>>(ByteVectorReader &msg, values_t &obj)
