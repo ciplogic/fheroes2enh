@@ -97,31 +97,31 @@ StreamBase &operator<<(StreamBase &sb, const ListActions &listActions)
         {
             case ACTION_DEFAULT:
             {
-                const auto *ptr = static_cast<const ActionDefault *>(listAction);
+                const auto *ptr = static_cast<const ActionDefault *>(listAction.get());
                 if (ptr) sb << *ptr;
             }
                 break;
             case ACTION_ACCESS:
             {
-                const auto *ptr = static_cast<const ActionAccess *>(listAction);
+                const auto *ptr = static_cast<const ActionAccess *>(listAction.get());
                 if (ptr) sb << *ptr;
             }
                 break;
             case ACTION_MESSAGE:
             {
-                const auto *ptr = static_cast<const ActionMessage *>(listAction);
+                const auto *ptr = static_cast<const ActionMessage *>(listAction.get());
                 if (ptr) sb << *ptr;
             }
                 break;
             case ACTION_RESOURCES:
             {
-                const auto *ptr = static_cast<const ActionResources *>(listAction);
+                const auto *ptr = static_cast<const ActionResources *>(listAction.get());
                 if (ptr) sb << *ptr;
             }
                 break;
             case ACTION_ARTIFACT:
             {
-                const auto *ptr = static_cast<const ActionArtifact *>(listAction);
+                const auto *ptr = static_cast<const ActionArtifact *>(listAction.get());
                 if (ptr) sb << *ptr;
             }
                 break;
@@ -149,35 +149,35 @@ ByteVectorReader &operator>>(ByteVectorReader &sb, ListActions &st)
 		{
 		case ACTION_DEFAULT:
 		{
-			auto *ptr = new ActionDefault();
+			auto ptr = std::make_shared<ActionDefault>();
 			sb >> *ptr;
 			st.push_back(ptr);
 		}
 		break;
 		case ACTION_ACCESS:
 		{
-			auto *ptr = new ActionAccess();
+			auto ptr = std::make_shared<ActionAccess>();
 			sb >> *ptr;
 			st.push_back(ptr);
 		}
 		break;
 		case ACTION_MESSAGE:
 		{
-			auto *ptr = new ActionMessage();
+			auto ptr = std::make_shared<ActionMessage>();
 			sb >> *ptr;
 			st.push_back(ptr);
 		}
 		break;
 		case ACTION_RESOURCES:
 		{
-			auto *ptr = new ActionResources();
+			auto ptr = std::make_shared<ActionResources>();
 			sb >> *ptr;
 			st.push_back(ptr);
 		}
 		break;
 		case ACTION_ARTIFACT:
 		{
-			auto *ptr = new ActionArtifact();
+			auto ptr = std::make_shared<ActionArtifact>();
 			sb >> *ptr;
 			st.push_back(ptr);
 		}
@@ -185,7 +185,7 @@ ByteVectorReader &operator>>(ByteVectorReader &sb, ListActions &st)
 
 		default:
 		{
-			auto *ptr = new ActionSimple();
+			auto ptr = std::make_shared<ActionSimple>();
 			sb >> *ptr;
 			st.push_back(ptr);
 		}

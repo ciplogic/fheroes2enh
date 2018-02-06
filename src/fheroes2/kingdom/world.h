@@ -50,11 +50,8 @@ class MapObjectSimple;
 
 class ActionSimple;
 
-struct ListActions : public vector<ActionSimple *>
+struct ListActions : public vector<sp<ActionSimple>>
 {
-    ~ListActions();
-
-    void clear();
 };
 
 struct MapObjects : public unordered_map<u32, MapObjectSimple *>

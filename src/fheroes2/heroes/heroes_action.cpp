@@ -461,25 +461,25 @@ void Heroes::Action(s32 dst_index)
             switch (it->GetType())
             {
                 case ACTION_ACCESS:
-                    if (!ActionAccess::Action(static_cast<ActionAccess *>(it), dst_index, *this))
+                    if (!ActionAccess::Action(static_cast<ActionAccess *>(it.get()), dst_index, *this))
                         cancel_default = true;
                     break;
 
                 case ACTION_DEFAULT:
-                    if (!ActionDefault::Action(static_cast<ActionDefault *>(it), dst_index, *this))
+                    if (!ActionDefault::Action(static_cast<ActionDefault *>(it.get()), dst_index, *this))
                         cancel_default = true;
                     break;
 
                 case ACTION_MESSAGE:
-                    ActionMessage::Action(static_cast<ActionMessage *>(it), dst_index, *this);
+                    ActionMessage::Action(static_cast<ActionMessage *>(it.get()), dst_index, *this);
                     break;
 
                 case ACTION_RESOURCES:
-                    ActionResources::Action(static_cast<ActionResources *>(it), dst_index, *this);
+                    ActionResources::Action(static_cast<ActionResources *>(it.get()), dst_index, *this);
                     break;
 
                 case ACTION_ARTIFACT:
-                    ActionArtifact::Action(static_cast<ActionArtifact *>(it), dst_index, *this);
+                    ActionArtifact::Action(static_cast<ActionArtifact *>(it.get()), dst_index, *this);
                     break;
 
                 default:

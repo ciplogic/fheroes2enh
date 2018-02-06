@@ -39,18 +39,6 @@ namespace GameStatic
     extern u32 uniq;
 }
 
-ListActions::~ListActions()
-{
-    clear();
-}
-
-void ListActions::clear()
-{
-    for (auto& it : *this)
-        delete it;
-	vector<ActionSimple *>::clear();
-}
-
 MapObjects::~MapObjects()
 {
     clear();
