@@ -454,7 +454,7 @@ bool ActionSpellTownPortal(Heroes &hero)
         return false;
     }
 
-    Dialog::FrameBorder *frameborder = new Dialog::FrameBorder(Size(280, 200));
+    up<Dialog::FrameBorder> frameborder(new Dialog::FrameBorder(Size(280, 200)));
 
     const Rect &area = frameborder->GetArea();
     int result = Dialog::ZERO;
@@ -488,9 +488,6 @@ bool ActionSpellTownPortal(Heroes &hero)
             display.Flip();
         }
     }
-
-    delete frameborder;
-
     // store
     if (result == Dialog::OK)
         return HeroesTownGate(hero, world.GetCastle(Maps::GetPoint(listbox.GetCurrent())));

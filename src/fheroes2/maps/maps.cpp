@@ -646,6 +646,21 @@ StreamBase &operator<<(StreamBase &sb, IndexObject &st)
 	return sb << st.Value.first << st.Value.second;
 }
 
+ByteVectorReader&operator>>(ByteVectorReader &sb, IndexDistance &st)
+{
+    return sb >> st.first >> st.second;
+}
+
+ByteVectorReader&operator>>(ByteVectorReader&sb, ObjectColor &st)
+{
+    return sb >> st.first >> st.second;
+}
+
+ByteVectorReader&operator>>(ByteVectorReader&sb, ResourceCount &st)
+{
+    return sb >> st.first >> st.second;
+}
+
 StreamBase &operator>>(StreamBase &sb, IndexDistance &st)
 {
     return sb >> st.first >> st.second;

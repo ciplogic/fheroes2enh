@@ -81,14 +81,14 @@ void Dialog::SecondarySkillInfo(const string &header, const string &message, con
 
     LocalEvent &le = LocalEvent::Get();
 
-    Button *button = nullptr;
+    up<Button> button;
     Point pt;
 
     if (ok_button)
     {
         pt.x = box.GetArea().x + (box.GetArea().w - AGG::GetICN(system, 1).w()) / 2;
         pt.y = box.GetArea().y + box.GetArea().h - AGG::GetICN(system, 1).h();
-        button = new Button(pt.x+70, pt.y, system, 1, 2);
+        button = std::make_unique<Button>(pt.x + 70, pt.y, system, 1, 2);
     }
 
     if (button) (*button).Draw();
@@ -111,7 +111,6 @@ void Dialog::SecondarySkillInfo(const string &header, const string &message, con
     }
 
     cursor.Hide();
-    delete button;
 }
 
 void Dialog::PrimarySkillInfo(const string &header, const string &message, int skill)

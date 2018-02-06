@@ -35,7 +35,10 @@ FontTTF::FontTTF() : ptr(nullptr)
 
 FontTTF::~FontTTF()
 {
-    if(ptr) TTF_CloseFont(ptr);
+    if (ptr) 
+    {
+        TTF_CloseFont(ptr);
+    }
 }
 
 void FontTTF::Init()

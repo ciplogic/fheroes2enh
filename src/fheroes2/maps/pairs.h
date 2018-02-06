@@ -20,10 +20,10 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2PAIRS_H_
-#define H2PAIRS_H_
+#pragma once
 
 #include <utility>
+#include <map>
 #include "mp2.h"
 #include "color.h"
 #include "resource.h"
@@ -45,7 +45,7 @@ public:
     { return id1.second > id2.second; };
 };
 
-StreamBase &operator>>(StreamBase &, IndexDistance &);
+ByteVectorReader &operator>>(ByteVectorReader&, IndexDistance &);
 
 class IndexObject 
 {
@@ -64,7 +64,6 @@ public:
     { return object == Value.second; };
 };
 
-StreamBase &operator>>(StreamBase &, IndexObject &);
 ByteVectorReader &operator>>(ByteVectorReader &, IndexObject &);
 StreamBase &operator<<(StreamBase &, IndexObject &);
 
@@ -84,7 +83,7 @@ public:
     { return colors & second; };
 };
 
-StreamBase &operator>>(StreamBase &, ObjectColor &);
+ByteVectorReader &operator>>(ByteVectorReader&, ObjectColor &);
 
 class ResourceCount : public pair<int, u32>
 {
@@ -102,7 +101,4 @@ public:
     { return (first & Resource::ALL) && second; };
 };
 
-StreamBase &operator>>(StreamBase &, ResourceCount &);
-
-
-#endif
+ByteVectorReader &operator>>(ByteVectorReader&, ResourceCount &);

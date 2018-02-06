@@ -1127,12 +1127,11 @@ void Battle::Unit::PostAttackAction(Unit &enemy)
 void Battle::Unit::ResetBlind()
 {
     // remove blind action
-    if (Modes(SP_BLIND))
-    {
-        SetModes(TR_MOVED);
-        ResetModes(SP_BLIND);
-        affected.RemoveMode(SP_BLIND);
-    }
+    if (!Modes(SP_BLIND))
+        return;
+    SetModes(TR_MOVED);
+    ResetModes(SP_BLIND);
+    affected.RemoveMode(SP_BLIND);
 }
 
 u32 Battle::Unit::GetAttack() const

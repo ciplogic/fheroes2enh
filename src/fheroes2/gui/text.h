@@ -180,7 +180,7 @@ public:
     static u32 height(const string &, int ft, u32 width = 0);
 
 protected:
-    TextInterface *message;
+    sp<TextInterface> message;
     u32 gw;
     u32 gh;
 };

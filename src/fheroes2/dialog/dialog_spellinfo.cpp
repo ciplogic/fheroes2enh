@@ -99,14 +99,14 @@ void Dialog::SpellInfo(const string &header, const string &message, const Spell 
 
     LocalEvent &le = LocalEvent::Get();
 
-    Button *button = nullptr;
+    up<Button> button;
     Point pt;
 
     if (ok_button)
     {
         pt.x = box.GetArea().x + (box.GetArea().w - AGG::GetICN(system, 1).w()) / 2;
         pt.y = box.GetArea().y + box.GetArea().h - AGG::GetICN(system, 1).h();
-        button = new Button(pt.x+70, pt.y, system, 1, 2);
+        button = std::make_unique<Button>(pt.x + 70, pt.y, system, 1, 2);
     }
 
     if (button) (*button).Draw();
@@ -126,5 +126,4 @@ void Dialog::SpellInfo(const string &header, const string &message, const Spell 
     }
 
     cursor.Hide();
-    if (button) delete button;
 }

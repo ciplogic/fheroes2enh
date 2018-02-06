@@ -148,12 +148,10 @@ namespace AGG
     bool memlimit_usage = true;
 
 
-#ifdef WITH_TTF
-    FontTTF*			fonts; /* small, medium */
+    up<FontTTF[]> fonts; /* small, medium */
 
     void			LoadTTFChar(u32);
     Surface			GetFNT(u32, u32);
-#endif
 
     const vector<u8> &GetWAV(int m82);
 
@@ -1573,7 +1571,7 @@ bool AGG::Init()
     const std::string font1 = Settings::GetLastFile(prefix_fonts, conf.FontsNormal());
     const std::string font2 = Settings::GetLastFile(prefix_fonts, conf.FontsSmall());
 
-    fonts = new FontTTF[2];
+    fonts = std::unique_ptr<FontTTF[]>(new FontTTF[2]);
 
     if(conf.Unicode())
     {
@@ -1618,10 +1616,7 @@ void AGG::Quit()
     loop_sounds.clear();
     fnt_cache.clear();
     pal_colors.clear();
-
-#ifdef WITH_TTF
-    delete [] fonts;
-#endif
+    fonts = nullptr;
 }
 
 RGBA AGG::GetPaletteColor(u32 index)

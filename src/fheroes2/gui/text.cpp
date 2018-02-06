@@ -355,12 +355,12 @@ void TextUnicode::Blit(s32 ax, s32 ay, int maxw, Surface & dst)
 
 Text::Text() : message(nullptr), gw(0), gh(0)
 {
-    message = static_cast<TextInterface*>(new TextUnicode());
+    message = sp<TextInterface>(new TextUnicode());
 }
 
 Text::Text(const string &msg, int ft) : message(nullptr), gw(0), gh(0)
 {
-    message = static_cast<TextInterface*>(new TextUnicode(msg, ft));
+    message = sp<TextInterface>(new TextUnicode(msg, ft));
  
     gw = message->w();
     gh = message->h();
@@ -369,7 +369,7 @@ Text::Text(const string &msg, int ft) : message(nullptr), gw(0), gh(0)
 Text::Text(const u16* pt, size_t sz, int ft) : message(nullptr), gw(0), gh(0)
 {
     if(!pt) return;
-	message = static_cast<TextInterface*>(new TextUnicode(pt, sz, ft));
+	message = sp<TextInterface>(new TextUnicode(pt, sz, ft));
 
 	gw = message->w();
 	gh = message->h();
@@ -377,12 +377,11 @@ Text::Text(const u16* pt, size_t sz, int ft) : message(nullptr), gw(0), gh(0)
 
 Text::~Text()
 {
-    delete message;
 }
 
 Text::Text(const Text &t)
 {
-    message = static_cast<TextInterface*>(new TextUnicode(static_cast<TextUnicode &>(*t.message)));
+    message = sp<TextInterface>(new TextUnicode(static_cast<TextUnicode &>(*t.message)));
  
     gw = t.gw;
     gh = t.gh;
@@ -390,8 +389,8 @@ Text::Text(const Text &t)
 
 Text &Text::operator=(const Text &t)
 {
-    delete message;
-    message = static_cast<TextInterface*>(new TextUnicode(static_cast<TextUnicode &>(*t.message)));
+    
+    message = sp<TextInterface>(new TextUnicode(static_cast<TextUnicode &>(*t.message)));
 
     gw = t.gw;
     gh = t.gh;
