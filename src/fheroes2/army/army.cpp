@@ -942,37 +942,38 @@ int Army::GetMoraleModificator(string *strs) const
     u32 count_bomg = 0;
     bool ghost_present = false;
 
-    for (const auto _item : m_troops._items)
-        if (_item->isValid())
+    for (const auto &_item : m_troops._items)
+    {
+        if (!_item->isValid())
+            continue;
+        switch (_item->GetRace())
         {
-            switch (_item->GetRace())
-            {
-                case Race::KNGT:
-                    ++count_kngt;
-                    break;
-                case Race::BARB:
-                    ++count_barb;
-                    break;
-                case Race::SORC:
-                    ++count_sorc;
-                    break;
-                case Race::WRLK:
-                    ++count_wrlk;
-                    break;
-                case Race::WZRD:
-                    ++count_wzrd;
-                    break;
-                case Race::NECR:
-                    ++count_necr;
-                    break;
-                case Race::NONE:
-                    ++count_bomg;
-                    break;
-                default:
-                    break;
-            }
-            if (_item->GetID() == Monster::GHOST) ghost_present = true;
+            case Race::KNGT:
+                ++count_kngt;
+                break;
+            case Race::BARB:
+                ++count_barb;
+                break;
+            case Race::SORC:
+                ++count_sorc;
+                break;
+            case Race::WRLK:
+                ++count_wrlk;
+                break;
+            case Race::WZRD:
+                ++count_wzrd;
+                break;
+            case Race::NECR:
+                ++count_necr;
+                break;
+            case Race::NONE:
+                ++count_bomg;
+                break;
+            default:
+                break;
         }
+        if (_item->GetID() == Monster::GHOST) ghost_present = true;
+    }
 
     u32 r = Race::MULT;
     if (count_kngt)
@@ -1089,12 +1090,13 @@ u32 Army::GetAttack() const
     u32 res = 0;
     u32 count = 0;
 
-    for (const auto _item : m_troops._items)
-        if (_item->isValid())
-        {
-            res += _item->GetAttack();
-            ++count;
-        }
+    for (const auto &_item : m_troops._items)
+    {
+        if (!_item->isValid())
+            continue;
+        res += _item->GetAttack();
+        ++count;
+    }
 
     return count ? res / count : 0;
 }
@@ -1105,11 +1107,12 @@ u32 Army::GetDefense() const
     u32 count = 0;
 
     for (const auto &_item : m_troops._items)
-        if (_item->isValid())
-        {
-            res += _item->GetDefense();
-            ++count;
-        }
+    {
+        if (!_item->isValid())
+            continue;
+        res += _item->GetDefense();
+        ++count;
+    }
 
     return count ? res / count : 0;
 }

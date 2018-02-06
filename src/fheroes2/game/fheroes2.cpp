@@ -67,7 +67,9 @@ int PrintHelp(const char *basename)
 
 void extractFrames()
 {
-
+    static bool isExtracted = false;
+    if(isExtracted)
+        return;
     for (int icnId = 1; icnId < ICN::LASTICN; icnId++)
     {
         bool canContinue = false;
@@ -84,26 +86,10 @@ void extractFrames()
                 break;
             }
             frameId++;
-            stringstream sstr;
-            sstr << "out/frame" << icnId << "_" << frameId;
-            auto firstName = sstr.str();
-            if (sprite.isValid())
-            {
-                if (sprite.first.isValid())
-                {
-                    auto finalNameFront = firstName + ".png";
-                    sprite.first.Save(finalNameFront);
-                }
-                if (sprite.Second().isValid())
-                {
-                    auto finalNameFront = firstName + "_back.png";
-                    sprite.Second().Save(finalNameFront);
-                }
-            }
-
             canContinue = sprite.isValid();
         } while (canContinue);
     }
+    isExtracted = true;
 }
 
 string GetCaption()
@@ -243,6 +229,7 @@ int main(int argc, char **argv)
             switch (rs)
             {
                 case Game::MAINMENU:
+                    extractFrames();
                     rs = Game::MainMenu();
                     break;
                 case Game::NEWGAME:
