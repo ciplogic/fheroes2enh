@@ -5,15 +5,15 @@
 
 unsigned long long GetTickCount()
 {
-	using namespace std::chrono;
-	return duration_cast<microseconds>(steady_clock::now().time_since_epoch()).count();
+    using namespace std::chrono;
+    return duration_cast<microseconds>(steady_clock::now().time_since_epoch()).count();
 }
 
-void TimeAction(std::string message, std::function<void()>& runAction)
+void TimeAction(std::string message, std::function<void()> &runAction)
 {
-    const auto startTime = GetTickCount(); 
-	runAction();
+    const auto startTime = GetTickCount();
+    runAction();
     const auto endTime = GetTickCount();
-	auto delta = endTime - startTime;
-	Dialog::Message("", message + ": " + to_string(delta), Font::BIG, Dialog::YES);
+    auto delta = endTime - startTime;
+    Dialog::Message("", message + ": " + to_string(delta), Font::BIG, Dialog::YES);
 }

@@ -38,7 +38,8 @@ public:
     BitModes() : modes(0)
     {}
 
-	virtual ~BitModes(){}
+    virtual ~BitModes()
+    {}
 
     u32 operator()() const
     { return modes; }
@@ -53,13 +54,14 @@ public:
     { modes ^= f; }
 
     bool Modes(u32 f) const
-    { return (modes & f)!=0; }
+    { return (modes & f) != 0; }
 
 protected:
     friend StreamBase &operator<<(StreamBase &, const BitModes &);
 
     friend StreamBase &operator>>(StreamBase &, BitModes &);
-	friend ByteVectorReader &operator>>(ByteVectorReader &, BitModes &);
+
+    friend ByteVectorReader &operator>>(ByteVectorReader &, BitModes &);
 
     u32 modes;
 };
@@ -67,6 +69,7 @@ protected:
 StreamBase &operator<<(StreamBase &, const BitModes &);
 
 StreamBase &operator>>(StreamBase &, BitModes &);
+
 ByteVectorReader &operator>>(ByteVectorReader &, BitModes &);
 
 #endif

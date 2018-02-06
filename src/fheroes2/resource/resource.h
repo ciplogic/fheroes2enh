@@ -114,9 +114,11 @@ public:
 };
 
 StreamBase &operator<<(StreamBase &, const cost_t &);
+
 void serializeTo(ByteVectorWriter &msg, cost_t &res);
 
 StreamBase &operator<<(StreamBase &, const Funds &);
+
 void serializeTo(ByteVectorWriter &msg, Funds &res);
 
 ByteVectorReader &operator>>(ByteVectorReader &, cost_t &);

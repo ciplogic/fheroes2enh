@@ -80,10 +80,11 @@ namespace Game
     {
         return msg >> hdr.status >> hdr.info;
     }
-	ByteVectorReader &operator>>(ByteVectorReader &msg, HeaderSAV &hdr)
-	{
-		return msg >> hdr.status >> hdr.info;
-	}
+
+    ByteVectorReader &operator>>(ByteVectorReader &msg, HeaderSAV &hdr)
+    {
+        return msg >> hdr.status >> hdr.info;
+    }
 }
 
 bool Game::Save(const string &fn)
@@ -134,16 +135,16 @@ bool Game::Load(const string &fn)
     // loading info
     ShowLoadMapsText();
 
-	auto fileVector = readFileBytes(fn);
-	if (fileVector.empty())
-	{
-		return false;
-	}
-	ByteVectorReader byteFs(fileVector);
-	byteFs.setBigEndian(true);
+    auto fileVector = readFileBytes(fn);
+    if (fileVector.empty())
+    {
+        return false;
+    }
+    ByteVectorReader byteFs(fileVector);
+    byteFs.setBigEndian(true);
     char major, minor;
 
-	byteFs >> major >> minor;
+    byteFs >> major >> minor;
 
 
     const u16 savid = (static_cast<u16>(major) << 8) | static_cast<u16>(minor);
@@ -159,16 +160,16 @@ bool Game::Load(const string &fn)
     HeaderSAV header;
 
     // read raw info
-	byteFs >> strver >> binver >> header;
-	size_t offset = byteFs.tell();
+    byteFs >> strver >> binver >> header;
+    size_t offset = byteFs.tell();
 
 
-    if(header.status & HeaderSAV::IS_COMPRESS)
+    if (header.status & HeaderSAV::IS_COMPRESS)
     {
-		return false;
+        return false;
     }
 
-	ZStreamFile fz;
+    ZStreamFile fz;
 
     fz.setbigendian(true);
 
@@ -176,29 +177,30 @@ bool Game::Load(const string &fn)
     {
         return false;
     }
-	fileVector = readFileBytes(fn);
-	if (fileVector.empty())
-	{
-		return false;
-	}
-	sp<ByteVectorReader> bfz = make_shared<ByteVectorReader>(fileVector);
-	{
-    	bfz->setBigEndian(true);
-		bfz->seek(offset);
-		int size = bfz->get32();
-		fileVector = bfz->getRaw(size);
-		bfz = make_shared<ByteVectorReader>(fileVector);
-		bfz->setBigEndian(true);
-	}
+    fileVector = readFileBytes(fn);
+    if (fileVector.empty())
+    {
+        return false;
+    }
+    sp<ByteVectorReader> bfz = make_shared<ByteVectorReader>(fileVector);
+    {
+        bfz->setBigEndian(true);
+        bfz->seek(offset);
+        int size = bfz->get32();
+        fileVector = bfz->getRaw(size);
+        bfz = make_shared<ByteVectorReader>(fileVector);
+        bfz->setBigEndian(true);
+    }
 
-	if ((header.status & HeaderSAV::IS_LOYALTY) && !conf.PriceLoyaltyVersion())
-	{
-		Message("Warning", _("This file is saved in the \"Price Loyalty\" version.\nSome items may be unavailable."), Font::BIG, Dialog::OK);
-	}
+    if ((header.status & HeaderSAV::IS_LOYALTY) && !conf.PriceLoyaltyVersion())
+    {
+        Message("Warning", _("This file is saved in the \"Price Loyalty\" version.\nSome items may be unavailable."),
+                Font::BIG, Dialog::OK);
+    }
 
     fz >> binver;
 
-	*bfz >> binver;
+    *bfz >> binver;
 
     // check version: false
     if (binver > CURRENT_FORMAT_VERSION || binver < LAST_FORMAT_VERSION)
@@ -212,17 +214,17 @@ bool Game::Load(const string &fn)
     }
     SetLoadVersion(binver);
     u16 end_check = 0;
-	auto& world = World::Get();
-	auto& settings = Settings::Get();
-	auto& gameOverResult= GameOver::Result::Get();
-	auto& gameStatic = GameStatic::Data::Get();
-	auto& monsterData = MonsterStaticData::Get();
-	
-	*bfz >> world>>settings >>
-		gameOverResult >> gameStatic 
-		>> monsterData 
-		>> end_check;
-	World::Get().PostFixLoad();
+    auto &world = World::Get();
+    auto &settings = Settings::Get();
+    auto &gameOverResult = GameOver::Result::Get();
+    auto &gameStatic = GameStatic::Data::Get();
+    auto &monsterData = MonsterStaticData::Get();
+
+    *bfz >> world >> settings >>
+         gameOverResult >> gameStatic
+         >> monsterData
+         >> end_check;
+    World::Get().PostFixLoad();
 
     if (fz.fail() || (end_check != SAV2ID2 && end_check != SAV2ID3))
     {
@@ -270,9 +272,9 @@ bool Game::LoadSAV2FileInfo(const string &fn, Maps::FileInfo &finfo)
 
 #ifndef WITH_ZLIB
     // check: compress game data
-    if(header.status & HeaderSAV::IS_COMPRESS)
+    if (header.status & HeaderSAV::IS_COMPRESS)
     {
-    return false;
+        return false;
     }
 #endif
 

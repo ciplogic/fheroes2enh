@@ -21,8 +21,10 @@
  ***************************************************************************/
 
 #ifndef WIN32
+
 #include <dirent.h>
-#else 
+
+#else
 #include <Windows.h>
 #endif
 
@@ -33,18 +35,19 @@
 
 using namespace std;
 
-wstring s2ws(const string& str)
+wstring s2ws(const string &str)
 {
-	return wstring(str.begin(), str.end());
+    return wstring(str.begin(), str.end());
 }
 
-string ws2s(const wstring& wstr)
+string ws2s(const wstring &wstr)
 {
-	using convert_typeX = codecvt_utf8<wchar_t>;
-	wstring_convert<convert_typeX, wchar_t> converterX;
+    using convert_typeX = codecvt_utf8<wchar_t>;
+    wstring_convert<convert_typeX, wchar_t> converterX;
 
-	return converterX.to_bytes(wstr);
+    return converterX.to_bytes(wstr);
 }
+
 void ListFiles::Append(const ListFiles &lst)
 {
     insert(end(), lst.begin(), lst.end());
@@ -53,64 +56,65 @@ void ListFiles::Append(const ListFiles &lst)
 #ifdef WIN32
 vector<string> GetFilesOfDir(const string &path)
 {
-	HANDLE hFind;
-	WIN32_FIND_DATA FindFileData;
-	auto wPath = s2ws(path + "\\*.*");
-	vector<string> dirsInCurrent;
-	if ((hFind = FindFirstFile(wPath.c_str(), &FindFileData)) != INVALID_HANDLE_VALUE) {
-		do {
-			wstring wFileName = FindFileData.cFileName;
-			string fileName = ws2s(wFileName);
-			string fullFileName = path + "\\" + fileName;
-			if (System::IsFile(fullFileName))
-			{
-				dirsInCurrent.push_back(fullFileName);
-			}
-			
+    HANDLE hFind;
+    WIN32_FIND_DATA FindFileData;
+    auto wPath = s2ws(path + "\\*.*");
+    vector<string> dirsInCurrent;
+    if ((hFind = FindFirstFile(wPath.c_str(), &FindFileData)) != INVALID_HANDLE_VALUE) {
+        do {
+            wstring wFileName = FindFileData.cFileName;
+            string fileName = ws2s(wFileName);
+            string fullFileName = path + "\\" + fileName;
+            if (System::IsFile(fullFileName))
+            {
+                dirsInCurrent.push_back(fullFileName);
+            }
 
-		} while (FindNextFile(hFind, &FindFileData));
-		FindClose(hFind);
-	}
-	return dirsInCurrent;
+
+        } while (FindNextFile(hFind, &FindFileData));
+        FindClose(hFind);
+    }
+    return dirsInCurrent;
 }
 
 void ListFiles::ReadDir(const string &path, const string &filter, bool sensitive)
 {
-	auto files = GetFilesOfDir(path);
-	if (filter.empty())
-	{
-		for(auto fullname : files)
-			push_back(fullname);
-		return;
-	}
-	for (auto fullname : files)
-	{
-		auto insensitiveFile = StringLower(fullname);
-		if (insensitiveFile.find(filter) != string::npos)
-		{
-			push_back(fullname);
-		}
-	}
+    auto files = GetFilesOfDir(path);
+    if (filter.empty())
+    {
+        for(auto fullname : files)
+            push_back(fullname);
+        return;
+    }
+    for (auto fullname : files)
+    {
+        auto insensitiveFile = StringLower(fullname);
+        if (insensitiveFile.find(filter) != string::npos)
+        {
+            push_back(fullname);
+        }
+    }
 }
 #endif
 
 #ifndef WIN32
+
 void ListFiles::ReadDir(const string &path, const string &filter, bool sensitive)
 {
-	// read directory
-	DIR *dp = opendir(path.c_str());
+    // read directory
+    DIR *dp = opendir(path.c_str());
 
-	if (dp)
-	{
-		struct dirent *ep;
-		while (nullptr != (ep = readdir(dp)))
-		{
-			const std::string fullname = System::ConcatePath(path, ep->d_name);
+    if (dp)
+    {
+        struct dirent *ep;
+        while (nullptr != (ep = readdir(dp)))
+        {
+            const std::string fullname = System::ConcatePath(path, ep->d_name);
 
-			// if not regular file
-			if (!System::IsFile(fullname)) continue;
+            // if not regular file
+            if (!System::IsFile(fullname)) continue;
 
-			if (filter.empty())
+            if (filter.empty())
             {
                 push_back(fullname);
                 continue;
@@ -120,17 +124,16 @@ void ListFiles::ReadDir(const string &path, const string &filter, bool sensitive
             if (sensitive)
             {
                 if (std::string::npos == filename.find(filter)) continue;
-            }
-            else
+            } else
             {
                 if (std::string::npos == StringLower(filename).find(StringLower(filter))) continue;
             }
 
 
             push_back(fullname);
-		}
-		closedir(dp);
-	}
+        }
+        closedir(dp);
+    }
 }
 
 #endif

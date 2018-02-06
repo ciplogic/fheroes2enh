@@ -96,7 +96,7 @@ class StatsHeroesList : public Interface::ListBox<HeroRow>
 public:
     StatsHeroesList(const Point &pt, KingdomHeroes &);
 
-    void RedrawItem(const HeroRow &, s32, s32, bool) override ;
+    void RedrawItem(const HeroRow &, s32, s32, bool) override;
 
     void RedrawBackground(const Point &) override;
 
@@ -173,22 +173,22 @@ bool StatsHeroesList::ActionListCursor(HeroRow &row, const Point &cursor, s32 ox
         if (row.artifactsBar->isSelected()) row.artifactsBar->ResetSelected();
         Cursor::Get().Hide();
         return true;
-    } 
-	if ((row.artifactsBar->GetArea() & cursor) &&
-               row.artifactsBar->QueueEventProcessing())
+    }
+    if ((row.artifactsBar->GetArea() & cursor) &&
+        row.artifactsBar->QueueEventProcessing())
     {
         if (row.armyBar->isSelected()) row.armyBar->ResetSelected();
         Cursor::Get().Hide();
         return true;
-    } 
-	if ((row.primskillsBar->GetArea() & cursor) &&
-               row.primskillsBar->QueueEventProcessing())
+    }
+    if ((row.primskillsBar->GetArea() & cursor) &&
+        row.primskillsBar->QueueEventProcessing())
     {
         Cursor::Get().Hide();
         return true;
-    } 
-	if ((row.secskillsBar->GetArea() & cursor) &&
-               row.secskillsBar->QueueEventProcessing())
+    }
+    if ((row.secskillsBar->GetArea() & cursor) &&
+        row.secskillsBar->QueueEventProcessing())
     {
         Cursor::Get().Hide();
         return true;

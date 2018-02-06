@@ -78,15 +78,18 @@ class ColorBase
 
     friend StreamBase &operator<<(StreamBase &, const ColorBase &);
 
-    friend StreamBase &operator>>(StreamBase &, ColorBase &); 
-	friend ByteVectorReader &operator>>(ByteVectorReader &msg, ColorBase &col);
+    friend StreamBase &operator>>(StreamBase &, ColorBase &);
+
+    friend ByteVectorReader &operator>>(ByteVectorReader &msg, ColorBase &col);
 
 public:
     ColorBase(int col = Color::NONE) : color(col)
     {}
-	virtual ~ColorBase(){}
 
-	bool operator==(int) const;
+    virtual ~ColorBase()
+    {}
+
+    bool operator==(int) const;
 
     bool isFriends(int) const;
 
@@ -103,4 +106,5 @@ StreamBase &operator<<(StreamBase &, const ColorBase &);
 StreamBase &operator>>(StreamBase &, ColorBase &);
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, ColorBase &col);
+
 #endif

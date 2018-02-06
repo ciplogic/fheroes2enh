@@ -311,8 +311,8 @@ bool isNeedStayFrontObject(const Heroes &hero, const Maps::Tiles &next)
 
         return (castle &&
                 !hero.isFriends(castle->GetColor()));
-    } 
-        // to coast action
+    }
+    // to coast action
     if (hero.isShipMaster() &&
         next.GetObject() == MP2::OBJ_COAST)
         return true;
@@ -424,7 +424,7 @@ void Heroes::Redraw(Surface &dst, s32 dx, s32 dy, bool with_shadow) const
 
     tile.RedrawTop(dst);
 
-	Size wSize(world.w(), world.h());
+    Size wSize(world.w(), world.h());
     if (Maps::isValidDirection(centerIndex, Direction::TOP, wSize))
         world.GetTiles(Maps::GetDirectionIndex(centerIndex, Direction::TOP)).RedrawTop4Hero(dst, skip_ground);
 
@@ -513,8 +513,8 @@ bool Heroes::MoveStep(bool fast)
             MoveStep(*this, index_from, index_to, true);
 
         return true;
-    } 
-	if (0 == sprite_index % 9)
+    }
+    if (0 == sprite_index % 9)
     {
         if (index_to == index_dst && isNeedStayFrontObject(*this, world.GetTiles(index_to)))
         {

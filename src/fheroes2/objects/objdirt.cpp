@@ -36,7 +36,7 @@ int ObjDirt::GetPassable(u32 index)
     if (isShadow(index))
         return DIRECTION_ALL;
     if (isAction(index) ||
-             ARRAY_COUNT_END(disabled) != std::find(disabled, ARRAY_COUNT_END(disabled), index))
+        ARRAY_COUNT_END(disabled) != std::find(disabled, ARRAY_COUNT_END(disabled), index))
         return 0;
 
     return ARRAY_COUNT_END(restricted) != std::find(restricted, ARRAY_COUNT_END(restricted), index) ?

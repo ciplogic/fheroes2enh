@@ -54,7 +54,7 @@ void Kingdom::Init(int clr)
         castles.reserve(15);
 
         UpdateStartingResource();
-    } 
+    }
 }
 
 void Kingdom::clear()
@@ -113,7 +113,7 @@ void Kingdom::LossPostActions()
         if (!heroes.empty())
         {
             for_each(heroes.begin(), heroes.end(),
-                          bind2nd(mem_fun(&Heroes::SetFreeman), static_cast<int>(Battle::RESULT_LOSS)));
+                     bind2nd(mem_fun(&Heroes::SetFreeman), static_cast<int>(Battle::RESULT_LOSS)));
             heroes.clear();
         }
         if (!castles.empty())
@@ -341,8 +341,8 @@ bool Kingdom::isVisited(const Maps::Tiles &tile) const
 bool Kingdom::isVisited(s32 index, int object) const
 {
     auto it = find_if(visit_object.begin(), visit_object.end(),
-                                                             bind2nd(mem_fun_ref(&IndexObject::isIndex),
-                                                                          index));
+                      bind2nd(mem_fun_ref(&IndexObject::isIndex),
+                              index));
     return visit_object.end() != it && (*it).isObject(object);
 }
 
@@ -350,13 +350,13 @@ bool Kingdom::isVisited(s32 index, int object) const
 bool Kingdom::isVisited(int object) const
 {
     return visit_object.end() != find_if(visit_object.begin(), visit_object.end(),
-                                              bind2nd(mem_fun_ref(&IndexObject::isObject), object));
+                                         bind2nd(mem_fun_ref(&IndexObject::isObject), object));
 }
 
 u32 Kingdom::CountVisitedObjects(int object) const
 {
     return count_if(visit_object.begin(), visit_object.end(),
-                         bind2nd(mem_fun_ref(&IndexObject::isObject), object));
+                    bind2nd(mem_fun_ref(&IndexObject::isObject), object));
 }
 
 /* set visited cell */
@@ -781,19 +781,19 @@ StreamBase &operator<<(StreamBase &msg, const Kingdom &kingdom)
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, Kingdom &kingdom)
 {
-	return msg >>
-		kingdom.modes >>
-		kingdom.color >>
-		kingdom.resource >>
-		kingdom.lost_town_days >>
-		kingdom.castles >>
-		kingdom.heroes >>
-		kingdom.recruits >>
-		kingdom.lost_hero >>
-		kingdom.visit_object >>
-		kingdom.puzzle_maps >>
-		kingdom.visited_tents_colors >>
-		kingdom.heroes_cond_loss;
+    return msg >>
+               kingdom.modes >>
+               kingdom.color >>
+               kingdom.resource >>
+               kingdom.lost_town_days >>
+               kingdom.castles >>
+               kingdom.heroes >>
+               kingdom.recruits >>
+               kingdom.lost_hero >>
+               kingdom.visit_object >>
+               kingdom.puzzle_maps >>
+               kingdom.visited_tents_colors >>
+               kingdom.heroes_cond_loss;
 }
 
 
@@ -809,13 +809,13 @@ StreamBase &operator<<(StreamBase &msg, const Kingdoms &obj)
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, Kingdoms &obj)
 {
-	u32 kingdomscount;
-	msg >> kingdomscount; // FIXME: check kingdomscount
+    u32 kingdomscount;
+    msg >> kingdomscount; // FIXME: check kingdomscount
 
-	for (u32 ii = 0; ii < kingdomscount; ++ii)
-		msg >> obj.kingdoms[ii];
+    for (u32 ii = 0; ii < kingdomscount; ++ii)
+        msg >> obj.kingdoms[ii];
 
-	return msg;
+    return msg;
 }
 
 StreamBase &operator>>(StreamBase &sb, LastLoseHero &st)

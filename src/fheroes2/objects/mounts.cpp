@@ -36,12 +36,12 @@ int ObjMnts1::GetPassable(int icn, u32 index)
     const u8 disabled2[] = {6, 7, 8, 9, 14, 15, 16, 28, 29, 30, 31, 33, 34, 35, 47, 48, 56, 57, 64, 67, 68, 69, 82};
 
     if (isShadow(index)) return DIRECTION_ALL;
-	    // fix: disable passable: invalid top sprite
-	if (icn == ICN::MTNGRAS &&
-		(25 == index || 43 == index || 44 == index || 53 == index || 54 == index || 78 == index))
-		return 0;
+    // fix: disable passable: invalid top sprite
+    if (icn == ICN::MTNGRAS &&
+        (25 == index || 43 == index || 44 == index || 53 == index || 54 == index || 78 == index))
+        return 0;
 
-	return ARRAY_COUNT_END(disabled2) != std::find(disabled2, ARRAY_COUNT_END(disabled2), index) ?
+    return ARRAY_COUNT_END(disabled2) != std::find(disabled2, ARRAY_COUNT_END(disabled2), index) ?
            0 : DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW;
 }
 

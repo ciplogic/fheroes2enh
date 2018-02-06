@@ -64,9 +64,9 @@
 // ai/hero speed
 #define DEFAULT_SPEED_DELAY        5
 
-template <class T>
+template<class T>
 using sp = std::shared_ptr<T>;
-template <class T>
+template<class T>
 using up = std::unique_ptr<T>;
 
 #endif

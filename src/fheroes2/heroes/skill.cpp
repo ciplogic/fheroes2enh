@@ -118,10 +118,10 @@ int Skill::Primary::GetInitialSpell(int race)
     return ptr ? ptr->initial_spell : 0;
 }
 
-void Skill::Primary::ReadFrom(ByteVectorReader & msg)
+void Skill::Primary::ReadFrom(ByteVectorReader &msg)
 {
-	auto& skill = *this;
-	msg >> skill.attack >> skill.defense >> skill.knowledge >> skill.power;
+    auto &skill = *this;
+    msg >> skill.attack >> skill.defense >> skill.knowledge >> skill.power;
 }
 
 int Skill::Primary::LevelUp(int race, int level)
@@ -609,7 +609,7 @@ Skill::SecSkills::SecSkills(int race)
 int Skill::SecSkills::GetLevel(int skill) const
 {
     const_iterator it = find_if(begin(), end(),
-                                     bind2nd(mem_fun_ref(&Secondary::isSkill), skill));
+                                bind2nd(mem_fun_ref(&Secondary::isSkill), skill));
 
     return it == end() ? Level::NONE : (*it).Level();
 }
@@ -617,7 +617,7 @@ int Skill::SecSkills::GetLevel(int skill) const
 u32 Skill::SecSkills::GetValues(int skill) const
 {
     const_iterator it = find_if(begin(), end(),
-                                     bind2nd(mem_fun_ref(&Secondary::isSkill), skill));
+                                bind2nd(mem_fun_ref(&Secondary::isSkill), skill));
 
     return it == end() ? 0 : (*it).GetValues();
 }
@@ -632,13 +632,13 @@ void Skill::SecSkills::AddSkill(const Secondary &skill)
     if (skill.isValid())
     {
         iterator it = find_if(begin(), end(),
-                                   bind2nd(mem_fun_ref(&Secondary::isSkill), skill.Skill()));
+                              bind2nd(mem_fun_ref(&Secondary::isSkill), skill.Skill()));
         if (it != end())
             (*it).SetLevel(skill.Level());
         else
         {
             it = find_if(begin(), end(),
-                              not1(mem_fun_ref(&Secondary::isValid)));
+                         not1(mem_fun_ref(&Secondary::isValid)));
             if (it != end())
                 (*it).Set(skill);
             else if (size() < HEROESMAXSKILL)
@@ -650,7 +650,7 @@ void Skill::SecSkills::AddSkill(const Secondary &skill)
 Skill::Secondary *Skill::SecSkills::FindSkill(int skill)
 {
     iterator it = find_if(begin(), end(),
-                               bind2nd(mem_fun_ref(&Secondary::isSkill), skill));
+                          bind2nd(mem_fun_ref(&Secondary::isSkill), skill));
     return it != end() ? &(*it) : nullptr;
 }
 
@@ -664,7 +664,7 @@ string Skill::SecSkills::String() const
 {
     ostringstream os;
 
-    for (const auto& it : *this)
+    for (const auto &it : *this)
         os << it.GetName() << ", ";
 
     return os.str();
@@ -730,7 +730,7 @@ void Skill::SecSkills::FindSkillsForLevelUp(int race, Secondary &sec1, Secondary
     exclude_skills.reserve(MAXSECONDARYSKILL + HEROESMAXSKILL);
 
     // exclude for expert
-    for (const auto& it : *this)
+    for (const auto &it : *this)
         if (it.Level() == Level::EXPERT) exclude_skills.push_back(it.Skill());
 
     // exclude is full, add other.
@@ -755,8 +755,8 @@ void Skill::SecSkills::FindSkillsForLevelUp(int race, Secondary &sec1, Secondary
     } else if (Settings::Get().ExtHeroAllowBannedSecSkillsUpgrade())
     {
         const_iterator it = find_if(begin(), end(),
-                                         not1(bind2nd(mem_fun_ref(&Secondary::isLevel),
-                                                                static_cast<int>(Level::EXPERT))));
+                                    not1(bind2nd(mem_fun_ref(&Secondary::isLevel),
+                                                 static_cast<int>(Level::EXPERT))));
         if (it != end())
         {
             sec1.SetSkill((*it).Skill());
@@ -814,7 +814,7 @@ StreamBase &Skill::operator>>(StreamBase &msg, Primary &skill)
 
 ByteVectorReader &Skill::operator>>(ByteVectorReader &msg, Primary &skill)
 {
-	return msg >> skill.attack >> skill.defense >> skill.knowledge >> skill.power;
+    return msg >> skill.attack >> skill.defense >> skill.knowledge >> skill.power;
 }
 
 Surface GetBarBackgroundSprite()
@@ -870,28 +870,28 @@ void PrimarySkillsBar::RedrawItem(int &skill, const Rect &pos, Surface &dstsf)
 
         switch (skill)
         {
-        case Skill::Primary::ATTACK:
-            backSprite.Blit(Rect(217, 52, ww, ww), dstpt, dstsf);
-            if (hero) text.Set(GetString(hero->GetAttack()));
-            break;
+            case Skill::Primary::ATTACK:
+                backSprite.Blit(Rect(217, 52, ww, ww), dstpt, dstsf);
+                if (hero) text.Set(GetString(hero->GetAttack()));
+                break;
 
-        case Skill::Primary::DEFENSE:
-            backSprite.Blit(Rect(217, 85, ww, ww), dstpt, dstsf);
-            if (hero) text.Set(GetString(hero->GetDefense()));
-            break;
+            case Skill::Primary::DEFENSE:
+                backSprite.Blit(Rect(217, 85, ww, ww), dstpt, dstsf);
+                if (hero) text.Set(GetString(hero->GetDefense()));
+                break;
 
-        case Skill::Primary::POWER:
-            backSprite.Blit(Rect(217, 118, ww, ww), dstpt, dstsf);
-            if (hero) text.Set(GetString(hero->GetPower()));
-            break;
+            case Skill::Primary::POWER:
+                backSprite.Blit(Rect(217, 118, ww, ww), dstpt, dstsf);
+                if (hero) text.Set(GetString(hero->GetPower()));
+                break;
 
-        case Skill::Primary::KNOWLEDGE:
-            backSprite.Blit(Rect(217, 151, ww, ww), dstpt, dstsf);
-            if (hero) text.Set(GetString(hero->GetKnowledge()));
-            break;
+            case Skill::Primary::KNOWLEDGE:
+                backSprite.Blit(Rect(217, 151, ww, ww), dstpt, dstsf);
+                if (hero) text.Set(GetString(hero->GetKnowledge()));
+                break;
 
-        default:
-            break;
+            default:
+                break;
         }
 
         if (hero) text.Blit(pos.x + (pos.w + toff.x - text.w()) / 2, pos.y + pos.h + toff.y, dstsf);
@@ -907,24 +907,24 @@ void PrimarySkillsBar::RedrawItem(int &skill, const Rect &pos, Surface &dstsf)
         {
             switch (skill)
             {
-            case Skill::Primary::ATTACK:
-                text.Set(GetString(hero->GetAttack()), Font::BIG);
-                break;
+                case Skill::Primary::ATTACK:
+                    text.Set(GetString(hero->GetAttack()), Font::BIG);
+                    break;
 
-            case Skill::Primary::DEFENSE:
-                text.Set(GetString(hero->GetDefense()), Font::BIG);
-                break;
+                case Skill::Primary::DEFENSE:
+                    text.Set(GetString(hero->GetDefense()), Font::BIG);
+                    break;
 
-            case Skill::Primary::POWER:
-                text.Set(GetString(hero->GetPower()), Font::BIG);
-                break;
+                case Skill::Primary::POWER:
+                    text.Set(GetString(hero->GetPower()), Font::BIG);
+                    break;
 
-            case Skill::Primary::KNOWLEDGE:
-                text.Set(GetString(hero->GetKnowledge()), Font::BIG);
-                break;
+                case Skill::Primary::KNOWLEDGE:
+                    text.Set(GetString(hero->GetKnowledge()), Font::BIG);
+                    break;
 
-            default:
-                break;
+                default:
+                    break;
             }
 
             text.Blit(pos.x + (pos.w - text.w()) / 2, pos.y + pos.h - text.h() - 3, dstsf);
@@ -995,8 +995,8 @@ void SecondarySkillsBar::RedrawItem(Skill::Secondary &skill, const Rect &pos, Su
     if (!skill.isValid())
         return;
     const Sprite &sprite = use_mini_sprite ?
-                               AGG::GetICN(ICN::MINISS, skill.GetIndexSprite2()) : AGG::GetICN(ICN::SECSKILL,
-                                                                                               skill.GetIndexSprite1());
+                           AGG::GetICN(ICN::MINISS, skill.GetIndexSprite2()) : AGG::GetICN(ICN::SECSKILL,
+                                                                                           skill.GetIndexSprite1());
     sprite.Blit(pos.x + (pos.w - sprite.w()) / 2, pos.y + (pos.h - sprite.h()) / 2, dstsf);
 
     if (use_mini_sprite)
@@ -1019,7 +1019,7 @@ bool SecondarySkillsBar::ActionBarSingleClick(const Point &cursor, Skill::Second
     {
         Dialog::SecondarySkillInfo(skill, true);
         return true;
-    } 
+    }
     if (!can_change)
     {
         return false;
@@ -1072,7 +1072,7 @@ StreamBase &Skill::operator>>(StreamBase &sb, Secondary &st)
 
 ByteVectorReader &Skill::operator>>(ByteVectorReader &sb, Secondary &st)
 {
-	return sb >> st.first >> st.second;
+    return sb >> st.first >> st.second;
 }
 
 
@@ -1098,13 +1098,13 @@ StreamBase &Skill::operator>>(StreamBase &sb, SecSkills &ss)
 
 ByteVectorReader &Skill::operator>>(ByteVectorReader &sb, SecSkills &ss)
 {
-	vector<Secondary> &v = ss;
-	sb >> v;
+    vector<Secondary> &v = ss;
+    sb >> v;
 
-	if (FORMAT_VERSION_3255 > Game::GetLoadVersion())
-	{
-		if (v.size() > HEROESMAXSKILL)
-			v.resize(HEROESMAXSKILL);
-	}
-	return sb;
+    if (FORMAT_VERSION_3255 > Game::GetLoadVersion())
+    {
+        if (v.size() > HEROESMAXSKILL)
+            v.resize(HEROESMAXSKILL);
+    }
+    return sb;
 }

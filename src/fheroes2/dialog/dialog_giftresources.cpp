@@ -50,7 +50,7 @@ struct SelectRecipientsColors
         positions.reserve(colors.size());
 
         for (auto
-             it = colors.begin(); it != colors.end(); ++it)
+                     it = colors.begin(); it != colors.end(); ++it)
         {
             const u32 current = distance(colors.begin(), it);
             const Sprite &sprite = AGG::GetICN(ICN::CELLWIN, 43);
@@ -68,7 +68,7 @@ struct SelectRecipientsColors
     void Redraw() const
     {
         for (auto
-             it = colors.begin(); it != colors.end(); ++it)
+                     it = colors.begin(); it != colors.end(); ++it)
         {
             const Rect &pos = positions[distance(colors.begin(), it)];
 

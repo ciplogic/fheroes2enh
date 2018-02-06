@@ -269,7 +269,7 @@ Heroes::Heroes(int heroid, int rc) : HeroBase(HEROES, rc), ColorBase(Color::NONE
     move_point = GetMaxMovePoints();
 }
 
-void Heroes::LoadFromMP2(s32 map_index, int cl, int rc, ByteVectorReader& st)
+void Heroes::LoadFromMP2(s32 map_index, int cl, int rc, ByteVectorReader &st)
 {
     // reset modes
     modes = 0;
@@ -858,12 +858,12 @@ bool Heroes::isVisited(const Maps::Tiles &tile, Visit::type_t type) const
 
     if (Visit::GLOBAL == type) return GetKingdom().isVisited(index, object);
 
-	IndexObject valueToFind(index, object);
-	auto findIt = std::find_if(visit_object.begin(), visit_object.end(), 
-		[&](const IndexObject& item) {
-		return item.Value == valueToFind.Value;
-		});
-	
+    IndexObject valueToFind(index, object);
+    auto findIt = std::find_if(visit_object.begin(), visit_object.end(),
+                               [&](const IndexObject &item) {
+                                   return item.Value == valueToFind.Value;
+                               });
+
     return visit_object.end() != findIt;
 }
 
@@ -873,7 +873,7 @@ bool Heroes::isVisited(int object, Visit::type_t type) const
     if (Visit::GLOBAL == type) return GetKingdom().isVisited(object);
 
     return visit_object.end() != find_if(visit_object.begin(), visit_object.end(),
-                                              bind2nd(mem_fun_ref(&IndexObject::isObject), object));
+                                         bind2nd(mem_fun_ref(&IndexObject::isObject), object));
 }
 
 /* set visited cell */
@@ -960,8 +960,8 @@ bool Heroes::PickupArtifact(const Artifact &art)
         {
             art() == Artifact::MAGIC_BOOK ?
             Message("",
-                            _("You must purchase a spell book to use the mage guild, but you currently have no room for a spell book. Try giving one of your artifacts to another hero."),
-                            Font::BIG, Dialog::OK) :
+                    _("You must purchase a spell book to use the mage guild, but you currently have no room for a spell book. Try giving one of your artifacts to another hero."),
+                    Font::BIG, Dialog::OK) :
             Message(art.GetName(), _("You have no room to carry another artifact!"), Font::BIG, Dialog::OK);
         }
         return false;
@@ -1304,7 +1304,7 @@ int Heroes::GetRangeRouteDays(s32 dst) const
         if (max >= total) return 3;
 
         return 4;
-    } 
+    }
 
     return 0;
 }
@@ -1646,15 +1646,15 @@ Surface Heroes::GetPortrait(int id, int type)
     }
     switch (type)
     {
-    case PORT_BIG:
-        return AGG::GetICN(ICN::PORTxxxx(id), 0);
-    case PORT_MEDIUM:
-        return SANDYSANDY > id ? AGG::GetICN(ICN::PORTMEDI, id + 1) : AGG::GetICN(ICN::PORTMEDI,
-            BAX + 1);
-    case PORT_SMALL:
-        return SANDYSANDY > id ? AGG::GetICN(ICN::MINIPORT, id) : AGG::GetICN(ICN::MINIPORT, BAX);
-    default:
-        break;
+        case PORT_BIG:
+            return AGG::GetICN(ICN::PORTxxxx(id), 0);
+        case PORT_MEDIUM:
+            return SANDYSANDY > id ? AGG::GetICN(ICN::PORTMEDI, id + 1) : AGG::GetICN(ICN::PORTMEDI,
+                                                                                      BAX + 1);
+        case PORT_SMALL:
+            return SANDYSANDY > id ? AGG::GetICN(ICN::MINIPORT, id) : AGG::GetICN(ICN::MINIPORT, BAX);
+        default:
+            break;
     }
 
     return Surface();
@@ -1880,7 +1880,7 @@ void AllHeroes::Init()
 
 void AllHeroes::clear()
 {
-    for (auto& it : *this)
+    for (auto &it : *this)
         delete it;
     vector<Heroes *>::clear();
 }
@@ -1901,7 +1901,7 @@ Heroes *VecHeroes::Get(const Point &center) const
 Heroes *AllHeroes::GetGuest(const Castle &castle) const
 {
     const_iterator it = find_if(begin(), end(),
-                                     bind1st(InCastleNotGuardian(), &castle));
+                                bind1st(InCastleNotGuardian(), &castle));
     return end() != it ? *it : nullptr;
 }
 
@@ -1995,14 +1995,14 @@ void AllHeroes::Scoute(int colors) const
 Heroes *AllHeroes::FromJail(s32 index) const
 {
     auto it = find_if(begin(), end(),
-                                     bind1st(InJailMode(), index));
+                      bind1st(InJailMode(), index));
     return end() != it ? *it : nullptr;
 }
 
 bool AllHeroes::HaveTwoFreemans() const
 {
     return 2 <= count_if(begin(), end(),
-                              mem_fun(&Heroes::isFreeman));
+                         mem_fun(&Heroes::isFreeman));
 }
 
 StreamBase &operator<<(StreamBase &msg, const VecHeroes &heroes)
@@ -2022,7 +2022,7 @@ StreamBase &operator>>(StreamBase &msg, VecHeroes &heroes)
 
     heroes.resize(size, nullptr);
 
-    for (auto& heroe : heroes)
+    for (auto &heroe : heroes)
     {
         u32 hid;
         msg >> hid;
@@ -2034,19 +2034,19 @@ StreamBase &operator>>(StreamBase &msg, VecHeroes &heroes)
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, VecHeroes &heroes)
 {
-	u32 size;
-	msg >> size;
+    u32 size;
+    msg >> size;
 
-	heroes.resize(size, nullptr);
+    heroes.resize(size, nullptr);
 
-	for (auto& heroe : heroes)
-	{
-		u32 hid;
-		msg >> hid;
-		heroe = (hid != Heroes::UNKNOWN ? world.GetHeroes(hid) : nullptr);
-	}
+    for (auto &heroe : heroes)
+    {
+        u32 hid;
+        msg >> hid;
+        heroe = (hid != Heroes::UNKNOWN ? world.GetHeroes(hid) : nullptr);
+    }
 
-	return msg;
+    return msg;
 }
 
 StreamBase &operator<<(StreamBase &msg, const Heroes &hero)
@@ -2083,61 +2083,62 @@ enum deprecated_t
     SCOUTER = 0x00000020,
     STUPID = 0x00000040
 };
+
 ByteVectorReader &operator>>(ByteVectorReader &msg, Heroes &hero)
 {
-	HeroBase &base = hero;
-	ColorBase &col = hero;
+    HeroBase &base = hero;
+    ColorBase &col = hero;
 
-	msg >> base >>
-		hero.name >>
-		col >>
-		hero.killer_color >>
-		hero.experience >>
-		hero.move_point_scale >>
-		hero.secondary_skills >>
-		hero.army >>
-		hero.hid >>
-		hero.portrait >>
-		hero.race >>
-		hero.save_maps_object >>
-		hero.path >>
-		hero.direction >>
-		hero.sprite_index >>
-		hero.patrol_center >>
-		hero.patrol_square >>
-		hero.visit_object;
+    msg >> base >>
+        hero.name >>
+        col >>
+        hero.killer_color >>
+        hero.experience >>
+        hero.move_point_scale >>
+        hero.secondary_skills >>
+        hero.army >>
+        hero.hid >>
+        hero.portrait >>
+        hero.race >>
+        hero.save_maps_object >>
+        hero.path >>
+        hero.direction >>
+        hero.sprite_index >>
+        hero.patrol_center >>
+        hero.patrol_square >>
+        hero.visit_object;
 
-	hero.army.SetCommander(&hero);
-	return msg;
+    hero.army.SetCommander(&hero);
+    return msg;
 }
 
 void Heroes::ReadFrom(ByteVectorReader &msg)
 {
-	auto& hero = *this;
-	HeroBase &base = hero;
-	ColorBase &col = hero;
-	base.ReadFrom(msg);
-	msg >>
-		hero.name; 
-	msg>>
-		col >>
-		hero.killer_color >>
-		hero.experience >>
-		hero.move_point_scale >>
-		hero.secondary_skills >>
-		hero.army >>
-		hero.hid >>
-		hero.portrait >>
-		hero.race >>
-		hero.save_maps_object >>
-		hero.path >>
-		hero.direction >>
-		hero.sprite_index >>
-		hero.patrol_center >>
-		hero.patrol_square >>
-		hero.visit_object;
+    auto &hero = *this;
+    HeroBase &base = hero;
+    ColorBase &col = hero;
+    base.ReadFrom(msg);
+    msg >>
+        hero.name;
+    msg >>
+        col >>
+        hero.killer_color >>
+        hero.experience >>
+        hero.move_point_scale >>
+        hero.secondary_skills >>
+        hero.army >>
+        hero.hid >>
+        hero.portrait >>
+        hero.race >>
+        hero.save_maps_object >>
+        hero.path >>
+        hero.direction >>
+        hero.sprite_index >>
+        hero.patrol_center >>
+        hero.patrol_square >>
+        hero.visit_object;
 
-	hero.army.SetCommander(&hero);
+    hero.army.SetCommander(&hero);
 }
 
 
@@ -2153,17 +2154,17 @@ StreamBase &operator<<(StreamBase &msg, const AllHeroes &heroes)
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, AllHeroes &heroes)
 {
-	u32 size;
-	msg >> size;
+    u32 size;
+    msg >> size;
 
-	heroes.clear();
-	heroes.resize(size, nullptr);
+    heroes.clear();
+    heroes.resize(size, nullptr);
 
-	for (auto& heroe : heroes)
-	{
-		heroe = new Heroes();
-		msg >> *heroe;
-	}
+    for (auto &heroe : heroes)
+    {
+        heroe = new Heroes();
+        msg >> *heroe;
+    }
 
-	return msg;
+    return msg;
 }

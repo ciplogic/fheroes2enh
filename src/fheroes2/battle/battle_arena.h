@@ -176,7 +176,8 @@ namespace Battle
         friend StreamBase &operator<<(StreamBase &, const Arena &);
 
         friend StreamBase &operator>>(StreamBase &, Arena &);
-		friend ByteVectorReader &operator>>(ByteVectorReader &, Arena &);
+
+        friend ByteVectorReader &operator>>(ByteVectorReader &, Arena &);
 
         void RemoteTurn(const Unit &, Actions &);
 
@@ -232,7 +233,7 @@ namespace Battle
         const Castle *castle;
         int current_color;
 
-        up<Tower>towers[3];
+        up<Tower> towers[3];
         up<Catapult> catapult;
         Bridge *bridge;
 
@@ -255,6 +256,6 @@ namespace Battle
 
     StreamBase &operator<<(StreamBase &, const Arena &);
 
-	ByteVectorReader &operator>>(ByteVectorReader &, Arena &);
+    ByteVectorReader &operator>>(ByteVectorReader &, Arena &);
 }
 

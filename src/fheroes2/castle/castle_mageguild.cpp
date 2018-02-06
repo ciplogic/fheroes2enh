@@ -105,7 +105,7 @@ void RowSpells::Redraw()
 
         icon.Blit(dst.x + 5 + (dst.w - icon.w()) / 2, dst.y + 40 - icon.h() / 2);
         TextBox text(string(spell.GetName()) + " [" + GetString(spell.SpellPoint(nullptr)) + "]", Font::SMALL,
-                 78);
+                     78);
         text.Blit(dst.x + 18, dst.y + 62);
 
     }

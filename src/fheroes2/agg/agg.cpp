@@ -21,6 +21,7 @@
  ***************************************************************************/
 
 #define _CRT_SECURE_NO_WARNINGS
+
 #include <algorithm>
 #include <iostream>
 #include <unordered_map>
@@ -52,8 +53,8 @@
 
 namespace
 {
-	vector<SDL_Color> pal_colors;
-	vector<u32> pal_colors_u32;
+    vector<SDL_Color> pal_colors;
+    vector<u32> pal_colors_u32;
 }
 
 namespace AGG
@@ -87,13 +88,13 @@ namespace AGG
 
         const FAT &Fat(const string &key);
 
-	    vector<u8> Read(const string &str);
+        vector<u8> Read(const string &str);
 
     private:
         string filename;
         unordered_map<string, FAT> fat;
         u32 count_items;
-		BinaryFileReader stream;
+        BinaryFileReader stream;
         string key;
         vector<u8> body;
     };
@@ -140,8 +141,8 @@ namespace AGG
     vector<icn_cache_t> icn_cache;
     vector<til_cache_t> til_cache;
 
-	unordered_map<int, vector<u8> > wav_cache;
-	unordered_map<int, vector<u8> > mid_cache;
+    unordered_map<int, vector<u8> > wav_cache;
+    unordered_map<int, vector<u8> > mid_cache;
     vector<loop_sound_t> loop_sounds;
     unordered_map<u32, fnt_cache_t> fnt_cache;
 
@@ -150,8 +151,9 @@ namespace AGG
 
     up<FontTTF[]> fonts; /* small, medium */
 
-    void			LoadTTFChar(u32);
-    Surface			GetFNT(u32, u32);
+    void LoadTTFChar(u32);
+
+    Surface GetFNT(u32, u32);
 
     const vector<u8> &GetWAV(int m82);
 
@@ -191,9 +193,9 @@ namespace AGG
 
     bool ReadDataDir();
 
-	vector<u8> ReadICNChunk(int icn, u32);
+    vector<u8> ReadICNChunk(int icn, u32);
 
-	vector<u8> ReadChunk(const string &);
+    vector<u8> ReadChunk(const string &);
 }
 
 sp<Sprite> ICNSprite::CreateSprite(bool reflect, bool shadow) const
@@ -230,25 +232,25 @@ bool AGG::File::Open(const string &fname)
 
     count_items = stream.getLE16();
 
-	stream.seek(size - FATSIZENAME * count_items);
-	std::vector<std::string> vectorNames;
-	vectorNames.reserve(count_items);
-	for (u32 ii = 0; ii < count_items; ++ii)
-	{
-		vectorNames.push_back(stream.toString(FATSIZENAME));
-	}
-	stream.seek(2);
+    stream.seek(size - FATSIZENAME * count_items);
+    std::vector<std::string> vectorNames;
+    vectorNames.reserve(count_items);
     for (u32 ii = 0; ii < count_items; ++ii)
     {
-		string itemName = vectorNames[ii];
+        vectorNames.push_back(stream.toString(FATSIZENAME));
+    }
+    stream.seek(2);
+    for (u32 ii = 0; ii < count_items; ++ii)
+    {
+        string itemName = vectorNames[ii];
         FAT f;
-		auto crc = stream.getLE32();
-		f.crc = crc;
-		auto offset = stream.getLE32();
+        auto crc = stream.getLE32();
+        f.crc = crc;
+        auto offset = stream.getLE32();
         f.offset = offset;
-		auto sizeChunk= stream.getLE32();
+        auto sizeChunk = stream.getLE32();
         f.size = sizeChunk;
-		fat[itemName] = f;
+        fat[itemName] = f;
     }
 
     return !stream.fail();
@@ -285,27 +287,27 @@ string AGG::FAT::Info() const
 /* read element to body */
 vector<u8> AGG::File::Read(const string &str)
 {
-	const auto it = fat.find(str);
+    const auto it = fat.find(str);
 
-	if (it == fat.end())
-	{
-		vector<u8> emptyBuf;
-		return emptyBuf;
-	}
+    if (it == fat.end())
+    {
+        vector<u8> emptyBuf;
+        return emptyBuf;
+    }
 
-	const FAT& f = (*it).second;
-	key = str;
+    const FAT &f = (*it).second;
+    key = str;
 
-	if (!f.size)
-	{
-		vector<u8> emptyBuf;
-		return emptyBuf;
-	}
-	stream.seek(f.offset);
-	vector<u8> body = stream.getRaw(f.size);
-	
+    if (!f.size)
+    {
+        vector<u8> emptyBuf;
+        return emptyBuf;
+    }
+    stream.seek(f.offset);
+    vector<u8> body = stream.getRaw(f.size);
 
-	return body;
+
+    return body;
 }
 
 u32 AGG::ClearFreeObjects()
@@ -324,18 +326,16 @@ u32 AGG::ClearFreeObjects()
 
     total = 0;
 
-#ifdef WITH_TTF
     // fnt cache
-    for(auto it = fnt_cache.begin(); it != fnt_cache.end(); ++it)
+    for (auto &it : fnt_cache)
     {
-    total += (*it).second.sfs[0].GetMemoryUsage();
-    total += (*it).second.sfs[1].GetMemoryUsage();
-    total += (*it).second.sfs[2].GetMemoryUsage();
-    total += (*it).second.sfs[3].GetMemoryUsage();
+        total += it.second.sfs[0].GetMemoryUsage();
+        total += it.second.sfs[1].GetMemoryUsage();
+        total += it.second.sfs[2].GetMemoryUsage();
+        total += it.second.sfs[3].GetMemoryUsage();
     }
 
     total = 0;
-#endif
 
     // til cache
     for (auto &tils : til_cache)
@@ -779,25 +779,29 @@ ByteVectorReader &operator>>(ByteVectorReader &st, ICNHeader &icn)
 
     return st;
 }
+
 void AGG::RenderICNSprite(int icn, u32 index, const Rect &srt, const Point &dpt, Surface &dst)
 {
     ICNSprite res = RenderICNSprite(icn, index);
     res.first.Blit(srt, dpt, dst);
 }
 
-std::string joinValues(const std::vector<u8>& body, int maxSize)
+std::string joinValues(const std::vector<u8> &body, int maxSize)
 {
-	std:string result = std::to_string(body.size())+ ": ";
-	int maxIndex = std::min((int)body.size(), maxSize);
-	bool isFirst = true;
+    std:
+    string result = std::to_string(body.size()) + ": ";
+    int maxIndex = std::min((int) body.size(), maxSize);
+    bool isFirst = true;
 
-	for(int i = 0;i<maxIndex; i++)
-	{
-		if (isFirst) { isFirst = false; }
-		else { result += ", "; }
-		result += std::to_string(body[i]);
-	}
-	return result;
+    for (int i = 0; i < maxIndex; i++)
+    {
+        if (isFirst)
+        { isFirst = false; }
+        else
+        { result += ", "; }
+        result += std::to_string(body[i]);
+    }
+    return result;
 }
 
 ICNSprite AGG::RenderICNSprite(int icn, u32 index)
@@ -808,15 +812,15 @@ ICNSprite AGG::RenderICNSprite(int icn, u32 index)
     {
         return res;
     }
-	
-	ByteVectorReader st(body);
-	//StreamBuf st(body);
+
+    ByteVectorReader st(body);
+    //StreamBuf st(body);
 
     u32 count = st.getLE16();
-	if (index >= count)
-	{
-		return res;
-	}
+    if (index >= count)
+    {
+        return res;
+    }
     u32 blockSize = st.getLE32();
 
     if (index) st.skip(index * 13);
@@ -824,7 +828,7 @@ ICNSprite AGG::RenderICNSprite(int icn, u32 index)
     ICNHeader header1;
     st >> header1;
 
-	u32 sizeData = 0;
+    u32 sizeData = 0;
     if (index + 1 != count)
     {
         ICNHeader header2;
@@ -845,14 +849,14 @@ ICNSprite AGG::RenderICNSprite(int icn, u32 index)
 
     sf1.Set(sz.w, sz.h, false);
 
-	u32 shadowCol = RGBA::packRgba(0, 0, 0, 0x40);
+    u32 shadowCol = RGBA::packRgba(0, 0, 0, 0x40);
 
     u32 c = 0;
     Point pt(0, 0);
-	sf1.Lock();
+    sf1.Lock();
     while (true)
     {
-		auto cur = *buf;
+        auto cur = *buf;
         // 0x00 - end line
         if (0 == *buf)
         {
@@ -867,7 +871,7 @@ ICNSprite AGG::RenderICNSprite(int icn, u32 index)
             ++buf;
             while (c-- && buf < max)
             {
-				DrawPointFast(sf1, pt.x, pt.y, *buf);
+                DrawPointFast(sf1, pt.x, pt.y, *buf);
                 ++pt.x;
                 ++buf;
 
@@ -892,18 +896,18 @@ ICNSprite AGG::RenderICNSprite(int icn, u32 index)
 
             if (sf1.depth() == 8) // skip alpha
             {
-				pt.x += c;
-				c = 0;
+                pt.x += c;
+                c = 0;
             } else
             {
-				if (!sf2.isValid())
-				{
-					sf2.Set(sz.w, sz.h, true);
-					sf2.Lock();
-				}
+                if (!sf2.isValid())
+                {
+                    sf2.Set(sz.w, sz.h, true);
+                    sf2.Lock();
+                }
                 while (c--)
                 {
-					sf2.SetPixel4(pt.x, pt.y, shadowCol);
+                    sf2.SetPixel4(pt.x, pt.y, shadowCol);
                     ++pt.x;
                 }
             }
@@ -917,7 +921,7 @@ ICNSprite AGG::RenderICNSprite(int icn, u32 index)
             ++buf;
             while (c--)
             {
-				DrawPointFast(sf1, pt.x, pt.y, *buf);
+                DrawPointFast(sf1, pt.x, pt.y, *buf);
                 ++pt.x;
             }
             ++buf;
@@ -927,7 +931,7 @@ ICNSprite AGG::RenderICNSprite(int icn, u32 index)
             ++buf;
             while (c--)
             {
-				DrawPointFast(sf1, pt.x, pt.y, *buf);
+                DrawPointFast(sf1, pt.x, pt.y, *buf);
                 ++pt.x;
             }
             ++buf;
@@ -944,11 +948,11 @@ ICNSprite AGG::RenderICNSprite(int icn, u32 index)
     {
         res.first.RenderContour(RGBA(0, 0x84, 0xe0)).Blit(-1, -1, res.first);
     }
-	sf1.Unlock();
-	if(sf2.isValid())
-	{
-		sf2.Unlock();
-	}
+    sf1.Unlock();
+    if (sf2.isValid())
+    {
+        sf2.Unlock();
+    }
     return res;
 }
 
@@ -958,8 +962,8 @@ bool AGG::LoadOrgICN(Sprite &sp, int icn, u32 index, bool reflect)
 
     if (icnSprite.isValid())
     {
-		auto picSp = icnSprite.CreateSprite(reflect, !ICN::SkipLocalAlpha(icn));
-		sp = *picSp;
+        auto picSp = icnSprite.CreateSprite(reflect, !ICN::SkipLocalAlpha(icn));
+        sp = *picSp;
         return true;
     }
 
@@ -975,15 +979,15 @@ bool AGG::LoadOrgICN(int icn, u32 index, bool reflect)
         const vector<u8> &body = ReadChunk(ICN::GetString(icn));
 
         if (body.empty())
-	        return false;
-		ByteVectorReader bvr(body);
-	    v.count = bvr.getLE16();
-	    v.sprites = new Sprite[v.count];
-	    v.reflect = new Sprite[v.count];
-	    if (v.count == 0)
-	    {
-		    return true;
-	    }
+            return false;
+        ByteVectorReader bvr(body);
+        v.count = bvr.getLE16();
+        v.sprites = new Sprite[v.count];
+        v.reflect = new Sprite[v.count];
+        if (v.count == 0)
+        {
+            return true;
+        }
     }
 
     Sprite &sp = reflect ? v.reflect[index] : v.sprites[index];
@@ -997,22 +1001,22 @@ void AGG::LoadICN(int icn, u32 index, bool reflect)
     icn_cache_t &v = icn_cache[icn];
 
     // need load
-    if ((!reflect || v.reflect 
-		&& (index >= v.count || v.reflect[index].isValid())) 
-		&& (reflect || v.sprites && 
-		(index >= v.count || v.sprites[index].isValid())))
-		return;
-	const Settings &conf = Settings::Get();
+    if ((!reflect || v.reflect
+                     && (index >= v.count || v.reflect[index].isValid()))
+        && (reflect || v.sprites &&
+                       (index >= v.count || v.sprites[index].isValid())))
+        return;
+    const Settings &conf = Settings::Get();
 
-	// load from images dir
-	if (conf.UseAltResource() && LoadAltICN(icn, index, reflect))
-		return;
-	// load modify sprite
-	if (LoadExtICN(icn, index, reflect))
-		return;
-	//load origin sprite
-	if (!LoadOrgICN(icn, index, reflect))
-		Error::Except(__FUNCTION__, "load icn");
+    // load from images dir
+    if (conf.UseAltResource() && LoadAltICN(icn, index, reflect))
+        return;
+    // load modify sprite
+    if (LoadExtICN(icn, index, reflect))
+        return;
+    //load origin sprite
+    if (!LoadOrgICN(icn, index, reflect))
+        Error::Except(__FUNCTION__, "load icn");
 }
 
 /* return ICN sprite */
@@ -1042,7 +1046,7 @@ Sprite AGG::GetICN(int icn, u32 index, bool reflect)
 
     result = reflect ? v.reflect[index] : v.sprites[index];
 
-    
+
     return result;
 }
 
@@ -1087,7 +1091,7 @@ bool AGG::LoadOrgTIL(int til, u32 max)
 
     if (body.empty())
         return false;
-	ByteVectorReader st(body);
+    ByteVectorReader st(body);
 
     u32 count = st.getLE16();
     u32 width = st.getLE16();
@@ -1206,9 +1210,9 @@ Surface AGG::GetTIL(int til, u32 index, u32 shape)
 void AGG::LoadWAV(int m82, vector<u8> &v)
 {
 #ifdef WITH_MIXER
-    const Settings & conf = Settings::Get();
+    const Settings &conf = Settings::Get();
 
-    if(conf.UseAltResource())
+    if (conf.UseAltResource())
     {
         std::string name = StringLower(M82::GetString(m82));
         std::string prefix_sounds = System::ConcatePath("files", "sounds");
@@ -1238,24 +1242,24 @@ void AGG::LoadWAV(int m82, vector<u8> &v)
         return;
 #ifdef WITH_MIXER
     // create WAV format
-StreamBuf wavHeader(44);
-wavHeader.putLE32(0x46464952);		// RIFF
-wavHeader.putLE32(body.size() + 0x24);	// size
-wavHeader.putLE32(0x45564157);		// WAVE
-wavHeader.putLE32(0x20746D66);		// FMT
-wavHeader.putLE32(0x10);		// size_t
-wavHeader.putLE16(0x01);		// format
-wavHeader.putLE16(0x01);		// channels
-wavHeader.putLE32(22050);		// samples
-wavHeader.putLE32(22050);		// byteper
-wavHeader.putLE16(0x01);		// align
-wavHeader.putLE16(0x08);		// bitsper
-wavHeader.putLE32(0x61746164);		// DATA
-wavHeader.putLE32(body.size());		// size
+    StreamBuf wavHeader(44);
+    wavHeader.putLE32(0x46464952);        // RIFF
+    wavHeader.putLE32(body.size() + 0x24);    // size
+    wavHeader.putLE32(0x45564157);        // WAVE
+    wavHeader.putLE32(0x20746D66);        // FMT
+    wavHeader.putLE32(0x10);        // size_t
+    wavHeader.putLE16(0x01);        // format
+    wavHeader.putLE16(0x01);        // channels
+    wavHeader.putLE32(22050);        // samples
+    wavHeader.putLE32(22050);        // byteper
+    wavHeader.putLE16(0x01);        // align
+    wavHeader.putLE16(0x08);        // bitsper
+    wavHeader.putLE32(0x61746164);        // DATA
+    wavHeader.putLE32(body.size());        // size
 
-v.reserve(body.size() + 44);
-v.assign(wavHeader.data(), wavHeader.data() + 44);
-v.insert(v.begin() + 44, body.begin(), body.end());
+    v.reserve(body.size() + 44);
+    v.assign(wavHeader.data(), wavHeader.data() + 44);
+    v.insert(v.begin() + 44, body.begin(), body.end());
 #else
     Audio::Spec wav_spec;
     wav_spec.format = AUDIO_U8;
@@ -1365,7 +1369,7 @@ void AGG::LoadLOOPXXSounds(const vector<int> &vols)
 
                     // find unused
                     auto itl = find(loop_sounds.begin(), loop_sounds.end(),
-                                         static_cast<int>(M82::UNKNOWN));
+                                    static_cast<int>(M82::UNKNOWN));
 
                     if (itl != loop_sounds.end())
                     {
@@ -1446,8 +1450,8 @@ void AGG::PlayMusic(int mus, bool loop)
         if (XMI::UNKNOWN != xmi)
         {
 #ifdef WITH_MIXER
-            const std::vector<u8> & v = GetMID(xmi);
-            if(!v.empty()) Music::Play(v, loop);
+            const std::vector<u8> &v = GetMID(xmi);
+            if (!v.empty()) Music::Play(v, loop);
 #else
             string mid = XMI::GetString(xmi);
             StringReplace(mid, ".XMI", ".MID");
@@ -1466,35 +1470,35 @@ void AGG::PlayMusic(int mus, bool loop)
 
 void AGG::LoadTTFChar(u32 ch)
 {
-	const Settings & conf = Settings::Get();
-	const RGBA white(0xFF, 0xFF, 0xFF);
-	const RGBA yellow(0xFF, 0xFF, 0x00);
-	const RGBA gray(0x7F, 0x7F, 0x7F);
+    const Settings &conf = Settings::Get();
+    const RGBA white(0xFF, 0xFF, 0xFF);
+    const RGBA yellow(0xFF, 0xFF, 0x00);
+    const RGBA gray(0x7F, 0x7F, 0x7F);
 
-	// small
-	fnt_cache[ch].sfs[0] = fonts[0].RenderUnicodeChar(ch, white, !conf.FontSmallRenderBlended());
-	fnt_cache[ch].sfs[1] = fonts[0].RenderUnicodeChar(ch, yellow, !conf.FontSmallRenderBlended());
+    // small
+    fnt_cache[ch].sfs[0] = fonts[0].RenderUnicodeChar(ch, white, !conf.FontSmallRenderBlended());
+    fnt_cache[ch].sfs[1] = fonts[0].RenderUnicodeChar(ch, yellow, !conf.FontSmallRenderBlended());
 
-	// medium
-	fnt_cache[ch].sfs[2] = fonts[1].RenderUnicodeChar(ch, white, !conf.FontNormalRenderBlended());
-	fnt_cache[ch].sfs[3] = fonts[1].RenderUnicodeChar(ch, yellow, !conf.FontNormalRenderBlended());
-	// gray
-	fnt_cache[ch].sfs[4] = fonts[0].RenderUnicodeChar(ch, gray, !conf.FontSmallRenderBlended());
-	fnt_cache[ch].sfs[5] = fonts[1].RenderUnicodeChar(ch, gray, !conf.FontNormalRenderBlended());
+    // medium
+    fnt_cache[ch].sfs[2] = fonts[1].RenderUnicodeChar(ch, white, !conf.FontNormalRenderBlended());
+    fnt_cache[ch].sfs[3] = fonts[1].RenderUnicodeChar(ch, yellow, !conf.FontNormalRenderBlended());
+    // gray
+    fnt_cache[ch].sfs[4] = fonts[0].RenderUnicodeChar(ch, gray, !conf.FontSmallRenderBlended());
+    fnt_cache[ch].sfs[5] = fonts[1].RenderUnicodeChar(ch, gray, !conf.FontNormalRenderBlended());
 }
 
 void AGG::LoadFNT()
 {
-    const Settings & conf = Settings::Get();
+    const Settings &conf = Settings::Get();
 
-	if (!fnt_cache.empty())
-		return;
-	const std::string letters =
-		"!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
-	std::vector<u16> unicode = StringUTF8_to_UNICODE(letters);
+    if (!fnt_cache.empty())
+        return;
+    const std::string letters =
+            "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+    std::vector<u16> unicode = StringUTF8_to_UNICODE(letters);
 
-	for (auto it = unicode.begin(); it != unicode.end(); ++it)
-		LoadTTFChar(*it);
+    for (unsigned short &it : unicode)
+        LoadTTFChar(it);
 }
 
 u32 AGG::GetFontHeight(bool small)
@@ -1507,21 +1511,27 @@ Surface AGG::GetUnicodeLetter(u32 ch, u32 ft)
 {
     bool ttf_valid = fonts[0].isValid() && fonts[1].isValid();
 
-    if(! ttf_valid)
+    if (!ttf_valid)
         return GetLetter(ch, ft);
 
-    if(!fnt_cache[ch].sfs[0].isValid()) LoadTTFChar(ch);
+    if (!fnt_cache[ch].sfs[0].isValid()) LoadTTFChar(ch);
 
-	const auto& surfaces = fnt_cache[ch].sfs;
-	switch (ft)
-	{
-	case Font::YELLOW_SMALL: return surfaces[1];
-	case Font::BIG:		 return surfaces[2];
-	case Font::YELLOW_BIG:	 return surfaces[3];
-	case Font::SHADDOW:	 return surfaces[4];
-	case Font::SHADDOW_BIG:	 return surfaces[5];
-	default: break;
-	}
+    const auto &surfaces = fnt_cache[ch].sfs;
+    switch (ft)
+    {
+        case Font::YELLOW_SMALL:
+            return surfaces[1];
+        case Font::BIG:
+            return surfaces[2];
+        case Font::YELLOW_BIG:
+            return surfaces[3];
+        case Font::SHADDOW:
+            return surfaces[4];
+        case Font::SHADDOW_BIG:
+            return surfaces[5];
+        default:
+            break;
+    }
 
     return surfaces[0];
 }
@@ -1566,17 +1576,18 @@ bool AGG::Init()
         //return false;
     }
 
-    Settings & conf = Settings::Get();
+    Settings &conf = Settings::Get();
     const std::string prefix_fonts = System::ConcatePath("files", "fonts");
     const std::string font1 = Settings::GetLastFile(prefix_fonts, conf.FontsNormal());
     const std::string font2 = Settings::GetLastFile(prefix_fonts, conf.FontsSmall());
 
     fonts = std::unique_ptr<FontTTF[]>(new FontTTF[2]);
 
-    if(conf.Unicode())
+    if (conf.Unicode())
     {
-    if(!fonts[1].Open(font1, conf.FontsNormalSize()) ||
-       !fonts[0].Open(font2, conf.FontsSmallSize())) conf.SetUnicode(false);
+        if (!fonts[1].Open(font1, conf.FontsNormalSize()) ||
+            !fonts[0].Open(font2, conf.FontsSmallSize()))
+            conf.SetUnicode(false);
     }
 
     icn_cache.reserve(ICN::LASTICN + 256);
@@ -1625,8 +1636,8 @@ RGBA AGG::GetPaletteColor(u32 index)
            RGBA(pal_colors[index].r, pal_colors[index].g, pal_colors[index].b) : RGBA(0, 0, 0);
 }
 
-void AGG::DrawPointFast(Surface& srf, int x, int y, u8 palette)
+void AGG::DrawPointFast(Surface &srf, int x, int y, u8 palette)
 {
-	auto palColor = pal_colors_u32[palette];
-	srf.SetPixel4(x, y, palColor);
+    auto palColor = pal_colors_u32[palette];
+    srf.SetPixel4(x, y, palColor);
 }

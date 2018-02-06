@@ -111,7 +111,7 @@ public:
 
     Castle *inCastle();
 
-    void LoadFromMP2(s32 map_index, int cl, int rc, ByteVectorReader&);
+    void LoadFromMP2(s32 map_index, int cl, int rc, ByteVectorReader &);
 
     void PostLoad();
 
@@ -317,13 +317,14 @@ public:
 
     static void ScholarAction(Heroes &, Heroes &);
 
-	void ReadFrom(ByteVectorReader&);
+    void ReadFrom(ByteVectorReader &);
 
 private:
     friend StreamBase &operator<<(StreamBase &, const Heroes &);
 
     friend StreamBase &operator>>(StreamBase &, Heroes &);
-	friend ByteVectorReader &operator>>(ByteVectorReader &msg, Heroes &hero);
+
+    friend ByteVectorReader &operator>>(ByteVectorReader &msg, Heroes &hero);
 
     friend class Recruits;
 
@@ -398,15 +399,19 @@ struct AllHeroes : public VecHeroes
 
 };
 
-Battle::Result BattleHeroWithMonster(Heroes& hero, Army&army, s32 dst_index);
-Battle::Result BattleHeroWithHero(Heroes& hero, Heroes&other_hero, s32 dst_index);
+Battle::Result BattleHeroWithMonster(Heroes &hero, Army &army, s32 dst_index);
+
+Battle::Result BattleHeroWithHero(Heroes &hero, Heroes &other_hero, s32 dst_index);
 
 StreamBase &operator<<(StreamBase &, const VecHeroes &);
+
 ByteVectorReader &operator>>(ByteVectorReader &, VecHeroes &);
 
 StreamBase &operator<<(StreamBase &, const Heroes &);
+
 ByteVectorReader &operator>>(ByteVectorReader &, Heroes &);
 
 StreamBase &operator<<(StreamBase &, const AllHeroes &);
+
 ByteVectorReader &operator>>(ByteVectorReader &msg, AllHeroes &heroes);
 

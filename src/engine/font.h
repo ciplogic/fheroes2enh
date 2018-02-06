@@ -32,39 +32,54 @@
 class RGBA;
 
 #ifdef WITH_TTF
+
 #include "SDL_ttf.h"
 
 class FontTTF
 {
 public:
     FontTTF();
+
     ~FontTTF();
 
-    TTF_Font* operator() () const { return ptr; }
+    TTF_Font *operator()() const
+    { return ptr; }
 
     static void Init();
+
     static void Quit();
 
     bool Open(const std::string &, int size);
+
     bool isValid() const;
+
     void SetStyle(int) const;
 
     int Height() const;
+
     int Ascent() const;
+
     int Descent() const;
+
     int LineSkip() const;
 
     Surface RenderText(const std::string &, const RGBA &, bool solid /* or blended */) const;
+
     Surface RenderChar(char, const RGBA &, bool solid /* or blended */) const;
+
     Surface RenderUnicodeText(const std::vector<u16> &, const RGBA &, bool solid /* or blended */) const;
+
     Surface RenderUnicodeChar(u16, const RGBA &, bool solid /* or blended */) const;
 
 protected:
     TTF_Font *ptr = nullptr;
 
 private:
-    FontTTF(const FontTTF &) {}
-    FontTTF & operator= (const FontTTF &) { return *this; }
+    FontTTF(const FontTTF &)
+    {}
+
+    FontTTF &operator=(const FontTTF &)
+    { return *this; }
 };
 
 #endif

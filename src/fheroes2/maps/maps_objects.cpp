@@ -39,14 +39,14 @@ StreamBase &operator<<(StreamBase &msg, const MapObjectSimple &obj)
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, MapObjectSimple &obj)
 {
-	return msg >> obj.type >> obj.uid >> static_cast<MapPosition &>(obj);
+    return msg >> obj.type >> obj.uid >> static_cast<MapPosition &>(obj);
 }
 
 MapEvent::MapEvent() : MapObjectSimple(MP2::OBJ_EVENT), computer(false), cancel(true), colors(0)
 {
 }
 
-void MapEvent::LoadFromMP2(s32 index, ByteVectorReader& st)
+void MapEvent::LoadFromMP2(s32 index, ByteVectorReader &st)
 {
     // id
     if (1 == st.get())
@@ -89,8 +89,8 @@ void MapEvent::LoadFromMP2(s32 index, ByteVectorReader& st)
 
         // message
         message = Game::GetEncodeString(st.toString(0));
-       
-    } 
+
+    }
 }
 
 void MapEvent::SetVisited(int color)
@@ -110,7 +110,7 @@ MapSphinx::MapSphinx() : MapObjectSimple(MP2::OBJ_SPHINX), valid(false)
 {
 }
 
-void MapSphinx::LoadFromMP2(s32 index, ByteVectorReader& st)
+void MapSphinx::LoadFromMP2(s32 index, ByteVectorReader &st)
 {
     // id
     if (0 == st.get())
@@ -145,7 +145,7 @@ void MapSphinx::LoadFromMP2(s32 index, ByteVectorReader& st)
         message = Game::GetEncodeString(st.toString(0));
 
         valid = true;
-    } 
+    }
 }
 
 bool MapSphinx::AnswerCorrect(const string &answer)
@@ -174,14 +174,14 @@ StreamBase &operator<<(StreamBase &msg, const MapEvent &obj)
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, MapEvent &obj)
 {
-	return msg >>
-		static_cast<MapObjectSimple &>(obj) >>
-		obj.resources >>
-		obj.artifact >>
-		obj.computer >>
-		obj.cancel >>
-		obj.colors >>
-		obj.message;
+    return msg >>
+               static_cast<MapObjectSimple &>(obj) >>
+               obj.resources >>
+               obj.artifact >>
+               obj.computer >>
+               obj.cancel >>
+               obj.colors >>
+               obj.message;
 }
 
 StreamBase &operator<<(StreamBase &msg, const MapSphinx &obj)
@@ -195,15 +195,15 @@ StreamBase &operator<<(StreamBase &msg, const MapSphinx &obj)
                obj.valid;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader&msg, MapSphinx &obj)
+ByteVectorReader &operator>>(ByteVectorReader &msg, MapSphinx &obj)
 {
-	return msg >>
-		static_cast<MapObjectSimple &>(obj) >>
-		obj.resources >>
-		obj.artifact >>
-		obj.answers >>
-		obj.message >>
-		obj.valid;
+    return msg >>
+               static_cast<MapObjectSimple &>(obj) >>
+               obj.resources >>
+               obj.artifact >>
+               obj.answers >>
+               obj.message >>
+               obj.valid;
 }
 
 MapSign::MapSign() : MapObjectSimple(MP2::OBJ_SIGN)
@@ -216,7 +216,7 @@ MapSign::MapSign(s32 index, const string &msg) : MapObjectSimple(MP2::OBJ_SIGN)
     message = msg;
 }
 
-void MapSign::LoadFromMP2(s32 index, ByteVectorReader& st)
+void MapSign::LoadFromMP2(s32 index, ByteVectorReader &st)
 {
     st.skip(9);
     message = st.toString(0);
@@ -234,9 +234,9 @@ StreamBase &operator<<(StreamBase &msg, const MapSign &obj)
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, MapSign &obj)
 {
-	return msg >>
-		static_cast<MapObjectSimple &>(obj) >>
-		obj.message;
+    return msg >>
+               static_cast<MapObjectSimple &>(obj) >>
+               obj.message;
 }
 
 MapResource::MapResource() : MapObjectSimple(MP2::OBJ_RESOURCE)
@@ -252,9 +252,9 @@ StreamBase &operator<<(StreamBase &msg, const MapResource &obj)
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, MapResource &obj)
 {
-	return msg >>
-		static_cast<MapObjectSimple &>(obj) >>
-		obj.resource;
+    return msg >>
+               static_cast<MapObjectSimple &>(obj) >>
+               obj.resource;
 }
 
 MapArtifact::MapArtifact() : MapObjectSimple(MP2::OBJ_ARTIFACT), condition(0), extended(0)
@@ -304,9 +304,9 @@ StreamBase &operator<<(StreamBase &msg, const MapArtifact &obj)
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, MapArtifact &obj)
 {
-	return msg >>
-		static_cast<MapObjectSimple &>(obj) >>
-		obj.artifact >> obj.condition >> obj.extended;
+    return msg >>
+               static_cast<MapObjectSimple &>(obj) >>
+               obj.artifact >> obj.condition >> obj.extended;
 }
 
 MapMonster::MapMonster() : MapObjectSimple(MP2::OBJ_MONSTER), condition(0), count(0)
@@ -347,7 +347,7 @@ StreamBase &operator<<(StreamBase &msg, const MapMonster &obj)
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, MapMonster &obj)
 {
-	return msg >>
-		static_cast<MapObjectSimple &>(obj) >>
-		obj.monster >> obj.condition >> obj.count;
+    return msg >>
+               static_cast<MapObjectSimple &>(obj) >>
+               obj.monster >> obj.condition >> obj.count;
 }

@@ -34,7 +34,7 @@ StreamBase &operator<<(StreamBase &sb, const ActionSimple &st)
 
 ByteVectorReader &operator>>(ByteVectorReader &sb, ActionSimple &st)
 {
-	return sb >> st.type >> st.uid;
+    return sb >> st.type >> st.uid;
 }
 
 ActionSimple::~ActionSimple() = default;
@@ -89,7 +89,7 @@ ByteVectorReader &operator>>(ByteVectorReader &sb, ActionMessage &st)
 StreamBase &operator<<(StreamBase &sb, const ListActions &listActions)
 {
     sb << static_cast<u32>(listActions.size());
-    for (const auto& listAction : listActions)
+    for (const auto &listAction : listActions)
     {
         sb << listAction->GetType();
 
@@ -148,67 +148,68 @@ ByteVectorReader &operator>>(ByteVectorReader &sb, MapActions &v)
     }
     return sb;
 }
+
 ByteVectorReader &operator>>(ByteVectorReader &sb, ListActions &st)
 {
-	u32 size = 0;
-	sb >> size;
+    u32 size = 0;
+    sb >> size;
 
-	st.clear();
+    st.clear();
 
-	for (u32 ii = 0; ii < size; ++ii)
-	{
-		int type;
-		sb >> type;
+    for (u32 ii = 0; ii < size; ++ii)
+    {
+        int type;
+        sb >> type;
 
-		switch (type)
-		{
-		case ACTION_DEFAULT:
-		{
-			auto ptr = std::make_unique<ActionDefault>();
-			sb >> *ptr;
-			st.push_back(std::move(ptr));
-		}
-		break;
-		case ACTION_ACCESS:
-		{
-			auto ptr = std::make_unique<ActionAccess>();
-			sb >> *ptr;
-			st.push_back(std::move(ptr));
-		}
-		break;
-		case ACTION_MESSAGE:
-		{
-			auto ptr = std::make_unique<ActionMessage>();
-			sb >> *ptr;
-			st.push_back(std::move(ptr));
-		}
-		break;
-		case ACTION_RESOURCES:
-		{
-			auto ptr = std::make_unique<ActionResources>();
-			sb >> *ptr;
-			st.push_back(std::move(ptr));
-		}
-		break;
-		case ACTION_ARTIFACT:
-		{
-			auto ptr = std::make_unique<ActionArtifact>();
-			sb >> *ptr;
-			st.push_back(std::move(ptr));
-		}
-		break;
+        switch (type)
+        {
+            case ACTION_DEFAULT:
+            {
+                auto ptr = std::make_unique<ActionDefault>();
+                sb >> *ptr;
+                st.push_back(std::move(ptr));
+            }
+                break;
+            case ACTION_ACCESS:
+            {
+                auto ptr = std::make_unique<ActionAccess>();
+                sb >> *ptr;
+                st.push_back(std::move(ptr));
+            }
+                break;
+            case ACTION_MESSAGE:
+            {
+                auto ptr = std::make_unique<ActionMessage>();
+                sb >> *ptr;
+                st.push_back(std::move(ptr));
+            }
+                break;
+            case ACTION_RESOURCES:
+            {
+                auto ptr = std::make_unique<ActionResources>();
+                sb >> *ptr;
+                st.push_back(std::move(ptr));
+            }
+                break;
+            case ACTION_ARTIFACT:
+            {
+                auto ptr = std::make_unique<ActionArtifact>();
+                sb >> *ptr;
+                st.push_back(std::move(ptr));
+            }
+                break;
 
-		default:
-		{
-			auto ptr = std::make_unique<ActionSimple>();
-			sb >> *ptr;
-            st.push_back(std::move(ptr));
-		}
-		break;
-		}
-	}
+            default:
+            {
+                auto ptr = std::make_unique<ActionSimple>();
+                sb >> *ptr;
+                st.push_back(std::move(ptr));
+            }
+                break;
+        }
+    }
 
-	return sb;
+    return sb;
 }
 
 bool ActionAccess::Action(ActionAccess *act, s32 index, Heroes &hero)

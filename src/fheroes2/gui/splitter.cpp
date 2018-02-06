@@ -112,9 +112,9 @@ void Splitter::MoveIndex(int num)
 {
     if (num <= max && num >= min)
     {
-	    cur = num;
-	    Move(GetPositionCursor());
-    } 
+        cur = num;
+        Move(GetPositionCursor());
+    }
 }
 
 /* forward spliter */

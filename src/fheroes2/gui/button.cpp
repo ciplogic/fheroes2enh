@@ -162,7 +162,7 @@ void Button::Draw()
 }
 
 ButtonGroups::ButtonGroups(const Rect pos, u32 btns) : button1(nullptr), button2(nullptr), result1(Dialog::ZERO),
-                                                        result2(Dialog::ZERO), buttons(btns)
+                                                       result2(Dialog::ZERO), buttons(btns)
 {
     Point pt;
     const int system = Settings::Get().ExtGameEvilInterface() ? ICN::SYSTEME : ICN::SYSTEM;
@@ -171,7 +171,7 @@ ButtonGroups::ButtonGroups(const Rect pos, u32 btns) : button1(nullptr), button2
     {
         case Dialog::YES | Dialog::NO:
             //pt.x = pos.x;
-            pt.x = pos.x + pos.w - AGG::GetICN(system, 5).w()- AGG::GetICN(system, 7).w() - 5;
+            pt.x = pos.x + pos.w - AGG::GetICN(system, 5).w() - AGG::GetICN(system, 7).w() - 5;
             pt.y = pos.y + pos.h - AGG::GetICN(system, 5).h();
             button1 = std::make_unique<Button>(pt.x, pt.y, system, 5, 6);
             result1 = Dialog::YES;
@@ -183,7 +183,7 @@ ButtonGroups::ButtonGroups(const Rect pos, u32 btns) : button1(nullptr), button2
 
         case Dialog::OK | Dialog::CANCEL:
             ///pt.x = pos.x;
-            pt.x = pos.x + pos.w - AGG::GetICN(system, 1).w()- AGG::GetICN(system, 3).w() - 5;
+            pt.x = pos.x + pos.w - AGG::GetICN(system, 1).w() - AGG::GetICN(system, 3).w() - 5;
             pt.y = pos.y + pos.h - AGG::GetICN(system, 1).h();
             button1 = std::make_unique<Button>(pt.x, pt.y, system, 1, 2);
             result1 = Dialog::OK;
@@ -210,10 +210,6 @@ ButtonGroups::ButtonGroups(const Rect pos, u32 btns) : button1(nullptr), button2
         default:
             break;
     }
-}
-
-ButtonGroups::~ButtonGroups()
-{
 }
 
 void ButtonGroups::Draw()
@@ -254,32 +250,30 @@ int ButtonGroups::QueueEventProcessing()
 
 void ButtonGroups::DisableButton1(bool f)
 {
-    if (button1)
+    if (!button1)
+        return;
+    if (f)
     {
-        if (f)
-        {
-            button1->Press();
-            button1->SetDisable(true);
-        } else
-        {
-            button1->Release();
-            button1->SetDisable(false);
-        }
+        button1->Press();
+        button1->SetDisable(true);
+    } else
+    {
+        button1->Release();
+        button1->SetDisable(false);
     }
 }
 
 void ButtonGroups::DisableButton2(bool f)
 {
-    if (button2)
+    if (!button2)
+        return;
+    if (f)
     {
-        if (f)
-        {
-            button2->Press();
-            button2->SetDisable(true);
-        } else
-        {
-            button2->Release();
-            button2->SetDisable(false);
-        }
+        button2->Press();
+        button2->SetDisable(true);
+    } else
+    {
+        button2->Release();
+        button2->SetDisable(false);
     }
 }

@@ -50,7 +50,7 @@ struct ValueColors : pair<int, int>
 
 void UpdateValuesColors(vector<ValueColors> &v, int value, int color)
 {
-	const auto it =
+    const auto it =
             find_if(v.begin(), v.end(), bind2nd(mem_fun_ref(&ValueColors::IsValue), value));
 
     if (it == v.end())
@@ -197,35 +197,35 @@ void DrawFlags(const vector<ValueColors> &v, const Point &pos, u32 width, u32 co
     {
         const u32 chunk = width / count;
         if (ii >= v.size()) continue;
-	    const Colors colors(v[ii].second);
-	    const u32 sw = AGG::GetICN(ICN::FLAG32, 1).w();
-	    s32 px = pos.x + chunk / 2 + ii * chunk - (colors.size() * sw) / 2;
+        const Colors colors(v[ii].second);
+        const u32 sw = AGG::GetICN(ICN::FLAG32, 1).w();
+        s32 px = pos.x + chunk / 2 + ii * chunk - (colors.size() * sw) / 2;
 
-	    for (auto color : colors)
-	    {
-		    const Sprite &flag = AGG::GetICN(ICN::FLAG32, Color::GetIndex(color) * 2 + 1);
-		    flag.Blit(px, pos.y);
-		    px = px + sw;
-	    }
+        for (auto color : colors)
+        {
+            const Sprite &flag = AGG::GetICN(ICN::FLAG32, Color::GetIndex(color) * 2 + 1);
+            flag.Blit(px, pos.y);
+            px = px + sw;
+        }
     }
 }
 
 void DrawHeroIcons(const vector<ValueColors> &v, const Point &pos, u32 width)
 {
     if (v.empty()) return;
-	Display &display = Display::Get();
-	const int chunk = width / v.size();
+    Display &display = Display::Get();
+    const int chunk = width / v.size();
 
-	for (u32 ii = 0; ii < v.size(); ++ii)
-	{
-		const Heroes *hero = world.GetHeroes(v[ii].first);
-		if (!hero) continue;
-		Surface icons = hero->GetPortrait(PORT_SMALL);
-		s32 px = pos.x + chunk / 2 + ii * chunk;
-		const Sprite &window = AGG::GetICN(ICN::LOCATORS, 22);
-		window.Blit(px - window.w() / 2, pos.y - 4, display);
-		icons.Blit(px - icons.w() / 2, pos.y, display);
-	}
+    for (u32 ii = 0; ii < v.size(); ++ii)
+    {
+        const Heroes *hero = world.GetHeroes(v[ii].first);
+        if (!hero) continue;
+        Surface icons = hero->GetPortrait(PORT_SMALL);
+        s32 px = pos.x + chunk / 2 + ii * chunk;
+        const Sprite &window = AGG::GetICN(ICN::LOCATORS, 22);
+        window.Blit(px - window.w() / 2, pos.y - 4, display);
+        icons.Blit(px - icons.w() / 2, pos.y, display);
+    }
 }
 
 void Dialog::ThievesGuild(bool oracle)

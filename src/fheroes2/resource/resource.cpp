@@ -39,30 +39,30 @@ Funds::Funds(s32 _ore, s32 _wood, s32 _mercury, s32 _sulfur, s32 _crystal, s32 _
 
 Funds::Funds(int rs, u32 count) : wood(0), mercury(0), ore(0), sulfur(0), crystal(0), gems(0), gold(0)
 {
-	switch (rs)
-	{
-	case Resource::ORE:
-		ore = count;
-		break;
-	case Resource::WOOD:
-		wood = count;
-		break;
-	case Resource::MERCURY:
-		mercury = count;
-		break;
-	case Resource::SULFUR:
-		sulfur = count;
-		break;
-	case Resource::GEMS:
-		gems = count;
-		break;
-	case Resource::CRYSTAL:
-		crystal = count;
-		break;
-	case Resource::GOLD:
-		gold = count;
-		break;
-	}
+    switch (rs)
+    {
+        case Resource::ORE:
+            ore = count;
+            break;
+        case Resource::WOOD:
+            wood = count;
+            break;
+        case Resource::MERCURY:
+            mercury = count;
+            break;
+        case Resource::SULFUR:
+            sulfur = count;
+            break;
+        case Resource::GEMS:
+            gems = count;
+            break;
+        case Resource::CRYSTAL:
+            crystal = count;
+            break;
+        case Resource::GOLD:
+            gold = count;
+            break;
+    }
 }
 
 Funds::Funds(const cost_t &cost)
@@ -605,9 +605,9 @@ StreamBase &operator<<(StreamBase &msg, const Funds &res)
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, Funds &res)
 {
-	return msg >> res.wood >>
-		res.mercury >> res.ore >> res.sulfur >>
-		res.crystal >> res.gems >> res.gold;
+    return msg >> res.wood >>
+               res.mercury >> res.ore >> res.sulfur >>
+               res.crystal >> res.gems >> res.gold;
 }
 
 StreamBase &operator<<(StreamBase &msg, const cost_t &res)
@@ -619,8 +619,8 @@ StreamBase &operator<<(StreamBase &msg, const cost_t &res)
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, cost_t &res)
 {
-	return msg >> res.wood >>
-		res.mercury >> res.ore >> res.sulfur >>
-		res.crystal >> res.gems >> res.gold;
+    return msg >> res.wood >>
+               res.mercury >> res.ore >> res.sulfur >>
+               res.crystal >> res.gems >> res.gold;
 }
 

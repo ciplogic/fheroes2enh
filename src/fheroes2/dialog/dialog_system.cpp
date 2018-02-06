@@ -52,7 +52,7 @@ int Dialog::SystemOptions()
     cursor.SetThemes(cursor.POINTER);
 
     FrameBorder frameborder((display.w() - 300 - BORDERWIDTH * 2) / 2,
-                                    (display.h() - 320 - BORDERWIDTH * 2) / 2, 300, 315);
+                            (display.h() - 320 - BORDERWIDTH * 2) / 2, 300, 315);
     const Rect &area = frameborder.GetArea();
 
     Rects rects;
@@ -180,7 +180,7 @@ void Dialog::DrawSystemInfo(const Rects &rects)
     Display &display = Display::Get();
     Settings &conf = Settings::Get();
 
-	Text text;
+    Text text;
 
     Surface black(Size(65, 65), false);
     black.Fill(ColorBlack);

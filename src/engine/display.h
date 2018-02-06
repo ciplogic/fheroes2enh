@@ -23,6 +23,7 @@
 #define H2DISPLAY_H
 
 #include "surface.h"
+
 using namespace std;
 
 class Display : public Surface
@@ -45,7 +46,7 @@ public:
     static void SetIcons(Surface &);
 
     void Flip();
-	
+
     void Clear();
 
     void ToggleFullScreen() const;
@@ -68,7 +69,7 @@ public:
 
 protected:
 
-	Surface displaySurface;
+    Surface displaySurface;
 
     Display();
 };

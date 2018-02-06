@@ -352,11 +352,11 @@ void BuildingInfo::RedrawCaptain()
     // indicator
     dst_pt.x = area.x + 65;
     dst_pt.y = area.y + 60;
-    if (bcond == ALREADY_BUILT) {
+    if (bcond == ALREADY_BUILT)
+    {
         sprite_allow.Blit(dst_pt);
 
-    }
-    else if (!allow_buy)
+    } else if (!allow_buy)
     {
         if (LACK_RESOURCES == bcond)
             sprite_money.Blit(dst_pt);
@@ -364,7 +364,7 @@ void BuildingInfo::RedrawCaptain()
             sprite_deny.Blit(dst_pt);
     }
 
-    if(allow_buy && bcond!=ALREADY_BUILT)
+    if (allow_buy && bcond != ALREADY_BUILT)
     {
         PlusSignAddon plusSignAddon;
         plusSignAddon.draw(area.x + area.w, area.y, true);
@@ -413,8 +413,7 @@ void BuildingInfo::Redraw()
             if (LACK_RESOURCES == bcond)
             {
                 sprite_money.Blit(dst_pt);
-            }
-            else
+            } else
             {
                 sprite_deny.Blit(dst_pt);
             }
@@ -435,7 +434,7 @@ void BuildingInfo::Redraw()
         dst_pt.y = area.y + 59;
         text.Blit(dst_pt);
 
-        if(canBuildQuick)
+        if (canBuildQuick)
         {
             PlusSignAddon plusSignAddon;
             plusSignAddon.draw(area.x + 132, area.y, true);
@@ -465,13 +464,13 @@ bool BuildingInfo::QueueEventProcessing()
         else if (bcond == ALLOW_BUILD || bcond == REQUIRES_BUILD || bcond == LACK_RESOURCES)
         {
             const Point cursor = LocalEvent::Get().GetMouseCursor();
-            if(CanQuickBuild(cursor, area)){
+            if (CanQuickBuild(cursor, area))
+            {
                 //build quickly
                 return true;
             }
             return DialogBuyBuilding(true);
-        }
-        else
+        } else
             Message("", GetConditionDescription(), Font::BIG, Dialog::OK);
     } else if (le.MousePressRight(area))
     {
@@ -540,7 +539,7 @@ bool BuildingInfo::DialogBuyBuilding(bool buttons) const
 
     Point dst_pt;
 
-    dst_pt.x = box_rt.x+50;
+    dst_pt.x = box_rt.x + 50;
     dst_pt.y = box_rt.y + box_rt.h - AGG::GetICN(system, 1).h();
     Button button1(dst_pt.x, dst_pt.y, system, 1, 2);
 
@@ -706,9 +705,10 @@ void BuildingInfo::SetStatusMessage(StatusBar &bar) const
 
 bool BuildingInfo::CanQuickBuild(const Point &cursor, Rect area)
 {
-    int dx = area.w  - (cursor.x - area.x);
+    int dx = area.w - (cursor.x - area.x);
     int dy = cursor.y - area.y;
-    if((dy < 20) &&(dx < 20)){
+    if ((dy < 20) && (dx < 20))
+    {
         return true;
     }
 

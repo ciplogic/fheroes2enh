@@ -45,12 +45,13 @@ public:
     { return id1.second > id2.second; };
 };
 
-ByteVectorReader &operator>>(ByteVectorReader&, IndexDistance &);
+ByteVectorReader &operator>>(ByteVectorReader &, IndexDistance &);
 
-class IndexObject 
+class IndexObject
 {
 public:
-	pair<s32, int> Value;
+    pair<s32, int> Value;
+
     IndexObject() : Value(-1, MP2::OBJ_ZERO)
     {};
 
@@ -65,6 +66,7 @@ public:
 };
 
 ByteVectorReader &operator>>(ByteVectorReader &, IndexObject &);
+
 StreamBase &operator<<(StreamBase &, IndexObject &);
 
 class ObjectColor : public pair<int, int>
@@ -83,7 +85,7 @@ public:
     { return colors & second; };
 };
 
-ByteVectorReader &operator>>(ByteVectorReader&, ObjectColor &);
+ByteVectorReader &operator>>(ByteVectorReader &, ObjectColor &);
 
 class ResourceCount : public pair<int, u32>
 {
@@ -101,4 +103,4 @@ public:
     { return (first & Resource::ALL) && second; };
 };
 
-ByteVectorReader &operator>>(ByteVectorReader&, ResourceCount &);
+ByteVectorReader &operator>>(ByteVectorReader &, ResourceCount &);

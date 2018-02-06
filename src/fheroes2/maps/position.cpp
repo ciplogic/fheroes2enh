@@ -64,7 +64,7 @@ StreamBase &operator<<(StreamBase &sb, const MapPosition &st)
 
 ByteVectorReader &operator>>(ByteVectorReader &sb, MapPosition &st)
 {
-	return sb >> st.center;
+    return sb >> st.center;
 }
 
 bool MapPosition::isPosition(const Point &pt) const
@@ -72,7 +72,7 @@ bool MapPosition::isPosition(const Point &pt) const
     return pt == center;
 }
 
-void MapPosition::ReadFrom(ByteVectorReader & msg)
+void MapPosition::ReadFrom(ByteVectorReader &msg)
 {
-	msg >> center;
+    msg >> center;
 }

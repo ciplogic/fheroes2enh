@@ -23,9 +23,9 @@
 #include "system.h"
 #include "audio.h"
 
-namespace Audio
+namespace
 {
-    Spec hardware;
+    Audio::Spec hardware;
 }
 
 Audio::Spec::Spec() : SDL_AudioSpec()

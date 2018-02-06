@@ -119,5 +119,5 @@ StreamBase &operator>>(StreamBase &msg, MageGuild &guild)
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, MageGuild &guild)
 {
-	return msg >> guild.general >> guild.library;
+    return msg >> guild.general >> guild.library;
 }

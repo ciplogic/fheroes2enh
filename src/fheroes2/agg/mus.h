@@ -23,6 +23,7 @@
 #pragma once
 
 #include <string>
+
 using namespace std;
 
 namespace MUS
@@ -77,7 +78,7 @@ namespace MUS
         UNKNOWN
     };
 
-	std::string GetString(int, bool shortname = false);
+    std::string GetString(int, bool shortname = false);
 
     int FromGround(int);
 

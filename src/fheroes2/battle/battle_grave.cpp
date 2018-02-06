@@ -28,7 +28,7 @@ Battle::Indexes Battle::Graveyard::GetClosedCells() const
     Indexes res;
     res.reserve(size());
 
-    for (const auto& it : *this)
+    for (const auto &it : *this)
         res.push_back(it.first);
 
     return res;

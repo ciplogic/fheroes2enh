@@ -19,8 +19,8 @@ void PlusSignAddon::draw(int rightMost, int top, bool isEnabled)
     else
         greenUp.Fill(ColorsTable::Gray);
 
-	Rect area{ 0,0, greenUp.w() - 1, greenUp.h() - 1 };
-	greenUp.DrawRect(area, RGBA(255, 255, 0));
+    Rect area{0, 0, greenUp.w() - 1, greenUp.h() - 1};
+    greenUp.DrawRect(area, RGBA(255, 255, 0));
 
     const Point ptPlus(pos.x + pos.w - greenUp.w() - 1, pos.y + 2);
     greenUp.Blit(ptPlus.x, ptPlus.y, Display::Get());

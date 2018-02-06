@@ -73,7 +73,8 @@ void Battle::Arena::BattleProcess(Unit &attacker, Unit &defender, s32 dst, int d
 
         if (!targets.empty())
         {
-            if (interface) interface->RedrawActionSpellCastPart1(spell, defender.GetHeadIndex(), nullptr, name, targets);
+            if (interface)
+                interface->RedrawActionSpellCastPart1(spell, defender.GetHeadIndex(), nullptr, name, targets);
 
             // magic attack not depends from hero
             TargetsApplySpell(nullptr, spell, targets);
@@ -187,38 +188,38 @@ void Battle::Arena::ApplyActionAttack(Command &cmd)
     Unit *b1 = GetTroopUID(uid1);
     Unit *b2 = GetTroopUID(uid2);
 
-    if (!b1 || !b1->isValid() 
-		|| !b2 || !b2->isValid() 
-		|| (b1->GetColor() == b2->GetColor() && !b2->Modes(SP_HYPNOTIZE)))
-		return;
-	// reset blind
-	if (b2->Modes(SP_BLIND)) b2->ResetBlind();
+    if (!b1 || !b1->isValid()
+        || !b2 || !b2->isValid()
+        || (b1->GetColor() == b2->GetColor() && !b2->Modes(SP_HYPNOTIZE)))
+        return;
+    // reset blind
+    if (b2->Modes(SP_BLIND)) b2->ResetBlind();
 
-	const bool handfighting = Unit::isHandFighting(*b1, *b2);
-	// check position
-	if (!b1->isArchers() && !handfighting)
-		return;
-	// attack
-	BattleProcess(*b1, *b2, dst, dir);
+    const bool handfighting = Unit::isHandFighting(*b1, *b2);
+    // check position
+    if (!b1->isArchers() && !handfighting)
+        return;
+    // attack
+    BattleProcess(*b1, *b2, dst, dir);
 
-	if (b2->isValid())
-	{
-		// defense answer
-		if (handfighting && !b1->isHideAttack() && b2->AllowResponse())
-		{
-			BattleProcess(*b2, *b1);
-			b2->SetResponse();
-		}
+    if (b2->isValid())
+    {
+        // defense answer
+        if (handfighting && !b1->isHideAttack() && b2->AllowResponse())
+        {
+            BattleProcess(*b2, *b1);
+            b2->SetResponse();
+        }
 
-		// twice attack
-		if (b1->isValid() && b1->isTwiceAttack() && !b1->Modes(IS_PARALYZE_MAGIC))
-		{
-			BattleProcess(*b1, *b2);
-		}
-	}
+        // twice attack
+        if (b1->isValid() && b1->isTwiceAttack() && !b1->Modes(IS_PARALYZE_MAGIC))
+        {
+            BattleProcess(*b1, *b2);
+        }
+    }
 
-	b1->UpdateDirection();
-	b2->UpdateDirection();
+    b1->UpdateDirection();
+    b2->UpdateDirection();
 }
 
 void Battle::Arena::ApplyActionMove(Command &cmd)
@@ -231,56 +232,56 @@ void Battle::Arena::ApplyActionMove(Command &cmd)
     Cell *cell = Board::GetCell(dst);
 
     if (!b || !b->isValid() || !cell || !cell->isPassable3(*b, false))
-		return;
-	Position pos2;
-	const s32 head = b->GetHeadIndex();
-	Position pos1 = Position::GetCorrect(*b, dst);
+        return;
+    Position pos2;
+    const s32 head = b->GetHeadIndex();
+    Position pos1 = Position::GetCorrect(*b, dst);
 
-	// force check fly
-	if (static_cast<ArmyTroop *>(b)->isFly())
-	{
-		b->UpdateDirection(pos1.GetRect());
-		if (b->isReflect() != pos1.isReflect()) pos1.Swap();
-		if (interface) interface->RedrawActionFly(*b, pos1);
-		pos2 = pos1;
-	} else
-	{
-		Indexes path;
+    // force check fly
+    if (static_cast<ArmyTroop *>(b)->isFly())
+    {
+        b->UpdateDirection(pos1.GetRect());
+        if (b->isReflect() != pos1.isReflect()) pos1.Swap();
+        if (interface) interface->RedrawActionFly(*b, pos1);
+        pos2 = pos1;
+    } else
+    {
+        Indexes path;
 
-		// check path
-		if (0 == path_size)
-		{
-			path = GetPath(*b, pos1);
-			cmd = Command(MSG_BATTLE_MOVE, b->GetUID(), dst, path);
-		} else
-			for (int index = 0; index < path_size; ++index)
-				path.push_back(cmd.GetValue());
+        // check path
+        if (0 == path_size)
+        {
+            path = GetPath(*b, pos1);
+            cmd = Command(MSG_BATTLE_MOVE, b->GetUID(), dst, path);
+        } else
+            for (int index = 0; index < path_size; ++index)
+                path.push_back(cmd.GetValue());
 
-		if (path.empty())
-		{
-			return;
-		}
+        if (path.empty())
+        {
+            return;
+        }
 
-		if (interface) interface->RedrawActionMove(*b, path);
-		else if (bridge)
-		{
-			for (Indexes::const_iterator
-			     it = path.begin(); it != path.end(); ++it)
-				if (bridge->NeedAction(*b, *it)) bridge->Action(*b, *it);
-		}
+        if (interface) interface->RedrawActionMove(*b, path);
+        else if (bridge)
+        {
+            for (Indexes::const_iterator
+                         it = path.begin(); it != path.end(); ++it)
+                if (bridge->NeedAction(*b, *it)) bridge->Action(*b, *it);
+        }
 
-		if (b->isWide())
-		{
-			const s32 dst1 = path.back();
-			const s32 dst2 = 1 < path.size() ? path[path.size() - 2] : head;
+        if (b->isWide())
+        {
+            const s32 dst1 = path.back();
+            const s32 dst2 = 1 < path.size() ? path[path.size() - 2] : head;
 
-			pos2.Set(dst1, b->isWide(), RIGHT_SIDE & Board::GetDirection(dst1, dst2));
-		} else
-			pos2.Set(path.back(), false, b->isReflect());
-	}
+            pos2.Set(dst1, b->isWide(), RIGHT_SIDE & Board::GetDirection(dst1, dst2));
+        } else
+            pos2.Set(path.back(), false, b->isReflect());
+    }
 
-	b->SetPosition(pos2);
-	b->UpdateDirection();
+    b->SetPosition(pos2);
+    b->UpdateDirection();
 }
 
 void Battle::Arena::ApplyActionSkip(Command &cmd)
@@ -290,19 +291,19 @@ void Battle::Arena::ApplyActionSkip(Command &cmd)
 
     Unit *battle = GetTroopUID(uid);
     if (!battle || !battle->isValid())
-		return;
-	if (battle->Modes(TR_MOVED))
-		return;
-	if (hard)
-	{
-		battle->SetModes(TR_HARDSKIP);
-		battle->SetModes(TR_SKIPMOVE);
-		battle->SetModes(TR_MOVED);
-		if (Settings::Get().ExtBattleSkipIncreaseDefense()) battle->SetModes(TR_DEFENSED);
-	} else
-		battle->SetModes(battle->Modes(TR_SKIPMOVE) ? TR_MOVED : TR_SKIPMOVE);
+        return;
+    if (battle->Modes(TR_MOVED))
+        return;
+    if (hard)
+    {
+        battle->SetModes(TR_HARDSKIP);
+        battle->SetModes(TR_SKIPMOVE);
+        battle->SetModes(TR_MOVED);
+        if (Settings::Get().ExtBattleSkipIncreaseDefense()) battle->SetModes(TR_DEFENSED);
+    } else
+        battle->SetModes(battle->Modes(TR_SKIPMOVE) ? TR_MOVED : TR_SKIPMOVE);
 
-	if (interface) interface->RedrawActionSkipStatus(*battle);
+    if (interface) interface->RedrawActionSkipStatus(*battle);
 }
 
 void Battle::Arena::ApplyActionEnd(Command &cmd)
@@ -312,12 +313,12 @@ void Battle::Arena::ApplyActionEnd(Command &cmd)
     Unit *battle = GetTroopUID(uid);
 
     if (!battle)
-		return;
-	if (battle->Modes(TR_MOVED))
-		return;
-	battle->SetModes(TR_MOVED);
+        return;
+    if (battle->Modes(TR_MOVED))
+        return;
+    battle->SetModes(TR_MOVED);
 
-	if (battle->Modes(TR_SKIPMOVE) && interface) interface->RedrawActionSkipStatus(*battle);
+    if (battle->Modes(TR_SKIPMOVE) && interface) interface->RedrawActionSkipStatus(*battle);
 }
 
 void Battle::Arena::ApplyActionMorale(Command &cmd)
@@ -328,70 +329,70 @@ void Battle::Arena::ApplyActionMorale(Command &cmd)
     Unit *b = GetTroopUID(uid);
 
     if (!b || !b->isValid())
-		return;
-	// good morale
-	if (morale && b->Modes(TR_MOVED) && b->Modes(MORALE_GOOD))
-	{
-		b->ResetModes(TR_MOVED);
-		b->ResetModes(MORALE_GOOD);
-		end_turn = false;
-	}
-		// bad morale
-	else if (!morale && !b->Modes(TR_MOVED) && b->Modes(MORALE_BAD))
-	{
-		b->SetModes(TR_MOVED);
-		b->ResetModes(MORALE_BAD);
-		end_turn = true;
-	}
+        return;
+    // good morale
+    if (morale && b->Modes(TR_MOVED) && b->Modes(MORALE_GOOD))
+    {
+        b->ResetModes(TR_MOVED);
+        b->ResetModes(MORALE_GOOD);
+        end_turn = false;
+    }
+        // bad morale
+    else if (!morale && !b->Modes(TR_MOVED) && b->Modes(MORALE_BAD))
+    {
+        b->SetModes(TR_MOVED);
+        b->ResetModes(MORALE_BAD);
+        end_turn = true;
+    }
 
-	if (interface) interface->RedrawActionMorale(*b, morale);
+    if (interface) interface->RedrawActionMorale(*b, morale);
 }
 
 void Battle::Arena::ApplyActionRetreat(Command &cmd)
 {
     if (!CanRetreatOpponent(current_color))
-		return;
-	if (army1->GetColor() == current_color)
-	{
-		result_game.army1 = RESULT_RETREAT;
-	} else if (army2->GetColor() == current_color)
-	{
-		result_game.army2 = RESULT_RETREAT;
-	}
+        return;
+    if (army1->GetColor() == current_color)
+    {
+        result_game.army1 = RESULT_RETREAT;
+    } else if (army2->GetColor() == current_color)
+    {
+        result_game.army2 = RESULT_RETREAT;
+    }
 }
 
 void Battle::Arena::ApplyActionSurrender(Command &cmd)
 {
     if (!CanSurrenderOpponent(current_color))
-		return;
-	Funds cost;
+        return;
+    Funds cost;
 
-	if (army1->GetColor() == current_color)
-		cost.gold = army1->GetSurrenderCost();
-	else if (army2->GetColor() == current_color)
-		cost.gold = army2->GetSurrenderCost();
+    if (army1->GetColor() == current_color)
+        cost.gold = army1->GetSurrenderCost();
+    else if (army2->GetColor() == current_color)
+        cost.gold = army2->GetSurrenderCost();
 
-	if (!world.GetKingdom(current_color).AllowPayment(cost))
-		return;
-	if (army1->GetColor() == current_color)
-	{
-		result_game.army1 = RESULT_SURRENDER;
-		world.GetKingdom(current_color).OddFundsResource(cost);
-		world.GetKingdom(army2->GetColor()).AddFundsResource(cost);
-	} else if (army2->GetColor() == current_color)
-	{
-		result_game.army2 = RESULT_SURRENDER;
-		world.GetKingdom(current_color).OddFundsResource(cost);
-		world.GetKingdom(army1->GetColor()).AddFundsResource(cost);
-	}
+    if (!world.GetKingdom(current_color).AllowPayment(cost))
+        return;
+    if (army1->GetColor() == current_color)
+    {
+        result_game.army1 = RESULT_SURRENDER;
+        world.GetKingdom(current_color).OddFundsResource(cost);
+        world.GetKingdom(army2->GetColor()).AddFundsResource(cost);
+    } else if (army2->GetColor() == current_color)
+    {
+        result_game.army2 = RESULT_SURRENDER;
+        world.GetKingdom(current_color).OddFundsResource(cost);
+        world.GetKingdom(army1->GetColor()).AddFundsResource(cost);
+    }
 }
 
 void Battle::Arena::TargetsApplyDamage(Unit &attacker, Unit &defender, TargetsInfo &targets)
 {
-    for (auto & target : targets)
+    for (auto &target : targets)
     {
         if (!target.defender) continue;
-	    target.killed = target.defender->ApplyDamage(attacker, target.damage);
+        target.killed = target.defender->ApplyDamage(attacker, target.damage);
     }
 }
 
@@ -465,10 +466,10 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForDamage(Unit &attacker, Unit &def
 
 void Battle::Arena::TargetsApplySpell(const HeroBase *hero, const Spell &spell, TargetsInfo &targets)
 {
-    for (auto & target : targets)
+    for (auto &target : targets)
     {
         if (!target.defender) continue;
-	    target.defender->ApplySpell(spell, hero, target);
+        target.defender->ApplySpell(spell, hero, target);
     }
 }
 
@@ -630,34 +631,34 @@ void Battle::Arena::ApplyActionTower(Command &cmd)
     Unit *b2 = GetTroopUID(uid);
 
     if (!b2 || !b2->isValid() || !tower)
-		return;
-	TargetInfo target;
-	target.defender = b2;
-	target.damage = tower->GetDamage(*b2);
+        return;
+    TargetInfo target;
+    target.defender = b2;
+    target.damage = tower->GetDamage(*b2);
 
-	if (interface) interface->RedrawActionTowerPart1(*tower, *b2);
-	target.killed = b2->ApplyDamage(*tower, target.damage);
-	if (interface) interface->RedrawActionTowerPart2(*tower, target);
+    if (interface) interface->RedrawActionTowerPart1(*tower, *b2);
+    target.killed = b2->ApplyDamage(*tower, target.damage);
+    if (interface) interface->RedrawActionTowerPart2(*tower, target);
 
-	if (b2->Modes(SP_BLIND)) b2->ResetBlind();
+    if (b2->Modes(SP_BLIND)) b2->ResetBlind();
 }
 
 void Battle::Arena::ApplyActionCatapult(Command &cmd)
 {
     if (!catapult)
-		return;
-	u32 shots = cmd.GetValue();
+        return;
+    u32 shots = cmd.GetValue();
 
-	while (shots--)
-	{
-		u32 target = cmd.GetValue();
-		u32 damage = cmd.GetValue();
+    while (shots--)
+    {
+        u32 target = cmd.GetValue();
+        u32 damage = cmd.GetValue();
 
-		if (!target)
-			continue;
-		if (interface) interface->RedrawActionCatapult(target);
-		SetCastleTargetValue(target, GetCastleTargetValue(target) - damage);
-	}
+        if (!target)
+            continue;
+        if (interface) interface->RedrawActionCatapult(target);
+        SetCastleTargetValue(target, GetCastleTargetValue(target) - damage);
+    }
 }
 
 void Battle::Arena::ApplyActionAutoBattle(Command &cmd)
@@ -665,16 +666,16 @@ void Battle::Arena::ApplyActionAutoBattle(Command &cmd)
     int color = cmd.GetValue();
 
     if (current_color != color)
-		return;
-	if (auto_battle & color)
-	{
-		if (interface) interface->SetStatus(_("Set auto battle off"), true);
-		auto_battle &= ~color;
-	} else
-	{
-		if (interface) interface->SetStatus(_("Set auto battle on"), true);
-		auto_battle |= color;
-	}
+        return;
+    if (auto_battle & color)
+    {
+        if (interface) interface->SetStatus(_("Set auto battle off"), true);
+        auto_battle &= ~color;
+    } else
+    {
+        if (interface) interface->SetStatus(_("Set auto battle on"), true);
+        auto_battle |= color;
+    }
 }
 
 void Battle::Arena::ApplyActionSpellSummonElemental(Command &cmd, const Spell &spell)
@@ -707,14 +708,14 @@ void Battle::Arena::ApplyActionSpellTeleport(Command &cmd)
     const Spell spell(Spell::TELEPORT);
 
     if (!b)
-		return;
-	Position pos = Position::GetCorrect(*b, dst);
-	if (b->isReflect() != pos.isReflect()) pos.Swap();
+        return;
+    Position pos = Position::GetCorrect(*b, dst);
+    if (b->isReflect() != pos.isReflect()) pos.Swap();
 
-	if (interface) interface->RedrawActionTeleportSpell(*b, pos.GetHead()->GetIndex());
+    if (interface) interface->RedrawActionTeleportSpell(*b, pos.GetHead()->GetIndex());
 
-	b->SetPosition(pos);
-	b->UpdateDirection();
+    b->SetPosition(pos);
+    b->UpdateDirection();
 }
 
 void Battle::Arena::ApplyActionSpellEarthQuake(Command &cmd)
@@ -742,30 +743,30 @@ void Battle::Arena::ApplyActionSpellMirrorImage(Command &cmd)
     Unit *b = GetTroopBoard(who);
 
     if (!b)
-		return;
-	Indexes distances = Board::GetDistanceIndexes(b->GetHeadIndex(), 4);
+        return;
+    Indexes distances = Board::GetDistanceIndexes(b->GetHeadIndex(), 4);
 
-	ShortestDistance SortingDistance(b->GetHeadIndex());
-	sort(distances.begin(), distances.end(), SortingDistance);
+    ShortestDistance SortingDistance(b->GetHeadIndex());
+    sort(distances.begin(), distances.end(), SortingDistance);
 
-	auto it = find_if(distances.begin(), distances.end(),
-	                  bind2nd(ptr_fun(&Board::isValidMirrorImageIndex), b));
+    auto it = find_if(distances.begin(), distances.end(),
+                      bind2nd(ptr_fun(&Board::isValidMirrorImageIndex), b));
 
-	for (auto& distance : distances)
-	{
-		const Cell *cell = Board::GetCell(distance);
-		if (cell && cell->isPassable3(*b, true)) break;
-	}
+    for (auto &distance : distances)
+    {
+        const Cell *cell = Board::GetCell(distance);
+        if (cell && cell->isPassable3(*b, true)) break;
+    }
 
-	if (it != distances.end())
-	{
-		const Position pos = Position::GetCorrect(*b, *it);
-		const s32 dst = pos.GetHead()->GetIndex();
-		if (interface) interface->RedrawActionMirrorImageSpell(*b, pos);
-		Unit *mirror = CreateMirrorImage(*b, dst);
-		if (mirror) mirror->SetPosition(pos);
-	} else
-	{
-		if (interface) interface->SetStatus(_("spell failed!"), true);
-	}
+    if (it != distances.end())
+    {
+        const Position pos = Position::GetCorrect(*b, *it);
+        const s32 dst = pos.GetHead()->GetIndex();
+        if (interface) interface->RedrawActionMirrorImageSpell(*b, pos);
+        Unit *mirror = CreateMirrorImage(*b, dst);
+        if (mirror) mirror->SetPosition(pos);
+    } else
+    {
+        if (interface) interface->SetStatus(_("spell failed!"), true);
+    }
 }

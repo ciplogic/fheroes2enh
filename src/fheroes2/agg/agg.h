@@ -66,8 +66,11 @@ namespace AGG
     Surface GetLetter(u32 ch, u32 ft);
 
 #ifdef WITH_TTF
-    Surface	GetUnicodeLetter(u32 ch, u32 ft);
-    u32		GetFontHeight(bool small);
+
+    Surface GetUnicodeLetter(u32 ch, u32 ft);
+
+    u32 GetFontHeight(bool small);
+
 #endif
 
     void LoadLOOPXXSounds(const std::vector<int> &);
@@ -80,7 +83,7 @@ namespace AGG
 
     RGBA GetPaletteColor(u32 index);
 
-	void DrawPointFast(Surface&srf, int x, int y, u8 color);
+    void DrawPointFast(Surface &srf, int x, int y, u8 color);
 
     ICNSprite RenderICNSprite(int, u32);
 

@@ -129,7 +129,7 @@ public:
         {
             cobj.SetSplit(3);
             return true;
-        } 
+        }
         if (le.MouseClickLeft(rt3) && 5 != cobj.GetSplit() && troop.GetCount() >= 5)
         {
             cobj.SetSplit(5);

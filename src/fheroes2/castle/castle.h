@@ -126,7 +126,7 @@ public:
     virtual ~Castle()
     {}
 
-    void LoadFromMP2(ByteVectorReader&);
+    void LoadFromMP2(ByteVectorReader &);
 
     Captain &GetCaptain();
 
@@ -201,9 +201,10 @@ public:
     void DrawImageCastle(const Point &);
 
     int OpenDialog(bool readonly = false, bool fade = false);
-	void DrawCastleFundsAtPos(Display& display, const Funds& resource, Rect src_rt) const;
 
-	int GetAttackModificator(string *) const;
+    void DrawCastleFundsAtPos(Display &display, const Funds &resource, Rect src_rt) const;
+
+    int GetAttackModificator(string *) const;
 
     int GetDefenseModificator(string *) const;
 
@@ -302,8 +303,8 @@ private:
     friend StreamBase &operator<<(StreamBase &, const Castle &);
 
     friend StreamBase &operator>>(StreamBase &, Castle &);
-	friend ByteVectorReader &operator>>(ByteVectorReader &, Castle &);
 
+    friend ByteVectorReader &operator>>(ByteVectorReader &, Castle &);
 
 
     int race;
@@ -313,7 +314,7 @@ private:
     string name;
 
     MageGuild mageguild;
-    u32 dwelling[CASTLEMAXMONSTER] {};
+    u32 dwelling[CASTLEMAXMONSTER]{};
     Army army;
 };
 

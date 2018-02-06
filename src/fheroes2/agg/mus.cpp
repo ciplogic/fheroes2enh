@@ -85,7 +85,7 @@ namespace MUS
             {UNKNOWN,      "UNKNOWN"}
     };
 
-	string GetString(int mus, bool shortname)
+    string GetString(int mus, bool shortname)
     {
         stringstream sstream;
         sstream << setw(2) << setfill('0') << mus;

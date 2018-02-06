@@ -195,13 +195,15 @@ public:
     static void UpdateStats(const string &);
 
     static u32 CalculateDimensionDoorDistance(u32 current_sp, u32 total_hp);
-	void ReadFrom(ByteVectorReader &msg);
+
+    void ReadFrom(ByteVectorReader &msg);
 
 private:
     friend StreamBase &operator<<(StreamBase &, const Spell &);
 
     friend StreamBase &operator>>(StreamBase &, Spell &);
-	friend ByteVectorReader &operator>>(ByteVectorReader&, Spell &);
+
+    friend ByteVectorReader &operator>>(ByteVectorReader &, Spell &);
 
     int id;
 };
@@ -209,6 +211,7 @@ private:
 StreamBase &operator<<(StreamBase &, const Spell &);
 
 StreamBase &operator>>(StreamBase &, Spell &);
+
 ByteVectorReader &operator>>(ByteVectorReader &, Spell &);
 
 #endif

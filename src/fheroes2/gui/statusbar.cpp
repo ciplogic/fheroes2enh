@@ -40,14 +40,14 @@ void StatusBar::SetCenter(s32 cx, s32 cy)
 void StatusBar::ShowMessage(const string &msg)
 {
     if (msg == prev)
-		return;
-	Cursor::Get().Hide();
-	SetText(msg);
-	SetPos(center.x - w() / 2, center.y - h() / 2);
-	Show();
-	Cursor::Get().Show();
-	Display::Get().Flip();
-	prev = msg;
+        return;
+    Cursor::Get().Hide();
+    SetText(msg);
+    SetPos(center.x - w() / 2, center.y - h() / 2);
+    Show();
+    Cursor::Get().Show();
+    Display::Get().Flip();
+    prev = msg;
 }
 
 void StatusBar::Redraw()

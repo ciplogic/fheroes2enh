@@ -8,7 +8,10 @@
 #include <cstring>
 
 namespace FileUtils
-{    template <class T> void ZeroMem(T& t){
+{
+    template<class T>
+    void ZeroMem(T &t)
+    {
         memset(&t, 0, sizeof(T));
     }
 

@@ -298,18 +298,18 @@ void Battle::Arena::DialogBattleSummary(const Result &res) const
         text.Set("None", Font::SMALL);
         text.Blit(pos_rt.x + (pos_rt.w - text.w()) / 2, pos_rt.y + 360);
     }
-	Rect btnRect(pos_rt);
-	btnRect.x -= 18;
-	btnRect.y -= 22;
+    Rect btnRect(pos_rt);
+    btnRect.x -= 18;
+    btnRect.y -= 22;
 
-	Point textPos = pos_rt;
-	textPos.x += 36;
-	textPos.y += 410;
-	Text textFight(_("Fight: "), Font::BIG);
-	textFight.Blit(textPos);
-	ButtonGroups btnGroups(btnRect, YES|NO);
-	btnGroups.Draw();
-	cursor.Show();
+    Point textPos = pos_rt;
+    textPos.x += 36;
+    textPos.y += 410;
+    Text textFight(_("Fight: "), Font::BIG);
+    textFight.Blit(textPos);
+    ButtonGroups btnGroups(btnRect, YES | NO);
+    btnGroups.Draw();
+    cursor.Show();
     display.Flip();
 
     u32 frame = 0;
@@ -317,14 +317,14 @@ void Battle::Arena::DialogBattleSummary(const Result &res) const
     while (le.HandleEvents())
     {
         //le.MousePressLeft(btn_ok) ? btn_ok.PressDraw() : btn_ok.ReleaseDraw();
-		auto result = btnGroups.QueueEventProcessing();
-		if(Dialog::YES == result)
-		{
-			res.fightAgain = FightResultType::FightAgain;
-			break;
-		}
+        auto result = btnGroups.QueueEventProcessing();
+        if (Dialog::YES == result)
+        {
+            res.fightAgain = FightResultType::FightAgain;
+            break;
+        }
         // exit
-        if (HotKeyCloseWindow || result!=Dialog::ZERO) break;
+        if (HotKeyCloseWindow || result != Dialog::ZERO) break;
 
         // animation
         if (AnimateInfrequentDelay(Game::BATTLE_DIALOG_DELAY))

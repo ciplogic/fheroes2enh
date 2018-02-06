@@ -54,7 +54,7 @@ Castle::Castle(s32 cx, s32 cy, int rc) : MapPosition(Point(cx, cy)), race(rc), b
     army.SetCommander(&captain);
 }
 
-void Castle::LoadFromMP2(ByteVectorReader& st)
+void Castle::LoadFromMP2(ByteVectorReader &st)
 {
     switch (st.get())
     {
@@ -2454,20 +2454,20 @@ struct CastleHavePoint : public binary_function<const Castle *, const Point *, b
 Castle *VecCastles::Get(const Point &position) const
 {
     auto it = find_if(begin(), end(),
-                                     bind2nd(CastleHavePoint(), &position));
+                      bind2nd(CastleHavePoint(), &position));
     return end() != it ? *it : nullptr;
 }
 
 Castle *VecCastles::GetFirstCastle() const
 {
     auto it = find_if(begin(), end(),
-                                     mem_fun(&Castle::isCastle));
+                      mem_fun(&Castle::isCastle));
     return end() != it ? *it : nullptr;
 }
 
 void VecCastles::ChangeColors(int col1, int col2)
 {
-    for (auto& it : *this)
+    for (auto &it : *this)
         if (it->GetColor() == col1) it->ChangeColor(col2);
 }
 
@@ -2490,7 +2490,7 @@ void AllCastles::Init()
 
 void AllCastles::clear()
 {
-    for (auto& it : *this)
+    for (auto &it : *this)
         delete it;
     vector<Castle *>::clear();
 }
@@ -2525,27 +2525,27 @@ StreamBase &operator<<(StreamBase &msg, const Castle &castle)
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, Castle &castle)
 {
-	ColorBase &color = castle;
-	u32 dwellingcount;
+    ColorBase &color = castle;
+    u32 dwellingcount;
 
-	msg >>
-		static_cast<MapPosition &>(castle) >>
-		castle.modes >>
-		castle.race >>
-		castle.building >>
-		castle.captain >>
-		color >>
-		castle.name >>
-		castle.mageguild;
+    msg >>
+        static_cast<MapPosition &>(castle) >>
+        castle.modes >>
+        castle.race >>
+        castle.building >>
+        castle.captain >>
+        color >>
+        castle.name >>
+        castle.mageguild;
 
-	msg >> dwellingcount;
-	for (u32 ii = 0; ii < dwellingcount; ++ii)
-		msg >> castle.dwelling[ii];
+    msg >> dwellingcount;
+    for (u32 ii = 0; ii < dwellingcount; ++ii)
+        msg >> castle.dwelling[ii];
 
-	msg >> castle.army;
-	castle.army.SetCommander(&castle.captain);
+    msg >> castle.army;
+    castle.army.SetCommander(&castle.captain);
 
-	return msg;
+    return msg;
 }
 
 StreamBase &operator<<(StreamBase &msg, const VecCastles &castles)
@@ -2560,19 +2560,19 @@ StreamBase &operator<<(StreamBase &msg, const VecCastles &castles)
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, VecCastles &castles)
 {
-	s32 index;
-	u32 size;
-	msg >> size;
+    s32 index;
+    u32 size;
+    msg >> size;
 
-	castles.resize(size, nullptr);
+    castles.resize(size, nullptr);
 
-	for (auto &castle : castles)
-	{
-		msg >> index;
-		castle = (index < 0 ? nullptr : world.GetCastle(Maps::GetPoint(index)));
-	}
+    for (auto &castle : castles)
+    {
+        msg >> index;
+        castle = (index < 0 ? nullptr : world.GetCastle(Maps::GetPoint(index)));
+    }
 
-	return msg;
+    return msg;
 }
 
 StreamBase &operator<<(StreamBase &msg, const AllCastles &castles)
@@ -2587,19 +2587,19 @@ StreamBase &operator<<(StreamBase &msg, const AllCastles &castles)
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, AllCastles &castles)
 {
-	u32 size;
-	msg >> size;
+    u32 size;
+    msg >> size;
 
-	castles.clear();
-	castles.resize(size, nullptr);
+    castles.clear();
+    castles.resize(size, nullptr);
 
-	for (auto& castle : castles)
-	{
-		castle = new Castle();
-		msg >> *castle;
-	}
+    for (auto &castle : castles)
+    {
+        castle = new Castle();
+        msg >> *castle;
+    }
 
-	return msg;
+    return msg;
 }
 
 void Castle::SwapCastleHeroes(CastleHeroes &heroes)

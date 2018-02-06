@@ -129,7 +129,7 @@ namespace Interface
     class IconsPanel : public BorderWindow
     {
     public:
-        IconsPanel(Basic &);
+        explicit IconsPanel(Basic &);
 
         void SetPos(s32, s32);
 

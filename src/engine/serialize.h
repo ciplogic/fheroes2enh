@@ -94,7 +94,7 @@ public:
 
     u16 get16();
 
-	u32 get32();
+    u32 get32();
 
     void put16(u16);
 
@@ -174,7 +174,7 @@ public:
     }
 
     template<class Type>
-    StreamBase &operator>>(list<Type> &v)
+    StreamBase &operator>>(list <Type> &v)
     {
         const u32 size = get32();
         v.resize(size);
@@ -213,11 +213,11 @@ public:
     }
 
     template<class Type>
-    StreamBase &operator<<(const list<Type> &v)
+    StreamBase &operator<<(const list <Type> &v)
     {
         put32(static_cast<u32>(v.size()));
-		for (auto it : v)
-			*this << it;
+        for (auto it : v)
+            *this << it;
         return *this;
     }
 
@@ -254,13 +254,13 @@ public:
 
     void skip(size_t) override;
 
-	u16 getBE16() override;
+    u16 getBE16() override;
 
     u16 getLE16() override;
 
-	u32 getBE32() override;
+    u32 getBE32() override;
 
-	u32 getLE32() override;
+    u32 getLE32() override;
 
     void putBE32(u32) override;
 
@@ -276,13 +276,13 @@ public:
 
     string toString(size_t = 0 /* all data */);
 
-	StreamBuf toStreamBuf(size_t sz)
-	{
-		StreamBuf sb;
-		vector<u8> buf = getRaw(sz);
-		sb.putRaw(reinterpret_cast<const char *>(&buf[0]), buf.size());
-		return sb;
-	}
+    StreamBuf toStreamBuf(size_t sz)
+    {
+        StreamBuf sb;
+        vector<u8> buf = getRaw(sz);
+        sb.putRaw(reinterpret_cast<const char *>(&buf[0]), buf.size());
+        return sb;
+    }
 
 protected:
     void reset();
@@ -318,13 +318,13 @@ protected:
 };
 
 
-
 class StreamFile : public StreamBase
 {
     SDL_RWops *rw;
 
 public:
-    StreamFile() : rw(nullptr) {}
+    StreamFile() : rw(nullptr)
+    {}
 
     StreamFile(const string &, const char *mode);
 
@@ -344,13 +344,13 @@ public:
 
     void skip(size_t) override;
 
-	u16 getBE16() override;
+    u16 getBE16() override;
 
-	u16 getLE16() override;
+    u16 getLE16() override;
 
-	u32 getBE32() override;
+    u32 getBE32() override;
 
-	u32 getLE32() override;
+    u32 getLE32() override;
 
     void putBE32(u32) override;
 

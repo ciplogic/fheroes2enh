@@ -84,7 +84,7 @@ namespace Battle
     public:
         Unit(const Troop &, s32 pos, bool reflect);
 
-	    virtual ~Unit();
+        virtual ~Unit();
 
         bool isModes(u32) const;
 
@@ -250,7 +250,7 @@ namespace Battle
 
         u32 HowManyCanKill(const Unit &) const;
 
-        u32 HowManyWillKilled(u32&) const;
+        u32 HowManyWillKilled(u32 &) const;
 
         void SetResponse();
 
@@ -275,7 +275,8 @@ namespace Battle
     private:
         friend StreamBase &operator<<(StreamBase &, const Unit &);
 
-		friend ByteVectorReader &operator>>(ByteVectorReader &, Unit &);
+        friend ByteVectorReader &operator>>(ByteVectorReader &, Unit &);
+
         friend StreamBase &operator>>(StreamBase &, Unit &);
 
         u32 uid;
@@ -301,7 +302,8 @@ namespace Battle
     StreamBase &operator<<(StreamBase &, const Unit &);
 
     StreamBase &operator>>(StreamBase &, Unit &);
-	ByteVectorReader &operator>>(ByteVectorReader &, Unit &);
+
+    ByteVectorReader &operator>>(ByteVectorReader &, Unit &);
 }
 
 #endif

@@ -193,5 +193,5 @@ StreamBase &operator>>(StreamBase &msg, ColorBase &col)
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, ColorBase &col)
 {
-	return msg >> col.color;
+    return msg >> col.color;
 }

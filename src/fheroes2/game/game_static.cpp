@@ -38,7 +38,7 @@ namespace Skill
             {"warlock",     {0, 0, 2, 2}, {0, 0, 3, 2}, 1, 19, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1}, 10, {10, 10, 50, 30}, {20, 20, 30, 30}, {1, 3, 2, 3, 2, 1, 2, 1, 3, 2, 1, 2, 4, 5}},
             {"wizard",      {0, 0, 2, 2}, {0, 1, 2, 2}, 1, 17, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2}, 10, {10, 10, 40, 40}, {20, 20, 30, 30}, {1, 3, 2, 3, 2, 2, 2, 2, 4, 2, 0, 2, 2, 5}},
             {"necromancer", {0, 0, 2, 2}, {1, 0, 2, 2}, 1, 10, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1}, 10, {15, 15, 35, 35}, {25, 25, 25, 25}, {1, 3, 2, 3, 2, 0, 2, 1, 3, 2, 5, 3, 1, 4}},
-            {nullptr,          {0, 0, 0, 0}, {0, 0, 0, 0}, 0, 0,  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 10, {0,  0,  0,  0},  {0,  0,  0,  0},  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}}
+            {nullptr,       {0, 0, 0, 0}, {0, 0, 0, 0}, 0, 0,  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 10, {0,  0,  0,  0},  {0,  0,  0,  0},  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}}
     };
 
     values_t _values[] = {
@@ -56,7 +56,7 @@ namespace Skill
             {"eagleeye",    {20,  30,  40}},
             {"necromancy",  {10,  20,  30}},
             {"estates",     {100, 250, 500}},
-            {nullptr,          {0,   0,   0}},
+            {nullptr,       {0,   0,   0}},
     };
 
     secondary_t _from_witchs_hut = {
@@ -76,10 +76,10 @@ namespace Skill
         return msg >> obj.basic >> obj.advanced >> obj.expert;
     }
 
-	ByteVectorReader &operator>>(ByteVectorReader &msg, level_t &obj)
-	{
-		return msg >> obj.basic >> obj.advanced >> obj.expert;
-	}
+    ByteVectorReader &operator>>(ByteVectorReader &msg, level_t &obj)
+    {
+        return msg >> obj.basic >> obj.advanced >> obj.expert;
+    }
 
     StreamBase &operator<<(StreamBase &msg, const primary_t &obj)
     {
@@ -90,10 +90,11 @@ namespace Skill
     {
         return msg >> obj.attack >> obj.defense >> obj.power >> obj.knowledge;
     }
-	ByteVectorReader &operator>>(ByteVectorReader &msg, primary_t &obj)
-	{
-		return msg >> obj.attack >> obj.defense >> obj.power >> obj.knowledge;
-	}
+
+    ByteVectorReader &operator>>(ByteVectorReader &msg, primary_t &obj)
+    {
+        return msg >> obj.attack >> obj.defense >> obj.power >> obj.knowledge;
+    }
 
     StreamBase &operator<<(StreamBase &msg, const secondary_t &obj)
     {
@@ -109,12 +110,12 @@ namespace Skill
                    >> obj.scouting >> obj.wisdom;
     }
 
-	ByteVectorReader &operator>>(ByteVectorReader &msg, secondary_t &obj)
-	{
-		return msg >> obj.archery >> obj.ballistics >> obj.diplomacy >> obj.eagleeye >> obj.estates >> obj.leadership >>
-			obj.logistics >> obj.luck >> obj.mysticism >> obj.navigation >> obj.necromancy >> obj.pathfinding
-			>> obj.scouting >> obj.wisdom;
-	}
+    ByteVectorReader &operator>>(ByteVectorReader &msg, secondary_t &obj)
+    {
+        return msg >> obj.archery >> obj.ballistics >> obj.diplomacy >> obj.eagleeye >> obj.estates >> obj.leadership >>
+                   obj.logistics >> obj.luck >> obj.mysticism >> obj.navigation >> obj.necromancy >> obj.pathfinding
+                   >> obj.scouting >> obj.wisdom;
+    }
 
     StreamBase &operator<<(StreamBase &msg, const stats_t &obj)
     {
@@ -130,12 +131,12 @@ namespace Skill
                    >> obj.mature_secondary;
     }
 
-	ByteVectorReader &operator>>(ByteVectorReader &msg, stats_t &obj)
-	{
-		return msg >> obj.captain_primary >> obj.initial_primary >> obj.initial_book >> obj.initial_spell >>
-			obj.initial_secondary >> obj.over_level >> obj.mature_primary_under >> obj.mature_primary_over
-			>> obj.mature_secondary;
-	}
+    ByteVectorReader &operator>>(ByteVectorReader &msg, stats_t &obj)
+    {
+        return msg >> obj.captain_primary >> obj.initial_primary >> obj.initial_book >> obj.initial_spell >>
+                   obj.initial_secondary >> obj.over_level >> obj.mature_primary_under >> obj.mature_primary_over
+                   >> obj.mature_secondary;
+    }
 
     StreamBase &operator<<(StreamBase &msg, const values_t &obj)
     {
@@ -147,10 +148,10 @@ namespace Skill
         return msg >> obj.values;
     }
 
-	ByteVectorReader &operator>>(ByteVectorReader &msg, values_t &obj)
-	{
-		return msg >> obj.values;
-	}
+    ByteVectorReader &operator>>(ByteVectorReader &msg, values_t &obj)
+    {
+        return msg >> obj.values;
+    }
 
 }
 

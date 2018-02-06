@@ -64,7 +64,7 @@ int ArtifactsModifiersResult(int type, const u8 *arts, u32 size, const HeroBase 
                         break;
                         // morale
                     case Artifact::FIZBIN_MISFORTUNE:
-                        if (type == MDF_MORALE) mod = 0-art.ExtraValue();
+                        if (type == MDF_MORALE) mod = 0 - art.ExtraValue();
                         break;
                     default:
                         break;
@@ -196,27 +196,27 @@ void HeroBase::LoadDefaults(int type, int race)
     }
 }
 
-void HeroBase::ReadFrom(ByteVectorReader & msg)
+void HeroBase::ReadFrom(ByteVectorReader &msg)
 {
-	auto& hero = *this;
-	
-	auto& skillPrimary = static_cast<Skill::Primary &>(hero);
-	skillPrimary.ReadFrom(msg);
-	auto& mapPos = static_cast<MapPosition &>(hero);
-	mapPos.ReadFrom(msg);
-	msg >>
-		// modes
-		hero.modes >>
-		hero.magic_point >> hero.move_point;
+    auto &hero = *this;
 
-	msg.readToVec(hero.spell_book); 
-		msg.readToVec(hero.bag_artifacts);
+    auto &skillPrimary = static_cast<Skill::Primary &>(hero);
+    skillPrimary.ReadFrom(msg);
+    auto &mapPos = static_cast<MapPosition &>(hero);
+    mapPos.ReadFrom(msg);
+    msg >>
+        // modes
+        hero.modes >>
+        hero.magic_point >> hero.move_point;
 
-	if (FORMAT_VERSION_3269 > Game::GetLoadVersion())
-	{
-		if (hero.bag_artifacts.size() < HEROESMAXARTIFACT)
-			hero.bag_artifacts.resize(HEROESMAXARTIFACT, Artifact::UNKNOWN);
-	}
+    msg.readToVec(hero.spell_book);
+    msg.readToVec(hero.bag_artifacts);
+
+    if (FORMAT_VERSION_3269 > Game::GetLoadVersion())
+    {
+        if (hero.bag_artifacts.size() < HEROESMAXARTIFACT)
+            hero.bag_artifacts.resize(HEROESMAXARTIFACT, Artifact::UNKNOWN);
+    }
 
 }
 
@@ -532,19 +532,19 @@ StreamBase &operator<<(StreamBase &msg, const HeroBase &hero)
 /* unpack hero base */
 ByteVectorReader &operator>>(ByteVectorReader &msg, HeroBase &hero)
 {
-	msg >>
-		static_cast<Skill::Primary &>(hero) >>
-		static_cast<MapPosition &>(hero) >>
-		// modes
-		hero.modes >>
-		hero.magic_point >> hero.move_point >>
-		hero.spell_book >> hero.bag_artifacts;
+    msg >>
+        static_cast<Skill::Primary &>(hero) >>
+        static_cast<MapPosition &>(hero) >>
+        // modes
+        hero.modes >>
+        hero.magic_point >> hero.move_point >>
+        hero.spell_book >> hero.bag_artifacts;
 
-	if (FORMAT_VERSION_3269 > Game::GetLoadVersion())
-	{
-		if (hero.bag_artifacts.size() < HEROESMAXARTIFACT)
-			hero.bag_artifacts.resize(HEROESMAXARTIFACT, Artifact::UNKNOWN);
-	}
+    if (FORMAT_VERSION_3269 > Game::GetLoadVersion())
+    {
+        if (hero.bag_artifacts.size() < HEROESMAXARTIFACT)
+            hero.bag_artifacts.resize(HEROESMAXARTIFACT, Artifact::UNKNOWN);
+    }
 
-	return msg;
+    return msg;
 }

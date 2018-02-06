@@ -445,7 +445,7 @@ s32 Route::Path::GetAllowStep() const
 
     for (auto it : *this)
     {
-        if(move_point < it.GetPenalty())
+        if (move_point < it.GetPenalty())
             break;
         move_point -= it.GetPenalty();
         ++green;
@@ -550,9 +550,10 @@ StreamBase &Route::operator>>(StreamBase &msg, Step &step)
 {
     return msg >> step.from >> step.direction >> step.penalty;
 }
+
 ByteVectorReader &Route::operator>>(ByteVectorReader &msg, Step &step)
 {
-	return msg >> step.from >> step.direction >> step.penalty;
+    return msg >> step.from >> step.direction >> step.penalty;
 }
 
 
@@ -565,6 +566,6 @@ StreamBase &Route::operator>>(StreamBase &msg, Path &path)
 
 ByteVectorReader &Route::operator>>(ByteVectorReader &msg, Path &path)
 {
-	list<Step> &base = path;
-	return msg >> path.dst >> path.hide >> base;
+    list<Step> &base = path;
+    return msg >> path.dst >> path.hide >> base;
 }

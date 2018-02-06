@@ -37,6 +37,7 @@ namespace Maps
 }
 
 class Castle;
+
 class Heroes;
 
 // control_t
@@ -103,7 +104,7 @@ class Player : public Control
 {
 public:
     Player(int col = Color::NONE);
-	
+
     bool isID(u32) const;
 
     bool isColor(int) const;
@@ -139,13 +140,15 @@ public:
     Focus &GetFocus();
 
     const Focus &GetFocus() const;
-	BitModes _bitModes;
+
+    BitModes _bitModes;
 
 protected:
     friend StreamBase &operator<<(StreamBase &, const Player &);
 
     friend StreamBase &operator>>(StreamBase &, Player &);
-	friend ByteVectorReader &operator>>(ByteVectorReader &, Player &);
+
+    friend ByteVectorReader &operator>>(ByteVectorReader &, Player &);
 
     int control;
     int color;
@@ -159,9 +162,10 @@ protected:
 StreamBase &operator<<(StreamBase &, const Player &);
 
 StreamBase &operator>>(StreamBase &, Player &);
+
 ByteVectorReader &operator>>(ByteVectorReader &, Player &);
 
-class Players  
+class Players
 {
 public:
     Players();
@@ -208,13 +212,14 @@ public:
 
     static int FriendColors();
 
-	vector<Player *> _items;
+    vector<Player *> _items;
     int current_color;
 };
 
 StreamBase &operator<<(StreamBase &, const Players &);
 
 StreamBase &operator>>(StreamBase &, Players &);
+
 ByteVectorReader &operator>>(ByteVectorReader &, Players &);
 
 namespace Interface

@@ -235,9 +235,9 @@ void Artifact::UpdateStats(const string &spec)
 {
 }
 
-void Artifact::ReadFrom(ByteVectorReader & msg)
+void Artifact::ReadFrom(ByteVectorReader &msg)
 {
-	msg >> id >> ext;
+    msg >> id >> ext;
 }
 
 Artifact::Artifact(int art) : id(art < UNKNOWN ? art : UNKNOWN), ext(0)
@@ -699,7 +699,7 @@ StreamBase &operator<<(StreamBase &msg, const Artifact &art)
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, Artifact &art)
 {
-	return msg >> art.id >> art.ext;
+    return msg >> art.id >> art.ext;
 }
 
 BagArtifacts::BagArtifacts() : vector<Artifact>(HEROESMAXARTIFACT, Artifact::UNKNOWN)
@@ -752,8 +752,8 @@ bool BagArtifacts::isFull() const
 bool BagArtifacts::MakeBattleGarb()
 {
     iterator it1 = find(begin(), end(), Artifact(Artifact::BREASTPLATE_ANDURAN));
-	iterator it2 = find(begin(), end(), Artifact(Artifact::HELMET_ANDURAN));
-	iterator it3 = find(begin(), end(), Artifact(Artifact::SWORD_ANDURAN));
+    iterator it2 = find(begin(), end(), Artifact(Artifact::HELMET_ANDURAN));
+    iterator it3 = find(begin(), end(), Artifact(Artifact::SWORD_ANDURAN));
     if (it1 == end() || it2 == end() || it3 == end()) return false;
 
     *it1 = Artifact::UNKNOWN;

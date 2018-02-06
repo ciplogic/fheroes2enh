@@ -120,13 +120,13 @@ public:
         GAME_BATTLE_SHOW_MOUSE_SHADOW = 0x10040000,
         GAME_BATTLE_SHOW_MOVE_SHADOW = 0x10080000,
         GAME_BATTLE_SHOW_DAMAGE = 0x10100000,
-		GAME_CONTINUE_AFTER_VICTORY = 0x10200000,
+        GAME_CONTINUE_AFTER_VICTORY = 0x10200000,
         POCKETPC_HIDE_CURSOR = 0x10400000,
         POCKETPC_LOW_MEMORY = 0x10800000,
         POCKETPC_TAP_MODE = 0x11000000,
         POCKETPC_DRAG_DROP_SCROLL = 0x12000000,
         POCKETPC_LOW_RESOLUTION = 0x14000000,
-		GAME_QUICKCOMBAT_ON = 0x18000000,
+        GAME_QUICKCOMBAT_ON = 0x18000000,
 
         /* influence on game balance: save to savefile */
                 WORLD_SHOW_VISITED_CONTENT = 0x20000001,
@@ -254,8 +254,10 @@ public:
     bool Sound() const;
 
     bool Music() const;
-	void SetQuickCombat(bool value);
-	bool QuickCombat() const;
+
+    void SetQuickCombat(bool value);
+
+    bool QuickCombat() const;
 
     bool ShowControlPanel() const;
 
@@ -556,9 +558,10 @@ public:
     { return path_program; }
 
     void SetProgramPath(const char *);
-	void SwapQuickCombat();
 
-	static string GetVersion();
+    void SwapQuickCombat();
+
+    static string GetVersion();
 
     static ListFiles GetListFiles(const string &prefix, const string &filter);
 
@@ -576,7 +579,7 @@ public:
     const string &GetDataParams() const
     { return data_params; }
 
-	ListDirs GetMapsParams() const
+    ListDirs GetMapsParams() const
     { return maps_params; }
 
 protected:
@@ -587,7 +590,8 @@ protected:
 private:
     friend StreamBase &operator<<(StreamBase &, const Settings &);
 
-	friend StreamBase &operator>>(StreamBase &, Settings &);
+    friend StreamBase &operator>>(StreamBase &, Settings &);
+
     friend ByteVectorReader &operator>>(ByteVectorReader &, Settings &);
 
     Settings();
@@ -615,7 +619,7 @@ private:
     int size_normal;
     int size_small;
 
-	bool _isQuickCombat;
+    bool _isQuickCombat;
 
     Maps::FileInfo
             current_maps_file;
@@ -647,6 +651,7 @@ private:
 StreamBase &operator<<(StreamBase &, const Settings &);
 
 StreamBase &operator>>(StreamBase &, Settings &);
+
 ByteVectorReader &operator>>(ByteVectorReader &, Settings &);
 
 #endif

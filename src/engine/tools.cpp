@@ -45,13 +45,13 @@ std::string StringTrim(std::string str)
     if (str.empty())
         return str;
 
-	// left
-	auto iter = str.begin();
+    // left
+    auto iter = str.begin();
     while (iter != str.end() && isspace(*iter)) ++iter;
     if (iter != str.begin()) str.erase(str.begin(), iter);
 
-	if (str.empty())
-		return str;
+    if (str.empty())
+        return str;
 
     // right
     iter = str.end() - 1;
@@ -78,21 +78,21 @@ std::string StringUpper(std::string str)
 /* int to string */
 std::string GetString(int value)
 {
-	return std::to_string(value);
+    return std::to_string(value);
 }
 
 std::string GetStringShort(int value)
 {
     if (abs(value) <= 1000)
-		return GetString(value);
-	std::ostringstream stream;
+        return GetString(value);
+    std::ostringstream stream;
 
-	if (abs(value) > 1000000)
-		stream << value / 1000000 << "M";
-	else
-		stream << value / 1000 << "K";
+    if (abs(value) > 1000000)
+        stream << value / 1000000 << "M";
+    else
+        stream << value / 1000 << "K";
 
-	return stream.str();
+    return stream.str();
 }
 
 std::string GetString(double value, u8 prec)
@@ -273,21 +273,20 @@ std::string StringUNICODE_to_UTF8(const std::vector<u16> &unicode)
     std::string utf8;
     utf8.reserve(2 * unicode.size());
 
-    for (std::vector<u16>::const_iterator
-                 it = unicode.begin(); it != unicode.end(); ++it)
+    for (unsigned short it : unicode)
     {
-        if (*it < 128)
+        if (it < 128)
         {
-            utf8.append(1, static_cast<char>(*it));
-        } else if (*it < 2048)
+            utf8.append(1, static_cast<char>(it));
+        } else if (it < 2048)
         {
-            utf8.append(1, static_cast<char>(192 + ((*it - (*it % 64)) / 64)));
-            utf8.append(1, static_cast<char>(128 + (*it % 64)));
+            utf8.append(1, static_cast<char>(192 + ((it - (it % 64)) / 64)));
+            utf8.append(1, static_cast<char>(128 + (it % 64)));
         } else
         {
-            utf8.append(1, static_cast<char>(224 + ((*it - (*it % 4096)) / 4096)));
-            utf8.append(1, static_cast<char>(128 + (((*it % 4096) - (*it % 64)) / 64)));
-            utf8.append(1, static_cast<char>(128 + (*it % 64)));
+            utf8.append(1, static_cast<char>(224 + ((it - (it % 4096)) / 4096)));
+            utf8.append(1, static_cast<char>(128 + (((it % 4096) - (it % 64)) / 64)));
+            utf8.append(1, static_cast<char>(128 + (it % 64)));
         }
     }
 
@@ -473,7 +472,7 @@ size_t InsertKeySym(std::string &res, size_t pos, KeySym sym, u16 mod)
     {
         case KEY_BACKSPACE:
         {
-            if (res.size() && pos)
+            if (!res.empty() && pos)
             {
                 if (pos >= res.size())
                     res.resize(res.size() - 1);
@@ -696,8 +695,8 @@ bool PressIntKey(u32 min, u32 max, u32 &result)
             if (result < min) result = min;
         }
         return true;
-    } 
-	if (le.KeyPress() && KEY_0 <= le.KeyValue() && KEY_9 >= le.KeyValue())
+    }
+    if (le.KeyPress() && KEY_0 <= le.KeyValue() && KEY_9 >= le.KeyValue())
     {
         if (max > result)
         {
@@ -902,9 +901,9 @@ Points GetLinePoints(const Point &pt1, const Point &pt2, u16 step)
 Points GetArcPoints(const Point &from, const Point &to, const Point &max, u16 step)
 {
     Points res;
-    
-	Point pt1 = from;
-	Point pt2 = Point(from.x + abs(max.x - from.x) / 2, from.y - abs(max.y - from.y) * 3 / 4);
+
+    Point pt1 = from;
+    Point pt2 = Point(from.x + abs(max.x - from.x) / 2, from.y - abs(max.y - from.y) * 3 / 4);
     const Points &pts1 = GetLinePoints(pt1, pt2, step);
     res.insert(res.end(), pts1.begin(), pts1.end());
 
@@ -981,7 +980,7 @@ std::vector<u8> decodeBase64(const std::string &src)
 int CheckSum(const std::vector<u8> &v)
 {
     u32 ret = 0;
-    std::vector<u8>::const_iterator it = v.begin();
+    auto it = v.begin();
 
     do
     {

@@ -27,6 +27,7 @@
 #include <utility>
 #include <iterator>
 #include "types.h"
+
 using namespace std;
 
 namespace Rand
@@ -44,7 +45,7 @@ namespace Rand
     }
 
     template<typename T>
-    const T *Get(const list<T> &lst)
+    const T *Get(const list <T> &lst)
     {
         auto it = lst.begin();
         std::advance(it, Rand::Get(lst.size() - 1));

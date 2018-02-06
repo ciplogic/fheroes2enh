@@ -162,8 +162,7 @@ s32 Battle::AIAttackPosition(Arena &arena, const Unit &b, const Indexes &positio
     if (b.isMultiCellAttack())
     {
         res = AIMaxQualityPosition(positions);
-    } else
-    if (b.isDoubleCellAttack())
+    } else if (b.isDoubleCellAttack())
     {
         Indexes results;
         results.reserve(12);
@@ -318,7 +317,7 @@ void AI::BattleTurn(Arena &arena, const Unit &b, Actions &a)
     {
         if (attack)
             a.push_back(Command(MSG_BATTLE_ATTACK, b.GetUID(), enemy->GetUID(), enemy->GetHeadIndex(), 0));
-    } 
+    }
 
     // end action
     a.push_back(Command(MSG_BATTLE_END_TURN, b.GetUID()));
@@ -346,7 +345,7 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
     {
         // sort strongest
         auto it = find_if(friends.begin(), friends.end(),
-                                          bind2nd(mem_fun(&Unit::Modes), IS_BAD_MAGIC));
+                          bind2nd(mem_fun(&Unit::Modes), IS_BAD_MAGIC));
         if (it != friends.end())
         {
             if (AIApplySpell(Spell::DISPEL, *it, *hero, a)) return true;
@@ -403,7 +402,7 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
     {
         // sort strongest
         auto it = find_if(friends.begin(), friends.end(),
-                                          not1(bind2nd(mem_fun(&Unit::Modes), SP_HASTE)));
+                          not1(bind2nd(mem_fun(&Unit::Modes), SP_HASTE)));
         if (it != friends.end() &&
             AIApplySpell(Spell::HASTE, *it, *hero, a))
             return true;
@@ -412,7 +411,7 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
     // shield spell conditions
     {
         auto it = find_if(enemies.begin(), enemies.end(),
-                                          mem_fun(&Unit::isArchers));
+                          mem_fun(&Unit::isArchers));
 
         const Castle *castle = Arena::GetCastle();
 
@@ -428,7 +427,7 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
             // or other strongest friends
             if (it == friends.end())
                 it = find_if(friends.begin(), friends.end(),
-                                  not1(bind2nd(mem_fun(&Unit::Modes), SP_SHIELD)));
+                             not1(bind2nd(mem_fun(&Unit::Modes), SP_SHIELD)));
 
             if (it != friends.end() &&
                 AIApplySpell(Spell::SHIELD, *it, *hero, a))
@@ -441,7 +440,7 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
     {
         // find mirror image or summon elem
         auto it = find_if(enemies.begin(), enemies.end(),
-                                          bind2nd(mem_fun(&Unit::Modes), CAP_MIRRORIMAGE | CAP_SUMMONELEM));
+                          bind2nd(mem_fun(&Unit::Modes), CAP_MIRRORIMAGE | CAP_SUMMONELEM));
 
         if (it != enemies.end())
         {
@@ -451,7 +450,7 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
 
         // find good magic
         it = find_if(enemies.begin(), enemies.end(),
-                          bind2nd(mem_fun(&Unit::Modes), IS_GOOD_MAGIC));
+                     bind2nd(mem_fun(&Unit::Modes), IS_GOOD_MAGIC));
 
         if (it != enemies.end())
         {

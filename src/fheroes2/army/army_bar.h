@@ -72,4 +72,5 @@ protected:
     bool can_change;
     string msg;
 };
-bool CanUpgradeTroop(Troop& troop, Army* army);
+
+bool CanUpgradeTroop(Troop &troop, Army *army);

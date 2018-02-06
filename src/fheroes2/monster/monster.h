@@ -127,7 +127,7 @@ public:
 
     Monster(int race, u32 dw);
 
-	virtual ~Monster()
+    virtual ~Monster()
     = default;
 
     bool operator<(const Monster &) const;
@@ -164,7 +164,7 @@ public:
 
     u32 GetShots() const;
 
-    static u32 GetHitPoints(const Monster& m);
+    static u32 GetHitPoints(const Monster &m);
 
     u32 GetHitPoints() const;
 

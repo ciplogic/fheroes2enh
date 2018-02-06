@@ -192,7 +192,7 @@ namespace Interface
             splitter.RedrawCursor();
 
             ItemsIterator curt = top;
-			auto startIndex = top - content->begin();
+            auto startIndex = top - content->begin();
             ItemsIterator last = startIndex + maxItems < content->size() ? top + maxItems : content->end();
             for (; curt != last; ++curt)
                 RedrawItem(*curt, rtAreaItems.x, rtAreaItems.y + (curt - top) * rtAreaItems.h / maxItems, curt == cur);
@@ -221,9 +221,9 @@ namespace Interface
 
         void SetCurrentVisible()
         {
-			int curIndex = cur - content->begin();
-			int topIndex = top - content->begin();
-            if (topIndex > curIndex || ((int)(topIndex + maxItems)) <= curIndex)
+            int curIndex = cur - content->begin();
+            int topIndex = top - content->begin();
+            if (topIndex > curIndex || ((int) (topIndex + maxItems)) <= curIndex)
             {
                 top = cur + maxItems > content->end() ? content->end() - maxItems : cur;
                 if (top < content->begin()) top = content->begin();
@@ -280,40 +280,40 @@ namespace Interface
                 UpdateSplitterRange();
                 splitter.MoveIndex(top - content->begin());
                 return true;
-            } 
-			if (useHotkeys && le.KeyPress(KEY_UP) && (cur > content->begin()))
+            }
+            if (useHotkeys && le.KeyPress(KEY_UP) && (cur > content->begin()))
             {
                 cursor.Hide();
                 --cur;
                 SetCurrentVisible();
                 ActionCurrentUp();
                 return true;
-            } 
-			if (useHotkeys && le.KeyPress(KEY_DOWN) && (cur < (content->end() - 1)))
+            }
+            if (useHotkeys && le.KeyPress(KEY_DOWN) && (cur < (content->end() - 1)))
             {
                 cursor.Hide();
                 ++cur;
                 SetCurrentVisible();
                 ActionCurrentDn();
                 return true;
-            } 
-			if ((le.MouseWheelUp(rtAreaItems) || le.MouseWheelUp(splitter.GetRect())) &&
-                       (top > content->begin()))
+            }
+            if ((le.MouseWheelUp(rtAreaItems) || le.MouseWheelUp(splitter.GetRect())) &&
+                (top > content->begin()))
             {
                 cursor.Hide();
                 --top;
                 splitter.Backward();
                 return true;
-            } 
-			if ((le.MouseWheelDn(rtAreaItems) || le.MouseWheelDn(splitter.GetRect())) &&
-                       (top < (content->end() - maxItems)))
+            }
+            if ((le.MouseWheelDn(rtAreaItems) || le.MouseWheelDn(splitter.GetRect())) &&
+                (top < (content->end() - maxItems)))
             {
                 cursor.Hide();
                 ++top;
                 splitter.Forward();
                 return true;
-            } 
-			if (le.MousePressLeft(splitter.GetRect()) && (content->size() > maxItems))
+            }
+            if (le.MousePressLeft(splitter.GetRect()) && (content->size() > maxItems))
             {
                 cursor.Hide();
                 UpdateSplitterRange();
@@ -327,17 +327,17 @@ namespace Interface
 
             if (!content->empty())
             {
-                double offset = (double)((le.GetMouseCursor().y - rtAreaItems.y) * maxItems / rtAreaItems.h);
+                double offset = (double) ((le.GetMouseCursor().y - rtAreaItems.y) * maxItems / rtAreaItems.h);
 
                 if (offset >= 0)
                 {
                     cursor.Hide();
 
-					int curIndex = cur - content->begin();
-                	int topIndex = top - content->begin();
-					int posIndex = topIndex+ (int)offset;
+                    int curIndex = cur - content->begin();
+                    int topIndex = top - content->begin();
+                    int posIndex = topIndex + (int) offset;
 
-                    if (posIndex >= 0 && posIndex < (int)content->size())
+                    if (posIndex >= 0 && posIndex < (int) content->size())
                     {
                         const s32 posy = rtAreaItems.y + (posIndex - topIndex) * rtAreaItems.h / maxItems;
 
@@ -351,13 +351,13 @@ namespace Interface
                                 ActionListDoubleClick(*cur, le.GetMouseCursor(), rtAreaItems.x, posy);
                             } else
                             {
-                                cur = content->begin()+posIndex;
+                                cur = content->begin() + posIndex;
                                 ActionListSingleClick(*cur, le.GetMouseCursor(), rtAreaItems.x, posy);
                             }
                             return true;
                         } else if (le.MousePressRight(rtAreaItems))
                         {
-							auto pos = content->begin() + posIndex;
+                            auto pos = content->begin() + posIndex;
                             ActionListPressRight(*pos, le.GetMouseCursor(), rtAreaItems.x, posy);
                             return true;
                         }

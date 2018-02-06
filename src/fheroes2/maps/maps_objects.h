@@ -52,20 +52,21 @@ public:
 protected:
     friend StreamBase &operator<<(StreamBase &, const MapObjectSimple &);
 
-	friend ByteVectorReader &operator>>(ByteVectorReader &, MapObjectSimple &);
+    friend ByteVectorReader &operator>>(ByteVectorReader &, MapObjectSimple &);
 
     u32 uid;
     int type;
 };
 
 StreamBase &operator<<(StreamBase &, const MapObjectSimple &);
+
 ByteVectorReader &operator>>(ByteVectorReader &, MapObjectSimple &);
 
 struct MapEvent : MapObjectSimple
 {
     MapEvent();
 
-    void LoadFromMP2(s32 index, ByteVectorReader&);
+    void LoadFromMP2(s32 index, ByteVectorReader &);
 
     bool isAllow(int color) const;
 
@@ -89,7 +90,7 @@ struct MapSphinx : MapObjectSimple
 {
     MapSphinx();
 
-    void LoadFromMP2(s32 index, ByteVectorReader&);
+    void LoadFromMP2(s32 index, ByteVectorReader &);
 
     bool AnswerCorrect(const string &answer);
 
@@ -105,7 +106,8 @@ struct MapSphinx : MapObjectSimple
 StreamBase &operator<<(StreamBase &, const MapSphinx &);
 
 StreamBase &operator>>(StreamBase &, MapSphinx &);
-ByteVectorReader &operator>>(ByteVectorReader&, MapSphinx &);
+
+ByteVectorReader &operator>>(ByteVectorReader &, MapSphinx &);
 
 struct MapSign : MapObjectSimple
 {
@@ -113,14 +115,14 @@ struct MapSign : MapObjectSimple
 
     MapSign(s32 index, const string &);
 
-    void LoadFromMP2(s32 index, ByteVectorReader&);
+    void LoadFromMP2(s32 index, ByteVectorReader &);
 
     string message;
 };
 
 StreamBase &operator<<(StreamBase &, const MapSign &);
 
-ByteVectorReader &operator>>(ByteVectorReader&, MapSign &);
+ByteVectorReader &operator>>(ByteVectorReader &, MapSign &);
 
 struct MapResource : MapObjectSimple
 {

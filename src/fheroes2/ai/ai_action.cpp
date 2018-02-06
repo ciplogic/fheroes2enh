@@ -476,7 +476,7 @@ void AIToHeroes(Heroes &hero, u32 obj, s32 dst_index)
 
         //bool disable_auto_move = hero.isShipMaster() || other_hero->isShipMaster() ||
         //                    other_hero_castle || world.GetTiles(hero.GetIndex()).GetObject(false) == MP2::OBJ_STONELIGHTS;
-		
+
         // new battle
         Battle::Result res = Battle::Loader(hero.GetArmy(), other_hero->GetArmy(), dst_index);
 
@@ -544,14 +544,14 @@ void AIToCastle(Heroes &hero, u32 obj, s32 dst_index)
             castle->ActionPreBattle();
 
             // new battle
-			Battle::Result res;
-			if (defender)
-			{
-				res = BattleHeroWithHero(hero, *defender, dst_index);
-			}else
-			{
-				res = BattleHeroWithMonster(hero, army, dst_index);
-			}
+            Battle::Result res;
+            if (defender)
+            {
+                res = BattleHeroWithHero(hero, *defender, dst_index);
+            } else
+            {
+                res = BattleHeroWithMonster(hero, army, dst_index);
+            }
 
             castle->ActionAfterBattle(res.AttackerWins());
 
@@ -677,7 +677,7 @@ void AIToMonster(Heroes &hero, u32 obj, s32 dst_index)
             tile.Remove(uniq);
             tile.MonsterSetCount(0);
             tile.SetObject(MP2::OBJ_ZERO);
-			Size wSize(world.w(), world.h());
+            Size wSize(world.w(), world.h());
             // remove shadow from left cell
             if (Maps::isValidDirection(dst_index, Direction::LEFT, wSize))
                 world.GetTiles(Maps::GetDirectionIndex(dst_index, Direction::LEFT)).Remove(uniq);
@@ -909,8 +909,9 @@ void AIToTeleports(Heroes &hero, s32 index_from)
             // lose battle
             if (hero.isFreeman())
                 return;
-			if (!other_hero->isFreeman()) {
-			}
+            if (!other_hero->isFreeman())
+            {
+            }
         }
     }
 
@@ -936,9 +937,10 @@ void AIToWhirlpools(Heroes &hero, s32 index_from)
     if (troop && Rand::Get(1) && 1 < troop->GetCount())
     {
         Monster monster(troop->GetID());
-        troop->SetCount(Monster::GetCountFromHitPoints(monster, troop->GetHitPointsTroop() - troop->GetHitPointsTroop() *
-                                                                                               Game::GetWhirlpoolPercent() /
-                                                                                               100));
+        troop->SetCount(
+                Monster::GetCountFromHitPoints(monster, troop->GetHitPointsTroop() - troop->GetHitPointsTroop() *
+                                                                                     Game::GetWhirlpoolPercent() /
+                                                                                     100));
     }
 
     hero.GetPath().Reset();
@@ -1355,7 +1357,7 @@ void AIToStables(Heroes &hero, u32 obj, s32 dst_index)
         hero.IncreaseMovePoints(400);
     }
 
-    if (hero.GetArmy().m_troops.HasMonster(Monster::CAVALRY)) 
+    if (hero.GetArmy().m_troops.HasMonster(Monster::CAVALRY))
         hero.GetArmy().m_troops.UpgradeMonsters(Monster::CAVALRY);
 }
 
@@ -1587,7 +1589,8 @@ bool AI::HeroesValidObject(const Heroes &hero, s32 index)
                     if (tile.CaptureObjectIsProtection())
                     {
                         Army enemy(tile);
-                        return !enemy.m_troops.isValid() || Army::TroopsStrongerEnemyTroops(army.m_troops, enemy.m_troops);
+                        return !enemy.m_troops.isValid() ||
+                               Army::TroopsStrongerEnemyTroops(army.m_troops, enemy.m_troops);
                     } else
                         return true;
                 }
@@ -1608,25 +1611,25 @@ bool AI::HeroesValidObject(const Heroes &hero, s32 index)
             if (hero.IsFullBagArtifacts()) return false;
 
             if (hero.isShipMaster()) return false;
-            
-        	// 1,2,3 - 2000g, 2500g+3res, 3000g+5res
+
+            // 1,2,3 - 2000g, 2500g+3res, 3000g+5res
             if (1 <= variants && 3 >= variants)
             {
                 return kingdom.AllowPayment(tile.QuantityFunds());
-            } 
-        	// 4,5 - need have skill wisard or leadership,
+            }
+            // 4,5 - need have skill wisard or leadership,
             if (3 < variants && 6 > variants)
             {
                 return hero.HasSecondarySkill(tile.QuantitySkill().Skill());
-            } 
-        	// 6 - 50 rogues, 7 - 1 gin, 8,9,10,11,12,13 - 1 monster level4
+            }
+            // 6 - 50 rogues, 7 - 1 gin, 8,9,10,11,12,13 - 1 monster level4
             if (5 < variants && 14 > variants)
             {
                 Army enemy(tile);
-                return !enemy.m_troops.isValid() 
-                || Army::TroopsStrongerEnemyTroops(army.m_troops, enemy.m_troops);
-            } 
-        	// other
+                return !enemy.m_troops.isValid()
+                       || Army::TroopsStrongerEnemyTroops(army.m_troops, enemy.m_troops);
+            }
+            // other
             return true;
         }
             break;
@@ -1835,8 +1838,8 @@ bool AI::HeroesValidObject(const Heroes &hero, s32 index)
                 tile.QuantityIsValid())
             {
                 Army enemy(tile);
-                return enemy.m_troops.isValid() 
-                && Army::TroopsStrongerEnemyTroops(army.m_troops, enemy.m_troops);
+                return enemy.m_troops.isValid()
+                       && Army::TroopsStrongerEnemyTroops(army.m_troops, enemy.m_troops);
             }
             break;
 
@@ -1849,8 +1852,8 @@ bool AI::HeroesValidObject(const Heroes &hero, s32 index)
         case MP2::OBJ_MONSTER:
         {
             Army enemy(tile);
-            return !enemy.m_troops.isValid() 
-                || Army::TroopsStrongerEnemyTroops(army.m_troops, enemy.m_troops);
+            return !enemy.m_troops.isValid()
+                   || Army::TroopsStrongerEnemyTroops(army.m_troops, enemy.m_troops);
         }
             break;
 
@@ -1863,15 +1866,15 @@ bool AI::HeroesValidObject(const Heroes &hero, s32 index)
         {
             const Castle *castle = world.GetCastle(Maps::GetPoint(index));
             if (!castle)
-	        {
-				break;
-	        }
-	        if (hero.GetColor() == castle->GetColor())
-		        return nullptr == castle->GetHeroes().Guest() && !hero.isVisited(tile);
-	        // FIXME: AI skip visiting alliance
-	        if (hero.isFriends(castle->GetColor())) return false;
-	        if (Army::TroopsStrongerEnemyTroops(army.m_troops, castle->GetActualArmy().m_troops)) return true;
-	        break;
+            {
+                break;
+            }
+            if (hero.GetColor() == castle->GetColor())
+                return nullptr == castle->GetHeroes().Guest() && !hero.isVisited(tile);
+            // FIXME: AI skip visiting alliance
+            if (hero.isFriends(castle->GetColor())) return false;
+            if (Army::TroopsStrongerEnemyTroops(army.m_troops, castle->GetActualArmy().m_troops)) return true;
+            break;
         }
 
         case MP2::OBJ_HEROES:
@@ -1879,15 +1882,15 @@ bool AI::HeroesValidObject(const Heroes &hero, s32 index)
             const Heroes *hero2 = tile.GetHeroes();
             if (!hero2)
             {
-	            break;
+                break;
             }
-	        if (hero.GetColor() == hero2->GetColor()) return true;
-	        // FIXME: AI skip visiting alliance
-	        if (hero.isFriends(hero2->GetColor())) return false;
-	        if (hero2->AllowBattle(false) &&
-		        Army::TroopsStrongerEnemyTroops(army.m_troops, hero2->GetArmy().m_troops))
-		        return true;
-	        break;
+            if (hero.GetColor() == hero2->GetColor()) return true;
+            // FIXME: AI skip visiting alliance
+            if (hero.isFriends(hero2->GetColor())) return false;
+            if (hero2->AllowBattle(false) &&
+                Army::TroopsStrongerEnemyTroops(army.m_troops, hero2->GetArmy().m_troops))
+                return true;
+            break;
         }
 
         case MP2::OBJ_BOAT:
@@ -1929,18 +1932,18 @@ bool AIHeroesShowAnimation(const Heroes &hero)
     const s32 index_from = hero.GetIndex();
 
     if (!colors || !Maps::isValidAbsIndex(index_from))
-		return false;
-	const Maps::Tiles &tile_from = world.GetTiles(index_from);
+        return false;
+    const Maps::Tiles &tile_from = world.GetTiles(index_from);
 
-	if (hero.GetPath().isValid())
-	{
-		const s32 index_to = Maps::GetDirectionIndex(index_from, hero.GetPath().GetFrontDirection());
-		const Maps::Tiles &tile_to = world.GetTiles(index_to);
+    if (hero.GetPath().isValid())
+    {
+        const s32 index_to = Maps::GetDirectionIndex(index_from, hero.GetPath().GetFrontDirection());
+        const Maps::Tiles &tile_to = world.GetTiles(index_to);
 
-		return !tile_from.isFog(colors) && !tile_to.isFog(colors);
-	}
+        return !tile_from.isFog(colors) && !tile_to.isFog(colors);
+    }
 
-	return !tile_from.isFog(colors);
+    return !tile_from.isFog(colors);
 }
 
 void AI::HeroesMove(Heroes &hero)

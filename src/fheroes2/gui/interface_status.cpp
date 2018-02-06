@@ -56,7 +56,7 @@ u32 Interface::StatusWindow::ResetResourceStatus(u32 tick, void *ptr)
 {
     if (!ptr)
         return 0;
-    StatusWindow *status = reinterpret_cast<StatusWindow *>(ptr);
+    auto status = static_cast<StatusWindow *>(ptr);
     if (STATUS_RESOURCE == status->state)
     {
         status->state = status->oldState;

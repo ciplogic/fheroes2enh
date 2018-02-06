@@ -47,32 +47,32 @@ int Cursor::Themes()
 bool Cursor::SetThemes(int name, bool force)
 {
     if (!force && theme == name)
-		return false;
-	if (isVisible()) Hide();
-	theme = name;
+        return false;
+    if (isVisible()) Hide();
+    theme = name;
 
-	switch (0xF000 & name)
-	{
-	case 0x3000:
-		Set(AGG::GetICN(ICN::SPELCO, 0xFF & name), true);
-		break;
+    switch (0xF000 & name)
+    {
+        case 0x3000:
+            Set(AGG::GetICN(ICN::SPELCO, 0xFF & name), true);
+            break;
 
-	case 0x2000:
-		Set(AGG::GetICN(ICN::CMSECO, 0xFF & name), true);
-		break;
+        case 0x2000:
+            Set(AGG::GetICN(ICN::CMSECO, 0xFF & name), true);
+            break;
 
-	case 0x1000:
-		Set(AGG::GetICN(ICN::ADVMCO, 0xFF & name), true);
-		break;
+        case 0x1000:
+            Set(AGG::GetICN(ICN::ADVMCO, 0xFF & name), true);
+            break;
 
-	default:
-		// default Cursor::POINTER
-		Set(AGG::GetICN(ICN::ADVMCO, 0), true);
-		break;
-	}
+        default:
+            // default Cursor::POINTER
+            Set(AGG::GetICN(ICN::ADVMCO, 0), true);
+            break;
+    }
 
-	SetOffset(name);
-	return true;
+    SetOffset(name);
+    return true;
 }
 
 /* redraw cursor wrapper for local event */
@@ -243,7 +243,7 @@ void Cursor::SetOffset(int name)
 
 void Cursor::Show()
 {
-	SetAlphaMod(210);
+    SetAlphaMod(210);
     if (!Settings::Get().ExtPocketHideCursor()) SpriteMove::Show();
 }
 

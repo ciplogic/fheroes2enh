@@ -57,7 +57,7 @@ profitstats_t _profits[] = {
         {"endless_pouch_crystal", {0,     0, 0, 0, 0, 1, 0}},
         {"endless_pouch_gems",    {0,     0, 0, 0, 0, 0, 1}},
 
-        {nullptr,                    {0,     0, 0, 0, 0, 0, 0}},
+        {nullptr,                 {0,     0, 0, 0, 0, 0, 0}},
 };
 
 void ProfitConditions::UpdateCosts(const string &spec)

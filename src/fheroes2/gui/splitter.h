@@ -57,10 +57,10 @@ public:
     int GetCurrent() const
     { return cur; }
 
-	int GetStep() const
+    int GetStep() const
     { return step; }
 
-	int Max() const
+    int Max() const
     { return max; };
 
     int Min() const

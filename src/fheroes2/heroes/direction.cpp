@@ -217,11 +217,12 @@ int Direction::Reflect(int direct)
 
 namespace
 {
-	using namespace Direction;
-	const int directs[] = { TOP_LEFT, TOP, TOP_RIGHT, RIGHT, BOTTOM_RIGHT, BOTTOM, BOTTOM_LEFT, LEFT };
-	Directions allDirections(directs, directs + 8);
+    using namespace Direction;
+    const int directs[] = {TOP_LEFT, TOP, TOP_RIGHT, RIGHT, BOTTOM_RIGHT, BOTTOM, BOTTOM_LEFT, LEFT};
+    Directions allDirections(directs, directs + 8);
 }
-Directions& Direction::All()
+
+Directions &Direction::All()
 {
     return allDirections;
 }

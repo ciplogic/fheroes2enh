@@ -35,6 +35,7 @@
 
 #include "system.h"
 #include "tools.h"
+
 void LossConditionInfo(const Maps::FileInfo &);
 
 void VictoryConditionInfo(const Maps::FileInfo &);
@@ -61,12 +62,12 @@ void ScenarioListBox::RedrawItem(const Maps::FileInfo &info, s32 dstx, s32 dsty,
     spriteCount.Blit(dstx, dsty);
 
     if (info.size_w != info.size_h ||
-            (info.size_w < (int)mapsize_t::SMALL) || (info.size_w > (int)mapsize_t::XLARGE))
+        (info.size_w < (int) mapsize_t::SMALL) || (info.size_w > (int) mapsize_t::XLARGE))
     {
         GetNonStandardSizeIcon().Blit(dstx + spriteCount.w() + 2, dsty, Display::Get());
     } else
     {
-        switch ((mapsize_t)info.size_w)
+        switch ((mapsize_t) info.size_w)
         {
             case mapsize_t::SMALL:
                 index = 26;
@@ -116,7 +117,7 @@ void ScenarioListBox::RedrawBackground(const Point &dst)
     const Sprite &spriteCount = AGG::GetICN(ICN::REQUESTS, index);
     spriteCount.Blit(dst.x + 65, dst.y + 265);
 
-    switch ((mapsize_t)info.size_w)
+    switch ((mapsize_t) info.size_w)
     {
         case mapsize_t::SMALL:
             index = 26;
@@ -316,12 +317,12 @@ const Maps::FileInfo *Dialog::SelectScenario(const MapsFileInfoList &all)
             Message(_("All Maps"), _("View all maps, regardless of size."), Font::BIG);
         else if (le.MousePressRight(countPlayers) || le.MousePressRight(curCountPlayer))
             Message(_("Players Icon"),
-                            _("Indicates how many players total are in the EditScenario. Any positions not occupied by humans will be occupied by computer players."),
-                            Font::BIG);
+                    _("Indicates how many players total are in the EditScenario. Any positions not occupied by humans will be occupied by computer players."),
+                    Font::BIG);
         else if (le.MousePressRight(sizeMaps) || le.MousePressRight(curMapSize))
             Message(_("Size Icon"),
-                            _("Indicates whether the maps is small (36x36), medium (72x72), large (108x108), or extra large (144x144)."),
-                            Font::BIG);
+                    _("Indicates whether the maps is small (36x36), medium (72x72), large (108x108), or extra large (144x144)."),
+                    Font::BIG);
         else if (le.MousePressRight(curMapName))
             Message(_("Selected Name"), _("The name of the currently selected map."), Font::BIG);
         else if (le.MousePressRight(victoryConds))
@@ -336,8 +337,8 @@ const Maps::FileInfo *Dialog::SelectScenario(const MapsFileInfoList &all)
         else if (le.MousePressRight(curLossCond)) LossConditionInfo(listbox.GetCurrent());
         else if (le.MousePressRight(curDifficulty))
             Message(_("Selected Map Difficulty"),
-                            _("The map difficulty of the currently selected map.  The map difficulty is determined by the EditScenario designer. More difficult maps might include more or stronger enemies, fewer resources, or other special conditions making things tougher for the human player."),
-                            Font::BIG);
+                    _("The map difficulty of the currently selected map.  The map difficulty is determined by the EditScenario designer. More difficult maps might include more or stronger enemies, fewer resources, or other special conditions making things tougher for the human player."),
+                    Font::BIG);
         else if (le.MousePressRight(curDescription))
             Message(_("Selected Description"), _("The description of the currently selected map."), Font::BIG);
         else if (le.MousePressRight(buttonOk)) Message(_("OK"), _("Accept the choice made."), Font::BIG);

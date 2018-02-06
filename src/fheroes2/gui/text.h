@@ -106,34 +106,49 @@ private:
 };
 
 #ifdef WITH_TTF
+
 class TextUnicode : public TextInterface
 {
 public:
-    TextUnicode() {};
+    TextUnicode()
+    {};
+
     TextUnicode(const std::string &, int ft = Font::BIG);
-    TextUnicode(const u16*, size_t, int ft = Font::BIG);
 
-    void	SetText(const std::string &);
-    void	SetFont(int);
-    void	Clear();
+    TextUnicode(const u16 *, size_t, int ft = Font::BIG);
 
-    int		w() const;
-    int		w(u32, u32) const;
-    int		h() const;
-    int		h(int) const;
-    size_t	Size() const;
+    void SetText(const std::string &);
 
-    void	Blit(s32, s32, int maxw, Surface & sf = Display::Get());
+    void SetFont(int);
+
+    void Clear();
+
+    int w() const;
+
+    int w(u32, u32) const;
+
+    int h() const;
+
+    int h(int) const;
+
+    size_t Size() const;
+
+    void Blit(s32, s32, int maxw, Surface &sf = Display::Get());
 
     static bool isspace(int);
-    static int	CharWidth(int, int ft);
-    static int	CharHeight(int ft);
-    static int	CharAscent(int ft);
-    static int	CharDescent(int ft);
+
+    static int CharWidth(int, int ft);
+
+    static int CharHeight(int ft);
+
+    static int CharAscent(int ft);
+
+    static int CharDescent(int ft);
 
 private:
     std::vector<u16> message;
 };
+
 #endif
 
 class Text
@@ -144,7 +159,9 @@ public:
     Text(const string &, int ft = Font::BIG);
 
 #ifdef WITH_TTF
-    Text(const u16*, size_t, int ft = Font::BIG);
+
+    Text(const u16 *, size_t, int ft = Font::BIG);
+
 #endif
 
     Text(const Text &);
@@ -264,7 +281,9 @@ private:
     void Append(const string &, int, u32);
 
 #ifdef WITH_TTF
-    void	Append(const std::vector<u16> &, int, u32);
+
+    void Append(const std::vector<u16> &, int, u32);
+
 #endif
 
     vector<Text> messages;

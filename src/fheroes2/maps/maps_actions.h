@@ -53,7 +53,7 @@ public:
 protected:
     friend StreamBase &operator<<(StreamBase &, const ActionSimple &);
 
-	friend ByteVectorReader &operator>>(ByteVectorReader&, ActionSimple &);
+    friend ByteVectorReader &operator>>(ByteVectorReader &, ActionSimple &);
 
     u32 uid;
     int type;

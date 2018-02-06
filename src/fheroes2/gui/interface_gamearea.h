@@ -87,9 +87,10 @@ namespace Interface
         void SetRedraw() const;
 
         void Redraw(Surface &dst, int) const;
-	    void DrawHeroRoute(Surface& dst, int flag, const Rect& rt) const;
 
-	    void Redraw(Surface &dst, int, const Rect &) const;
+        void DrawHeroRoute(Surface &dst, int flag, const Rect &rt) const;
+
+        void Redraw(Surface &dst, int, const Rect &) const;
 
         void BlitOnTile(Surface &, const Surface &, s32, s32, const Point &) const;
 

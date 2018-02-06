@@ -74,7 +74,7 @@ namespace GameOver
 
         friend StreamBase &operator>>(StreamBase &, Result &);
 
-		friend ByteVectorReader &operator>>(ByteVectorReader & , Result & );
+        friend ByteVectorReader &operator>>(ByteVectorReader &, Result &);
 
         Result();
 
@@ -86,7 +86,8 @@ namespace GameOver
     StreamBase &operator<<(StreamBase &, const Result &);
 
     StreamBase &operator>>(StreamBase &, Result &);
-	ByteVectorReader &operator>>(ByteVectorReader &, Result &);
+
+    ByteVectorReader &operator>>(ByteVectorReader &, Result &);
 }
 
 #endif

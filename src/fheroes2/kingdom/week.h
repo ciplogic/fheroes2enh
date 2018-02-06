@@ -75,4 +75,5 @@ struct Week : pair<int, int>
 };
 
 StreamBase &operator>>(StreamBase &, Week &);
+
 ByteVectorReader &operator>>(ByteVectorReader &sb, Week &st);

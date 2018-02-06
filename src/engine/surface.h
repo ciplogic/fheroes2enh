@@ -51,14 +51,15 @@ public:
     int a() const;
 
     u32 pack() const;
+
     SDL_Color packSdlColor() const;
 
     static RGBA unpack(int);
 
-	static u32 packRgba(u32 r, u32 g, u32 b, u32 a = 255)
-	{
-		return r + (g << 8) + (b << 16) + (a << 24);
-	}
+    static u32 packRgba(u32 r, u32 g, u32 b, u32 a = 255)
+    {
+        return r + (g << 8) + (b << 16) + (a << 24);
+    }
 
 protected:
     u32 color;
@@ -94,6 +95,7 @@ public:
     Surface(const void *pixels, u32 width, u32 height, u32 bytes_per_pixel /* 1, 2, 3, 4 */,
             bool amask);  /* agg: create raw tile */
     Surface(const Surface &);
+
     explicit Surface(SDL_Surface *);
 
     Surface &operator=(const Surface &);
@@ -138,6 +140,7 @@ public:
     u32 GetColorKey() const;
 
     void BlitAlpha(const Rect &srt, const Point &dpt, Surface &dst) const;
+
     void Blit(Surface &) const;
 
     void Blit(s32, s32, Surface &) const;
@@ -152,9 +155,12 @@ public:
 
     void FillRect(const Rect &, const RGBA &);
 
-    void drawPixel( int x , int y , float brightness, u32 col);
-    void drawAALine(int x0 , int y0 , int x1 , int y1, const RGBA&);
+    void drawPixel(int x, int y, float brightness, u32 col);
+
+    void drawAALine(int x0, int y0, int x1, int y1, const RGBA &);
+
     void DrawLineAa(const Point &, const Point &, const RGBA &);
+
     void DrawLine(const Point &, const Point &, const RGBA &);
 
     void DrawPoint(const Point &, const RGBA &) const;
@@ -201,13 +207,15 @@ public:
 
     void SetAlphaMod(int);
 
-	void Set(u32 sw, u32 sh, u32 bpp /* bpp: 8, 16, 24, 32 */, bool amask);
+    void Set(u32 sw, u32 sh, u32 bpp /* bpp: 8, 16, 24, 32 */, bool amask);
 
-	void Lock() const;
+    void Lock() const;
 
-	void SetPixel4(s32 x, s32 y, u32 color) const;
-	void Unlock() const;
-	SDL_Surface *surface;
+    void SetPixel4(s32 x, s32 y, u32 color) const;
+
+    void Unlock() const;
+
+    SDL_Surface *surface;
 protected:
     static void FreeSurface(Surface &);
 

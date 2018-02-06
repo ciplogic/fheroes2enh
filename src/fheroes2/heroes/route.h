@@ -55,7 +55,8 @@ namespace Route
         friend StreamBase &operator<<(StreamBase &, const Step &);
 
         friend StreamBase &operator>>(StreamBase &, Step &);
-		friend ByteVectorReader &operator>>(ByteVectorReader &, Step &);
+
+        friend ByteVectorReader &operator>>(ByteVectorReader &, Step &);
 
         s32 from;
         int direction;
@@ -122,7 +123,8 @@ namespace Route
         friend StreamBase &operator<<(StreamBase &, const Path &);
 
         friend StreamBase &operator>>(StreamBase &, Path &);
-		friend ByteVectorReader &operator>>(ByteVectorReader &, Path &);
+
+        friend ByteVectorReader &operator>>(ByteVectorReader &, Path &);
 
         const Heroes *hero;
         s32 dst;
@@ -134,10 +136,12 @@ namespace Route
     StreamBase &operator<<(StreamBase &, const Path &);
 
     StreamBase &operator>>(StreamBase &, Step &);
-	ByteVectorReader &operator>>(ByteVectorReader &, Step &);
+
+    ByteVectorReader &operator>>(ByteVectorReader &, Step &);
 
     StreamBase &operator>>(StreamBase &, Path &);
-	ByteVectorReader &operator>>(ByteVectorReader &, Path &);
+
+    ByteVectorReader &operator>>(ByteVectorReader &, Path &);
 }
 
 #endif

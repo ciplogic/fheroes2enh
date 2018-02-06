@@ -143,6 +143,7 @@ class Army : public Control
 {
 public:
     Troops m_troops;
+
     static string SizeString(u32);
 
     static string TroopSizeString(const Troop &);
@@ -226,7 +227,7 @@ public:
 protected:
     friend StreamBase &operator<<(StreamBase &, const Army &);
 
-	friend ByteVectorReader &operator>>(ByteVectorReader &msg, Army &army);
+    friend ByteVectorReader &operator>>(ByteVectorReader &msg, Army &army);
 
     HeroBase *commander;
     bool combat_format;

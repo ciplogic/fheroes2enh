@@ -338,7 +338,7 @@ void Dialog::QuickInfo(const Maps::Tiles &tile)
     const int qwikinfo = ICN::QWIKINFO;
 
     // image box
-    auto boxInfo= AGG::GetICN(qwikinfo, 0);
+    auto boxInfo = AGG::GetICN(qwikinfo, 0);
     Sprite &box = boxInfo;
     const Interface::GameArea &gamearea = Interface::Basic::Get().GetGameArea();
     const Rect ar(BORDERWIDTH, BORDERWIDTH, gamearea.GetArea().w, gamearea.GetArea().h);
@@ -369,7 +369,7 @@ void Dialog::QuickInfo(const Maps::Tiles &tile)
 
     SpriteBack back(pos);
 
-	box.SetAlphaMod(210);
+    box.SetAlphaMod(210);
     box.Blit(pos.x, pos.y);
 
     string name_object;
@@ -545,7 +545,7 @@ void Dialog::QuickInfo(const Castle &castle)
     const int qwiktown = ICN::QWIKTOWN;
 
     // image box
-    auto boxInfo= AGG::GetICN(qwiktown, 0);
+    auto boxInfo = AGG::GetICN(qwiktown, 0);
     Sprite &box = boxInfo;
     const Interface::GameArea &gamearea = Interface::Basic::Get().GetGameArea();
     const Rect ar(BORDERWIDTH, BORDERWIDTH, gamearea.GetArea().w, gamearea.GetArea().h);
@@ -574,7 +574,7 @@ void Dialog::QuickInfo(const Castle &castle)
         // bottom right
         cur_rt = Rect(mx - box.w(), my - box.h(), box.w(), box.h());
 
-	box.SetAlphaMod(210);
+    box.SetAlphaMod(210);
     SpriteBack back(cur_rt);
     box.Blit(cur_rt.x, cur_rt.y);
 
@@ -735,8 +735,8 @@ void Dialog::QuickInfo(const Heroes &hero)
     const int qwikhero = ICN::QWIKHERO;
 
     // image box
-    auto boxInfo= AGG::GetICN(qwikhero, 0);
-    Sprite &box =boxInfo;
+    auto boxInfo = AGG::GetICN(qwikhero, 0);
+    Sprite &box = boxInfo;
     const Interface::GameArea &gamearea = Interface::Basic::Get().GetGameArea();
     const Rect ar(BORDERWIDTH, BORDERWIDTH, gamearea.GetArea().w, gamearea.GetArea().h);
 
@@ -765,7 +765,7 @@ void Dialog::QuickInfo(const Heroes &hero)
         cur_rt = Rect(mx - box.w(), my - box.h(), box.w(), box.h());
 
 
-	box.SetAlphaMod(210);
+    box.SetAlphaMod(210);
     SpriteBack back(cur_rt);
     box.Blit(cur_rt.x, cur_rt.y);
 

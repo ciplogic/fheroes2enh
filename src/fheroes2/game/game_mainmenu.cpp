@@ -133,16 +133,16 @@ int Game::MainMenu()
             button.isOver = le.MouseCursor(button.button);
 
             if ((button.isOver || !button.wasOver) && (!button.isOver || button.wasOver))
-		        continue;
-	        u32 frame = button.frame;
+                continue;
+            u32 frame = button.frame;
 
-	        if (button.isOver && !button.wasOver)
-		        frame++;
+            if (button.isOver && !button.wasOver)
+                frame++;
 
-	        cursor.Hide();
-	        const Sprite &sprite = AGG::GetICN(ICN::BTNSHNGL, frame);
-	        sprite.Blit(top.x + sprite.x(), top.y + sprite.y());
-	        cursor.Show();
+            cursor.Hide();
+            const Sprite &sprite = AGG::GetICN(ICN::BTNSHNGL, frame);
+            sprite.Blit(top.x + sprite.x(), top.y + sprite.y());
+            cursor.Show();
         }
 
         if (HotKeyPressEvent(EVENT_BUTTON_NEWGAME) || le.MouseClickLeft(buttonNewGame)) return NEWGAME;
@@ -169,13 +169,13 @@ int Game::MainMenu()
             Dialog::Message(_("New Game"), _("Start a single or multi-player game."), Font::BIG);
 
         if (!AnimateInfrequentDelay(MAIN_MENU_DELAY))
-		    continue;
-	    cursor.Hide();
-	    const Sprite &lantern12 = AGG::GetICN(ICN::SHNGANIM,
-	                                          AnimationFrame(ICN::SHNGANIM, 0, lantern_frame++));
-	    lantern12.Blit(top.x + lantern12.x(), top.y + lantern12.y());
-	    cursor.Show();
-	    display.Flip();
+            continue;
+        cursor.Hide();
+        const Sprite &lantern12 = AGG::GetICN(ICN::SHNGANIM,
+                                              AnimationFrame(ICN::SHNGANIM, 0, lantern_frame++));
+        lantern12.Blit(top.x + lantern12.x(), top.y + lantern12.y());
+        cursor.Show();
+        display.Flip();
     }
 
     return QUITGAME;

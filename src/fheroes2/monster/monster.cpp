@@ -150,10 +150,10 @@ StreamBase &operator<<(StreamBase &msg, const monstats_t &obj)
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, monstats_t &obj)
 {
-	return msg >> obj.attack >> obj.defense >>
-		obj.damageMin >> obj.damageMax >>
-		obj.hp >> obj.speed >> obj.grown >>
-		obj.shots >> obj.cost;
+    return msg >> obj.attack >> obj.defense >>
+               obj.damageMin >> obj.damageMax >>
+               obj.hp >> obj.speed >> obj.grown >>
+               obj.shots >> obj.cost;
 }
 
 
@@ -165,14 +165,15 @@ StreamBase &operator<<(StreamBase &msg, const MonsterStaticData &obj)
         msg << monsters[ii];
     return msg;
 }
+
 ByteVectorReader &operator>>(ByteVectorReader &msg, MonsterStaticData &obj)
 {
-	u32 monsters_size;
-	msg >> monsters_size;
+    u32 monsters_size;
+    msg >> monsters_size;
 
-	for (u32 ii = 0; ii < monsters_size; ++ii)
-		msg >> monsters[ii];
-	return msg;
+    for (u32 ii = 0; ii < monsters_size; ++ii)
+        msg >> monsters[ii];
+    return msg;
 }
 
 float Monster::GetUpgradeRatio()
@@ -324,7 +325,9 @@ u32 Monster::GetShots() const
 {
     return monsters[id].shots;
 }
-/*static*/ u32 Monster::GetHitPoints(const Monster& m){
+
+/*static*/ u32 Monster::GetHitPoints(const Monster &m)
+{
     return monsters[m.id].hp;
 }
 
@@ -1543,10 +1546,10 @@ payment_t Monster::GetUpgradeCost() const
 u32 Monster::GetCountFromHitPoints(const Monster &mons, u32 hp)
 {
     if (!hp)
-		return 0;
-	const u32 hp1 = Monster::GetHitPoints(mons);
-	const u32 count = hp / hp1;
-	return (count * hp1) < hp ? count + 1 : count;
+        return 0;
+    const u32 hp1 = Monster::GetHitPoints(mons);
+    const u32 count = hp / hp1;
+    return (count * hp1) < hp ? count + 1 : count;
 }
 
 MonsterStaticData &MonsterStaticData::Get()
@@ -1565,7 +1568,7 @@ StreamBase &operator>>(StreamBase &msg, Monster &obj)
     return msg;
 }
 
-ByteVectorReader& operator>>(ByteVectorReader&msg, Monster&)
+ByteVectorReader &operator>>(ByteVectorReader &msg, Monster &)
 {
-	return msg;
+    return msg;
 }

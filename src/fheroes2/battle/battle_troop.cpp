@@ -174,7 +174,7 @@ Battle::ModesAffected::ModesAffected()
 u32 Battle::ModesAffected::GetMode(u32 mode) const
 {
     auto it = find_if(begin(), end(),
-                                     bind2nd(mem_fun_ref(&ModeDuration::isMode), mode));
+                      bind2nd(mem_fun_ref(&ModeDuration::isMode), mode));
     return it == end() ? 0 : (*it).second;
 }
 
@@ -674,56 +674,56 @@ u32 Battle::Unit::GetDamage(const Unit &enemy) const
 
 u32 Battle::Unit::HowManyCanKill(const Unit &b) const
 {
-	u32 dmg = (GetDamageMin(b) + GetDamageMax(b)) / 2;
+    u32 dmg = (GetDamageMin(b) + GetDamageMax(b)) / 2;
     return b.HowManyWillKilled(dmg);
 }
 
-u32 Battle::Unit::HowManyWillKilled(u32& dmg) const
+u32 Battle::Unit::HowManyWillKilled(u32 &dmg) const
 {
-	int unitLife = Monster::GetHitPoints(*this);
+    int unitLife = Monster::GetHitPoints(*this);
 
-	int killTopUnit = dmg > hp ? 1 : 0;
-	if(killTopUnit)
-	{
-		dmg -= hp;
-	}
-	int unitsToKill = dmg / unitLife;
-	unitsToKill += killTopUnit;
-	dmg %= unitLife;
-	return unitsToKill;
+    int killTopUnit = dmg > hp ? 1 : 0;
+    if (killTopUnit)
+    {
+        dmg -= hp;
+    }
+    int unitsToKill = dmg / unitLife;
+    unitsToKill += killTopUnit;
+    dmg %= unitLife;
+    return unitsToKill;
 }
 
 u32 Battle::Unit::ApplyDamage(u32 dmg)
 {
     if (!dmg || !GetCount())
-		return 0;
-	u32 killed = HowManyWillKilled(dmg);
+        return 0;
+    u32 killed = HowManyWillKilled(dmg);
 
-	// kill mirror image (slave)
-	if (Modes(CAP_MIRRORIMAGE))
-	{
-		if (Arena::GetInterface()) Arena::GetInterface()->RedrawActionRemoveMirrorImage(*this);
-		mirror->ResetModes(CAP_MIRROROWNER);
-		dmg = hp;
-		killed = GetCount();
-		mirror = nullptr;
-	}
+    // kill mirror image (slave)
+    if (Modes(CAP_MIRRORIMAGE))
+    {
+        if (Arena::GetInterface()) Arena::GetInterface()->RedrawActionRemoveMirrorImage(*this);
+        mirror->ResetModes(CAP_MIRROROWNER);
+        dmg = hp;
+        killed = GetCount();
+        mirror = nullptr;
+    }
 
 
- 	if (killed >= GetCount())
-	{
-		dead += GetCount();
-		SetCount(0);
-	} else
-	{
-		dead += killed;
-		SetCount(GetCount() - killed);
-	}
-	hp -= (dmg >= hp ? hp : dmg);
+    if (killed >= GetCount())
+    {
+        dead += GetCount();
+        SetCount(0);
+    } else
+    {
+        dead += killed;
+        SetCount(GetCount() - killed);
+    }
+    hp -= (dmg >= hp ? hp : dmg);
 
-	if (!isValid()) PostKilledAction();
+    if (!isValid()) PostKilledAction();
 
-	return killed;
+    return killed;
 }
 
 void Battle::Unit::PostKilledAction()
@@ -1032,29 +1032,29 @@ StreamBase &Battle::operator>>(StreamBase &msg, Unit &b)
 
 ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, Unit &b)
 {
-	s32 head = -1;
-	u32 uid = 0;
+    s32 head = -1;
+    u32 uid = 0;
 
-	msg >>
-		b.modes >>
-		b.id >>
-		b.count >>
-		b.uid >>
-		b.hp >>
-		b.count0 >>
-		b.dead >>
-		b.shots >>
-		b.disruptingray >>
-		b.reflect >>
-		head >>
-		uid >>
-		b.affected >>
-		b.blindanswer;
+    msg >>
+        b.modes >>
+        b.id >>
+        b.count >>
+        b.uid >>
+        b.hp >>
+        b.count0 >>
+        b.dead >>
+        b.shots >>
+        b.disruptingray >>
+        b.reflect >>
+        head >>
+        uid >>
+        b.affected >>
+        b.blindanswer;
 
-	b.position.Set(head, b.isWide(), b.isReflect());
-	b.mirror = GetArena()->GetTroopUID(uid);
+    b.position.Set(head, b.isWide(), b.isReflect());
+    b.mirror = GetArena()->GetTroopUID(uid);
 
-	return msg;
+    return msg;
 }
 
 bool Battle::Unit::AllowResponse() const
@@ -1180,7 +1180,7 @@ s32 Battle::Unit::GetScoreQuality(const Unit &defender) const
 
     // initial value: (hitpoints)
     const u32 &damage = (attacker.GetDamageMin(defender) + attacker.GetDamageMax(defender)) / 2;
-	u32 dmg = attacker.isTwiceAttack() ? damage * 2 : damage;
+    u32 dmg = attacker.isTwiceAttack() ? damage * 2 : damage;
     const u32 &kills = defender.HowManyWillKilled(dmg);
     double res = kills * Monster::GetHitPoints(defender);
     bool noscale = false;

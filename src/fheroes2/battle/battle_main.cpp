@@ -74,7 +74,7 @@ Battle::Result Battle::Loader(Army &army1, Army &army2, s32 mapsindex)
 
 
     Arena arena(army1, army2, mapsindex, local);
-	
+
     while (arena.BattleValid())
         arena.Turns();
 
@@ -150,7 +150,7 @@ Battle::Result Battle::Loader(Army &army1, Army &army2, s32 mapsindex)
         // hard reset army
         if (!army2.m_troops.isValid() || (result.army2 & RESULT_RETREAT)) army2.Reset(false);
     }
-	
+
     return result;
 }
 
@@ -198,24 +198,24 @@ void Battle::EagleEyeSkillAction(HeroBase &hero, const SpellStorage &spells, boo
     for (auto sp : spells)
     {
         if (hero.HaveSpell(sp))
-		    continue;
-	    switch (eagleeye.Level())
-	    {
-	    case Skill::Level::BASIC:
-		    // 20%
-		    if (3 > sp.Level() && eagleeye.GetValues() >= Rand::Get(1, 100)) new_spells.push_back(sp);
-		    break;
-	    case Skill::Level::ADVANCED:
-		    // 30%
-		    if (4 > sp.Level() && eagleeye.GetValues() >= Rand::Get(1, 100)) new_spells.push_back(sp);
-		    break;
-	    case Skill::Level::EXPERT:
-		    // 40%
-		    if (5 > sp.Level() && eagleeye.GetValues() >= Rand::Get(1, 100)) new_spells.push_back(sp);
-		    break;
-	    default:
-		    break;
-	    }
+            continue;
+        switch (eagleeye.Level())
+        {
+            case Skill::Level::BASIC:
+                // 20%
+                if (3 > sp.Level() && eagleeye.GetValues() >= Rand::Get(1, 100)) new_spells.push_back(sp);
+                break;
+            case Skill::Level::ADVANCED:
+                // 30%
+                if (4 > sp.Level() && eagleeye.GetValues() >= Rand::Get(1, 100)) new_spells.push_back(sp);
+                break;
+            case Skill::Level::EXPERT:
+                // 40%
+                if (5 > sp.Level() && eagleeye.GetValues() >= Rand::Get(1, 100)) new_spells.push_back(sp);
+                break;
+            default:
+                break;
+        }
     }
 
     // add new spell
@@ -325,5 +325,5 @@ StreamBase &Battle::operator<<(StreamBase &msg, const Result &res)
 
 ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, Result &res)
 {
-	return msg >> res.army1 >> res.army2 >> res.exp1 >> res.exp2 >> res.killed;
+    return msg >> res.army1 >> res.army2 >> res.exp1 >> res.exp2 >> res.killed;
 }

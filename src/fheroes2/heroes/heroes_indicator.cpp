@@ -201,7 +201,7 @@ ExperienceIndicator::ExperienceIndicator(const Heroes &h) : HeroesIndicator(h)
     StringReplace(descriptions, "%{exp1}", hero.GetExperience());
     StringReplace(descriptions, "%{exp2}",
                   Heroes::GetExperienceFromLevel(
-                      Heroes::GetLevelFromExperience(hero.GetExperience())));
+                          Heroes::GetLevelFromExperience(hero.GetExperience())));
 }
 
 void ExperienceIndicator::Redraw()

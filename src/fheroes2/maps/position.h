@@ -31,7 +31,8 @@ class MapPosition
 {
 public:
     MapPosition(const Point & = Point(-1, -1));
-	~MapPosition();
+
+    ~MapPosition();
 
     bool operator==(s32) const;
 
@@ -44,12 +45,13 @@ public:
     void SetIndex(s32);
 
     bool isPosition(const Point &) const;
-	void ReadFrom(ByteVectorReader & msg);
+
+    void ReadFrom(ByteVectorReader &msg);
 
 protected:
     friend StreamBase &operator<<(StreamBase &, const MapPosition &);
 
-	friend ByteVectorReader &operator>>(ByteVectorReader &, MapPosition &);
+    friend ByteVectorReader &operator>>(ByteVectorReader &, MapPosition &);
 
     Point center;
 };

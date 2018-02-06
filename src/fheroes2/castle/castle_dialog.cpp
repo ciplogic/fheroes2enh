@@ -471,8 +471,7 @@ int Castle::OpenDialog(bool readonly, bool fade)
         {
             result = Dialog::PREV;
             break;
-        }
-        else
+        } else
             // next castle
         if (buttonNextCastle.isEnable() && le.MouseClickLeft(buttonNextCastle))
         {
@@ -533,7 +532,7 @@ int Castle::OpenDialog(bool readonly, bool fade)
                     if (readonly &&
                         ((*it).id & (BUILD_SHIPYARD | BUILD_MARKETPLACE | BUILD_WELL | BUILD_TENT | BUILD_CASTLE)))
                         Message(GetStringBuilding((*it).id), GetDescriptionBuilding((*it).id), Font::BIG,
-                                        Dialog::OK);
+                                Dialog::OK);
                     else
                         switch ((*it).id)
                         {
@@ -552,7 +551,7 @@ int Castle::OpenDialog(bool readonly, bool fade)
                             case BUILD_SPEC:
                             case BUILD_SHRINE:
                                 Message(GetStringBuilding((*it).id), GetDescriptionBuilding((*it).id),
-                                                Font::BIG, Dialog::OK);
+                                        Font::BIG, Dialog::OK);
                                 break;
 
                             case BUILD_SHIPYARD:
@@ -576,7 +575,7 @@ int Castle::OpenDialog(bool readonly, bool fade)
                             case BUILD_TENT:
                                 if (!Modes(ALLOWCASTLE))
                                     Message(_("Town"), _("This town may not be upgraded to a castle."),
-                                                    Font::BIG, Dialog::OK);
+                                            Font::BIG, Dialog::OK);
                                 else if (Dialog::OK == DialogBuyCastle(true))
                                 {
                                     AGG::PlaySound(M82::BUILDTWN);
@@ -723,8 +722,8 @@ int Castle::OpenDialog(bool readonly, bool fade)
         {
             cursor.Hide();
             RedrawAllBuilding(*this, cur_pt, cacheBuildings,
-                                            (conf.ExtCastleAllowFlash() ? GetCurrentFlash(*this, cacheBuildings)
-                                                                        : BUILD_NOTHING));
+                              (conf.ExtCastleAllowFlash() ? GetCurrentFlash(*this, cacheBuildings)
+                                                          : BUILD_NOTHING));
             cursor.Show();
             display.Flip();
         }
@@ -741,95 +740,95 @@ int Castle::OpenDialog(bool readonly, bool fade)
     return result;
 }
 
-void Castle::DrawCastleFundsAtPos(Display& display, const Funds& resource, Rect src_rt) const
+void Castle::DrawCastleFundsAtPos(Display &display, const Funds &resource, Rect src_rt) const
 {
-	display.FillRect(src_rt, ColorBlack);
+    display.FillRect(src_rt, ColorBlack);
 
-	Text text;
+    Text text;
 
-	Point dst_pt;
-	// sprite wood
-	dst_pt.x = src_rt.x + 1;
-	dst_pt.y = src_rt.y + 10;
-	const Sprite &wood = AGG::GetICN(ICN::RESOURCE, 0);
-	wood.Blit(dst_pt);
+    Point dst_pt;
+    // sprite wood
+    dst_pt.x = src_rt.x + 1;
+    dst_pt.y = src_rt.y + 10;
+    const Sprite &wood = AGG::GetICN(ICN::RESOURCE, 0);
+    wood.Blit(dst_pt);
 
-	// count wood
-	text.Set(GetString(resource.wood), Font::SMALL);
-	dst_pt.y += 22;
-	text.Blit(dst_pt.x + (wood.w() - text.w()) / 2, dst_pt.y);
+    // count wood
+    text.Set(GetString(resource.wood), Font::SMALL);
+    dst_pt.y += 22;
+    text.Blit(dst_pt.x + (wood.w() - text.w()) / 2, dst_pt.y);
 
-	// sprite sulfur
-	dst_pt.x = src_rt.x + 42;
-	dst_pt.y = src_rt.y + 6;
-	const Sprite &sulfur = AGG::GetICN(ICN::RESOURCE, 3);
-	sulfur.Blit(dst_pt);
+    // sprite sulfur
+    dst_pt.x = src_rt.x + 42;
+    dst_pt.y = src_rt.y + 6;
+    const Sprite &sulfur = AGG::GetICN(ICN::RESOURCE, 3);
+    sulfur.Blit(dst_pt);
 
-	// count sulfur
-	text.Set(GetString(resource.sulfur));
-	dst_pt.y += 26;
-	text.Blit(dst_pt.x + (sulfur.w() - text.w()) / 2, dst_pt.y);
+    // count sulfur
+    text.Set(GetString(resource.sulfur));
+    dst_pt.y += 26;
+    text.Blit(dst_pt.x + (sulfur.w() - text.w()) / 2, dst_pt.y);
 
-	// sprite crystal
-	dst_pt.x = src_rt.x + 1;
-	dst_pt.y = src_rt.y + 45;
-	const Sprite &crystal = AGG::GetICN(ICN::RESOURCE, 4);
-	crystal.Blit(dst_pt);
+    // sprite crystal
+    dst_pt.x = src_rt.x + 1;
+    dst_pt.y = src_rt.y + 45;
+    const Sprite &crystal = AGG::GetICN(ICN::RESOURCE, 4);
+    crystal.Blit(dst_pt);
 
-	// count crystal
-	text.Set(GetString(resource.crystal));
-	dst_pt.y += 33;
-	text.Blit(dst_pt.x + (crystal.w() - text.w()) / 2, dst_pt.y);
+    // count crystal
+    text.Set(GetString(resource.crystal));
+    dst_pt.y += 33;
+    text.Blit(dst_pt.x + (crystal.w() - text.w()) / 2, dst_pt.y);
 
-	// sprite mercury
-	dst_pt.x = src_rt.x + 44;
-	dst_pt.y = src_rt.y + 47;
-	const Sprite &mercury = AGG::GetICN(ICN::RESOURCE, 1);
-	mercury.Blit(dst_pt);
+    // sprite mercury
+    dst_pt.x = src_rt.x + 44;
+    dst_pt.y = src_rt.y + 47;
+    const Sprite &mercury = AGG::GetICN(ICN::RESOURCE, 1);
+    mercury.Blit(dst_pt);
 
-	// count mercury
-	text.Set(GetString(resource.mercury));
-	dst_pt.y += 34;
-	text.Blit(dst_pt.x + (mercury.w() - text.w()) / 2, dst_pt.y);
+    // count mercury
+    text.Set(GetString(resource.mercury));
+    dst_pt.y += 34;
+    text.Blit(dst_pt.x + (mercury.w() - text.w()) / 2, dst_pt.y);
 
-	// sprite ore
-	dst_pt.x = src_rt.x + 1;
-	dst_pt.y = src_rt.y + 92;
-	const Sprite &ore = AGG::GetICN(ICN::RESOURCE, 2);
-	ore.Blit(dst_pt);
+    // sprite ore
+    dst_pt.x = src_rt.x + 1;
+    dst_pt.y = src_rt.y + 92;
+    const Sprite &ore = AGG::GetICN(ICN::RESOURCE, 2);
+    ore.Blit(dst_pt);
 
-	// count ore
-	text.Set(GetString(resource.ore));
-	dst_pt.y += 26;
-	text.Blit(dst_pt.x + (ore.w() - text.w()) / 2, dst_pt.y);
+    // count ore
+    text.Set(GetString(resource.ore));
+    dst_pt.y += 26;
+    text.Blit(dst_pt.x + (ore.w() - text.w()) / 2, dst_pt.y);
 
-	// sprite gems
-	dst_pt.x = src_rt.x + 45;
-	dst_pt.y = src_rt.y + 92;
-	const Sprite &gems = AGG::GetICN(ICN::RESOURCE, 5);
-	gems.Blit(dst_pt);
+    // sprite gems
+    dst_pt.x = src_rt.x + 45;
+    dst_pt.y = src_rt.y + 92;
+    const Sprite &gems = AGG::GetICN(ICN::RESOURCE, 5);
+    gems.Blit(dst_pt);
 
-	// count gems
-	text.Set(GetString(resource.gems));
-	dst_pt.y += 26;
-	text.Blit(dst_pt.x + (gems.w() - text.w()) / 2, dst_pt.y);
+    // count gems
+    text.Set(GetString(resource.gems));
+    dst_pt.y += 26;
+    text.Blit(dst_pt.x + (gems.w() - text.w()) / 2, dst_pt.y);
 
-	// sprite gold
-	dst_pt.x = src_rt.x + 6;
-	dst_pt.y = src_rt.y + 130;
-	const Sprite &gold = AGG::GetICN(ICN::RESOURCE, 6);
-	gold.Blit(dst_pt);
+    // sprite gold
+    dst_pt.x = src_rt.x + 6;
+    dst_pt.y = src_rt.y + 130;
+    const Sprite &gold = AGG::GetICN(ICN::RESOURCE, 6);
+    gold.Blit(dst_pt);
 
-	// count gold
-	text.Set(GetString(resource.gold));
-	dst_pt.y += 24;
-	text.Blit(dst_pt.x + (gold.w() - text.w()) / 2, dst_pt.y);
+    // count gold
+    text.Set(GetString(resource.gold));
+    dst_pt.y += 24;
+    text.Blit(dst_pt.x + (gold.w() - text.w()) / 2, dst_pt.y);
 
-	// sprite button exit
-	dst_pt.x = src_rt.x + 1;
-	dst_pt.y = src_rt.y + 166;
-	const Sprite &exit = AGG::GetICN(ICN::SWAPBTN, 0);
-	exit.Blit(dst_pt);
+    // sprite button exit
+    dst_pt.x = src_rt.x + 1;
+    dst_pt.y = src_rt.y + 166;
+    const Sprite &exit = AGG::GetICN(ICN::SWAPBTN, 0);
+    exit.Blit(dst_pt);
 }
 
 /* redraw resource info panel */
@@ -840,7 +839,7 @@ Rect Castle::RedrawResourcePanel(const Point &pt)
 
     Rect src_rt(pt.x + 552, pt.y + 262, 82, 192);
 
-	DrawCastleFundsAtPos(display, resource, src_rt);
+    DrawCastleFundsAtPos(display, resource, src_rt);
 
     return src_rt;
 }

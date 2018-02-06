@@ -2,17 +2,17 @@
 #include "gamedefs.h"
 
 BinaryFileReader::BinaryFileReader()
-    :_file(nullptr), 
-    defaultBuf{} 
+        : _file(nullptr),
+          defaultBuf{}
 {
 }
 
 BinaryFileReader::~BinaryFileReader()
 {
-	close();
+    close();
 }
 
-bool BinaryFileReader::open(const std::string& cs, const char* rb)
+bool BinaryFileReader::open(const std::string &cs, const char *rb)
 {
     _file = fopen(cs.c_str(), rb);
     return _file != nullptr;
@@ -99,22 +99,22 @@ u32 BinaryFileReader::tell() const
 
 void BinaryFileReader::close()
 {
-	if (!_file)
-		return;
-	fclose(_file);
-	_file = nullptr;
+    if (!_file)
+        return;
+    fclose(_file);
+    _file = nullptr;
 }
 
 std::vector<u8> readFileBytes(std::string fileName)
 {
-	std::vector<u8> result;
-	BinaryFileReader reader;
-	if(!reader.open(fileName, "rb"))
-	{
-		return result;
-	}
-	int fileSize = reader.size();
-	reader.seek(0);
-	result = reader.getRaw(fileSize);
-	return result;
+    std::vector<u8> result;
+    BinaryFileReader reader;
+    if (!reader.open(fileName, "rb"))
+    {
+        return result;
+    }
+    int fileSize = reader.size();
+    reader.seek(0);
+    result = reader.getRaw(fileSize);
+    return result;
 }

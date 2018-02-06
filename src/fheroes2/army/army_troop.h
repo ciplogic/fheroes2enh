@@ -94,7 +94,7 @@ public:
 protected:
     friend StreamBase &operator<<(StreamBase &, const Troop &);
 
-	friend ByteVectorReader &operator>>(ByteVectorReader &msg, Troop &troop);
+    friend ByteVectorReader &operator>>(ByteVectorReader &msg, Troop &troop);
 
     u32 count;
 };

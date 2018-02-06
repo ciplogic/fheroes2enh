@@ -21,6 +21,7 @@
  ***************************************************************************/
 
 #include "system.h"
+
 #ifdef WITH_NET
 
 #include "sdlnet.h"
@@ -114,20 +115,20 @@ bool Network::Socket::Send(const char* buf, int len)
 template <typename T>
 T swap_endian(T u)
 {
-	static_assert (CHAR_BIT == 8, "CHAR_BIT != 8");
+    static_assert (CHAR_BIT == 8, "CHAR_BIT != 8");
 
-	union
-	{
-		T u;
-		unsigned char u8[sizeof(T)];
-	} source, dest;
+    union
+    {
+        T u;
+        unsigned char u8[sizeof(T)];
+    } source, dest;
 
-	source.u = u;
+    source.u = u;
 
-	for (size_t k = 0; k < sizeof(T); k++)
-		dest.u8[k] = source.u8[sizeof(T) - k - 1];
+    for (size_t k = 0; k < sizeof(T); k++)
+        dest.u8[k] = source.u8[sizeof(T) - k - 1];
 
-	return dest.u;
+    return dest.u;
 }
 
 
@@ -135,7 +136,7 @@ bool Network::Socket::Recv32(u32 & v)
 {
     if(Recv(reinterpret_cast<char*>(&v), sizeof(v)))
     {
-		auto swappedV = swap_endian(v);
+        auto swappedV = swap_endian(v);
         v = swappedV;
         return true;
     }
@@ -146,8 +147,8 @@ bool Network::Socket::Recv16(u16 & v)
 {
     if(Recv(reinterpret_cast<char*>(&v), sizeof(v)))
     {
-		auto swappedV = swap_endian(v);
-		v = swappedV;
+        auto swappedV = swap_endian(v);
+        v = swappedV;
         return true;
     }
     return false;
@@ -155,9 +156,9 @@ bool Network::Socket::Recv16(u16 & v)
 
 bool Network::Socket::Send32(const u32 & v0)
 {
-    u32 v = v0;		
-	auto swappedV = swap_endian(v);
-	v = swappedV;
+    u32 v = v0;
+    auto swappedV = swap_endian(v);
+    v = swappedV;
 
     return Send(reinterpret_cast<char*>(&v), sizeof(v));
 }
@@ -165,8 +166,8 @@ bool Network::Socket::Send32(const u32 & v0)
 bool Network::Socket::Send16(const u16 & v0)
 {
     u16 v = v0;
-	auto swappedV = swap_endian(v);
-	v = swappedV;
+    auto swappedV = swap_endian(v);
+    v = swappedV;
     return Send(reinterpret_cast<char*>(&v), sizeof(v));
 }
 

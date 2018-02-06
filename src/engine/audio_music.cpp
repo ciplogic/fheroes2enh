@@ -28,30 +28,30 @@
 #include "audio_mixer.h"
 
 #ifdef WITH_MIXER
+
 #include "SDL_mixer.h"
 
 namespace Music
 {
-    void Play(Mix_Music* mix, u32 id, bool loop);
+    void Play(Mix_Music *mix, u32 id, bool loop);
 
-    Mix_Music* music = nullptr;
-    int fadein  = 0;
+    Mix_Music *music = nullptr;
+    int fadein = 0;
     int fadeout = 0;
 }
 
-void Music::Play(Mix_Music* mix, u32 id, bool loop)
+void Music::Play(Mix_Music *mix, u32 id, bool loop)
 {
     Reset();
-    
-    int res = fadein ?
-    Mix_FadeInMusic(mix, loop ? -1 : 0, fadein) : Mix_PlayMusic(mix, loop ? -1 : 0);
 
-    if(res < 0)
+    int res = fadein ?
+              Mix_FadeInMusic(mix, loop ? -1 : 0, fadein) : Mix_PlayMusic(mix, loop ? -1 : 0);
+
+    if (res < 0)
     {
         ERROR(Mix_GetError());
-    }
-    else
-    music = mix;
+    } else
+        music = mix;
 /*
     std::list<play_t>::iterator
     it = std::find(musics.begin(), musics.end(), f);
@@ -90,31 +90,30 @@ void Music::Play(Mix_Music* mix, u32 id, bool loop)
 */
 }
 
-void Music::Play(const std::vector<u8> & v, bool loop)
+void Music::Play(const std::vector<u8> &v, bool loop)
 {
-    if(!Mixer::isValid() || v.empty())
+    if (!Mixer::isValid() || v.empty())
         return;
     u32 id = CheckSum(v);
-    SDL_RWops* rwops = SDL_RWFromConstMem(&v[0], v.size());
+    SDL_RWops *rwops = SDL_RWFromConstMem(&v[0], v.size());
 
-    Mix_Music* mix = Mix_LoadMUS_RW(rwops);
+    Mix_Music *mix = Mix_LoadMUS_RW(rwops);
 
     SDL_FreeRW(rwops);
     Music::Play(mix, id, loop);
 }
 
-void Music::Play(const std::string & file, bool loop)
+void Music::Play(const std::string &file, bool loop)
 {
-    if(!Mixer::isValid())
+    if (!Mixer::isValid())
         return;
     u32 id = CheckSum(file);
-    Mix_Music* mix = Mix_LoadMUS(file.c_str());
+    Mix_Music *mix = Mix_LoadMUS(file.c_str());
 
-    if(! mix)
+    if (!mix)
     {
         ERROR(Mix_GetError());
-    }
-    else
+    } else
         Music::Play(mix, id, loop);
 }
 
@@ -135,23 +134,22 @@ u16 Music::Volume(s16 vol)
 
 void Music::Pause()
 {
-    if(music) Mix_PauseMusic();
+    if (music) Mix_PauseMusic();
 }
 
 void Music::Resume()
 {
-    if(music) Mix_ResumeMusic();
+    if (music) Mix_ResumeMusic();
 }
 
 void Music::Reset()
 {
-    if(!music)
+    if (!music)
         return;
     if (fadeout)
     {
         while (!Mix_FadeOutMusic(fadeout) && Mix_PlayingMusic()) SDL_Delay(50);
-    }
-    else
+    } else
         Mix_HaltMusic();
 
     Mix_FreeMusic(music);
@@ -197,7 +195,7 @@ struct info_t
 int callbackPlayMusic(void *ptr)
 {
 #if WIN32
-	return 0;
+    return 0;
 #endif
     if (ptr && System::ShellCommand(nullptr))
     {

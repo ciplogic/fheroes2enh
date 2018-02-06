@@ -89,7 +89,7 @@ void Dialog::SpellInfo(const string &header, const string &message, const Spell 
 
     // blit sprite
     pos.x = box.GetArea().x + (pos.w - sprite.w()) / 2;
-	
+
     sprite.Blit(pos.x, pos.y);
 
     // small text

@@ -84,7 +84,7 @@ string GameOver::GetActualDescription(int cond)
         if (town)
         {
             msg = town->isCastle() ? _("Capture the castle '%{name}'") : _("Capture the town '%{name}'");
-	        StringReplace(msg, "%{name}", town->GetName());
+            StringReplace(msg, "%{name}", town->GetName());
         }
     } else if (WINS_HERO & cond)
     {
@@ -376,7 +376,7 @@ StreamBase &GameOver::operator>>(StreamBase &msg, Result &res)
     return msg >> res.colors >> res.result >> res.continue_game;
 }
 
-ByteVectorReader &GameOver::operator>>(ByteVectorReader&msg, Result &res)
+ByteVectorReader &GameOver::operator>>(ByteVectorReader &msg, Result &res)
 {
-	return msg >> res.colors >> res.result >> res.continue_game;
+    return msg >> res.colors >> res.result >> res.continue_game;
 }

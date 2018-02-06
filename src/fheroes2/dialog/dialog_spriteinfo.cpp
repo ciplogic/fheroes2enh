@@ -38,7 +38,7 @@ int Dialog::ArtifactInfo(const string &hdr, const string &msg, const Artifact &a
     Surface image = border.GetSurface();
     border.Blit(image);
     artifact.Blit(5, 5, image);
-	border.SetAlphaMod(210);
+    border.SetAlphaMod(210);
     string ext = msg;
     ext.append("\n");
     ext.append(" ");

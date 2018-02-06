@@ -293,13 +293,13 @@ std::pair<Rect, Point> Rect::Fixed4Blit(const Rect &srcrt, const Rect &dstrt)
 }
 
 Rect::Rect(int x, int y, int w, int h)
-: Point(static_cast<s16>(x), static_cast<s16>(y)), Size(static_cast<u16>(w), static_cast<u16>(h))
+        : Point(static_cast<s16>(x), static_cast<s16>(y)), Size(static_cast<u16>(w), static_cast<u16>(h))
 {
 }
 
-void SDLRect(s32 x, s32 y, u32 w, u32 h, SDL_Rect& writeTo)
+void SDLRect(s32 x, s32 y, u32 w, u32 h, SDL_Rect &writeTo)
 {
-    SDL_Rect& res = writeTo;
+    SDL_Rect &res = writeTo;
 
     res.x = x;
     res.y = y;
@@ -308,9 +308,9 @@ void SDLRect(s32 x, s32 y, u32 w, u32 h, SDL_Rect& writeTo)
 
 }
 
-void SDLRect(const Rect &rt2, SDL_Rect& writeTo)
+void SDLRect(const Rect &rt2, SDL_Rect &writeTo)
 {
-	SDL_Rect& res = writeTo;
+    SDL_Rect &res = writeTo;
 
     res.x = rt2.x;
     res.y = rt2.y;

@@ -151,9 +151,9 @@ int Dialog::ArmyInfo(const Troop &troop, int flags)
             if (buttonUpgrade.isEnable() && le.MouseClickLeft(buttonUpgrade))
             {
                 string msg = 1.0f != Monster::GetUpgradeRatio() ?
-                                  _("Your troops can be upgraded, but it will cost you %{ratio} times the difference in cost for each troop, rounded up to next highest number. Do you wish to upgrade them?")
-                                                                     :
-                                  _("Your troops can be upgraded, but it will cost you dearly. Do you wish to upgrade them?");
+                             _("Your troops can be upgraded, but it will cost you %{ratio} times the difference in cost for each troop, rounded up to next highest number. Do you wish to upgrade them?")
+                                                                :
+                             _("Your troops can be upgraded, but it will cost you dearly. Do you wish to upgrade them?");
                 StringReplace(msg, "%{ratio}", GetString(Monster::GetUpgradeRatio(), 2));
                 if (YES == ResourceInfo("", msg, troop.GetUpgradeCost(), YES | NO))
                 {
@@ -164,7 +164,7 @@ int Dialog::ArmyInfo(const Troop &troop, int flags)
                 // dismiss
             if (buttonDismiss.isEnable() && le.MouseClickLeft(buttonDismiss) &&
                 YES == Message("", _("Are you sure you want to dismiss this army?"), Font::BIG,
-                                               YES | NO))
+                               YES | NO))
             {
                 result = DISMISS;
                 break;
@@ -398,7 +398,7 @@ int Dialog::ArmyJoinFree(const Troop &troop, Heroes &hero)
     TextBox textbox(message, Font::BIG, BOXAREA_WIDTH);
     const int buttons = YES | NO;
 
-	FrameBox box(10 + textbox.h() + 10, buttons);
+    FrameBox box(10 + textbox.h() + 10, buttons);
     const Rect &pos = box.GetArea();
 
     int posy = pos.y + 10;
@@ -408,7 +408,7 @@ int Dialog::ArmyJoinFree(const Troop &troop, Heroes &hero)
     Button btnHeroes(pos.x + pos.w / 2 - 20, pos.y + pos.h - 35,
                      (conf.ExtGameEvilInterface() ? ICN::ADVEBTNS : ICN::ADVBTNS), 0, 1);
 
-    if (hero.GetArmy().m_troops.GetCount() < hero.GetArmy().m_troops.Size() 
+    if (hero.GetArmy().m_troops.GetCount() < hero.GetArmy().m_troops.Size()
         || hero.GetArmy().m_troops.HasMonster(troop))
         btnHeroes.SetDisable(true);
     else
@@ -546,7 +546,7 @@ int Dialog::ArmyJoinWithCost(const Troop &troop, u32 join, u32 gold, Heroes &her
         }
     }
 
-    if (hero.GetArmy().m_troops.GetCount() < hero.GetArmy().m_troops.Size() 
+    if (hero.GetArmy().m_troops.GetCount() < hero.GetArmy().m_troops.Size()
         || hero.GetArmy().m_troops.HasMonster(troop))
         btnHeroes.SetDisable(true);
     else

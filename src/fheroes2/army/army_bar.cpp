@@ -36,7 +36,7 @@
 #include "system.h"
 #include "tools.h"
 
-bool CanUpgradeTroopButNoResources(Troop& troop, Army* army)
+bool CanUpgradeTroopButNoResources(Troop &troop, Army *army)
 {
     const Castle *castle = army->inCastle();
     bool candidate = false;
@@ -50,7 +50,7 @@ bool CanUpgradeTroopButNoResources(Troop& troop, Army* army)
 
 }
 
-bool CanUpgradeTroop(Troop& troop, Army* army)
+bool CanUpgradeTroop(Troop &troop, Army *army)
 {
     const Castle *castle = army->inCastle();
     bool candidate = false;
@@ -64,22 +64,24 @@ bool CanUpgradeTroop(Troop& troop, Army* army)
 
 }
 
-bool DoUpgradeOnPlusClick(const Point &cursor, ArmyTroop &troop, const Rect &pos, Army* army)
+bool DoUpgradeOnPlusClick(const Point &cursor, ArmyTroop &troop, const Rect &pos, Army *army)
 {
     int posXInArea = cursor.x - pos.x;
     int posYInArea = cursor.y - pos.y;
     auto isUpgradable = false;
 
     Text textPlus = {"+"};
-    if((pos.w - posXInArea <textPlus.w()+4) && (posYInArea<textPlus.h()+4)){
+    if ((pos.w - posXInArea < textPlus.w() + 4) && (posYInArea < textPlus.h() + 4))
+    {
         isUpgradable = true;
     }
-    if(isUpgradable && CanUpgradeTroop(troop, army)){
+    if (isUpgradable && CanUpgradeTroop(troop, army))
+    {
         world.GetKingdom(army->GetColor()).OddFundsResource(troop.GetUpgradeCost());
         troop.Upgrade();
         return true;
     }
-	return false;
+    return false;
 }
 
 void RedistributeArmy(ArmyTroop &troop1 /* from */, ArmyTroop &troop2 /* to */)
@@ -99,7 +101,7 @@ void RedistributeArmy(ArmyTroop &troop1 /* from */, ArmyTroop &troop2 /* to */)
         const u32 max_count = save_last_troop ? troop1.GetCount() - 1 : troop1.GetCount();
         u32 redistr_count = troop1.GetCount() / 2;
         const u32 slotCount = Dialog::ArmySplitTroop((free_slots > max_count ? max_count : free_slots), max_count,
-                                                 redistr_count, save_last_troop);
+                                                     redistr_count, save_last_troop);
 
         switch (slotCount)
         {
@@ -189,87 +191,87 @@ void ArmyBar::RedrawBackground(const Rect &pos, Surface &dstsf)
 void ArmyBar::RedrawItem(ArmyTroop &troop, const Rect &pos, bool selected, Surface &dstsf)
 {
     if (!troop.isValid())
-		return;
-	Text text(GetString(troop.GetCount()), (use_mini_sprite ? Font::SMALL : Font::BIG));
+        return;
+    Text text(GetString(troop.GetCount()), (use_mini_sprite ? Font::SMALL : Font::BIG));
 
-	if (use_mini_sprite)
-	{
-		const Sprite &mons32 = AGG::GetICN(ICN::MONS32, troop.GetSpriteIndex());
-		Rect srcrt(0, 0, mons32.w(), mons32.h());
+    if (use_mini_sprite)
+    {
+        const Sprite &mons32 = AGG::GetICN(ICN::MONS32, troop.GetSpriteIndex());
+        Rect srcrt(0, 0, mons32.w(), mons32.h());
 
-		if (mons32.w() > pos.w)
-		{
-			srcrt.x = (mons32.w() - pos.w) / 2;
-			srcrt.w = pos.w;
-		}
+        if (mons32.w() > pos.w)
+        {
+            srcrt.x = (mons32.w() - pos.w) / 2;
+            srcrt.w = pos.w;
+        }
 
-		if (mons32.h() > pos.h)
-		{
-			srcrt.y = (mons32.h() - pos.h) / 2;
-			srcrt.h = pos.h;
-		}
+        if (mons32.h() > pos.h)
+        {
+            srcrt.y = (mons32.h() - pos.h) / 2;
+            srcrt.h = pos.h;
+        }
 
-		mons32.Blit(srcrt, pos.x + (pos.w - mons32.w()) / 2, pos.y + pos.h - mons32.h() - 1, dstsf);
-	} else
-	{
-		switch (troop.GetRace())
-		{
-		case Race::KNGT:
-			AGG::GetICN(ICN::STRIP, 4).Blit(pos, dstsf);
-			break;
-		case Race::BARB:
-			AGG::GetICN(ICN::STRIP, 5).Blit(pos, dstsf);
-			break;
-		case Race::SORC:
-			AGG::GetICN(ICN::STRIP, 6).Blit(pos, dstsf);
-			break;
-		case Race::WRLK:
-			AGG::GetICN(ICN::STRIP, 7).Blit(pos, dstsf);
-			break;
-		case Race::WZRD:
-			AGG::GetICN(ICN::STRIP, 8).Blit(pos, dstsf);
-			break;
-		case Race::NECR:
-			AGG::GetICN(ICN::STRIP, 9).Blit(pos, dstsf);
-			break;
-		default:
-			AGG::GetICN(ICN::STRIP, 10).Blit(pos, dstsf);
-			break;
-		}
+        mons32.Blit(srcrt, pos.x + (pos.w - mons32.w()) / 2, pos.y + pos.h - mons32.h() - 1, dstsf);
+    } else
+    {
+        switch (troop.GetRace())
+        {
+            case Race::KNGT:
+                AGG::GetICN(ICN::STRIP, 4).Blit(pos, dstsf);
+                break;
+            case Race::BARB:
+                AGG::GetICN(ICN::STRIP, 5).Blit(pos, dstsf);
+                break;
+            case Race::SORC:
+                AGG::GetICN(ICN::STRIP, 6).Blit(pos, dstsf);
+                break;
+            case Race::WRLK:
+                AGG::GetICN(ICN::STRIP, 7).Blit(pos, dstsf);
+                break;
+            case Race::WZRD:
+                AGG::GetICN(ICN::STRIP, 8).Blit(pos, dstsf);
+                break;
+            case Race::NECR:
+                AGG::GetICN(ICN::STRIP, 9).Blit(pos, dstsf);
+                break;
+            default:
+                AGG::GetICN(ICN::STRIP, 10).Blit(pos, dstsf);
+                break;
+        }
 
-		const Sprite &spmonh = AGG::GetICN(troop.ICNMonh(), 0);
-		spmonh.Blit(pos.x + spmonh.x(), pos.y + spmonh.y(), dstsf);
-	}
+        const Sprite &spmonh = AGG::GetICN(troop.ICNMonh(), 0);
+        spmonh.Blit(pos.x + spmonh.x(), pos.y + spmonh.y(), dstsf);
+    }
 
-	if (use_mini_sprite)
-		text.Blit(pos.x + pos.w - text.w() - 3, pos.y + pos.h - text.h() - 1, dstsf);
-	else
-	{
-		{
-			Surface black(Size(text.w() + 6, text.h() + 2), false);
-			black.Fill(RGBA(55, 55, 187, 255));
-			Rect area{ 0,0, black.w() - 1,black.h() - 1 };
-			black.DrawRect(area, RGBA(255, 255, 0));
-			const Point pt(pos.x + pos.w - black.w() - 1, pos.y + pos.h - black.h() - 1);
-			black.SetAlphaMod(200);
-			black.Blit(pt.x, pt.y, dstsf);
-			text.Blit(pt.x + 1, pt.y + 0, dstsf);
+    if (use_mini_sprite)
+        text.Blit(pos.x + pos.w - text.w() - 3, pos.y + pos.h - text.h() - 1, dstsf);
+    else
+    {
+        {
+            Surface black(Size(text.w() + 6, text.h() + 2), false);
+            black.Fill(RGBA(55, 55, 187, 255));
+            Rect area{0, 0, black.w() - 1, black.h() - 1};
+            black.DrawRect(area, RGBA(255, 255, 0));
+            const Point pt(pos.x + pos.w - black.w() - 1, pos.y + pos.h - black.h() - 1);
+            black.SetAlphaMod(200);
+            black.Blit(pt.x, pt.y, dstsf);
+            text.Blit(pt.x + 1, pt.y + 0, dstsf);
 
-		}
-		if (CanUpgradeTroop(troop, army))
-		{
-			PlusSignAddon plusSignAddon;
-			plusSignAddon.draw(pos.x + pos.w, pos.y, true);
-		}
-		if (CanUpgradeTroopButNoResources(troop, army))
-		{
-			PlusSignAddon plusSignAddon;
-			plusSignAddon.draw(pos.x + pos.w, pos.y, false);
-		}
-	}
+        }
+        if (CanUpgradeTroop(troop, army))
+        {
+            PlusSignAddon plusSignAddon;
+            plusSignAddon.draw(pos.x + pos.w, pos.y, true);
+        }
+        if (CanUpgradeTroopButNoResources(troop, army))
+        {
+            PlusSignAddon plusSignAddon;
+            plusSignAddon.draw(pos.x + pos.w, pos.y, false);
+        }
+    }
 
-	if (selected)
-		spcursor.Move(pos.x, pos.y);
+    if (selected)
+        spcursor.Move(pos.x, pos.y);
 }
 
 void ArmyBar::ResetSelected()
@@ -328,7 +330,7 @@ bool ArmyBar::ActionBarCursor(const Point &cursor, ArmyTroop &troop, const Rect 
             Display::Get().Flip();
             DELAY(1);
         }
-	    ArmyTroop *troop_r = GetItem(le.GetMouseReleaseLeft());
+        ArmyTroop *troop_r = GetItem(le.GetMouseReleaseLeft());
 
         if (troop_r && !troop_r->isValid())
         {
@@ -376,7 +378,7 @@ ArmyBar::ActionBarCursor(const Point &cursor, ArmyTroop &troop1, const Rect &pos
 
 bool ArmyBar::ActionBarSingleClick(const Point &cursor, ArmyTroop &troop, const Rect &pos)
 {
-    if(DoUpgradeOnPlusClick(cursor, troop, pos, army))
+    if (DoUpgradeOnPlusClick(cursor, troop, pos, army))
         return true;
 
     if (isSelected())
@@ -479,7 +481,7 @@ bool ArmyBar::ActionBarDoubleClick(const Point &cursor, ArmyTroop &troop, const 
 
     if (&troop == troop2)
     {
-        if(DoUpgradeOnPlusClick(cursor, troop, pos, army))
+        if (DoUpgradeOnPlusClick(cursor, troop, pos, army))
             return true;
 
         int flags = (read_only || army->SaveLastTroop() ? Dialog::READONLY | Dialog::BUTTONS : Dialog::BUTTONS);

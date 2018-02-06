@@ -111,14 +111,14 @@ StreamBase &Battle::operator<<(StreamBase &msg, const TargetInfo &t)
 
 ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, TargetInfo &t)
 {
-	u32 uid = 0;
+    u32 uid = 0;
 
-	msg >> uid >>
-		t.damage >> t.killed >> t.resist;
+    msg >> uid >>
+        t.damage >> t.killed >> t.resist;
 
-	t.defender = uid ? GetArena()->GetTroopUID(uid) : nullptr;
+    t.defender = uid ? GetArena()->GetTroopUID(uid) : nullptr;
 
-	return msg;
+    return msg;
 }
 
 StreamBase &Battle::operator<<(StreamBase &msg, const TargetsInfo &ts)
@@ -133,15 +133,15 @@ StreamBase &Battle::operator<<(StreamBase &msg, const TargetsInfo &ts)
 
 ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, TargetsInfo &ts)
 {
-	u32 size = 0;
+    u32 size = 0;
 
-	msg >> size;
-	ts.resize(size);
+    msg >> size;
+    ts.resize(size);
 
-	for (auto &t : ts)
-		msg >> t;
+    for (auto &t : ts)
+        msg >> t;
 
-	return msg;
+    return msg;
 }
 
 bool Battle::TargetInfo::operator==(const TargetInfo &ta) const
@@ -200,7 +200,7 @@ Battle::Arena::Arena(Army &a1, Army &a2, s32 index, bool local) :
         bridge(nullptr), interface(nullptr), icn_covr(ICN::UNKNOWN), current_turn(0), auto_battle(0), end_turn(false)
 {
     const Settings &conf = Settings::Get();
-	auto_battle = conf.QuickCombat();
+    auto_battle = conf.QuickCombat();
     usage_spells.reserve(20);
 
     arena = this;
@@ -246,17 +246,17 @@ Battle::Arena::Arena(Army &a1, Army &a2, s32 index, bool local) :
     if (castle)
     {
         // init
-        towers[0] = castle->isBuild(BUILD_LEFTTURRET) 
-            ? std::make_unique<Tower>(*castle, TWR_LEFT)
-            : nullptr;
+        towers[0] = castle->isBuild(BUILD_LEFTTURRET)
+                    ? std::make_unique<Tower>(*castle, TWR_LEFT)
+                    : nullptr;
         towers[1] = std::make_unique<Tower>(*castle, TWR_CENTER);
-        towers[2] = castle->isBuild(BUILD_RIGHTTURRET) 
-            ? std::make_unique<Tower>(*castle, TWR_RIGHT)
-            : nullptr;
+        towers[2] = castle->isBuild(BUILD_RIGHTTURRET)
+                    ? std::make_unique<Tower>(*castle, TWR_RIGHT)
+                    : nullptr;
         bool fortification = (Race::KNGT == castle->GetRace()) && castle->isBuild(BUILD_SPEC);
-        catapult = army1->GetCommander() 
-            ? std::make_unique<Catapult>(*army1->GetCommander(), fortification)
-            : nullptr;
+        catapult = army1->GetCommander()
+                   ? std::make_unique<Catapult>(*army1->GetCommander(), fortification)
+                   : nullptr;
         bridge = new Bridge();
 
         // catapult cell
@@ -282,8 +282,8 @@ Battle::Arena::Arena(Army &a1, Army &a2, s32 index, bool local) :
     } else
         // set obstacles
     {
-		MapsIndexes mapIndexes;
-		Maps::ScanAroundObject(index, MP2::OBJ_CRATER, mapIndexes);
+        MapsIndexes mapIndexes;
+        Maps::ScanAroundObject(index, MP2::OBJ_CRATER, mapIndexes);
         icn_covr = !mapIndexes.empty() ?
                    GetCovr(world.GetTiles(index).GetGround()) : ICN::UNKNOWN;
 
@@ -485,7 +485,8 @@ void Battle::Arena::Turns()
         if (army1->GetCommander()) result_game.exp2 += 500;
         if (army2->GetCommander()) result_game.exp1 += 500;
 
-        Force *army_loss = (result_game.army1 & RESULT_LOSS ? army1.get() : (result_game.army2 & RESULT_LOSS ? army2.get() : nullptr));
+        Force *army_loss = (result_game.army1 & RESULT_LOSS ? army1.get() : (result_game.army2 & RESULT_LOSS
+                                                                             ? army2.get() : nullptr));
         result_game.killed = army_loss ? army_loss->GetDeadCounts() : 0;
     }
 }
@@ -497,11 +498,11 @@ void Battle::Arena::RemoteTurn(const Unit &b, Actions &a)
 
 void Battle::Arena::HumanTurn(const Unit &b, Actions &a)
 {
-	if(Settings::Get().QuickCombat())
-	{
-		AI::BattleTurn(*this, b, a);
-		return;
-	}
+    if (Settings::Get().QuickCombat())
+    {
+        AI::BattleTurn(*this, b, a);
+        return;
+    }
     if (interface)
         interface->HumanTurn(b, a);
 }
@@ -600,12 +601,12 @@ int Battle::Arena::GetOppositeColor(int col) const
 Battle::Unit *Battle::Arena::GetTroopUID(u32 uid)
 {
     auto it = find_if(army1->begin(), army1->end(),
-                                      bind2nd(mem_fun(&Unit::isUID), uid));
+                      bind2nd(mem_fun(&Unit::isUID), uid));
 
     if (it != army1->end()) return *it;
 
     it = find_if(army2->begin(), army2->end(),
-                      bind2nd(mem_fun(&Unit::isUID), uid));
+                 bind2nd(mem_fun(&Unit::isUID), uid));
 
     return it != army2->end() ? *it : nullptr;
 }
@@ -613,12 +614,12 @@ Battle::Unit *Battle::Arena::GetTroopUID(u32 uid)
 const Battle::Unit *Battle::Arena::GetTroopUID(u32 uid) const
 {
     Units::const_iterator it = find_if(army1->begin(), army1->end(),
-                                            bind2nd(mem_fun(&Unit::isUID), uid));
+                                       bind2nd(mem_fun(&Unit::isUID), uid));
 
     if (it != army1->end()) return *it;
 
     it = find_if(army2->begin(), army2->end(),
-                      bind2nd(mem_fun(&Unit::isUID), uid));
+                 bind2nd(mem_fun(&Unit::isUID), uid));
 
     return it != army2->end() ? *it : nullptr;
 }
@@ -664,18 +665,18 @@ s32 Battle::Arena::GetFreePositionNearHero(int color) const
     else if (army2->GetColor() == color) cells = cells2;
 
     if (!cells)
-	{
-		return -1;
-	}
-	for (u32 ii = 0; ii < 3; ++ii)
-	{
-		if (board[cells[ii]].isPassable1(true)
-			&& nullptr == board[cells[ii]].GetUnit())
-		{
-			return cells[ii];
-		}
-	}
-	return -1;
+    {
+        return -1;
+    }
+    for (u32 ii = 0; ii < 3; ++ii)
+    {
+        if (board[cells[ii]].isPassable1(true)
+            && nullptr == board[cells[ii]].GetUnit())
+        {
+            return cells[ii];
+        }
+    }
+    return -1;
 }
 
 bool Battle::Arena::CanSurrenderOpponent(int color) const
@@ -683,14 +684,14 @@ bool Battle::Arena::CanSurrenderOpponent(int color) const
     const HeroBase *hero1 = GetCommander(color, false); // enemy
     const HeroBase *hero2 = GetCommander(color, true);
     return hero1 && hero1->isHeroes() && hero2 &&
-            !world.GetKingdom(hero2->GetColor()).GetCastles().empty();
+           !world.GetKingdom(hero2->GetColor()).GetCastles().empty();
 }
 
 bool Battle::Arena::CanRetreatOpponent(int color) const
 {
     const HeroBase *hero = army1->GetColor() == color ? army1->GetCommander() : army2->GetCommander();
     return hero && hero->isHeroes() && nullptr == hero->inCastle() &&
-            !world.GetKingdom(hero->GetColor()).GetCastles().empty();
+           !world.GetKingdom(hero->GetColor()).GetCastles().empty();
 }
 
 bool Battle::Arena::isDisableCastSpell(const Spell &spell, string *msg)
@@ -720,8 +721,8 @@ bool Battle::Arena::isDisableCastSpell(const Spell &spell, string *msg)
         {
             *msg = _("That spell will affect no one!");
             return true;
-        } 
-    	if (spell.isSummon())
+        }
+        if (spell.isSummon())
         {
             const Unit *elem = GetCurrentForce().FindMode(CAP_SUMMONELEM);
             bool affect = true;
@@ -917,20 +918,20 @@ StreamBase &Battle::operator<<(StreamBase &msg, const Arena &a)
 
 ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, Arena &a)
 {
-	msg >> a.current_turn >> a.board >>
-		*a.army1 >> *a.army2;
+    msg >> a.current_turn >> a.board >>
+        *a.army1 >> *a.army2;
 
-	int type;
-	HeroBase *hero1 = a.army1->GetCommander();
-	HeroBase *hero2 = a.army2->GetCommander();
+    int type;
+    HeroBase *hero1 = a.army1->GetCommander();
+    HeroBase *hero2 = a.army2->GetCommander();
 
-	msg >> type;
-	if (hero1 && type == hero1->GetType()) msg >> *hero1;
+    msg >> type;
+    if (hero1 && type == hero1->GetType()) msg >> *hero1;
 
-	msg >> type;
-	if (hero2 && type == hero2->GetType()) msg >> *hero2;
+    msg >> type;
+    if (hero2 && type == hero2->GetType()) msg >> *hero2;
 
-	return msg;
+    return msg;
 }
 
 const HeroBase *Battle::Arena::GetCommander(int color, bool invert) const
@@ -1025,7 +1026,7 @@ Battle::Unit *Battle::Arena::CreateElemental(const Spell &spell)
 Battle::Unit *Battle::Arena::CreateMirrorImage(Unit &b, s32 pos)
 {
     auto *image = new Unit(b, pos, b.isReflect());
-	    
+
     b.SetMirror(image);
     image->SetArmy(*b.GetArmy());
     image->SetMirror(&b);
@@ -1034,7 +1035,7 @@ Battle::Unit *Battle::Arena::CreateMirrorImage(Unit &b, s32 pos)
     b.SetModes(CAP_MIRROROWNER);
 
     GetCurrentForce().push_back(image);
-   
+
 
     return image;
 }

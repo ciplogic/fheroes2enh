@@ -144,13 +144,14 @@ public:
 
     void LoadDefaults(int type, int race);
 
-	void ReadFrom(ByteVectorReader &msg);
+    void ReadFrom(ByteVectorReader &msg);
 
 protected:
     friend StreamBase &operator<<(StreamBase &, const HeroBase &);
 
     friend StreamBase &operator>>(StreamBase &, HeroBase &);
-	friend ByteVectorReader &operator>>(ByteVectorReader &, HeroBase &);
+
+    friend ByteVectorReader &operator>>(ByteVectorReader &, HeroBase &);
 
     u32 magic_point;
     u32 move_point;
@@ -168,6 +169,7 @@ struct HeroHasArtifact : public binary_function<const HeroBase *, Artifact, bool
 };
 
 StreamBase &operator<<(StreamBase &, const HeroBase &);
+
 ByteVectorReader &operator>>(ByteVectorReader &, HeroBase &);
 
 #endif

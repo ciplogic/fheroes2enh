@@ -369,7 +369,7 @@ void Interface::Radar::QueueEventProcessing()
         RedrawCursor();
         return;
     }
-        // move cursor
+    // move cursor
     if (!le.MouseCursor(area))
         return;
     if (le.MouseClickLeft() || le.MousePressLeft())

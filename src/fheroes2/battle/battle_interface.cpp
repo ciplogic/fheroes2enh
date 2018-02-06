@@ -194,7 +194,7 @@ bool CursorAttack(u32 theme)
 
 Surface DrawHexagon(const RGBA &color)
 {
-	int r = 22;
+    int r = 22;
     int l = 13;
     int w = CELLW;
     int h = CELLH;
@@ -215,9 +215,9 @@ Surface DrawHexagon(const RGBA &color)
 
 Surface DrawHexagonShadow()
 {
-	int l = 13;
-	int w = 45;
-	int h = 52;
+    int l = 13;
+    int w = 45;
+    int h = 52;
 
     Surface sf(Size(w, h), true);
     RGBA shadow = RGBA(0, 0, 0, 0x30);
@@ -419,134 +419,175 @@ void Battle::OpponentSprite::ResetAnimFrame(int rule)
     {
         switch (base->GetRace())
         {
-        case Race::BARB: icn = ICN::CMBTHROB;
-            switch (rule)
-            {
-            case OP_IDLE: animframe_start = 15;
-                animframe_count = 4;
+            case Race::BARB:
+                icn = ICN::CMBTHROB;
+                switch (rule)
+                {
+                    case OP_IDLE:
+                        animframe_start = 15;
+                        animframe_count = 4;
+                        break;
+                    case OP_SRRW:
+                        animframe_start = 1;
+                        animframe_count = 5;
+                        break;
+                    case OP_CAST:
+                        animframe_start = 6;
+                        animframe_count = 9;
+                        break;
+                    default:
+                        break;
+                }
                 break;
-            case OP_SRRW: animframe_start = 1;
-                animframe_count = 5;
+            case Race::KNGT:
+                icn = ICN::CMBTHROK;
+                switch (rule)
+                {
+                    case OP_IDLE:
+                        animframe_start = 15;
+                        animframe_count = 5;
+                        break;
+                    case OP_SRRW:
+                        animframe_start = 1;
+                        animframe_count = 5;
+                        break;
+                    case OP_CAST:
+                        animframe_start = 6;
+                        animframe_count = 9;
+                        break;
+                    default:
+                        break;
+                }
                 break;
-            case OP_CAST: animframe_start = 6;
-                animframe_count = 9;
+            case Race::NECR:
+                icn = ICN::CMBTHRON;
+                switch (rule)
+                {
+                    case OP_IDLE:
+                        animframe_start = 16;
+                        animframe_count = 2;
+                        break;
+                    case OP_SRRW:
+                        animframe_start = 1;
+                        animframe_count = 5;
+                        break;
+                    case OP_CAST:
+                        animframe_start = 6;
+                        animframe_count = 9;
+                        break;
+                    default:
+                        break;
+                }
                 break;
-            default: break;
-            }
-            break;
-        case Race::KNGT: icn = ICN::CMBTHROK;
-            switch (rule)
-            {
-            case OP_IDLE: animframe_start = 15;
-                animframe_count = 5;
+            case Race::SORC:
+                icn = ICN::CMBTHROS;
+                switch (rule)
+                {
+                    case OP_IDLE:
+                        animframe_start = 13;
+                        animframe_count = 4;
+                        break;
+                    case OP_SRRW:
+                        animframe_start = 1;
+                        animframe_count = 5;
+                        break;
+                    case OP_CAST:
+                        animframe_start = 6;
+                        animframe_count = 7;
+                        break;
+                    default:
+                        break;
+                }
                 break;
-            case OP_SRRW: animframe_start = 1;
-                animframe_count = 5;
+            case Race::WRLK:
+                icn = ICN::CMBTHROW;
+                switch (rule)
+                {
+                    case OP_IDLE:
+                        animframe_start = 14;
+                        animframe_count = 3;
+                        break;
+                    case OP_SRRW:
+                        animframe_start = 1;
+                        animframe_count = 5;
+                        break;
+                    case OP_CAST:
+                        animframe_start = 6;
+                        animframe_count = 8;
+                        break;
+                    default:
+                        break;
+                }
                 break;
-            case OP_CAST: animframe_start = 6;
-                animframe_count = 9;
+            case Race::WZRD:
+                icn = ICN::CMBTHROZ;
+                switch (rule)
+                {
+                    case OP_IDLE:
+                        animframe_start = 16;
+                        animframe_count = 3;
+                        break;
+                    case OP_SRRW:
+                        animframe_start = 1;
+                        animframe_count = 5;
+                        break;
+                    case OP_CAST:
+                        animframe_start = 12;
+                        animframe_count = 7;
+                        break;
+                    default:
+                        break;
+                }
                 break;
-            default: break;
-            }
-            break;
-        case Race::NECR: icn = ICN::CMBTHRON;
-            switch (rule)
-            {
-            case OP_IDLE: animframe_start = 16;
-                animframe_count = 2;
+            default:
                 break;
-            case OP_SRRW: animframe_start = 1;
-                animframe_count = 5;
-                break;
-            case OP_CAST: animframe_start = 6;
-                animframe_count = 9;
-                break;
-            default: break;
-            }
-            break;
-        case Race::SORC: icn = ICN::CMBTHROS;
-            switch (rule)
-            {
-            case OP_IDLE: animframe_start = 13;
-                animframe_count = 4;
-                break;
-            case OP_SRRW: animframe_start = 1;
-                animframe_count = 5;
-                break;
-            case OP_CAST: animframe_start = 6;
-                animframe_count = 7;
-                break;
-            default: break;
-            }
-            break;
-        case Race::WRLK: icn = ICN::CMBTHROW;
-            switch (rule)
-            {
-            case OP_IDLE: animframe_start = 14;
-                animframe_count = 3;
-                break;
-            case OP_SRRW: animframe_start = 1;
-                animframe_count = 5;
-                break;
-            case OP_CAST: animframe_start = 6;
-                animframe_count = 8;
-                break;
-            default: break;
-            }
-            break;
-        case Race::WZRD: icn = ICN::CMBTHROZ;
-            switch (rule)
-            {
-            case OP_IDLE: animframe_start = 16;
-                animframe_count = 3;
-                break;
-            case OP_SRRW: animframe_start = 1;
-                animframe_count = 5;
-                break;
-            case OP_CAST: animframe_start = 12;
-                animframe_count = 7;
-                break;
-            default: break;
-            }
-            break;
-        default: break;
         }
         animframe = animframe_start;
-    }
-    else if (base->isCaptain())
+    } else if (base->isCaptain())
     {
         icn = ICN::CMBTCAPB;
         switch (base->GetRace())
         {
-        case Race::BARB: icn = ICN::CMBTCAPB;
-            break;
-        case Race::KNGT: icn = ICN::CMBTCAPK;
-            break;
-        case Race::NECR: icn = ICN::CMBTCAPN;
-            break;
-        case Race::SORC: icn = ICN::CMBTCAPS;
-            break;
-        case Race::WRLK: icn = ICN::CMBTCAPW;
-            break;
-        case Race::WZRD: icn = ICN::CMBTCAPZ;
-            break;
-        default: break;
+            case Race::BARB:
+                icn = ICN::CMBTCAPB;
+                break;
+            case Race::KNGT:
+                icn = ICN::CMBTCAPK;
+                break;
+            case Race::NECR:
+                icn = ICN::CMBTCAPN;
+                break;
+            case Race::SORC:
+                icn = ICN::CMBTCAPS;
+                break;
+            case Race::WRLK:
+                icn = ICN::CMBTCAPW;
+                break;
+            case Race::WZRD:
+                icn = ICN::CMBTCAPZ;
+                break;
+            default:
+                break;
         }
         switch (rule)
         {
-        case OP_IDLE: animframe_start = 1;
-            animframe_count = 1;
-            break;
-        case OP_SRRW: animframe_start = 1;
-            animframe_count = 1;
-            break;
-        case OP_CAST: animframe_start = 3;
-            animframe_count = 6;
-            break;
-        default: break;
+            case OP_IDLE:
+                animframe_start = 1;
+                animframe_count = 1;
+                break;
+            case OP_SRRW:
+                animframe_start = 1;
+                animframe_count = 1;
+                break;
+            case OP_CAST:
+                animframe_start = 3;
+                animframe_count = 6;
+                break;
+            default:
+                break;
         }
         animframe = animframe_start;
-    } 
+    }
 }
 
 bool Battle::OpponentSprite::isFinishFrame() const
@@ -689,7 +730,7 @@ void Battle::ArmiesOrder::Redraw(const Unit *current)
         const u32 ow = ARMYORDERW + 2;
 
         u32 ox = area.x + (area.w - ow * count_if(orders->begin(), orders->end(),
-                                                       mem_fun(&Unit::isValid))) / 2;
+                                                  mem_fun(&Unit::isValid))) / 2;
         u32 oy = area.y;
 
         x = ox;
@@ -714,7 +755,8 @@ Battle::Interface::Interface(Arena &a, s32 center) : arena(a), icn_cbkg(ICN::UNK
                                                      humanturn_spell(Spell::NONE), humanturn_exit(true),
                                                      humanturn_redraw(true), animation_flags_frame(0),
                                                      catapult_frame(0),
-                                                     b_current(nullptr), b_move(nullptr), b_fly(nullptr), b_current_sprite(nullptr),
+                                                     b_current(nullptr), b_move(nullptr), b_fly(nullptr),
+                                                     b_current_sprite(nullptr),
                                                      b_current_alpha(255), index_pos(-1), teleport_src(-1),
                                                      listlog(nullptr), turn(0)
 {
@@ -731,8 +773,8 @@ Battle::Interface::Interface(Arena &a, s32 center) : arena(a), icn_cbkg(ICN::UNK
                        arenah);
 
     // cover
-	MapsIndexes treeIndices;
-	Maps::ScanAroundObject(center, MP2::OBJ_TREES, treeIndices);
+    MapsIndexes treeIndices;
+    Maps::ScanAroundObject(center, MP2::OBJ_TREES, treeIndices);
     bool trees = !treeIndices.empty();
     const Maps::Tiles &tile = world.GetTiles(center);
     bool grave = MP2::OBJ_GRAVEYARD == tile.GetObject(false);
@@ -829,11 +871,11 @@ Battle::Interface::Interface(Arena &a, s32 center) : arena(a), icn_cbkg(ICN::UNK
 
     // opponents
     opponent1 = arena.GetCommander1()
-        ? std::make_unique<OpponentSprite>(area, arena.GetCommander1(), false)
-        : nullptr;
+                ? std::make_unique<OpponentSprite>(area, arena.GetCommander1(), false)
+                : nullptr;
     opponent2 = arena.GetCommander2()
-        ? std::make_unique<OpponentSprite>(area, arena.GetCommander2(), true)
-        : nullptr;
+                ? std::make_unique<OpponentSprite>(area, arena.GetCommander2(), true)
+                : nullptr;
 
     if (Arena::GetCastle())
         main_tower = Rect(area.x + 570, area.y + 145, 70, 70);
@@ -1203,7 +1245,8 @@ void Battle::Interface::RedrawCoverStatic(Surface &dst)
     if (conf.ExtBattleShowGrid())
     {
         for (const auto &it : board)
-            if (it.GetObject() == 0) {
+            if (it.GetObject() == 0)
+            {
                 Rect sizeHex(Point(0, 0), sf_hexagon.GetSize());
                 sf_hexagon.BlitAlpha(sizeHex, it.GetPos(), dst);
             }
@@ -1577,7 +1620,7 @@ int Battle::Interface::GetBattleCursor(string &status)
                 StringReplace(status, "%{count}", b_current->GetShots());
 
                 return arena.GetObstaclesPenalty(*b_current, *b_enemy) ? Cursor::WAR_BROKENARROW
-                           : Cursor::WAR_ARROW;
+                                                                       : Cursor::WAR_ARROW;
             } else
             {
                 const int dir = cell->GetTriangleDirection(LocalEvent::Get().GetMouseCursor());
@@ -2055,16 +2098,16 @@ void Battle::Interface::FadeArena()
 
 int Battle::GetIndexIndicator(const Unit &b)
 {
-	// yellow
-	if (b.Modes(IS_GREEN_STATUS) && b.Modes(IS_RED_STATUS)) return 13;
+    // yellow
+    if (b.Modes(IS_GREEN_STATUS) && b.Modes(IS_RED_STATUS)) return 13;
 
-	// green
-	if (b.Modes(IS_GREEN_STATUS)) return 12;
+    // green
+    if (b.Modes(IS_GREEN_STATUS)) return 12;
 
-	// red
-	if (b.Modes(IS_RED_STATUS)) return 14;
+    // red
+    if (b.Modes(IS_RED_STATUS)) return 14;
 
-	return 10;
+    return 10;
 }
 
 void Battle::Interface::EventShowOptions()
@@ -2118,9 +2161,9 @@ void Battle::Interface::ButtonWaitAction(Actions &a)
     le.MousePressLeft(btn_wait) ? btn_wait.PressDraw() : btn_wait.ReleaseDraw();
 
     if (!le.MouseClickLeft(btn_wait) || !b_current)
-		return;
-	a.push_back(Command(MSG_BATTLE_SKIP, b_current->GetUID(), false));
-	humanturn_exit = true;
+        return;
+    a.push_back(Command(MSG_BATTLE_SKIP, b_current->GetUID(), false));
+    humanturn_exit = true;
 }
 
 void Battle::Interface::ButtonSkipAction(Actions &a)
@@ -2130,9 +2173,9 @@ void Battle::Interface::ButtonSkipAction(Actions &a)
     le.MousePressLeft(btn_skip) ? btn_skip.PressDraw() : btn_skip.ReleaseDraw();
 
     if (!le.MouseClickLeft(btn_skip) || !b_current)
-		return;
-	a.push_back(Command(MSG_BATTLE_SKIP, b_current->GetUID(), true));
-	humanturn_exit = true;
+        return;
+    a.push_back(Command(MSG_BATTLE_SKIP, b_current->GetUID(), true));
+    humanturn_exit = true;
 }
 
 int Battle::Interface::GetAllowSwordDirection(u32 index) const
@@ -2140,22 +2183,22 @@ int Battle::Interface::GetAllowSwordDirection(u32 index) const
     int res = 0;
 
     if (!b_current)
-	{
-		return res;
-	}
-	const Indexes around = Board::GetAroundIndexes(index);
+    {
+        return res;
+    }
+    const Indexes around = Board::GetAroundIndexes(index);
 
-	for (int from : around)
-	{
-		if (UNKNOWN != Board::GetCell(from)->GetDirection() ||
-			from == b_current->GetHeadIndex() ||
-			(b_current->isWide() && from == b_current->GetTailIndex()))
-		{
-			res |= Board::GetDirection(index, from);
-		}
-	}
+    for (int from : around)
+    {
+        if (UNKNOWN != Board::GetCell(from)->GetDirection() ||
+            from == b_current->GetHeadIndex() ||
+            (b_current->isWide() && from == b_current->GetTailIndex()))
+        {
+            res |= Board::GetDirection(index, from);
+        }
+    }
 
-	return res;
+    return res;
 }
 
 void Battle::Interface::MousePressRightBoardAction(u32 themes, const Cell &cell, Actions &a)
@@ -2164,32 +2207,32 @@ void Battle::Interface::MousePressRightBoardAction(u32 themes, const Cell &cell,
     const Unit *b = cell.GetUnit();
 
     if (!b)
-		return;
-	const Settings &conf = Settings::Get();
-	const int allow = GetAllowSwordDirection(index);
+        return;
+    const Settings &conf = Settings::Get();
+    const int allow = GetAllowSwordDirection(index);
 
-	if (arena.GetCurrentColor() == b->GetColor() || !conf.ExtPocketTapMode() || !allow)
-	{
-		ArmyInfo(*b, Dialog::READONLY);
-		return;
-	}
-	int res = PocketPC::GetCursorAttackDialog(cell.GetPos(), allow);
+    if (arena.GetCurrentColor() == b->GetColor() || !conf.ExtPocketTapMode() || !allow)
+    {
+        ArmyInfo(*b, Dialog::READONLY);
+        return;
+    }
+    int res = PocketPC::GetCursorAttackDialog(cell.GetPos(), allow);
 
-	switch (res)
-	{
-	case Cursor::SWORD_TOPLEFT:
-	case Cursor::SWORD_TOPRIGHT:
-	case Cursor::SWORD_RIGHT:
-	case Cursor::SWORD_BOTTOMRIGHT:
-	case Cursor::SWORD_BOTTOMLEFT:
-	case Cursor::SWORD_LEFT:
-		MouseLeftClickBoardAction(res, cell, a);
-		break;
+    switch (res)
+    {
+        case Cursor::SWORD_TOPLEFT:
+        case Cursor::SWORD_TOPRIGHT:
+        case Cursor::SWORD_RIGHT:
+        case Cursor::SWORD_BOTTOMRIGHT:
+        case Cursor::SWORD_BOTTOMLEFT:
+        case Cursor::SWORD_LEFT:
+            MouseLeftClickBoardAction(res, cell, a);
+            break;
 
-	default:
-		Dialog::ArmyInfo(*b, Dialog::READONLY | Dialog::BUTTONS);
-		break;
-	}
+        default:
+            Dialog::ArmyInfo(*b, Dialog::READONLY | Dialog::BUTTONS);
+            break;
+    }
 }
 
 void Battle::Interface::MouseLeftClickBoardAction(u32 themes, const Cell &cell, Actions &a)
@@ -2226,68 +2269,68 @@ void Battle::Interface::MouseLeftClickBoardAction(u32 themes, const Cell &cell, 
         }
     }
 
-	if (!b_current)
-		return;
-	switch (themes)
-	{
-	case Cursor::WAR_FLY:
-	case Cursor::WAR_MOVE:
-		a.push_back(Command(MSG_BATTLE_MOVE, b_current->GetUID(), index));
-		a.push_back(Command(MSG_BATTLE_END_TURN, b_current->GetUID()));
-		humanturn_exit = true;
-		break;
+    if (!b_current)
+        return;
+    switch (themes)
+    {
+        case Cursor::WAR_FLY:
+        case Cursor::WAR_MOVE:
+            a.push_back(Command(MSG_BATTLE_MOVE, b_current->GetUID(), index));
+            a.push_back(Command(MSG_BATTLE_END_TURN, b_current->GetUID()));
+            humanturn_exit = true;
+            break;
 
-	case Cursor::SWORD_TOPLEFT:
-	case Cursor::SWORD_TOPRIGHT:
-	case Cursor::SWORD_RIGHT:
-	case Cursor::SWORD_BOTTOMRIGHT:
-	case Cursor::SWORD_BOTTOMLEFT:
-	case Cursor::SWORD_LEFT:
-		{
-			const Unit *enemy = b;
-			const int dir = GetDirectionFromCursorSword(themes);
+        case Cursor::SWORD_TOPLEFT:
+        case Cursor::SWORD_TOPRIGHT:
+        case Cursor::SWORD_RIGHT:
+        case Cursor::SWORD_BOTTOMRIGHT:
+        case Cursor::SWORD_BOTTOMLEFT:
+        case Cursor::SWORD_LEFT:
+        {
+            const Unit *enemy = b;
+            const int dir = GetDirectionFromCursorSword(themes);
 
-			if (enemy && Board::isValidDirection(index, dir))
-			{
-				const s32 move = Board::GetIndexDirection(index, dir);
+            if (enemy && Board::isValidDirection(index, dir))
+            {
+                const s32 move = Board::GetIndexDirection(index, dir);
 
-				if (b_current->GetHeadIndex() != move)
-					a.push_back(Command(MSG_BATTLE_MOVE, b_current->GetUID(), move));
-				a.push_back(Command(MSG_BATTLE_ATTACK, b_current->GetUID(), enemy->GetUID(), index,
-				                    Board::GetReflectDirection(dir)));
-				a.push_back(Command(MSG_BATTLE_END_TURN, b_current->GetUID()));
-				humanturn_exit = true;
-			}
-			break;
-		}
+                if (b_current->GetHeadIndex() != move)
+                    a.push_back(Command(MSG_BATTLE_MOVE, b_current->GetUID(), move));
+                a.push_back(Command(MSG_BATTLE_ATTACK, b_current->GetUID(), enemy->GetUID(), index,
+                                    Board::GetReflectDirection(dir)));
+                a.push_back(Command(MSG_BATTLE_END_TURN, b_current->GetUID()));
+                humanturn_exit = true;
+            }
+            break;
+        }
 
-	case Cursor::WAR_BROKENARROW:
-	case Cursor::WAR_ARROW:
-		{
-			const Unit *enemy = b;
+        case Cursor::WAR_BROKENARROW:
+        case Cursor::WAR_ARROW:
+        {
+            const Unit *enemy = b;
 
-			if (enemy)
-			{
-				a.push_back(Command(MSG_BATTLE_ATTACK, b_current->GetUID(), enemy->GetUID(), index, 0));
-				a.push_back(Command(MSG_BATTLE_END_TURN, b_current->GetUID()));
-				humanturn_exit = true;
-			}
-			break;
-		}
+            if (enemy)
+            {
+                a.push_back(Command(MSG_BATTLE_ATTACK, b_current->GetUID(), enemy->GetUID(), index, 0));
+                a.push_back(Command(MSG_BATTLE_END_TURN, b_current->GetUID()));
+                humanturn_exit = true;
+            }
+            break;
+        }
 
-	case Cursor::WAR_INFO:
-		{
-			if (b)
-			{
-				Dialog::ArmyInfo(*b, Dialog::BUTTONS | Dialog::READONLY);
-				humanturn_redraw = true;
-			}
-			break;
-		}
+        case Cursor::WAR_INFO:
+        {
+            if (b)
+            {
+                Dialog::ArmyInfo(*b, Dialog::BUTTONS | Dialog::READONLY);
+                humanturn_redraw = true;
+            }
+            break;
+        }
 
-	default:
-		break;
-	}
+        default:
+            break;
+    }
 }
 
 void Battle::Interface::RedrawTroopFrameAnimation(Unit &b)
@@ -2301,13 +2344,13 @@ void Battle::Interface::RedrawTroopFrameAnimation(Unit &b)
         CheckGlobalEvents(le);
 
         if (!Battle::AnimateInfrequentDelay(Game::BATTLE_FRAME_DELAY))
-		    continue;
-	    cursor.Hide();
-	    Redraw();
-	    cursor.Show();
-	    display.Flip();
-	    if (b.isFinishAnimFrame()) break;
-	    b.IncreaseAnimFrame();
+            continue;
+        cursor.Hide();
+        Redraw();
+        cursor.Show();
+        display.Flip();
+        if (b.isFinishAnimFrame()) break;
+        b.IncreaseAnimFrame();
     }
 }
 
@@ -2545,8 +2588,8 @@ void Battle::Interface::RedrawActionWincesKills(TargetsInfo &targets)
             {
                 OpponentSprite *commander =
                         target.defender->GetColor() == arena.GetArmyColor1()
-            			? opponent1.get() 
-            			: opponent2.get();
+                        ? opponent1.get()
+                        : opponent2.get();
                 if (commander) commander->ResetAnimFrame(OP_SRRW);
             }
         } else
@@ -2568,7 +2611,7 @@ void Battle::Interface::RedrawActionWincesKills(TargetsInfo &targets)
 
     // targets damage animation loop
     while (le.HandleEvents() && finish != count_if(targets.begin(), targets.end(),
-                                                        mem_fun_ref(&TargetInfo::isFinishAnimFrame)))
+                                                   mem_fun_ref(&TargetInfo::isFinishAnimFrame)))
     {
         CheckGlobalEvents(le);
 
@@ -2755,9 +2798,9 @@ void Battle::Interface::RedrawActionSpellCastPart1(const Spell &spell, s32 dst, 
     // set spell cast animation
     if (caster)
     {
-        OpponentSprite *opponent = caster->GetColor() == arena.GetArmyColor1() 
-            ? opponent1.get() 
-            : opponent2.get();
+        OpponentSprite *opponent = caster->GetColor() == arena.GetArmyColor1()
+                                   ? opponent1.get()
+                                   : opponent2.get();
         if (opponent)
         {
             opponent->ResetAnimFrame(OP_CAST);
@@ -4248,7 +4291,7 @@ bool Battle::Interface::IdleTroopsAnimation() const
     // set animation
     if (Battle::AnimateInfrequentDelay(Game::BATTLE_IDLE_DELAY))
     {
-        if (arena.GetForce1().SetIdleAnimation()) return  true;
+        if (arena.GetForce1().SetIdleAnimation()) return true;
         if (arena.GetForce2().SetIdleAnimation()) return true;
     } else
         // next animation
@@ -4293,10 +4336,10 @@ void Battle::Interface::CheckGlobalEvents(LocalEvent &le)
         (le.MouseClickLeft(btn_auto) ||
          (le.KeyPress() && (HotKeyPressEvent(Game::EVENT_BATTLE_AUTOSWITCH) ||
                             (HotKeyPressEvent(Game::EVENT_BATTLE_RETREAT) && Dialog::YES == Dialog::Message("",
-                                                                                                                  _("Break auto battle?"),
-                                                                                                                  Font::BIG,
-                                                                                                                  Dialog::YES |
-                                                                                                                  Dialog::NO))))))
+                                                                                                            _("Break auto battle?"),
+                                                                                                            Font::BIG,
+                                                                                                            Dialog::YES |
+                                                                                                            Dialog::NO))))))
     {
         arena.BreakAutoBattle();
     }
@@ -4428,58 +4471,58 @@ void Battle::PopupDamageInfo::Reset()
 void Battle::PopupDamageInfo::Redraw(int maxw, int maxh)
 {
     if (!redraw)
-		return;
-	Cursor::Get().Hide();
+        return;
+    Cursor::Get().Hide();
 
-	Text text1, text2;
+    Text text1, text2;
 
-	u32 tmp1 = attacker->GetDamageMin(*defender);
-	u32 tmp2 = attacker->GetDamageMax(*defender);
+    u32 tmp1 = attacker->GetDamageMin(*defender);
+    u32 tmp2 = attacker->GetDamageMax(*defender);
 
-	string str = tmp1 == tmp2 ? _("Damage: %{max}") : _("Damage: %{min} - %{max}");
+    string str = tmp1 == tmp2 ? _("Damage: %{max}") : _("Damage: %{min} - %{max}");
 
-	StringReplace(str, "%{min}", tmp1);
-	StringReplace(str, "%{max}", tmp2);
+    StringReplace(str, "%{min}", tmp1);
+    StringReplace(str, "%{max}", tmp2);
 
-	text1.Set(str, Font::SMALL);
+    text1.Set(str, Font::SMALL);
 
-	tmp1 = defender->HowManyWillKilled(tmp1);
-	tmp2 = defender->HowManyWillKilled(tmp2);
+    tmp1 = defender->HowManyWillKilled(tmp1);
+    tmp2 = defender->HowManyWillKilled(tmp2);
 
-	if (tmp1 > defender->GetCount()) tmp1 = defender->GetCount();
-	if (tmp2 > defender->GetCount()) tmp2 = defender->GetCount();
+    if (tmp1 > defender->GetCount()) tmp1 = defender->GetCount();
+    if (tmp2 > defender->GetCount()) tmp2 = defender->GetCount();
 
-	str = tmp1 == tmp2 ? _("Perish: %{max}") : _("Perish: %{min} - %{max}");
+    str = tmp1 == tmp2 ? _("Perish: %{max}") : _("Perish: %{min} - %{max}");
 
-	StringReplace(str, "%{min}", tmp1);
-	StringReplace(str, "%{max}", tmp2);
+    StringReplace(str, "%{min}", tmp1);
+    StringReplace(str, "%{max}", tmp2);
 
-	text2.Set(str, Font::SMALL);
+    text2.Set(str, Font::SMALL);
 
-	int tw = 5 + (text1.w() > text2.w() ? text1.w() : text2.w());
-	int th = (text1.h() + text2.h());
+    int tw = 5 + (text1.w() > text2.w() ? text1.w() : text2.w());
+    int th = (text1.h() + text2.h());
 
-	const Rect &area = GetArea();
-	const Rect &rect = GetRect();
-	const Rect &pos = cell->GetPos();
+    const Rect &area = GetArea();
+    const Rect &rect = GetRect();
+    const Rect &pos = cell->GetPos();
 
-	int tx = rect.x;
-	int ty = rect.y;
+    int tx = rect.x;
+    int ty = rect.y;
 
-	if (rect.x + rect.w > maxw)
-	{
-		tx = maxw - rect.w - 5;
-		ty = pos.y - pos.h;
-	}
+    if (rect.x + rect.w > maxw)
+    {
+        tx = maxw - rect.w - 5;
+        ty = pos.y - pos.h;
+    }
 
-	if (rect.x != tx || rect.y != ty || area.w != tw || area.h != th)
-		SetPosition(tx, ty, tw, th);
+    if (rect.x != tx || rect.y != ty || area.w != tw || area.h != th)
+        SetPosition(tx, ty, tw, th);
 
-	const Sprite &sf = AGG::GetICN(ICN::CELLWIN, 1);
-	RenderOther(sf, GetRect());
+    const Sprite &sf = AGG::GetICN(ICN::CELLWIN, 1);
+    RenderOther(sf, GetRect());
 
-	text1.Blit(area.x, area.y);
-	text2.Blit(area.x, area.y + area.h / 2);
+    text1.Blit(area.x, area.y);
+    text2.Blit(area.x, area.y + area.h / 2);
 }
 
 bool Battle::Interface::NetworkTurn(Result &result)

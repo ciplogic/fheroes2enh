@@ -41,7 +41,7 @@ paymentstats_t _payments[] = {
         {"recruit_level",               {500,  0,  0, 0, 0, 0, 0}},
         {"alchemist_payment",           {750,  0,  0, 0, 0, 0, 0}},
 
-        {nullptr,                          {0,    0,  0, 0, 0, 0, 0}},
+        {nullptr,                       {0,    0,  0, 0, 0, 0, 0}},
 };
 
 

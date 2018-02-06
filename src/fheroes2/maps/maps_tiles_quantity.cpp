@@ -186,17 +186,17 @@ Artifact Maps::Tiles::QuantityArtifact() const
             return Artifact(quantity1);
 
         case MP2::OBJ_ARTIFACT:
-	        {
-		        if (QuantityVariant() == 15)
-		        {
-			        Artifact art(Artifact::SPELL_SCROLL);
-			        art.SetSpell(QuantitySpell().GetID());
-			        return art;
-		        }
-		        return Artifact(quantity1);
-	        }
+        {
+            if (QuantityVariant() == 15)
+            {
+                Artifact art(Artifact::SPELL_SCROLL);
+                art.SetSpell(QuantitySpell().GetID());
+                return art;
+            }
+            return Artifact(quantity1);
+        }
 
-    default:
+        default:
             break;
     }
 
@@ -847,7 +847,7 @@ void Maps::Tiles::QuantityUpdate()
         case MP2::OBJ_BARRIER:
         {
             Addons::const_reverse_iterator it = find_if(addons_level1.rbegin(), addons_level1.rend(),
-                                                             ptr_fun(&TilesAddon::ColorFromBarrierSprite));
+                                                        ptr_fun(&TilesAddon::ColorFromBarrierSprite));
             if (it != addons_level1.rend())
                 QuantitySetColor(TilesAddon::ColorFromBarrierSprite(*it));
         }
@@ -856,7 +856,7 @@ void Maps::Tiles::QuantityUpdate()
         case MP2::OBJ_TRAVELLERTENT:
         {
             Addons::const_reverse_iterator it = find_if(addons_level1.rbegin(), addons_level1.rend(),
-                                                             ptr_fun(&TilesAddon::ColorFromTravellerTentSprite));
+                                                        ptr_fun(&TilesAddon::ColorFromTravellerTentSprite));
             if (it != addons_level1.rend())
                 QuantitySetColor(TilesAddon::ColorFromTravellerTentSprite(*it));
         }
@@ -1033,9 +1033,9 @@ void Maps::Tiles::MonsterSetJoinCondition(int cond)
 {
     TilesAddon *addon = FindObject(MP2::OBJ_MONSTER);
     if (!addon)
-		return;
-	addon->tmp &= 0xFC;
-	addon->tmp |= (cond & 0x03);
+        return;
+    addon->tmp &= 0xFC;
+    addon->tmp |= (cond & 0x03);
 }
 
 void Maps::Tiles::MonsterSetFixedCount()

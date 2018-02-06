@@ -1885,8 +1885,8 @@ u32 ICN::missile9(float dx, float dy)
 
     // tan 30: 0 - 30
     if (0.577 >= tan) return dy > 0 ? 3 : 5;
-    
-	// tan 60: 90 - 60
+
+    // tan 60: 90 - 60
     if (1.732 <= tan) return dy > 0 ? 1 : 7;
 
     // tan 45: 30 - 60

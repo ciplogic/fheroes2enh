@@ -39,7 +39,7 @@
 
 
 #if defined(WIN32) || defined(WIN64)
- // Copied from linux libc sys/stat.h:
+// Copied from linux libc sys/stat.h:
 #define S_ISREG(m) (((m) & S_IFMT) == S_IFREG)
 #define S_ISDIR(m) (((m) & S_IFMT) == S_IFDIR)
 #endif
@@ -166,30 +166,30 @@ ListFiles System::GetListFiles(const std::string &prog, const std::string &prefi
 std::string System::GetDirname(const std::string &str)
 {
     if (str.empty())
-		return str;
-	size_t pos = str.rfind(SEPARATOR);
+        return str;
+    size_t pos = str.rfind(SEPARATOR);
 
-	if (std::string::npos == pos)
-		return std::string(".");
-	if (pos == 0)
-		return std::string("./");
-	if (pos == str.size() - 1)
-		return GetDirname(str.substr(0, str.size() - 1));
-	return str.substr(0, pos);
+    if (std::string::npos == pos)
+        return std::string(".");
+    if (pos == 0)
+        return std::string("./");
+    if (pos == str.size() - 1)
+        return GetDirname(str.substr(0, str.size() - 1));
+    return str.substr(0, pos);
 }
 
 std::string System::GetBasename(const std::string &str)
 {
     if (str.empty())
-		return str;
-	size_t pos = str.rfind(SEPARATOR);
+        return str;
+    size_t pos = str.rfind(SEPARATOR);
 
-	if (std::string::npos == pos ||
-		pos == 0)
-		return str;
-	if (pos == str.size() - 1)
-		return GetBasename(str.substr(0, str.size() - 1));
-	return str.substr(pos + 1);
+    if (std::string::npos == pos ||
+        pos == 0)
+        return str;
+    if (pos == str.size() - 1)
+        return GetBasename(str.substr(0, str.size() - 1));
+    return str.substr(pos + 1);
 }
 
 const char *System::GetEnvironment(const char *name)
@@ -314,19 +314,19 @@ std::string System::GetTime()
 bool System::IsFile(const std::string &name, bool writable)
 {
     std::ifstream f(name.c_str());
-	return f.good();
+    return f.good();
 }
 
 #ifdef WIN32
 bool dirExists(const std::string& dirName_in)
 {
-	DWORD ftyp = GetFileAttributesA(dirName_in.c_str());
-	if (ftyp == INVALID_FILE_ATTRIBUTES)
-		return false;  //something is wrong with your path!
-        
+    DWORD ftyp = GetFileAttributesA(dirName_in.c_str());
+    if (ftyp == INVALID_FILE_ATTRIBUTES)
+        return false;  //something is wrong with your path!
+
     // this is a directory!
     return (ftyp & FILE_ATTRIBUTE_DIRECTORY);
-		
+
 }
 #endif
 
@@ -337,14 +337,14 @@ bool System::IsDirectory(const std::string &name, bool writable)
     return writable ? 0 == access(name.c_str(), W_OK) : true;
 #else
 #ifdef WIN32
-	return dirExists(name);
-	#else
-	struct stat fs{};
+    return dirExists(name);
+#else
+    struct stat fs{};
 
-	if (stat(name.c_str(), &fs) || !S_ISDIR(fs.st_mode))
-		return false;
+    if (stat(name.c_str(), &fs) || !S_ISDIR(fs.st_mode))
+        return false;
 
-	return writable ? 0 == access(name.c_str(), W_OK) : S_IRUSR & fs.st_mode;
+    return writable ? 0 == access(name.c_str(), W_OK) : S_IRUSR & fs.st_mode;
 
 #endif
 #endif
@@ -475,7 +475,8 @@ bool System::isRunning()
 
 int System::ShellCommand(const char *cmd)
 {
-	if (!cmd) { return -1; }
+    if (!cmd)
+    { return -1; }
     return system(cmd);
 }
 

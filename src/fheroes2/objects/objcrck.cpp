@@ -38,7 +38,7 @@ int ObjCrck::GetPassable(u32 index)
     if (184 == index)
         return Direction::CENTER | Direction::BOTTOM_RIGHT | DIRECTION_TOP_ROW;
     if (isAction(index) ||
-             ARRAY_COUNT_END(disabled) != std::find(disabled, ARRAY_COUNT_END(disabled), index))
+        ARRAY_COUNT_END(disabled) != std::find(disabled, ARRAY_COUNT_END(disabled), index))
         return 0;
 
     return ARRAY_COUNT_END(restricted) != std::find(restricted, ARRAY_COUNT_END(restricted), index) ?

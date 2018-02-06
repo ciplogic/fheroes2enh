@@ -127,7 +127,7 @@ bool Heroes::ActionSpellCast(const Spell &spell)
     if (!CanMove())
     {
         Message("", _("Your hero is too tired to cast this spell today. Try again tomorrow."), Font::BIG,
-                        Dialog::OK);
+                Dialog::OK);
         return false;
     } else if (spell == Spell::NONE || spell.isCombat() || !CanCastSpell(spell, &error))
     {
@@ -318,8 +318,8 @@ bool ActionSpellSummonBoat(Heroes &hero)
 
     // find water
     s32 dst_water = -1;
-	MapsIndexes v;
-	Maps::ScanAroundObject(center, MP2::OBJ_ZERO,v);
+    MapsIndexes v;
+    Maps::ScanAroundObject(center, MP2::OBJ_ZERO, v);
     for (auto it = v.begin(); it != v.end(); ++it)
     {
         if (world.GetTiles(*it).isWater())
@@ -352,7 +352,7 @@ bool ActionSpellSummonBoat(Heroes &hero)
 bool ActionSpellDimensionDoor(Heroes &hero)
 {
     const u32 distance = Spell::CalculateDimensionDoorDistance(
-        hero.GetPower(), hero.GetArmy().m_troops.GetHitPoints());
+            hero.GetPower(), hero.GetArmy().m_troops.GetHitPoints());
 
     Interface::Basic &I = Interface::Basic::Get();
     Cursor &cursor = Cursor::Get();
@@ -511,7 +511,7 @@ bool ActionSpellVisions(Heroes &hero)
 
             string msg;
 
-			string hdr = string("%{count} ") + StringLower(troop.GetPluralName(join.second));
+            string hdr = string("%{count} ") + StringLower(troop.GetPluralName(join.second));
             StringReplace(hdr, "%{count}", join.second);
 
             switch (join.first)
@@ -565,8 +565,8 @@ bool ActionSpellSetGuardian(Heroes &hero, const Spell &spell, int mons)
     if (MP2::OBJ_MINES != tile.GetObject(false))
     {
         Message("",
-                        _("You must be standing on the entrance to a mine (sawmills and alchemists don't count) to cast this spell."),
-                        Font::BIG, Dialog::OK);
+                _("You must be standing on the entrance to a mine (sawmills and alchemists don't count) to cast this spell."),
+                Font::BIG, Dialog::OK);
         return false;
     }
 

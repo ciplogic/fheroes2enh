@@ -133,7 +133,7 @@ struct EventDate
     EventDate() : computer(false), first(0), subsequent(0), colors(0)
     {}
 
-    void LoadFromMP2(ByteVectorReader&);
+    void LoadFromMP2(ByteVectorReader &);
 
     bool isAllow(int color, u32 date) const;
 
@@ -317,7 +317,8 @@ private:
     friend StreamBase &operator<<(StreamBase &, const World &);
 
     friend StreamBase &operator>>(StreamBase &, World &);
-	friend ByteVectorReader &operator>>(ByteVectorReader &, World &);
+
+    friend ByteVectorReader &operator>>(ByteVectorReader &, World &);
 
     MapsTiles vec_tiles;
     AllHeroes vec_heroes;
@@ -356,9 +357,11 @@ ByteVectorReader &operator>>(ByteVectorReader &, World &);
 StreamBase &operator<<(StreamBase &, const ListActions &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, MapActions &);
+
 ByteVectorReader &operator>>(ByteVectorReader &, ListActions &);
 
 StreamBase &operator<<(StreamBase &, const MapObjects &);
+
 ByteVectorReader &operator>>(ByteVectorReader &, MapObjects &);
 
 extern World &world;

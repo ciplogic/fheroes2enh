@@ -6,8 +6,9 @@
 
 #include <surface.h>
 
-namespace ColorsTable {
+namespace ColorsTable
+{
 
-    static RGBA Green(64,196,0,255);
-    static RGBA Gray (127,127,127,255);
+    static RGBA Green(64, 196, 0, 255);
+    static RGBA Gray(127, 127, 127, 255);
 }

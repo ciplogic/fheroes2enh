@@ -37,7 +37,7 @@ Dialog::FrameBorder::~FrameBorder()
 {
     if (Cursor::Get().isVisible())
     { Cursor::Get().Hide(); }
-	background.Restore();
+    background.Restore();
 }
 
 Dialog::FrameBorder::FrameBorder(const Size &sz, const Surface &sf) : border(BORDERWIDTH)

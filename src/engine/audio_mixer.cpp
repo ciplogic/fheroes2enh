@@ -46,30 +46,30 @@ bool Mixer::isValid()
 }
 
 #ifdef WITH_MIXER
+
 #include "SDL_mixer.h"
 
 void FreeChannel(int channel)
 {
-    Mixer::chunk_t* sample = Mix_GetChunk(channel);
-    if(sample) Mix_FreeChunk(sample);
+    Mixer::chunk_t *sample = Mix_GetChunk(channel);
+    if (sample) Mix_FreeChunk(sample);
 }
 
 void Mixer::Init()
 {
-    if(SDL::SubSystem(SDL_INIT_AUDIO))
+    if (SDL::SubSystem(SDL_INIT_AUDIO))
     {
-        Audio::Spec & hardware = Audio::GetHardwareSpec();
+        Audio::Spec &hardware = Audio::GetHardwareSpec();
         hardware.freq = 22050;
         hardware.format = AUDIO_S16;
         hardware.channels = 2;
         hardware.samples = 2048;
 
-        if(0 != Mix_OpenAudio(hardware.freq, hardware.format, hardware.channels, hardware.samples))
+        if (0 != Mix_OpenAudio(hardware.freq, hardware.format, hardware.channels, hardware.samples))
         {
             ERROR(SDL_GetError());
             valid = false;
-        }
-        else
+        } else
         {
             int channels = 0;
             Mix_QuerySpec(&hardware.freq, &hardware.format, &channels);
@@ -77,8 +77,7 @@ void Mixer::Init()
 
             valid = true;
         }
-    }
-    else
+    } else
     {
         ERROR("audio subsystem not initialize");
         valid = false;
@@ -87,7 +86,7 @@ void Mixer::Init()
 
 void Mixer::Quit()
 {
-    if(!SDL::SubSystem(SDL_INIT_AUDIO) || !valid)
+    if (!SDL::SubSystem(SDL_INIT_AUDIO) || !valid)
         return;
     Music::Reset();
     Mixer::Reset();
@@ -101,54 +100,57 @@ void Mixer::SetChannels(u8 num)
     Mix_ReserveChannels(1);
 }
 
-void Mixer::FreeChunk(chunk_t* sample)
+void Mixer::FreeChunk(chunk_t *sample)
 {
-    if(sample) Mix_FreeChunk(sample);
+    if (sample) Mix_FreeChunk(sample);
 }
 
 
-Mixer::chunk_t* Mixer::LoadWAV(const char* file)
+Mixer::chunk_t *Mixer::LoadWAV(const char *file)
 {
     Mix_Chunk *sample = Mix_LoadWAV(file);
-    if(!sample) ERROR(SDL_GetError());
+    if (!sample)
+    ERROR(SDL_GetError());
     return sample;
 }
 
-Mixer::chunk_t* Mixer::LoadWAV(const u8* ptr, u32 size)
+Mixer::chunk_t *Mixer::LoadWAV(const u8 *ptr, u32 size)
 {
     Mix_Chunk *sample = Mix_LoadWAV_RW(SDL_RWFromConstMem(ptr, size), 1);
-    if(!sample) ERROR(SDL_GetError());
+    if (!sample)
+    ERROR(SDL_GetError());
     return sample;
 }
 
-int Mixer::Play(chunk_t* sample, int channel, bool loop)
+int Mixer::Play(chunk_t *sample, int channel, bool loop)
 {
     int res = Mix_PlayChannel(channel, sample, loop ? -1 : 0);
-    if(res == -1) ERROR(SDL_GetError());
+    if (res == -1)
+    ERROR(SDL_GetError());
     return res;
 }
 
-int Mixer::Play(const char* file, int channel, bool loop)
+int Mixer::Play(const char *file, int channel, bool loop)
 {
-    if(!valid)
+    if (!valid)
     {
         return -1;
     }
-    chunk_t* sample = LoadWAV(file);
-    if(!sample)
+    chunk_t *sample = LoadWAV(file);
+    if (!sample)
         return -1;
     Mix_ChannelFinished(FreeChannel);
     return Play(sample, channel, loop);
 }
 
-int Mixer::Play(const u8* ptr, u32 size, int channel, bool loop)
+int Mixer::Play(const u8 *ptr, u32 size, int channel, bool loop)
 {
-    if(!valid || !ptr)
+    if (!valid || !ptr)
     {
         return -1;
     }
-    chunk_t* sample = LoadWAV(ptr, size);
-    if(!sample)
+    chunk_t *sample = LoadWAV(ptr, size);
+    if (!sample)
         return -1;
     Mix_ChannelFinished(FreeChannel);
     return Play(sample, channel, loop);
@@ -161,7 +163,7 @@ u16 Mixer::MaxVolume()
 
 u16 Mixer::Volume(int channel, s16 vol)
 {
-    if(!valid) return 0;
+    if (!valid) return 0;
     return Mix_Volume(channel, vol > MIX_MAX_VOLUME ? MIX_MAX_VOLUME : vol);
 }
 

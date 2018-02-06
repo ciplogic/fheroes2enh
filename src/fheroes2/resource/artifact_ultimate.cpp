@@ -87,10 +87,10 @@ StreamBase &operator<<(StreamBase &msg, const UltimateArtifact &ultimate)
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, UltimateArtifact &ultimate)
 {
-	Artifact &artifact = ultimate;
-	msg >> artifact >> ultimate.index >> ultimate.isfound;
+    Artifact &artifact = ultimate;
+    msg >> artifact >> ultimate.index >> ultimate.isfound;
 
-	ultimate.MakeSurface();
+    ultimate.MakeSurface();
 
-	return msg;
+    return msg;
 }

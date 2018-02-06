@@ -187,8 +187,7 @@ int DialogSelectSecondary(const string &name, const string &primary, const Skill
             Dialog::SecondarySkillInfo(sec1);
             cursor.Show();
             display.Flip();
-        }
-        else if (le.MouseClickLeft(rect_image2))
+        } else if (le.MouseClickLeft(rect_image2))
         {
             cursor.Hide();
             Dialog::SecondarySkillInfo(sec2);
@@ -202,8 +201,7 @@ int DialogSelectSecondary(const string &name, const string &primary, const Skill
             Dialog::SecondarySkillInfo(sec1, false);
             cursor.Show();
             display.Flip();
-        }
-        else if (le.MousePressRight(rect_image2))
+        } else if (le.MousePressRight(rect_image2))
         {
             cursor.Hide();
             Dialog::SecondarySkillInfo(sec2, false);

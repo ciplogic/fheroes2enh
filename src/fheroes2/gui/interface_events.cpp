@@ -66,7 +66,7 @@ void Interface::Basic::ShowPathOrStartMoveHero(Heroes *hero, s32 dst_index)
 
 void Interface::Basic::MoveHeroFromArrowKeys(Heroes &hero, int direct)
 {
-	Size wSize(world.w(), world.h());
+    Size wSize(world.w(), world.h());
     if (!Maps::isValidDirection(hero.GetIndex(), direct, wSize)) return;
     s32 dst = Maps::GetDirectionIndex(hero.GetIndex(), direct);
     const Maps::Tiles &tile = world.GetTiles(dst);
@@ -111,7 +111,7 @@ void Interface::Basic::EventNextHero()
     if (GetFocusHeroes())
     {
         auto it = find(myHeroes.begin(), myHeroes.end(),
-                                                     GetFocusHeroes());
+                       GetFocusHeroes());
         ++it;
         if (it == myHeroes.end()) it = myHeroes.begin();
         SetFocus(*it);
@@ -211,7 +211,7 @@ int Interface::Basic::EventFileDialog()
             return Game::QUITGAME;
 
         case Game::LOADGAME:
-            return EventLoadGame()?Game::LOADGAME:Game::NEWGAME;
+            return EventLoadGame() ? Game::LOADGAME : Game::NEWGAME;
 
         case Game::SAVEGAME:
             return EventSaveGame();
@@ -283,7 +283,7 @@ void Interface::Basic::EventNextTown()
     if (GetFocusCastle())
     {
         KingdomCastles::const_iterator it = find(myCastles.begin(), myCastles.end(),
-                                                      GetFocusCastle());
+                                                 GetFocusCastle());
         ++it;
         if (it == myCastles.end()) it = myCastles.begin();
         SetFocus(*it);
@@ -520,7 +520,8 @@ void Interface::Basic::EventKeyArrowPress(int dir)
     Heroes *hero = GetFocusHeroes();
 
     // move hero
-    if (hero) {
+    if (hero)
+    {
         MoveHeroFromArrowKeys(*hero, dir);
         return;
     }

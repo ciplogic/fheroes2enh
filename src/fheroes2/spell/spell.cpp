@@ -573,20 +573,20 @@ bool Spell::isApplyWithoutFocusObject() const
 {
     if (isMassActions() || isSummon())
         return true;
-	switch (id)
-	{
-	case DEATHRIPPLE:
-	case DEATHWAVE:
-	case EARTHQUAKE:
-	case HOLYWORD:
-	case HOLYSHOUT:
-	case ARMAGEDDON:
-	case ELEMENTALSTORM:
-		return true;
+    switch (id)
+    {
+        case DEATHRIPPLE:
+        case DEATHWAVE:
+        case EARTHQUAKE:
+        case HOLYWORD:
+        case HOLYSHOUT:
+        case ARMAGEDDON:
+        case ELEMENTALSTORM:
+            return true;
 
-	default:	
-		return false;
-	}
+        default:
+            return false;
+    }
 }
 
 bool Spell::isSummon() const
@@ -600,7 +600,7 @@ bool Spell::isSummon() const
             return true;
 
         default:
-			return false;
+            return false;
     }
 }
 
@@ -613,7 +613,7 @@ bool Spell::isApplyToAnyTroops() const
             return true;
 
         default:
-			return false;
+            return false;
     }
 }
 
@@ -643,7 +643,7 @@ bool Spell::isApplyToFriends() const
             return true;
 
         default:
-			return false;
+            return false;
     }
 
 
@@ -690,10 +690,10 @@ bool Spell::isApplyToEnemies() const
             return true;
 
         default:
-			return false;
+            return false;
     }
 
-    
+
 }
 
 bool Spell::isRaceCompatible(int race) const
@@ -716,7 +716,7 @@ bool Spell::isRaceCompatible(int race) const
             break;
 
     }
-	return true;
+    return true;
 }
 
 u32 Spell::CalculateDimensionDoorDistance(u32 current_sp, u32 total_hp)
@@ -743,10 +743,10 @@ StreamBase &operator>>(StreamBase &msg, Spell &spell)
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, Spell &spell)
 {
-	return msg >> spell.id;
+    return msg >> spell.id;
 }
 
 void Spell::ReadFrom(ByteVectorReader &msg)
 {
-	msg >> this->id;
+    msg >> this->id;
 }

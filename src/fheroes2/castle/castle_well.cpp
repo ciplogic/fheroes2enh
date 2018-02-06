@@ -59,7 +59,7 @@ u32 HowManyRecruitMonster(const Castle &castle, u32 dw, const Funds &add, Funds 
 
     u32 count = castle.GetDwellingLivedCount(dw);
 
-	while (count)
+    while (count)
     {
         payment_t payment = ms.GetCost() * count;
         res = payment;

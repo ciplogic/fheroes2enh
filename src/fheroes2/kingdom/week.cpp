@@ -117,5 +117,5 @@ StreamBase &operator>>(StreamBase &sb, Week &st)
 
 ByteVectorReader &operator>>(ByteVectorReader &sb, Week &st)
 {
-	return sb >> st.first >> st.second;
+    return sb >> st.first >> st.second;
 }

@@ -207,7 +207,8 @@ public:
 private:
     friend StreamBase &operator<<(StreamBase &, const Kingdom &);
 
-	friend ByteVectorReader &operator>>(ByteVectorReader &, Kingdom &);
+    friend ByteVectorReader &operator>>(ByteVectorReader &, Kingdom &);
+
     friend StreamBase &operator>>(StreamBase &, Kingdom &);
 
     int color;
@@ -271,7 +272,7 @@ public:
 private:
     friend StreamBase &operator<<(StreamBase &, const Kingdoms &);
 
-	friend ByteVectorReader &operator>>(ByteVectorReader &, Kingdoms &);
+    friend ByteVectorReader &operator>>(ByteVectorReader &, Kingdoms &);
 
     Kingdom kingdoms[KINGDOMMAX + 1];
 };

@@ -102,7 +102,8 @@ namespace Battle
         friend StreamBase &operator<<(StreamBase &, const Cell &);
 
         friend StreamBase &operator>>(StreamBase &, Cell &);
-		friend ByteVectorReader &operator>>(ByteVectorReader &, Cell &);
+
+        friend ByteVectorReader &operator>>(ByteVectorReader &, Cell &);
 
         s32 index;
         Rect pos;

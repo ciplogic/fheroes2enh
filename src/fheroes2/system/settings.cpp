@@ -44,9 +44,11 @@
 
 #ifdef WINDOWS
 #include <direct.h>
-    #define GetCurrentDir _getcwd
+#define GetCurrentDir _getcwd
 #else
+
 #include <unistd.h>
+
 #define GetCurrentDir getcwd
 #endif
 
@@ -132,14 +134,14 @@ const settings_t settingsGeneral[] =
                 {GLOBAL_POCKETPC,     "pocketpc",},
                 {GLOBAL_POCKETPC,     "pocket pc",},
                 {GLOBAL_USESWSURFACE, "use swsurface only",},
-                {0, nullptr,},
+                {0,                   nullptr,},
         };
 
 // internal settings
 const settings_t settingsFHeroes2[] =
         {
-				{Settings::GAME_QUICKCOMBAT_ON,              _("game: quick combat on"), },
-				{Settings::GAME_SAVE_REWRITE_CONFIRM,        _("game: always confirm for rewrite savefile"),},
+                {Settings::GAME_QUICKCOMBAT_ON,              _("game: quick combat on"),},
+                {Settings::GAME_SAVE_REWRITE_CONFIRM,        _("game: always confirm for rewrite savefile"),},
                 {Settings::GAME_ALSO_CONFIRM_AUTOSAVE,       _("game: also confirm autosave"),},
                 {Settings::GAME_REMEMBER_LAST_FOCUS,         _("game: remember last focus"),},
                 {Settings::GAME_BATTLE_SHOW_GRID,            _("game: battle show grid"),},
@@ -210,7 +212,7 @@ const settings_t settingsFHeroes2[] =
                 {Settings::POCKETPC_DRAG_DROP_SCROLL,        _("pocketpc: drag&drop gamearea as scroll"),},
                 {Settings::POCKETPC_LOW_MEMORY,              _("pocketpc: low memory"),},
 
-                {0,                                          nullptr},
+                {0, nullptr},
         };
 
 string Settings::GetVersion()
@@ -265,7 +267,7 @@ Settings &Settings::Get()
 bool Settings::Read(const string &filename)
 {
     TinyConfig config('=', '#');
-	int ival;
+    int ival;
     LocalEvent &le = LocalEvent::Get();
 
     if (!config.Load(filename)) return false;
@@ -325,11 +327,11 @@ bool Settings::Read(const string &filename)
         ++ptr;
     }
 
-	if(config.Exists("quickcombat"))
-	{
-		_isQuickCombat = config.IntParams("quickcombat");
-	}
-	
+    if (config.Exists("quickcombat"))
+    {
+        _isQuickCombat = config.IntParams("quickcombat");
+    }
+
 
     // maps directories
     maps_params.Append(config.ListStr("maps"));
@@ -481,7 +483,6 @@ bool Settings::Read(const string &filename)
     }
 
 
-
     if (font_normal.empty() || font_small.empty()) opt_global.ResetModes(GLOBAL_USEUNICODE);
 
 #ifdef BUILD_RELEASE
@@ -566,13 +567,13 @@ string Settings::String() const
 
 #ifdef WITH_TTF
     os <<
-    "fonts normal = " << font_normal << std::endl <<
-    "fonts small = " << font_small << std::endl <<
-    "fonts normal size = " << static_cast<int>(size_normal) << std::endl <<
-    "fonts small size = " << static_cast<int>(size_small) << std::endl <<
-    "unicode = " << (opt_global.Modes(GLOBAL_USEUNICODE) ? "on" : "off") << std::endl;
-    if(!force_lang.empty())
-    os << "lang = " << force_lang << std::endl;
+       "fonts normal = " << font_normal << std::endl <<
+       "fonts small = " << font_small << std::endl <<
+       "fonts normal size = " << static_cast<int>(size_normal) << std::endl <<
+       "fonts small size = " << static_cast<int>(size_small) << std::endl <<
+       "unicode = " << (opt_global.Modes(GLOBAL_USEUNICODE) ? "on" : "off") << std::endl;
+    if (!force_lang.empty())
+        os << "lang = " << force_lang << std::endl;
 #endif
 
     if (!video_driver.empty())
@@ -647,7 +648,7 @@ void Settings::SetProgramPath(const char *argv0)
 
 void Settings::SwapQuickCombat()
 {
-	_isQuickCombat = !_isQuickCombat;
+    _isQuickCombat = !_isQuickCombat;
 }
 
 ListDirs Settings::GetRootDirs()
@@ -690,7 +691,7 @@ ListFiles Settings::GetListFiles(const string &prefix, const string &filter)
     if (!prefix.empty() && System::IsDirectory(prefix))
         res.ReadDir(prefix, filter, false);
 
-    for (const auto& dir : dirs)
+    for (const auto &dir : dirs)
     {
         string path = !prefix.empty() ? System::ConcatePath(dir, prefix) : dir;
 
@@ -714,13 +715,13 @@ string Settings::GetLangDir()
 #ifdef CONFIGURE_FHEROES2_LOCALEDIR
     return std::string(CONFIGURE_FHEROES2_LOCALEDIR);
 #else
-    
+
     const ListDirs dirs = GetRootDirs();
 
     for (auto
-         it = dirs.rbegin(); it != dirs.rend(); ++it)
+                 it = dirs.rbegin(); it != dirs.rend(); ++it)
     {
-		string res = System::ConcatePath(System::ConcatePath(*it, "files"), "lang");
+        string res = System::ConcatePath(System::ConcatePath(*it, "files"), "lang");
         if (System::IsDirectory(res)) return res;
     }
 #endif
@@ -733,7 +734,7 @@ string Settings::GetWriteableDir(const char *subdir)
     ListDirs dirs = GetRootDirs();
     dirs.Append(System::GetDataDirectories("fheroes2"));
 
-    for (auto& dir : dirs)
+    for (auto &dir : dirs)
     {
         string dir_files = System::ConcatePath(dir, "files");
 
@@ -781,14 +782,14 @@ bool Settings::Music() const
 
 
 /* return music */
-void Settings::SetQuickCombat(bool value) 
+void Settings::SetQuickCombat(bool value)
 {
-	_isQuickCombat = value;
+    _isQuickCombat = value;
 }
 
 bool Settings::QuickCombat() const
 {
-	return _isQuickCombat;
+    return _isQuickCombat;
 }
 
 /* return move speed */
@@ -873,8 +874,8 @@ bool Settings::ShowStatus() const
 /* unicode support */
 bool Settings::Unicode() const
 {
-	return true;
-	return opt_global.Modes(GLOBAL_USEUNICODE);
+    return true;
+    return opt_global.Modes(GLOBAL_USEUNICODE);
 }
 
 /* pocketpc mode */
@@ -1128,7 +1129,7 @@ bool Settings::ExtModes(u32 f) const
 const char *Settings::ExtName(u32 f) const
 {
     const settings_t *ptr = find(settingsFHeroes2,
-                                      ARRAY_COUNT_END(settingsFHeroes2) - 1, f);
+                                 ARRAY_COUNT_END(settingsFHeroes2) - 1, f);
 
     return ptr ? _(ptr->str) : nullptr;
 }
@@ -1603,7 +1604,7 @@ u32 Settings::MemoryLimit() const
 
 bool Settings::FullScreen() const
 {
-	auto isFullScreen = opt_global.Modes(GLOBAL_FULLSCREEN) && false;
+    auto isFullScreen = opt_global.Modes(GLOBAL_FULLSCREEN) && false;
     return isFullScreen;
 }
 
@@ -1625,34 +1626,34 @@ StreamBase &operator<<(StreamBase &msg, const Settings &conf)
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, Settings &conf)
 {
-	string lang;
+    string lang;
 
-	msg >> lang;
+    msg >> lang;
 
-	if (lang != "en" && lang != conf.force_lang && !conf.Unicode())
-	{
-		string msg("This is an saved game is localized for lang = ");
-		msg.append(lang);
-		msg.append(", and most of the messages will be displayed incorrectly.\n \n");
-		msg.append("(tip: set unicode = on)");
-		Message("Warning!", msg, Font::BIG, Dialog::OK);
-	}
+    if (lang != "en" && lang != conf.force_lang && !conf.Unicode())
+    {
+        string msg("This is an saved game is localized for lang = ");
+        msg.append(lang);
+        msg.append(", and most of the messages will be displayed incorrectly.\n \n");
+        msg.append("(tip: set unicode = on)");
+        Message("Warning!", msg, Font::BIG, Dialog::OK);
+    }
 
-	int debug;
-	u32 opt_game = 0; // skip: settings
+    int debug;
+    u32 opt_game = 0; // skip: settings
 
-					  // map file
-	msg >> conf.current_maps_file >>
-		conf.game_difficulty >> conf.game_type >>
-		conf.preferably_count_players >> debug >>
-		opt_game >> conf.opt_world >> conf.opt_battle >> conf.opt_addons >>
-		conf.players;
+    // map file
+    msg >> conf.current_maps_file >>
+        conf.game_difficulty >> conf.game_type >>
+        conf.preferably_count_players >> debug >>
+        opt_game >> conf.opt_world >> conf.opt_battle >> conf.opt_addons >>
+        conf.players;
 
 #ifndef WITH_DEBUG
-	conf.debug = debug;
+    conf.debug = debug;
 #endif
 
-	return msg;
+    return msg;
 }
 
 StreamBase &operator>>(StreamBase &msg, Settings &conf)

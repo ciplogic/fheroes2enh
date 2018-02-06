@@ -343,7 +343,7 @@ SpellStorage SpellBook::SetFilter(int filter, const HeroBase *hero) const
     if (filter != ALL)
     {
         res.resize(distance(res.begin(),
-                                 remove_if(res.begin(), res.end(), bind2nd(SpellFiltered(), filter))));
+                            remove_if(res.begin(), res.end(), bind2nd(SpellFiltered(), filter))));
     }
 
     // check on water: disable portal spells
@@ -450,7 +450,7 @@ SpellBookRedrawSpells(const SpellStorage &spells, Rects &coords, const size_t cu
             }
 
             TextBox box(string(spell.GetName()) + " [" + GetString(spell.SpellPoint(&hero)) + "]", Font::SMALL,
-                    80);
+                        80);
             box.Blit(px + ox - 40, py + oy + 25);
 
             oy += 80;

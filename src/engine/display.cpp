@@ -41,8 +41,8 @@ void Display::SetVideoMode(int w, int h, bool fullscreen)
     if (fullscreen)
         flags |= SDL_FULLSCREEN;
 
-	displaySurface.surface = SDL_SetVideoMode(w, h, 0, flags);
-	Set(w, h, 32, false);
+    displaySurface.surface = SDL_SetVideoMode(w, h, 0, flags);
+    Set(w, h, 32, false);
 
     if (!surface)
         Error::Except(__FUNCTION__, SDL_GetError());
@@ -55,40 +55,40 @@ Size Display::GetSize() const
 
 void Display::Flip()
 {
-	this->Blit(displaySurface);
+    this->Blit(displaySurface);
     SDL_Flip(displaySurface.surface);
 }
 
 int IsFullScreen(SDL_Surface *surface)
 {
-	if (surface->flags & SDL_FULLSCREEN) return 1; // return true if surface is fullscreen 
-	return 0; // Return false if surface is windowed 
+    if (surface->flags & SDL_FULLSCREEN) return 1; // return true if surface is fullscreen
+    return 0; // Return false if surface is windowed
 }
 
 int SDL_ToggleFS(SDL_Surface *surface)
 {
-	Uint32 flags = surface->flags; // Get the video surface flags 
-	int w = surface->w;
-	int h = surface->h;
-	if (IsFullScreen(surface))
-	{
-		// Swith to WINDOWED mode 
-		if ((surface = SDL_SetVideoMode(w,h, 0, flags -= SDL_FULLSCREEN)) == nullptr) return 0;
-		return 1;
-	}
+    Uint32 flags = surface->flags; // Get the video surface flags
+    int w = surface->w;
+    int h = surface->h;
+    if (IsFullScreen(surface))
+    {
+        // Swith to WINDOWED mode
+        if ((surface = SDL_SetVideoMode(w, h, 0, flags -= SDL_FULLSCREEN)) == nullptr) return 0;
+        return 1;
+    }
 
-	// Swith to FULLSCREEN mode 
-	if ((surface = SDL_SetVideoMode(w, h, 0, flags | SDL_FULLSCREEN)) == nullptr) return 0;
-	return 1;
+    // Swith to FULLSCREEN mode
+    if ((surface = SDL_SetVideoMode(w, h, 0, flags | SDL_FULLSCREEN)) == nullptr) return 0;
+    return 1;
 }
 
 void Display::ToggleFullScreen() const
 {
-	int result = SDL_WM_ToggleFullScreen(surface);
-	if(result==0)
-	{
-		SDL_ToggleFS(surface);
-	}
+    int result = SDL_WM_ToggleFullScreen(surface);
+    if (result == 0)
+    {
+        SDL_ToggleFS(surface);
+    }
 }
 
 void Display::SetCaption(const char *str)
@@ -148,7 +148,7 @@ string Display::GetInfo() const
 
 Surface Display::GetSurface(const Rect &rt) const
 {
-    return Surface::GetSurface(rt); 
+    return Surface::GetSurface(rt);
 }
 
 void Display::Clear()

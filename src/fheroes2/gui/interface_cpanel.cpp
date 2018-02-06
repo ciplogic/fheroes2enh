@@ -27,8 +27,8 @@
 #include "localevent.h"
 #include "icn.h"
 
-Interface::ControlPanel::ControlPanel(Basic &basic) 
-    : interface(basic)
+Interface::ControlPanel::ControlPanel(Basic &basic)
+        : interface(basic)
 {
     _area.w = 180;
     _area.h = 36;

@@ -31,8 +31,10 @@
 #include "system.h"
 
 #ifdef WITH_IMAGE
+
 #include "SDL_image.h"
 #include "IMG_savepng.h"
+
 #endif
 
 namespace
@@ -200,13 +202,13 @@ RGBA RGBA::unpack(int v)
     return RGBA(r, g, b, a);
 }
 
-Surface::Surface() 
-: surface(nullptr)
+Surface::Surface()
+        : surface(nullptr)
 {
 }
 
-Surface::Surface(const Size &sz, bool amask) 
-: surface(nullptr)
+Surface::Surface(const Size &sz, bool amask)
+        : surface(nullptr)
 {
     Set(sz.w, sz.h, amask);
 }
@@ -232,7 +234,7 @@ Surface::Surface(SDL_Surface *sf) : surface(nullptr)
 }
 
 Surface::Surface(const void *pixels, u32 width, u32 height, u32 bytes_per_pixel /* 1, 2, 3, 4 */, bool amask)
-: surface(nullptr)
+        : surface(nullptr)
 {
     SurfaceFormat fm = GetRGBAMask(8 * bytes_per_pixel);
 
@@ -241,7 +243,7 @@ Surface::Surface(const void *pixels, u32 width, u32 height, u32 bytes_per_pixel 
 
         surface = SDL_CreateRGBSurface(SDL_HWSURFACE, width, height, fm.depth, fm.rmask, fm.gmask, fm.bmask,
                                        amask ? fm.amask : 0);
-    	SetPalette();
+        SetPalette();
         Lock();
         memcpy(surface->pixels, pixels, width * height);
         Unlock();
@@ -294,7 +296,7 @@ void Surface::Set(const Surface &bs, bool refcopy)
 
         if (!surface)
             Error::Except(__FUNCTION__, SDL_GetError());
-        
+
     }
 }
 
@@ -487,9 +489,9 @@ void Surface::SetPalette()
         pal_colors && pal_nums && surface->format->palette)
     {
 #ifndef WIN32
-		if (surface->format->palette->colors &&
-			pal_colors != surface->format->palette->colors)
-			SDL_free(surface->format->palette->colors);
+        if (surface->format->palette->colors &&
+            pal_colors != surface->format->palette->colors)
+            SDL_free(surface->format->palette->colors);
 #endif
         surface->format->palette->colors = pal_colors;
         surface->format->palette->ncolors = pal_nums;
@@ -620,39 +622,42 @@ u32 Surface::GetPixel(int x, int y) const
 
     return pixel;
 }
+
 void Surface::BlitAlpha(const Rect &srt, const Point &dpt, Surface &dst) const
 {
     auto w = srt.w, h = srt.h;
-    for(int x = 0; x<w;x++){
-        for(int y = 0; y<h;y++){
-            u32 srcPix = this->GetPixel4(srt.x + x, srt.y+y);
-            u32 alpha = srcPix>>24;
-            if(alpha==0)
+    for (int x = 0; x < w; x++)
+    {
+        for (int y = 0; y < h; y++)
+        {
+            u32 srcPix = this->GetPixel4(srt.x + x, srt.y + y);
+            u32 alpha = srcPix >> 24;
+            if (alpha == 0)
                 continue;
 
-            if(alpha==255)
+            if (alpha == 255)
             {
-                dst.SetPixel4(dpt.x+x, dpt.y + y, srcPix);
+                dst.SetPixel4(dpt.x + x, dpt.y + y, srcPix);
                 continue;
             }
-            u32 dstPix = dst.GetPixel4(dpt.x+x, dpt.y + y);
+            u32 dstPix = dst.GetPixel4(dpt.x + x, dpt.y + y);
             u32 dstRed = dstPix & 0xff;
-            u32 dstGreen = (dstPix>>8) & 0xff;
-            u32 dstBlue = (dstPix>>16) & 0xff;
+            u32 dstGreen = (dstPix >> 8) & 0xff;
+            u32 dstBlue = (dstPix >> 16) & 0xff;
             u32 srcRed = srcPix & 0xff;
-            u32 srcGreen = (srcPix>>8) & 0xff;
-            u32 srcBlue = (srcPix>>16) & 0xff;
-            u32 opacity = alpha ;
+            u32 srcGreen = (srcPix >> 8) & 0xff;
+            u32 srcBlue = (srcPix >> 16) & 0xff;
+            u32 opacity = alpha;
             u32 revOpacity = 255 - opacity;
-            u32 finalRed = (opacity*srcRed + revOpacity*dstRed)>>8;
-            if(finalRed>255) finalRed = 255;
-            u32 finalGreen =(opacity*srcGreen + revOpacity*dstGreen)>>8;
-            if(finalGreen>255) finalGreen = 255;
-            u32 finalBlue = (opacity*srcBlue + revOpacity*dstBlue)>>8;
-            if(finalBlue>255) finalBlue = 255;
+            u32 finalRed = (opacity * srcRed + revOpacity * dstRed) >> 8;
+            if (finalRed > 255) finalRed = 255;
+            u32 finalGreen = (opacity * srcGreen + revOpacity * dstGreen) >> 8;
+            if (finalGreen > 255) finalGreen = 255;
+            u32 finalBlue = (opacity * srcBlue + revOpacity * dstBlue) >> 8;
+            if (finalBlue > 255) finalBlue = 255;
 
-            u32 finalPix = 0xff000000 | (finalBlue<<16) | (finalGreen<<8) | (finalRed);
-            dst.SetPixel4(dpt.x+x, dpt.y + y, finalPix);
+            u32 finalPix = 0xff000000 | (finalBlue << 16) | (finalGreen << 8) | (finalRed);
+            dst.SetPixel4(dpt.x + x, dpt.y + y, finalPix);
 
         }
     }
@@ -660,10 +665,10 @@ void Surface::BlitAlpha(const Rect &srt, const Point &dpt, Surface &dst) const
 
 void Surface::Blit(const Rect &srt, const Point &dpt, Surface &dst) const
 {
-	SDL_Rect dstrect;
-	SDLRect(dpt.x, dpt.y, srt.w, srt.h, dstrect);
-	SDL_Rect srcrect;
-	SDLRect(srt, srcrect);
+    SDL_Rect dstrect;
+    SDLRect(dpt.x, dpt.y, srt.w, srt.h, dstrect);
+    SDL_Rect srcrect;
+    SDLRect(srt, srcrect);
 
     if (amask() && dst.amask())
     {
@@ -697,17 +702,17 @@ void Surface::Blit(const Point &dpt, Surface &dst) const
 void Surface::SetAlphaMod(int level)
 {
     if (!isValid())
-		return;
-	if (amask())
-	{
-		Surface res(GetSize(), false);
-		SDL_SetAlpha(surface, 0, 0);
-		Blit(res);
-		SDL_SetAlpha(surface, SDL_SRCALPHA, 255);
-		Set(res, true);
-	}
+        return;
+    if (amask())
+    {
+        Surface res(GetSize(), false);
+        SDL_SetAlpha(surface, 0, 0);
+        Blit(res);
+        SDL_SetAlpha(surface, SDL_SRCALPHA, 255);
+        Set(res, true);
+    }
 
-	SDL_SetAlpha(surface, SDL_SRCALPHA, level);
+    SDL_SetAlpha(surface, SDL_SRCALPHA, level);
 }
 
 void Surface::Lock() const
@@ -728,18 +733,18 @@ bool Surface::isRefCopy() const
 void Surface::FreeSurface(Surface &sf)
 {
     if (!sf.surface)
-		return;
+        return;
 
-	// clear static palette
-	if (sf.surface->format && 8 == sf.surface->format->BitsPerPixel && pal_colors && pal_nums &&
-		sf.surface->format->palette && pal_colors == sf.surface->format->palette->colors)
-	{
-		sf.surface->format->palette->colors = nullptr;
-		sf.surface->format->palette->ncolors = 0;
-	}
+    // clear static palette
+    if (sf.surface->format && 8 == sf.surface->format->BitsPerPixel && pal_colors && pal_nums &&
+        sf.surface->format->palette && pal_colors == sf.surface->format->palette->colors)
+    {
+        sf.surface->format->palette->colors = nullptr;
+        sf.surface->format->palette->ncolors = 0;
+    }
 
-	SDL_FreeSurface(sf.surface);
-	sf.surface = nullptr;
+    SDL_FreeSurface(sf.surface);
+    sf.surface = nullptr;
 }
 
 u32 Surface::GetMemoryUsage() const
@@ -747,16 +752,16 @@ u32 Surface::GetMemoryUsage() const
     u32 res = sizeof(surface);
 
     if (!surface)
-	{
-		return res;
-	}
-	res += sizeof(SDL_Surface) + sizeof(SDL_PixelFormat) + surface->pitch * surface->h;
+    {
+        return res;
+    }
+    res += sizeof(SDL_Surface) + sizeof(SDL_PixelFormat) + surface->pitch * surface->h;
 
-	if (surface->format && surface->format->palette &&
-		(!pal_colors || pal_colors != surface->format->palette->colors))
-		res += sizeof(SDL_Palette) + surface->format->palette->ncolors * sizeof(SDL_Color);
+    if (surface->format && surface->format->palette &&
+        (!pal_colors || pal_colors != surface->format->palette->colors))
+        res += sizeof(SDL_Palette) + surface->format->palette->ncolors * sizeof(SDL_Color);
 
-	return res;
+    return res;
 }
 
 std::string Surface::Info() const
@@ -870,8 +875,8 @@ Surface Surface::RenderRotate(int parm /* 0: none, 1 : 90 CW, 2: 90 CCW, 3: 180 
             }
         res.Unlock();
         return res;
-    } 
-	if (parm == 3)
+    }
+    if (parm == 3)
         return RenderReflect(3);
 
     return RenderReflect(0);
@@ -908,38 +913,38 @@ Surface Surface::RenderContour(const RGBA &color) const
 
     res.Lock();
     for (int y = 0; y < trf.h(); ++y)
-		for (int x = 0; x < trf.w(); ++x)
-		{
-			if (fake2 != trf.GetPixel(x, y))
-				continue;
-			if (0 == x || 0 == y ||
-			trf.w() - 1 == x || trf.h() - 1 == y)
-			{
-				res.SetPixel(x, y, pixel);
-				continue;
-			}
-			if (0 < x)
-			{
-				RGBA col = trf.GetRGB(trf.GetPixel(x - 1, y));
-				if ((clkey0 && col == clkey) || col.a() < 200) res.SetPixel(x - 1, y, pixel);
-			}
-			if (trf.w() - 1 > x)
-			{
-				RGBA col = trf.GetRGB(trf.GetPixel(x + 1, y));
-				if ((clkey0 && col == clkey) || col.a() < 200) res.SetPixel(x + 1, y, pixel);
-			}
+        for (int x = 0; x < trf.w(); ++x)
+        {
+            if (fake2 != trf.GetPixel(x, y))
+                continue;
+            if (0 == x || 0 == y ||
+                trf.w() - 1 == x || trf.h() - 1 == y)
+            {
+                res.SetPixel(x, y, pixel);
+                continue;
+            }
+            if (0 < x)
+            {
+                RGBA col = trf.GetRGB(trf.GetPixel(x - 1, y));
+                if ((clkey0 && col == clkey) || col.a() < 200) res.SetPixel(x - 1, y, pixel);
+            }
+            if (trf.w() - 1 > x)
+            {
+                RGBA col = trf.GetRGB(trf.GetPixel(x + 1, y));
+                if ((clkey0 && col == clkey) || col.a() < 200) res.SetPixel(x + 1, y, pixel);
+            }
 
-			if (0 < y)
-			{
-				RGBA col = trf.GetRGB(trf.GetPixel(x, y - 1));
-				if ((clkey0 && col == clkey) || col.a() < 200) res.SetPixel(x, y - 1, pixel);
-			}
-			if (trf.h() - 1 > y)
-			{
-				RGBA col = trf.GetRGB(trf.GetPixel(x, y + 1));
-				if ((clkey0 && col == clkey) || col.a() < 200) res.SetPixel(x, y + 1, pixel);
-			}
-		}
+            if (0 < y)
+            {
+                RGBA col = trf.GetRGB(trf.GetPixel(x, y - 1));
+                if ((clkey0 && col == clkey) || col.a() < 200) res.SetPixel(x, y - 1, pixel);
+            }
+            if (trf.h() - 1 > y)
+            {
+                RGBA col = trf.GetRGB(trf.GetPixel(x, y + 1));
+                if ((clkey0 && col == clkey) || col.a() < 200) res.SetPixel(x, y + 1, pixel);
+            }
+        }
     res.Unlock();
     return res;
 }
@@ -972,10 +977,10 @@ Surface Surface::RenderSepia() const
     const u32 colkey = GetColorKey();
 
     res.Lock();
-	int width = w();
-	int height = h();
-	for (int y = 0; y < height; y++)
-		for (int x = 0; x < width; x++)
+    int width = w();
+    int height = h();
+    for (int y = 0; y < height; y++)
+        for (int x = 0; x < width; x++)
         {
             u32 pixel = GetPixel4(x, y);
             if (colkey == 0 || pixel != colkey)
@@ -983,11 +988,11 @@ Surface Surface::RenderSepia() const
                 RGBA col = GetRGB(pixel);
                 //Numbers derived from http://blogs.techrepublic.com.com/howdoi/?p=120
 #define CLAMP255(val) std::min<u32>((val), 255)
-				u32 outR = CLAMP255(static_cast<u32>(col.r() * 0.693f + col.g() * 0.769f + col.b() * 0.189f));
-				u32 outG = CLAMP255(static_cast<u32>(col.r() * 0.449f + col.g() * 0.686f + col.b() * 0.168f));
-				u32 outB = CLAMP255(static_cast<u32>(col.r() * 0.272f + col.g() * 0.534f + col.b() * 0.131f));
-                
-				u32 outPixel = RGBA::packRgba(outR, outG, outB, col.a());
+                u32 outR = CLAMP255(static_cast<u32>(col.r() * 0.693f + col.g() * 0.769f + col.b() * 0.189f));
+                u32 outG = CLAMP255(static_cast<u32>(col.r() * 0.449f + col.g() * 0.686f + col.b() * 0.168f));
+                u32 outB = CLAMP255(static_cast<u32>(col.r() * 0.272f + col.g() * 0.534f + col.b() * 0.131f));
+
+                u32 outPixel = RGBA::packRgba(outR, outG, outB, col.a());
                 res.SetPixel4(x, y, outPixel);
 #undef CLAMP255
             }
@@ -1025,7 +1030,7 @@ Surface Surface::GetSurface() const
 Surface Surface::GetSurface(const Rect &rt) const
 {
     SurfaceFormat fm = GetFormat();
-	
+
     Surface res(rt, fm);
 
     if (amask())
@@ -1046,13 +1051,13 @@ void Surface::Fill(const RGBA &col)
 
 void Surface::FillRect(const Rect &rect, const RGBA &col)
 {
-	SDL_Rect dstrect;
-	SDLRect(rect, dstrect);
+    SDL_Rect dstrect;
+    SDLRect(rect, dstrect);
     SDL_FillRect(surface, &dstrect, MapRGB(col));
 }
 
 // swaps two numbers
-void swap(int* a , int*b)
+void swap(int *a, int *b)
 {
     int temp = *a;
     *a = *b;
@@ -1060,10 +1065,10 @@ void swap(int* a , int*b)
 }
 
 // returns absolute value of number
-float absolute(float x )
+float absolute(float x)
 {
     if (x < 0) return -x;
-	return x;
+    return x;
 }
 
 //returns integer part of a floating point number
@@ -1075,14 +1080,14 @@ int iPartOfNumber(float x)
 //rounds off a number
 int roundNumber(float x)
 {
-    return iPartOfNumber(x + 0.5) ;
+    return iPartOfNumber(x + 0.5);
 }
 
 //returns fractional part of a number
 float fPartOfNumber(float x)
 {
-    if (x>0) return x - iPartOfNumber(x);
-    else return x - (iPartOfNumber(x)+1);
+    if (x > 0) return x - iPartOfNumber(x);
+    else return x - (iPartOfNumber(x) + 1);
 
 }
 
@@ -1095,19 +1100,19 @@ float rfPartOfNumber(float x)
 // draws a pixel on screen of given brightness
 // 0<=brightness<=1. We can use your own library
 // to draw on screen
-void Surface::drawPixel( int x , int y , float brightness, const u32 col)
+void Surface::drawPixel(int x, int y, float brightness, const u32 col)
 {
-    int finalColA = 255*brightness;
-    if(finalColA>255)
+    int finalColA = 255 * brightness;
+    if (finalColA > 255)
         finalColA = 255;
 
-    u32 uCol = (col & 0xffffff)+(finalColA<<24);
-    SetPixel4(x,y,uCol);
+    u32 uCol = (col & 0xffffff) + (finalColA << 24);
+    SetPixel4(x, y, uCol);
 }
 
-void Surface::drawAALine(int x0 , int y0 , int x1 , int y1, const RGBA& col)
+void Surface::drawAALine(int x0, int y0, int x1, int y1, const RGBA &col)
 {
-    int steep = absolute(y1 - y0) > absolute(x1 - x0) ;
+    int steep = absolute(y1 - y0) > absolute(x1 - x0);
 
     const u32 uCol = MapRGB(col);
 
@@ -1115,19 +1120,19 @@ void Surface::drawAALine(int x0 , int y0 , int x1 , int y1, const RGBA& col)
     // draw backwards
     if (steep)
     {
-        swap(&x0 , &y0);
-        swap(&x1 , &y1);
+        swap(&x0, &y0);
+        swap(&x1, &y1);
     }
     if (x0 > x1)
     {
-        swap(&x0 ,&x1);
-        swap(&y0 ,&y1);
+        swap(&x0, &x1);
+        swap(&y0, &y1);
     }
 
     //compute the slope
-    float dx = x1-x0;
-    float dy = y1-y0;
-    float gradient = dy/dx;
+    float dx = x1 - x0;
+    float dy = y1 - y0;
+    float gradient = dy / dx;
     if (dx == 0.0)
         gradient = 1;
 
@@ -1138,28 +1143,27 @@ void Surface::drawAALine(int x0 , int y0 , int x1 , int y1, const RGBA& col)
     // main loop
     if (steep)
     {
-	    for (int x = xpxl1 ; x <=xpxl2 ; x++)
+        for (int x = xpxl1; x <= xpxl2; x++)
         {
             // pixel coverage is determined by fractional
             // part of y co-ordinate
             int y = iPartOfNumber(intersectY);
             drawPixel(y, x,
                       rfPartOfNumber(intersectY), uCol);
-            drawPixel(y-1, x,
+            drawPixel(y - 1, x,
                       fPartOfNumber(intersectY), uCol);
             intersectY += gradient;
         }
-    }
-    else
+    } else
     {
-	    for (int x = xpxl1 ; x <=xpxl2 ; x++)
+        for (int x = xpxl1; x <= xpxl2; x++)
         {
             // pixel coverage is determined by fractional
             // part of y co-ordinate
             int y = iPartOfNumber(intersectY);
             drawPixel(x, y,
                       rfPartOfNumber(intersectY), uCol);
-            drawPixel(x, y-1,
+            drawPixel(x, y - 1,
                       fPartOfNumber(intersectY), uCol);
             intersectY += gradient;
         }
@@ -1178,9 +1182,10 @@ void Surface::DrawLineAa(const Point &p1, const Point &p2, const RGBA &color)
     const int dy = abs(y2 - y1);
 
     Lock();
-    drawAALine(x1, y1, x2,y2, color);
+    drawAALine(x1, y1, x2, y2, color);
     Unlock();
 }
+
 void Surface::DrawLine(const Point &p1, const Point &p2, const RGBA &color)
 {
     int x1 = p1.x;

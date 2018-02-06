@@ -94,7 +94,7 @@ void Game::SetLastSavename(const string &name)
 int Game::Testing(int t)
 {
     return MAINMENU;
-} 
+}
 
 int Game::Credits()
 {
@@ -203,7 +203,7 @@ void Game::EnvironmentSoundMixer()
             // calculation volume
             const int length = max(abs(xx - abs_pt.x), abs(yy - abs_pt.y));
             const int volume =
-                (2 < length ? 4 : (1 < length ? 8 : (0 < length ? 12 : 16))) * Mixer::MaxVolume() / 16;
+                    (2 < length ? 4 : (1 < length ? 8 : (0 < length ? 12 : 16))) * Mixer::MaxVolume() / 16;
 
             if (volume > reserved_vols[channel]) reserved_vols[channel] = volume;
         }
@@ -268,7 +268,7 @@ u32 Game::GetGameOverScores()
 
     u32 k_size = 0;
 
-    switch ((mapsize_t)conf.MapsSize().w)
+    switch ((mapsize_t) conf.MapsSize().w)
     {
         case mapsize_t::SMALL:
             k_size = 140;
@@ -298,8 +298,7 @@ u32 Game::GetGameOverScores()
         {
             end_days = ii + (world.CountDay() - ii) / 2;
             flag = 1;
-        }
-        else if (1 == flag && nk > 120) end_days = ii + (world.CountDay() - ii) / 2;
+        } else if (1 == flag && nk > 120) end_days = ii + (world.CountDay() - ii) / 2;
         else if (nk > 180) break;
     }
 
@@ -428,7 +427,7 @@ int Game::GetActualKingdomColors()
 
 string Game::CountScoute(u32 count, int scoute, bool shorts)
 {
-	double infelicity = 0;
+    double infelicity = 0;
     string res;
 
     switch (scoute)

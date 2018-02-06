@@ -344,11 +344,10 @@ void Game::KeyboardGlobalFilter(int sym, int mod)
     Display &display = Display::Get();
 
     // system hotkeys
-	if (sym == key_events[EVENT_SYSTEM_FULLSCREEN])
-	{
-		display.ToggleFullScreen();
-	}
-    else if (sym == key_events[EVENT_SYSTEM_SCREENSHOT])
+    if (sym == key_events[EVENT_SYSTEM_FULLSCREEN])
+    {
+        display.ToggleFullScreen();
+    } else if (sym == key_events[EVENT_SYSTEM_SCREENSHOT])
     {
         ostringstream stream;
         stream << System::ConcatePath(Settings::GetSaveDir(), "screenshot_") << time(nullptr);
@@ -358,7 +357,8 @@ void Game::KeyboardGlobalFilter(int sym, int mod)
 #else
         stream << ".png";
 #endif
-		if (display.Save(stream.str())) {}
+        if (display.Save(stream.str()))
+        {}
     }
 #ifdef WITHOUT_MOUSE
         else

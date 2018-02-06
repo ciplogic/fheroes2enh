@@ -183,12 +183,12 @@ bool AIHeroesPriorityObject(const Heroes &hero, s32 index)
 
 s32 FindUncharteredTerritory(Heroes &hero, u32 scoute)
 {
-	Maps::Indexes v;
-	Maps::GetAroundIndexes(hero.GetIndex(), scoute, true, v);
+    Maps::Indexes v;
+    Maps::GetAroundIndexes(hero.GetIndex(), scoute, true, v);
     Maps::Indexes res;
 
     v.resize(distance(v.begin(),
-                           remove_if(v.begin(), v.end(), ptr_fun(&Maps::TileIsUnderProtection))));
+                      remove_if(v.begin(), v.end(), ptr_fun(&Maps::TileIsUnderProtection))));
 
 
 #if defined(ANDROID)
@@ -215,12 +215,12 @@ s32 FindUncharteredTerritory(Heroes &hero, u32 scoute)
 
 s32 GetRandomHeroesPosition(Heroes &hero, u32 scoute)
 {
-	Maps::Indexes v;
-	Maps::GetAroundIndexes(hero.GetIndex(), scoute, true, v);
+    Maps::Indexes v;
+    Maps::GetAroundIndexes(hero.GetIndex(), scoute, true, v);
     Maps::Indexes res;
 
     v.resize(distance(v.begin(),
-                           remove_if(v.begin(), v.end(), ptr_fun(&Maps::TileIsUnderProtection))));
+                      remove_if(v.begin(), v.end(), ptr_fun(&Maps::TileIsUnderProtection))));
 
 #if defined(ANDROID)
     const MapsIndexes::const_reverse_iterator crend = v.rend();
@@ -321,7 +321,7 @@ void AIHeroesAddedTask(Heroes &hero)
         }
 
         objs.emplace_back((*it).first,
-                                     Maps::GetApproximateDistance(hero.GetIndex(), (*it).first));
+                          Maps::GetApproximateDistance(hero.GetIndex(), (*it).first));
     }
 
 
@@ -481,7 +481,7 @@ bool AI::HeroesGetTask(Heroes &hero)
             const Castle *castle = nullptr;
 
             if (nullptr != (castle = world.GetCastle(Maps::GetPoint(ai_hero.primary_target))) &&
-                    nullptr != castle->GetHeroes().Guest() && castle->isFriends(hero.GetColor()))
+                nullptr != castle->GetHeroes().Guest() && castle->isFriends(hero.GetColor()))
             {
                 hero.SetModes(HEROES_WAITING);
             }
@@ -531,11 +531,11 @@ bool AI::HeroesGetTask(Heroes &hero)
     {
         hero.GetPath().Reset();
 
-        for (auto it = pickups.begin(); it != pickups.end(); ++it)
+        for (int &pickup : pickups)
         {
-            if (!HeroesValidObject(hero, *it))
+            if (!HeroesValidObject(hero, pickup))
                 continue;
-            task.push_front(*it);
+            task.push_front(pickup);
         }
     }
 
@@ -582,18 +582,18 @@ bool AI::HeroesGetTask(Heroes &hero)
 
         return true;
     }
-	if (hero.Modes(HEROES_WAITING))
-	{
-		hero.GetPath().Reset();
+    if (hero.Modes(HEROES_WAITING))
+    {
+        hero.GetPath().Reset();
 
-		hero.ResetModes(HEROES_WAITING);
-		hero.SetModes(HEROES_STUPID);
-	} else
-	{
-		hero.SetModes(HEROES_WAITING);
-	}
+        hero.ResetModes(HEROES_WAITING);
+        hero.SetModes(HEROES_STUPID);
+    } else
+    {
+        hero.SetModes(HEROES_WAITING);
+    }
 
-	return false;
+    return false;
 }
 
 void AIHeroesTurn(Heroes *hero)
@@ -649,65 +649,65 @@ bool IsPriorityAndNotVisitAndNotPresent(const pair<s32, int> &indexObj, const He
 void AIHeroesEnd(Heroes *hero)
 {
     if (!hero)
-		return;
-	AIHero &ai_hero = AIHeroes::Get(*hero);
-	AIKingdom &ai_kingdom = AIKingdoms::Get(hero->GetColor());
-	Queue &task = ai_hero.sheduled_visit;
-	IndexObjectMap &ai_objects = ai_kingdom.scans;
+        return;
+    AIHero &ai_hero = AIHeroes::Get(*hero);
+    AIKingdom &ai_kingdom = AIKingdoms::Get(hero->GetColor());
+    Queue &task = ai_hero.sheduled_visit;
+    IndexObjectMap &ai_objects = ai_kingdom.scans;
 
-	if (hero->Modes(AI::HEROES_WAITING | AI::HEROES_STUPID))
-	{
-		ai_hero.Reset();
-		hero->ResetModes(AI::HEROES_WAITING | AI::HEROES_STUPID);
-	}
+    if (hero->Modes(AI::HEROES_WAITING | AI::HEROES_STUPID))
+    {
+        ai_hero.Reset();
+        hero->ResetModes(AI::HEROES_WAITING | AI::HEROES_STUPID);
+    }
 
-	IndexObjectMap::iterator it;
+    IndexObjectMap::iterator it;
 
-	while (true)
-	{
-		for (it = ai_objects.begin(); it != ai_objects.end(); ++it)
-			if (IsPriorityAndNotVisitAndNotPresent(*it, hero)) break;
+    while (true)
+    {
+        for (it = ai_objects.begin(); it != ai_objects.end(); ++it)
+            if (IsPriorityAndNotVisitAndNotPresent(*it, hero)) break;
 
-		if (ai_objects.end() == it) break;
-		task.push_front((*it).first);
-		ai_objects.erase((*it).first);
-	}
+        if (ai_objects.end() == it) break;
+        task.push_front((*it).first);
+        ai_objects.erase((*it).first);
+    }
 }
 
 
 void AIHeroesSetHunterWithTarget(Heroes *hero, s32 dst)
 {
     if (!hero)
-		return;
-	AIHero &ai_hero = AIHeroes::Get(*hero);
+        return;
+    AIHero &ai_hero = AIHeroes::Get(*hero);
 
-	hero->SetModes(AI::HEROES_HUNTER);
+    hero->SetModes(AI::HEROES_HUNTER);
 
-	if (0 > ai_hero.primary_target)
-	{
-		ai_hero.primary_target = dst;
-	}
+    if (0 > ai_hero.primary_target)
+    {
+        ai_hero.primary_target = dst;
+    }
 }
 
 void AIHeroesCaptureNearestTown(Heroes *hero)
 {
     if (!hero) return;
-	AIHero &ai_hero = AIHeroes::Get(*hero);
+    AIHero &ai_hero = AIHeroes::Get(*hero);
 
-	if (0 <= ai_hero.primary_target)
-		return;
-	const Maps::Indexes &castles = Maps::GetObjectPositions(hero->GetIndex(), MP2::OBJ_CASTLE, true);
+    if (0 <= ai_hero.primary_target)
+        return;
+    const Maps::Indexes &castles = Maps::GetObjectPositions(hero->GetIndex(), MP2::OBJ_CASTLE, true);
 
-	for (int it : castles)
-	{
-		const Castle *castle = world.GetCastle(Maps::GetPoint(it));
+    for (int it : castles)
+    {
+        const Castle *castle = world.GetCastle(Maps::GetPoint(it));
 
-		if (castle &&
-			Army::TroopsStrongerEnemyTroops(hero->GetArmy().m_troops, castle->GetArmy().m_troops))
-		{
-			ai_hero.primary_target = it;
+        if (castle &&
+            Army::TroopsStrongerEnemyTroops(hero->GetArmy().m_troops, castle->GetArmy().m_troops))
+        {
+            ai_hero.primary_target = it;
 
-			break;
-		}
-	}
+            break;
+        }
+    }
 }

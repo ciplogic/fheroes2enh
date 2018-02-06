@@ -254,10 +254,10 @@ namespace Interface
 
                 if (ActionBarCursor(cursor, **iterPos.first, iterPos.second))
                     return true;
-				if (le.MouseClickLeft(iterPos.second))
-					return ActionBarSingleClick(cursor, **iterPos.first, iterPos.second);
-				if (le.MousePressRight(iterPos.second))
-					return ActionBarPressRight(cursor, **iterPos.first, iterPos.second);
+                if (le.MouseClickLeft(iterPos.second))
+                    return ActionBarSingleClick(cursor, **iterPos.first, iterPos.second);
+                if (le.MousePressRight(iterPos.second))
+                    return ActionBarPressRight(cursor, **iterPos.first, iterPos.second);
             }
 
             return false;
@@ -480,7 +480,8 @@ namespace Interface
 
                     other.ResetSelected();
                     return true;
-                } if (le.MousePressRight(iterPos1.second))
+                }
+                if (le.MousePressRight(iterPos1.second))
                 {
                     other.ResetSelected();
                     return ActionBarPressRight(cursor, **iterPos1.first, iterPos1.second, **iterPos2.first,

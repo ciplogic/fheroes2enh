@@ -352,8 +352,8 @@ void AnimationRemoveObject(Maps::Tiles &tile)
     Cursor &cursor = Cursor::Get();
     Display &display = Display::Get();
 
-	MapsIndexes heroes;
-	Maps::ScanAroundObject(tile.GetIndex(), MP2::OBJ_HEROES, heroes);
+    MapsIndexes heroes;
+    Maps::ScanAroundObject(tile.GetIndex(), MP2::OBJ_HEROES, heroes);
     const Surface &stile = tile.GetTileSurface();
     Surface sobj(stile.GetSize(), true);
 
@@ -456,7 +456,7 @@ void Heroes::Action(s32 dst_index)
 
     if (listActions)
     {
-        for (const auto & it : *listActions)
+        for (const auto &it : *listActions)
         {
             switch (it->GetType())
             {
@@ -759,55 +759,59 @@ void Heroes::Action(s32 dst_index)
         }
 }
 
-Battle::Result BattleHeroWithMonster(Heroes& hero, Army&army, s32 dst_index)
+Battle::Result BattleHeroWithMonster(Heroes &hero, Army &army, s32 dst_index)
 {
-	Battle::Result res;
-	StreamBuf armyBuf, heroArmyBuf;
-	armyBuf << army;
-	armyBuf.seek(0);
-	auto armyVec = armyBuf.getRaw(0);
-	heroArmyBuf << hero;
-	heroArmyBuf.seek(0);
-	auto heroVec = heroArmyBuf.getRaw(0);
+    Battle::Result res;
+    StreamBuf armyBuf, heroArmyBuf;
+    armyBuf << army;
+    armyBuf.seek(0);
+    auto armyVec = armyBuf.getRaw(0);
+    heroArmyBuf << hero;
+    heroArmyBuf.seek(0);
+    auto heroVec = heroArmyBuf.getRaw(0);
 
-	do {
-		res = Battle::Loader(hero.GetArmy(), army, dst_index);
-		if (res.fightAgain == Battle::FightResultType::FightAgain) {
-			Settings::Get().SetQuickCombat(false);
-			ByteVectorReader bvr(armyVec);
-			bvr >> army;
-			ByteVectorReader heroArmyReader(heroVec);
-			hero.ReadFrom(heroArmyReader);
-		}
-	} while (res.fightAgain == Battle::FightResultType::FightAgain);
-	Settings::Get().SetQuickCombat(true);
-	return res;
+    do
+    {
+        res = Battle::Loader(hero.GetArmy(), army, dst_index);
+        if (res.fightAgain == Battle::FightResultType::FightAgain)
+        {
+            Settings::Get().SetQuickCombat(false);
+            ByteVectorReader bvr(armyVec);
+            bvr >> army;
+            ByteVectorReader heroArmyReader(heroVec);
+            hero.ReadFrom(heroArmyReader);
+        }
+    } while (res.fightAgain == Battle::FightResultType::FightAgain);
+    Settings::Get().SetQuickCombat(true);
+    return res;
 }
 
-	
-Battle::Result BattleHeroWithHero(Heroes& hero, Heroes&other_hero, s32 dst_index)
-{
-	Battle::Result res;
-	StreamBuf armyBuf, heroArmyBuf;
-	armyBuf << other_hero;
-	armyBuf.seek(0);
-	auto armyVec = armyBuf.getRaw(0);
-	heroArmyBuf << hero;
-	heroArmyBuf.seek(0);
-	auto heroVec = heroArmyBuf.getRaw(0);
 
-	do {
-		res = Battle::Loader(hero.GetArmy(), other_hero.GetArmy(), dst_index);
-		if (res.fightAgain == Battle::FightResultType::FightAgain) {
-			Settings::Get().SetQuickCombat(false);
-			ByteVectorReader bvr(armyVec);
-			bvr >> other_hero;
-			ByteVectorReader heroArmyReader(heroVec);
-			hero.ReadFrom(heroArmyReader);
-		}
-	} while (res.fightAgain == Battle::FightResultType::FightAgain);
-	Settings::Get().SetQuickCombat(true);
-	return res;
+Battle::Result BattleHeroWithHero(Heroes &hero, Heroes &other_hero, s32 dst_index)
+{
+    Battle::Result res;
+    StreamBuf armyBuf, heroArmyBuf;
+    armyBuf << other_hero;
+    armyBuf.seek(0);
+    auto armyVec = armyBuf.getRaw(0);
+    heroArmyBuf << hero;
+    heroArmyBuf.seek(0);
+    auto heroVec = heroArmyBuf.getRaw(0);
+
+    do
+    {
+        res = Battle::Loader(hero.GetArmy(), other_hero.GetArmy(), dst_index);
+        if (res.fightAgain == Battle::FightResultType::FightAgain)
+        {
+            Settings::Get().SetQuickCombat(false);
+            ByteVectorReader bvr(armyVec);
+            bvr >> other_hero;
+            ByteVectorReader heroArmyReader(heroVec);
+            hero.ReadFrom(heroArmyReader);
+        }
+    } while (res.fightAgain == Battle::FightResultType::FightAgain);
+    Settings::Get().SetQuickCombat(true);
+    return res;
 }
 
 void ActionToMonster(Heroes &hero, u32 obj, s32 dst_index)
@@ -832,7 +836,7 @@ void ActionToMonster(Heroes &hero, u32 obj, s32 dst_index)
         } else
         {
             Message("", _("Insulted by your refusal of their offer, the monsters attack!"), Font::BIG,
-                            Dialog::OK);
+                    Dialog::OK);
             join.first = JOIN_NONE;
         }
     } else
@@ -849,7 +853,7 @@ void ActionToMonster(Heroes &hero, u32 obj, s32 dst_index)
         } else
         {
             Message("", _("Insulted by your refusal of their offer, the monsters attack!"), Font::BIG,
-                            Dialog::OK);
+                    Dialog::OK);
             join.first = JOIN_NONE;
         }
     } else
@@ -871,8 +875,8 @@ void ActionToMonster(Heroes &hero, u32 obj, s32 dst_index)
     // fight
     if (JOIN_NONE == join.first)
     {
-		Army army(tile);
-		Battle::Result res = BattleHeroWithMonster(hero, army, dst_index);
+        Army army(tile);
+        Battle::Result res = BattleHeroWithMonster(hero, army, dst_index);
 
         if (res.AttackerWins())
         {
@@ -912,9 +916,9 @@ void ActionToMonster(Heroes &hero, u32 obj, s32 dst_index)
             tile.MonsterSetCount(0);
             tile.SetObject(MP2::OBJ_ZERO);
 
-			Size wSize(world.w(), world.h());
+            Size wSize(world.w(), world.h());
             // remove shadow from left cell
-            if (Maps::isValidDirection(dst_index, Direction::LEFT,wSize))
+            if (Maps::isValidDirection(dst_index, Direction::LEFT, wSize))
                 world.GetTiles(Maps::GetDirectionIndex(dst_index, Direction::LEFT)).Remove(uniq);
         }
 
@@ -962,7 +966,7 @@ void ActionToHeroes(Heroes &hero, u32 obj, s32 dst_index)
                                  world.GetTiles(hero.GetIndex()).GetObject(false) == MP2::OBJ_STONELIGHTS;
 
         // new battle
-		Battle::Result res = BattleHeroWithHero(hero, *other_hero, dst_index);
+        Battle::Result res = BattleHeroWithHero(hero, *other_hero, dst_index);
 
         // loss defender
         if (!res.DefenderWins())
@@ -1001,7 +1005,7 @@ void ActionToCastle(Heroes &hero, u32 obj, s32 dst_index)
     } else if (hero.GetColor() == castle->GetColor() ||
                (conf.ExtUnionsAllowCastleVisiting() && Players::isFriends(hero.GetColor(), castle->GetColor())))
     {
-        
+
         Mixer::Reduce();
         if (!conf.ExtHeroLearnSpellsWithDay()) castle->MageGuildEducateHero(hero);
         Game::OpenCastleDialog(*castle);
@@ -1027,8 +1031,8 @@ void ActionToCastle(Heroes &hero, u32 obj, s32 dst_index)
             Heroes *defender = heroes.GuardFirst();
             castle->ActionPreBattle();
 
-			// new battle
-			Battle::Result res = BattleHeroWithMonster(hero, army, dst_index);
+            // new battle
+            Battle::Result res = BattleHeroWithMonster(hero, army, dst_index);
 
             castle->ActionAfterBattle(res.AttackerWins());
 
@@ -1578,22 +1582,22 @@ void ActionToMagicWell(Heroes &hero, u32 obj, s32 dst_index)
     {
         PlaySoundFailure;
         Message(StringObject(MP2::OBJ_MAGICWELL),
-                        _("A drink at the well is supposed to restore your spell points, but you are already at maximum."),
-                        Font::BIG, Dialog::OK);
+                _("A drink at the well is supposed to restore your spell points, but you are already at maximum."),
+                Font::BIG, Dialog::OK);
     } else
         // check already visited
     if (hero.isVisited(MP2::OBJ_MAGICWELL))
     {
         PlaySoundVisited;
         Message(StringObject(MP2::OBJ_MAGICWELL),
-                        _("A second drink at the well in one day will not help you."), Font::BIG, Dialog::OK);
+                _("A second drink at the well in one day will not help you."), Font::BIG, Dialog::OK);
     } else
     {
         PlaySoundSuccess;
         hero.SetVisited(dst_index);
         hero.SetSpellPoints(max);
         Message(StringObject(MP2::OBJ_MAGICWELL),
-                        _("A drink from the well has restored your spell points to maximum."), Font::BIG, Dialog::OK);
+                _("A drink from the well has restored your spell points to maximum."), Font::BIG, Dialog::OK);
     }
 }
 
@@ -1930,13 +1934,13 @@ void ActionToArtifact(Heroes &hero, u32 obj, s32 dst_index)
                 {
                     PlaySoundFailure;
                     Message("",
-                                    _("You try to pay the leprechaun, but realize that you can't afford it. The leprechaun stamps his foot and ignores you."),
-                                    Font::BIG, Dialog::OK);
+                            _("You try to pay the leprechaun, but realize that you can't afford it. The leprechaun stamps his foot and ignores you."),
+                            Font::BIG, Dialog::OK);
                 }
             } else
                 Message("",
-                                _("Insulted by your refusal of his generous offer, the leprechaun stamps his foot and ignores you."),
-                                Font::BIG, Dialog::OK);
+                        _("Insulted by your refusal of his generous offer, the leprechaun stamps his foot and ignores you."),
+                        Font::BIG, Dialog::OK);
         } else
             // 4,5 - need have skill wisard or leadership,
         if (3 < cond && cond < 6)
@@ -1978,8 +1982,8 @@ void ActionToArtifact(Heroes &hero, u32 obj, s32 dst_index)
             {
                 if (Monster::ROGUE == troop->GetID())
                     Message("",
-                                    _("You come upon an ancient artifact. As you reach for it, a pack of Rogues leap out of the brush to guard their stolen loot."),
-                                    Font::BIG, Dialog::OK);
+                            _("You come upon an ancient artifact. As you reach for it, a pack of Rogues leap out of the brush to guard their stolen loot."),
+                            Font::BIG, Dialog::OK);
                 else
                 {
                     msg = _("Through a clearing you observe an ancient artifact. Unfortunately, it's guarded by a nearby %{monster}. Do you want to fight the %{monster} for the artifact?");
@@ -2008,8 +2012,8 @@ void ActionToArtifact(Heroes &hero, u32 obj, s32 dst_index)
             {
                 PlaySoundFailure;
                 Message("",
-                                _("Discretion is the better part of valor, and you decide to avoid this fight for today."),
-                                Font::BIG, Dialog::OK);
+                        _("Discretion is the better part of valor, and you decide to avoid this fight for today."),
+                        Font::BIG, Dialog::OK);
             }
         } else
         {
@@ -2082,8 +2086,8 @@ void ActionToTreasureChest(Heroes &hero, u32 obj, s32 dst_index)
         } else
         {
             Message(hdr,
-                            _("After spending hours trying to fish the chest out of the sea, you open it, only to find it empty."),
-                            Font::BIG, Dialog::OK);
+                    _("After spending hours trying to fish the chest out of the sea, you open it, only to find it empty."),
+                    Font::BIG, Dialog::OK);
         }
     } else
     {
@@ -2158,9 +2162,9 @@ void ActionToTeleports(Heroes &hero, s32 index_from)
         // lose battle
         if (hero.isFreeman())
             return;
-		if (!other_hero->isFreeman())
-		{
-		}
+        if (!other_hero->isFreeman())
+        {
+        }
     }
 
     AGG::PlaySound(M82::KILLFADE);
@@ -2219,10 +2223,11 @@ void ActionToWhirlpools(Heroes &hero, u32 obj, s32 index_from)
     {
         PlaySoundWarning;
         Message(_("A whirlpool engulfs your ship."), _("Some of your army has fallen overboard."), Font::BIG,
-                        Dialog::OK);
-        troop->SetCount(Monster::GetCountFromHitPoints(troop->GetID(), troop->GetHitPointsTroop() - troop->GetHitPointsTroop() *
-                                                                                               Game::GetWhirlpoolPercent() /
-                                                                                               100));
+                Dialog::OK);
+        troop->SetCount(
+                Monster::GetCountFromHitPoints(troop->GetID(), troop->GetHitPointsTroop() - troop->GetHitPointsTroop() *
+                                                                                            Game::GetWhirlpoolPercent() /
+                                                                                            100));
     }
 
     hero.GetPath().Reset();
@@ -2398,7 +2403,7 @@ void ActionToDwellingJoinMonster(Heroes &hero, u32 obj, s32 dst_index)
         {
             if (!hero.GetArmy().m_troops.CanJoinTroop(troop))
                 Message(troop.GetName(), _("You are unable to recruit at this time, your ranks are full."),
-                                Font::BIG, Dialog::OK);
+                        Font::BIG, Dialog::OK);
             else
             {
                 tile.MonsterSetCount(0);
@@ -2414,7 +2419,7 @@ void ActionToDwellingJoinMonster(Heroes &hero, u32 obj, s32 dst_index)
     } else
     {
         Message("", _("As you approach the dwelling, you notice that there is no one here."), Font::BIG,
-                        Dialog::OK);
+                Dialog::OK);
     }
 
     hero.SetVisited(dst_index, Visit::GLOBAL);
@@ -2604,7 +2609,7 @@ void ActionToObservationTower(Heroes &hero, u32 obj, s32 dst_index)
 {
     PlaySoundWarning;
     Message(MP2::StringObject(obj), _("From the observation tower, you are able to see distant lands."),
-                    Font::BIG, Dialog::OK);
+            Font::BIG, Dialog::OK);
     Maps::ClearFog(dst_index, GetViewDistance(Game::VIEW_OBSERVATION_TOWER), hero.GetColor());
 }
 
@@ -2617,13 +2622,13 @@ void ActionToArtesianSpring(Heroes &hero, u32 obj, s32 dst_index)
     {
         PlaySoundVisited;
         Message(name, _("The spring only refills once a week, and someone's already been here this week."),
-                        Font::BIG, Dialog::OK);
+                Font::BIG, Dialog::OK);
     } else if (hero.GetSpellPoints() == max * 2)
     {
         PlaySoundFailure;
         Message(name,
-                        _("A drink at the spring is supposed to give you twice your normal spell points, but you are already at that level."),
-                        Font::BIG, Dialog::OK);
+                _("A drink at the spring is supposed to give you twice your normal spell points, but you are already at that level."),
+                Font::BIG, Dialog::OK);
     } else
     {
         if (Settings::Get().MusicMIDI())
@@ -2633,8 +2638,8 @@ void ActionToArtesianSpring(Heroes &hero, u32 obj, s32 dst_index)
             AGG::PlayMusic(MUS::WATERSPRING, false);
         hero.SetSpellPoints(max * 2);
         Message(name,
-                        _("A drink from the spring fills your blood with magic! You have twice your normal spell points in reserve."),
-                        Font::BIG, Dialog::OK);
+                _("A drink from the spring fills your blood with magic! You have twice your normal spell points in reserve."),
+                Font::BIG, Dialog::OK);
 
         if (Settings::Get().ExtWorldArtesianSpringSeparatelyVisit())
             hero.SetVisited(dst_index, Visit::LOCAL);
@@ -2652,8 +2657,8 @@ void ActionToXanadu(Heroes &hero, u32 obj, s32 dst_index)
     {
         PlaySoundVisited;
         Message(MP2::StringObject(obj),
-                        _("Recognizing you, the butler refuses to admit you. \"The master,\" he says, \"will not see the same student twice.\""),
-                        Font::BIG, Dialog::OK);
+                _("Recognizing you, the butler refuses to admit you. \"The master,\" he says, \"will not see the same student twice.\""),
+                Font::BIG, Dialog::OK);
     } else
     {
         bool access = false;
@@ -2677,8 +2682,8 @@ void ActionToXanadu(Heroes &hero, u32 obj, s32 dst_index)
         {
             PlaySoundSuccess;
             Message(MP2::StringObject(obj),
-                            _("The butler admits you to see the master of the house. He trains you in the four skills a hero should know."),
-                            Font::BIG, Dialog::OK);
+                    _("The butler admits you to see the master of the house. He trains you in the four skills a hero should know."),
+                    Font::BIG, Dialog::OK);
             hero.IncreasePrimarySkill(Skill::Primary::ATTACK);
             hero.IncreasePrimarySkill(Skill::Primary::DEFENSE);
             hero.IncreasePrimarySkill(Skill::Primary::KNOWLEDGE);
@@ -2688,8 +2693,8 @@ void ActionToXanadu(Heroes &hero, u32 obj, s32 dst_index)
         {
             PlaySoundFailure;
             Message(MP2::StringObject(obj),
-                            _("The butler opens the door and looks you up and down. \"You are neither famous nor diplomatic enough to be admitted to see my master,\" he sniffs. \"Come back when you think yourself worthy.\""),
-                            Font::BIG, Dialog::OK);
+                    _("The butler opens the door and looks you up and down. \"You are neither famous nor diplomatic enough to be admitted to see my master,\" he sniffs. \"Come back when you think yourself worthy.\""),
+                    Font::BIG, Dialog::OK);
         }
     }
 }
@@ -2759,51 +2764,51 @@ void ActionToUpgradeArmyObject(Heroes &hero, u32 obj, s32 dst_index)
 
     if (mons.empty())
     {
-	    PlaySoundFailure;
-	    Message(MP2::StringObject(obj), msg2, Font::BIG, Dialog::OK);
-		return;
+        PlaySoundFailure;
+        Message(MP2::StringObject(obj), msg2, Font::BIG, Dialog::OK);
+        return;
     }
-	// composite sprite
-	u32 ox = 0;
-	const Sprite &br = AGG::GetICN(ICN::STRIP, 12);
-	Surface sf(Size(br.w() * mons.size() + (mons.size() - 1) * 4, br.h()), false);
+    // composite sprite
+    u32 ox = 0;
+    const Sprite &br = AGG::GetICN(ICN::STRIP, 12);
+    Surface sf(Size(br.w() * mons.size() + (mons.size() - 1) * 4, br.h()), false);
 
-	for (vector<Monster>::const_iterator
-	     it = mons.begin(); it != mons.end(); ++it)
-	{
-		br.Blit(ox, 0, sf);
-		switch (Monster(*it).GetRace())
-		{
-		case Race::KNGT:
-			AGG::GetICN(ICN::STRIP, 4).Blit(ox + 6, 6, sf);
-			break;
-		case Race::BARB:
-			AGG::GetICN(ICN::STRIP, 5).Blit(ox + 6, 6, sf);
-			break;
-		case Race::SORC:
-			AGG::GetICN(ICN::STRIP, 6).Blit(ox + 6, 6, sf);
-			break;
-		case Race::WRLK:
-			AGG::GetICN(ICN::STRIP, 7).Blit(ox + 6, 6, sf);
-			break;
-		case Race::WZRD:
-			AGG::GetICN(ICN::STRIP, 8).Blit(ox + 6, 6, sf);
-			break;
-		case Race::NECR:
-			AGG::GetICN(ICN::STRIP, 9).Blit(ox + 6, 6, sf);
-			break;
-		default:
-			AGG::GetICN(ICN::STRIP, 10).Blit(ox + 6, 6, sf);
-			break;
-		}
-		const Sprite &mon = AGG::GetICN((*it).GetUpgrade().ICNMonh(), 0);
-		mon.Blit(ox + 6 + mon.x(), 6 + mon.y(), sf);
-		ox += br.w() + 4;
-	}
-	Dialog::SpriteInfo(MP2::StringObject(obj), msg1, sf);
+    for (vector<Monster>::const_iterator
+                 it = mons.begin(); it != mons.end(); ++it)
+    {
+        br.Blit(ox, 0, sf);
+        switch (Monster(*it).GetRace())
+        {
+            case Race::KNGT:
+                AGG::GetICN(ICN::STRIP, 4).Blit(ox + 6, 6, sf);
+                break;
+            case Race::BARB:
+                AGG::GetICN(ICN::STRIP, 5).Blit(ox + 6, 6, sf);
+                break;
+            case Race::SORC:
+                AGG::GetICN(ICN::STRIP, 6).Blit(ox + 6, 6, sf);
+                break;
+            case Race::WRLK:
+                AGG::GetICN(ICN::STRIP, 7).Blit(ox + 6, 6, sf);
+                break;
+            case Race::WZRD:
+                AGG::GetICN(ICN::STRIP, 8).Blit(ox + 6, 6, sf);
+                break;
+            case Race::NECR:
+                AGG::GetICN(ICN::STRIP, 9).Blit(ox + 6, 6, sf);
+                break;
+            default:
+                AGG::GetICN(ICN::STRIP, 10).Blit(ox + 6, 6, sf);
+                break;
+        }
+        const Sprite &mon = AGG::GetICN((*it).GetUpgrade().ICNMonh(), 0);
+        mon.Blit(ox + 6 + mon.x(), 6 + mon.y(), sf);
+        ox += br.w() + 4;
+    }
+    Dialog::SpriteInfo(MP2::StringObject(obj), msg1, sf);
 
-	if (Settings::Get().ExtHeroRecalculateMovement())
-		hero.RecalculateMovePoints();
+    if (Settings::Get().ExtHeroRecalculateMovement())
+        hero.RecalculateMovePoints();
 }
 
 void ActionToMagellanMaps(Heroes &hero, u32 obj, s32 dst_index)
@@ -2832,8 +2837,8 @@ void ActionToMagellanMaps(Heroes &hero, u32 obj, s32 dst_index)
     {
         PlaySoundFailure;
         Message(MP2::StringObject(obj),
-                        _("The captain sighs. \"You don't have enough money, eh?  You can't expect me to give my maps away for free!\""),
-                        Font::BIG, Dialog::OK);
+                _("The captain sighs. \"You don't have enough money, eh?  You can't expect me to give my maps away for free!\""),
+                Font::BIG, Dialog::OK);
     }
 }
 
@@ -2885,8 +2890,8 @@ void ActionToObelisk(Heroes &hero, u32 obj, s32 dst_index)
         kingdom.PuzzleMaps().Update(kingdom.CountVisitedObjects(MP2::OBJ_OBELISK), world.CountObeliskOnMaps());
         AGG::PlaySound(M82::EXPERNCE);
         Message(MP2::StringObject(obj),
-                        _("You come upon an obelisk made from a type of stone you have never seen before. Staring at it intensely, the smooth surface suddenly changes to an inscription. The inscription is a piece of a lost ancient map. Quickly you copy down the piece and the inscription vanishes as abruptly as it appeared."),
-                        Font::BIG, Dialog::OK);
+                _("You come upon an obelisk made from a type of stone you have never seen before. Staring at it intensely, the smooth surface suddenly changes to an inscription. The inscription is a piece of a lost ancient map. Quickly you copy down the piece and the inscription vanishes as abruptly as it appeared."),
+                Font::BIG, Dialog::OK);
         kingdom.PuzzleMaps().ShowMapsDialog();
     } else
         Message(MP2::StringObject(obj), _("You have already been to this obelisk."), Font::BIG, Dialog::OK);
@@ -2900,8 +2905,8 @@ void ActionToTreeKnowledge(Heroes &hero, u32 obj, s32 dst_index)
     {
         PlaySoundVisited;
         Message(MP2::StringObject(obj),
-                        _("Upon your approach, the tree opens its eyes in delight. \"It is good to see you, my student. I hope my teachings have helped you.\""),
-                        Font::BIG, Dialog::OK);
+                _("Upon your approach, the tree opens its eyes in delight. \"It is good to see you, my student. I hope my teachings have helped you.\""),
+                Font::BIG, Dialog::OK);
     } else
     {
         const Funds &funds = tile.QuantityFunds();
@@ -3059,7 +3064,7 @@ void ActionToDaemonCave(Heroes &hero, u32 obj, s32 dst_index)
             tile.QuantityReset();
         } else
             Message("", _("Except for evidence of a terrible battle, the cave is empty."), Font::BIG,
-                            Dialog::OK);
+                    Dialog::OK);
 
         hero.SetVisited(dst_index, Visit::GLOBAL);
     }
@@ -3089,16 +3094,16 @@ void ActionToAlchemistsTower(Heroes &hero, u32 obj, s32 dst_index)
             {
                 hero.GetKingdom().OddFundsResource(payment);
                 bag.resize(distance(bag.begin(),
-                                         remove_if(bag.begin(), bag.end(),
-                                                        mem_fun_ref(&Artifact::isAlchemistRemove))));
+                                    remove_if(bag.begin(), bag.end(),
+                                              mem_fun_ref(&Artifact::isAlchemistRemove))));
             }
         } else
             Message("",
-                            _("You hear a voice from behind the locked door, \"You don't have enough gold to pay for my services.\""),
-                            Font::BIG, Dialog::OK);
+                    _("You hear a voice from behind the locked door, \"You don't have enough gold to pay for my services.\""),
+                    Font::BIG, Dialog::OK);
     } else
         Message("", _("You hear a voice from high above in the tower, \"Go away! I can't help you!\""),
-                        Font::BIG, Dialog::OK);
+                Font::BIG, Dialog::OK);
 
 }
 
@@ -3159,8 +3164,8 @@ void ActionToSirens(Heroes &hero, u32 obj, s32 dst_index)
     {
         PlaySoundVisited;
         Message(MP2::StringObject(obj),
-                        _("As the sirens sing their eerie song, your small, determined army manages to overcome the urge to dive headlong into the sea."),
-                        Font::BIG, Dialog::OK);
+                _("As the sirens sing their eerie song, your small, determined army manages to overcome the urge to dive headlong into the sea."),
+                Font::BIG, Dialog::OK);
     } else
     {
         u32 exp = hero.GetArmy().ActionToSirens();
@@ -3184,8 +3189,8 @@ void ActionToJail(Heroes &hero, u32 obj, s32 dst_index)
         Maps::Tiles &tile = world.GetTiles(dst_index);
         PlaySoundSuccess;
         Message(MP2::StringObject(obj),
-                        _("In a dazzling display of daring, you break into the local jail and free the hero imprisoned there, who, in return, pledges loyalty to your cause."),
-                        Font::BIG, Dialog::OK);
+                _("In a dazzling display of daring, you break into the local jail and free the hero imprisoned there, who, in return, pledges loyalty to your cause."),
+                Font::BIG, Dialog::OK);
 
         AnimationRemoveObject(tile);
         tile.RemoveObjectSprite();
@@ -3212,8 +3217,8 @@ void ActionToJail(Heroes &hero, u32 obj, s32 dst_index)
 void ActionToHutMagi(Heroes &hero, u32 obj, s32 dst_index)
 {
     Message(MP2::StringObject(obj),
-                    _("You enter a rickety hut and talk to the magician who lives there. He tells you of places near and far which may aid you in your journeys."),
-                    Font::BIG, Dialog::OK);
+            _("You enter a rickety hut and talk to the magician who lives there. He tells you of places near and far which may aid you in your journeys."),
+            Font::BIG, Dialog::OK);
 
     if (!hero.isVisited(obj, Visit::GLOBAL))
     {
@@ -3226,7 +3231,7 @@ void ActionToHutMagi(Heroes &hero, u32 obj, s32 dst_index)
 void ActionToEyeMagi(Heroes &hero, u32 obj, s32 dst_index)
 {
     Message(MP2::StringObject(obj), _("This eye seems to be intently studying its surroundings."), Font::BIG,
-                    Dialog::OK);
+            Dialog::OK);
 
 }
 
@@ -3235,63 +3240,61 @@ void ActionToSphinx(Heroes &hero, u32 obj, s32 dst_index)
     Maps::Tiles &tile = world.GetTiles(dst_index);
     MapSphinx *riddle = static_cast<MapSphinx *>(world.GetMapObject(tile.GetObjectUID(obj)));
 
-	if (!riddle || !riddle->valid)
-	{
-		Message(MP2::StringObject(obj),
-			_("You come across a giant Sphinx. The Sphinx remains strangely quiet."), Font::BIG,
-			Dialog::OK);
-		return;
-	}
-	if (Dialog::YES !=
-		Dialog::Message("",
-			_("\"I have a riddle for you,\" the Sphinx says. \"Answer correctly, and you shall be rewarded. Answer incorrectly, and you shall be eaten. Do you accept the challenge?\""),
-			Font::BIG, Dialog::YES | Dialog::NO))
-	{
-		return;
-	}
-	string header(_("The Sphinx asks you the following riddle: %{riddle}. Your answer?"));
-	StringReplace(header, "%{riddle}", riddle->message);
-	string answer;
-	Dialog::InputString(header, answer);
-	if (riddle->AnswerCorrect(answer))
-	{
-		const Funds& res = riddle->resources;
-		const Artifact art = riddle->artifact;
-		const string say = _(
-			"Looking somewhat disappointed, the Sphinx sighs. You've answered my riddle so here's your reward. Now begone.");
-		const u32 count = res.GetValidItemsCount();
+    if (!riddle || !riddle->valid)
+    {
+        Message(MP2::StringObject(obj),
+                _("You come across a giant Sphinx. The Sphinx remains strangely quiet."), Font::BIG,
+                Dialog::OK);
+        return;
+    }
+    if (Dialog::YES !=
+        Dialog::Message("",
+                        _("\"I have a riddle for you,\" the Sphinx says. \"Answer correctly, and you shall be rewarded. Answer incorrectly, and you shall be eaten. Do you accept the challenge?\""),
+                        Font::BIG, Dialog::YES | Dialog::NO))
+    {
+        return;
+    }
+    string header(_("The Sphinx asks you the following riddle: %{riddle}. Your answer?"));
+    StringReplace(header, "%{riddle}", riddle->message);
+    string answer;
+    Dialog::InputString(header, answer);
+    if (riddle->AnswerCorrect(answer))
+    {
+        const Funds &res = riddle->resources;
+        const Artifact art = riddle->artifact;
+        const string say = _(
+                "Looking somewhat disappointed, the Sphinx sighs. You've answered my riddle so here's your reward. Now begone.");
+        const u32 count = res.GetValidItemsCount();
 
-		if (count)
-		{
-			if (1 == count && res.gold && art.isValid())
-				DialogWithArtifactAndGold("", say, art, res.gold);
-			else
-			{
-				Dialog::ResourceInfo("", say, res);
-				if (art.isValid()) Dialog::ArtifactInfo("", say, art);
-			}
-		}
-		else if (art.isValid()) Dialog::ArtifactInfo("", say, art);
+        if (count)
+        {
+            if (1 == count && res.gold && art.isValid())
+                DialogWithArtifactAndGold("", say, art, res.gold);
+            else
+            {
+                Dialog::ResourceInfo("", say, res);
+                if (art.isValid()) Dialog::ArtifactInfo("", say, art);
+            }
+        } else if (art.isValid()) Dialog::ArtifactInfo("", say, art);
 
-		riddle->SetQuiet();
-		hero.SetVisited(dst_index, Visit::GLOBAL);
+        riddle->SetQuiet();
+        hero.SetVisited(dst_index, Visit::GLOBAL);
 
-		if (art.isValid())
-			hero.PickupArtifact(art);
+        if (art.isValid())
+            hero.PickupArtifact(art);
 
-		if (count)
-			hero.GetKingdom().AddFundsResource(res);
-	}
-	else
-	{
-		Message("",
-		        _("\"You guessed incorrectly,\" the Sphinx says, smiling. The Sphinx swipes at you with a paw, knocking you to the ground. Another blow makes the world go black, and you know no more."
-		        ),
-		        Font::BIG, Dialog::OK);
-		Battle::Result res;
-		res.army1 = Battle::RESULT_LOSS;
-		BattleLose(hero, res, true);
-	}
+        if (count)
+            hero.GetKingdom().AddFundsResource(res);
+    } else
+    {
+        Message("",
+                _("\"You guessed incorrectly,\" the Sphinx says, smiling. The Sphinx swipes at you with a paw, knocking you to the ground. Another blow makes the world go black, and you know no more."
+                ),
+                Font::BIG, Dialog::OK);
+        Battle::Result res;
+        res.army1 = Battle::RESULT_LOSS;
+        BattleLose(hero, res, true);
+    }
 }
 
 void ActionToBarrier(Heroes &hero, u32 obj, s32 dst_index)
@@ -3302,8 +3305,8 @@ void ActionToBarrier(Heroes &hero, u32 obj, s32 dst_index)
     if (kingdom.IsVisitTravelersTent(tile.QuantityColor()))
     {
         Message(MP2::StringObject(obj),
-                        _("A magical barrier stands tall before you, blocking your way. Runes on the arch read,\n\"Speak the key and you may pass.\"\nAs you speak the magic word, the glowing barrier dissolves into nothingness."),
-                        Font::BIG, Dialog::OK);
+                _("A magical barrier stands tall before you, blocking your way. Runes on the arch read,\n\"Speak the key and you may pass.\"\nAs you speak the magic word, the glowing barrier dissolves into nothingness."),
+                Font::BIG, Dialog::OK);
 
         AnimationRemoveObject(tile);
         tile.RemoveObjectSprite();
@@ -3311,16 +3314,16 @@ void ActionToBarrier(Heroes &hero, u32 obj, s32 dst_index)
     } else
     {
         Message(MP2::StringObject(obj),
-                        _("A magical barrier stands tall before you, blocking your way. Runes on the arch read,\n\"Speak the key and you may pass.\"\nYou speak, and nothing happens."),
-                        Font::BIG, Dialog::OK);
+                _("A magical barrier stands tall before you, blocking your way. Runes on the arch read,\n\"Speak the key and you may pass.\"\nYou speak, and nothing happens."),
+                Font::BIG, Dialog::OK);
     }
 }
 
 void ActionToTravellersTent(Heroes &hero, u32 obj, s32 dst_index)
 {
     Message(MP2::StringObject(obj),
-                    _("You enter the tent and see an old woman gazing into a magic gem. She looks up and says,\n\"In my travels, I have learned much in the way of arcane magic. A great oracle taught me his skill. I have the answer you seek.\""),
-                    Font::BIG, Dialog::OK);
+            _("You enter the tent and see an old woman gazing into a magic gem. She looks up and says,\n\"In my travels, I have learned much in the way of arcane magic. A great oracle taught me his skill. I have the answer you seek.\""),
+            Font::BIG, Dialog::OK);
 
     const Maps::Tiles &tile = world.GetTiles(dst_index);
     Kingdom &kingdom = hero.GetKingdom();

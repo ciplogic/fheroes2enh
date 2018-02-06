@@ -122,7 +122,7 @@ enum KeySym
     KEY_x = SDLK_x,
     KEY_y = SDLK_y,
     KEY_z = SDLK_z,
-    
+
     KEY_PRINT = SDLK_PRINT,
     KEY_KP0 = SDLK_KP0,
     KEY_KP1 = SDLK_KP1,
@@ -305,7 +305,6 @@ private:
     void HandleKeyboardEvent(SDL_KeyboardEvent &);
 
     static int GlobalFilterEvents(const SDL_Event *);
-
 
 
     enum flag_t

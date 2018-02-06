@@ -23,7 +23,9 @@
 #pragma once
 
 #ifndef WIN32
+
 #include <sys/time.h>
+
 #endif // !WINDOWS
 
 #include "SDL_thread.h"

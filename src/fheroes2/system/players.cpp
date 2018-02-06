@@ -213,25 +213,26 @@ StreamBase &operator>>(StreamBase &msg, Focus &focus)
 
     return msg;
 }
+
 ByteVectorReader &operator>>(ByteVectorReader &msg, Focus &focus)
 {
-	s32 index;
-	msg >> focus.first >> index;
+    s32 index;
+    msg >> focus.first >> index;
 
-	switch (focus.first)
-	{
-	case FOCUS_HEROES:
-		focus.second = world.GetHeroes(Maps::GetPoint(index));
-		break;
-	case FOCUS_CASTLE:
-		focus.second = world.GetCastle(Maps::GetPoint(index));
-		break;
-	default:
-		focus.second = nullptr;
-		break;
-	}
+    switch (focus.first)
+    {
+        case FOCUS_HEROES:
+            focus.second = world.GetHeroes(Maps::GetPoint(index));
+            break;
+        case FOCUS_CASTLE:
+            focus.second = world.GetCastle(Maps::GetPoint(index));
+            break;
+        default:
+            focus.second = nullptr;
+            break;
+    }
 
-	return msg;
+    return msg;
 }
 
 StreamBase &operator<<(StreamBase &msg, const Player &player)
@@ -264,24 +265,24 @@ StreamBase &operator>>(StreamBase &msg, Player &player)
                player.focus;
 }
 
-ByteVectorReader& operator>>(ByteVectorReader&msg, Player &player)
+ByteVectorReader &operator>>(ByteVectorReader &msg, Player &player)
 {
-	BitModes &modes = player._bitModes;
+    BitModes &modes = player._bitModes;
 
-	return msg >>
-		modes >>
-		player.id >>
-		player.control >>
-		player.color >>
-		player.race >>
-		player.friends >>
-		player.name >>
-		player.focus;
+    return msg >>
+               modes >>
+               player.id >>
+               player.control >>
+               player.color >>
+               player.race >>
+               player.friends >>
+               player.name >>
+               player.focus;
 }
 
 Players::Players() : current_color(0)
 {
-	_items.reserve(KINGDOMMAX);
+    _items.reserve(KINGDOMMAX);
 }
 
 Players::~Players()
@@ -291,10 +292,10 @@ Players::~Players()
 
 void Players::clear()
 {
-    for (auto& it : _items)
+    for (auto &it : _items)
         delete it;
 
-	_items.clear();
+    _items.clear();
 
     for (u32 ii = 0; ii < KINGDOMMAX + 1; ++ii)
         _players[ii] = nullptr;
@@ -311,7 +312,7 @@ void Players::Init(int colors)
 
     for (int vcolor : vcolors)
     {
-		_items.push_back(new Player(vcolor));
+        _items.push_back(new Player(vcolor));
         _players[Color::GetIndex(vcolor)] = _items.back();
     }
 }
@@ -325,11 +326,11 @@ void Players::Init(const Maps::FileInfo &fi)
     clear();
     const Colors vcolors(fi.kingdom_colors);
 
-    Player* first = nullptr;
+    Player *first = nullptr;
 
     for (int vcolor : vcolors)
     {
-        Player* player = new Player(vcolor);
+        Player *player = new Player(vcolor);
         player->SetRace(fi.KingdomRace(vcolor));
         player->SetControl(CONTROL_AI);
         player->SetFriends(vcolor | fi.unions[Color::GetIndex(vcolor)]);
@@ -342,7 +343,7 @@ void Players::Init(const Maps::FileInfo &fi)
         if (!first && (player->GetControl() & CONTROL_HUMAN))
             first = player;
 
-		_items.push_back(player);
+        _items.push_back(player);
         _players[Color::GetIndex(vcolor)] = _items.back();
     }
 
@@ -541,24 +542,25 @@ StreamBase &operator>>(StreamBase &msg, Players &players)
 
     return msg;
 }
+
 ByteVectorReader &operator>>(ByteVectorReader &msg, Players &players)
 {
-	int colors, current;
-	msg >> colors >> current;
+    int colors, current;
+    msg >> colors >> current;
 
-	players.clear();
-	players.current_color = current;
-	const Colors vcolors(colors);
+    players.clear();
+    players.current_color = current;
+    const Colors vcolors(colors);
 
-	for (u32 ii = 0; ii < vcolors.size(); ++ii)
-	{
-		Player *player = new Player();
-		msg >> *player;
-		_players[Color::GetIndex(player->GetColor())] = player;
-		players._items.push_back(player);
-	}
+    for (u32 ii = 0; ii < vcolors.size(); ++ii)
+    {
+        Player *player = new Player();
+        msg >> *player;
+        _players[Color::GetIndex(player->GetColor())] = player;
+        players._items.push_back(player);
+    }
 
-	return msg;
+    return msg;
 }
 
 bool Interface::PlayerInfo::operator==(const Player *p) const
@@ -607,7 +609,7 @@ void Interface::PlayersInfo::UpdateInfo(Players &players, const Point &pt1, cons
 
 Player *Interface::PlayersInfo::GetFromOpponentClick(const Point &pt)
 {
-    for (auto& it : *this)
+    for (auto &it : *this)
         if (it.rect1 & pt) return it.player;
 
     return nullptr;
@@ -615,7 +617,7 @@ Player *Interface::PlayersInfo::GetFromOpponentClick(const Point &pt)
 
 Player *Interface::PlayersInfo::GetFromOpponentNameClick(const Point &pt)
 {
-    for (auto& it : *this)
+    for (auto &it : *this)
         if (Rect(it.rect1.x, it.rect1.y + it.rect1.h, it.rect1.w, 10) & pt) return it.player;
 
     return nullptr;
@@ -623,7 +625,7 @@ Player *Interface::PlayersInfo::GetFromOpponentNameClick(const Point &pt)
 
 Player *Interface::PlayersInfo::GetFromOpponentChangeClick(const Point &pt)
 {
-    for (auto& it : *this)
+    for (auto &it : *this)
         if (it.rect3 & pt) return it.player;
 
     return nullptr;
@@ -631,7 +633,7 @@ Player *Interface::PlayersInfo::GetFromOpponentChangeClick(const Point &pt)
 
 Player *Interface::PlayersInfo::GetFromClassClick(const Point &pt)
 {
-    for (auto& it : *this)
+    for (auto &it : *this)
         if (it.rect2 & pt) return it.player;
 
     return nullptr;

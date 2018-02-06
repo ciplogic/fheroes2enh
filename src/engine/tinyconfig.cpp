@@ -25,6 +25,7 @@
 #include "tools.h"
 #include "serialize.h"
 #include "tinyconfig.h"
+
 using namespace std;
 
 bool SpaceCompare(char a, char b)
@@ -41,8 +42,9 @@ string ModifyKey(const string &str)
     keyString.resize(it - keyString.begin());
 
     // change space
-    for(auto &c:keyString){
-        if(isspace(c))
+    for (auto &c:keyString)
+    {
+        if (isspace(c))
             c = ' ';
     }
 
@@ -86,7 +88,7 @@ bool TinyConfig::Save(const string &cfile) const
     StreamFile sf;
     if (!sf.open(cfile, "wb")) return false;
 
-    for (const auto& it : *this)
+    for (const auto &it : *this)
         sf << it.first << " " << separator << " " << it.second << '\n';
 
     return true;

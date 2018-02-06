@@ -25,33 +25,33 @@
 
 bool ZStreamFile::read(const string &fn, size_t offset)
 {
-	StreamFile sf;
-	sf.setbigendian(true);
+    StreamFile sf;
+    sf.setbigendian(true);
 
-	if (sf.open(fn, "rb"))
-	{
-		if (offset) sf.seek(offset);
+    if (sf.open(fn, "rb"))
+    {
+        if (offset) sf.seek(offset);
 
-		const u32 size0 = sf.get32(); // raw size
-		vector<u8> raw = sf.getRaw(size0);
-		putRaw((const char*)&raw[0], raw.size());
-		seek(0);
-		return !fail();
-	}
-	return false;
+        const u32 size0 = sf.get32(); // raw size
+        vector<u8> raw = sf.getRaw(size0);
+        putRaw((const char *) &raw[0], raw.size());
+        seek(0);
+        return !fail();
+    }
+    return false;
 }
 
 bool ZStreamFile::write(const string &fn, bool append) const
 {
-	StreamFile sf;
-	sf.setbigendian(true);
+    StreamFile sf;
+    sf.setbigendian(true);
 
-	if (sf.open(fn, append ? "ab" : "wb"))
-	{
-		sf.put32(size());
-		sf.putRaw((const char*)data(), size());
-		return !sf.fail();
-	}
-	return false;
+    if (sf.open(fn, append ? "ab" : "wb"))
+    {
+        sf.put32(size());
+        sf.putRaw((const char *) data(), size());
+        return !sf.fail();
+    }
+    return false;
 }
 

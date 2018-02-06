@@ -81,9 +81,8 @@ protected:
 class ButtonGroups
 {
 public:
-    ButtonGroups(const Rect, u32);
+    ButtonGroups(Rect, u32);
 
-    ~ButtonGroups();
 
     void Draw();
 
@@ -95,7 +94,7 @@ public:
 
 protected:
     std::unique_ptr<Button> button1;
-	std::unique_ptr<Button> button2;
+    std::unique_ptr<Button> button2;
     int result1;
     int result2;
     int buttons;

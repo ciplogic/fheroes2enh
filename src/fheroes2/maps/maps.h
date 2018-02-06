@@ -69,37 +69,37 @@ namespace Maps
 
     s32 GetDirectionIndex(s32, int direct);
 
-    inline bool isValidDirection(s32 from, int vector, Size world) 
-	{
-		switch (vector)
-		{
-		case Direction::TOP:
-			return (from >= world.w);
-		case Direction::RIGHT:
-			return ((from % world.w) < (world.w - 1));
-		case Direction::BOTTOM:
-			return (from < world.w * (world.h - 1));
-		case Direction::LEFT:
-			return (from % world.w);
+    inline bool isValidDirection(s32 from, int vector, Size world)
+    {
+        switch (vector)
+        {
+            case Direction::TOP:
+                return (from >= world.w);
+            case Direction::RIGHT:
+                return ((from % world.w) < (world.w - 1));
+            case Direction::BOTTOM:
+                return (from < world.w * (world.h - 1));
+            case Direction::LEFT:
+                return (from % world.w);
 
-		case Direction::TOP_RIGHT:
-			return (from >= world.w) && ((from % world.w) < (world.w - 1));
+            case Direction::TOP_RIGHT:
+                return (from >= world.w) && ((from % world.w) < (world.w - 1));
 
-		case Direction::BOTTOM_RIGHT:
-			return (from < world.w * (world.h - 1)) && ((from % world.w) < (world.w - 1));
+            case Direction::BOTTOM_RIGHT:
+                return (from < world.w * (world.h - 1)) && ((from % world.w) < (world.w - 1));
 
-		case Direction::BOTTOM_LEFT:
-			return (from < world.w * (world.h - 1)) && (from % world.w);
+            case Direction::BOTTOM_LEFT:
+                return (from < world.w * (world.h - 1)) && (from % world.w);
 
-		case Direction::TOP_LEFT:
-			return (from >= world.w) && (from % world.w);
+            case Direction::TOP_LEFT:
+                return (from >= world.w) && (from % world.w);
 
-		default:
-			break;
-		}
+            default:
+                break;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
 
     bool isValidAbsIndex(s32);
@@ -116,12 +116,12 @@ namespace Maps
 
     Indexes GetAllIndexes();
 
-    void GetAroundIndexes(s32, Indexes&);
+    void GetAroundIndexes(s32, Indexes &);
 
-    void GetAroundIndexes(s32, int dist, bool, Indexes&); // sorting distance
+    void GetAroundIndexes(s32, int dist, bool, Indexes &); // sorting distance
     Indexes GetDistanceIndexes(s32 center, int dist);
 
-    void ScanAroundObject(s32, int obj, MapsIndexes&);
+    void ScanAroundObject(s32, int obj, MapsIndexes &);
 
     Indexes ScanAroundObjects(s32, const u8 *objs);
 

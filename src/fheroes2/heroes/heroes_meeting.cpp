@@ -53,7 +53,7 @@ void Heroes::MeetingDialog(Heroes &heroes2)
     SpriteBack background(Rect(cur_pt, backSprite.w(), backSprite.h()));
     Point dst_pt(cur_pt);
 
-	Rect src_rt(0, 0, 640, 480);
+    Rect src_rt(0, 0, 640, 480);
 
     // background
     dst_pt.x = cur_pt.x;
@@ -347,15 +347,15 @@ void Heroes::ScholarAction(Heroes &hero1, Heroes &hero2)
     if (!learn.empty())
     {
         auto
-        res = remove_if(learn.begin(), learn.end(), bind1st(HeroesHaveSpell(), teacher));
+                res = remove_if(learn.begin(), learn.end(), bind1st(HeroesHaveSpell(), teacher));
         learn.resize(distance(learn.begin(), res));
     }
 
     if (!learn.empty())
     {
         auto
-        res = remove_if(learn.begin(), learn.end(),
-                                     not1(bind1st(HeroesCanTeachSpell(), teacher)));
+                res = remove_if(learn.begin(), learn.end(),
+                                not1(bind1st(HeroesCanTeachSpell(), teacher)));
         learn.resize(distance(learn.begin(), res));
     }
 
@@ -363,15 +363,15 @@ void Heroes::ScholarAction(Heroes &hero1, Heroes &hero2)
     if (!teach.empty())
     {
         auto
-        res = remove_if(teach.begin(), teach.end(), bind1st(HeroesHaveSpell(), learner));
+                res = remove_if(teach.begin(), teach.end(), bind1st(HeroesHaveSpell(), learner));
         teach.resize(distance(teach.begin(), res));
     }
 
     if (!teach.empty())
     {
         auto
-        res = remove_if(teach.begin(), teach.end(),
-                                     not1(bind1st(HeroesCanTeachSpell(), teacher)));
+                res = remove_if(teach.begin(), teach.end(),
+                                not1(bind1st(HeroesCanTeachSpell(), teacher)));
         teach.resize(distance(teach.begin(), res));
     }
 

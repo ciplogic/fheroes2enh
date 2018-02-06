@@ -46,7 +46,7 @@ Interface::Basic::Basic() : gameArea(*this), radar(*this),
 
     scrollLeft = Rect(0, 0, scroll_width, display.h());
     scrollRight = Rect(display.w() - scroll_width, 0, scroll_width, display.h());
-    scrollTop = Rect(0, 0,display.w() - radar.GetArea().w, scroll_width);
+    scrollTop = Rect(0, 0, display.w() - radar.GetArea().w, scroll_width);
     scrollBottom = Rect(0, display.h() - scroll_width, display.w(), scroll_width);
 
     system_info.Set(Font::YELLOW_SMALL);
@@ -87,7 +87,7 @@ void Interface::Basic::SetHideInterface(bool f)
     Settings &conf = Settings::Get().Get();
     const Display &display = Display::Get();
     const u32 px = display.w() - BORDERWIDTH - RADARWIDTH;
-    const u32 scroll_width =  BORDERWIDTH;
+    const u32 scroll_width = BORDERWIDTH;
 
     conf.SetHideInterface(f);
 
@@ -158,7 +158,7 @@ const Rect &Interface::Basic::GetScrollBottom() const
 
 bool Interface::Basic::NeedRedraw() const
 {
-    return redraw!=0;
+    return redraw != 0;
 }
 
 void Interface::Basic::SetRedraw(int f)

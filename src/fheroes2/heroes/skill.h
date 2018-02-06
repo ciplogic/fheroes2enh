@@ -121,7 +121,8 @@ namespace Skill
     };
 
     StreamBase &operator>>(StreamBase &, Secondary &);
-	ByteVectorReader &operator>>(ByteVectorReader &, Secondary &);
+
+    ByteVectorReader &operator>>(ByteVectorReader &, Secondary &);
 
     class SecSkills : protected vector<Secondary>
     {
@@ -153,13 +154,15 @@ namespace Skill
         friend StreamBase &operator<<(StreamBase &, const SecSkills &);
 
         friend StreamBase &operator>>(StreamBase &, SecSkills &);
-		friend ByteVectorReader &operator>>(ByteVectorReader &, SecSkills &);
+
+        friend ByteVectorReader &operator>>(ByteVectorReader &, SecSkills &);
     };
 
     StreamBase &operator<<(StreamBase &, const SecSkills &);
 
     StreamBase &operator>>(StreamBase &, SecSkills &);
-	ByteVectorReader &operator>>(ByteVectorReader &, SecSkills &);
+
+    ByteVectorReader &operator>>(ByteVectorReader &, SecSkills &);
 
     class Primary
     {
@@ -202,7 +205,7 @@ namespace Skill
 
         static int GetInitialSpell(int race);
 
-		void ReadFrom(ByteVectorReader & msg);
+        void ReadFrom(ByteVectorReader &msg);
 
     protected:
         void LoadDefaults(int type, int race);
@@ -210,7 +213,8 @@ namespace Skill
         friend StreamBase &operator<<(StreamBase &, const Primary &);
 
         friend StreamBase &operator>>(StreamBase &, Primary &);
-		friend ByteVectorReader &operator>>(ByteVectorReader &, Primary &);
+
+        friend ByteVectorReader &operator>>(ByteVectorReader &, Primary &);
 
         int attack;
         int defense;
@@ -221,7 +225,8 @@ namespace Skill
     StreamBase &operator<<(StreamBase &, const Primary &);
 
     StreamBase &operator>>(StreamBase &, Primary &);
-	ByteVectorReader &operator>>(ByteVectorReader &, Primary &);
+
+    ByteVectorReader &operator>>(ByteVectorReader &, Primary &);
 }
 
 #include "interface_itemsbar.h"

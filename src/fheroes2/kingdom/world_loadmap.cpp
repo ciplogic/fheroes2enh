@@ -57,8 +57,8 @@ bool World::LoadMapMP2(const string &filename)
     {
         Error::Except(__FUNCTION__, "load maps");
     }
-	const auto vectorBytes = fileReader.getRaw(fileReader.size());
-	ByteVectorReader fs(vectorBytes);
+    const auto vectorBytes = fileReader.getRaw(fileReader.size());
+    ByteVectorReader fs(vectorBytes);
 
     MapsIndexes vec_object; // index maps for OBJ_CASTLE, OBJ_HEROES, OBJ_SIGN, OBJ_BOTTLE, OBJ_EVENT
     vec_object.reserve(100);
@@ -98,7 +98,7 @@ bool World::LoadMapMP2(const string &filename)
     }
 
     // height
-    switch ((mapsize_t)fs.getLE32())
+    switch ((mapsize_t) fs.getLE32())
     {
         case mapsize_t::SMALL:
             Size::h = static_cast<u16>(mapsize_t::SMALL);
@@ -333,7 +333,7 @@ bool World::LoadMapMP2(const string &filename)
         //	std::setw(2) << std::setfill('0') << std::hex << h);
 
         if (0 == h && 0 == l) break;
-	    countblock = 256 * h + l - 1;
+        countblock = 256 * h + l - 1;
     }
 
     // castle or heroes or (events, rumors, etc)
@@ -342,8 +342,8 @@ bool World::LoadMapMP2(const string &filename)
         s32 findobject = -1;
 
         // read block
-	    const size_t sizeblock = fs.getLE16();
-	    auto pblock = fs.getRaw(sizeblock);
+        const size_t sizeblock = fs.getLE16();
+        auto pblock = fs.getRaw(sizeblock);
 
         for (auto it_index = vec_object.begin(); it_index != vec_object.end() && findobject < 0; ++it_index)
         {
@@ -369,17 +369,17 @@ bool World::LoadMapMP2(const string &filename)
                     // add castle
                     if (SIZEOFMP2CASTLE != pblock.size())
                     {
-                        
+
                     } else
                     {
                         Castle *castle = GetCastle(Maps::GetPoint(findobject));
                         if (castle)
                         {
-							ByteVectorReader bvr(pblock);
-							castle->LoadFromMP2(bvr);
+                            ByteVectorReader bvr(pblock);
+                            castle->LoadFromMP2(bvr);
                             Maps::MinimizeAreaForCastle(castle->GetCenter());
                             map_captureobj.SetColor(tile.GetIndex(), castle->GetColor());
-                        } 
+                        }
                     }
                     break;
                 case MP2::OBJ_RNDTOWN:
@@ -392,7 +392,7 @@ bool World::LoadMapMP2(const string &filename)
                         Castle *castle = GetCastle(Maps::GetPoint(findobject));
                         if (castle)
                         {
-							ByteVectorReader bvr(pblock);
+                            ByteVectorReader bvr(pblock);
                             castle->LoadFromMP2(bvr);
                             Maps::UpdateRNDSpriteForCastle(castle->GetCenter(), castle->GetRace(), castle->isCastle());
                             Maps::MinimizeAreaForCastle(castle->GetCenter());
@@ -434,7 +434,7 @@ bool World::LoadMapMP2(const string &filename)
 
                         if (hero)
                         {
-							ByteVectorReader bvr(pblock);
+                            ByteVectorReader bvr(pblock);
                             hero->LoadFromMP2(findobject, Color::NONE, hero->GetRace(), bvr);
                             hero->SetModes(Heroes::JAIL);
                         }
@@ -465,12 +465,12 @@ bool World::LoadMapMP2(const string &filename)
                             if (!hero || !hero->isFreeman())
                                 hero = vec_heroes.GetFreeman(colorRace.second);
 
-							if (hero)
-							{
-								ByteVectorReader bvr(pblock);
-								hero->LoadFromMP2(findobject, colorRace.first, colorRace.second, bvr);
-							}
-                        } 
+                            if (hero)
+                            {
+                                ByteVectorReader bvr(pblock);
+                                hero->LoadFromMP2(findobject, colorRace.first, colorRace.second, bvr);
+                            }
+                        }
                     }
                     break;
                 case MP2::OBJ_SIGN:
@@ -479,7 +479,7 @@ bool World::LoadMapMP2(const string &filename)
                     if (SIZEOFMP2SIGN - 1 < pblock.size() && 0x01 == pblock[0])
                     {
                         auto *obj = new MapSign();
-						ByteVectorReader bvr(pblock);
+                        ByteVectorReader bvr(pblock);
                         obj->LoadFromMP2(findobject, bvr);
                         map_objects.add(obj);
                     }
@@ -489,7 +489,7 @@ bool World::LoadMapMP2(const string &filename)
                     if (SIZEOFMP2EVENT - 1 < pblock.size() && 0x01 == pblock[0])
                     {
                         auto *obj = new MapEvent();
-						ByteVectorReader bvr(pblock);
+                        ByteVectorReader bvr(pblock);
                         obj->LoadFromMP2(findobject, bvr);
                         map_objects.add(obj);
                     }
@@ -499,7 +499,7 @@ bool World::LoadMapMP2(const string &filename)
                     if (SIZEOFMP2RIDDLE - 1 < pblock.size() && 0x00 == pblock[0])
                     {
                         auto *obj = new MapSphinx();
-						ByteVectorReader bvr(pblock);
+                        ByteVectorReader bvr(pblock);
                         obj->LoadFromMP2(findobject, bvr);
                         map_objects.add(obj);
                     }
@@ -515,7 +515,7 @@ bool World::LoadMapMP2(const string &filename)
             if (SIZEOFMP2EVENT - 1 < pblock.size() && 1 == pblock[42])
             {
                 vec_eventsday.emplace_back();
-				ByteVectorReader bvr(pblock);
+                ByteVectorReader bvr(pblock);
                 vec_eventsday.back().LoadFromMP2(bvr);
             }
                 // add rumors
@@ -523,9 +523,9 @@ bool World::LoadMapMP2(const string &filename)
             {
                 if (pblock[8])
                 {
-					std::vector<u8> subBlock(pblock.begin() + 8, pblock.end());
-					ByteVectorReader bvr(subBlock);
-					std::string valueRumor = bvr.toString(subBlock.size());
+                    std::vector<u8> subBlock(pblock.begin() + 8, pblock.end());
+                    ByteVectorReader bvr(subBlock);
+                    std::string valueRumor = bvr.toString(subBlock.size());
                     vec_rumors.push_back(Game::GetEncodeString(valueRumor));
                 }
             }
@@ -666,7 +666,7 @@ void World::PostLoad()
 
     // update tile passable
     for_each(vec_tiles.begin(), vec_tiles.end(),
-                  mem_fun_ref(&Maps::Tiles::UpdatePassable));
+             mem_fun_ref(&Maps::Tiles::UpdatePassable));
 
     // play with hero
     vec_kingdoms.ApplyPlayWithStartingHero();
@@ -695,8 +695,8 @@ void World::PostLoad()
 
     // set ultimate
     auto it = find_if(vec_tiles.begin(), vec_tiles.end(),
-                                          bind2nd(mem_fun_ref(&Maps::Tiles::isObject),
-                                                       static_cast<int>(MP2::OBJ_RNDULTIMATEARTIFACT)));
+                      bind2nd(mem_fun_ref(&Maps::Tiles::isObject),
+                              static_cast<int>(MP2::OBJ_RNDULTIMATEARTIFACT)));
     Point ultimate_pos;
 
     // not found
@@ -775,6 +775,7 @@ void World::PostLoad()
     vec_rumors.emplace_back(_("A Black Dragon will take out a Titan any day of the week."));
     vec_rumors.emplace_back(_("He told her: Yada yada yada...  and then she said: Blah, blah, blah..."));
 
-    vec_rumors.emplace_back(_("You can load the newest version of game from a site:\n http://sf.net/projects/fheroes2"));
+    vec_rumors.emplace_back(
+            _("You can load the newest version of game from a site:\n http://sf.net/projects/fheroes2"));
     vec_rumors.emplace_back(_("This game is now in beta development version. ;)"));
 }

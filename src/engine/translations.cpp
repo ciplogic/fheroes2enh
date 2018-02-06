@@ -50,7 +50,7 @@ u32 crc32b(const char *msg)
 
         for (int bit = 0; bit < 8; ++bit)
         {
-            size_t mask = 0-(crc & 1);
+            size_t mask = 0 - (crc & 1);
             crc = (crc >> 1) ^ (0xEDB88320 & mask);
         }
 
@@ -110,33 +110,33 @@ struct mofile
 
         if (!sf.open(file, "rb"))
             return false;
-	    u32 size = sf.size();
-	    u32 id = 0;
-	    sf >> id;
+        u32 size = sf.size();
+        u32 id = 0;
+        sf >> id;
 
-	    if (0x950412de != id)
-	    {
-		    ERROR("incorrect mo id: " << GetHexString(id));
-		    return false;
-	    }
-	    u16 major, minor;
-	    sf >> major >> minor;
+        if (0x950412de != id)
+        {
+            ERROR("incorrect mo id: " << GetHexString(id));
+            return false;
+        }
+        u16 major, minor;
+        sf >> major >> minor;
 
-	    if (0 != major)
-	    {
-		    ERROR("incorrect major version: " << GetHexString(major, 4));
-		    return false;
-	    } else
-	    {
-		    sf >> count >> offset_strings1 >> offset_strings2 >> hash_size >> hash_offset;
+        if (0 != major)
+        {
+            ERROR("incorrect major version: " << GetHexString(major, 4));
+            return false;
+        } else
+        {
+            sf >> count >> offset_strings1 >> offset_strings2 >> hash_size >> hash_offset;
 
 
-		    sf.seek(0);
-		    buf = sf.toStreamBuf(size);
-		    sf.close();
-	    }
+            sf.seek(0);
+            buf = sf.toStreamBuf(size);
+            sf.close();
+        }
 
-	    // parse encoding and plural forms
+        // parse encoding and plural forms
         if (count)
         {
             buf.seek(offset_strings2);

@@ -565,7 +565,7 @@ bool PrepareMapsFileInfoList(MapsFileInfoList &lists, bool multi)
     if (!multi)
     {
         auto it = remove_if(lists.begin(), lists.end(),
-                                                       mem_fun_ref(&Maps::FileInfo::isMultiPlayerMap));
+                            mem_fun_ref(&Maps::FileInfo::isMultiPlayerMap));
         if (it != lists.begin()) lists.resize(distance(lists.begin(), it));
     }
 
@@ -574,9 +574,9 @@ bool PrepareMapsFileInfoList(MapsFileInfoList &lists, bool multi)
     {
 
         auto it = remove_if(lists.begin(), lists.end(),
-                                                       not1(bind2nd(
-                                                               mem_fun_ref(&Maps::FileInfo::isAllowCountPlayers),
-                                                               conf.PreferablyCountPlayers())));
+                            not1(bind2nd(
+                                    mem_fun_ref(&Maps::FileInfo::isAllowCountPlayers),
+                                    conf.PreferablyCountPlayers())));
         if (it != lists.begin()) lists.resize(distance(lists.begin(), it));
     }
 
@@ -614,19 +614,20 @@ StreamBase &Maps::operator>>(StreamBase &msg, FileInfo &fi)
 
     return msg;
 }
+
 ByteVectorReader &Maps::operator>>(ByteVectorReader &msg, FileInfo &fi)
 {
-	u8 kingdommax;
+    u8 kingdommax;
 
-	msg >> fi.file >> fi.name >> fi.description >>
-		fi.size_w >> fi.size_h >> fi.difficulty >> kingdommax;
+    msg >> fi.file >> fi.name >> fi.description >>
+        fi.size_w >> fi.size_h >> fi.difficulty >> kingdommax;
 
-	for (u32 ii = 0; ii < kingdommax; ++ii)
-		msg >> fi.races[ii] >> fi.unions[ii];
+    for (u32 ii = 0; ii < kingdommax; ++ii)
+        msg >> fi.races[ii] >> fi.unions[ii];
 
-	msg >> fi.kingdom_colors >> fi.allow_human_colors >> fi.allow_comp_colors >>
-		fi.rnd_races >> fi.conditions_wins >> fi.comp_also_wins >> fi.allow_normal_victory >> fi.wins1 >> fi.wins2 >>
-		fi.conditions_loss >> fi.loss1 >> fi.loss2 >> fi.localtime >> fi.with_heroes;
+    msg >> fi.kingdom_colors >> fi.allow_human_colors >> fi.allow_comp_colors >>
+        fi.rnd_races >> fi.conditions_wins >> fi.comp_also_wins >> fi.allow_normal_victory >> fi.wins1 >> fi.wins2 >>
+        fi.conditions_loss >> fi.loss1 >> fi.loss2 >> fi.localtime >> fi.with_heroes;
 
-	return msg;
+    return msg;
 }

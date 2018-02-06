@@ -29,10 +29,10 @@ namespace Interface
 {
     class Basic;
 
-    class ControlPanel 
+    class ControlPanel
     {
     public:
-        ControlPanel(Basic &);
+        explicit ControlPanel(Basic &);
 
         void SetPos(s32, s32);
 

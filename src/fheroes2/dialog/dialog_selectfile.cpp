@@ -134,11 +134,12 @@ size_t GetInsertPosition(const string &name, s32 cx, s32 posx)
     if (name.empty())
         return 0;
     s32 tw = Text::width(name, Font::SMALL);
-    if (cx <= posx) { return 0; }
-     if (cx >= posx + tw)
+    if (cx <= posx)
+    { return 0; }
+    if (cx >= posx + tw)
         return name.size();
-	float cw = tw / name.size();
-	return static_cast<size_t>((cx - posx) / cw);
+    float cw = tw / name.size();
+    return static_cast<size_t>((cx - posx) / cw);
 }
 
 
@@ -146,7 +147,7 @@ bool FileSortingByTime(const Maps::FileInfo &fi1, const Maps::FileInfo &fi2)
 {
     long timeF1 = FileUtils::GetFileTime(fi1.file);
     long timeF2 = FileUtils::GetFileTime(fi2.file);
-    return timeF1>timeF2;
+    return timeF1 > timeF2;
 }
 
 MapsFileInfoList GetSortedMapsFileInfoList()
@@ -198,7 +199,7 @@ string SelectFileListSimple(const string &header, const string &lastfile, bool e
 
     const Sprite &sprite = AGG::GetICN(ICN::REQBKG, 0);
     Size panel(sprite.w(), sprite.h());
-    
+
 
     SpriteBack back(Rect((display.w() - panel.w) / 2, (display.h() - panel.h) / 2, panel.w, panel.h));
 
@@ -235,7 +236,7 @@ string SelectFileListSimple(const string &header, const string &lastfile, bool e
             listbox.Unselect();
     }
 
-    int btnTop = rt.y +  315;
+    int btnTop = rt.y + 315;
     Button buttonOk(rt.x + 134, btnTop, ICN::REQUEST, 1, 2);
     Button buttonCancel(rt.x + 244, btnTop, ICN::REQUEST, 3, 4);
 
@@ -251,11 +252,10 @@ string SelectFileListSimple(const string &header, const string &lastfile, bool e
     listbox.Redraw();
     RedrawExtraInfo(rt, header, filename, enter_field);
 
-    std::function<void()> actionClear = [&]()
-    {
-        Rect sourceRect(buttonOk.x + 61, btnTop, 40, buttonOk.h+4);
+    std::function<void()> actionClear = [&]() {
+        Rect sourceRect(buttonOk.x + 61, btnTop, 40, buttonOk.h + 4);
         Point destPoint(rt.x + 31, btnTop);
-        for(int step = 0; step<8; step++)
+        for (int step = 0; step < 8; step++)
         {
             display.Blit(sourceRect, destPoint, display);
             destPoint.x += sourceRect.w;

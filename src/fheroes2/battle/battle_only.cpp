@@ -56,7 +56,8 @@ void Battle::ControlInfo::Redraw() const
 
 Battle::Only::Only() : hero1(nullptr), hero2(nullptr), player1(Color::BLUE), player2(Color::NONE),
                        army1(nullptr), army2(nullptr), moraleIndicator1(nullptr), moraleIndicator2(nullptr),
-                       luckIndicator1(nullptr), luckIndicator2(nullptr), primskill_bar1(nullptr), primskill_bar2(nullptr),
+                       luckIndicator1(nullptr), luckIndicator2(nullptr), primskill_bar1(nullptr),
+                       primskill_bar2(nullptr),
                        secskill_bar1(nullptr), secskill_bar2(nullptr), selectArmy1(nullptr), selectArmy2(nullptr),
                        selectArtifacts1(nullptr), selectArtifacts2(nullptr), cinfo2(nullptr),
                        rt1(36, 267, 43, 53), sfb1(rt1, false), rt2(23, 347, 34, 34), sfb2(rt2, false)
@@ -86,24 +87,24 @@ StreamBase &operator<<(StreamBase &msg, const Battle::Only &b)
                b.player1 << b.player2;
 }
 
-ByteVectorReader& operator>>(ByteVectorReader&msg, Battle::Only &b)
+ByteVectorReader &operator>>(ByteVectorReader &msg, Battle::Only &b)
 {
-	int id = 0;
+    int id = 0;
 
-	msg >> id;
-	b.hero1 = world.GetHeroes(id);
-	if (b.hero1)
-		msg >> *b.hero1;
+    msg >> id;
+    b.hero1 = world.GetHeroes(id);
+    if (b.hero1)
+        msg >> *b.hero1;
 
-	msg >> id;
-	b.hero2 = world.GetHeroes(id);
-	if (b.hero2)
-		msg >> *b.hero2;
+    msg >> id;
+    b.hero2 = world.GetHeroes(id);
+    if (b.hero2)
+        msg >> *b.hero2;
 
-	msg >>
-		b.player1 >> b.player2;
+    msg >>
+        b.player1 >> b.player2;
 
-	return msg;
+    return msg;
 }
 
 bool Battle::Only::ChangeSettings()
@@ -655,14 +656,13 @@ void Battle::Only::StartBattle()
             hero2->SetSpellPoints(hero2->GetMaxSpellPoints());
             hero2->Recruit(player2.GetColor(), Point(5, 6));
         }
-		if(hero2)
-		{
-			BattleHeroWithHero(*hero1, *hero2, hero1->GetIndex() + 1);
-		}
-		else
-		{
-			BattleHeroWithMonster(*hero1, monsters, hero1->GetIndex() + 1);
-		}
-        
+        if (hero2)
+        {
+            BattleHeroWithHero(*hero1, *hero2, hero1->GetIndex() + 1);
+        } else
+        {
+            BattleHeroWithMonster(*hero1, monsters, hero1->GetIndex() + 1);
+        }
+
     }
 }

@@ -86,7 +86,7 @@ void RedrawStaticInfo(const Rect &pos, const Monster &monster, bool label)
     Text text;
     Point dst_pt;
 
-	const Sprite &box = AGG::GetICN(ICN::RECRBKG, 0);
+    const Sprite &box = AGG::GetICN(ICN::RECRBKG, 0);
     box.Blit(pos.x, pos.y);
 
     payment_t paymentMonster = monster.GetCost();
