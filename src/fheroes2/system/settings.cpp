@@ -113,10 +113,10 @@ enum
 struct settings_t
 {
     u32 id;
-    const char *str;
+    std::string str;
 
     bool operator==(const string &s) const
-    { return str && s == str; };
+    { return str.size() && s == str; };
 
     bool operator==(u32 i) const
     { return id && id == i; };
@@ -133,8 +133,7 @@ const settings_t settingsGeneral[] =
                 {GLOBAL_ALTRESOURCE,  "alt resource",},
                 {GLOBAL_POCKETPC,     "pocketpc",},
                 {GLOBAL_POCKETPC,     "pocket pc",},
-                {GLOBAL_USESWSURFACE, "use swsurface only",},
-                {0,                   nullptr,},
+                {GLOBAL_USESWSURFACE, "use swsurface only",}
         };
 
 // internal settings
@@ -212,7 +211,6 @@ const settings_t settingsFHeroes2[] =
                 {Settings::POCKETPC_DRAG_DROP_SCROLL,        _("pocketpc: drag&drop gamearea as scroll"),},
                 {Settings::POCKETPC_LOW_MEMORY,              _("pocketpc: low memory"),},
 
-                {0, nullptr},
         };
 
 string Settings::GetVersion()
@@ -1126,7 +1124,7 @@ bool Settings::ExtModes(u32 f) const
     return false;
 }
 
-const char *Settings::ExtName(u32 f) const
+std::string Settings::ExtName(u32 f) const
 {
     const settings_t *ptr = find(settingsFHeroes2,
                                  ARRAY_COUNT_END(settingsFHeroes2) - 1, f);

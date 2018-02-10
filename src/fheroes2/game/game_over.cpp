@@ -30,9 +30,9 @@
 #include "game_over.h"
 #include "mus.h"
 
-const char *GameOver::GetString(int cond)
+std::string GameOver::GetString(int cond)
 {
-    const char *cond_str[] = {"None",
+    std::string cond_str[] = {"None",
                               _("Defeat all enemy heroes and capture all enemy towns and castles."),
                               _("Capture a specific town."), _("Defeat a specific hero."),
                               _("Find a specific artifact."), _("Your side defeats the opposing side."),

@@ -40,7 +40,7 @@ Battle::Tower::Tower(const Castle &castle, int twr) : Unit(Troop(ARCHER, 0), -1,
     SetModes(CAP_TOWER);
 }
 
-const char *Battle::Tower::GetName() const
+string Battle::Tower::GetName() const
 {
     switch (type)
     {
@@ -121,8 +121,8 @@ void Battle::Tower::SetDestroy()
 
 string Battle::Tower::GetInfo(const Castle &cstl)
 {
-    const char *tmpl = _("The %{name} fires with the strength of %{count} Archers");
-    const char *addn = _("each with a +%{attack} bonus to their attack skill.");
+    string tmpl = _("The %{name} fires with the strength of %{count} Archers");
+    string addn = _("each with a +%{attack} bonus to their attack skill.");
 
     vector<int> towers;
     string msg;

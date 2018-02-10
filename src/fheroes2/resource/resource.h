@@ -127,7 +127,7 @@ ByteVectorReader &operator>>(ByteVectorReader &, Funds &);
 
 namespace Resource
 {
-    const char *String(int resource);
+    std::string String(int resource);
 
     int Rand(bool with_gold = false);
 

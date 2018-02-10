@@ -21,6 +21,7 @@
  ***************************************************************************/
 #ifndef H2DIFFICULTY_H
 #define H2DIFFICULTY_H
+#include <string>
 
 namespace Difficulty
 {
@@ -33,7 +34,7 @@ namespace Difficulty
         IMPOSSIBLE
     };
 
-    const char *String(int);
+    std::string String(int);
 }
 
 #endif

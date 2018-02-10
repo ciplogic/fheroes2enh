@@ -540,7 +540,7 @@ namespace MP2
 
     int GetICNObject(int type);
 
-    const char *StringObject(int object);
+    std::string StringObject(int object);
 
     bool isActionObject(int obj, bool water);
 

@@ -41,7 +41,7 @@ public:
 
     const Rect &GetArea() const;
 
-    const char *GetName() const;
+    std::string GetName() const;
 
     const string &GetDescription() const;
 

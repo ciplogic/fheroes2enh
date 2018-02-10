@@ -102,9 +102,9 @@ Maps::Indexes &MapsIndexesFilteredObject(Maps::Indexes &indexes, int obj)
     return indexes;
 }
 
-const char *Maps::SizeString(int size)
+std::string Maps::SizeString(int size)
 {
-    const char *mapsize[] = {"Unknown", _("maps|Small"), _("maps|Medium"), _("maps|Large"), _("maps|Extra Large"),
+    std::string mapsize[] = {"Unknown", _("maps|Small"), _("maps|Medium"), _("maps|Large"), _("maps|Extra Large"),
                              _("maps|Custom Size")};
 
     switch ((mapsize_t) size)
@@ -124,7 +124,7 @@ const char *Maps::SizeString(int size)
     return mapsize[5];
 }
 
-const char *Maps::GetMinesName(int type)
+std::string Maps::GetMinesName(int type)
 {
     switch (type)
     {

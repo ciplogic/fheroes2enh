@@ -42,8 +42,8 @@ struct monstats_t
     u8 speed;
     u8 grown;
     u8 shots;
-    const char *name;
-    const char *multiname;
+    std::string name;
+    std::string multiname;
     cost_t cost;
 };
 
@@ -1351,17 +1351,17 @@ u32 Monster::GetDwelling() const
     return 0;
 }
 
-const char *Monster::GetName() const
+std::string Monster::GetName() const
 {
     return _(monsters[id].name);
 }
 
-const char *Monster::GetMultiName() const
+std::string Monster::GetMultiName() const
 {
     return _(monsters[id].multiname);
 }
 
-const char *Monster::GetPluralName(u32 count) const
+std::string Monster::GetPluralName(u32 count) const
 {
     switch (id)
     {

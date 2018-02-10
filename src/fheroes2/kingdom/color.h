@@ -33,7 +33,7 @@ namespace BarrierColor
         NONE = 0, AQUA = 1, BLUE = 2, BROWN = 3, GOLD = 4, GREEN = 5, ORANGE = 6, PURPLE = 7, RED = 8
     };
 
-    const char *String(int);
+    std::string String(int);
 }
 
 namespace Color
@@ -51,7 +51,7 @@ namespace Color
         ALL = BLUE | GREEN | RED | YELLOW | ORANGE | PURPLE
     };
 
-    const char *String(int);
+    std::string String(int);
 
     int Count(int);
 

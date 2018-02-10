@@ -42,9 +42,9 @@
 #include "rand.h"
 #include "icn.h"
 
-const char *Heroes::GetName(int id)
+std::string Heroes::GetName(int id)
 {
-    const char *names[] = {
+    std::string names[] = {
             // knight
             _("Lord Kilburn"), _("Sir Gallanth"), _("Ector"), _("Gwenneth"), _("Tyro"), _("Ambrose"), _("Ruby"),
             _("Maximus"), _("Dimitry"),

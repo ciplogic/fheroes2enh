@@ -126,9 +126,9 @@ public:
 
     int GetID() const;
 
-    const char *GetName() const;
+    std::string GetName() const;
 
-    const char *GetDescription() const;
+    std::string GetDescription() const;
 
     u32 SpellPoint(const HeroBase *hero = nullptr) const;
 

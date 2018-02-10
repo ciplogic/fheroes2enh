@@ -3022,7 +3022,7 @@ void Battle::Interface::RedrawActionSpellCastPart2(const Spell &spell, TargetsIn
 
 void Battle::Interface::RedrawActionMonsterSpellCastStatus(const Unit &attacker, const TargetInfo &target)
 {
-    const char *msg = nullptr;
+    string msg;
 
     switch (attacker.GetID())
     {
@@ -3046,7 +3046,7 @@ void Battle::Interface::RedrawActionMonsterSpellCastStatus(const Unit &attacker,
             break;
     }
 
-    if (msg)
+    if (msg.size())
     {
         string str(msg);
         StringReplace(str, "%{name}", target.defender->GetName());

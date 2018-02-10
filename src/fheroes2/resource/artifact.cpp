@@ -48,8 +48,8 @@ struct artifactstats_t
     u8 bits;
     u8 extra;
     u8 type;
-    const char *name;
-    const char *description;
+    std::string name;
+    std::string description;
 };
 
 artifactstats_t artifacts[] = {
@@ -163,7 +163,7 @@ artifactstats_t artifacts[] = {
         {0, 0,   TYPE0, "Unknown", "Unknown"},
 };
 
-const char *GetPluralDescription(const Artifact &art, u32 count)
+std::string GetPluralDescription(const Artifact &art, u32 count)
 {
     switch (art())
     {
@@ -197,7 +197,7 @@ const char *GetPluralDescription(const Artifact &art, u32 count)
         default:
             break;
     }
-    return _(artifacts[art()].description);
+    return _(artifacts[art()].description.c_str());
 }
 
 bool SkipExtra(int art)
@@ -285,7 +285,7 @@ int Artifact::GetID() const
     return id;
 }
 
-const char *Artifact::GetName() const
+std::string Artifact::GetName() const
 {
     return _(artifacts[id].name);
 }
@@ -629,7 +629,7 @@ Artifact Artifact::FromMP2IndexSprite(u32 index)
     return Artifact(UNKNOWN);
 }
 
-const char *Artifact::GetScenario(const Artifact &art)
+std::string Artifact::GetScenario(const Artifact &art)
 {
     switch (art())
     {

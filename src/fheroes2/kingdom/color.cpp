@@ -26,9 +26,9 @@
 #include "world.h"
 #include "game.h"
 
-const char *Color::String(int color)
+std::string Color::String(int color)
 {
-    const char *str_color[] = {"None", _("Blue"), _("Green"), _("Red"), _("Yellow"), _("Orange"), _("Purple"),
+    std::string str_color[] = {"None", _("Blue"), _("Green"), _("Red"), _("Yellow"), _("Orange"), _("Purple"),
                                "uknown"};
 
     switch (color)
@@ -111,7 +111,7 @@ int Color::GetFirst(int colors)
     return NONE;
 }
 
-const char *BarrierColor::String(int val)
+std::string BarrierColor::String(int val)
 {
     switch (val)
     {

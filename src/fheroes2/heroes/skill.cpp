@@ -169,9 +169,9 @@ int Skill::Primary::LevelUp(int race, int level)
     return result;
 }
 
-const char *Skill::Primary::String(int skill)
+std::string Skill::Primary::String(int skill)
 {
-    const char *str_skill[] = {_("Attack"), _("Defense"), _("Power"), _("Knowledge"), "Unknown"};
+    std::string str_skill[] = {_("Attack"), _("Defense"), _("Power"), _("Knowledge"), "Unknown"};
 
     switch (skill)
     {
@@ -238,9 +238,9 @@ string Skill::Primary::StringSkills(const string &sep) const
     return os.str();
 }
 
-const char *Skill::Level::String(int level)
+std::string Skill::Level::String(int level)
 {
-    const char *str_level[] = {"None", _("skill|Basic"), _("skill|Advanced"), _("skill|Expert")};
+    std::string str_level[] = {"None", _("skill|Basic"), _("skill|Advanced"), _("skill|Expert")};
 
     switch (level)
     {
@@ -372,9 +372,9 @@ int Skill::Secondary::GetIndexSprite2() const
     return Skill() <= ESTATES ? Skill() - 1 : 0xFF;
 }
 
-const char *Skill::Secondary::String(int skill)
+std::string Skill::Secondary::String(int skill)
 {
-    const char *str_skill[] = {_("Pathfinding"), _("Archery"), _("Logistics"), _("Scouting"), _("Diplomacy"),
+    std::string str_skill[] = {_("Pathfinding"), _("Archery"), _("Logistics"), _("Scouting"), _("Diplomacy"),
                                _("Navigation"),
                                _("Leadership"), _("Wisdom"), _("Mysticism"), _("Luck"), _("Ballistics"), _("Eagle Eye"),
                                _("Necromancy"), _("Estates"), "Unknown"};
@@ -417,9 +417,9 @@ const char *Skill::Secondary::String(int skill)
     return str_skill[14];
 }
 
-const char *Skill::Secondary::GetName() const
+std::string Skill::Secondary::GetName() const
 {
-    const char *name_skill[] =
+    std::string name_skill[] =
             {
                     _("Basic Pathfinding"), _("Advanced Pathfinding"), _("Expert Pathfinding"),
                     _("Basic Archery"), _("Advanced Archery"), _("Expert Archery"),

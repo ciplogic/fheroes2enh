@@ -35,14 +35,14 @@ enum
 
 struct spellstats_t
 {
-    const char *name;
+    std::string name;
     u8 sp;
     u16 mp;
     u8 sprite;
     u8 extra;
     u8 bits;
     cost_t cost;
-    const char *description;
+    std::string description;
 };
 
 spellstats_t spells[] = {
@@ -161,12 +161,12 @@ int Spell::GetID() const
     return id;
 }
 
-const char *Spell::GetName() const
+std::string Spell::GetName() const
 {
     return _(spells[id].name);
 }
 
-const char *Spell::GetDescription() const
+std::string Spell::GetDescription() const
 {
     return _(spells[id].description);
 }

@@ -48,7 +48,7 @@ namespace GameOver
         LOSS = LOSS_ALL | LOSS_TOWN | LOSS_HERO | LOSS_TIME | LOSS_STARTHERO
     };
 
-    const char *GetString(int);
+    std::string GetString(int);
 
     string GetActualDescription(int);
 

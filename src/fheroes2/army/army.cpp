@@ -112,7 +112,7 @@ string Army::TroopSizeString(const Troop &troop)
 
 string Army::SizeString(u32 size)
 {
-    const char *str_size[] = {_("army|Few"), _("army|Several"), _("army|Pack"), _("army|Lots"),
+    string str_size[] = {_("army|Few"), _("army|Several"), _("army|Pack"), _("army|Lots"),
                               _("army|Horde"), _("army|Throng"), _("army|Swarm"), _("army|Zounds"), _("army|Legion")};
 
     switch (ArmyGetSize(size))

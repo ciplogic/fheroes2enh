@@ -23,9 +23,9 @@
 #include "difficulty.h"
 #include "gamedefs.h"
 
-const char *Difficulty::String(int difficulty)
+std::string Difficulty::String(int difficulty)
 {
-    const char *str_difficulty[] = {_("difficulty|Easy"), _("difficulty|Normal"), _("difficulty|Hard"),
+    std::string str_difficulty[] = {_("difficulty|Easy"), _("difficulty|Normal"), _("difficulty|Hard"),
                                     _("difficulty|Expert"), _("difficulty|Impossible"), "Unknown"};
 
     switch (difficulty)

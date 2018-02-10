@@ -240,9 +240,9 @@ public:
 
     string GetDescriptionBuilding(u32) const;
 
-    static const char *GetStringBuilding(u32, int race);
+    static string GetStringBuilding(u32, int race);
 
-    static const char *GetDescriptionBuilding(u32, int race);
+    static string GetDescriptionBuilding(u32, int race);
 
     static int GetICNBuilding(u32, int race);
 

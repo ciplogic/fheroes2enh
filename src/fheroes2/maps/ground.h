@@ -46,7 +46,7 @@ namespace Maps
             ALL = DESERT | SNOW | SWAMP | WASTELAND | BEACH | LAVA | DIRT | GRASS
         };
 
-        const char *String(int);
+        std::string String(int);
 
         u32 GetPenalty(s32, int direction, u32 pathfinding);
     }

@@ -63,9 +63,9 @@ namespace Maps
         IndexesDistance(s32, s32, u32 dist, int sort = 0);
     };
 
-    const char *SizeString(int size);
+    std::string SizeString(int size);
 
-    const char *GetMinesName(int res);
+    std::string GetMinesName(int res);
 
     s32 GetDirectionIndex(s32, int direct);
 

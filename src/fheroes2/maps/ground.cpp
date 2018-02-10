@@ -24,9 +24,9 @@
 #include "world.h"
 #include "ground.h"
 
-const char *Maps::Ground::String(int ground)
+std::string Maps::Ground::String(int ground)
 {
-    const char *str_ground[] = {_("Desert"), _("Snow"), _("Swamp"), _("Wasteland"), _("Beach"),
+    std::string str_ground[] = {_("Desert"), _("Snow"), _("Swamp"), _("Wasteland"), _("Beach"),
                                 _("Lava"), _("Dirt"), _("Grass"), _("Water"), "Unknown"};
 
     switch (ground)

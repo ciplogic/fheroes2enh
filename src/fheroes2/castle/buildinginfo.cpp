@@ -443,7 +443,7 @@ void BuildingInfo::Redraw()
 }
 
 
-const char *BuildingInfo::GetName() const
+std::string BuildingInfo::GetName() const
 {
     return Castle::GetStringBuilding(building, castle.GetRace());
 }
@@ -615,7 +615,7 @@ bool BuildingInfo::DialogBuyBuilding(bool buttons) const
     return false;
 }
 
-const char *GetBuildConditionDescription(int bcond)
+std::string GetBuildConditionDescription(int bcond)
 {
     switch (bcond)
     {

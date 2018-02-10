@@ -354,7 +354,7 @@ int MP2::GetICNObject(int type)
     return ICN::UNKNOWN;
 }
 
-const char *MP2::StringObject(int object)
+std::string MP2::StringObject(int object)
 {
     switch (object)
     {

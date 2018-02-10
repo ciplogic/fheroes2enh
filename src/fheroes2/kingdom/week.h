@@ -67,7 +67,7 @@ struct Week : pair<int, int>
     int GetMonster() const
     { return second; }
 
-    const char *GetName() const;
+    std::string GetName() const;
 
     static int WeekRand();
 

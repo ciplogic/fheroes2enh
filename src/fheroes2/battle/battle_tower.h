@@ -50,7 +50,7 @@ namespace Battle
 
         u32 GetAttack() const;
 
-        const char *GetName() const;
+        string GetName() const;
 
         void SetDestroy();
 

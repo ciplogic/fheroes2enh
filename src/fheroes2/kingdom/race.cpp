@@ -25,9 +25,9 @@
 #include "race.h"
 #include "rand.h"
 
-const char *Race::String(int race)
+string Race::String(int race)
 {
-    const char *str_race[] = {_("Knight"), _("Barbarian"), _("Sorceress"),
+    string str_race[] = {_("Knight"), _("Barbarian"), _("Sorceress"),
                               _("Warlock"), _("Wizard"), _("Necromancer"), _("Multi"), "Random", "Neutral"};
 
     switch (race)

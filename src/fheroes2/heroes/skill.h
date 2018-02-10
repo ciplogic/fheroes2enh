@@ -51,7 +51,7 @@ namespace Skill
             NONE = 0, BASIC = 1, ADVANCED = 2, EXPERT = 3
         };
 
-        const char *String(int level);
+        std::string String(int level);
     }
 
     class Secondary : public pair<int, int>
@@ -102,7 +102,7 @@ namespace Skill
 
         bool isValid() const;
 
-        const char *GetName() const;
+        std::string GetName() const;
 
         string GetDescription() const;
 
@@ -116,8 +116,7 @@ namespace Skill
 
         static int RandForWitchsHut();
 
-        static const char *
-        String(int);
+        static std::string String(int);
     };
 
     StreamBase &operator>>(StreamBase &, Secondary &);
@@ -199,7 +198,7 @@ namespace Skill
 
         string StringSkills(const string &) const;
 
-        static const char *String(int);
+        static std::string String(int);
 
         static string StringDescription(int, const Heroes *);
 

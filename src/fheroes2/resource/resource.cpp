@@ -314,9 +314,9 @@ string Funds::String() const
 }
 
 /* name resource */
-const char *Resource::String(int resource)
+std::string Resource::String(int resource)
 {
-    const char *res[] = {"Unknown", _("Wood"), _("Mercury"), _("Ore"), _("Sulfur"), _("Crystal"), _("Gems"), _("Gold")};
+    std::string res[] = {"Unknown", _("Wood"), _("Mercury"), _("Ore"), _("Sulfur"), _("Crystal"), _("Gems"), _("Gold")};
 
     switch (resource)
     {

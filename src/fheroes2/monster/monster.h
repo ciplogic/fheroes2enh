@@ -176,11 +176,11 @@ public:
 
     u32 GetRNDSize(bool skip) const;
 
-    const char *GetName() const;
+    std::string GetName() const;
 
-    const char *GetMultiName() const;
+    std::string GetMultiName() const;
 
-    const char *GetPluralName(u32) const;
+    std::string GetPluralName(u32) const;
 
     bool isValid() const;
 

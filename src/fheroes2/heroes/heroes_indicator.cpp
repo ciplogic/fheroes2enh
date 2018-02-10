@@ -30,7 +30,7 @@
 #include "heroes_indicator.h"
 #include "icn.h"
 
-const char *MoraleString(int morale)
+std::string MoraleString(int morale)
 {
     switch (morale)
     {
@@ -53,7 +53,7 @@ const char *MoraleString(int morale)
     return nullptr;
 }
 
-const char *LuckString(int luck)
+std::string LuckString(int luck)
 {
     switch (luck)
     {

@@ -73,7 +73,7 @@ public:
 
     static Surface GetPortrait(int heroid, int type);
 
-    static const char *GetName(int heroid);
+    static std::string GetName(int heroid);
 
     enum flags_t
     {

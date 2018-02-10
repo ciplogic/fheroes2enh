@@ -52,7 +52,7 @@ public:
 
     bool isMonster(int) const;
 
-    const char *GetName() const;
+    std::string GetName() const;
 
     u32 GetCount() const;
 

@@ -27,9 +27,9 @@
 #include "game.h"
 #include "rand.h"
 
-const char *Week::GetName() const
+std::string Week::GetName() const
 {
-    const char *str_name[] = {"Unnamed", _("week|PLAGUE"),
+    std::string str_name[] = {"Unnamed", _("week|PLAGUE"),
                               _("week|Ant"), _("week|Grasshopper"), _("week|Dragonfly"), _("week|Spider"),
                               _("week|Butterfly"), _("week|Bumblebee"),
                               _("week|Locust"), _("week|Earthworm"), _("week|Hornet"), _("week|Beetle"),

@@ -297,7 +297,7 @@ public:
 
     void ExtResetModes(u32);
 
-    const char *ExtName(u32) const;
+    std::string ExtName(u32) const;
 
     bool ExtHeroLearnSpellsWithDay() const;
 

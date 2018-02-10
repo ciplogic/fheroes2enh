@@ -2021,7 +2021,7 @@ void ActionToArtifact(Heroes &hero, u32 obj, s32 dst_index)
         {
             PlaySoundSuccess;
 
-            if (Artifact::GetScenario(art))
+            if (Artifact::GetScenario(art).size())
                 msg = Artifact::GetScenario(art);
             else
             {
@@ -2518,11 +2518,11 @@ void ActionToDwellingBattleMonster(Heroes &hero, u32 obj, s32 dst_index)
     const bool &battle = Color::NONE == tile.QuantityColor();
     const Troop &troop = tile.QuantityTroop();
 
-    const char *str_empty = nullptr;
-    const char *str_recr = nullptr;
-    const char *str_warn = nullptr;
-    const char *str_wins = nullptr;
-    const char *str_scss = nullptr;
+    string str_empty;
+    string str_recr;
+    string str_warn;
+    string str_wins;
+    string str_scss;
 
     switch (obj)
     {
@@ -2597,7 +2597,7 @@ void ActionToDwellingBattleMonster(Heroes &hero, u32 obj, s32 dst_index)
     }
 
     // recruit monster
-    if (str_scss)
+    if (str_scss.size())
     {
         if (troop.isValid() &&
             Dialog::YES == Dialog::Message(MP2::StringObject(obj), str_scss, Font::BIG, Dialog::YES | Dialog::NO))

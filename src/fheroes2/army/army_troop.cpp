@@ -83,7 +83,7 @@ void Troop::Reset()
     count = 0;
 }
 
-const char *Troop::GetName() const
+std::string Troop::GetName() const
 {
     return GetPluralName(count);
 }

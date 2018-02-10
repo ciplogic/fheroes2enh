@@ -205,7 +205,7 @@ public:
 
     int GetSpell() const;
 
-    const char *GetName() const;
+    std::string GetName() const;
 
     string GetDescription() const;
 
@@ -213,7 +213,7 @@ public:
 
     static Artifact FromMP2IndexSprite(u32);
 
-    static const char *GetScenario(const Artifact &);
+    static std::string GetScenario(const Artifact &);
 
     static void UpdateStats(const string &);
 
