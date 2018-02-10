@@ -70,7 +70,7 @@ void extractFrames()
     static bool isExtracted = false;
     if(isExtracted)
         return;
-    for (int icnId = 1; icnId < ICN::LASTICN; icnId++)
+    for (int icnId = 3; icnId < ICN::LASTICN; icnId++)
     {
         bool canContinue = false;
         int frameId = 0;
@@ -212,7 +212,7 @@ int main(int argc, char **argv)
             return EXIT_FAILURE;
 
         atexit(&AGG::Quit);
-        //extractFrames();
+        extractFrames();
         conf.SetBlitSpeed(TestBlitSpeed());
 
         // init cursor

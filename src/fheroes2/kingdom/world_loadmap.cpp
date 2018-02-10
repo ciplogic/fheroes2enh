@@ -98,7 +98,7 @@ bool World::LoadMapMP2(const string &filename)
     }
 
     // height
-    switch ((mapsize_t) fs.getLE32())
+    switch (static_cast<mapsize_t>(fs.getLE32()))
     {
         case mapsize_t::SMALL:
             Size::h = static_cast<u16>(mapsize_t::SMALL);

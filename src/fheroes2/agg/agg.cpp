@@ -94,7 +94,8 @@ namespace AGG
         string filename;
         unordered_map<string, FAT> fat;
         u32 count_items;
-        BinaryFileReader stream;
+        up<ByteVectorReader> stream;
+        vector<u8> fileContent;
         string key;
         vector<u8> body;
     };
@@ -222,45 +223,47 @@ AGG::File::File() : count_items(0)
 bool AGG::File::Open(const string &fname)
 {
     filename = fname;
-
-    if (!stream.open(filename, "rb"))
+    BinaryFileReader fstream;
+    if (!fstream.open(filename, "rb"))
     {
         return false;
     }
+    fileContent = fstream.getRaw(fstream.size());
+    stream = std::make_unique<ByteVectorReader>(fileContent);
 
-    const u32 size = stream.size();
+    const u32 size = stream->size();
 
-    count_items = stream.getLE16();
+    count_items = stream->getLE16();
 
-    stream.seek(size - FATSIZENAME * count_items);
+    stream->seek(size - FATSIZENAME * count_items);
     std::vector<std::string> vectorNames;
     vectorNames.reserve(count_items);
     for (u32 ii = 0; ii < count_items; ++ii)
     {
-        vectorNames.push_back(stream.toString(FATSIZENAME));
+        vectorNames.push_back(stream->toString(FATSIZENAME));
     }
-    stream.seek(2);
+    stream->seek(2);
     for (u32 ii = 0; ii < count_items; ++ii)
     {
         string itemName = vectorNames[ii];
         FAT f;
-        auto crc = stream.getLE32();
+        auto crc = stream->getLE32();
         f.crc = crc;
-        auto offset = stream.getLE32();
+        auto offset = stream->getLE32();
         f.offset = offset;
-        auto sizeChunk = stream.getLE32();
+        auto sizeChunk = stream->getLE32();
         f.size = sizeChunk;
         fat[itemName] = f;
     }
 
-    return !stream.fail();
+    return true;
 }
 
 AGG::File::~File() = default;
 
 bool AGG::File::isGood() const
 {
-    return !stream.fail() && count_items;
+    return stream&& stream->size() && count_items;
 }
 
 /* get AGG file name */
@@ -303,8 +306,8 @@ vector<u8> AGG::File::Read(const string &str)
         vector<u8> emptyBuf;
         return emptyBuf;
     }
-    stream.seek(f.offset);
-    vector<u8> body = stream.getRaw(f.size);
+    stream->seek(f.offset);
+    vector<u8> body = stream->getRaw(f.size);
 
 
     return body;
