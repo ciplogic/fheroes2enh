@@ -52,7 +52,7 @@ int Interface::StatusWindow::GetState() const
     return state;
 }
 
-u32 Interface::StatusWindow::ResetResourceStatus(u32 tick, void *ptr)
+u32 __cdecl Interface::StatusWindow::ResetResourceStatus(u32 tick, void *ptr)
 {
     if (!ptr)
         return 0;

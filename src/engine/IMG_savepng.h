@@ -35,7 +35,7 @@
  * Takes a filename, a surface to save, and a compression level.  The
  * compression level can be 0(min) through 9(max), or -1(default).
  */
-int IMG_SavePNG(const char *file,
+int __cdecl IMG_SavePNG(const char *file,
                 SDL_Surface *surf,
                 int compression);
 

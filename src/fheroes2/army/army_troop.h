@@ -75,7 +75,7 @@ public:
 
     virtual bool isBattle() const;
 
-    bool isModes(u32) const;
+    static bool isModes(u32);
 
     string GetAttackString() const;
 

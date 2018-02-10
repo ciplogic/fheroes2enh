@@ -45,7 +45,7 @@ namespace SDL
 
         Thread &operator=(const Thread &);
 
-        void Create(int (*)(void *), void *param = nullptr);
+        void Create(int (__cdecl *)(void *), void *param = nullptr);
 
         int Wait();
 
@@ -88,7 +88,7 @@ namespace SDL
 
         bool IsValid() const;
 
-        void Run(u32, u32 (*)(u32, void *), void *param = nullptr);
+        void Run(u32, u32 (__cdecl*)(u32, void *), void *param = nullptr);
 
         void Remove();
 

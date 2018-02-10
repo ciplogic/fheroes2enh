@@ -43,7 +43,7 @@ Thread &Thread::operator=(const Thread &)
     return *this;
 }
 
-void Thread::Create(int (*fn)(void *), void *param)
+void Thread::Create(int (__cdecl *fn)(void *), void *param)
 {
     thread = SDL_CreateThread(fn, param);
 }
@@ -110,7 +110,7 @@ Timer::Timer() : id(nullptr)
 {
 }
 
-void Timer::Run(u32 interval, u32 (*fn)(u32, void *), void *param)
+void Timer::Run(u32 interval, u32(__cdecl *fn)(u32, void *), void *param)
 {
     if (id) Remove();
 

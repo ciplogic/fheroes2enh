@@ -83,7 +83,7 @@ namespace Interface
 
         void DrawAITurns() const;
 
-        static u32 ResetResourceStatus(u32, void *);
+        static u32 __cdecl ResetResourceStatus(u32, void *);
 
         static u32 RedrawAIStatus(u32, void *);
 

@@ -154,7 +154,7 @@ bool Troop::isBattle() const
     return false;
 }
 
-bool Troop::isModes(u32) const
+bool Troop::isModes(u32)
 {
     return false;
 }

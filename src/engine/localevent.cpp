@@ -839,7 +839,7 @@ void LocalEvent::SetGlobalFilterKeysEvents(void (*pf)(int, int))
 }
 
 
-int LocalEvent::GlobalFilterEvents(const SDL_Event *event)
+int __cdecl LocalEvent::GlobalFilterEvents(const SDL_Event *event)
 {
     LocalEvent &le = Get();
 
