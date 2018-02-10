@@ -32,6 +32,7 @@
             this.installButton = new System.Windows.Forms.Button();
             this.licensesInstallCheck = new System.Windows.Forms.CheckBox();
             this.installOptionsUserControl1 = new Installer.UserControls.InstallOptionsUserControl();
+            this.installerControlProgress1 = new Installer.UserControls.InstallerControlProgress();
             this.SuspendLayout();
             // 
             // label1
@@ -76,11 +77,20 @@
             this.installOptionsUserControl1.Size = new System.Drawing.Size(533, 197);
             this.installOptionsUserControl1.TabIndex = 2;
             // 
+            // installerControlProgress1
+            // 
+            this.installerControlProgress1.Location = new System.Drawing.Point(17, 40);
+            this.installerControlProgress1.Name = "installerControlProgress1";
+            this.installerControlProgress1.Size = new System.Drawing.Size(533, 197);
+            this.installerControlProgress1.TabIndex = 4;
+            this.installerControlProgress1.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(562, 278);
+            this.Controls.Add(this.installerControlProgress1);
             this.Controls.Add(this.licensesInstallCheck);
             this.Controls.Add(this.installOptionsUserControl1);
             this.Controls.Add(this.installButton);
@@ -100,5 +110,6 @@
         private System.Windows.Forms.Button installButton;
         private UserControls.InstallOptionsUserControl installOptionsUserControl1;
         private System.Windows.Forms.CheckBox licensesInstallCheck;
+        private UserControls.InstallerControlProgress installerControlProgress1;
     }
 }

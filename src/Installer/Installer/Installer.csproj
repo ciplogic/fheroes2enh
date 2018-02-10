@@ -61,6 +61,12 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
+    <Compile Include="UserControls\InstallerControlProgress.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\InstallerControlProgress.Designer.cs">
+      <DependentUpon>InstallerControlProgress.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\InstallOptionsUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -92,6 +98,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="fh2enh.zip" />
+    <EmbeddedResource Include="UserControls\InstallerControlProgress.resx">
+      <DependentUpon>InstallerControlProgress.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\InstallOptionsUserControl.resx">
       <DependentUpon>InstallOptionsUserControl.cs</DependentUpon>
     </EmbeddedResource>

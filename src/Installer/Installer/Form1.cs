@@ -11,6 +11,8 @@ namespace Installer
     public partial class Form1 : Form
     {
         private ValueObservable<bool> LicensesAgreed;
+        private int _stepsInstall;
+
         public Form1()
         {
             InitializeComponent();
@@ -23,6 +25,9 @@ namespace Installer
         {
             var destinationPath = installOptionsUserControl1.PathSelected.Value;
             var itemsToDownload = installOptionsUserControl1.GetItemsToDownload();
+
+            installOptionsUserControl1.Visible = false;
+            installerControlProgress1.Visible = true;
 
             DownloadItems(itemsToDownload, destinationPath);
 
@@ -51,12 +56,20 @@ namespace Installer
         {
             installButton.Enabled = false;
             licensesInstallCheck.Enabled = false;
+
+            _stepsInstall = itemsToDownload.Length * 2 + 2;
+            installerControlProgress1.MainProgress.Maximum = _stepsInstall;
+
             var thread = new Thread(() =>
             {
                 var wc = new WebClient();
                 foreach (var itemToDownload in itemsToDownload)
                 {
-                    this.UIThread(() => { this.Text = "Downloading: " + itemToDownload; });
+                    this.UIThread(() =>
+                    {
+                        installerControlProgress1.MainLabel.Text = "Downloading: " + itemToDownload;
+                        installerControlProgress1.MainProgress.Value++;
+                    });
                     var urlToDownload = ConstStrings.FullUrlToPacks + itemToDownload;
                     var destinationFile = Path.Combine(destinationPath, itemToDownload);
                     ZipExtractorUtilies.CreateDirectoryForFile(destinationFile);
@@ -66,13 +79,14 @@ namespace Installer
                         ZipExtractorUtilies.UnzipFromStream(zipStream, destinationPath);
                     }
                     File.Delete(destinationFile);
+                    this.UIThread(() => { installerControlProgress1.MainProgress.Value++; });
                 }
-                
+                this.UIThread(() => { installerControlProgress1.MainProgress.Value++; });
                 using (var zipStream = GetStream("Installer.fh2enh.zip"))
                 {
                     ZipExtractorUtilies.UnzipFromStream(zipStream, destinationPath);
                 }
-                ControlExtensions.UIThread(this, () =>
+                this.UIThread(() =>
                 {
                     installButton.Enabled = true;
                     licensesInstallCheck.Enabled = true;
