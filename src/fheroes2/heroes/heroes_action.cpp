@@ -770,6 +770,7 @@ Battle::Result BattleHeroWithMonster(Heroes &hero, Army &army, s32 dst_index)
     heroArmyBuf.seek(0);
     auto heroVec = heroArmyBuf.getRaw(0);
 
+    Settings::Get().SetQuickCombat(true);
     do
     {
         res = Battle::Loader(hero.GetArmy(), army, dst_index);
@@ -798,6 +799,7 @@ Battle::Result BattleHeroWithHero(Heroes &hero, Heroes &other_hero, s32 dst_inde
     heroArmyBuf.seek(0);
     auto heroVec = heroArmyBuf.getRaw(0);
 
+    Settings::Get().SetQuickCombat(true);
     do
     {
         res = Battle::Loader(hero.GetArmy(), other_hero.GetArmy(), dst_index);

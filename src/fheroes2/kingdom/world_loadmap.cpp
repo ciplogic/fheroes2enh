@@ -666,7 +666,10 @@ void World::PostLoad()
 
     // update tile passable
     for_each(vec_tiles.begin(), vec_tiles.end(),
-             mem_fun_ref(&Maps::Tiles::UpdatePassable));
+        [](Maps::Tiles& tile)
+    {
+        tile.UpdatePassable();
+    });
 
     // play with hero
     vec_kingdoms.ApplyPlayWithStartingHero();
@@ -695,8 +698,11 @@ void World::PostLoad()
 
     // set ultimate
     auto it = find_if(vec_tiles.begin(), vec_tiles.end(),
-                      bind2nd(mem_fun_ref(&Maps::Tiles::isObject),
-                              static_cast<int>(MP2::OBJ_RNDULTIMATEARTIFACT)));
+        [](Maps::Tiles& tile)
+    {
+        return tile.isObject(static_cast<int>(MP2::OBJ_RNDULTIMATEARTIFACT));
+    });
+
     Point ultimate_pos;
 
     // not found
@@ -723,10 +729,10 @@ void World::PostLoad()
         }
     } else
     {
-        const Maps::TilesAddon *addon = nullptr;
+        const Maps::TilesAddon *addon = it->FindObjectConst(MP2::OBJ_RNDULTIMATEARTIFACT);
 
         // remove ultimate artifact sprite
-        if (nullptr != (addon = (*it).FindObjectConst(MP2::OBJ_RNDULTIMATEARTIFACT)))
+        if (addon)
         {
             ultimate_artifact.Set((*it).GetIndex(), Artifact::FromMP2IndexSprite(addon->index));
             (*it).Remove(addon->uniq);
