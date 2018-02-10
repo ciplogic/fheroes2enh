@@ -187,9 +187,7 @@ void AI::KingdomTurn(Kingdom &kingdom)
             modes = HEROES_HUNTER | HEROES_SCOUTER;
         else if (heroes.size() < maxhero ||
                  0 == count_if(heroes.begin(), heroes.end(),
-                               [](auto& unit){
-                                   return unit.Modes (HEROES_SCOUTER);
-                               }))
+                               bind2nd(mem_fun(&Heroes::Modes), HEROES_SCOUTER)))
             modes = HEROES_SCOUTER;
 
         if (modes &&
