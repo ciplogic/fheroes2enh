@@ -51,6 +51,8 @@ public:
     bool isPresentSpell(const Spell &) const;
 
     string String() const;
+
+    long getSpellCountOfLevel(int level) const;
 };
 
 #endif

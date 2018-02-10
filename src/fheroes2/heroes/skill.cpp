@@ -754,9 +754,10 @@ void Skill::SecSkills::FindSkillsForLevelUp(int race, Secondary &sec1, Secondary
         sec2.NextLevel();
     } else if (Settings::Get().ExtHeroAllowBannedSecSkillsUpgrade())
     {
-        const_iterator it = find_if(begin(), end(),
-                                    not1(bind2nd(mem_fun_ref(&Secondary::isLevel),
-                                                 static_cast<int>(Level::EXPERT))));
+        auto it = find_if(begin(), end(),
+                                    [](auto& skill){
+                                        return !skill.isLevel(static_cast<int>(Level::EXPERT));
+                                    });
         if (it != end())
         {
             sec1.SetSkill((*it).Skill());

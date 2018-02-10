@@ -443,10 +443,23 @@ void Players::SetPlayerInGame(int color, bool f)
 
 void Players::SetStartGame()
 {
-    for_each(_items.begin(), _items.end(), bind2nd(mem_fun(&Player::SetPlay), true));
-    for_each(_items.begin(), _items.end(), ptr_fun(&PlayerFocusReset));
-    for_each(_items.begin(), _items.end(), ptr_fun(&PlayerFixRandomRace));
-    for_each(_items.begin(), _items.end(), ptr_fun(&PlayerFixMultiControl));
+    for_each(_items.begin(), _items.end(),
+             [](auto&player){
+                return player->SetPlay(true);
+             });
+
+    for_each(_items.begin(), _items.end(),
+             [](auto&player) {
+                 PlayerFocusReset(player);
+             });
+    for_each(_items.begin(), _items.end(),
+             [](auto&player) {
+                 PlayerFixRandomRace(player);
+             });
+    for_each(_items.begin(), _items.end(),
+             [](auto&player) {
+                 PlayerFixMultiControl(player);
+             });
 
     current_color = Color::NONE;
     human_colors = Color::NONE;

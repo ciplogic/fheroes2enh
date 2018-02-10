@@ -2453,15 +2453,18 @@ struct CastleHavePoint : public binary_function<const Castle *, const Point *, b
 
 Castle *VecCastles::Get(const Point &position) const
 {
-    auto it = find_if(begin(), end(),
-                      bind2nd(CastleHavePoint(), &position));
+    auto it = find_if(begin(), end(), [&](auto&castle){
+        return castle->isPosition(position);
+    });
     return end() != it ? *it : nullptr;
 }
 
 Castle *VecCastles::GetFirstCastle() const
 {
-    auto it = find_if(begin(), end(),
-                      mem_fun(&Castle::isCastle));
+    auto it = find_if(begin(), end(),[](auto&castle)
+    {
+        return castle->isCastle();
+    });
     return end() != it ? *it : nullptr;
 }
 

@@ -360,7 +360,7 @@ struct AllCastles : VecCastles
 {
     AllCastles();
 
-    ~AllCastles();
+    virtual ~AllCastles();
 
     void Init();
 
