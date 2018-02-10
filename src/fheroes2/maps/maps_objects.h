@@ -84,7 +84,7 @@ StreamBase &operator<<(StreamBase &, const MapEvent &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, MapEvent &);
 
-typedef list<string> RiddleAnswers;
+typedef vector<string> RiddleAnswers;
 
 struct MapSphinx : MapObjectSimple
 {

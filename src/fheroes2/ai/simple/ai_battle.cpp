@@ -345,7 +345,10 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
     {
         // sort strongest
         auto it = find_if(friends.begin(), friends.end(),
-                          bind2nd(mem_fun(&Unit::Modes), IS_BAD_MAGIC));
+                          [](auto& unit){
+                              return unit.Modes (IS_BAD_MAGIC);
+                          }
+        );
         if (it != friends.end())
         {
             if (AIApplySpell(Spell::DISPEL, *it, *hero, a)) return true;
@@ -427,7 +430,9 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
             // or other strongest friends
             if (it == friends.end())
                 it = find_if(friends.begin(), friends.end(),
-                             not1(bind2nd(mem_fun(&Unit::Modes), SP_SHIELD)));
+                             [](auto& unit){
+                                 return !unit.Modes (CAP_MIRRORIMAGE | CAP_SUMMONELEM);
+                             });
 
             if (it != friends.end() &&
                 AIApplySpell(Spell::SHIELD, *it, *hero, a))
@@ -440,7 +445,9 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
     {
         // find mirror image or summon elem
         auto it = find_if(enemies.begin(), enemies.end(),
-                          bind2nd(mem_fun(&Unit::Modes), CAP_MIRRORIMAGE | CAP_SUMMONELEM));
+                          [](auto& unit){
+                              return unit.Modes (CAP_MIRRORIMAGE | CAP_SUMMONELEM);
+                          });
 
         if (it != enemies.end())
         {

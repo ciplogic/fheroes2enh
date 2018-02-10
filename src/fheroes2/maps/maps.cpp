@@ -85,7 +85,9 @@ Maps::Indexes &MapsIndexesFilteredObjects(Maps::Indexes &indexes, const u8 *objs
 {
     indexes.resize(distance(indexes.begin(),
                             remove_if(indexes.begin(), indexes.end(),
-                                      not1(bind2nd(ptr_fun(&TileIsObjects), objs)))));
+                                      [&](auto &tile) {
+                                          return !TileIsObjects(tile, objs);
+                                      })));
 
     return indexes;
 }
@@ -94,7 +96,9 @@ Maps::Indexes &MapsIndexesFilteredObject(Maps::Indexes &indexes, int obj)
 {
     indexes.resize(distance(indexes.begin(),
                             remove_if(indexes.begin(), indexes.end(),
-                                      not1(bind2nd(ptr_fun(&TileIsObject), obj)))));
+                                      [&](auto &tile) {
+                                          return !TileIsObject(tile, obj);
+                                      })));
     return indexes;
 }
 

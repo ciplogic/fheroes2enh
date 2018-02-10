@@ -39,21 +39,26 @@ u32 SpellStorage::Size(int lvl) const
     switch (lvl)
     {
         case 1:
-            return count_if(begin(), end(), bind2nd(mem_fun_ref(&Spell::isLevel), 1));
+            return getSpellCountOfLevel(1);
         case 2:
-            return count_if(begin(), end(), bind2nd(mem_fun_ref(&Spell::isLevel), 2));
+            return getSpellCountOfLevel(2);
         case 3:
-            return count_if(begin(), end(), bind2nd(mem_fun_ref(&Spell::isLevel), 3));
+            return getSpellCountOfLevel(3);
         case 4:
-            return count_if(begin(), end(), bind2nd(mem_fun_ref(&Spell::isLevel), 4));
+            return getSpellCountOfLevel(4);
         case 5:
-            return count_if(begin(), end(), bind2nd(mem_fun_ref(&Spell::isLevel), 5));
+            return getSpellCountOfLevel(5);
 
         default:
             break;
     }
 
     return size();
+}
+
+long SpellStorage::getSpellCountOfLevel(int level) const
+{
+    return count_if(begin(), end(), bind2nd(mem_fun_ref(&Spell::isLevel), level));
 }
 
 SpellStorage SpellStorage::GetSpells(int lvl) const
