@@ -1608,7 +1608,7 @@ bool AGG::Init()
     return true;
 }
 
-void __cdecl AGG::Quit()
+void AGG::Quit()
 {
     for (auto &icns : icn_cache)
     {

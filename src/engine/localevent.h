@@ -304,7 +304,7 @@ private:
 
     void HandleKeyboardEvent(SDL_KeyboardEvent &);
 
-    static int __cdecl GlobalFilterEvents(const SDL_Event *);
+    static int GlobalFilterEvents(const SDL_Event *);
 
 
     enum flag_t

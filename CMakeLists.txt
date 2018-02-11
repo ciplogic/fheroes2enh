@@ -354,8 +354,6 @@ set(SOURCE_FILES
         src/tools/palette_h2.h
         src/tools/palette_h2.cpp
         src/fheroes2/agg/ColorTable.h
-        src/fheroes2/gui/PlusIndicator.cpp
-        src/fheroes2/gui/PlusIndicator.h
         src/fheroes2/dialog/FileUtils.cpp
         src/fheroes2/dialog/FileUtils.h src/tools/palette_h2.cpp src/fheroes2/dialog/plus_sign_addon.cpp src/fheroes2/dialog/plus_sign_addon.h)
 

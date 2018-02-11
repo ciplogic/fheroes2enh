@@ -76,7 +76,7 @@ bool SDL::Init(u32 system)
     return true;
 }
 
-void __cdecl SDL::Quit()
+void SDL::Quit()
 {
     System::CreateTrayIcon(false);
     System::PowerManagerOff(false);

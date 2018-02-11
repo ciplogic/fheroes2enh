@@ -53,7 +53,7 @@ namespace AGG
 {
     bool Init();
 
-    void __cdecl Quit();
+    void Quit();
 
     int PutICN(const Sprite &, bool init_reflect = false);
 

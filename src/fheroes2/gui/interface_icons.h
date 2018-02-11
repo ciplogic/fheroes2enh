@@ -97,6 +97,30 @@ namespace Interface
 
         void RedrawBackground(const Point &);
     };
+    class HeroesBottomIcons : public ListBox<HEROES>, public IconsBar
+    {
+    public:
+        HeroesBottomIcons (u32 count, const Surface &sf) : IconsBar(count, sf)
+        {}
+
+
+        void SetShow(bool);
+
+    protected:
+        void ActionCurrentUp();
+
+        void ActionCurrentDn();
+
+        void ActionListDoubleClick(HEROES &);
+
+        void ActionListSingleClick(HEROES &);
+
+        void ActionListPressRight(HEROES &);
+
+        void RedrawItem(const HEROES &, s32 ox, s32 oy, bool current);
+
+        void RedrawBackground(const Point &);
+    };
 
     class CastleIcons : public ListBox<CASTLE>, public IconsBar
     {
@@ -166,8 +190,11 @@ namespace Interface
 
         Surface sfMarker;
 
+        Surface sfHeroes;
+
         CastleIcons castleIcons;
         HeroesIcons heroesIcons;
+        HeroesBottomIcons heroesBottom;
     };
 }
 

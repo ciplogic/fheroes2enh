@@ -37,7 +37,7 @@
 
 #include "png.h"
 
-int __cdecl IMG_SavePNG(const char *file, SDL_Surface *surf, int compression)
+int IMG_SavePNG(const char *file, SDL_Surface *surf, int compression)
 {
     SDL_RWops *fp = SDL_RWFromFile(file, "wb");
 
@@ -51,7 +51,7 @@ int __cdecl IMG_SavePNG(const char *file, SDL_Surface *surf, int compression)
     return ret;
 }
 
-static void __cdecl png_write_data(png_structp png_ptr, png_bytep data, png_size_t length)
+static void png_write_data(png_structp png_ptr, png_bytep data, png_size_t length)
 {
     auto *rp = (SDL_RWops *) png_get_io_ptr(png_ptr);
     SDL_RWwrite(rp, data, 1, length);

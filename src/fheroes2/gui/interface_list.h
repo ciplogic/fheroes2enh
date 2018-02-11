@@ -325,47 +325,45 @@ namespace Interface
                 return true;
             }
 
-            if (!content->empty())
+            if (content->empty())
+                return false;
+            double offset =  ((double)(le.GetMouseCursor().y - rtAreaItems.y) * maxItems / rtAreaItems.h);
+
+            if (offset < 0)
+                return false;
+            cursor.Hide();
+
+            int curIndex = cur - content->begin();
+            int topIndex = top - content->begin();
+            int posIndex = topIndex + (int) offset;
+
+            if (posIndex >= 0 && posIndex < (int) content->size())
             {
-                double offset = (double) ((le.GetMouseCursor().y - rtAreaItems.y) * maxItems / rtAreaItems.h);
+                const s32 posy = rtAreaItems.y + (posIndex - topIndex) * rtAreaItems.h / maxItems;
 
-                if (offset >= 0)
+                if (ActionListCursor((*content)[posIndex], le.GetMouseCursor(), rtAreaItems.x, posy))
+                    return true;
+
+                if (le.MouseClickLeft(rtAreaItems))
                 {
-                    cursor.Hide();
-
-                    int curIndex = cur - content->begin();
-                    int topIndex = top - content->begin();
-                    int posIndex = topIndex + (int) offset;
-
-                    if (posIndex >= 0 && posIndex < (int) content->size())
+                    if (posIndex == curIndex)
                     {
-                        const s32 posy = rtAreaItems.y + (posIndex - topIndex) * rtAreaItems.h / maxItems;
-
-                        if (ActionListCursor((*content)[posIndex], le.GetMouseCursor(), rtAreaItems.x, posy))
-                            return true;
-
-                        if (le.MouseClickLeft(rtAreaItems))
-                        {
-                            if (posIndex == curIndex)
-                            {
-                                ActionListDoubleClick(*cur, le.GetMouseCursor(), rtAreaItems.x, posy);
-                            } else
-                            {
-                                cur = content->begin() + posIndex;
-                                ActionListSingleClick(*cur, le.GetMouseCursor(), rtAreaItems.x, posy);
-                            }
-                            return true;
-                        } else if (le.MousePressRight(rtAreaItems))
-                        {
-                            auto pos = content->begin() + posIndex;
-                            ActionListPressRight(*pos, le.GetMouseCursor(), rtAreaItems.x, posy);
-                            return true;
-                        }
+                        ActionListDoubleClick(*cur, le.GetMouseCursor(), rtAreaItems.x, posy);
+                    } else
+                    {
+                        cur = content->begin() + posIndex;
+                        ActionListSingleClick(*cur, le.GetMouseCursor(), rtAreaItems.x, posy);
                     }
-
-                    cursor.Show();
+                    return true;
+                } else if (le.MousePressRight(rtAreaItems))
+                {
+                    auto pos = content->begin() + posIndex;
+                    ActionListPressRight(*pos, le.GetMouseCursor(), rtAreaItems.x, posy);
+                    return true;
                 }
             }
+
+            cursor.Show();
 
             return false;
         }

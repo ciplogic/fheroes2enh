@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2INTERFACE_STATUS_H
-#define H2INTERFACE_STATUS_H
+#pragma once
 
 #include "thread.h"
 #include "interface_border.h"
@@ -83,7 +82,7 @@ namespace Interface
 
         void DrawAITurns() const;
 
-        static u32 __cdecl ResetResourceStatus(u32, void *);
+        static u32 ResetResourceStatus(u32, void *);
 
         static u32 RedrawAIStatus(u32, void *);
 
@@ -98,5 +97,3 @@ namespace Interface
         u32 turn_progress;
     };
 }
-
-#endif

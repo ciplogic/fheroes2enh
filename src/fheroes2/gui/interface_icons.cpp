@@ -336,7 +336,9 @@ void Interface::HeroesIcons::SetPos(s32 px, s32 py)
 
 /* Interface::IconsPanel */
 Interface::IconsPanel::IconsPanel(Basic &basic) : BorderWindow(Rect(0, 0, 144, 128)),
-                                                  interface(basic), castleIcons(4, sfMarker), heroesIcons(4, sfMarker)
+                                                  interface(basic), castleIcons(4, sfMarker),
+                                                  heroesIcons(4, sfMarker),
+                                                  heroesBottom(4, sfMarker)
 {
     sfMarker.Set(ICONS_CURSOR_WIDTH, ICONS_CURSOR_HEIGHT, true);
     sfMarker.DrawBorder(ICONS_CURSOR_COLOR);
@@ -508,4 +510,42 @@ bool Interface::IconsPanel::IsSelected(icons_t type) const
     if (type & ICON_CASTLES) return castleIcons.isSelected();
 
     return false;
+}
+
+void Interface::HeroesBottomIcons::SetShow(bool)
+{
+}
+
+void Interface::HeroesBottomIcons::ActionCurrentUp()
+{
+
+}
+
+void Interface::HeroesBottomIcons::ActionCurrentDn()
+{
+
+}
+
+void Interface::HeroesBottomIcons::ActionListDoubleClick(Interface::HEROES &)
+{
+
+}
+
+void Interface::HeroesBottomIcons::ActionListSingleClick(Interface::HEROES &)
+{
+
+}
+
+void Interface::HeroesBottomIcons::ActionListPressRight(Interface::HEROES &)
+{
+
+}
+
+void Interface::HeroesBottomIcons::RedrawItem(Interface::HEROES const &, s32 ox, s32 oy, bool current)
+{
+
+}
+
+void Interface::HeroesBottomIcons::RedrawBackground(const Point &)
+{
 }
