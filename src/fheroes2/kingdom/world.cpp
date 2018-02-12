@@ -356,20 +356,12 @@ Maps::Tiles &World::GetTiles(u32 ax, u32 ay)
 
 const Maps::Tiles &World::GetTiles(s32 index) const
 {
-#ifdef WITH_DEBUG
-    return vec_tiles.at(index);
-#else
     return vec_tiles[index];
-#endif
 }
 
 Maps::Tiles &World::GetTiles(s32 index)
 {
-#ifdef WITH_DEBUG
-    return vec_tiles.at(index);
-#else
     return vec_tiles[index];
-#endif
 }
 
 /* get kingdom */

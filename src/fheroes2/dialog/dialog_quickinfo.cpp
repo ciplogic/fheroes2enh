@@ -861,7 +861,7 @@ void Dialog::QuickInfo(const Heroes &hero)
     r_flag.Blit(dst_pt);
 
     // attack
-    text.Set(string(_("Attack")) + ":");
+    text.Set(_("Attack") + ":");
     dst_pt.x = cur_rt.x + 10;
     dst_pt.y += port.h();
     text.Blit(dst_pt);
@@ -871,7 +871,7 @@ void Dialog::QuickInfo(const Heroes &hero)
     text.Blit(dst_pt);
 
     // defense
-    text.Set(string(_("Defense")) + ":");
+    text.Set(_("Defense") + ":");
     dst_pt.x = cur_rt.x + 10;
     dst_pt.y += 12;
     text.Blit(dst_pt);
@@ -881,7 +881,7 @@ void Dialog::QuickInfo(const Heroes &hero)
     text.Blit(dst_pt);
 
     // power
-    text.Set(string(_("Spell Power")) + ":");
+    text.Set(_("Spell Power") + ":");
     dst_pt.x = cur_rt.x + 10;
     dst_pt.y += 12;
     text.Blit(dst_pt);
@@ -891,7 +891,7 @@ void Dialog::QuickInfo(const Heroes &hero)
     text.Blit(dst_pt);
 
     // knowledge
-    text.Set(string(_("Knowledge")) + ":");
+    text.Set(_("Knowledge") + ":");
     dst_pt.x = cur_rt.x + 10;
     dst_pt.y += 12;
     text.Blit(dst_pt);
@@ -901,7 +901,7 @@ void Dialog::QuickInfo(const Heroes &hero)
     text.Blit(dst_pt);
 
     // spell point
-    text.Set(string(_("Spell Points")) + ":");
+    text.Set(_("Spell Points") + ":");
     dst_pt.x = cur_rt.x + 10;
     dst_pt.y += 12;
     text.Blit(dst_pt);
@@ -911,7 +911,7 @@ void Dialog::QuickInfo(const Heroes &hero)
     text.Blit(dst_pt);
 
     // move point
-    text.Set(string(_("Move Points")) + ":");
+    text.Set(_("Move Points") + ":");
     dst_pt.x = cur_rt.x + 10;
     dst_pt.y += 12;
     text.Blit(dst_pt);

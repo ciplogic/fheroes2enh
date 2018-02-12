@@ -269,11 +269,7 @@ void Interface::Radar::RedrawObjects(int color)
         for (s32 xx = 0; xx < world_w; xx += stepx)
         {
             const Maps::Tiles &tile = world.GetTiles(xx, yy);
-#ifdef WITH_DEBUG
-            bool show_tile = IS_DEVEL() || ! tile.isFog(color);
-#else
             const bool &show_tile = !tile.isFog(color);
-#endif
             RGBA rgba(0, 0, 0);
 
             if (show_tile)

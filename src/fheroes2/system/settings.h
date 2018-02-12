@@ -583,8 +583,6 @@ public:
     { return maps_params; }
 
 protected:
-    void Parse(const string &left, const string &right);
-
     void PostLoad();
 
 private:
@@ -621,8 +619,7 @@ private:
 
     bool _isQuickCombat;
 
-    Maps::FileInfo
-            current_maps_file;
+    Maps::FileInfo current_maps_file;
 
     int sound_volume;
     int music_volume;
@@ -649,8 +646,6 @@ private:
 };
 
 StreamBase &operator<<(StreamBase &, const Settings &);
-
-StreamBase &operator>>(StreamBase &, Settings &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, Settings &);
 

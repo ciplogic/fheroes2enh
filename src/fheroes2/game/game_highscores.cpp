@@ -38,7 +38,6 @@
 #include "game.h"
 #include "game_over.h"
 #include "mus.h"
-#include "audio.h"
 #include "audio_mixer.h"
 #include "icn.h"
 
@@ -189,15 +188,6 @@ int Game::HighScores(bool fill)
 
     cursor.Hide();
     if (fill) display.Fill(ColorBlack);
-
-#ifdef WITH_DEBUG
-    if(IS_DEVEL() && world.CountDay())
-    {
-    std::string msg = std::string("Devepoper mode, not save! \n \n Your result: ") + Int2Str(GetGameOverScores());
-    Dialog::Message("High Scores", msg, Font::BIG, Dialog::OK);
-    return MAINMENU;
-    }
-#endif
 
     HGSData hgs;
 

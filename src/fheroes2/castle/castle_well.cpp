@@ -314,32 +314,32 @@ void Castle::WellRedrawInfoArea(const Point &cur_pt)
         dst_pt.y = pt.y + 16;
         text.Blit(dst_pt);
         // attack
-        string str = string(_("Attack")) + ": " + Int2Str(monster.GetAttack());
+        string str = _("Attack") + ": " + Int2Str(monster.GetAttack());
         text.Set(str);
         dst_pt.x = pt.x + 268 - text.w() / 2;
         dst_pt.y = pt.y + 22;
         text.Blit(dst_pt);
         // defense
-        str = string(_("Defense")) + ": " + Int2Str(monster.GetDefense());
+        str = _("Defense") + ": " + Int2Str(monster.GetDefense());
         text.Set(str);
         dst_pt.x = pt.x + 268 - text.w() / 2;
         dst_pt.y = pt.y + 34;
         text.Blit(dst_pt);
         // damage
-        str = string(_("Damage")) + ": " + Int2Str(monster.GetDamageMin()) + "-" +
+        str = _("Damage") + ": " + Int2Str(monster.GetDamageMin()) + "-" +
               Int2Str(monster.GetDamageMax());
         text.Set(str);
         dst_pt.x = pt.x + 268 - text.w() / 2;
         dst_pt.y = pt.y + 46;
         text.Blit(dst_pt);
         // hp
-        str = string(_("HP")) + ": " + Int2Str(monster.GetHitPoints());
+        str = _("HP") + ": " + Int2Str(monster.GetHitPoints());
         text.Set(str);
         dst_pt.x = pt.x + 268 - text.w() / 2;
         dst_pt.y = pt.y + 58;
         text.Blit(dst_pt);
         // speed
-        str = string(_("Speed")) + ": ";
+        str = _("Speed") + ": ";
         text.Set(str);
         dst_pt.x = pt.x + 268 - text.w() / 2;
         dst_pt.y = pt.y + 78;
@@ -365,7 +365,7 @@ void Castle::WellRedrawInfoArea(const Point &cur_pt)
             dst_pt.y = pt.y + 122;
             text.Blit(dst_pt);
 
-            str = string(_("Available")) + ": ";
+            str = _("Available") + ": ";
             text.Set(str);
             dst_pt.x = pt.x + 44;
             dst_pt.y = pt.y + 122;

@@ -139,46 +139,47 @@ int Dialog::ArmyInfo(const Troop &troop, int flags)
     // dialog menu loop
     while (le.HandleEvents())
     {
-        if (flags & BUTTONS)
+        if (!(flags & BUTTONS))
         {
-            if (buttonUpgrade.isEnable())
-                le.MousePressLeft(buttonUpgrade) ? (buttonUpgrade).PressDraw() : (buttonUpgrade).ReleaseDraw();
-            if (buttonDismiss.isEnable())
-                le.MousePressLeft(buttonDismiss) ? (buttonDismiss).PressDraw() : (buttonDismiss).ReleaseDraw();
-            le.MousePressLeft(buttonExit) ? (buttonExit).PressDraw() : (buttonExit).ReleaseDraw();
+            if (!le.MousePressRight()) break;
+            continue;
+        }
+        if (buttonUpgrade.isEnable())
+            le.MousePressLeft(buttonUpgrade) ? (buttonUpgrade).PressDraw() : (buttonUpgrade).ReleaseDraw();
+        if (buttonDismiss.isEnable())
+            le.MousePressLeft(buttonDismiss) ? (buttonDismiss).PressDraw() : (buttonDismiss).ReleaseDraw();
+        le.MousePressLeft(buttonExit) ? (buttonExit).PressDraw() : (buttonExit).ReleaseDraw();
 
-            // upgrade
-            if (buttonUpgrade.isEnable() && le.MouseClickLeft(buttonUpgrade))
+        // upgrade
+        if (buttonUpgrade.isEnable() && le.MouseClickLeft(buttonUpgrade))
+        {
+            string msg = 1.0f != Monster::GetUpgradeRatio() ?
+                _("Your troops can be upgraded, but it will cost you %{ratio} times the difference in cost for each troop, rounded up to next highest number. Do you wish to upgrade them?")
+                :
+                _("Your troops can be upgraded, but it will cost you dearly. Do you wish to upgrade them?");
+            StringReplace(msg, "%{ratio}", GetString(Monster::GetUpgradeRatio(), 2));
+            if (YES == ResourceInfo("", msg, troop.GetUpgradeCost(), YES | NO))
             {
-                string msg = 1.0f != Monster::GetUpgradeRatio() ?
-                             _("Your troops can be upgraded, but it will cost you %{ratio} times the difference in cost for each troop, rounded up to next highest number. Do you wish to upgrade them?")
-                                                                :
-                             _("Your troops can be upgraded, but it will cost you dearly. Do you wish to upgrade them?");
-                StringReplace(msg, "%{ratio}", GetString(Monster::GetUpgradeRatio(), 2));
-                if (YES == ResourceInfo("", msg, troop.GetUpgradeCost(), YES | NO))
-                {
-                    result = UPGRADE;
-                    break;
-                }
-            } else
-                // dismiss
+                result = UPGRADE;
+                break;
+            }
+        }
+        else
+            // dismiss
             if (buttonDismiss.isEnable() && le.MouseClickLeft(buttonDismiss) &&
                 YES == Message("", _("Are you sure you want to dismiss this army?"), Font::BIG,
-                               YES | NO))
+                    YES | NO))
             {
                 result = DISMISS;
                 break;
-            } else
-                // exit
-            if (le.MouseClickLeft(buttonExit) || HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
-            {
-                result = CANCEL;
-                break;
             }
-        } else
-        {
-            if (!le.MousePressRight()) break;
-        }
+            else
+                // exit
+                if (le.MouseClickLeft(buttonExit) || HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
+                {
+                    result = CANCEL;
+                    break;
+                }
     }
 
     cursor.Hide();
@@ -193,7 +194,7 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
     Text text;
 
     // attack
-    text.Set(string(_("Attack")) + ":");
+    text.Set(_("Attack") + ":");
     dst_pt.x = dst.x - text.w();
     dst_pt.y = dst.y;
     text.Blit(dst_pt);
@@ -205,7 +206,7 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
     text.Blit(dst_pt);
 
     // defense
-    text.Set(string(_("Defense")) + ":");
+    text.Set(_("Defense") + ":");
     dst_pt.x = dst.x - text.w();
     dst_pt.y += 18;
     text.Blit(dst_pt);
@@ -230,7 +231,7 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
     }
 
     // damage
-    text.Set(string(_("Damage")) + ":");
+    text.Set(_("Damage") + ":");
     dst_pt.x = dst.x - text.w();
     dst_pt.y += 18;
     text.Blit(dst_pt);
@@ -243,7 +244,7 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
     text.Blit(dst_pt);
 
     // hp
-    text.Set(string(_("Hit Points")) + ":");
+    text.Set(_("Hit Points") + ":");
     dst_pt.x = dst.x - text.w();
     dst_pt.y += 18;
     text.Blit(dst_pt);
@@ -254,7 +255,7 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
 
     if (troop.isBattle())
     {
-        text.Set(string(_("Hit Points Left")) + ":");
+        text.Set(_("Hit Points Left") + ":");
         dst_pt.x = dst.x - text.w();
         dst_pt.y += 18;
         text.Blit(dst_pt);
@@ -265,7 +266,7 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
     }
 
     // speed
-    text.Set(string(_("Speed")) + ":");
+    text.Set(_("Speed") + ":");
     dst_pt.x = dst.x - text.w();
     dst_pt.y += 18;
     text.Blit(dst_pt);
@@ -275,7 +276,7 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
     text.Blit(dst_pt);
 
     // morale
-    text.Set(string(_("Morale")) + ":");
+    text.Set(_("Morale") + ":");
     dst_pt.x = dst.x - text.w();
     dst_pt.y += 18;
     text.Blit(dst_pt);
@@ -285,7 +286,7 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
     text.Blit(dst_pt);
 
     // luck
-    text.Set(string(_("Luck")) + ":");
+    text.Set(_("Luck") + ":");
     dst_pt.x = dst.x - text.w();
     dst_pt.y += 18;
     text.Blit(dst_pt);

@@ -441,9 +441,6 @@ namespace Maps
         u8 quantity2;
         u8 quantity3;
 
-#ifdef WITH_DEBUG
-        u8	passable_disable;
-#endif
     };
 
     StreamBase &operator<<(StreamBase &, const TilesAddon &);

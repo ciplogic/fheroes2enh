@@ -1835,29 +1835,6 @@ void Battle::Interface::HumanBattleTurn(const Unit &b, Actions &a, string &msg)
             // surrender
         if (HotKeyPressEvent(Game::EVENT_BATTLE_SURRENDER))
             ProcessingHeroDialogResult(3, a);
-
-        // debug only
-#ifdef WITH_DEBUG
-                                                                                                                                if(IS_DEVEL())
-	switch(le.KeyValue())
-	{
-	    case KEY_w:
-		// fast wins game
-		arena.GetResult().army1 = RESULT_WINS;
-		humanturn_exit = true;
-		a.push_back(Command(MSG_BATTLE_END_TURN, b.GetUID()));
-		break;
-
-	    case KEY_l:
-		// fast loss game
-		arena.GetResult().army1 = RESULT_LOSS;
-		humanturn_exit = true;
-		a.push_back(Command(MSG_BATTLE_END_TURN, b.GetUID()));
-		break;
-
-    	    default: break;
-    	}
-#endif
     }
 
     if (pocket_book.w && le.MouseCursor(pocket_book))

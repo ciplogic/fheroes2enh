@@ -1035,9 +1035,6 @@ u32 PackTileSpriteIndex(u32 index, u32 shape) /* index max: 0x3FFF, shape value:
 /* Maps::Tiles */
 Maps::Tiles::Tiles() : maps_index(0), pack_sprite_index(0), tile_passable(DIRECTION_ALL),
                        mp2_object(0), fog_colors(Color::ALL), quantity1(0), quantity2(0), quantity3(0)
-#ifdef WITH_DEBUG
-, passable_disable(0)
-#endif
 {
 }
 
@@ -1198,9 +1195,6 @@ bool Maps::Tiles::isLongObject(int direction)
 void Maps::Tiles::UpdatePassable()
 {
     tile_passable = DIRECTION_ALL;
-#ifdef WITH_DEBUG
-    passable_disable = 0;
-#endif
 
     const int obj = GetObject(false);
     bool emptyobj = MP2::OBJ_ZERO == obj || MP2::OBJ_COAST == obj || MP2::OBJ_EVENT == obj;
@@ -1208,10 +1202,6 @@ void Maps::Tiles::UpdatePassable()
     if (MP2::isActionObject(obj, isWater()))
     {
         tile_passable = MP2::GetObjectDirect(obj);
-#ifdef WITH_DEBUG
-        if(tile_passable == 0)
-            passable_disable = 8;
-#endif
         return;
     }
 
@@ -1233,9 +1223,6 @@ void Maps::Tiles::UpdatePassable()
                                                                   ptr_fun(&TilesAddon::isShadow)))))
         {
             tile_passable = 0;
-#ifdef WITH_DEBUG
-            passable_disable = 1;
-#endif
         }
 
         // fix mountain layer
@@ -1244,9 +1231,6 @@ void Maps::Tiles::UpdatePassable()
             mounts1 && (mounts2 || trees2))
         {
             tile_passable = 0;
-#ifdef WITH_DEBUG
-            passable_disable = 2;
-#endif
         }
 
         // fix trees layer
@@ -1255,9 +1239,6 @@ void Maps::Tiles::UpdatePassable()
             trees1 && (mounts2 || trees2))
         {
             tile_passable = 0;
-#ifdef WITH_DEBUG
-            passable_disable = 3;
-#endif
         }
 
         // town twba
@@ -1265,9 +1246,6 @@ void Maps::Tiles::UpdatePassable()
             FindAddonICN1(ICN::OBJNTWBA) && (mounts2 || trees2))
         {
             tile_passable = 0;
-#ifdef WITH_DEBUG
-            passable_disable = 5;
-#endif
         }
 
         if (isValidDirection(GetIndex(), Direction::TOP, wSize))
@@ -1279,9 +1257,6 @@ void Maps::Tiles::UpdatePassable()
                 !(Direction::TOP & top.tile_passable))
             {
                 top.tile_passable = 0;
-#ifdef WITH_DEBUG
-                top.passable_disable = 9;
-#endif
             }
         }
     }
@@ -1293,9 +1268,6 @@ void Maps::Tiles::UpdatePassable()
         !MP2::isActionObject(obj, isWater()))
     {
         tile_passable = 0;
-#ifdef WITH_DEBUG
-        passable_disable = 4;
-#endif
     }
 
     // check all sprite (level 1)
@@ -1305,11 +1277,6 @@ void Maps::Tiles::UpdatePassable()
         if (tile_passable)
         {
             tile_passable &= TilesAddon::GetPassable(*it);
-
-#ifdef WITH_DEBUG
-            if(0 == tile_passable)
-            passable_disable = 6;
-#endif
         }
     }
 
@@ -1326,9 +1293,6 @@ void Maps::Tiles::UpdatePassable()
             !(top.tile_passable & DIRECTION_TOP_ROW))
         {
             top.tile_passable = 0;
-#ifdef WITH_DEBUG
-            top.passable_disable = 7;
-#endif
         }
     }
 
@@ -1497,27 +1461,7 @@ void Maps::Tiles::RedrawBottom(Surface &dst, bool skip_objs) const
 
 void Maps::Tiles::RedrawPassable(Surface &dst) const
 {
-#ifdef WITH_DEBUG
-    const Interface::GameArea & area = Interface::Basic::Get().GetGameArea();
-    const Point mp = Maps::GetPoint(GetIndex());
 
-    if(area.GetRectMaps() & mp)
-    {
-    if(0 == tile_passable ||
-       DIRECTION_ALL != tile_passable)
-    {
-        Surface sf = PassableViewSurface(tile_passable);
-
-        if(passable_disable)
-        {
-        Text text(GetString(passable_disable), Font::SMALL);
-        text.Blit(13, 13, sf);
-        }
-
-            area.BlitOnTile(dst, sf, 0, 0, mp);
-    }
-    }
-#endif
 }
 
 void Maps::Tiles::RedrawObjects(Surface &dst) const
@@ -1813,10 +1757,6 @@ string Maps::Tiles::String() const
     }
     os << endl <<
        "passable        : " << (tile_passable ? Direction::String(tile_passable) : "false");
-#ifdef WITH_DEBUG
-    if(passable_disable)
-    os << ", disable(" << static_cast<int>(passable_disable) << ")";
-#endif
     os <<
        endl <<
        "mp2 object      : " << "0x" << setw(2) << setfill('0') << GetObject() <<
