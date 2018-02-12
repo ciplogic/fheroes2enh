@@ -1,5 +1,22 @@
 **FHeroes 2 Enhanced**
+*What is it?*
+Free Heroes 2 is an engine recreation of game Heroes 2 (of Might and Magic) with UI and coding enhancements.
 
+*What do you mean by enhancements?*
+Would you want to play Heroes 2 but you feel things missing like:
+* Buying buildings with one click? 
+* Upgrade units with one click if you have resources? 
+* Last saved file is put on top of "Load" list?
+* An installer that will also download the Heroes 2 Demo or extra maps to not look for them how to copy (only on Windows now)?
+* Quick combat to avoid tedious battles?
+* Performance improvements over Free Heroes 2?
+
+If you want to see what is it about, and you have an Windows machine, why not try it?
+
+The Releases page contains the latest version from here:
+https://github.com/ciplogic/fheroes2enh/releases
+
+**More details**
 Over time there will be mostly usability changes and improvements over modernizing the code. (i.e. C++ 11)
 
 You can see a demo of how it runs and how it is enhanced here: (feel free to build it and make a more pleasing intro!)
