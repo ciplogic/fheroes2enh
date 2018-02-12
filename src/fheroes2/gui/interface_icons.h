@@ -106,6 +106,8 @@ namespace Interface
 
         void SetShow(bool);
 
+        void SetHero(HEROES const pHeroes);
+
     protected:
         void ActionCurrentUp();
 

@@ -822,3 +822,9 @@ StreamBase &operator>>(StreamBase &sb, LastLoseHero &st)
 {
     return sb >> st.first >> st.second;
 }
+
+KingdomHeroes& KingdomHeroes::GetNull()
+{
+    static KingdomHeroes nullInstance;
+    return nullInstance;
+}

@@ -57,7 +57,10 @@ struct KingdomCastles : public VecCastles
 
 struct KingdomHeroes : public VecHeroes
 {
+    static KingdomHeroes& GetNull();
 };
+
+
 
 class Kingdom : public BitModes, public Control
 {

@@ -818,6 +818,8 @@ int Interface::Basic::HumanTurn(bool isload)
             if (le.MouseCursor(GetScrollBottom())) gameArea.SetScroll(SCROLL_BOTTOM);
         }
 
+        heroesBar.QueueEventProcessing();
+
         // cursor over radar
         if ((!conf.ExtGameHideInterface() || conf.ShowRadar()) &&
             le.MouseCursor(radar.GetRect()))

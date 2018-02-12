@@ -445,6 +445,8 @@ void Interface::IconsPanel::Select(const Heroes &hr)
 {
     castleIcons.Unselect();
     heroesIcons.SetCurrent((const HEROES) &hr);
+
+    heroesBottom.SetHero((const HEROES) &hr);
 }
 
 void Interface::IconsPanel::Select(const Castle &cs)
@@ -548,4 +550,9 @@ void Interface::HeroesBottomIcons::RedrawItem(Interface::HEROES const &, s32 ox,
 
 void Interface::HeroesBottomIcons::RedrawBackground(const Point &)
 {
+}
+
+void Interface::HeroesBottomIcons::SetHero(Interface::HEROES const pHeroes)
+{
+
 }

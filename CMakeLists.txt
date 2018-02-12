@@ -229,6 +229,8 @@ set(SOURCE_FILES
         src/fheroes2/gui/interface_radar.h
         src/fheroes2/gui/interface_status.cpp
         src/fheroes2/gui/interface_status.h
+        src/fheroes2/gui/interface_heroes_bar.cpp
+        src/fheroes2/gui/interface_heroes_bar.h
         src/fheroes2/gui/splitter.cpp
         src/fheroes2/gui/splitter.h
         src/fheroes2/gui/statusbar.cpp

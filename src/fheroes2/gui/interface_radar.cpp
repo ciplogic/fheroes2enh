@@ -51,56 +51,76 @@
 #define COLOR_PURPLE    0x87
 #define COLOR_GRAY    0x10
 
-u32 GetPaletteIndexFromGround(int ground)
+namespace
 {
-    switch (ground)
+    u32 GetPaletteIndexFromGround(int ground)
     {
-        case Maps::Ground::DESERT:
-            return (COLOR_DESERT);
-        case Maps::Ground::SNOW:
-            return (COLOR_SNOW);
-        case Maps::Ground::SWAMP:
-            return (COLOR_SWAMP);
-        case Maps::Ground::WASTELAND:
-            return (COLOR_WASTELAND);
-        case Maps::Ground::BEACH:
-            return (COLOR_BEACH);
-        case Maps::Ground::LAVA:
-            return (COLOR_LAVA);
-        case Maps::Ground::DIRT:
-            return (COLOR_DIRT);
-        case Maps::Ground::GRASS:
-            return (COLOR_GRASS);
-        case Maps::Ground::WATER:
-            return (COLOR_WATER);
-        default:
-            break;
+        switch (ground)
+        {
+            case Maps::Ground::DESERT:
+                return (COLOR_DESERT);
+            case Maps::Ground::SNOW:
+                return (COLOR_SNOW);
+            case Maps::Ground::SWAMP:
+                return (COLOR_SWAMP);
+            case Maps::Ground::WASTELAND:
+                return (COLOR_WASTELAND);
+            case Maps::Ground::BEACH:
+                return (COLOR_BEACH);
+            case Maps::Ground::LAVA:
+                return (COLOR_LAVA);
+            case Maps::Ground::DIRT:
+                return (COLOR_DIRT);
+            case Maps::Ground::GRASS:
+                return (COLOR_GRASS);
+            case Maps::Ground::WATER:
+                return (COLOR_WATER);
+            default:
+                break;
+        }
+
+        return 0;
     }
 
-    return 0;
-}
-
-u32 GetPaletteIndexFromColor(int color)
-{
-    switch (color)
+    u32 GetPaletteIndexFromColor(int color)
     {
-        case Color::BLUE:
-            return COLOR_BLUE;
-        case Color::GREEN:
-            return COLOR_GREEN;
-        case Color::RED:
-            return COLOR_RED;
-        case Color::YELLOW:
-            return COLOR_YELLOW;
-        case Color::ORANGE:
-            return COLOR_ORANGE;
-        case Color::PURPLE:
-            return COLOR_PURPLE;
-        default:
-            break;
+        switch (color)
+        {
+            case Color::BLUE:
+                return COLOR_BLUE;
+            case Color::GREEN:
+                return COLOR_GREEN;
+            case Color::RED:
+                return COLOR_RED;
+            case Color::YELLOW:
+                return COLOR_YELLOW;
+            case Color::ORANGE:
+                return COLOR_ORANGE;
+            case Color::PURPLE:
+                return COLOR_PURPLE;
+            default:
+                break;
+        }
+
+        return COLOR_GRAY;
     }
 
-    return COLOR_GRAY;
+    int GetChunkSize(float size1, float size2)
+    {
+        int res = 1;
+        if (size1 > size2)
+        {
+            double intpart;
+            double fractpart = modf(size1 / size2, &intpart);
+            res = static_cast<int>(intpart);
+
+            if (static_cast<int>(fractpart * 100) > 10)
+                res += 1;
+        }
+
+        return res;
+    }
+
 }
 
 /* constructor */
@@ -222,23 +242,6 @@ void Interface::Radar::Redraw()
         }
     }
 }
-
-int GetChunkSize(float size1, float size2)
-{
-    int res = 1;
-    if (size1 > size2)
-    {
-        double intpart;
-        double fractpart = modf(size1 / size2, &intpart);
-        res = static_cast<int>(intpart);
-
-        if (static_cast<int>(fractpart * 100) > 10)
-            res += 1;
-    }
-
-    return res;
-}
-
 /* redraw radar area for color */
 void Interface::Radar::RedrawObjects(int color)
 {

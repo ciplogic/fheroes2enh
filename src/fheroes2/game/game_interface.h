@@ -23,6 +23,7 @@
 #ifndef H2GAMEINTERFACE_H
 #define H2GAMEINTERFACE_H
 
+#include "interface_heroes_bar.h"
 #include "gamedefs.h"
 #include "interface_radar.h"
 #include "interface_buttons.h"
@@ -200,6 +201,8 @@ namespace Interface
         ButtonsArea buttonsArea;
         StatusWindow statusWindow;
         ControlPanel controlPanel;
+
+        HeroesBar heroesBar;
 
         int redraw;
 

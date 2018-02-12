@@ -36,7 +36,10 @@
 #include "game_interface.h"
 
 Interface::Basic::Basic() : gameArea(*this), radar(*this),
-                            iconsPanel(*this), buttonsArea(*this), statusWindow(*this), controlPanel(*this), redraw(0)
+                            iconsPanel(*this), buttonsArea(*this),
+                            heroesBar(*this),
+                            statusWindow(*this), controlPanel(*this),
+                            redraw(0)
 {
     Settings &conf = Settings::Get().Get();
     const Display &display = Display::Get();
@@ -173,6 +176,8 @@ void Interface::Basic::Redraw(int force)
     if ((redraw | force) & REDRAW_GAMEAREA) gameArea.Redraw(Display::Get(), LEVEL_ALL);
 
     if ((conf.ExtGameHideInterface() && conf.ShowRadar()) || ((redraw | force) & REDRAW_RADAR)) radar.Redraw();
+
+    heroesBar.Redraw();
 
     if ((conf.ExtGameHideInterface() && conf.ShowIcons()) || ((redraw | force) & REDRAW_ICONS)) iconsPanel.Redraw();
     else if ((redraw | force) & REDRAW_HEROES) iconsPanel.RedrawIcons(ICON_HEROES);
