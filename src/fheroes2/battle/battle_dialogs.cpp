@@ -380,48 +380,47 @@ int Battle::Arena::DialogBattleHero(const HeroBase &hero, bool buttons) const
 
     Point tp(pos_rt);
 
-    string str;
     Text text;
     text.Set(Font::SMALL);
-    str = _("%{name} the %{race}");
+    string str = _("%{name} the %{race}");
     StringReplace(str, "%{name}", hero.GetName());
     StringReplace(str, "%{race}", Race::String(hero.GetRace()));
     text.Set(str);
     tp.x = pos_rt.x + (pos_rt.w - text.w()) / 2;
     tp.y += 10;
     text.Blit(tp);
-    str = _("Attack") + string(": ") + GetString(hero.GetAttack());
+    str = _("Attack") + ": " + Int2Str(hero.GetAttack());
     text.Set(str);
     tp.x = pos_rt.x + 205 - text.w() / 2;
     tp.y = pos_rt.y + 40;
     text.Blit(tp);
-    str = _("Defense") + string(": ") + GetString(hero.GetDefense());
+    str = _("Defense") + ": " + Int2Str(hero.GetDefense());
     text.Set(str);
     tp.x = pos_rt.x + 205 - text.w() / 2;
     tp.y = pos_rt.y + 51;
     text.Blit(tp);
-    str = _("Spell Power") + string(": ") + GetString(hero.GetPower());
+    str = _("Spell Power") + ": " + Int2Str(hero.GetPower());
     text.Set(str);
     tp.x = pos_rt.x + 205 - text.w() / 2;
     tp.y = pos_rt.y + 62;
     text.Blit(tp);
-    str = _("Knowledge") + string(": ") + GetString(hero.GetKnowledge());
+    str = _("Knowledge") + ": " + Int2Str(hero.GetKnowledge());
     text.Set(str);
     tp.x = pos_rt.x + 205 - text.w() / 2;
     tp.y = pos_rt.y + 73;
     text.Blit(tp);
-    str = _("Morale") + string(": ") + Morale::String(hero.GetMorale());
+    str = _("Morale") + ": " + Morale::String(hero.GetMorale());
     text.Set(str);
     tp.x = pos_rt.x + 205 - text.w() / 2;
     tp.y = pos_rt.y + 84;
     text.Blit(tp);
-    str = _("Luck") + string(": ") + Luck::String(hero.GetLuck());
+    str = _("Luck") + ": " + Luck::String(hero.GetLuck());
     text.Set(str);
     tp.x = pos_rt.x + 205 - text.w() / 2;
     tp.y = pos_rt.y + 95;
     text.Blit(tp);
-    str = _("Spell Points") + string(": ") + GetString(hero.GetSpellPoints()) + "/" +
-          GetString(hero.GetMaxSpellPoints());
+    str = _("Spell Points") + ": " + Int2Str(hero.GetSpellPoints()) + "/" +
+          Int2Str(hero.GetMaxSpellPoints());
     text.Set(str);
     tp.x = pos_rt.x + 205 - text.w() / 2;
     tp.y = pos_rt.y + 117;

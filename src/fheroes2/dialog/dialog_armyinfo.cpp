@@ -81,7 +81,7 @@ int Dialog::ArmyInfo(const Troop &troop, int flags)
     text.Blit(dst_pt);
 
     // count
-    text.Set(GetString(troop.GetCount()));
+    text.Set(Int2Str(troop.GetCount()));
     dst_pt.x = pos_rt.x + 140 - text.w() / 2;
     dst_pt.y = pos_rt.y + 225;
     text.Blit(dst_pt);
@@ -236,9 +236,9 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
     text.Blit(dst_pt);
 
     if (troop().GetDamageMin() != troop().GetDamageMax())
-        text.Set(GetString(troop().GetDamageMin()) + " - " + GetString(troop().GetDamageMax()));
+        text.Set(Int2Str(troop().GetDamageMin()) + " - " + Int2Str(troop().GetDamageMax()));
     else
-        text.Set(GetString(troop().GetDamageMin()));
+        text.Set(Int2Str(troop().GetDamageMin()));
     dst_pt.x = dst.x + ox;
     text.Blit(dst_pt);
 
@@ -248,7 +248,7 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
     dst_pt.y += 18;
     text.Blit(dst_pt);
 
-    text.Set(GetString(troop().GetHitPoints()));
+    text.Set(Int2Str(troop().GetHitPoints()));
     dst_pt.x = dst.x + ox;
     text.Blit(dst_pt);
 
@@ -259,7 +259,7 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
         dst_pt.y += 18;
         text.Blit(dst_pt);
 
-        text.Set(GetString(troop.GetHitPointsLeft()));
+        text.Set(Int2Str(troop.GetHitPointsLeft()));
         dst_pt.x = dst.x + ox;
         text.Blit(dst_pt);
     }
@@ -372,7 +372,7 @@ void DrawBattleStats(const Point &dst, const Troop &b)
             const u32 duration = b.GetAffectedDuration(mode);
             if (duration)
             {
-                text.Set(GetString(duration), Font::SMALL);
+                text.Set(Int2Str(duration), Font::SMALL);
                 text.Blit(ow + (sprite1.w() - text.w()) / 2, dst.y + sprite1.h() + 1);
             }
 
@@ -515,8 +515,8 @@ int Dialog::ArmyJoinWithCost(const Troop &troop, u32 join, u32 gold, Heroes &her
     posy += text.h() + 40;
     sprite.Blit(pos.x + (pos.w - sprite.w()) / 2, posy);
 
-    TextSprite tsTotal(GetString(gold) + " " + "(" + "total: " +
-                       GetString(world.GetKingdom(hero.GetColor()).GetFunds().Get(Resource::GOLD)) + ")", Font::SMALL,
+    TextSprite tsTotal(Int2Str(gold) + " " + "(" + "total: " +
+                       Int2Str(world.GetKingdom(hero.GetColor()).GetFunds().Get(Resource::GOLD)) + ")", Font::SMALL,
                        pos.x + (pos.w - text.w()) / 2, posy + sprite.h() + 5);
     tsTotal.Show();
 
@@ -585,8 +585,8 @@ int Dialog::ArmyJoinWithCost(const Troop &troop, u32 join, u32 gold, Heroes &her
 
             cursor.Hide();
             tsTotal.Hide();
-            tsTotal.SetText(GetString(gold) + " " + "(" + "total: " +
-                            GetString(world.GetKingdom(hero.GetColor()).GetFunds().Get(Resource::GOLD)) + ")");
+            tsTotal.SetText(Int2Str(gold) + " " + "(" + "total: " +
+                            Int2Str(world.GetKingdom(hero.GetColor()).GetFunds().Get(Resource::GOLD)) + ")");
             tsTotal.Show();
 
             if (kingdom.AllowPayment(payment_t(Resource::GOLD, gold)))

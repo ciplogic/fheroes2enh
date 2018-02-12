@@ -511,7 +511,7 @@ void RedrawResourceSprite(const Surface &sf, const Point &pos,
 
     sf.Blit(dst_pt.x - sf.w() / 2, dst_pt.y - sf.h(), display);
 
-    text.Set(GetString(value), Font::SMALL);
+    text.Set(Int2Str(value), Font::SMALL);
     text.Blit(dst_pt.x - text.w() / 2, dst_pt.y + 2);
 }
 

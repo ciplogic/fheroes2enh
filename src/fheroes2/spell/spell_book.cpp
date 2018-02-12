@@ -370,7 +370,7 @@ void SpellBookRedrawMP(const Point &dst, u32 mp)
         for (u32 i = 100; i >= 1; i /= 10)
             if (mp >= i)
             {
-                Text text(GetString((mp % (i * 10)) / i), Font::SMALL);
+                Text text(Int2Str((mp % (i * 10)) / i), Font::SMALL);
                 text.Blit(tp.x - text.w() / 2, tp.y);
                 tp.y += 0 + text.h();
             }
@@ -449,7 +449,7 @@ SpellBookRedrawSpells(const SpellStorage &spells, Rects &coords, const size_t cu
                     break;
             }
 
-            TextBox box(string(spell.GetName()) + " [" + GetString(spell.SpellPoint(&hero)) + "]", Font::SMALL,
+            TextBox box(string(spell.GetName()) + " [" + Int2Str(spell.SpellPoint(&hero)) + "]", Font::SMALL,
                         80);
             box.Blit(px + ox - 40, py + oy + 25);
 

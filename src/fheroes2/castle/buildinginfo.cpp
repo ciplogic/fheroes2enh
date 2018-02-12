@@ -745,7 +745,7 @@ void DwellingsBar::RedrawItem(DwellingItem &dwl, const Rect &pos, Surface &dstsf
     if (castle.isBuild(dwl.type))
     {
         // count
-        Text text(GetString(castle.GetDwellingLivedCount(dwl.type)), Font::SMALL);
+        Text text(Int2Str(castle.GetDwellingLivedCount(dwl.type)), Font::SMALL);
         text.Blit(pos.x + pos.w - text.w() - 3, pos.y + pos.h - text.h() - 1);
 
         u32 grown = dwl.mons.GetGrown();
@@ -753,7 +753,7 @@ void DwellingsBar::RedrawItem(DwellingItem &dwl, const Rect &pos, Surface &dstsf
         if (castle.isBuild(BUILD_WEL2) && DWELLING_MONSTER1 == dwl.type) grown += Castle::GetGrownWel2();
 
         // grown
-        text.Set("+" + GetString(grown), Font::YELLOW_SMALL);
+        text.Set("+" + Int2Str(grown), Font::YELLOW_SMALL);
         text.Blit(pos.x + pos.w - text.w() - 3, pos.y + 2);
     } else
         AGG::GetICN(ICN::CSLMARKER, 0).Blit(pos.x + pos.w - 10, pos.y + 4, dstsf);

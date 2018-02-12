@@ -192,7 +192,7 @@ void Dialog::DrawSystemInfo(const Rects &rects)
     string str = _("sound");
     str.append(" ");
     if (conf.Sound() && conf.SoundVolume())
-        str.append(GetString(conf.SoundVolume()));
+        str.append(Int2Str(conf.SoundVolume()));
     else
         str.append(_("off"));
     text.Set(str, Font::SMALL);
@@ -205,7 +205,7 @@ void Dialog::DrawSystemInfo(const Rects &rects)
     str = _("music");
     str.append(" ");
     if (conf.Music() && conf.MusicVolume())
-        str.append(GetString(conf.MusicVolume()));
+        str.append(Int2Str(conf.MusicVolume()));
     else
         str.append(_("off"));
     text.Set(str);
@@ -229,7 +229,7 @@ void Dialog::DrawSystemInfo(const Rects &rects)
     str = _("hero speed");
     str.append(" ");
     if (conf.HeroesMoveSpeed())
-        str.append(GetString(conf.HeroesMoveSpeed()));
+        str.append(Int2Str(conf.HeroesMoveSpeed()));
     else
         str.append(_("off"));
     text.Set(str);
@@ -245,7 +245,7 @@ void Dialog::DrawSystemInfo(const Rects &rects)
     str = _("ai speed");
     str.append(" ");
     if (conf.AIMoveSpeed())
-        str.append(GetString(conf.AIMoveSpeed()));
+        str.append(Int2Str(conf.AIMoveSpeed()));
     else
         str.append(_("off"));
     text.Set(str);
@@ -260,7 +260,7 @@ void Dialog::DrawSystemInfo(const Rects &rects)
     sprite6.Blit(rect6);
     str = _("scroll speed");
     str.append(" ");
-    str.append(GetString(conf.ScrollSpeed()));
+    str.append(Int2Str(conf.ScrollSpeed()));
     text.Set(str);
     text.Blit(rect6.x + (rect6.w - text.w()) / 2, rect6.y + rect6.h + 5);
 

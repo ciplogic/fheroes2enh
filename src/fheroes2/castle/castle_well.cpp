@@ -153,7 +153,7 @@ void Castle::OpenWell()
                         const Monster ms(race, GetActualDwelling(*it));
                         str.append(ms.GetPluralName(can_recruit));
                         str.append(" - ");
-                        str.append(GetString(can_recruit));
+                        str.append(Int2Str(can_recruit));
                         str.append("\n");
                     }
                 }
@@ -314,26 +314,26 @@ void Castle::WellRedrawInfoArea(const Point &cur_pt)
         dst_pt.y = pt.y + 16;
         text.Blit(dst_pt);
         // attack
-        string str = string(_("Attack")) + ": " + GetString(monster.GetAttack());
+        string str = string(_("Attack")) + ": " + Int2Str(monster.GetAttack());
         text.Set(str);
         dst_pt.x = pt.x + 268 - text.w() / 2;
         dst_pt.y = pt.y + 22;
         text.Blit(dst_pt);
         // defense
-        str = string(_("Defense")) + ": " + GetString(monster.GetDefense());
+        str = string(_("Defense")) + ": " + Int2Str(monster.GetDefense());
         text.Set(str);
         dst_pt.x = pt.x + 268 - text.w() / 2;
         dst_pt.y = pt.y + 34;
         text.Blit(dst_pt);
         // damage
-        str = string(_("Damage")) + ": " + GetString(monster.GetDamageMin()) + "-" +
-              GetString(monster.GetDamageMax());
+        str = string(_("Damage")) + ": " + Int2Str(monster.GetDamageMin()) + "-" +
+              Int2Str(monster.GetDamageMax());
         text.Set(str);
         dst_pt.x = pt.x + 268 - text.w() / 2;
         dst_pt.y = pt.y + 46;
         text.Blit(dst_pt);
         // hp
-        str = string(_("HP")) + ": " + GetString(monster.GetHitPoints());
+        str = string(_("HP")) + ": " + Int2Str(monster.GetHitPoints());
         text.Set(str);
         dst_pt.x = pt.x + 268 - text.w() / 2;
         dst_pt.y = pt.y + 58;
@@ -359,7 +359,7 @@ void Castle::WellRedrawInfoArea(const Point &cur_pt)
             dst_pt.x = pt.x + 268 - text.w() / 2;
             dst_pt.y = pt.y + 110;
             text.Blit(dst_pt);
-            str = string("+ ") + GetString(grown) + " / " + _("week");
+            str = string("+ ") + Int2Str(grown) + " / " + _("week");
             text.Set(str);
             dst_pt.x = pt.x + 268 - text.w() / 2;
             dst_pt.y = pt.y + 122;
@@ -370,7 +370,7 @@ void Castle::WellRedrawInfoArea(const Point &cur_pt)
             dst_pt.x = pt.x + 44;
             dst_pt.y = pt.y + 122;
             text.Blit(dst_pt);
-            text.Set(GetString(available), Font::BIG);
+            text.Set(Int2Str(available), Font::BIG);
             dst_pt.x = pt.x + 129 - text.w() / 2;
             dst_pt.y = pt.y + 119;
             text.Blit(dst_pt);

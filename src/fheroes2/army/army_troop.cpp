@@ -161,17 +161,17 @@ bool Troop::isModes(u32)
 
 string Troop::GetAttackString() const
 {
-    return GetString(GetAttack());
+    return Int2Str(GetAttack());
 }
 
 string Troop::GetDefenseString() const
 {
-    return GetString(GetDefense());
+    return Int2Str(GetDefense());
 }
 
 string Troop::GetShotString() const
 {
-    return GetString(GetShots());
+    return Int2Str(GetShots());
 }
 
 string Troop::GetSpeedString() const
@@ -247,7 +247,7 @@ const Army *ArmyTroop::GetArmy() const
 string ArmyTroop::GetAttackString() const
 {
     if (Troop::GetAttack() == GetAttack())
-        return GetString(Troop::GetAttack());
+        return Int2Str(Troop::GetAttack());
 
     ostringstream os;
     os << Troop::GetAttack() << " (" << GetAttack() << ")";
@@ -257,7 +257,7 @@ string ArmyTroop::GetAttackString() const
 string ArmyTroop::GetDefenseString() const
 {
     if (Troop::GetDefense() == GetDefense())
-        return GetString(Troop::GetDefense());
+        return Int2Str(Troop::GetDefense());
 
     ostringstream os;
     os << Troop::GetDefense() << " (" << GetDefense() << ")";

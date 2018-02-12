@@ -192,7 +192,7 @@ void ArmyBar::RedrawItem(ArmyTroop &troop, const Rect &pos, bool selected, Surfa
 {
     if (!troop.isValid())
         return;
-    Text text(GetString(troop.GetCount()), (use_mini_sprite ? Font::SMALL : Font::BIG));
+    Text text(Int2Str(troop.GetCount()), (use_mini_sprite ? Font::SMALL : Font::BIG));
 
     if (use_mini_sprite)
     {

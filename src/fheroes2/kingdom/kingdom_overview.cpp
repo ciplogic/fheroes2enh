@@ -207,16 +207,16 @@ void StatsHeroesList::RedrawItem(const HeroRow &row, s32 dstx, s32 dsty, bool cu
     // base info
     Interface::RedrawHeroesIcon(*row.hero, dstx + 5, dsty + 4);
 
-    text.Set(GetString(row.hero->GetAttack()));
+    text.Set(Int2Str(row.hero->GetAttack()));
     text.Blit(dstx + 90 - text.w(), dsty + 20);
 
-    text.Set(GetString(row.hero->GetDefense()));
+    text.Set(Int2Str(row.hero->GetDefense()));
     text.Blit(dstx + 125 - text.w(), dsty + 20);
 
-    text.Set(GetString(row.hero->GetPower()));
+    text.Set(Int2Str(row.hero->GetPower()));
     text.Blit(dstx + 160 - text.w(), dsty + 20);
 
-    text.Set(GetString(row.hero->GetKnowledge()));
+    text.Set(Int2Str(row.hero->GetKnowledge()));
     text.Blit(dstx + 195 - text.w(), dsty + 20);
 
     // primary skills info
@@ -557,28 +557,28 @@ void RedrawFundsInfo(const Point &pt, const Kingdom &myKingdom)
 
     AGG::GetICN(ICN::OVERBACK, 0).Blit(Rect(4, 422, 530, 56), pt.x + 4, pt.y + 422);
 
-    text.Set(GetString(funds.wood));
+    text.Set(Int2Str(funds.wood));
     text.Blit(pt.x + 56 - text.w() / 2, pt.y + 448);
 
-    text.Set(GetString(funds.mercury));
+    text.Set(Int2Str(funds.mercury));
     text.Blit(pt.x + 146 - text.w() / 2, pt.y + 448);
 
-    text.Set(GetString(funds.ore));
+    text.Set(Int2Str(funds.ore));
     text.Blit(pt.x + 226 - text.w() / 2, pt.y + 448);
 
-    text.Set(GetString(funds.sulfur));
+    text.Set(Int2Str(funds.sulfur));
     text.Blit(pt.x + 294 - text.w() / 2, pt.y + 448);
 
-    text.Set(GetString(funds.crystal));
+    text.Set(Int2Str(funds.crystal));
     text.Blit(pt.x + 362 - text.w() / 2, pt.y + 448);
 
-    text.Set(GetString(funds.gems));
+    text.Set(Int2Str(funds.gems));
     text.Blit(pt.x + 428 - text.w() / 2, pt.y + 448);
 
-    text.Set(GetString(funds.gold));
+    text.Set(Int2Str(funds.gold));
     text.Blit(pt.x + 496 - text.w() / 2, pt.y + 448);
 
-    text.Set(_("Gold Per Day:") + string(" ") + GetString(myKingdom.GetIncome().Get(Resource::GOLD)));
+    text.Set(_("Gold Per Day:") + string(" ") + Int2Str(myKingdom.GetIncome().Get(Resource::GOLD)));
     text.Blit(pt.x + 180, pt.y + 462);
 
     string msg = _("Day: %{day}");

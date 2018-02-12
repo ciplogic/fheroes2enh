@@ -441,7 +441,7 @@ string Game::CountScoute(u32 count, int scoute, bool shorts)
             break;
 
         case Skill::Level::EXPERT:
-            res = shorts ? GetStringShort(count) : GetString(count);
+            res = shorts ? GetStringShort(count) : Int2Str(count);
             break;
 
         default:
@@ -461,12 +461,12 @@ string Game::CountScoute(u32 count, int scoute, bool shorts)
         } else
             max = static_cast<u32>(floor(count + infelicity + 0.5));
 
-        res = GetString(min);
+        res = Int2Str(min);
 
         if (min != max)
         {
             res.append("-");
-            res.append(GetString(max));
+            res.append(Int2Str(max));
         }
     }
 

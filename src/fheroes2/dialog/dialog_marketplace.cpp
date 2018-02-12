@@ -194,14 +194,14 @@ void TradeWindowGUI::RedrawInfoBuySell(u32 count_sell, u32 count_buy, u32 max_se
     splitter.HideCursor();
 
     textSell.Hide();
-    textSell.SetText(string("-") + GetString(count_sell) + " " + "(" + GetString(max_sell - count_sell) + ")");
+    textSell.SetText(string("-") + Int2Str(count_sell) + " " + "(" + Int2Str(max_sell - count_sell) + ")");
     dst_pt.x = pos_rt.x + pos_rt.w / 2 - 70 - textSell.w() / 2;
     dst_pt.y = pos_rt.y + 116;
     textSell.SetPos(dst_pt);
     textSell.Show();
 
     textBuy.Hide();
-    textBuy.SetText(string("+") + GetString(count_buy) + " " + "(" + GetString(orig_buy + count_buy) + ")");
+    textBuy.SetText(string("+") + Int2Str(count_buy) + " " + "(" + Int2Str(orig_buy + count_buy) + ")");
     dst_pt.x = pos_rt.x + pos_rt.w / 2 + 70 - textBuy.w() / 2;
     dst_pt.y = pos_rt.y + 116;
     textBuy.SetPos(dst_pt);
@@ -513,7 +513,7 @@ void RedrawResourceSprite(const Surface &sf, s32 px, s32 py, s32 value)
     Point dst_pt(px, py);
 
     sf.Blit(dst_pt, display);
-    text.Set(GetString(value), Font::SMALL);
+    text.Set(Int2Str(value), Font::SMALL);
     dst_pt.x += (34 - text.w()) / 2;
     dst_pt.y += 21;
     text.Blit(dst_pt);
@@ -592,7 +592,7 @@ string GetStringTradeCosts(int rs_from, int rs_to, bool tradingPost)
     {
         if (Resource::GOLD != rs_from && Resource::GOLD != rs_to)
             res = "1/";
-        res.append(GetString(GetTradeCosts(rs_from, rs_to, tradingPost)));
+        res.append(Int2Str(GetTradeCosts(rs_from, rs_to, tradingPost)));
     }
 
     return res;

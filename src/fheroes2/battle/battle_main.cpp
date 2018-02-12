@@ -270,7 +270,7 @@ void Battle::NecromancySkillAction(HeroBase &hero, u32 killed, bool local)
         Surface sf1(Size(40, 45), false);
         const Sprite &sf2 = AGG::GetICN(ICN::MONS32, mons.GetSpriteIndex());
         sf2.Blit((sf1.w() - sf2.w()) / 2, 0, sf1);
-        Text text(GetString(count), Font::SMALL);
+        Text text(Int2Str(count), Font::SMALL);
         text.Blit((sf1.w() - text.w()) / 2, sf2.h() + 3, sf1);
         Game::PlayPickupSound();
 

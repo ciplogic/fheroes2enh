@@ -47,7 +47,7 @@ string GetMinesIncomeString(int type)
         res.append(" ");
         res.append("(");
         res.append(value > 0 ? "+" : "-");
-        res.append(GetString(value));
+        res.append(Int2Str(value));
         res.append(")");
     }
 
@@ -866,7 +866,7 @@ void Dialog::QuickInfo(const Heroes &hero)
     dst_pt.y += port.h();
     text.Blit(dst_pt);
 
-    text.Set(GetString(hero.GetAttack()));
+    text.Set(Int2Str(hero.GetAttack()));
     dst_pt.x += 75;
     text.Blit(dst_pt);
 
@@ -876,7 +876,7 @@ void Dialog::QuickInfo(const Heroes &hero)
     dst_pt.y += 12;
     text.Blit(dst_pt);
 
-    text.Set(GetString(hero.GetDefense()));
+    text.Set(Int2Str(hero.GetDefense()));
     dst_pt.x += 75;
     text.Blit(dst_pt);
 
@@ -886,7 +886,7 @@ void Dialog::QuickInfo(const Heroes &hero)
     dst_pt.y += 12;
     text.Blit(dst_pt);
 
-    text.Set(GetString(hero.GetPower()));
+    text.Set(Int2Str(hero.GetPower()));
     dst_pt.x += 75;
     text.Blit(dst_pt);
 
@@ -896,7 +896,7 @@ void Dialog::QuickInfo(const Heroes &hero)
     dst_pt.y += 12;
     text.Blit(dst_pt);
 
-    text.Set(GetString(hero.GetKnowledge()));
+    text.Set(Int2Str(hero.GetKnowledge()));
     dst_pt.x += 75;
     text.Blit(dst_pt);
 
@@ -906,7 +906,7 @@ void Dialog::QuickInfo(const Heroes &hero)
     dst_pt.y += 12;
     text.Blit(dst_pt);
 
-    text.Set(GetString(hero.GetSpellPoints()) + "/" + GetString(hero.GetMaxSpellPoints()));
+    text.Set(Int2Str(hero.GetSpellPoints()) + "/" + Int2Str(hero.GetMaxSpellPoints()));
     dst_pt.x += 75;
     text.Blit(dst_pt);
 
@@ -916,8 +916,8 @@ void Dialog::QuickInfo(const Heroes &hero)
     dst_pt.y += 12;
     text.Blit(dst_pt);
 
-    text.Set(GetString(hero.GetMobilityIndexSprite()) + "/" + GetString(hero.GetMovePoints()) + "/" +
-             GetString(hero.GetMaxMovePoints()));
+    text.Set(Int2Str(hero.GetMobilityIndexSprite()) + "/" + Int2Str(hero.GetMovePoints()) + "/" +
+             Int2Str(hero.GetMaxMovePoints()));
     dst_pt.x += 75;
     text.Blit(dst_pt);
 

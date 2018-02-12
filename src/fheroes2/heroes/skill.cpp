@@ -234,7 +234,7 @@ string Skill::Primary::StringDescription(int skill, const Heroes *hero)
 string Skill::Primary::StringSkills(const string &sep) const
 {
     ostringstream os;
-    os << GetString(attack) << sep << GetString(defense) << sep << GetString(knowledge) << sep << GetString(power);
+    os << Int2Str(attack) << sep << Int2Str(defense) << sep << Int2Str(knowledge) << sep << Int2Str(power);
     return os.str();
 }
 
@@ -772,7 +772,7 @@ void StringAppendModifiers(string &str, int value)
     if (value < 0) str.append(" "); // '-' present
     else if (value > 0) str.append(" +");
 
-    str.append(GetString(value));
+    str.append(Int2Str(value));
 }
 
 int Skill::GetLeadershipModifiers(int level, string *strs = nullptr)
@@ -873,22 +873,22 @@ void PrimarySkillsBar::RedrawItem(int &skill, const Rect &pos, Surface &dstsf)
         {
             case Skill::Primary::ATTACK:
                 backSprite.Blit(Rect(217, 52, ww, ww), dstpt, dstsf);
-                if (hero) text.Set(GetString(hero->GetAttack()));
+                if (hero) text.Set(Int2Str(hero->GetAttack()));
                 break;
 
             case Skill::Primary::DEFENSE:
                 backSprite.Blit(Rect(217, 85, ww, ww), dstpt, dstsf);
-                if (hero) text.Set(GetString(hero->GetDefense()));
+                if (hero) text.Set(Int2Str(hero->GetDefense()));
                 break;
 
             case Skill::Primary::POWER:
                 backSprite.Blit(Rect(217, 118, ww, ww), dstpt, dstsf);
-                if (hero) text.Set(GetString(hero->GetPower()));
+                if (hero) text.Set(Int2Str(hero->GetPower()));
                 break;
 
             case Skill::Primary::KNOWLEDGE:
                 backSprite.Blit(Rect(217, 151, ww, ww), dstpt, dstsf);
-                if (hero) text.Set(GetString(hero->GetKnowledge()));
+                if (hero) text.Set(Int2Str(hero->GetKnowledge()));
                 break;
 
             default:
@@ -909,19 +909,19 @@ void PrimarySkillsBar::RedrawItem(int &skill, const Rect &pos, Surface &dstsf)
             switch (skill)
             {
                 case Skill::Primary::ATTACK:
-                    text.Set(GetString(hero->GetAttack()), Font::BIG);
+                    text.Set(Int2Str(hero->GetAttack()), Font::BIG);
                     break;
 
                 case Skill::Primary::DEFENSE:
-                    text.Set(GetString(hero->GetDefense()), Font::BIG);
+                    text.Set(Int2Str(hero->GetDefense()), Font::BIG);
                     break;
 
                 case Skill::Primary::POWER:
-                    text.Set(GetString(hero->GetPower()), Font::BIG);
+                    text.Set(Int2Str(hero->GetPower()), Font::BIG);
                     break;
 
                 case Skill::Primary::KNOWLEDGE:
-                    text.Set(GetString(hero->GetKnowledge()), Font::BIG);
+                    text.Set(Int2Str(hero->GetKnowledge()), Font::BIG);
                     break;
 
                 default:
@@ -1002,7 +1002,7 @@ void SecondarySkillsBar::RedrawItem(Skill::Secondary &skill, const Rect &pos, Su
 
     if (use_mini_sprite)
     {
-        Text text(GetString(skill.Level()), Font::SMALL);
+        Text text(Int2Str(skill.Level()), Font::SMALL);
         text.Blit(pos.x + (pos.w - text.w()) - 3, pos.y + pos.h - 12, dstsf);
     } else
     {

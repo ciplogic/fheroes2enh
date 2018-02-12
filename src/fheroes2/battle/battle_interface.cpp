@@ -719,7 +719,7 @@ void Battle::ArmiesOrder::RedrawUnit(const Rect &pos, const Unit &unit, bool rev
         sf_color[2].Blit(pos.x + 1, pos.y + 1, display);
 
     // number
-    Text number(GetString(unit.GetCount()), Font::SMALL);
+    Text number(Int2Str(unit.GetCount()), Font::SMALL);
     number.Blit(pos.x + 2, pos.y + 2);
 }
 
@@ -2631,7 +2631,7 @@ void Battle::Interface::RedrawActionWincesKills(TargetsInfo &targets)
             if (conf.ExtBattleShowDamage() && target1.killed &&
                 (pos.y - py) > topleft.y)
             {
-                string msg = "-" + GetString(target1.killed);
+                string msg = "-" + Int2Str(target1.killed);
                 Text txt(msg, Font::YELLOW_SMALL);
                 txt.Blit(pos.x + (pos.w - txt.w()) / 2, pos.y - py);
             }

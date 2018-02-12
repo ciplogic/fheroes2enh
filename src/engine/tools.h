@@ -29,7 +29,7 @@
 #include "localevent.h"
 
 
-std::string GetString(int);
+std::string Int2Str(int);
 
 std::string GetStringShort(int);
 

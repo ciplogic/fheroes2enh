@@ -153,7 +153,7 @@ int DialogSelectSecondary(const string &name, const string &primary, const Skill
     pt.x = box.GetArea().x + box.GetArea().w / 2 - 18;
     pt.y = box.GetArea().y + box.GetArea().h - 36;
     Button button_hero(pt.x, pt.y, (Settings::Get().ExtGameEvilInterface() ? ICN::ADVEBTNS : ICN::ADVBTNS), 0, 1);
-    text.Set(GetString(HEROESMAXSKILL) + "/" + GetString(hero.GetSecondarySkills().Count()), Font::BIG);
+    text.Set(Int2Str(HEROESMAXSKILL) + "/" + Int2Str(hero.GetSecondarySkills().Count()), Font::BIG);
     text.Blit(box.GetArea().x + (box.GetArea().w - text.w()) / 2, pt.y - 15);
 
     button_learn1.Draw();

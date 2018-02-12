@@ -171,10 +171,10 @@ void HGSData::RedrawList(s32 ox, s32 oy)
         text.Set(hgs.land);
         text.Blit(ox + 260, oy + 70);
 
-        text.Set(GetString(hgs.days));
+        text.Set(Int2Str(hgs.days));
         text.Blit(ox + 420, oy + 70);
 
-        text.Set(GetString(hgs.rating));
+        text.Set(Int2Str(hgs.rating));
         text.Blit(ox + 480, oy + 70);
 
         oy += 40;
@@ -193,7 +193,7 @@ int Game::HighScores(bool fill)
 #ifdef WITH_DEBUG
     if(IS_DEVEL() && world.CountDay())
     {
-    std::string msg = std::string("Devepoper mode, not save! \n \n Your result: ") + GetString(GetGameOverScores());
+    std::string msg = std::string("Devepoper mode, not save! \n \n Your result: ") + Int2Str(GetGameOverScores());
     Dialog::Message("High Scores", msg, Font::BIG, Dialog::OK);
     return MAINMENU;
     }
@@ -253,7 +253,7 @@ int Game::HighScores(bool fill)
     {
         // key code info
         if (Settings::Get().Debug() == 0x12 && le.KeyPress())
-            Message("Key Press:", GetString(le.KeyValue()), Font::SMALL, Dialog::OK);
+            Message("Key Press:", Int2Str(le.KeyValue()), Font::SMALL, Dialog::OK);
         le.MousePressLeft(buttonCampain) ? buttonCampain.PressDraw() : buttonCampain.ReleaseDraw();
         le.MousePressLeft(buttonExit) ? buttonExit.PressDraw() : buttonExit.ReleaseDraw();
 

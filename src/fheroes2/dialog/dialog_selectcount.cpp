@@ -81,7 +81,7 @@ public:
         const Sprite &sprite_edit = AGG::GetICN(ICN::TOWNWIND, 4);
         sprite_edit.Blit(pos.x, pos.y + 4);
 
-        Text text(GetString(vcur), Font::BIG);
+        Text text(Int2Str(vcur), Font::BIG);
         text.Blit(pos.x + (sprite_edit.w() - text.w()) / 2, pos.y + 5);
 
         btnUp.Draw();
@@ -373,13 +373,13 @@ int Dialog::ArmySplitTroop(int free_slots, u32 max, u32 &cur, bool savelast)
     btnGroups.Draw();
 
     if (savelast)
-        text.Set(string("MAX") + " " + "(" + GetString(max) + ")", Font::SMALL);
+        text.Set(string("MAX") + " " + "(" + Int2Str(max) + ")", Font::SMALL);
     else
-        text.Set(string("MAX") + " " + "(" + GetString(max) + ")" + " " + "-" + " " + "1", Font::SMALL);
+        text.Set(string("MAX") + " " + "(" + Int2Str(max) + ")" + " " + "-" + " " + "1", Font::SMALL);
     const Rect rectMax(pos.x + 163, pos.y + 30, text.w(), text.h());
     text.Blit(rectMax.x, rectMax.y);
 
-    text.Set(string("MIN") + " " + "(" + GetString(min) + ")", Font::SMALL);
+    text.Set(string("MIN") + " " + "(" + Int2Str(min) + ")", Font::SMALL);
     const Rect rectMin(pos.x + 163, pos.y + 45, text.w(), text.h());
     text.Blit(rectMin.x, rectMin.y);
 

@@ -220,9 +220,9 @@ u32 DialogGoldWithExp(const string &hdr, const string &msg, u32 count, u32 exp, 
     Surface image(sprite.GetSize() + Size(gold.w() + 50, 12), true);
     gold.Blit(0, image.h() - gold.h() - 12, image);
     sprite.Blit(gold.w() + 50, 0, image);
-    Text text(GetString(count));
+    Text text(Int2Str(count));
     text.Blit((gold.w() - text.w()) / 2, image.h() - 12, image);
-    text.Set(GetString(exp));
+    text.Set(Int2Str(exp));
     text.Blit(gold.w() + 50 + (sprite.w() - text.w()) / 2, image.h() - 12, image);
 
     return Dialog::SpriteInfo(hdr, msg, image, buttons);
@@ -238,7 +238,7 @@ u32 DialogArtifactWithExp(const string &hdr, const string &msg, const Artifact &
     border.Blit(image);
     artifact.Blit(5, 5, image);
     sprite.Blit(border.w() + 50, (border.h() - sprite.h()) / 2, image);
-    Text text(GetString(exp), Font::SMALL);
+    Text text(Int2Str(exp), Font::SMALL);
     text.Blit(border.w() + 50 + (sprite.w() - text.w()) / 2, image.h() - 12, image);
 
     return Dialog::SpriteInfo(hdr, msg, image, buttons);
@@ -249,7 +249,7 @@ u32 DialogWithExp(const string &hdr, const string &msg, u32 exp, u32 buttons = D
     const Sprite &sprite = AGG::GetICN(ICN::EXPMRL, 4);
     Surface image(sprite.GetSize() + Size(0, 12), true);
     sprite.Blit(image);
-    Text text(GetString(exp), Font::SMALL);
+    Text text(Int2Str(exp), Font::SMALL);
     text.Blit((sprite.w() - text.w()) / 2, sprite.h(), image);
 
     return Dialog::SpriteInfo(hdr, msg, image, buttons);
@@ -265,7 +265,7 @@ u32 DialogWithArtifactAndGold(const string &hdr, const string &msg, const Artifa
     border.Blit(image);
     artifact.Blit(5, 5, image);
     gold.Blit(border.w() + 50, (border.h() - gold.h()) / 2, image);
-    Text text(GetString(count), Font::SMALL);
+    Text text(Int2Str(count), Font::SMALL);
     text.Blit(border.w() + 50 + (gold.w() - text.w()) / 2, border.h() - 25, image);
 
     return Dialog::SpriteInfo(hdr, msg, image, buttons);
@@ -276,7 +276,7 @@ u32 DialogWithGold(const string &hdr, const string &msg, u32 count, u32 buttons 
     const Sprite &gold = AGG::GetICN(ICN::RESOURCE, 6);
     Surface image(gold.GetSize() + Size(0, 12), true);
     gold.Blit(image);
-    Text text(GetString(count), Font::SMALL);
+    Text text(Int2Str(count), Font::SMALL);
     text.Blit((gold.w() - text.w()) / 2, gold.h(), image);
 
     return Dialog::SpriteInfo(hdr, msg, image, buttons);

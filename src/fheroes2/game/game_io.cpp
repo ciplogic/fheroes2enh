@@ -114,7 +114,7 @@ bool Game::Save(const string &fn)
 
     // raw info content
     fs << static_cast<char>(SAV2ID3 >> 8) << static_cast<char>(SAV2ID3) <<
-       GetString(loadver) << loadver << HeaderSAV(conf.CurrentFileInfo(), conf.PriceLoyaltyVersion());
+       Int2Str(loadver) << loadver << HeaderSAV(conf.CurrentFileInfo(), conf.PriceLoyaltyVersion());
     fs.close();
 
     ZStreamFile fz;

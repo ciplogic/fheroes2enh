@@ -754,7 +754,7 @@ void Castle::DrawCastleFundsAtPos(Display &display, const Funds &resource, Rect 
     wood.Blit(dst_pt);
 
     // count wood
-    text.Set(GetString(resource.wood), Font::SMALL);
+    text.Set(Int2Str(resource.wood), Font::SMALL);
     dst_pt.y += 22;
     text.Blit(dst_pt.x + (wood.w() - text.w()) / 2, dst_pt.y);
 
@@ -765,7 +765,7 @@ void Castle::DrawCastleFundsAtPos(Display &display, const Funds &resource, Rect 
     sulfur.Blit(dst_pt);
 
     // count sulfur
-    text.Set(GetString(resource.sulfur));
+    text.Set(Int2Str(resource.sulfur));
     dst_pt.y += 26;
     text.Blit(dst_pt.x + (sulfur.w() - text.w()) / 2, dst_pt.y);
 
@@ -776,7 +776,7 @@ void Castle::DrawCastleFundsAtPos(Display &display, const Funds &resource, Rect 
     crystal.Blit(dst_pt);
 
     // count crystal
-    text.Set(GetString(resource.crystal));
+    text.Set(Int2Str(resource.crystal));
     dst_pt.y += 33;
     text.Blit(dst_pt.x + (crystal.w() - text.w()) / 2, dst_pt.y);
 
@@ -787,7 +787,7 @@ void Castle::DrawCastleFundsAtPos(Display &display, const Funds &resource, Rect 
     mercury.Blit(dst_pt);
 
     // count mercury
-    text.Set(GetString(resource.mercury));
+    text.Set(Int2Str(resource.mercury));
     dst_pt.y += 34;
     text.Blit(dst_pt.x + (mercury.w() - text.w()) / 2, dst_pt.y);
 
@@ -798,7 +798,7 @@ void Castle::DrawCastleFundsAtPos(Display &display, const Funds &resource, Rect 
     ore.Blit(dst_pt);
 
     // count ore
-    text.Set(GetString(resource.ore));
+    text.Set(Int2Str(resource.ore));
     dst_pt.y += 26;
     text.Blit(dst_pt.x + (ore.w() - text.w()) / 2, dst_pt.y);
 
@@ -809,7 +809,7 @@ void Castle::DrawCastleFundsAtPos(Display &display, const Funds &resource, Rect 
     gems.Blit(dst_pt);
 
     // count gems
-    text.Set(GetString(resource.gems));
+    text.Set(Int2Str(resource.gems));
     dst_pt.y += 26;
     text.Blit(dst_pt.x + (gems.w() - text.w()) / 2, dst_pt.y);
 
@@ -820,7 +820,7 @@ void Castle::DrawCastleFundsAtPos(Display &display, const Funds &resource, Rect 
     gold.Blit(dst_pt);
 
     // count gold
-    text.Set(GetString(resource.gold));
+    text.Set(Int2Str(resource.gold));
     dst_pt.y += 24;
     text.Blit(dst_pt.x + (gold.w() - text.w()) / 2, dst_pt.y);
 

@@ -104,7 +104,7 @@ void RowSpells::Redraw()
         const Sprite &icon = AGG::GetICN(ICN::SPELLS, spell.IndexSprite());
 
         icon.Blit(dst.x + 5 + (dst.w - icon.w()) / 2, dst.y + 40 - icon.h() / 2);
-        TextBox text(string(spell.GetName()) + " [" + GetString(spell.SpellPoint(nullptr)) + "]", Font::SMALL,
+        TextBox text(string(spell.GetName()) + " [" + Int2Str(spell.SpellPoint(nullptr)) + "]", Font::SMALL,
                      78);
         text.Blit(dst.x + 18, dst.y + 62);
 

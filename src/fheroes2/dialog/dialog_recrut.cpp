@@ -40,10 +40,10 @@ void RedrawCurrentInfo(const Point &pos, u32 available, u32 result,
     StringReplace(str, "%{count}", available);
     text.Set(str, Font::SMALL);
     text.Blit(pos.x + 70 - text.w() / 2, pos.y + 130);
-    text.Set(GetString(result), Font::BIG);
+    text.Set(Int2Str(result), Font::BIG);
     text.Blit(pos.x + 167 - text.w() / 2, pos.y + 160);
     const string sgold =
-            GetString(paymentCosts.gold) + " " + "(" + GetString(funds.gold - paymentCosts.gold) + ")";
+            Int2Str(paymentCosts.gold) + " " + "(" + Int2Str(funds.gold - paymentCosts.gold) + ")";
     int rsext = paymentMonster.GetValidItems() & ~Resource::GOLD;
 
     if (rsext)
@@ -52,7 +52,7 @@ void RedrawCurrentInfo(const Point &pos, u32 available, u32 result,
         text.Blit(pos.x + 133 - text.w() / 2, pos.y + 228);
 
         text.Set(
-                GetString(paymentCosts.Get(rsext)) + " " + "(" + GetString(funds.Get(rsext) - paymentCosts.Get(rsext)) +
+                Int2Str(paymentCosts.Get(rsext)) + " " + "(" + Int2Str(funds.Get(rsext) - paymentCosts.Get(rsext)) +
                 ")", Font::SMALL);
         text.Blit(pos.x + 195 - text.w() / 2, pos.y + 228);
     } else
@@ -75,7 +75,7 @@ void RedrawResourceInfo(const Surface &sres, const Point &pos, s32 value,
     dst_pt.y = pos.y + py1;
     sres.Blit(dst_pt, display);
 
-    Text text(GetString(value), Font::SMALL);
+    Text text(Int2Str(value), Font::SMALL);
     dst_pt.x = pos.x + px2 - text.w() / 2;
     dst_pt.y = pos.y + py2;
     text.Blit(dst_pt);
@@ -135,7 +135,7 @@ void RedrawStaticInfo(const Rect &pos, const Monster &monster, bool label)
     dst_pt.y = pos.y + 200;
     sgold.Blit(dst_pt);
 
-    text.Set(GetString(paymentMonster.gold), Font::SMALL);
+    text.Set(Int2Str(paymentMonster.gold), Font::SMALL);
     dst_pt.x = pos.x + (extres ? 183 : 205) - text.w() / 2;
     dst_pt.y = pos.y + 103;
     text.Blit(dst_pt);
@@ -508,7 +508,7 @@ void Dialog::DwellingInfo(const Monster &monster, u32 available)
     dst_pt.y = pos.y + 75;
     sgold.Blit(dst_pt);
 
-    text.Set(GetString(paymentMonster.gold), Font::SMALL);
+    text.Set(Int2Str(paymentMonster.gold), Font::SMALL);
     dst_pt.x = pos.x + (extres ? 183 : 205) - text.w() / 2;
     dst_pt.y = pos.y + 103;
     text.Blit(dst_pt);

@@ -76,7 +76,7 @@ std::string StringUpper(std::string str)
 }
 
 /* int to string */
-std::string GetString(int value)
+std::string Int2Str(int value)
 {
     return std::to_string(value);
 }
@@ -84,7 +84,7 @@ std::string GetString(int value)
 std::string GetStringShort(int value)
 {
     if (abs(value) <= 1000)
-        return GetString(value);
+        return Int2Str(value);
     std::ostringstream stream;
 
     if (abs(value) > 1000000)
@@ -190,7 +190,7 @@ void StringReplace(std::string &dst, const char *pred, const std::string &src)
 
 void StringReplace(std::string &dst, const char *pred, int value)
 {
-    StringReplace(dst, pred, GetString(value));
+    StringReplace(dst, pred, Int2Str(value));
 }
 
 std::vector<std::string> StringSplit(const std::string &str, const std::string &sep)

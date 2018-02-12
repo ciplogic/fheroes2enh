@@ -72,7 +72,7 @@ void Dialog::GameInfo()
     text.Set(Difficulty::String(conf.GameDifficulty()), Font::SMALL, 80);
     text.Blit(pt.x + 140, pt.y + 80);
 
-    text.Set(GetString(Game::GetRating()) + " %", Font::SMALL, 80);
+    text.Set(Int2Str(Game::GetRating()) + " %", Font::SMALL, 80);
     text.Blit(pt.x + 230, pt.y + 80);
 
     text.Set(Maps::SizeString(conf.MapsSize().w), Font::SMALL, 80);
@@ -104,7 +104,7 @@ void Dialog::GameInfo()
     text.Set(GameOver::GetActualDescription(conf.ConditionLoss()), Font::SMALL, 272);
     text.Blit(pt.x + 130, pt.y + 396);
 
-    text.Set("score: " + GetString(Game::GetGameOverScores()), Font::YELLOW_SMALL, 80);
+    text.Set("score: " + Int2Str(Game::GetGameOverScores()), Font::YELLOW_SMALL, 80);
     text.Blit(pt.x + 415 - text.w(), pt.y + 434);
 
     Button buttonOk(pt.x + 180, pt.y + 425, ICN::SYSTEM, 1, 2);
