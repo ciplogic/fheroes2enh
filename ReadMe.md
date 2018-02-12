@@ -1,8 +1,11 @@
 **FHeroes 2 Enhanced**
+
 *What is it?*
+
 Free Heroes 2 is an engine recreation of game Heroes 2 (of Might and Magic) with UI and coding enhancements.
 
 *What do you mean by enhancements?*
+
 Would you want to play Heroes 2 but you feel things missing like:
 * Buying buildings with one click? 
 * Upgrade units with one click if you have resources? 
