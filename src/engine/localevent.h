@@ -305,7 +305,7 @@ private:
     void HandleKeyboardEvent(SDL_KeyboardEvent &);
 
     static int GlobalFilterEvents(const SDL_Event *);
-
+    static void ExtractCleanSdlEvents(std::vector<SDL_Event>& eventListCleared);
 
     enum flag_t
     {

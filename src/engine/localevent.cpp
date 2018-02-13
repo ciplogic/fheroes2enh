@@ -383,19 +383,15 @@ LocalEvent &LocalEvent::Get()
     return le;
 }
 
-bool LocalEvent::HandleEvents(bool delay)
+void LocalEvent::ExtractCleanSdlEvents(std::vector<SDL_Event>& eventListCleared)
 {
     SDL_Event event{};
-
-    ResetModes(MOUSE_MOTION);
-    ResetModes(KEY_PRESSED);
     std::vector<SDL_Event> eventList;
 
     while (SDL_PollEvent(&event))
     {
         eventList.push_back(event);
     }
-    std::vector<SDL_Event> eventListCleared;
     int lastPosMouse = -1;
     for (auto &sdlEvent : eventList)
     {
@@ -413,6 +409,15 @@ bool LocalEvent::HandleEvents(bool delay)
         }
         eventListCleared.push_back(sdlEvent);
     }
+}
+
+bool LocalEvent::HandleEvents(bool delay)
+{
+
+    ResetModes(MOUSE_MOTION);
+    ResetModes(KEY_PRESSED);
+    std::vector<SDL_Event> eventListCleared;
+    ExtractCleanSdlEvents(eventListCleared);
 
     for (auto &event : eventListCleared)
     {
