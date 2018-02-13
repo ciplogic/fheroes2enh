@@ -286,14 +286,60 @@ void Interface::HeroesBar::SetListContent(KingdomHeroes &heroes)
 
 }
 
+namespace
+{
+    void rectangleFill(Surface& srf, int heightBevel, int heroLevel, bool isFocused, Point topLeft)
+    {
+        Surface srfTop(Size(srf.w(), srf.h()), true);
+        RGBA col(192, 192, 20);
+        RGBA colDark(128, 128, 10);
+
+        int wid = srfTop.w() - 1;
+        int hgt = srfTop.h() - 1;
+        if (isFocused) 
+        {
+            for (int i = 0; i < heightBevel; i++) 
+            {
+                srfTop.DrawLine(Point(0, i), Point(wid - i, i), col);
+                srfTop.DrawLine(Point(i, i), Point(i, hgt), col);
+
+                srfTop.DrawLine(Point(i, hgt - i), Point(wid, hgt - i), colDark);
+                srfTop.DrawLine(Point(wid - i, i), Point(wid - i, hgt), colDark);
+
+            }
+        }
+        Text textPlus = { Int2Str(heroLevel) };
+        int textW = textPlus.w();
+        int xText = srfTop.w() - textW-8;
+        int yText = srfTop.h() - textPlus.h() - 8;
+        Size textSize(textPlus.w(), textPlus.h());
+        Point textPoint(xText, yText);
+        Rect rectArea(textPoint, textSize);
+        RGBA white(40, 40, 185);
+        srfTop.FillRect(rectArea, white);
+
+        srfTop.SetAlphaMod(180);        
+        if (isFocused)
+        {
+            srfTop.Blit(srf);
+        }
+        if (!isFocused)
+            srf.SetAlphaMod(120);
+        srf.Blit(topLeft.x, topLeft.y, Display::Get());
+        srfTop.Blit(topLeft.x, topLeft.y, Display::Get());
+        textPoint += topLeft;
+        textPlus.Blit(textPoint);
+
+    }
+}
+
 void Interface::HeroesBar::PortraitRedraw(s16 x, s16 y, Heroes& hero, Display &display, bool isFocused)
 {
     Surface srfPortrait = hero.GetPortrait(PORT_BIG);
-    if(!isFocused)
-    {
-        srfPortrait.SetAlphaMod(120);
-    }
-    srfPortrait.Blit(x,y, display);
 
+    rectangleFill(srfPortrait, 5, hero.GetLevel(), isFocused, Point(x,y));
+
+
+    //textPlus.Blit(xText, , srfPortrait);
     //hero.PortraitRedraw(x, y, PORT_BIG, display);
 }
