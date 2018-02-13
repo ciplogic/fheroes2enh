@@ -48,7 +48,7 @@ namespace Interface
 
         void ResetAreaSize();
 
-        void QueueEventProcessing();
+        bool EventProcessing();
 
         void SetHeroes(HEROES* heroes, int count);
 

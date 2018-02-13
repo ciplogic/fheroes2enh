@@ -818,7 +818,6 @@ int Interface::Basic::HumanTurn(bool isload)
             if (le.MouseCursor(GetScrollBottom())) gameArea.SetScroll(SCROLL_BOTTOM);
         }
 
-        heroesBar.QueueEventProcessing();
 
         // cursor over radar
         if ((!conf.ExtGameHideInterface() || conf.ShowRadar()) &&
@@ -859,6 +858,9 @@ int Interface::Basic::HumanTurn(bool isload)
             if (Cursor::POINTER != cursor.Themes())
                 cursor.SetThemes(Cursor::POINTER);
             res = controlPanel.QueueEventProcessing();
+        } else if (heroesBar.EventProcessing())
+        {
+            res = Game::CANCEL;
         } else
             // cursor over game area
         if (le.MouseCursor(gameArea.GetArea()) && !gameArea.NeedScroll())

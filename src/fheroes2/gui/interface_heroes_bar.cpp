@@ -179,18 +179,16 @@ int Interface::HeroesBar::getSelectedIndex() const
     Focus &focus = player.GetFocus();
     auto *selectedHero = focus.GetHeroes();
 
-    int selected = -1;
-    if (selectedHero)
+    if (!selectedHero)
+        return -1;
+    int selected = 0;
+    for (Heroes *&hero:this->kingdomHeroes)
     {
-        selected = 0;
-        for (Heroes *&hero:this->kingdomHeroes)
+        if (hero->GetName() == selectedHero->GetName())
         {
-            if (hero->GetName() == selectedHero->GetName())
-            {
-                break;
-            }
-            selected++;
+            break;
         }
+        selected++;
     }
     return selected;
 }
@@ -218,7 +216,7 @@ void Interface::HeroesBar::RedrawCursor()
 
 }
 
-void Interface::HeroesBar::QueueEventProcessing()
+bool Interface::HeroesBar::EventProcessing()
 {
     GameArea &gamearea = interface.GetGameArea();
     Settings &conf = Settings::Get();
@@ -232,16 +230,16 @@ void Interface::HeroesBar::QueueEventProcessing()
         BorderWindow::QueueEventProcessing())
     {
         RedrawCursor();
-        return;
+        return false;
     }
     // move cursor
     if (!le.MouseCursor(area))
-        return;
+        return false;
 
 
     auto& kingdom =world.GetKingdom(Settings::Get().CurrentColor());
     if(!kingdom.isControlHuman())
-        return;
+        return false;
     SetListContent(kingdom.GetHeroes());
     if (le.MouseClickLeft() || le.MousePressLeft())
     {
@@ -257,8 +255,9 @@ void Interface::HeroesBar::QueueEventProcessing()
                 interface.SetFocus(heroClick);
             }
         }
-        return;
+
     }
+    return true;
 }
 
 void Interface::HeroesBar::ResetAreaSize()
