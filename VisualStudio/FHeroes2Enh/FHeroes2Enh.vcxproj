@@ -258,6 +258,7 @@
     <ClInclude Include="..\..\src\fheroes2\gui\interface_buttons.h" />
     <ClInclude Include="..\..\src\fheroes2\gui\interface_cpanel.h" />
     <ClInclude Include="..\..\src\fheroes2\gui\interface_gamearea.h" />
+    <ClInclude Include="..\..\src\fheroes2\gui\interface_heroes_bar.h" />
     <ClInclude Include="..\..\src\fheroes2\gui\interface_icons.h" />
     <ClInclude Include="..\..\src\fheroes2\gui\interface_itemsbar.h" />
     <ClInclude Include="..\..\src\fheroes2\gui\interface_list.h" />
@@ -450,6 +451,7 @@
     <ClCompile Include="..\..\src\fheroes2\gui\interface_events.cpp" />
     <ClCompile Include="..\..\src\fheroes2\gui\interface_focus.cpp" />
     <ClCompile Include="..\..\src\fheroes2\gui\interface_gamearea.cpp" />
+    <ClCompile Include="..\..\src\fheroes2\gui\interface_heroes_bar.cpp" />
     <ClCompile Include="..\..\src\fheroes2\gui\interface_icons.cpp" />
     <ClCompile Include="..\..\src\fheroes2\gui\interface_radar.cpp" />
     <ClCompile Include="..\..\src\fheroes2\gui\interface_status.cpp" />

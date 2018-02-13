@@ -19,8 +19,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef H2KINGDOM_H
-#define H2KINGDOM_H
+#pragma once
 
 #include "payment.h"
 #include "puzzle.h"
@@ -287,5 +286,3 @@ ByteVectorReader &operator>>(ByteVectorReader &, Kingdom &);
 StreamBase &operator<<(StreamBase &, const Kingdoms &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, Kingdoms &);
-
-#endif

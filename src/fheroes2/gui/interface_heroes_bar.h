@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include <kingdom/kingdom.h>
+#include "kingdom.h"
 #include "interface_border.h"
 
 namespace Interface
