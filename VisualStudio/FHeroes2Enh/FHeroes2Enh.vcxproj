@@ -154,8 +154,6 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>SDL.lib;libpng.lib;SDL_mixer.lib;SDL_image.lib;SDL_net.lib;SDL_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\Cs-Oss\fheroes2enh\libs\SDL\lib;C:\Cs-Oss\fheroes2enh\libs\libpng\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>

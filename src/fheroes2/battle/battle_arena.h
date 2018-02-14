@@ -226,18 +226,18 @@ namespace Battle
 
         Unit *CreateMirrorImage(Unit &, s32);
 
-        up<Force> army1;
-        up<Force> army2;
-        up<Units> armies_order;
+        sp<Force> army1;
+        sp<Force> army2;
+        sp<Units> armies_order;
 
         const Castle *castle;
         int current_color;
 
-        up<Tower> towers[3];
-        up<Catapult> catapult;
+        sp<Tower> towers[3];
+        sp<Catapult> catapult;
         Bridge *bridge;
 
-        up<Interface> interface;
+        sp<Interface> interface;
         Result result_game;
 
         Graveyard graveyard;
