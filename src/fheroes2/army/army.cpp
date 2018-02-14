@@ -37,7 +37,7 @@
 
 namespace
 {
-    bool ArmyStrongestTroop(const Troop* &t1, const Troop* &t2)
+    bool ArmyStrongestTroop(const Troop *t1, const Troop *t2)
     {
         return t1->GetDamageMin() > t2->GetDamageMin();
     }
