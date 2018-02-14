@@ -27,81 +27,16 @@
 #include "settings.h"
 #include "game.h"
 #include "game_interface.h"
-#include "ground.h"
 #include "world.h"
-#include "icn.h"
 
-
-#define RADARCOLOR    0x40    // index palette
-#define COLOR_DESERT    0x70
-#define COLOR_SNOW    0x0A
-#define COLOR_SWAMP    0xA0
-#define COLOR_WASTELAND    0xD6
-#define COLOR_BEACH    0xC6
-#define COLOR_LAVA    0x19
-#define COLOR_DIRT    0x30
-#define COLOR_GRASS    0x60
-#define COLOR_WATER    0xF0
-#define COLOR_ROAD    0x7A
-
-#define COLOR_BLUE    0x47
-#define COLOR_GREEN    0x67
-#define COLOR_RED    0xbd
-#define COLOR_YELLOW    0x70
-#define COLOR_ORANGE    0xcd
-#define COLOR_PURPLE    0x87
-#define COLOR_GRAY    0x10
-
-u32 GetPaletteIndexFromGround(int ground)
+namespace
 {
-    switch (ground)
-    {
-        case Maps::Ground::DESERT:
-            return (COLOR_DESERT);
-        case Maps::Ground::SNOW:
-            return (COLOR_SNOW);
-        case Maps::Ground::SWAMP:
-            return (COLOR_SWAMP);
-        case Maps::Ground::WASTELAND:
-            return (COLOR_WASTELAND);
-        case Maps::Ground::BEACH:
-            return (COLOR_GRASS);
-        case Maps::Ground::WATER:
-            return (COLOR_BEACH);
-        case Maps::Ground::LAVA:
-            return (COLOR_LAVA);
-        case Maps::Ground::DIRT:
-            return (COLOR_DIRT);
-        case Maps::Ground::GRASS:
-            return (COLOR_WATER);
-        default:
-            break;
-    }
 
-    return 0;
-}
+    RGBA colBright(192, 192, 20);
+    RGBA colDark(128, 128, 10);
 
-u32 GetPaletteIndexFromColor(int color)
-{
-    switch (color)
-    {
-        case Color::BLUE:
-            return COLOR_BLUE;
-        case Color::GREEN:
-            return COLOR_GREEN;
-        case Color::RED:
-            return COLOR_RED;
-        case Color::YELLOW:
-            return COLOR_YELLOW;
-        case Color::ORANGE:
-            return COLOR_ORANGE;
-        case Color::PURPLE:
-            return COLOR_PURPLE;
-        default:
-            break;
-    }
-
-    return COLOR_GRAY;
+    int posLeftSpacing = 80;
+    int spaceTiling = 120;
 }
 
 /* constructor */
@@ -145,9 +80,12 @@ void Interface::HeroesBar::SetRedraw() const
 
 void Interface::HeroesBar::Redraw()
 {
+    auto &kingdom = world.GetKingdom(Settings::Get().CurrentColor());
+    if (!kingdom.isControlHuman())
+        return;
     Display &display = Display::Get();
 
-    SetPos(30, display.h() - 110);
+    SetPos(posLeftSpacing, display.h() - 110);
 
     const Settings &conf = Settings::Get();
     const Rect &area = GetArea();
@@ -157,10 +95,6 @@ void Interface::HeroesBar::Redraw()
     Point dst_pt;
     dst_pt.x = area.x;
     dst_pt.y = area.y;
-    const Rect portPos(dst_pt.x, dst_pt.y, 101, 93);
-    auto &kingdom = world.GetKingdom(Settings::Get().CurrentColor());
-    if (!kingdom.isControlHuman())
-        return;
     SetListContent(kingdom.GetHeroes());
 
     this->_selectedIndex = getSelectedIndex();
@@ -168,7 +102,7 @@ void Interface::HeroesBar::Redraw()
     for (Heroes *&hero:kingdomHeroes)
     {
         PortraitRedraw(dst_pt.x, dst_pt.y, *hero, display, pos == _selectedIndex);
-        dst_pt.x += 120;
+        dst_pt.x += spaceTiling;
         pos++;
     }
 }
@@ -223,7 +157,9 @@ bool Interface::HeroesBar::EventProcessing()
     LocalEvent &le = LocalEvent::Get();
 
     Display &display = Display::Get();
-    const Rect &area = Rect(30, display.h()-110, display.w()-50, 120);
+    const Rect &area = Rect(
+        ::posLeftSpacing, display.h()-110, 
+        display.w()-50, ::spaceTiling);
 
     // move border
     if (conf.ShowRadar() &&
@@ -245,7 +181,7 @@ bool Interface::HeroesBar::EventProcessing()
     {
         const Point prev(gamearea.GetRectMaps());
         const Point &pt = le.GetMouseCursor();
-        int index = (pt.x-30) / 120;
+        int index = (pt.x- posLeftSpacing) / spaceTiling;
 
         if (area & pt)
         {
@@ -291,17 +227,14 @@ namespace
     void rectangleFill(Surface& srf, int heightBevel, int heroLevel, bool isFocused, Point topLeft)
     {
         Surface srfTop(Size(srf.w(), srf.h()), true);
-        RGBA col(192, 192, 20);
-        RGBA colDark(128, 128, 10);
-
         int wid = srfTop.w() - 1;
         int hgt = srfTop.h() - 1;
         if (isFocused) 
         {
             for (int i = 0; i < heightBevel; i++) 
             {
-                srfTop.DrawLine(Point(0, i), Point(wid - i, i), col);
-                srfTop.DrawLine(Point(i, i), Point(i, hgt), col);
+                srfTop.DrawLine(Point(i, i), Point(wid - i, i), colBright);
+                srfTop.DrawLine(Point(i, i), Point(i, hgt-i), colBright);
 
                 srfTop.DrawLine(Point(i, hgt - i), Point(wid, hgt - i), colDark);
                 srfTop.DrawLine(Point(wid - i, i), Point(wid - i, hgt), colDark);
