@@ -122,7 +122,7 @@ public:
 
     void SplitTroopIntoFreeSlots(const Troop &, u32);
 
-    vector<sp<Troop>> _items;
+    vector<Troop*> _items;
 };
 
 enum
