@@ -52,6 +52,7 @@ StreamBase &operator>>(StreamBase &, LastLoseHero &);
 
 struct KingdomCastles : public VecCastles
 {
+    static KingdomCastles& GetNull();
 };
 
 struct KingdomHeroes : public VecHeroes

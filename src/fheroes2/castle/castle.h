@@ -198,7 +198,7 @@ public:
 
     void ActionAfterBattle(bool attacker_wins);
 
-    void DrawImageCastle(const Point &);
+    void DrawImageCastle(const Point &, Surface& destSurface) const;
 
     int OpenDialog(bool readonly = false, bool fade = false);
 
