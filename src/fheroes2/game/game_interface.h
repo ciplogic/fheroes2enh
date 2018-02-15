@@ -32,6 +32,7 @@
 #include "interface_gamearea.h"
 #include "interface_cpanel.h"
 #include "text.h"
+#include "interface_castle_bar.h"
 
 enum redraw_t
 {
@@ -203,6 +204,7 @@ namespace Interface
         ControlPanel controlPanel;
 
         HeroesBar heroesBar;
+        CastleBar castleBar;
 
         int redraw;
 

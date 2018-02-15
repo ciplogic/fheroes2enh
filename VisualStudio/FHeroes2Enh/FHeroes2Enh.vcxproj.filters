@@ -1179,7 +1179,7 @@
       <Filter>Source Files\fheroes2\gui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\fheroes2\gui\interface_castle_bar.cpp">
-      <Filter>Header Files\fheroes2\gui</Filter>
+      <Filter>Source Files\fheroes2\gui</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

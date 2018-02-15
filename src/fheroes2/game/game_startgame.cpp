@@ -858,10 +858,15 @@ int Interface::Basic::HumanTurn(bool isload)
             if (Cursor::POINTER != cursor.Themes())
                 cursor.SetThemes(Cursor::POINTER);
             res = controlPanel.QueueEventProcessing();
-        } else if (heroesBar.EventProcessing())
+        } else if (castleBar.EventProcessing())
         {
             res = Game::CANCEL;
-        } else
+        }
+        else if (heroesBar.EventProcessing())
+        {
+            res = Game::CANCEL;
+        }
+        else
             // cursor over game area
         if (le.MouseCursor(gameArea.GetArea()) && !gameArea.NeedScroll())
         {

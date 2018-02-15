@@ -137,7 +137,6 @@ void Interface::HeroesBar::RedrawCursor()
 
 bool Interface::HeroesBar::EventProcessing()
 {
-    GameArea &gamearea = interface.GetGameArea();
     Settings &conf = Settings::Get();
     LocalEvent &le = LocalEvent::Get();
     
@@ -147,9 +146,16 @@ bool Interface::HeroesBar::EventProcessing()
         ::posLeftSpacing, display.h()-110, 
         display.w()-50, ::spaceTiling);
 
+    // move border
+    if (conf.ShowRadar() &&
+        BorderWindow::QueueEventProcessing())
+    {
+        RedrawCursor();
+        return false;
+    }
     
     // move cursor
-    if (!le.MouseCursor(gamearea.GetArea()))
+    if (!le.MouseCursor(area))
         return false;
 
 

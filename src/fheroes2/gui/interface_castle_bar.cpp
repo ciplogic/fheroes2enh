@@ -146,6 +146,7 @@ bool Interface::CastleBar::EventProcessing()
     if(!kingdom.isControlHuman())
         return false;
 
+    return false;
     int posBottom = display.h() - shiftBottom + ::spaceTiling;
 
     SetListContent(kingdom.GetCastles());
