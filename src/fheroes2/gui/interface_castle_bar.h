@@ -72,7 +72,7 @@ namespace Interface
 
         void SetListContent(KingdomCastles &castles);
 
-        void PortraitRedraw(s16 x, s16 y, Castle& hero, Display &display, bool isFocused);
+        static void PortraitRedraw(s16 x, s16 y, Castle& hero, Display &display, bool isFocused);
         int getSelectedIndex() const;
     };
 }

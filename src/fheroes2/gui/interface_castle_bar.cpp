@@ -86,11 +86,7 @@ void Interface::CastleBar::Redraw()
     if (!kingdom.isControlHuman())
         return;
     Display &display = Display::Get();
-
-
-    const Settings &conf = Settings::Get();
-    const Rect &area = GetArea();
-
+    
 
     // portrait
     Point dst_pt;
@@ -98,12 +94,12 @@ void Interface::CastleBar::Redraw()
     dst_pt.y = display.h()-shiftBottom;
     SetListContent(kingdom.GetCastles());
 
-    auto _selectedIndex = getSelectedIndex();
+    const auto selectedIndex = getSelectedIndex();
     SetPos(dst_pt.x, dst_pt.y - kingdomCastles.size()*::spaceTiling);
     int pos = 0;
     for (Castle* &castle : this->kingdomCastles)
     {
-        PortraitRedraw(dst_pt.x, dst_pt.y, *castle, display, pos == _selectedIndex);
+        PortraitRedraw(dst_pt.x, dst_pt.y, *castle, display, pos == selectedIndex);
         dst_pt.y -= spaceTiling;
         pos++;
     }
@@ -132,12 +128,12 @@ int Interface::CastleBar::getSelectedIndex() const
 /* redraw CastleBar cursor */
 void Interface::CastleBar::RedrawCursor()
 {
-    const Settings &conf = Settings::Get();
 
 }
 
 bool Interface::CastleBar::EventProcessing()
 {
+    Settings &conf = Settings::Get();
     LocalEvent &le = LocalEvent::Get();
 
     Display &display = Display::Get();
@@ -145,29 +141,35 @@ bool Interface::CastleBar::EventProcessing()
     auto& kingdom =world.GetKingdom(Settings::Get().CurrentColor());
     if(!kingdom.isControlHuman())
         return false;
+    // move border
+    if (conf.ShowRadar() && QueueEventProcessing())
+    {
+        RedrawCursor();
+        return false;
+    }
 
-    return false;
     int posBottom = display.h() - shiftBottom + ::spaceTiling;
 
     SetListContent(kingdom.GetCastles());
+
+    const Point &pt = le.GetMouseCursor();
+    if (pt.x<::posLeftSpacing)
+        return false;
+    if (pt.x>::posLeftSpacing + 32)
+        return false;
+    if (pt.y>posBottom + spaceTiling)
+        return false;
+    uint32_t index = (posBottom - pt.y) / spaceTiling;
+
+    if (index >= kingdomCastles.size())
+        return false;
     if (le.MouseClickLeft())
     {
         const Point &pt = le.GetMousePressLeft();
-        if(pt.x<::posLeftSpacing)
-            return false;
-        if (pt.x>::posLeftSpacing+32)
-            return false;
-        if (pt.y>posBottom+spaceTiling)
-            return false;
-        uint32_t index = (posBottom - pt.y) / spaceTiling;
 
-        if(index<kingdomCastles.size())
-        {
-            Castle *heroClick = kingdomCastles[index];
-            interface.SetFocus(heroClick);
-            return true;
-        }
-
+        Castle *heroClick = kingdomCastles[index];
+        interface.SetFocus(heroClick);
+        return true;
     }
     return false;
 }
