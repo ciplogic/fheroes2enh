@@ -19,7 +19,8 @@ If you want to see what is it about, and you have an Windows machine, why not tr
 The Releases page contains the latest version from here:
 https://github.com/ciplogic/fheroes2enh/releases
 
-**More details**
+<span style="color:red">**More details**</span>
+
 Over time there will be mostly usability changes and improvements over modernizing the code. (i.e. C++ 11)
 
 You can see a demo of how it runs and how it is enhanced here: (feel free to build it and make a more pleasing intro!)
