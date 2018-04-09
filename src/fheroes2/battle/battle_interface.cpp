@@ -3023,7 +3023,7 @@ void Battle::Interface::RedrawActionMonsterSpellCastStatus(const Unit &attacker,
             break;
     }
 
-    if (msg.size())
+    if (!msg.empty())
     {
         string str(msg);
         StringReplace(str, "%{name}", target.defender->GetName());
@@ -3458,9 +3458,60 @@ void Battle::Interface::RedrawActionMirrorImageSpell(const Unit &target, const P
     status.SetMessage(_("MirrorImage created"), true);
 }
 
+namespace
+{
+    std::vector<Point> drawPoints;
+    Point start, endPoint;
+    const int steps = 5;
+
+    double lerp(double start, double end, double theta)
+    {
+        double delta = end - start;
+        return start + theta * delta;
+    }
+
+    int iLerp(int start, int end, double theta)
+    {
+        return lerp(start, end, theta);
+    }
+
+    Point pointLerp(Point start, Point end, double theta)
+    {
+        return Point(iLerp(start.x, end.x, theta), iLerp(start.y, end.y, theta));
+    }
+
+    void populateSpark(const Point &src, const Point &dst)
+    {
+        if (start == src && endPoint == dst)
+        {
+            return;
+        }
+        start = src;
+        endPoint = dst;
+        double floatPart = 1.0 / steps;
+        double pos = 0;
+        drawPoints.clear();
+        drawPoints.push_back(start);
+        for (int i = 1; i<steps; i++)
+        {
+            Point interpolated = pointLerp(start, endPoint, pos);
+            interpolated.x += Rand::Get(-20, 20);
+            interpolated.y += Rand::Get(-20, 20);
+            drawPoints.push_back(interpolated);
+            pos += floatPart;
+        }
+        drawPoints.push_back(endPoint);
+
+    }
+}
+
 void Battle::Interface::RedrawActionLightningBoltSpell(Unit &target)
 {
     // FIX: LightningBolt draw
+    const Rect &pos = target.GetRectPosition();
+    const Rect &rectArea = border.GetArea();
+    const Point dest = Point(rectArea.x + rectArea.w / 2, rectArea.y);
+    populateSpark(pos, dest);
     RedrawTroopWithFrameAnimation(target, ICN::SPARKS, M82::FromSpell(Spell::LIGHTNINGBOLT), true);
 }
 
@@ -3469,8 +3520,15 @@ void Battle::Interface::RedrawActionChainLightningSpell(const TargetsInfo &targe
     // FIX: ChainLightning draw
     //AGG::PlaySound(targets.size() > 1 ? M82::CHAINLTE : M82::LIGHTBLT);
 
+    const Rect &rectArea = border.GetArea();
+    Point startPos = Point(rectArea.x + rectArea.w / 2, rectArea.y);
     for (const auto &target : targets)
+    {
+        const Rect &pos = target.defender->GetRectPosition();
+        populateSpark(startPos, pos);
         RedrawTroopWithFrameAnimation(*(target.defender), ICN::SPARKS, M82::FromSpell(Spell::LIGHTNINGBOLT), true);
+        startPos = pos;
+    }
 }
 
 void Battle::Interface::RedrawActionBloodLustSpell(Unit &target)
@@ -4092,10 +4150,6 @@ void Battle::Interface::RedrawTargetsWithFrameAnimation(const TargetsInfo &targe
 
     b_current = nullptr;
 
-    if (wnce)
-        for (const auto &target : targets)
-            if (target.defender && target.damage) target.defender->ResetAnimFrame(AS_WNCE);
-
     if (M82::UNKNOWN != m82) AGG::PlaySound(m82);
 
     while (le.HandleEvents() && frame < AGG::GetICNCount(icn))
@@ -4133,30 +4187,26 @@ void Battle::Interface::RedrawTargetsWithFrameAnimation(const TargetsInfo &targe
         cursor.Show();
         display.Flip();
 
-        if (wnce)
-            for (const auto &target : targets)
-            {
-                if (!target.defender || !target.damage)
-                    continue;
-                target.defender->IncreaseAnimFrame(false);
-            }
         ++frame;
     }
 
-    if (!wnce)
-        return;
-    for (const auto &target1 : targets)
-    {
-        if (!target1.defender)
-            continue;
-        target1.defender->ResetAnimFrame(AS_IDLE);
-        b_current = nullptr;
-    }
 }
 
 void RedrawSparksEffects(const Point &src, const Point &dst)
 {
-    Display::Get().DrawLine(src, dst, RGBA(0xff, 0xff, 0));
+    const auto& display = Display::Get();    
+    if(drawPoints.empty())
+    {
+        display.DrawLine(src, dst, RGBA(0xff, 0xff, 0));
+        return;
+    }
+    auto start = drawPoints[0];
+    for(int i = 0;i<steps;i++)
+    {
+        auto end = drawPoints[i+1];
+        display.DrawLine(start, end, RGBA(0xff, 0xff, 0));
+        start = end;
+    }
 }
 
 void Battle::Interface::RedrawTroopWithFrameAnimation(Unit &b, int icn, int m82, bool pain)
