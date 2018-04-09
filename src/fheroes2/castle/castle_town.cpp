@@ -167,7 +167,7 @@ u32 Castle::OpenTown()
     // draw castle sprite
     dst_pt.x = cur_pt.x + 460;
     dst_pt.y = cur_pt.y + 5;
-    DrawImageCastle(dst_pt);
+    DrawImageCastle(dst_pt, display);
 
     // castle name
     Text text(GetName(), Font::SMALL);

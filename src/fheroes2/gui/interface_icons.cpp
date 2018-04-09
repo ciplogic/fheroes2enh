@@ -55,7 +55,7 @@ u32 Interface::IconsBar::GetItemHeight()
     return ICONS_HEIGHT;
 }
 
-void Interface::RedrawCastleIcon(const Castle &castle, s32 sx, s32 sy)
+void Interface::RedrawCastleIcon(const Castle &castle, s32 sx, s32 sy, Surface& destSurface)
 {
     const bool evil = Settings::Get().ExtGameEvilInterface();
     u32 index_sprite = 1;
@@ -82,7 +82,7 @@ void Interface::RedrawCastleIcon(const Castle &castle, s32 sx, s32 sy)
             break;
     }
 
-    AGG::GetICN(evil ? ICN::LOCATORE : ICN::LOCATORS, index_sprite).Blit(sx, sy);
+    AGG::GetICN(evil ? ICN::LOCATORE : ICN::LOCATORS, index_sprite).Blit(sx, sy, destSurface);
 
     // castle build marker
     switch (Castle::GetAllBuildingStatus(castle))
@@ -90,18 +90,18 @@ void Interface::RedrawCastleIcon(const Castle &castle, s32 sx, s32 sy)
         // white marker
         case UNKNOWN_COND:
         case NOT_TODAY:
-            AGG::GetICN(ICN::CSLMARKER, 0).Blit(sx + 39, sy + 1);
+            AGG::GetICN(ICN::CSLMARKER, 0).Blit(sx + 39, sy + 1, destSurface);
             break;
 
-            // green marker
+        // green marker
         case LACK_RESOURCES:
-            AGG::GetICN(ICN::CSLMARKER, 2).Blit(sx + 39, sy + 1);
+            AGG::GetICN(ICN::CSLMARKER, 2).Blit(sx + 39, sy + 1, destSurface);
             break;
 
             // red marker
         case NEED_CASTLE:
         case REQUIRES_BUILD:
-            AGG::GetICN(ICN::CSLMARKER, 1).Blit(sx + 39, sy + 1);
+            AGG::GetICN(ICN::CSLMARKER, 1).Blit(sx + 39, sy + 1, destSurface);
             break;
 
         default:
@@ -157,7 +157,7 @@ void Interface::CastleIcons::RedrawItem(const CASTLE &item, s32 ox, s32 oy, bool
 {
     if (item && show)
     {
-        RedrawCastleIcon(*item, ox, oy);
+        RedrawCastleIcon(*item, ox, oy, Display::Get());
 
         if (current)
             marker.Blit(ox - 5, oy - 5, Display::Get());

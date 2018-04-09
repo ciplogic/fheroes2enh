@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2GAMEINTERFACE_H
-#define H2GAMEINTERFACE_H
+#pragma once
 
 #include "interface_heroes_bar.h"
 #include "gamedefs.h"
@@ -32,6 +31,7 @@
 #include "interface_gamearea.h"
 #include "interface_cpanel.h"
 #include "text.h"
+#include "interface_castle_bar.h"
 
 enum redraw_t
 {
@@ -214,5 +214,3 @@ namespace Interface
         Text system_info;
     };
 }
-
-#endif

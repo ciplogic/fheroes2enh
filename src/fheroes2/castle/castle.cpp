@@ -1432,59 +1432,56 @@ bool Castle::BuyBuilding(u32 build)
 }
 
 /* draw image castle to position */
-void Castle::DrawImageCastle(const Point &pt)
+void Castle::DrawImageCastle(const Point &pt, Surface& destSurface) const
 {
     const Maps::Tiles &tile = world.GetTiles(GetIndex());
-
     u32 index;
     Point dst_pt;
 
     // draw ground
     switch (tile.GetGround())
     {
-        case Maps::Ground::GRASS:
-            index = 0;
-            break;
-        case Maps::Ground::SNOW:
-            index = 10;
-            break;
-        case Maps::Ground::SWAMP:
-            index = 20;
-            break;
-        case Maps::Ground::LAVA:
-            index = 30;
-            break;
-        case Maps::Ground::DESERT:
-            index = 40;
-            break;
-        case Maps::Ground::DIRT:
-            index = 50;
-            break;
-        case Maps::Ground::WASTELAND:
-            index = 60;
-            break;
-        case Maps::Ground::BEACH:
-            index = 70;
-            break;
+    case Maps::Ground::GRASS:
+        index = 0;
+        break;
+    case Maps::Ground::SNOW:
+        index = 10;
+        break;
+    case Maps::Ground::SWAMP:
+        index = 20;
+        break;
+    case Maps::Ground::LAVA:
+        index = 30;
+        break;
+    case Maps::Ground::DESERT:
+        index = 40;
+        break;
+    case Maps::Ground::DIRT:
+        index = 50;
+        break;
+    case Maps::Ground::WASTELAND:
+        index = 60;
+        break;
+    case Maps::Ground::BEACH:
+        index = 70;
+        break;
 
-        default:
-            return;
+    default:
+        return;
     }
-
     for (u32 ii = 0; ii < 5; ++ii)
     {
-        const Sprite &sprite = AGG::GetICN(ICN::OBJNTWBA, index + ii);
+        const Sprite& sprite = AGG::GetICN(ICN::OBJNTWBA, index + ii);
         dst_pt.x = pt.x + ii * 32 + sprite.x();
         dst_pt.y = pt.y + 3 * 32 + sprite.y();
-        sprite.Blit(dst_pt);
+        sprite.Blit(dst_pt, destSurface);
     }
-
     for (u32 ii = 0; ii < 5; ++ii)
     {
-        const Sprite &sprite = AGG::GetICN(ICN::OBJNTWBA, index + 5 + ii);
+        const Sprite& sprite = AGG::GetICN(ICN::OBJNTWBA, index + 5 + ii);
         dst_pt.x = pt.x + ii * 32 + sprite.x();
         dst_pt.y = pt.y + 4 * 32 + sprite.y();
-        sprite.Blit(dst_pt);
+        sprite.Blit(dst_pt, destSurface);
     }
 
     // draw castle
@@ -1515,27 +1512,27 @@ void Castle::DrawImageCastle(const Point &pt)
     const Sprite &sprite2 = AGG::GetICN(ICN::OBJNTOWN, index);
     dst_pt.x = pt.x + 2 * 32 + sprite2.x();
     dst_pt.y = pt.y + sprite2.y();
-    sprite2.Blit(dst_pt);
+    sprite2.Blit(dst_pt, destSurface);
     for (u32 ii = 0; ii < 5; ++ii)
     {
         const Sprite &sprite = AGG::GetICN(ICN::OBJNTOWN, index + 1 + ii);
         dst_pt.x = pt.x + ii * 32 + sprite.x();
         dst_pt.y = pt.y + 32 + sprite.y();
-        sprite.Blit(dst_pt);
+        sprite.Blit(dst_pt, destSurface);
     }
     for (u32 ii = 0; ii < 5; ++ii)
     {
         const Sprite &sprite = AGG::GetICN(ICN::OBJNTOWN, index + 6 + ii);
         dst_pt.x = pt.x + ii * 32 + sprite.x();
         dst_pt.y = pt.y + 2 * 32 + sprite.y();
-        sprite.Blit(dst_pt);
+        sprite.Blit(dst_pt, destSurface);
     }
     for (u32 ii = 0; ii < 5; ++ii)
     {
         const Sprite &sprite = AGG::GetICN(ICN::OBJNTOWN, index + 11 + ii);
         dst_pt.x = pt.x + ii * 32 + sprite.x();
         dst_pt.y = pt.y + 3 * 32 + sprite.y();
-        sprite.Blit(dst_pt);
+        sprite.Blit(dst_pt, destSurface);
     }
 }
 

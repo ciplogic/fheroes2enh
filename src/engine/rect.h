@@ -28,10 +28,8 @@
 struct Point
 {
     s16 x, y;
-
-    Point();
-
-    Point(int, int);
+    constexpr Point(): x(0), y(0){}
+    constexpr Point(int, int);
 
     bool operator==(const Point &) const;
 
@@ -53,9 +51,9 @@ struct Size
 {
     u16 w, h;
 
-    Size();
+    constexpr Size();
 
-    Size(u16, u16);
+    constexpr Size(u16, u16);
 
     explicit Size(const Point &);
 
@@ -76,9 +74,14 @@ struct Size
 
 struct Rect : Point, Size
 {
-    Rect();
+    constexpr Rect();
 
-    Rect(int, int, int, int);
+    constexpr Rect(int x, int y, int w, int h)
+
+        : Point(static_cast<s16>(x), static_cast<s16>(y)), Size(static_cast<u16>(w), static_cast<u16>(h))
+    {
+        
+    }
 
     Rect(const Point &, u16, u16);
 

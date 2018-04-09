@@ -68,9 +68,9 @@ namespace Interface
         bool show;
     };
 
+    void RedrawCastleIcon(const Castle &, s32, s32, Surface& destSurface);
     void RedrawHeroesIcon(const Heroes &, s32, s32);
 
-    void RedrawCastleIcon(const Castle &, s32, s32);
 
     class HeroesIcons : public ListBox<HEROES>, public IconsBar
     {

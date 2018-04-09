@@ -20,8 +20,8 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2FONT_H
-#define H2FONT_H
+#pragma once
+
 
 #include <string>
 #include <vector>
@@ -30,8 +30,6 @@
 #include "types.h"
 
 class RGBA;
-
-#ifdef WITH_TTF
 
 #include "SDL_ttf.h"
 
@@ -82,18 +80,3 @@ private:
     { return *this; }
 };
 
-#endif
-
-class FontPSF
-{
-public:
-    FontPSF(const std::string &, const Size &);
-
-    Surface RenderText(const std::string &, const RGBA &) const;
-
-private:
-    std::vector<u8> buf;
-    Size size;
-};
-
-#endif

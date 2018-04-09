@@ -31,10 +31,10 @@ namespace Interface
     typedef Heroes *HEROES;
     class Basic;
 
-    class HeroesBar : public BorderWindow
+    class CastleBar : public BorderWindow
     {
     public:
-        explicit HeroesBar(Basic &);
+        explicit CastleBar(Basic &);
 
         void SetPos(s32, s32);
 
@@ -49,6 +49,8 @@ namespace Interface
         void ResetAreaSize();
 
         bool EventProcessing();
+
+        void SetHeroes(HEROES* heroes, int count);
 
     private:
         void SavePosition();
@@ -66,11 +68,11 @@ namespace Interface
         Point offset;
         bool hide;
 
-        KingdomHeroes& kingdomHeroes;
+        KingdomCastles& kingdomCastles;
 
-        void SetListContent(KingdomHeroes &heroes);
+        void SetListContent(KingdomCastles &castles);
 
-        static void PortraitRedraw(s16 x, s16 y, Heroes& hero, bool isFocused);
+        static void PortraitRedraw(s16 x, s16 y, Castle& hero, Display &display, bool isFocused);
         int getSelectedIndex() const;
     };
 }

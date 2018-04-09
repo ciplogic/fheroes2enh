@@ -35,11 +35,12 @@
 #include "dialog.h"
 #include "game_interface.h"
 
-Interface::Basic::Basic() : gameArea(*this), radar(*this),
-                            iconsPanel(*this), buttonsArea(*this),
-                            heroesBar(*this),
-                            statusWindow(*this), controlPanel(*this),
-                            redraw(0)
+Interface::Basic::Basic()
+    : gameArea(*this), radar(*this),
+    iconsPanel(*this), buttonsArea(*this),
+    heroesBar(*this),
+    statusWindow(*this), controlPanel(*this),
+    redraw(0)
 {
     Settings &conf = Settings::Get().Get();
     const Display &display = Display::Get();

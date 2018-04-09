@@ -447,7 +447,7 @@ void StatsCastlesList::RedrawItem(const CstlRow &row, s32 dstx, s32 dsty, bool c
     back.Blit(dstx, dsty);
 
     // base info
-    Interface::RedrawCastleIcon(*row.castle, dstx + 17, dsty + 19);
+    Interface::RedrawCastleIcon(*row.castle, dstx + 17, dsty + 19, Display::Get());
 
     const Heroes *hero = row.castle->GetHeroes().GuardFirst();
 

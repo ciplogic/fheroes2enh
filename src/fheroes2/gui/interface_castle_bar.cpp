@@ -22,7 +22,8 @@
 
 #include <cmath>
 
-#include "interface_heroes_bar.h"
+#include "interface_castle_bar.h"
+#include "interface_icons.h"
 #include "agg.h"
 #include "settings.h"
 #include "game.h"
@@ -36,89 +37,86 @@ namespace
     RGBA colDark(128, 128, 10);
 
     int posLeftSpacing = 80;
-    int spaceTiling = 120;
+    int shiftBottom = 160;
+    int spaceTiling = 36;
 }
 
 /* constructor */
-Interface::HeroesBar::HeroesBar(Basic &basic)
+Interface::CastleBar::CastleBar(Interface::Basic &basic)
         : BorderWindow(Rect(0, 0, RADARWIDTH, RADARWIDTH)),
           interface(basic), hide(true),
-          kingdomHeroes(KingdomHeroes::GetNull())
+          kingdomCastles(KingdomCastles::GetNull())
 {
 }
 
-void Interface::HeroesBar::SavePosition()
+void Interface::CastleBar::SavePosition()
 {
     Settings::Get().SetPosRadar(GetRect());
 }
 
-void Interface::HeroesBar::SetPos(s32 ox, s32 oy)
+void Interface::CastleBar::SetPos(s32 ox, s32 oy)
 {
     SetPosition(ox, oy);
 }
 
 /* construct gui */
-void Interface::HeroesBar::Build()
+void Interface::CastleBar::Build()
 {
     Generate();
     RedrawCursor();
 }
 
 /* generate mini maps */
-void Interface::HeroesBar::Generate()
+void Interface::CastleBar::Generate()
 {
 }
 
-void Interface::HeroesBar::SetHide(bool f)
+void Interface::CastleBar::SetHide(bool f)
 {
     hide = f;
 }
 
-void Interface::HeroesBar::SetRedraw() const
+void Interface::CastleBar::SetRedraw() const
 {
 }
 
-void Interface::HeroesBar::Redraw()
+void Interface::CastleBar::Redraw()
 {
     auto &kingdom = world.GetKingdom(Settings::Get().CurrentColor());
     if (!kingdom.isControlHuman())
         return;
     Display &display = Display::Get();
-
-    SetPos(posLeftSpacing, display.h() - 110);
-
-    const Settings &conf = Settings::Get();
-    const Rect &area = GetArea();
-
+    
 
     // portrait
     Point dst_pt;
-    dst_pt.x = area.x;
-    dst_pt.y = area.y;
-    SetListContent(kingdom.GetHeroes());
+    dst_pt.x = posLeftSpacing;
+    dst_pt.y = display.h()-shiftBottom;
+    SetListContent(kingdom.GetCastles());
 
-    auto _selectedIndex = getSelectedIndex();
+    const auto selectedIndex = getSelectedIndex();
+    SetPos(dst_pt.x, dst_pt.y - kingdomCastles.size()*::spaceTiling);
     int pos = 0;
-    for (Heroes *&hero:kingdomHeroes)
+    for (Castle* &castle : this->kingdomCastles)
     {
-        PortraitRedraw(dst_pt.x, dst_pt.y, *hero, pos == _selectedIndex);
-        dst_pt.x += spaceTiling;
+        PortraitRedraw(dst_pt.x, dst_pt.y, *castle, display, pos == selectedIndex);
+        dst_pt.y -= spaceTiling;
         pos++;
     }
 }
 
-int Interface::HeroesBar::getSelectedIndex() const
+int Interface::CastleBar::getSelectedIndex() const
 {
     Player &player = *Settings::Get().GetPlayers().GetCurrent();
     Focus &focus = player.GetFocus();
-    auto *selectedHero = focus.GetHeroes();
+    auto *selectedHero = focus.GetCastle();
 
     if (!selectedHero)
         return -1;
     int selected = 0;
-    for (Heroes *&hero:this->kingdomHeroes)
+    for (Castle* &castle:this->kingdomCastles)
     {
-        if (hero->GetName() == selectedHero->GetName())
+        if (castle->GetName() == selectedHero->GetName())
         {
             break;
         }
@@ -127,67 +125,61 @@ int Interface::HeroesBar::getSelectedIndex() const
     return selected;
 }
 
-
-/* redraw HeroesBar cursor */
-void Interface::HeroesBar::RedrawCursor()
+/* redraw CastleBar cursor */
+void Interface::CastleBar::RedrawCursor()
 {
-    const Settings &conf = Settings::Get();
 
 }
 
-bool Interface::HeroesBar::EventProcessing()
+bool Interface::CastleBar::EventProcessing()
 {
     Settings &conf = Settings::Get();
     LocalEvent &le = LocalEvent::Get();
-    
 
     Display &display = Display::Get();
-    const Rect &area = Rect(
-        ::posLeftSpacing, display.h()-110, 
-        display.w()-50, ::spaceTiling);
-
+   
+    auto& kingdom =world.GetKingdom(Settings::Get().CurrentColor());
+    if(!kingdom.isControlHuman())
+        return false;
     // move border
-    if (conf.ShowRadar() &&
-        BorderWindow::QueueEventProcessing())
+    if (conf.ShowRadar() && QueueEventProcessing())
     {
         RedrawCursor();
         return false;
     }
-    
-    // move cursor
-    if (!le.MouseCursor(area))
-        return false;
 
+    int posBottom = display.h() - shiftBottom + ::spaceTiling;
 
-    auto& kingdom =world.GetKingdom(Settings::Get().CurrentColor());
-    if(!kingdom.isControlHuman())
+    SetListContent(kingdom.GetCastles());
+
+    const Point &pt = le.GetMouseCursor();
+    if (pt.x<::posLeftSpacing)
         return false;
-    SetListContent(kingdom.GetHeroes());
-    if (le.MouseClickLeft() || le.MousePressLeft())
+    if (pt.x>::posLeftSpacing + 32)
+        return false;
+    if (pt.y>posBottom + spaceTiling)
+        return false;
+    uint32_t index = (posBottom - pt.y) / spaceTiling;
+
+    if (index >= kingdomCastles.size())
+        return false;
+    if (le.MouseClickLeft())
     {
-        const Point &pt = le.GetMouseCursor();
-        uint32_t index = (pt.x- posLeftSpacing) / spaceTiling;
+        const Point &mousePoint = le.GetMousePressLeft();
 
-        if (area & pt)
-        {
-            if(index<kingdomHeroes.size())
-            {
-                Heroes *heroClick = kingdomHeroes[index];
-                interface.SetFocus(heroClick); 
-                return true;
-            }
-        }
-
+        Castle *heroClick = kingdomCastles[index];
+        interface.SetFocus(heroClick);
+        return true;
     }
     return false;
 }
 
-void Interface::HeroesBar::ResetAreaSize()
+void Interface::CastleBar::ResetAreaSize()
 {
     ChangeAreaSize(Size(RADARWIDTH, RADARWIDTH));
 }
 
-void Interface::HeroesBar::ChangeAreaSize(const Size &newSize)
+void Interface::CastleBar::ChangeAreaSize(const Size &newSize)
 {
     if (newSize == area) return;
     const Rect &rect = GetRect();
@@ -198,10 +190,13 @@ void Interface::HeroesBar::ChangeAreaSize(const Size &newSize)
     interface.GetGameArea().SetRedraw();
 }
 
-void Interface::HeroesBar::SetListContent(KingdomHeroes &heroes)
+void Interface::CastleBar::SetHeroes(Interface::HEROES *heroes, int count)
 {
-    kingdomHeroes = heroes;
+}
 
+void Interface::CastleBar::SetListContent(KingdomCastles &castles)
+{
+    kingdomCastles = castles;
 }
 
 namespace
@@ -220,6 +215,7 @@ namespace
 
                 srfTop.DrawLine(Point(i, hgt - i), Point(wid, hgt - i), colDark);
                 srfTop.DrawLine(Point(wid - i, i), Point(wid - i, hgt), colDark);
+
             }
         }
         Text textPlus = { Int2Str(heroLevel) };
@@ -229,7 +225,7 @@ namespace
         Size textSize(textPlus.w(), textPlus.h());
         Point textPoint(xText, yText);
         Rect rectArea(textPoint, textSize);
-        const RGBA white(40, 40, 185);
+        RGBA white(40, 40, 185);
         srfTop.FillRect(rectArea, white);
 
         srfTop.SetAlphaMod(180);        
@@ -247,13 +243,11 @@ namespace
     }
 }
 
-void Interface::HeroesBar::PortraitRedraw(s16 x, s16 y, Heroes& hero, bool isFocused)
+void Interface::CastleBar::PortraitRedraw(s16 x, s16 y, Castle& hero, Display &display, bool isFocused)
 {
-    Surface srfPortrait = hero.GetPortrait(PORT_BIG);
-
-    rectangleFill(srfPortrait, 5, hero.GetLevel(), isFocused, Point(x,y));
-
-
-    //textPlus.Blit(xText, , srfPortrait);
-    //hero.PortraitRedraw(x, y, PORT_BIG, display);
+    Surface srfBack(Size(64,64),true);
+    Interface::RedrawCastleIcon(hero, 0, 0, srfBack);
+    if (!isFocused)
+        srfBack.SetAlphaMod(120);
+    srfBack.Blit(x, y, display);
 }
