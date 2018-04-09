@@ -25,8 +25,6 @@
 #include "system.h"
 #include "tools.h"
 
-#ifdef WITH_TTF
-
 #include <SDL_ttf.h>
 
 FontTTF::FontTTF() : ptr(nullptr)
@@ -127,44 +125,4 @@ Surface FontTTF::RenderUnicodeChar(u16 ch, const RGBA &clr, bool solid) const
                    TTF_RenderUNICODE_Blended(ptr, buf, fgColor));
 }
 
-#endif
 
-FontPSF::FontPSF(const std::string &fn, const Size &sz) : size(sz)
-{
-    buf = LoadFileToMem(fn);
-    if (buf.empty())
-    ERROR("empty buffer");
-}
-
-Surface FontPSF::RenderText(const std::string &msg, const RGBA &color) const
-{
-    Surface res;
-
-    res.Set(msg.size() * size.w, size.h, false);
-    int posx = 0;
-
-    for (auto it : msg)
-    {
-        // render char
-        u32 offsetx = it * size.w * size.h / 8; // bits -> byte
-
-        for (u32 yy = 0; yy < size.h; ++yy)
-        {
-            u32 offsety = yy * size.w / 8; // bits -> byte
-
-            if (offsetx + offsety < buf.size())
-            {
-                int line = buf[offsetx + offsety];
-                for (u32 xx = 0; xx < size.w; ++xx)
-                {
-                    if (0x80 & (line << xx))
-                        res.DrawPoint(Point(posx + xx, yy), color);
-                }
-            }
-        }
-
-        posx += size.w;
-    }
-
-    return res;
-}

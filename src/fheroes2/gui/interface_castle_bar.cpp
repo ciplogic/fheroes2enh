@@ -165,7 +165,7 @@ bool Interface::CastleBar::EventProcessing()
         return false;
     if (le.MouseClickLeft())
     {
-        const Point &pt = le.GetMousePressLeft();
+        const Point &mousePoint = le.GetMousePressLeft();
 
         Castle *heroClick = kingdomCastles[index];
         interface.SetFocus(heroClick);

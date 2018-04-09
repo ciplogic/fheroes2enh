@@ -203,7 +203,6 @@ namespace Interface
         ControlPanel controlPanel;
 
         HeroesBar heroesBar;
-        CastleBar castleBar;
 
         int redraw;
 

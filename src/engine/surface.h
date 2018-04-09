@@ -34,7 +34,12 @@ class RGBA
 public:
     RGBA();
 
-    RGBA(int r, int g, int b, int a = 255) noexcept;
+    constexpr RGBA(int r, int g, int b, int a = 255) 
+        : color( ((r << 24) & 0xFF000000) |
+            ((g << 16) & 0x00FF0000) |
+            ((b << 8) & 0x0000FF00) |
+            (a & 0x000000FF)){
+    }
 
     bool operator==(const RGBA &col) const
     { return pack() == col.pack(); }
@@ -153,7 +158,7 @@ public:
 
     void Fill(const RGBA &);
 
-    void FillRect(const Rect &, const RGBA &);
+    void FillRect(const Rect &, const RGBA &) const;
 
     void drawPixel(int x, int y, float brightness, u32 col);
 
@@ -161,7 +166,7 @@ public:
 
     void DrawLineAa(const Point &, const Point &, const RGBA &);
 
-    void DrawLine(const Point &, const Point &, const RGBA &);
+    void DrawLine(const Point &, const Point &, const RGBA &) const;
 
     void DrawPoint(const Point &, const RGBA &) const;
 

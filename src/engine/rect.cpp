@@ -24,11 +24,7 @@
 #include <iterator>
 #include "rect.h"
 
-Point::Point() : x(0), y(0)
-{
-}
-
-Point::Point(int px, int py) : x(static_cast<s16>(px)), y(static_cast<s16>(py))
+constexpr Point::Point(int px, int py) : x(static_cast<s16>(px)), y(static_cast<s16>(py))
 {
 }
 
@@ -77,11 +73,11 @@ bool Point::inABC(const Point &pt1, const Point &pt2, const Point &pt3) const
     return ((a >= 0 && b >= 0 && c >= 0) || (a < 0 && b < 0 && c < 0));
 }
 
-Size::Size() : w(0), h(0)
+constexpr Size::Size() : w(0), h(0)
 {
 }
 
-Size::Size(u16 sw, u16 sh) : w(sw), h(sh)
+constexpr Size::Size(u16 sw, u16 sh) : w(sw), h(sh)
 {
 }
 
@@ -130,9 +126,9 @@ bool Size::isEmpty() const
     return 0 == w && 0 == h;
 }
 
-Rect::Rect() = default;
+constexpr Rect::Rect() = default;
 
-Rect::Rect(const Point &pt, u16 rw, u16 rh) : Point(pt), Size(rw, rh)
+ Rect::Rect(const Point &pt, u16 rw, u16 rh) : Point(pt), Size(rw, rh)
 {
 }
 
@@ -290,11 +286,6 @@ std::pair<Rect, Point> Rect::Fixed4Blit(const Rect &srcrt, const Rect &dstrt)
     }
 
     return res;
-}
-
-Rect::Rect(int x, int y, int w, int h)
-        : Point(static_cast<s16>(x), static_cast<s16>(y)), Size(static_cast<u16>(w), static_cast<u16>(h))
-{
 }
 
 void SDLRect(s32 x, s32 y, u32 w, u32 h, SDL_Rect &writeTo)

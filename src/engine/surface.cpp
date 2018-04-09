@@ -142,13 +142,7 @@ RGBA::RGBA()
     color = 0;
 }
 
-RGBA::RGBA(int r, int g, int b, int a) noexcept
-{
-    color = ((r << 24) & 0xFF000000) |
-            ((g << 16) & 0x00FF0000) |
-            ((b << 8) & 0x0000FF00) |
-            (a & 0x000000FF);
-}
+
 
 int RGBA::r() const
 {
@@ -971,6 +965,14 @@ Surface Surface::RenderGrayScale() const
     return res;
 }
 
+namespace 
+{
+    u32 CLAMP255(int val) 
+    {
+        return std::min<u32>(val, 255);
+    }
+}
+
 Surface Surface::RenderSepia() const
 {
     Surface res(GetSize(), GetFormat());
@@ -987,14 +989,12 @@ Surface Surface::RenderSepia() const
             {
                 RGBA col = GetRGB(pixel);
                 //Numbers derived from http://blogs.techrepublic.com.com/howdoi/?p=120
-#define CLAMP255(val) std::min<u32>((val), 255)
                 u32 outR = CLAMP255(static_cast<u32>(col.r() * 0.693f + col.g() * 0.769f + col.b() * 0.189f));
                 u32 outG = CLAMP255(static_cast<u32>(col.r() * 0.449f + col.g() * 0.686f + col.b() * 0.168f));
                 u32 outB = CLAMP255(static_cast<u32>(col.r() * 0.272f + col.g() * 0.534f + col.b() * 0.131f));
 
                 u32 outPixel = RGBA::packRgba(outR, outG, outB, col.a());
                 res.SetPixel4(x, y, outPixel);
-#undef CLAMP255
             }
         }
     res.Unlock();
@@ -1049,7 +1049,7 @@ void Surface::Fill(const RGBA &col)
     FillRect(Rect(0, 0, w(), h()), col);
 }
 
-void Surface::FillRect(const Rect &rect, const RGBA &col)
+void Surface::FillRect(const Rect &rect, const RGBA &col) const
 {
     SDL_Rect dstrect;
     SDLRect(rect, dstrect);
@@ -1186,7 +1186,7 @@ void Surface::DrawLineAa(const Point &p1, const Point &p2, const RGBA &color)
     Unlock();
 }
 
-void Surface::DrawLine(const Point &p1, const Point &p2, const RGBA &color)
+void Surface::DrawLine(const Point &p1, const Point &p2, const RGBA &color) const
 {
     int x1 = p1.x;
     int y1 = p1.y;

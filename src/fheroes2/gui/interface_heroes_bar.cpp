@@ -101,7 +101,7 @@ void Interface::HeroesBar::Redraw()
     int pos = 0;
     for (Heroes *&hero:kingdomHeroes)
     {
-        PortraitRedraw(dst_pt.x, dst_pt.y, *hero, display, pos == _selectedIndex);
+        PortraitRedraw(dst_pt.x, dst_pt.y, *hero, pos == _selectedIndex);
         dst_pt.x += spaceTiling;
         pos++;
     }
@@ -220,7 +220,6 @@ namespace
 
                 srfTop.DrawLine(Point(i, hgt - i), Point(wid, hgt - i), colDark);
                 srfTop.DrawLine(Point(wid - i, i), Point(wid - i, hgt), colDark);
-
             }
         }
         Text textPlus = { Int2Str(heroLevel) };
@@ -230,7 +229,7 @@ namespace
         Size textSize(textPlus.w(), textPlus.h());
         Point textPoint(xText, yText);
         Rect rectArea(textPoint, textSize);
-        RGBA white(40, 40, 185);
+        const RGBA white(40, 40, 185);
         srfTop.FillRect(rectArea, white);
 
         srfTop.SetAlphaMod(180);        
@@ -248,7 +247,7 @@ namespace
     }
 }
 
-void Interface::HeroesBar::PortraitRedraw(s16 x, s16 y, Heroes& hero, Display &display, bool isFocused)
+void Interface::HeroesBar::PortraitRedraw(s16 x, s16 y, Heroes& hero, bool isFocused)
 {
     Surface srfPortrait = hero.GetPortrait(PORT_BIG);
 
