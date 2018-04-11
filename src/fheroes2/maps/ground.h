@@ -48,7 +48,7 @@ namespace Maps
 
         std::string String(int);
 
-        u32 GetPenalty(s32, int direction, u32 pathfinding);
+        uint32_t GetPenalty(s32, int direction, uint32_t pathfinding);
     }
 }
 

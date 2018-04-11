@@ -130,10 +130,10 @@ void MapSphinx::LoadFromMP2(s32 index, ByteVectorReader &st)
         artifact = st.getLE16();
 
         // count answers
-        u32 count = st.get();
+        uint32_t count = st.get();
 
         // answers
-        for (u32 i = 0; i < 8; ++i)
+        for (uint32_t i = 0; i < 8; ++i)
         {
             string answer = Game::GetEncodeString(st.toString(13));
 

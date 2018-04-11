@@ -94,7 +94,7 @@ namespace Interface
 
         const Rect &GetScrollBottom() const;
 
-        s32 GetDimensionDoorDestination(s32, u32, bool) const;
+        s32 GetDimensionDoorDestination(s32, uint32_t, bool) const;
 
         GameArea &GetGameArea();
 
@@ -187,7 +187,7 @@ namespace Interface
     private:
         Basic();
 
-        void RedrawSystemInfo(s32, s32, u32);
+        void RedrawSystemInfo(s32, s32, uint32_t);
 
         void ShowPathOrStartMoveHero(Heroes *, s32);
 

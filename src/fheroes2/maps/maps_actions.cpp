@@ -88,7 +88,7 @@ ByteVectorReader &operator>>(ByteVectorReader &sb, ActionMessage &st)
 
 StreamBase &operator<<(StreamBase &sb, const ListActions &listActions)
 {
-    sb << static_cast<u32>(listActions.size());
+    sb << static_cast<uint32_t>(listActions.size());
     for (const auto &listAction : listActions)
     {
         sb << listAction->GetType();
@@ -136,9 +136,9 @@ StreamBase &operator<<(StreamBase &sb, const ListActions &listActions)
 
 ByteVectorReader &operator>>(ByteVectorReader &sb, MapActions &v)
 {
-    const u32 size = sb.get32();
+    const uint32_t size = sb.get32();
     v.clear();
-    for (u32 ii = 0; ii < size; ++ii)
+    for (uint32_t ii = 0; ii < size; ++ii)
     {
         s32 key;
         ListActions listActions;
@@ -151,12 +151,12 @@ ByteVectorReader &operator>>(ByteVectorReader &sb, MapActions &v)
 
 ByteVectorReader &operator>>(ByteVectorReader &sb, ListActions &st)
 {
-    u32 size = 0;
+    uint32_t size = 0;
     sb >> size;
 
     st.clear();
 
-    for (u32 ii = 0; ii < size; ++ii)
+    for (uint32_t ii = 0; ii < size; ++ii)
     {
         int type;
         sb >> type;

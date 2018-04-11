@@ -95,11 +95,11 @@ int Game::MainMenu()
     cursor.Show();
     display.Flip();
 
-    u32 lantern_frame = 0;
+    uint32_t lantern_frame = 0;
 
     struct ButtonInfo
     {
-        u32 frame;
+        uint32_t frame;
         Button &button;
         bool isOver;
         bool wasOver;
@@ -111,7 +111,7 @@ int Game::MainMenu()
             {QUIT_DEFAULT,       buttonQuit,       false, false}
     };
 
-    for (u32 i = 0; le.MouseMotion() && i < ARRAY_COUNT(buttons); i++)
+    for (uint32_t i = 0; le.MouseMotion() && i < ARRAY_COUNT(buttons); i++)
     {
         cursor.Hide();
         const Sprite &sprite = AGG::GetICN(ICN::BTNSHNGL, buttons[i].frame);
@@ -134,7 +134,7 @@ int Game::MainMenu()
 
             if ((button.isOver || !button.wasOver) && (!button.isOver || button.wasOver))
                 continue;
-            u32 frame = button.frame;
+            uint32_t frame = button.frame;
 
             if (button.isOver && !button.wasOver)
                 frame++;

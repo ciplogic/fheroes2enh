@@ -294,7 +294,7 @@ int Game::ScenarioInfo()
     return result;
 }
 
-u32 Game::GetStep4Player(u32 current, u32 width, u32 count)
+uint32_t Game::GetStep4Player(uint32_t current, uint32_t width, uint32_t count)
 {
     return current * width * KINGDOMMAX / count + (width * (KINGDOMMAX - count) / (2 * count));
 }
@@ -319,11 +319,11 @@ void RedrawScenarioStaticInfo(const Rect &rt)
 
 void RedrawDifficultyInfo(const Point &dst, bool label)
 {
-    for (u32 current = Difficulty::EASY; current <= Difficulty::IMPOSSIBLE; ++current)
+    for (uint32_t current = Difficulty::EASY; current <= Difficulty::IMPOSSIBLE; ++current)
     {
         const Sprite &sprite = AGG::GetICN(ICN::NGHSBKG, 0);
         Rect src_rt(24, 94, 65, 65);
-        u32 offset = current * (src_rt.w + 12);
+        uint32_t offset = current * (src_rt.w + 12);
         src_rt.x = src_rt.x + offset;
         sprite.Blit(src_rt, dst.x + offset, dst.y);
 

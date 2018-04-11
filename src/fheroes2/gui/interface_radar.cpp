@@ -53,7 +53,7 @@
 
 namespace
 {
-    u32 GetPaletteIndexFromGround(int ground)
+    uint32_t GetPaletteIndexFromGround(int ground)
     {
         switch (ground)
         {
@@ -82,7 +82,7 @@ namespace
         return 0;
     }
 
-    u32 GetPaletteIndexFromColor(int color)
+    uint32_t GetPaletteIndexFromColor(int color)
     {
         switch (color)
         {
@@ -165,7 +165,7 @@ void Interface::Radar::Generate()
                 color = AGG::GetPaletteColor(COLOR_ROAD);
             else
             {
-                u32 index = GetPaletteIndexFromGround(tile.GetGround());
+                uint32_t index = GetPaletteIndexFromGround(tile.GetGround());
 
                 if (tile.GetObject() == MP2::OBJ_MOUNTS)
                     index += 2;

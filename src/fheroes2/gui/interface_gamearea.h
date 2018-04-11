@@ -106,7 +106,7 @@ namespace Interface
         static Surface GenerateUltimateArtifactAreaSurface(s32);
 
     private:
-        void SetAreaPosition(s32, s32, u32, u32);
+        void SetAreaPosition(s32, s32, uint32_t, uint32_t);
 
         Basic &interface;
 

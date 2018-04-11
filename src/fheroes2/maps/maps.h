@@ -60,7 +60,7 @@ namespace Maps
     public:
         IndexesDistance(s32, const Indexes &, int sort = 0);
 
-        IndexesDistance(s32, s32, u32 dist, int sort = 0);
+        IndexesDistance(s32, s32, uint32_t dist, int sort = 0);
     };
 
     std::string SizeString(int size);
@@ -125,9 +125,9 @@ namespace Maps
 
     Indexes ScanAroundObjects(s32, const u8 *objs);
 
-    Indexes ScanAroundObject(s32, u32 dist, int obj);
+    Indexes ScanAroundObject(s32, uint32_t dist, int obj);
 
-    Indexes ScanAroundObjects(s32, u32 dist, const u8 *objs);
+    Indexes ScanAroundObjects(s32, uint32_t dist, const u8 *objs);
 
     Indexes GetTilesUnderProtection(s32);
 
@@ -145,7 +145,7 @@ namespace Maps
 
     void ClearFog(s32, int scoute, int color);
 
-    u32 GetApproximateDistance(s32, s32);
+    uint32_t GetApproximateDistance(s32, s32);
 
     void UpdateRNDSpriteForCastle(const Point &, int race, bool castle);
 

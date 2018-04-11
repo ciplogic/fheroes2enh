@@ -64,7 +64,7 @@ int Game::NewHotSeat()
         world.NewMaps(10, 10);
         return StartBattleOnly();
     }
-    const u32 select = SelectCountPlayers();
+    const uint32_t select = SelectCountPlayers();
     if (select)
     {
         conf.SetPreferablyCountPlayers(select);
@@ -295,7 +295,7 @@ int Game::NewMulti()
     return QUITGAME;
 }
 
-u32 Game::SelectCountPlayers()
+uint32_t Game::SelectCountPlayers()
 {
     // cursor
     Cursor &cursor = Cursor::Get();

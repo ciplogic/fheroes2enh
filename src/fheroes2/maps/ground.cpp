@@ -56,7 +56,7 @@ std::string Maps::Ground::String(int ground)
     return str_ground[8];
 }
 
-u32 Maps::Ground::GetPenalty(s32 index, int direct, u32 level)
+uint32_t Maps::Ground::GetPenalty(s32 index, int direct, uint32_t level)
 {
     const Tiles &tile = world.GetTiles(index);
 
@@ -76,7 +76,7 @@ u32 Maps::Ground::GetPenalty(s32 index, int direct, u32 level)
         // road priority: need small value
         return 59;
 
-    u32 result = 100;
+    uint32_t result = 100;
 
     switch (tile.GetGround())
     {

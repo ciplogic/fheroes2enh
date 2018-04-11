@@ -90,8 +90,8 @@ void Interface::Basic::SetHideInterface(bool f)
 {
     Settings &conf = Settings::Get().Get();
     const Display &display = Display::Get();
-    const u32 px = display.w() - BORDERWIDTH - RADARWIDTH;
-    const u32 scroll_width = BORDERWIDTH;
+    const uint32_t px = display.w() - BORDERWIDTH - RADARWIDTH;
+    const uint32_t scroll_width = BORDERWIDTH;
 
     conf.SetHideInterface(f);
 
@@ -202,7 +202,7 @@ void Interface::Basic::Redraw(int force)
     redraw = 0;
 }
 
-void Interface::Basic::RedrawSystemInfo(s32 cx, s32 cy, u32 usage)
+void Interface::Basic::RedrawSystemInfo(s32 cx, s32 cy, uint32_t usage)
 {
     ostringstream os;
 
@@ -220,7 +220,7 @@ void Interface::Basic::RedrawSystemInfo(s32 cx, s32 cy, u32 usage)
     system_info.Blit(cx, cy);
 }
 
-s32 Interface::Basic::GetDimensionDoorDestination(s32 from, u32 distance, bool water) const
+s32 Interface::Basic::GetDimensionDoorDestination(s32 from, uint32_t distance, bool water) const
 {
     Cursor &cursor = Cursor::Get();
     Display &display = Display::Get();

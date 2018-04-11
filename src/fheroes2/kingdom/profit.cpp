@@ -64,7 +64,7 @@ void ProfitConditions::UpdateCosts(const string &spec)
 {
 }
 
-payment_t ProfitConditions::FromBuilding(u32 building, int race)
+payment_t ProfitConditions::FromBuilding(uint32_t building, int race)
 {
     payment_t result;
     const char *id = nullptr;

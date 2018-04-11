@@ -166,7 +166,7 @@ int main(int argc, char **argv)
     Rand::Init();
     if (conf.Music()) SetTimidityEnvPath(conf);
 
-    u32 subsystem = INIT_VIDEO | INIT_TIMER;
+    uint32_t subsystem = INIT_VIDEO | INIT_TIMER;
 
     if (conf.Sound() || conf.Music())
         subsystem |= INIT_AUDIO;

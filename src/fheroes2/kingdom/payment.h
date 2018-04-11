@@ -35,7 +35,7 @@ enum
 
 namespace PaymentConditions
 {
-    payment_t BuyBuilding(int race, u32 build);
+    payment_t BuyBuilding(int race, uint32_t build);
 
     payment_t BuyBoat();
 

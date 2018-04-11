@@ -45,12 +45,12 @@ bool Interface::IconsBar::IsVisible()
     return !conf.ExtGameHideInterface() || conf.ShowIcons();
 }
 
-u32 Interface::IconsBar::GetItemWidth()
+uint32_t Interface::IconsBar::GetItemWidth()
 {
     return ICONS_WIDTH;
 }
 
-u32 Interface::IconsBar::GetItemHeight()
+uint32_t Interface::IconsBar::GetItemHeight()
 {
     return ICONS_HEIGHT;
 }
@@ -58,7 +58,7 @@ u32 Interface::IconsBar::GetItemHeight()
 void Interface::RedrawCastleIcon(const Castle &castle, s32 sx, s32 sy, Surface& destSurface)
 {
     const bool evil = Settings::Get().ExtGameEvilInterface();
-    u32 index_sprite = 1;
+    uint32_t index_sprite = 1;
 
     switch (castle.GetRace())
     {
@@ -138,7 +138,7 @@ void Interface::IconsBar::RedrawBackground(const Point &pos)
     srcrt.h = 32;
 
     if (2 < iconsCount)
-        for (u32 ii = 0; ii < iconsCount - 2; ++ii)
+        for (uint32_t ii = 0; ii < iconsCount - 2; ++ii)
         {
             icnadv.Blit(srcrt, dstpt);
             dstpt.y += srcrt.h;
@@ -148,7 +148,7 @@ void Interface::IconsBar::RedrawBackground(const Point &pos)
     srcrt.h = 32;
     icnadv.Blit(srcrt, dstpt);
 
-    for (u32 ii = 0; ii < iconsCount; ++ii)
+    for (uint32_t ii = 0; ii < iconsCount; ++ii)
         back.Blit(pos.x + 5, pos.y + 5 + ii * (GetItemHeight() + 10));
 }
 
@@ -344,7 +344,7 @@ Interface::IconsPanel::IconsPanel(Basic &basic) : BorderWindow(Rect(0, 0, 144, 1
     sfMarker.DrawBorder(ICONS_CURSOR_COLOR);
 }
 
-u32 Interface::IconsPanel::CountIcons() const
+uint32_t Interface::IconsPanel::CountIcons() const
 {
     return castleIcons.CountIcons();
 }
@@ -382,14 +382,14 @@ void Interface::IconsPanel::SetRedraw() const
 
 void Interface::IconsPanel::SetPos(s32 ox, s32 oy)
 {
-    u32 iconsCount = 0;
+    uint32_t iconsCount = 0;
 
     if (Settings::Get().ExtGameHideInterface())
     {
         iconsCount = 2;
     } else
     {
-        const u32 count_h = (Display::Get().h() - 480) / TILEWIDTH;
+        const uint32_t count_h = (Display::Get().h() - 480) / TILEWIDTH;
         iconsCount = count_h > 3 ? 8 : (count_h < 3 ? 4 : 7);
     }
 

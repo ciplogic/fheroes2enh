@@ -215,10 +215,10 @@ bool PassableFromToTile(const Heroes &hero, s32 from, const s32 &to, int direct,
     return PassableToTile(hero, toTile, direct, dst);
 }
 
-u32 GetPenaltyFromTo(s32 from, s32 to, int direct, int pathfinding)
+uint32_t GetPenaltyFromTo(s32 from, s32 to, int direct, int pathfinding)
 {
-    const u32 cost1 = Maps::Ground::GetPenalty(from, direct, pathfinding); // penalty: for [cur] out
-    const u32 cost2 = Maps::Ground::GetPenalty(to, Direction::Reflect(direct), pathfinding); // penalty: for [tmp] in
+    const uint32_t cost1 = Maps::Ground::GetPenalty(from, direct, pathfinding); // penalty: for [cur] out
+    const uint32_t cost2 = Maps::Ground::GetPenalty(to, Direction::Reflect(direct), pathfinding); // penalty: for [tmp] in
     return (cost1 + cost2) >> 1;
 }
 
@@ -344,7 +344,7 @@ bool Route::Path::Find(s32 to, int limit)
             auto &curItem2 = pathPointsMap2.get(cur);
 
             if (!tmpItem2.open) continue;
-            const u32 costg = GetPenaltyFromTo(cur, tmp, direction, pathfinding);
+            const uint32_t costg = GetPenaltyFromTo(cur, tmp, direction, pathfinding);
 
             // new
             if (-1 == tmpItem2.parent)

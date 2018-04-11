@@ -239,7 +239,7 @@ void ShowNewWeekDialog()
     if (week.GetType() == Week::MONSTERS)
     {
         const Monster monster(week.GetMonster());
-        const u32 count = world.BeginMonth() ? Castle::GetGrownMonthOf() : Castle::GetGrownWeekOf(monster);
+        const uint32_t count = world.BeginMonth() ? Castle::GetGrownMonthOf() : Castle::GetGrownWeekOf(monster);
 
         if (monster.isValid() && count)
         {
@@ -938,7 +938,7 @@ int Interface::Basic::HumanTurn(bool isload)
         // slow maps objects animation
         if (AnimateInfrequentDelay(Game::MAPS_DELAY))
         {
-            u32 &frame = Game::MapsAnimationFrame();
+            uint32_t &frame = Game::MapsAnimationFrame();
             ++frame;
             gameArea.SetRedraw();
         }

@@ -42,7 +42,7 @@ int Route::Step::GetDirection() const
     return direction;
 }
 
-u32 Route::Step::GetPenalty() const
+uint32_t Route::Step::GetPenalty() const
 {
     return penalty;
 }
@@ -80,7 +80,7 @@ int Route::Path::GetFrontDirection() const
                                     : Direction::CENTER) : front().GetDirection();
 }
 
-u32 Route::Path::GetFrontPenalty() const
+uint32_t Route::Path::GetFrontPenalty() const
 {
     return empty() ? 0 : front().GetPenalty();
 }
@@ -431,9 +431,9 @@ int Route::Path::GetIndexSprite(int from, int to, int mod)
 }
 
 /* total penalty cast */
-u32 Route::Path::GetTotalPenalty() const
+uint32_t Route::Path::GetTotalPenalty() const
 {
-    u32 result = 0;
+    uint32_t result = 0;
 
     for (auto it : *this)
         result += it.GetPenalty();
@@ -444,7 +444,7 @@ u32 Route::Path::GetTotalPenalty() const
 s32 Route::Path::GetAllowStep() const
 {
     s32 green = 0;
-    u32 move_point = hero->GetMovePoints();
+    uint32_t move_point = hero->GetMovePoints();
 
     for (auto it : *this)
     {

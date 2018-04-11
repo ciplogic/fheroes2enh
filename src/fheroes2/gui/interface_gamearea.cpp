@@ -77,7 +77,7 @@ void Interface::GameArea::Build()
                         display.h() - 2 * BORDERWIDTH);
 }
 
-void Interface::GameArea::SetAreaPosition(s32 x, s32 y, u32 w, u32 h)
+void Interface::GameArea::SetAreaPosition(s32 x, s32 y, uint32_t w, uint32_t h)
 {
     areaPosition.x = x;
     areaPosition.y = y;
@@ -165,7 +165,7 @@ void Interface::GameArea::DrawHeroRoute(Surface &dst, int flag, const Rect &rt) 
             // check skip first?
             !(it1 == hero->GetPath().begin() && skipfirst))
         {
-            const u32 index = (it3 == it2 ? 0 :
+            const uint32_t index = (it3 == it2 ? 0 :
                                Route::Path::GetIndexSprite((*it1).GetDirection(), (*it3).GetDirection(),
                                                            Maps::Ground::GetPenalty(from, Direction::CENTER,
                                                                                     hero->GetLevelSkill(
@@ -389,13 +389,13 @@ Surface Interface::GameArea::GenerateUltimateArtifactAreaSurface(s32 index)
     gamearea.Redraw(sf, LEVEL_BOTTOM | LEVEL_TOP);
 
     // blit marker
-    for (u32 ii = 0; ii < rectMaps.h; ++ii)
+    for (uint32_t ii = 0; ii < rectMaps.h; ++ii)
         if (index < Maps::GetIndexFromAbsPoint(rectMaps.x + rectMaps.w - 1, rectMaps.y + ii))
         {
             pt.y = ii;
             break;
         }
-    for (u32 ii = 0; ii < rectMaps.w; ++ii)
+    for (uint32_t ii = 0; ii < rectMaps.w; ++ii)
         if (index == Maps::GetIndexFromAbsPoint(rectMaps.x + ii, rectMaps.y + pt.y))
         {
             pt.x = ii;

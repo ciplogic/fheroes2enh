@@ -52,7 +52,7 @@ int Interface::StatusWindow::GetState() const
     return state;
 }
 
-u32 Interface::StatusWindow::ResetResourceStatus(u32 tick, void *ptr)
+uint32_t Interface::StatusWindow::ResetResourceStatus(uint32_t tick, void *ptr)
 {
     if (!ptr)
         return 0;
@@ -80,8 +80,8 @@ void Interface::StatusWindow::SetRedraw() const
 
 void Interface::StatusWindow::SetPos(s32 ox, s32 oy)
 {
-    u32 ow = 144;
-    u32 oh = 72;
+    uint32_t ow = 144;
+    uint32_t oh = 72;
 
     if (!Settings::Get().ExtGameHideInterface())
     {
@@ -222,7 +222,7 @@ void Interface::StatusWindow::DrawDayInfo(int oh) const
     text.Blit(pos.x + (pos.w - text.w()) / 2, pos.y + 46 + oh);
 }
 
-void Interface::StatusWindow::SetResource(int res, u32 count)
+void Interface::StatusWindow::SetResource(int res, uint32_t count)
 {
     lastResource = res;
     countLastResource = count;
@@ -275,7 +275,7 @@ void Interface::StatusWindow::DrawArmyInfo(int oh) const
     if (armies)
     {
         const Rect &pos = GetArea();
-        u32 count = armies->m_troops.GetCount();
+        uint32_t count = armies->m_troops.GetCount();
 
         if (4 > count)
         {
@@ -372,8 +372,8 @@ void Interface::StatusWindow::DrawBackground() const
 
         //
         srcrt = Rect(0, 16, icnston.w(), 16);
-        const u32 hh = 1 + (pos.h - 32) / 16;
-        for (u32 yy = 1; yy <= hh; ++yy)
+        const uint32_t hh = 1 + (pos.h - 32) / 16;
+        for (uint32_t yy = 1; yy <= hh; ++yy)
         {
             dstpt = Point(pos.x, pos.y + 16 * yy);
             icnston.Blit(srcrt, dstpt);
@@ -412,7 +412,7 @@ void Interface::StatusWindow::QueueEventProcessing()
                         Font::BIG);
 }
 
-void Interface::StatusWindow::RedrawTurnProgress(u32 v)
+void Interface::StatusWindow::RedrawTurnProgress(uint32_t v)
 {
     turn_progress = v;
     SetRedraw();

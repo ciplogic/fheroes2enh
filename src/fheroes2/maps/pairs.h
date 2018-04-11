@@ -29,13 +29,13 @@
 #include "resource.h"
 #include "ByteVectorReader.h"
 
-class IndexDistance : public pair<s32, u32>
+class IndexDistance : public pair<s32, uint32_t>
 {
 public:
-    IndexDistance() : pair<s32, u32>(-1, 0)
+    IndexDistance() : pair<s32, uint32_t>(-1, 0)
     {}
 
-    IndexDistance(s32 i, u32 d) : pair<s32, u32>(i, d)
+    IndexDistance(s32 i, uint32_t d) : pair<s32, uint32_t>(i, d)
     {};
 
     static bool Shortest(const IndexDistance &id1, const IndexDistance &id2)
@@ -87,13 +87,13 @@ public:
 
 ByteVectorReader &operator>>(ByteVectorReader &, ObjectColor &);
 
-class ResourceCount : public pair<int, u32>
+class ResourceCount : public pair<int, uint32_t>
 {
 public:
-    ResourceCount() : pair<int, u32>(Resource::UNKNOWN, 0)
+    ResourceCount() : pair<int, uint32_t>(Resource::UNKNOWN, 0)
     {};
 
-    ResourceCount(int res, u32 count) : pair<int, u32>(res, count)
+    ResourceCount(int res, uint32_t count) : pair<int, uint32_t>(res, count)
     {};
 
     bool isResource(int res) const

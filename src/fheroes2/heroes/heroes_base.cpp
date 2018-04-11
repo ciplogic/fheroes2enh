@@ -30,11 +30,11 @@
 #include "world.h"
 #include "settings.h"
 
-int ArtifactsModifiersResult(int type, const u8 *arts, u32 size, const HeroBase &base, string *strs)
+int ArtifactsModifiersResult(int type, const u8 *arts, uint32_t size, const HeroBase &base, string *strs)
 {
     int result = 0;
 
-    for (u32 ii = 0; ii < size; ++ii)
+    for (uint32_t ii = 0; ii < size; ++ii)
     {
         const Artifact art(arts[ii]);
 
@@ -234,12 +234,12 @@ bool HeroBase::isHeroes() const
     return GetType() == HEROES;
 }
 
-u32 HeroBase::GetSpellPoints() const
+uint32_t HeroBase::GetSpellPoints() const
 {
     return magic_point;
 }
 
-void HeroBase::SetSpellPoints(u32 points)
+void HeroBase::SetSpellPoints(uint32_t points)
 {
     magic_point = points;
 }
@@ -298,7 +298,7 @@ BagArtifacts &HeroBase::GetBagArtifacts()
     return bag_artifacts;
 }
 
-u32 HeroBase::HasArtifact(const Artifact &art) const
+uint32_t HeroBase::HasArtifact(const Artifact &art) const
 {
     bool unique = true;
 

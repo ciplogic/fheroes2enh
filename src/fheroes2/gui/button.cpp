@@ -39,7 +39,7 @@ Button::Button() : flags(0)
 {
 }
 
-Button::Button(s32 ox, s32 oy, int icn, u32 index1, u32 index2) : flags(0)
+Button::Button(s32 ox, s32 oy, int icn, uint32_t index1, uint32_t index2) : flags(0)
 {
     SetPos(ox, oy);
 
@@ -75,7 +75,7 @@ void Button::SetPos(s32 ox, s32 oy)
     y = oy;
 }
 
-void Button::SetSize(u32 ow, u32 oh)
+void Button::SetSize(uint32_t ow, uint32_t oh)
 {
     w = ow;
     h = oh;
@@ -86,7 +86,7 @@ void Button::SetPos(const Point &pos)
     SetPos(pos.x, pos.y);
 }
 
-void Button::SetSprite(int icn, u32 index1, u32 index2)
+void Button::SetSprite(int icn, uint32_t index1, uint32_t index2)
 {
     sf1 = AGG::GetICN(icn, index1);
     sf2 = AGG::GetICN(icn, index2);
@@ -161,7 +161,7 @@ void Button::Draw()
     if (localcursor) cursor.Show();
 }
 
-ButtonGroups::ButtonGroups(const Rect pos, u32 btns) : button1(nullptr), button2(nullptr), result1(Dialog::ZERO),
+ButtonGroups::ButtonGroups(const Rect pos, uint32_t btns) : button1(nullptr), button2(nullptr), result1(Dialog::ZERO),
                                                        result2(Dialog::ZERO), buttons(btns)
 {
     Point pt;

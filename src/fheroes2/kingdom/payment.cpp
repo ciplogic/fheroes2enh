@@ -49,7 +49,7 @@ void PaymentConditions::UpdateCosts(const string &spec)
 {
 }
 
-payment_t PaymentConditions::BuyBuilding(int race, u32 build)
+payment_t PaymentConditions::BuyBuilding(int race, uint32_t build)
 {
     return BuildingInfo::GetCost(build, race);
 }

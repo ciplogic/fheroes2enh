@@ -51,7 +51,7 @@ namespace Interface
         const Rect &GetRect() const;
 
     protected:
-        void SetPosition(s32, s32, u32, u32);
+        void SetPosition(s32, s32, uint32_t, uint32_t);
 
         void SetPosition(s32, s32);
 

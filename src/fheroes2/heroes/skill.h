@@ -106,7 +106,7 @@ namespace Skill
 
         string GetDescription() const;
 
-        u32 GetValues() const;
+        uint32_t GetValues() const;
 
         /* index sprite from SECSKILL */
         int GetIndexSprite1() const;
@@ -132,7 +132,7 @@ namespace Skill
 
         int GetLevel(int skill) const;
 
-        u32 GetValues(int skill) const;
+        uint32_t GetValues(int skill) const;
 
         void AddSkill(const Secondary &);
 

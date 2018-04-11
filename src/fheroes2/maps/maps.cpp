@@ -43,7 +43,7 @@ struct ComparsionDistance
     s32 center;
 };
 
-Maps::IndexesDistance::IndexesDistance(s32 from, s32 center, u32 dist, int sort)
+Maps::IndexesDistance::IndexesDistance(s32 from, s32 center, uint32_t dist, int sort)
 {
     MapsIndexes results;
     GetAroundIndexes(center, dist, sort, results);
@@ -338,14 +338,14 @@ void Maps::ScanAroundObject(s32 center, int obj, MapsIndexes &resultsScan)
     MapsIndexesFilteredObject(resultsScan, obj);
 }
 
-Maps::Indexes Maps::ScanAroundObject(s32 center, u32 dist, int obj)
+Maps::Indexes Maps::ScanAroundObject(s32 center, uint32_t dist, int obj)
 {
     Indexes results;
     GetAroundIndexes(center, dist, true, results);
     return MapsIndexesFilteredObject(results, obj);
 }
 
-Maps::Indexes Maps::ScanAroundObjects(s32 center, u32 dist, const u8 *objs)
+Maps::Indexes Maps::ScanAroundObjects(s32 center, uint32_t dist, const u8 *objs)
 {
     Indexes results;
     GetAroundIndexes(center, dist, true, results);
@@ -452,7 +452,7 @@ Maps::Indexes Maps::GetTilesUnderProtection(s32 center)
     return tilesIndexesUnderProtection;
 }
 
-u32 Maps::GetApproximateDistance(s32 index1, s32 index2)
+uint32_t Maps::GetApproximateDistance(s32 index1, s32 index2)
 {
     const Size sz(GetPoint(index1) - GetPoint(index2));
     return max(sz.w, sz.h);

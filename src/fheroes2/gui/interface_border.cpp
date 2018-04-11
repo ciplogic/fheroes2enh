@@ -36,9 +36,9 @@ void Interface::GameBorderRedraw()
     Display &display = Display::Get();
 
     const bool evil = Settings::Get().ExtGameEvilInterface();
-    u32 count_w = (display.w() - 640) / TILEWIDTH;
-    u32 count_h = (display.h() - 480) / TILEWIDTH;
-    const u32 count_icons = count_h > 3 ? 8 : (count_h < 3 ? 4 : 7);
+    uint32_t count_w = (display.w() - 640) / TILEWIDTH;
+    uint32_t count_h = (display.h() - 480) / TILEWIDTH;
+    const uint32_t count_icons = count_h > 3 ? 8 : (count_h < 3 ? 4 : 7);
 
     if (display.w() % TILEWIDTH) ++count_w;
     if (display.h() % TILEWIDTH) ++count_h;
@@ -59,7 +59,7 @@ void Interface::GameBorderRedraw()
     srcrt.w = TILEWIDTH;
     dstpt.x = srcrt.x;
     dstpt.y = 0;
-    for (u32 ii = 0; ii < count_w + 1; ++ii)
+    for (uint32_t ii = 0; ii < count_w + 1; ++ii)
     {
         icnadv.Blit(srcrt, dstpt);
         dstpt.x += TILEWIDTH;
@@ -81,7 +81,7 @@ void Interface::GameBorderRedraw()
     srcrt.h = TILEWIDTH;
     dstpt.x = srcrt.x;
     dstpt.y = srcrt.y;
-    for (u32 ii = 0; ii < count_h + 1; ++ii)
+    for (uint32_t ii = 0; ii < count_h + 1; ++ii)
     {
         icnadv.Blit(srcrt, dstpt);
         dstpt.y += TILEWIDTH;
@@ -102,7 +102,7 @@ void Interface::GameBorderRedraw()
     srcrt.h = TILEWIDTH;
     dstpt.x = display.w() - RADARWIDTH - 2 * BORDERWIDTH;
     dstpt.y = srcrt.y;
-    for (u32 ii = 0; ii < count_h + 1; ++ii)
+    for (uint32_t ii = 0; ii < count_h + 1; ++ii)
     {
         icnadv.Blit(srcrt, dstpt);
         dstpt.y += TILEWIDTH;
@@ -123,7 +123,7 @@ void Interface::GameBorderRedraw()
     srcrt.h = TILEWIDTH;
     dstpt.x = display.w() - BORDERWIDTH;
     dstpt.y = srcrt.y;
-    for (u32 ii = 0; ii < count_h + 1; ++ii)
+    for (uint32_t ii = 0; ii < count_h + 1; ++ii)
     {
         icnadv.Blit(srcrt, dstpt);
         dstpt.y += TILEWIDTH;
@@ -144,7 +144,7 @@ void Interface::GameBorderRedraw()
     srcrt.w = TILEWIDTH;
     dstpt.x = srcrt.x;
     dstpt.y = display.h() - BORDERWIDTH;
-    for (u32 ii = 0; ii < count_w + 1; ++ii)
+    for (uint32_t ii = 0; ii < count_w + 1; ++ii)
     {
         icnadv.Blit(srcrt, dstpt);
         dstpt.x += TILEWIDTH;
@@ -186,7 +186,7 @@ void Interface::BorderWindow::Redraw()
     Dialog::FrameBorder::RenderRegular(border.GetRect());
 }
 
-void Interface::BorderWindow::SetPosition(s32 px, s32 py, u32 pw, u32 ph)
+void Interface::BorderWindow::SetPosition(s32 px, s32 py, uint32_t pw, uint32_t ph)
 {
     area.w = pw;
     area.h = ph;
