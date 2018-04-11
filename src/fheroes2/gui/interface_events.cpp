@@ -22,6 +22,8 @@
 
 #include <vector>
 #include <algorithm>
+#include <sstream>
+#include <iostream>
 
 #include "agg.h"
 #include "button.h"

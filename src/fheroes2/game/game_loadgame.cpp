@@ -29,6 +29,8 @@
 #include "game.h"
 #include "display.h"
 #include "icn.h"
+#include <iostream>
+
 
 int Game::LoadCampain()
 {

@@ -33,6 +33,8 @@
 #include "maps_actions.h"
 #include "world.h"
 #include "rand.h"
+#include <sstream>
+#include <iostream>
 
 namespace GameStatic
 {

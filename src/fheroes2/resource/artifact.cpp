@@ -34,6 +34,9 @@
 #include "rand.h"
 #include "icn.h"
 
+#include <sstream>
+#include <iostream>
+
 enum
 {
     ART_DISABLED = 0x01, ART_RNDUSED = 0x02

@@ -26,6 +26,8 @@
 #include "race.h"
 #include "game.h"
 #include "difficulty.h"
+#include <iostream>
+
 
 struct ComparsionDistance
 {

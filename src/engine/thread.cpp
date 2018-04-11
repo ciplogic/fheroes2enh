@@ -22,6 +22,9 @@
 
 #include "system.h"
 #include "thread.h"
+#include <sstream>
+#include <iostream>
+
 
 using namespace SDL;
 

@@ -39,8 +39,7 @@ Interface::Basic::Basic() : gameArea(*this), radar(*this),
     iconsPanel(*this), buttonsArea(*this),
     statusWindow(*this),
     controlPanel(*this),
-    heroesBar(*this),
-    castleBar(*this),
+    heroesBar(*this),  
     redraw(0)
 {
     Settings &conf = Settings::Get();
@@ -180,7 +179,6 @@ void Interface::Basic::Redraw(int force)
     if ((conf.ExtGameHideInterface() && conf.ShowRadar()) || ((redraw | force) & REDRAW_RADAR)) radar.Redraw();
 
     heroesBar.Redraw();
-    castleBar.Redraw();
 
     if ((conf.ExtGameHideInterface() && conf.ShowIcons()) || ((redraw | force) & REDRAW_ICONS)) iconsPanel.Redraw();
     else if ((redraw | force) & REDRAW_HEROES) iconsPanel.RedrawIcons(ICON_HEROES);

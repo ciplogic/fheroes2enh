@@ -42,6 +42,9 @@
 #include "rand.h"
 #include "icn.h"
 
+#include <sstream>
+#include <iostream>
+
 std::string Heroes::GetName(int id)
 {
     std::string names[] = {

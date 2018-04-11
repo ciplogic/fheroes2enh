@@ -34,6 +34,7 @@
 #include "luck.h"
 #include "morale.h"
 #include "rand.h"
+#include <sstream>
 
 namespace
 {

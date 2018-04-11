@@ -23,7 +23,6 @@
 #include <sstream>
 
 #include "speed.h"
-#include "game.h"
 #include "army.h"
 #include "heroes_base.h"
 #include "tools.h"

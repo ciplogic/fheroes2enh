@@ -26,6 +26,8 @@
 #include "serialize.h"
 #include "system.h"
 #include "tools.h"
+#include <sstream>
+#include <iostream>
 
 struct chunk
 {

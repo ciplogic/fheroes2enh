@@ -26,6 +26,9 @@
 #include "system.h"
 #include "error.h"
 #include "display.h"
+#include <sstream>
+#include <iostream>
+
 
 #include <SDL.h>
 

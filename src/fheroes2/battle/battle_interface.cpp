@@ -45,10 +45,7 @@
 #include "m82.h"
 #include "rand.h"
 
-#include "audio.h"
 #include "audio_mixer.h"
-#include "audio_music.h"
-#include "audio_cdrom.h"
 
 #define  ARMYORDERW    40
 

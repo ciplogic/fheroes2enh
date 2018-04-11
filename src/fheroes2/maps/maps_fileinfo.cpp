@@ -28,7 +28,8 @@
 
 #include <string>
 #include <iosfwd>
-#include <cstring>
+#include <sstream>
+
 #include <algorithm>
 #include "difficulty.h"
 #include "color.h"

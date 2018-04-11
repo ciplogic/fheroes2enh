@@ -26,6 +26,9 @@
 
 #include "sdlnet.h"
 
+#include <sstream>
+#include <iostream>
+
 
 Network::Socket::Socket() : sd(nullptr), sdset(nullptr), status(0)
 {

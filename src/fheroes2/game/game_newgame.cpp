@@ -32,6 +32,9 @@
 #include "mus.h"
 #include "audio_mixer.h"
 #include "icn.h"
+#include <sstream>
+#include <iostream>
+
 
 
 int Game::NewStandard()

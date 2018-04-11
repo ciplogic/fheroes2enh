@@ -21,6 +21,8 @@
  ***************************************************************************/
 
 #include "font.h"
+#include <sstream>
+#include <iostream>
 
 #include "system.h"
 #include "tools.h"

@@ -32,6 +32,9 @@
 #include "buildinginfo.h"
 #include "interface_icons.h"
 
+#include <sstream>
+#include <iostream>
+
 #include "icn.h"
 
 struct HeroRow

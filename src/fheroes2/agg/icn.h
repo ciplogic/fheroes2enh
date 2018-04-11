@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include "gamedefs.h"
+#include "types.h"
 
 namespace ICN
 {

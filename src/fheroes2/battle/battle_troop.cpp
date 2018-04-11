@@ -21,7 +21,6 @@
  ***************************************************************************/
 
 #include "icn.h"
-#include <cstring>
 #include <algorithm>
 #include <functional>
 #include "engine.h"
@@ -38,6 +37,7 @@
 #include "m82.h"
 #include "rand.h"
 #include "battle_army.h"
+#include <sstream>
 
 namespace Battle
 {

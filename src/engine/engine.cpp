@@ -29,6 +29,8 @@
 #ifdef WITH_NET
 #include "sdlnet.h"
 #endif
+#include <iostream>
+
 
 namespace Mixer
 {

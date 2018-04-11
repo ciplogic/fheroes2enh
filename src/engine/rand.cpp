@@ -25,7 +25,8 @@
 
 #include "system.h"
 #include "rand.h"
-
+#include <sstream>
+#include <iostream>
 
 void Rand::Init()
 {

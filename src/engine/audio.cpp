@@ -22,6 +22,8 @@
 
 #include "system.h"
 #include "audio.h"
+#include <sstream>
+#include <iostream>
 
 namespace
 {

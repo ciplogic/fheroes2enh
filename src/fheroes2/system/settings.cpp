@@ -31,12 +31,13 @@
 #include "dialog.h"
 #include "settings.h"
 
-#include "system.h"
 #include "tools.h"
 #include "audio.h"
 #include "audio_mixer.h"
 #include "audio_music.h"
 #include "audio_cdrom.h"
+#include <sstream>
+#include <iostream>
 
 #ifdef WIN32
 #define WINDOWS

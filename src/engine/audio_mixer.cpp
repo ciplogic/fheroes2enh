@@ -30,6 +30,7 @@
 #include "audio.h"
 #include "audio_mixer.h"
 #include "audio_music.h"
+#include <iostream>
 
 namespace Mixer
 {

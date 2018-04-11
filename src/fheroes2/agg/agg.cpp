@@ -50,6 +50,9 @@
 #include "audio_mixer.h"
 #include "audio_music.h"
 
+#include <sstream>
+#include <iostream>
+
 #define FATSIZENAME    15
 
 

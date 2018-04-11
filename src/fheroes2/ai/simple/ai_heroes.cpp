@@ -38,6 +38,8 @@
 #include "ai_simple.h"
 #include "rand.h"
 
+#include <sstream>
+
 #define HERO_MAX_SHEDULED_TASK 7
 
 AIHeroes &AIHeroes::Get()

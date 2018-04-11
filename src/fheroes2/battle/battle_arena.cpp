@@ -38,7 +38,6 @@
 #include "battle_interface.h"
 #include "battle_command.h"
 #include "localevent.h"
-#include "system.h"
 #include "tools.h"
 #include "m82.h"
 #include "mus.h"

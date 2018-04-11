@@ -27,6 +27,8 @@
 #include "game.h"
 #include "system.h"
 #include "tools.h"
+#include <sstream>
+
 
 struct TimeDelay : pair<SDL::Time, int>
 {

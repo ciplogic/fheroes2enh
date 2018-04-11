@@ -26,7 +26,6 @@
 #include <utility>
 #include <string>
 #include <vector>
-#include "bitmodes.h"
 #include "players.h"
 #include "army_troop.h"
 

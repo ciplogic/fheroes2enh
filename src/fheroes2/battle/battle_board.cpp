@@ -34,6 +34,7 @@
 #include "icn.h"
 #include <unordered_map>
 #include "rand.h"
+#include <sstream>
 
 namespace Battle
 {
