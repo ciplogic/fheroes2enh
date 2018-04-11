@@ -55,7 +55,7 @@ namespace Battle
 
     s32 AIAreaSpellDst(const HeroBase &);
 
-    bool MaxDstCount(const pair<s32, u32> &p1, const pair<s32, u32> &p2)
+    bool MaxDstCount(const pair<s32, uint32_t> &p1, const pair<s32, uint32_t> &p2)
     { return p1.second < p2.second; }
 
     int countAlive(Units friends)
@@ -81,7 +81,7 @@ namespace Battle
 
 s32 Battle::AIAreaSpellDst(const HeroBase &hero)
 {
-    map<s32, u32> dstcount;
+    map<s32, uint32_t> dstcount;
 
     Arena *arena = GetArena();
     Units enemies(arena->GetForce(hero.GetColor(), true), true);
@@ -157,12 +157,12 @@ const Battle::Unit *Battle::AIGetEnemyAbroadMaxQuality(const Unit &b)
 
 s32 Battle::AIShortDistance(s32 from, const Indexes &indexes)
 {
-    u32 len = MAXU16;
+    uint32_t len = MAXU16;
     s32 res = -1;
 
     for (int indexe : indexes)
     {
-        const u32 length = Board::GetDistance(from, indexe);
+        const uint32_t length = Board::GetDistance(from, indexe);
 
         if (len > length)
         {
@@ -290,7 +290,7 @@ void AI::BattleTurn(Arena &arena, const Unit &b, Actions &a)
 
                 if (path.empty())
                 {
-                    const u32 direction = b.GetPosition().GetHead()->GetPos().x > dst.GetHead()->GetPos().x ?
+                    const uint32_t direction = b.GetPosition().GetHead()->GetPos().x > dst.GetHead()->GetPos().x ?
                                           RIGHT : LEFT;
                     // find near position
                     while (path.empty() &&
@@ -531,7 +531,7 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
 
 bool Battle::AIApplySpell(const Spell &spell, const Unit *b, const HeroBase &hero, Actions &a)
 {
-    u32 mass = Spell::NONE;
+    uint32_t mass = Spell::NONE;
 
     switch (spell())
     {

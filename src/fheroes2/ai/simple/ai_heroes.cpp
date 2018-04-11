@@ -183,7 +183,7 @@ bool AIHeroesPriorityObject(const Heroes &hero, s32 index)
     return false;
 }
 
-s32 FindUncharteredTerritory(Heroes &hero, u32 scoute)
+s32 FindUncharteredTerritory(Heroes &hero, uint32_t scoute)
 {
     Maps::Indexes v;
     Maps::GetAroundIndexes(hero.GetIndex(), scoute, true, v);
@@ -215,7 +215,7 @@ s32 FindUncharteredTerritory(Heroes &hero, u32 scoute)
     return result;
 }
 
-s32 GetRandomHeroesPosition(Heroes &hero, u32 scoute)
+s32 GetRandomHeroesPosition(Heroes &hero, uint32_t scoute)
 {
     Maps::Indexes v;
     Maps::GetAroundIndexes(hero.GetIndex(), scoute, true, v);
@@ -249,7 +249,7 @@ void AIHeroesAddedRescueTask(Heroes &hero)
     AIHero &ai_hero = AIHeroes::Get(hero);
     Queue &task = ai_hero.sheduled_visit;
 
-    u32 scoute = hero.GetScoute();
+    uint32_t scoute = hero.GetScoute();
 
     switch (Settings::Get().GameDifficulty())
     {

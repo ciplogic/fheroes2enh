@@ -62,14 +62,14 @@ public:
 
     int GetLevelSkill(int) const;
 
-    u32 GetSecondaryValues(int) const;
+    uint32_t GetSecondaryValues(int) const;
 
     const Army &
     GetArmy() const;
 
     Army &GetArmy();
 
-    u32 GetMaxSpellPoints() const;
+    uint32_t GetMaxSpellPoints() const;
 
     void ActionPreBattle();
 

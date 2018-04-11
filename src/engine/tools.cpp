@@ -130,11 +130,11 @@ std::string GetHexString(int value, int width)
     return stream.str();
 }
 
-int CountBits(u32 val)
+int CountBits(uint32_t val)
 {
     int res = 0;
 
-    for (u32 itr = 0x00000001; itr; itr <<= 1)
+    for (uint32_t itr = 0x00000001; itr; itr <<= 1)
         if (val & itr) ++res;
 
     return res;
@@ -683,7 +683,7 @@ std::vector<u8> LoadFileToMem(const std::string &file)
     return data;
 }
 
-bool PressIntKey(u32 min, u32 max, u32 &result)
+bool PressIntKey(uint32_t min, uint32_t max, uint32_t &result)
 {
     LocalEvent &le = LocalEvent::Get();
 
@@ -801,7 +801,7 @@ std::string EncodeString(const std::string & str, const char* charset)
 
 std::string cp1251_to_utf8(const std::string &in)
 {
-    const u32 table_1251[] = {
+    const uint32_t table_1251[] = {
             0x82D0, 0x83D0, 0x9A80E2, 0x93D1, 0x9E80E2, 0xA680E2, 0xA080E2, 0xA180E2,
             0xAC82E2, 0xB080E2, 0x89D0, 0xB980E2, 0x8AD0, 0x8CD0, 0x8BD0, 0x8FD0,
             0x92D1, 0x9880E2, 0x9980E2, 0x9C80E2, 0x9D80E2, 0xA280E2, 0x9380E2, 0x9480E2,
@@ -831,7 +831,7 @@ std::string cp1251_to_utf8(const std::string &in)
 
             if (index < ARRAY_COUNT(table_1251))
             {
-                const u32 &v = table_1251[index];
+                const uint32_t &v = table_1251[index];
                 res.append(1, v);
                 res.append(1, v >> 8);
                 if (v & 0xFFFF0000) res.append(1, v >> 16);
@@ -925,7 +925,7 @@ Points GetArcPoints(const Point &from, const Point &to, const Point &max, u16 st
     return res;
 }
 
-u32 decodeChar(int v)
+uint32_t decodeChar(int v)
 {
     if ('A' <= v && v <= 'Z')
         return v - 'A';
@@ -951,21 +951,21 @@ std::vector<u8> decodeBase64(const std::string &src)
 
     if (src.size() % 4 == 0)
     {
-        u32 size = 3 * src.size() / 4;
+        uint32_t size = 3 * src.size() / 4;
 
         if (src[src.size() - 1] == '=') size--;
         if (src[src.size() - 2] == '=') size--;
 
         res.reserve(size);
 
-        for (u32 ii = 0; ii < src.size(); ii += 4)
+        for (uint32_t ii = 0; ii < src.size(); ii += 4)
         {
-            u32 sextet_a = decodeChar(src[ii]);
-            u32 sextet_b = decodeChar(src[ii + 1]);
-            u32 sextet_c = decodeChar(src[ii + 2]);
-            u32 sextet_d = decodeChar(src[ii + 3]);
+            uint32_t sextet_a = decodeChar(src[ii]);
+            uint32_t sextet_b = decodeChar(src[ii + 1]);
+            uint32_t sextet_c = decodeChar(src[ii + 2]);
+            uint32_t sextet_d = decodeChar(src[ii + 3]);
 
-            u32 triple = (sextet_a << 18) + (sextet_b << 12) +
+            uint32_t triple = (sextet_a << 18) + (sextet_b << 12) +
                          (sextet_c << 6) + sextet_d;
 
             if (res.size() < size) res.push_back((triple >> 16) & 0xFF);
@@ -979,15 +979,15 @@ std::vector<u8> decodeBase64(const std::string &src)
 
 int CheckSum(const std::vector<u8> &v)
 {
-    u32 ret = 0;
+    uint32_t ret = 0;
     auto it = v.begin();
 
     do
     {
-        u32 b1 = it < v.end() ? *it++ : 0;
-        u32 b2 = it < v.end() ? *it++ : 0;
-        u32 b3 = it < v.end() ? *it++ : 0;
-        u32 b4 = it < v.end() ? *it++ : 0;
+        uint32_t b1 = it < v.end() ? *it++ : 0;
+        uint32_t b2 = it < v.end() ? *it++ : 0;
+        uint32_t b3 = it < v.end() ? *it++ : 0;
+        uint32_t b4 = it < v.end() ? *it++ : 0;
 
         ret += (b1 << 24) | (b2 << 16) | (b3 << 8) | b4;
     } while (it != v.end());

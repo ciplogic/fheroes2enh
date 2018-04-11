@@ -59,7 +59,7 @@ void StringReplace(std::string &, const char *, const std::string &);
 
 void StringReplace(std::string &, const char *, int);
 
-int CountBits(u32);
+int CountBits(uint32_t);
 
 int CheckSum(const std::vector<u8> &);
 
@@ -81,7 +81,7 @@ KeySym KeySymFromChar(char);
 
 char CharFromKeySym(KeySym, u16 mod = 0);
 
-bool PressIntKey(u32 min, u32 max, u32 &result);
+bool PressIntKey(uint32_t min, uint32_t max, uint32_t &result);
 
 bool SaveMemToFile(const std::vector<u8> &, const std::string &);
 

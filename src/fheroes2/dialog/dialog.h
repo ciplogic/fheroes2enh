@@ -111,7 +111,7 @@ namespace Dialog
     int LevelUpSelectSkill(const std::string &, const std::string &, const Skill::Secondary &, const Skill::Secondary &,
                            Heroes &);
 
-    bool SelectGoldOrExp(const std::string &, const std::string &, u32 gold, u32 expr, const Heroes &);
+    bool SelectGoldOrExp(const std::string &, const std::string &, uint32_t gold, uint32_t expr, const Heroes &);
 
     void SpellInfo(const Spell &, bool ok_button = true);
 
@@ -132,13 +132,13 @@ namespace Dialog
 
     int SelectSkillFromArena();
 
-    bool SelectCount(const std::string &, u32 min, u32 max, u32 &res, int step = 1);
+    bool SelectCount(const std::string &, uint32_t min, uint32_t max, uint32_t &res, int step = 1);
 
     bool InputString(const std::string &, std::string &);
 
-    Troop RecruitMonster(const Monster &, u32 available, bool);
+    Troop RecruitMonster(const Monster &, uint32_t available, bool);
 
-    void DwellingInfo(const Monster &, u32 available);
+    void DwellingInfo(const Monster &, uint32_t available);
 
     bool SetGuardian(Heroes &, Troop &, CapturedObject &, bool readonly);
 
@@ -146,9 +146,9 @@ namespace Dialog
 
     int ArmyJoinFree(const Troop &, Heroes &);
 
-    int ArmyJoinWithCost(const Troop &, u32 join, u32 gold, Heroes &);
+    int ArmyJoinWithCost(const Troop &, uint32_t join, uint32_t gold, Heroes &);
 
-    int ArmySplitTroop(int free_slots, u32 max, u32 &, bool);
+    int ArmySplitTroop(int free_slots, uint32_t max, uint32_t &, bool);
 
     void Marketplace(bool fromTradingPost = false);
 
@@ -186,7 +186,7 @@ namespace Dialog
 
         FrameBorder(const Size &, const Surface &);
 
-        FrameBorder(s32, s32, u32, u32);
+        FrameBorder(s32, s32, uint32_t, uint32_t);
 
         ~FrameBorder();
 
@@ -198,7 +198,7 @@ namespace Dialog
 
         bool isValid() const;
 
-        void SetPosition(s32, s32, u32 = 0, u32 = 0);
+        void SetPosition(s32, s32, uint32_t = 0, uint32_t = 0);
 
         const Rect &GetRect() const;
 

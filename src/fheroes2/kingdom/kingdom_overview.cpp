@@ -259,7 +259,7 @@ void StatsHeroesList::RedrawBackground(const Point &dst)
     AGG::GetICN(ICN::OVERVIEW, 13).Blit(dst.x + 628, dst.y + 17);
 
     // items background
-    for (u32 ii = 0; ii < maxItems; ++ii)
+    for (uint32_t ii = 0; ii < maxItems; ++ii)
     {
         const Sprite &back = AGG::GetICN(ICN::OVERVIEW, 8);
         back.Blit(dst.x + 30, dst.y + 17 + ii * (back.h() + 4));
@@ -501,7 +501,7 @@ void StatsCastlesList::RedrawBackground(const Point &dst)
     AGG::GetICN(ICN::OVERVIEW, 13).Blit(dst.x + 628, dst.y + 17);
 
     // items background
-    for (u32 ii = 0; ii < maxItems; ++ii)
+    for (uint32_t ii = 0; ii < maxItems; ++ii)
     {
         const Sprite &back = AGG::GetICN(ICN::OVERVIEW, 8);
         back.Blit(dst.x + 30, dst.y + 17 + ii * (back.h() + 4));

@@ -27,7 +27,7 @@
 
 namespace PocketPC
 {
-    u32 GetCursorAttackDialog(const Point &, int direction);
+    uint32_t GetCursorAttackDialog(const Point &, int direction);
 }
 
 #endif

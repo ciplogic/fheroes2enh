@@ -47,7 +47,7 @@ public:
 
     void Blit(const Rect &srt, const Point &) const;
 
-    void ChangeColorIndex(u32 index1, u32 index2);
+    void ChangeColorIndex(uint32_t index1, uint32_t index2);
 
     static Surface ScaleQVGASurface(const Surface &);
 

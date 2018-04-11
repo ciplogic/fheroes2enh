@@ -25,7 +25,7 @@
 #include "direction.h"
 #include "objswmp.h"
 
-int ObjSwmp::GetPassable(u32 index)
+int ObjSwmp::GetPassable(uint32_t index)
 {
     const u8 disabled[] = {88, 89, 90, 91, 94, 95, 96, 97, 98, 108, 109, 110, 112,
                            113, 115, 116, 118, 119, 122, 123, 143, 144};
@@ -45,12 +45,12 @@ int ObjSwmp::GetPassable(u32 index)
            DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW : DIRECTION_ALL;
 }
 
-bool ObjSwmp::isAction(u32 index)
+bool ObjSwmp::isAction(uint32_t index)
 {
     return MP2::OBJ_ZERO != GetActionObject(index);
 }
 
-bool ObjSwmp::isShadow(u32 index)
+bool ObjSwmp::isShadow(uint32_t index)
 {
     const u8 shadows[] = {14, 21, 31, 43, 66, 83, 125, 127, 130, 132, 136, 141, 163, 170,
                           175, 178, 195, 197, 202, 204, 207, 211, 215};
@@ -58,7 +58,7 @@ bool ObjSwmp::isShadow(u32 index)
     return ARRAY_COUNT_END(shadows) != std::find(shadows, ARRAY_COUNT_END(shadows), index);
 }
 
-int ObjSwmp::GetActionObject(u32 index)
+int ObjSwmp::GetActionObject(uint32_t index)
 {
     switch (index)
     {

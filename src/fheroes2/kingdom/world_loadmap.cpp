@@ -39,7 +39,7 @@
 
 namespace GameStatic
 {
-    extern u32 uniq;
+    extern uint32_t uniq;
 }
 
 bool World::LoadMapMAP(const string &filename)
@@ -68,7 +68,7 @@ bool World::LoadMapMP2(const string &filename)
         return false;
 
     // endof
-    const u32 endof_mp2 = fs.size();
+    const uint32_t endof_mp2 = fs.size();
     fs.seek(endof_mp2 - 4);
 
     // read uniq
@@ -141,7 +141,7 @@ bool World::LoadMapMP2(const string &filename)
         mp2addon.uniqNumberN2 = fs.getLE32();
     }
 
-    const u32 endof_addons = fs.tell();
+    const uint32_t endof_addons = fs.tell();
 
     // offset data
     fs.seek(MP2OFFSETDATA);
@@ -212,11 +212,11 @@ bool World::LoadMapMP2(const string &filename)
 
     // cood castles
     // 72 x 3 byte (cx, cy, id)
-    for (u32 ii = 0; ii < 72; ++ii)
+    for (uint32_t ii = 0; ii < 72; ++ii)
     {
-        u32 cx = fs.get();
-        u32 cy = fs.get();
-        u32 id = fs.get();
+        uint32_t cx = fs.get();
+        uint32_t cy = fs.get();
+        uint32_t id = fs.get();
 
         // empty block
         if (0xFF == cx && 0xFF == cy) continue;
@@ -269,11 +269,11 @@ bool World::LoadMapMP2(const string &filename)
 
     // cood resource kingdoms
     // 144 x 3 byte (cx, cy, id)
-    for (u32 ii = 0; ii < 144; ++ii)
+    for (uint32_t ii = 0; ii < 144; ++ii)
     {
-        u32 cx = fs.get();
-        u32 cy = fs.get();
-        u32 id = fs.get();
+        uint32_t cx = fs.get();
+        uint32_t cy = fs.get();
+        uint32_t id = fs.get();
 
         // empty block
         if (0xFF == cx && 0xFF == cy) continue;
@@ -323,11 +323,11 @@ bool World::LoadMapMP2(const string &filename)
     fs.skip(1);
 
     // count final mp2 blocks
-    u32 countblock = 0;
+    uint32_t countblock = 0;
     while (true)
     {
-        u32 l = fs.get();
-        u32 h = fs.get();
+        uint32_t l = fs.get();
+        uint32_t h = fs.get();
 
         //VERBOSE("dump block: 0x" << std::setw(2) << std::setfill('0') << std::hex << l <<
         //	std::setw(2) << std::setfill('0') << std::hex << h);
@@ -337,7 +337,7 @@ bool World::LoadMapMP2(const string &filename)
     }
 
     // castle or heroes or (events, rumors, etc)
-    for (u32 ii = 0; ii < countblock; ++ii)
+    for (uint32_t ii = 0; ii < countblock; ++ii)
     {
         s32 findobject = -1;
 
@@ -350,7 +350,7 @@ bool World::LoadMapMP2(const string &filename)
             const Maps::Tiles &tile = vec_tiles[*it_index];
 
             // orders(quantity2, quantity1)
-            u32 orders = (tile.GetQuantity2() ? tile.GetQuantity2() : 0);
+            uint32_t orders = (tile.GetQuantity2() ? tile.GetQuantity2() : 0);
             orders <<= 8;
             orders |= tile.GetQuantity1();
 

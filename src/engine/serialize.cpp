@@ -81,7 +81,7 @@ u16 StreamBase::get16()
     return bigendian() ? getBE16() : getLE16();
 }
 
-u32 StreamBase::get32()
+uint32_t StreamBase::get32()
 {
     return bigendian() ? getBE32() : getLE32();
 }
@@ -123,7 +123,7 @@ StreamBase &StreamBase::operator>>(s16 &v)
     return *this;
 }
 
-StreamBase &StreamBase::operator>>(u32 &v)
+StreamBase &StreamBase::operator>>(uint32_t &v)
 {
     v = get32();
     return *this;
@@ -146,7 +146,7 @@ StreamBase &StreamBase::operator>>(float &v)
 
 StreamBase &StreamBase::operator>>(string &v)
 {
-    u32 size = get32();
+    uint32_t size = get32();
     v.resize(size);
 
     for (char &it : v)
@@ -178,7 +178,7 @@ void StreamBase::put16(u16 v)
     bigendian() ? putBE16(v) : putLE16(v);
 }
 
-void StreamBase::put32(u32 v)
+void StreamBase::put32(uint32_t v)
 {
     bigendian() ? putBE32(v) : putLE32(v);
 }
@@ -225,7 +225,7 @@ StreamBase &StreamBase::operator<<(const s32 &v)
     return *this;
 }
 
-StreamBase &StreamBase::operator<<(const u32 &v)
+StreamBase &StreamBase::operator<<(const uint32_t &v)
 {
     put32(v);
     return *this;
@@ -445,12 +445,12 @@ u16 StreamBuf::getLE16()
     return get8() | (get8() << 8);
 }
 
-u32 StreamBuf::getBE32()
+uint32_t StreamBuf::getBE32()
 {
     return (get8() << 24) | (get8() << 16) | (get8() << 8) | get8();
 }
 
-u32 StreamBuf::getLE32()
+uint32_t StreamBuf::getLE32()
 {
     return getLE16() | (getLE16() << 16);
 }
@@ -467,7 +467,7 @@ void StreamBuf::putLE16(u16 v)
     put8(v >> 8);
 }
 
-void StreamBuf::putBE32(u32 v)
+void StreamBuf::putBE32(uint32_t v)
 {
     put8(v >> 24);
     put8(v >> 16);
@@ -475,7 +475,7 @@ void StreamBuf::putBE32(u32 v)
     put8(v);
 }
 
-void StreamBuf::putLE32(u32 v)
+void StreamBuf::putLE32(uint32_t v)
 {
     put8(v);
     put8(v >> 8);
@@ -624,22 +624,22 @@ u16 StreamFile::getLE16()
     return rw ? SDL_ReadLE16(rw) : 0;
 }
 
-u32 StreamFile::getBE32()
+uint32_t StreamFile::getBE32()
 {
     return rw ? SDL_ReadBE32(rw) : 0;
 }
 
-u32 StreamFile::getLE32()
+uint32_t StreamFile::getLE32()
 {
     return rw ? SDL_ReadLE32(rw) : 0;
 }
 
-void StreamFile::putBE32(u32 val)
+void StreamFile::putBE32(uint32_t val)
 {
     if (rw) SDL_WriteBE32(rw, val);
 }
 
-void StreamFile::putLE32(u32 val)
+void StreamFile::putLE32(uint32_t val)
 {
     if (rw) SDL_WriteLE32(rw, val);
 }

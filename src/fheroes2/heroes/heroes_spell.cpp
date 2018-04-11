@@ -110,12 +110,12 @@ void CastleIndexListBox::RedrawBackground(const Point &dst)
     text.Blit(dst.x + 140 - text.w() / 2, dst.y + 30);
 
     AGG::GetICN(ICN::LISTBOX, 0).Blit(dst.x + 2, dst.y + 55);
-    for (u32 ii = 1; ii < 5; ++ii)
+    for (uint32_t ii = 1; ii < 5; ++ii)
         AGG::GetICN(ICN::LISTBOX, 1).Blit(dst.x + 2, dst.y + 55 + (ii * 19));
     AGG::GetICN(ICN::LISTBOX, 2).Blit(dst.x + 2, dst.y + 145);
 
     AGG::GetICN(ICN::LISTBOX, 7).Blit(dst.x + 256, dst.y + 75);
-    for (u32 ii = 1; ii < 3; ++ii)
+    for (uint32_t ii = 1; ii < 3; ++ii)
         AGG::GetICN(ICN::LISTBOX, 8).Blit(dst.x + 256, dst.y + 74 + (ii * 19));
     AGG::GetICN(ICN::LISTBOX, 9).Blit(dst.x + 256, dst.y + 126);
 }
@@ -296,7 +296,7 @@ bool ActionSpellIdentifyHero(Heroes &hero)
 
 bool ActionSpellSummonBoat(Heroes &hero)
 {
-    u32 chance = 0;
+    uint32_t chance = 0;
 
     switch (hero.GetLevelSkill(Skill::Secondary::WISDOM))
     {
@@ -351,7 +351,7 @@ bool ActionSpellSummonBoat(Heroes &hero)
 
 bool ActionSpellDimensionDoor(Heroes &hero)
 {
-    const u32 distance = Spell::CalculateDimensionDoorDistance(
+    const uint32_t distance = Spell::CalculateDimensionDoorDistance(
             hero.GetPower(), hero.GetArmy().m_troops.GetHitPoints());
 
     Interface::Basic &I = Interface::Basic::Get();
@@ -497,7 +497,7 @@ bool ActionSpellTownPortal(Heroes &hero)
 
 bool ActionSpellVisions(Heroes &hero)
 {
-    const u32 dist = hero.GetVisionsDistance();
+    const uint32_t dist = hero.GetVisionsDistance();
     const MapsIndexes &monsters = Maps::ScanAroundObject(hero.GetIndex(), dist, MP2::OBJ_MONSTER);
 
     if (!monsters.empty())
@@ -570,7 +570,7 @@ bool ActionSpellSetGuardian(Heroes &hero, const Spell &spell, int mons)
         return false;
     }
 
-    const u32 count = hero.GetPower() * spell.ExtraValue();
+    const uint32_t count = hero.GetPower() * spell.ExtraValue();
 
     if (count)
     {

@@ -125,7 +125,7 @@ int Player::GetID() const
     return id;
 }
 
-bool Player::isID(u32 id2) const
+bool Player::isID(uint32_t id2) const
 {
     return id2 == id;
 }
@@ -299,7 +299,7 @@ void Players::clear()
 
     _items.clear();
 
-    for (u32 ii = 0; ii < KINGDOMMAX + 1; ++ii)
+    for (uint32_t ii = 0; ii < KINGDOMMAX + 1; ++ii)
         _players[ii] = nullptr;
 
     current_color = 0;
@@ -547,7 +547,7 @@ StreamBase &operator>>(StreamBase &msg, Players &players)
     players.current_color = current;
     const Colors vcolors(colors);
 
-    for (u32 ii = 0; ii < vcolors.size(); ++ii)
+    for (uint32_t ii = 0; ii < vcolors.size(); ++ii)
     {
         Player *player = new Player();
         msg >> *player;
@@ -567,7 +567,7 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, Players &players)
     players.current_color = current;
     const Colors vcolors(colors);
 
-    for (u32 ii = 0; ii < vcolors.size(); ++ii)
+    for (uint32_t ii = 0; ii < vcolors.size(); ++ii)
     {
         Player *player = new Player();
         msg >> *player;
@@ -596,7 +596,7 @@ void Interface::PlayersInfo::UpdateInfo(Players &players, const Point &pt1, cons
 
     for (auto it = players._items.begin(); it != players._items.end(); ++it)
     {
-        const u32 current = distance(players._items.begin(), it);
+        const uint32_t current = distance(players._items.begin(), it);
         PlayerInfo info;
 
         info.player = *it;
@@ -660,8 +660,8 @@ void Interface::PlayersInfo::RedrawInfo(
     const Settings &conf = Settings::Get();
     const Maps::FileInfo &fi = conf.CurrentFileInfo();
 
-    const u32 humans_colors = conf.GetPlayers().GetColors(CONTROL_HUMAN, true);
-    u32 index = 0;
+    const uint32_t humans_colors = conf.GetPlayers().GetColors(CONTROL_HUMAN, true);
+    uint32_t index = 0;
 
     for (auto it = begin(); it != end(); ++it)
     {
@@ -796,7 +796,7 @@ bool Interface::PlayersInfo::QueueEventProcessing()
             if ((player->GetColor() & fi.AllowHumanColors()) &&
                 (!Settings::Get().GameType(Game::TYPE_MULTI) || !(player->GetColor() & fi.HumanOnlyColors())))
             {
-                u32 humans = players.GetColors(CONTROL_HUMAN, true);
+                uint32_t humans = players.GetColors(CONTROL_HUMAN, true);
 
                 if (conf.GameType(Game::TYPE_MULTI))
                 {

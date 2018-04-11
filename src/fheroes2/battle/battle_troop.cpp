@@ -132,7 +132,7 @@ namespace Battle
             {ICN::UNKNOWN,  {0,  0},  {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0},  {0,  0},  {0,  0}, {0,  0},  M82::UNKNOWN,  M82::UNKNOWN,  M82::UNKNOWN,  M82::UNKNOWN},
     };
 
-    u32 genie_enemy_half_percent = 10;
+    uint32_t genie_enemy_half_percent = 10;
 }
 
 void Battle::UpdateMonsterAttributes(const string &spec)
@@ -143,15 +143,15 @@ void Battle::UpdateMonsterSpriteAnimation(const string &spec)
 {
 }
 
-Battle::ModeDuration::ModeDuration() : pair<u32, u32>(0, 0)
+Battle::ModeDuration::ModeDuration() : pair<uint32_t, uint32_t>(0, 0)
 {
 }
 
-Battle::ModeDuration::ModeDuration(u32 mode, u32 duration) : pair<u32, u32>(mode, duration)
+Battle::ModeDuration::ModeDuration(uint32_t mode, uint32_t duration) : pair<uint32_t, uint32_t>(mode, duration)
 {
 }
 
-bool Battle::ModeDuration::isMode(u32 mode) const
+bool Battle::ModeDuration::isMode(uint32_t mode) const
 {
     return (first & mode);
 }
@@ -171,14 +171,14 @@ Battle::ModesAffected::ModesAffected()
     reserve(3);
 }
 
-u32 Battle::ModesAffected::GetMode(u32 mode) const
+uint32_t Battle::ModesAffected::GetMode(uint32_t mode) const
 {
     auto it = find_if(begin(), end(),
                       bind2nd(mem_fun_ref(&ModeDuration::isMode), mode));
     return it == end() ? 0 : (*it).second;
 }
 
-void Battle::ModesAffected::AddMode(u32 mode, u32 duration)
+void Battle::ModesAffected::AddMode(uint32_t mode, uint32_t duration)
 {
     auto it = find_if(begin(), end(), bind2nd(mem_fun_ref(&ModeDuration::isMode), mode));
     if (it == end())
@@ -187,7 +187,7 @@ void Battle::ModesAffected::AddMode(u32 mode, u32 duration)
         (*it).second = duration;
 }
 
-void Battle::ModesAffected::RemoveMode(u32 mode)
+void Battle::ModesAffected::RemoveMode(uint32_t mode)
 {
     auto it = find_if(begin(), end(), bind2nd(mem_fun_ref(&ModeDuration::isMode), mode));
     if (it != end())
@@ -203,7 +203,7 @@ void Battle::ModesAffected::DecreaseDuration()
     for_each(begin(), end(), mem_fun_ref(&ModeDuration::DecreaseDuration));
 }
 
-u32 Battle::ModesAffected::FindZeroDuration() const
+uint32_t Battle::ModesAffected::FindZeroDuration() const
 {
     auto it = find_if(begin(), end(), mem_fun_ref(&ModeDuration::isZeroDuration));
     return it == end() ? 0 : (*it).first;
@@ -292,7 +292,7 @@ bool Battle::Unit::isBattle() const
     return true;
 }
 
-bool Battle::Unit::isModes(u32 v) const
+bool Battle::Unit::isModes(uint32_t v) const
 {
     return Modes(v);
 }
@@ -333,32 +333,32 @@ Surface Battle::Unit::GetContour(int val) const
     return Surface();
 }
 
-u32 Battle::Unit::GetDead() const
+uint32_t Battle::Unit::GetDead() const
 {
     return dead;
 }
 
-u32 Battle::Unit::GetHitPointsLeft() const
+uint32_t Battle::Unit::GetHitPointsLeft() const
 {
     return GetHitPointsTroop() - (GetCount() - 1) * Monster::GetHitPoints();
 }
 
-u32 Battle::Unit::GetAffectedDuration(u32 mod) const
+uint32_t Battle::Unit::GetAffectedDuration(uint32_t mod) const
 {
     return affected.GetMode(mod);
 }
 
-u32 Battle::Unit::GetSpeed() const
+uint32_t Battle::Unit::GetSpeed() const
 {
     return GetSpeed(false);
 }
 
-bool Battle::Unit::isUID(u32 v) const
+bool Battle::Unit::isUID(uint32_t v) const
 {
     return uid == v;
 }
 
-u32 Battle::Unit::GetUID() const
+uint32_t Battle::Unit::GetUID() const
 {
     return uid;
 }
@@ -390,7 +390,7 @@ void Battle::Unit::SetMirror(Unit *ptr)
     mirror = ptr;
 }
 
-u32 Battle::Unit::GetShots() const
+uint32_t Battle::Unit::GetShots() const
 {
     return shots;
 }
@@ -538,7 +538,7 @@ void Battle::Unit::NewTurn()
     affected.DecreaseDuration();
 
     // remove spell duration
-    u32 mode = 0;
+    uint32_t mode = 0;
     while (0 != (mode = affected.FindZeroDuration()))
     {
         affected.RemoveMode(mode);
@@ -565,7 +565,7 @@ void Battle::Unit::NewTurn()
     }
 }
 
-u32 Battle::Unit::GetSpeed(bool skip_standing_check) const
+uint32_t Battle::Unit::GetSpeed(bool skip_standing_check) const
 {
     if (!skip_standing_check && (!GetCount() || Modes(TR_MOVED | SP_BLIND | IS_PARALYZE_MAGIC))) return Speed::STANDING;
 
@@ -585,17 +585,17 @@ u32 Battle::Unit::GetSpeed(bool skip_standing_check) const
     return speed;
 }
 
-u32 Battle::Unit::GetDamageMin(const Unit &enemy) const
+uint32_t Battle::Unit::GetDamageMin(const Unit &enemy) const
 {
     return CalculateDamageUnit(enemy, ArmyTroop::GetDamageMin());
 }
 
-u32 Battle::Unit::GetDamageMax(const Unit &enemy) const
+uint32_t Battle::Unit::GetDamageMax(const Unit &enemy) const
 {
     return CalculateDamageUnit(enemy, ArmyTroop::GetDamageMax());
 }
 
-u32 Battle::Unit::CalculateDamageUnit(const Unit &enemy, double dmg) const
+uint32_t Battle::Unit::CalculateDamageUnit(const Unit &enemy, double dmg) const
 {
     if (isArchers())
     {
@@ -652,12 +652,12 @@ u32 Battle::Unit::CalculateDamageUnit(const Unit &enemy, double dmg) const
     if (enemy.isDragons() && Modes(SP_DRAGONSLAYER)) r += Spell(Spell::DRAGONSLAYER).ExtraValue();
     dmg *= 1 + (0 < r ? 0.1 * min(r, 20) : 0.05 * max(r, -15));
 
-    return static_cast<u32>(dmg) < 1 ? 1 : static_cast<u32>(dmg);
+    return static_cast<uint32_t>(dmg) < 1 ? 1 : static_cast<uint32_t>(dmg);
 }
 
-u32 Battle::Unit::GetDamage(const Unit &enemy) const
+uint32_t Battle::Unit::GetDamage(const Unit &enemy) const
 {
-    u32 res = 0;
+    uint32_t res = 0;
 
     if (Modes(SP_BLESS))
         res = GetDamageMax(enemy);
@@ -672,13 +672,13 @@ u32 Battle::Unit::GetDamage(const Unit &enemy) const
     return res;
 }
 
-u32 Battle::Unit::HowManyCanKill(const Unit &b) const
+uint32_t Battle::Unit::HowManyCanKill(const Unit &b) const
 {
-    u32 dmg = (GetDamageMin(b) + GetDamageMax(b)) / 2;
+    uint32_t dmg = (GetDamageMin(b) + GetDamageMax(b)) / 2;
     return b.HowManyWillKilled(dmg);
 }
 
-u32 Battle::Unit::HowManyWillKilled(u32 &dmg) const
+uint32_t Battle::Unit::HowManyWillKilled(uint32_t &dmg) const
 {
     int unitLife = Monster::GetHitPoints(*this);
 
@@ -693,11 +693,11 @@ u32 Battle::Unit::HowManyWillKilled(u32 &dmg) const
     return unitsToKill;
 }
 
-u32 Battle::Unit::ApplyDamage(u32 dmg)
+uint32_t Battle::Unit::ApplyDamage(uint32_t dmg)
 {
     if (!dmg || !GetCount())
         return 0;
-    u32 killed = HowManyWillKilled(dmg);
+    uint32_t killed = HowManyWillKilled(dmg);
 
     // kill mirror image (slave)
     if (Modes(CAP_MIRRORIMAGE))
@@ -765,9 +765,9 @@ void Battle::Unit::PostKilledAction()
     // possible also..
 }
 
-u32 Battle::Unit::Resurrect(u32 points, bool allow_overflow, bool skip_dead)
+uint32_t Battle::Unit::Resurrect(uint32_t points, bool allow_overflow, bool skip_dead)
 {
-    u32 resurrect = GetCountFromHitPoints(*this, hp + points) - GetCount();
+    uint32_t resurrect = GetCountFromHitPoints(*this, hp + points) - GetCount();
 
     SetCount(GetCount() + resurrect);
     hp += points;
@@ -788,10 +788,10 @@ u32 Battle::Unit::Resurrect(u32 points, bool allow_overflow, bool skip_dead)
     return resurrect;
 }
 
-u32 Battle::Unit::ApplyDamage(Unit &enemy, u32 dmg)
+uint32_t Battle::Unit::ApplyDamage(Unit &enemy, uint32_t dmg)
 {
-    u32 killed = ApplyDamage(dmg);
-    u32 resurrect;
+    uint32_t killed = ApplyDamage(dmg);
+    uint32_t resurrect;
 
     switch (enemy.GetID())
     {
@@ -923,7 +923,7 @@ bool Battle::Unit::AllowApplySpell(const Spell &spell, const HeroBase *hero, str
 bool Battle::Unit::ApplySpell(const Spell &spell, const HeroBase *hero, TargetInfo &target)
 {
     if (!AllowApplySpell(spell, hero)) return false;
-    u32 spoint = hero ? hero->GetPower() : 3;
+    uint32_t spoint = hero ? hero->GetPower() : 3;
 
     if (spell.isDamage())
         SpellApplyDamage(spell, spoint, hero, target);
@@ -960,7 +960,7 @@ string Battle::Unit::String(bool more) const
 
 StreamBase &Battle::operator<<(StreamBase &msg, const ModesAffected &v)
 {
-    msg << static_cast<u32>(v.size());
+    msg << static_cast<uint32_t>(v.size());
 
     for (size_t ii = 0; ii < v.size(); ++ii)
         msg << v[ii].first << v[ii].second;
@@ -971,7 +971,7 @@ StreamBase &Battle::operator<<(StreamBase &msg, const ModesAffected &v)
 
 ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, ModesAffected &v)
 {
-    u32 size = 0;
+    uint32_t size = 0;
     msg >> size;
     v.clear();
 
@@ -1000,7 +1000,7 @@ StreamBase &Battle::operator<<(StreamBase &msg, const Unit &b)
                b.disruptingray <<
                b.reflect <<
                b.GetHeadIndex() <<
-               (b.mirror ? b.mirror->GetUID() : static_cast<u32>(0)) <<
+               (b.mirror ? b.mirror->GetUID() : static_cast<uint32_t>(0)) <<
                b.affected <<
                b.blindanswer;
 }
@@ -1008,7 +1008,7 @@ StreamBase &Battle::operator<<(StreamBase &msg, const Unit &b)
 ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, Unit &b)
 {
     s32 head = -1;
-    u32 uid = 0;
+    uint32_t uid = 0;
 
     msg >>
         b.modes >>
@@ -1109,18 +1109,18 @@ void Battle::Unit::ResetBlind()
     affected.RemoveMode(SP_BLIND);
 }
 
-u32 Battle::Unit::GetAttack() const
+uint32_t Battle::Unit::GetAttack() const
 {
-    u32 res = ArmyTroop::GetAttack();
+    uint32_t res = ArmyTroop::GetAttack();
 
     if (Modes(SP_BLOODLUST)) res += Spell(Spell::BLOODLUST).ExtraValue();
 
     return res;
 }
 
-u32 Battle::Unit::GetDefense() const
+uint32_t Battle::Unit::GetDefense() const
 {
-    u32 res = ArmyTroop::GetDefense();
+    uint32_t res = ArmyTroop::GetDefense();
 
     if (GetArena()->GetArmyColor2() == GetColor() &&
         GetArena()->GetForce2().Modes(ARMY_GUARDIANS_OBJECT))
@@ -1135,7 +1135,7 @@ u32 Battle::Unit::GetDefense() const
     // disrupting ray accumulate effect
     if (disruptingray)
     {
-        const u32 step = disruptingray * Spell(Spell::DISRUPTINGRAY).ExtraValue();
+        const uint32_t step = disruptingray * Spell(Spell::DISRUPTINGRAY).ExtraValue();
         if (step > res)
             res = 1;
         else
@@ -1154,9 +1154,9 @@ s32 Battle::Unit::GetScoreQuality(const Unit &defender) const
     const Unit &attacker = *this;
 
     // initial value: (hitpoints)
-    const u32 &damage = (attacker.GetDamageMin(defender) + attacker.GetDamageMax(defender)) / 2;
-    u32 dmg = attacker.isTwiceAttack() ? damage * 2 : damage;
-    const u32 &kills = defender.HowManyWillKilled(dmg);
+    const uint32_t &damage = (attacker.GetDamageMin(defender) + attacker.GetDamageMax(defender)) / 2;
+    uint32_t dmg = attacker.isTwiceAttack() ? damage * 2 : damage;
+    const uint32_t &kills = defender.HowManyWillKilled(dmg);
     double res = kills * Monster::GetHitPoints(defender);
     bool noscale = false;
 
@@ -1205,10 +1205,10 @@ s32 Battle::Unit::GetScoreQuality(const Unit &defender) const
         }
     }
 
-    return static_cast<s32>(res) > 1 ? static_cast<u32>(res) : 1;
+    return static_cast<s32>(res) > 1 ? static_cast<uint32_t>(res) : 1;
 }
 
-u32 Battle::Unit::GetHitPointsTroop() const
+uint32_t Battle::Unit::GetHitPointsTroop() const
 {
     return hp;
 }
@@ -1223,11 +1223,11 @@ bool Battle::Unit::isArchers() const
     return ArmyTroop::isArchers() && shots;
 }
 
-void Battle::Unit::SpellModesAction(const Spell &spell, u32 duration, const HeroBase *hero)
+void Battle::Unit::SpellModesAction(const Spell &spell, uint32_t duration, const HeroBase *hero)
 {
     if (hero)
     {
-        u32 acount = hero->HasArtifact(Artifact::WIZARD_HAT);
+        uint32_t acount = hero->HasArtifact(Artifact::WIZARD_HAT);
         if (acount) duration += acount * Artifact(Artifact::WIZARD_HAT).ExtraValue();
         acount = hero->HasArtifact(Artifact::ENCHANTED_HOURGLASS);
         if (acount) duration += acount * Artifact(Artifact::ENCHANTED_HOURGLASS).ExtraValue();
@@ -1351,7 +1351,7 @@ void Battle::Unit::SpellModesAction(const Spell &spell, u32 duration, const Hero
         case Spell::HYPNOTIZE:
         {
             SetModes(SP_HYPNOTIZE);
-            u32 acount = hero ? hero->HasArtifact(Artifact::GOLD_WATCH) : 0;
+            uint32_t acount = hero ? hero->HasArtifact(Artifact::GOLD_WATCH) : 0;
             affected.AddMode(SP_HYPNOTIZE, (acount ? duration * acount * 2 : duration));
         }
             break;
@@ -1374,9 +1374,9 @@ void Battle::Unit::SpellModesAction(const Spell &spell, u32 duration, const Hero
     }
 }
 
-void Battle::Unit::SpellApplyDamage(const Spell &spell, u32 spoint, const HeroBase *hero, TargetInfo &target)
+void Battle::Unit::SpellApplyDamage(const Spell &spell, uint32_t spoint, const HeroBase *hero, TargetInfo &target)
 {
-    u32 dmg = spell.Damage() * spoint;
+    uint32_t dmg = spell.Damage() * spoint;
 
     switch (GetID())
     {
@@ -1448,7 +1448,7 @@ void Battle::Unit::SpellApplyDamage(const Spell &spell, u32 spoint, const HeroBa
     if (hero)
     {
         const HeroBase *myhero = GetCommander();
-        u32 acount = 0;
+        uint32_t acount = 0;
 
         switch (spell())
         {
@@ -1540,7 +1540,7 @@ void Battle::Unit::SpellApplyDamage(const Spell &spell, u32 spoint, const HeroBa
     }
 }
 
-void Battle::Unit::SpellRestoreAction(const Spell &spell, u32 spoint, const HeroBase *hero)
+void Battle::Unit::SpellRestoreAction(const Spell &spell, uint32_t spoint, const HeroBase *hero)
 {
     switch (spell())
     {
@@ -1561,7 +1561,7 @@ void Battle::Unit::SpellRestoreAction(const Spell &spell, u32 spoint, const Hero
         case Spell::ANIMATEDEAD:
         case Spell::RESURRECTTRUE:
         {
-            u32 restore = spell.Resurrect() * spoint;
+            uint32_t restore = spell.Resurrect() * spoint;
             // remove from graveyard
             if (!isValid())
             {
@@ -1569,10 +1569,10 @@ void Battle::Unit::SpellRestoreAction(const Spell &spell, u32 spoint, const Hero
                 ResetAnimFrame(AS_IDLE);
             }
             // restore hp
-            u32 acount = hero ? hero->HasArtifact(Artifact::ANKH) : 0;
+            uint32_t acount = hero ? hero->HasArtifact(Artifact::ANKH) : 0;
             if (acount) restore *= acount * 2;
 
-            const u32 resurrect = Resurrect(restore, false, (spell == Spell::RESURRECT));
+            const uint32_t resurrect = Resurrect(restore, false, (spell == Spell::RESURRECT));
 
             if (Arena::GetInterface())
             {
@@ -1605,12 +1605,12 @@ bool Battle::Unit::isTwiceAttack() const
     return ArmyTroop::isTwiceAttack();
 }
 
-bool Battle::Unit::isMagicResist(const Spell &spell, u32 spower) const
+bool Battle::Unit::isMagicResist(const Spell &spell, uint32_t spower) const
 {
     return 100 <= GetMagicResist(spell, spower);
 }
 
-u32 Battle::Unit::GetMagicResist(const Spell &spell, u32 spower) const
+uint32_t Battle::Unit::GetMagicResist(const Spell &spell, uint32_t spower) const
 {
     if (spell.isMindInfluence() &&
         (isUndead() || isElemental() ||

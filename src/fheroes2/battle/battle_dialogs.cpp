@@ -43,7 +43,7 @@ using namespace Dialog;
 
 namespace Battle
 {
-    void GetSummaryParams(int res1, int res2, const HeroBase &, u32 exp, int &, string &);
+    void GetSummaryParams(int res1, int res2, const HeroBase &, uint32_t exp, int &, string &);
 
     void SpeedRedraw(const Point &);
 }
@@ -160,7 +160,7 @@ void Battle::DialogBattleSettings()
     display.Flip();
 }
 
-void Battle::GetSummaryParams(int res1, int res2, const HeroBase &hero, u32 exp, int &icn_anim, string &msg)
+void Battle::GetSummaryParams(int res1, int res2, const HeroBase &hero, uint32_t exp, int &icn_anim, string &msg)
 {
     if (res1 & RESULT_WINS)
     {
@@ -312,7 +312,7 @@ void Battle::Arena::DialogBattleSummary(const Result &res) const
     cursor.Show();
     display.Flip();
 
-    u32 frame = 0;
+    uint32_t frame = 0;
 
     while (le.HandleEvents())
     {
@@ -501,7 +501,7 @@ int Battle::Arena::DialogBattleHero(const HeroBase &hero, bool buttons) const
     return result;
 }
 
-bool Battle::DialogBattleSurrender(const HeroBase &hero, u32 cost)
+bool Battle::DialogBattleSurrender(const HeroBase &hero, uint32_t cost)
 {
     Display &display = Display::Get();
     Cursor &cursor = Cursor::Get();

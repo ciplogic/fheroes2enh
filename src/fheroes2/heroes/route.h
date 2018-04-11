@@ -38,12 +38,12 @@ namespace Route
         Step() : from(-1), direction(Direction::CENTER), penalty(0)
         {}
 
-        Step(s32 index, int dir, u32 cost) : from(index), direction(dir), penalty(cost)
+        Step(s32 index, int dir, uint32_t cost) : from(index), direction(dir), penalty(cost)
         {}
 
         s32 GetIndex() const;
 
-        u32 GetPenalty() const;
+        uint32_t GetPenalty() const;
 
         s32 GetFrom() const;
 
@@ -58,7 +58,7 @@ namespace Route
 
         s32 from;
         int direction;
-        u32 penalty;
+        uint32_t penalty;
     };
 
     class Path : public list<Step>
@@ -78,9 +78,9 @@ namespace Route
 
         int GetFrontDirection() const;
 
-        u32 GetFrontPenalty() const;
+        uint32_t GetFrontPenalty() const;
 
-        u32 GetTotalPenalty() const;
+        uint32_t GetTotalPenalty() const;
 
         bool Calculate(const s32 &, int limit = -1);
 

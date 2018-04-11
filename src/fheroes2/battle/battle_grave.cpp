@@ -59,7 +59,7 @@ void Battle::Graveyard::RemoveTroop(const Unit &b)
     if (it != ids2.end()) ids2.erase(it);
 }
 
-u32 Battle::Graveyard::GetLastTroopUID(s32 index) const
+uint32_t Battle::Graveyard::GetLastTroopUID(s32 index) const
 {
     for (auto troop: *this)
         if (index == troop.first && !troop.second.empty())

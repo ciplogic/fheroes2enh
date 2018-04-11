@@ -34,7 +34,7 @@ SpellStorage::SpellStorage()
     reserve(67);
 }
 
-u32 SpellStorage::Size(int lvl) const
+uint32_t SpellStorage::Size(int lvl) const
 {
     switch (lvl)
     {

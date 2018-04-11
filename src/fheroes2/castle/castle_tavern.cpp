@@ -65,7 +65,7 @@ void Castle::OpenTavern() const
     const Sprite &s20 = AGG::GetICN(tavwin, 1);
     s20.Blit(dst_pt);
 
-    if (const u32 index = ICN::AnimationFrame(tavwin, 0, 0))
+    if (const uint32_t index = ICN::AnimationFrame(tavwin, 0, 0))
     {
         const Sprite &s21 = AGG::GetICN(tavwin, index);
         s21.Blit(dst_pt.x + s21.x(), dst_pt.y + s21.y());
@@ -84,7 +84,7 @@ void Castle::OpenTavern() const
     display.Flip();
 
     LocalEvent &le = LocalEvent::Get();
-    u32 frame = 0;
+    uint32_t frame = 0;
 
     // message loop
     while (le.HandleEvents())
@@ -98,7 +98,7 @@ void Castle::OpenTavern() const
         cursor.Hide();
         s20.Blit(dst_pt);
 
-        if (const u32 index1 = ICN::AnimationFrame(tavwin, 0, frame++))
+        if (const uint32_t index1 = ICN::AnimationFrame(tavwin, 0, frame++))
         {
             const Sprite &s22 = AGG::GetICN(tavwin, index1);
             s22.Blit(dst_pt.x + s22.x(), dst_pt.y + s22.y());

@@ -221,7 +221,7 @@ void Dialog::DrawSystemInfo(const Rects &rects)
     text.Blit(rect3.x + (rect3.w - text.w()) / 2, rect3.y + rect3.h + 5);
 
     // hero move speed
-    const u32 is4 = conf.HeroesMoveSpeed() ? (conf.HeroesMoveSpeed() < 9 ? (conf.HeroesMoveSpeed() < 7 ? (
+    const uint32_t is4 = conf.HeroesMoveSpeed() ? (conf.HeroesMoveSpeed() < 9 ? (conf.HeroesMoveSpeed() < 7 ? (
             conf.HeroesMoveSpeed() < 4 ? 4 : 5) : 6) : 7) : 9;
     const Sprite &sprite4 = AGG::GetICN(ICN::SPANEL, is4);
     const Rect &rect4 = rects[3];
@@ -236,7 +236,7 @@ void Dialog::DrawSystemInfo(const Rects &rects)
     text.Blit(rect4.x + (rect4.w - text.w()) / 2, rect4.y + rect4.h + 5);
 
     // ai move speed
-    const u32 is5 = conf.AIMoveSpeed() ? (conf.AIMoveSpeed() < 9 ? (conf.AIMoveSpeed() < 7 ? (conf.AIMoveSpeed() < 4 ? 4
+    const uint32_t is5 = conf.AIMoveSpeed() ? (conf.AIMoveSpeed() < 9 ? (conf.AIMoveSpeed() < 7 ? (conf.AIMoveSpeed() < 4 ? 4
                                                                                                                      : 5)
                                                                                            : 6) : 7) : 9;
     const Sprite &sprite5 = AGG::GetICN(ICN::SPANEL, is5);
@@ -252,7 +252,7 @@ void Dialog::DrawSystemInfo(const Rects &rects)
     text.Blit(rect5.x + (rect5.w - text.w()) / 2, rect5.y + rect5.h + 5);
 
     // scroll speed
-    const u32 is6 = (conf.ScrollSpeed() < SCROLL_FAST2 ? (conf.ScrollSpeed() < SCROLL_FAST1 ? (conf.ScrollSpeed() <
+    const uint32_t is6 = (conf.ScrollSpeed() < SCROLL_FAST2 ? (conf.ScrollSpeed() < SCROLL_FAST1 ? (conf.ScrollSpeed() <
                                                                                                SCROLL_NORMAL ? 4 : 5)
                                                                                             : 6) : 7);
     const Sprite &sprite6 = AGG::GetICN(ICN::SPANEL, is6);

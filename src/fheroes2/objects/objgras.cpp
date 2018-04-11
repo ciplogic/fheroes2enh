@@ -25,7 +25,7 @@
 #include "direction.h"
 #include "objgras.h"
 
-int ObjGras::GetPassable(u32 index)
+int ObjGras::GetPassable(uint32_t index)
 {
     const u8 disabled[] = {54, 55, 56, 57, 58, 65, 66, 67, 68};
     const u8 restricted[] = {5, 7, 31, 33, 34, 37, 38, 40, 41, 43, 45, 47, 49, 59,
@@ -43,19 +43,19 @@ int ObjGras::GetPassable(u32 index)
            DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW : DIRECTION_ALL;
 }
 
-bool ObjGras::isAction(u32 index)
+bool ObjGras::isAction(uint32_t index)
 {
     return MP2::OBJ_ZERO != GetActionObject(index);
 }
 
-bool ObjGras::isShadow(u32 index)
+bool ObjGras::isShadow(uint32_t index)
 {
     const u8 shadows2[] = {0, 4, 29, 32, 36, 39, 42, 44, 46, 48, 50, 76, 79, 82, 88, 92, 94, 98, 102, 105,
                            108, 111, 113, 120, 124, 128, 134, 138, 141, 143, 145, 147};
     return ARRAY_COUNT_END(shadows2) != std::find(shadows2, ARRAY_COUNT_END(shadows2), index);
 }
 
-int ObjGra2::GetPassable(u32 index)
+int ObjGra2::GetPassable(uint32_t index)
 {
     const u8 restricted[] = {2, 3, 6, 8, 22, 59};
     if (isShadow(index))
@@ -67,18 +67,18 @@ int ObjGra2::GetPassable(u32 index)
            DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW : DIRECTION_ALL;
 }
 
-bool ObjGra2::isAction(u32 index)
+bool ObjGra2::isAction(uint32_t index)
 {
     return MP2::OBJ_ZERO != GetActionObject(index);
 }
 
-bool ObjGra2::isShadow(u32 index)
+bool ObjGra2::isShadow(uint32_t index)
 {
     const u8 shadows1[] = {5, 19, 20, 31, 33, 47, 51, 70, 77, 91, 100, 107, 124, 128};
     return ARRAY_COUNT_END(shadows1) != std::find(shadows1, ARRAY_COUNT_END(shadows1), index);
 }
 
-int ObjGras::GetActionObject(u32 index)
+int ObjGras::GetActionObject(uint32_t index)
 {
     switch (index)
     {
@@ -91,7 +91,7 @@ int ObjGras::GetActionObject(u32 index)
     }
 }
 
-int ObjGra2::GetActionObject(u32 index)
+int ObjGra2::GetActionObject(uint32_t index)
 {
     switch (index)
     {

@@ -30,7 +30,7 @@
 #include "dialog.h"
 #include "icn.h"
 
-void RedrawCurrentInfo(const Point &pos, u32 available, u32 result,
+void RedrawCurrentInfo(const Point &pos, uint32_t available, uint32_t result,
                        const payment_t &paymentMonster, const payment_t &paymentCosts, const Funds &funds,
                        const string &label)
 {
@@ -229,15 +229,15 @@ const char *SwitchMaxMinButtons(Button &btnMax, Button &btnMin, bool max)
     return "";
 }
 
-u32 CalculateMax(const Monster &monster, const Kingdom &kingdom, u32 available)
+uint32_t CalculateMax(const Monster &monster, const Kingdom &kingdom, uint32_t available)
 {
-    u32 max = 0;
+    uint32_t max = 0;
     while (kingdom.AllowPayment(monster.GetCost() * (max + 1)) && (max + 1) <= available) ++max;
 
     return max;
 }
 
-Troop Dialog::RecruitMonster(const Monster &monster0, u32 available, bool ext)
+Troop Dialog::RecruitMonster(const Monster &monster0, uint32_t available, bool ext)
 {
     Display &display = Display::Get();
     LocalEvent &le = LocalEvent::Get();
@@ -253,8 +253,8 @@ Troop Dialog::RecruitMonster(const Monster &monster0, u32 available, bool ext)
     payment_t paymentMonster = monster.GetCost();
     const Kingdom &kingdom = world.GetKingdom(Settings::Get().CurrentColor());
 
-    u32 max = CalculateMax(monster, kingdom, available);
-    u32 result = max;
+    uint32_t max = CalculateMax(monster, kingdom, available);
+    uint32_t result = max;
 
     payment_t paymentCosts(paymentMonster * result);
 
@@ -463,7 +463,7 @@ Troop Dialog::RecruitMonster(const Monster &monster0, u32 available, bool ext)
     return Troop(monster, result);
 }
 
-void Dialog::DwellingInfo(const Monster &monster, u32 available)
+void Dialog::DwellingInfo(const Monster &monster, uint32_t available)
 {
     Display &display = Display::Get();
 

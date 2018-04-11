@@ -296,7 +296,7 @@ void DrawMonsterStats(const Point &dst, const Troop &troop)
     text.Blit(dst_pt);
 }
 
-Sprite GetModesSprite(u32 mod)
+Sprite GetModesSprite(uint32_t mod)
 {
     switch (mod)
     {
@@ -339,14 +339,14 @@ Sprite GetModesSprite(u32 mod)
 
 void DrawBattleStats(const Point &dst, const Troop &b)
 {
-    const u32 modes[] = {
+    const uint32_t modes[] = {
             Battle::SP_BLOODLUST, Battle::SP_BLESS, Battle::SP_HASTE, Battle::SP_SHIELD, Battle::SP_STONESKIN,
             Battle::SP_DRAGONSLAYER, Battle::SP_STEELSKIN, Battle::SP_ANTIMAGIC, Battle::SP_CURSE, Battle::SP_SLOW,
             Battle::SP_BERSERKER, Battle::SP_HYPNOTIZE, Battle::SP_BLIND, Battle::SP_PARALYZE, Battle::SP_STONE
     };
 
     // accumulate width
-    u32 ow = 0;
+    uint32_t ow = 0;
 
     for (unsigned int mode : modes)
         if (b.isModes(mode))
@@ -370,7 +370,7 @@ void DrawBattleStats(const Point &dst, const Troop &b)
         {
             sprite1.Blit(ow, dst.y);
 
-            const u32 duration = b.GetAffectedDuration(mode);
+            const uint32_t duration = b.GetAffectedDuration(mode);
             if (duration)
             {
                 text.Set(Int2Str(duration), Font::SMALL);
@@ -460,7 +460,7 @@ int Dialog::ArmyJoinFree(const Troop &troop, Heroes &hero)
     return result;
 }
 
-int Dialog::ArmyJoinWithCost(const Troop &troop, u32 join, u32 gold, Heroes &hero)
+int Dialog::ArmyJoinWithCost(const Troop &troop, uint32_t join, uint32_t gold, Heroes &hero)
 {
     Display &display = Display::Get();
     const Settings &conf = Settings::Get();

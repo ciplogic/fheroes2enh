@@ -50,7 +50,7 @@ public:
         // scroll
         AGG::GetICN(ICN::LISTBOX, 7).Blit(dst.x + area.w - 24, dst.y + 45);
 
-        for (u32 ii = 1; ii < 9; ++ii)
+        for (uint32_t ii = 1; ii < 9; ++ii)
             AGG::GetICN(ICN::LISTBOX, 8).Blit(dst.x + area.w - 24, dst.y + 44 + (ii * 19));
 
         AGG::GetICN(ICN::LISTBOX, 9).Blit(dst.x + area.w - 24, dst.y + area.h - 74);

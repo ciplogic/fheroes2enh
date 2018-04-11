@@ -43,11 +43,11 @@ struct SpellFiltered : binary_function<Spell, int, bool>
     }
 };
 
-void SpellBookRedrawLists(const SpellStorage &, Rects &, size_t, const Point &, u32, int only, const HeroBase &hero);
+void SpellBookRedrawLists(const SpellStorage &, Rects &, size_t, const Point &, uint32_t, int only, const HeroBase &hero);
 
 void SpellBookRedrawSpells(const SpellStorage &, Rects &, size_t, s32, s32, const HeroBase &hero);
 
-void SpellBookRedrawMP(const Point &, u32);
+void SpellBookRedrawMP(const Point &, uint32_t);
 
 bool SpellBookSortingSpell(const Spell &spell1, const Spell &spell2)
 {
@@ -359,7 +359,7 @@ SpellStorage SpellBook::SetFilter(int filter, const HeroBase *hero) const
     return res;
 }
 
-void SpellBookRedrawMP(const Point &dst, u32 mp)
+void SpellBookRedrawMP(const Point &dst, uint32_t mp)
 {
     Point tp(dst.x + 11, dst.y + 9);
     if (0 == mp)
@@ -367,7 +367,7 @@ void SpellBookRedrawMP(const Point &dst, u32 mp)
         Text text("0", Font::SMALL);
         text.Blit(tp.x - text.w() / 2, tp.y);
     } else
-        for (u32 i = 100; i >= 1; i /= 10)
+        for (uint32_t i = 100; i >= 1; i /= 10)
             if (mp >= i)
             {
                 Text text(Int2Str((mp % (i * 10)) / i), Font::SMALL);
@@ -377,7 +377,7 @@ void SpellBookRedrawMP(const Point &dst, u32 mp)
 }
 
 void
-SpellBookRedrawLists(const SpellStorage &spells, Rects &coords, const size_t cur, const Point &pt, u32 sp, int only,
+SpellBookRedrawLists(const SpellStorage &spells, Rects &coords, const size_t cur, const Point &pt, uint32_t sp, int only,
                      const HeroBase &hero)
 {
     const Sprite &r_list = AGG::GetICN(ICN::BOOK, 0);
@@ -416,7 +416,7 @@ SpellBookRedrawSpells(const SpellStorage &spells, Rects &coords, const size_t cu
     s32 ox = 0;
     s32 oy = 0;
 
-    for (u32 ii = 0; ii < SPELL_PER_PAGE; ++ii)
+    for (uint32_t ii = 0; ii < SPELL_PER_PAGE; ++ii)
         if (spells.size() > cur + ii)
         {
             if (0 == (ii % (SPELL_PER_PAGE / 2)))

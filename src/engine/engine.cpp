@@ -47,7 +47,7 @@ namespace Cdrom
 }
 #endif
 
-bool SDL::Init(u32 system)
+bool SDL::Init(uint32_t system)
 {
     if (System::isRunning()) return false;
 
@@ -97,7 +97,7 @@ void SDL::Quit()
     SDL_Quit();
 }
 
-bool SDL::SubSystem(u32 system)
+bool SDL::SubSystem(uint32_t system)
 {
     return system & SDL_WasInit(system);
 }

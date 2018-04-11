@@ -39,7 +39,7 @@
 
 void CastleRedrawTownName(const Castle &castle, const Point &dst);
 
-bool AllowFlashBuilding(u32 build)
+bool AllowFlashBuilding(uint32_t build)
 {
     switch (build)
     {
@@ -83,9 +83,9 @@ bool AllowFlashBuilding(u32 build)
     return false;
 }
 
-Sprite GetActualSpriteBuilding(const Castle &castle, u32 build)
+Sprite GetActualSpriteBuilding(const Castle &castle, uint32_t build)
 {
-    u32 index = 0;
+    uint32_t index = 0;
     // correct index (mage guild)
     switch (build)
     {
@@ -125,7 +125,7 @@ building_t GetCurrentFlash(const Castle &castle, CastleDialog::CacheBuildings &c
         {
             if ((*it).id & BUILD_MAGEGUILD)
             {
-                u32 lvl = castle.GetLevelMageGuild();
+                uint32_t lvl = castle.GetLevelMageGuild();
 
                 if (((*it).id == BUILD_MAGEGUILD1 && lvl > 1) ||
                     ((*it).id == BUILD_MAGEGUILD2 && lvl > 2) ||
@@ -502,7 +502,7 @@ int Castle::OpenDialog(bool readonly, bool fade)
         {
             if (BUILD_MAGEGUILD & (*it).id)
             {
-                for (u32 id = BUILD_MAGEGUILD5; id >= BUILD_MAGEGUILD1; id >>= 1)
+                for (uint32_t id = BUILD_MAGEGUILD5; id >= BUILD_MAGEGUILD1; id >>= 1)
                     if (isBuild(id) && id == (*it).id)
                     {
                         if (le.MouseClickLeft((*it).coord))
@@ -590,7 +590,7 @@ int Castle::OpenDialog(bool readonly, bool fade)
                             case BUILD_CASTLE:
                             {
                                 const Heroes *prev = heroes.Guest();
-                                const u32 build = OpenTown();
+                                const uint32_t build = OpenTown();
                                 heroes = world.GetHeroes(*this);
                                 bool buyhero = (heroes.Guest() && (heroes.Guest() != prev));
 

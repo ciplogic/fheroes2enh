@@ -54,7 +54,7 @@ Dialog::FrameBorder::FrameBorder(const Size &sz) : border(BORDERWIDTH)
     RenderRegular(GetRect());
 }
 
-Dialog::FrameBorder::FrameBorder(s32 posx, s32 posy, u32 encw, u32 ench) : border(BORDERWIDTH)
+Dialog::FrameBorder::FrameBorder(s32 posx, s32 posy, uint32_t encw, uint32_t ench) : border(BORDERWIDTH)
 {
     SetPosition(posx, posy, encw, ench);
     RenderRegular(GetRect());
@@ -75,7 +75,7 @@ bool Dialog::FrameBorder::isValid() const
     return background.isValid();
 }
 
-void Dialog::FrameBorder::SetPosition(s32 posx, s32 posy, u32 encw, u32 ench)
+void Dialog::FrameBorder::SetPosition(s32 posx, s32 posy, uint32_t encw, uint32_t ench)
 {
     if (background.isValid())
         background.Restore();
@@ -124,7 +124,7 @@ const Rect &Dialog::FrameBorder::GetArea() const
 void Dialog::FrameBorder::RenderRegular(const Rect &dstrt)
 {
     const Sprite &sf = AGG::GetICN((Settings::Get().ExtGameEvilInterface() ? ICN::SURDRBKE : ICN::SURDRBKG), 0);
-    const u32 shadow = 16;
+    const uint32_t shadow = 16;
     sf.RenderSurface(Rect(shadow, 0, sf.w() - shadow, sf.h() - shadow), Size(dstrt.w, dstrt.h)).Blit(dstrt.x, dstrt.y,
                                                                                                      Display::Get());
 }

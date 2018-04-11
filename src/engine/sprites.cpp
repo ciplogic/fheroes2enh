@@ -56,14 +56,14 @@ void SpritePos::Reset()
     Surface::Reset();
 }
 
-u32 SpritePos::GetMemoryUsage() const
+uint32_t SpritePos::GetMemoryUsage() const
 {
     return Surface::GetMemoryUsage() + sizeof(pos);
 }
 
 SpriteBack::SpriteBack() = default;
 
-u32 SpriteBack::GetMemoryUsage() const
+uint32_t SpriteBack::GetMemoryUsage() const
 {
     return Surface::GetMemoryUsage() + sizeof(pos);
 }
@@ -206,7 +206,7 @@ const Rect &SpriteMove::GetArea() const
     return background.GetArea();
 }
 
-u32 SpriteMove::GetMemoryUsage() const
+uint32_t SpriteMove::GetMemoryUsage() const
 {
     return Surface::GetMemoryUsage() +
            background.GetMemoryUsage() + sizeof(mode);

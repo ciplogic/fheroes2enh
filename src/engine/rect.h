@@ -109,7 +109,7 @@ struct Rect : Point, Size
     static std::pair<Rect, Point> Fixed4Blit(const Rect &, const Rect &);
 };
 
-void SDLRect(s32, s32, u32, u32, SDL_Rect &writeTo);
+void SDLRect(s32, s32, uint32_t, uint32_t, SDL_Rect &writeTo);
 
 void SDLRect(const Rect &, SDL_Rect &writeTo);
 

@@ -118,7 +118,7 @@ int Captain::GetLevelSkill(int) const
     return 0;
 }
 
-u32 Captain::GetSecondaryValues(int) const
+uint32_t Captain::GetSecondaryValues(int) const
 {
     return 0;
 }
@@ -133,7 +133,7 @@ Army &Captain::GetArmy()
     return home.GetArmy();
 }
 
-u32 Captain::GetMaxSpellPoints() const
+uint32_t Captain::GetMaxSpellPoints() const
 {
     return knowledge * 10;
 }

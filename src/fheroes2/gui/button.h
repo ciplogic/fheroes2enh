@@ -30,7 +30,7 @@ class Button : public Rect
 public:
     Button();
 
-    Button(s32, s32, int, u32 index1, u32 index2);
+    Button(s32, s32, int, uint32_t index1, uint32_t index2);
 
     bool isEnable() const;
 
@@ -48,9 +48,9 @@ public:
 
     void SetPos(const Point &);
 
-    void SetSize(u32, u32);
+    void SetSize(uint32_t, uint32_t);
 
-    void SetSprite(int icn, u32, u32);
+    void SetSprite(int icn, uint32_t, uint32_t);
 
     void SetSprite(const Surface &, const Surface &);
 
@@ -66,7 +66,7 @@ protected:
     Surface sf1;
     Surface sf2;
 
-    u32 flags;
+    uint32_t flags;
 };
 
 class ButtonSprite : public Button
@@ -81,7 +81,7 @@ protected:
 class ButtonGroups
 {
 public:
-    ButtonGroups(Rect, u32);
+    ButtonGroups(Rect, uint32_t);
 
 
     void Draw();

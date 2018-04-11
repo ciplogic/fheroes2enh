@@ -25,7 +25,7 @@
 #include "battle_arena.h"
 #include "battle_command.h"
 
-bool Battle::Actions::HaveCommand(u32 cmd) const
+bool Battle::Actions::HaveCommand(uint32_t cmd) const
 {
     return end() != find_if(begin(), end(), bind2nd(mem_fun_ref(&Command::isType), cmd));
 }

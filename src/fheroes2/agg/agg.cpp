@@ -59,7 +59,7 @@
 namespace
 {
     vector<SDL_Color> pal_colors;
-    vector<u32> pal_colors_u32;
+    vector<uint32_t> pal_colors_u32;
 }
 
 namespace AGG
@@ -70,9 +70,9 @@ namespace AGG
         FAT() : crc(0), offset(0), size(0)
         {}
 
-        u32 crc;
-        u32 offset;
-        u32 size;
+        uint32_t crc;
+        uint32_t offset;
+        uint32_t size;
 
         string Info() const;
     };
@@ -98,7 +98,7 @@ namespace AGG
     private:
         string filename;
         unordered_map<string, FAT> fat;
-        u32 count_items;
+        uint32_t count_items;
         up<ByteVectorReader> stream;
         vector<u8> fileContent;
         string key;
@@ -112,7 +112,7 @@ namespace AGG
 
         Sprite *sprites;
         Sprite *reflect;
-        u32 count;
+        uint32_t count;
     };
 
     struct til_cache_t
@@ -121,7 +121,7 @@ namespace AGG
         {}
 
         Surface *sprites;
-        u32 count;
+        uint32_t count;
     };
 
     struct fnt_cache_t
@@ -150,16 +150,16 @@ namespace AGG
     unordered_map<int, vector<u8> > wav_cache;
     unordered_map<int, vector<u8> > mid_cache;
     vector<loop_sound_t> loop_sounds;
-    unordered_map<u32, fnt_cache_t> fnt_cache;
+    unordered_map<uint32_t, fnt_cache_t> fnt_cache;
 
     bool memlimit_usage = true;
 
 
     up<FontTTF[]> fonts; /* small, medium */
 
-    void LoadTTFChar(u32);
+    void LoadTTFChar(uint32_t);
 
-    Surface GetFNT(u32, u32);
+    Surface GetFNT(uint32_t, uint32_t);
 
     const vector<u8> &GetWAV(int m82);
 
@@ -169,21 +169,21 @@ namespace AGG
 
     void LoadMID(int xmi, vector<u8> &);
 
-    bool LoadExtICN(int icn, u32, bool);
+    bool LoadExtICN(int icn, uint32_t, bool);
 
-    bool LoadAltICN(int icn, u32, bool);
+    bool LoadAltICN(int icn, uint32_t, bool);
 
-    bool LoadOrgICN(Sprite &, int icn, u32, bool);
+    bool LoadOrgICN(Sprite &, int icn, uint32_t, bool);
 
-    bool LoadOrgICN(int icn, u32, bool);
+    bool LoadOrgICN(int icn, uint32_t, bool);
 
-    void LoadICN(int icn, u32, bool reflect = false);
+    void LoadICN(int icn, uint32_t, bool reflect = false);
 
     void SaveICN(int icn);
 
-    bool LoadAltTIL(int til, u32 max);
+    bool LoadAltTIL(int til, uint32_t max);
 
-    bool LoadOrgTIL(int til, u32 max);
+    bool LoadOrgTIL(int til, uint32_t max);
 
     void LoadTIL(int til);
 
@@ -195,11 +195,11 @@ namespace AGG
 
     bool CheckMemoryLimit();
 
-    u32 ClearFreeObjects();
+    uint32_t ClearFreeObjects();
 
     bool ReadDataDir();
 
-    vector<u8> ReadICNChunk(int icn, u32);
+    vector<u8> ReadICNChunk(int icn, uint32_t);
 
     vector<u8> ReadChunk(const string &);
 }
@@ -236,19 +236,19 @@ bool AGG::File::Open(const string &fname)
     fileContent = fstream.getRaw(fstream.size());
     stream = std::make_unique<ByteVectorReader>(fileContent);
 
-    const u32 size = stream->size();
+    const uint32_t size = stream->size();
 
     count_items = stream->getLE16();
 
     stream->seek(size - FATSIZENAME * count_items);
     std::vector<std::string> vectorNames;
     vectorNames.reserve(count_items);
-    for (u32 ii = 0; ii < count_items; ++ii)
+    for (uint32_t ii = 0; ii < count_items; ++ii)
     {
         vectorNames.push_back(stream->toString(FATSIZENAME));
     }
     stream->seek(2);
-    for (u32 ii = 0; ii < count_items; ++ii)
+    for (uint32_t ii = 0; ii < count_items; ++ii)
     {
         string itemName = vectorNames[ii];
         FAT f;
@@ -318,9 +318,9 @@ vector<u8> AGG::File::Read(const string &str)
     return body;
 }
 
-u32 AGG::ClearFreeObjects()
+uint32_t AGG::ClearFreeObjects()
 {
-    u32 total = 0;
+    uint32_t total = 0;
 
     // wav cache
     for (auto &it : wav_cache)
@@ -348,18 +348,18 @@ u32 AGG::ClearFreeObjects()
     // til cache
     for (auto &tils : til_cache)
     {
-        for (u32 jj = 0; jj < tils.count; ++jj)
+        for (uint32_t jj = 0; jj < tils.count; ++jj)
             if (tils.sprites)
                 total += tils.sprites[jj].GetMemoryUsage();
     }
     total = 0;
 
     // icn cache
-    u32 used = 0;
+    uint32_t used = 0;
 
     for (auto &icns : icn_cache)
     {
-        for (u32 jj = 0; jj < icns.count; ++jj)
+        for (uint32_t jj = 0; jj < icns.count; ++jj)
         {
             if (icns.sprites)
             {
@@ -397,12 +397,12 @@ bool AGG::CheckMemoryLimit()
     // memory limit trigger
     if (conf.ExtPocketLowMemory() && 0 < conf.MemoryLimit() && memlimit_usage)
     {
-        u32 usage = System::GetMemoryUsage();
+        uint32_t usage = System::GetMemoryUsage();
 
         if (0 < usage && conf.MemoryLimit() < usage)
         {
             VERBOSE("settings: " << conf.MemoryLimit() << ", game usage: " << usage);
-            const u32 freemem = ClearFreeObjects();
+            const uint32_t freemem = ClearFreeObjects();
             VERBOSE("free " << freemem);
 
             usage = System::GetMemoryUsage();
@@ -462,10 +462,10 @@ vector<u8> AGG::ReadChunk(const string &key)
 }
 
 /* load manual ICN object */
-bool AGG::LoadExtICN(int icn, u32 index, bool reflect)
+bool AGG::LoadExtICN(int icn, uint32_t index, bool reflect)
 {
     // for animation sprite need update count for ICN::AnimationFrame
-    u32 count = 0;
+    uint32_t count = 0;
     const Settings &conf = Settings::Get();
 
     switch (icn)
@@ -657,7 +657,7 @@ bool AGG::LoadExtICN(int icn, u32 index, bool reflect)
     }
 
     // change color
-    for (u32 ii = 0; ii < count; ++ii)
+    for (uint32_t ii = 0; ii < count; ++ii)
     {
         Sprite &sprite = reflect ? v.reflect[ii] : v.sprites[ii];
 
@@ -742,7 +742,7 @@ bool AGG::LoadExtICN(int icn, u32 index, bool reflect)
     return true;
 }
 
-bool AGG::LoadAltICN(int icn, u32 index, bool reflect)
+bool AGG::LoadAltICN(int icn, uint32_t index, bool reflect)
 {
     return false;
 }
@@ -751,7 +751,7 @@ void AGG::SaveICN(int icn)
 {
 }
 
-vector<u8> AGG::ReadICNChunk(int icn, u32 index)
+vector<u8> AGG::ReadICNChunk(int icn, uint32_t index)
 {
     // hard fix artifact "ultimate stuff" sprite for loyalty version
     if (ICN::ARTIFACT == icn &&
@@ -773,7 +773,7 @@ struct ICNHeader
     u16 width;
     u16 height;
     u8 type;
-    u32 offsetData;
+    uint32_t offsetData;
 };
 
 ByteVectorReader &operator>>(ByteVectorReader &st, ICNHeader &icn)
@@ -788,7 +788,7 @@ ByteVectorReader &operator>>(ByteVectorReader &st, ICNHeader &icn)
     return st;
 }
 
-void AGG::RenderICNSprite(int icn, u32 index, const Rect &srt, const Point &dpt, Surface &dst)
+void AGG::RenderICNSprite(int icn, uint32_t index, const Rect &srt, const Point &dpt, Surface &dst)
 {
     ICNSprite res = RenderICNSprite(icn, index);
     res.first.Blit(srt, dpt, dst);
@@ -812,7 +812,7 @@ std::string joinValues(const std::vector<u8> &body, int maxSize)
     return result;
 }
 
-ICNSprite AGG::RenderICNSprite(int icn, u32 index)
+ICNSprite AGG::RenderICNSprite(int icn, uint32_t index)
 {
     ICNSprite res;
     const vector<u8> body = ReadICNChunk(icn, index);
@@ -824,19 +824,19 @@ ICNSprite AGG::RenderICNSprite(int icn, u32 index)
     ByteVectorReader st(body);
     //StreamBuf st(body);
 
-    u32 count = st.getLE16();
+    uint32_t count = st.getLE16();
     if (index >= count)
     {
         return res;
     }
-    u32 blockSize = st.getLE32();
+    uint32_t blockSize = st.getLE32();
 
     if (index) st.skip(index * 13);
 
     ICNHeader header1;
     st >> header1;
 
-    u32 sizeData = 0;
+    uint32_t sizeData = 0;
     if (index + 1 != count)
     {
         ICNHeader header2;
@@ -857,9 +857,9 @@ ICNSprite AGG::RenderICNSprite(int icn, u32 index)
 
     sf1.Set(sz.w, sz.h, false);
 
-    u32 shadowCol = RGBA::packRgba(0, 0, 0, 0x40);
+    uint32_t shadowCol = RGBA::packRgba(0, 0, 0, 0x40);
 
-    u32 c = 0;
+    uint32_t c = 0;
     Point pt(0, 0);
     sf1.Lock();
     while (true)
@@ -964,7 +964,7 @@ ICNSprite AGG::RenderICNSprite(int icn, u32 index)
     return res;
 }
 
-bool AGG::LoadOrgICN(Sprite &sp, int icn, u32 index, bool reflect)
+bool AGG::LoadOrgICN(Sprite &sp, int icn, uint32_t index, bool reflect)
 {
     ICNSprite icnSprite = RenderICNSprite(icn, index);
 
@@ -978,7 +978,7 @@ bool AGG::LoadOrgICN(Sprite &sp, int icn, u32 index, bool reflect)
     return false;
 }
 
-bool AGG::LoadOrgICN(int icn, u32 index, bool reflect)
+bool AGG::LoadOrgICN(int icn, uint32_t index, bool reflect)
 {
     icn_cache_t &v = icn_cache[icn];
 
@@ -1004,7 +1004,7 @@ bool AGG::LoadOrgICN(int icn, u32 index, bool reflect)
 }
 
 /* load ICN object */
-void AGG::LoadICN(int icn, u32 index, bool reflect)
+void AGG::LoadICN(int icn, uint32_t index, bool reflect)
 {
     icn_cache_t &v = icn_cache[icn];
 
@@ -1028,7 +1028,7 @@ void AGG::LoadICN(int icn, u32 index, bool reflect)
 }
 
 /* return ICN sprite */
-Sprite AGG::GetICN(int icn, u32 index, bool reflect)
+Sprite AGG::GetICN(int icn, uint32_t index, bool reflect)
 {
     Sprite result;
 
@@ -1059,7 +1059,7 @@ Sprite AGG::GetICN(int icn, u32 index, bool reflect)
 }
 
 /* return count of sprites from specific ICN */
-u32 AGG::GetICNCount(int icn)
+uint32_t AGG::GetICNCount(int icn)
 {
     if (icn_cache[icn].count == 0) GetICN(icn, 0);
     return icn_cache[icn].count;
@@ -1084,7 +1084,7 @@ int AGG::PutICN(const Sprite &sprite, bool init_reflect)
     return icn_cache.size() - 1;
 }
 
-bool AGG::LoadAltTIL(int til, u32 max)
+bool AGG::LoadAltTIL(int til, uint32_t max)
 {
     return false;
 }
@@ -1093,7 +1093,7 @@ void AGG::SaveTIL(int til)
 {
 }
 
-bool AGG::LoadOrgTIL(int til, u32 max)
+bool AGG::LoadOrgTIL(int til, uint32_t max)
 {
     vector<u8> body = ReadChunk(TIL::GetString(til));
 
@@ -1101,19 +1101,19 @@ bool AGG::LoadOrgTIL(int til, u32 max)
         return false;
     ByteVectorReader st(body);
 
-    u32 count = st.getLE16();
-    u32 width = st.getLE16();
-    u32 height = st.getLE16();
+    uint32_t count = st.getLE16();
+    uint32_t width = st.getLE16();
+    uint32_t height = st.getLE16();
 
-    u32 tile_size = width * height;
-    u32 body_size = 6 + count * tile_size;
+    uint32_t tile_size = width * height;
+    uint32_t body_size = 6 + count * tile_size;
 
     til_cache_t &v = til_cache[til];
 
     // check size
     if (body.size() == body_size && count <= max)
     {
-        for (u32 ii = 0; ii < count; ++ii)
+        for (uint32_t ii = 0; ii < count; ++ii)
             v.sprites[ii] = Surface(&body[6 + ii * tile_size], width, height, 1, false);
 
         return true;
@@ -1131,7 +1131,7 @@ void AGG::LoadTIL(int til)
 
     if (v.sprites != nullptr)
         return;
-    u32 max = 0;
+    uint32_t max = 0;
 
     switch (til)
     {
@@ -1163,7 +1163,7 @@ void AGG::LoadTIL(int til)
 }
 
 /* return TIL surface from AGG::Cache */
-Surface AGG::GetTIL(int til, u32 index, u32 shape)
+Surface AGG::GetTIL(int til, uint32_t index, uint32_t shape)
 {
     Surface result;
 
@@ -1172,7 +1172,7 @@ Surface AGG::GetTIL(int til, u32 index, u32 shape)
         til_cache_t &v = til_cache[til];
 
         if (0 == v.count) LoadTIL(til);
-        u32 index2 = index;
+        uint32_t index2 = index;
 
         if (shape)
         {
@@ -1286,7 +1286,7 @@ void AGG::LoadWAV(int m82, vector<u8> &v)
     }
     else
     {
-        const u32 size = cvt.len_mult * body.size();
+        const uint32_t size = cvt.len_mult * body.size();
 
         up<u8> upBuf(new u8[size]);
         cvt.buf = upBuf.get();
@@ -1478,7 +1478,7 @@ void AGG::PlayMusic(int mus, bool loop)
     }
 }
 
-void AGG::LoadTTFChar(u32 ch)
+void AGG::LoadTTFChar(uint32_t ch)
 {
     const Settings &conf = Settings::Get();
     const RGBA white(0xFF, 0xFF, 0xFF);
@@ -1511,13 +1511,13 @@ void AGG::LoadFNT()
         LoadTTFChar(it);
 }
 
-u32 AGG::GetFontHeight(bool small)
+uint32_t AGG::GetFontHeight(bool small)
 {
     return small ? fonts[0].Height() : fonts[1].Height();
 }
 
 /* return letter sprite */
-Surface AGG::GetUnicodeLetter(u32 ch, u32 ft)
+Surface AGG::GetUnicodeLetter(uint32_t ch, uint32_t ft)
 {
     bool ttf_valid = fonts[0].isValid() && fonts[1].isValid();
 
@@ -1546,7 +1546,7 @@ Surface AGG::GetUnicodeLetter(u32 ch, u32 ft)
     return surfaces[0];
 }
 
-Surface AGG::GetLetter(u32 ch, u32 ft)
+Surface AGG::GetLetter(uint32_t ch, uint32_t ft)
 {
     switch (ft)
     {
@@ -1640,7 +1640,7 @@ void AGG::Quit()
     fonts = nullptr;
 }
 
-RGBA AGG::GetPaletteColor(u32 index)
+RGBA AGG::GetPaletteColor(uint32_t index)
 {
     return index < pal_colors.size() ?
            RGBA(pal_colors[index].r, pal_colors[index].g, pal_colors[index].b) : RGBA(0, 0, 0);

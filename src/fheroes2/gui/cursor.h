@@ -138,7 +138,7 @@ public:
 
     static void Redraw(s32, s32);
 
-    static int DistanceThemes(int, u32);
+    static int DistanceThemes(int, uint32_t);
 
     static int WithoutDistanceThemes(int);
 

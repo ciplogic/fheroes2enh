@@ -348,7 +348,7 @@ namespace M82
 
     int FromSpell(int);
 
-    u32 GetIndexLOOP00XXFromObject(int);
+    uint32_t GetIndexLOOP00XXFromObject(int);
 
     int GetLOOP00XX(int);
 }

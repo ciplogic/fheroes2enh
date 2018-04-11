@@ -39,7 +39,7 @@
 #define BOXAREA_MIDDLE  10
 #define BOXAREA_BOTTOM  35
 
-void BoxRedraw(s32 posx, s32 posy, u32 count);
+void BoxRedraw(s32 posx, s32 posy, uint32_t count);
 
 Dialog::FrameBox::FrameBox(int height, bool buttons)
 {
@@ -48,10 +48,10 @@ Dialog::FrameBox::FrameBox(int height, bool buttons)
     if (buttons) height += BUTTON_HEIGHT;
 
     bool evil = Settings::Get().ExtGameEvilInterface();
-    const u32 count_middle = (height <= BOXAREA_TOP + BOXAREA_BOTTOM ? 0 : 1 + (height - BOXAREA_TOP - BOXAREA_BOTTOM) /
+    const uint32_t count_middle = (height <= BOXAREA_TOP + BOXAREA_BOTTOM ? 0 : 1 + (height - BOXAREA_TOP - BOXAREA_BOTTOM) /
                                                                                BOXAREA_MIDDLE);
-    const u32 height_middle = count_middle * BOXAREA_MIDDLE;
-    const u32 height_top_bottom = (evil ? BOXE_TOP + BOXE_BOTTOM : BOX_TOP + BOX_BOTTOM);
+    const uint32_t height_middle = count_middle * BOXAREA_MIDDLE;
+    const uint32_t height_top_bottom = (evil ? BOXE_TOP + BOXE_BOTTOM : BOX_TOP + BOX_BOTTOM);
 
     area.w = BOXAREA_WIDTH;
     area.h = BOXAREA_TOP + BOXAREA_BOTTOM + height_middle;
@@ -82,7 +82,7 @@ Dialog::FrameBox::~FrameBox()
     Display::Get().Flip();
 }
 
-void BoxRedraw(s32 posx, s32 posy, u32 count)
+void BoxRedraw(s32 posx, s32 posy, uint32_t count)
 {
     const int buybuild = Settings::Get().ExtGameEvilInterface() ? ICN::BUYBUILE : ICN::BUYBUILD;
 
@@ -96,7 +96,7 @@ void BoxRedraw(s32 posx, s32 posy, u32 count)
     AGG::GetICN(buybuild, 0).Blit(pt);
 
     pt.y += AGG::GetICN(buybuild, 4).h();
-    for (u32 i = 0; i < count; ++i)
+    for (uint32_t i = 0; i < count; ++i)
     {
         // left middle sprite
         pt.x = posx;

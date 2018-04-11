@@ -83,7 +83,7 @@ public:
 
     int w() const;
 
-    int w(u32, u32) const;
+    int w(uint32_t, uint32_t) const;
 
     int h() const;
 
@@ -125,7 +125,7 @@ public:
 
     int w() const;
 
-    int w(u32, u32) const;
+    int w(uint32_t, uint32_t) const;
 
     int h() const;
 
@@ -192,14 +192,14 @@ public:
 
     void Blit(const Point &, Surface &sf = Display::Get()) const;
 
-    static u32 width(const string &, int ft, u32 start = 0, u32 count = 0);
+    static uint32_t width(const string &, int ft, uint32_t start = 0, uint32_t count = 0);
 
-    static u32 height(const string &, int ft, u32 width = 0);
+    static uint32_t height(const string &, int ft, uint32_t width = 0);
 
 protected:
     sp<TextInterface> message;
-    u32 gw;
-    u32 gh;
+    uint32_t gw;
+    uint32_t gh;
 };
 
 class TextSprite : protected Text
@@ -247,11 +247,11 @@ class TextBox : protected Rect
 public:
     TextBox();
 
-    TextBox(const string &, int, u32 width);
+    TextBox(const string &, int, uint32_t width);
 
     TextBox(const string &, int, const Rect &);
 
-    void Set(const string &, int, u32 width);
+    void Set(const string &, int, uint32_t width);
 
     void SetAlign(int type);
 
@@ -270,7 +270,7 @@ public:
     int h() const
     { return Rect::h; }
 
-    u32 row() const
+    uint32_t row() const
     { return messages.size(); }
 
     void Blit(s32, s32, Surface &sf = Display::Get());
@@ -278,11 +278,11 @@ public:
     void Blit(const Point &, Surface &sf = Display::Get());
 
 private:
-    void Append(const string &, int, u32);
+    void Append(const string &, int, uint32_t);
 
 #ifdef WITH_TTF
 
-    void Append(const std::vector<u16> &, int, u32);
+    void Append(const std::vector<u16> &, int, uint32_t);
 
 #endif
 

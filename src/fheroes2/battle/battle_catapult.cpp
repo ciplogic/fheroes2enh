@@ -52,11 +52,11 @@ Battle::Catapult::Catapult(const HeroBase &hero, bool fortification) : cat_shots
             break;
     }
 
-    u32 acount = hero.HasArtifact(Artifact::BALLISTA);
+    uint32_t acount = hero.HasArtifact(Artifact::BALLISTA);
     if (acount) cat_shots += acount * Artifact(Artifact::BALLISTA).ExtraValue();
 }
 
-u32 Battle::Catapult::GetDamage(int target, u32 value) const
+uint32_t Battle::Catapult::GetDamage(int target, uint32_t value) const
 {
     switch (target)
     {
@@ -125,9 +125,9 @@ Point Battle::Catapult::GetTargetPosition(int target)
     return res;
 }
 
-int Battle::Catapult::GetTarget(const vector<u32> &values) const
+int Battle::Catapult::GetTarget(const vector<uint32_t> &values) const
 {
-    vector<u32> targets;
+    vector<uint32_t> targets;
     targets.reserve(4);
 
     // check walls

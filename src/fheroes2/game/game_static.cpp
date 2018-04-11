@@ -182,7 +182,7 @@ namespace GameStatic
     s8 objects_mod[] = {1, 1, 1, 2, -1, -1, -1, 1, 1, 1, 1, -2};
 
     // world
-    u32 uniq = 0;
+    uint32_t uniq = 0;
 }
 
 StreamBase &GameStatic::operator<<(StreamBase &msg, const Data &obj)
@@ -202,22 +202,22 @@ StreamBase &GameStatic::operator<<(StreamBase &msg, const Data &obj)
 
     u8 array_size = ARRAY_COUNT(overview_distance);
     msg << array_size;
-    for (u32 ii = 0; ii < array_size; ++ii)
+    for (uint32_t ii = 0; ii < array_size; ++ii)
         msg << overview_distance[ii];
 
     array_size = ARRAY_COUNT(kingdom_starting_resource);
     msg << array_size;
-    for (u32 ii = 0; ii < array_size; ++ii)
+    for (uint32_t ii = 0; ii < array_size; ++ii)
         msg << kingdom_starting_resource[ii];
 
     array_size = ARRAY_COUNT(mageguild_restore_spell_points_day);
     msg << array_size;
-    for (u32 ii = 0; ii < array_size; ++ii)
+    for (uint32_t ii = 0; ii < array_size; ++ii)
         msg << mageguild_restore_spell_points_day[ii];
 
     array_size = ARRAY_COUNT(objects_mod);
     msg << array_size;
-    for (u32 ii = 0; ii < array_size; ++ii)
+    for (uint32_t ii = 0; ii < array_size; ++ii)
         msg << objects_mod[ii];
 
     msg << monster_upgrade_ratio << uniq;
@@ -225,12 +225,12 @@ StreamBase &GameStatic::operator<<(StreamBase &msg, const Data &obj)
     // skill statics
     array_size = ARRAY_COUNT(Skill::_stats);
     msg << array_size;
-    for (u32 ii = 0; ii < array_size; ++ii)
+    for (uint32_t ii = 0; ii < array_size; ++ii)
         msg << Skill::_stats[ii];
 
     array_size = ARRAY_COUNT(Skill::_values);
     msg << array_size;
-    for (u32 ii = 0; ii < array_size; ++ii)
+    for (uint32_t ii = 0; ii < array_size; ++ii)
         msg << Skill::_values[ii];
 
     msg << Skill::_from_witchs_hut;
@@ -256,29 +256,29 @@ ByteVectorReader &GameStatic::operator>>(ByteVectorReader &msg, Data &obj)
     u8 array_size = 0;
 
     msg >> array_size;
-    for (u32 ii = 0; ii < array_size; ++ii)
+    for (uint32_t ii = 0; ii < array_size; ++ii)
         msg >> overview_distance[ii];
 
     msg >> array_size;
-    for (u32 ii = 0; ii < array_size; ++ii)
+    for (uint32_t ii = 0; ii < array_size; ++ii)
         msg >> kingdom_starting_resource[ii];
 
     msg >> array_size;
-    for (u32 ii = 0; ii < array_size; ++ii)
+    for (uint32_t ii = 0; ii < array_size; ++ii)
         msg >> mageguild_restore_spell_points_day[ii];
 
     msg >> array_size;
-    for (u32 ii = 0; ii < array_size; ++ii)
+    for (uint32_t ii = 0; ii < array_size; ++ii)
         msg >> objects_mod[ii];
 
     msg >> monster_upgrade_ratio >> uniq;
 
     msg >> array_size;
-    for (u32 ii = 0; ii < array_size; ++ii)
+    for (uint32_t ii = 0; ii < array_size; ++ii)
         msg >> Skill::_stats[ii];
 
     msg >> array_size;
-    for (u32 ii = 0; ii < array_size; ++ii)
+    for (uint32_t ii = 0; ii < array_size; ++ii)
         msg >> Skill::_values[ii];
 
     msg >> Skill::_from_witchs_hut;
@@ -291,17 +291,17 @@ float GameStatic::GetMonsterUpgradeRatio()
     return monster_upgrade_ratio;
 }
 
-u32 GameStatic::GetLostOnWhirlpoolPercent()
+uint32_t GameStatic::GetLostOnWhirlpoolPercent()
 {
     return whirlpool_lost_percent;
 }
 
-u32 GameStatic::GetOverViewDistance(u32 d)
+uint32_t GameStatic::GetOverViewDistance(uint32_t d)
 {
     return d >= ARRAY_COUNT(overview_distance) ? 0 : overview_distance[d];
 }
 
-u32 GameStatic::GetGameOverLostDays()
+uint32_t GameStatic::GetGameOverLostDays()
 {
     return gameover_lost_days;
 }
@@ -327,37 +327,37 @@ cost_t &GameStatic::GetKingdomStartingResource(int df)
     return kingdom_starting_resource[5];
 }
 
-u32 GameStatic::GetHeroesRestoreSpellPointsPerDay()
+uint32_t GameStatic::GetHeroesRestoreSpellPointsPerDay()
 {
     return heroes_spell_points_day;
 }
 
-u32 GameStatic::GetMageGuildRestoreSpellPointsPercentDay(int level)
+uint32_t GameStatic::GetMageGuildRestoreSpellPointsPercentDay(int level)
 {
     return level && level < 6 ? mageguild_restore_spell_points_day[level - 1] : 0;
 }
 
-u32 GameStatic::GetKingdomMaxHeroes()
+uint32_t GameStatic::GetKingdomMaxHeroes()
 {
     return kingdom_max_heroes;
 }
 
-u32 GameStatic::GetCastleGrownWell()
+uint32_t GameStatic::GetCastleGrownWell()
 {
     return castle_grown_well;
 }
 
-u32 GameStatic::GetCastleGrownWel2()
+uint32_t GameStatic::GetCastleGrownWel2()
 {
     return castle_grown_wel2;
 }
 
-u32 GameStatic::GetCastleGrownWeekOf()
+uint32_t GameStatic::GetCastleGrownWeekOf()
 {
     return castle_grown_week_of;
 }
 
-u32 GameStatic::GetCastleGrownMonthOf()
+uint32_t GameStatic::GetCastleGrownMonthOf()
 {
     return castle_grown_month_of;
 }
@@ -397,17 +397,17 @@ s32 GameStatic::ObjectVisitedModifiers(int obj)
     return 0;
 }
 
-u32 GameStatic::Spell_DD_Distance()
+uint32_t GameStatic::Spell_DD_Distance()
 {
     return spell_dd_distance;
 }
 
-u32 GameStatic::Spell_DD_SP()
+uint32_t GameStatic::Spell_DD_SP()
 {
     return spell_dd_sp;
 }
 
-u32 GameStatic::Spell_DD_HP()
+uint32_t GameStatic::Spell_DD_HP()
 {
     return spell_dd_hp;
 }

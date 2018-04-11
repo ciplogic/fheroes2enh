@@ -921,9 +921,9 @@ namespace ICN
             {CSLMARKER,       "CSLMARKER.ICN"}
     };
 
-    u32 missile9(float, float);
+    uint32_t missile9(float, float);
 
-    u32 missile7(float, float);
+    uint32_t missile7(float, float);
 }
 
 const char *ICN::GetString(int icn)
@@ -931,7 +931,7 @@ const char *ICN::GetString(int icn)
     return UNKNOWN <= icn && LASTICN > icn ? icnmap[icn].string : "CUSTOM";
 }
 
-u32 ICN::AnimationFrame(int icn, u32 start, u32 ticket, bool quantity)
+uint32_t ICN::AnimationFrame(int icn, uint32_t start, uint32_t ticket, bool quantity)
 {
     switch (icn)
     {
@@ -1703,7 +1703,7 @@ int ICN::PORTxxxx(int heroId)
     return UNKNOWN;
 }
 
-bool ICN::NeedMinify4PocketPC(int icn, u32 index)
+bool ICN::NeedMinify4PocketPC(int icn, uint32_t index)
 {
     if (Settings::Get().ExtBattleSoftWait() &&
         icn == TEXTBAR && (index == 0 || index == 1))
@@ -1876,7 +1876,7 @@ bool ICN::NeedMinify4PocketPC(int icn, u32 index)
 
 }
 
-u32 ICN::missile9(float dx, float dy)
+uint32_t ICN::missile9(float dx, float dy)
 {
     if (0 == dx) return dy > 0 ? 0 : 8;
     if (0 == dy) return 4;
@@ -1893,7 +1893,7 @@ u32 ICN::missile9(float dx, float dy)
     return dy > 0 ? 2 : 6;
 }
 
-u32 ICN::missile7(float dx, float dy)
+uint32_t ICN::missile7(float dx, float dy)
 {
     if (0 == dx) return dy > 0 ? 0 : 6;
     if (0 == dy) return 3;
@@ -1907,7 +1907,7 @@ u32 ICN::missile7(float dx, float dy)
     return dy > 0 ? 1 : 5;
 }
 
-u32 ICN::GetMissIndex(int icn, s32 dx, s32 dy)
+uint32_t ICN::GetMissIndex(int icn, s32 dx, s32 dy)
 {
     switch (icn)
     {
@@ -2017,7 +2017,7 @@ int ICN::FromString(const char *str)
     return ptr->type;
 }
 
-bool ICN::HighlyObjectSprite(int icn, u32 index)
+bool ICN::HighlyObjectSprite(int icn, uint32_t index)
 {
     switch (icn)
     {

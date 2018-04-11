@@ -66,7 +66,7 @@ void Network::Socket::Assign(const TCPsocket csd)
 }
 
 
-u32 Network::Socket::Host() const
+uint32_t Network::Socket::Host() const
 {
     IPaddress* remoteIP = sd ? SDLNet_TCP_GetPeerAddress(sd) : nullptr;
     if(remoteIP) return SDLNet_Read32(&remoteIP->host);
@@ -135,7 +135,7 @@ T swap_endian(T u)
 }
 
 
-bool Network::Socket::Recv32(u32 & v)
+bool Network::Socket::Recv32(uint32_t & v)
 {
     if(Recv(reinterpret_cast<char*>(&v), sizeof(v)))
     {
@@ -157,9 +157,9 @@ bool Network::Socket::Recv16(u16 & v)
     return false;
 }
 
-bool Network::Socket::Send32(const u32 & v0)
+bool Network::Socket::Send32(const uint32_t & v0)
 {
-    u32 v = v0;
+    uint32_t v = v0;
     auto swappedV = swap_endian(v);
     v = swappedV;
 

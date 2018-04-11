@@ -42,7 +42,7 @@ namespace Battle
 
     void EagleEyeSkillAction(HeroBase &, const SpellStorage &, bool);
 
-    void NecromancySkillAction(HeroBase &, u32, bool);
+    void NecromancySkillAction(HeroBase &, uint32_t, bool);
 }
 
 Battle::Result Battle::Loader(Army &army1, Army &army2, s32 mapsindex)
@@ -85,7 +85,7 @@ Battle::Result Battle::Loader(Army &army1, Army &army2, s32 mapsindex)
                                                                                 ? army2.GetCommander() : nullptr));
     HeroBase *hero_loss = (result.army1 & RESULT_LOSS ? army1.GetCommander() : (result.army2 & RESULT_LOSS
                                                                                 ? army2.GetCommander() : nullptr));
-    const u32 loss_result = result.army1 & RESULT_LOSS ? result.army1 : result.army2;
+    const uint32_t loss_result = result.army1 & RESULT_LOSS ? result.army1 : result.army2;
 
     if (local)
     {
@@ -159,7 +159,7 @@ void Battle::PickupArtifactsAction(HeroBase &hero1, HeroBase &hero2, bool local)
     BagArtifacts &bag1 = hero1.GetBagArtifacts();
     BagArtifacts &bag2 = hero2.GetBagArtifacts();
 
-    for (u32 ii = 0; ii < bag2.size(); ++ii)
+    for (uint32_t ii = 0; ii < bag2.size(); ++ii)
     {
         Artifact &art = bag2[ii];
 
@@ -234,7 +234,7 @@ void Battle::EagleEyeSkillAction(HeroBase &hero, const SpellStorage &spells, boo
     hero.AppendSpellsToBook(new_spells, true);
 }
 
-void Battle::NecromancySkillAction(HeroBase &hero, u32 killed, bool local)
+void Battle::NecromancySkillAction(HeroBase &hero, uint32_t killed, bool local)
 {
     Army &army = hero.GetArmy();
 
@@ -243,10 +243,10 @@ void Battle::NecromancySkillAction(HeroBase &hero, u32 killed, bool local)
         return;
 
     // check necromancy shrine build
-    u32 percent = 10 * world.GetKingdom(army.GetColor()).GetCountNecromancyShrineBuild();
+    uint32_t percent = 10 * world.GetKingdom(army.GetColor()).GetCountNecromancyShrineBuild();
 
     // check artifact
-    u32 acount = hero.HasArtifact(Artifact::SPADE_NECROMANCY);
+    uint32_t acount = hero.HasArtifact(Artifact::SPADE_NECROMANCY);
     if (acount) percent += acount * 10;
 
     // fix over 60%
@@ -258,7 +258,7 @@ void Battle::NecromancySkillAction(HeroBase &hero, u32 killed, bool local)
     if (percent > 90) percent = 90;
 
     const Monster mons(Monster::SKELETON);
-    const u32 count = Monster::GetCountFromHitPoints(Monster::SKELETON, mons.GetHitPoints() * killed * percent / 100);
+    const uint32_t count = Monster::GetCountFromHitPoints(Monster::SKELETON, mons.GetHitPoints() * killed * percent / 100);
     army.m_troops.JoinTroop(mons, count);
 
     if (local)
@@ -278,7 +278,7 @@ void Battle::NecromancySkillAction(HeroBase &hero, u32 killed, bool local)
     }
 }
 
-u32 Battle::Result::AttackerResult() const
+uint32_t Battle::Result::AttackerResult() const
 {
     if (RESULT_SURRENDER & army1) return RESULT_SURRENDER;
     if (RESULT_RETREAT & army1) return RESULT_RETREAT;
@@ -288,7 +288,7 @@ u32 Battle::Result::AttackerResult() const
     return 0;
 }
 
-u32 Battle::Result::DefenderResult() const
+uint32_t Battle::Result::DefenderResult() const
 {
     if (RESULT_SURRENDER & army2) return RESULT_SURRENDER;
     if (RESULT_RETREAT & army2) return RESULT_RETREAT;
@@ -298,12 +298,12 @@ u32 Battle::Result::DefenderResult() const
     return 0;
 }
 
-u32 Battle::Result::GetExperienceAttacker() const
+uint32_t Battle::Result::GetExperienceAttacker() const
 {
     return exp1;
 }
 
-u32 Battle::Result::GetExperienceDefender() const
+uint32_t Battle::Result::GetExperienceDefender() const
 {
     return exp2;
 }

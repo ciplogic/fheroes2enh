@@ -180,7 +180,7 @@ void Battle::Cell::SetDirection(int val)
     direction = val;
 }
 
-void Battle::Cell::SetQuality(u32 val)
+void Battle::Cell::SetQuality(uint32_t val)
 {
     quality = val;
 }
@@ -287,12 +287,12 @@ void Battle::Cell::ResetDirection()
 StreamBase &Battle::operator<<(StreamBase &msg, const Cell &c)
 {
     return msg << c.index << c.object << c.direction << c.quality <<
-               (c.troop ? c.troop->GetUID() : static_cast<u32>(0));
+               (c.troop ? c.troop->GetUID() : static_cast<uint32_t>(0));
 }
 
 ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, Cell &c)
 {
-    u32 uid = 0;
+    uint32_t uid = 0;
     msg >> c.index >> c.object >> c.direction >> c.quality >> uid;
     c.troop = GetArena()->GetTroopUID(uid);
     return msg;

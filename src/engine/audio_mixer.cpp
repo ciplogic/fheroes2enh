@@ -112,7 +112,7 @@ Mixer::chunk_t *Mixer::LoadWAV(const char *file)
     return sample;
 }
 
-Mixer::chunk_t *Mixer::LoadWAV(const u8 *ptr, u32 size)
+Mixer::chunk_t *Mixer::LoadWAV(const u8 *ptr, uint32_t size)
 {
     Mix_Chunk *sample = Mix_LoadWAV_RW(SDL_RWFromConstMem(ptr, size), 1);
     if (!sample)
@@ -140,7 +140,7 @@ int Mixer::Play(const char *file, int channel, bool loop)
     return Play(sample, channel, loop);
 }
 
-int Mixer::Play(const u8 *ptr, u32 size, int channel, bool loop)
+int Mixer::Play(const u8 *ptr, uint32_t size, int channel, bool loop)
 {
     if (!valid || !ptr)
     {

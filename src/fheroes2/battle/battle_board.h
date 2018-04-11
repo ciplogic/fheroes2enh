@@ -105,7 +105,7 @@ namespace Battle
 
         static s32 GetIndexDirection(s32, int);
 
-        static Indexes GetDistanceIndexes(s32, u32);
+        static Indexes GetDistanceIndexes(s32, uint32_t);
 
         static Indexes GetAroundIndexes(s32);
 

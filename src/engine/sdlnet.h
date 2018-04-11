@@ -49,13 +49,13 @@ namespace Network
         bool            Recv(char*, int);
         bool            Send(const char*, int);
 
-        bool            Recv32(u32 &);
-        bool            Send32(const u32 &);
+        bool            Recv32(uint32_t &);
+        bool            Send32(const uint32_t &);
 
         bool            Recv16(u16 &);
         bool            Send16(const u16 &);
 
-    u32		Host() const;
+    uint32_t		Host() const;
     u16		Port() const;
 
     bool		Open(IPaddress &);

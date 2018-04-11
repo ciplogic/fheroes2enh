@@ -70,7 +70,7 @@ bool Thread::IsRun() const
     return GetID();
 }
 
-u32 Thread::GetID() const
+uint32_t Thread::GetID() const
 {
     return thread ? SDL_GetThreadID(thread) : 0;
 }
@@ -113,7 +113,7 @@ Timer::Timer() : id(nullptr)
 {
 }
 
-void Timer::Run(u32 interval, u32(*fn)(u32, void *), void *param)
+void Timer::Run(uint32_t interval, uint32_t(*fn)(uint32_t, void *), void *param)
 {
     if (id) Remove();
 
@@ -146,7 +146,7 @@ void Time::Stop()
     tick2 = SDL_GetTicks();
 }
 
-u32 Time::Get() const
+uint32_t Time::Get() const
 {
     return tick2 > tick1 ? tick2 - tick1 : 0;
 }

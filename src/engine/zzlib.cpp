@@ -32,7 +32,7 @@ bool ZStreamFile::read(const string &fn, size_t offset)
     {
         if (offset) sf.seek(offset);
 
-        const u32 size0 = sf.get32(); // raw size
+        const uint32_t size0 = sf.get32(); // raw size
         vector<u8> raw = sf.getRaw(size0);
         putRaw(reinterpret_cast<const char *>(&raw[0]), raw.size());
         seek(0);

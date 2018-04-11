@@ -38,7 +38,7 @@ namespace SDL
 
     void Quit();
 
-    bool SubSystem(u32 system);
+    bool SubSystem(uint32_t system);
 }
 
 #endif

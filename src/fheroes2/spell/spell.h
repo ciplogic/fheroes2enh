@@ -130,19 +130,19 @@ public:
 
     std::string GetDescription() const;
 
-    u32 SpellPoint(const HeroBase *hero = nullptr) const;
+    uint32_t SpellPoint(const HeroBase *hero = nullptr) const;
 
-    u32 MovePoint() const;
+    uint32_t MovePoint() const;
 
     int Level() const;
 
-    u32 Damage() const;
+    uint32_t Damage() const;
 
-    u32 Restore() const;
+    uint32_t Restore() const;
 
-    u32 Resurrect() const;
+    uint32_t Resurrect() const;
 
-    u32 ExtraValue() const;
+    uint32_t ExtraValue() const;
 
     payment_t GetCost() const;
 
@@ -181,10 +181,10 @@ public:
     bool isRaceCompatible(int race) const;
 
     /* return index sprite spells.icn */
-    u32 IndexSprite() const;
+    uint32_t IndexSprite() const;
 
     /* return index in spellinl.icn */
-    u32 InlIndexSprite() const;
+    uint32_t InlIndexSprite() const;
 
     static Spell RandCombat(int lvl);
 
@@ -194,7 +194,7 @@ public:
 
     static void UpdateStats(const string &);
 
-    static u32 CalculateDimensionDoorDistance(u32 current_sp, u32 total_hp);
+    static uint32_t CalculateDimensionDoorDistance(uint32_t current_sp, uint32_t total_hp);
 
     void ReadFrom(ByteVectorReader &msg);
 

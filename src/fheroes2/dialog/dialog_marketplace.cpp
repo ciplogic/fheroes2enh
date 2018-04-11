@@ -39,7 +39,7 @@ void RedrawToResource(const Point &, bool showcost, bool tradingPost, int from_r
 
 string GetStringTradeCosts(int rs_from, int rs_to, bool tradingPost);
 
-u32 GetTradeCosts(int rs_from, int rs_to, bool tradingPost);
+uint32_t GetTradeCosts(int rs_from, int rs_to, bool tradingPost);
 
 class TradeWindowGUI
 {
@@ -71,9 +71,9 @@ public:
         textBuy.SetFont(Font::SMALL);
     };
 
-    void RedrawInfoBuySell(u32 count_sell, u32 count_buy, u32 max_sell, u32 orig_buy);
+    void RedrawInfoBuySell(uint32_t count_sell, uint32_t count_buy, uint32_t max_sell, uint32_t orig_buy);
 
-    void ShowTradeArea(int resourceFrom, int resourceTo, u32 max_buy, u32 max_sell, u32 count_buy, u32 count_sell,
+    void ShowTradeArea(int resourceFrom, int resourceTo, uint32_t max_buy, uint32_t max_sell, uint32_t count_buy, uint32_t count_sell,
                        bool fromTradingPost);
 
     Rect buttonMax;
@@ -93,8 +93,8 @@ private:
     TextSprite textBuy;
 };
 
-void TradeWindowGUI::ShowTradeArea(int resourceFrom, int resourceTo, u32 max_buy, u32 max_sell, u32 count_buy,
-                                   u32 count_sell, bool fromTradingPost)
+void TradeWindowGUI::ShowTradeArea(int resourceFrom, int resourceTo, uint32_t max_buy, uint32_t max_sell, uint32_t count_buy,
+                                   uint32_t count_sell, bool fromTradingPost)
 {
     Cursor &cursor = Cursor::Get();
     Display &display = Display::Get();
@@ -128,7 +128,7 @@ void TradeWindowGUI::ShowTradeArea(int resourceFrom, int resourceTo, u32 max_buy
         dst_pt.y = pos_rt.y + 128;
         bar.Blit(dst_pt);
         splitter.SetRange(0, (Resource::GOLD == resourceTo ? max_sell : max_buy));
-        u32 exchange_rate = GetTradeCosts(resourceFrom, resourceTo, fromTradingPost);
+        uint32_t exchange_rate = GetTradeCosts(resourceFrom, resourceTo, fromTradingPost);
         string message;
         if (Resource::GOLD == resourceTo)
         {
@@ -187,7 +187,7 @@ void TradeWindowGUI::ShowTradeArea(int resourceFrom, int resourceTo, u32 max_buy
     }
 }
 
-void TradeWindowGUI::RedrawInfoBuySell(u32 count_sell, u32 count_buy, u32 max_sell, u32 orig_buy)
+void TradeWindowGUI::RedrawInfoBuySell(uint32_t count_sell, uint32_t count_buy, uint32_t max_sell, uint32_t orig_buy)
 {
     Point dst_pt;
 
@@ -280,11 +280,11 @@ void Dialog::Marketplace(bool fromTradingPost)
     text.Blit(dst_pt);
     RedrawToResource(pt2, false, fromTradingPost);
 
-    u32 count_sell = 0;
-    u32 count_buy = 0;
+    uint32_t count_sell = 0;
+    uint32_t count_buy = 0;
 
-    u32 max_sell = 0;
-    u32 max_buy = 0;
+    uint32_t max_sell = 0;
+    uint32_t max_buy = 0;
 
     Rect &buttonMax = gui.buttonMax;
     Rect &buttonMin = gui.buttonMin;
@@ -333,7 +333,7 @@ void Dialog::Marketplace(bool fromTradingPost)
         }
 
         // click from
-        for (u32 ii = 0; ii < rectsFrom.size(); ++ii)
+        for (uint32_t ii = 0; ii < rectsFrom.size(); ++ii)
         {
             const Rect &rect_from = rectsFrom[ii];
 
@@ -369,7 +369,7 @@ void Dialog::Marketplace(bool fromTradingPost)
         }
 
         // click to
-        for (u32 ii = 0; ii < rectsTo.size(); ++ii)
+        for (uint32_t ii = 0; ii < rectsTo.size(); ++ii)
         {
             const Rect &rect_to = rectsTo[ii];
 
@@ -425,7 +425,7 @@ void Dialog::Marketplace(bool fromTradingPost)
             // click max
         if (buttonMax.w && max_buy && le.MouseClickLeft(buttonMax))
         {
-            const u32 &max = splitter.Max();
+            const uint32_t &max = splitter.Max();
 
             count_buy =
                     max * (Resource::GOLD == resourceTo ? GetTradeCosts(resourceFrom, resourceTo, fromTradingPost) : 1);
@@ -441,7 +441,7 @@ void Dialog::Marketplace(bool fromTradingPost)
         // click min
         if (buttonMin.w && max_buy && le.MouseClickLeft(buttonMin))
         {
-            const u32 min = 1;
+            const uint32_t min = 1;
 
             count_buy =
                     min * (Resource::GOLD == resourceTo ? GetTradeCosts(resourceFrom, resourceTo, fromTradingPost) : 1);
@@ -598,9 +598,9 @@ string GetStringTradeCosts(int rs_from, int rs_to, bool tradingPost)
     return res;
 }
 
-u32 GetTradeCosts(int rs_from, int rs_to, bool tradingPost)
+uint32_t GetTradeCosts(int rs_from, int rs_to, bool tradingPost)
 {
-    const u32 markets = tradingPost ? 3 : world.GetKingdom(Settings::Get().CurrentColor()).GetCountMarketplace();
+    const uint32_t markets = tradingPost ? 3 : world.GetKingdom(Settings::Get().CurrentColor()).GetCountMarketplace();
 
     if (rs_from == rs_to) return 0;
 

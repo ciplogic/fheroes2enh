@@ -25,7 +25,7 @@
 #include "direction.h"
 #include "objxloc.h"
 
-int ObjXlc1::GetPassable(u32 index)
+int ObjXlc1::GetPassable(uint32_t index)
 {
     const u8 disabled[] = {40, 49, 50};
     const u8 restricted[] = {69, 71, 75, 76, 85, 103, 117, 119, 126, 128, 134, 136};
@@ -40,19 +40,19 @@ int ObjXlc1::GetPassable(u32 index)
            DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW : DIRECTION_ALL;
 }
 
-bool ObjXlc1::isAction(u32 index)
+bool ObjXlc1::isAction(uint32_t index)
 {
     return MP2::OBJ_ZERO != GetActionObject(index);
 }
 
-bool ObjXlc1::isShadow(u32 index)
+bool ObjXlc1::isShadow(uint32_t index)
 {
     const u8 shadows[] = {1, 2, 59, 68, 72, 78, 79, 83, 84, 112, 116, 120, 124, 125, 129, 133};
 
     return ARRAY_COUNT_END(shadows) != std::find(shadows, ARRAY_COUNT_END(shadows), index);
 }
 
-int ObjXlc2::GetPassable(u32 index)
+int ObjXlc2::GetPassable(uint32_t index)
 {
     const u8 restricted[] = {3, 8, 28, 46, 92, 102};
 
@@ -66,12 +66,12 @@ int ObjXlc2::GetPassable(u32 index)
            DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW : DIRECTION_ALL;
 }
 
-bool ObjXlc2::isAction(u32 index)
+bool ObjXlc2::isAction(uint32_t index)
 {
     return MP2::OBJ_ZERO != GetActionObject(index);
 }
 
-bool ObjXlc2::isShadow(u32 index)
+bool ObjXlc2::isShadow(uint32_t index)
 {
     const u8 shadows[] = {2, 10, 47, 83};
 
@@ -79,7 +79,7 @@ bool ObjXlc2::isShadow(u32 index)
 }
 
 
-int ObjXlc3::GetPassable(u32 index)
+int ObjXlc3::GetPassable(uint32_t index)
 {
     if (isShadow(index))
         return DIRECTION_ALL;
@@ -89,12 +89,12 @@ int ObjXlc3::GetPassable(u32 index)
     return DIRECTION_ALL;
 }
 
-bool ObjXlc3::isAction(u32 index)
+bool ObjXlc3::isAction(uint32_t index)
 {
     return MP2::OBJ_ZERO != GetActionObject(index);
 }
 
-bool ObjXlc3::isShadow(u32 index)
+bool ObjXlc3::isShadow(uint32_t index)
 {
     const u8 shadows[] = {0, 9, 20, 29, 41, 59, 65, 71, 77, 83, 89, 95, 101,
                           108, 109, 112, 113, 116, 117, 120, 121, 124, 125, 128, 129, 132, 133, 136, 137};
@@ -102,7 +102,7 @@ bool ObjXlc3::isShadow(u32 index)
     return ARRAY_COUNT_END(shadows) != std::find(shadows, ARRAY_COUNT_END(shadows), index);
 }
 
-int ObjXlc1::GetActionObject(u32 index)
+int ObjXlc1::GetActionObject(uint32_t index)
 {
     switch (index)
     {
@@ -127,7 +127,7 @@ int ObjXlc1::GetActionObject(u32 index)
     return MP2::OBJ_ZERO;
 }
 
-int ObjXlc2::GetActionObject(u32 index)
+int ObjXlc2::GetActionObject(uint32_t index)
 {
     switch (index)
     {
@@ -146,7 +146,7 @@ int ObjXlc2::GetActionObject(u32 index)
     return MP2::OBJ_ZERO;
 }
 
-int ObjXlc3::GetActionObject(u32 index)
+int ObjXlc3::GetActionObject(uint32_t index)
 {
     switch (index)
     {

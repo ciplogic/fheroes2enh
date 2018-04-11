@@ -43,7 +43,7 @@
 
 struct buildstats_t
 {
-    u32 id2;
+    uint32_t id2;
     u8 race;
     cost_t cost;
 };
@@ -154,7 +154,7 @@ void BuildingInfo::UpdateCosts(const string &spec)
 {
 }
 
-payment_t BuildingInfo::GetCost(u32 build, int race)
+payment_t BuildingInfo::GetCost(uint32_t build, int race)
 {
     payment_t payment;
     const buildstats_t *ptr = &_builds[0];
@@ -175,7 +175,7 @@ payment_t BuildingInfo::GetCost(u32 build, int race)
     return payment;
 }
 
-int GetIndexBuildingSprite(u32 build)
+int GetIndexBuildingSprite(uint32_t build)
 {
     switch (build)
     {
@@ -299,7 +299,7 @@ BuildingInfo::BuildingInfo(const Castle &c, building_t b) : castle(c), building(
     }
 }
 
-u32 BuildingInfo::operator()() const
+uint32_t BuildingInfo::operator()() const
 {
     return building;
 }
@@ -510,10 +510,10 @@ bool BuildingInfo::DialogBuyBuilding(bool buttons) const
 
     // prepare requires build string
     string str;
-    const u32 requires = castle.GetBuildingRequires(building);
+    const uint32_t requires = castle.GetBuildingRequires(building);
     const char *sep = ", ";
 
-    for (u32 itr = 0x00000001; itr; itr <<= 1)
+    for (uint32_t itr = 0x00000001; itr; itr <<= 1)
         if ((requires & itr) && !castle.isBuild(itr))
         {
             str.append(Castle::GetStringBuilding(itr, castle.GetRace()));
@@ -715,7 +715,7 @@ bool BuildingInfo::CanQuickBuild(const Point &cursor, Rect area)
     return false;
 }
 
-DwellingItem::DwellingItem(Castle &castle, u32 dw)
+DwellingItem::DwellingItem(Castle &castle, uint32_t dw)
 {
     type = castle.GetActualDwelling(dw);
     mons = Monster(castle.GetRace(), type);
@@ -723,7 +723,7 @@ DwellingItem::DwellingItem(Castle &castle, u32 dw)
 
 DwellingsBar::DwellingsBar(Castle &cstl, const Size &sz, const RGBA &fill) : castle(cstl)
 {
-    for (u32 dw = DWELLING_MONSTER1; dw <= DWELLING_MONSTER6; dw <<= 1)
+    for (uint32_t dw = DWELLING_MONSTER1; dw <= DWELLING_MONSTER6; dw <<= 1)
         content.emplace_back(castle, dw);
 
     SetContent(content);
@@ -748,7 +748,7 @@ void DwellingsBar::RedrawItem(DwellingItem &dwl, const Rect &pos, Surface &dstsf
         Text text(Int2Str(castle.GetDwellingLivedCount(dwl.type)), Font::SMALL);
         text.Blit(pos.x + pos.w - text.w() - 3, pos.y + pos.h - text.h() - 1);
 
-        u32 grown = dwl.mons.GetGrown();
+        uint32_t grown = dwl.mons.GetGrown();
         if (castle.isBuild(BUILD_WELL)) grown += Castle::GetGrownWell();
         if (castle.isBuild(BUILD_WEL2) && DWELLING_MONSTER1 == dwl.type) grown += Castle::GetGrownWel2();
 

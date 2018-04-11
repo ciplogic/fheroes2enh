@@ -246,7 +246,7 @@ bool Battle::Only::ChangeSettings()
         {
             if (le.MouseClickLeft(rtAttack1))
             {
-                u32 value = hero1->attack;
+                uint32_t value = hero1->attack;
                 if (Dialog::SelectCount("Set Attack Skill", 0, PRIMARY_MAX_VALUE, value))
                 {
                     hero1->attack = value;
@@ -254,7 +254,7 @@ bool Battle::Only::ChangeSettings()
                 }
             } else if (le.MouseClickLeft(rtDefense1))
             {
-                u32 value = hero1->defense;
+                uint32_t value = hero1->defense;
                 if (Dialog::SelectCount("Set Defense Skill", 0, PRIMARY_MAX_VALUE, value))
                 {
                     hero1->defense = value;
@@ -262,7 +262,7 @@ bool Battle::Only::ChangeSettings()
                 }
             } else if (le.MouseClickLeft(rtPower1))
             {
-                u32 value = hero1->power;
+                uint32_t value = hero1->power;
                 if (Dialog::SelectCount("Set Power Skill", 0, PRIMARY_MAX_VALUE, value))
                 {
                     hero1->power = value;
@@ -270,7 +270,7 @@ bool Battle::Only::ChangeSettings()
                 }
             } else if (le.MouseClickLeft(rtKnowledge1))
             {
-                u32 value = hero1->knowledge;
+                uint32_t value = hero1->knowledge;
                 if (Dialog::SelectCount("Set Knowledge Skill", 0, PRIMARY_MAX_VALUE, value))
                 {
                     hero1->knowledge = value;
@@ -283,7 +283,7 @@ bool Battle::Only::ChangeSettings()
         {
             if (le.MouseClickLeft(rtAttack2))
             {
-                u32 value = hero2->attack;
+                uint32_t value = hero2->attack;
                 if (Dialog::SelectCount("Set Attack Skill", 0, PRIMARY_MAX_VALUE, value))
                 {
                     hero2->attack = value;
@@ -291,7 +291,7 @@ bool Battle::Only::ChangeSettings()
                 }
             } else if (le.MouseClickLeft(rtDefense2))
             {
-                u32 value = hero2->defense;
+                uint32_t value = hero2->defense;
                 if (Dialog::SelectCount("Set Defense Skill", 0, PRIMARY_MAX_VALUE, value))
                 {
                     hero2->defense = value;
@@ -299,7 +299,7 @@ bool Battle::Only::ChangeSettings()
                 }
             } else if (le.MouseClickLeft(rtPower2))
             {
-                u32 value = hero2->power;
+                uint32_t value = hero2->power;
                 if (Dialog::SelectCount("Set Power Skill", 0, PRIMARY_MAX_VALUE, value))
                 {
                     hero2->power = value;
@@ -307,7 +307,7 @@ bool Battle::Only::ChangeSettings()
                 }
             } else if (le.MouseClickLeft(rtKnowledge2))
             {
-                u32 value = hero2->knowledge;
+                uint32_t value = hero2->knowledge;
                 if (Dialog::SelectCount("Set Knowledge Skill", 0, PRIMARY_MAX_VALUE, value))
                 {
                     hero2->knowledge = value;

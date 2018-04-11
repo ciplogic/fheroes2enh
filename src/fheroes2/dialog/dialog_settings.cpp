@@ -31,13 +31,13 @@
 
 #include "icn.h"
 
-class SettingsListBox : public Interface::ListBox<u32>
+class SettingsListBox : public Interface::ListBox<uint32_t>
 {
 public:
-    SettingsListBox(const Point &pt, bool f) : ListBox<u32>(pt), readonly(f)
+    SettingsListBox(const Point &pt, bool f) : ListBox<uint32_t>(pt), readonly(f)
     {};
 
-    void RedrawItem(const u32 &, s32, s32, bool);
+    void RedrawItem(const uint32_t &, s32, s32, bool);
 
     void RedrawBackground(const Point &);
 
@@ -47,17 +47,17 @@ public:
     void ActionCurrentDn()
     {};
 
-    void ActionListDoubleClick(u32 &);
+    void ActionListDoubleClick(uint32_t &);
 
-    void ActionListSingleClick(u32 &);
+    void ActionListSingleClick(uint32_t &);
 
-    void ActionListPressRight(u32 &)
+    void ActionListPressRight(uint32_t &)
     {};
 
     bool readonly;
 };
 
-void SettingsListBox::RedrawItem(const u32 &item, s32 ox, s32 oy, bool current)
+void SettingsListBox::RedrawItem(const uint32_t &item, s32 ox, s32 oy, bool current)
 {
     const Settings &conf = Settings::Get();
 
@@ -92,12 +92,12 @@ void SettingsListBox::RedrawBackground(const Point &top)
     AGG::GetICN(ICN::DROPLISL, 12).Blit(top.x + 295, top.y + ah - 14);
 }
 
-void SettingsListBox::ActionListDoubleClick(u32 &item)
+void SettingsListBox::ActionListDoubleClick(uint32_t &item)
 {
     ActionListSingleClick(item);
 }
 
-void SettingsListBox::ActionListSingleClick(u32 &item)
+void SettingsListBox::ActionListSingleClick(uint32_t &item)
 {
     Settings &conf = Settings::Get();
 
@@ -168,7 +168,7 @@ void Dialog::ExtSettings(bool readonly)
     Text text("FHeroes2 Settings", Font::YELLOW_BIG);
     text.Blit(area.x + (area.w - text.w()) / 2, area.y + 6);
 
-    vector<u32> states;
+    vector<uint32_t> states;
     states.reserve(64);
 
     states.push_back(Settings::GAME_SAVE_REWRITE_CONFIRM);

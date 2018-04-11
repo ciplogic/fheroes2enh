@@ -31,7 +31,7 @@
 #include "icn.h"
 
 bool
-Dialog::SelectGoldOrExp(const string &header, const string &message, u32 gold, u32 expr, const Heroes &hero)
+Dialog::SelectGoldOrExp(const string &header, const string &message, uint32_t gold, uint32_t expr, const Heroes &hero)
 {
     Display &display = Display::Get();
     const int system = Settings::Get().ExtGameEvilInterface() ? ICN::SYSTEME : ICN::SYSTEM;

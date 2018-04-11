@@ -159,19 +159,19 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, monstats_t &obj)
 
 StreamBase &operator<<(StreamBase &msg, const MonsterStaticData &obj)
 {
-    u32 monsters_size = ARRAY_COUNT(monsters);
+    uint32_t monsters_size = ARRAY_COUNT(monsters);
     msg << monsters_size;
-    for (u32 ii = 0; ii < monsters_size; ++ii)
+    for (uint32_t ii = 0; ii < monsters_size; ++ii)
         msg << monsters[ii];
     return msg;
 }
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, MonsterStaticData &obj)
 {
-    u32 monsters_size;
+    uint32_t monsters_size;
     msg >> monsters_size;
 
-    for (u32 ii = 0; ii < monsters_size; ++ii)
+    for (uint32_t ii = 0; ii < monsters_size; ++ii)
         msg >> monsters[ii];
     return msg;
 }
@@ -233,7 +233,7 @@ Monster::Monster(const Spell &sp) : id(UNKNOWN)
     }
 }
 
-Monster::Monster(int race, u32 dw) : id(UNKNOWN)
+Monster::Monster(int race, uint32_t dw) : id(UNKNOWN)
 {
     id = FromDwelling(race, dw).id;
 }
@@ -273,12 +273,12 @@ void Monster::Upgrade()
     id = GetUpgrade().id;
 }
 
-u32 Monster::GetAttack() const
+uint32_t Monster::GetAttack() const
 {
     return monsters[id].attack;
 }
 
-u32 Monster::GetDefense() const
+uint32_t Monster::GetDefense() const
 {
     return monsters[id].defense;
 }
@@ -311,49 +311,49 @@ int Monster::GetRace() const
     return Race::NONE;
 }
 
-u32 Monster::GetDamageMin() const
+uint32_t Monster::GetDamageMin() const
 {
     return monsters[id].damageMin;
 }
 
-u32 Monster::GetDamageMax() const
+uint32_t Monster::GetDamageMax() const
 {
     return monsters[id].damageMax;
 }
 
-u32 Monster::GetShots() const
+uint32_t Monster::GetShots() const
 {
     return monsters[id].shots;
 }
 
-/*static*/ u32 Monster::GetHitPoints(const Monster &m)
+/*static*/ uint32_t Monster::GetHitPoints(const Monster &m)
 {
     return monsters[m.id].hp;
 }
 
-u32 Monster::GetHitPoints() const
+uint32_t Monster::GetHitPoints() const
 {
     return Monster::GetHitPoints(*this);
 }
 
-u32 Monster::GetSpeed() const
+uint32_t Monster::GetSpeed() const
 {
     return monsters[id].speed;
 }
 
-u32 Monster::GetGrown() const
+uint32_t Monster::GetGrown() const
 {
     return monsters[id].grown;
 }
 
-u32 Monster::GetRNDSize(bool skip_factor) const
+uint32_t Monster::GetRNDSize(bool skip_factor) const
 {
-    u32 hps = (GetGrown() ? GetGrown() : 1) * GetHitPoints();
-    u32 res = Rand::Get(hps, hps + hps / 2);
+    uint32_t hps = (GetGrown() ? GetGrown() : 1) * GetHitPoints();
+    uint32_t res = Rand::Get(hps, hps + hps / 2);
 
     if (!skip_factor)
     {
-        u32 factor = 100;
+        uint32_t factor = 100;
 
         switch (Settings::Get().GameDifficulty())
         {
@@ -705,7 +705,7 @@ Monster Monster::GetUpgrade() const
     return Monster(id);
 }
 
-Monster Monster::FromDwelling(int race, u32 dwelling)
+Monster Monster::FromDwelling(int race, uint32_t dwelling)
 {
     switch (dwelling)
     {
@@ -973,7 +973,7 @@ Monster Monster::Rand(level_t level)
     vector<Monster> monsters;
     monsters.reserve(30);
 
-    for (u32 ii = PEASANT; ii <= WATER_ELEMENT; ++ii)
+    for (uint32_t ii = PEASANT; ii <= WATER_ELEMENT; ++ii)
     {
         Monster mons(ii);
         if (mons.GetLevel() == level) monsters.push_back(mons);
@@ -982,7 +982,7 @@ Monster Monster::Rand(level_t level)
     return !monsters.empty() ? *Rand::Get(monsters) : UNKNOWN;
 }
 
-u32 Monster::Rand4WeekOf()
+uint32_t Monster::Rand4WeekOf()
 {
     switch (Rand::Get(1, 47))
     {
@@ -1086,7 +1086,7 @@ u32 Monster::Rand4WeekOf()
     return UNKNOWN;
 }
 
-u32 Monster::Rand4MonthOf()
+uint32_t Monster::Rand4MonthOf()
 {
     switch (Rand::Get(1, 30))
     {
@@ -1259,7 +1259,7 @@ int Monster::GetLevel() const
     return LEVEL0;
 }
 
-u32 Monster::GetDwelling() const
+uint32_t Monster::GetDwelling() const
 {
     switch (id)
     {
@@ -1361,7 +1361,7 @@ std::string Monster::GetMultiName() const
     return _(monsters[id].multiname);
 }
 
-std::string Monster::GetPluralName(u32 count) const
+std::string Monster::GetPluralName(uint32_t count) const
 {
     switch (id)
     {
@@ -1511,7 +1511,7 @@ std::string Monster::GetPluralName(u32 count) const
     return 1 == count ? GetName() : GetMultiName();
 }
 
-u32 Monster::GetSpriteIndex() const
+uint32_t Monster::GetSpriteIndex() const
 {
     return UNKNOWN < id ? id - 1 : 0;
 }
@@ -1543,12 +1543,12 @@ payment_t Monster::GetUpgradeCost() const
     return pay;
 }
 
-u32 Monster::GetCountFromHitPoints(const Monster &mons, u32 hp)
+uint32_t Monster::GetCountFromHitPoints(const Monster &mons, uint32_t hp)
 {
     if (!hp)
         return 0;
-    const u32 hp1 = Monster::GetHitPoints(mons);
-    const u32 count = hp / hp1;
+    const uint32_t hp1 = Monster::GetHitPoints(mons);
+    const uint32_t count = hp / hp1;
     return (count * hp1) < hp ? count + 1 : count;
 }
 

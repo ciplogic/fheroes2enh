@@ -35,7 +35,7 @@ public:
 
     Puzzle &operator=(const char *);
 
-    void Update(u32 open, u32 total);
+    void Update(uint32_t open, uint32_t total);
 
     void ShowMapsDialog() const;
 

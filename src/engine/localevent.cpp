@@ -85,7 +85,7 @@ void LocalEvent::SetTapMode(bool f)
     }
 }
 
-void LocalEvent::SetTapDelayForRightClickEmulation(u32 d)
+void LocalEvent::SetTapDelayForRightClickEmulation(uint32_t d)
 {
     clock_delay = d < 200 ? TAP_DELAY_EMULATE : d;
 }
@@ -712,7 +712,7 @@ bool LocalEvent::MousePressLeft(const Rect &rt) const
     return MousePressLeft() && (rt & mouse_pl);
 }
 
-bool LocalEvent::MousePressLeft(const Point &pt, u32 w, u32 h) const
+bool LocalEvent::MousePressLeft(const Point &pt, uint32_t w, uint32_t h) const
 {
     return MousePressLeft() && (Rect(pt.x, pt.y, w, h) & mouse_pl);
 }
@@ -872,12 +872,12 @@ int LocalEvent::GlobalFilterEvents(const SDL_Event *event)
     return 1;
 }
 
-void LocalEvent::SetState(u32 type, bool enable)
+void LocalEvent::SetState(uint32_t type, bool enable)
 {
     SDL_EventState(type, enable ? SDL_ENABLE : SDL_IGNORE);
 }
 
-int LocalEvent::GetState(u32 type)
+int LocalEvent::GetState(uint32_t type)
 {
     return SDL_EventState(type, SDL_QUERY);
 }

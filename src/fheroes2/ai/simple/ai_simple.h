@@ -84,7 +84,7 @@ struct AIHero
 
     Queue sheduled_visit;
     s32 primary_target;
-    u32 fix_loop;
+    uint32_t fix_loop;
 };
 
 struct AIHeroes : vector<AIHero>

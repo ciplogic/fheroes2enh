@@ -53,9 +53,9 @@ struct hgs_t
 
     string player;
     string land;
-    u32 localtime;
-    u32 days;
-    u32 rating;
+    uint32_t localtime;
+    uint32_t days;
+    uint32_t rating;
 };
 
 StreamBase &operator<<(StreamBase &msg, const hgs_t &hgs)
@@ -87,7 +87,7 @@ public:
 
     bool Save(const string &);
 
-    void ScoreRegistry(const string &, const string &, u32, u32);
+    void ScoreRegistry(const string &, const string &, uint32_t, uint32_t);
 
     void RedrawList(s32, s32);
 
@@ -123,7 +123,7 @@ bool HGSData::Save(const string &fn)
 
 }
 
-void HGSData::ScoreRegistry(const string &p, const string &m, u32 r, u32 s)
+void HGSData::ScoreRegistry(const string &p, const string &m, uint32_t r, uint32_t s)
 {
     hgs_t h;
 
@@ -218,8 +218,8 @@ int Game::HighScores(bool fill)
     cursor.Show();
     display.Flip();
 
-    const u32 rating = GetGameOverScores();
-    const u32 days = world.CountDay();
+    const uint32_t rating = GetGameOverScores();
+    const uint32_t days = world.CountDay();
     GameOver::Result &gameResult = GameOver::Result::Get();
 
     if (rating && (gameResult.GetResult() & GameOver::WINS))

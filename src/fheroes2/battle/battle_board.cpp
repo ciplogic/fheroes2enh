@@ -56,7 +56,7 @@ namespace Battle
 Battle::Board::Board()
 {
     reserve(ARENASIZE);
-    for (u32 ii = 0; ii < ARENASIZE; ++ii) push_back(Cell(ii));
+    for (uint32_t ii = 0; ii < ARENASIZE; ++ii) push_back(Cell(ii));
 }
 
 void Battle::Board::SetArea(const Rect &area)
@@ -322,9 +322,9 @@ Battle::Indexes Battle::Board::GetPassableQualityPositions(const Unit &b)
     return result;
 }
 
-struct IndexDistanceEqualDistance : binary_function<IndexDistance, u32, bool>
+struct IndexDistanceEqualDistance : binary_function<IndexDistance, uint32_t, bool>
 {
-    bool operator()(const IndexDistance &id, u32 dist) const
+    bool operator()(const IndexDistance &id, uint32_t dist) const
     { return id.second == dist; };
 };
 
@@ -980,7 +980,7 @@ Battle::Indexes Battle::Board::GetAroundIndexes(const Unit &b)
     return GetAroundIndexes(b.GetHeadIndex());
 }
 
-Battle::Indexes Battle::Board::GetDistanceIndexes(s32 center, u32 radius)
+Battle::Indexes Battle::Board::GetDistanceIndexes(s32 center, uint32_t radius)
 {
     Indexes result;
 

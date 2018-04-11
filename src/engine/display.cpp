@@ -39,7 +39,7 @@ Display::~Display() = default;
 
 void Display::SetVideoMode(int w, int h, bool fullscreen)
 {
-    u32 flags = System::GetRenderFlags();
+    uint32_t flags = System::GetRenderFlags();
 
     if (fullscreen)
         flags |= SDL_FULLSCREEN;

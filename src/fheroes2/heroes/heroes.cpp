@@ -77,11 +77,11 @@ std::string Heroes::GetName(int id)
     return names[id];
 }
 
-int ObjectVisitedModifiersResult(int type, const u8 *objs, u32 size, const Heroes &hero, string *strs)
+int ObjectVisitedModifiersResult(int type, const u8 *objs, uint32_t size, const Heroes &hero, string *strs)
 {
     int result = 0;
 
-    for (u32 ii = 0; ii < size; ++ii)
+    for (uint32_t ii = 0; ii < size; ++ii)
     {
         if (hero.isVisited(objs[ii]))
         {
@@ -260,7 +260,7 @@ Heroes::Heroes(int heroid, int rc) : HeroBase(HEROES, rc), ColorBase(Color::NONE
             magic_point = 120;
 
             // all spell in magic book
-            for (u32 spell = Spell::FIREBALL; spell < Spell::STONE; ++spell) AppendSpellToBook(Spell(spell), true);
+            for (uint32_t spell = Spell::FIREBALL; spell < Spell::STONE; ++spell) AppendSpellToBook(Spell(spell), true);
             break;
 
         default:
@@ -289,11 +289,11 @@ void Heroes::LoadFromMP2(s32 map_index, int cl, int rc, ByteVectorReader &st)
         Troop troops[5];
 
         // set monster id
-        for (u32 ii = 0; ii < ARRAY_COUNT(troops); ++ii)
+        for (uint32_t ii = 0; ii < ARRAY_COUNT(troops); ++ii)
             troops[ii].SetMonster(st.get() + 1);
 
         // set count
-        for (u32 ii = 0; ii < ARRAY_COUNT(troops); ++ii)
+        for (uint32_t ii = 0; ii < ARRAY_COUNT(troops); ++ii)
             troops[ii].SetCount(st.getLE16());
 
         army.m_troops.Assign(troops, ARRAY_COUNT_END(troops));
@@ -536,27 +536,27 @@ void Heroes::IncreasePrimarySkill(int skill)
     }
 }
 
-u32 Heroes::GetExperience() const
+uint32_t Heroes::GetExperience() const
 {
     return experience;
 }
 
-void Heroes::IncreaseMovePoints(u32 point)
+void Heroes::IncreaseMovePoints(uint32_t point)
 {
     move_point += point;
 }
 
-u32 Heroes::GetMovePoints() const
+uint32_t Heroes::GetMovePoints() const
 {
     return move_point;
 }
 
-u32 Heroes::GetMaxSpellPoints() const
+uint32_t Heroes::GetMaxSpellPoints() const
 {
     return 10 * GetKnowledge();
 }
 
-u32 Heroes::GetMaxMovePoints() const
+uint32_t Heroes::GetMaxMovePoints() const
 {
     int point = 0;
     int acount = 0;
@@ -748,8 +748,8 @@ void Heroes::ActionNewDay()
     // recovery spell points
     //if(HaveSpellBook())
     {
-        u32 curr = GetSpellPoints();
-        u32 maxp = GetMaxSpellPoints();
+        uint32_t curr = GetSpellPoints();
+        uint32_t maxp = GetMaxSpellPoints();
         const Castle *castle = inCastle();
 
         // possible visit arteian spring 2 * max
@@ -936,7 +936,7 @@ void Heroes::ResetAction()
     ResetModes(ACTION);
 }
 
-u32 Heroes::GetCountArtifacts() const
+uint32_t Heroes::GetCountArtifacts() const
 {
     return bag_artifacts.CountArtifacts();
 }
@@ -1002,7 +1002,7 @@ void Heroes::ShowPath(bool f)
     f ? path.Show() : path.Hide();
 }
 
-void Heroes::IncreaseExperience(u32 exp)
+void Heroes::IncreaseExperience(uint32_t exp)
 {
     int level_old = GetLevelFromExperience(experience);
     int level_new = GetLevelFromExperience(experience + exp);
@@ -1013,7 +1013,7 @@ void Heroes::IncreaseExperience(u32 exp)
 }
 
 /* calc level from exp */
-int Heroes::GetLevelFromExperience(u32 exp)
+int Heroes::GetLevelFromExperience(uint32_t exp)
 {
     for (int lvl = 1; lvl < 255; ++lvl) if (exp < GetExperienceFromLevel(lvl)) return lvl;
 
@@ -1021,7 +1021,7 @@ int Heroes::GetLevelFromExperience(u32 exp)
 }
 
 /* calc exp from level */
-u32 Heroes::GetExperienceFromLevel(int lvl)
+uint32_t Heroes::GetExperienceFromLevel(int lvl)
 {
     switch (lvl)
     {
@@ -1110,8 +1110,8 @@ u32 Heroes::GetExperienceFromLevel(int lvl)
             break;
     }
 
-    const u32 l1 = GetExperienceFromLevel(lvl - 1);
-    return (l1 + static_cast<u32>(round((l1 - GetExperienceFromLevel(lvl - 2)) * 1.2 / 100) * 100));
+    const uint32_t l1 = GetExperienceFromLevel(lvl - 1);
+    return (l1 + static_cast<uint32_t>(round((l1 - GetExperienceFromLevel(lvl - 2)) * 1.2 / 100) * 100));
 }
 
 /* buy book */
@@ -1231,7 +1231,7 @@ bool Heroes::HasSecondarySkill(int skill) const
     return Skill::Level::NONE != secondary_skills.GetLevel(skill);
 }
 
-u32 Heroes::GetSecondaryValues(int skill) const
+uint32_t Heroes::GetSecondaryValues(int skill) const
 {
     return secondary_skills.GetValues(skill);
 }
@@ -1265,7 +1265,7 @@ int Heroes::GetScoute() const
            GetViewDistance(Game::VIEW_HEROES) + GetSecondaryValues(Skill::Secondary::SCOUTING);
 }
 
-u32 Heroes::GetVisionsDistance() const
+uint32_t Heroes::GetVisionsDistance() const
 {
     int dist = Spell(Spell::VISIONS).ExtraValue();
     int acount = HasArtifact(Artifact::CRYSTAL_BALL);
@@ -1284,8 +1284,8 @@ int Heroes::GetDirection() const
 /* return route range in days */
 int Heroes::GetRangeRouteDays(s32 dst) const
 {
-    const u32 max = GetMaxMovePoints();
-    const u32 limit = max * 5 / 100; // limit ~5 day
+    const uint32_t max = GetMaxMovePoints();
+    const uint32_t limit = max * 5 / 100; // limit ~5 day
 
     // approximate distance, this restriction calculation
     if ((4 * max / 100) < Maps::GetApproximateDistance(GetIndex(), dst))
@@ -1297,7 +1297,7 @@ int Heroes::GetRangeRouteDays(s32 dst) const
     // approximate limit, this restriction path finding algorithm
     if (test.Calculate(dst, limit))
     {
-        u32 total = test.GetTotalPenalty();
+        uint32_t total = test.GetTotalPenalty();
         if (move_point >= total) return 1;
 
         total -= move_point;
@@ -1383,7 +1383,7 @@ void Heroes::LevelUpSecondarySkill(int primary, bool autoselect)
 /* apply penalty */
 bool Heroes::ApplyPenaltyMovement()
 {
-    u32 penalty = path.isValid() ?
+    uint32_t penalty = path.isValid() ?
                   path.GetFrontPenalty() :
                   Maps::Ground::GetPenalty(GetIndex(), Direction::CENTER, GetLevelSkill(Skill::Secondary::PATHFINDING));
 
@@ -1605,7 +1605,7 @@ int Heroes::CanScouteTile(s32 dst) const
         {
             //const Maps::Tiles & tile = world.GetTiles(dst);
 
-            u32 dist = GetSecondaryValues(Skill::Secondary::SCOUTING) ? GetScoute() : 0;
+            uint32_t dist = GetSecondaryValues(Skill::Secondary::SCOUTING) ? GetScoute() : 0;
             if (Modes(VISIONS) && dist < GetVisionsDistance()) dist = GetVisionsDistance();
 
             if (dist > Maps::GetApproximateDistance(GetIndex(), dst))
@@ -1832,27 +1832,27 @@ void AllHeroes::Init()
     const bool loyalty = Settings::Get().PriceLoyaltyVersion();
 
     // knight: LORDKILBURN, SIRGALLANTH, ECTOR, GVENNETH, TYRO, AMBROSE, RUBY, MAXIMUS, DIMITRY
-    for (u32 hid = Heroes::LORDKILBURN; hid <= Heroes::DIMITRY; ++hid)
+    for (uint32_t hid = Heroes::LORDKILBURN; hid <= Heroes::DIMITRY; ++hid)
         push_back(new Heroes(hid, Race::KNGT));
 
     // barbarian: THUNDAX, FINEOUS, JOJOSH, CRAGHACK, JEZEBEL, JACLYN, ERGON, TSABU, ATLAS
-    for (u32 hid = Heroes::THUNDAX; hid <= Heroes::ATLAS; ++hid)
+    for (uint32_t hid = Heroes::THUNDAX; hid <= Heroes::ATLAS; ++hid)
         push_back(new Heroes(hid, Race::BARB));
 
     // sorceress: ASTRA, NATASHA, TROYAN, VATAWNA, REBECCA, GEM, ARIEL, CARLAWN, LUNA
-    for (u32 hid = Heroes::ASTRA; hid <= Heroes::LUNA; ++hid)
+    for (uint32_t hid = Heroes::ASTRA; hid <= Heroes::LUNA; ++hid)
         push_back(new Heroes(hid, Race::SORC));
 
     // warlock: ARIE, ALAMAR, VESPER, CRODO, BAROK, KASTORE, AGAR, FALAGAR, WRATHMONT
-    for (u32 hid = Heroes::ARIE; hid <= Heroes::WRATHMONT; ++hid)
+    for (uint32_t hid = Heroes::ARIE; hid <= Heroes::WRATHMONT; ++hid)
         push_back(new Heroes(hid, Race::WRLK));
 
     // wizard: MYRA, FLINT, DAWN, HALON, MYRINI, WILFREY, SARAKIN, KALINDRA, MANDIGAL
-    for (u32 hid = Heroes::MYRA; hid <= Heroes::MANDIGAL; ++hid)
+    for (uint32_t hid = Heroes::MYRA; hid <= Heroes::MANDIGAL; ++hid)
         push_back(new Heroes(hid, Race::WZRD));
 
     // necromancer: ZOM, DARLANA, ZAM, RANLOO, CHARITY, RIALDO, ROXANA, SANDRO, CELIA
-    for (u32 hid = Heroes::ZOM; hid <= Heroes::CELIA; ++hid)
+    for (uint32_t hid = Heroes::ZOM; hid <= Heroes::CELIA; ++hid)
         push_back(new Heroes(hid, Race::NECR));
 
     // from campain
@@ -2010,7 +2010,7 @@ bool AllHeroes::HaveTwoFreemans() const
 
 StreamBase &operator<<(StreamBase &msg, const VecHeroes &heroes)
 {
-    msg << static_cast<u32>(heroes.size());
+    msg << static_cast<uint32_t>(heroes.size());
 
     for (auto heroe : heroes)
         msg << (heroe ? heroe->GetID() : Heroes::UNKNOWN);
@@ -2020,14 +2020,14 @@ StreamBase &operator<<(StreamBase &msg, const VecHeroes &heroes)
 
 StreamBase &operator>>(StreamBase &msg, VecHeroes &heroes)
 {
-    u32 size;
+    uint32_t size;
     msg >> size;
 
     heroes.resize(size, nullptr);
 
     for (auto &heroe : heroes)
     {
-        u32 hid;
+        uint32_t hid;
         msg >> hid;
         heroe = (hid != Heroes::UNKNOWN ? world.GetHeroes(hid) : nullptr);
     }
@@ -2037,14 +2037,14 @@ StreamBase &operator>>(StreamBase &msg, VecHeroes &heroes)
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, VecHeroes &heroes)
 {
-    u32 size;
+    uint32_t size;
     msg >> size;
 
     heroes.resize(size, nullptr);
 
     for (auto &heroe : heroes)
     {
-        u32 hid;
+        uint32_t hid;
         msg >> hid;
         heroe = (hid != Heroes::UNKNOWN ? world.GetHeroes(hid) : nullptr);
     }
@@ -2147,7 +2147,7 @@ void Heroes::ReadFrom(ByteVectorReader &msg)
 
 StreamBase &operator<<(StreamBase &msg, const AllHeroes &heroes)
 {
-    msg << static_cast<u32>(heroes.size());
+    msg << static_cast<uint32_t>(heroes.size());
 
     for (auto heroe : heroes)
         msg << *heroe;
@@ -2157,7 +2157,7 @@ StreamBase &operator<<(StreamBase &msg, const AllHeroes &heroes)
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, AllHeroes &heroes)
 {
-    u32 size;
+    uint32_t size;
     msg >> size;
 
     heroes.clear();

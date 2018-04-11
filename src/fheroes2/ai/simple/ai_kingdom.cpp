@@ -180,8 +180,8 @@ void AI::KingdomTurn(Kingdom &kingdom)
     // buy hero in capital
     if (ai.capital && ai.capital->isCastle())
     {
-        u32 modes = 0;
-        const u32 maxhero = (s32) mapsize_t::XLARGE > world.w() ? ((s32) mapsize_t::LARGE > world.w() ? 3 : 2) : 4;
+        uint32_t modes = 0;
+        const uint32_t maxhero = (s32) mapsize_t::XLARGE > world.w() ? ((s32) mapsize_t::LARGE > world.w() ? 3 : 2) : 4;
 
         if (heroes.empty())
             modes = HEROES_HUNTER | HEROES_SCOUTER;

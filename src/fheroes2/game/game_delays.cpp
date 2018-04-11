@@ -56,7 +56,7 @@ struct TimeDelay : pair<SDL::Time, int>
     bool Trigger()
     {
         first.Stop();
-        if (first.Get() < static_cast<u32>(second)) return false;
+        if (first.Get() < static_cast<uint32_t>(second)) return false;
 
         first.Start();
         return true;

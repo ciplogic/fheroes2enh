@@ -105,7 +105,7 @@ class Player : public Control
 public:
     Player(int col = Color::NONE);
 
-    bool isID(u32) const;
+    bool isID(uint32_t) const;
 
     bool isColor(int) const;
 
@@ -155,7 +155,7 @@ protected:
     int race;
     int friends;
     string name;
-    u32 id;
+    uint32_t id;
     Focus focus;
 };
 

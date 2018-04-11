@@ -38,7 +38,7 @@
 
 namespace GameStatic
 {
-    extern u32 uniq;
+    extern uint32_t uniq;
 }
 
 MapObjects::~MapObjects()
@@ -50,7 +50,7 @@ void MapObjects::clear()
 {
     for (auto &it : *this)
         delete it.second;
-    unordered_map<u32, MapObjectSimple *>::clear();
+    unordered_map<uint32_t, MapObjectSimple *>::clear();
 }
 
 void MapObjects::add(MapObjectSimple *obj)
@@ -61,7 +61,7 @@ void MapObjects::add(MapObjectSimple *obj)
     map[obj->GetUID()] = obj;
 }
 
-MapObjectSimple *MapObjects::get(u32 uid)
+MapObjectSimple *MapObjects::get(uint32_t uid)
 {
     auto it = find(uid);
     return it != end() ? (*it).second : nullptr;
@@ -78,7 +78,7 @@ vector<MapObjectSimple *> MapObjects::get(const Point &pos)
 
 void MapObjects::remove(const Point &pos)
 {
-    vector<u32> uids;
+    vector<uint32_t> uids;
 
     for (auto &it : *this)
         if (it.second && it.second->isPosition(pos))
@@ -88,7 +88,7 @@ void MapObjects::remove(const Point &pos)
         remove(it);
 }
 
-void MapObjects::remove(u32 uid)
+void MapObjects::remove(uint32_t uid)
 {
     const auto it = find(uid);
     if (it != end()) delete (*it).second;
@@ -116,9 +116,9 @@ void CapturedObjects::Set(s32 index, int obj, int col)
     co.Set(obj, col);
 }
 
-u32 CapturedObjects::GetCount(int obj, int col) const
+uint32_t CapturedObjects::GetCount(int obj, int col) const
 {
-    u32 result = 0;
+    uint32_t result = 0;
 
     const ObjectColor objcol(obj, col);
 
@@ -129,9 +129,9 @@ u32 CapturedObjects::GetCount(int obj, int col) const
     return result;
 }
 
-u32 CapturedObjects::GetCountMines(int type, int col) const
+uint32_t CapturedObjects::GetCountMines(int type, int col) const
 {
-    u32 result = 0;
+    uint32_t result = 0;
 
     const ObjectColor objcol1(MP2::OBJ_MINES, col);
     const ObjectColor objcol2(MP2::OBJ_HEROES, col);
@@ -291,7 +291,7 @@ void World::Reset()
 }
 
 /* new maps */
-void World::NewMaps(u32 sw, u32 sh)
+void World::NewMaps(uint32_t sw, uint32_t sh)
 {
     Reset();
     Defaults();
@@ -346,12 +346,12 @@ s32 World::h() const
     return Size::h;
 }
 
-const Maps::Tiles &World::GetTiles(u32 ax, u32 ay) const
+const Maps::Tiles &World::GetTiles(uint32_t ax, uint32_t ay) const
 {
     return GetTiles(ay * w() + ax);
 }
 
-Maps::Tiles &World::GetTiles(u32 ax, u32 ay)
+Maps::Tiles &World::GetTiles(uint32_t ax, uint32_t ay)
 {
     return GetTiles(ay * w() + ax);
 }
@@ -439,12 +439,12 @@ int World::GetMonth() const
     return month;
 }
 
-u32 World::CountDay() const
+uint32_t World::CountDay() const
 {
     return day;
 }
 
-u32 World::CountWeek() const
+uint32_t World::CountWeek() const
 {
     return week;
 }
@@ -561,7 +561,7 @@ void World::MonthOfMonstersAction(const Monster &mons)
         tiles.reserve(vec_tiles.size() / 2);
         excld.reserve(vec_tiles.size() / 2);
 
-        const u32 dist = 2;
+        const uint32_t dist = 2;
         const u8 objs[] = {MP2::OBJ_MONSTER, MP2::OBJ_HEROES, MP2::OBJ_CASTLE, MP2::OBJN_CASTLE, 0};
 
         MapsIndexes obja;
@@ -592,8 +592,8 @@ void World::MonthOfMonstersAction(const Monster &mons)
             }
         }
 
-        const u32 area = 12;
-        const u32 maxc = (w() / area) * (h() / area);
+        const uint32_t area = 12;
+        const uint32_t maxc = (w() / area) * (h() / area);
         random_shuffle(tiles.begin(), tiles.end());
         if (tiles.size() > maxc) tiles.resize(maxc);
 
@@ -689,7 +689,7 @@ MapsIndexes World::GetWhirlpoolEndPoints(s32 center) const
         {
             for (auto it = uniq_whirlpools.begin(); it != uniq_whirlpools.end(); ++it)
             {
-                const u32 &uniq = (*it).first;
+                const uint32_t &uniq = (*it).first;
                 if (uniq == addon->uniq) continue;
                 uniqs.push_back(uniq);
             }
@@ -713,13 +713,13 @@ s32 World::NextWhirlpool(s32 index) const
 /* return message from sign */
 
 /* return count captured object */
-u32 World::CountCapturedObject(int obj, int col) const
+uint32_t World::CountCapturedObject(int obj, int col) const
 {
     return map_captureobj.GetCount(obj, col);
 }
 
 /* return count captured mines */
-u32 World::CountCapturedMines(int type, int color) const
+uint32_t World::CountCapturedMines(int type, int color) const
 {
     switch (type)
     {
@@ -797,7 +797,7 @@ bool World::DiggingForUltimateArtifact(const Point &center)
 
     // puts hole sprite
     int obj = 0;
-    u32 idx = 0;
+    uint32_t idx = 0;
 
     switch (tile.GetGround())
     {
@@ -863,9 +863,9 @@ bool IsObeliskOnMaps(const Maps::Tiles &tile)
     return MP2::OBJ_OBELISK == tile.GetObject(false);
 }
 
-u32 World::CountObeliskOnMaps()
+uint32_t World::CountObeliskOnMaps()
 {
-    u32 res = count_if(vec_tiles.begin(), vec_tiles.end(), IsObeliskOnMaps);
+    uint32_t res = count_if(vec_tiles.begin(), vec_tiles.end(), IsObeliskOnMaps);
     return res ? res : 6;
 }
 
@@ -893,7 +893,7 @@ MapEvent *World::GetMapEvent(const Point &pos)
     return !res.empty() ? static_cast<MapEvent *>(res.front()) : nullptr;
 }
 
-MapObjectSimple *World::GetMapObject(u32 uid)
+MapObjectSimple *World::GetMapObject(uint32_t uid)
 {
     return uid ? map_objects.get(uid) : nullptr;
 }
@@ -970,7 +970,7 @@ bool World::KingdomIsWins(const Kingdom &kingdom, int wins) const
             // check comp also wins
             return ((kingdom.isControlHuman() || conf.WinsCompAlsoWins()) &&
                     0 < kingdom.GetFunds().Get(Resource::GOLD) &&
-                    static_cast<u32>(kingdom.GetFunds().Get(Resource::GOLD)) >= conf.WinsAccumulateGold());
+                    static_cast<uint32_t>(kingdom.GetFunds().Get(Resource::GOLD)) >= conf.WinsAccumulateGold());
 
         default:
             break;
@@ -1018,7 +1018,7 @@ int World::CheckKingdomWins(const Kingdom &kingdom) const
     const int wins[] = {GameOver::WINS_ALL, GameOver::WINS_TOWN, GameOver::WINS_HERO, GameOver::WINS_ARTIFACT,
                         GameOver::WINS_SIDE, GameOver::WINS_GOLD, 0};
 
-    for (u32 ii = 0; wins[ii]; ++ii)
+    for (uint32_t ii = 0; wins[ii]; ++ii)
         if ((conf.ConditionWins() & wins[ii]) &&
             KingdomIsWins(kingdom, wins[ii]))
             return wins[ii];
@@ -1045,7 +1045,7 @@ int World::CheckKingdomLoss(const Kingdom &kingdom) const
 
     const int loss[] = {GameOver::LOSS_ALL, GameOver::LOSS_TOWN, GameOver::LOSS_HERO, GameOver::LOSS_TIME, 0};
 
-    for (u32 ii = 0; loss[ii]; ++ii)
+    for (uint32_t ii = 0; loss[ii]; ++ii)
         if ((conf.ConditionLoss() & loss[ii]) &&
             KingdomIsLoss(kingdom, loss[ii]))
             return loss[ii];
@@ -1059,7 +1059,7 @@ int World::CheckKingdomLoss(const Kingdom &kingdom) const
     return GameOver::COND_NONE;
 }
 
-u32 World::GetUniq()
+uint32_t World::GetUniq()
 {
     return ++GameStatic::uniq;
 }
@@ -1076,7 +1076,7 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, CapturedObject &obj)
 
 StreamBase &operator<<(StreamBase &msg, const MapObjects &objs)
 {
-    msg << static_cast<u32>(objs.size());
+    msg << static_cast<uint32_t>(objs.size());
     for (const auto &it : objs)
     {
         if (!it.second)
@@ -1120,12 +1120,12 @@ StreamBase &operator<<(StreamBase &msg, const MapObjects &objs)
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, MapObjects &objs)
 {
-    u32 size = 0;
+    uint32_t size = 0;
     msg >> size;
 
     objs.clear();
 
-    for (u32 ii = 0; ii < size; ++ii)
+    for (uint32_t ii = 0; ii < size; ++ii)
     {
         s32 index;
         int type;
@@ -1314,12 +1314,12 @@ void EventDate::LoadFromMP2(ByteVectorReader &st)
 
 }
 
-bool EventDate::isDeprecated(u32 date) const
+bool EventDate::isDeprecated(uint32_t date) const
 {
     return 0 == subsequent && first < date;
 }
 
-bool EventDate::isAllow(int col, u32 date) const
+bool EventDate::isAllow(int col, uint32_t date) const
 {
     return ((first == date ||
              (subsequent && (first < date && 0 == ((date - first) % subsequent)))) &&

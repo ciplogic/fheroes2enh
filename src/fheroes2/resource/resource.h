@@ -64,7 +64,7 @@ public:
 
     Funds(s32 _ore, s32 _wood, s32 _mercury, s32 _sulfur, s32 _crystal, s32 _gems, s32 _gold);
 
-    Funds(int rs, u32 count);
+    Funds(int rs, uint32_t count);
 
     Funds(const cost_t &);
 
@@ -72,13 +72,13 @@ public:
 
     Funds operator+(const Funds &) const;
 
-    Funds operator*(u32 mul) const;
+    Funds operator*(uint32_t mul) const;
 
     Funds operator-(const Funds &) const;
 
     Funds &operator+=(const Funds &);
 
-    Funds &operator*=(u32 mul);
+    Funds &operator*=(uint32_t mul);
 
     Funds &operator-=(const Funds &);
 
@@ -98,7 +98,7 @@ public:
 
     int GetValidItems() const;
 
-    u32 GetValidItemsCount() const;
+    uint32_t GetValidItemsCount() const;
 
     void Reset();
 
@@ -132,19 +132,19 @@ namespace Resource
     int Rand(bool with_gold = false);
 
     /* return index sprite objnrsrc.icn */
-    u32 GetIndexSprite(int resource);
+    uint32_t GetIndexSprite(int resource);
 
-    int FromIndexSprite(u32 index);
+    int FromIndexSprite(uint32_t index);
 
     /* return index sprite resource.icn */
-    u32 GetIndexSprite2(int resource);
+    uint32_t GetIndexSprite2(int resource);
 
-    int FromIndexSprite2(u32 index);
+    int FromIndexSprite2(uint32_t index);
 
     class BoxSprite : protected Rect
     {
     public:
-        BoxSprite(const Funds &, u32);
+        BoxSprite(const Funds &, uint32_t);
 
         const Rect &GetArea() const;
 

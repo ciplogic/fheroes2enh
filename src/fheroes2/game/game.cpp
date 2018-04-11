@@ -47,7 +47,7 @@
 
 namespace Game
 {
-    u32 GetMixerChannelFromObject(const Maps::Tiles &);
+    uint32_t GetMixerChannelFromObject(const Maps::Tiles &);
 
     void AnimateDelaysInitialize();
 
@@ -63,8 +63,8 @@ namespace Game
 
     bool disable_change_music = false;
     int current_music = MUS::UNKNOWN;
-    u32 castle_animation_frame = 0;
-    u32 maps_animation_frame = 0;
+    uint32_t castle_animation_frame = 0;
+    uint32_t maps_animation_frame = 0;
     string last_name;
     int save_version = CURRENT_FORMAT_VERSION;
     vector<int>
@@ -172,12 +172,12 @@ void Game::SetCurrentMusic(int mus)
     current_music = mus;
 }
 
-u32 &Game::MapsAnimationFrame()
+uint32_t &Game::MapsAnimationFrame()
 {
     return maps_animation_frame;
 }
 
-u32 &Game::CastleAnimationFrame()
+uint32_t &Game::CastleAnimationFrame()
 {
     return castle_animation_frame;
 }
@@ -198,7 +198,7 @@ void Game::EnvironmentSoundMixer()
         {
             if (!Maps::isValidAbsPoint(xx, yy))
                 continue;
-            const u32 channel = GetMixerChannelFromObject(world.GetTiles(xx, yy));
+            const uint32_t channel = GetMixerChannelFromObject(world.GetTiles(xx, yy));
             if (channel >= reserved_vols.size()) continue;
             // calculation volume
             const int length = max(abs(xx - abs_pt.x), abs(yy - abs_pt.y));
@@ -212,7 +212,7 @@ void Game::EnvironmentSoundMixer()
     AGG::LoadLOOPXXSounds(reserved_vols);
 }
 
-u32 Game::GetMixerChannelFromObject(const Maps::Tiles &tile)
+uint32_t Game::GetMixerChannelFromObject(const Maps::Tiles &tile)
 {
     // force: check stream
     if (tile.isStream()) return 13;
@@ -220,10 +220,10 @@ u32 Game::GetMixerChannelFromObject(const Maps::Tiles &tile)
     return M82::GetIndexLOOP00XXFromObject(tile.GetObject(false));
 }
 
-u32 Game::GetRating()
+uint32_t Game::GetRating()
 {
     Settings &conf = Settings::Get();
-    u32 rating = 50;
+    uint32_t rating = 50;
 
     switch (conf.MapsDifficulty())
     {
@@ -262,11 +262,11 @@ u32 Game::GetRating()
     return rating;
 }
 
-u32 Game::GetGameOverScores()
+uint32_t Game::GetGameOverScores()
 {
     Settings &conf = Settings::Get();
 
-    u32 k_size = 0;
+    uint32_t k_size = 0;
 
     switch ((mapsize_t) conf.MapsSize().w)
     {
@@ -286,11 +286,11 @@ u32 Game::GetGameOverScores()
             break;
     }
 
-    u32 flag = 0;
-    u32 nk = 0;
-    u32 end_days = world.CountDay();
+    uint32_t flag = 0;
+    uint32_t nk = 0;
+    uint32_t end_days = world.CountDay();
 
-    for (u32 ii = 1; ii <= end_days; ++ii)
+    for (uint32_t ii = 1; ii <= end_days; ++ii)
     {
         nk = ii * k_size / 100;
 
@@ -317,12 +317,12 @@ void Game::ShowLoadMapsText()
     display.Flip();
 }
 
-u32 Game::GetLostTownDays()
+uint32_t Game::GetLostTownDays()
 {
     return GameStatic::GetGameOverLostDays();
 }
 
-u32 Game::GetViewDistance(u32 d)
+uint32_t Game::GetViewDistance(uint32_t d)
 {
     return GameStatic::GetOverViewDistance(d);
 }
@@ -331,7 +331,7 @@ void Game::UpdateGlobalDefines(const string &spec)
 {
 }
 
-u32 Game::GetWhirlpoolPercent()
+uint32_t Game::GetWhirlpoolPercent()
 {
     return GameStatic::GetLostOnWhirlpoolPercent();
 }
@@ -425,7 +425,7 @@ int Game::GetActualKingdomColors()
 
 #include <cmath>
 
-string Game::CountScoute(u32 count, int scoute, bool shorts)
+string Game::CountScoute(uint32_t count, int scoute, bool shorts)
 {
     double infelicity = 0;
     string res;
@@ -450,16 +450,16 @@ string Game::CountScoute(u32 count, int scoute, bool shorts)
 
     if (res.empty())
     {
-        u32 min = Rand::Get(static_cast<u32>(floor(count - infelicity + 0.5)),
-                            static_cast<u32>(floor(count + infelicity + 0.5)));
-        u32 max = 0;
+        uint32_t min = Rand::Get(static_cast<uint32_t>(floor(count - infelicity + 0.5)),
+                            static_cast<uint32_t>(floor(count + infelicity + 0.5)));
+        uint32_t max = 0;
 
         if (min > count)
         {
             max = min;
-            min = static_cast<u32>(floor(count - infelicity + 0.5));
+            min = static_cast<uint32_t>(floor(count - infelicity + 0.5));
         } else
-            max = static_cast<u32>(floor(count + infelicity + 0.5));
+            max = static_cast<uint32_t>(floor(count + infelicity + 0.5));
 
         res = Int2Str(min);
 

@@ -17,7 +17,7 @@ void ByteVectorWriter::putLE16(u16 v)
     put8(v);
     put8(v >> 8);
 }
-void ByteVectorWriter::putLE32(u32 v)
+void ByteVectorWriter::putLE32(uint32_t v)
 {
     put8(v);
     put8(v >> 8);

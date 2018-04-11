@@ -77,18 +77,18 @@ int TextAscii::CharDescent(int f)
     return Font::SMALL == f || Font::YELLOW_SMALL == f ? 2 : 3;
 }
 
-int TextAscii::w(u32 s, u32 c) const
+int TextAscii::w(uint32_t s, uint32_t c) const
 {
 
-    u32 res = 0;
-    u32 size = message.size();
+    uint32_t res = 0;
+    uint32_t size = message.size();
 
     if (size)
     {
         if (s > size - 1) s = size - 1;
         if (!c || c > size) c = size - s;
 
-        for (u32 ii = s; ii < s + c; ++ii)
+        for (uint32_t ii = s; ii < s + c; ++ii)
             res += CharWidth(message[ii], font);
     }
 
@@ -265,17 +265,17 @@ int TextUnicode::CharDescent(int f)
     return 0;
 }
 
-int TextUnicode::w(u32 s, u32 c) const
+int TextUnicode::w(uint32_t s, uint32_t c) const
 {
-    u32 res = 0;
-    u32 size = message.size();
+    uint32_t res = 0;
+    uint32_t size = message.size();
 
     if (size)
     {
         if (s > size - 1) s = size - 1;
         if (!c || c > size) c = size - s;
 
-        for (u32 ii = s; ii < s + c; ++ii)
+        for (uint32_t ii = s; ii < s + c; ++ii)
             res += CharWidth(message[ii], font);
     }
 
@@ -450,7 +450,7 @@ void Text::Blit(s32 ax, s32 ay, int maxw, Surface &dst) const
     return message->Blit(ax, ay, maxw, dst);
 }
 
-u32 Text::width(const string &str, int ft, u32 start, u32 count)
+uint32_t Text::width(const string &str, int ft, uint32_t start, uint32_t count)
 {
     if (Settings::Get().Unicode())
     {
@@ -461,7 +461,7 @@ u32 Text::width(const string &str, int ft, u32 start, u32 count)
     return text.w(start, count);
 }
 
-u32 Text::height(const string &str, int ft, u32 width)
+uint32_t Text::height(const string &str, int ft, uint32_t width)
 {
     if (str.empty())
         return 0;
@@ -478,7 +478,7 @@ TextBox::TextBox() : align(ALIGN_CENTER)
 {
 }
 
-TextBox::TextBox(const string &msg, int ft, u32 width) : align(ALIGN_CENTER)
+TextBox::TextBox(const string &msg, int ft, uint32_t width) : align(ALIGN_CENTER)
 {
     Set(msg, ft, width);
 }
@@ -489,7 +489,7 @@ TextBox::TextBox(const string &msg, int ft, const Rect &rt) : align(ALIGN_CENTER
     Blit(rt.x, rt.y);
 }
 
-void TextBox::Set(const string &msg, int ft, u32 width)
+void TextBox::Set(const string &msg, int ft, uint32_t width)
 {
     messages.clear();
     if (msg.empty()) return;
@@ -540,10 +540,10 @@ void TextBox::SetAlign(int f)
     align = f;
 }
 
-void TextBox::Append(const string &msg, int ft, u32 width)
+void TextBox::Append(const string &msg, int ft, uint32_t width)
 {
     const Settings &conf = Settings::Get();
-    u32 www = 0;
+    uint32_t www = 0;
     Rect::w = width;
 
     string::const_iterator pos1 = msg.begin();
@@ -583,11 +583,11 @@ void TextBox::Append(const string &msg, int ft, u32 width)
     }
 }
 
-void TextBox::Append(const std::vector<u16> &msg, int ft, u32 width)
+void TextBox::Append(const std::vector<u16> &msg, int ft, uint32_t width)
 {
     const Settings &conf = Settings::Get();
 
-    u32 www = 0;
+    uint32_t www = 0;
     Rect::w = width;
 
     auto pos1 = msg.begin();
@@ -598,7 +598,7 @@ void TextBox::Append(const std::vector<u16> &msg, int ft, u32 width)
     while (pos2 < pos3)
     {
         if (TextUnicode::isspace(*pos2)) space = pos2;
-        u32 char_w = TextUnicode::CharWidth(*pos2, ft);
+        uint32_t char_w = TextUnicode::CharWidth(*pos2, ft);
 
         if (www + char_w >= width)
         {

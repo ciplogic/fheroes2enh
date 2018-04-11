@@ -288,7 +288,7 @@ std::pair<Rect, Point> Rect::Fixed4Blit(const Rect &srcrt, const Rect &dstrt)
     return res;
 }
 
-void SDLRect(s32 x, s32 y, u32 w, u32 h, SDL_Rect &writeTo)
+void SDLRect(s32 x, s32 y, uint32_t w, uint32_t h, SDL_Rect &writeTo)
 {
     SDL_Rect &res = writeTo;
 

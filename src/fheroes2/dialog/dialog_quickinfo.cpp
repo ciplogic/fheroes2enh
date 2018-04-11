@@ -280,7 +280,7 @@ string ShowGroundInfo(const Maps::Tiles &tile, bool show, const Heroes *hero)
     int dir = Direction::Get(hero->GetIndex(), tile.GetIndex());
     if (!(dir != Direction::UNKNOWN))
         return str;
-    u32 cost = Maps::Ground::GetPenalty(tile.GetIndex(), Direction::Reflect(dir),
+    uint32_t cost = Maps::Ground::GetPenalty(tile.GetIndex(), Direction::Reflect(dir),
                                         hero->GetLevelSkill(Skill::Secondary::PATHFINDING));
     if (cost)
     {
@@ -580,7 +580,7 @@ void Dialog::QuickInfo(const Castle &castle)
     dst_pt.y = cur_rt.y + 5;
     text.Blit(dst_pt);
 
-    u32 index = 0;
+    uint32_t index = 0;
 
     switch (castle.GetRace())
     {
@@ -656,7 +656,7 @@ void Dialog::QuickInfo(const Castle &castle)
     text.Blit(dst_pt);
 
     //
-    u32 count = castle.GetArmy().m_troops.GetCount();
+    uint32_t count = castle.GetArmy().m_troops.GetCount();
     const Settings &conf = Settings::Get();
 
     const Heroes *from_hero = Interface::GetFocusHeroes();
@@ -793,7 +793,7 @@ void Dialog::QuickInfo(const Heroes &hero)
     {
         const s32 luck = hero.GetLuckWithModificators(nullptr);
         const Sprite &sprite = AGG::GetICN(ICN::MINILKMR, (0 > luck ? 0 : (0 < luck ? 1 : 2)));
-        u32 count = (0 == luck ? 1 : abs(luck));
+        uint32_t count = (0 == luck ? 1 : abs(luck));
         dst_pt.x = cur_rt.x + 120;
         dst_pt.y = cur_rt.y + (count == 1 ? 20 : 13);
 
@@ -809,7 +809,7 @@ void Dialog::QuickInfo(const Heroes &hero)
     {
         const s32 morale = hero.GetMoraleWithModificators(nullptr);
         const Sprite &sprite = AGG::GetICN(ICN::MINILKMR, (0 > morale ? 3 : (0 < morale ? 4 : 5)));
-        u32 count = (0 == morale ? 1 : abs(morale));
+        uint32_t count = (0 == morale ? 1 : abs(morale));
         dst_pt.x = cur_rt.x + 10;
         dst_pt.y = cur_rt.y + (count == 1 ? 20 : 13);
 
@@ -821,7 +821,7 @@ void Dialog::QuickInfo(const Heroes &hero)
     }
 
     // color flags
-    u32 index = 0;
+    uint32_t index = 0;
 
     switch (hero.GetColor())
     {

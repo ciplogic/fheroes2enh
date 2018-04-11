@@ -55,7 +55,7 @@ namespace Battle
 
     int GetSwordCursorDirection(int);
 
-    int GetDirectionFromCursorSword(u32);
+    int GetDirectionFromCursorSword(uint32_t);
 
     int GetCursorFromSpell(int);
 
@@ -74,14 +74,14 @@ namespace Battle
         StatusListBox() : openlog(false)
         {}
 
-        void SetPosition(u32 px, u32 py)
+        void SetPosition(uint32_t px, uint32_t py)
         {
-            const u32 mx = 6;
-            const u32 sw = 640;
-            const u32 sh = mx * 20;
+            const uint32_t mx = 6;
+            const uint32_t sw = 640;
+            const uint32_t sh = mx * 20;
             border.SetPosition(px, py - sh - 2, sw - 30, sh - 30);
             const Rect &area = border.GetArea();
-            const u32 ax = area.x + area.w - 20;
+            const uint32_t ax = area.x + area.w - 20;
 
             SetTopLeft(area);
             SetAreaMaxItems(mx);
@@ -121,12 +121,12 @@ namespace Battle
             const Sprite &sp2 = AGG::GetICN(ICN::DROPLISL, 12);
             const Sprite &sp3 = AGG::GetICN(ICN::DROPLISL, 11);
             const Sprite &sp4 = AGG::GetICN(ICN::TEXTBAK2, 0);
-            const u32 ax = buttonPgUp.x;
-            const u32 ah = buttonPgDn.y - (buttonPgUp.y + buttonPgUp.h);
+            const uint32_t ax = buttonPgUp.x;
+            const uint32_t ah = buttonPgDn.y - (buttonPgUp.y + buttonPgUp.h);
 
             Dialog::FrameBorder::RenderOther(sp4, border.GetRect());
 
-            for (u32 ii = 0; ii < (ah / sp3.h()); ++ii)
+            for (uint32_t ii = 0; ii < (ah / sp3.h()); ++ii)
                 sp3.Blit(ax, buttonPgUp.y + buttonPgUp.h + (sp3.h() * ii));
 
             sp1.Blit(ax, buttonPgUp.y + buttonPgUp.h);
@@ -167,7 +167,7 @@ namespace Battle
     }
 }
 
-bool CursorAttack(u32 theme)
+bool CursorAttack(uint32_t theme)
 {
     switch (theme)
     {
@@ -348,7 +348,7 @@ int Battle::GetSwordCursorDirection(int dir)
     return 0;
 }
 
-int Battle::GetDirectionFromCursorSword(u32 sword)
+int Battle::GetDirectionFromCursorSword(uint32_t sword)
 {
     switch (sword)
     {
@@ -724,11 +724,11 @@ void Battle::ArmiesOrder::Redraw(const Unit *current)
 {
     if (orders)
     {
-        const u32 ow = ARMYORDERW + 2;
+        const uint32_t ow = ARMYORDERW + 2;
 
-        u32 ox = area.x + (area.w - ow * count_if(orders->begin(), orders->end(),
+        uint32_t ox = area.x + (area.w - ow * count_if(orders->begin(), orders->end(),
                                                   mem_fun(&Unit::isValid))) / 2;
-        u32 oy = area.y;
+        uint32_t oy = area.y;
 
         x = ox;
         y = oy;
@@ -764,8 +764,8 @@ Battle::Interface::Interface(Arena &a, s32 center) : arena(a), icn_cbkg(ICN::UNK
 
     // border
     Display &display = Display::Get();
-    const u32 arenaw = pda ? 320 : 640;
-    const u32 arenah = pda ? (display.h() < 240 ? display.h() : 240) : 480;
+    const uint32_t arenaw = pda ? 320 : 640;
+    const uint32_t arenah = pda ? (display.h() < 240 ? display.h() : 240) : 480;
     border.SetPosition((display.w() - arenaw) / 2 - BORDERWIDTH, (display.h() - arenah) / 2 - BORDERWIDTH, arenaw,
                        arenah);
 
@@ -1047,7 +1047,7 @@ void Battle::Interface::RedrawOpponentsFlags() const
         }
 
         const Sprite &flag = AGG::GetICN(icn, ICN::AnimationFrame(icn, 0, animation_flags_frame), true);
-        const u32 ox = opponent2->GetHero()->isHeroes() ? 38 : 26;
+        const uint32_t ox = opponent2->GetHero()->isHeroes() ? 38 : 26;
         flag.Blit(opponent2->GetArea().x + ox - flag.w(), opponent2->GetArea().y + 5);
     }
 }
@@ -1230,7 +1230,7 @@ void Battle::Interface::RedrawCoverStatic(Surface &dst)
     }
 
     // ground obstacles
-    for (u32 ii = 0; ii < ARENASIZE; ++ii)
+    for (uint32_t ii = 0; ii < ARENASIZE; ++ii)
     {
         RedrawLowObjects(ii, dst);
     }
@@ -1320,7 +1320,7 @@ void Battle::Interface::RedrawCastle2(const Castle &castle, s32 cell_index) cons
         // castle wall
     if (8 == cell_index || 29 == cell_index || 73 == cell_index || 96 == cell_index)
     {
-        u32 index = 0;
+        uint32_t index = 0;
         const bool fortification = (Race::KNGT == castle.GetRace()) && castle.isBuild(BUILD_SPEC);
 
         switch (cell_index)
@@ -1385,7 +1385,7 @@ void Battle::Interface::RedrawCastle2(const Castle &castle, s32 cell_index) cons
     if (19 == cell_index)
     {
         const Tower *ltower = Arena::GetTower(TWR_LEFT);
-        u32 index = 17;
+        uint32_t index = 17;
 
         if (castle.isBuild(BUILD_LEFTTURRET) && ltower)
             index = ltower->isValid() ? 18 : 19;
@@ -1394,7 +1394,7 @@ void Battle::Interface::RedrawCastle2(const Castle &castle, s32 cell_index) cons
     } else if (85 == cell_index)
     {
         const Tower *rtower = Arena::GetTower(TWR_RIGHT);
-        u32 index = 17;
+        uint32_t index = 17;
 
         if (castle.isBuild(BUILD_RIGHTTURRET) && rtower)
             index = rtower->isValid() ? 18 : 19;
@@ -2152,7 +2152,7 @@ void Battle::Interface::ButtonSkipAction(Actions &a)
     humanturn_exit = true;
 }
 
-int Battle::Interface::GetAllowSwordDirection(u32 index) const
+int Battle::Interface::GetAllowSwordDirection(uint32_t index) const
 {
     int res = 0;
 
@@ -2175,7 +2175,7 @@ int Battle::Interface::GetAllowSwordDirection(u32 index) const
     return res;
 }
 
-void Battle::Interface::MousePressRightBoardAction(u32 themes, const Cell &cell, Actions &a)
+void Battle::Interface::MousePressRightBoardAction(uint32_t themes, const Cell &cell, Actions &a)
 {
     const s32 index = cell.GetIndex();
     const Unit *b = cell.GetUnit();
@@ -2209,7 +2209,7 @@ void Battle::Interface::MousePressRightBoardAction(u32 themes, const Cell &cell,
     }
 }
 
-void Battle::Interface::MouseLeftClickBoardAction(u32 themes, const Cell &cell, Actions &a)
+void Battle::Interface::MouseLeftClickBoardAction(uint32_t themes, const Cell &cell, Actions &a)
 {
     const s32 index = cell.GetIndex();
     const Unit *b = cell.GetUnit();
@@ -2421,7 +2421,7 @@ void Battle::Interface::RedrawActionAttackPart1(Unit &attacker, Unit &defender, 
                                             ICN::GetMissIndex(attacker.ICNMiss(), bp1.x - bp2.x, bp1.y - bp2.y),
                                             bp1.x > bp2.x);
 
-        const u32 step = (missile.w() < 16 ? 16 : missile.w());
+        const uint32_t step = (missile.w() < 16 ? 16 : missile.w());
         const Point line_from = Point(pos1.x + (attacker.isReflect() ? 0 : pos1.w),
                                       pos1.y + attacker.GetStartMissileOffset(action1));
         const Point line_to = Point(pos2.x + (defender.isReflect() ? 0 : pos1.w), pos2.y);
@@ -2479,8 +2479,8 @@ void Battle::Interface::RedrawActionAttackPart2(Unit &attacker, TargetsInfo &tar
 
         if (1 < targets.size())
         {
-            u32 killed = 0;
-            u32 damage = 0;
+            uint32_t killed = 0;
+            uint32_t damage = 0;
 
             for (TargetsInfo::const_iterator
                          it = targets.begin(); it != targets.end(); ++it)
@@ -2693,7 +2693,7 @@ void Battle::Interface::RedrawActionFly(Unit &b, const Position &pos)
     Point pt2(pos2.x, pos2.y);
 
     cursor.SetThemes(Cursor::WAR_NONE);
-    const u32 step = b.isWide() ? 80 : 40;
+    const uint32_t step = b.isWide() ? 80 : 40;
 
     const Points points = GetLinePoints(pt1, pt2, step);
     Points::const_iterator pnt = points.begin();
@@ -2941,8 +2941,8 @@ void Battle::Interface::RedrawActionSpellCastPart2(const Spell &spell, TargetsIn
         // targets damage animation
         RedrawActionWincesKills(targets);
 
-        u32 killed = 0;
-        u32 damage = 0;
+        uint32_t killed = 0;
+        uint32_t damage = 0;
 
         for (TargetsInfo::const_iterator
                      it = targets.begin(); it != targets.end(); ++it)
@@ -3240,7 +3240,7 @@ void Battle::Interface::RedrawActionCatapult(int target)
     }
 
     // clod
-    u32 frame = 0;
+    uint32_t frame = 0;
     int icn = target == CAT_MISS ? ICN::SMALCLOD : ICN::LICHCLOD;
     AGG::PlaySound(M82::CATSND02);
 
@@ -3547,7 +3547,7 @@ void Battle::Interface::RedrawActionBloodLustSpell(Unit &target)
 
     b_current = &target;
     b_current_sprite = &sprite2;
-    u32 alpha = 10;
+    uint32_t alpha = 10;
 
     AGG::PlaySound(M82::BLOODLUS);
 
@@ -3583,7 +3583,7 @@ void Battle::Interface::RedrawActionColdRaySpell(Unit &target)
     LocalEvent &le = LocalEvent::Get();
 
     const int icn = ICN::COLDRAY;
-    u32 frame = 0;
+    uint32_t frame = 0;
 
     Point pt_from, pt_to;
     const HeroBase *current_commander = arena.GetCurrentCommander();
@@ -3604,9 +3604,9 @@ void Battle::Interface::RedrawActionColdRaySpell(Unit &target)
         pt_to = Point(pos2.x + pos2.w, pos2.y);
     }
 
-    const u32 dx = abs(pt_from.x - pt_to.x);
-    const u32 dy = abs(pt_from.y - pt_to.y);
-    const u32 step = (dx > dy ? dx / AGG::GetICNCount(icn) : dy / AGG::GetICNCount(icn));
+    const uint32_t dx = abs(pt_from.x - pt_to.x);
+    const uint32_t dy = abs(pt_from.y - pt_to.y);
+    const uint32_t step = (dx > dy ? dx / AGG::GetICNCount(icn) : dy / AGG::GetICNCount(icn));
 
 
     const Points points = GetLinePoints(pt_from, pt_to, step);
@@ -3677,7 +3677,7 @@ void Battle::Interface::RedrawActionDisruptingRaySpell(Unit &target)
                    sprite1.y());
 
     const int icn = ICN::DISRRAY;
-    u32 frame = 0;
+    uint32_t frame = 0;
     Point pt_from, pt_to;
     const HeroBase *current_commander = arena.GetCurrentCommander();
 
@@ -3697,9 +3697,9 @@ void Battle::Interface::RedrawActionDisruptingRaySpell(Unit &target)
         pt_to = Point(pos2.x + pos2.w, pos2.y);
     }
 
-    const u32 dx = abs(pt_from.x - pt_to.x);
-    const u32 dy = abs(pt_from.y - pt_to.y);
-    const u32 step = (dx > dy ? dx / AGG::GetICNCount(icn) : dy / AGG::GetICNCount(icn));
+    const uint32_t dx = abs(pt_from.x - pt_to.x);
+    const uint32_t dy = abs(pt_from.y - pt_to.y);
+    const uint32_t step = (dx > dy ? dx / AGG::GetICNCount(icn) : dy / AGG::GetICNCount(icn));
 
     const Points points = GetLinePoints(pt_from, pt_to, step);
     Points::const_iterator pnt = points.begin();
@@ -3757,7 +3757,7 @@ void Battle::Interface::RedrawActionColdRingSpell(s32 dst, const TargetsInfo &ta
 
     const int icn = ICN::COLDRING;
     const int m82 = M82::FromSpell(Spell::COLDRING);
-    u32 frame = 0;
+    uint32_t frame = 0;
     const Rect &center = Board::GetCell(dst)->GetPos();
 
     cursor.SetThemes(Cursor::WAR_NONE);
@@ -3813,8 +3813,8 @@ void Battle::Interface::RedrawActionElementalStormSpell(const TargetsInfo &targe
     const int m82 = M82::FromSpell(Spell::ELEMENTALSTORM);
     const Rect &area = border.GetArea();
 
-    u32 frame = 0;
-    u32 repeat = 4;
+    uint32_t frame = 0;
+    uint32_t repeat = 4;
     Point center;
 
     cursor.SetThemes(Cursor::WAR_NONE);
@@ -3891,7 +3891,7 @@ void Battle::Interface::RedrawActionArmageddonSpell(const TargetsInfo &targets)
 
     b_current = nullptr;
     AGG::PlaySound(M82::ARMGEDN);
-    u32 alpha = 10;
+    uint32_t alpha = 10;
 
     while (le.HandleEvents() && alpha < 180)
     {
@@ -3914,7 +3914,7 @@ void Battle::Interface::RedrawActionArmageddonSpell(const TargetsInfo &targets)
     cursor.Hide();
 
     alpha = 0;
-    const u32 offset = 10;
+    const uint32_t offset = 10;
     bool restore = false;
 
     while (le.HandleEvents() && alpha < 20)
@@ -3969,7 +3969,7 @@ void Battle::Interface::RedrawActionEarthQuakeSpell(const vector<int> &targets)
     LocalEvent &le = LocalEvent::Get();
     Rect area = border.GetArea();
 
-    u32 frame = 0;
+    uint32_t frame = 0;
     area.h -= 38;
 
     cursor.SetThemes(Cursor::WAR_NONE);
@@ -3980,7 +3980,7 @@ void Battle::Interface::RedrawActionEarthQuakeSpell(const vector<int> &targets)
     b_current = nullptr;
     AGG::PlaySound(M82::ERTHQUAK);
 
-    const u32 offset = 10;
+    const uint32_t offset = 10;
     bool restore = false;
 
     // draw earth quake
@@ -4069,7 +4069,7 @@ void Battle::Interface::RedrawTargetsWithFrameAnimation(s32 dst, const TargetsIn
     Cursor &cursor = Cursor::Get();
     LocalEvent &le = LocalEvent::Get();
 
-    u32 frame = 0;
+    uint32_t frame = 0;
     const Rect &center = Board::GetCell(dst)->GetPos();
 
     cursor.SetThemes(Cursor::WAR_NONE);
@@ -4141,7 +4141,7 @@ void Battle::Interface::RedrawTargetsWithFrameAnimation(const TargetsInfo &targe
     Cursor &cursor = Cursor::Get();
     LocalEvent &le = LocalEvent::Get();
 
-    u32 frame = 0;
+    uint32_t frame = 0;
 
     cursor.SetThemes(Cursor::WAR_NONE);
 
@@ -4215,7 +4215,7 @@ void Battle::Interface::RedrawTroopWithFrameAnimation(Unit &b, int icn, int m82,
     const Rect &pos = b.GetRectPosition();
     const Rect &rectArea = border.GetArea();
 
-    u32 frame = 0;
+    uint32_t frame = 0;
     bool reflect = false;
 
     switch (icn)
@@ -4276,7 +4276,7 @@ void Battle::Interface::RedrawBridgeAnimation(bool down)
     LocalEvent &le = LocalEvent::Get();
     const Point &topleft = border.GetArea();
 
-    u32 frame = down ? 23 : 21;
+    uint32_t frame = down ? 23 : 21;
 
     if (down) AGG::PlaySound(M82::DRAWBRG);
 
@@ -4500,8 +4500,8 @@ void Battle::PopupDamageInfo::Redraw(int maxw, int maxh)
 
     Text text1, text2;
 
-    u32 tmp1 = attacker->GetDamageMin(*defender);
-    u32 tmp2 = attacker->GetDamageMax(*defender);
+    uint32_t tmp1 = attacker->GetDamageMin(*defender);
+    uint32_t tmp2 = attacker->GetDamageMax(*defender);
 
     string str = tmp1 == tmp2 ? _("Damage: %{max}") : _("Damage: %{min} - %{max}");
 

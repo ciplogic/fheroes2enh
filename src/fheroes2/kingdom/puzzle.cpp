@@ -39,7 +39,7 @@ const u8 zone4_index[] = {20, 21, 26, 27};
 
 bool ClosedTilesExists(const Puzzle &, const u8 *, const u8 *);
 
-void ZoneOpenFirstTiles(Puzzle &, u32 &, const u8 *, const u8 *);
+void ZoneOpenFirstTiles(Puzzle &, uint32_t &, const u8 *, const u8 *);
 
 void ShowStandardDialog(const Puzzle &, const Surface &);
 
@@ -72,10 +72,10 @@ Puzzle &Puzzle::operator=(const char *str)
     return *this;
 }
 
-void Puzzle::Update(u32 open_obelisk, u32 total_obelisk)
+void Puzzle::Update(uint32_t open_obelisk, uint32_t total_obelisk)
 {
-    u32 open_puzzle = open_obelisk * PUZZLETILES / total_obelisk;
-    u32 need_puzzle = open_puzzle > count() ? open_puzzle - count() : 0;
+    uint32_t open_puzzle = open_obelisk * PUZZLETILES / total_obelisk;
+    uint32_t need_puzzle = open_puzzle > count() ? open_puzzle - count() : 0;
 
     if (need_puzzle && ClosedTilesExists(*this, zone1_order, ARRAY_COUNT_END(zone1_order)))
         ZoneOpenFirstTiles(*this, need_puzzle, zone1_order, ARRAY_COUNT_END(zone1_order));
@@ -121,7 +121,7 @@ bool ClosedTilesExists(const Puzzle &pzl, const u8 *it1, const u8 *it2)
     return false;
 }
 
-void ZoneOpenFirstTiles(Puzzle &pzl, u32 &opens, const u8 *it1, const u8 *it2)
+void ZoneOpenFirstTiles(Puzzle &pzl, uint32_t &opens, const u8 *it1, const u8 *it2)
 {
     while (opens)
     {
@@ -275,16 +275,16 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, Puzzle &pzl)
     u8 size;
 
     msg >> size;
-    for (u32 ii = 0; ii < size; ++ii) msg >> pzl.zone1_order[ii];
+    for (uint32_t ii = 0; ii < size; ++ii) msg >> pzl.zone1_order[ii];
 
     msg >> size;
-    for (u32 ii = 0; ii < size; ++ii) msg >> pzl.zone2_order[ii];
+    for (uint32_t ii = 0; ii < size; ++ii) msg >> pzl.zone2_order[ii];
 
     msg >> size;
-    for (u32 ii = 0; ii < size; ++ii) msg >> pzl.zone3_order[ii];
+    for (uint32_t ii = 0; ii < size; ++ii) msg >> pzl.zone3_order[ii];
 
     msg >> size;
-    for (u32 ii = 0; ii < size; ++ii) msg >> pzl.zone4_order[ii];
+    for (uint32_t ii = 0; ii < size; ++ii) msg >> pzl.zone4_order[ii];
 
     return msg;
 }
@@ -299,16 +299,16 @@ StreamBase &operator>>(StreamBase &msg, Puzzle &pzl)
     u8 size;
 
     msg >> size;
-    for (u32 ii = 0; ii < size; ++ii) msg >> pzl.zone1_order[ii];
+    for (uint32_t ii = 0; ii < size; ++ii) msg >> pzl.zone1_order[ii];
 
     msg >> size;
-    for (u32 ii = 0; ii < size; ++ii) msg >> pzl.zone2_order[ii];
+    for (uint32_t ii = 0; ii < size; ++ii) msg >> pzl.zone2_order[ii];
 
     msg >> size;
-    for (u32 ii = 0; ii < size; ++ii) msg >> pzl.zone3_order[ii];
+    for (uint32_t ii = 0; ii < size; ++ii) msg >> pzl.zone3_order[ii];
 
     msg >> size;
-    for (u32 ii = 0; ii < size; ++ii) msg >> pzl.zone4_order[ii];
+    for (uint32_t ii = 0; ii < size; ++ii) msg >> pzl.zone4_order[ii];
 
     return msg;
 }

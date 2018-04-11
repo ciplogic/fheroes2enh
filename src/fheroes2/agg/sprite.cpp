@@ -103,7 +103,7 @@ Sprite Sprite::ScaleQVGASprite(const Sprite &sp)
     return res;
 }
 
-void Sprite::ChangeColorIndex(u32 fc, u32 tc)
+void Sprite::ChangeColorIndex(uint32_t fc, uint32_t tc)
 {
     SetSurface(RenderChangeColor(AGG::GetPaletteColor(fc), AGG::GetPaletteColor(tc)));
 }

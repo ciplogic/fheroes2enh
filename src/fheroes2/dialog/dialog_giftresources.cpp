@@ -54,7 +54,7 @@ struct SelectRecipientsColors
         for (auto
                      it = colors.begin(); it != colors.end(); ++it)
         {
-            const u32 current = distance(colors.begin(), it);
+            const uint32_t current = distance(colors.begin(), it);
             const Sprite &sprite = AGG::GetICN(ICN::CELLWIN, 43);
 
             positions.push_back(Rect(pos.x + Game::GetStep4Player(current, sprite.w() + 15, colors.size()),
@@ -147,18 +147,18 @@ struct ResourceBar
         return GetIndexClickRects(positions);
     }
 
-    bool QueueEventProcessing(Funds &funds, u32 mul)
+    bool QueueEventProcessing(Funds &funds, uint32_t mul)
     {
         const s32 index = GetIndexClick();
 
         if (index >= 0)
         {
             int rs = Resource::FromIndexSprite2(index);
-            u32 step = rs == Resource::GOLD ? 100 : 1;
+            uint32_t step = rs == Resource::GOLD ? 100 : 1;
 
-            u32 cur = resource.Get(rs);
-            u32 sel = cur;
-            u32 max = mul > 1 ? (funds.Get(rs) + resource.Get(rs)) / mul : funds.Get(rs) + resource.Get(rs);
+            uint32_t cur = resource.Get(rs);
+            uint32_t sel = cur;
+            uint32_t max = mul > 1 ? (funds.Get(rs) + resource.Get(rs)) / mul : funds.Get(rs) + resource.Get(rs);
 
             if (0 == mul)
             {
@@ -241,7 +241,7 @@ void Dialog::MakeGiftResource()
     cursor.Show();
     display.Flip();
 
-    u32 count = Color::Count(selector.recipients);
+    uint32_t count = Color::Count(selector.recipients);
 
     // message loop
     int result = ZERO;
@@ -249,7 +249,7 @@ void Dialog::MakeGiftResource()
     {
         if (selector.QueueEventProcessing())
         {
-            u32 new_count = Color::Count(selector.recipients);
+            uint32_t new_count = Color::Count(selector.recipients);
             cursor.Hide();
             btnGroups.DisableButton1(0 == new_count || 0 == funds2.GetValidItemsCount());
             if (count != new_count)

@@ -34,11 +34,11 @@
 void CastleRedrawTownName(const Castle &, const Point &);
 
 void
-CastleRedrawCurrentBuilding(const Castle &, const Point &, const CastleDialog::CacheBuildings &, u32 build, u32 flash);
+CastleRedrawCurrentBuilding(const Castle &, const Point &, const CastleDialog::CacheBuildings &, uint32_t build, uint32_t flash);
 
-void CastleRedrawBuilding(const Castle &, const Point &, u32 build, u32 frame, int alpha);
+void CastleRedrawBuilding(const Castle &, const Point &, uint32_t build, uint32_t frame, int alpha);
 
-void CastleRedrawBuildingExtended(const Castle &, const Point &, u32 build, u32 frame);
+void CastleRedrawBuildingExtended(const Castle &, const Point &, uint32_t build, uint32_t frame);
 
 Rect CastleGetCoordBuilding(int, building_t, const Point &);
 
@@ -74,13 +74,13 @@ const Rect &CastleDialog::CacheBuildings::GetRect(building_t b) const
 }
 
 void CastleDialog::RedrawAnimationBuilding(const Castle &castle, const Point &dst_pt, const CacheBuildings &orders,
-                                           u32 build)
+                                           uint32_t build)
 {
     Cursor::Get().Hide();
     CastleRedrawCurrentBuilding(castle, dst_pt, orders, build, BUILD_NOTHING);
 }
 
-void CastleDialog::RedrawAllBuilding(const Castle &castle, const Point &dst_pt, const CacheBuildings &orders, u32 flash)
+void CastleDialog::RedrawAllBuilding(const Castle &castle, const Point &dst_pt, const CacheBuildings &orders, uint32_t flash)
 {
     CastleRedrawCurrentBuilding(castle, dst_pt, orders, BUILD_NOTHING, flash);
     CastleRedrawTownName(castle, dst_pt);
@@ -99,9 +99,9 @@ void CastleRedrawTownName(const Castle &castle, const Point &dst)
 }
 
 void CastleRedrawCurrentBuilding(const Castle &castle, const Point &dst_pt,
-                                 const CastleDialog::CacheBuildings &orders, u32 build, u32 flash)
+                                 const CastleDialog::CacheBuildings &orders, uint32_t build, uint32_t flash)
 {
-    u32 &frame = Game::CastleAnimationFrame();
+    uint32_t &frame = Game::CastleAnimationFrame();
 
     Display &display = Display::Get();
     Cursor &cursor = Cursor::Get();
@@ -219,7 +219,7 @@ void CastleRedrawCurrentBuilding(const Castle &castle, const Point &dst_pt,
 
                 for (const auto &order : orders)
                 {
-                    const u32 &build2 = order.id;
+                    const uint32_t &build2 = order.id;
 
                     if (castle.isBuild(build2))
                     {
@@ -247,7 +247,7 @@ void CastleRedrawCurrentBuilding(const Castle &castle, const Point &dst_pt,
     ++frame;
 }
 
-void CastleRedrawBuilding(const Castle &castle, const Point &dst_pt, u32 build, u32 frame, int alpha)
+void CastleRedrawBuilding(const Castle &castle, const Point &dst_pt, uint32_t build, uint32_t frame, int alpha)
 {
     const Rect max = CastleGetMaxArea(castle, dst_pt);
 
@@ -267,7 +267,7 @@ void CastleRedrawBuilding(const Castle &castle, const Point &dst_pt, u32 build, 
     }
 
     const int icn = Castle::GetICNBuilding(build, castle.GetRace());
-    u32 index = 0;
+    uint32_t index = 0;
 
     // correct index (mage guild)
     switch (build)
@@ -305,7 +305,7 @@ void CastleRedrawBuilding(const Castle &castle, const Point &dst_pt, u32 build, 
             CastleDialog::RedrawBuildingSpriteToArea(sprite1, dst_pt.x + sprite1.x(), dst_pt.y + sprite1.y(), max);
 
         // second anime sprite
-        if (const u32 index2 = ICN::AnimationFrame(icn, index, frame))
+        if (const uint32_t index2 = ICN::AnimationFrame(icn, index, frame))
         {
             Sprite sprite2 = AGG::GetICN(icn, index2);
 
@@ -320,7 +320,7 @@ void CastleRedrawBuilding(const Castle &castle, const Point &dst_pt, u32 build, 
     }
 }
 
-void CastleRedrawBuildingExtended(const Castle &castle, const Point &dst_pt, u32 build, u32 frame)
+void CastleRedrawBuildingExtended(const Castle &castle, const Point &dst_pt, uint32_t build, uint32_t frame)
 {
     const Rect max = CastleGetMaxArea(castle, dst_pt);
     int icn = Castle::GetICNBuilding(build, castle.GetRace());
@@ -336,7 +336,7 @@ void CastleRedrawBuildingExtended(const Castle &castle, const Point &dst_pt, u32
             const Sprite &sprite40 = AGG::GetICN(icn2, 0);
             CastleDialog::RedrawBuildingSpriteToArea(sprite40, dst_pt.x + sprite40.x(), dst_pt.y + sprite40.y(), max);
 
-            if (const u32 index2 = ICN::AnimationFrame(icn2, 0, frame))
+            if (const uint32_t index2 = ICN::AnimationFrame(icn2, 0, frame))
             {
                 const Sprite &sprite41 = AGG::GetICN(icn2, index2);
                 CastleDialog::RedrawBuildingSpriteToArea(sprite41, dst_pt.x + sprite41.x(), dst_pt.y + sprite41.y(),
@@ -344,7 +344,7 @@ void CastleRedrawBuildingExtended(const Castle &castle, const Point &dst_pt, u32
             }
         } else
         {
-            if (const u32 index2 = ICN::AnimationFrame(icn, 0, frame))
+            if (const uint32_t index2 = ICN::AnimationFrame(icn, 0, frame))
             {
                 const Sprite &sprite3 = AGG::GetICN(icn, index2);
                 CastleDialog::RedrawBuildingSpriteToArea(sprite3, dst_pt.x + sprite3.x(), dst_pt.y + sprite3.y(), max);
@@ -359,7 +359,7 @@ void CastleRedrawBuildingExtended(const Castle &castle, const Point &dst_pt, u32
         const Sprite &sprite20 = AGG::GetICN(icn2, 0);
         CastleDialog::RedrawBuildingSpriteToArea(sprite20, dst_pt.x + sprite20.x(), dst_pt.y + sprite20.y(), max);
 
-        if (const u32 index2 = ICN::AnimationFrame(icn2, 0, frame))
+        if (const uint32_t index2 = ICN::AnimationFrame(icn2, 0, frame))
         {
             const Sprite &sprite21 = AGG::GetICN(icn2, index2);
             CastleDialog::RedrawBuildingSpriteToArea(sprite21, dst_pt.x + sprite21.x(), dst_pt.y + sprite21.y(), max);

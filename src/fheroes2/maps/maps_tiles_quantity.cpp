@@ -209,13 +209,13 @@ void Maps::Tiles::QuantitySetArtifact(int art)
     quantity1 = art;
 }
 
-void Maps::Tiles::QuantitySetResource(int res, u32 count)
+void Maps::Tiles::QuantitySetResource(int res, uint32_t count)
 {
     quantity1 = res;
     quantity2 = res == Resource::GOLD ? count / 100 : count;
 }
 
-u32 Maps::Tiles::QuantityGold() const
+uint32_t Maps::Tiles::QuantityGold() const
 {
     switch (GetObject(false))
     {
@@ -599,7 +599,7 @@ void Maps::Tiles::QuantityUpdate()
             if (addon)
             {
                 int res = Resource::FromIndexSprite(addon->index);
-                u32 count = 0;
+                uint32_t count = 0;
 
                 switch (res)
                 {
@@ -718,7 +718,7 @@ void Maps::Tiles::QuantityUpdate()
             percents.Push(2, 10);
 
             int art = Artifact::UNKNOWN;
-            u32 gold = 0;
+            uint32_t gold = 0;
 
             // variant
             switch (percents.Get())
@@ -759,7 +759,7 @@ void Maps::Tiles::QuantityUpdate()
                 percents.Push(4, 5);
 
                 int art = Artifact::UNKNOWN;
-                u32 gold = 0;
+                uint32_t gold = 0;
 
                 // variant
                 switch (percents.Get())
@@ -1070,18 +1070,18 @@ bool Maps::Tiles::MonsterJoinConditionForce() const
     return Monster::JOIN_CONDITION_FORCE == MonsterJoinCondition();
 }
 
-u32 Maps::Tiles::MonsterCount() const
+uint32_t Maps::Tiles::MonsterCount() const
 {
-    return (static_cast<u32>(quantity1) << 8) | quantity2;
+    return (static_cast<uint32_t>(quantity1) << 8) | quantity2;
 }
 
-void Maps::Tiles::MonsterSetCount(u32 count)
+void Maps::Tiles::MonsterSetCount(uint32_t count)
 {
     quantity1 = count >> 8;
     quantity2 = 0x00FF & count;
 }
 
-void Maps::Tiles::PlaceMonsterOnTile(Tiles &tile, const Monster &mons, u32 count)
+void Maps::Tiles::PlaceMonsterOnTile(Tiles &tile, const Monster &mons, uint32_t count)
 {
     tile.SetObject(MP2::OBJ_MONSTER);
     // monster type
@@ -1195,7 +1195,7 @@ void Maps::Tiles::UpdateMonsterInfo(Tiles &tile)
             addon->index = mons() - 1; // ICN::MONS32 start from PEASANT
     }
 
-    u32 count = 0;
+    uint32_t count = 0;
 
     // update count (mp2 format)
     if (tile.quantity1 || tile.quantity2)
@@ -1211,7 +1211,7 @@ void Maps::Tiles::UpdateMonsterInfo(Tiles &tile)
 
 void Maps::Tiles::UpdateDwellingPopulation(Tiles &tile)
 {
-    u32 count = 0;
+    uint32_t count = 0;
     const int obj = tile.GetObject(false);
     const Troop &troop = tile.QuantityTroop();
 

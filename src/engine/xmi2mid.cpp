@@ -45,13 +45,13 @@
 
 using namespace std;
 
-struct pack_t : public pair<u32, u32> /* delta offset */
+struct pack_t : public pair<uint32_t, uint32_t> /* delta offset */
 {
-    pack_t() : pair<u32, u32>(0, 0)
+    pack_t() : pair<uint32_t, uint32_t>(0, 0)
     {}
 };
 
-vector<u8> packValue(u32 delta)
+vector<u8> packValue(uint32_t delta)
 {
     u8 c1 = delta & 0x0000007F;
     u8 c2 = (delta & 0x00003F80) >> 7;
@@ -111,26 +111,26 @@ struct meta_t
     meta_t() : command(0), quantity(0), duration(0)
     {}
 
-    meta_t(u8 c, u8 q, u32 d) : command(c), quantity(q), duration(d)
+    meta_t(u8 c, u8 q, uint32_t d) : command(c), quantity(q), duration(d)
     {}
 
     bool operator<(const meta_t &m) const
     { return duration < m.duration; }
 
-    void decrease_duration(u32 delta)
+    void decrease_duration(uint32_t delta)
     { duration -= delta; }
 
     u8 command;
     u8 quantity;
-    u32 duration;
+    uint32_t duration;
 };
 
 struct IFFChunkHeader
 {
-    u32 ID;      // 4 upper case ASCII chars, padded with 0x20 (space)
-    u32 length;  // big-endian
+    uint32_t ID;      // 4 upper case ASCII chars, padded with 0x20 (space)
+    uint32_t length;  // big-endian
 
-    IFFChunkHeader(u32 id, u32 sz) : ID(id), length(sz)
+    IFFChunkHeader(uint32_t id, uint32_t sz) : ID(id), length(sz)
     {}
 
     IFFChunkHeader() : ID(0), length(0)
@@ -156,11 +156,11 @@ StreamBuf &operator<<(StreamBuf &sb, const IFFChunkHeader &st)
 
 struct GroupChunkHeader
 {
-    u32 ID;        // 4 byte ASCII string, either 'FORM', 'CAT ' or 'LIST'
-    u32 length;
-    u32 type;      // 4 byte ASCII string
+    uint32_t ID;        // 4 byte ASCII string, either 'FORM', 'CAT ' or 'LIST'
+    uint32_t length;
+    uint32_t type;      // 4 byte ASCII string
 
-    GroupChunkHeader(u32 id, u32 sz, u32 tp) : ID(id), length(sz), type(tp)
+    GroupChunkHeader(uint32_t id, uint32_t sz, uint32_t tp) : ID(id), length(sz), type(tp)
     {}
 
     GroupChunkHeader() : ID(0), length(0), type(0)
@@ -304,7 +304,7 @@ struct MidEvent
     MidEvent()
     {}
 
-    MidEvent(u32 delta, u8 st, u8 d1, u8 d2)
+    MidEvent(uint32_t delta, u8 st, u8 d1, u8 d2)
     {
         data[0] = st;
         data[1] = d1;
@@ -313,7 +313,7 @@ struct MidEvent
         pack = packValue(delta);
     }
 
-    MidEvent(u32 delta, u8 st, u8 d1)
+    MidEvent(uint32_t delta, u8 st, u8 d1)
     {
         data[0] = st;
         data[1] = d1;
@@ -358,7 +358,7 @@ struct MidEvents : public vector<MidEvent>
         const u8 *ptr = &t.evnt[0];
         const u8 *end = ptr + t.evnt.size();
 
-        u32 delta = 0;
+        uint32_t delta = 0;
         list<meta_t> notesoff;
 
         while (ptr && ptr < end)
@@ -371,7 +371,7 @@ struct MidEvents : public vector<MidEvent>
 
                 auto it1 = notesoff.begin();
                 auto it2 = notesoff.end();
-                u32 delta2 = 0;
+                uint32_t delta2 = 0;
 
                 // apply delta
                 for (; it1 != it2; ++it1)

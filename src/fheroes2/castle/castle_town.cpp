@@ -48,7 +48,7 @@ int Castle::DialogBuyHero(const Heroes *hero)
 
     Text text(_("Recruit Hero"), Font::BIG);
 
-    u32 count = hero->GetCountArtifacts();
+    uint32_t count = hero->GetCountArtifacts();
     if (hero->HasArtifact(Artifact::MAGIC_BOOK)) count--;
 
     string str = _("%{name} is a level %{value} %{race}");
@@ -139,7 +139,7 @@ int Castle::DialogBuyCastle(bool buttons) const
     return info.DialogBuyBuilding(buttons) ? Dialog::OK : Dialog::CANCEL;
 }
 
-u32 Castle::OpenTown()
+uint32_t Castle::OpenTown()
 {
     Display &display = Display::Get();
     Cursor &cursor = Cursor::Get();

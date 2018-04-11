@@ -61,17 +61,17 @@ bool Battle::Tower::isValid() const
     return valid;
 }
 
-u32 Battle::Tower::GetType() const
+uint32_t Battle::Tower::GetType() const
 {
     return type;
 }
 
-u32 Battle::Tower::GetBonus() const
+uint32_t Battle::Tower::GetBonus() const
 {
     return bonus;
 }
 
-u32 Battle::Tower::GetAttack() const
+uint32_t Battle::Tower::GetAttack() const
 {
     return Unit::GetAttack() + bonus;
 }

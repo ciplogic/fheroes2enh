@@ -128,7 +128,7 @@ void Castle::LoadFromMP2(ByteVectorReader &st)
 
         // default building
         building |= DWELLING_MONSTER1;
-        u32 dwelling2 = 0;
+        uint32_t dwelling2 = 0;
         switch (Settings::Get().GameDifficulty())
         {
             case Difficulty::EASY:
@@ -176,7 +176,7 @@ void Castle::LoadFromMP2(ByteVectorReader &st)
     name = Game::GetEncodeString(st.toString(13));
 
     // race
-    u32 kingdom_race = Players::GetPlayerRace(GetColor());
+    uint32_t kingdom_race = Players::GetPlayerRace(GetColor());
     switch (st.get())
     {
         case 0:
@@ -307,9 +307,9 @@ bool Castle::isCapital() const
     return Modes(CAPITAL);
 }
 
-u32 Castle::CountBuildings() const
+uint32_t Castle::CountBuildings() const
 {
-    const u32 tavern = (race == Race::NECR ? (Settings::Get().PriceLoyaltyVersion() ? BUILD_SHRINE : 0) : BUILD_TAVERN);
+    const uint32_t tavern = (race == Race::NECR ? (Settings::Get().PriceLoyaltyVersion() ? BUILD_SHRINE : 0) : BUILD_TAVERN);
 
     return CountBits(building & (BUILD_THIEVESGUILD | tavern | BUILD_SHIPYARD | BUILD_WELL |
                                  BUILD_STATUE | BUILD_LEFTTURRET | BUILD_RIGHTTURRET |
@@ -360,7 +360,7 @@ void Castle::ActionNewDay()
     SetModes(ALLOWBUILD);
 }
 
-u32 *Castle::GetDwelling(u32 dw)
+uint32_t *Castle::GetDwelling(uint32_t dw)
 {
     if (isBuild(dw))
         switch (dw)
@@ -396,15 +396,15 @@ void Castle::ActionNewWeek()
     // increase population
     if (world.GetWeekType().GetType() != Week::PLAGUE)
     {
-        const u32 dwellings1[] = {DWELLING_MONSTER1, DWELLING_MONSTER2, DWELLING_MONSTER3, DWELLING_MONSTER4,
+        const uint32_t dwellings1[] = {DWELLING_MONSTER1, DWELLING_MONSTER2, DWELLING_MONSTER3, DWELLING_MONSTER4,
                                   DWELLING_MONSTER5, DWELLING_MONSTER6, 0};
-        u32 *dw = nullptr;
+        uint32_t *dw = nullptr;
 
         // simple growth
-        for (u32 ii = 0; dwellings1[ii]; ++ii)
+        for (uint32_t ii = 0; dwellings1[ii]; ++ii)
             if (nullptr != (dw = GetDwelling(dwellings1[ii])))
             {
-                u32 growth = Monster(race, GetActualDwelling(dwellings1[ii])).GetGrown();
+                uint32_t growth = Monster(race, GetActualDwelling(dwellings1[ii])).GetGrown();
 
                 // well build
                 if (building & BUILD_WELL) growth += GetGrownWell();
@@ -422,11 +422,11 @@ void Castle::ActionNewWeek()
         // Week Of
         if (world.GetWeekType().GetType() == Week::MONSTERS && !world.BeginMonth())
         {
-            const u32 dwellings2[] = {DWELLING_MONSTER1, DWELLING_UPGRADE2, DWELLING_UPGRADE3, DWELLING_UPGRADE4,
+            const uint32_t dwellings2[] = {DWELLING_MONSTER1, DWELLING_UPGRADE2, DWELLING_UPGRADE3, DWELLING_UPGRADE4,
                                       DWELLING_UPGRADE5, DWELLING_MONSTER2, DWELLING_MONSTER3, DWELLING_MONSTER4,
                                       DWELLING_MONSTER5, 0};
 
-            for (u32 ii = 0; dwellings2[ii]; ++ii)
+            for (uint32_t ii = 0; dwellings2[ii]; ++ii)
                 if (nullptr != (dw = GetDwelling(dwellings2[ii])))
                 {
                     const Monster mons(race, dwellings2[ii]);
@@ -456,12 +456,12 @@ void Castle::ActionNewMonth()
         // Month Of
     if (world.GetWeekType().GetType() == Week::MONSTERS)
     {
-        const u32 dwellings[] = {DWELLING_MONSTER1, DWELLING_UPGRADE2, DWELLING_UPGRADE3, DWELLING_UPGRADE4,
+        const uint32_t dwellings[] = {DWELLING_MONSTER1, DWELLING_UPGRADE2, DWELLING_UPGRADE3, DWELLING_UPGRADE4,
                                  DWELLING_UPGRADE5, DWELLING_MONSTER2, DWELLING_MONSTER3, DWELLING_MONSTER4,
                                  DWELLING_MONSTER5, 0};
-        u32 *dw = nullptr;
+        uint32_t *dw = nullptr;
 
-        for (u32 ii = 0; dwellings[ii]; ++ii)
+        for (uint32_t ii = 0; dwellings[ii]; ++ii)
             if (nullptr != (dw = GetDwelling(dwellings[ii])))
             {
                 const Monster mons(race, dwellings[ii]);
@@ -513,7 +513,7 @@ void Castle::MageGuildEducateHero(HeroBase &hero) const
     mageguild.EducateHero(hero, GetLevelMageGuild(), isLibraryBuild());
 }
 
-string Castle::GetStringBuilding(u32 build, int race)
+string Castle::GetStringBuilding(uint32_t build, int race)
 {
     string str_build[] = {_("Thieves' Guild"), _("Tavern"), _("Shipyard"), _("Well"), _("Statue"),
                                _("Left Turret"),
@@ -546,7 +546,7 @@ string Castle::GetStringBuilding(u32 build, int race)
 
     string shrine = _("Shrine");
 
-    u32 offset = 0;
+    uint32_t offset = 0;
 
     switch (race)
     {
@@ -649,7 +649,7 @@ string Castle::GetStringBuilding(u32 build, int race)
     return str_build[17];
 }
 
-string Castle::GetDescriptionBuilding(u32 build, int race)
+string Castle::GetDescriptionBuilding(uint32_t build, int race)
 {
     string desc_build[] = {
             _("The Thieves' Guild provides information on enemy players. Thieves' Guilds can also provide scouting information on enemy towns."),
@@ -684,7 +684,7 @@ string Castle::GetDescriptionBuilding(u32 build, int race)
 
     string shrine_descr = _("The Shrine increases the necromancy skill of all your necromancers by 10 percent.");
 
-    u32 offset = 0;
+    uint32_t offset = 0;
 
     switch (race)
     {
@@ -877,7 +877,7 @@ bool Castle::RecruitMonster(const Troop &troop)
     }
 
     const Monster &ms = troop;
-    u32 count = troop.GetCount();
+    uint32_t count = troop.GetCount();
 
     // fix count
     if (dwelling[dw_index] < count) count = dwelling[dw_index];
@@ -906,7 +906,7 @@ bool Castle::RecruitMonster(const Troop &troop)
     return true;
 }
 
-bool Castle::RecruitMonsterFromDwelling(u32 dw, u32 count)
+bool Castle::RecruitMonsterFromDwelling(uint32_t dw, uint32_t count)
 {
     int dw_index = 0;
 
@@ -961,7 +961,7 @@ bool Castle::RecruitMonsterFromDwelling(u32 dw, u32 count)
 }
 
 /* return current count monster in dwelling */
-u32 Castle::GetDwellingLivedCount(u32 dw) const
+uint32_t Castle::GetDwellingLivedCount(uint32_t dw) const
 {
     switch (dw)
     {
@@ -992,9 +992,9 @@ u32 Castle::GetDwellingLivedCount(u32 dw) const
 }
 
 /* return requires for building */
-u32 Castle::GetBuildingRequires(u32 build) const
+uint32_t Castle::GetBuildingRequires(uint32_t build) const
 {
-    u32 requires = 0;
+    uint32_t requires = 0;
 
     switch (build)
     {
@@ -1273,7 +1273,7 @@ u32 Castle::GetBuildingRequires(u32 build) const
 }
 
 /* check allow buy building */
-int Castle::CheckBuyBuilding(u32 build) const
+int Castle::CheckBuyBuilding(uint32_t build) const
 {
     if (build & building) return ALREADY_BUILT;
 
@@ -1335,9 +1335,9 @@ int Castle::CheckBuyBuilding(u32 build) const
     }
 
     // check build requirements
-    const u32 requires(GetBuildingRequires(build));
+    const uint32_t requires(GetBuildingRequires(build));
 
-    for (u32 itr = 0x00000001; itr; itr <<= 1)
+    for (uint32_t itr = 0x00000001; itr; itr <<= 1)
         if ((requires & itr) && !(building & itr)) return REQUIRES_BUILD;
 
     // check valid payment
@@ -1351,27 +1351,27 @@ int Castle::GetAllBuildingStatus(const Castle &castle)
     if (!castle.Modes(ALLOWBUILD)) return NOT_TODAY;
     if (!castle.isCastle()) return NEED_CASTLE;
 
-    const u32 rest = ~castle.building;
+    const uint32_t rest = ~castle.building;
 
-    for (u32 itr = 0x00000001; itr; itr <<= 1)
+    for (uint32_t itr = 0x00000001; itr; itr <<= 1)
         if ((rest & itr) && (ALLOW_BUILD == castle.CheckBuyBuilding(itr))) return ALLOW_BUILD;
 
-    for (u32 itr = 0x00000001; itr; itr <<= 1)
+    for (uint32_t itr = 0x00000001; itr; itr <<= 1)
         if ((rest & itr) && (LACK_RESOURCES == castle.CheckBuyBuilding(itr))) return LACK_RESOURCES;
 
-    for (u32 itr = 0x00000001; itr; itr <<= 1)
+    for (uint32_t itr = 0x00000001; itr; itr <<= 1)
         if ((rest & itr) && (REQUIRES_BUILD == castle.CheckBuyBuilding(itr))) return REQUIRES_BUILD;
 
     return UNKNOWN_COND;
 }
 
-bool Castle::AllowBuyBuilding(u32 build) const
+bool Castle::AllowBuyBuilding(uint32_t build) const
 {
     return ALLOW_BUILD == CheckBuyBuilding(build);
 }
 
 /* buy building */
-bool Castle::BuyBuilding(u32 build)
+bool Castle::BuyBuilding(uint32_t build)
 {
     if (!AllowBuyBuilding(build)) return false;
 
@@ -1438,7 +1438,7 @@ bool Castle::BuyBuilding(u32 build)
 void Castle::DrawImageCastle(const Point &pt, Surface& destSurface) const
 {
     const Maps::Tiles &tile = world.GetTiles(GetIndex());
-    u32 index;
+    uint32_t index;
     Point dst_pt;
 
     // draw ground
@@ -1472,14 +1472,14 @@ void Castle::DrawImageCastle(const Point &pt, Surface& destSurface) const
     default:
         return;
     }
-    for (u32 ii = 0; ii < 5; ++ii)
+    for (uint32_t ii = 0; ii < 5; ++ii)
     {
         const Sprite& sprite = AGG::GetICN(ICN::OBJNTWBA, index + ii);
         dst_pt.x = pt.x + ii * 32 + sprite.x();
         dst_pt.y = pt.y + 3 * 32 + sprite.y();
         sprite.Blit(dst_pt, destSurface);
     }
-    for (u32 ii = 0; ii < 5; ++ii)
+    for (uint32_t ii = 0; ii < 5; ++ii)
     {
         const Sprite& sprite = AGG::GetICN(ICN::OBJNTWBA, index + 5 + ii);
         dst_pt.x = pt.x + ii * 32 + sprite.x();
@@ -1516,21 +1516,21 @@ void Castle::DrawImageCastle(const Point &pt, Surface& destSurface) const
     dst_pt.x = pt.x + 2 * 32 + sprite2.x();
     dst_pt.y = pt.y + sprite2.y();
     sprite2.Blit(dst_pt, destSurface);
-    for (u32 ii = 0; ii < 5; ++ii)
+    for (uint32_t ii = 0; ii < 5; ++ii)
     {
         const Sprite &sprite = AGG::GetICN(ICN::OBJNTOWN, index + 1 + ii);
         dst_pt.x = pt.x + ii * 32 + sprite.x();
         dst_pt.y = pt.y + 32 + sprite.y();
         sprite.Blit(dst_pt, destSurface);
     }
-    for (u32 ii = 0; ii < 5; ++ii)
+    for (uint32_t ii = 0; ii < 5; ++ii)
     {
         const Sprite &sprite = AGG::GetICN(ICN::OBJNTOWN, index + 6 + ii);
         dst_pt.x = pt.x + ii * 32 + sprite.x();
         dst_pt.y = pt.y + 2 * 32 + sprite.y();
         sprite.Blit(dst_pt, destSurface);
     }
-    for (u32 ii = 0; ii < 5; ++ii)
+    for (uint32_t ii = 0; ii < 5; ++ii)
     {
         const Sprite &sprite = AGG::GetICN(ICN::OBJNTOWN, index + 11 + ii);
         dst_pt.x = pt.x + ii * 32 + sprite.x();
@@ -1563,7 +1563,7 @@ int Castle::GetICNBoat(int race)
 }
 
 /* get building name ICN */
-int Castle::GetICNBuilding(u32 build, int race)
+int Castle::GetICNBuilding(uint32_t build, int race)
 {
     if (Race::BARB == race)
     {
@@ -1977,7 +1977,7 @@ bool Castle::PresentBoat() const
     return false;
 }
 
-u32 Castle::GetActualDwelling(u32 build) const
+uint32_t Castle::GetActualDwelling(uint32_t build) const
 {
     switch (build)
     {
@@ -2008,7 +2008,7 @@ u32 Castle::GetActualDwelling(u32 build) const
     return BUILD_NOTHING;
 }
 
-u32 Castle::GetUpgradeBuilding(u32 build) const
+uint32_t Castle::GetUpgradeBuilding(uint32_t build) const
 {
     switch (build)
     {
@@ -2259,7 +2259,7 @@ void Castle::RecruitAllMonster()
         skip_recruit = true;
 
     if (!skip_recruit)
-        for (u32 dw = DWELLING_MONSTER6; dw >= DWELLING_MONSTER1; dw >>= 1)
+        for (uint32_t dw = DWELLING_MONSTER6; dw >= DWELLING_MONSTER1; dw >>= 1)
             if (isBuild(dw)) RecruitMonsterFromDwelling(dw, GetDwellingLivedCount(dw));
 }
 
@@ -2350,7 +2350,7 @@ bool Castle::AllowBuild() const
     return Modes(ALLOWBUILD);
 }
 
-bool Castle::isBuild(u32 bd) const
+bool Castle::isBuild(uint32_t bd) const
 {
     return building & bd;
 }
@@ -2360,23 +2360,23 @@ bool Castle::isNecromancyShrineBuild() const
     return race == Race::NECR && (BUILD_SHRINE & building);
 }
 
-u32 Castle::GetGrownWell()
+uint32_t Castle::GetGrownWell()
 {
     return GameStatic::GetCastleGrownWell();
 }
 
-u32 Castle::GetGrownWel2()
+uint32_t Castle::GetGrownWel2()
 {
     return GameStatic::GetCastleGrownWel2();
 }
 
-u32 Castle::GetGrownWeekOf(const Monster &mons)
+uint32_t Castle::GetGrownWeekOf(const Monster &mons)
 {
     return Settings::Get().ExtWorldNewVersionWeekOf() ?
            mons.GetGrown() : GameStatic::GetCastleGrownWeekOf();
 }
 
-u32 Castle::GetGrownMonthOf()
+uint32_t Castle::GetGrownMonthOf()
 {
     return GameStatic::GetCastleGrownMonthOf();
 }
@@ -2518,7 +2518,7 @@ StreamBase &operator<<(StreamBase &msg, const Castle &castle)
         color <<
         castle.name <<
         castle.mageguild <<
-        static_cast<u32>(CASTLEMAXMONSTER);
+        static_cast<uint32_t>(CASTLEMAXMONSTER);
 
     for (unsigned int ii : castle.dwelling)
         msg << ii;
@@ -2529,7 +2529,7 @@ StreamBase &operator<<(StreamBase &msg, const Castle &castle)
 ByteVectorReader &operator>>(ByteVectorReader &msg, Castle &castle)
 {
     ColorBase &color = castle;
-    u32 dwellingcount;
+    uint32_t dwellingcount;
 
     msg >>
         static_cast<MapPosition &>(castle) >>
@@ -2542,7 +2542,7 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, Castle &castle)
         castle.mageguild;
 
     msg >> dwellingcount;
-    for (u32 ii = 0; ii < dwellingcount; ++ii)
+    for (uint32_t ii = 0; ii < dwellingcount; ++ii)
         msg >> castle.dwelling[ii];
 
     msg >> castle.army;
@@ -2553,7 +2553,7 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, Castle &castle)
 
 StreamBase &operator<<(StreamBase &msg, const VecCastles &castles)
 {
-    msg << static_cast<u32>(castles.size());
+    msg << static_cast<uint32_t>(castles.size());
 
     for (auto castle : castles)
         msg << (castle ? castle->GetIndex() : static_cast<s32>(-1));
@@ -2564,7 +2564,7 @@ StreamBase &operator<<(StreamBase &msg, const VecCastles &castles)
 ByteVectorReader &operator>>(ByteVectorReader &msg, VecCastles &castles)
 {
     s32 index;
-    u32 size;
+    uint32_t size;
     msg >> size;
 
     castles.resize(size, nullptr);
@@ -2580,7 +2580,7 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, VecCastles &castles)
 
 StreamBase &operator<<(StreamBase &msg, const AllCastles &castles)
 {
-    msg << static_cast<u32>(castles.size());
+    msg << static_cast<uint32_t>(castles.size());
 
     for (auto castle : castles)
         msg << *castle;
@@ -2590,7 +2590,7 @@ StreamBase &operator<<(StreamBase &msg, const AllCastles &castles)
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, AllCastles &castles)
 {
-    u32 size;
+    uint32_t size;
     msg >> size;
 
     castles.clear();
@@ -2654,12 +2654,12 @@ void Castle::SwapCastleHeroes(CastleHeroes &heroes)
     }
 }
 
-string Castle::GetStringBuilding(u32 build) const
+string Castle::GetStringBuilding(uint32_t build) const
 {
     return GetStringBuilding(build, GetRace());
 }
 
-string Castle::GetDescriptionBuilding(u32 build) const
+string Castle::GetDescriptionBuilding(uint32_t build) const
 {
     string res = GetDescriptionBuilding(build, GetRace());
 

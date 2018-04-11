@@ -38,9 +38,9 @@
 
 using namespace std;
 
-struct dwelling_t : pair<u32, u32>
+struct dwelling_t : pair<uint32_t, uint32_t>
 {
-    dwelling_t(u32 type, u32 count) : pair<u32, u32>(type, count)
+    dwelling_t(uint32_t type, uint32_t count) : pair<uint32_t, uint32_t>(type, count)
     {};
 };
 
@@ -50,14 +50,14 @@ struct dwellings_t : vector<dwelling_t>
     { reserve(6); };
 };
 
-u32 HowManyRecruitMonster(const Castle &castle, u32 dw, const Funds &add, Funds &res)
+uint32_t HowManyRecruitMonster(const Castle &castle, uint32_t dw, const Funds &add, Funds &res)
 {
     const Monster ms(castle.GetRace(), castle.GetActualDwelling(dw));
     const Kingdom &kingdom = castle.GetKingdom();
 
     if (!castle.GetArmy().m_troops.CanJoinTroop(ms)) return 0;
 
-    u32 count = castle.GetDwellingLivedCount(dw);
+    uint32_t count = castle.GetDwellingLivedCount(dw);
 
     while (count)
     {
@@ -109,7 +109,7 @@ void Castle::OpenWell()
         buttonMax.Draw();
     }
 
-    vector<u32> alldwellings;
+    vector<uint32_t> alldwellings;
     alldwellings.reserve(6);
     alldwellings.push_back(DWELLING_MONSTER6);
     alldwellings.push_back(DWELLING_MONSTER5);
@@ -141,7 +141,7 @@ void Castle::OpenWell()
             {
                 dwellings_t results;
                 Funds cur, total;
-                u32 can_recruit;
+                uint32_t can_recruit;
                 string str;
 
                 for (auto it = alldwellings.begin(); it != alldwellings.end(); ++it)
@@ -230,14 +230,14 @@ void Castle::WellRedrawInfoArea(const Point &cur_pt)
     dst_pt.y = cur_pt.y + 462;
     text.Blit(dst_pt);
 
-    u32 dw = DWELLING_MONSTER1;
+    uint32_t dw = DWELLING_MONSTER1;
 
     while (dw <= DWELLING_MONSTER6)
     {
         bool present = false;
-        u32 dw_orig = DWELLING_MONSTER1;
-        u32 icnindex = 0;
-        u32 available = 0;
+        uint32_t dw_orig = DWELLING_MONSTER1;
+        uint32_t icnindex = 0;
+        uint32_t available = 0;
 
         switch (dw)
         {
@@ -351,7 +351,7 @@ void Castle::WellRedrawInfoArea(const Point &cur_pt)
 
         if (present)
         {
-            u32 grown = monster.GetGrown();
+            uint32_t grown = monster.GetGrown();
             grown += building & BUILD_WELL ? GetGrownWell() : 0;
             if (DWELLING_MONSTER1 & dw) grown += building & BUILD_WEL2 ? GetGrownWel2() : 0;
 

@@ -209,7 +209,7 @@ public:
 
     int ScrollSpeed() const;
 
-    u32 MemoryLimit() const;
+    uint32_t MemoryLimit() const;
 
     const string &PlayMusCommand() const;
 
@@ -289,15 +289,15 @@ public:
 
     void BinaryLoad();
 
-    bool CanChangeInGame(u32) const;
+    bool CanChangeInGame(uint32_t) const;
 
-    bool ExtModes(u32) const;
+    bool ExtModes(uint32_t) const;
 
-    void ExtSetModes(u32);
+    void ExtSetModes(uint32_t);
 
-    void ExtResetModes(u32);
+    void ExtResetModes(uint32_t);
 
-    std::string ExtName(u32) const;
+    std::string ExtName(uint32_t) const;
 
     bool ExtHeroLearnSpellsWithDay() const;
 
@@ -473,7 +473,7 @@ public:
 
     void SetShowStatus(bool);
 
-    void SetMemoryLimit(u32);
+    void SetMemoryLimit(uint32_t);
 
     void SetAIMoveSpeed(int);
 
@@ -546,13 +546,13 @@ public:
 
     bool WinsFindUltimateArtifact() const;
 
-    u32 WinsAccumulateGold() const;
+    uint32_t WinsAccumulateGold() const;
 
     Point WinsMapsPositionObject() const;
 
     Point LossMapsPositionObject() const;
 
-    u32 LossCountDays() const;
+    uint32_t LossCountDays() const;
 
     string GetProgramPath() const
     { return path_program; }
@@ -635,7 +635,7 @@ private:
     string video_driver;
 
     int port;
-    u32 memory_limit;
+    uint32_t memory_limit;
 
     Point pos_radr;
     Point pos_bttn;

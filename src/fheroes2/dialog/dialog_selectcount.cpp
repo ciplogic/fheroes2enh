@@ -36,7 +36,7 @@
 class SelectValue : public Rect
 {
 public:
-    SelectValue(u32 min, u32 max, u32 cur, u32 st) : vmin(min), vmax(max), vcur(cur), step(st)
+    SelectValue(uint32_t min, uint32_t max, uint32_t cur, uint32_t st) : vmin(min), vmax(max), vcur(cur), step(st)
     {
         if (vmin >= vmax) vmin = 0;
         if (vcur > vmax || vcur < vmin) vcur = vmin;
@@ -48,17 +48,17 @@ public:
         pos.h = 30;
     }
 
-    u32 Min()
+    uint32_t Min()
     {
         return vmin;
     }
 
-    u32 Max()
+    uint32_t Max()
     {
         return vmax;
     }
 
-    void SetCur(u32 v)
+    void SetCur(uint32_t v)
     {
         vcur = v;
     }
@@ -71,7 +71,7 @@ public:
         btnDn.SetPos(pt.x + 70, pt.y + 16);
     }
 
-    u32 operator()() const
+    uint32_t operator()() const
     {
         return vcur;
     }
@@ -115,10 +115,10 @@ public:
     }
 
 protected:
-    u32 vmin;
-    u32 vmax;
-    u32 vcur;
-    u32 step;
+    uint32_t vmin;
+    uint32_t vmax;
+    uint32_t vcur;
+    uint32_t step;
 
     Rect pos;
 
@@ -126,7 +126,7 @@ protected:
     Button btnDn;
 };
 
-bool Dialog::SelectCount(const string &header, u32 min, u32 max, u32 &cur, int step)
+bool Dialog::SelectCount(const string &header, uint32_t min, uint32_t max, uint32_t &cur, int step)
 {
     Display &display = Display::Get();
 
@@ -296,7 +296,7 @@ bool Dialog::InputString(const string &header, string &res)
     return !res.empty();
 }
 
-int Dialog::ArmySplitTroop(int free_slots, u32 max, u32 &cur, bool savelast)
+int Dialog::ArmySplitTroop(int free_slots, uint32_t max, uint32_t &cur, bool savelast)
 {
     Display &display = Display::Get();
 
@@ -304,7 +304,7 @@ int Dialog::ArmySplitTroop(int free_slots, u32 max, u32 &cur, bool savelast)
     Cursor &cursor = Cursor::Get();
     cursor.Hide();
 
-    const u32 min = 1;
+    const uint32_t min = 1;
     const int spacer = 10;
 
     FrameBox box(free_slots > 2 ? 90 + spacer : 45, true);

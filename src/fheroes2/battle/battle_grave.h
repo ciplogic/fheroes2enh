@@ -32,7 +32,7 @@ namespace Battle
 {
     class Unit;
 
-    struct TroopUIDs : vector<u32>
+    struct TroopUIDs : vector<uint32_t>
     {
         TroopUIDs()
         { reserve(4); }
@@ -50,7 +50,7 @@ namespace Battle
 
         void RemoveTroop(const Unit &);
 
-        u32 GetLastTroopUID(s32) const;
+        uint32_t GetLastTroopUID(s32) const;
     };
 }
 

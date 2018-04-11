@@ -140,7 +140,7 @@ Maps::FileInfo &Maps::FileInfo::operator=(const FileInfo &f)
     size_h = f.size_h;
     difficulty = f.difficulty;
 
-    for (u32 ii = 0; ii < KINGDOMMAX; ++ii)
+    for (uint32_t ii = 0; ii < KINGDOMMAX; ++ii)
     {
         races[ii] = f.races[ii];
         unions[ii] = f.unions[ii];
@@ -187,7 +187,7 @@ void Maps::FileInfo::Reset()
     localtime = 0;
     with_heroes = false;
 
-    for (u32 ii = 0; ii < KINGDOMMAX; ++ii)
+    for (uint32_t ii = 0; ii < KINGDOMMAX; ++ii)
     {
         races[ii] = Race::NONE;
         unions[ii] = ByteToColor(ii);
@@ -340,7 +340,7 @@ void Maps::FileInfo::FillUnions()
             side2 |= color;
     }
 
-    for (u32 ii = 0; ii < KINGDOMMAX; ++ii)
+    for (uint32_t ii = 0; ii < KINGDOMMAX; ++ii)
     {
         int cl = ByteToColor(ii);
 
@@ -453,7 +453,7 @@ bool Maps::FileInfo::WinsFindUltimateArtifact() const
     return 0 == wins1;
 }
 
-u32 Maps::FileInfo::WinsAccumulateGold() const
+uint32_t Maps::FileInfo::WinsAccumulateGold() const
 {
     return wins1 * 1000;
 }
@@ -468,7 +468,7 @@ Point Maps::FileInfo::LossMapsPositionObject() const
     return Point(loss1, loss2);
 }
 
-u32 Maps::FileInfo::LossCountDays() const
+uint32_t Maps::FileInfo::LossCountDays() const
 {
     return loss1;
 }
@@ -498,10 +498,10 @@ int Maps::FileInfo::ComputerOnlyColors() const
     return allow_comp_colors & ~(allow_human_colors);
 }
 
-bool Maps::FileInfo::isAllowCountPlayers(u32 colors) const
+bool Maps::FileInfo::isAllowCountPlayers(uint32_t colors) const
 {
-    u32 human_only = Color::Count(HumanOnlyColors());
-    u32 comp_human = Color::Count(AllowCompHumanColors());
+    uint32_t human_only = Color::Count(HumanOnlyColors());
+    uint32_t comp_human = Color::Count(AllowCompHumanColors());
 
     return human_only <= colors && colors <= human_only + comp_human;
 }
@@ -589,7 +589,7 @@ StreamBase &Maps::operator<<(StreamBase &msg, const FileInfo &fi)
     msg << System::GetBasename(fi.file) << fi.name << fi.description <<
         fi.size_w << fi.size_h << fi.difficulty << static_cast<u8>(KINGDOMMAX);
 
-    for (u32 ii = 0; ii < KINGDOMMAX; ++ii)
+    for (uint32_t ii = 0; ii < KINGDOMMAX; ++ii)
         msg << fi.races[ii] << fi.unions[ii];
 
     msg << fi.kingdom_colors << fi.allow_human_colors << fi.allow_comp_colors <<
@@ -606,7 +606,7 @@ StreamBase &Maps::operator>>(StreamBase &msg, FileInfo &fi)
     msg >> fi.file >> fi.name >> fi.description >>
         fi.size_w >> fi.size_h >> fi.difficulty >> kingdommax;
 
-    for (u32 ii = 0; ii < kingdommax; ++ii)
+    for (uint32_t ii = 0; ii < kingdommax; ++ii)
         msg >> fi.races[ii] >> fi.unions[ii];
 
     msg >> fi.kingdom_colors >> fi.allow_human_colors >> fi.allow_comp_colors >>
@@ -623,7 +623,7 @@ ByteVectorReader &Maps::operator>>(ByteVectorReader &msg, FileInfo &fi)
     msg >> fi.file >> fi.name >> fi.description >>
         fi.size_w >> fi.size_h >> fi.difficulty >> kingdommax;
 
-    for (u32 ii = 0; ii < kingdommax; ++ii)
+    for (uint32_t ii = 0; ii < kingdommax; ++ii)
         msg >> fi.races[ii] >> fi.unions[ii];
 
     msg >> fi.kingdom_colors >> fi.allow_human_colors >> fi.allow_comp_colors >>

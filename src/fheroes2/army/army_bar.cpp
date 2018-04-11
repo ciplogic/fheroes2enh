@@ -97,10 +97,10 @@ void RedistributeArmy(ArmyTroop &troop1 /* from */, ArmyTroop &troop2 /* to */)
             Army::SwapTroops(troop1, troop2);
     } else
     {
-        const u32 free_slots = (army1 == army2 ? 1 : 0) + army2->m_troops.Size() - army2->m_troops.GetCount();
-        const u32 max_count = save_last_troop ? troop1.GetCount() - 1 : troop1.GetCount();
-        u32 redistr_count = troop1.GetCount() / 2;
-        const u32 slotCount = Dialog::ArmySplitTroop((free_slots > max_count ? max_count : free_slots), max_count,
+        const uint32_t free_slots = (army1 == army2 ? 1 : 0) + army2->m_troops.Size() - army2->m_troops.GetCount();
+        const uint32_t max_count = save_last_troop ? troop1.GetCount() - 1 : troop1.GetCount();
+        uint32_t redistr_count = troop1.GetCount() / 2;
+        const uint32_t slotCount = Dialog::ArmySplitTroop((free_slots > max_count ? max_count : free_slots), max_count,
                                                      redistr_count, save_last_troop);
 
         switch (slotCount)
@@ -155,7 +155,7 @@ void ArmyBar::SetArmy(Army *ptr)
     items.clear();
 
     if (ptr)
-        for (u32 ii = 0; ii < ptr->m_troops.Size(); ++ii)
+        for (uint32_t ii = 0; ii < ptr->m_troops.Size(); ++ii)
             items.push_back(reinterpret_cast<ArmyTroop *>(ptr->m_troops.GetTroop(ii)));
 
     SetContentItems();
@@ -439,7 +439,7 @@ bool ArmyBar::ActionBarSingleClick(const Point &cursor, ArmyTroop &troop, const 
 
             if (mons.isValid())
             {
-                u32 count = 1;
+                uint32_t count = 1;
 
                 if (Dialog::SelectCount("Set Count", 1, 500000, count))
                     troop.Set(mons, count);

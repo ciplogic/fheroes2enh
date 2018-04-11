@@ -180,8 +180,8 @@ void Battle::Arena::ApplyActionSpellCast(Command &cmd)
 
 void Battle::Arena::ApplyActionAttack(Command &cmd)
 {
-    u32 uid1 = cmd.GetValue();
-    u32 uid2 = cmd.GetValue();
+    uint32_t uid1 = cmd.GetValue();
+    uint32_t uid2 = cmd.GetValue();
     s32 dst = cmd.GetValue();
     int dir = cmd.GetValue();
 
@@ -224,7 +224,7 @@ void Battle::Arena::ApplyActionAttack(Command &cmd)
 
 void Battle::Arena::ApplyActionMove(Command &cmd)
 {
-    u32 uid = cmd.GetValue();
+    uint32_t uid = cmd.GetValue();
     s32 dst = cmd.GetValue();
     int path_size = cmd.GetValue();
 
@@ -286,7 +286,7 @@ void Battle::Arena::ApplyActionMove(Command &cmd)
 
 void Battle::Arena::ApplyActionSkip(Command &cmd)
 {
-    u32 uid = cmd.GetValue();
+    uint32_t uid = cmd.GetValue();
     int hard = cmd.GetValue();
 
     Unit *battle = GetTroopUID(uid);
@@ -308,7 +308,7 @@ void Battle::Arena::ApplyActionSkip(Command &cmd)
 
 void Battle::Arena::ApplyActionEnd(Command &cmd)
 {
-    u32 uid = cmd.GetValue();
+    uint32_t uid = cmd.GetValue();
 
     Unit *battle = GetTroopUID(uid);
 
@@ -323,7 +323,7 @@ void Battle::Arena::ApplyActionEnd(Command &cmd)
 
 void Battle::Arena::ApplyActionMorale(Command &cmd)
 {
-    u32 uid = cmd.GetValue();
+    uint32_t uid = cmd.GetValue();
     int morale = cmd.GetValue();
 
     Unit *b = GetTroopUID(uid);
@@ -522,7 +522,7 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForSpells(const HeroBase *hero, con
                 trgts.push_back(dst);
 
                 // find targets
-                for (u32 ii = 0; ii < 3; ++ii)
+                for (uint32_t ii = 0; ii < 3; ++ii)
                 {
                     const Indexes reslt = board.GetNearestTroopIndexes(dst, &trgts);
                     if (reslt.empty()) break;
@@ -607,7 +607,7 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForSpells(const HeroBase *hero, con
     TargetsInfo::iterator it = targets.begin();
     while (it != targets.end())
     {
-        const u32 resist = (*it).defender->GetMagicResist(spell, hero ? hero->GetPower() : 0);
+        const uint32_t resist = (*it).defender->GetMagicResist(spell, hero ? hero->GetPower() : 0);
 
         if (0 < resist && 100 > resist && resist >= Rand::Get(1, 100))
         {
@@ -624,8 +624,8 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForSpells(const HeroBase *hero, con
 
 void Battle::Arena::ApplyActionTower(Command &cmd)
 {
-    u32 type = cmd.GetValue();
-    u32 uid = cmd.GetValue();
+    uint32_t type = cmd.GetValue();
+    uint32_t uid = cmd.GetValue();
 
     Tower *tower = GetTower(type);
     Unit *b2 = GetTroopUID(uid);
@@ -647,12 +647,12 @@ void Battle::Arena::ApplyActionCatapult(Command &cmd)
 {
     if (!catapult)
         return;
-    u32 shots = cmd.GetValue();
+    uint32_t shots = cmd.GetValue();
 
     while (shots--)
     {
-        u32 target = cmd.GetValue();
-        u32 damage = cmd.GetValue();
+        uint32_t target = cmd.GetValue();
+        uint32_t damage = cmd.GetValue();
 
         if (!target)
             continue;

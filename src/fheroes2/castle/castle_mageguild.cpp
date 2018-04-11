@@ -41,7 +41,7 @@ RowSpells::RowSpells(const Point &pos, const Castle &castle, int lvl)
     const Sprite &roll_hide = AGG::GetICN(ICN::TOWNWIND, 1);
     const Sprite &roll = (hide ? roll_hide : roll_show);
 
-    u32 count = 0;
+    uint32_t count = 0;
 
     switch (lvl)
     {
@@ -60,7 +60,7 @@ RowSpells::RowSpells(const Point &pos, const Castle &castle, int lvl)
             break;
     }
 
-    for (u32 ii = 0; ii < count; ++ii)
+    for (uint32_t ii = 0; ii < count; ++ii)
         coords.push_back(
                 Rect(pos.x + coords.size() * 110 - roll.w() / 2, pos.y, roll.w(),
                      roll.h()));

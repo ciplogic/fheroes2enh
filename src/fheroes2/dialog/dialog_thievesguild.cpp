@@ -190,15 +190,15 @@ void GetBestHeroArmyInfo(vector<ValueColors> &v, const Colors &colors)
     }
 }
 
-void DrawFlags(const vector<ValueColors> &v, const Point &pos, u32 width, u32 count)
+void DrawFlags(const vector<ValueColors> &v, const Point &pos, uint32_t width, uint32_t count)
 {
 
-    for (u32 ii = 0; ii < count; ++ii)
+    for (uint32_t ii = 0; ii < count; ++ii)
     {
-        const u32 chunk = width / count;
+        const uint32_t chunk = width / count;
         if (ii >= v.size()) continue;
         const Colors colors(v[ii].second);
-        const u32 sw = AGG::GetICN(ICN::FLAG32, 1).w();
+        const uint32_t sw = AGG::GetICN(ICN::FLAG32, 1).w();
         s32 px = pos.x + chunk / 2 + ii * chunk - (colors.size() * sw) / 2;
 
         for (auto color : colors)
@@ -210,13 +210,13 @@ void DrawFlags(const vector<ValueColors> &v, const Point &pos, u32 width, u32 co
     }
 }
 
-void DrawHeroIcons(const vector<ValueColors> &v, const Point &pos, u32 width)
+void DrawHeroIcons(const vector<ValueColors> &v, const Point &pos, uint32_t width)
 {
     if (v.empty()) return;
     Display &display = Display::Get();
     const int chunk = width / v.size();
 
-    for (u32 ii = 0; ii < v.size(); ++ii)
+    for (uint32_t ii = 0; ii < v.size(); ++ii)
     {
         const Heroes *hero = world.GetHeroes(v[ii].first);
         if (!hero) continue;
@@ -242,7 +242,7 @@ void Dialog::ThievesGuild(bool oracle)
     const Point &cur_pt = frameborder.GetArea();
     Point dst_pt(cur_pt);
 
-    const u32 count = oracle ? 0xFF : world.GetKingdom(Settings::Get().CurrentColor()).GetCountBuilding(
+    const uint32_t count = oracle ? 0xFF : world.GetKingdom(Settings::Get().CurrentColor()).GetCountBuilding(
             BUILD_THIEVESGUILD);
 
     vector<ValueColors> v;
@@ -254,7 +254,7 @@ void Dialog::ThievesGuild(bool oracle)
     Text text;
 
     // head 1
-    u32 ii = 0;
+    uint32_t ii = 0;
     for (ii = 0; ii < colors.size(); ++ii)
     {
         switch (ii + 1)

@@ -39,7 +39,7 @@ Funds::Funds(s32 _ore, s32 _wood, s32 _mercury, s32 _sulfur, s32 _crystal, s32 _
 {
 }
 
-Funds::Funds(int rs, u32 count) : wood(0), mercury(0), ore(0), sulfur(0), crystal(0), gems(0), gold(0)
+Funds::Funds(int rs, uint32_t count) : wood(0), mercury(0), ore(0), sulfur(0), crystal(0), gems(0), gold(0)
 {
     switch (rs)
     {
@@ -226,7 +226,7 @@ Funds &Funds::operator-=(const Funds &pm)
 }
 
 // operator Funds *
-Funds Funds::operator*(u32 mul) const
+Funds Funds::operator*(uint32_t mul) const
 {
     Funds res;
 
@@ -241,7 +241,7 @@ Funds Funds::operator*(u32 mul) const
     return res;
 }
 
-Funds &Funds::operator*=(u32 mul)
+Funds &Funds::operator*=(uint32_t mul)
 {
     wood *= mul;
     mercury *= mul;
@@ -344,7 +344,7 @@ std::string Resource::String(int resource)
 }
 
 /* return index sprite objnrsrc.icn */
-u32 Resource::GetIndexSprite(int resource)
+uint32_t Resource::GetIndexSprite(int resource)
 {
     switch (resource)
     {
@@ -367,7 +367,7 @@ u32 Resource::GetIndexSprite(int resource)
     return 0;
 }
 
-int Resource::FromIndexSprite(u32 index)
+int Resource::FromIndexSprite(uint32_t index)
 {
     switch (index)
     {
@@ -394,7 +394,7 @@ int Resource::FromIndexSprite(u32 index)
 }
 
 /* return index sprite resource.icn */
-u32 Resource::GetIndexSprite2(int resource)
+uint32_t Resource::GetIndexSprite2(int resource)
 {
     switch (resource)
     {
@@ -417,7 +417,7 @@ u32 Resource::GetIndexSprite2(int resource)
     return 0;
 }
 
-int Resource::FromIndexSprite2(u32 index)
+int Resource::FromIndexSprite2(uint32_t index)
 {
     switch (index)
     {
@@ -458,9 +458,9 @@ int Funds::GetValidItems() const
     return rs;
 }
 
-u32 Funds::GetValidItemsCount() const
+uint32_t Funds::GetValidItemsCount() const
 {
-    u32 result = 0;
+    uint32_t result = 0;
 
     if (wood) ++result;
     if (ore) ++result;
@@ -484,9 +484,9 @@ void Funds::Reset()
     gold = 0;
 }
 
-Resource::BoxSprite::BoxSprite(const Funds &f, u32 w) : Rect(0, 0, w, 0), rs(f)
+Resource::BoxSprite::BoxSprite(const Funds &f, uint32_t w) : Rect(0, 0, w, 0), rs(f)
 {
-    const u32 count = rs.GetValidItemsCount();
+    const uint32_t count = rs.GetValidItemsCount();
     h = 4 > count ? 45 : (7 > count ? 90 : 135);
 }
 
@@ -502,7 +502,7 @@ void Resource::BoxSprite::SetPos(s32 px, s32 py)
 }
 
 void RedrawResourceSprite(const Surface &sf, const Point &pos,
-                          u32 count, u32 width, u32 offset, s32 value)
+                          uint32_t count, uint32_t width, uint32_t offset, s32 value)
 {
     Display &display = Display::Get();
     Point dst_pt;
@@ -519,13 +519,13 @@ void RedrawResourceSprite(const Surface &sf, const Point &pos,
 
 void Resource::BoxSprite::Redraw() const
 {
-    const u32 valid_resource = rs.GetValidItemsCount();
+    const uint32_t valid_resource = rs.GetValidItemsCount();
     if (0 == valid_resource) return;
 
-    u32 width = 2 < valid_resource ? w / 3 : w / valid_resource;
+    uint32_t width = 2 < valid_resource ? w / 3 : w / valid_resource;
 
-    u32 count = 0;
-    u32 offset = 35;
+    uint32_t count = 0;
+    uint32_t offset = 35;
 
     if (rs.wood)
     {
