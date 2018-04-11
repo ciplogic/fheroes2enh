@@ -33,14 +33,14 @@
 
 namespace Music
 {
-    void Play(Mix_Music *mix, u32 id, bool loop);
+    void Play(Mix_Music *mix, uint32_t id, bool loop);
 
     Mix_Music *music = nullptr;
     int fadein = 0;
     int fadeout = 0;
 }
 
-void Music::Play(Mix_Music *mix, u32 id, bool loop)
+void Music::Play(Mix_Music *mix, uint32_t id, bool loop)
 {
     Reset();
 
@@ -58,7 +58,7 @@ void Music::Play(const std::vector<u8> &v, bool loop)
 {
     if (!Mixer::isValid() || v.empty())
         return;
-    u32 id = CheckSum(v);
+    uint32_t id = CheckSum(v);
     SDL_RWops *rwops = SDL_RWFromConstMem(&v[0], v.size());
 
     Mix_Music *mix = Mix_LoadMUS_RW(rwops);
@@ -71,7 +71,7 @@ void Music::Play(const std::string &file, bool loop)
 {
     if (!Mixer::isValid())
         return;
-    u32 id = CheckSum(file);
+    uint32_t id = CheckSum(file);
     Mix_Music *mix = Mix_LoadMUS(file.c_str());
 
     if (!mix)

@@ -41,19 +41,19 @@ public:
     virtual ~BitModes()
     {}
 
-    u32 operator()() const
+    uint32_t operator()() const
     { return modes; }
 
-    void SetModes(u32 f)
+    void SetModes(uint32_t f)
     { modes |= f; }
 
-    void ResetModes(u32 f)
+    void ResetModes(uint32_t f)
     { modes &= ~f; }
 
-    void ToggleModes(u32 f)
+    void ToggleModes(uint32_t f)
     { modes ^= f; }
 
-    bool Modes(u32 f) const
+    bool Modes(uint32_t f) const
     { return (modes & f) != 0; }
 
 protected:
@@ -63,7 +63,7 @@ protected:
 
     friend ByteVectorReader &operator>>(ByteVectorReader &, BitModes &);
 
-    u32 modes;
+    uint32_t modes;
 };
 
 StreamBase &operator<<(StreamBase &, const BitModes &);

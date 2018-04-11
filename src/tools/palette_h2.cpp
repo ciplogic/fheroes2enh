@@ -61,19 +61,19 @@ namespace
     };
 }
 
-void fillPalette(std::vector<SDL_Color> &pal_colors, std::vector<u32> &pal_colors_u32)
+void fillPalette(std::vector<SDL_Color> &pal_colors, std::vector<uint32_t> &pal_colors_u32)
 {
 
-    u32 ncolors = ARRAY_COUNT(kb_pal) / 3;
+    uint32_t ncolors = ARRAY_COUNT(kb_pal) / 3;
     pal_colors.reserve(ncolors);
 
-    for (u32 ii = 0; ii < ncolors; ++ii)
+    for (uint32_t ii = 0; ii < ncolors; ++ii)
     {
-        u32 index = ii * 3;
+        uint32_t index = ii * 3;
         SDL_Color cols{};
-        u32 r = kb_pal[index] << 2;
-        u32 g = kb_pal[index + 1] << 2;
-        u32 b = kb_pal[index + 2] << 2;
+        uint32_t r = kb_pal[index] << 2;
+        uint32_t g = kb_pal[index + 1] << 2;
+        uint32_t b = kb_pal[index + 2] << 2;
         cols.r = r;
         cols.g = g;
         cols.b = b;

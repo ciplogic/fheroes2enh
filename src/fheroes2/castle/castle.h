@@ -146,7 +146,7 @@ public:
 
     bool isNecromancyShrineBuild() const;
 
-    u32 CountBuildings() const;
+    uint32_t CountBuildings() const;
 
     Heroes *RecruitHero(Heroes *);
 
@@ -176,11 +176,11 @@ public:
 
     Army &GetActualArmy();
 
-    u32 GetDwellingLivedCount(u32) const;
+    uint32_t GetDwellingLivedCount(uint32_t) const;
 
-    u32 GetActualDwelling(u32) const;
+    uint32_t GetActualDwelling(uint32_t) const;
 
-    bool RecruitMonsterFromDwelling(u32 dw, u32 count);
+    bool RecruitMonsterFromDwelling(uint32_t dw, uint32_t count);
 
     bool RecruitMonster(const Troop &);
 
@@ -218,37 +218,37 @@ public:
 
     bool AllowBuild() const;
 
-    bool AllowBuyBuilding(u32) const;
+    bool AllowBuyBuilding(uint32_t) const;
 
-    bool isBuild(u32 bd) const;
+    bool isBuild(uint32_t bd) const;
 
-    bool BuyBuilding(u32);
+    bool BuyBuilding(uint32_t);
 
     bool AllowBuyBoat() const;
 
     bool BuyBoat() const;
 
-    u32 GetBuildingRequires(u32) const;
+    uint32_t GetBuildingRequires(uint32_t) const;
 
-    int CheckBuyBuilding(u32) const;
+    int CheckBuyBuilding(uint32_t) const;
 
     static int GetAllBuildingStatus(const Castle &);
 
     void Scoute() const;
 
-    string GetStringBuilding(u32) const;
+    string GetStringBuilding(uint32_t) const;
 
-    string GetDescriptionBuilding(u32) const;
+    string GetDescriptionBuilding(uint32_t) const;
 
-    static string GetStringBuilding(u32, int race);
+    static string GetStringBuilding(uint32_t, int race);
 
-    static string GetDescriptionBuilding(u32, int race);
+    static string GetDescriptionBuilding(uint32_t, int race);
 
-    static int GetICNBuilding(u32, int race);
+    static int GetICNBuilding(uint32_t, int race);
 
     static int GetICNBoat(int race);
 
-    u32 GetUpgradeBuilding(u32) const;
+    uint32_t GetUpgradeBuilding(uint32_t) const;
 
     static bool PredicateIsCastle(const Castle *);
 
@@ -258,13 +258,13 @@ public:
 
     static bool PredicateIsCapital(const Castle *);
 
-    static u32 GetGrownWell();
+    static uint32_t GetGrownWell();
 
-    static u32 GetGrownWel2();
+    static uint32_t GetGrownWel2();
 
-    static u32 GetGrownWeekOf(const Monster &);
+    static uint32_t GetGrownWeekOf(const Monster &);
 
-    static u32 GetGrownMonthOf();
+    static uint32_t GetGrownMonthOf();
 
     string String() const;
 
@@ -277,13 +277,13 @@ public:
     void SwapCastleHeroes(CastleHeroes &);
 
 private:
-    u32 *GetDwelling(u32 dw);
+    uint32_t *GetDwelling(uint32_t dw);
 
     void EducateHeroes();
 
     Rect RedrawResourcePanel(const Point &);
 
-    u32 OpenTown();
+    uint32_t OpenTown();
 
     void OpenTavern() const;
 
@@ -308,13 +308,13 @@ private:
 
 
     int race;
-    u32 building;
+    uint32_t building;
     Captain captain;
 
     string name;
 
     MageGuild mageguild;
-    u32 dwelling[CASTLEMAXMONSTER]{};
+    uint32_t dwelling[CASTLEMAXMONSTER]{};
     Army army;
 };
 
@@ -325,7 +325,7 @@ namespace CastleDialog
         builds_t(building_t b, const Rect &r) : id(b), coord(r)
         {};
 
-        bool operator==(u32 b) const
+        bool operator==(uint32_t b) const
         { return b == id; };
 
         building_t id;
@@ -340,9 +340,9 @@ namespace CastleDialog
         const Rect &GetRect(building_t) const;
     };
 
-    void RedrawAllBuilding(const Castle &, const Point &, const CacheBuildings &, u32 flash = BUILD_NOTHING);
+    void RedrawAllBuilding(const Castle &, const Point &, const CacheBuildings &, uint32_t flash = BUILD_NOTHING);
 
-    void RedrawAnimationBuilding(const Castle &, const Point &, const CacheBuildings &, u32 build);
+    void RedrawAnimationBuilding(const Castle &, const Point &, const CacheBuildings &, uint32_t build);
 
     void RedrawBuildingSpriteToArea(const Sprite &, s32, s32, const Rect &);
 }

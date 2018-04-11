@@ -39,7 +39,7 @@ namespace Interface
     class IconsBar
     {
     public:
-        IconsBar(u32 count, const Surface &sf) : iconsCount(count), marker(sf), show(true)
+        IconsBar(uint32_t count, const Surface &sf) : iconsCount(count), marker(sf), show(true)
         {}
 
         void SetShow(bool f)
@@ -50,20 +50,20 @@ namespace Interface
 
         void RedrawBackground(const Point &);
 
-        u32 CountIcons() const
+        uint32_t CountIcons() const
         { return iconsCount; }
 
-        void SetIconsCount(u32 c)
+        void SetIconsCount(uint32_t c)
         { iconsCount = c; }
 
-        static u32 GetItemWidth();
+        static uint32_t GetItemWidth();
 
-        static u32 GetItemHeight();
+        static uint32_t GetItemHeight();
 
         static bool IsVisible();
 
     protected:
-        u32 iconsCount;
+        uint32_t iconsCount;
         const Surface &marker;
         bool show;
     };
@@ -75,7 +75,7 @@ namespace Interface
     class HeroesIcons : public ListBox<HEROES>, public IconsBar
     {
     public:
-        HeroesIcons(u32 count, const Surface &sf) : IconsBar(count, sf)
+        HeroesIcons(uint32_t count, const Surface &sf) : IconsBar(count, sf)
         {}
 
         void SetPos(s32, s32);
@@ -100,7 +100,7 @@ namespace Interface
     class HeroesBottomIcons : public ListBox<HEROES>, public IconsBar
     {
     public:
-        HeroesBottomIcons (u32 count, const Surface &sf) : IconsBar(count, sf)
+        HeroesBottomIcons (uint32_t count, const Surface &sf) : IconsBar(count, sf)
         {}
 
 
@@ -127,7 +127,7 @@ namespace Interface
     class CastleIcons : public ListBox<CASTLE>, public IconsBar
     {
     public:
-        CastleIcons(u32 count, const Surface &sf) : IconsBar(count, sf)
+        CastleIcons(uint32_t count, const Surface &sf) : IconsBar(count, sf)
         {}
 
         void SetPos(s32, s32);
@@ -169,7 +169,7 @@ namespace Interface
 
         void QueueEventProcessing();
 
-        u32 CountIcons() const;
+        uint32_t CountIcons() const;
 
         void Select(const Heroes &);
 

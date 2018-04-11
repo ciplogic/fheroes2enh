@@ -27,24 +27,24 @@
 
 namespace ObjMnts1
 {
-    bool isAction(u32 index);
+    bool isAction(uint32_t index);
 
-    bool isShadow(u32 index);
+    bool isShadow(uint32_t index);
 
-    int GetPassable(int icn, u32 index);
+    int GetPassable(int icn, uint32_t index);
 
-    int GetActionObject(u32 index);
+    int GetActionObject(uint32_t index);
 }
 
 namespace ObjMnts2
 {
-    bool isAction(u32 index);
+    bool isAction(uint32_t index);
 
-    bool isShadow(u32 index);
+    bool isShadow(uint32_t index);
 
-    int GetPassable(int icn, u32 index);
+    int GetPassable(int icn, uint32_t index);
 
-    int GetActionObject(u32 index);
+    int GetActionObject(uint32_t index);
 }
 
 #endif

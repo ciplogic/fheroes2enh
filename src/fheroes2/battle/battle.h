@@ -55,11 +55,11 @@ namespace Battle
 
     struct Result
     {
-        u32 army1;
-        u32 army2;
-        u32 exp1;
-        u32 exp2;
-        u32 killed;
+        uint32_t army1;
+        uint32_t army2;
+        uint32_t exp1;
+        uint32_t exp2;
+        uint32_t killed;
         mutable FightResultType fightAgain;
 
         Result() : army1(0), army2(0), exp1(0), exp2(0), killed(0), fightAgain(FightResultType::Accept)
@@ -69,13 +69,13 @@ namespace Battle
 
         bool DefenderWins() const;
 
-        u32 AttackerResult() const;
+        uint32_t AttackerResult() const;
 
-        u32 DefenderResult() const;
+        uint32_t DefenderResult() const;
 
-        u32 GetExperienceAttacker() const;
+        uint32_t GetExperienceAttacker() const;
 
-        u32 GetExperienceDefender() const;
+        uint32_t GetExperienceDefender() const;
     };
 
     StreamBase &operator<<(StreamBase &, const Result &);
@@ -141,8 +141,8 @@ namespace Battle
     struct TargetInfo
     {
         Unit *defender;
-        u32 damage;
-        u32 killed;
+        uint32_t damage;
+        uint32_t killed;
         bool resist;
 
         TargetInfo() : defender(nullptr), damage(0), killed(0), resist(false)

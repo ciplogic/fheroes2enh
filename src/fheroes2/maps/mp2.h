@@ -50,8 +50,8 @@ namespace MP2
         u8 shape;        // shape reflect % 4, 0 none, 1 vertical, 2 horizontal, 3 any
         u8 generalObject;    // zero or object
         u16 indexAddon;    // zero or index addons_t
-        u32 uniqNumber1;    // level 1.0
-        u32 uniqNumber2;    // level 2.0
+        uint32_t uniqNumber1;    // level 1.0
+        uint32_t uniqNumber2;    // level 2.0
     };
 
     // origin mp2 addons tile
@@ -63,8 +63,8 @@ namespace MP2
         u8 quantityN;    //
         u8 objectNameN2;    // level 2.N
         u8 indexNameN2;    // level 1.N or 0xFF
-        u32 uniqNumberN1;    // level 1.N
-        u32 uniqNumberN2;    // level 2.N
+        uint32_t uniqNumberN1;    // level 1.N
+        uint32_t uniqNumberN2;    // level 2.N
     };
 
     // origin mp2 castle
@@ -144,7 +144,7 @@ namespace MP2
         u8 artifact2;    // 0xff none
         u8 artifact3;    // 0xff none
         u8 unknown2;    // 0
-        u32 exerience;
+        uint32_t exerience;
         bool customSkill;
         u8 skill1;        // 0xff none
         u8 skill2;        // pathfinding, archery, logistic, scouting,
@@ -182,13 +182,13 @@ namespace MP2
     struct mp2eventcoord_t
     {
         u8 id;        // 0x01
-        u32 wood;
-        u32 mercury;
-        u32 ore;
-        u32 sulfur;
-        u32 crystal;
-        u32 gems;
-        u32 golds;
+        uint32_t wood;
+        uint32_t mercury;
+        uint32_t ore;
+        uint32_t sulfur;
+        uint32_t crystal;
+        uint32_t gems;
+        uint32_t golds;
         u16 artifact;    // 0xffff - none
         bool computer;    // allow events for computer
         bool cancel;        // cancel event after first visit
@@ -207,13 +207,13 @@ namespace MP2
     struct mp2eventday_t
     {
         u8 id;        // 0x00
-        u32 wood;
-        u32 mercury;
-        u32 ore;
-        u32 sulfur;
-        u32 crystal;
-        u32 gems;
-        u32 golds;
+        uint32_t wood;
+        uint32_t mercury;
+        uint32_t ore;
+        uint32_t sulfur;
+        uint32_t crystal;
+        uint32_t gems;
+        uint32_t golds;
         u16 artifact;    // always 0xffff - none
         u16 computer;    // allow events for computer
         u16 first;        // day of first occurent
@@ -240,13 +240,13 @@ namespace MP2
     struct mp2riddle_t
     {
         u8 id;        // 0x00
-        u32 wood;
-        u32 mercury;
-        u32 ore;
-        u32 sulfur;
-        u32 crystal;
-        u32 gems;
-        u32 golds;
+        uint32_t wood;
+        uint32_t mercury;
+        uint32_t ore;
+        uint32_t sulfur;
+        uint32_t crystal;
+        uint32_t gems;
+        uint32_t golds;
         u16 artifact;    // 0xffff - none
         u8 count;        // count answers (1, 8)
         char answer1[13];

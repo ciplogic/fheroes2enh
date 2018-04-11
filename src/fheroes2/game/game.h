@@ -279,21 +279,21 @@ namespace Game
 
     int CurrentMusic();
 
-    u32 &CastleAnimationFrame();
+    uint32_t &CastleAnimationFrame();
 
-    u32 &MapsAnimationFrame();
+    uint32_t &MapsAnimationFrame();
 
-    u32 GetRating();
+    uint32_t GetRating();
 
-    u32 GetGameOverScores();
+    uint32_t GetGameOverScores();
 
-    u32 GetLostTownDays();
+    uint32_t GetLostTownDays();
 
-    u32 GetViewDistance(u32);
+    uint32_t GetViewDistance(uint32_t);
 
-    u32 GetWhirlpoolPercent();
+    uint32_t GetWhirlpoolPercent();
 
-    u32 SelectCountPlayers();
+    uint32_t SelectCountPlayers();
 
     void ShowLoadMapsText();
 
@@ -320,9 +320,9 @@ namespace Game
         int StartGame();
     }
 
-    u32 GetStep4Player(u32, u32, u32);
+    uint32_t GetStep4Player(uint32_t, uint32_t, uint32_t);
 
-    string CountScoute(u32 count, int scoute, bool shorts = false);
+    string CountScoute(uint32_t count, int scoute, bool shorts = false);
 }
 
 #define HotKeyCloseWindow (Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT) || Game::HotKeyPressEvent(Game::EVENT_DEFAULT_READY))

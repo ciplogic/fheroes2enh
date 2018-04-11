@@ -41,13 +41,13 @@ class HeroBase;
 
 namespace Battle
 {
-    struct ModeDuration : pair<u32, u32>
+    struct ModeDuration : pair<uint32_t, uint32_t>
     {
         ModeDuration();
 
-        ModeDuration(u32, u32);
+        ModeDuration(uint32_t, uint32_t);
 
-        bool isMode(u32) const;
+        bool isMode(uint32_t) const;
 
         bool isZeroDuration() const;
 
@@ -58,15 +58,15 @@ namespace Battle
     {
         ModesAffected();
 
-        u32 GetMode(u32) const;
+        uint32_t GetMode(uint32_t) const;
 
-        void AddMode(u32, u32);
+        void AddMode(uint32_t, uint32_t);
 
-        void RemoveMode(u32);
+        void RemoveMode(uint32_t);
 
         void DecreaseDuration();
 
-        u32 FindZeroDuration() const;
+        uint32_t FindZeroDuration() const;
     };
 
     StreamBase &operator<<(StreamBase &, const ModesAffected &);
@@ -86,7 +86,7 @@ namespace Battle
 
         virtual ~Unit();
 
-        bool isModes(u32) const;
+        bool isModes(uint32_t) const;
 
         bool isBattle() const;
 
@@ -94,11 +94,11 @@ namespace Battle
 
         string GetSpeedString() const;
 
-        u32 GetHitPointsLeft() const;
+        uint32_t GetHitPointsLeft() const;
 
-        u32 GetAffectedDuration(u32) const;
+        uint32_t GetAffectedDuration(uint32_t) const;
 
-        u32 GetSpeed() const;
+        uint32_t GetSpeed() const;
 
         Surface GetContour(int) const;
 
@@ -128,7 +128,7 @@ namespace Battle
 
         bool isHaveDamage() const;
 
-        bool isMagicResist(const Spell &, u32) const;
+        bool isMagicResist(const Spell &, uint32_t) const;
 
         bool isMagicAttack() const;
 
@@ -137,9 +137,9 @@ namespace Battle
 
         string String(bool more = false) const;
 
-        u32 GetUID() const;
+        uint32_t GetUID() const;
 
-        bool isUID(u32) const;
+        bool isUID(uint32_t) const;
 
         s32 GetHeadIndex() const;
 
@@ -153,37 +153,37 @@ namespace Battle
 
         void SetReflection(bool);
 
-        u32 GetAttack() const;
+        uint32_t GetAttack() const;
 
-        u32 GetDefense() const;
+        uint32_t GetDefense() const;
 
         int GetArmyColor() const;
 
         int GetColor() const;
 
-        u32 GetSpeed(bool skip_standing_check) const;
+        uint32_t GetSpeed(bool skip_standing_check) const;
 
         int GetControl() const;
 
-        u32 GetDamage(const Unit &) const;
+        uint32_t GetDamage(const Unit &) const;
 
         s32 GetScoreQuality(const Unit &) const;
 
-        u32 GetDead() const;
+        uint32_t GetDead() const;
 
-        u32 GetHitPointsTroop() const;
+        uint32_t GetHitPointsTroop() const;
 
-        u32 GetShots() const;
+        uint32_t GetShots() const;
 
-        u32 ApplyDamage(Unit &, u32);
+        uint32_t ApplyDamage(Unit &, uint32_t);
 
-        u32 ApplyDamage(u32);
+        uint32_t ApplyDamage(uint32_t);
 
-        u32 GetDamageMin(const Unit &) const;
+        uint32_t GetDamageMin(const Unit &) const;
 
-        u32 GetDamageMax(const Unit &) const;
+        uint32_t GetDamageMax(const Unit &) const;
 
-        u32 CalculateDamageUnit(const Unit &, double) const;
+        uint32_t CalculateDamageUnit(const Unit &, double) const;
 
         bool ApplySpell(const Spell &, const HeroBase *hero, TargetInfo &);
 
@@ -193,13 +193,13 @@ namespace Battle
 
         void ResetBlind();
 
-        void SpellModesAction(const Spell &, u32, const HeroBase *);
+        void SpellModesAction(const Spell &, uint32_t, const HeroBase *);
 
-        void SpellApplyDamage(const Spell &, u32, const HeroBase *, TargetInfo &);
+        void SpellApplyDamage(const Spell &, uint32_t, const HeroBase *, TargetInfo &);
 
-        void SpellRestoreAction(const Spell &, u32, const HeroBase *);
+        void SpellRestoreAction(const Spell &, uint32_t, const HeroBase *);
 
-        u32 Resurrect(u32, bool, bool);
+        uint32_t Resurrect(uint32_t, bool, bool);
 
         const monstersprite_t &
         GetMonsterSprite() const;
@@ -248,9 +248,9 @@ namespace Battle
 
         Rect GetRectPosition() const;
 
-        u32 HowManyCanKill(const Unit &) const;
+        uint32_t HowManyCanKill(const Unit &) const;
 
-        u32 HowManyWillKilled(u32 &) const;
+        uint32_t HowManyWillKilled(uint32_t &) const;
 
         void SetResponse();
 
@@ -262,11 +262,11 @@ namespace Battle
 
         void PostKilledAction();
 
-        u32 GetMagicResist(const Spell &, u32) const;
+        uint32_t GetMagicResist(const Spell &, uint32_t) const;
 
         int GetSpellMagic(bool force = false) const;
 
-        u32 GetObstaclesPenalty(const Unit &) const;
+        uint32_t GetObstaclesPenalty(const Unit &) const;
 
         const HeroBase *GetCommander() const;
 
@@ -277,15 +277,15 @@ namespace Battle
 
         friend ByteVectorReader &operator>>(ByteVectorReader &, Unit &);
         
-        u32 uid;
-        u32 hp;
-        u32 count0;
-        u32 dead;
-        u32 shots;
-        u32 disruptingray;
+        uint32_t uid;
+        uint32_t hp;
+        uint32_t count0;
+        uint32_t dead;
+        uint32_t shots;
+        uint32_t disruptingray;
         bool reflect;
 
-        u32 animstate;
+        uint32_t animstate;
         s32 animframe;
         s32 animstep;
 

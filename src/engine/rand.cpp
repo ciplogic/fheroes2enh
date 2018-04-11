@@ -30,10 +30,10 @@
 
 void Rand::Init()
 {
-    srand((u32) time(nullptr));
+    srand((uint32_t) time(nullptr));
 }
 
-u32 Rand::Get(u32 min, u32 max)
+uint32_t Rand::Get(uint32_t min, uint32_t max)
 {
     if (max)
     {
@@ -42,10 +42,10 @@ u32 Rand::Get(u32 min, u32 max)
         return min + Get(max - min);
     }
 
-    return static_cast<u32>((min + 1) * (rand() / (RAND_MAX + 1.0)));
+    return static_cast<uint32_t>((min + 1) * (rand() / (RAND_MAX + 1.0)));
 }
 
-Rand::Queue::Queue(u32 size)
+Rand::Queue::Queue(uint32_t size)
 {
     reserve(size);
 }
@@ -55,7 +55,7 @@ void Rand::Queue::Reset()
     clear();
 }
 
-void Rand::Queue::Push(s32 value, u32 percent)
+void Rand::Queue::Push(s32 value, uint32_t percent)
 {
     if (percent)
         push_back(make_pair(value, percent));
@@ -70,7 +70,7 @@ s32 Rand::Queue::Get()
 {
     // get max
 
-    u32 max = 0;
+    uint32_t max = 0;
     for (auto &it : *this)
         max += it.second;
 

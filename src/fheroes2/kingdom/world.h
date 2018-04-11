@@ -54,7 +54,7 @@ struct ListActions : public vector<up<ActionSimple>>
 {
 };
 
-struct MapObjects : public unordered_map<u32, MapObjectSimple *>
+struct MapObjects : public unordered_map<uint32_t, MapObjectSimple *>
 {
     ~MapObjects();
 
@@ -64,11 +64,11 @@ struct MapObjects : public unordered_map<u32, MapObjectSimple *>
 
     vector<MapObjectSimple *> get(const Point &);
 
-    MapObjectSimple *get(u32 uid);
+    MapObjectSimple *get(uint32_t uid);
 
     void remove(const Point &);
 
-    void remove(u32 uid);
+    void remove(uint32_t uid);
 };
 
 typedef map<s32, ListActions> MapActions;
@@ -121,9 +121,9 @@ struct CapturedObjects : map<s32, CapturedObject>
 
     Funds TributeCapturedObject(int col, int obj);
 
-    u32 GetCount(int, int) const;
+    uint32_t GetCount(int, int) const;
 
-    u32 GetCountMines(int, int) const;
+    uint32_t GetCountMines(int, int) const;
 
     int GetColor(s32) const;
 };
@@ -135,14 +135,14 @@ struct EventDate
 
     void LoadFromMP2(ByteVectorReader &);
 
-    bool isAllow(int color, u32 date) const;
+    bool isAllow(int color, uint32_t date) const;
 
-    bool isDeprecated(u32 date) const;
+    bool isDeprecated(uint32_t date) const;
 
     Funds resource;
     bool computer;
-    u32 first;
-    u32 subsequent;
+    uint32_t first;
+    uint32_t subsequent;
     int colors;
     string message;
 };
@@ -165,7 +165,7 @@ public:
 
     bool LoadMapMAP(const string &);
 
-    void NewMaps(u32, u32);
+    void NewMaps(uint32_t, uint32_t);
 
     static World &Get();
 
@@ -173,9 +173,9 @@ public:
 
     s32 h() const;
 
-    const Maps::Tiles &GetTiles(u32, u32) const;
+    const Maps::Tiles &GetTiles(uint32_t, uint32_t) const;
 
-    Maps::Tiles &GetTiles(u32, u32);
+    Maps::Tiles &GetTiles(uint32_t, uint32_t);
 
     const Maps::Tiles &GetTiles(s32) const;
 
@@ -219,9 +219,9 @@ public:
 
     int GetMonth() const;
 
-    u32 CountDay() const;
+    uint32_t CountDay() const;
 
-    u32 CountWeek() const;
+    uint32_t CountWeek() const;
 
     bool BeginWeek() const;
 
@@ -254,11 +254,11 @@ public:
 
     void CaptureObject(s32, int col);
 
-    u32 CountCapturedObject(int obj, int col) const;
+    uint32_t CountCapturedObject(int obj, int col) const;
 
-    u32 CountCapturedMines(int type, int col) const;
+    uint32_t CountCapturedMines(int type, int col) const;
 
-    u32 CountObeliskOnMaps();
+    uint32_t CountObeliskOnMaps();
 
     int ColorCapturedObject(s32) const;
 
@@ -291,11 +291,11 @@ public:
 
     MapEvent *GetMapEvent(const Point &);
 
-    MapObjectSimple *GetMapObject(u32 uid);
+    MapObjectSimple *GetMapObject(uint32_t uid);
 
     void RemoveMapObject(const MapObjectSimple *);
 
-    static u32 GetUniq();
+    static uint32_t GetUniq();
 
     void PostFixLoad();
 
@@ -332,9 +332,9 @@ private:
 
     UltimateArtifact ultimate_artifact;
 
-    u32 day;
-    u32 week;
-    u32 month;
+    uint32_t day;
+    uint32_t week;
+    uint32_t month;
 
     Week week_current;
     Week week_next;

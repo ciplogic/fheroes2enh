@@ -34,7 +34,7 @@ namespace Rand
 {
     void Init();
 
-    u32 Get(u32 min, u32 max = 0);
+    uint32_t Get(uint32_t min, uint32_t max = 0);
 
     template<typename T>
     const T *Get(const vector<T> &vec)
@@ -52,16 +52,16 @@ namespace Rand
         return it == lst.end() ? nullptr : &(*it);
     }
 
-    typedef pair<s32, u32> ValuePercent;
+    typedef pair<s32, uint32_t> ValuePercent;
 
     class Queue : private vector<ValuePercent>
     {
     public:
-        Queue(u32 size = 0);
+        Queue(uint32_t size = 0);
 
         void Reset();
 
-        void Push(s32, u32);
+        void Push(s32, uint32_t);
 
         size_t Size() const;
 

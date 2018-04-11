@@ -27,13 +27,13 @@
 
 namespace ObjCrck
 {
-    bool isAction(u32 index);
+    bool isAction(uint32_t index);
 
-    bool isShadow(u32 index);
+    bool isShadow(uint32_t index);
 
-    int GetPassable(u32 index);
+    int GetPassable(uint32_t index);
 
-    int GetActionObject(u32 index);
+    int GetActionObject(uint32_t index);
 }
 
 #endif

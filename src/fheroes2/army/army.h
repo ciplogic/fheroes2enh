@@ -53,7 +53,7 @@ public:
 
     void Insert(const Troops &);
 
-    void PushBack(const Monster &, u32);
+    void PushBack(const Monster &, uint32_t);
 
     void PopBack();
 
@@ -65,9 +65,9 @@ public:
 
     void UpgradeMonsters(const Monster &);
 
-    u32 GetCountMonsters(const Monster &) const;
+    uint32_t GetCountMonsters(const Monster &) const;
 
-    u32 GetCount() const;
+    uint32_t GetCount() const;
 
     bool isValid() const;
 
@@ -75,11 +75,11 @@ public:
 
     bool AllTroopsIsRace(int) const;
 
-    u32 GetUniqueCount() const;
+    uint32_t GetUniqueCount() const;
 
     bool JoinTroop(const Troop &);
 
-    bool JoinTroop(const Monster &, u32);
+    bool JoinTroop(const Monster &, uint32_t);
 
     bool CanJoinTroop(const Monster &) const;
 
@@ -89,17 +89,17 @@ public:
 
     Troops GetOptimized() const;
 
-    virtual u32 GetAttack() const;
+    virtual uint32_t GetAttack() const;
 
-    virtual u32 GetDefense() const;
+    virtual uint32_t GetDefense() const;
 
-    u32 GetHitPoints() const;
+    uint32_t GetHitPoints() const;
 
-    u32 GetDamageMin() const;
+    uint32_t GetDamageMin() const;
 
-    u32 GetDamageMax() const;
+    uint32_t GetDamageMax() const;
 
-    u32 GetStrength() const;
+    uint32_t GetStrength() const;
 
     void Clean();
 
@@ -117,9 +117,9 @@ public:
 
     void KeepOnlyWeakest(Troops &, bool);
 
-    void DrawMons32LineWithScoute(s32, s32, u32, u32, u32, u32, bool) const;
+    void DrawMons32LineWithScoute(s32, s32, uint32_t, uint32_t, uint32_t, uint32_t, bool) const;
 
-    void SplitTroopIntoFreeSlots(const Troop &, u32);
+    void SplitTroopIntoFreeSlots(const Troop &, uint32_t);
 
     vector<sp<Troop>> _items;
 };
@@ -129,12 +129,12 @@ enum
     JOIN_NONE, JOIN_FREE, JOIN_COST, JOIN_FLEE
 };
 
-struct JoinCount : pair<int, u32>
+struct JoinCount : pair<int, uint32_t>
 {
-    JoinCount() : pair<int, u32>(JOIN_NONE, 0)
+    JoinCount() : pair<int, uint32_t>(JOIN_NONE, 0)
     {}
 
-    JoinCount(int reason, u32 count) : pair<int, u32>(reason, count)
+    JoinCount(int reason, uint32_t count) : pair<int, uint32_t>(reason, count)
     {}
 };
 
@@ -143,7 +143,7 @@ class Army : public Control
 public:
     Troops m_troops;
 
-    static string SizeString(u32);
+    static string SizeString(uint32_t);
 
     static string TroopSizeString(const Troop &);
 
@@ -158,18 +158,18 @@ public:
 
     static void SwapTroops(Troop &, Troop &);
 
-    static u32 UniqueCount(const Army &);
+    static uint32_t UniqueCount(const Army &);
 
     // 0: fight, 1: free join, 2: join with gold, 3: flee
     static JoinCount GetJoinSolution(const Heroes &, const Maps::Tiles &, const Troop &);
 
     static bool TroopsStrongerEnemyTroops(const Troops &, const Troops &);
 
-    static void DrawMons32Line(const Troops &, s32, s32, u32, u32 = 0, u32 = 0);
+    static void DrawMons32Line(const Troops &, s32, s32, uint32_t, uint32_t = 0, uint32_t = 0);
 
-    static void DrawMons32LineWithScoute(const Troops &, s32, s32, u32, u32, u32, u32);
+    static void DrawMons32LineWithScoute(const Troops &, s32, s32, uint32_t, uint32_t, uint32_t, uint32_t);
 
-    static void DrawMons32LineShort(const Troops &, s32, s32, u32, u32, u32);
+    static void DrawMons32LineShort(const Troops &, s32, s32, uint32_t, uint32_t, uint32_t);
 
     Army(HeroBase *s = nullptr);
 
@@ -185,9 +185,9 @@ public:
 
     int GetControl() const;
 
-    u32 GetAttack() const;
+    uint32_t GetAttack() const;
 
-    u32 GetDefense() const;
+    uint32_t GetDefense() const;
 
     void SetColor(int);
 
@@ -199,7 +199,7 @@ public:
 
     static int GetLuckModificator(string *);
 
-    u32 ActionToSirens();
+    uint32_t ActionToSirens();
 
     const HeroBase *GetCommander() const;
 

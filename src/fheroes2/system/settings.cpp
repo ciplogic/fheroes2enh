@@ -113,13 +113,13 @@ enum
 
 struct settings_t
 {
-    u32 id;
+    uint32_t id;
     std::string str;
 
     bool operator==(const string &s) const
     { return str.size() && s == str; };
 
-    bool operator==(u32 i) const
+    bool operator==(uint32_t i) const
     { return id && id == i; };
 };
 
@@ -1011,7 +1011,7 @@ bool Settings::WinsFindUltimateArtifact() const
     return current_maps_file.WinsFindUltimateArtifact();
 }
 
-u32 Settings::WinsAccumulateGold() const
+uint32_t Settings::WinsAccumulateGold() const
 {
     return current_maps_file.WinsAccumulateGold();
 }
@@ -1026,7 +1026,7 @@ Point Settings::LossMapsPositionObject() const
     return current_maps_file.LossMapsPositionObject();
 }
 
-u32 Settings::LossCountDays() const
+uint32_t Settings::LossCountDays() const
 {
     return current_maps_file.LossCountDays();
 }
@@ -1101,14 +1101,14 @@ void Settings::SetShowStatus(bool f)
     f ? opt_global.SetModes(GLOBAL_SHOWSTATUS) : opt_global.ResetModes(GLOBAL_SHOWSTATUS);
 }
 
-bool Settings::CanChangeInGame(u32 f) const
+bool Settings::CanChangeInGame(uint32_t f) const
 {
     return (f >> 28) == 0x01; // GAME_ and POCKETPC_
 }
 
-bool Settings::ExtModes(u32 f) const
+bool Settings::ExtModes(uint32_t f) const
 {
-    const u32 mask = 0x0FFFFFFF;
+    const uint32_t mask = 0x0FFFFFFF;
     switch (f >> 28)
     {
         case 0x01:
@@ -1125,7 +1125,7 @@ bool Settings::ExtModes(u32 f) const
     return false;
 }
 
-std::string Settings::ExtName(u32 f) const
+std::string Settings::ExtName(uint32_t f) const
 {
     const settings_t *ptr = find(settingsFHeroes2,
                                  ARRAY_COUNT_END(settingsFHeroes2) - 1, f);
@@ -1133,9 +1133,9 @@ std::string Settings::ExtName(u32 f) const
     return ptr ? _(ptr->str) : nullptr;
 }
 
-void Settings::ExtSetModes(u32 f)
+void Settings::ExtSetModes(uint32_t f)
 {
-    const u32 mask = 0x0FFFFFFF;
+    const uint32_t mask = 0x0FFFFFFF;
     switch (f >> 28)
     {
         case 0x01:
@@ -1155,9 +1155,9 @@ void Settings::ExtSetModes(u32 f)
     }
 }
 
-void Settings::ExtResetModes(u32 f)
+void Settings::ExtResetModes(uint32_t f)
 {
-    const u32 mask = 0x0FFFFFFF;
+    const uint32_t mask = 0x0FFFFFFF;
     switch (f >> 28)
     {
         case 0x01:
@@ -1591,12 +1591,12 @@ void Settings::BinaryLoad()
     }
 }
 
-void Settings::SetMemoryLimit(u32 limit)
+void Settings::SetMemoryLimit(uint32_t limit)
 {
     memory_limit = limit;
 }
 
-u32 Settings::MemoryLimit() const
+uint32_t Settings::MemoryLimit() const
 {
     return memory_limit;
 }
@@ -1639,7 +1639,7 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, Settings &conf)
     }
 
     int debug;
-    u32 opt_game = 0; // skip: settings
+    uint32_t opt_game = 0; // skip: settings
 
     // map file
     msg >> conf.current_maps_file >>

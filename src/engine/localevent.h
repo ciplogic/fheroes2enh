@@ -182,7 +182,7 @@ public:
 
     void SetTapMode(bool);
 
-    void SetTapDelayForRightClickEmulation(u32);
+    void SetTapDelayForRightClickEmulation(uint32_t);
 
     void SetMouseOffsetX(s16);
 
@@ -190,9 +190,9 @@ public:
 
     static void SetStateDefaults();
 
-    static void SetState(u32 type, bool enable);
+    static void SetState(uint32_t type, bool enable);
 
-    static int GetState(u32 type);
+    static int GetState(uint32_t type);
 
     bool HandleEvents(bool delay = true);
 
@@ -246,7 +246,7 @@ public:
 
     bool MousePressLeft(const Rect &rt) const;
 
-    bool MousePressLeft(const Point &pt, u32 w, u32 h) const;
+    bool MousePressLeft(const Point &pt, uint32_t w, uint32_t h) const;
 
     bool MousePressMiddle() const;
 
@@ -347,7 +347,7 @@ private:
     void (*keyboard_filter_func)(int, int);
 
     SDL::Time clock;
-    u32 clock_delay;
+    uint32_t clock_delay;
     int loop_delay;
 
 #ifdef WITHOUT_MOUSE

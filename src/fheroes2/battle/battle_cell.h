@@ -68,7 +68,7 @@ namespace Battle
 
         void SetDirection(int);
 
-        void SetQuality(u32);
+        void SetQuality(uint32_t);
 
         void SetArea(const Rect &);
 

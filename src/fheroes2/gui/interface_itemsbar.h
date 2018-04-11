@@ -54,9 +54,9 @@ namespace Interface
         virtual ~ItemsBar() = default;
 
         /*
-	void		SetColRows(u32, u32);
+	void		SetColRows(uint32_t, uint32_t);
 	void        	SetPos(s32, s32);
-	void        	SetItemSize(u32, u32);
+	void        	SetItemSize(uint32_t, uint32_t);
 	void		SetHSpace(int);
 	void		SetVSpace(int);
 	void		SetContent(const std::list<Item> &);
@@ -87,7 +87,7 @@ namespace Interface
         { return false; }
 
         //body
-        void SetColRows(u32 col, u32 row)
+        void SetColRows(uint32_t col, uint32_t row)
         {
             colrows.w = col;
             colrows.h = row;
@@ -118,7 +118,7 @@ namespace Interface
             barsz.y = py;
         }
 
-        void SetItemSize(u32 pw, u32 ph)
+        void SetItemSize(uint32_t pw, uint32_t ph)
         {
             itemsz.w = pw;
             itemsz.h = ph;
@@ -174,9 +174,9 @@ namespace Interface
         {
             Point dstpt(barsz);
 
-            for (u32 yy = 0; yy < colrows.h; ++yy)
+            for (uint32_t yy = 0; yy < colrows.h; ++yy)
             {
-                for (u32 xx = 0; xx < colrows.w; ++xx)
+                for (uint32_t xx = 0; xx < colrows.w; ++xx)
                 {
                     RedrawBackground(Rect(dstpt, itemsz.w, itemsz.h), dstsf);
 
@@ -190,9 +190,9 @@ namespace Interface
             dstpt = barsz;
             ItemsIterator posItem = GetTopItemIter();
 
-            for (u32 yy = 0; yy < colrows.h; ++yy)
+            for (uint32_t yy = 0; yy < colrows.h; ++yy)
             {
-                for (u32 xx = 0; xx < colrows.w; ++xx)
+                for (uint32_t xx = 0; xx < colrows.w; ++xx)
                 {
                     if (posItem != items.end())
                     {
@@ -278,9 +278,9 @@ namespace Interface
             Rect dstrt(barsz, itemsz.w, itemsz.h);
             ItemsIterator posItem = GetTopItemIter();
 
-            for (u32 yy = 0; yy < colrows.h; ++yy)
+            for (uint32_t yy = 0; yy < colrows.h; ++yy)
             {
-                for (u32 xx = 0; xx < colrows.w; ++xx)
+                for (uint32_t xx = 0; xx < colrows.w; ++xx)
                 {
                     if (posItem != items.end())
                     {

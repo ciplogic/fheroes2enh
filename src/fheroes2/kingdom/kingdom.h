@@ -42,9 +42,9 @@ struct AllCastles;
 struct VecCastles;
 struct CapturedObjects;
 
-struct LastLoseHero : pair<int, u32> /* Heroes, date */
+struct LastLoseHero : pair<int, uint32_t> /* Heroes, date */
 {
-    LastLoseHero() : pair<int, u32>(Heroes::UNKNOWN, 0)
+    LastLoseHero() : pair<int, uint32_t>(Heroes::UNKNOWN, 0)
     {}
 };
 
@@ -122,25 +122,25 @@ public:
 
     Funds GetIncome(int = INCOME_ALL) const;
 
-    u32 GetArmiesStrength() const;
+    uint32_t GetArmiesStrength() const;
 
     void AddFundsResource(const Funds &);
 
     void OddFundsResource(const Funds &);
 
-    u32 GetCountCastle() const;
+    uint32_t GetCountCastle() const;
 
-    u32 GetCountTown() const;
+    uint32_t GetCountTown() const;
 
-    u32 GetCountMarketplace() const;
+    uint32_t GetCountMarketplace() const;
 
-    u32 GetCountCapital() const;
+    uint32_t GetCountCapital() const;
 
-    u32 GetLostTownDays() const;
+    uint32_t GetLostTownDays() const;
 
-    u32 GetCountNecromancyShrineBuild() const;
+    uint32_t GetCountNecromancyShrineBuild() const;
 
-    u32 GetCountBuilding(u32) const;
+    uint32_t GetCountBuilding(uint32_t) const;
 
     Recruits &GetRecruits();
 
@@ -182,7 +182,7 @@ public:
 
     void SetVisited(s32 index, int object = MP2::OBJ_ZERO);
 
-    u32 CountVisitedObjects(int object) const;
+    uint32_t CountVisitedObjects(int object) const;
 
     bool isVisited(int object) const;
 
@@ -205,7 +205,7 @@ public:
 
     void LossPostActions();
 
-    static u32 GetMaxHeroes();
+    static uint32_t GetMaxHeroes();
 
 private:
     friend StreamBase &operator<<(StreamBase &, const Kingdom &);
@@ -217,7 +217,7 @@ private:
     int color;
     Funds resource;
 
-    u32 lost_town_days;
+    uint32_t lost_town_days;
 
     KingdomCastles castles;
     KingdomHeroes heroes;
@@ -229,7 +229,7 @@ private:
             visit_object;
 
     Puzzle puzzle_maps;
-    u32 visited_tents_colors;
+    uint32_t visited_tents_colors;
 
     KingdomHeroes heroes_cond_loss;
 };
@@ -268,9 +268,9 @@ public:
 
     void AddCondLossHeroes(const AllHeroes &);
 
-    void AddTributeEvents(CapturedObjects &, u32 day, int obj);
+    void AddTributeEvents(CapturedObjects &, uint32_t day, int obj);
 
-    u32 size() const;
+    uint32_t size() const;
 
 private:
     friend StreamBase &operator<<(StreamBase &, const Kingdoms &);

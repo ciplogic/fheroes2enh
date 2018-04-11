@@ -18,37 +18,37 @@ bool BinaryFileReader::open(const std::string &cs, const char *rb)
     return _file != nullptr;
 }
 
-void BinaryFileReader::seek(u32 pos) const
+void BinaryFileReader::seek(uint32_t pos) const
 {
     fseek(_file, pos, SEEK_SET);
 }
 
-u32 BinaryFileReader::size()
+uint32_t BinaryFileReader::size()
 {
     fseek(_file, 0L, SEEK_END);
-    u32 sz = ftell(_file);
+    uint32_t sz = ftell(_file);
     seek(0);
     return sz;
 }
 
-u32 BinaryFileReader::getLE16()
+uint32_t BinaryFileReader::getLE16()
 {
     fread(defaultBuf, 1, 2, _file);
-    u32 result = defaultBuf[0] + (defaultBuf[1] << 8);
+    uint32_t result = defaultBuf[0] + (defaultBuf[1] << 8);
     return result;
 }
 
-u32 BinaryFileReader::getLE32()
+uint32_t BinaryFileReader::getLE32()
 {
     fread(defaultBuf, 1, 4, _file);
-    u32 result = defaultBuf[0];
+    uint32_t result = defaultBuf[0];
     result += defaultBuf[1] << 8;
     result += defaultBuf[2] << 16;
     result += defaultBuf[3] << 24;
     return result;
 }
 
-std::vector<u8> BinaryFileReader::getRaw(u32 size) const
+std::vector<u8> BinaryFileReader::getRaw(uint32_t size) const
 {
     up<u8> data(new u8[size]);
     fread(data.get(), 1, size, _file);
@@ -77,10 +77,10 @@ int BinaryFileReader::get()
     return result;
 }
 
-u32 BinaryFileReader::getBE32()
+uint32_t BinaryFileReader::getBE32()
 {
     fread(defaultBuf, 1, 4, _file);
-    u32 result = defaultBuf[3];
+    uint32_t result = defaultBuf[3];
     result += defaultBuf[2] << 8;
     result += defaultBuf[1] << 16;
     result += defaultBuf[0] << 24;
@@ -92,7 +92,7 @@ void BinaryFileReader::skip(s32 pos) const
     fseek(_file, pos, SEEK_CUR);
 }
 
-u32 BinaryFileReader::tell() const
+uint32_t BinaryFileReader::tell() const
 {
     return ftell(_file);
 }

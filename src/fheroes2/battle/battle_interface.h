@@ -54,7 +54,7 @@ namespace Battle
 
     void DialogBattleSettings();
 
-    bool DialogBattleSurrender(const HeroBase &, u32);
+    bool DialogBattleSurrender(const HeroBase &, uint32_t);
 
     enum
     {
@@ -305,15 +305,15 @@ namespace Battle
 
         void ButtonWaitAction(Actions &);
 
-        void MouseLeftClickBoardAction(u32, const Cell &, Actions &);
+        void MouseLeftClickBoardAction(uint32_t, const Cell &, Actions &);
 
-        void MousePressRightBoardAction(u32, const Cell &, Actions &);
+        void MousePressRightBoardAction(uint32_t, const Cell &, Actions &);
 
         int GetBattleCursor(string &);
 
         int GetBattleSpellCursor(string &) const;
 
-        int GetAllowSwordDirection(u32) const;
+        int GetAllowSwordDirection(uint32_t) const;
 
         void CreateDamageInfoPopup(s32, s32, const Unit &, const Unit &);
 
@@ -340,14 +340,14 @@ namespace Battle
         Spell humanturn_spell;
         bool humanturn_exit;
         bool humanturn_redraw;
-        u32 animation_flags_frame;
+        uint32_t animation_flags_frame;
         int catapult_frame;
 
         const Unit *b_current;
         const Unit *b_move;
         const Unit *b_fly;
         const Sprite *b_current_sprite;
-        u32 b_current_alpha;
+        uint32_t b_current_alpha;
         Point p_move;
         Point p_fly;
 
@@ -357,7 +357,7 @@ namespace Battle
         Rect main_tower;
 
         up<StatusListBox> listlog;
-        u32 turn;
+        uint32_t turn;
 
         PopupDamageInfo popup;
         ArmiesOrder armies_order;

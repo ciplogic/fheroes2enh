@@ -57,19 +57,19 @@ namespace AGG
 
     int PutICN(const Sprite &, bool init_reflect = false);
 
-    Sprite GetICN(int icn, u32 index, bool reflect = false);
+    Sprite GetICN(int icn, uint32_t index, bool reflect = false);
 
-    u32 GetICNCount(int icn);
+    uint32_t GetICNCount(int icn);
 
-    Surface GetTIL(int til, u32 index, u32 shape);
+    Surface GetTIL(int til, uint32_t index, uint32_t shape);
 
-    Surface GetLetter(u32 ch, u32 ft);
+    Surface GetLetter(uint32_t ch, uint32_t ft);
 
 #ifdef WITH_TTF
 
-    Surface GetUnicodeLetter(u32 ch, u32 ft);
+    Surface GetUnicodeLetter(uint32_t ch, uint32_t ft);
 
-    u32 GetFontHeight(bool small);
+    uint32_t GetFontHeight(bool small);
 
 #endif
 
@@ -81,11 +81,11 @@ namespace AGG
 
     void ResetMixer();
 
-    RGBA GetPaletteColor(u32 index);
+    RGBA GetPaletteColor(uint32_t index);
 
     void DrawPointFast(Surface &srf, int x, int y, u8 color);
 
-    ICNSprite RenderICNSprite(int, u32);
+    ICNSprite RenderICNSprite(int, uint32_t);
 
-    void RenderICNSprite(int icn, u32 index, const Rect &srt, const Point &dpt, Surface &dst);
+    void RenderICNSprite(int icn, uint32_t index, const Rect &srt, const Point &dpt, Surface &dst);
 }

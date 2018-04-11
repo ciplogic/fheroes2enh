@@ -18,31 +18,31 @@ class ByteVectorReader
 public:
     explicit ByteVectorReader(const std::vector<u8> &data);
 
-    void skip(u32 sz);
+    void skip(uint32_t sz);
 
-    u32 Get8();
+    uint32_t Get8();
 
-    u32 getLE16();
+    uint32_t getLE16();
 
-    u32 getLE32();
+    uint32_t getLE32();
 
     u16 get16();
 
-    u32 get32();
+    uint32_t get32();
 
 
-    u32 getBE16();
+    uint32_t getBE16();
 
-    u32 getBE32();
+    uint32_t getBE32();
 
 
-    u32 size() const;
+    uint32_t size() const;
 
-    void seek(u32 pos);
+    void seek(uint32_t pos);
 
-    u32 get();
+    uint32_t get();
 
-    u32 tell() const;
+    uint32_t tell() const;
 
     std::vector<u8> getRaw(size_t sizeblock);
 
@@ -58,7 +58,7 @@ public:
     template<class Type>
     void readToVec(std::vector<Type> &v)
     {
-        const u32 size = get32();
+        const uint32_t size = get32();
         v.resize(size);
         for (auto &it : v)
             it.ReadFrom(*this);
@@ -67,7 +67,7 @@ public:
     template<class Type>
     ByteVectorReader &operator>>(std::vector<Type> &v)
     {
-        const u32 size = get32();
+        const uint32_t size = get32();
         v.resize(size);
         for (auto &it : v)
             *this >> it;
@@ -77,7 +77,7 @@ public:
     template<class Type>
     ByteVectorReader &operator>>(std::list<Type> &v)
     {
-        const u32 size = get32();
+        const uint32_t size = get32();
         v.resize(size);
         for (auto &it : v)
             *this >> it;
@@ -93,9 +93,9 @@ public:
     template<class Type1, class Type2>
     ByteVectorReader &operator>>(std::map<Type1, Type2> &v)
     {
-        const u32 size = get32();
+        const uint32_t size = get32();
         v.clear();
-        for (u32 ii = 0; ii < size; ++ii)
+        for (uint32_t ii = 0; ii < size; ++ii)
         {
             std::pair<Type1, Type2> pr;
             *this >> pr;
@@ -116,7 +116,7 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, u16 &val);
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, s16 &val);
 
-ByteVectorReader &operator>>(ByteVectorReader &, u32 &);
+ByteVectorReader &operator>>(ByteVectorReader &, uint32_t &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, s32 &);
 

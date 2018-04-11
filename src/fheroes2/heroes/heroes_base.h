@@ -70,11 +70,11 @@ public:
 
     virtual Army &GetArmy() = 0;
 
-    virtual u32 GetMaxSpellPoints() const = 0;
+    virtual uint32_t GetMaxSpellPoints() const = 0;
 
     virtual int GetLevelSkill(int skill) const = 0;
 
-    virtual u32 GetSecondaryValues(int skill) const = 0;
+    virtual uint32_t GetSecondaryValues(int skill) const = 0;
 
     virtual void ActionAfterBattle() = 0;
 
@@ -102,7 +102,7 @@ public:
 
     int GetLuckModificator(string * = nullptr) const;
 
-    u32 GetSpellPoints() const;
+    uint32_t GetSpellPoints() const;
 
     bool HaveSpellPoints(const Spell &) const;
 
@@ -118,7 +118,7 @@ public:
 
     void SpellCasted(const Spell &);
 
-    void SetSpellPoints(u32);
+    void SetSpellPoints(uint32_t);
 
     void EditSpellBook();
 
@@ -138,7 +138,7 @@ public:
 
     const BagArtifacts &GetBagArtifacts() const;
 
-    u32 HasArtifact(const Artifact &) const;
+    uint32_t HasArtifact(const Artifact &) const;
 
     bool PickupArtifact(const Artifact &);
 
@@ -153,8 +153,8 @@ protected:
 
     friend ByteVectorReader &operator>>(ByteVectorReader &, HeroBase &);
 
-    u32 magic_point;
-    u32 move_point;
+    uint32_t magic_point;
+    uint32_t move_point;
 
     SpellBook spell_book;
     BagArtifacts bag_artifacts;

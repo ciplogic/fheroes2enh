@@ -58,11 +58,11 @@ namespace Maps
 
         TilesAddon();
 
-        TilesAddon(int lv, u32 gid, int obj, u32 ii);
+        TilesAddon(int lv, uint32_t gid, int obj, uint32_t ii);
 
         TilesAddon &operator=(const TilesAddon &ta);
 
-        bool isUniq(u32) const;
+        bool isUniq(uint32_t) const;
 
         bool isRoad(int) const;
 
@@ -181,7 +181,7 @@ namespace Maps
 
         static bool ForceLevel2(const TilesAddon &);
 
-        u32 uniq;
+        uint32_t uniq;
         u8 level;
         u8 object;
         u8 index;
@@ -190,7 +190,7 @@ namespace Maps
 
     struct Addons : vector<TilesAddon>
     {
-        void Remove(u32 uniq);
+        void Remove(uint32_t uniq);
     };
 
     class Tiles
@@ -206,7 +206,7 @@ namespace Maps
 
         int GetObject(bool skip_hero = true) const;
 
-        u32 GetObjectUID(int obj) const;
+        uint32_t GetObjectUID(int obj) const;
 
         int GetQuantity1() const
         { return quantity1; }
@@ -220,9 +220,9 @@ namespace Maps
 
         bool isWater() const;
 
-        u32 TileSpriteIndex() const;
+        uint32_t TileSpriteIndex() const;
 
-        u32 TileSpriteShape() const;
+        uint32_t TileSpriteShape() const;
 
         Surface GetTileSurface() const;
 
@@ -243,15 +243,15 @@ namespace Maps
 
         TilesAddon *FindAddonICN2(int icn2);
 
-        TilesAddon *FindAddonLevel1(u32 uniq1);
+        TilesAddon *FindAddonLevel1(uint32_t uniq1);
 
-        TilesAddon *FindAddonLevel2(u32 uniq2);
+        TilesAddon *FindAddonLevel2(uint32_t uniq2);
 
         TilesAddon *FindObject(int);
 
         const TilesAddon *FindObjectConst(int) const;
 
-        void SetTile(u32 sprite_index, u32 shape /* 0: none, 1 : vert, 2: horz, 3: both */);
+        void SetTile(uint32_t sprite_index, uint32_t shape /* 0: none, 1 : vert, 2: horz, 3: both */);
 
         void SetObject(int object);
 
@@ -293,7 +293,7 @@ namespace Maps
 
         void AddonsSort();
 
-        void Remove(u32 uniq);
+        void Remove(uint32_t uniq);
 
         void RemoveObjectSprite();
 
@@ -320,9 +320,9 @@ namespace Maps
 
         bool MonsterFixedCount() const;
 
-        void MonsterSetCount(u32 count);
+        void MonsterSetCount(uint32_t count);
 
-        u32 MonsterCount() const;
+        uint32_t MonsterCount() const;
 
         bool CaptureObjectIsProtection() const;
 
@@ -343,7 +343,7 @@ namespace Maps
 
         int QuantityColor() const;
 
-        u32 QuantityGold() const;
+        uint32_t QuantityGold() const;
 
         Spell QuantitySpell() const;
 
@@ -365,7 +365,7 @@ namespace Maps
 
         void SetHeroes(Heroes *);
 
-        static void PlaceMonsterOnTile(Tiles &, const Monster &, u32);
+        static void PlaceMonsterOnTile(Tiles &, const Monster &, uint32_t);
 
         static void UpdateAbandoneMineSprite(Tiles &);
 
@@ -374,7 +374,7 @@ namespace Maps
     private:
         TilesAddon *FindFlags();
 
-        void CorrectFlags32(u32 index, bool);
+        void CorrectFlags32(uint32_t index, bool);
 
         void RemoveJailSprite();
 
@@ -396,7 +396,7 @@ namespace Maps
 
         void QuantitySetArtifact(int);
 
-        void QuantitySetResource(int, u32);
+        void QuantitySetResource(int, uint32_t);
 
         void QuantitySetTeleportType(int);
 
@@ -430,7 +430,7 @@ namespace Maps
         Addons addons_level1;
         Addons addons_level2; // 16
 
-        u32 maps_index;
+        uint32_t maps_index;
         u16 pack_sprite_index;
 
         u16 tile_passable;

@@ -53,7 +53,7 @@ namespace SDL
 
         bool IsRun() const;
 
-        u32 GetID() const;
+        uint32_t GetID() const;
 
     private:
         SDL_Thread *thread;
@@ -88,7 +88,7 @@ namespace SDL
 
         bool IsValid() const;
 
-        void Run(u32, u32 (*)(u32, void *), void *param = nullptr);
+        void Run(uint32_t, uint32_t (*)(uint32_t, void *), void *param = nullptr);
 
         void Remove();
 
@@ -105,13 +105,13 @@ namespace SDL
 
         void Stop();
 
-        u32 Get() const;
+        uint32_t Get() const;
 
         void Print(const char *header = nullptr) const;
 
     private:
-        u32 tick1;
-        u32 tick2;
+        uint32_t tick1;
+        uint32_t tick2;
     };
 
 }

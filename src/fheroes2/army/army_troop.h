@@ -34,7 +34,7 @@ class Troop : public Monster
 public:
     Troop();
 
-    Troop(const Monster &, u32);
+    Troop(const Monster &, uint32_t);
 
     bool operator==(const Monster &) const;
 
@@ -42,11 +42,11 @@ public:
 
     void Set(const Troop &);
 
-    void Set(const Monster &, u32);
+    void Set(const Monster &, uint32_t);
 
     void SetMonster(const Monster &);
 
-    void SetCount(u32);
+    void SetCount(uint32_t);
 
     void Reset();
 
@@ -54,17 +54,17 @@ public:
 
     std::string GetName() const;
 
-    u32 GetCount() const;
+    uint32_t GetCount() const;
 
-    u32 GetHitPointsTroop() const;
+    uint32_t GetHitPointsTroop() const;
 
     Monster GetMonster() const;
 
-    u32 GetDamageMin() const;
+    uint32_t GetDamageMin() const;
 
-    u32 GetDamageMax() const;
+    uint32_t GetDamageMax() const;
 
-    u32 GetStrength() const;
+    uint32_t GetStrength() const;
 
 
     payment_t GetCost() const;
@@ -75,7 +75,7 @@ public:
 
     virtual bool isBattle() const;
 
-    static bool isModes(u32);
+    static bool isModes(uint32_t);
 
     string GetAttackString() const;
 
@@ -85,18 +85,18 @@ public:
 
     string GetSpeedString() const;
 
-    u32 GetHitPointsLeft() const;
+    uint32_t GetHitPointsLeft() const;
 
-    u32 GetSpeed() const;
+    uint32_t GetSpeed() const;
 
-    u32 GetAffectedDuration(u32) const;
+    uint32_t GetAffectedDuration(uint32_t) const;
 
 protected:
     friend StreamBase &operator<<(StreamBase &, const Troop &);
 
     friend ByteVectorReader &operator>>(ByteVectorReader &msg, Troop &troop);
 
-    u32 count;
+    uint32_t count;
 };
 
 StreamBase &operator<<(StreamBase &, const Troop &);
@@ -112,9 +112,9 @@ public:
 
     ArmyTroop &operator=(const Troop &);
 
-    u32 GetAttack() const;
+    uint32_t GetAttack() const;
 
-    u32 GetDefense() const;
+    uint32_t GetDefense() const;
 
     int GetColor() const;
 

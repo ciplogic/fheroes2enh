@@ -6,29 +6,29 @@ ByteVectorReader::ByteVectorReader(const std::vector<u8> &data)
 {
 }
 
-void ByteVectorReader::skip(u32 sz)
+void ByteVectorReader::skip(uint32_t sz)
 {
     _pos += sz;
 }
 
-u32 ByteVectorReader::Get8()
+uint32_t ByteVectorReader::Get8()
 {
-    const u32 result = _data[_pos];
+    const uint32_t result = _data[_pos];
     _pos++;
     return result;
 }
 
-u32 ByteVectorReader::getLE16()
+uint32_t ByteVectorReader::getLE16()
 {
-    u32 lo = Get8();
-    u32 hi = Get8();
+    uint32_t lo = Get8();
+    uint32_t hi = Get8();
     return lo + (hi << 8);
 }
 
-u32 ByteVectorReader::getLE32()
+uint32_t ByteVectorReader::getLE32()
 {
-    u32 lo = getLE16();
-    u32 hi = getLE16();
+    uint32_t lo = getLE16();
+    uint32_t hi = getLE16();
     return lo + (hi << 16);
 }
 
@@ -38,46 +38,46 @@ u16 ByteVectorReader::get16()
     return value;
 }
 
-u32 ByteVectorReader::get32()
+uint32_t ByteVectorReader::get32()
 {
-    u32 value = _isBigEndian ? getBE32() : getLE32();
+    uint32_t value = _isBigEndian ? getBE32() : getLE32();
     return value;
 }
 
-u32 ByteVectorReader::getBE16()
+uint32_t ByteVectorReader::getBE16()
 {
-    u32 lo = Get8();
-    u32 hi = Get8();
+    uint32_t lo = Get8();
+    uint32_t hi = Get8();
     return hi + (lo << 8);
 }
 
-u32 ByteVectorReader::getBE32()
+uint32_t ByteVectorReader::getBE32()
 {
-    u32 lo1 = Get8();
-    u32 hi1 = Get8();
-    u32 lo2 = Get8();
-    u32 hi2 = Get8();
-    u32 lo = hi1 + (lo1 << 8);
-    u32 hi = hi2 + (lo2 << 8);
+    uint32_t lo1 = Get8();
+    uint32_t hi1 = Get8();
+    uint32_t lo2 = Get8();
+    uint32_t hi2 = Get8();
+    uint32_t lo = hi1 + (lo1 << 8);
+    uint32_t hi = hi2 + (lo2 << 8);
     return hi + (lo << 16);
 }
 
-u32 ByteVectorReader::size() const
+uint32_t ByteVectorReader::size() const
 {
     return _data.size();
 }
 
-void ByteVectorReader::seek(u32 pos)
+void ByteVectorReader::seek(uint32_t pos)
 {
     _pos = pos;
 }
 
-u32 ByteVectorReader::get()
+uint32_t ByteVectorReader::get()
 {
     return Get8();
 }
 
-u32 ByteVectorReader::tell() const
+uint32_t ByteVectorReader::tell() const
 {
     return _pos;
 }
@@ -124,7 +124,7 @@ ByteVectorReader &ByteVectorReader::operator>>(float &v)
     return *this;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, u32 &val)
+ByteVectorReader &operator>>(ByteVectorReader &msg, uint32_t &val)
 {
     val = msg.get32();
     return msg;
@@ -138,7 +138,7 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, bool &v)
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, std::string &v)
 {
-    u32 size = msg.get32();
+    uint32_t size = msg.get32();
     v.resize(size);
 
     for (char &it : v)

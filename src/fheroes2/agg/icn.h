@@ -920,15 +920,15 @@ namespace ICN
 
     int FromString(const char *);
 
-    u32 AnimationFrame(int icn, u32, u32, bool = false);
+    uint32_t AnimationFrame(int icn, uint32_t, uint32_t, bool = false);
 
-    bool NeedMinify4PocketPC(int icn, u32);
+    bool NeedMinify4PocketPC(int icn, uint32_t);
 
-    bool HighlyObjectSprite(int icn, u32);
+    bool HighlyObjectSprite(int icn, uint32_t);
 
     int PORTxxxx(int heroId);
 
-    u32 GetMissIndex(int icn, s32, s32);
+    uint32_t GetMissIndex(int icn, s32, s32);
 
     bool isBattleMonsterICN(int);
 

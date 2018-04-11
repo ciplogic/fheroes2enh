@@ -171,15 +171,15 @@ std::string Spell::GetDescription() const
     return _(spells[id].description);
 }
 
-u32 Spell::MovePoint() const
+uint32_t Spell::MovePoint() const
 {
     return spells[id].mp;
 }
 
-u32 Spell::SpellPoint(const HeroBase *hero) const
+uint32_t Spell::SpellPoint(const HeroBase *hero) const
 {
-    u32 res = spells[id].sp;
-    u32 acount = 0;
+    uint32_t res = spells[id].sp;
+    uint32_t acount = 0;
 
     if (hero)
     {
@@ -363,7 +363,7 @@ bool Spell::isDamage() const
     return Damage();
 }
 
-u32 Spell::Damage() const
+uint32_t Spell::Damage() const
 {
     switch (id)
     {
@@ -407,12 +407,12 @@ bool Spell::isMindInfluence() const
     return false;
 }
 
-u32 Spell::IndexSprite() const
+uint32_t Spell::IndexSprite() const
 {
     return spells[id].sprite;
 }
 
-u32 Spell::InlIndexSprite() const
+uint32_t Spell::InlIndexSprite() const
 {
     switch (id)
     {
@@ -458,7 +458,7 @@ u32 Spell::InlIndexSprite() const
     return 0;
 }
 
-u32 Spell::Restore() const
+uint32_t Spell::Restore() const
 {
     switch (id)
     {
@@ -473,7 +473,7 @@ u32 Spell::Restore() const
     return Resurrect();
 }
 
-u32 Spell::Resurrect() const
+uint32_t Spell::Resurrect() const
 {
     switch (id)
     {
@@ -500,7 +500,7 @@ bool Spell::isResurrect() const
 }
 
 
-u32 Spell::ExtraValue() const
+uint32_t Spell::ExtraValue() const
 {
     return spells[id].extra;
 }
@@ -510,7 +510,7 @@ Spell Spell::Rand(int lvl, bool adv)
     vector<Spell> v;
     v.reserve(15);
 
-    for (u32 sp = NONE; sp < STONE; ++sp)
+    for (uint32_t sp = NONE; sp < STONE; ++sp)
     {
         const Spell spell(sp);
         if (((adv && !spell.isCombat()) || (!adv && spell.isCombat())) &&
@@ -719,11 +719,11 @@ bool Spell::isRaceCompatible(int race) const
     return true;
 }
 
-u32 Spell::CalculateDimensionDoorDistance(u32 current_sp, u32 total_hp)
+uint32_t Spell::CalculateDimensionDoorDistance(uint32_t current_sp, uint32_t total_hp)
 {
     if (GameStatic::Spell_DD_Distance() && GameStatic::Spell_DD_HP() && GameStatic::Spell_DD_SP() && total_hp)
     {
-        const u32 res = (GameStatic::Spell_DD_Distance() * current_sp * GameStatic::Spell_DD_HP()) /
+        const uint32_t res = (GameStatic::Spell_DD_Distance() * current_sp * GameStatic::Spell_DD_HP()) /
                         (GameStatic::Spell_DD_SP() * total_hp);
         return res ? (res < 255 ? res : 255) : 1;
     }

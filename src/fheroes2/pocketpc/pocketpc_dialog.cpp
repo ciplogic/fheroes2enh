@@ -28,7 +28,7 @@
 #include "localevent.h"
 #include "icn.h"
 
-u32 PocketPC::GetCursorAttackDialog(const Point &dst, int allow)
+uint32_t PocketPC::GetCursorAttackDialog(const Point &dst, int allow)
 {
     Display &display = Display::Get();
     LocalEvent &le = LocalEvent::Get();
@@ -96,8 +96,8 @@ Surface CreateTouchButton()
 {
     Surface sf(Size(24, 24), false);
 
-    const u32 ww = sf.w() / 2;
-    const u32 hh = sf.h() / 2;
+    const uint32_t ww = sf.w() / 2;
+    const uint32_t hh = sf.h() / 2;
 
     const Sprite &sp0 = AGG::GetICN(ICN::LOCATORS, 22);
 
@@ -115,13 +115,13 @@ void RedrawTouchButton(const Surface &sf, const Rect &rt, const char *lb)
 
     if (sf.w() != rt.w)
     {
-        const u32 ww = 4;
+        const uint32_t ww = 4;
         sf.Blit(Rect(0, 0, ww, sf.h()), rt.x, rt.y, display);
 
         if (rt.w > 8)
         {
-            const u32 count = (rt.w - ww) / ww;
-            for (u32 ii = 0; ii < count; ++ii)
+            const uint32_t count = (rt.w - ww) / ww;
+            for (uint32_t ii = 0; ii < count; ++ii)
                 sf.Blit(Rect(ww, 0, ww, sf.h()), rt.x + ww * (ii + 1), rt.y, display);
         }
 

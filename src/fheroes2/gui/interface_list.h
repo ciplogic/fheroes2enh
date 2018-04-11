@@ -87,10 +87,10 @@ namespace Interface
 
         /*
         void SetTopLeft(const Point & top);
-        void SetScrollButtonUp(int, u32, u32, const Point &);
-        void SetScrollButtonDn(int, u32, u32, const Point &);
+        void SetScrollButtonUp(int, uint32_t, uint32_t, const Point &);
+        void SetScrollButtonDn(int, uint32_t, uint32_t, const Point &);
         void SetScrollSplitter(const Sprite &, const Rect &);
-        void SetAreaMaxItems(u32);
+        void SetAreaMaxItems(uint32_t);
         void SetAreaItems(const Rect &);
         void SetListContent(std::vector<Item> &);
         void Redraw();
@@ -111,13 +111,13 @@ namespace Interface
             ptRedraw = tl;
         }
 
-        void SetScrollButtonUp(int icn, u32 index1, u32 index2, const Point &pos)
+        void SetScrollButtonUp(int icn, uint32_t index1, uint32_t index2, const Point &pos)
         {
             buttonPgUp.SetSprite(icn, index1, index2);
             buttonPgUp.SetPos(pos);
         }
 
-        void SetScrollButtonDn(int icn, u32 index1, u32 index2, const Point &pos)
+        void SetScrollButtonDn(int icn, uint32_t index1, uint32_t index2, const Point &pos)
         {
             buttonPgDn.SetSprite(icn, index1, index2);
             buttonPgDn.SetPos(pos);
@@ -385,7 +385,7 @@ namespace Interface
 
         Splitter splitter;
 
-        u32 maxItems;
+        uint32_t maxItems;
         bool useHotkeys;
 
         Items *content;

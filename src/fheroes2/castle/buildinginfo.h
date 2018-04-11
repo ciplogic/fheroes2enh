@@ -35,7 +35,7 @@ class BuildingInfo
 public:
     BuildingInfo(const Castle &, building_t);
 
-    u32 operator()() const;
+    uint32_t operator()() const;
 
     void SetPos(s32, s32);
 
@@ -57,7 +57,7 @@ public:
 
     static void UpdateCosts(const string &);
 
-    static payment_t GetCost(u32, int);
+    static payment_t GetCost(uint32_t, int);
 
 private:
     void RedrawCaptain();
@@ -65,7 +65,7 @@ private:
     string GetConditionDescription() const;
 
     const Castle &castle;
-    u32 building;
+    uint32_t building;
     string description;
     Rect area;
     int bcond;
@@ -75,9 +75,9 @@ private:
 
 struct DwellingItem
 {
-    DwellingItem(Castle &, u32 dw);
+    DwellingItem(Castle &, uint32_t dw);
 
-    u32 type;
+    uint32_t type;
     Monster mons;
 };
 

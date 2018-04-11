@@ -43,10 +43,10 @@ public:
     int GetType() const
     { return type; }
 
-    u32 GetUID() const
+    uint32_t GetUID() const
     { return uid; }
 
-    void SetUID(u32 v)
+    void SetUID(uint32_t v)
     { uid = v; }
 
 protected:
@@ -54,7 +54,7 @@ protected:
 
     friend ByteVectorReader &operator>>(ByteVectorReader &, MapObjectSimple &);
 
-    u32 uid;
+    uint32_t uid;
     int type;
 };
 

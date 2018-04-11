@@ -41,7 +41,7 @@ public:
 
     Rect GetArea() const;
 
-    u32 GetMemoryUsage() const;
+    uint32_t GetMemoryUsage() const;
 
 protected:
     Point pos;
@@ -72,7 +72,7 @@ public:
 
     const Rect &GetArea() const;
 
-    u32 GetMemoryUsage() const;
+    uint32_t GetMemoryUsage() const;
 
 protected:
     Rect pos;
@@ -102,11 +102,11 @@ public:
 
     const Rect &GetArea() const;
 
-    u32 GetMemoryUsage() const;
+    uint32_t GetMemoryUsage() const;
 
 protected:
     void Show(const Point &);
 
     SpriteBack background;
-    u32 mode;
+    uint32_t mode;
 };

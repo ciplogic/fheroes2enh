@@ -55,19 +55,19 @@ public:
 
     int a() const;
 
-    u32 pack() const;
+    uint32_t pack() const;
 
     SDL_Color packSdlColor() const;
 
     static RGBA unpack(int);
 
-    static u32 packRgba(u32 r, u32 g, u32 b, u32 a = 255)
+    static uint32_t packRgba(uint32_t r, uint32_t g, uint32_t b, uint32_t a = 255)
     {
         return r + (g << 8) + (b << 16) + (a << 24);
     }
 
 protected:
-    u32 color;
+    uint32_t color;
 };
 
 
@@ -75,11 +75,11 @@ protected:
 
 struct SurfaceFormat
 {
-    u32 depth;
-    u32 rmask;
-    u32 gmask;
-    u32 bmask;
-    u32 amask;
+    uint32_t depth;
+    uint32_t rmask;
+    uint32_t gmask;
+    uint32_t bmask;
+    uint32_t amask;
     RGBA ckey;
 
     SurfaceFormat() : depth(0), rmask(0), gmask(0), bmask(0), amask(0)
@@ -97,7 +97,7 @@ public:
 
     explicit Surface(const std::string &);
 
-    Surface(const void *pixels, u32 width, u32 height, u32 bytes_per_pixel /* 1, 2, 3, 4 */,
+    Surface(const void *pixels, uint32_t width, uint32_t height, uint32_t bytes_per_pixel /* 1, 2, 3, 4 */,
             bool amask);  /* agg: create raw tile */
     Surface(const Surface &);
 
@@ -112,9 +112,9 @@ public:
 
     virtual ~Surface();
 
-    void Set(u32 sw, u32 sh, const SurfaceFormat &);
+    void Set(uint32_t sw, uint32_t sh, const SurfaceFormat &);
 
-    void Set(u32 sw, u32 sh, bool amask);
+    void Set(uint32_t sw, uint32_t sh, bool amask);
 
     virtual void Reset();
 
@@ -126,11 +126,11 @@ public:
 
     int h() const;
 
-    u32 depth() const;
+    uint32_t depth() const;
 
-    u32 amask() const;
+    uint32_t amask() const;
 
-    u32 alpha() const;
+    uint32_t alpha() const;
 
     Size GetSize() const;
 
@@ -142,7 +142,7 @@ public:
 
     void SetColorKey(const RGBA &);
 
-    u32 GetColorKey() const;
+    uint32_t GetColorKey() const;
 
     void BlitAlpha(const Rect &srt, const Point &dpt, Surface &dst) const;
 
@@ -160,7 +160,7 @@ public:
 
     void FillRect(const Rect &, const RGBA &) const;
 
-    void drawPixel(int x, int y, float brightness, u32 col);
+    void drawPixel(int x, int y, float brightness, uint32_t col);
 
     void drawAALine(int x0, int y0, int x1, int y1, const RGBA &);
 
@@ -174,7 +174,7 @@ public:
 
     void DrawBorder(const RGBA &, bool solid = true);
 
-    virtual u32 GetMemoryUsage() const;
+    virtual uint32_t GetMemoryUsage() const;
 
     std::string Info() const;
 
@@ -204,7 +204,7 @@ public:
 
     static void SetDefaultPalette(SDL_Color *, int);
 
-    static void SetDefaultDepth(u32);
+    static void SetDefaultDepth(uint32_t);
 
     static void SetDefaultColorKey(int, int, int);
 
@@ -212,11 +212,11 @@ public:
 
     void SetAlphaMod(int);
 
-    void Set(u32 sw, u32 sh, u32 bpp /* bpp: 8, 16, 24, 32 */, bool amask);
+    void Set(uint32_t sw, uint32_t sh, uint32_t bpp /* bpp: 8, 16, 24, 32 */, bool amask);
 
     void Lock() const;
 
-    void SetPixel4(s32 x, s32 y, u32 color) const;
+    void SetPixel4(s32 x, s32 y, uint32_t color) const;
 
     void Unlock() const;
 
@@ -228,9 +228,9 @@ protected:
     //void SetColorMod(const RGBA &);
     //void SetBlendMode(int);
 
-    u32 MapRGB(const RGBA &) const;
+    uint32_t MapRGB(const RGBA &) const;
 
-    RGBA GetRGB(u32 pixel) const;
+    RGBA GetRGB(uint32_t pixel) const;
 
     void Set(const Surface &, bool refcopy);
 
@@ -239,21 +239,21 @@ protected:
     void SetPalette();
 
 
-    void SetPixel3(s32 x, s32 y, u32 color) const;
+    void SetPixel3(s32 x, s32 y, uint32_t color) const;
 
-    void SetPixel2(s32 x, s32 y, u32 color) const;
+    void SetPixel2(s32 x, s32 y, uint32_t color) const;
 
-    void SetPixel1(s32 x, s32 y, u32 color) const;
+    void SetPixel1(s32 x, s32 y, uint32_t color) const;
 
-    void SetPixel(int x, int y, u32) const;
+    void SetPixel(int x, int y, uint32_t) const;
 
-    u32 GetPixel4(s32 x, s32 y) const;
+    uint32_t GetPixel4(s32 x, s32 y) const;
 
-    u32 GetPixel3(s32 x, s32 y) const;
+    uint32_t GetPixel3(s32 x, s32 y) const;
 
-    u32 GetPixel2(s32 x, s32 y) const;
+    uint32_t GetPixel2(s32 x, s32 y) const;
 
-    u32 GetPixel1(s32 x, s32 y) const;
+    uint32_t GetPixel1(s32 x, s32 y) const;
 
-    u32 GetPixel(int x, int y) const;
+    uint32_t GetPixel(int x, int y) const;
 };

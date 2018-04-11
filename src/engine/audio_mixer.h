@@ -40,7 +40,7 @@ namespace Mixer
 
     chunk_t *LoadWAV(const char *);
 
-    chunk_t *LoadWAV(const u8 *, u32);
+    chunk_t *LoadWAV(const u8 *, uint32_t);
 
     int Play(chunk_t *, int, bool);
 
@@ -48,7 +48,7 @@ namespace Mixer
 
 #endif
 
-    int Play(const u8 *, u32, int = -1, bool = false);
+    int Play(const u8 *, uint32_t, int = -1, bool = false);
 
     void SetChannels(u8);
 

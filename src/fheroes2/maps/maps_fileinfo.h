@@ -53,7 +53,7 @@ namespace Maps
 
         static bool NameCompare(const FileInfo &, const FileInfo &);
 
-        bool isAllowCountPlayers(u32) const;
+        bool isAllowCountPlayers(uint32_t) const;
 
         bool isMultiPlayerMap() const;
 
@@ -81,13 +81,13 @@ namespace Maps
 
         bool WinsFindUltimateArtifact() const;
 
-        u32 WinsAccumulateGold() const;
+        uint32_t WinsAccumulateGold() const;
 
         Point WinsMapsPositionObject() const;
 
         Point LossMapsPositionObject() const;
 
-        u32 LossCountDays() const;
+        uint32_t LossCountDays() const;
 
         string String() const;
 
@@ -119,7 +119,7 @@ namespace Maps
         u16 loss1;
         u16 loss2;
 
-        u32 localtime;
+        uint32_t localtime;
 
         bool with_heroes;
     };

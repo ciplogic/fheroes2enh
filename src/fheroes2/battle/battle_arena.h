@@ -53,7 +53,7 @@ namespace Battle
     class Actions : public list<Command>
     {
     public:
-        bool HaveCommand(u32) const;
+        bool HaveCommand(uint32_t) const;
     };
 
     class Arena
@@ -73,7 +73,7 @@ namespace Battle
 
         void BreakAutoBattle();
 
-        u32 GetCurrentTurn() const;
+        uint32_t GetCurrentTurn() const;
 
         Result &GetResult();
 
@@ -105,9 +105,9 @@ namespace Battle
 
         const Unit *GetTroopBoard(s32) const;
 
-        Unit *GetTroopUID(u32);
+        Unit *GetTroopUID(uint32_t);
 
-        const Unit *GetTroopUID(u32) const;
+        const Unit *GetTroopUID(uint32_t) const;
 
         const Unit *GetEnemyMaxQuality(int) const;
 
@@ -154,11 +154,11 @@ namespace Battle
 
         void ApplyActionSpellDefaults(Command &, const Spell &);
 
-        u32 GetObstaclesPenalty(const Unit &, const Unit &) const;
+        uint32_t GetObstaclesPenalty(const Unit &, const Unit &) const;
 
         int GetICNCovr() const;
 
-        u32 GetCastleTargetValue(int) const;
+        uint32_t GetCastleTargetValue(int) const;
 
         static Board *GetBoard();
 
@@ -187,7 +187,7 @@ namespace Battle
 
         void TowerAction(const Tower &);
 
-        void SetCastleTargetValue(int, u32);
+        void SetCastleTargetValue(int, uint32_t);
 
         void CatapultAction();
 
@@ -246,7 +246,7 @@ namespace Battle
         Board board;
         int icn_covr;
 
-        u32 current_turn;
+        uint32_t current_turn;
         int auto_battle;
 
         bool end_turn;

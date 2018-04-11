@@ -45,27 +45,27 @@ namespace GameStatic
 
     ByteVectorReader &operator>>(ByteVectorReader &, Data &);
 
-    u32 GetLostOnWhirlpoolPercent();
+    uint32_t GetLostOnWhirlpoolPercent();
 
-    u32 GetGameOverLostDays();
+    uint32_t GetGameOverLostDays();
 
-    u32 GetOverViewDistance(u32);
+    uint32_t GetOverViewDistance(uint32_t);
 
     cost_t &GetKingdomStartingResource(int difficulty);
 
-    u32 GetKingdomMaxHeroes();
+    uint32_t GetKingdomMaxHeroes();
 
-    u32 GetCastleGrownWell();
+    uint32_t GetCastleGrownWell();
 
-    u32 GetCastleGrownWel2();
+    uint32_t GetCastleGrownWel2();
 
-    u32 GetCastleGrownWeekOf();
+    uint32_t GetCastleGrownWeekOf();
 
-    u32 GetCastleGrownMonthOf();
+    uint32_t GetCastleGrownMonthOf();
 
-    u32 GetHeroesRestoreSpellPointsPerDay();
+    uint32_t GetHeroesRestoreSpellPointsPerDay();
 
-    u32 GetMageGuildRestoreSpellPointsPercentDay(int level);
+    uint32_t GetMageGuildRestoreSpellPointsPercentDay(int level);
 
     float GetMonsterUpgradeRatio();
 
@@ -79,11 +79,11 @@ namespace GameStatic
 
     const Skill::secondary_t *GetSkillForWitchsHut();
 
-    u32 Spell_DD_Distance();
+    uint32_t Spell_DD_Distance();
 
-    u32 Spell_DD_SP();
+    uint32_t Spell_DD_SP();
 
-    u32 Spell_DD_HP();
+    uint32_t Spell_DD_HP();
 
     void SetSpell_DD_Distance(int);
 

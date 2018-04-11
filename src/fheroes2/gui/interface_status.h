@@ -61,9 +61,9 @@ namespace Interface
 
         void SetState(int);
 
-        void SetResource(int, u32);
+        void SetResource(int, uint32_t);
 
-        void RedrawTurnProgress(u32);
+        void RedrawTurnProgress(uint32_t);
 
         void QueueEventProcessing();
 
@@ -82,18 +82,18 @@ namespace Interface
 
         void DrawAITurns() const;
 
-        static u32 ResetResourceStatus(u32, void *);
+        static uint32_t ResetResourceStatus(uint32_t, void *);
 
-        static u32 RedrawAIStatus(u32, void *);
+        static uint32_t RedrawAIStatus(uint32_t, void *);
 
         Basic &interface;
 
         int state;
         int oldState;
         int lastResource;
-        u32 countLastResource;
+        uint32_t countLastResource;
         SDL::Timer timerShowLastResource;
         SDL::Timer timerRedrawAIStatus;
-        u32 turn_progress;
+        uint32_t turn_progress;
     };
 }

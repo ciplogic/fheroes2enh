@@ -184,7 +184,7 @@ public:
 
     void Reset();
 
-    u32 ExtraValue() const;
+    uint32_t ExtraValue() const;
 
     int Level() const;
 
@@ -193,13 +193,13 @@ public:
     int Type() const;
 
     /* objnarti.icn */
-    u32 IndexSprite() const;
+    uint32_t IndexSprite() const;
 
     /* artfx.icn */
-    u32 IndexSprite32() const;
+    uint32_t IndexSprite32() const;
 
     /* artifact.icn */
-    u32 IndexSprite64() const;
+    uint32_t IndexSprite64() const;
 
     void SetSpell(int);
 
@@ -211,7 +211,7 @@ public:
 
     static int Rand(level_t);
 
-    static Artifact FromMP2IndexSprite(u32);
+    static Artifact FromMP2IndexSprite(uint32_t);
 
     static std::string GetScenario(const Artifact &);
 
@@ -234,7 +234,7 @@ StreamBase &operator<<(StreamBase &, const Artifact &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, Artifact &);
 
-u32 GoldInsteadArtifact(int);
+uint32_t GoldInsteadArtifact(int);
 
 class BagArtifacts : public vector<Artifact>
 {
@@ -257,9 +257,9 @@ public:
 
     void RemoveScroll(const Artifact &);
 
-    u32 CountArtifacts() const;
+    uint32_t CountArtifacts() const;
 
-    u32 Count(const Artifact &) const;
+    uint32_t Count(const Artifact &) const;
 
     string String() const;
 };

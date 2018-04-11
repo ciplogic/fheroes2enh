@@ -173,13 +173,13 @@ public:
 
     int GetSquarePatrol() const;
 
-    u32 GetMaxSpellPoints() const;
+    uint32_t GetMaxSpellPoints() const;
 
-    u32 GetMaxMovePoints() const;
+    uint32_t GetMaxMovePoints() const;
 
-    u32 GetMovePoints() const;
+    uint32_t GetMovePoints() const;
 
-    void IncreaseMovePoints(u32);
+    void IncreaseMovePoints(uint32_t);
 
     bool MayStillMove() const;
 
@@ -195,7 +195,7 @@ public:
 
     int GetLevelSkill(int) const;
 
-    u32 GetSecondaryValues(int) const;
+    uint32_t GetSecondaryValues(int) const;
 
     void LearnSkill(const Skill::Secondary &);
 
@@ -205,7 +205,7 @@ public:
 
     bool HasUltimateArtifact() const;
 
-    u32 GetCountArtifacts() const;
+    uint32_t GetCountArtifacts() const;
 
     bool IsFullBagArtifacts() const;
 
@@ -295,15 +295,15 @@ public:
 
     int CanScouteTile(s32) const;
 
-    u32 GetVisionsDistance() const;
+    uint32_t GetVisionsDistance() const;
 
     bool isShipMaster() const;
 
     void SetShipMaster(bool);
 
-    u32 GetExperience() const;
+    uint32_t GetExperience() const;
 
-    void IncreaseExperience(u32);
+    void IncreaseExperience(uint32_t);
 
     bool AllowBattle(bool attacker) const;
 
@@ -311,9 +311,9 @@ public:
 
     Surface GetPortrait(int type) const;
 
-    static int GetLevelFromExperience(u32);
+    static int GetLevelFromExperience(uint32_t);
 
-    static u32 GetExperienceFromLevel(int);
+    static uint32_t GetExperienceFromLevel(int);
 
     static void ScholarAction(Heroes &, Heroes &);
 
@@ -344,7 +344,7 @@ private:
 
     string name;
     ColorBase killer_color;
-    u32 experience;
+    uint32_t experience;
     s32 move_point_scale;
 
     Skill::SecSkills secondary_skills;

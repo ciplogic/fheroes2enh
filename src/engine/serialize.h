@@ -75,13 +75,13 @@ public:
 
     virtual u16 getLE16() = 0;
 
-    virtual u32 getBE32() = 0;
+    virtual uint32_t getBE32() = 0;
 
-    virtual u32 getLE32() = 0;
+    virtual uint32_t getLE32() = 0;
 
-    virtual void putBE32(u32) = 0;
+    virtual void putBE32(uint32_t) = 0;
 
-    virtual void putLE32(u32) = 0;
+    virtual void putLE32(uint32_t) = 0;
 
     virtual void putBE16(u16) = 0;
 
@@ -94,11 +94,11 @@ public:
 
     u16 get16();
 
-    u32 get32();
+    uint32_t get32();
 
     void put16(u16);
 
-    void put32(u32);
+    void put32(uint32_t);
 
     int get()
     { return get8(); } // get char
@@ -117,7 +117,7 @@ public:
 
     StreamBase &operator>>(s16 &);
 
-    StreamBase &operator>>(u32 &);
+    StreamBase &operator>>(uint32_t &);
 
     StreamBase &operator>>(s32 &);
 
@@ -143,7 +143,7 @@ public:
 
     StreamBase &operator<<(const s16 &);
 
-    StreamBase &operator<<(const u32 &);
+    StreamBase &operator<<(const uint32_t &);
 
     StreamBase &operator<<(const s32 &);
 
@@ -166,7 +166,7 @@ public:
     template<class Type>
     StreamBase &operator>>(vector<Type> &v)
     {
-        const u32 size = get32();
+        const uint32_t size = get32();
         v.resize(size);
         for (auto it = v.begin(); it != v.end(); ++it)
             *this >> *it;
@@ -176,7 +176,7 @@ public:
     template<class Type>
     StreamBase &operator>>(list <Type> &v)
     {
-        const u32 size = get32();
+        const uint32_t size = get32();
         v.resize(size);
         for (auto it = v.begin(); it != v.end(); ++it)
             *this >> *it;
@@ -186,9 +186,9 @@ public:
     template<class Type1, class Type2>
     StreamBase &operator>>(map<Type1, Type2> &v)
     {
-        const u32 size = get32();
+        const uint32_t size = get32();
         v.clear();
-        for (u32 ii = 0; ii < size; ++ii)
+        for (uint32_t ii = 0; ii < size; ++ii)
         {
             pair<Type1, Type2> pr;
             *this >> pr;
@@ -206,7 +206,7 @@ public:
     template<class Type>
     StreamBase &operator<<(const vector<Type> &v)
     {
-        put32(static_cast<u32>(v.size()));
+        put32(static_cast<uint32_t>(v.size()));
         for (auto it : v)
             *this << it;
         return *this;
@@ -215,7 +215,7 @@ public:
     template<class Type>
     StreamBase &operator<<(const list <Type> &v)
     {
-        put32(static_cast<u32>(v.size()));
+        put32(static_cast<uint32_t>(v.size()));
         for (auto it : v)
             *this << it;
         return *this;
@@ -224,7 +224,7 @@ public:
     template<class Type1, class Type2>
     StreamBase &operator<<(const map<Type1, Type2> &v)
     {
-        put32(static_cast<u32>(v.size()));
+        put32(static_cast<uint32_t>(v.size()));
         for (typename map<Type1, Type2>::const_iterator
                      it = v.begin(); it != v.end(); ++it)
             *this << *it;
@@ -258,13 +258,13 @@ public:
 
     u16 getLE16() override;
 
-    u32 getBE32() override;
+    uint32_t getBE32() override;
 
-    u32 getLE32() override;
+    uint32_t getLE32() override;
 
-    void putBE32(u32) override;
+    void putBE32(uint32_t) override;
 
-    void putLE32(u32) override;
+    void putLE32(uint32_t) override;
 
     void putBE16(u16) override;
 
@@ -348,13 +348,13 @@ public:
 
     u16 getLE16() override;
 
-    u32 getBE32() override;
+    uint32_t getBE32() override;
 
-    u32 getLE32() override;
+    uint32_t getLE32() override;
 
-    void putBE32(u32) override;
+    void putBE32(uint32_t) override;
 
-    void putLE32(u32) override;
+    void putLE32(uint32_t) override;
 
     void putBE16(u16) override;
 

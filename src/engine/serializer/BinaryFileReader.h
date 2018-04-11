@@ -16,15 +16,15 @@ public:
 
     bool open(const std::string &cs, const char *rb);
 
-    void seek(u32 pos) const;
+    void seek(uint32_t pos) const;
 
-    u32 size();
+    uint32_t size();
 
-    u32 getLE16();
+    uint32_t getLE16();
 
-    u32 getLE32();
+    uint32_t getLE32();
 
-    std::vector<u8> getRaw(u32 size) const;
+    std::vector<u8> getRaw(uint32_t size) const;
 
     std::string toString(int size) const;
 
@@ -32,11 +32,11 @@ public:
 
     int get();
 
-    u32 getBE32();
+    uint32_t getBE32();
 
     void skip(s32 pos) const;
 
-    u32 tell() const;
+    uint32_t tell() const;
 
     void close();
 };

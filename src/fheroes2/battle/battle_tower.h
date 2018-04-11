@@ -44,11 +44,11 @@ namespace Battle
 
         int GetColor() const;
 
-        u32 GetType() const;
+        uint32_t GetType() const;
 
-        u32 GetBonus() const;
+        uint32_t GetBonus() const;
 
-        u32 GetAttack() const;
+        uint32_t GetAttack() const;
 
         string GetName() const;
 
@@ -61,7 +61,7 @@ namespace Battle
     private:
         int type;
         int color;
-        u32 bonus;
+        uint32_t bonus;
         bool valid;
     };
 }

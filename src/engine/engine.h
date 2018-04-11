@@ -34,7 +34,7 @@
 
 namespace SDL
 {
-    bool Init(u32 system = INIT_VIDEO);
+    bool Init(uint32_t system = INIT_VIDEO);
 
     void Quit();
 
