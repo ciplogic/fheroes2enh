@@ -36,6 +36,7 @@
 #include "game.h"
 #include "ByteVectorReader.h"
 #include "BinaryFileReader.h"
+#include "ByteVectorWriter.h"
 
 #include "m82.h"
 #include "system.h"
@@ -50,6 +51,7 @@
 #include "audio_music.h"
 
 #define FATSIZENAME    15
+
 
 namespace
 {
@@ -1245,7 +1247,9 @@ void AGG::LoadWAV(int m82, vector<u8> &v)
         return;
 #ifdef WITH_MIXER
     // create WAV format
-    StreamBuf wavHeader(44);
+    StreamBuf wavHeader2(44);
+
+    ByteVectorWriter wavHeader(44);
     wavHeader.putLE32(0x46464952);        // RIFF
     wavHeader.putLE32(body.size() + 0x24);    // size
     wavHeader.putLE32(0x45564157);        // WAVE

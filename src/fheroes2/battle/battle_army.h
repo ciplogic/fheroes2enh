@@ -109,8 +109,6 @@ namespace Battle
 
     StreamBase &operator<<(StreamBase &, const Force &);
 
-    StreamBase &operator>>(StreamBase &, Force &);
-
     ByteVectorReader &operator>>(ByteVectorReader &, Force &);
 }
 

@@ -375,23 +375,6 @@ StreamBase &Battle::operator<<(StreamBase &msg, const Force &f)
     return msg;
 }
 
-StreamBase &Battle::operator>>(StreamBase &msg, Force &f)
-{
-    u32 size = 0;
-    u32 uid = 0;
-
-    msg >> static_cast<BitModes &>(f) >> size;
-
-    for (u32 ii = 0; ii < size; ++ii)
-    {
-        msg >> uid;
-        Unit *b = f.FindUID(uid);
-        if (b) msg >> *b;
-    }
-
-    return msg;
-}
-
 
 ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, Force &f)
 {

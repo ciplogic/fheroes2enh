@@ -28,7 +28,6 @@
 #include "kingdom.h"
 #include "dialog.h"
 #include "world.h"
-#include "interface_gamearea.h"
 #include "game.h"
 #include "game_over.h"
 #include "game_static.h"

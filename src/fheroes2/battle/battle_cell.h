@@ -101,8 +101,6 @@ namespace Battle
     private:
         friend StreamBase &operator<<(StreamBase &, const Cell &);
 
-        friend StreamBase &operator>>(StreamBase &, Cell &);
-
         friend ByteVectorReader &operator>>(ByteVectorReader &, Cell &);
 
         s32 index;
@@ -115,8 +113,6 @@ namespace Battle
     };
 
     StreamBase &operator<<(StreamBase &, const Cell &);
-
-    StreamBase &operator>>(StreamBase &, Cell &);
 
     class Position : protected pair<Cell *, Cell *>
     {

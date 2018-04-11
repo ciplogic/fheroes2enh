@@ -71,7 +71,7 @@ namespace Battle
 
     StreamBase &operator<<(StreamBase &, const ModesAffected &);
 
-    StreamBase &operator>>(StreamBase &, ModesAffected &);
+    ByteVectorReader &operator>>(ByteVectorReader &, ModesAffected &);
 
     enum
     {
@@ -276,9 +276,7 @@ namespace Battle
         friend StreamBase &operator<<(StreamBase &, const Unit &);
 
         friend ByteVectorReader &operator>>(ByteVectorReader &, Unit &);
-
-        friend StreamBase &operator>>(StreamBase &, Unit &);
-
+        
         u32 uid;
         u32 hp;
         u32 count0;
@@ -300,8 +298,6 @@ namespace Battle
     };
 
     StreamBase &operator<<(StreamBase &, const Unit &);
-
-    StreamBase &operator>>(StreamBase &, Unit &);
 
     ByteVectorReader &operator>>(ByteVectorReader &, Unit &);
 }

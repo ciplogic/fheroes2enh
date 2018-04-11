@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2AUDIO_H
-#define H2AUDIO_H
+#pragma once
 
 #include "types.h"
 
@@ -43,5 +42,3 @@ namespace Audio
 
     Spec &GetHardwareSpec();
 }
-
-#endif

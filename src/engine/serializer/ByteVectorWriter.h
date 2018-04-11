@@ -7,22 +7,20 @@
 class ByteVectorWriter
 {
     std::vector<u8> _data;
+    int _pos;
 
-    void Add8(u8);
+    void put8(u8);
 
-    void Add16(u16);
 
 public:
+    explicit ByteVectorWriter(int sz);
+    void putLE16(u16 v);
+    void putLE32(u32 v);
 
-    ByteVectorWriter &Add(u8);
-
-    ByteVectorWriter &Add(u16);
-
-    ByteVectorWriter &Add(u32);
-
-    ByteVectorWriter &Add(s32);
-
-    std::vector<u8> &data();
+    const std::vector<u8>::const_iterator& data() const
+    {
+        return _data.begin();
+    }
 };
 
 #endif

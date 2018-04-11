@@ -34,7 +34,7 @@ bool ZStreamFile::read(const string &fn, size_t offset)
 
         const u32 size0 = sf.get32(); // raw size
         vector<u8> raw = sf.getRaw(size0);
-        putRaw((const char *) &raw[0], raw.size());
+        putRaw(reinterpret_cast<const char *>(&raw[0]), raw.size());
         seek(0);
         return !fail();
     }
@@ -49,7 +49,7 @@ bool ZStreamFile::write(const string &fn, bool append) const
     if (sf.open(fn, append ? "ab" : "wb"))
     {
         sf.put32(size());
-        sf.putRaw((const char *) data(), size());
+        sf.putRaw(reinterpret_cast<const char *>(data()), size());
         return !sf.fail();
     }
     return false;

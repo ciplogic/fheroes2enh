@@ -371,11 +371,6 @@ StreamBase &GameOver::operator<<(StreamBase &msg, const Result &res)
     return msg << res.colors << res.result << res.continue_game;
 }
 
-StreamBase &GameOver::operator>>(StreamBase &msg, Result &res)
-{
-    return msg >> res.colors >> res.result >> res.continue_game;
-}
-
 ByteVectorReader &GameOver::operator>>(ByteVectorReader &msg, Result &res)
 {
     return msg >> res.colors >> res.result >> res.continue_game;

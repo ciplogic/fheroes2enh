@@ -35,14 +35,15 @@
 #include "dialog.h"
 #include "game_interface.h"
 
-Interface::Basic::Basic()
-    : gameArea(*this), radar(*this),
+Interface::Basic::Basic() : gameArea(*this), radar(*this),
     iconsPanel(*this), buttonsArea(*this),
+    statusWindow(*this),
+    controlPanel(*this),
     heroesBar(*this),
-    statusWindow(*this), controlPanel(*this),
+    castleBar(*this),
     redraw(0)
 {
-    Settings &conf = Settings::Get().Get();
+    Settings &conf = Settings::Get();
     const Display &display = Display::Get();
     const int scroll_width = BORDERWIDTH;
 
@@ -179,6 +180,7 @@ void Interface::Basic::Redraw(int force)
     if ((conf.ExtGameHideInterface() && conf.ShowRadar()) || ((redraw | force) & REDRAW_RADAR)) radar.Redraw();
 
     heroesBar.Redraw();
+    castleBar.Redraw();
 
     if ((conf.ExtGameHideInterface() && conf.ShowIcons()) || ((redraw | force) & REDRAW_ICONS)) iconsPanel.Redraw();
     else if ((redraw | force) & REDRAW_HEROES) iconsPanel.RedrawIcons(ICON_HEROES);
@@ -226,12 +228,11 @@ s32 Interface::Basic::GetDimensionDoorDestination(s32 from, u32 distance, bool w
     Display &display = Display::Get();
     Settings &conf = Settings::Get();
     LocalEvent &le = LocalEvent::Get();
-    s32 dst = -1;
 
     while (le.HandleEvents())
     {
         const Point &mp = le.GetMouseCursor();
-        dst = gameArea.GetIndexFromMousePoint(mp);
+        s32 dst = gameArea.GetIndexFromMousePoint(mp);
         if (0 > dst) break;
 
         const Maps::Tiles &tile = world.GetTiles(dst);

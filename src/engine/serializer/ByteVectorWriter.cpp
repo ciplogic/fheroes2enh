@@ -1,45 +1,26 @@
 #include "ByteVectorWriter.h"
 
-void ByteVectorWriter::Add8(u8 val)
+void ByteVectorWriter::put8(u8 val)
 {
-    this->_data.push_back(val);
+    _data[_pos] = val;
+    _pos++;
 }
 
-void ByteVectorWriter::Add16(u16 val)
+ByteVectorWriter::ByteVectorWriter(int sz)
+    : _pos(0)
 {
-    Add8(val);
-    val = val >> 8;
-    Add8(val);
+    _data.resize(sz, 0);
 }
 
-ByteVectorWriter &ByteVectorWriter::Add(u8 value)
+void ByteVectorWriter::putLE16(u16 v)
 {
-    Add8(value);
-    return *this;
+    put8(v);
+    put8(v >> 8);
 }
-
-ByteVectorWriter &ByteVectorWriter::Add(u16 value)
+void ByteVectorWriter::putLE32(u32 v)
 {
-    Add16(value);
-    return *this;
+    put8(v);
+    put8(v >> 8);
+    put8(v >> 16);
+    put8(v >> 24);
 }
-
-ByteVectorWriter &ByteVectorWriter::Add(u32 value)
-{
-    Add16(value);
-    Add16(value >> 16);
-    return *this;
-}
-
-ByteVectorWriter &ByteVectorWriter::Add(s32 val)
-{
-    u32 uVal = val;
-    Add(uVal);
-    return *this;
-}
-
-std::vector<u8> &ByteVectorWriter::data()
-{
-    return _data;
-}
-

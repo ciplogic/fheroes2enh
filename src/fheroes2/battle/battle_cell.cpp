@@ -290,14 +290,6 @@ StreamBase &Battle::operator<<(StreamBase &msg, const Cell &c)
                (c.troop ? c.troop->GetUID() : static_cast<u32>(0));
 }
 
-StreamBase &Battle::operator>>(StreamBase &msg, Cell &c)
-{
-    u32 uid = 0;
-    msg >> c.index >> c.object >> c.direction >> c.quality >> uid;
-    c.troop = GetArena()->GetTroopUID(uid);
-    return msg;
-}
-
 ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, Cell &c)
 {
     u32 uid = 0;

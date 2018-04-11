@@ -968,7 +968,8 @@ StreamBase &Battle::operator<<(StreamBase &msg, const ModesAffected &v)
     return msg;
 }
 
-StreamBase &Battle::operator>>(StreamBase &msg, ModesAffected &v)
+
+ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, ModesAffected &v)
 {
     u32 size = 0;
     msg >> size;
@@ -983,6 +984,7 @@ StreamBase &Battle::operator>>(StreamBase &msg, ModesAffected &v)
 
     return msg;
 }
+
 
 StreamBase &Battle::operator<<(StreamBase &msg, const Unit &b)
 {
@@ -1001,33 +1003,6 @@ StreamBase &Battle::operator<<(StreamBase &msg, const Unit &b)
                (b.mirror ? b.mirror->GetUID() : static_cast<u32>(0)) <<
                b.affected <<
                b.blindanswer;
-}
-
-StreamBase &Battle::operator>>(StreamBase &msg, Unit &b)
-{
-    s32 head = -1;
-    u32 uid = 0;
-
-    msg >>
-        b.modes >>
-        b.id >>
-        b.count >>
-        b.uid >>
-        b.hp >>
-        b.count0 >>
-        b.dead >>
-        b.shots >>
-        b.disruptingray >>
-        b.reflect >>
-        head >>
-        uid >>
-        b.affected >>
-        b.blindanswer;
-
-    b.position.Set(head, b.isWide(), b.isReflect());
-    b.mirror = GetArena()->GetTroopUID(uid);
-
-    return msg;
 }
 
 ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, Unit &b)

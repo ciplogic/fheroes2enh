@@ -546,21 +546,9 @@ StreamBase &Route::operator<<(StreamBase &msg, const Path &path)
     return msg << path.dst << path.hide << static_cast< list<Step> >(path);
 }
 
-StreamBase &Route::operator>>(StreamBase &msg, Step &step)
-{
-    return msg >> step.from >> step.direction >> step.penalty;
-}
-
 ByteVectorReader &Route::operator>>(ByteVectorReader &msg, Step &step)
 {
     return msg >> step.from >> step.direction >> step.penalty;
-}
-
-
-StreamBase &Route::operator>>(StreamBase &msg, Path &path)
-{
-    list<Step> &base = path;
-    return msg >> path.dst >> path.hide >> base;
 }
 
 
