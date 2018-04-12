@@ -17,7 +17,7 @@ public:
     void putLE16(u16 v);
     void putLE32(uint32_t v);
 
-    const std::vector<u8>::const_iterator& data() const
+    const std::vector<u8>::const_iterator data() const
     {
         return _data.begin();
     }

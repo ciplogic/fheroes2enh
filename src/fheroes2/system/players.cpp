@@ -195,26 +195,6 @@ StreamBase &operator<<(StreamBase &msg, const Focus &focus)
     return msg;
 }
 
-StreamBase &operator>>(StreamBase &msg, Focus &focus)
-{
-    s32 index;
-    msg >> focus.first >> index;
-
-    switch (focus.first)
-    {
-        case FOCUS_HEROES:
-            focus.second = world.GetHeroes(Maps::GetPoint(index));
-            break;
-        case FOCUS_CASTLE:
-            focus.second = world.GetCastle(Maps::GetPoint(index));
-            break;
-        default:
-            focus.second = nullptr;
-            break;
-    }
-
-    return msg;
-}
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, Focus &focus)
 {
@@ -249,21 +229,6 @@ StreamBase &operator<<(StreamBase &msg, const Player &player)
                player.race <<
                player.friends <<
                player.name <<
-               player.focus;
-}
-
-StreamBase &operator>>(StreamBase &msg, Player &player)
-{
-    BitModes &modes = player._bitModes;
-
-    return msg >>
-               modes >>
-               player.id >>
-               player.control >>
-               player.color >>
-               player.race >>
-               player.friends >>
-               player.name >>
                player.focus;
 }
 
@@ -534,26 +499,6 @@ StreamBase &operator<<(StreamBase &msg, const Players &players)
 
     for (auto player : players._items)
         msg << (*player);
-
-    return msg;
-}
-
-StreamBase &operator>>(StreamBase &msg, Players &players)
-{
-    int colors, current;
-    msg >> colors >> current;
-
-    players.clear();
-    players.current_color = current;
-    const Colors vcolors(colors);
-
-    for (uint32_t ii = 0; ii < vcolors.size(); ++ii)
-    {
-        Player *player = new Player();
-        msg >> *player;
-        _players[Color::GetIndex(player->GetColor())] = player;
-        players._items.push_back(player);
-    }
 
     return msg;
 }

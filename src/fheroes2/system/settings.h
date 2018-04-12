@@ -182,6 +182,8 @@ public:
         BATTLE_MERGE_ARMIES = 0x40100000,
         BATTLE_SKIP_INCREASE_DEFENSE = 0x40200000,
         BATTLE_OBJECTS_ARCHERS_PENALTY = 0x42000000,
+        //Option for Heroes bar
+        UI_HEROES_BAR = 0x42000000,
 
         SETTINGS_LAST
     };
@@ -258,6 +260,7 @@ public:
     void SetQuickCombat(bool value);
 
     bool QuickCombat() const;
+    bool UiHeroesBar() const;
 
     bool ShowControlPanel() const;
 
@@ -559,8 +562,6 @@ public:
 
     void SetProgramPath(const char *);
 
-    void SwapQuickCombat();
-
     static string GetVersion();
 
     static ListFiles GetListFiles(const string &prefix, const string &filter);
@@ -618,6 +619,8 @@ private:
     int size_small;
 
     bool _isQuickCombat;
+    bool _isUiHeroesBar;
+
 
     Maps::FileInfo current_maps_file;
 

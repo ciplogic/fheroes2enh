@@ -22,7 +22,6 @@
 
 #include "engine.h"
 
-#include "rand.h"
 #include "system.h"
 #include "font.h"
 

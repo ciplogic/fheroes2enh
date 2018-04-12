@@ -859,7 +859,7 @@ int Interface::Basic::HumanTurn(bool isload)
                 cursor.SetThemes(Cursor::POINTER);
             res = controlPanel.QueueEventProcessing();
         } 
-        else if (heroesBar.EventProcessing())
+        else if (conf.UiHeroesBar() && heroesBar.EventProcessing())
         {
             res = Game::CANCEL;
         }

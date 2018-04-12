@@ -130,6 +130,12 @@ void SettingsListBox::ActionListSingleClick(uint32_t &item)
                 else
                     conf.ExtResetModes(Settings::GAME_QUICKCOMBAT_ON);
                 break;
+            case Settings::UI_HEROES_BAR:
+                if (conf.ExtModes(Settings::UI_HEROES_BAR))
+                    conf.ExtSetModes(Settings::UI_HEROES_BAR);
+                else
+                    conf.ExtResetModes(Settings::UI_HEROES_BAR);
+                break;
 
             case Settings::WORLD_GUARDIAN_TWO_DEFENSE:
                 if (conf.ExtModes(Settings::WORLD_GUARDIAN_TWO_DEFENSE))
@@ -188,6 +194,7 @@ void Dialog::ExtSettings(bool readonly)
 
     states.push_back(Settings::GAME_AUTOSAVE_ON);
     states.push_back(Settings::GAME_QUICKCOMBAT_ON);
+    states.push_back(Settings::UI_HEROES_BAR);
     states.push_back(Settings::GAME_AUTOSAVE_BEGIN_DAY);
 
     if (conf.VideoMode().w == 640 && conf.VideoMode().h == 480)

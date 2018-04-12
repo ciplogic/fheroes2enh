@@ -32,12 +32,9 @@
 #include "settings.h"
 
 #include "tools.h"
-#include "audio.h"
 #include "audio_mixer.h"
 #include "audio_music.h"
-#include "audio_cdrom.h"
 #include <sstream>
-#include <iostream>
 
 #ifdef WIN32
 #define WINDOWS
@@ -141,6 +138,7 @@ const settings_t settingsGeneral[] =
 const settings_t settingsFHeroes2[] =
         {
                 {Settings::GAME_QUICKCOMBAT_ON,              _("game: quick combat on"),},
+                {Settings::UI_HEROES_BAR,              _("interface: show heroes bar"), },
                 {Settings::GAME_SAVE_REWRITE_CONFIRM,        _("game: always confirm for rewrite savefile"),},
                 {Settings::GAME_ALSO_CONFIRM_AUTOSAVE,       _("game: also confirm autosave"),},
                 {Settings::GAME_REMEMBER_LAST_FOCUS,         _("game: remember last focus"),},
@@ -329,6 +327,12 @@ bool Settings::Read(const string &filename)
     if (config.Exists("quickcombat"))
     {
         _isQuickCombat = config.IntParams("quickcombat");
+    }
+
+
+    if (config.Exists("ui_hero_bar"))
+    {
+        _isUiHeroesBar = config.IntParams("ui_hero_bar");
     }
 
 
@@ -645,11 +649,6 @@ void Settings::SetProgramPath(const char *argv0)
     if (argv0) path_program = argv0;
 }
 
-void Settings::SwapQuickCombat()
-{
-    _isQuickCombat = !_isQuickCombat;
-}
-
 ListDirs Settings::GetRootDirs()
 {
     const Settings &conf = Get();
@@ -789,6 +788,10 @@ void Settings::SetQuickCombat(bool value)
 bool Settings::QuickCombat() const
 {
     return _isQuickCombat;
+}
+bool Settings::UiHeroesBar() const
+{
+    return _isUiHeroesBar;
 }
 
 /* return move speed */

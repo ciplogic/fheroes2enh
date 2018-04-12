@@ -146,8 +146,6 @@ public:
 protected:
     friend StreamBase &operator<<(StreamBase &, const Player &);
 
-    friend StreamBase &operator>>(StreamBase &, Player &);
-
     friend ByteVectorReader &operator>>(ByteVectorReader &, Player &);
 
     int control;
@@ -160,8 +158,6 @@ protected:
 };
 
 StreamBase &operator<<(StreamBase &, const Player &);
-
-StreamBase &operator>>(StreamBase &, Player &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, Player &);
 
@@ -217,8 +213,6 @@ public:
 };
 
 StreamBase &operator<<(StreamBase &, const Players &);
-
-StreamBase &operator>>(StreamBase &, Players &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, Players &);
 
