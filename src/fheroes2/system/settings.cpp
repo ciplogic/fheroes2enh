@@ -138,7 +138,6 @@ const settings_t settingsGeneral[] =
 const settings_t settingsFHeroes2[] =
         {
                 {Settings::GAME_QUICKCOMBAT_ON,              _("game: quick combat on"),},
-                {Settings::UI_HEROES_BAR,              _("interface: show heroes bar"), },
                 {Settings::GAME_SAVE_REWRITE_CONFIRM,        _("game: always confirm for rewrite savefile"),},
                 {Settings::GAME_ALSO_CONFIRM_AUTOSAVE,       _("game: also confirm autosave"),},
                 {Settings::GAME_REMEMBER_LAST_FOCUS,         _("game: remember last focus"),},
