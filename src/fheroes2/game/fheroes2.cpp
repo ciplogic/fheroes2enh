@@ -398,25 +398,19 @@ void SetTimidityEnvPath(const Settings &conf)
 
 void SetLangEnvPath(const Settings &conf)
 {
-#ifdef WITH_TTF
-    if (conf.Unicode())
+    System::SetLocale(LC_ALL, "");
+    System::SetLocale(LC_NUMERIC, "C");
+
+    std::string mofile = conf.ForceLang().empty() ?
+                             System::GetMessageLocale(1).append(".po") :
+                             std::string(conf.ForceLang()).append(".po");
+
+    ListFiles translations = Settings::GetListFiles(System::ConcatePath("files", "lang"), mofile);
+
+    if (!translations.empty())
     {
-        System::SetLocale(LC_ALL, "");
-        System::SetLocale(LC_NUMERIC, "C");
-
-        std::string mofile = conf.ForceLang().empty() ?
-                             System::GetMessageLocale(1).append(".mo") :
-                             std::string(conf.ForceLang()).append(".mo");
-
-        ListFiles translations = Settings::GetListFiles(System::ConcatePath("files", "lang"), mofile);
-
-        if (!translations.empty())
-        {
-            if (Translation::bindDomain("fheroes2", translations.back().c_str()))
-                Translation::setDomain("fheroes2");
-        } else
+        Translation::bindDomain(translations.back().c_str());
+            
+    } else
         ERROR("translation not found: " + mofile);
-    }
-#endif
-    Translation::setStripContext('|');
 }

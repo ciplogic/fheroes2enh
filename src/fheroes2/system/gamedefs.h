@@ -31,7 +31,7 @@
 #include "translations.h"
 #include <memory>
 
-#define _(s)       std::string(Translation::gettext(s))
+#define _(s)       Translation::gettext(s)
 #define _n(a, b, c)    Translation::ngettext(a,b,c)
 
 // hardcore defines: kingdom

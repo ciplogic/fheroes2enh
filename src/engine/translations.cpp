@@ -26,335 +26,302 @@
 #include "serialize.h"
 #include "system.h"
 #include "tools.h"
-#include <iostream>
+#include <fstream>
 
-struct chunk
+
+namespace ModernTranslation
 {
-    uint32_t offset;
-    uint32_t length;
-
-    chunk() : offset(0), length(0)
-    {}
-
-    chunk(uint32_t off, uint32_t len) : offset(off), length(len)
-    {}
-};
-
-uint32_t crc32b(const char *msg)
-{
-    uint32_t crc = 0xFFFFFFFF;
-    uint32_t index = 0;
-
-    while (msg[index])
+    using StringVector = std::vector <string>;
+    using StringTable = std::map<std::string, std::string>;
+    struct TranslationTable
     {
-        crc ^= static_cast<uint32_t>(msg[index]);
+        StringTable directTranslations;
+        StringTable singularTranslation;
+        StringTable pluralTranslation;
 
-        for (int bit = 0; bit < 8; ++bit)
+    public:
+        void clear();
+        bool readFile(std::string fileName);
+        void addDirectTranslation(StringVector& id, StringVector& trans);
+        void addMultiTranslation(StringVector& messageIds, StringVector& messagePlurals, StringVector& messageStr1, StringVector& messageStr2);
+        
+        string getTranslation(const string& str);
+        string getTranslationPlural(const string& singular, const string& plural, size_t count);
+
+    private:
+        static std::string joinAsRows(StringVector& id);
+    };
+    namespace
+    {
+        std::string getDictText(const StringTable& stringTable, const std::string& item)
         {
-            size_t mask = 0 - (crc & 1);
-            crc = (crc >> 1) ^ (0xEDB88320 & mask);
-        }
 
-        ++index;
+            const auto findIt = stringTable.find(item);
+            if (findIt == stringTable.end())
+                return item;
+            return findIt->second;
+        }
+    }
+    void TranslationTable::clear()
+    {
+        directTranslations.clear();
+        singularTranslation.clear();
+        pluralTranslation.clear();
     }
 
-    return ~crc;
-}
-
-struct mofile
-{
-    uint32_t count, offset_strings1, offset_strings2, hash_size, hash_offset;
-    StreamBuf buf;
-    map<uint32_t, chunk> hash_offsets;
-    string encoding;
-    string plural_forms;
-    uint32_t nplurals;
-
-    mofile() : count(0), offset_strings1(0), offset_strings2(0), hash_size(0), hash_offset(0), nplurals(0)
-    {}
-
-    const char *ngettext(const char *str, size_t plural)
+    enum class TranslationLineType
     {
-        auto it = hash_offsets.find(crc32b(str));
-        if (it == hash_offsets.end())
-            return str;
+        Empty,
+        Msgid,
+        Msgid_plural,
+        Msgstr,
+        QuoteLine,
+        Msgstr1,
+        Msgstr2
+    };
 
-        buf.seek((*it).second.offset);
-        const u8 *ptr = buf.data();
+    struct ClassifiedLine
+    {
+        TranslationLineType translationLineType;
+        std::string line;
+    };
 
-        while (plural > 0)
-        {
-            while (*ptr) ptr++;
-            plural--;
-            ptr++;
-        }
-
-        return reinterpret_cast<const char *>(ptr);
+    bool startsWith(string text, string subStr)
+    {
+        if(text.size()< subStr.size())
+            return false;
+        auto subText = text.substr(0, subStr.size());
+        return subText == subStr;
     }
 
-    string get_tag(const string &str, const string &tag, const string &sep)
+    bool cutTextIfMatchStart(string text, string subStr, string& outStr)
     {
-        string res;
-        if (str.size() > tag.size() &&
-            tag == str.substr(0, tag.size()))
-        {
-            size_t pos = str.find(sep);
-            if (pos != string::npos)
-                res = str.substr(pos + sep.size());
-        }
-        return res;
+        outStr = "";
+        if(!startsWith(text, subStr))
+            return false;
+        outStr = text.substr(subStr.size()+1);
+        outStr.pop_back();
+        return true;
     }
 
-    bool open(const string &file)
+    ClassifiedLine classifyLine(string text)
     {
-        StreamFile sf;
-
-        if (!sf.open(file, "rb"))
-            return false;
-        uint32_t size = sf.size();
-        uint32_t id = 0;
-        sf >> id;
-
-        if (0x950412de != id)
+        ClassifiedLine result;
+        if(text.empty())
         {
-            ERROR("incorrect mo id: " << GetHexString(id));
-            return false;
+            result.translationLineType = TranslationLineType::Empty;
+            return result;
         }
-        u16 major, minor;
-        sf >> major >> minor;
-
-        if (0 != major)
+        if(text[0] == '#')
         {
-            ERROR("incorrect major version: " << GetHexString(major, 4));
-            return false;
-        } else
+            result.translationLineType = TranslationLineType::Empty;
+            result.line = text.substr(1);
+            return result;
+        }
+        string outRow;
+        if (text[0] == '"')
         {
-            sf >> count >> offset_strings1 >> offset_strings2 >> hash_size >> hash_offset;
-
-
-            sf.seek(0);
-            buf = sf.toStreamBuf(size);
-            sf.close();
+            cutTextIfMatchStart(text, "", outRow);
+            result.translationLineType = TranslationLineType::QuoteLine;
+            result.line = outRow;
+            return result;
+        }
+        if(cutTextIfMatchStart(text, "msgid ", outRow))
+        {
+            result.translationLineType = TranslationLineType::Msgid;
+            result.line = outRow;
+            return result;
+        }
+        if (cutTextIfMatchStart(text, "msgstr ", outRow))
+        {
+            result.translationLineType = TranslationLineType::Msgstr;
+            result.line = outRow;
+            return result;
         }
 
-        // parse encoding and plural forms
-        if (count)
+        if (cutTextIfMatchStart(text, "msgid_plural ", outRow))
         {
-            buf.seek(offset_strings2);
-            uint32_t length2 = buf.get32();
-            uint32_t offset2 = buf.get32();
+            result.translationLineType = TranslationLineType::Msgid_plural;
+            result.line = outRow;
+            return result;
+        }
 
-            const string tag1("Content-Type");
-            const string sep1("charset=");
-            const string tag2("Plural-Forms");
-            const string sep2(": ");
+        if (cutTextIfMatchStart(text, "msgstr[0] ", outRow))
+        {
+            result.translationLineType = TranslationLineType::Msgstr1;
+            result.line = outRow;
+            return result;
+        }
 
-            buf.seek(offset2);
-            auto tags = StringSplit(buf.toString(length2), "\n");
+        if (cutTextIfMatchStart(text, "msgstr[1] ", outRow))
+        {
+            result.translationLineType = TranslationLineType::Msgstr2;
+            result.line = outRow;
+            return result;
+        }
 
-            for (auto &tag : tags)
+        return result;
+    }
+
+    TranslationTable mainTable;
+
+    struct BuildVector
+    {
+        StringVector messageIds, messagePlurals, messageStr, messageStr1, messageStr2;
+
+        void clear()
+        {
+            messageIds.clear();
+            messageStr.clear();
+            messageStr1.clear();  
+            messageStr2.clear();
+        }
+        void addString(TranslationLineType lineType, std::string line)
+        {
+            switch (lineType)
             {
-                if (encoding.empty())
-                    encoding = get_tag(tag, tag1, sep1);
-
-                if (plural_forms.empty())
-                    plural_forms = get_tag(tag, tag2, sep2);
+            case TranslationLineType::Msgid:
+                messageIds.push_back(line);
+                break;
+            case TranslationLineType::Msgid_plural:
+                messagePlurals.push_back(line);
+                break;
+            case TranslationLineType::Msgstr:
+                messageStr.push_back(line);
+                break;
+            case TranslationLineType::Msgstr1:
+                messageStr1.push_back(line);
+                break;
+            case TranslationLineType::Msgstr2:
+                messageStr2.push_back(line);
+                break;
             }
         }
+    };
 
-        // generate hash table
-        for (uint32_t index = 0; index < count; ++index)
+    bool TranslationTable::readFile(std::string fileName)
+    {
+        std::ifstream infile(fileName);
+        if(!infile.is_open())
+            return false;
+        std::string line;
+        TranslationLineType current = TranslationLineType::Empty;
+        BuildVector buildVector;
+        while (std::getline(infile, line))
         {
-            buf.seek(offset_strings1 + index * 8 /* length, offset */);
-            uint32_t length1 = buf.get32();
-            uint32_t offset1 = buf.get32();
-            buf.seek(offset1);
-            const string msg1 = buf.toString(length1);
-            uint32_t crc = crc32b(msg1.c_str());
-            buf.seek(offset_strings2 + index * 8 /* length, offset */);
-            uint32_t length2 = buf.get32();
-            uint32_t offset2 = buf.get32();
-            map<uint32_t, chunk>::const_iterator it = hash_offsets.find(crc);
-            if (it == hash_offsets.end())
-                hash_offsets[crc] = chunk(offset2, length2);
-            else
-            {
-                ERROR("incorrect hash for: " << msg1);
+            ClassifiedLine classLine = classifyLine(line);
+            if (classLine.translationLineType == TranslationLineType::QuoteLine) {
+                buildVector.addString(current, classLine.line);
+                continue;
             }
+            if (classLine.translationLineType == TranslationLineType::Empty)
+            {
+                if (current == TranslationLineType::Msgstr)
+                {
+                    mainTable.addDirectTranslation(buildVector.messageIds, buildVector.messageStr);
+                    buildVector.clear();
+                    continue;
+                }
+                if (current == TranslationLineType::Msgstr2)
+                {
+                    mainTable.addMultiTranslation(buildVector.messageIds, buildVector.messagePlurals, 
+                        buildVector.messageStr1, buildVector.messageStr2);
+                    buildVector.clear();
+                    continue;
+                }
+                continue;
+            }
+            buildVector.addString(classLine.translationLineType, classLine.line);
+            current = classLine.translationLineType;
+        
         }
 
         return true;
     }
 
-};
+    void TranslationTable::addDirectTranslation(StringVector& id, StringVector& trans)
+    {
+        string key = joinAsRows(id);
+        string value = joinAsRows(trans);
+        if(key.empty() || value.empty())
+            return;
+        directTranslations[key] = value;
+    }
+
+    void TranslationTable::addMultiTranslation(StringVector& messageIds, StringVector& messagePlurals,
+        StringVector& messageStr1, StringVector& messageStr2)
+    {
+        string key = joinAsRows(messageIds);
+        string value = joinAsRows(messageStr1);
+        if (key.empty() || value.empty())
+            return;
+        singularTranslation[key] = value;
+        string keyPl = joinAsRows(messagePlurals);
+        string valuePl = joinAsRows(messageStr2);
+        if (keyPl.empty() || valuePl.empty())
+            return;
+        pluralTranslation[keyPl] = valuePl;
+    }
+
+    string TranslationTable::getTranslation(const string& str)
+    {
+        return getDictText(directTranslations, str);
+    }
+    string TranslationTable::getTranslationPlural(const string& singular, const string& plural, size_t count)
+    {
+        if (count == 1) {
+            return getDictText(singularTranslation, singular);
+        }
+        return getDictText(pluralTranslation, plural);
+    }
+
+    std::string TranslationTable::joinAsRows(StringVector& id)
+    {
+        string result;
+
+        if (id.empty())
+            return result;
+        if(id[0].empty())
+        {
+            id.erase(id.begin());
+        }
+        
+        bool first = true;
+        for (const auto& it : id)
+        {
+            if (first)
+            {
+                first = false;
+            }
+            else
+            {
+                result += '\n';
+            }
+            result += it;
+        }
+        return result;
+    }
+
+}
 
 namespace Translation
 {
-    enum
+    bool bindDomain(const char *file)
     {
-        LOCALE_EN, LOCALE_AF, LOCALE_AR, LOCALE_BG, LOCALE_CA, LOCALE_CS, LOCALE_DA, LOCALE_DE, LOCALE_EL, LOCALE_ES,
-        LOCALE_ET, LOCALE_EU, LOCALE_FI, LOCALE_FR, LOCALE_GL, LOCALE_HE, LOCALE_HR, LOCALE_HU, LOCALE_ID, LOCALE_IT,
-        LOCALE_LA, LOCALE_LT, LOCALE_LV, LOCALE_MK, LOCALE_NL, LOCALE_PL, LOCALE_PT, LOCALE_RU, LOCALE_SK, LOCALE_SL,
-        LOCALE_SR, LOCALE_SV, LOCALE_TR
-    };
-
-    mofile *current = nullptr;
-    map<string, mofile> domains;
-    int locale = LOCALE_EN;
-    char context = 0;
-
-    void setStripContext(char strip)
+        return  ModernTranslation::mainTable.readFile(file);
+    }
+    const string gettext(const string &str)
     {
-        context = strip;
+        return ModernTranslation::mainTable.getTranslation(str);
     }
 
-    const char *stripContext(const char *str)
+    const string ngettext(const char *str, const char *plural, size_t n)
     {
-        if (!context) return str;
-        const char *pos = str;
-        while (*pos && *pos++ != context);
-        return *pos ? pos : str;
+        return ModernTranslation::mainTable.getTranslationPlural(str, plural, n);
     }
 
-    bool bindDomain(const char *domain, const char *file)
+    const string dngettext(const char *domain, const char *str, const char *plural, size_t num)
     {
-        map<string, mofile>::const_iterator it = domains.find(domain);
-        if (it != domains.end())
-            return true;
-
-        string str = System::GetMessageLocale(1);
-
-        if (str == "af" || str == "afrikaans") locale = LOCALE_AF;
-        else if (str == "ar" || str == "arabic") locale = LOCALE_AR;
-        else if (str == "bg" || str == "bulgarian") locale = LOCALE_BG;
-        else if (str == "ca" || str == "catalan") locale = LOCALE_CA;
-        else if (str == "da" || str == "danish") locale = LOCALE_DA;
-        else if (str == "de" || str == "german") locale = LOCALE_DE;
-        else if (str == "el" || str == "greek") locale = LOCALE_EL;
-        else if (str == "es" || str == "spanish") locale = LOCALE_ES;
-        else if (str == "et" || str == "estonian") locale = LOCALE_ET;
-        else if (str == "eu" || str == "basque") locale = LOCALE_EU;
-        else if (str == "fi" || str == "finnish") locale = LOCALE_FI;
-        else if (str == "fr" || str == "french") locale = LOCALE_FR;
-        else if (str == "gl" || str == "galician") locale = LOCALE_GL;
-        else if (str == "he" || str == "hebrew") locale = LOCALE_HE;
-        else if (str == "hr" || str == "croatian") locale = LOCALE_HR;
-        else if (str == "hu" || str == "hungarian") locale = LOCALE_HU;
-        else if (str == "id" || str == "indonesian") locale = LOCALE_ID;
-        else if (str == "it" || str == "italian") locale = LOCALE_IT;
-        else if (str == "la" || str == "latin") locale = LOCALE_LA;
-        else if (str == "lt" || str == "lithuanian") locale = LOCALE_LT;
-        else if (str == "lv" || str == "latvian") locale = LOCALE_LV;
-        else if (str == "mk" || str == "macedonia") locale = LOCALE_MK;
-        else if (str == "nl" || str == "dutch") locale = LOCALE_NL;
-        else if (str == "pl" || str == "polish") locale = LOCALE_PL;
-        else if (str == "pt" || str == "portuguese") locale = LOCALE_PT;
-        else if (str == "ru" || str == "russian") locale = LOCALE_RU;
-        else if (str == "sk" || str == "slovak") locale = LOCALE_SK;
-        else if (str == "sl" || str == "slovenian") locale = LOCALE_SL;
-        else if (str == "sr" || str == "serbian") locale = LOCALE_SR;
-        else if (str == "sv" || str == "swedish") locale = LOCALE_SV;
-        else if (str == "tr" || str == "turkish") locale = LOCALE_TR;
-
-        return domains[domain].open(file);
-    }
-
-    bool setDomain(const char *domain)
-    {
-        auto it = domains.find(domain);
-        if (it == domains.end())
-            return false;
-
-        current = &(*it).second;
-        return true;
-    }
-
-    const char *gettext(const string &str)
-    {
-        return gettext(str.c_str());
-    }
-
-    const char *gettext(const char *str)
-    {
-        return stripContext(current ? current->ngettext(str, 0) : str);
-    }
-
-    const char *dgettext(const char *domain, const char *str)
-    {
-        setDomain(domain);
-        return gettext(str);
-    }
-
-    const char *ngettext(const char *str, const char *plural, size_t n)
-    {
-        if (current)
-            switch (locale)
-            {
-                case LOCALE_AF:
-                case LOCALE_EU:
-                case LOCALE_ID:
-                case LOCALE_LA:
-                case LOCALE_TR:
-                    return stripContext(current->ngettext(str, 0));
-                case LOCALE_AR:
-                    return stripContext(current->ngettext(str, (n == 0 ? 0 : n == 1 ? 1 : n == 2 ? 2 : n % 100 >= 3 &&
-                                                                                                       n % 100 <= 10 ? 3
-                                                                                                                     :
-                                                                                                       n % 100 >= 11 &&
-                                                                                                       n % 100 <= 99 ? 4
-                                                                                                                     : 5)));
-                case LOCALE_BG:
-                case LOCALE_DA:
-                case LOCALE_DE:
-                case LOCALE_ES:
-                case LOCALE_ET:
-                case LOCALE_FI:
-                case LOCALE_GL:
-                case LOCALE_HE:
-                case LOCALE_IT:
-                case LOCALE_NL:
-                case LOCALE_SV:
-                    return stripContext(current->ngettext(str, (n != 1)));
-                case LOCALE_SK:
-                    return stripContext(current->ngettext(str, ((n == 1) ? 1 : (n >= 2 && n <= 4) ? 2 : 0)));
-                case LOCALE_SL:
-                    return stripContext(current->ngettext(str, (n % 100 == 1 ? 0 : n % 100 == 2 ? 1 : n % 100 == 3 ||
-                                                                                                      n % 100 == 4 ? 2
-                                                                                                                   : 3)));
-                case LOCALE_SR:
-                    return stripContext(current->ngettext(str, (n == 1 ? 3 : n % 10 == 1 && n % 100 != 11 ? 0 :
-                                                                             n % 10 >= 2 && n % 10 <= 4 &&
-                                                                             (n % 100 < 10 || n % 100 >= 20) ? 1 : 2)));
-                case LOCALE_CS:
-                    return stripContext(current->ngettext(str, ((n == 1) ? 0 : (n >= 2 && n <= 4) ? 1 : 2)));
-                case LOCALE_EL:
-                case LOCALE_FR:
-                case LOCALE_PT:
-                    return stripContext(current->ngettext(str, (n > 1)));
-                case LOCALE_HR:
-                case LOCALE_RU:
-                case LOCALE_LT:
-                case LOCALE_LV:
-                    return stripContext(current->ngettext(str, (n % 10 == 1 && n % 100 != 11 ? 0 : n % 10 >= 2 &&
-                                                                                                   n % 10 <= 4 &&
-                                                                                                   (n % 100 < 10 ||
-                                                                                                    n % 100 >= 20) ? 1
-                                                                                                                   : 2)));
-                case LOCALE_MK:
-                    return stripContext(current->ngettext(str, (n == 1 || n % 10 == 1 ? 0 : 1)));
-                case LOCALE_PL:
-                    return stripContext(current->ngettext(str, (n == 1 ? 0 : n % 10 >= 2 && n % 10 <= 4 &&
-                                                                             (n % 100 < 10 || n % 100 >= 20) ? 1 : 2)));
-                default:
-                    break;
-            }
-
-        return stripContext(n == 1 ? str : plural);
-    }
-
-    const char *dngettext(const char *domain, const char *str, const char *plural, size_t num)
-    {
-        setDomain(domain);
         return ngettext(str, plural, num);
     }
 }
