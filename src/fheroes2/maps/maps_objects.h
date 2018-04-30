@@ -105,8 +105,6 @@ struct MapSphinx : MapObjectSimple
 
 StreamBase &operator<<(StreamBase &, const MapSphinx &);
 
-StreamBase &operator>>(StreamBase &, MapSphinx &);
-
 ByteVectorReader &operator>>(ByteVectorReader &, MapSphinx &);
 
 struct MapSign : MapObjectSimple

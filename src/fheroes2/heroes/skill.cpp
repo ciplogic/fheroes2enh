@@ -1083,20 +1083,6 @@ StreamBase &Skill::operator<<(StreamBase &sb, const SecSkills &ss)
     return sb << v;
 }
 
-StreamBase &Skill::operator>>(StreamBase &sb, SecSkills &ss)
-{
-    vector<Secondary> &v = ss;
-    sb >> v;
-
-    if (FORMAT_VERSION_3255 > Game::GetLoadVersion())
-    {
-        if (v.size() > HEROESMAXSKILL)
-            v.resize(HEROESMAXSKILL);
-    }
-    return sb;
-}
-
-
 ByteVectorReader &Skill::operator>>(ByteVectorReader &sb, SecSkills &ss)
 {
     vector<Secondary> &v = ss;

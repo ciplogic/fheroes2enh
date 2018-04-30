@@ -201,7 +201,6 @@ public:
 private:
     friend StreamBase &operator<<(StreamBase &, const Spell &);
 
-    friend StreamBase &operator>>(StreamBase &, Spell &);
 
     friend ByteVectorReader &operator>>(ByteVectorReader &, Spell &);
 
@@ -209,8 +208,6 @@ private:
 };
 
 StreamBase &operator<<(StreamBase &, const Spell &);
-
-StreamBase &operator>>(StreamBase &, Spell &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, Spell &);
 

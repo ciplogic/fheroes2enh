@@ -158,9 +158,7 @@ namespace Skill
     };
 
     StreamBase &operator<<(StreamBase &, const SecSkills &);
-
-    StreamBase &operator>>(StreamBase &, SecSkills &);
-
+    
     ByteVectorReader &operator>>(ByteVectorReader &, SecSkills &);
 
     class Primary

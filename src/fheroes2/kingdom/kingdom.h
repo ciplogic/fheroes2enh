@@ -212,8 +212,6 @@ private:
 
     friend ByteVectorReader &operator>>(ByteVectorReader &, Kingdom &);
 
-    friend StreamBase &operator>>(StreamBase &, Kingdom &);
-
     int color;
     Funds resource;
 
@@ -281,9 +279,7 @@ private:
 };
 
 StreamBase &operator<<(StreamBase &, const Kingdom &);
-
 ByteVectorReader &operator>>(ByteVectorReader &, Kingdom &);
 
 StreamBase &operator<<(StreamBase &, const Kingdoms &);
-
 ByteVectorReader &operator>>(ByteVectorReader &, Kingdoms &);

@@ -301,9 +301,7 @@ private:
 
 private:
     friend StreamBase &operator<<(StreamBase &, const Castle &);
-
-    friend StreamBase &operator>>(StreamBase &, Castle &);
-
+    
     friend ByteVectorReader &operator>>(ByteVectorReader &, Castle &);
 
 

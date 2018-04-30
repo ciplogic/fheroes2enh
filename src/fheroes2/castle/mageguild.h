@@ -56,8 +56,6 @@ private:
 
 StreamBase &operator<<(StreamBase &, const MageGuild &);
 
-StreamBase &operator>>(StreamBase &, MageGuild &);
-
 ByteVectorReader &operator>>(ByteVectorReader &, MageGuild &);
 
 class RowSpells

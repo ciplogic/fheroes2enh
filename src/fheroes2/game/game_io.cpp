@@ -75,11 +75,6 @@ namespace Game
         return msg << hdr.status << hdr.info;
     }
 
-    StreamBase &operator>>(StreamBase &msg, HeaderSAV &hdr)
-    {
-        return msg >> hdr.status >> hdr.info;
-    }
-
     ByteVectorReader &operator>>(ByteVectorReader &msg, HeaderSAV &hdr)
     {
         return msg >> hdr.status >> hdr.info;
@@ -240,14 +235,13 @@ bool Game::Load(const string &fn)
 
 bool Game::LoadSAV2FileInfo(const string &fn, Maps::FileInfo &finfo)
 {
-    StreamFile fs;
-    fs.setbigendian(true);
-
-    if (!fs.open(fn, "rb"))
+    BinaryFileReader fileReader;
+    if (!fileReader.open(fn, "rb"))
     {
         return false;
     }
-
+    const auto vectorBytes = fileReader.getRaw(fileReader.size());
+    ByteVectorReader fs(vectorBytes);
     char major, minor;
     fs >> major >> minor;
     const u16 savid = (static_cast<u16>(major) << 8) | static_cast<u16>(minor);

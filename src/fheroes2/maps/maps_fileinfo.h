@@ -126,8 +126,6 @@ namespace Maps
 
     StreamBase &operator<<(StreamBase &, const FileInfo &);
 
-    StreamBase &operator>>(StreamBase &, FileInfo &);
-
     ByteVectorReader &operator>>(ByteVectorReader &, FileInfo &);
 }
 

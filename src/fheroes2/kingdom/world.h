@@ -315,9 +315,7 @@ private:
     friend class Radar;
 
     friend StreamBase &operator<<(StreamBase &, const World &);
-
-    friend StreamBase &operator>>(StreamBase &, World &);
-
+    
     friend ByteVectorReader &operator>>(ByteVectorReader &, World &);
 
     MapsTiles vec_tiles;

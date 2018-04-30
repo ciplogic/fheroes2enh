@@ -736,11 +736,6 @@ StreamBase &operator<<(StreamBase &msg, const Spell &spell)
     return msg << spell.id;
 }
 
-StreamBase &operator>>(StreamBase &msg, Spell &spell)
-{
-    return msg >> spell.id;
-}
-
 ByteVectorReader &operator>>(ByteVectorReader &msg, Spell &spell)
 {
     return msg >> spell.id;
