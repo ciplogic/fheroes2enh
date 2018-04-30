@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ComCtrls;
+  ComCtrls, ExtCtrls;
 
 type
 
@@ -14,18 +14,24 @@ type
 
   TForm1 = class(TForm)
     Button1: TButton;
+    Button2: TButton;
     cbxFullScreen: TCheckBox;
     cbxMusic: TCheckBox;
-    cbxSound: TCheckBox;
     cbxRes: TComboBox;
+    cbxSound: TCheckBox;
     editFh2Exe: TEdit;
+    Image1: TImage;
+    Label1: TLabel;
+    OpenDialog1: TOpenDialog;
     PageControl1: TPageControl;
     TabSheet1: TTabSheet;
-    TabSheet2: TTabSheet;
     TabSheet3: TTabSheet;
     tbMusic: TTrackBar;
     tbSound: TTrackBar;
     procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure cbxMusicChange(Sender: TObject);
+    procedure cbxSoundChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
 
@@ -68,8 +74,8 @@ begin
 
   if(cbxMusic.Enabled) then
   begin
-    sl.Add('sound = on');
-    sl.Add('sound volume = '+IntToStr(tbSound.Position));
+    sl.Add('music = on');
+    sl.Add('music volume = '+IntToStr(tbSound.Position));
   end;
 
   if(cbxFullScreen.Checked) then
@@ -91,6 +97,22 @@ begin
   sl.Free;
 
   SysUtils.ExecuteProcess(editFh2Exe.Text, '');
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+  if not OpenDialog1.Execute then exit;
+  editFh2Exe.Caption:= OpenDialog1.FileName;
+end;
+
+procedure TForm1.cbxMusicChange(Sender: TObject);
+begin
+  tbMusic.Enabled:= cbxMusic.Checked;
+end;
+
+procedure TForm1.cbxSoundChange(Sender: TObject);
+begin
+  tbSound.Enabled:= cbxSound.Enabled;
 end;
 
 end.

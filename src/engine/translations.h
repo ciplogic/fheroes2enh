@@ -30,7 +30,6 @@ namespace Translation
     bool bindDomain(const char *file);
     
     const std::string gettext(const std::string &str);
-
     
     const std::string ngettext(const char *str, const char *plural, size_t num);
 

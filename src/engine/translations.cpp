@@ -55,11 +55,16 @@ namespace ModernTranslation
     {
         std::string getDictText(const StringTable& stringTable, const std::string& item)
         {
-
             const auto findIt = stringTable.find(item);
+            std::string result;
             if (findIt == stringTable.end())
-                return item;
-            return findIt->second;
+                result = item;
+            else result = findIt->second;
+            auto posFind = result.find('|');
+            if (posFind == std::string::npos)
+                return result;
+            result = result.substr(posFind+1);
+            return result;
         }
     }
     void TranslationTable::clear()
@@ -265,7 +270,10 @@ namespace ModernTranslation
 
     string TranslationTable::getTranslation(const string& str)
     {
-        return getDictText(directTranslations, str);
+        auto result = getDictText(directTranslations, str);
+    
+
+        return result;
     }
     string TranslationTable::getTranslationPlural(const string& singular, const string& plural, size_t count)
     {
