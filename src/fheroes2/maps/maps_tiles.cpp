@@ -2845,11 +2845,6 @@ StreamBase &Maps::operator<<(StreamBase &msg, const TilesAddon &ta)
     return msg << ta.level << ta.uniq << ta.object << ta.index << ta.tmp;
 }
 
-StreamBase &Maps::operator>>(StreamBase &msg, TilesAddon &ta)
-{
-    return msg >> ta.level >> ta.uniq >> ta.object >> ta.index >> ta.tmp;
-}
-
 ByteVectorReader &Maps::operator>>(ByteVectorReader &msg, TilesAddon &ta)
 {
     msg >> ta.level;
@@ -2869,21 +2864,6 @@ StreamBase &Maps::operator<<(StreamBase &msg, const Tiles &tile)
                tile.quantity2 <<
                tile.quantity3 <<
                tile.addons_level1 <<
-               tile.addons_level2;
-}
-
-StreamBase &Maps::operator>>(StreamBase &msg, Tiles &tile)
-{
-    return msg >>
-               tile.maps_index >>
-               tile.pack_sprite_index >>
-               tile.tile_passable >>
-               tile.mp2_object >>
-               tile.fog_colors >>
-               tile.quantity1 >>
-               tile.quantity2 >>
-               tile.quantity3 >>
-               tile.addons_level1 >>
                tile.addons_level2;
 }
 

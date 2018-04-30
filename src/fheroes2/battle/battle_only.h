@@ -126,7 +126,6 @@ namespace Battle
 
 StreamBase &operator<<(StreamBase &, const Battle::Only &);
 
-//StreamBase &operator>>(StreamBase &, Battle::Only &);
 ByteVectorReader &operator>>(ByteVectorReader &, Battle::Only &);
 
 #endif

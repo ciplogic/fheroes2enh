@@ -221,9 +221,7 @@ public:
 
 private:
     friend StreamBase &operator<<(StreamBase &, const Artifact &);
-
-    friend StreamBase &operator>>(StreamBase &, Artifact &);
-
+    
     friend ByteVectorReader &operator>>(ByteVectorReader &, Artifact &);
 
     int id;

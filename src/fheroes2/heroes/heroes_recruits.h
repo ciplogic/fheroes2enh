@@ -53,5 +53,6 @@ public:
 };
 
 StreamBase &operator>>(StreamBase &, Recruits &);
+ByteVectorReader &operator>>(ByteVectorReader &, Recruits &);
 
 #endif

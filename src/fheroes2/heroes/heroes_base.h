@@ -148,9 +148,7 @@ public:
 
 protected:
     friend StreamBase &operator<<(StreamBase &, const HeroBase &);
-
-    friend StreamBase &operator>>(StreamBase &, HeroBase &);
-
+    
     friend ByteVectorReader &operator>>(ByteVectorReader &, HeroBase &);
 
     uint32_t magic_point;

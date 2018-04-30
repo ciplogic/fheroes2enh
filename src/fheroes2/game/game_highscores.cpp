@@ -68,6 +68,11 @@ StreamBase &operator>>(StreamBase &msg, hgs_t &hgs)
     return msg >> hgs.player >> hgs.land >> hgs.localtime >> hgs.days >> hgs.rating;
 }
 
+ByteVectorReader &operator>>(ByteVectorReader &msg, hgs_t &hgs)
+{
+    return msg >> hgs.player >> hgs.land >> hgs.localtime >> hgs.days >> hgs.rating;
+}
+
 bool hgs_t::operator==(const hgs_t &h) const
 {
     return player == h.player && land == h.land && days == h.days;

@@ -76,3 +76,8 @@ StreamBase &operator>>(StreamBase &sb, Recruits &rt)
 {
     return sb >> rt.first >> rt.second;
 }
+
+ByteVectorReader &operator>>(ByteVectorReader &sb, Recruits &rt)
+{
+    return sb >> rt.first >> rt.second;
+}

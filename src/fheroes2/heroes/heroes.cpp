@@ -2018,23 +2018,6 @@ StreamBase &operator<<(StreamBase &msg, const VecHeroes &heroes)
     return msg;
 }
 
-StreamBase &operator>>(StreamBase &msg, VecHeroes &heroes)
-{
-    uint32_t size;
-    msg >> size;
-
-    heroes.resize(size, nullptr);
-
-    for (auto &heroe : heroes)
-    {
-        uint32_t hid;
-        msg >> hid;
-        heroe = (hid != Heroes::UNKNOWN ? world.GetHeroes(hid) : nullptr);
-    }
-
-    return msg;
-}
-
 ByteVectorReader &operator>>(ByteVectorReader &msg, VecHeroes &heroes)
 {
     uint32_t size;

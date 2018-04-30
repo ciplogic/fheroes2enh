@@ -586,9 +586,7 @@ protected:
 
 private:
     friend StreamBase &operator<<(StreamBase &, const Settings &);
-
-    friend StreamBase &operator>>(StreamBase &, Settings &);
-
+    
     friend ByteVectorReader &operator>>(ByteVectorReader &, Settings &);
 
     Settings();

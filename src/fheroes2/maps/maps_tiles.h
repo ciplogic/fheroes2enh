@@ -423,8 +423,6 @@ namespace Maps
     private:
         friend StreamBase &operator<<(StreamBase &, const Tiles &);
 
-        friend StreamBase &operator>>(StreamBase &, Tiles &);
-
         friend ByteVectorReader &operator>>(ByteVectorReader &, Tiles &);
 
         Addons addons_level1;
@@ -446,12 +444,8 @@ namespace Maps
     StreamBase &operator<<(StreamBase &, const TilesAddon &);
 
     StreamBase &operator<<(StreamBase &, const Tiles &);
-
-    StreamBase &operator>>(StreamBase &, TilesAddon &);
-
+    
     ByteVectorReader &operator>>(ByteVectorReader &, TilesAddon &);
-
-    StreamBase &operator>>(StreamBase &, Tiles &);
 
     ByteVectorReader &operator>>(ByteVectorReader &, Tiles &);
 }

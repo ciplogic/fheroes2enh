@@ -174,9 +174,7 @@ namespace Battle
 
     private:
         friend StreamBase &operator<<(StreamBase &, const Arena &);
-
-        friend StreamBase &operator>>(StreamBase &, Arena &);
-
+        
         friend ByteVectorReader &operator>>(ByteVectorReader &, Arena &);
 
         void RemoteTurn(const Unit &, Actions &);

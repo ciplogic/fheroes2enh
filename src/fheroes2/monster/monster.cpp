@@ -1563,11 +1563,6 @@ StreamBase &operator<<(StreamBase &msg, const Monster &obj)
     return msg;
 }
 
-StreamBase &operator>>(StreamBase &msg, Monster &obj)
-{
-    return msg;
-}
-
 ByteVectorReader &operator>>(ByteVectorReader &msg, Monster &)
 {
     return msg;

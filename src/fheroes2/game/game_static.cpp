@@ -81,11 +81,6 @@ namespace Skill
         return msg << obj.attack << obj.defense << obj.power << obj.knowledge;
     }
 
-    StreamBase &operator>>(StreamBase &msg, primary_t &obj)
-    {
-        return msg >> obj.attack >> obj.defense >> obj.power >> obj.knowledge;
-    }
-
     ByteVectorReader &operator>>(ByteVectorReader &msg, primary_t &obj)
     {
         return msg >> obj.attack >> obj.defense >> obj.power >> obj.knowledge;
@@ -96,13 +91,6 @@ namespace Skill
         return msg << obj.archery << obj.ballistics << obj.diplomacy << obj.eagleeye << obj.estates << obj.leadership <<
                    obj.logistics << obj.luck << obj.mysticism << obj.navigation << obj.necromancy << obj.pathfinding
                    << obj.scouting << obj.wisdom;
-    }
-
-    StreamBase &operator>>(StreamBase &msg, secondary_t &obj)
-    {
-        return msg >> obj.archery >> obj.ballistics >> obj.diplomacy >> obj.eagleeye >> obj.estates >> obj.leadership >>
-                   obj.logistics >> obj.luck >> obj.mysticism >> obj.navigation >> obj.necromancy >> obj.pathfinding
-                   >> obj.scouting >> obj.wisdom;
     }
 
     ByteVectorReader &operator>>(ByteVectorReader &msg, secondary_t &obj)

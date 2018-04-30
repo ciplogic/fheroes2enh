@@ -154,9 +154,7 @@ namespace Battle
     };
 
     StreamBase &operator<<(StreamBase &, const TargetInfo &);
-
-    StreamBase &operator>>(StreamBase &, TargetInfo &);
-
+    
     ByteVectorReader &operator>>(ByteVectorReader &, TargetInfo &);
 
     struct TargetsInfo : public vector<TargetInfo>
@@ -166,8 +164,6 @@ namespace Battle
     };
 
     StreamBase &operator<<(StreamBase &, const TargetsInfo &);
-
-    StreamBase &operator>>(StreamBase &, TargetsInfo &);
 
     ByteVectorReader &operator>>(ByteVectorReader &, TargetsInfo &);
 
