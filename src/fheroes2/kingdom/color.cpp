@@ -185,12 +185,6 @@ StreamBase &operator<<(StreamBase &msg, const ColorBase &col)
     return msg << col.color;
 }
 
-StreamBase &operator>>(StreamBase &msg, ColorBase &col)
-{
-    return msg >> col.color;
-}
-
-
 ByteVectorReader &operator>>(ByteVectorReader &msg, ColorBase &col)
 {
     return msg >> col.color;

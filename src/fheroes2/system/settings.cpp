@@ -35,6 +35,7 @@
 #include "audio_mixer.h"
 #include "audio_music.h"
 #include <sstream>
+#include "BinaryFileReader.h"
 
 #ifdef WIN32
 #define WINDOWS
@@ -1580,17 +1581,21 @@ void Settings::BinaryLoad()
     if (!System::IsFile(fname))
         fname = GetLastFile("", "fheroes2.bin");
 
-    StreamFile fs;
-    fs.setbigendian(true);
-
-    if (fs.open(fname, "rb"))
+    BinaryFileReader fileReader;
+    if (!fileReader.open(fname, "rb"))
     {
-        u16 version = 0;
-
-        fs >> version >>
-           opt_game >> opt_world >> opt_battle >> opt_addons >>
-           pos_radr >> pos_bttn >> pos_icon >> pos_stat;
+        return;
     }
+    const auto vectorBytes = fileReader.getRaw(fileReader.size());
+
+    ByteVectorReader fs(vectorBytes);
+    fs.setBigEndian(true);
+
+    u16 version = 0;
+
+    fs >> version >>
+        opt_game >> opt_world >> opt_battle >> opt_addons >>
+        pos_radr >> pos_bttn >> pos_icon >> pos_stat;
 }
 
 void Settings::SetMemoryLimit(uint32_t limit)

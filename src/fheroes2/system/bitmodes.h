@@ -59,16 +59,12 @@ public:
 protected:
     friend StreamBase &operator<<(StreamBase &, const BitModes &);
 
-    friend StreamBase &operator>>(StreamBase &, BitModes &);
-
     friend ByteVectorReader &operator>>(ByteVectorReader &, BitModes &);
 
     uint32_t modes;
 };
 
 StreamBase &operator<<(StreamBase &, const BitModes &);
-
-StreamBase &operator>>(StreamBase &, BitModes &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, BitModes &);
 

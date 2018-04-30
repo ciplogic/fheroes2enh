@@ -47,6 +47,5 @@ public:
 
 StreamBase &operator<<(StreamBase &, const Puzzle &);
 
-StreamBase &operator>>(StreamBase &, Puzzle &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, Puzzle &);

@@ -808,11 +808,6 @@ StreamBase &Skill::operator<<(StreamBase &msg, const Primary &skill)
     return msg << skill.attack << skill.defense << skill.knowledge << skill.power;
 }
 
-StreamBase &Skill::operator>>(StreamBase &msg, Primary &skill)
-{
-    return msg >> skill.attack >> skill.defense >> skill.knowledge >> skill.power;
-}
-
 ByteVectorReader &Skill::operator>>(ByteVectorReader &msg, Primary &skill)
 {
     return msg >> skill.attack >> skill.defense >> skill.knowledge >> skill.power;
@@ -1066,16 +1061,10 @@ bool SecondarySkillsBar::QueueEventProcessing(string *str)
     return res;
 }
 
-StreamBase &Skill::operator>>(StreamBase &sb, Secondary &st)
-{
-    return sb >> st.first >> st.second;
-}
-
 ByteVectorReader &Skill::operator>>(ByteVectorReader &sb, Secondary &st)
 {
     return sb >> st.first >> st.second;
 }
-
 
 StreamBase &Skill::operator<<(StreamBase &sb, const SecSkills &ss)
 {

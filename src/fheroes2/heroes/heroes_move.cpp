@@ -736,27 +736,27 @@ void Heroes::FadeOut() const
 
             for (s32 y = mp.y - 1; y <= mp.y + 1; ++y)
                 for (s32 x = mp.x - 1; x <= mp.x + 1; ++x)
-                    if (Maps::isValidAbsPoint(x, y))
-                    {
-                        const Maps::Tiles &tile = world.GetTiles(Maps::GetIndexFromAbsPoint(x, y));
+                {
+                    if (!Maps::isValidAbsPoint(x, y))
+                        continue;
+                    const Maps::Tiles &tile = world.GetTiles(Maps::GetIndexFromAbsPoint(x, y));
 
-                        tile.RedrawTile(display);
-                        tile.RedrawBottom(display);
-                        tile.RedrawObjects(display);
-                    }
-
+                    tile.RedrawTile(display);
+                    tile.RedrawBottom(display);
+                    tile.RedrawObjects(display);
+                }
             sprite1.SetAlphaMod(alpha);
             sprite1.Blit(src_rt, dst_pt1, display);
 
             for (s32 y = mp.y - 1; y <= mp.y + 1; ++y)
                 for (s32 x = mp.x - 1; x <= mp.x + 1; ++x)
-                    if (Maps::isValidAbsPoint(x, y))
-                    {
-                        const Maps::Tiles &tile = world.GetTiles(Maps::GetIndexFromAbsPoint(x, y));
+                {
+                    if (!Maps::isValidAbsPoint(x, y))
+                        continue;
+                    const Maps::Tiles &tile = world.GetTiles(Maps::GetIndexFromAbsPoint(x, y));
 
-                        tile.RedrawTop(display);
-                    }
-
+                    tile.RedrawTop(display);
+                }
             Cursor::Get().Show();
             display.Flip();
             alpha -= 10;

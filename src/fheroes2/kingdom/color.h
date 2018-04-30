@@ -78,8 +78,6 @@ class ColorBase
 
     friend StreamBase &operator<<(StreamBase &, const ColorBase &);
 
-    friend StreamBase &operator>>(StreamBase &, ColorBase &);
-
     friend ByteVectorReader &operator>>(ByteVectorReader &msg, ColorBase &col);
 
 public:
@@ -102,9 +100,6 @@ public:
 };
 
 StreamBase &operator<<(StreamBase &, const ColorBase &);
-
-StreamBase &operator>>(StreamBase &, ColorBase &);
-
 ByteVectorReader &operator>>(ByteVectorReader &msg, ColorBase &col);
 
 #endif

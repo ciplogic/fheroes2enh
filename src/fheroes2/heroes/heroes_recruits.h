@@ -52,7 +52,6 @@ public:
     void SetHero2(const Heroes *);
 };
 
-StreamBase &operator>>(StreamBase &, Recruits &);
 ByteVectorReader &operator>>(ByteVectorReader &, Recruits &);
 
 #endif

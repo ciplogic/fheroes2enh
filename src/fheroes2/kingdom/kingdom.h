@@ -48,7 +48,7 @@ struct LastLoseHero : pair<int, uint32_t> /* Heroes, date */
     {}
 };
 
-StreamBase &operator>>(StreamBase &, LastLoseHero &);
+ByteVectorReader &operator>>(ByteVectorReader &, LastLoseHero &);
 
 struct KingdomCastles : public VecCastles
 {

@@ -818,7 +818,7 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, Kingdoms &obj)
     return msg;
 }
 
-StreamBase &operator>>(StreamBase &sb, LastLoseHero &st)
+ByteVectorReader &operator>>(ByteVectorReader &sb, LastLoseHero &st)
 {
     return sb >> st.first >> st.second;
 }
@@ -828,7 +828,6 @@ KingdomCastles& KingdomCastles::GetNull()
     static KingdomCastles nullInstance;
     return nullInstance;
 }
-
 
 KingdomHeroes& KingdomHeroes::GetNull()
 {

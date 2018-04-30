@@ -74,6 +74,4 @@ struct Week : pair<int, int>
     static int MonthRand();
 };
 
-StreamBase &operator>>(StreamBase &, Week &);
-
 ByteVectorReader &operator>>(ByteVectorReader &sb, Week &st);

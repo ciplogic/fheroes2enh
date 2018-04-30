@@ -322,8 +322,6 @@ public:
 private:
     friend StreamBase &operator<<(StreamBase &, const Heroes &);
 
-    friend StreamBase &operator>>(StreamBase &, Heroes &);
-
     friend ByteVectorReader &operator>>(ByteVectorReader &msg, Heroes &hero);
 
     friend class Recruits;

@@ -40,6 +40,7 @@
 #include "mus.h"
 #include "audio_mixer.h"
 #include "icn.h"
+#include "BinaryFileReader.h"
 
 #define HGS_ID    0xF1F3
 #define HGS_MAX    10
@@ -61,11 +62,6 @@ struct hgs_t
 StreamBase &operator<<(StreamBase &msg, const hgs_t &hgs)
 {
     return msg << hgs.player << hgs.land << hgs.localtime << hgs.days << hgs.rating;
-}
-
-StreamBase &operator>>(StreamBase &msg, hgs_t &hgs)
-{
-    return msg >> hgs.player >> hgs.land >> hgs.localtime >> hgs.days >> hgs.rating;
 }
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, hgs_t &hgs)
@@ -102,10 +98,15 @@ private:
 
 bool HGSData::Load(const string &fn)
 {
-    ZStreamFile hdata;
-    if (!hdata.read(fn)) return false;
+    BinaryFileReader fileReader;
+    if (!fileReader.open(fn, "rb"))
+    {
+        return false;
+    }
+    const auto vectorBytes = fileReader.getRaw(fileReader.size());
+    ByteVectorReader hdata(vectorBytes);
 
-    hdata.setbigendian(true);
+    hdata.setBigEndian(true);
     u16 hgs_id = 0;
 
     hdata >> hgs_id;
@@ -113,7 +114,7 @@ bool HGSData::Load(const string &fn)
     if (hgs_id == HGS_ID)
     {
         hdata >> list;
-        return !hdata.fail();
+        return true;
     }
 
     return false;
@@ -125,7 +126,6 @@ bool HGSData::Save(const string &fn)
     hdata.setbigendian(true);
     hdata << static_cast<u16>(HGS_ID) << list;
     return !(hdata.fail() || !hdata.write(fn));
-
 }
 
 void HGSData::ScoreRegistry(const string &p, const string &m, uint32_t r, uint32_t s)

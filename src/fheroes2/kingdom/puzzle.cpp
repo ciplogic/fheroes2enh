@@ -288,27 +288,3 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, Puzzle &pzl)
 
     return msg;
 }
-
-StreamBase &operator>>(StreamBase &msg, Puzzle &pzl)
-{
-    string str;
-
-    msg >> str;
-    pzl = str.c_str();
-
-    u8 size;
-
-    msg >> size;
-    for (uint32_t ii = 0; ii < size; ++ii) msg >> pzl.zone1_order[ii];
-
-    msg >> size;
-    for (uint32_t ii = 0; ii < size; ++ii) msg >> pzl.zone2_order[ii];
-
-    msg >> size;
-    for (uint32_t ii = 0; ii < size; ++ii) msg >> pzl.zone3_order[ii];
-
-    msg >> size;
-    for (uint32_t ii = 0; ii < size; ++ii) msg >> pzl.zone4_order[ii];
-
-    return msg;
-}

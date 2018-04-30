@@ -322,11 +322,11 @@ bool Route::Path::Find(s32 to, int limit)
     auto it1_2 = pathPointsMap2._rows.begin();
     auto it2_2 = pathPointsMap2._rows.end();
 
-
-    pathPointsMap2.get(cur).cost_g = 0;
-    pathPointsMap2.get(cur).cost_t = 0;
-    pathPointsMap2.get(cur).parent = -1;
-    pathPointsMap2.get(cur).open = 0;
+    cell_t& currCell = pathPointsMap2.get(cur);
+    currCell.cost_g = 0;
+    currCell.cost_t = 0;
+    currCell.parent = -1;
+    currCell.open = 0;
 
     const Directions directions = Direction::All();
     clear();

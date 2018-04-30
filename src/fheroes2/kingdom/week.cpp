@@ -109,12 +109,6 @@ int Week::MonthRand()
            Rand::Get(Settings::Get().ExtWorldBanPlagues() ? ANT : PLAGUE, CONDOR);
 }
 
-StreamBase &operator>>(StreamBase &sb, Week &st)
-{
-    return sb >> st.first >> st.second;
-}
-
-
 ByteVectorReader &operator>>(ByteVectorReader &sb, Week &st)
 {
     return sb >> st.first >> st.second;

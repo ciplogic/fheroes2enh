@@ -45,9 +45,7 @@ public:
 
 private:
     friend StreamBase &operator<<(StreamBase &, const MageGuild &);
-
-    friend StreamBase &operator>>(StreamBase &, MageGuild &);
-
+    
     friend ByteVectorReader &operator>>(ByteVectorReader &, MageGuild &);
 
     SpellStorage general;

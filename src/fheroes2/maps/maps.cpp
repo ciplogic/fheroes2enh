@@ -638,11 +638,6 @@ int Maps::TileIsCoast(s32 center, int filter)
     return result;
 }
 
-StreamBase &operator>>(StreamBase &sb, IndexObject &st)
-{
-    return sb >> st.Value.first >> st.Value.second;
-}
-
 ByteVectorReader &operator>>(ByteVectorReader &sb, IndexObject &st)
 {
     return sb >> st.Value.first >> st.Value.second;
@@ -664,21 +659,6 @@ ByteVectorReader &operator>>(ByteVectorReader &sb, ObjectColor &st)
 }
 
 ByteVectorReader &operator>>(ByteVectorReader &sb, ResourceCount &st)
-{
-    return sb >> st.first >> st.second;
-}
-
-StreamBase &operator>>(StreamBase &sb, IndexDistance &st)
-{
-    return sb >> st.first >> st.second;
-}
-
-StreamBase &operator>>(StreamBase &sb, ObjectColor &st)
-{
-    return sb >> st.first >> st.second;
-}
-
-StreamBase &operator>>(StreamBase &sb, ResourceCount &st)
 {
     return sb >> st.first >> st.second;
 }

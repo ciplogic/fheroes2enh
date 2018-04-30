@@ -118,9 +118,7 @@ namespace Skill
 
         static std::string String(int);
     };
-
-    StreamBase &operator>>(StreamBase &, Secondary &);
-
+    
     ByteVectorReader &operator>>(ByteVectorReader &, Secondary &);
 
     class SecSkills : protected vector<Secondary>
@@ -151,8 +149,6 @@ namespace Skill
 
     protected:
         friend StreamBase &operator<<(StreamBase &, const SecSkills &);
-
-        friend StreamBase &operator>>(StreamBase &, SecSkills &);
 
         friend ByteVectorReader &operator>>(ByteVectorReader &, SecSkills &);
     };
@@ -208,9 +204,6 @@ namespace Skill
         void LoadDefaults(int type, int race);
 
         friend StreamBase &operator<<(StreamBase &, const Primary &);
-
-        friend StreamBase &operator>>(StreamBase &, Primary &);
-
         friend ByteVectorReader &operator>>(ByteVectorReader &, Primary &);
 
         int attack;
@@ -220,8 +213,6 @@ namespace Skill
     };
 
     StreamBase &operator<<(StreamBase &, const Primary &);
-
-    StreamBase &operator>>(StreamBase &, Primary &);
 
     ByteVectorReader &operator>>(ByteVectorReader &, Primary &);
 }

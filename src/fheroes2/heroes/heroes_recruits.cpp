@@ -72,11 +72,6 @@ void Recruits::SetHero2(const Heroes *hero)
     second = hero ? hero->hid : Heroes::UNKNOWN;
 }
 
-StreamBase &operator>>(StreamBase &sb, Recruits &rt)
-{
-    return sb >> rt.first >> rt.second;
-}
-
 ByteVectorReader &operator>>(ByteVectorReader &sb, Recruits &rt)
 {
     return sb >> rt.first >> rt.second;
