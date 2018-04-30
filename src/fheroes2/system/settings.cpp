@@ -94,7 +94,6 @@ enum
 
     GLOBAL_FONTRENDERBLENDED1 = 0x00020000,
     GLOBAL_FONTRENDERBLENDED2 = 0x00040000,
-    GLOBAL_FULLSCREEN = 0x00400000,
     GLOBAL_USESWSURFACE = 0x00800000,
 
     GLOBAL_SOUND = 0x01000000,
@@ -126,8 +125,6 @@ const settings_t settingsGeneral[] =
         {
                 {GLOBAL_SOUND,        "sound",},
                 {GLOBAL_MUSIC_MIDI,   "music",},
-                {GLOBAL_FULLSCREEN,   "fullscreen",},
-                {GLOBAL_FULLSCREEN,   "full screen",},
                 {GLOBAL_USEUNICODE,   "unicode",},
                 {GLOBAL_ALTRESOURCE,  "alt resource",},
                 {GLOBAL_POCKETPC,     "pocketpc",},
@@ -227,11 +224,12 @@ string Settings::GetVersion()
 }
 
 /* constructor */
-Settings::Settings() : debug(DEFAULT_DEBUG), video_mode(0, 0), game_difficulty(Difficulty::NORMAL),
-                       font_normal("dejavusans.ttf"), font_small("dejavusans.ttf"), size_normal(15), size_small(10),
-                       sound_volume(6), music_volume(6), heroes_speed(DEFAULT_SPEED_DELAY),
-                       ai_speed(DEFAULT_SPEED_DELAY), scroll_speed(SCROLL_NORMAL), battle_speed(DEFAULT_SPEED_DELAY),
-                       blit_speed(0), game_type(0), preferably_count_players(0), port(DEFAULT_PORT), memory_limit(0)
+Settings::Settings() 
+    : debug(DEFAULT_DEBUG), video_mode(0, 0), fullScreen(false), game_difficulty(Difficulty::NORMAL),
+    font_normal("dejavusans.ttf"), font_small("dejavusans.ttf"), size_normal(15), size_small(10),
+    sound_volume(6), music_volume(6), heroes_speed(DEFAULT_SPEED_DELAY),
+    ai_speed(DEFAULT_SPEED_DELAY), scroll_speed(SCROLL_NORMAL), battle_speed(DEFAULT_SPEED_DELAY),
+    blit_speed(0), game_type(0), preferably_count_players(0), port(DEFAULT_PORT), memory_limit(0)
 {
     ExtSetModes(GAME_SHOW_SDL_LOGO);
     ExtSetModes(GAME_AUTOSAVE_ON);
@@ -484,6 +482,8 @@ bool Settings::Read(const string &filename)
             video_mode.h = 0;
         }
     }
+    sval = config.StrParams("fullscreen");
+    fullScreen = sval == "on";
 
 
     if (font_normal.empty() || font_small.empty()) opt_global.ResetModes(GLOBAL_USEUNICODE);
@@ -505,14 +505,6 @@ bool Settings::Read(const string &filename)
 
 void Settings::PostLoad()
 {
-    if (opt_global.Modes(GLOBAL_POCKETPC))
-        opt_global.SetModes(GLOBAL_FULLSCREEN);
-    else
-    {
-        ExtResetModes(POCKETPC_HIDE_CURSOR);
-        ExtResetModes(POCKETPC_TAP_MODE);
-        ExtResetModes(POCKETPC_LOW_MEMORY);
-    }
 
     if (ExtModes(GAME_HIDE_INTERFACE))
     {
@@ -564,7 +556,7 @@ string Settings::String() const
                GLOBAL_MUSIC_EXT) ? "ext" : "off"))) << endl <<
        "sound volume = " << static_cast<int>(sound_volume) << endl <<
        "music volume = " << static_cast<int>(music_volume) << endl <<
-       "fullscreen = " << (opt_global.Modes(GLOBAL_FULLSCREEN) ? "on" : "off") << endl <<
+       "fullscreen = " << (fullScreen ? "on" : "off") << endl <<
        "alt resource = " << (opt_global.Modes(GLOBAL_ALTRESOURCE) ? "on" : "off") << endl <<
        "debug = " << (debug ? "on" : "off") << endl;
 
@@ -1610,7 +1602,7 @@ uint32_t Settings::MemoryLimit() const
 
 bool Settings::FullScreen() const
 {
-    auto isFullScreen = opt_global.Modes(GLOBAL_FULLSCREEN) && false;
+    auto isFullScreen = fullScreen;
     return isFullScreen;
 }
 

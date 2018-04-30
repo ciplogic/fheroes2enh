@@ -601,6 +601,7 @@ private:
 
     int debug;
     Size video_mode;
+    bool fullScreen;
     int game_difficulty;
 
     string path_program;
