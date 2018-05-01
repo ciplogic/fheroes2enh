@@ -6,13 +6,22 @@ Free Heroes 2 is an engine recreation of game Heroes 2 (of Might and Magic) with
 
 *What do you mean by enhancements?*
 
-Would you want to play Heroes 2 but you feel things missing like:
-* Buying buildings with one click? 
-* Upgrade units with one click if you have resources? 
-* Last saved file is put on top of "Load" list?
-* An installer that will also download the Heroes 2 Demo or extra maps to not look for them how to copy (only on Windows now)?
-* Quick combat to avoid tedious battles?
-* Performance improvements over Free Heroes 2?
+Features:
+* Buying buildings with one click?
+* Upgrade units with one click if you have resources
+* Last saved file is put on top of "Load" list (files are sorted by time, not name)
+* An installer that will also download the Heroes 2 Demo or extra maps to not look for them how to copy (only on Windows now)
+* Quick combat to avoid tedious battles. If the QuickCombat results are not perfect, you can replay the battle
+* Performance improvements over Free Heroes 2. Especially when "end-turn", in my testing is around 3-4 times quicker
+* Many UI fixes
+* Game balance fixes: going to a boat will not drain all movement points (but it will dran many). This matches more with Heroes 6-7 gameplay, but is nicer like this. The same is with digging for treasures
+
+Screenshots:
+
+![Semi transparent popups](docs/images/Fh2_semitransparent_dialogs.png)
+
+![Updated Dialogs](docs/images/UpdatedDialogs.png)
+
 
 If you want to see what is it about, and you have an Windows machine, why not try it?
 
@@ -91,21 +100,32 @@ C:\Cs-Oss\FHeroes2Enh
 
 **How to contribute**
 
-Excluding you have a clear vision of a feature, I recommend to make many pull requests
-fixing one issue at a time. The smaller the better. 
+Things to do:
+1. Play the game and promote it if you like it!
+2. Fix things that are annoying to you. Don't go to a big item. 
+   To do: 
+    
+    - make a simpler code to read settings (the code is really bad)
 
-If you don't know what to do, try to "clean up the code", especially consider 
-into finding some code that is full with allocations/deletes for example, and try
-rewrite it using std::shared_ptr or std::unique_ptr. Or try to use: std::string 
-everyhwere it is used char*, or std::vector instead of plain arrays.
+    - improve battle's AI with one item at a time: make for example that black dragons will try to attack most enemies units if are two in lines (the same is with Phoenixes)
+    
+    - improve AI one item at a time: AI should attack troops when it is very likely it cannot lose troops (let's say the life of the hero stacks is 5x bigger than the estimated target troop)
 
-Even more important is to drop things that are not supported anymore:
-- if you want to upgrade libraries like using SDL 2.0, today SDL 2.0 is 
-incomplete (even broken), so, if you have time, making SDL 2.0 to run nicely 
-and dropping SDL 1.2 would be really nice to have feature
+    - improve displaying of popups: provide "trivial/easy/medium/hard/very hard/impossible" ratings to enemy troops
+    
+    - improve the way a dialog is written
+    
+    - delete code that is not used
+    
+    - rewrite code hard to understand to an easier code
 
-- if you want to fix performance or animations or things like it: 
-make sure you understand that section of code before rewriting it. Make 
-sure that the code is more readable than it was before.
+  Don't:
+    
+    - rewrite the AI fully, this is a 1 year task to be done well enough
+    
+    - rewrite dialogs to use an XML representation (or Json)
+    
+    - rewrite code to use Qt/Gtk/whatever framework you love best
 
-- if some code is hard to understand, rewrite it to be a bit more readable.
+    When you see big rewrites, don't do them: they are very risky
+

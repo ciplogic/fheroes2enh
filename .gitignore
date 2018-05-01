@@ -33,3 +33,4 @@ obj
 /src/Fh2Launcher/lib/i*
 /Fh2Launcher.exe
 /src/Fh2Launcher/backup/*
+/src/Fh2Launcher/lib/*
