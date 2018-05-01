@@ -33,7 +33,7 @@ https://github.com/ciplogic/fheroes2enh/releases
 Over time there will be mostly usability changes and improvements over modernizing the code. (i.e. C++ 11)
 
 You can see a demo of how it runs and how it is enhanced here: (feel free to build it and make a more pleasing intro!)
-https://youtu.be/AmPKviRAPB4
+https://youtu.be/A8KwfSmW0G4
 
 For now CMake is supported with Linux/Mac OS X only, but please help us to move the code to other platforms (MacOS, Windows and not only).
 
