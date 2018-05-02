@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
+using System.IO;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace FH2Launcher
@@ -28,7 +31,10 @@ namespace FH2Launcher
 
         private void button1_Click(object sender, EventArgs e)
         {
+            var configText = BuildConfig();
+            File.WriteAllText("fheroes2.cfg", configText);
 
+            Process.Start("FHeroes2Enh");
         }
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
@@ -67,6 +73,27 @@ namespace FH2Launcher
             sb.AppendLine("battle speed = 10");
             return sb.ToString();
 
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            downloadButton.Enabled = false;
+            var _form = this;
+            listBox1.Items.Clear();
+            var thr = new Thread(() =>
+            {
+                ZipExtractorUtilies.DownloadItems(ConstStrings.Packs, ".", fName =>
+                {
+                    _form.UIThread(() =>
+                    {
+                        listBox1.Items.Add(fName);
+                        Thread.Sleep(50);
+                    });
+
+                });
+                _form.UIThread(() => { downloadButton.Enabled = true; });
+            });
+            thr.Start();
         }
     }
 }

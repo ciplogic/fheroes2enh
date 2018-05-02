@@ -1,4 +1,4 @@
-﻿namespace Installer
+﻿namespace FH2Launcher
 {
     class ConstStrings
     {
