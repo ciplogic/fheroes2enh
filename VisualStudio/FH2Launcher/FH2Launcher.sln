@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2043
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FH2Launcher", "FH2Launcher\FH2Launcher.csproj", "{2BA0022C-CA8D-46D9-BDA4-8D7EFD5F886E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Installer", "..\..\src\Installer\Installer\Installer.csproj", "{714B81C8-C6CB-49EF-AEDE-A237CFB1C802}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2BA0022C-CA8D-46D9-BDA4-8D7EFD5F886E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BA0022C-CA8D-46D9-BDA4-8D7EFD5F886E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BA0022C-CA8D-46D9-BDA4-8D7EFD5F886E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BA0022C-CA8D-46D9-BDA4-8D7EFD5F886E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{714B81C8-C6CB-49EF-AEDE-A237CFB1C802}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{714B81C8-C6CB-49EF-AEDE-A237CFB1C802}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{714B81C8-C6CB-49EF-AEDE-A237CFB1C802}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{714B81C8-C6CB-49EF-AEDE-A237CFB1C802}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6EE78FA9-29C0-4C13-A20D-7A6FEB9515BB}
+	EndGlobalSection
+EndGlobal

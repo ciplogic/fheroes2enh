@@ -31,8 +31,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.installButton = new System.Windows.Forms.Button();
             this.licensesInstallCheck = new System.Windows.Forms.CheckBox();
-            this.installOptionsUserControl1 = new Installer.UserControls.InstallOptionsUserControl();
             this.installerControlProgress1 = new Installer.UserControls.InstallerControlProgress();
+            this.installOptionsUserControl1 = new Installer.UserControls.InstallOptionsUserControl();
             this.SuspendLayout();
             // 
             // label1
@@ -58,6 +58,7 @@
             // 
             // licensesInstallCheck
             // 
+            this.licensesInstallCheck.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.licensesInstallCheck.AutoSize = true;
             this.licensesInstallCheck.Location = new System.Drawing.Point(17, 249);
             this.licensesInstallCheck.Name = "licensesInstallCheck";
@@ -66,6 +67,14 @@
             this.licensesInstallCheck.Text = "Agree with licenses";
             this.licensesInstallCheck.UseVisualStyleBackColor = true;
             this.licensesInstallCheck.CheckedChanged += new System.EventHandler(this.licensesInstallCheck_CheckedChanged);
+            // 
+            // installerControlProgress1
+            // 
+            this.installerControlProgress1.Location = new System.Drawing.Point(17, 40);
+            this.installerControlProgress1.Name = "installerControlProgress1";
+            this.installerControlProgress1.Size = new System.Drawing.Size(533, 197);
+            this.installerControlProgress1.TabIndex = 4;
+            this.installerControlProgress1.Visible = false;
             // 
             // installOptionsUserControl1
             // 
@@ -76,14 +85,6 @@
             this.installOptionsUserControl1.Name = "installOptionsUserControl1";
             this.installOptionsUserControl1.Size = new System.Drawing.Size(533, 197);
             this.installOptionsUserControl1.TabIndex = 2;
-            // 
-            // installerControlProgress1
-            // 
-            this.installerControlProgress1.Location = new System.Drawing.Point(17, 40);
-            this.installerControlProgress1.Name = "installerControlProgress1";
-            this.installerControlProgress1.Size = new System.Drawing.Size(533, 197);
-            this.installerControlProgress1.TabIndex = 4;
-            this.installerControlProgress1.Visible = false;
             // 
             // Form1
             // 
