@@ -35,6 +35,7 @@
 #include "ByteVectorReader.h"
 #include "BinaryFileReader.h"
 #include <chrono>
+#include "FileUtils.h"
 
 static u16 SAV2ID2 = 0xFF02;
 static u16 SAV2ID3 = 0xFF03;
@@ -74,12 +75,7 @@ namespace Game
     {
         return msg << hdr.status << hdr.info;
     }
-
-    StreamBase &operator>>(StreamBase &msg, HeaderSAV &hdr)
-    {
-        return msg >> hdr.status >> hdr.info;
-    }
-
+    
     ByteVectorReader &operator>>(ByteVectorReader &msg, HeaderSAV &hdr)
     {
         return msg >> hdr.status >> hdr.info;
@@ -168,19 +164,23 @@ bool Game::Load(const string &fn)
         return false;
     }
 
-    ZStreamFile fz;
+    //ZStreamFile fz;
 
-    fz.setbigendian(true);
+    auto fileDataZ = readFileBytes(fn);
+    ByteVectorReader fz(fileDataZ);
 
+    fz.setBigEndian(true);
+    if(fileDataZ.empty())
+        return false;
+    /*
     if (!fz.read(fn, offset))
     {
         return false;
     }
+    */
     fileVector = readFileBytes(fn);
     if (fileVector.empty())
-    {
         return false;
-    }
     sp<ByteVectorReader> bfz = make_shared<ByteVectorReader>(fileVector);
     {
         bfz->setBigEndian(true);
@@ -225,7 +225,7 @@ bool Game::Load(const string &fn)
          >> end_check;
     World::Get().PostFixLoad();
 
-    if (fz.fail() || (end_check != SAV2ID2 && end_check != SAV2ID3))
+    if ( (end_check != SAV2ID2 && end_check != SAV2ID3))
     {
         return false;
     }
@@ -240,23 +240,19 @@ bool Game::Load(const string &fn)
 
 bool Game::LoadSAV2FileInfo(const string &fn, Maps::FileInfo &finfo)
 {
-    StreamFile fs;
-    fs.setbigendian(true);
-
-    if (!fs.open(fn, "rb"))
-    {
+    auto fileBytes = readFileBytes(fn);
+    if (fileBytes.empty())
         return false;
-    }
-
+    ByteVectorReader fs(fileBytes);
+    fs.setBigEndian(true);
     char major, minor;
     fs >> major >> minor;
+
     const u16 savid = (static_cast<u16>(major) << 8) | static_cast<u16>(minor);
 
     // check version sav file
     if (savid != SAV2ID2 && savid != SAV2ID3)
-    {
         return false;
-    }
 
     string strver;
     u16 binver = 0;
@@ -269,13 +265,9 @@ bool Game::LoadSAV2FileInfo(const string &fn, Maps::FileInfo &finfo)
     if (binver > CURRENT_FORMAT_VERSION || binver < LAST_FORMAT_VERSION)
         return false;
 
-#ifndef WITH_ZLIB
     // check: compress game data
     if (header.status & HeaderSAV::IS_COMPRESS)
-    {
         return false;
-    }
-#endif
 
     finfo = header.info;
     finfo.file = fn;

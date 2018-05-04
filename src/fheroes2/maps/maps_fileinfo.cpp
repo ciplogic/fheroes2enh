@@ -599,22 +599,6 @@ StreamBase &Maps::operator<<(StreamBase &msg, const FileInfo &fi)
     return msg;
 }
 
-StreamBase &Maps::operator>>(StreamBase &msg, FileInfo &fi)
-{
-    u8 kingdommax;
-
-    msg >> fi.file >> fi.name >> fi.description >>
-        fi.size_w >> fi.size_h >> fi.difficulty >> kingdommax;
-
-    for (uint32_t ii = 0; ii < kingdommax; ++ii)
-        msg >> fi.races[ii] >> fi.unions[ii];
-
-    msg >> fi.kingdom_colors >> fi.allow_human_colors >> fi.allow_comp_colors >>
-        fi.rnd_races >> fi.conditions_wins >> fi.comp_also_wins >> fi.allow_normal_victory >> fi.wins1 >> fi.wins2 >>
-        fi.conditions_loss >> fi.loss1 >> fi.loss2 >> fi.localtime >> fi.with_heroes;
-
-    return msg;
-}
 
 ByteVectorReader &Maps::operator>>(ByteVectorReader &msg, FileInfo &fi)
 {

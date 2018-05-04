@@ -35,3 +35,4 @@ obj
 /src/Fh2Launcher/backup/*
 /src/Fh2Launcher/lib/*
 /VisualStudio/FH2Launcher/FH2Launcher/bin/
+*.pdb
