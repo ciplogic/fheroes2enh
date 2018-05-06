@@ -249,10 +249,12 @@ struct MonsterStaticData
 };
 
 StreamBase &operator<<(StreamBase &, const Monster &);
+ByteVectorWriter &operator<<(ByteVectorWriter &, const Monster &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, Monster &);
 
 StreamBase &operator<<(StreamBase &, const MonsterStaticData &);
+ByteVectorWriter &operator<<(ByteVectorWriter &, const MonsterStaticData &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, MonsterStaticData &);
 

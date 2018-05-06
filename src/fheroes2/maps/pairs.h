@@ -68,6 +68,7 @@ public:
 ByteVectorReader &operator>>(ByteVectorReader &, IndexObject &);
 
 StreamBase &operator<<(StreamBase &, IndexObject &);
+ByteVectorWriter &operator<<(ByteVectorWriter &, IndexObject &);
 
 class ObjectColor : public pair<int, int>
 {

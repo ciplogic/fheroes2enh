@@ -52,6 +52,7 @@ public:
 
 protected:
     friend StreamBase &operator<<(StreamBase &, const ActionSimple &);
+    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const ActionSimple &);
 
     friend ByteVectorReader &operator>>(ByteVectorReader &, ActionSimple &);
 

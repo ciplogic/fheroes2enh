@@ -107,10 +107,7 @@ bool Game::Save(const string &fn)
 
     bfs << static_cast<char>(SAV2ID3 >> 8) << static_cast<char>(SAV2ID3) << Int2Str(loadver) << loadver
       << HeaderSAV(conf.CurrentFileInfo(), conf.PriceLoyaltyVersion());
-    auto newBytes = bfs.data();
-    writeFileBytes(fn, newBytes);
 
-    bfs.clear();
     ZStreamFile fz;
     fz.setbigendian(true);
 
@@ -120,7 +117,10 @@ bool Game::Save(const string &fn)
     bfs << loadver << World::Get() << Settings::Get() <<
         GameOver::Result::Get() << GameStatic::Data::Get() << MonsterStaticData::Get() << SAV2ID3; // eof marker
 
-    return !fz.fail() && fz.write(fn, true);
+    auto result = !fz.fail() && fz.write(fn, true);
+    auto finalFile = bfs.data();
+    writeFileBytes(fn+"_bw", finalFile);
+    return result;
 }
 
 //#define OLDMETHOD
