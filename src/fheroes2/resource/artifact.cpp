@@ -35,7 +35,6 @@
 #include "icn.h"
 
 #include <sstream>
-#include <iostream>
 
 enum
 {
@@ -696,6 +695,11 @@ std::string Artifact::GetScenario(const Artifact &art)
 }
 
 StreamBase &operator<<(StreamBase &msg, const Artifact &art)
+{
+    return msg << art.id << art.ext;
+}
+
+ByteVectorWriter &operator<<(ByteVectorWriter &msg, const Artifact &art)
 {
     return msg << art.id << art.ext;
 }

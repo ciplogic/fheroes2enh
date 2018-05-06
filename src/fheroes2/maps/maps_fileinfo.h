@@ -26,6 +26,7 @@
 #include <vector>
 #include "gamedefs.h"
 #include "ByteVectorReader.h"
+#include "ByteVectorWriter.h"
 
 namespace Maps
 {
@@ -125,6 +126,7 @@ namespace Maps
     };
 
     StreamBase &operator<<(StreamBase &, const FileInfo &);
+    ByteVectorWriter & operator<<(ByteVectorWriter & msg, const FileInfo & fi);
     ByteVectorReader &operator>>(ByteVectorReader &, FileInfo &);
 }
 

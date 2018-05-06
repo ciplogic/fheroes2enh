@@ -113,39 +113,38 @@ MapSphinx::MapSphinx() : MapObjectSimple(MP2::OBJ_SPHINX), valid(false)
 void MapSphinx::LoadFromMP2(s32 index, ByteVectorReader &st)
 {
     // id
-    if (0 == st.get())
+    if (0 != st.get())
+        return;
+    SetIndex(index);
+
+    // resource
+    resources.wood = st.getLE32();
+    resources.mercury = st.getLE32();
+    resources.ore = st.getLE32();
+    resources.sulfur = st.getLE32();
+    resources.crystal = st.getLE32();
+    resources.gems = st.getLE32();
+    resources.gold = st.getLE32();
+
+    // artifact
+    artifact = st.getLE16();
+
+    // count answers
+    uint32_t count = st.get();
+
+    // answers
+    for (uint32_t i = 0; i < 8; ++i)
     {
-        SetIndex(index);
+        string answer = Game::GetEncodeString(st.toString(13));
 
-        // resource
-        resources.wood = st.getLE32();
-        resources.mercury = st.getLE32();
-        resources.ore = st.getLE32();
-        resources.sulfur = st.getLE32();
-        resources.crystal = st.getLE32();
-        resources.gems = st.getLE32();
-        resources.gold = st.getLE32();
-
-        // artifact
-        artifact = st.getLE16();
-
-        // count answers
-        uint32_t count = st.get();
-
-        // answers
-        for (uint32_t i = 0; i < 8; ++i)
-        {
-            string answer = Game::GetEncodeString(st.toString(13));
-
-            if (count-- && !answer.empty())
-                answers.push_back(StringLower(answer));
-        }
-
-        // message
-        message = Game::GetEncodeString(st.toString(0));
-
-        valid = true;
+        if (count-- && !answer.empty())
+            answers.push_back(StringLower(answer));
     }
+
+    // message
+    message = Game::GetEncodeString(st.toString(0));
+
+    valid = true;
 }
 
 bool MapSphinx::AnswerCorrect(const string &answer)

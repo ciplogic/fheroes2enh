@@ -229,6 +229,7 @@ private:
 };
 
 StreamBase &operator<<(StreamBase &, const Artifact &);
+ByteVectorWriter &operator<<(ByteVectorWriter &, const Artifact &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, Artifact &);
 

@@ -42,3 +42,5 @@ public:
 };
 
 std::vector<u8> readFileBytes(std::string fileName);
+void writeFileBytes(std::string fileName, const std::vector<u8>& v);
+

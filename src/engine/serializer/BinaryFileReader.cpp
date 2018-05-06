@@ -1,5 +1,6 @@
 #include "BinaryFileReader.h"
 #include "gamedefs.h"
+#include <fstream>
 
 BinaryFileReader::BinaryFileReader()
         : _file(nullptr),
@@ -117,4 +118,10 @@ std::vector<u8> readFileBytes(std::string fileName)
     reader.seek(0);
     result = reader.getRaw(fileSize);
     return result;
+}
+
+void writeFileBytes(std::string fileName, const std::vector<u8>& v)
+{
+    std::ofstream outfile(fileName, std::ios::out | std::ios::binary);
+    outfile.write((const char*)&v[0], v.size());
 }

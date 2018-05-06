@@ -32,6 +32,7 @@
 #include "game_static.h"
 #include "game_interface.h"
 #include "ai.h"
+#include "bitmodes.h"
 
 bool HeroesStrongestArmy(const Heroes *h1, const Heroes *h2)
 {
@@ -779,6 +780,23 @@ StreamBase &operator<<(StreamBase &msg, const Kingdom &kingdom)
                kingdom.heroes_cond_loss;
 }
 
+ByteVectorWriter& operator<<(ByteVectorWriter&msg, const Kingdom &kingdom)
+{
+    return msg <<
+        kingdom.modes <<
+        kingdom.color <<
+        kingdom.resource <<
+        kingdom.lost_town_days <<
+        kingdom.castles <<
+        kingdom.heroes <<
+        kingdom.recruits <<
+        kingdom.lost_hero <<
+        kingdom.visit_object <<
+        kingdom.puzzle_maps <<
+        kingdom.visited_tents_colors <<
+        kingdom.heroes_cond_loss;
+}
+
 ByteVectorReader &operator>>(ByteVectorReader &msg, Kingdom &kingdom)
 {
     return msg >>
@@ -806,6 +824,14 @@ StreamBase &operator<<(StreamBase &msg, const Kingdoms &obj)
     return msg;
 }
 
+ByteVectorWriter &operator<<(ByteVectorWriter &msg, const Kingdoms &obj)
+{
+    msg << static_cast<uint32_t>(obj.size());
+    for (uint32_t ii = 0; ii < obj.size(); ++ii)
+        msg << obj.kingdoms[ii];
+
+    return msg;
+}
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, Kingdoms &obj)
 {

@@ -25,6 +25,7 @@
 
 #include "gamedefs.h"
 #include "ByteVectorReader.h"
+#include "ByteVectorWriter.h"
 
 #define MODES_ALL 0xFFFFFFFF
 
@@ -58,6 +59,7 @@ public:
 
 protected:
     friend StreamBase &operator<<(StreamBase &, const BitModes &);
+    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const BitModes &);
 
     friend ByteVectorReader &operator>>(ByteVectorReader &, BitModes &);
 
@@ -65,6 +67,7 @@ protected:
 };
 
 StreamBase &operator<<(StreamBase &, const BitModes &);
+ByteVectorWriter &operator<<(ByteVectorWriter &, const BitModes &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, BitModes &);
 

@@ -1227,6 +1227,30 @@ StreamBase &operator<<(StreamBase &msg, const World &w)
                w.map_objects;
 }
 
+ByteVectorWriter &operator<<(ByteVectorWriter &msg, const World &w)
+{
+    const Size &sz = w;
+
+    return msg << sz <<
+        w.vec_tiles <<
+        w.vec_heroes <<
+        w.vec_castles <<
+        w.vec_kingdoms <<
+        w.vec_rumors <<
+        w.vec_eventsday <<
+        w.map_captureobj <<
+        w.ultimate_artifact <<
+        w.day <<
+        w.week <<
+        w.month <<
+        w.week_current <<
+        w.week_next <<
+        w.heroes_cond_wins <<
+        w.heroes_cond_loss <<
+        w.map_actions <<
+        w.map_objects;
+}
+
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, World &w)
 {

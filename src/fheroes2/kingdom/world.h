@@ -315,6 +315,7 @@ private:
     friend class Radar;
 
     friend StreamBase &operator<<(StreamBase &, const World &);
+    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const World &);
     
     friend ByteVectorReader &operator>>(ByteVectorReader &, World &);
 
@@ -349,6 +350,7 @@ StreamBase &operator<<(StreamBase &, const CapturedObject &);
 ByteVectorReader &operator>>(ByteVectorReader &, CapturedObject &);
 
 StreamBase &operator<<(StreamBase &, const World &);
+ByteVectorWriter &operator<<(ByteVectorWriter &, const World &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, World &);
 

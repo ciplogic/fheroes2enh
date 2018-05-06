@@ -1217,7 +1217,6 @@ Surface AGG::GetTIL(int til, uint32_t index, uint32_t shape)
 /* load 82M object to AGG::Cache in Audio::CVT */
 void AGG::LoadWAV(int m82, vector<u8> &v)
 {
-#ifdef WITH_MIXER
     const Settings &conf = Settings::Get();
 
     if (conf.UseAltResource())
@@ -1242,16 +1241,12 @@ void AGG::LoadWAV(int m82, vector<u8> &v)
         if (!v.empty()) return;
 
     }
-#endif
 
     const vector<u8> &body = ReadChunk(M82::GetString(m82));
 
     if (body.empty())
         return;
-#ifdef WITH_MIXER
     // create WAV format
-    StreamBuf wavHeader2(44);
-
     ByteVectorWriter wavHeader(44);
     wavHeader.putLE32(0x46464952);        // RIFF
     wavHeader.putLE32(body.size() + 0x24);    // size
@@ -1268,39 +1263,9 @@ void AGG::LoadWAV(int m82, vector<u8> &v)
     wavHeader.putLE32(body.size());        // size
 
     v.reserve(body.size() + 44);
-    v.assign(wavHeader.data(), wavHeader.data() + 44);
+    auto vecData = wavHeader.data();
+    v.assign(vecData.begin(), vecData.end());
     v.insert(v.begin() + 44, body.begin(), body.end());
-#else
-    Audio::Spec wav_spec;
-    wav_spec.format = AUDIO_U8;
-    wav_spec.channels = 1;
-    wav_spec.freq = 22050;
-
-    const Audio::Spec &hardware = Audio::GetHardwareSpec();
-
-    Audio::CVT cvt;
-
-    if (!cvt.Build(wav_spec, hardware))
-    {
-        return;
-    }
-    else
-    {
-        const uint32_t size = cvt.len_mult * body.size();
-
-        up<u8> upBuf(new u8[size]);
-        cvt.buf = upBuf.get();
-        cvt.len = body.size();
-
-        memcpy(cvt.buf, &body[0], body.size());
-
-        cvt.Convert();
-
-        v.assign(cvt.buf, cvt.buf + size - 1);
-
-        cvt.buf = nullptr;
-    }
-#endif
 }
 
 /* load XMI object */

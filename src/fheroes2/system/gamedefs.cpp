@@ -29,6 +29,11 @@ StreamBase &operator<<(StreamBase &msg, const BitModes &b)
     return msg << b.modes;
 }
 
+ByteVectorWriter&operator<<(ByteVectorWriter&msg, const BitModes &b)
+{
+    return msg << b.modes;
+}
+
 ByteVectorReader &operator>>(ByteVectorReader &msg, BitModes &b)
 {
     return msg >> b.modes;

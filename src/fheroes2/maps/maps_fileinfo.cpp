@@ -598,6 +598,20 @@ StreamBase &Maps::operator<<(StreamBase &msg, const FileInfo &fi)
 
     return msg;
 }
+ByteVectorWriter &Maps::operator<<(ByteVectorWriter &msg, const FileInfo &fi)
+{
+    msg << System::GetBasename(fi.file) << fi.name << fi.description <<
+        fi.size_w << fi.size_h << fi.difficulty << static_cast<u8>(KINGDOMMAX);
+
+    for (uint32_t ii = 0; ii < KINGDOMMAX; ++ii)
+        msg << fi.races[ii] << fi.unions[ii];
+
+    msg << fi.kingdom_colors << fi.allow_human_colors << fi.allow_comp_colors <<
+        fi.rnd_races << fi.conditions_wins << fi.comp_also_wins << fi.allow_normal_victory << fi.wins1 << fi.wins2 <<
+        fi.conditions_loss << fi.loss1 << fi.loss2 << fi.localtime << fi.with_heroes;
+
+    return msg;
+}
 
 
 ByteVectorReader &Maps::operator>>(ByteVectorReader &msg, FileInfo &fi)

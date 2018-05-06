@@ -272,6 +272,7 @@ public:
 
 private:
     friend StreamBase &operator<<(StreamBase &, const Kingdoms &);
+    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Kingdoms &);
 
     friend ByteVectorReader &operator>>(ByteVectorReader &, Kingdoms &);
 
@@ -279,7 +280,9 @@ private:
 };
 
 StreamBase &operator<<(StreamBase &, const Kingdom &);
+ByteVectorWriter &operator<<(ByteVectorWriter &, const Kingdom &);
 ByteVectorReader &operator>>(ByteVectorReader &, Kingdom &);
 
 StreamBase &operator<<(StreamBase &, const Kingdoms &);
+ByteVectorWriter &operator<<(ByteVectorWriter &, const Kingdoms &);
 ByteVectorReader &operator>>(ByteVectorReader &, Kingdoms &);
