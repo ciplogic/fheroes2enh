@@ -24,7 +24,7 @@
 #include <iterator>
 #include "rect.h"
 
-constexpr Point::Point(int px, int py) : x(static_cast<s16>(px)), y(static_cast<s16>(py))
+Point::Point(int px, int py) : x(static_cast<s16>(px)), y(static_cast<s16>(py))
 {
 }
 
@@ -73,11 +73,11 @@ bool Point::inABC(const Point &pt1, const Point &pt2, const Point &pt3) const
     return ((a >= 0 && b >= 0 && c >= 0) || (a < 0 && b < 0 && c < 0));
 }
 
-constexpr Size::Size() : w(0), h(0)
+Size::Size() : w(0), h(0)
 {
 }
 
-constexpr Size::Size(u16 sw, u16 sh) : w(sw), h(sh)
+Size::Size(u16 sw, u16 sh) : w(sw), h(sh)
 {
 }
 
@@ -126,9 +126,9 @@ bool Size::isEmpty() const
     return 0 == w && 0 == h;
 }
 
-constexpr Rect::Rect() = default;
+Rect::Rect() = default;
 
- Rect::Rect(const Point &pt, u16 rw, u16 rh) : Point(pt), Size(rw, rh)
+Rect::Rect(const Point &pt, u16 rw, u16 rh) : Point(pt), Size(rw, rh)
 {
 }
 

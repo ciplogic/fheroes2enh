@@ -6,6 +6,8 @@
 #include <list>
 #include "rect.h"
 
+using namespace std;
+
 class ByteVectorWriter
 {
     std::vector<u8> _data;
@@ -50,46 +52,6 @@ public:
 
 
     template<class Type1, class Type2>
-    ByteVectorWriter &operator>>(std::pair<Type1, Type2> &p)
-    {
-        return *this >> p.first >> p.second;
-    }
-
-    template<class Type>
-    ByteVectorWriter &operator>>(std::vector<Type> &v)
-    {
-        const uint32_t size = get32();
-        v.resize(size);
-        for (auto it = v.begin(); it != v.end(); ++it)
-            *this >> *it;
-        return *this;
-    }
-
-    template<class Type>
-    ByteVectorWriter &operator>>(std::list <Type> &v)
-    {
-        const uint32_t size = get32();
-        v.resize(size);
-        for (auto it = v.begin(); it != v.end(); ++it)
-            *this >> *it;
-        return *this;
-    }
-
-    template<class Type1, class Type2>
-    ByteVectorWriter &operator>>(std::map<Type1, Type2> &v)
-    {
-        const uint32_t size = get32();
-        v.clear();
-        for (uint32_t ii = 0; ii < size; ++ii)
-        {
-            pair<Type1, Type2> pr;
-            *this >> pr;
-            v.insert(pr);
-        }
-        return *this;
-    }
-
-    template<class Type1, class Type2>
     ByteVectorWriter &operator<<(const std::pair<Type1, Type2> &p)
     {
         return *this << p.first << p.second;
@@ -114,15 +76,14 @@ public:
     }
 
     template<class Type1, class Type2>
-    ByteVectorWriter &operator<<(const std::map<Type1, Type2> &v)
+    ByteVectorWriter &operator<<(const map<Type1, Type2> &v)
     {
         put32(static_cast<uint32_t>(v.size()));
         for (typename map<Type1, Type2>::const_iterator
-            it = v.begin(); it != v.end(); ++it)
+                     it = v.begin(); it != v.end(); ++it)
             *this << *it;
         return *this;
     }
-
 
     void clear()
     {
