@@ -20,10 +20,10 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2PLAYERS_H
-#define H2PLAYERS_H
+#pragma once
 
 #include "ByteVectorReader.h"
+#include "ByteVectorWriter.h"
 #include <string>
 #include <vector>
 #include "bitmodes.h"
@@ -145,6 +145,7 @@ public:
 
 protected:
     friend StreamBase &operator<<(StreamBase &, const Player &);
+    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Player &);
 
     friend ByteVectorReader &operator>>(ByteVectorReader &, Player &);
 
@@ -213,6 +214,7 @@ public:
 };
 
 StreamBase &operator<<(StreamBase &, const Players &);
+ByteVectorWriter &operator<<(ByteVectorWriter &, const Players &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, Players &);
 
@@ -255,4 +257,3 @@ namespace Interface
     };
 }
 
-#endif

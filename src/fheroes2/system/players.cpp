@@ -231,6 +231,20 @@ StreamBase &operator<<(StreamBase &msg, const Player &player)
                player.name <<
                player.focus;
 }
+ByteVectorWriter &operator<<(ByteVectorWriter &msg, const Player &player)
+{
+    const BitModes &modes = player._bitModes;
+
+    return msg <<
+        modes <<
+        player.id <<
+        player.control <<
+        player.color <<
+        player.race <<
+        player.friends <<
+        player.name <<
+        player.focus;
+}
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, Player &player)
 {
@@ -494,6 +508,15 @@ string Players::String() const
 }
 
 StreamBase &operator<<(StreamBase &msg, const Players &players)
+{
+    msg << players.GetColors() << players.current_color;
+
+    for (auto player : players._items)
+        msg << (*player);
+
+    return msg;
+}
+ByteVectorWriter &operator<<(ByteVectorWriter &msg, const Players &players)
 {
     msg << players.GetColors() << players.current_color;
 

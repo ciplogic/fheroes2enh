@@ -20,10 +20,10 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2GAMESTATIC_H
-#define H2GAMESTATIC_H
+#pragma once
 
 #include "gamedefs.h"
+#include "ByteVectorWriter.h"
 
 struct cost_t;
 namespace Skill
@@ -42,6 +42,7 @@ namespace GameStatic
     };
 
     StreamBase &operator<<(StreamBase &, const Data &);
+    ByteVectorWriter &operator<<(ByteVectorWriter &, const Data &);
 
     ByteVectorReader &operator>>(ByteVectorReader &, Data &);
 
@@ -92,5 +93,3 @@ namespace GameStatic
     void SetSpell_DD_HP(int);
 }
 
-
-#endif

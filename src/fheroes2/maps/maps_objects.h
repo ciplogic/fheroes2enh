@@ -51,6 +51,7 @@ public:
 
 protected:
     friend StreamBase &operator<<(StreamBase &, const MapObjectSimple &);
+    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const MapObjectSimple &);
 
     friend ByteVectorReader &operator>>(ByteVectorReader &, MapObjectSimple &);
 
@@ -81,6 +82,7 @@ struct MapEvent : MapObjectSimple
 };
 
 StreamBase &operator<<(StreamBase &, const MapEvent &);
+ByteVectorWriter &operator<<(ByteVectorWriter &, const MapEvent &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, MapEvent &);
 

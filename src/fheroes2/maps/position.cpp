@@ -61,6 +61,11 @@ StreamBase &operator<<(StreamBase &sb, const MapPosition &st)
     return sb << st.center;
 }
 
+ByteVectorWriter &operator<<(ByteVectorWriter &sb, const MapPosition &st)
+{
+    return sb << st.center;
+}
+
 
 ByteVectorReader &operator>>(ByteVectorReader &sb, MapPosition &st)
 {

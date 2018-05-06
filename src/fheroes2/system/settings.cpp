@@ -1622,6 +1622,22 @@ StreamBase &operator<<(StreamBase &msg, const Settings &conf)
                conf.players;
 }
 
+ByteVectorWriter &operator<<(ByteVectorWriter &msg, const Settings &conf)
+{
+    return msg <<
+        // lang
+        conf.force_lang <<
+        // current maps
+        conf.current_maps_file <<
+        // game config
+        conf.game_difficulty <<
+        conf.game_type <<
+        conf.preferably_count_players <<
+        conf.debug <<
+        conf.opt_game << conf.opt_world << conf.opt_battle << conf.opt_addons <<
+        conf.players;
+}
+
 ByteVectorReader &operator>>(ByteVectorReader &msg, Settings &conf)
 {
     string lang;

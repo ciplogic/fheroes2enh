@@ -20,10 +20,10 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2GAMEOVER_H
-#define H2GAMEOVER_H
+#pragma once
 
 #include "ByteVectorReader.h"
+#include "ByteVectorWriter.h"
 #include <string>
 
 namespace GameOver
@@ -71,6 +71,8 @@ namespace GameOver
 
     private:
         friend StreamBase &operator<<(StreamBase &, const Result &);
+        friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Result &);
+
 
         friend ByteVectorReader &operator>>(ByteVectorReader &, Result &);
 
@@ -86,4 +88,3 @@ namespace GameOver
     ByteVectorReader &operator>>(ByteVectorReader &, Result &);
 }
 
-#endif

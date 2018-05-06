@@ -34,6 +34,7 @@
 #include "dir.h"
 #include "maps_fileinfo.h"
 #include "bitmodes.h"
+#include "ByteVectorWriter.h"
 
 #define FORMAT_VERSION_3269 3269
 #define FORMAT_VERSION_3255 3255
@@ -586,6 +587,7 @@ protected:
 
 private:
     friend StreamBase &operator<<(StreamBase &, const Settings &);
+    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Settings &);
     
     friend ByteVectorReader &operator>>(ByteVectorReader &, Settings &);
 

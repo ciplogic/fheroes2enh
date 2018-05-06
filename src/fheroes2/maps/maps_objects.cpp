@@ -33,9 +33,12 @@
 StreamBase &operator<<(StreamBase &msg, const MapObjectSimple &obj)
 {
     return msg << obj.type << obj.uid << static_cast<const MapPosition &>(obj);
-
 }
 
+ByteVectorWriter &operator<<(ByteVectorWriter &msg, const MapObjectSimple &obj)
+{
+    return msg << obj.type << obj.uid << static_cast<const MapPosition &>(obj);
+}
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, MapObjectSimple &obj)
 {
@@ -169,6 +172,18 @@ StreamBase &operator<<(StreamBase &msg, const MapEvent &obj)
                obj.cancel <<
                obj.colors <<
                obj.message;
+}
+
+ByteVectorWriter &operator<<(ByteVectorWriter &msg, const MapEvent &obj)
+{
+    return msg <<
+        static_cast<const MapObjectSimple &>(obj) <<
+        obj.resources <<
+        obj.artifact <<
+        obj.computer <<
+        obj.cancel <<
+        obj.colors <<
+        obj.message;
 }
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, MapEvent &obj)

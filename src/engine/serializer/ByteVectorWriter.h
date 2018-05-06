@@ -2,9 +2,9 @@
 
 #include "types.h"
 #include <vector>
-#include "ByteVectorReader.h"
 #include <map>
 #include <list>
+#include "rect.h"
 
 class ByteVectorWriter
 {
@@ -32,8 +32,8 @@ public:
 
     ByteVectorWriter &operator<<(const char &);
 
-    void put32(uint32_t sz);
-    void put16(u16 u16);
+    void put32(uint32_t v);
+    void put16(u16 v);
 
 
     ByteVectorWriter &operator<<(const bool &);
@@ -41,7 +41,10 @@ public:
     ByteVectorWriter &operator<<(const u16 &v);
     ByteVectorWriter &operator<<(const u32 &v);
     ByteVectorWriter &operator<<(const s32 &);
+    ByteVectorWriter &operator<<(const float &);
     ByteVectorWriter &operator<<(const Size &);
+    ByteVectorWriter& operator<<(const Point& v);
+
 
     ByteVectorWriter &operator<<(const std::string &);
 

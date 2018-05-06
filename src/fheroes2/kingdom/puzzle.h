@@ -25,6 +25,7 @@
 #include <bitset>
 #include "gamedefs.h"
 #include "ByteVectorReader.h"
+#include "ByteVectorWriter.h"
 
 #define PUZZLETILES    48
 
@@ -46,6 +47,7 @@ public:
 };
 
 StreamBase &operator<<(StreamBase &, const Puzzle &);
+ByteVectorWriter &operator<<(ByteVectorWriter &, const Puzzle &);
 
 
 ByteVectorReader &operator>>(ByteVectorReader &, Puzzle &);

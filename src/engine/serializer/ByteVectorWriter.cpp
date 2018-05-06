@@ -1,6 +1,7 @@
 #include "ByteVectorWriter.h"
 
 ByteVectorWriter::ByteVectorWriter(int sz)
+    : _isBigEndian(false)
 {
     _data.reserve(sz);
 }
@@ -79,9 +80,21 @@ ByteVectorWriter& ByteVectorWriter::operator<<(const s32&v)
     return *this;
 }
 
+ByteVectorWriter& ByteVectorWriter::operator<<(const float&v)
+{
+    auto intpart = static_cast<s32>(v);
+    float decpart = (v - intpart) * 100000000;
+    return *this << intpart << static_cast<s32>(decpart);
+}
+
 ByteVectorWriter& ByteVectorWriter::operator<<(const Size& v)
 {
     return *this << v.w << v.h;
+}
+
+ByteVectorWriter& ByteVectorWriter::operator<<(const Point& v)
+{
+    return *this << v.x << v.y;
 }
 
 ByteVectorWriter& ByteVectorWriter::operator<<(const std::string& v)

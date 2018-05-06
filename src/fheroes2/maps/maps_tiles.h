@@ -32,6 +32,7 @@
 #include "army_troop.h"
 #include "resource.h"
 #include "ByteVectorReader.h"
+#include "ByteVectorWriter.h"
 
 class Sprite;
 
@@ -422,6 +423,7 @@ namespace Maps
 
     private:
         friend StreamBase &operator<<(StreamBase &, const Tiles &);
+        friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Tiles &);
 
         friend ByteVectorReader &operator>>(ByteVectorReader &, Tiles &);
 
@@ -442,11 +444,13 @@ namespace Maps
     };
 
     StreamBase &operator<<(StreamBase &, const TilesAddon &);
-
     StreamBase &operator<<(StreamBase &, const Tiles &);
+
+    ByteVectorWriter &operator<<(ByteVectorWriter&, const TilesAddon &);
+    ByteVectorWriter &operator<<(ByteVectorWriter&, const Tiles &);
+
     
     ByteVectorReader &operator>>(ByteVectorReader &, TilesAddon &);
-
     ByteVectorReader &operator>>(ByteVectorReader &, Tiles &);
 }
 

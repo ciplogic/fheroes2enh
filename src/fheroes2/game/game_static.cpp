@@ -70,6 +70,10 @@ namespace Skill
     {
         return msg << obj.basic << obj.advanced << obj.expert;
     }
+    ByteVectorWriter &operator<<(ByteVectorWriter &msg, const level_t &obj)
+    {
+        return msg << obj.basic << obj.advanced << obj.expert;
+    }
 
     ByteVectorReader &operator>>(ByteVectorReader &msg, level_t &obj)
     {
@@ -77,6 +81,10 @@ namespace Skill
     }
 
     StreamBase &operator<<(StreamBase &msg, const primary_t &obj)
+    {
+        return msg << obj.attack << obj.defense << obj.power << obj.knowledge;
+    }
+    ByteVectorWriter &operator<<(ByteVectorWriter &msg, const primary_t &obj)
     {
         return msg << obj.attack << obj.defense << obj.power << obj.knowledge;
     }
@@ -92,6 +100,12 @@ namespace Skill
                    obj.logistics << obj.luck << obj.mysticism << obj.navigation << obj.necromancy << obj.pathfinding
                    << obj.scouting << obj.wisdom;
     }
+    ByteVectorWriter &operator<<(ByteVectorWriter &msg, const secondary_t &obj)
+    {
+        return msg << obj.archery << obj.ballistics << obj.diplomacy << obj.eagleeye << obj.estates << obj.leadership <<
+            obj.logistics << obj.luck << obj.mysticism << obj.navigation << obj.necromancy << obj.pathfinding
+            << obj.scouting << obj.wisdom;
+    }
 
     ByteVectorReader &operator>>(ByteVectorReader &msg, secondary_t &obj)
     {
@@ -106,6 +120,12 @@ namespace Skill
                    obj.initial_secondary << obj.over_level << obj.mature_primary_under << obj.mature_primary_over
                    << obj.mature_secondary;
     }
+    ByteVectorWriter &operator<<(ByteVectorWriter &msg, const stats_t &obj)
+    {
+        return msg << obj.captain_primary << obj.initial_primary << obj.initial_book << obj.initial_spell <<
+            obj.initial_secondary << obj.over_level << obj.mature_primary_under << obj.mature_primary_over
+            << obj.mature_secondary;
+    }
 
     ByteVectorReader &operator>>(ByteVectorReader &msg, stats_t &obj)
     {
@@ -115,6 +135,10 @@ namespace Skill
     }
 
     StreamBase &operator<<(StreamBase &msg, const values_t &obj)
+    {
+        return msg << obj.values;
+    }
+    ByteVectorWriter &operator<<(ByteVectorWriter &msg, const values_t &obj)
     {
         return msg << obj.values;
     }
@@ -226,6 +250,58 @@ StreamBase &GameStatic::operator<<(StreamBase &msg, const Data &obj)
     return msg;
 }
 
+ByteVectorWriter &GameStatic::operator<<(ByteVectorWriter &msg, const Data &obj)
+{
+    msg <<
+        whirlpool_lost_percent <<
+        kingdom_max_heroes <<
+        castle_grown_well <<
+        castle_grown_wel2 <<
+        castle_grown_week_of <<
+        castle_grown_month_of <<
+        heroes_spell_points_day <<
+        gameover_lost_days <<
+        spell_dd_distance <<
+        spell_dd_sp <<
+        spell_dd_hp;
+
+    u8 array_size = ARRAY_COUNT(overview_distance);
+    msg << array_size;
+    for (uint32_t ii = 0; ii < array_size; ++ii)
+        msg << overview_distance[ii];
+
+    array_size = ARRAY_COUNT(kingdom_starting_resource);
+    msg << array_size;
+    for (uint32_t ii = 0; ii < array_size; ++ii)
+        msg << kingdom_starting_resource[ii];
+
+    array_size = ARRAY_COUNT(mageguild_restore_spell_points_day);
+    msg << array_size;
+    for (uint32_t ii = 0; ii < array_size; ++ii)
+        msg << mageguild_restore_spell_points_day[ii];
+
+    array_size = ARRAY_COUNT(objects_mod);
+    msg << array_size;
+    for (uint32_t ii = 0; ii < array_size; ++ii)
+        msg << objects_mod[ii];
+
+    msg << monster_upgrade_ratio << uniq;
+
+    // skill statics
+    array_size = ARRAY_COUNT(Skill::_stats);
+    msg << array_size;
+    for (uint32_t ii = 0; ii < array_size; ++ii)
+        msg << Skill::_stats[ii];
+
+    array_size = ARRAY_COUNT(Skill::_values);
+    msg << array_size;
+    for (uint32_t ii = 0; ii < array_size; ++ii)
+        msg << Skill::_values[ii];
+
+    msg << Skill::_from_witchs_hut;
+
+    return msg;
+}
 ByteVectorReader &GameStatic::operator>>(ByteVectorReader &msg, Data &obj)
 {
     msg >>

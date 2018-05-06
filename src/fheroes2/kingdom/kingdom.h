@@ -29,6 +29,7 @@
 #include "castle.h"
 #include "heroes_recruits.h"
 #include "ByteVectorReader.h"
+#include "ByteVectorWriter.h"
 
 class Player;
 
@@ -209,6 +210,7 @@ public:
 
 private:
     friend StreamBase &operator<<(StreamBase &, const Kingdom &);
+    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Kingdom &);
 
     friend ByteVectorReader &operator>>(ByteVectorReader &, Kingdom &);
 

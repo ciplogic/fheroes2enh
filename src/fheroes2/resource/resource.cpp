@@ -601,8 +601,15 @@ void Resource::BoxSprite::Redraw() const
 StreamBase &operator<<(StreamBase &msg, const Funds &res)
 {
     return msg << res.wood <<
-               res.mercury << res.ore << res.sulfur <<
-               res.crystal << res.gems << res.gold;
+        res.mercury << res.ore << res.sulfur <<
+        res.crystal << res.gems << res.gold;
+}
+
+ByteVectorWriter &operator<<(ByteVectorWriter &msg, const Funds &res)
+{
+    return msg << res.wood <<
+        res.mercury << res.ore << res.sulfur <<
+        res.crystal << res.gems << res.gold;
 }
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, Funds &res)
@@ -617,6 +624,13 @@ StreamBase &operator<<(StreamBase &msg, const cost_t &res)
     return msg << res.wood <<
                res.mercury << res.ore << res.sulfur <<
                res.crystal << res.gems << res.gold;
+}
+
+ByteVectorWriter &operator<<(ByteVectorWriter &msg, const cost_t &res)
+{
+    return msg << res.wood <<
+        res.mercury << res.ore << res.sulfur <<
+        res.crystal << res.gems << res.gold;
 }
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, cost_t &res)

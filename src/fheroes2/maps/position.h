@@ -50,6 +50,7 @@ public:
 
 protected:
     friend StreamBase &operator<<(StreamBase &, const MapPosition &);
+    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const MapPosition &);
 
     friend ByteVectorReader &operator>>(ByteVectorReader &, MapPosition &);
 

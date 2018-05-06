@@ -148,6 +148,7 @@ struct EventDate
 };
 
 StreamBase &operator<<(StreamBase &, const EventDate &);
+ByteVectorWriter &operator<<(ByteVectorWriter &, const EventDate &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, EventDate &);
 
@@ -346,6 +347,7 @@ private:
 };
 
 StreamBase &operator<<(StreamBase &, const CapturedObject &);
+ByteVectorWriter &operator<<(ByteVectorWriter &, const CapturedObject &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, CapturedObject &);
 
@@ -355,6 +357,7 @@ ByteVectorWriter &operator<<(ByteVectorWriter &, const World &);
 ByteVectorReader &operator>>(ByteVectorReader &, World &);
 
 StreamBase &operator<<(StreamBase &, const ListActions &);
+ByteVectorWriter &operator<<(ByteVectorWriter &, const ListActions &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, MapActions &);
 

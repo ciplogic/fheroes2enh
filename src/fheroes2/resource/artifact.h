@@ -19,12 +19,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef H2ARTIFACT_H
-#define H2ARTIFACT_H
+#pragma once
 
 #include <vector>
 #include "gamedefs.h"
 #include "ByteVectorReader.h"
+#include "ByteVectorWriter.h"
 #include "interface_itemsbar.h"
 #include "display.h"
 #include "sprites.h"
@@ -221,6 +221,7 @@ public:
 
 private:
     friend StreamBase &operator<<(StreamBase &, const Artifact &);
+    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Artifact &);
     
     friend ByteVectorReader &operator>>(ByteVectorReader &, Artifact &);
 
@@ -303,4 +304,3 @@ protected:
     string msg;
 };
 
-#endif
