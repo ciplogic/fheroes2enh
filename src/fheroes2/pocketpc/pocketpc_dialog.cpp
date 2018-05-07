@@ -20,9 +20,7 @@
 
 #include "agg.h"
 #include "cursor.h"
-#include "battle.h"
 #include "battle_board.h"
-#include "game.h"
 #include "text.h"
 #include "pocketpc.h"
 #include "localevent.h"
