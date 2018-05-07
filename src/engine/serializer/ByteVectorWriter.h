@@ -40,6 +40,7 @@ public:
 
     ByteVectorWriter &operator<<(const bool &);
     ByteVectorWriter &operator<<(const u8 &v);
+    ByteVectorWriter &operator<<(const s8 &v);
     ByteVectorWriter &operator<<(const u16 &v);
     ByteVectorWriter &operator<<(const s16 &v);
     ByteVectorWriter &operator<<(const u32 &v);

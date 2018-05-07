@@ -112,6 +112,11 @@ StreamBase &operator<<(StreamBase &msg, const MageGuild &guild)
     return msg << guild.general << guild.library;
 }
 
+ByteVectorWriter &operator<<(ByteVectorWriter &msg, const MageGuild &guild)
+{
+    return msg << guild.general << guild.library;
+}
+
 ByteVectorReader &operator>>(ByteVectorReader &msg, MageGuild &guild)
 {
     return msg >> guild.general >> guild.library;

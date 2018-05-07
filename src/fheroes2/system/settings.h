@@ -648,6 +648,7 @@ private:
 };
 
 StreamBase &operator<<(StreamBase &, const Settings &);
+ByteVectorWriter &operator<<(ByteVectorWriter &, const Settings &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, Settings &);
 

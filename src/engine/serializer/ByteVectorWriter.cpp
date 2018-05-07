@@ -62,6 +62,12 @@ ByteVectorWriter& ByteVectorWriter::operator<<(const u8& v)
     return *this;
 }
 
+ByteVectorWriter& ByteVectorWriter::operator<<(const s8& v)
+{
+    put8(v);
+    return *this;
+}
+
 ByteVectorWriter& ByteVectorWriter::operator<<(const u16& v)
 {
     put16(v);

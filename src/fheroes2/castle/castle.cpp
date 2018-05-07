@@ -2526,6 +2526,26 @@ StreamBase &operator<<(StreamBase &msg, const Castle &castle)
     return msg << castle.army;
 }
 
+ByteVectorWriter &operator<<(ByteVectorWriter &msg, const Castle &castle)
+{
+    const ColorBase &color = castle;
+
+    msg <<
+        static_cast<const MapPosition &>(castle) <<
+        castle.modes <<
+        castle.race <<
+        castle.building <<
+        castle.captain <<
+        color <<
+        castle.name <<
+        castle.mageguild <<
+        static_cast<uint32_t>(CASTLEMAXMONSTER);
+
+    for (unsigned int ii : castle.dwelling)
+        msg << ii;
+
+    return msg << castle.army;
+}
 ByteVectorReader &operator>>(ByteVectorReader &msg, Castle &castle)
 {
     ColorBase &color = castle;
@@ -2561,6 +2581,16 @@ StreamBase &operator<<(StreamBase &msg, const VecCastles &castles)
     return msg;
 }
 
+ByteVectorWriter &operator<<(ByteVectorWriter &msg, const VecCastles &castles)
+{
+    msg << static_cast<uint32_t>(castles.size());
+
+    for (auto castle : castles)
+        msg << (castle ? castle->GetIndex() : static_cast<s32>(-1));
+
+    return msg;
+}
+
 ByteVectorReader &operator>>(ByteVectorReader &msg, VecCastles &castles)
 {
     s32 index;
@@ -2579,6 +2609,15 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, VecCastles &castles)
 }
 
 StreamBase &operator<<(StreamBase &msg, const AllCastles &castles)
+{
+    msg << static_cast<uint32_t>(castles.size());
+
+    for (auto castle : castles)
+        msg << *castle;
+
+    return msg;
+}
+ByteVectorWriter &operator<<(ByteVectorWriter &msg, const AllCastles &castles)
 {
     msg << static_cast<uint32_t>(castles.size());
 

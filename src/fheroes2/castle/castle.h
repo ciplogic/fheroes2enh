@@ -301,6 +301,7 @@ private:
 
 private:
     friend StreamBase &operator<<(StreamBase &, const Castle &);
+    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Castle &);
     
     friend ByteVectorReader &operator>>(ByteVectorReader &, Castle &);
 
@@ -368,15 +369,16 @@ struct AllCastles : VecCastles
 };
 
 StreamBase &operator<<(StreamBase &, const VecCastles &);
-
+ByteVectorWriter &operator<<(ByteVectorWriter &, const VecCastles &);
 ByteVectorReader &operator>>(ByteVectorReader &, VecCastles &);
 
 
 StreamBase &operator<<(StreamBase &, const AllCastles &);
-
+ByteVectorWriter &operator<<(ByteVectorWriter &, const AllCastles &);
 ByteVectorReader &operator>>(ByteVectorReader &, AllCastles &);
 
 StreamBase &operator<<(StreamBase &, const Castle &);
+ByteVectorWriter &operator<<(ByteVectorWriter &, const Castle &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, Castle &);
 

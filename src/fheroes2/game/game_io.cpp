@@ -118,52 +118,22 @@ bool Game::Save(const string &fn)
 
     ByteVectorWriter bfs;
     bfs.SetBigEndian(true);
-    StreamFile fs;
-    fs.setbigendian(true);
-
-    if (!fs.open(fn, "wb"))
-    {
-        return false;
-    }
-
+    
     u16 loadver = GetLoadVersion();
     if (!autosave) SetLastSavename(fn);
 
-    // raw info content
-    fs << static_cast<char>(SAV2ID3 >> 8) << static_cast<char>(SAV2ID3) <<
-        Int2Str(loadver) << loadver << HeaderSAV(conf.CurrentFileInfo(), conf.PriceLoyaltyVersion());
-    fs.close();
 
     bfs << static_cast<char>(SAV2ID3 >> 8) << static_cast<char>(SAV2ID3) <<
         Int2Str(loadver) << loadver << HeaderSAV(conf.CurrentFileInfo(), conf.PriceLoyaltyVersion());
 
-    ZStreamFile fz;
-    fz.setbigendian(true);
 
-    // zip game data content
-    fz << loadver << World::Get() << Settings::Get() <<
-        GameOver::Result::Get() << GameStatic::Data::Get() << MonsterStaticData::Get() << SAV2ID3; // eof marker
-
-
-    World &w = World::Get();
-
-    StreamBuf sb;
-    sb.setbigendian(true);
     ByteVectorWriter bfz;
     bfz.SetBigEndian(true);
-    sb << w;
-    bfz << w;
-    if(!validateBuf(sb, bfz))
-    {
-        std::cerr << "Error"<<"\n";
-    };
-    
     bfz << loadver << World::Get() << Settings::Get() <<
         GameOver::Result::Get() << GameStatic::Data::Get() << MonsterStaticData::Get() << SAV2ID3;
     bfs << bfz.data();
-    auto result = !fz.fail() && fz.write(fn, true);
-    auto finalFile = bfs.data();
-    writeFileBytes(fn+"_bw", finalFile);
+    const auto savedFileData = bfs.data();
+    writeFileBytes(fn, savedFileData);
     return true;
 
 }

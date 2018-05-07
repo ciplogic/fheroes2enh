@@ -26,6 +26,7 @@
 #include "gamedefs.h"
 #include "spell_storage.h"
 #include "ByteVectorReader.h"
+#include "ByteVectorWriter.h"
 
 class Castle;
 
@@ -45,6 +46,7 @@ public:
 
 private:
     friend StreamBase &operator<<(StreamBase &, const MageGuild &);
+    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const MageGuild &);
     
     friend ByteVectorReader &operator>>(ByteVectorReader &, MageGuild &);
 
@@ -53,6 +55,7 @@ private:
 };
 
 StreamBase &operator<<(StreamBase &, const MageGuild &);
+ByteVectorWriter &operator<<(ByteVectorWriter &, const MageGuild &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, MageGuild &);
 
