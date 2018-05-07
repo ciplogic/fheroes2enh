@@ -31,8 +31,8 @@
 #include "castle_heroes.h"
 #include "position.h"
 #include "ByteVectorReader.h"
+#include "heroes.h"
 
-class Heroes;
 namespace Maps
 {
     class Tiles;

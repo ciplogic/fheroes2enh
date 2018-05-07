@@ -38,6 +38,7 @@
 #include "battle_troop.h"
 #include "battle_interface.h"
 #include "battle_command.h"
+#include "battle_army.h"
 
 namespace Battle
 {

@@ -31,8 +31,6 @@
 #include "ByteVectorReader.h"
 #include "battle_arena.h"
 
-#include "battle_army.h"
-
 class Sprite;
 
 class Spell;

@@ -19,13 +19,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef H2CAPTAIN_H
-#define H2CAPTAIN_H
 
-#include "gamedefs.h"
+#pragma once
+
+#include "army.h"
 #include "heroes_base.h"
-
-class Castle;
 
 class Captain : public HeroBase
 {
@@ -64,8 +62,7 @@ public:
 
     uint32_t GetSecondaryValues(int) const;
 
-    const Army &
-    GetArmy() const;
+    const Army &GetArmy() const;
 
     Army &GetArmy();
 
@@ -82,5 +79,3 @@ public:
 private:
     Castle &home;
 };
-
-#endif

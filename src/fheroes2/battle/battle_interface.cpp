@@ -46,6 +46,7 @@
 #include "rand.h"
 
 #include "audio_mixer.h"
+#include "battle_army.h"
 
 #define  ARMYORDERW    40
 

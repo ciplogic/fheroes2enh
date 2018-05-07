@@ -35,6 +35,7 @@
 #include <unordered_map>
 #include "rand.h"
 #include <sstream>
+#include "battle_army.h"
 
 namespace Battle
 {

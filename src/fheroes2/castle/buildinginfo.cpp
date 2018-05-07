@@ -32,7 +32,6 @@
 #include "profit.h"
 #include "statusbar.h"
 #include "buildinginfo.h"
-#include "ColorTable.h"
 #include "icn.h"
 
 #include "system.h"

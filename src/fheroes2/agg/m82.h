@@ -22,8 +22,6 @@
 
 #pragma once
 
-#include "gamedefs.h"
-
 #define LOOPXX_COUNT 28
 
 namespace M82

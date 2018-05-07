@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2ARMY_H
-#define H2ARMY_H
+#pragma once
 
 #include <utility>
 #include <string>
@@ -242,4 +241,3 @@ StreamBase &operator<<(StreamBase &, const Army &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, Army &);
 
-#endif

@@ -21,8 +21,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2HEROESBASE_H
-#define H2HEROESBASE_H
+#pragma once
 
 #include "bitmodes.h"
 #include "skill.h"
@@ -34,9 +33,8 @@
 #include "ByteVectorReader.h"
 #include "ByteVectorWriter.h"
 
-class Army;
-
 class Castle;
+class Army;
 
 enum
 {
@@ -169,7 +167,7 @@ struct HeroHasArtifact : public binary_function<const HeroBase *, Artifact, bool
 };
 
 StreamBase &operator<<(StreamBase &, const HeroBase &);
+ByteVectorWriter &operator<<(ByteVectorWriter &, const HeroBase &);
+
 
 ByteVectorReader &operator>>(ByteVectorReader &, HeroBase &);
-
-#endif
