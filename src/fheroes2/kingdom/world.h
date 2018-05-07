@@ -319,7 +319,7 @@ private:
     friend ByteVectorWriter &operator<<(ByteVectorWriter &, const World &);
     
     friend ByteVectorReader &operator>>(ByteVectorReader &, World &);
-
+public:
     MapsTiles vec_tiles;
     AllHeroes vec_heroes;
     AllCastles vec_castles;

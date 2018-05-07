@@ -2017,6 +2017,15 @@ StreamBase &operator<<(StreamBase &msg, const VecHeroes &heroes)
 
     return msg;
 }
+ByteVectorWriter &operator<<(ByteVectorWriter &msg, const VecHeroes &heroes)
+{
+    msg << static_cast<uint32_t>(heroes.size());
+
+    for (auto heroe : heroes)
+        msg << (heroe ? heroe->GetID() : Heroes::UNKNOWN);
+
+    return msg;
+}
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, VecHeroes &heroes)
 {
@@ -2060,6 +2069,33 @@ StreamBase &operator<<(StreamBase &msg, const Heroes &hero)
                hero.patrol_center <<
                hero.patrol_square <<
                hero.visit_object;
+}
+
+ByteVectorWriter &operator<<(ByteVectorWriter &msg, const Heroes &hero)
+{
+    const HeroBase &base = hero;
+    const ColorBase &col = hero;
+
+    return msg <<
+        base <<
+        // heroes
+        hero.name <<
+        col <<
+        hero.killer_color <<
+        hero.experience <<
+        hero.move_point_scale <<
+        hero.secondary_skills <<
+        hero.army <<
+        hero.hid <<
+        hero.portrait <<
+        hero.race <<
+        hero.save_maps_object <<
+        hero.path <<
+        hero.direction <<
+        hero.sprite_index <<
+        hero.patrol_center <<
+        hero.patrol_square <<
+        hero.visit_object;
 }
 
 enum deprecated_t
@@ -2129,6 +2165,15 @@ void Heroes::ReadFrom(ByteVectorReader &msg)
 
 
 StreamBase &operator<<(StreamBase &msg, const AllHeroes &heroes)
+{
+    msg << static_cast<uint32_t>(heroes.size());
+
+    for (auto heroe : heroes)
+        msg << *heroe;
+
+    return msg;
+}
+ByteVectorWriter &operator<<(ByteVectorWriter &msg, const AllHeroes &heroes)
 {
     msg << static_cast<uint32_t>(heroes.size());
 

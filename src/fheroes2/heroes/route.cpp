@@ -549,6 +549,17 @@ StreamBase &Route::operator<<(StreamBase &msg, const Path &path)
     return msg << path.dst << path.hide << static_cast< list<Step> >(path);
 }
 
+
+ByteVectorWriter &Route::operator<<(ByteVectorWriter &msg, const Step &step)
+{
+    return msg << step.from << step.direction << step.penalty;
+}
+
+ByteVectorWriter &Route::operator<<(ByteVectorWriter &msg, const Path &path)
+{
+    return msg << path.dst << path.hide << static_cast< list<Step> >(path);
+}
+
 ByteVectorReader &Route::operator>>(ByteVectorReader &msg, Step &step)
 {
     return msg >> step.from >> step.direction >> step.penalty;

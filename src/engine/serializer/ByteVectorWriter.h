@@ -41,6 +41,7 @@ public:
     ByteVectorWriter &operator<<(const bool &);
     ByteVectorWriter &operator<<(const u8 &v);
     ByteVectorWriter &operator<<(const u16 &v);
+    ByteVectorWriter &operator<<(const s16 &v);
     ByteVectorWriter &operator<<(const u32 &v);
     ByteVectorWriter &operator<<(const s32 &);
     ByteVectorWriter &operator<<(const float &);

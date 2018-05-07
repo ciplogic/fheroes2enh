@@ -27,6 +27,7 @@
 #include "gamedefs.h"
 #include "direction.h"
 #include "ByteVectorReader.h"
+#include "ByteVectorWriter.h"
 
 class Heroes;
 
@@ -53,6 +54,7 @@ namespace Route
 
     protected:
         friend StreamBase &operator<<(StreamBase &, const Step &);
+        friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Step &);
         
         friend ByteVectorReader &operator>>(ByteVectorReader &, Step &);
 
@@ -119,6 +121,7 @@ namespace Route
         bool Find(s32, int limit = -1);
 
         friend StreamBase &operator<<(StreamBase &, const Path &);
+        friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Path &);
 
         friend ByteVectorReader &operator>>(ByteVectorReader &, Path &);
 
@@ -129,6 +132,9 @@ namespace Route
 
     StreamBase &operator<<(StreamBase &, const Step &);
     StreamBase &operator<<(StreamBase &, const Path &);
+
+    ByteVectorWriter &operator<<(ByteVectorWriter &, const Step &);
+    ByteVectorWriter &operator<<(ByteVectorWriter &, const Path &);
 
 
     ByteVectorReader &operator>>(ByteVectorReader &, Step &);

@@ -528,6 +528,19 @@ StreamBase &operator<<(StreamBase &msg, const HeroBase &hero)
                 hero.magic_point << hero.move_point <<
                 hero.spell_book << hero.bag_artifacts;
 }
+/* pack hero base */
+ByteVectorWriter &operator<<(ByteVectorWriter &msg, const HeroBase &hero)
+{
+    return
+        msg <<
+        static_cast<const Skill::Primary &>(hero) <<
+        static_cast<const MapPosition &>(hero) <<
+        // modes
+        hero.modes <<
+        // hero base
+        hero.magic_point << hero.move_point <<
+        hero.spell_book << hero.bag_artifacts;
+}
 
 /* unpack hero base */
 ByteVectorReader &operator>>(ByteVectorReader &msg, HeroBase &hero)

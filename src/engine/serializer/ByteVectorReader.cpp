@@ -100,6 +100,7 @@ std::vector<u8> ByteVectorReader::getRaw(size_t sizeblock)
 std::string ByteVectorReader::toString(int sizeBlock)
 {
     auto raw = getRaw(sizeBlock);
+    raw.push_back(0);
     std::string text = reinterpret_cast<char *>(raw.data());
     return text;
 }

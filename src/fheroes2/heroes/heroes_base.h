@@ -32,6 +32,7 @@
 #include "players.h"
 
 #include "ByteVectorReader.h"
+#include "ByteVectorWriter.h"
 
 class Army;
 
@@ -148,6 +149,7 @@ public:
 
 protected:
     friend StreamBase &operator<<(StreamBase &, const HeroBase &);
+    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const HeroBase &);
     
     friend ByteVectorReader &operator>>(ByteVectorReader &, HeroBase &);
 

@@ -46,7 +46,7 @@ public:
 
     std::vector<u8> getRaw(size_t sizeblock);
 
-    std::string toString(int sizeBlock);
+    std::string toString(int sizeBlock = 0);
 
     void setBigEndian(int value);
 

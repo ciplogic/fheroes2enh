@@ -225,6 +225,7 @@ public:
 
 protected:
     friend StreamBase &operator<<(StreamBase &, const Army &);
+    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Army &);
 
     friend ByteVectorReader &operator>>(ByteVectorReader &msg, Army &army);
 

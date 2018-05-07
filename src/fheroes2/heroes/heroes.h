@@ -34,6 +34,7 @@
 #include "gamedefs.h"
 #include "serialize.h"
 #include "ByteVectorReader.h"
+#include "ByteVectorWriter.h"
 #include "battle.h"
 
 class Recruits;
@@ -321,6 +322,7 @@ public:
 
 private:
     friend StreamBase &operator<<(StreamBase &, const Heroes &);
+    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Heroes &);
 
     friend ByteVectorReader &operator>>(ByteVectorReader &msg, Heroes &hero);
 
@@ -339,7 +341,7 @@ private:
     bool MoveStep(bool fast = false);
 
     static void MoveStep(Heroes &, s32 from, s32 to, bool newpos);
-
+public:
     string name;
     ColorBase killer_color;
     uint32_t experience;
@@ -402,14 +404,15 @@ Battle::Result BattleHeroWithMonster(Heroes &hero, Army &army, s32 dst_index);
 Battle::Result BattleHeroWithHero(Heroes &hero, Heroes &other_hero, s32 dst_index);
 
 StreamBase &operator<<(StreamBase &, const VecHeroes &);
-
+ByteVectorWriter &operator<<(ByteVectorWriter &, const VecHeroes &);
 ByteVectorReader &operator>>(ByteVectorReader &, VecHeroes &);
 
 StreamBase &operator<<(StreamBase &, const Heroes &);
+ByteVectorWriter &operator<<(ByteVectorWriter &msg, const Heroes &hero);
 
 ByteVectorReader &operator>>(ByteVectorReader &, Heroes &);
 
+ByteVectorWriter &operator<<(ByteVectorWriter &, const AllHeroes &);
 StreamBase &operator<<(StreamBase &, const AllHeroes &);
-
 ByteVectorReader &operator>>(ByteVectorReader &msg, AllHeroes &heroes);
 

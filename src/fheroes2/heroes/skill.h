@@ -29,6 +29,7 @@
 #include "serialize.h"
 
 #include "ByteVectorReader.h"
+#include "ByteVectorWriter.h"
 
 void StringAppendModifiers(string &, int);
 
@@ -149,12 +150,13 @@ namespace Skill
 
     protected:
         friend StreamBase &operator<<(StreamBase &, const SecSkills &);
+        friend ByteVectorWriter &operator<<(ByteVectorWriter &, const SecSkills &);
 
         friend ByteVectorReader &operator>>(ByteVectorReader &, SecSkills &);
     };
 
     StreamBase &operator<<(StreamBase &, const SecSkills &);
-    
+    ByteVectorWriter &operator<<(ByteVectorWriter &, const SecSkills &);    
     ByteVectorReader &operator>>(ByteVectorReader &, SecSkills &);
 
     class Primary
@@ -204,6 +206,7 @@ namespace Skill
         void LoadDefaults(int type, int race);
 
         friend StreamBase &operator<<(StreamBase &, const Primary &);
+        friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Primary &);
         friend ByteVectorReader &operator>>(ByteVectorReader &, Primary &);
 
         int attack;
@@ -213,6 +216,7 @@ namespace Skill
     };
 
     StreamBase &operator<<(StreamBase &, const Primary &);
+    ByteVectorWriter &operator<<(ByteVectorWriter &, const Primary &);
 
     ByteVectorReader &operator>>(ByteVectorReader &, Primary &);
 }

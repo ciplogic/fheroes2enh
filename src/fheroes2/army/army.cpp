@@ -1353,6 +1353,18 @@ StreamBase &operator<<(StreamBase &msg, const Army &army)
     return msg << army.combat_format << army.color;
 }
 
+ByteVectorWriter &operator<<(ByteVectorWriter &msg, const Army &army)
+{
+    msg << static_cast<uint32_t>(army.m_troops._items.size());
+
+    // Army: fixed size
+    for (const auto &_item : army.m_troops._items)
+        msg << *_item;
+
+    return msg << army.combat_format << army.color;
+}
+
+
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, Army &army)
 {

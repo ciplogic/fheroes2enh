@@ -26,6 +26,7 @@
 #include <string>
 #include "monster.h"
 #include "ByteVectorReader.h"
+#include "ByteVectorWriter.h"
 
 class Army;
 
@@ -93,6 +94,7 @@ public:
 
 protected:
     friend StreamBase &operator<<(StreamBase &, const Troop &);
+    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Troop &);
 
     friend ByteVectorReader &operator>>(ByteVectorReader &msg, Troop &troop);
 
@@ -100,6 +102,7 @@ protected:
 };
 
 StreamBase &operator<<(StreamBase &, const Troop &);
+ByteVectorWriter &operator<<(ByteVectorWriter &, const Troop &);
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, Troop &troop);
 

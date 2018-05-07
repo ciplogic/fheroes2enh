@@ -735,6 +735,10 @@ StreamBase &operator<<(StreamBase &msg, const Spell &spell)
 {
     return msg << spell.id;
 }
+ByteVectorWriter &operator<<(ByteVectorWriter &msg, const Spell &spell)
+{
+    return msg << spell.id;
+}
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, Spell &spell)
 {

@@ -36,6 +36,7 @@
 #include "BinaryFileReader.h"
 #include <chrono>
 #include "FileUtils.h"
+#include <iostream>
 
 static u16 SAV2ID2 = 0xFF02;
 static u16 SAV2ID3 = 0xFF03;
@@ -85,6 +86,21 @@ namespace Game
         return msg >> hdr.status >> hdr.info;
     }
 }
+namespace 
+{
+    bool validateBuf(StreamBuf& sb, ByteVectorWriter& bw)
+    {
+        sb.seek(0);
+        auto sbData = sb.getRaw(0);
+        auto bwData = bw.data();
+        writeFileBytes("sb.dat", sbData);
+        writeFileBytes("bw.dat", bwData);
+        if (sbData.size() != bwData.size())
+            return false;
+        int iRes = memcmp(sbData.data(), bwData.data(), bwData.size());
+        return iRes == 0;
+    }
+}
 
 bool Game::Save(const string &fn)
 {
@@ -95,32 +111,61 @@ bool Game::Save(const string &fn)
     if (System::IsFile(fn) &&
         ((!autosave && conf.ExtGameRewriteConfirm()) || (autosave && Settings::Get().ExtGameAutosaveConfirm())) &&
         Dialog::NO == Dialog::Message("", _("Are you sure you want to overwrite the save with this name?"), Font::BIG,
-                                      Dialog::YES | Dialog::NO))
+            Dialog::YES | Dialog::NO))
     {
         return false;
     }
 
     ByteVectorWriter bfs;
     bfs.SetBigEndian(true);
+    StreamFile fs;
+    fs.setbigendian(true);
+
+    if (!fs.open(fn, "wb"))
+    {
+        return false;
+    }
+
     u16 loadver = GetLoadVersion();
     if (!autosave) SetLastSavename(fn);
 
-    bfs << static_cast<char>(SAV2ID3 >> 8) << static_cast<char>(SAV2ID3) << Int2Str(loadver) << loadver
-      << HeaderSAV(conf.CurrentFileInfo(), conf.PriceLoyaltyVersion());
+    // raw info content
+    fs << static_cast<char>(SAV2ID3 >> 8) << static_cast<char>(SAV2ID3) <<
+        Int2Str(loadver) << loadver << HeaderSAV(conf.CurrentFileInfo(), conf.PriceLoyaltyVersion());
+    fs.close();
+
+    bfs << static_cast<char>(SAV2ID3 >> 8) << static_cast<char>(SAV2ID3) <<
+        Int2Str(loadver) << loadver << HeaderSAV(conf.CurrentFileInfo(), conf.PriceLoyaltyVersion());
 
     ZStreamFile fz;
     fz.setbigendian(true);
 
     // zip game data content
     fz << loadver << World::Get() << Settings::Get() <<
-       GameOver::Result::Get() << GameStatic::Data::Get() << MonsterStaticData::Get() << SAV2ID3; // eof marker
-    bfs << loadver << World::Get() << Settings::Get() <<
         GameOver::Result::Get() << GameStatic::Data::Get() << MonsterStaticData::Get() << SAV2ID3; // eof marker
 
+
+    World &w = World::Get();
+
+    StreamBuf sb;
+    sb.setbigendian(true);
+    ByteVectorWriter bfz;
+    bfz.SetBigEndian(true);
+    sb << w;
+    bfz << w;
+    if(!validateBuf(sb, bfz))
+    {
+        std::cerr << "Error"<<"\n";
+    };
+    
+    bfz << loadver << World::Get() << Settings::Get() <<
+        GameOver::Result::Get() << GameStatic::Data::Get() << MonsterStaticData::Get() << SAV2ID3;
+    bfs << bfz.data();
     auto result = !fz.fail() && fz.write(fn, true);
     auto finalFile = bfs.data();
     writeFileBytes(fn+"_bw", finalFile);
-    return result;
+    return true;
+
 }
 
 //#define OLDMETHOD

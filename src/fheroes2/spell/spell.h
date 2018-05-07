@@ -25,6 +25,7 @@
 #include "payment.h"
 #include "gamedefs.h"
 #include "ByteVectorReader.h"
+#include "ByteVectorWriter.h"
 
 class HeroBase;
 
@@ -200,6 +201,7 @@ public:
 
 private:
     friend StreamBase &operator<<(StreamBase &, const Spell &);
+    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Spell &);
 
 
     friend ByteVectorReader &operator>>(ByteVectorReader &, Spell &);
@@ -208,6 +210,7 @@ private:
 };
 
 StreamBase &operator<<(StreamBase &, const Spell &);
+ByteVectorWriter &operator<<(ByteVectorWriter &, const Spell &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, Spell &);
 
