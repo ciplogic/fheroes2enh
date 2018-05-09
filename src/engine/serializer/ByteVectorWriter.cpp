@@ -1,4 +1,5 @@
 #include "ByteVectorWriter.h"
+#include <string>
 
 ByteVectorWriter::ByteVectorWriter(int sz)
     : _isBigEndian(false)
@@ -114,7 +115,10 @@ ByteVectorWriter& ByteVectorWriter::operator<<(const std::string& v)
     put32(v.size());
 
     for (char it : v)
-        put8(it);
+    {
+        u8 val = it;
+        put8(val);
+    }
 
     return *this;
 }
