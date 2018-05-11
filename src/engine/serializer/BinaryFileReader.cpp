@@ -106,22 +106,48 @@ void BinaryFileReader::close()
     _file = nullptr;
 }
 
-std::vector<u8> readFileBytes(std::string fileName)
+namespace FileUtils
 {
-    std::vector<u8> result;
-    BinaryFileReader reader;
-    if (!reader.open(fileName, "rb"))
+    std::vector<u8> readFileBytes(std::string fileName)
     {
+        std::vector<u8> result;
+        BinaryFileReader reader;
+        if (!reader.open(fileName, "rb"))
+        {
+            return result;
+        }
+        int fileSize = reader.size();
+        reader.seek(0);
+        result = reader.getRaw(fileSize);
         return result;
     }
-    int fileSize = reader.size();
-    reader.seek(0);
-    result = reader.getRaw(fileSize);
-    return result;
-}
+    bool Exists(std::string fileName)
+    {
+        std::ifstream infile(fileName);
+        return infile.is_open();
+    }
+    std::vector<std::string> readFileLines(std::string fileName)
+    {
+        std::vector<std::string> result;
+        std::string line;
+        std::ifstream infile(fileName);
+        if (!infile.is_open())
+            return result;
+        while (std::getline(infile, line))
+        {
+            result.push_back(line);
+        }
+        return result;
+    }
+    void writeFileBytes(std::string fileName, const std::vector<u8>& v)
+    {
+        std::ofstream outfile(fileName, std::ios::out | std::ios::binary);
+        outfile.write((const char*)&v[0], v.size());
+    }
 
-void writeFileBytes(std::string fileName, const std::vector<u8>& v)
-{
-    std::ofstream outfile(fileName, std::ios::out | std::ios::binary);
-    outfile.write((const char*)&v[0], v.size());
+    void writeFileString(std::string fileName, std::string text)
+    {
+        std::ofstream outfile(fileName);
+        outfile << text;
+    }
 }

@@ -25,6 +25,8 @@
 #include "tools.h"
 #include "serialize.h"
 #include "tinyconfig.h"
+#include "FileUtils.h"
+#include "BinaryFileReader.h"
 
 using namespace std;
 
@@ -57,10 +59,10 @@ TinyConfig::TinyConfig(char sep, char com) : separator(sep), comment(com)
 
 bool TinyConfig::Load(const string &cfile)
 {
-    StreamFile sf;
-    if (!sf.open(cfile, "rb")) return false;
+    if(!FileUtils::Exists(cfile))
+        return false;
 
-    auto rows = StringSplit(sf.toString(), "\n");
+    auto rows = FileUtils::readFileLines(cfile);
 
     for (auto &row : rows)
     {
@@ -85,12 +87,10 @@ bool TinyConfig::Load(const string &cfile)
 
 bool TinyConfig::Save(const string &cfile) const
 {
-    StreamFile sf;
-    if (!sf.open(cfile, "wb")) return false;
-
+    std::string outText;
     for (const auto &it : *this)
-        sf << it.first << " " << separator << " " << it.second << '\n';
-
+        outText += it.first+" " + separator + " " + it.second + '\n';
+    FileUtils::writeFileString(cfile, outText);
     return true;
 }
 

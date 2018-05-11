@@ -228,12 +228,9 @@ AGG::File::File() : count_items(0)
 bool AGG::File::Open(const string &fname)
 {
     filename = fname;
-    BinaryFileReader fstream;
-    if (!fstream.open(filename, "rb"))
-    {
+    if(!FileUtils::Exists(fname))
         return false;
-    }
-    fileContent = fstream.getRaw(fstream.size());
+    fileContent = FileUtils::readFileBytes(filename);
     stream = std::make_unique<ByteVectorReader>(fileContent);
 
     const uint32_t size = stream->size();

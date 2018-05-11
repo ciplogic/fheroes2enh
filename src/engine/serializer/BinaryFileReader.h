@@ -40,7 +40,14 @@ public:
 
     void close();
 };
+namespace FileUtils 
+{
+    std::vector<u8> readFileBytes(std::string fileName);
 
-std::vector<u8> readFileBytes(std::string fileName);
-void writeFileBytes(std::string fileName, const std::vector<u8>& v);
+    std::vector<std::string> readFileLines(std::string fileName);
+    bool Exists(std::string fileName);
 
+
+    void writeFileBytes(std::string fileName, const std::vector<u8>& v);
+    void writeFileString(std::string fileName, std::string text);
+}

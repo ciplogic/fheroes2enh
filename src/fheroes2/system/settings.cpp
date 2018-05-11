@@ -1572,13 +1572,9 @@ void Settings::BinaryLoad()
 
     if (!System::IsFile(fname))
         fname = GetLastFile("", "fheroes2.bin");
-
-    BinaryFileReader fileReader;
-    if (!fileReader.open(fname, "rb"))
-    {
+    if(!FileUtils::Exists(fname))
         return;
-    }
-    const auto vectorBytes = fileReader.getRaw(fileReader.size());
+    const auto vectorBytes = FileUtils::readFileBytes(fname);
 
     ByteVectorReader fs(vectorBytes);
     fs.setBigEndian(true);

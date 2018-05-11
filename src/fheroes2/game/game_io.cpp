@@ -93,8 +93,8 @@ namespace
         sb.seek(0);
         auto sbData = sb.getRaw(0);
         auto bwData = bw.data();
-        writeFileBytes("sb.dat", sbData);
-        writeFileBytes("bw.dat", bwData);
+        FileUtils::writeFileBytes("sb.dat", sbData);
+        FileUtils::writeFileBytes("bw.dat", bwData);
         if (sbData.size() != bwData.size())
             return false;
         int iRes = memcmp(sbData.data(), bwData.data(), bwData.size());
@@ -133,7 +133,7 @@ bool Game::Save(const string &fn)
         GameOver::Result::Get() << GameStatic::Data::Get() << MonsterStaticData::Get() << SAV2ID3;
     bfs << bfz.data();
     const auto savedFileData = bfs.data();
-    writeFileBytes(fn, savedFileData);
+    FileUtils::writeFileBytes(fn, savedFileData);
     return true;
 
 }
@@ -146,7 +146,7 @@ bool Game::Load(const string &fn)
     // loading info
     ShowLoadMapsText();
 
-    auto fileVector = readFileBytes(fn);
+    auto fileVector = FileUtils::readFileBytes(fn);
     if (fileVector.empty())
     {
         return false;
@@ -180,13 +180,13 @@ bool Game::Load(const string &fn)
         return false;
     }
     
-    auto fileDataZ = readFileBytes(fn);
+    auto fileDataZ = FileUtils::readFileBytes(fn);
     ByteVectorReader fz(fileDataZ);
 
     fz.setBigEndian(true);
     if(fileDataZ.empty())
         return false;
-    fileVector = readFileBytes(fn);
+    fileVector = FileUtils::readFileBytes(fn);
     if (fileVector.empty())
         return false;
     sp<ByteVectorReader> bfz = make_shared<ByteVectorReader>(fileVector);
@@ -248,7 +248,7 @@ bool Game::Load(const string &fn)
 
 bool Game::LoadSAV2FileInfo(const string &fn, Maps::FileInfo &finfo)
 {
-    auto fileBytes = readFileBytes(fn);
+    auto fileBytes = FileUtils::readFileBytes(fn);
     if (fileBytes.empty())
         return false;
     ByteVectorReader fs(fileBytes);
