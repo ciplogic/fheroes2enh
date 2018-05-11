@@ -636,9 +636,9 @@ bool Settings::FontSmallRenderBlended() const
 bool Settings::FontNormalRenderBlended() const
 { return opt_global.Modes(GLOBAL_FONTRENDERBLENDED2); }
 
-void Settings::SetProgramPath(const char *argv0)
+void Settings::SetProgramPath(const string &argv0)
 {
-    if (argv0) path_program = argv0;
+    if (!argv0.empty()) path_program = argv0;
 }
 
 ListDirs Settings::GetRootDirs()

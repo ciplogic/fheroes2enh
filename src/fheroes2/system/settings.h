@@ -559,7 +559,7 @@ public:
     string GetProgramPath() const
     { return path_program; }
 
-    void SetProgramPath(const char *);
+    void SetProgramPath(const string &);
 
     static string GetVersion();
 

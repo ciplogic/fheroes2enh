@@ -28,16 +28,12 @@
 #include "agg.h"
 #include "cursor.h"
 #include "game.h"
-#include "images_pack.h"
-#include "zzlib.h"
 #include "display.h"
 #include "system.h"
 #include "tools.h"
 #include "rand.h"
-#include "audio.h"
 #include "audio_mixer.h"
 #include "audio_music.h"
-#include "audio_cdrom.h"
 #include "icn.h"
 
 void LoadZLogo();
@@ -97,20 +93,11 @@ string GetCaption()
     return string("Free Heroes II, version: " + Settings::GetVersion());
 }
 
-#ifdef __APPLE__
-int SDL_main(int argc, char **argv)
-#elif WIN32
-#include <windows.h>
-int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
-#else
-
-int main(int argc, char **argv)
+#ifdef WIN32
+#include <Windows.h>
 #endif
+std::vector<std::string> extractArgsVector(int argc, char **argv)
 {
-
-    Settings &conf = Settings::Get();
-    int test = 0;
-
     vector<string> vArgv;
 
 
@@ -131,7 +118,29 @@ int main(int argc, char **argv)
     }
     LocalFree(szArglist);
 #endif
-    conf.SetProgramPath(vArgv[0].c_str());
+    return vArgv;
+}
+
+#ifdef __APPLE__
+int SDL_main(int argc, char **argv)
+{
+#elif WIN32
+#include <Windows.h>
+int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
+{
+    int argc = 0;
+char **argv = nullptr;
+#else
+
+int main(int argc, char **argv)
+{
+#endif
+
+    vector<string> vArgv = extractArgsVector(argc, argv);
+
+    Settings &conf = Settings::Get();
+
+    conf.SetProgramPath(vArgv[0]);
 
     InitHomeDir();
     ReadConfigs();
@@ -170,10 +179,7 @@ int main(int argc, char **argv)
 
     if (conf.Sound() || conf.Music())
         subsystem |= INIT_AUDIO;
-#ifdef WITH_AUDIOCD
-    if(conf.MusicCD())
-        subsystem |= INIT_CDROM | INIT_AUDIO;
-#endif
+
     if (SDL::Init(subsystem))
     {
         atexit(SDL::Quit);
@@ -220,6 +226,8 @@ int main(int argc, char **argv)
 
         // init game data
         Game::Init();
+
+        int test = 0;
 
         // goto main menu
         int rs = (test ? Game::TESTING : Game::MAINMENU);
