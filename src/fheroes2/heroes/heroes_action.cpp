@@ -762,13 +762,15 @@ void Heroes::Action(s32 dst_index)
 Battle::Result BattleHeroWithMonster(Heroes &hero, Army &army, s32 dst_index)
 {
     Battle::Result res;
-    StreamBuf armyBuf, heroArmyBuf;
-    armyBuf << army;
-    armyBuf.seek(0);
-    auto armyVec = armyBuf.getRaw(0);
-    heroArmyBuf << hero;
-    heroArmyBuf.seek(0);
-    auto heroVec = heroArmyBuf.getRaw(0);
+    std::vector<u8> armyVec;
+    std::vector<u8> heroVec;
+    {
+        ByteVectorWriter armyBuf, heroArmyBuf;
+        armyBuf << army;
+        heroArmyBuf << hero;
+        armyVec = armyBuf.data();
+        heroVec = heroArmyBuf.data();
+    }
 
     Settings::Get().SetQuickCombat(true);
     do
@@ -791,14 +793,14 @@ Battle::Result BattleHeroWithMonster(Heroes &hero, Army &army, s32 dst_index)
 Battle::Result BattleHeroWithHero(Heroes &hero, Heroes &other_hero, s32 dst_index)
 {
     Battle::Result res;
-    StreamBuf armyBuf, heroArmyBuf;
-    armyBuf << other_hero;
-    armyBuf.seek(0);
-    auto armyVec = armyBuf.getRaw(0);
-    heroArmyBuf << hero;
-    heroArmyBuf.seek(0);
-    auto heroVec = heroArmyBuf.getRaw(0);
-
+    std::vector<u8> armyVec, heroVec;
+    {
+        ByteVectorWriter armyBuf, heroArmyBuf;
+        armyBuf << other_hero;
+        armyVec = armyBuf.data();
+        heroArmyBuf << hero;
+        heroVec = heroArmyBuf.data();
+    }
     Settings::Get().SetQuickCombat(true);
     do
     {

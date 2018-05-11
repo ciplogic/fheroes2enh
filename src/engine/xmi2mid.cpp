@@ -42,6 +42,7 @@
 #include "system.h"
 #include "serialize.h"
 #include "ByteVectorReader.h"
+#include "ByteVectorWriter.h"
 
 using namespace std;
 
@@ -143,6 +144,13 @@ ByteVectorReader &operator>>(ByteVectorReader &sb, IFFChunkHeader &st)
 {
     st.ID = sb.getBE32();
     st.length = sb.getBE32();
+    return sb;
+}
+
+ByteVectorWriter &operator<<(ByteVectorWriter &sb, const IFFChunkHeader &st)
+{
+    sb.putBE32(st.ID);
+    sb.putBE32(st.length);
     return sb;
 }
 
@@ -334,6 +342,17 @@ StreamBuf &operator<<(StreamBuf &sb, const MidEvent &st)
         sb << st.data[1];
     return sb;
 }
+ByteVectorWriter &operator<<(ByteVectorWriter &sb, const MidEvent &st)
+{
+    for (unsigned char it : st.pack)
+        sb << it;
+    sb << st.data[0];
+    if (2 == st.data[3])
+        sb << st.data[1] << st.data[2];
+    else if (1 == st.data[3])
+        sb << st.data[1];
+    return sb;
+}
 
 struct MidEvents : public vector<MidEvent>
 {
@@ -471,6 +490,12 @@ struct MidEvents : public vector<MidEvent>
     }
 };
 
+ByteVectorWriter &operator<<(ByteVectorWriter &sb, const MidEvents &st)
+{
+    for (const auto &it : st)
+        sb << it;
+    return sb;
+}
 StreamBuf &operator<<(StreamBuf &sb, const MidEvents &st)
 {
     for (const auto &it : st)
@@ -496,6 +521,12 @@ struct MidTrack
 };
 
 StreamBuf &operator<<(StreamBuf &sb, const MidTrack &st)
+{
+    sb << st.mtrk;
+    sb << st.events;
+    return sb;
+}
+ByteVectorWriter &operator<<(ByteVectorWriter &sb, const MidTrack &st)
 {
     sb << st.mtrk;
     sb << st.events;
@@ -527,6 +558,12 @@ struct MidTracks : vector<MidTrack>
     }
 };
 
+ByteVectorWriter &operator<<(ByteVectorWriter &sb, const MidTracks &st)
+{
+    for (const auto &it : st)
+        sb << it;
+    return sb;
+}
 StreamBuf &operator<<(StreamBuf &sb, const MidTracks &st)
 {
     for (const auto &it : st)
@@ -549,6 +586,16 @@ struct MidData
 };
 
 StreamBuf &operator<<(StreamBuf &sb, const MidData &st)
+{
+    sb << st.mthd;
+    sb.putBE16(st.format);
+    sb.putBE16(st.tracks.count());
+    sb.putBE16(st.ppqn);
+    sb << st.tracks;
+    return sb;
+}
+
+ByteVectorWriter &operator<<(ByteVectorWriter &sb, const MidData &st)
 {
     sb << st.mthd;
     sb.putBE16(st.format);

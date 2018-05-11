@@ -819,7 +819,6 @@ ICNSprite AGG::RenderICNSprite(int icn, uint32_t index)
     }
 
     ByteVectorReader st(body);
-    //StreamBuf st(body);
 
     uint32_t count = st.getLE16();
     if (index >= count)
@@ -1268,7 +1267,7 @@ void AGG::LoadWAV(int m82, vector<u8> &v)
 /* load XMI object */
 void AGG::LoadMID(int xmi, vector<u8> &v)
 {
-    const vector<u8> &body = ReadChunk(XMI::GetString(xmi));
+    const vector<u8> body = ReadChunk(XMI::GetString(xmi));
 
     if (!body.empty())
         v = Music::Xmi2Mid(body);
