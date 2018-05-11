@@ -51,13 +51,11 @@ bool World::LoadMapMP2(const string &filename)
 {
     Reset();
     Defaults();
-
-    BinaryFileReader fileReader;
-    if (!fileReader.open(filename, "rb"))
+    if(!FileUtils::Exists(filename))
     {
         Error::Except(__FUNCTION__, "load maps");
     }
-    const auto vectorBytes = fileReader.getRaw(fileReader.size());
+    const auto vectorBytes = FileUtils::readFileBytes(filename);
     ByteVectorReader fs(vectorBytes);
 
     MapsIndexes vec_object; // index maps for OBJ_CASTLE, OBJ_HEROES, OBJ_SIGN, OBJ_BOTTLE, OBJ_EVENT

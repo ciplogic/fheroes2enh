@@ -98,12 +98,9 @@ private:
 
 bool HGSData::Load(const string &fn)
 {
-    BinaryFileReader fileReader;
-    if (!fileReader.open(fn, "rb"))
-    {
+    if(!FileUtils::Exists(fn))
         return false;
-    }
-    const auto vectorBytes = fileReader.getRaw(fileReader.size());
+    const auto vectorBytes = FileUtils::readFileBytes(fn);
     ByteVectorReader hdata(vectorBytes);
 
     hdata.setBigEndian(true);
