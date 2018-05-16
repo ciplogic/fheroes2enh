@@ -99,7 +99,7 @@ void Interface::HeroesBar::Redraw()
 
     auto _selectedIndex = getSelectedIndex();
     int pos = 0;
-    for (Heroes *&hero:kingdomHeroes)
+    for (Heroes *&hero:kingdomHeroes._items)
     {
         PortraitRedraw(dst_pt.x, dst_pt.y, *hero, pos == _selectedIndex);
         dst_pt.x += spaceTiling;
@@ -116,7 +116,7 @@ int Interface::HeroesBar::getSelectedIndex() const
     if (!selectedHero)
         return -1;
     int selected = 0;
-    for (Heroes *&hero:this->kingdomHeroes)
+    for (Heroes *&hero:this->kingdomHeroes._items)
     {
         if (hero->GetName() == selectedHero->GetName())
         {
@@ -170,9 +170,9 @@ bool Interface::HeroesBar::EventProcessing()
 
         if (area & pt)
         {
-            if(index<kingdomHeroes.size())
+            if(index<kingdomHeroes._items.size())
             {
-                Heroes *heroClick = kingdomHeroes[index];
+                Heroes *heroClick = kingdomHeroes._items[index];
                 interface.SetFocus(heroClick); 
                 return true;
             }

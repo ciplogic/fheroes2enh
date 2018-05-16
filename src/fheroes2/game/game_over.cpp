@@ -353,7 +353,7 @@ int GameOver::Result::LocalCheckGameOver()
     // set: continue after victory
     if (Game::CANCEL == res || !(Settings::Get().CurrentColor() & Players::HumanColors()) ||
         !Settings::Get().ExtGameContinueAfterVictory() ||
-        !(!myKingdom.GetCastles().empty() || !myKingdom.GetHeroes().empty()))
+        !(!myKingdom.GetCastles().empty() || !myKingdom.GetHeroes()._items.empty()))
         return res;
     if (!(Dialog::YES == Dialog::Message("", "Do you wish to continue the game?",
                                          Font::BIG, Dialog::YES | Dialog::NO)))

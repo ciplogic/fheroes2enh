@@ -330,7 +330,7 @@ void Interface::HeroesIcons::SetPos(s32 px, s32 py)
     SetAreaItems(Rect(px + 5, py + 5, ICONS_CURSOR_WIDTH, iconsCount * ICONS_CURSOR_HEIGHT));
     DisableHotkeys(true);
 
-    SetListContent(world.GetKingdom(Settings::Get().CurrentColor()).GetHeroes());
+    SetListContent(world.GetKingdom(Settings::Get().CurrentColor()).GetHeroes()._items);
     Reset();
 }
 
@@ -463,7 +463,7 @@ void Interface::IconsPanel::ResetIcons(icons_t type)
     {
         if (type & ICON_HEROES)
         {
-            heroesIcons.SetListContent(kingdom.GetHeroes());
+            heroesIcons.SetListContent(kingdom.GetHeroes()._items);
             heroesIcons.Reset();
         }
 

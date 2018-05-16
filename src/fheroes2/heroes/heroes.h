@@ -364,12 +364,12 @@ public:
     Point patrol_center;
     int patrol_square;
 
-    list<IndexObject>
-            visit_object;
+    vector<IndexObject> visit_object;
 };
 
-struct VecHeroes : public vector<Heroes *>
+struct VecHeroes 
 {
+    vector<Heroes *> _items;
     Heroes *Get(int /* hero id */) const;
 
     Heroes *Get(const Point &) const;

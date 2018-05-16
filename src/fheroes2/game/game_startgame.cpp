@@ -168,13 +168,13 @@ void Game::OpenHeroesDialog(Heroes &hero)
     Kingdom &myKingdom = hero.GetKingdom();
     const KingdomHeroes &myHeroes = myKingdom.GetHeroes();
     Display &display = Display::Get();
-    auto it = find(myHeroes.begin(), myHeroes.end(), &hero);
+    auto it = find(myHeroes._items.begin(), myHeroes._items.end(), &hero);
     Interface::StatusWindow::ResetTimer();
     Interface::Basic &I = Interface::Basic::Get();
     Interface::GameArea &gameArea = I.GetGameArea();
     bool need_fade = conf.ExtGameUseFade() && 640 == display.w() && 480 == display.h();
 
-    if (it != myHeroes.end())
+    if (it != myHeroes._items.end())
     {
         int result = Dialog::ZERO;
 
@@ -186,13 +186,13 @@ void Game::OpenHeroesDialog(Heroes &hero)
             switch (result)
             {
                 case Dialog::PREV:
-                    if (it == myHeroes.begin()) it = myHeroes.end();
+                    if (it == myHeroes._items.begin()) it = myHeroes._items.end();
                     --it;
                     break;
 
                 case Dialog::NEXT:
                     ++it;
-                    if (it == myHeroes.end()) it = myHeroes.begin();
+                    if (it == myHeroes._items.end()) it = myHeroes._items.begin();
                     break;
 
                 case Dialog::DISMISS:
@@ -203,7 +203,7 @@ void Game::OpenHeroesDialog(Heroes &hero)
 
                     (*it)->FadeOut();
                     (*it)->SetFreeman(0);
-                    it = myHeroes.begin();
+                    it = myHeroes._items.begin();
                     result = Dialog::CANCEL;
                     break;
 
@@ -213,7 +213,7 @@ void Game::OpenHeroesDialog(Heroes &hero)
         }
     }
 
-    if (it != myHeroes.end())
+    if (it != myHeroes._items.end())
         Interface::Basic::Get().SetFocus(*it);
     else
         Interface::Basic::Get().ResetFocus(GameFocus::HEROES);
@@ -959,7 +959,7 @@ int Interface::Basic::HumanTurn(bool isload)
     if (Game::ENDTURN == res)
     {
         // warning lost all town
-        if (!myHeroes.empty() && myCastles.empty() && Game::GetLostTownDays() < myKingdom.GetLostTownDays())
+        if (!myHeroes._items.empty() && myCastles.empty() && Game::GetLostTownDays() < myKingdom.GetLostTownDays())
         {
             Game::DialogPlayers(conf.CurrentColor(),
                                 _("%{color} player, you have lost your last town. If you do not conquer another town in next week, you will be eliminated."

@@ -91,7 +91,7 @@ void GetHeroesInfo(vector<ValueColors> &v, const Colors &colors)
 
     for (auto color : colors)
     {
-        int value = world.GetKingdom(color).GetHeroes().size();
+        int value = world.GetKingdom(color).GetHeroes()._items.size();
         UpdateValuesColors(v, value, color);
     }
 

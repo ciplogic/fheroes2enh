@@ -98,10 +98,10 @@ void Interface::Basic::ResetFocus(int priority)
             const KingdomHeroes &heroes = myKingdom.GetHeroes();
             // skip sleeping
             auto it =
-                    find_if(heroes.begin(), heroes.end(),
+                    find_if(heroes._items.begin(), heroes._items.end(),
                             not1(bind2nd(mem_fun(&Heroes::Modes), Heroes::SLEEPER)));
 
-            if (it != heroes.end())
+            if (it != heroes._items.end())
                 SetFocus(*it);
             else
                 ResetFocus(GameFocus::CASTLE);
@@ -111,8 +111,8 @@ void Interface::Basic::ResetFocus(int priority)
         case GameFocus::HEROES:
             if (focus.GetHeroes() && focus.GetHeroes()->GetColor() == player->GetColor())
                 SetFocus(focus.GetHeroes());
-            else if (!myKingdom.GetHeroes().empty())
-                SetFocus(myKingdom.GetHeroes().front());
+            else if (!myKingdom.GetHeroes()._items.empty())
+                SetFocus(myKingdom.GetHeroes()._items.front());
             else if (!myKingdom.GetCastles().empty())
             {
                 iconsPanel.SetRedraw(ICON_HEROES);
@@ -126,10 +126,10 @@ void Interface::Basic::ResetFocus(int priority)
                 SetFocus(focus.GetCastle());
             else if (!myKingdom.GetCastles().empty())
                 SetFocus(myKingdom.GetCastles().front());
-            else if (!myKingdom.GetHeroes().empty())
+            else if (!myKingdom.GetHeroes()._items.empty())
             {
                 iconsPanel.SetRedraw(ICON_CASTLES);
-                SetFocus(myKingdom.GetHeroes().front());
+                SetFocus(myKingdom.GetHeroes()._items.front());
             } else
                 focus.Reset();
             break;

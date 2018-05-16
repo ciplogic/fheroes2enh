@@ -538,7 +538,7 @@ void World::NewWeek()
     }
 
     // new day - reset option: "heroes: remember MP/SP for retreat/surrender result"
-    for_each(vec_heroes.begin(), vec_heroes.end(),
+    for_each(vec_heroes._items.begin(), vec_heroes._items.end(),
              bind2nd(mem_fun(&Heroes::ResetModes), Heroes::SAVEPOINTS));
 }
 
@@ -951,12 +951,12 @@ bool World::KingdomIsWins(const Kingdom &kingdom, int wins) const
             const KingdomHeroes &heroes = kingdom.GetHeroes();
             if (conf.WinsFindUltimateArtifact())
             {
-                return (heroes.end() != find_if(heroes.begin(), heroes.end(),
+                return (heroes._items.end() != find_if(heroes._items.begin(), heroes._items.end(),
                                                 mem_fun(&Heroes::HasUltimateArtifact)));
             } else
             {
                 const Artifact art = conf.WinsFindArtifactID();
-                return (heroes.end() != find_if(heroes.begin(), heroes.end(),
+                return (heroes._items.end() != find_if(heroes._items.begin(), heroes._items.end(),
                                                 bind2nd(HeroHasArtifact(), art)));
             }
         }
@@ -1326,7 +1326,7 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, World &w)
              mem_fun_ref(&Maps::Tiles::UpdatePassable));
 
     // heroes postfix
-    for_each(w.vec_heroes.begin(), w.vec_heroes.end(),
+    for_each(w.vec_heroes._items.begin(), w.vec_heroes._items.end(),
              mem_fun(&Heroes::RescanPathPassable));
 
     return msg;

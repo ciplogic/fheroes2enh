@@ -782,7 +782,7 @@ void Heroes::ActionNewDay()
     }
 
     // remove day visit object
-    visit_object.remove_if(Visit::isDayLife);
+    std::remove_if(visit_object.begin(), visit_object.end(), Visit::isDayLife);
 
 
     // new day, new capacities
@@ -792,7 +792,7 @@ void Heroes::ActionNewDay()
 void Heroes::ActionNewWeek()
 {
     // remove week visit object
-    visit_object.remove_if(Visit::isWeekLife);
+    std::remove_if(visit_object.begin(), visit_object.end(), Visit::isWeekLife);
 
     // fix artesian spring effect
     if (GetSpellPoints() > GetMaxSpellPoints()) SetSpellPoints(GetMaxSpellPoints());
@@ -801,13 +801,13 @@ void Heroes::ActionNewWeek()
 void Heroes::ActionNewMonth()
 {
     // remove month visit object
-    visit_object.remove_if(Visit::isMonthLife);
+    std::remove_if(visit_object.begin(), visit_object.end(), Visit::isMonthLife);
 }
 
 void Heroes::ActionAfterBattle()
 {
     // remove month visit object
-    visit_object.remove_if(Visit::isBattleLife);
+    std::remove_if(visit_object.begin(), visit_object.end(), Visit::isBattleLife);
     //
     SetModes(ACTION);
 }
@@ -888,7 +888,7 @@ void Heroes::SetVisited(s32 index, Visit::type_t type)
     if (Visit::GLOBAL == type)
         GetKingdom().SetVisited(index, object);
     else if (!isVisited(tile) && MP2::OBJ_ZERO != object)
-        visit_object.push_front(IndexObject(index, object));
+        visit_object.insert(visit_object.begin(), IndexObject(index, object));
 }
 
 void Heroes::SetVisitedWideTile(s32 index, int object, Visit::type_t type)
@@ -1768,8 +1768,7 @@ string Heroes::String() const
     if (!visit_object.empty())
     {
         os << "visit objects   : ";
-        for (list<IndexObject>::const_iterator
-                     it = visit_object.begin(); it != visit_object.end(); ++it)
+        for (auto it = visit_object.begin(); it != visit_object.end(); ++it)
             os << MP2::StringObject((*it).Value.second) << "(" << (*it).Value.first << "), ";
         os << endl;
     }
@@ -1816,7 +1815,7 @@ struct InJailMode : binary_function<s32, Heroes *, bool>
 
 AllHeroes::AllHeroes()
 {
-    reserve(HEROESMAXCOUNT + 2);
+    _items.reserve(HEROESMAXCOUNT + 2);
 }
 
 AllHeroes::~AllHeroes()
@@ -1826,93 +1825,93 @@ AllHeroes::~AllHeroes()
 
 void AllHeroes::Init()
 {
-    if (size())
+    if (_items.size())
         clear();
 
     const bool loyalty = Settings::Get().PriceLoyaltyVersion();
 
     // knight: LORDKILBURN, SIRGALLANTH, ECTOR, GVENNETH, TYRO, AMBROSE, RUBY, MAXIMUS, DIMITRY
     for (uint32_t hid = Heroes::LORDKILBURN; hid <= Heroes::DIMITRY; ++hid)
-        push_back(new Heroes(hid, Race::KNGT));
+        _items.push_back(new Heroes(hid, Race::KNGT));
 
     // barbarian: THUNDAX, FINEOUS, JOJOSH, CRAGHACK, JEZEBEL, JACLYN, ERGON, TSABU, ATLAS
     for (uint32_t hid = Heroes::THUNDAX; hid <= Heroes::ATLAS; ++hid)
-        push_back(new Heroes(hid, Race::BARB));
+        _items.push_back(new Heroes(hid, Race::BARB));
 
     // sorceress: ASTRA, NATASHA, TROYAN, VATAWNA, REBECCA, GEM, ARIEL, CARLAWN, LUNA
     for (uint32_t hid = Heroes::ASTRA; hid <= Heroes::LUNA; ++hid)
-        push_back(new Heroes(hid, Race::SORC));
+        _items.push_back(new Heroes(hid, Race::SORC));
 
     // warlock: ARIE, ALAMAR, VESPER, CRODO, BAROK, KASTORE, AGAR, FALAGAR, WRATHMONT
     for (uint32_t hid = Heroes::ARIE; hid <= Heroes::WRATHMONT; ++hid)
-        push_back(new Heroes(hid, Race::WRLK));
+        _items.push_back(new Heroes(hid, Race::WRLK));
 
     // wizard: MYRA, FLINT, DAWN, HALON, MYRINI, WILFREY, SARAKIN, KALINDRA, MANDIGAL
     for (uint32_t hid = Heroes::MYRA; hid <= Heroes::MANDIGAL; ++hid)
-        push_back(new Heroes(hid, Race::WZRD));
+        _items.push_back(new Heroes(hid, Race::WZRD));
 
     // necromancer: ZOM, DARLANA, ZAM, RANLOO, CHARITY, RIALDO, ROXANA, SANDRO, CELIA
     for (uint32_t hid = Heroes::ZOM; hid <= Heroes::CELIA; ++hid)
-        push_back(new Heroes(hid, Race::NECR));
+        _items.push_back(new Heroes(hid, Race::NECR));
 
     // from campain
-    push_back(new Heroes(Heroes::ROLAND, Race::WZRD));
-    push_back(new Heroes(Heroes::CORLAGON, Race::KNGT));
-    push_back(new Heroes(Heroes::ELIZA, Race::SORC));
-    push_back(new Heroes(Heroes::ARCHIBALD, Race::WRLK));
-    push_back(new Heroes(Heroes::HALTON, Race::KNGT));
-    push_back(new Heroes(Heroes::BAX, Race::NECR));
+    _items.push_back(new Heroes(Heroes::ROLAND, Race::WZRD));
+    _items.push_back(new Heroes(Heroes::CORLAGON, Race::KNGT));
+    _items.push_back(new Heroes(Heroes::ELIZA, Race::SORC));
+    _items.push_back(new Heroes(Heroes::ARCHIBALD, Race::WRLK));
+    _items.push_back(new Heroes(Heroes::HALTON, Race::KNGT));
+    _items.push_back(new Heroes(Heroes::BAX, Race::NECR));
 
     // loyalty version
-    push_back(new Heroes(loyalty ? Heroes::SOLMYR : Heroes::UNKNOWN, Race::WZRD));
-    push_back(new Heroes(loyalty ? Heroes::DAINWIN : Heroes::UNKNOWN, Race::WRLK));
-    push_back(new Heroes(loyalty ? Heroes::MOG : Heroes::UNKNOWN, Race::NECR));
-    push_back(new Heroes(loyalty ? Heroes::UNCLEIVAN : Heroes::UNKNOWN, Race::BARB));
-    push_back(new Heroes(loyalty ? Heroes::JOSEPH : Heroes::UNKNOWN, Race::KNGT));
-    push_back(new Heroes(loyalty ? Heroes::GALLAVANT : Heroes::UNKNOWN, Race::KNGT));
-    push_back(new Heroes(loyalty ? Heroes::ELDERIAN : Heroes::UNKNOWN, Race::WRLK));
-    push_back(new Heroes(loyalty ? Heroes::CEALLACH : Heroes::UNKNOWN, Race::KNGT));
-    push_back(new Heroes(loyalty ? Heroes::DRAKONIA : Heroes::UNKNOWN, Race::WZRD));
-    push_back(new Heroes(loyalty ? Heroes::MARTINE : Heroes::UNKNOWN, Race::SORC));
-    push_back(new Heroes(loyalty ? Heroes::JARKONAS : Heroes::UNKNOWN, Race::BARB));
+    _items.push_back(new Heroes(loyalty ? Heroes::SOLMYR : Heroes::UNKNOWN, Race::WZRD));
+    _items.push_back(new Heroes(loyalty ? Heroes::DAINWIN : Heroes::UNKNOWN, Race::WRLK));
+    _items.push_back(new Heroes(loyalty ? Heroes::MOG : Heroes::UNKNOWN, Race::NECR));
+    _items.push_back(new Heroes(loyalty ? Heroes::UNCLEIVAN : Heroes::UNKNOWN, Race::BARB));
+    _items.push_back(new Heroes(loyalty ? Heroes::JOSEPH : Heroes::UNKNOWN, Race::KNGT));
+    _items.push_back(new Heroes(loyalty ? Heroes::GALLAVANT : Heroes::UNKNOWN, Race::KNGT));
+    _items.push_back(new Heroes(loyalty ? Heroes::ELDERIAN : Heroes::UNKNOWN, Race::WRLK));
+    _items.push_back(new Heroes(loyalty ? Heroes::CEALLACH : Heroes::UNKNOWN, Race::KNGT));
+    _items.push_back(new Heroes(loyalty ? Heroes::DRAKONIA : Heroes::UNKNOWN, Race::WZRD));
+    _items.push_back(new Heroes(loyalty ? Heroes::MARTINE : Heroes::UNKNOWN, Race::SORC));
+    _items.push_back(new Heroes(loyalty ? Heroes::JARKONAS : Heroes::UNKNOWN, Race::BARB));
 
     // devel
-    push_back(new Heroes(IS_DEVEL() ? Heroes::SANDYSANDY : Heroes::UNKNOWN, Race::WRLK));
-    push_back(new Heroes(Heroes::UNKNOWN, Race::KNGT));
+    _items.push_back(new Heroes(IS_DEVEL() ? Heroes::SANDYSANDY : Heroes::UNKNOWN, Race::WRLK));
+    _items.push_back(new Heroes(Heroes::UNKNOWN, Race::KNGT));
 }
 
 void AllHeroes::clear()
 {
-    for (auto &it : *this)
+    for (auto &it : _items)
         delete it;
-    vector<Heroes *>::clear();
+    _items.clear();
 }
 
 Heroes *VecHeroes::Get(int hid) const
 {
-    const vector<Heroes *> &vec = *this;
+    const vector<Heroes *> &vec = _items;
     return 0 <= hid && hid < Heroes::UNKNOWN ? vec[hid] : nullptr;
 }
 
 Heroes *VecHeroes::Get(const Point &center) const
 {
-    const_iterator it = begin();
-    for (; it != end(); ++it) if ((*it)->isPosition(center)) break;
-    return end() != it ? *it : nullptr;
+    auto it = _items.begin();
+    for (; it != _items.end(); ++it) if ((*it)->isPosition(center)) break;
+    return _items.end() != it ? *it : nullptr;
 }
 
 Heroes *AllHeroes::GetGuest(const Castle &castle) const
 {
-    const_iterator it = find_if(begin(), end(),
+    auto it = find_if(_items.begin(), _items.end(),
                                 bind1st(InCastleNotGuardian(), &castle));
-    return end() != it ? *it : nullptr;
+    return _items.end() != it ? *it : nullptr;
 }
 
 Heroes *AllHeroes::GetGuard(const Castle &castle) const
 {
-    const_iterator it = Settings::Get().ExtCastleAllowGuardians() ?
-                        find_if(begin(), end(), bind1st(InCastleAndGuardian(), &castle)) : end();
-    return end() != it ? *it : nullptr;
+    auto it = Settings::Get().ExtCastleAllowGuardians() ?
+                        find_if(_items.begin(), _items.end(), bind1st(InCastleAndGuardian(), &castle)) : _items.end();
+    return _items.end() != it ? *it : nullptr;
 }
 
 Heroes *AllHeroes::GetFreeman(int race) const
@@ -1967,7 +1966,7 @@ Heroes *AllHeroes::GetFreeman(int race) const
 
     // find freeman in race (skip: manual changes)
     for (int ii = min; ii <= max; ++ii)
-        if (at(ii)->isFreeman() && !at(ii)->Modes(Heroes::NOTDEFAULTS)) freeman_heroes.push_back(ii);
+        if (_items.at(ii)->isFreeman() && !_items.at(ii)->Modes(Heroes::NOTDEFAULTS)) freeman_heroes.push_back(ii);
 
     // not found, find any race
     if (Race::NONE != race && freeman_heroes.empty())
@@ -1977,7 +1976,7 @@ Heroes *AllHeroes::GetFreeman(int race) const
                                                         : Heroes::CELIA;
 
         for (int ii = min; ii <= max; ++ii)
-            if (at(ii)->isFreeman()) freeman_heroes.push_back(ii);
+            if (_items.at(ii)->isFreeman()) freeman_heroes.push_back(ii);
     }
 
     // not found, all heroes busy
@@ -1986,42 +1985,42 @@ Heroes *AllHeroes::GetFreeman(int race) const
         return nullptr;
     }
 
-    return at(*Rand::Get(freeman_heroes));
+    return _items.at(*Rand::Get(freeman_heroes));
 }
 
 void AllHeroes::Scoute(int colors) const
 {
-    for (auto it : *this)
+    for (auto it : _items)
         if (colors & it->GetColor()) it->Scoute();
 }
 
 Heroes *AllHeroes::FromJail(s32 index) const
 {
-    auto it = find_if(begin(), end(),
+    auto it = find_if(_items.begin(), _items.end(),
                       bind1st(InJailMode(), index));
-    return end() != it ? *it : nullptr;
+    return _items.end() != it ? *it : nullptr;
 }
 
 bool AllHeroes::HaveTwoFreemans() const
 {
-    return 2 <= count_if(begin(), end(),
+    return 2 <= count_if(_items.begin(), _items.end(),
                          mem_fun(&Heroes::isFreeman));
 }
 
 StreamBase &operator<<(StreamBase &msg, const VecHeroes &heroes)
 {
-    msg << static_cast<uint32_t>(heroes.size());
+    msg << static_cast<uint32_t>(heroes._items.size());
 
-    for (auto heroe : heroes)
+    for (auto heroe : heroes._items)
         msg << (heroe ? heroe->GetID() : Heroes::UNKNOWN);
 
     return msg;
 }
 ByteVectorWriter &operator<<(ByteVectorWriter &msg, const VecHeroes &heroes)
 {
-    msg << static_cast<uint32_t>(heroes.size());
+    msg << static_cast<uint32_t>(heroes._items.size());
 
-    for (auto heroe : heroes)
+    for (auto heroe : heroes._items)
         msg << (heroe ? heroe->GetID() : Heroes::UNKNOWN);
 
     return msg;
@@ -2032,9 +2031,9 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, VecHeroes &heroes)
     uint32_t size;
     msg >> size;
 
-    heroes.resize(size, nullptr);
+    heroes._items.resize(size, nullptr);
 
-    for (auto &heroe : heroes)
+    for (auto &heroe : heroes._items)
     {
         uint32_t hid;
         msg >> hid;
@@ -2166,18 +2165,18 @@ void Heroes::ReadFrom(ByteVectorReader &msg)
 
 StreamBase &operator<<(StreamBase &msg, const AllHeroes &heroes)
 {
-    msg << static_cast<uint32_t>(heroes.size());
+    msg << static_cast<uint32_t>(heroes._items.size());
 
-    for (auto heroe : heroes)
+    for (auto heroe : heroes._items)
         msg << *heroe;
 
     return msg;
 }
 ByteVectorWriter &operator<<(ByteVectorWriter &msg, const AllHeroes &heroes)
 {
-    msg << static_cast<uint32_t>(heroes.size());
+    msg << static_cast<uint32_t>(heroes._items.size());
 
-    for (auto heroe : heroes)
+    for (auto heroe : heroes._items)
         msg << *heroe;
 
     return msg;
@@ -2189,9 +2188,9 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, AllHeroes &heroes)
     msg >> size;
 
     heroes.clear();
-    heroes.resize(size, nullptr);
+    heroes._items.resize(size, nullptr);
 
-    for (auto &heroe : heroes)
+    for (auto &heroe : heroes._items)
     {
         heroe = new Heroes();
         msg >> *heroe;

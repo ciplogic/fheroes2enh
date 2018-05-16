@@ -629,7 +629,7 @@ void AI::HeroesTurn(Heroes &hero)
 
 bool AIHeroesScheduledVisit(const Kingdom &kingdom, s32 index)
 {
-    for (auto it : kingdom.GetHeroes())
+    for (auto it : kingdom.GetHeroes()._items)
     {
         AIHero &ai_hero = AIHeroes::Get(*it);
         Queue &task = ai_hero.sheduled_visit;

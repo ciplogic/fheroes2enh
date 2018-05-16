@@ -141,10 +141,10 @@ StatsHeroesList::StatsHeroesList(const Point &pt, KingdomHeroes &heroes) : ListB
     SetAreaMaxItems(4);
     SetAreaItems(Rect(pt.x + 30, pt.y + 17, 594, 344));
 
-    content.resize(heroes.size());
+    content.resize(heroes._items.size());
 
-    for (auto it = heroes.begin(); it != heroes.end(); ++it)
-        content[distance(heroes.begin(), it)].Init(*it);
+    for (auto it = heroes._items.begin(); it != heroes._items.end(); ++it)
+        content[distance(heroes._items.begin(), it)].Init(*it);
 
     SetListContent(content);
 }

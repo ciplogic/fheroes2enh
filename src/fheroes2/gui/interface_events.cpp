@@ -108,14 +108,14 @@ void Interface::Basic::EventNextHero()
     const Kingdom &myKingdom = world.GetKingdom(Settings::Get().CurrentColor());
     const KingdomHeroes &myHeroes = myKingdom.GetHeroes();
 
-    if (myHeroes.empty()) return;
+    if (myHeroes._items.empty()) return;
 
     if (GetFocusHeroes())
     {
-        auto it = find(myHeroes.begin(), myHeroes.end(),
+        auto it = find(myHeroes._items.begin(), myHeroes._items.end(),
                        GetFocusHeroes());
         ++it;
-        if (it == myHeroes.end()) it = myHeroes.begin();
+        if (it == myHeroes._items.end()) it = myHeroes._items.begin();
         SetFocus(*it);
     } else
     {

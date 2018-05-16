@@ -200,7 +200,7 @@ int Heroes::OpenDialog(bool readonly, bool fade)
         buttonDismiss.SetDisable(true);
     }
 
-    if (readonly || 2 > GetKingdom().GetHeroes().size())
+    if (readonly || 2 > GetKingdom().GetHeroes()._items.size())
     {
         buttonNextHero.Press();
         buttonPrevHero.Press();

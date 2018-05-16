@@ -41,7 +41,7 @@ bool HeroesStrongestArmy(const Heroes *h1, const Heroes *h2)
 
 Kingdom::Kingdom() : color(Color::NONE), lost_town_days(0), visited_tents_colors(0)
 {
-    heroes_cond_loss.reserve(4);
+    heroes_cond_loss._items.reserve(4);
 }
 
 void Kingdom::Init(int clr)
@@ -51,7 +51,7 @@ void Kingdom::Init(int clr)
 
     if (Color::ALL & color)
     {
-        heroes.reserve(GetMaxHeroes());
+        heroes._items.reserve(GetMaxHeroes());
         castles.reserve(15);
 
         UpdateStartingResource();
@@ -66,13 +66,13 @@ void Kingdom::clear()
     visited_tents_colors = 0;
     lost_town_days = Game::GetLostTownDays() + 1;
 
-    heroes.clear();
+    heroes._items.clear();
     castles.clear();
     visit_object.clear();
 
     recruits.Reset();
 
-    heroes_cond_loss.clear();
+    heroes_cond_loss._items.clear();
 }
 
 int Kingdom::GetControl() const
@@ -97,7 +97,7 @@ void Kingdom::UpdateStartingResource()
 
 bool Kingdom::isLoss() const
 {
-    return castles.empty() && heroes.empty();
+    return castles.empty() && heroes._items.empty();
 }
 
 bool Kingdom::isPlay() const
@@ -111,11 +111,11 @@ void Kingdom::LossPostActions()
     {
         Players::SetPlayerInGame(color, false);
 
-        if (!heroes.empty())
+        if (!heroes._items.empty())
         {
-            for_each(heroes.begin(), heroes.end(),
+            for_each(heroes._items.begin(), heroes._items.end(),
                      bind2nd(mem_fun(&Heroes::SetFreeman), static_cast<int>(Battle::RESULT_LOSS)));
-            heroes.clear();
+            heroes._items.clear();
         }
         if (!castles.empty())
         {
@@ -129,7 +129,7 @@ void Kingdom::LossPostActions()
 void Kingdom::ActionBeforeTurn()
 {
     // rescan heroes path
-    for_each(heroes.begin(), heroes.end(), mem_fun(&Heroes::RescanPath));
+    for_each(heroes._items.begin(), heroes._items.end(), mem_fun(&Heroes::RescanPath));
 }
 
 void Kingdom::ActionNewDay()
@@ -153,7 +153,7 @@ void Kingdom::ActionNewDay()
         for_each(castles.begin(), castles.end(), mem_fun(&Castle::ActionNewDay));
 
         // heroes New Day
-        for_each(heroes.begin(), heroes.end(), mem_fun(&Heroes::ActionNewDay));
+        for_each(heroes._items.begin(), heroes._items.end(), mem_fun(&Heroes::ActionNewDay));
 
         // income
         AddFundsResource(GetIncome());
@@ -180,7 +180,7 @@ void Kingdom::ActionNewWeek()
         for_each(castles.begin(), castles.end(), mem_fun(&Castle::ActionNewWeek));
 
         // heroes New Week
-        for_each(heroes.begin(), heroes.end(), mem_fun(&Heroes::ActionNewWeek));
+        for_each(heroes._items.begin(), heroes._items.end(), mem_fun(&Heroes::ActionNewWeek));
 
         // debug an gift
         if (IS_DEVEL() && isControlHuman())
@@ -205,7 +205,7 @@ void Kingdom::ActionNewMonth()
         for_each(castles.begin(), castles.end(), mem_fun(&Castle::ActionNewMonth));
 
         // heroes New Month
-        for_each(heroes.begin(), heroes.end(), mem_fun(&Heroes::ActionNewMonth));
+        for_each(heroes._items.begin(), heroes._items.end(), mem_fun(&Heroes::ActionNewMonth));
     }
 
     // remove week visit object
@@ -216,8 +216,8 @@ void Kingdom::AddHeroes(Heroes *hero)
 {
     if (hero)
     {
-        if (heroes.end() == find(heroes.begin(), heroes.end(), hero))
-            heroes.push_back(hero);
+        if (heroes._items.end() == find(heroes._items.begin(), heroes._items.end(), hero))
+            heroes._items.push_back(hero);
 
         Player *player = Settings::Get().GetPlayers().GetCurrent();
         if (player && player->isColor(GetColor()))
@@ -230,12 +230,12 @@ void Kingdom::AddHeroes(Heroes *hero)
 void Kingdom::AddHeroStartCondLoss(Heroes *hero)
 {
     // see: Settings::ExtWorldStartHeroLossCond4Humans
-    heroes_cond_loss.push_back(hero);
+    heroes_cond_loss._items.push_back(hero);
 }
 
 const Heroes *Kingdom::GetFirstHeroStartCondLoss() const
 {
-    for (auto heroes_cond_los : heroes_cond_loss)
+    for (auto heroes_cond_los : heroes_cond_loss._items)
         if (heroes_cond_los->isFreeman() || heroes_cond_los->GetColor() != GetColor())
             return heroes_cond_los;
     return nullptr;
@@ -244,11 +244,10 @@ const Heroes *Kingdom::GetFirstHeroStartCondLoss() const
 string Kingdom::GetNamesHeroStartCondLoss() const
 {
     string result;
-    for (auto
-                 it = heroes_cond_loss.begin(); it != heroes_cond_loss.end(); ++it)
+    for (auto it = heroes_cond_loss._items.begin(); it != heroes_cond_loss._items.end(); ++it)
     {
         result.append((*it)->GetName());
-        if (it + 1 != heroes_cond_loss.end()) result.append(", ");
+        if (it + 1 != heroes_cond_loss._items.end()) result.append(", ");
     }
     return result;
 }
@@ -257,8 +256,8 @@ void Kingdom::RemoveHeroes(const Heroes *hero)
 {
     if (hero)
     {
-        if (!heroes.empty())
-            heroes.erase(find(heroes.begin(), heroes.end(), hero));
+        if (!heroes._items.empty())
+            heroes._items.erase(find(heroes._items.begin(), heroes._items.end(), hero));
 
         AI::HeroesRemove(*hero);
     }
@@ -368,7 +367,7 @@ void Kingdom::SetVisited(s32 index, int object)
 
 bool Kingdom::HeroesMayStillMove() const
 {
-    return heroes.end() != find_if(heroes.begin(), heroes.end(), mem_fun(&Heroes::MayStillMove));
+    return heroes._items.end() != find_if(heroes._items.begin(), heroes._items.end(), mem_fun(&Heroes::MayStillMove));
 }
 
 uint32_t Kingdom::GetCountCapital() const
@@ -436,7 +435,7 @@ bool Kingdom::IsVisitTravelersTent(int col) const
 
 bool Kingdom::AllowRecruitHero(bool check_payment, int level) const
 {
-    return (heroes.size() < GetMaxHeroes()) && (!check_payment || AllowPayment(PaymentConditions::RecruitHero(level)));
+    return (heroes._items.size() < GetMaxHeroes()) && (!check_payment || AllowPayment(PaymentConditions::RecruitHero(level)));
 }
 
 void Kingdom::ApplyPlayWithStartingHero()
@@ -480,7 +479,7 @@ void Kingdom::HeroesActionNewPosition()
 {
     // Heroes::ActionNewPosition: can remove elements from heroes vector.
     KingdomHeroes heroes2(heroes);
-    for_each(heroes2.begin(), heroes2.end(), mem_fun(&Heroes::ActionNewPosition));
+    for_each(heroes2._items.begin(), heroes2._items.end(), mem_fun(&Heroes::ActionNewPosition));
 }
 
 Funds Kingdom::GetIncome(int type /* INCOME_ALL */) const
@@ -528,12 +527,12 @@ Funds Kingdom::GetIncome(int type /* INCOME_ALL */) const
                                  Artifact::ENDLESS_POUCH_CRYSTAL, Artifact::UNKNOWN};
 
         for (uint32_t index = 0; artifacts[index] != Artifact::UNKNOWN; ++index)
-            for (auto heroe : heroes)
+            for (auto heroe : heroes._items)
                 resource += ProfitConditions::FromArtifact(artifacts[index]) *
                             (*heroe).GetBagArtifacts().Count(Artifact(artifacts[index]));
 
         // TAX_LIEN
-        for (auto heroe : heroes)
+        for (auto heroe : heroes._items)
             resource -= ProfitConditions::FromArtifact(Artifact::TAX_LIEN) *
                         (*heroe).GetBagArtifacts().Count(Artifact(Artifact::TAX_LIEN));
     }
@@ -541,7 +540,7 @@ Funds Kingdom::GetIncome(int type /* INCOME_ALL */) const
     if (INCOME_HEROSKILLS & type)
     {
         // estates skill bonus
-        for (auto heroe : heroes)
+        for (auto heroe : heroes._items)
             resource.gold += (*heroe).GetSecondaryValues(Skill::Secondary::ESTATES);
     }
 
@@ -550,14 +549,14 @@ Funds Kingdom::GetIncome(int type /* INCOME_ALL */) const
 
 const Heroes *Kingdom::GetBestHero() const
 {
-    return !heroes.empty() ? *max_element(heroes.begin(), heroes.end(), HeroesStrongestArmy) : nullptr;
+    return !heroes._items.empty() ? *max_element(heroes._items.begin(), heroes._items.end(), HeroesStrongestArmy) : nullptr;
 }
 
 uint32_t Kingdom::GetArmiesStrength() const
 {
     uint32_t res = 0;
 
-    for (auto heroe : heroes)
+    for (auto heroe : heroes._items)
         res += (*heroe).GetArmy().m_troops.GetStrength();
 
     for (auto castle : castles)
@@ -709,14 +708,14 @@ int Kingdoms::FindWins(int cond) const
 
 void Kingdoms::AddHeroes(const AllHeroes &heroes)
 {
-    for (auto heroe : heroes)
+    for (auto heroe : heroes._items)
         // skip gray color
         if (heroe->GetColor()) GetKingdom(heroe->GetColor()).AddHeroes(heroe);
 }
 
 void Kingdoms::AddCondLossHeroes(const AllHeroes &heroes)
 {
-    for (auto heroe : heroes)
+    for (auto heroe : heroes._items)
         // skip gray color
         if (heroe->GetColor())
         {

@@ -197,7 +197,7 @@ void AI::CastleTurn(Castle &castle)
 
         Kingdom &kingdom = castle.GetKingdom();
         Heroes *hero = castle.GetHeroes().Guest();
-        bool can_recruit = castle.isCastle() && !hero && kingdom.GetHeroes().size() < Kingdom::GetMaxHeroes();
+        bool can_recruit = castle.isCastle() && !hero && kingdom.GetHeroes()._items.size() < Kingdom::GetMaxHeroes();
 
         // part II
         if (enemy &&
