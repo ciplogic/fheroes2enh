@@ -192,21 +192,21 @@ public:
 
     Castle *GetCastle(const Point &);
 
-    const Heroes *GetHeroes(int /* hero id */) const;
+    const sp<Heroes> GetHeroes(int /* hero id */) const;
 
-    Heroes *GetHeroes(int /* hero id */);
+    sp<Heroes> GetHeroes(int /* hero id */);
 
-    const Heroes *GetHeroes(const Point &) const;
+    const sp<Heroes> GetHeroes(const Point &) const;
 
-    Heroes *GetHeroes(const Point &);
+    sp<Heroes> GetHeroes(const Point &);
 
-    Heroes *FromJailHeroes(s32);
+    sp<Heroes> FromJailHeroes(s32);
 
-    Heroes *GetFreemanHeroes(int race = 0) const;
+    sp<Heroes> GetFreemanHeroes(int race = 0) const;
 
-    const Heroes *GetHeroesCondWins() const;
+    const sp<Heroes> GetHeroesCondWins() const;
 
-    const Heroes *GetHeroesCondLoss() const;
+    const sp<Heroes> GetHeroesCondLoss() const;
 
     CastleHeroes GetHeroes(const Castle &) const;
 

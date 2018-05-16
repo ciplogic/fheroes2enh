@@ -369,10 +369,10 @@ public:
 
 struct VecHeroes 
 {
-    vector<Heroes *> _items;
-    Heroes *Get(int /* hero id */) const;
+    vector<sp<Heroes>> _items;
+    sp<Heroes>Get(int /* hero id */) const;
 
-    Heroes *Get(const Point &) const;
+    sp<Heroes> Get(const Point &) const;
 };
 
 struct AllHeroes : public VecHeroes
@@ -387,13 +387,13 @@ struct AllHeroes : public VecHeroes
 
     void Scoute(int) const;
 
-    Heroes *GetGuest(const Castle &) const;
+    sp<Heroes> GetGuest(const Castle &) const;
 
-    Heroes *GetGuard(const Castle &) const;
+    sp<Heroes> GetGuard(const Castle &) const;
 
-    Heroes *GetFreeman(int race) const;
+    sp<Heroes> GetFreeman(int race) const;
 
-    Heroes *FromJail(s32) const;
+    sp<Heroes> FromJail(s32) const;
 
     bool HaveTwoFreemans() const;
 

@@ -1832,15 +1832,15 @@ void AllHeroes::Init()
 
     // knight: LORDKILBURN, SIRGALLANTH, ECTOR, GVENNETH, TYRO, AMBROSE, RUBY, MAXIMUS, DIMITRY
     for (uint32_t hid = Heroes::LORDKILBURN; hid <= Heroes::DIMITRY; ++hid)
-        _items.push_back(new Heroes(hid, Race::KNGT));
+        _items.push_back(make_shared<Heroes>(hid, Race::KNGT));
 
     // barbarian: THUNDAX, FINEOUS, JOJOSH, CRAGHACK, JEZEBEL, JACLYN, ERGON, TSABU, ATLAS
     for (uint32_t hid = Heroes::THUNDAX; hid <= Heroes::ATLAS; ++hid)
-        _items.push_back(new Heroes(hid, Race::BARB));
+        _items.push_back(make_shared<Heroes>(hid, Race::BARB));
 
     // sorceress: ASTRA, NATASHA, TROYAN, VATAWNA, REBECCA, GEM, ARIEL, CARLAWN, LUNA
     for (uint32_t hid = Heroes::ASTRA; hid <= Heroes::LUNA; ++hid)
-        _items.push_back(new Heroes(hid, Race::SORC));
+        _items.push_back(make_shared<Heroes>(hid, Race::SORC));
 
     // warlock: ARIE, ALAMAR, VESPER, CRODO, BAROK, KASTORE, AGAR, FALAGAR, WRATHMONT
     for (uint32_t hid = Heroes::ARIE; hid <= Heroes::WRATHMONT; ++hid)
@@ -1852,32 +1852,32 @@ void AllHeroes::Init()
 
     // necromancer: ZOM, DARLANA, ZAM, RANLOO, CHARITY, RIALDO, ROXANA, SANDRO, CELIA
     for (uint32_t hid = Heroes::ZOM; hid <= Heroes::CELIA; ++hid)
-        _items.push_back(new Heroes(hid, Race::NECR));
+        _items.push_back(make_shared<Heroes>(hid, Race::NECR));
 
     // from campain
-    _items.push_back(new Heroes(Heroes::ROLAND, Race::WZRD));
-    _items.push_back(new Heroes(Heroes::CORLAGON, Race::KNGT));
-    _items.push_back(new Heroes(Heroes::ELIZA, Race::SORC));
-    _items.push_back(new Heroes(Heroes::ARCHIBALD, Race::WRLK));
-    _items.push_back(new Heroes(Heroes::HALTON, Race::KNGT));
-    _items.push_back(new Heroes(Heroes::BAX, Race::NECR));
+    _items.push_back(make_shared<Heroes>(Heroes::ROLAND, Race::WZRD));
+    _items.push_back(make_shared<Heroes>(Heroes::CORLAGON, Race::KNGT));
+    _items.push_back(make_shared<Heroes>(Heroes::ELIZA, Race::SORC));
+    _items.push_back(make_shared<Heroes>(Heroes::ARCHIBALD, Race::WRLK));
+    _items.push_back(make_shared<Heroes>(Heroes::HALTON, Race::KNGT));
+    _items.push_back(make_shared<Heroes>(Heroes::BAX, Race::NECR));
 
     // loyalty version
-    _items.push_back(new Heroes(loyalty ? Heroes::SOLMYR : Heroes::UNKNOWN, Race::WZRD));
-    _items.push_back(new Heroes(loyalty ? Heroes::DAINWIN : Heroes::UNKNOWN, Race::WRLK));
-    _items.push_back(new Heroes(loyalty ? Heroes::MOG : Heroes::UNKNOWN, Race::NECR));
-    _items.push_back(new Heroes(loyalty ? Heroes::UNCLEIVAN : Heroes::UNKNOWN, Race::BARB));
-    _items.push_back(new Heroes(loyalty ? Heroes::JOSEPH : Heroes::UNKNOWN, Race::KNGT));
-    _items.push_back(new Heroes(loyalty ? Heroes::GALLAVANT : Heroes::UNKNOWN, Race::KNGT));
-    _items.push_back(new Heroes(loyalty ? Heroes::ELDERIAN : Heroes::UNKNOWN, Race::WRLK));
-    _items.push_back(new Heroes(loyalty ? Heroes::CEALLACH : Heroes::UNKNOWN, Race::KNGT));
-    _items.push_back(new Heroes(loyalty ? Heroes::DRAKONIA : Heroes::UNKNOWN, Race::WZRD));
-    _items.push_back(new Heroes(loyalty ? Heroes::MARTINE : Heroes::UNKNOWN, Race::SORC));
-    _items.push_back(new Heroes(loyalty ? Heroes::JARKONAS : Heroes::UNKNOWN, Race::BARB));
+    _items.push_back(make_shared<Heroes>(loyalty ? Heroes::SOLMYR : Heroes::UNKNOWN, Race::WZRD));
+    _items.push_back(make_shared<Heroes>(loyalty ? Heroes::DAINWIN : Heroes::UNKNOWN, Race::WRLK));
+    _items.push_back(make_shared<Heroes>(loyalty ? Heroes::MOG : Heroes::UNKNOWN, Race::NECR));
+    _items.push_back(make_shared<Heroes>(loyalty ? Heroes::UNCLEIVAN : Heroes::UNKNOWN, Race::BARB));
+    _items.push_back(make_shared<Heroes>(loyalty ? Heroes::JOSEPH : Heroes::UNKNOWN, Race::KNGT));
+    _items.push_back(make_shared<Heroes>(loyalty ? Heroes::GALLAVANT : Heroes::UNKNOWN, Race::KNGT));
+    _items.push_back(make_shared<Heroes>(loyalty ? Heroes::ELDERIAN : Heroes::UNKNOWN, Race::WRLK));
+    _items.push_back(make_shared<Heroes>(loyalty ? Heroes::CEALLACH : Heroes::UNKNOWN, Race::KNGT));
+    _items.push_back(make_shared<Heroes>(loyalty ? Heroes::DRAKONIA : Heroes::UNKNOWN, Race::WZRD));
+    _items.push_back(make_shared<Heroes>(loyalty ? Heroes::MARTINE : Heroes::UNKNOWN, Race::SORC));
+    _items.push_back(make_shared<Heroes>(loyalty ? Heroes::JARKONAS : Heroes::UNKNOWN, Race::BARB));
 
     // devel
-    _items.push_back(new Heroes(IS_DEVEL() ? Heroes::SANDYSANDY : Heroes::UNKNOWN, Race::WRLK));
-    _items.push_back(new Heroes(Heroes::UNKNOWN, Race::KNGT));
+    _items.push_back(make_shared<Heroes>(IS_DEVEL() ? Heroes::SANDYSANDY : Heroes::UNKNOWN, Race::WRLK));
+    _items.push_back(make_shared<Heroes>(Heroes::UNKNOWN, Race::KNGT));
 }
 
 void AllHeroes::clear()
@@ -1887,34 +1887,34 @@ void AllHeroes::clear()
     _items.clear();
 }
 
-Heroes *VecHeroes::Get(int hid) const
+sp<Heroes> VecHeroes::Get(int hid) const
 {
-    const vector<Heroes *> &vec = _items;
+    const auto &vec = _items;
     return 0 <= hid && hid < Heroes::UNKNOWN ? vec[hid] : nullptr;
 }
 
-Heroes *VecHeroes::Get(const Point &center) const
+sp<Heroes> VecHeroes::Get(const Point &center) const
 {
     auto it = _items.begin();
     for (; it != _items.end(); ++it) if ((*it)->isPosition(center)) break;
     return _items.end() != it ? *it : nullptr;
 }
 
-Heroes *AllHeroes::GetGuest(const Castle &castle) const
+sp<Heroes> AllHeroes::GetGuest(const Castle &castle) const
 {
     auto it = find_if(_items.begin(), _items.end(),
                                 bind1st(InCastleNotGuardian(), &castle));
     return _items.end() != it ? *it : nullptr;
 }
 
-Heroes *AllHeroes::GetGuard(const Castle &castle) const
+sp<Heroes> AllHeroes::GetGuard(const Castle &castle) const
 {
     auto it = Settings::Get().ExtCastleAllowGuardians() ?
                         find_if(_items.begin(), _items.end(), bind1st(InCastleAndGuardian(), &castle)) : _items.end();
     return _items.end() != it ? *it : nullptr;
 }
 
-Heroes *AllHeroes::GetFreeman(int race) const
+sp<Heroes> AllHeroes::GetFreeman(int race) const
 {
     const Settings &conf = Settings::Get();
 
@@ -1990,11 +1990,11 @@ Heroes *AllHeroes::GetFreeman(int race) const
 
 void AllHeroes::Scoute(int colors) const
 {
-    for (auto it : _items)
+    for (const auto& it : _items)
         if (colors & it->GetColor()) it->Scoute();
 }
 
-Heroes *AllHeroes::FromJail(s32 index) const
+sp<Heroes> AllHeroes::FromJail(s32 index) const
 {
     auto it = find_if(_items.begin(), _items.end(),
                       bind1st(InJailMode(), index));

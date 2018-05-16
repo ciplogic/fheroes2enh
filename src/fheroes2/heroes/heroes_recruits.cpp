@@ -42,32 +42,32 @@ int Recruits::GetID2() const
     return second;
 }
 
-const Heroes *Recruits::GetHero1() const
+const sp<Heroes> Recruits::GetHero1() const
 {
     return world.GetHeroes(first);
 }
 
-const Heroes *Recruits::GetHero2() const
+const sp<Heroes> Recruits::GetHero2() const
 {
     return world.GetHeroes(second);
 }
 
-Heroes *Recruits::GetHero1()
+sp<Heroes> Recruits::GetHero1()
 {
     return world.GetHeroes(first);
 }
 
-Heroes *Recruits::GetHero2()
+sp<Heroes> Recruits::GetHero2()
 {
     return world.GetHeroes(second);
 }
 
-void Recruits::SetHero1(const Heroes *hero)
+void Recruits::SetHero1(const sp<Heroes> hero)
 {
     first = hero ? hero->hid : Heroes::UNKNOWN;
 }
 
-void Recruits::SetHero2(const Heroes *hero)
+void Recruits::SetHero2(const sp<Heroes> hero)
 {
     second = hero ? hero->hid : Heroes::UNKNOWN;
 }

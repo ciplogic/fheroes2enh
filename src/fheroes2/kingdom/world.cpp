@@ -388,33 +388,33 @@ const Castle *World::GetCastle(const Point &center) const
     return vec_castles.Get(center);
 }
 
-Heroes *World::GetHeroes(int id)
+sp<Heroes> World::GetHeroes(int id)
 {
     return vec_heroes.Get(id);
 }
 
-const Heroes *World::GetHeroes(int id) const
+const sp<Heroes> World::GetHeroes(int id) const
 {
     return vec_heroes.Get(id);
 }
 
 /* get heroes from index maps */
-Heroes *World::GetHeroes(const Point &center)
+sp<Heroes> World::GetHeroes(const Point &center)
 {
     return vec_heroes.Get(center);
 }
 
-const Heroes *World::GetHeroes(const Point &center) const
+const sp<Heroes> World::GetHeroes(const Point &center) const
 {
     return vec_heroes.Get(center);
 }
 
-Heroes *World::GetFreemanHeroes(int race) const
+sp<Heroes> World::GetFreemanHeroes(int race) const
 {
     return vec_heroes.GetFreeman(race);
 }
 
-Heroes *World::FromJailHeroes(s32 index)
+sp<Heroes> World::FromJailHeroes(s32 index)
 {
     return vec_heroes.FromJail(index);
 }
@@ -911,12 +911,12 @@ void World::UpdateRecruits(Recruits &recruits) const
         recruits.SetHero2(nullptr);
 }
 
-const Heroes *World::GetHeroesCondWins() const
+const sp<Heroes> World::GetHeroesCondWins() const
 {
     return GetHeroes(heroes_cond_wins);
 }
 
-const Heroes *World::GetHeroesCondLoss() const
+const sp<Heroes> World::GetHeroesCondLoss() const
 {
     return GetHeroes(heroes_cond_loss);
 }
@@ -940,7 +940,7 @@ bool World::KingdomIsWins(const Kingdom &kingdom, int wins) const
 
         case GameOver::WINS_HERO:
         {
-            const Heroes *hero = GetHeroesCondWins();
+            const sp<Heroes> hero = GetHeroesCondWins();
             return (hero && Heroes::UNKNOWN != heroes_cond_wins &&
                     hero->isFreeman() &&
                     hero->GetKillerColor() == kingdom.GetColor());
@@ -996,7 +996,7 @@ bool World::KingdomIsLoss(const Kingdom &kingdom, int loss) const
 
         case GameOver::LOSS_HERO:
         {
-            const Heroes *hero = GetHeroesCondLoss();
+            const sp<Heroes> hero = GetHeroesCondLoss();
             return (hero && Heroes::UNKNOWN != heroes_cond_loss &&
                     hero->isFreeman() &&
                     hero->GetKillerColor() != kingdom.GetColor());

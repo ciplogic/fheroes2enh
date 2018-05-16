@@ -27,31 +27,31 @@
 #include <algorithm>
 #include "heroes.h"
 
-class CastleHeroes : protected pair<Heroes *, Heroes *>
+class CastleHeroes : protected pair<sp<Heroes>, sp<Heroes>>
 {
 public:
-    CastleHeroes(Heroes *guest, Heroes *guard) : pair<Heroes *, Heroes *>(guest, guard)
+    CastleHeroes(sp<Heroes> guest, sp<Heroes> guard) : pair<sp<Heroes>, sp<Heroes> >(guest, guard)
     {};
 
-    Heroes *Guest()
+    sp<Heroes> Guest()
     { return first; };
 
-    Heroes *Guard()
+    sp<Heroes> Guard()
     { return second; };
 
-    const Heroes *Guest() const
+    const sp<Heroes> Guest() const
     { return first; };
 
-    const Heroes *Guard() const
+    const sp<Heroes> Guard() const
     { return second; };
 
-    Heroes *GuestFirst()
+    sp<Heroes> GuestFirst()
     { return first ? first : second; };
 
-    Heroes *GuardFirst()
+    sp<Heroes> GuardFirst()
     { return second ? second : first; };
 
-    bool operator==(const Heroes *hero) const
+    bool operator==(const sp<Heroes> hero) const
     { return first == hero || second == hero; };
 
     void Swap()

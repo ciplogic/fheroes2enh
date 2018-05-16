@@ -39,17 +39,17 @@ public:
 
     int GetID2() const;
 
-    const Heroes *GetHero1() const;
+    const sp<Heroes> GetHero1() const;
 
-    const Heroes *GetHero2() const;
+    const sp<Heroes> GetHero2() const;
 
-    Heroes *GetHero1();
+    sp<Heroes> GetHero1();
 
-    Heroes *GetHero2();
+    sp<Heroes> GetHero2();
 
-    void SetHero1(const Heroes *);
+    void SetHero1(const sp<Heroes>);
 
-    void SetHero2(const Heroes *);
+    void SetHero2(const sp<Heroes>);
 };
 
 ByteVectorReader &operator>>(ByteVectorReader &, Recruits &);
