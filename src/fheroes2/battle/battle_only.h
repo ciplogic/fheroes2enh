@@ -83,8 +83,8 @@ namespace Battle
         ArmyBar *selectArmy1;
         ArmyBar *selectArmy2;
 
-        ArtifactsBar *selectArtifacts1;
-        ArtifactsBar *selectArtifacts2;
+        sp<ArtifactsBar> selectArtifacts1;
+        sp<ArtifactsBar> selectArtifacts2;
 
         ControlInfo *cinfo2;
 

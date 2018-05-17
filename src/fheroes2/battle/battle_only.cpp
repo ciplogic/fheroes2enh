@@ -422,7 +422,6 @@ bool Battle::Only::ChangeSettings()
     delete luckIndicator1;
     delete primskill_bar1;
     delete secskill_bar1;
-    delete selectArtifacts1;
     delete selectArmy1;
 
     if (hero2)
@@ -431,7 +430,6 @@ bool Battle::Only::ChangeSettings()
         delete luckIndicator2;
         delete primskill_bar2;
         delete secskill_bar2;
-        delete selectArtifacts2;
         delete selectArmy2;
     }
 
@@ -466,12 +464,6 @@ void Battle::Only::UpdateHero1(const Point &cur_pt)
         secskill_bar1 = nullptr;
     }
 
-    if (selectArtifacts1)
-    {
-        delete selectArtifacts1;
-        selectArtifacts1 = nullptr;
-    }
-
     if (selectArmy1)
     {
         delete selectArmy1;
@@ -501,7 +493,7 @@ void Battle::Only::UpdateHero1(const Point &cur_pt)
         secskill_bar1->SetContent(hero1->GetSecondarySkills().ToVector());
         secskill_bar1->SetPos(cur_pt.x + 22, cur_pt.y + 199);
 
-        selectArtifacts1 = new ArtifactsBar(hero1, true, false, true);
+        selectArtifacts1 = make_shared<ArtifactsBar>(hero1, true, false, true);
         selectArtifacts1->SetColRows(7, 2);
         selectArtifacts1->SetHSpace(2);
         selectArtifacts1->SetVSpace(2);
@@ -542,10 +534,12 @@ void Battle::Only::UpdateHero2(const Point &cur_pt)
         delete secskill_bar2;
         secskill_bar2 = nullptr;
     }
-
+    if (selectArtifacts1)
+    {
+        selectArtifacts1 = nullptr;
+    }
     if (selectArtifacts2)
     {
-        delete selectArtifacts2;
         selectArtifacts2 = nullptr;
     }
 
@@ -578,7 +572,7 @@ void Battle::Only::UpdateHero2(const Point &cur_pt)
         secskill_bar2->SetContent(hero2->GetSecondarySkills().ToVector());
         secskill_bar2->SetPos(cur_pt.x + 353, cur_pt.y + 199);
 
-        selectArtifacts2 = new ArtifactsBar(hero2, true, false, true);
+        selectArtifacts2 = make_shared<ArtifactsBar>(hero2, true, false, true);
         selectArtifacts2->SetColRows(7, 2);
         selectArtifacts2->SetHSpace(2);
         selectArtifacts2->SetVSpace(2);
