@@ -270,9 +270,9 @@ void StatsHeroesList::RedrawBackground(const Point &dst)
 struct CstlRow
 {
     Castle *castle;
-    ArmyBar *armyBarGuard;
-    ArmyBar *armyBarGuest;
-    DwellingsBar *dwellingsBar;
+    sp<ArmyBar>armyBarGuard;
+    sp<ArmyBar>armyBarGuest;
+    sp<DwellingsBar>dwellingsBar;
 
     CstlRow() : castle(nullptr), armyBarGuard(nullptr), armyBarGuest(nullptr), dwellingsBar(nullptr)
     {}
@@ -284,9 +284,9 @@ struct CstlRow
 
     void Clear()
     {
-        delete armyBarGuard;
-        delete armyBarGuest;
-        delete dwellingsBar;
+        armyBarGuard = nullptr;
+        armyBarGuest = nullptr;
+        dwellingsBar = nullptr;
     }
 
     void Init(Castle *ptr)
@@ -296,7 +296,7 @@ struct CstlRow
         Clear();
         const RGBA fill(40, 12, 0);
 
-        armyBarGuard = new ArmyBar(&castle->GetArmy(), true, false);
+        armyBarGuard = make_shared<ArmyBar>(&castle->GetArmy(), true, false);
         armyBarGuard->SetBackground(Size(41, 41), fill);
         armyBarGuard->SetColRows(5, 1);
         armyBarGuard->SetHSpace(-1);
@@ -305,13 +305,13 @@ struct CstlRow
 
         if (heroes.Guest())
         {
-            armyBarGuest = new ArmyBar(&heroes.Guest()->GetArmy(), true, false);
+            armyBarGuest = make_shared<ArmyBar>(&heroes.Guest()->GetArmy(), true, false);
             armyBarGuest->SetBackground(Size(41, 41), fill);
             armyBarGuest->SetColRows(5, 1);
             armyBarGuest->SetHSpace(-1);
         }
 
-        dwellingsBar = new DwellingsBar(*castle, Size(39, 52), fill);
+        dwellingsBar = make_shared<DwellingsBar>(*castle, Size(39, 52), fill);
         dwellingsBar->SetColRows(6, 1);
         dwellingsBar->SetHSpace(2);
     }
@@ -443,8 +443,9 @@ bool StatsCastlesList::ActionListCursor(CstlRow &row, const Point &cursor, s32 o
     return false;
 }
 
-void StatsCastlesList::RedrawItem(const CstlRow &row, s32 dstx, s32 dsty, bool current)
+void StatsCastlesList::RedrawItem(const CstlRow &cRow, s32 dstx, s32 dsty, bool current)
 {
+    auto row = const_cast<CstlRow&>(cRow);
     if (!row.castle) return;
     Text text("", Font::SMALL);
     const Sprite &back = AGG::GetICN(ICN::OVERVIEW, 11);
@@ -468,18 +469,18 @@ void StatsCastlesList::RedrawItem(const CstlRow &row, s32 dstx, s32 dsty, bool c
     // army info
     if (row.armyBarGuard)
     {
-        const_cast<ArmyBar *>(row.armyBarGuard)->SetPos(dstx + 146, row.armyBarGuest ? dsty : dsty + 20);
-        const_cast<ArmyBar *>(row.armyBarGuard)->Redraw();
+        row.armyBarGuard->SetPos(dstx + 146, row.armyBarGuest ? dsty : dsty + 20);
+        row.armyBarGuard->Redraw();
     }
 
     if (row.armyBarGuest)
     {
-        const_cast<ArmyBar *>(row.armyBarGuest)->SetPos(dstx + 146, row.armyBarGuard ? dsty + 41 : dsty + 20);
-        const_cast<ArmyBar *>(row.armyBarGuest)->Redraw();
+        row.armyBarGuest->SetPos(dstx + 146, row.armyBarGuard ? dsty + 41 : dsty + 20);
+        row.armyBarGuest->Redraw();
     }
 
-    const_cast<DwellingsBar *>(row.dwellingsBar)->SetPos(dstx + 349, dsty + 15);
-    const_cast<DwellingsBar *>(row.dwellingsBar)->Redraw();
+    row.dwellingsBar->SetPos(dstx + 349, dsty + 15);
+    row.dwellingsBar->Redraw();
 }
 
 void StatsCastlesList::RedrawBackground(const Point &dst)
