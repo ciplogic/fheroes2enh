@@ -40,10 +40,10 @@
 struct HeroRow
 {
     Heroes *hero;
-    ArmyBar *armyBar;
-    ArtifactsBar *artifactsBar;
-    SecondarySkillsBar *secskillsBar;
-    PrimarySkillsBar *primskillsBar;
+    sp<ArmyBar> armyBar;
+    sp<ArtifactsBar> artifactsBar;
+    sp<SecondarySkillsBar> secskillsBar;
+    sp<PrimarySkillsBar> primskillsBar;
 
     HeroRow() : hero(nullptr), armyBar(nullptr), artifactsBar(nullptr), secskillsBar(nullptr), primskillsBar(nullptr)
     {}
@@ -55,10 +55,10 @@ struct HeroRow
 
     void Clear()
     {
-        delete armyBar;
-        delete artifactsBar;
-        delete secskillsBar;
-        delete primskillsBar;
+        armyBar = nullptr;
+        artifactsBar = nullptr;
+        secskillsBar = nullptr;
+        primskillsBar = nullptr;
     }
 
     void Init(Heroes *ptr)
@@ -67,24 +67,24 @@ struct HeroRow
 
         Clear();
 
-        armyBar = new ArmyBar(&hero->GetArmy(), true, false);
+        armyBar = make_shared<ArmyBar>(&hero->GetArmy(), true, false);
         armyBar->SetBackground(Size(41, 53), RGBA(72, 28, 0));
         armyBar->SetColRows(5, 1);
         armyBar->SetHSpace(-1);
 
-        artifactsBar = new ArtifactsBar(hero, true, false);
+        artifactsBar = make_shared<ArtifactsBar>(hero, true, false);
         artifactsBar->SetColRows(7, 2);
         artifactsBar->SetHSpace(1);
         artifactsBar->SetVSpace(8);
         artifactsBar->SetContent(hero->GetBagArtifacts());
 
-        secskillsBar = new SecondarySkillsBar();
+        secskillsBar = make_shared<SecondarySkillsBar>();
         secskillsBar->SetColRows(4, 2);
         secskillsBar->SetHSpace(-1);
         secskillsBar->SetVSpace(8);
         secskillsBar->SetContent(hero->GetSecondarySkills().ToVector());
 
-        primskillsBar = new PrimarySkillsBar(ptr, true);
+        primskillsBar = make_shared<PrimarySkillsBar>(ptr, true);
         primskillsBar->SetColRows(4, 1);
         primskillsBar->SetHSpace(2);
         primskillsBar->SetTextOff(20, -13);
@@ -200,8 +200,9 @@ bool StatsHeroesList::ActionListCursor(HeroRow &row, const Point &cursor, s32 ox
     return false;
 }
 
-void StatsHeroesList::RedrawItem(const HeroRow &row, s32 dstx, s32 dsty, bool current)
+void StatsHeroesList::RedrawItem(const HeroRow &cRow, s32 dstx, s32 dsty, bool current)
 {
+    auto& row = const_cast<HeroRow &>(cRow);
     if (!row.hero) return;
     Text text("", Font::SMALL);
     const Sprite &back = AGG::GetICN(ICN::OVERVIEW, 10);
@@ -223,20 +224,20 @@ void StatsHeroesList::RedrawItem(const HeroRow &row, s32 dstx, s32 dsty, bool cu
     text.Blit(dstx + 195 - text.w(), dsty + 20);
 
     // primary skills info
-    const_cast<PrimarySkillsBar *>(row.primskillsBar)->SetPos(dstx + 56, dsty - 3);
-    const_cast<PrimarySkillsBar *>(row.primskillsBar)->Redraw();
+    row.primskillsBar->SetPos(dstx + 56, dsty - 3);
+    row.primskillsBar->Redraw();
 
     // secondary skills info
-    const_cast<SecondarySkillsBar *>(row.secskillsBar)->SetPos(dstx + 206, dsty + 3);
-    const_cast<SecondarySkillsBar *>(row.secskillsBar)->Redraw();
+    row.secskillsBar->SetPos(dstx + 206, dsty + 3);
+    row.secskillsBar->Redraw();
 
     // artifacts info
-    const_cast<ArtifactsBar *>(row.artifactsBar)->SetPos(dstx + 348, dsty + 3);
-    const_cast<ArtifactsBar *>(row.artifactsBar)->Redraw();
+    row.artifactsBar->SetPos(dstx + 348, dsty + 3);
+    row.artifactsBar->Redraw();
 
     // army info
-    const_cast<ArmyBar *>(row.armyBar)->SetPos(dstx - 1, dsty + 30);
-    const_cast<ArmyBar *>(row.armyBar)->Redraw();
+    row.armyBar->SetPos(dstx - 1, dsty + 30);
+    row.armyBar->Redraw();
 }
 
 void StatsHeroesList::RedrawBackground(const Point &dst)
