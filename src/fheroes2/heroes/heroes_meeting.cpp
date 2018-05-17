@@ -37,7 +37,29 @@
 #include "game.h"
 #include "game_interface.h"
 
-void RedrawPrimarySkillInfo(const Point &, PrimarySkillsBar *, PrimarySkillsBar *);
+
+void RedrawPrimarySkillInfo(const Point &cur_pt, PrimarySkillsBar* bar1, PrimarySkillsBar* bar2)
+{
+    // attack skill
+    Text text(_("Attack Skill"), Font::SMALL);
+    text.Blit(cur_pt.x + 320 - text.w() / 2, cur_pt.y + 64);
+
+    // defense skill
+    text.Set(_("Defense Skill"));
+    text.Blit(cur_pt.x + 320 - text.w() / 2, cur_pt.y + 96);
+
+    // spell power
+    text.Set(_("Spell Power"));
+    text.Blit(cur_pt.x + 320 - text.w() / 2, cur_pt.y + 128);
+
+    // knowledge
+    text.Set(_("Knowledge"));
+    text.Blit(cur_pt.x + 320 - text.w() / 2, cur_pt.y + 160);
+
+    if (bar1) bar1->Redraw();
+    if (bar2) bar2->Redraw();
+}
+
 
 void Heroes::MeetingDialog(Heroes &heroes2)
 {
@@ -270,28 +292,6 @@ void Heroes::MeetingDialog(Heroes &heroes2)
     background.Restore();
     cursor.Show();
     display.Flip();
-}
-
-void RedrawPrimarySkillInfo(const Point &cur_pt, PrimarySkillsBar *bar1, PrimarySkillsBar *bar2)
-{
-    // attack skill
-    Text text(_("Attack Skill"), Font::SMALL);
-    text.Blit(cur_pt.x + 320 - text.w() / 2, cur_pt.y + 64);
-
-    // defense skill
-    text.Set(_("Defense Skill"));
-    text.Blit(cur_pt.x + 320 - text.w() / 2, cur_pt.y + 96);
-
-    // spell power
-    text.Set(_("Spell Power"));
-    text.Blit(cur_pt.x + 320 - text.w() / 2, cur_pt.y + 128);
-
-    // knowledge
-    text.Set(_("Knowledge"));
-    text.Blit(cur_pt.x + 320 - text.w() / 2, cur_pt.y + 160);
-
-    if (bar1) bar1->Redraw();
-    if (bar2) bar2->Redraw();
 }
 
 // spell_book.cpp

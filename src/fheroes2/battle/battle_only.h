@@ -68,20 +68,20 @@ namespace Battle
         Army *army2;
         Army monsters;
 
-        MoraleIndicator *moraleIndicator1;
-        MoraleIndicator *moraleIndicator2;
+        sp<MoraleIndicator> moraleIndicator1;
+        sp<MoraleIndicator> moraleIndicator2;
 
-        LuckIndicator *luckIndicator1;
-        LuckIndicator *luckIndicator2;
+        sp<LuckIndicator> luckIndicator1;
+        sp<LuckIndicator> luckIndicator2;
 
-        PrimarySkillsBar *primskill_bar1;
-        PrimarySkillsBar *primskill_bar2;
+        sp<PrimarySkillsBar> primskill_bar1;
+        sp<PrimarySkillsBar> primskill_bar2;
 
-        SecondarySkillsBar *secskill_bar1;
-        SecondarySkillsBar *secskill_bar2;
+        sp<SecondarySkillsBar> secskill_bar1;
+        sp<SecondarySkillsBar> secskill_bar2;
 
-        ArmyBar *selectArmy1;
-        ArmyBar *selectArmy2;
+        sp<ArmyBar> selectArmy1;
+        sp<ArmyBar> selectArmy2;
 
         sp<ArtifactsBar> selectArtifacts1;
         sp<ArtifactsBar> selectArtifacts2;
