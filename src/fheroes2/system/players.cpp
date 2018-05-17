@@ -36,7 +36,7 @@
 
 namespace
 {
-    Player *_players[KINGDOMMAX + 1] = {nullptr};
+    sp<Player> _players[KINGDOMMAX + 1] = {nullptr};
     int human_colors = 0;
 
     enum
@@ -45,17 +45,17 @@ namespace
     };
 }
 
-void PlayerFocusReset(Player *player)
+void PlayerFocusReset(sp<Player> player)
 {
     if (player) player->GetFocus().Reset();
 }
 
-void PlayerFixMultiControl(Player *player)
+void PlayerFixMultiControl(sp<Player> player)
 {
     if (player && player->GetControl() == (CONTROL_HUMAN | CONTROL_AI)) player->SetControl(CONTROL_AI);
 }
 
-void PlayerFixRandomRace(Player *player)
+void PlayerFixRandomRace(sp<Player> player)
 {
     if (player && player->GetRace() == Race::RAND) player->SetRace(Race::Rand());
 }
@@ -292,9 +292,6 @@ Players::~Players()
 
 void Players::clear()
 {
-    for (auto &it : _items)
-        delete it;
-
     _items.clear();
 
     for (uint32_t ii = 0; ii < KINGDOMMAX + 1; ++ii)
@@ -312,7 +309,7 @@ void Players::Init(int colors)
 
     for (int vcolor : vcolors)
     {
-        _items.push_back(new Player(vcolor));
+        _items.push_back(make_shared<Player>(vcolor));
         _players[Color::GetIndex(vcolor)] = _items.back();
     }
 }
@@ -326,11 +323,11 @@ void Players::Init(const Maps::FileInfo &fi)
     clear();
     const Colors vcolors(fi.kingdom_colors);
 
-    Player *first = nullptr;
+    sp<Player> first = nullptr;
 
     for (int vcolor : vcolors)
     {
-        Player *player = new Player(vcolor);
+        sp<Player> player = make_shared<Player>(vcolor);
         player->SetRace(fi.KingdomRace(vcolor));
         player->SetControl(CONTROL_AI);
         player->SetFriends(vcolor | fi.unions[Color::GetIndex(vcolor)]);
@@ -351,20 +348,20 @@ void Players::Init(const Maps::FileInfo &fi)
         first->SetControl(CONTROL_HUMAN);
 }
 
-Player *Players::Get(int color)
+sp<Player> Players::Get(int color)
 {
     return _players[Color::GetIndex(color)];
 }
 
 bool Players::isFriends(int player, int colors)
 {
-    const Player *ptr = Get(player);
+    const sp<Player> ptr = Get(player);
     return ptr ? ptr->GetFriends() & colors : false;
 }
 
 void Players::SetPlayerRace(int color, int race)
 {
-    Player *player = Get(color);
+    sp<Player> player = Get(color);
 
     if (player)
         player->SetRace(race);
@@ -372,7 +369,7 @@ void Players::SetPlayerRace(int color, int race)
 
 void Players::SetPlayerControl(int color, int ctrl)
 {
-    Player *player = Get(color);
+    sp<Player> player = Get(color);
 
     if (player)
         player->SetControl(ctrl);
@@ -401,43 +398,43 @@ int Players::GetActualColors() const
     return res;
 }
 
-Player *Players::GetCurrent()
+sp<Player> Players::GetCurrent()
 {
     return Get(current_color);
 }
 
-const Player *Players::GetCurrent() const
+const sp<Player> Players::GetCurrent() const
 {
     return Get(current_color);
 }
 
 int Players::GetPlayerFriends(int color)
 {
-    const Player *player = Get(color);
+    const sp<Player> player = Get(color);
     return player ? player->GetFriends() : 0;
 }
 
 int Players::GetPlayerControl(int color)
 {
-    const Player *player = Get(color);
+    const sp<Player> player = Get(color);
     return player ? player->GetControl() : CONTROL_NONE;
 }
 
 int Players::GetPlayerRace(int color)
 {
-    const Player *player = Get(color);
+    const sp<Player> player = Get(color);
     return player ? player->GetRace() : Race::NONE;
 }
 
 bool Players::GetPlayerInGame(int color)
 {
-    const Player *player = Get(color);
+    const sp<Player> player = Get(color);
     return player && player->isPlay();
 }
 
 void Players::SetPlayerInGame(int color, bool f)
 {
-    Player *player = Get(color);
+    sp<Player> player = Get(color);
     if (player) player->SetPlay(f);
 }
 
@@ -479,7 +476,7 @@ int Players::FriendColors()
 
     if (players.current_color & HumanColors())
     {
-        const Player *player = players.GetCurrent();
+        const sp<Player> player = players.GetCurrent();
         if (player)
             colors = player->GetFriends();
     } else
@@ -556,7 +553,7 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, Players &players)
 
     for (uint32_t ii = 0; ii < vcolors.size(); ++ii)
     {
-        Player *player = new Player();
+        sp<Player> player = make_shared<Player>();
         msg >> *player;
         _players[Color::GetIndex(player->GetColor())] = player;
         players._items.push_back(player);
@@ -565,7 +562,7 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, Players &players)
     return msg;
 }
 
-bool Interface::PlayerInfo::operator==(const Player *p) const
+bool Interface::PlayerInfo::operator==(const sp<Player> p) const
 {
     return player == p;
 }
@@ -609,7 +606,7 @@ void Interface::PlayersInfo::UpdateInfo(Players &players, const Point &pt1, cons
     }
 }
 
-Player *Interface::PlayersInfo::GetFromOpponentClick(const Point &pt)
+sp<Player> Interface::PlayersInfo::GetFromOpponentClick(const Point &pt)
 {
     for (auto &it : *this)
         if (it.rect1 & pt) return it.player;
@@ -617,7 +614,7 @@ Player *Interface::PlayersInfo::GetFromOpponentClick(const Point &pt)
     return nullptr;
 }
 
-Player *Interface::PlayersInfo::GetFromOpponentNameClick(const Point &pt)
+sp<Player> Interface::PlayersInfo::GetFromOpponentNameClick(const Point &pt)
 {
     for (auto &it : *this)
         if (Rect(it.rect1.x, it.rect1.y + it.rect1.h, it.rect1.w, 10) & pt) return it.player;
@@ -625,7 +622,7 @@ Player *Interface::PlayersInfo::GetFromOpponentNameClick(const Point &pt)
     return nullptr;
 }
 
-Player *Interface::PlayersInfo::GetFromOpponentChangeClick(const Point &pt)
+sp<Player> Interface::PlayersInfo::GetFromOpponentChangeClick(const Point &pt)
 {
     for (auto &it : *this)
         if (it.rect3 & pt) return it.player;
@@ -633,7 +630,7 @@ Player *Interface::PlayersInfo::GetFromOpponentChangeClick(const Point &pt)
     return nullptr;
 }
 
-Player *Interface::PlayersInfo::GetFromClassClick(const Point &pt)
+sp<Player> Interface::PlayersInfo::GetFromClassClick(const Point &pt)
 {
     for (auto &it : *this)
         if (it.rect2 & pt) return it.player;
@@ -756,7 +753,7 @@ bool Interface::PlayersInfo::QueueEventProcessing()
 {
     Settings &conf = Settings::Get();
     LocalEvent &le = LocalEvent::Get();
-    Player *player;
+    sp<Player> player;
 
     if (le.MousePressRight())
     {
@@ -864,5 +861,5 @@ bool Interface::PlayersInfo::QueueEventProcessing()
         }
     }
 
-    return player;
+    return player!=nullptr;
 }

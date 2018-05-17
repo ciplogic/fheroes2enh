@@ -183,11 +183,11 @@ public:
 
     string String() const;
 
-    Player *GetCurrent();
+    sp<Player> GetCurrent();
 
-    const Player *GetCurrent() const;
+    const sp<Player> GetCurrent() const;
 
-    static Player *Get(int color);
+    static sp<Player> Get(int color);
 
     static int GetPlayerControl(int color);
 
@@ -209,7 +209,7 @@ public:
 
     static int FriendColors();
 
-    vector<Player *> _items;
+    vector<sp<Player> > _items;
     int current_color;
 };
 
@@ -225,9 +225,9 @@ namespace Interface
         PlayerInfo() : player(nullptr)
         {}
 
-        bool operator==(const Player *) const;
+        bool operator==(const sp<Player> ) const;
 
-        Player *player;
+        sp<Player> player;
         Rect rect1; // opponent
         Rect rect2; // class
         Rect rect3; // change
@@ -239,13 +239,13 @@ namespace Interface
 
         void UpdateInfo(Players &, const Point &opponents, const Point &classes);
 
-        Player *GetFromOpponentClick(const Point &pt);
+        sp<Player> GetFromOpponentClick(const Point &pt);
 
-        Player *GetFromOpponentNameClick(const Point &pt);
+        sp<Player> GetFromOpponentNameClick(const Point &pt);
 
-        Player *GetFromOpponentChangeClick(const Point &pt);
+        sp<Player> GetFromOpponentChangeClick(const Point &pt);
 
-        Player *GetFromClassClick(const Point &pt);
+        sp<Player> GetFromClassClick(const Point &pt);
 
         void RedrawInfo(bool show_play_info = false) const;
 

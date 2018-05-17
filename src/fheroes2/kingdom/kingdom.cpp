@@ -219,7 +219,7 @@ void Kingdom::AddHeroes(Heroes *hero)
         if (heroes._items.end() == find(heroes._items.begin(), heroes._items.end(), hero))
             heroes._items.push_back(hero);
 
-        Player *player = Settings::Get().GetPlayers().GetCurrent();
+        auto player = Settings::Get().GetPlayers().GetCurrent();
         if (player && player->isColor(GetColor()))
             Interface::Basic::Get().GetIconsPanel().ResetIcons(ICON_HEROES);
 
@@ -272,7 +272,7 @@ void Kingdom::AddCastle(const Castle *castle)
         if (castles.end() == find(castles.begin(), castles.end(), castle))
             castles.push_back(const_cast<Castle *>(castle));
 
-        Player *player = Settings::Get().GetPlayers().GetCurrent();
+        auto player = Settings::Get().GetPlayers().GetCurrent();
         if (player && player->isColor(GetColor()))
             Interface::Basic::Get().GetIconsPanel().ResetIcons(ICON_CASTLES);
 

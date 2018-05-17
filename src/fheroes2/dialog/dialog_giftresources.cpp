@@ -288,7 +288,7 @@ void Dialog::MakeGiftResource()
         event.subsequent = 0;
         event.colors = selector.recipients;
         event.message = "Gift from %{name}";
-        const Player *player = Settings::Get().GetPlayers().GetCurrent();
+        const auto player = Settings::Get().GetPlayers().GetCurrent();
         if (player)
             StringReplace(event.message, "%{name}", player->GetName());
 

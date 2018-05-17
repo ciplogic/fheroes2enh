@@ -1919,12 +1919,12 @@ bool AIHeroesShowAnimation(const Heroes &hero)
         const Colors vcolors(Players::HumanColors());
         for (int vcolor : vcolors)
         {
-            const Player *player = Players::Get(vcolor);
+            const auto player = Players::Get(vcolor);
             if (player) colors |= player->GetFriends();
         }
     } else
     {
-        const Player *player = Players::Get(Players::HumanColors());
+        const auto player = Players::Get(Players::HumanColors());
         if (player) colors = player->GetFriends();
     }
 

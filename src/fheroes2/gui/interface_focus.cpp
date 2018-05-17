@@ -32,7 +32,7 @@
 
 void Interface::Basic::SetFocus(Heroes *hero)
 {
-    Player *player = Settings::Get().GetPlayers().GetCurrent();
+    auto player = Settings::Get().GetPlayers().GetCurrent();
 
     if (!player) return;
     Focus &focus = player->GetFocus();
@@ -60,7 +60,7 @@ void Interface::Basic::SetFocus(Heroes *hero)
 
 void Interface::Basic::SetFocus(Castle *castle)
 {
-    Player *player = Settings::Get().GetPlayers().GetCurrent();
+    auto player = Settings::Get().GetPlayers().GetCurrent();
 
     if (!player) return;
     Focus &focus = player->GetFocus();
@@ -83,7 +83,7 @@ void Interface::Basic::SetFocus(Castle *castle)
 
 void Interface::Basic::ResetFocus(int priority)
 {
-    Player *player = Settings::Get().GetPlayers().GetCurrent();
+    auto player = Settings::Get().GetPlayers().GetCurrent();
 
     if (!player) return;
     Focus &focus = player->GetFocus();
@@ -142,7 +142,7 @@ void Interface::Basic::ResetFocus(int priority)
 
 int Interface::GetFocusType()
 {
-    Player *player = Settings::Get().GetPlayers().GetCurrent();
+    auto player = Settings::Get().GetPlayers().GetCurrent();
 
     if (player)
     {
@@ -157,7 +157,7 @@ int Interface::GetFocusType()
 
 Castle *Interface::GetFocusCastle()
 {
-    Player *player = Settings::Get().GetPlayers().GetCurrent();
+    auto player = Settings::Get().GetPlayers().GetCurrent();
 
     return player ?
            player->GetFocus().GetCastle() : nullptr;
@@ -165,7 +165,7 @@ Castle *Interface::GetFocusCastle()
 
 Heroes *Interface::GetFocusHeroes()
 {
-    Player *player = Settings::Get().GetPlayers().GetCurrent();
+    auto player = Settings::Get().GetPlayers().GetCurrent();
 
     return player ?
            player->GetFocus().GetHeroes() : nullptr;
@@ -175,7 +175,7 @@ Heroes *Interface::GetFocusHeroes()
 
 Point Interface::GetFocusCenter()
 {
-    Player *player = Settings::Get().GetPlayers().GetCurrent();
+    auto player = Settings::Get().GetPlayers().GetCurrent();
 
     if (player)
     {

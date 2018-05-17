@@ -74,7 +74,7 @@ int Game::StartGame()
 
 void Game::DialogPlayers(int color, string str)
 {
-    const Player *player = Players::Get(color);
+    const auto player = Players::Get(color);
     StringReplace(str, "%{color}", (player ? player->GetName() : Color::String(color)));
 
     const Sprite &border = AGG::GetICN(ICN::BRCREST, 6);
