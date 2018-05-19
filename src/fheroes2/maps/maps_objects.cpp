@@ -162,17 +162,6 @@ void MapSphinx::SetQuiet()
     resources.Reset();
 }
 
-StreamBase &operator<<(StreamBase &msg, const MapEvent &obj)
-{
-    return msg <<
-               static_cast<const MapObjectSimple &>(obj) <<
-               obj.resources <<
-               obj.artifact <<
-               obj.computer <<
-               obj.cancel <<
-               obj.colors <<
-               obj.message;
-}
 
 ByteVectorWriter &operator<<(ByteVectorWriter &msg, const MapEvent &obj)
 {
@@ -198,7 +187,7 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, MapEvent &obj)
                obj.message;
 }
 
-StreamBase &operator<<(StreamBase &msg, const MapSphinx &obj)
+ByteVectorWriter &operator<<(ByteVectorWriter &msg, const MapSphinx &obj)
 {
     return msg <<
                static_cast<const MapObjectSimple &>(obj) <<
@@ -239,7 +228,7 @@ void MapSign::LoadFromMP2(s32 index, ByteVectorReader &st)
     message = Game::GetEncodeString(message);
 }
 
-StreamBase &operator<<(StreamBase &msg, const MapSign &obj)
+ByteVectorWriter &operator<<(ByteVectorWriter &msg, const MapSign &obj)
 {
     return msg <<
                static_cast<const MapObjectSimple &>(obj) <<
@@ -257,7 +246,7 @@ MapResource::MapResource() : MapObjectSimple(MP2::OBJ_RESOURCE)
 {
 }
 
-StreamBase &operator<<(StreamBase &msg, const MapResource &obj)
+ByteVectorWriter &operator<<(ByteVectorWriter &msg, const MapResource &obj)
 {
     return msg <<
                static_cast<const MapObjectSimple &>(obj) <<
@@ -309,7 +298,7 @@ ResourceCount MapArtifact::QuantityResourceCount() const
     return ResourceCount();
 }
 
-StreamBase &operator<<(StreamBase &msg, const MapArtifact &obj)
+ByteVectorWriter &operator<<(ByteVectorWriter &msg, const MapArtifact &obj)
 {
     return msg <<
                static_cast<const MapObjectSimple &>(obj) <<
@@ -352,7 +341,7 @@ bool MapMonster::JoinConditionForce() const
     return Monster::JOIN_CONDITION_FORCE == condition;
 }
 
-StreamBase &operator<<(StreamBase &msg, const MapMonster &obj)
+ByteVectorWriter &operator<<(ByteVectorWriter &msg, const MapMonster &obj)
 {
     return msg <<
                static_cast<const MapObjectSimple &>(obj) <<

@@ -1279,7 +1279,7 @@ ByteVectorWriter &operator<<(ByteVectorWriter &msg, const World &w)
 {
     const Size &sz = w;
 
-    return msg << sz <<
+    msg << sz <<
         w.vec_tiles <<
         w.vec_heroes <<
         w.vec_castles <<
@@ -1295,8 +1295,8 @@ ByteVectorWriter &operator<<(ByteVectorWriter &msg, const World &w)
         w.week_next <<
         w.heroes_cond_wins <<
         w.heroes_cond_loss <<
-        w.map_actions <<
-        w.map_objects;
+        w.map_actions;
+    return msg << w.map_objects;
 }
 
 

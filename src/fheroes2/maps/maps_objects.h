@@ -49,18 +49,12 @@ public:
     void SetUID(uint32_t v)
     { uid = v; }
 
-protected:
-    friend StreamBase &operator<<(StreamBase &, const MapObjectSimple &);
-    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const MapObjectSimple &);
-
-    friend ByteVectorReader &operator>>(ByteVectorReader &, MapObjectSimple &);
-
     uint32_t uid;
     int type;
+
 };
 
-StreamBase &operator<<(StreamBase &, const MapObjectSimple &);
-
+ByteVectorWriter &operator<<(ByteVectorWriter &, const MapObjectSimple &);
 ByteVectorReader &operator>>(ByteVectorReader &, MapObjectSimple &);
 
 struct MapEvent : MapObjectSimple
@@ -81,7 +75,6 @@ struct MapEvent : MapObjectSimple
     string message;
 };
 
-StreamBase &operator<<(StreamBase &, const MapEvent &);
 ByteVectorWriter &operator<<(ByteVectorWriter &, const MapEvent &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, MapEvent &);
@@ -105,7 +98,7 @@ struct MapSphinx : MapObjectSimple
     bool valid;
 };
 
-StreamBase &operator<<(StreamBase &, const MapSphinx &);
+ByteVectorWriter &operator<<(ByteVectorWriter &, const MapSphinx &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, MapSphinx &);
 
@@ -120,7 +113,7 @@ struct MapSign : MapObjectSimple
     string message;
 };
 
-StreamBase &operator<<(StreamBase &, const MapSign &);
+ByteVectorWriter &operator<<(ByteVectorWriter &, const MapSign &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, MapSign &);
 
@@ -131,7 +124,7 @@ struct MapResource : MapObjectSimple
     ResourceCount resource;
 };
 
-StreamBase &operator<<(StreamBase &, const MapResource &);
+ByteVectorWriter &operator<<(ByteVectorWriter &, const MapResource &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, MapResource &);
 
@@ -148,7 +141,7 @@ struct MapArtifact : MapObjectSimple
     ResourceCount QuantityResourceCount() const;
 };
 
-StreamBase &operator<<(StreamBase &, const MapArtifact &);
+ByteVectorWriter &operator<<(ByteVectorWriter &, const MapArtifact &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, MapArtifact &);
 
@@ -172,7 +165,7 @@ struct MapMonster : MapObjectSimple
     bool JoinConditionForce() const;
 };
 
-StreamBase &operator<<(StreamBase &, const MapMonster &);
+ByteVectorWriter &operator<<(ByteVectorWriter &, const MapMonster &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, MapMonster &);
 
