@@ -45,16 +45,13 @@ public:
     SpellStorage GetSpells(int lvlmage, bool islibrary, int) const;
 
 private:
-    friend StreamBase &operator<<(StreamBase &, const MageGuild &);
-    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const MageGuild &);
-    
+    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const MageGuild &);    
     friend ByteVectorReader &operator>>(ByteVectorReader &, MageGuild &);
 
     SpellStorage general;
     SpellStorage library;
 };
 
-StreamBase &operator<<(StreamBase &, const MageGuild &);
 ByteVectorWriter &operator<<(ByteVectorWriter &, const MageGuild &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, MageGuild &);

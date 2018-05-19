@@ -366,7 +366,7 @@ Battle::Unit *Battle::Force::GetCurrentUnit(const Force &army1, const Force &arm
            result->GetSpeed() > Speed::STANDING ? result : nullptr;
 }
 
-StreamBase &Battle::operator<<(StreamBase &msg, const Force &f)
+ByteVectorWriter &Battle::operator<<(ByteVectorWriter &msg, const Force &f)
 {
     msg << static_cast<const BitModes &>(f) << static_cast<uint32_t>(f.size());
 

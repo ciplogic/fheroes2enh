@@ -107,11 +107,6 @@ Spell GetCombatSpellCompatibility(int race, int level)
     return spell;
 }
 
-StreamBase &operator<<(StreamBase &msg, const MageGuild &guild)
-{
-    return msg << guild.general << guild.library;
-}
-
 ByteVectorWriter &operator<<(ByteVectorWriter &msg, const MageGuild &guild)
 {
     return msg << guild.general << guild.library;

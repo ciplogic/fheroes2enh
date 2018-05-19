@@ -22,7 +22,6 @@
 #pragma once
 
 #include <vector>
-#include "gamedefs.h"
 #include "ByteVectorReader.h"
 #include "ByteVectorWriter.h"
 #include "interface_itemsbar.h"

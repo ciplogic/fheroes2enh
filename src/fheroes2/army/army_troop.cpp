@@ -263,11 +263,6 @@ string ArmyTroop::GetDefenseString() const
     return os.str();
 }
 
-StreamBase &operator<<(StreamBase &msg, const Troop &troop)
-{
-    return msg << troop.id << troop.count;
-}
-
 ByteVectorWriter &operator<<(ByteVectorWriter &msg, const Troop &troop)
 {
     return msg << troop.id << troop.count;

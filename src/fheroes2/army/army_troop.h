@@ -93,7 +93,6 @@ public:
     uint32_t GetAffectedDuration(uint32_t) const;
 
 protected:
-    friend StreamBase &operator<<(StreamBase &, const Troop &);
     friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Troop &);
 
     friend ByteVectorReader &operator>>(ByteVectorReader &msg, Troop &troop);
@@ -101,7 +100,6 @@ protected:
     uint32_t count;
 };
 
-StreamBase &operator<<(StreamBase &, const Troop &);
 ByteVectorWriter &operator<<(ByteVectorWriter &, const Troop &);
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, Troop &troop);

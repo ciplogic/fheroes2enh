@@ -365,12 +365,6 @@ int GameOver::Result::LocalCheckGameOver()
 
     return res;
 }
-
-StreamBase &GameOver::operator<<(StreamBase &msg, const Result &res)
-{
-    return msg << res.colors << res.result << res.continue_game;
-}
-
 ByteVectorWriter &GameOver::operator<<(ByteVectorWriter &msg, const Result &res)
 {
     return msg << res.colors << res.result << res.continue_game;

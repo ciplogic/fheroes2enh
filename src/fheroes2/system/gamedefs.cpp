@@ -24,11 +24,6 @@
 #include "bitmodes.h"
 #include "players.h"
 
-StreamBase &operator<<(StreamBase &msg, const BitModes &b)
-{
-    return msg << b.modes;
-}
-
 ByteVectorWriter&operator<<(ByteVectorWriter&msg, const BitModes &b)
 {
     return msg << b.modes;

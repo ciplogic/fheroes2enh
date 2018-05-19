@@ -146,9 +146,7 @@ public:
     void ReadFrom(ByteVectorReader &msg);
 
 protected:
-    friend StreamBase &operator<<(StreamBase &, const HeroBase &);
-    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const HeroBase &);
-    
+    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const HeroBase &);    
     friend ByteVectorReader &operator>>(ByteVectorReader &, HeroBase &);
 
     uint32_t magic_point;
@@ -166,7 +164,6 @@ struct HeroHasArtifact : public binary_function<const HeroBase *, Artifact, bool
     }
 };
 
-StreamBase &operator<<(StreamBase &, const HeroBase &);
 ByteVectorWriter &operator<<(ByteVectorWriter &, const HeroBase &);
 
 

@@ -107,7 +107,7 @@ namespace Battle
         vector<uint32_t> uids;
     };
 
-    StreamBase &operator<<(StreamBase &, const Force &);
+    ByteVectorWriter &operator<<(ByteVectorWriter &, const Force &);
 
     ByteVectorReader &operator>>(ByteVectorReader &, Force &);
 }

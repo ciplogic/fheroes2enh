@@ -58,7 +58,6 @@ public:
     { return (modes & f) != 0; }
 
 protected:
-    friend StreamBase &operator<<(StreamBase &, const BitModes &);
     friend ByteVectorWriter &operator<<(ByteVectorWriter &, const BitModes &);
 
     friend ByteVectorReader &operator>>(ByteVectorReader &, BitModes &);
@@ -66,7 +65,6 @@ protected:
     uint32_t modes;
 };
 
-StreamBase &operator<<(StreamBase &, const BitModes &);
 ByteVectorWriter &operator<<(ByteVectorWriter &, const BitModes &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, BitModes &);

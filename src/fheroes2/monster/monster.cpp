@@ -140,14 +140,6 @@ namespace
     };
 }
 
-StreamBase &operator<<(StreamBase &msg, const monstats_t &obj)
-{
-    return msg << obj.attack << obj.defense <<
-               obj.damageMin << obj.damageMax <<
-               obj.hp << obj.speed << obj.grown <<
-               obj.shots << obj.cost;
-}
-
 ByteVectorWriter &operator<<(ByteVectorWriter &msg, const monstats_t &obj)
 {
     return msg << obj.attack << obj.defense <<
@@ -164,15 +156,6 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, monstats_t &obj)
                obj.shots >> obj.cost;
 }
 
-
-StreamBase &operator<<(StreamBase &msg, const MonsterStaticData &obj)
-{
-    uint32_t monsters_size = ARRAY_COUNT(monsters);
-    msg << monsters_size;
-    for (uint32_t ii = 0; ii < monsters_size; ++ii)
-        msg << monsters[ii];
-    return msg;
-}
 ByteVectorWriter &operator<<(ByteVectorWriter &msg, const MonsterStaticData &obj)
 {
     uint32_t monsters_size = ARRAY_COUNT(monsters);
@@ -1573,12 +1556,6 @@ MonsterStaticData &MonsterStaticData::Get()
     static MonsterStaticData mgds;
     return mgds;
 }
-
-StreamBase &operator<<(StreamBase &msg, const Monster &obj)
-{
-    return msg;
-}
-
 ByteVectorWriter& operator<<(ByteVectorWriter&msg, const Monster&)
 {
     return msg;

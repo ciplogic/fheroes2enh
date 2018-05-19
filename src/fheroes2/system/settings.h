@@ -586,7 +586,6 @@ protected:
     void PostLoad();
 
 private:
-    friend StreamBase &operator<<(StreamBase &, const Settings &);
     friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Settings &);
     
     friend ByteVectorReader &operator>>(ByteVectorReader &, Settings &);
@@ -647,7 +646,6 @@ private:
     Players players;
 };
 
-StreamBase &operator<<(StreamBase &, const Settings &);
 ByteVectorWriter &operator<<(ByteVectorWriter &, const Settings &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, Settings &);

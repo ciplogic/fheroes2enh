@@ -26,6 +26,7 @@
 #include <list>
 
 #include "ByteVectorReader.h"
+#include "ByteVectorWriter.h"
 #include "gamedefs.h"
 #include "ai.h"
 #include "spell_storage.h"
@@ -173,7 +174,7 @@ namespace Battle
         static Graveyard *GetGraveyard();
 
     private:
-        friend StreamBase &operator<<(StreamBase &, const Arena &);
+        friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Arena &);
         
         friend ByteVectorReader &operator>>(ByteVectorReader &, Arena &);
 
@@ -252,7 +253,7 @@ namespace Battle
 
     Arena *GetArena();
 
-    StreamBase &operator<<(StreamBase &, const Arena &);
+    ByteVectorWriter &operator<<(ByteVectorWriter &, const Arena &);
 
     ByteVectorReader &operator>>(ByteVectorReader &, Arena &);
 }

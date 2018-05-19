@@ -41,7 +41,6 @@ namespace GameStatic
         // wrapper for stream
     };
 
-    StreamBase &operator<<(StreamBase &, const Data &);
     ByteVectorWriter &operator<<(ByteVectorWriter &, const Data &);
 
     ByteVectorReader &operator>>(ByteVectorReader &, Data &);

@@ -125,7 +125,6 @@ namespace Maps
         bool with_heroes;
     };
 
-    StreamBase &operator<<(StreamBase &, const FileInfo &);
     ByteVectorWriter & operator<<(ByteVectorWriter & msg, const FileInfo & fi);
     ByteVectorReader &operator>>(ByteVectorReader &, FileInfo &);
 }

@@ -154,14 +154,6 @@ ByteVectorWriter &operator<<(ByteVectorWriter &sb, const IFFChunkHeader &st)
     return sb;
 }
 
-
-StreamBuf &operator<<(StreamBuf &sb, const IFFChunkHeader &st)
-{
-    sb.putBE32(st.ID);
-    sb.putBE32(st.length);
-    return sb;
-}
-
 struct GroupChunkHeader
 {
     uint32_t ID;        // 4 byte ASCII string, either 'FORM', 'CAT ' or 'LIST'
@@ -175,19 +167,11 @@ struct GroupChunkHeader
     {}
 };
 
-StreamBuf &operator<<(StreamBuf &sb, const GroupChunkHeader &st)
+ByteVectorWriter &operator<<(ByteVectorWriter &sb, const GroupChunkHeader &st)
 {
     sb.putBE32(st.ID);
     sb.putBE32(st.length);
     sb.putBE32(st.type);
-    return sb;
-}
-
-StreamBuf &operator>>(StreamBuf &sb, GroupChunkHeader &st)
-{
-    st.ID = sb.getBE32();
-    st.length = sb.getBE32();
-    st.type = sb.getBE32();
     return sb;
 }
 
@@ -215,7 +199,6 @@ struct XMIData
 
     XMIData(const vector<u8> &buf)
     {
-        //StreamBuf sb(buf);
         ByteVectorReader sb(buf);
 
         GroupChunkHeader group;
@@ -331,17 +314,6 @@ struct MidEvent
     }
 };
 
-StreamBuf &operator<<(StreamBuf &sb, const MidEvent &st)
-{
-    for (unsigned char it : st.pack)
-        sb << it;
-    sb << st.data[0];
-    if (2 == st.data[3])
-        sb << st.data[1] << st.data[2];
-    else if (1 == st.data[3])
-        sb << st.data[1];
-    return sb;
-}
 ByteVectorWriter &operator<<(ByteVectorWriter &sb, const MidEvent &st)
 {
     for (unsigned char it : st.pack)
@@ -496,12 +468,6 @@ ByteVectorWriter &operator<<(ByteVectorWriter &sb, const MidEvents &st)
         sb << it;
     return sb;
 }
-StreamBuf &operator<<(StreamBuf &sb, const MidEvents &st)
-{
-    for (const auto &it : st)
-        sb << it;
-    return sb;
-}
 
 struct MidTrack
 {
@@ -520,12 +486,6 @@ struct MidTrack
     }
 };
 
-StreamBuf &operator<<(StreamBuf &sb, const MidTrack &st)
-{
-    sb << st.mtrk;
-    sb << st.events;
-    return sb;
-}
 ByteVectorWriter &operator<<(ByteVectorWriter &sb, const MidTrack &st)
 {
     sb << st.mtrk;
@@ -564,12 +524,6 @@ ByteVectorWriter &operator<<(ByteVectorWriter &sb, const MidTracks &st)
         sb << it;
     return sb;
 }
-StreamBuf &operator<<(StreamBuf &sb, const MidTracks &st)
-{
-    for (const auto &it : st)
-        sb << it;
-    return sb;
-}
 
 struct MidData
 {
@@ -585,16 +539,6 @@ struct MidData
     {}
 };
 
-StreamBuf &operator<<(StreamBuf &sb, const MidData &st)
-{
-    sb << st.mthd;
-    sb.putBE16(st.format);
-    sb.putBE16(st.tracks.count());
-    sb.putBE16(st.ppqn);
-    sb << st.tracks;
-    return sb;
-}
-
 ByteVectorWriter &operator<<(ByteVectorWriter &sb, const MidData &st)
 {
     sb << st.mthd;
@@ -608,7 +552,7 @@ ByteVectorWriter &operator<<(ByteVectorWriter &sb, const MidData &st)
 vector<u8> Music::Xmi2Mid(const vector<u8> &buf)
 {
     XMIData xmi(buf);
-    StreamBuf sb(16 * 4096);
+    ByteVectorWriter sb(16 * 4096);
 
     if (xmi.isvalid())
     {
@@ -616,5 +560,5 @@ vector<u8> Music::Xmi2Mid(const vector<u8> &buf)
         sb << mid;
     }
 
-    return std::vector<u8>(sb.data(), sb.data() + sb.size());
+    return sb.data();
 }

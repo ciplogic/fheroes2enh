@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2BATTLE_TROOP_H
-#define H2BATTLE_TROOP_H
+#pragma once
 
 #include <vector>
 #include <utility>
@@ -29,6 +28,7 @@
 #include "sprite.h"
 #include "battle.h"
 #include "ByteVectorReader.h"
+#include "ByteVectorWriter.h"
 #include "battle_arena.h"
 
 class Sprite;
@@ -271,7 +271,7 @@ namespace Battle
         static bool isHandFighting(const Unit &, const Unit &);
 
     private:
-        friend StreamBase &operator<<(StreamBase &, const Unit &);
+        friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Unit &);
 
         friend ByteVectorReader &operator>>(ByteVectorReader &, Unit &);
         
@@ -295,9 +295,8 @@ namespace Battle
         bool blindanswer;
     };
 
-    StreamBase &operator<<(StreamBase &, const Unit &);
+    ByteVectorWriter &operator<<(ByteVectorWriter &, const Unit &);
 
     ByteVectorReader &operator>>(ByteVectorReader &, Unit &);
 }
 
-#endif

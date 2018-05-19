@@ -46,8 +46,5 @@ public:
     u8 zone4_order[4];
 };
 
-StreamBase &operator<<(StreamBase &, const Puzzle &);
 ByteVectorWriter &operator<<(ByteVectorWriter &, const Puzzle &);
-
-
 ByteVectorReader &operator>>(ByteVectorReader &, Puzzle &);

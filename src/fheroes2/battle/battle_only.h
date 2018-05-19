@@ -124,7 +124,7 @@ namespace Battle
     };
 }
 
-StreamBase &operator<<(StreamBase &, const Battle::Only &);
+ByteVectorWriter &operator<<(ByteVectorWriter &, const Battle::Only &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, Battle::Only &);
 

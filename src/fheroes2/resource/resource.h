@@ -113,18 +113,11 @@ public:
     s32 gold;
 };
 
-StreamBase &operator<<(StreamBase &, const cost_t &);
 ByteVectorWriter &operator<<(ByteVectorWriter &, const cost_t &);
-
-void serializeTo(ByteVectorWriter &msg, cost_t &res);
-
-StreamBase &operator<<(StreamBase &, const Funds &);
-ByteVectorWriter &operator<<(ByteVectorWriter &, const Funds &);
-
-void serializeTo(ByteVectorWriter &msg, Funds &res);
-
 ByteVectorReader &operator>>(ByteVectorReader &, cost_t &);
 
+
+ByteVectorWriter &operator<<(ByteVectorWriter &, const Funds &);
 ByteVectorReader &operator>>(ByteVectorReader &, Funds &);
 
 namespace Resource

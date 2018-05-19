@@ -79,7 +79,7 @@ Battle::Only::Only() : hero1(nullptr), hero2(nullptr), player1(Color::BLUE), pla
     sfc2.DrawBorder(gray);
 }
 
-StreamBase &operator<<(StreamBase &msg, const Battle::Only &b)
+ByteVectorWriter &operator<<(ByteVectorWriter &msg, const Battle::Only &b)
 {
     return msg <<
                b.hero1->GetID() << *b.hero1 <<

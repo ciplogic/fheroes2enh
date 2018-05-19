@@ -731,10 +731,6 @@ uint32_t Spell::CalculateDimensionDoorDistance(uint32_t current_sp, uint32_t tot
     return 14;
 }
 
-StreamBase &operator<<(StreamBase &msg, const Spell &spell)
-{
-    return msg << spell.id;
-}
 ByteVectorWriter &operator<<(ByteVectorWriter &msg, const Spell &spell)
 {
     return msg << spell.id;

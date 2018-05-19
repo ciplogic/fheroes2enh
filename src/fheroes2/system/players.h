@@ -144,7 +144,6 @@ public:
     BitModes _bitModes;
 
 protected:
-    friend StreamBase &operator<<(StreamBase &, const Player &);
     friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Player &);
 
     friend ByteVectorReader &operator>>(ByteVectorReader &, Player &);
@@ -158,7 +157,7 @@ protected:
     Focus focus;
 };
 
-StreamBase &operator<<(StreamBase &, const Player &);
+ByteVectorWriter &operator<<(ByteVectorWriter &, const Player &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, Player &);
 
@@ -213,9 +212,7 @@ public:
     int current_color;
 };
 
-StreamBase &operator<<(StreamBase &, const Players &);
 ByteVectorWriter &operator<<(ByteVectorWriter &, const Players &);
-
 ByteVectorReader &operator>>(ByteVectorReader &, Players &);
 
 namespace Interface

@@ -53,7 +53,6 @@ namespace Route
         bool isBad() const;
 
     protected:
-        friend StreamBase &operator<<(StreamBase &, const Step &);
         friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Step &);
         
         friend ByteVectorReader &operator>>(ByteVectorReader &, Step &);
@@ -120,7 +119,6 @@ namespace Route
     private:
         bool Find(s32, int limit = -1);
 
-        friend StreamBase &operator<<(StreamBase &, const Path &);
         friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Path &);
 
         friend ByteVectorReader &operator>>(ByteVectorReader &, Path &);
@@ -129,10 +127,6 @@ namespace Route
         s32 dst;
         bool hide;
     };
-
-    StreamBase &operator<<(StreamBase &, const Step &);
-    StreamBase &operator<<(StreamBase &, const Path &);
-
     ByteVectorWriter &operator<<(ByteVectorWriter &, const Step &);
     ByteVectorWriter &operator<<(ByteVectorWriter &, const Path &);
 

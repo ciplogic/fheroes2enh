@@ -986,7 +986,7 @@ ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, ModesAffected &v)
 }
 
 
-StreamBase &Battle::operator<<(StreamBase &msg, const Unit &b)
+ByteVectorWriter &Battle::operator<<(ByteVectorWriter &msg, const Unit &b)
 {
     return msg <<
                b.modes <<

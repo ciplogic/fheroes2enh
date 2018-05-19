@@ -245,26 +245,6 @@ void PuzzlesDraw(const Puzzle &pzl, const Surface &sf, s32 dstx, s32 dsty)
     cursor.Hide();
 }
 
-StreamBase &operator<<(StreamBase &msg, const Puzzle &pzl)
-{
-    msg << pzl.to_string<char, char_traits<char>, allocator<char> >();
-
-    // orders
-    msg << static_cast<u8>(ARRAY_COUNT(pzl.zone1_order));
-    for (unsigned char ii : pzl.zone1_order) msg << ii;
-
-    msg << static_cast<u8>(ARRAY_COUNT(pzl.zone2_order));
-    for (unsigned char ii : pzl.zone2_order) msg << ii;
-
-    msg << static_cast<u8>(ARRAY_COUNT(pzl.zone3_order));
-    for (unsigned char ii : pzl.zone3_order) msg << ii;
-
-    msg << static_cast<u8>(ARRAY_COUNT(pzl.zone4_order));
-    for (unsigned char ii : pzl.zone4_order) msg << ii;
-
-    return msg;
-}
-
 ByteVectorWriter& operator<<(ByteVectorWriter&msg, const Puzzle &pzl)
 {
     msg << pzl.to_string<char, char_traits<char>, allocator<char> >();

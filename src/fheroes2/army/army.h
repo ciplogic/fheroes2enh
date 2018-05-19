@@ -223,7 +223,6 @@ public:
     bool SaveLastTroop() const;
 
 protected:
-    friend StreamBase &operator<<(StreamBase &, const Army &);
     friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Army &);
 
     friend ByteVectorReader &operator>>(ByteVectorReader &msg, Army &army);
@@ -237,7 +236,6 @@ private:
     { return *this; }
 };
 
-StreamBase &operator<<(StreamBase &, const Army &);
-
+ByteVectorWriter &operator<<(ByteVectorWriter &, const Army &);
 ByteVectorReader &operator>>(ByteVectorReader &, Army &);
 

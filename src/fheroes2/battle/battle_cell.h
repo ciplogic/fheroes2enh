@@ -26,6 +26,7 @@
 #include "gamedefs.h"
 #include "battle.h"
 #include "ByteVectorReader.h"
+#include "ByteVectorWriter.h"
 
 #define CELLW 45
 #define CELLH 52
@@ -99,7 +100,7 @@ namespace Battle
         void SetUnit(Unit *);
 
     private:
-        friend StreamBase &operator<<(StreamBase &, const Cell &);
+        friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Cell &);
 
         friend ByteVectorReader &operator>>(ByteVectorReader &, Cell &);
 
@@ -112,7 +113,8 @@ namespace Battle
         Point coord[7];
     };
 
-    StreamBase &operator<<(StreamBase &, const Cell &);
+    ByteVectorWriter &operator<<(ByteVectorWriter &, const Cell &);
+    ByteVectorReader &operator>>(ByteVectorReader &, Cell &);
 
     class Position : protected pair<Cell *, Cell *>
     {

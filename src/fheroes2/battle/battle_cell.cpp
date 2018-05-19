@@ -284,7 +284,7 @@ void Battle::Cell::ResetDirection()
     direction = UNKNOWN;
 }
 
-StreamBase &Battle::operator<<(StreamBase &msg, const Cell &c)
+ByteVectorWriter &Battle::operator<<(ByteVectorWriter &msg, const Cell &c)
 {
     return msg << c.index << c.object << c.direction << c.quality <<
                (c.troop ? c.troop->GetUID() : static_cast<uint32_t>(0));

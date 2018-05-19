@@ -70,10 +70,7 @@ namespace GameOver
         int LocalCheckGameOver();
 
     private:
-        friend StreamBase &operator<<(StreamBase &, const Result &);
         friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Result &);
-
-
         friend ByteVectorReader &operator>>(ByteVectorReader &, Result &);
 
         Result();
@@ -83,8 +80,7 @@ namespace GameOver
         bool continue_game;
     };
 
-    StreamBase &operator<<(StreamBase &, const Result &);
-    
+    ByteVectorWriter &operator<<(ByteVectorWriter &, const Result &);
     ByteVectorReader &operator>>(ByteVectorReader &, Result &);
 }
 

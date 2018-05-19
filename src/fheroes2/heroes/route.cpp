@@ -539,17 +539,6 @@ void Route::Path::RescanPassable()
     }
 }
 
-StreamBase &Route::operator<<(StreamBase &msg, const Step &step)
-{
-    return msg << step.from << step.direction << step.penalty;
-}
-
-StreamBase &Route::operator<<(StreamBase &msg, const Path &path)
-{
-    return msg << path.dst << path.hide << static_cast< list<Step> >(path);
-}
-
-
 ByteVectorWriter &Route::operator<<(ByteVectorWriter &msg, const Step &step)
 {
     return msg << step.from << step.direction << step.penalty;

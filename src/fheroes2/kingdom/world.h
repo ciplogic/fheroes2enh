@@ -147,9 +147,7 @@ struct EventDate
     string message;
 };
 
-StreamBase &operator<<(StreamBase &, const EventDate &);
 ByteVectorWriter &operator<<(ByteVectorWriter &, const EventDate &);
-
 ByteVectorReader &operator>>(ByteVectorReader &, EventDate &);
 
 typedef vector<string> Rumors;
@@ -315,7 +313,6 @@ private:
 private:
     friend class Radar;
 
-    friend StreamBase &operator<<(StreamBase &, const World &);
     friend ByteVectorWriter &operator<<(ByteVectorWriter &, const World &);
     
     friend ByteVectorReader &operator>>(ByteVectorReader &, World &);
@@ -346,25 +343,18 @@ public:
     MapObjects map_objects;
 };
 
-StreamBase &operator<<(StreamBase &, const CapturedObject &);
 ByteVectorWriter &operator<<(ByteVectorWriter &, const CapturedObject &);
-
 ByteVectorReader &operator>>(ByteVectorReader &, CapturedObject &);
 
-StreamBase &operator<<(StreamBase &, const World &);
 ByteVectorWriter &operator<<(ByteVectorWriter &, const World &);
-
 ByteVectorReader &operator>>(ByteVectorReader &, World &);
-
-StreamBase &operator<<(StreamBase &, const ListActions &);
-ByteVectorWriter &operator<<(ByteVectorWriter &, const ListActions &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, MapActions &);
 
+ByteVectorWriter &operator<<(ByteVectorWriter &, const ListActions &);
 ByteVectorReader &operator>>(ByteVectorReader &, ListActions &);
 
-StreamBase &operator<<(StreamBase &, const MapObjects &);
-
+ByteVectorWriter &operator<<(ByteVectorWriter &msg, const MapObjects &objs);
 ByteVectorReader &operator>>(ByteVectorReader &, MapObjects &);
 
 extern World &world;

@@ -598,12 +598,6 @@ void Resource::BoxSprite::Redraw() const
     }
 }
 
-StreamBase &operator<<(StreamBase &msg, const Funds &res)
-{
-    return msg << res.wood <<
-        res.mercury << res.ore << res.sulfur <<
-        res.crystal << res.gems << res.gold;
-}
 
 ByteVectorWriter &operator<<(ByteVectorWriter &msg, const Funds &res)
 {

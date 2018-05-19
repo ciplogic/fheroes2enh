@@ -197,58 +197,6 @@ namespace GameStatic
     uint32_t uniq = 0;
 }
 
-StreamBase &GameStatic::operator<<(StreamBase &msg, const Data &obj)
-{
-    msg <<
-        whirlpool_lost_percent <<
-        kingdom_max_heroes <<
-        castle_grown_well <<
-        castle_grown_wel2 <<
-        castle_grown_week_of <<
-        castle_grown_month_of <<
-        heroes_spell_points_day <<
-        gameover_lost_days <<
-        spell_dd_distance <<
-        spell_dd_sp <<
-        spell_dd_hp;
-
-    u8 array_size = ARRAY_COUNT(overview_distance);
-    msg << array_size;
-    for (uint32_t ii = 0; ii < array_size; ++ii)
-        msg << overview_distance[ii];
-
-    array_size = ARRAY_COUNT(kingdom_starting_resource);
-    msg << array_size;
-    for (uint32_t ii = 0; ii < array_size; ++ii)
-        msg << kingdom_starting_resource[ii];
-
-    array_size = ARRAY_COUNT(mageguild_restore_spell_points_day);
-    msg << array_size;
-    for (uint32_t ii = 0; ii < array_size; ++ii)
-        msg << mageguild_restore_spell_points_day[ii];
-
-    array_size = ARRAY_COUNT(objects_mod);
-    msg << array_size;
-    for (uint32_t ii = 0; ii < array_size; ++ii)
-        msg << objects_mod[ii];
-
-    msg << monster_upgrade_ratio << uniq;
-
-    // skill statics
-    array_size = ARRAY_COUNT(Skill::_stats);
-    msg << array_size;
-    for (uint32_t ii = 0; ii < array_size; ++ii)
-        msg << Skill::_stats[ii];
-
-    array_size = ARRAY_COUNT(Skill::_values);
-    msg << array_size;
-    for (uint32_t ii = 0; ii < array_size; ++ii)
-        msg << Skill::_values[ii];
-
-    msg << Skill::_from_witchs_hut;
-
-    return msg;
-}
 
 ByteVectorWriter &GameStatic::operator<<(ByteVectorWriter &msg, const Data &obj)
 {

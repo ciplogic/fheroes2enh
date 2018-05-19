@@ -101,7 +101,7 @@ int GetCovr(int ground)
     return covrs.empty() ? ICN::UNKNOWN : *Rand::Get(covrs);
 }
 
-StreamBase &Battle::operator<<(StreamBase &msg, const TargetInfo &t)
+ByteVectorWriter &Battle::operator<<(ByteVectorWriter &msg, const TargetInfo &t)
 {
     return msg <<
                (t.defender ? t.defender->GetUID() : static_cast<uint32_t>(0)) <<
@@ -120,7 +120,7 @@ ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, TargetInfo &t)
     return msg;
 }
 
-StreamBase &Battle::operator<<(StreamBase &msg, const TargetsInfo &ts)
+ByteVectorWriter &Battle::operator<<(ByteVectorWriter &msg, const TargetsInfo &ts)
 {
     msg << static_cast<uint32_t>(ts.size());
 
@@ -893,7 +893,7 @@ vector<int> Battle::Arena::GetCastleTargets() const
     return targets;
 }
 
-StreamBase &Battle::operator<<(StreamBase &msg, const Arena &a)
+ByteVectorWriter &Battle::operator<<(ByteVectorWriter &msg, const Arena &a)
 {
     msg <<
         a.current_turn << a.board <<

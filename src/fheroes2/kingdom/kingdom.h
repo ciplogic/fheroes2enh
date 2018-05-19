@@ -209,7 +209,6 @@ public:
     static uint32_t GetMaxHeroes();
 
 private:
-    friend StreamBase &operator<<(StreamBase &, const Kingdom &);
     friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Kingdom &);
 
     friend ByteVectorReader &operator>>(ByteVectorReader &, Kingdom &);
@@ -273,7 +272,6 @@ public:
     uint32_t size() const;
 
 private:
-    friend StreamBase &operator<<(StreamBase &, const Kingdoms &);
     friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Kingdoms &);
 
     friend ByteVectorReader &operator>>(ByteVectorReader &, Kingdoms &);
@@ -281,10 +279,8 @@ private:
     Kingdom kingdoms[KINGDOMMAX + 1];
 };
 
-StreamBase &operator<<(StreamBase &, const Kingdom &);
 ByteVectorWriter &operator<<(ByteVectorWriter &, const Kingdom &);
 ByteVectorReader &operator>>(ByteVectorReader &, Kingdom &);
 
-StreamBase &operator<<(StreamBase &, const Kingdoms &);
 ByteVectorWriter &operator<<(ByteVectorWriter &, const Kingdoms &);
 ByteVectorReader &operator>>(ByteVectorReader &, Kingdoms &);

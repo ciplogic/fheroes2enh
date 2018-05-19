@@ -1342,17 +1342,6 @@ bool Army::SaveLastTroop() const
     return commander && commander->isHeroes() && 1 == m_troops.GetCount();
 }
 
-StreamBase &operator<<(StreamBase &msg, const Army &army)
-{
-    msg << static_cast<uint32_t>(army.m_troops._items.size());
-
-    // Army: fixed size
-    for (const auto &_item : army.m_troops._items)
-        msg << *_item;
-
-    return msg << army.combat_format << army.color;
-}
-
 ByteVectorWriter &operator<<(ByteVectorWriter &msg, const Army &army)
 {
     msg << static_cast<uint32_t>(army.m_troops._items.size());

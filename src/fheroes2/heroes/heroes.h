@@ -317,11 +317,8 @@ public:
     static uint32_t GetExperienceFromLevel(int);
 
     static void ScholarAction(Heroes &, Heroes &);
-
-    void ReadFrom(ByteVectorReader &);
-
+    
 private:
-    friend StreamBase &operator<<(StreamBase &, const Heroes &);
     friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Heroes &);
 
     friend ByteVectorReader &operator>>(ByteVectorReader &msg, Heroes &hero);
@@ -403,16 +400,12 @@ Battle::Result BattleHeroWithMonster(Heroes &hero, Army &army, s32 dst_index);
 
 Battle::Result BattleHeroWithHero(Heroes &hero, Heroes &other_hero, s32 dst_index);
 
-StreamBase &operator<<(StreamBase &, const VecHeroes &);
 ByteVectorWriter &operator<<(ByteVectorWriter &, const VecHeroes &);
 ByteVectorReader &operator>>(ByteVectorReader &, VecHeroes &);
 
-StreamBase &operator<<(StreamBase &, const Heroes &);
 ByteVectorWriter &operator<<(ByteVectorWriter &msg, const Heroes &hero);
-
 ByteVectorReader &operator>>(ByteVectorReader &, Heroes &);
 
 ByteVectorWriter &operator<<(ByteVectorWriter &, const AllHeroes &);
-StreamBase &operator<<(StreamBase &, const AllHeroes &);
 ByteVectorReader &operator>>(ByteVectorReader &msg, AllHeroes &heroes);
 

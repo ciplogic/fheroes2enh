@@ -1555,15 +1555,14 @@ void Settings::BinarySave() const
 {
     const string fname = System::ConcatePath(GetSaveDir(), "fheroes2.bin");
 
-    StreamFile fs;
-    fs.setbigendian(true);
+    ByteVectorWriter fs;
+    fs.SetBigEndian(true);
+    
+    fs << static_cast<u16>(CURRENT_FORMAT_VERSION) <<
+       opt_game << opt_world << opt_battle << opt_addons <<
+       pos_radr << pos_bttn << pos_icon << pos_stat;
 
-    if (fs.open(fname, "wb"))
-    {
-        fs << static_cast<u16>(CURRENT_FORMAT_VERSION) <<
-           opt_game << opt_world << opt_battle << opt_addons <<
-           pos_radr << pos_bttn << pos_icon << pos_stat;
-    }
+    FileUtils::writeFileBytes(fname, fs.data());
 }
 
 void Settings::BinaryLoad()
@@ -1600,22 +1599,6 @@ bool Settings::FullScreen() const
 {
     auto isFullScreen = fullScreen;
     return isFullScreen;
-}
-
-StreamBase &operator<<(StreamBase &msg, const Settings &conf)
-{
-    return msg <<
-               // lang
-               conf.force_lang <<
-               // current maps
-               conf.current_maps_file <<
-               // game config
-               conf.game_difficulty <<
-               conf.game_type <<
-               conf.preferably_count_players <<
-               conf.debug <<
-               conf.opt_game << conf.opt_world << conf.opt_battle << conf.opt_addons <<
-               conf.players;
 }
 
 ByteVectorWriter &operator<<(ByteVectorWriter &msg, const Settings &conf)

@@ -72,10 +72,6 @@ namespace Game
         Maps::FileInfo info;
     };
 
-    StreamBase &operator<<(StreamBase &msg, const HeaderSAV &hdr)
-    {
-        return msg << hdr.status << hdr.info;
-    }
     ByteVectorWriter&operator<<(ByteVectorWriter &msg, const HeaderSAV &hdr)
     {
         return msg << hdr.status << hdr.info;
@@ -86,22 +82,6 @@ namespace Game
         return msg >> hdr.status >> hdr.info;
     }
 }
-namespace 
-{
-    bool validateBuf(StreamBuf& sb, ByteVectorWriter& bw)
-    {
-        sb.seek(0);
-        auto sbData = sb.getRaw(0);
-        auto bwData = bw.data();
-        FileUtils::writeFileBytes("sb.dat", sbData);
-        FileUtils::writeFileBytes("bw.dat", bwData);
-        if (sbData.size() != bwData.size())
-            return false;
-        int iRes = memcmp(sbData.data(), bwData.data(), bwData.size());
-        return iRes == 0;
-    }
-}
-
 bool Game::Save(const string &fn)
 {
     const bool autosave = (System::GetBasename(fn) == "autosave.sav");
@@ -116,7 +96,7 @@ bool Game::Save(const string &fn)
         return false;
     }
 
-    ByteVectorWriter bfs;
+    ByteVectorWriter bfs(250*1024);
     bfs.SetBigEndian(true);
     
     u16 loadver = GetLoadVersion();
@@ -127,7 +107,7 @@ bool Game::Save(const string &fn)
         Int2Str(loadver) << loadver << HeaderSAV(conf.CurrentFileInfo(), conf.PriceLoyaltyVersion());
 
 
-    ByteVectorWriter bfz;
+    ByteVectorWriter bfz(226 * 1024);
     bfz.SetBigEndian(true);
     bfz << loadver << World::Get() << Settings::Get() <<
         GameOver::Result::Get() << GameStatic::Data::Get() << MonsterStaticData::Get() << SAV2ID3;

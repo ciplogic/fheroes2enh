@@ -43,11 +43,6 @@ ByteVectorReader &operator>>(ByteVectorReader &sb, ActionSimple &st)
 
 ActionSimple::~ActionSimple() = default;
 
-StreamBase &operator<<(StreamBase &sb, const ActionResources &st)
-{
-    return sb << static_cast<const ActionSimple &>(st) << st.resources << st.message;
-}
-
 StreamBase &operator<<(StreamBase &sb, const ActionArtifact &st)
 {
     return sb << static_cast<const ActionSimple &>(st) << st.artifact << st.message;
@@ -95,7 +90,7 @@ ByteVectorReader &operator>>(ByteVectorReader &sb, ActionMessage &st)
     return sb >> static_cast<ActionSimple &>(st) >> st.message;
 }
 
-StreamBase &operator<<(StreamBase &sb, const ListActions &listActions)
+ByteVectorWriter &operator<<(ByteVectorWriter &sb, const ListActions &listActions)
 {
     sb << static_cast<uint32_t>(listActions.size());
     for (const auto &listAction : listActions)
@@ -137,54 +132,6 @@ StreamBase &operator<<(StreamBase &sb, const ListActions &listActions)
             default:
                 sb << *listAction;
                 break;
-        }
-    }
-
-    return sb;
-}
-
-ByteVectorWriter &operator<<(ByteVectorWriter &sb, const ListActions &listActions)
-{
-    sb << static_cast<uint32_t>(listActions.size());
-    for (const auto &listAction : listActions)
-    {
-        sb << listAction->GetType();
-
-        switch (listAction->GetType())
-        {
-        case ACTION_DEFAULT:
-        {
-            const auto *ptr = static_cast<const ActionDefault *>(listAction.get());
-            if (ptr) sb << *ptr;
-        }
-        break;
-        case ACTION_ACCESS:
-        {
-            const auto *ptr = static_cast<const ActionAccess *>(listAction.get());
-            if (ptr) sb << *ptr;
-        }
-        break;
-        case ACTION_MESSAGE:
-        {
-            const auto *ptr = static_cast<const ActionMessage *>(listAction.get());
-            if (ptr) sb << *ptr;
-        }
-        break;
-        case ACTION_RESOURCES:
-        {
-            const auto *ptr = static_cast<const ActionResources *>(listAction.get());
-            if (ptr) sb << *ptr;
-        }
-        break;
-        case ACTION_ARTIFACT:
-        {
-            const auto *ptr = static_cast<const ActionArtifact *>(listAction.get());
-            if (ptr) sb << *ptr;
-        }
-        break;
-        default:
-            sb << *listAction;
-            break;
         }
     }
 

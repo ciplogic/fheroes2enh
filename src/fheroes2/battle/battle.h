@@ -24,6 +24,7 @@
 
 #include <vector>
 #include "ByteVectorReader.h"
+#include "ByteVectorWriter.h"
 #include "army.h"
 
 namespace Battle
@@ -78,7 +79,7 @@ namespace Battle
         uint32_t GetExperienceDefender() const;
     };
 
-    StreamBase &operator<<(StreamBase &, const Result &);
+    ByteVectorWriter &operator<<(ByteVectorWriter &, const Result &);
 
     ByteVectorReader &operator>>(ByteVectorReader &, Result &);
 
@@ -153,7 +154,7 @@ namespace Battle
         bool isFinishAnimFrame() const;
     };
 
-    StreamBase &operator<<(StreamBase &, const TargetInfo &);
+    ByteVectorWriter &operator<<(ByteVectorWriter &, const TargetInfo &);
     
     ByteVectorReader &operator>>(ByteVectorReader &, TargetInfo &);
 
@@ -163,7 +164,7 @@ namespace Battle
         {}
     };
 
-    StreamBase &operator<<(StreamBase &, const TargetsInfo &);
+    ByteVectorWriter &operator<<(ByteVectorWriter &, const TargetsInfo &);
 
     ByteVectorReader &operator>>(ByteVectorReader &, TargetsInfo &);
 

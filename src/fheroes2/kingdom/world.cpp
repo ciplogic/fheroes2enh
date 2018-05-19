@@ -1063,11 +1063,6 @@ uint32_t World::GetUniq()
 {
     return ++GameStatic::uniq;
 }
-
-StreamBase &operator<<(StreamBase &msg, const CapturedObject &obj)
-{
-    return msg << obj.objcol << obj.guardians << obj.split;
-}
 ByteVectorWriter &operator<<(ByteVectorWriter &msg, const CapturedObject &obj)
 {
     return msg << obj.objcol << obj.guardians << obj.split;
@@ -1079,49 +1074,6 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, CapturedObject &obj)
     return msg >> obj.objcol >> obj.guardians >> obj.split;
 }
 
-StreamBase &operator<<(StreamBase &msg, const MapObjects &objs)
-{
-    msg << static_cast<uint32_t>(objs.size());
-    for (const auto &it : objs)
-    {
-        if (!it.second)
-            continue;
-        const MapObjectSimple &obj = *it.second;
-        msg << it.first << obj.GetType();
-
-        switch (obj.GetType())
-        {
-            case MP2::OBJ_EVENT:
-                msg << static_cast<const MapEvent &>(obj);
-                break;
-
-            case MP2::OBJ_SPHINX:
-                msg << static_cast<const MapSphinx &>(obj);
-                break;
-
-            case MP2::OBJ_SIGN:
-                msg << static_cast<const MapSign &>(obj);
-                break;
-
-            case MP2::OBJ_RESOURCE:
-                msg << static_cast<const MapResource &>(obj);
-                break;
-
-            case MP2::OBJ_ARTIFACT:
-                msg << static_cast<const MapArtifact &>(obj);
-                break;
-
-            case MP2::OBJ_MONSTER:
-                msg << static_cast<const MapMonster &>(obj);
-                break;
-
-            default:
-                msg << obj;
-                break;
-        }
-    }
-    return msg;
-}
 ByteVectorWriter &operator<<(ByteVectorWriter &msg, const MapObjects &objs)
 {
     msg << static_cast<uint32_t>(objs.size());
@@ -1251,29 +1203,6 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, MapObjects &objs)
     return msg;
 }
 
-StreamBase &operator<<(StreamBase &msg, const World &w)
-{
-    const Size &sz = w;
-
-    return msg << sz <<
-               w.vec_tiles <<
-               w.vec_heroes <<
-               w.vec_castles <<
-               w.vec_kingdoms <<
-               w.vec_rumors <<
-               w.vec_eventsday <<
-               w.map_captureobj <<
-               w.ultimate_artifact <<
-               w.day <<
-               w.week <<
-               w.month <<
-               w.week_current <<
-               w.week_next <<
-               w.heroes_cond_wins <<
-               w.heroes_cond_loss <<
-               w.map_actions <<
-               w.map_objects;
-}
 
 ByteVectorWriter &operator<<(ByteVectorWriter &msg, const World &w)
 {
@@ -1396,17 +1325,6 @@ bool EventDate::isAllow(int col, uint32_t date) const
     return ((first == date ||
              (subsequent && (first < date && 0 == ((date - first) % subsequent)))) &&
             (col & colors));
-}
-
-StreamBase &operator<<(StreamBase &msg, const EventDate &obj)
-{
-    return msg <<
-               obj.resource <<
-               obj.computer <<
-               obj.first <<
-               obj.subsequent <<
-               obj.colors <<
-               obj.message;
 }
 
 ByteVectorWriter &operator<<(ByteVectorWriter &msg, const EventDate &obj)
