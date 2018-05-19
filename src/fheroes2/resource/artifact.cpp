@@ -696,11 +696,6 @@ std::string Artifact::GetScenario(const Artifact &art)
     return "";
 }
 
-StreamBase &operator<<(StreamBase &msg, const Artifact &art)
-{
-    return msg << art.id << art.ext;
-}
-
 ByteVectorWriter &operator<<(ByteVectorWriter &msg, const Artifact &art)
 {
     return msg << art.id << art.ext;

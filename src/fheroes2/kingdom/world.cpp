@@ -1256,7 +1256,7 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, World &w)
 
     // heroes postfix
     for_each(w.vec_heroes._items.begin(), w.vec_heroes._items.end(),
-             mem_fun(&Heroes::RescanPathPassable));
+        [](Heroes* &hero) { hero->RescanPathPassable(); });
 
     return msg;
 }

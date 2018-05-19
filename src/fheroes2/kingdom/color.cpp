@@ -180,11 +180,6 @@ Kingdom &ColorBase::GetKingdom() const
     return world.GetKingdom(color);
 }
 
-StreamBase &operator<<(StreamBase &msg, const ColorBase &col)
-{
-    return msg << col.color;
-}
-
 ByteVectorWriter &operator<<(ByteVectorWriter &msg, const ColorBase &col)
 {
     return msg << col.color;

@@ -52,7 +52,6 @@ public:
     GetArtifact() const;
 
 private:
-    friend StreamBase &operator<<(StreamBase &, const UltimateArtifact &);
     friend ByteVectorWriter &operator<<(ByteVectorWriter &, const UltimateArtifact &);
     
     friend ByteVectorReader &operator>>(ByteVectorReader &, UltimateArtifact &);
@@ -64,7 +63,6 @@ private:
     bool isfound;
 };
 
-StreamBase &operator<<(StreamBase &, const UltimateArtifact &);
 ByteVectorWriter &operator<<(ByteVectorWriter &, const UltimateArtifact &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, UltimateArtifact &);

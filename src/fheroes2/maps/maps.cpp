@@ -643,14 +643,15 @@ ByteVectorReader &operator>>(ByteVectorReader &sb, IndexObject &st)
     return sb >> st.Value.first >> st.Value.second;
 }
 
-StreamBase &operator<<(StreamBase &sb, IndexObject &st)
+ByteVectorWriter &operator<<(ByteVectorWriter &sb, const IndexObject &st)
 {
     return sb << st.Value.first << st.Value.second;
 }
 
-ByteVectorWriter &operator<<(ByteVectorWriter &sb, IndexObject &st)
+
+ByteVectorWriter &operator<<(ByteVectorWriter &sb, const IndexDistance &st)
 {
-    return sb << st.Value.first << st.Value.second;
+    return sb << st.first << st.second;
 }
 
 ByteVectorReader &operator>>(ByteVectorReader &sb, IndexDistance &st)
@@ -658,11 +659,20 @@ ByteVectorReader &operator>>(ByteVectorReader &sb, IndexDistance &st)
     return sb >> st.first >> st.second;
 }
 
+ByteVectorWriter &operator<<(ByteVectorWriter &sb, const ObjectColor &st)
+{
+    return sb << st.first << st.second;
+}
+
 ByteVectorReader &operator>>(ByteVectorReader &sb, ObjectColor &st)
 {
     return sb >> st.first >> st.second;
 }
 
+ByteVectorWriter &operator<<(ByteVectorWriter &sb, const ResourceCount &st)
+{
+    return sb << st.first << st.second;
+}
 ByteVectorReader &operator>>(ByteVectorReader &sb, ResourceCount &st)
 {
     return sb >> st.first >> st.second;

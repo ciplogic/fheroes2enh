@@ -51,7 +51,6 @@ public:
     { uid = v; }
 
 protected:
-    friend StreamBase &operator<<(StreamBase &, const ActionSimple &);
     friend ByteVectorWriter &operator<<(ByteVectorWriter &, const ActionSimple &);
 
     friend ByteVectorReader &operator>>(ByteVectorReader &, ActionSimple &);
@@ -60,7 +59,7 @@ protected:
     int type;
 };
 
-StreamBase &operator<<(StreamBase &, const ActionSimple &);
+ByteVectorWriter &operator<<(ByteVectorWriter &, const ActionSimple &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, ActionSimple &);
 

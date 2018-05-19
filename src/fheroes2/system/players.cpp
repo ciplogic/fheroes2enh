@@ -175,25 +175,6 @@ void Player::SetPlay(bool f)
     if (f) _bitModes.SetModes(ST_INGAME); else _bitModes.ResetModes(ST_INGAME);
 }
 
-StreamBase &operator<<(StreamBase &msg, const Focus &focus)
-{
-    msg << focus.first;
-
-    switch (focus.first)
-    {
-        case FOCUS_HEROES:
-            msg << reinterpret_cast<Heroes *>(focus.second)->GetIndex();
-            break;
-        case FOCUS_CASTLE:
-            msg << reinterpret_cast<Castle *>(focus.second)->GetIndex();
-            break;
-        default:
-            msg << static_cast<s32>(-1);
-            break;
-    }
-
-    return msg;
-}
 ByteVectorWriter &operator<<(ByteVectorWriter &msg, const Focus &focus)
 {
     msg << focus.first;

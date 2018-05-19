@@ -80,10 +80,6 @@ void UltimateArtifact::MakeSurface()
         puzzlemap.Reset();
 }
 
-StreamBase &operator<<(StreamBase &msg, const UltimateArtifact &ultimate)
-{
-    return msg << static_cast<Artifact>(ultimate) << ultimate.index << ultimate.isfound;
-}
 ByteVectorWriter &operator<<(ByteVectorWriter &msg, const UltimateArtifact &ultimate)
 {
     return msg << static_cast<Artifact>(ultimate) << ultimate.index << ultimate.isfound;

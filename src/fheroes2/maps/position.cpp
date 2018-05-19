@@ -56,11 +56,6 @@ void MapPosition::SetIndex(s32 index)
              Maps::GetPoint(index) : Point(-1, -1);
 }
 
-StreamBase &operator<<(StreamBase &sb, const MapPosition &st)
-{
-    return sb << st.center;
-}
-
 ByteVectorWriter &operator<<(ByteVectorWriter &sb, const MapPosition &st)
 {
     return sb << st.center;

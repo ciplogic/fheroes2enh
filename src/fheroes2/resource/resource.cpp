@@ -613,13 +613,6 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, Funds &res)
                res.crystal >> res.gems >> res.gold;
 }
 
-StreamBase &operator<<(StreamBase &msg, const cost_t &res)
-{
-    return msg << res.wood <<
-               res.mercury << res.ore << res.sulfur <<
-               res.crystal << res.gems << res.gold;
-}
-
 ByteVectorWriter &operator<<(ByteVectorWriter &msg, const cost_t &res)
 {
     return msg << res.wood <<

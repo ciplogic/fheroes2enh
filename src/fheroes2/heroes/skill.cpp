@@ -803,10 +803,6 @@ int Skill::GetLuckModifiers(int level, string *strs = nullptr)
     return skill.GetValues();
 }
 
-StreamBase &Skill::operator<<(StreamBase &msg, const Primary &skill)
-{
-    return msg << skill.attack << skill.defense << skill.knowledge << skill.power;
-}
 ByteVectorWriter &Skill::operator<<(ByteVectorWriter &msg, const Primary &skill)
 {
     return msg << skill.attack << skill.defense << skill.knowledge << skill.power;
@@ -1070,13 +1066,6 @@ ByteVectorReader &Skill::operator>>(ByteVectorReader &sb, Secondary &st)
 {
     return sb >> st.first >> st.second;
 }
-
-StreamBase &Skill::operator<<(StreamBase &sb, const SecSkills &ss)
-{
-    const vector<Secondary> &v = ss;
-    return sb << v;
-}
-
 ByteVectorWriter &Skill::operator<<(ByteVectorWriter &sb, const SecSkills &ss)
 {
     const vector<Secondary> &v = ss;

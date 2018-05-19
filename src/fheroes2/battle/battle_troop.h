@@ -67,8 +67,7 @@ namespace Battle
         uint32_t FindZeroDuration() const;
     };
 
-    StreamBase &operator<<(StreamBase &, const ModesAffected &);
-
+    ByteVectorWriter &operator<<(ByteVectorWriter &, const ModesAffected &);
     ByteVectorReader &operator>>(ByteVectorReader &, ModesAffected &);
 
     enum

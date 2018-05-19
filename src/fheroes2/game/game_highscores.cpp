@@ -59,7 +59,7 @@ struct hgs_t
     uint32_t rating;
 };
 
-StreamBase &operator<<(StreamBase &msg, const hgs_t &hgs)
+ByteVectorWriter &operator<<(ByteVectorWriter &msg, const hgs_t &hgs)
 {
     return msg << hgs.player << hgs.land << hgs.localtime << hgs.days << hgs.rating;
 }
@@ -119,10 +119,11 @@ bool HGSData::Load(const string &fn)
 
 bool HGSData::Save(const string &fn)
 {
-    ZStreamFile hdata;
-    hdata.setbigendian(true);
+    ByteVectorWriter hdata;
+    hdata.SetBigEndian(true);
     hdata << static_cast<u16>(HGS_ID) << list;
-    return !(hdata.fail() || !hdata.write(fn));
+    FileUtils::writeFileBytes(fn, hdata.data());
+    return true;
 }
 
 void HGSData::ScoreRegistry(const string &p, const string &m, uint32_t r, uint32_t s)

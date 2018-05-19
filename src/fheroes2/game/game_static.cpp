@@ -66,10 +66,6 @@ namespace Skill
             /* scouting */  1, /* wisdom */ 1
     };
 
-    StreamBase &operator<<(StreamBase &msg, const level_t &obj)
-    {
-        return msg << obj.basic << obj.advanced << obj.expert;
-    }
     ByteVectorWriter &operator<<(ByteVectorWriter &msg, const level_t &obj)
     {
         return msg << obj.basic << obj.advanced << obj.expert;
@@ -80,10 +76,6 @@ namespace Skill
         return msg >> obj.basic >> obj.advanced >> obj.expert;
     }
 
-    StreamBase &operator<<(StreamBase &msg, const primary_t &obj)
-    {
-        return msg << obj.attack << obj.defense << obj.power << obj.knowledge;
-    }
     ByteVectorWriter &operator<<(ByteVectorWriter &msg, const primary_t &obj)
     {
         return msg << obj.attack << obj.defense << obj.power << obj.knowledge;
@@ -94,12 +86,6 @@ namespace Skill
         return msg >> obj.attack >> obj.defense >> obj.power >> obj.knowledge;
     }
 
-    StreamBase &operator<<(StreamBase &msg, const secondary_t &obj)
-    {
-        return msg << obj.archery << obj.ballistics << obj.diplomacy << obj.eagleeye << obj.estates << obj.leadership <<
-                   obj.logistics << obj.luck << obj.mysticism << obj.navigation << obj.necromancy << obj.pathfinding
-                   << obj.scouting << obj.wisdom;
-    }
     ByteVectorWriter &operator<<(ByteVectorWriter &msg, const secondary_t &obj)
     {
         return msg << obj.archery << obj.ballistics << obj.diplomacy << obj.eagleeye << obj.estates << obj.leadership <<
@@ -114,12 +100,6 @@ namespace Skill
                    >> obj.scouting >> obj.wisdom;
     }
 
-    StreamBase &operator<<(StreamBase &msg, const stats_t &obj)
-    {
-        return msg << obj.captain_primary << obj.initial_primary << obj.initial_book << obj.initial_spell <<
-                   obj.initial_secondary << obj.over_level << obj.mature_primary_under << obj.mature_primary_over
-                   << obj.mature_secondary;
-    }
     ByteVectorWriter &operator<<(ByteVectorWriter &msg, const stats_t &obj)
     {
         return msg << obj.captain_primary << obj.initial_primary << obj.initial_book << obj.initial_spell <<
@@ -132,11 +112,6 @@ namespace Skill
         return msg >> obj.captain_primary >> obj.initial_primary >> obj.initial_book >> obj.initial_spell >>
                    obj.initial_secondary >> obj.over_level >> obj.mature_primary_under >> obj.mature_primary_over
                    >> obj.mature_secondary;
-    }
-
-    StreamBase &operator<<(StreamBase &msg, const values_t &obj)
-    {
-        return msg << obj.values;
     }
     ByteVectorWriter &operator<<(ByteVectorWriter &msg, const values_t &obj)
     {

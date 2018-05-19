@@ -30,11 +30,6 @@
 
 #define SIZEMESSAGE 400
 
-StreamBase &operator<<(StreamBase &msg, const MapObjectSimple &obj)
-{
-    return msg << obj.type << obj.uid << static_cast<const MapPosition &>(obj);
-}
-
 ByteVectorWriter &operator<<(ByteVectorWriter &msg, const MapObjectSimple &obj)
 {
     return msg << obj.type << obj.uid << static_cast<const MapPosition &>(obj);

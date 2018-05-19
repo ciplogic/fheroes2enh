@@ -27,10 +27,6 @@
 #include "game.h"
 #include "maps_actions.h"
 
-StreamBase &operator<<(StreamBase &sb, const ActionSimple &st)
-{
-    return sb << st.type << st.uid;
-}
 ByteVectorWriter &operator<<(ByteVectorWriter &sb, const ActionSimple &st)
 {
     return sb << st.type << st.uid;
@@ -43,7 +39,7 @@ ByteVectorReader &operator>>(ByteVectorReader &sb, ActionSimple &st)
 
 ActionSimple::~ActionSimple() = default;
 
-StreamBase &operator<<(StreamBase &sb, const ActionArtifact &st)
+ByteVectorWriter &operator<<(ByteVectorWriter &sb, const ActionArtifact &st)
 {
     return sb << static_cast<const ActionSimple &>(st) << st.artifact << st.message;
 }
@@ -53,7 +49,7 @@ ByteVectorReader &operator>>(ByteVectorReader &sb, ActionArtifact &st)
     return sb >> static_cast<ActionSimple &>(st) >> st.artifact >> st.message;
 }
 
-StreamBase &operator<<(StreamBase &sb, const ActionAccess &st)
+ByteVectorWriter &operator<<(ByteVectorWriter &sb, const ActionAccess &st)
 {
     return sb << static_cast<const ActionSimple &>(st) << st.allowPlayers << st.allowComputer
               << st.cancelAfterFirstVisit << st.message;
@@ -65,7 +61,7 @@ ByteVectorReader &operator>>(ByteVectorReader &sb, ActionAccess &st)
               >> st.message;
 }
 
-StreamBase &operator<<(StreamBase &sb, const ActionDefault &st)
+ByteVectorWriter &operator<<(ByteVectorWriter &sb, const ActionDefault &st)
 {
     return sb << static_cast<const ActionSimple &>(st) << st.enabled << st.message;
 }
@@ -73,11 +69,6 @@ StreamBase &operator<<(StreamBase &sb, const ActionDefault &st)
 ByteVectorReader &operator>>(ByteVectorReader &sb, ActionDefault &st)
 {
     return sb >> static_cast<ActionSimple &>(st) >> st.enabled >> st.message;
-}
-
-StreamBase &operator<<(StreamBase &sb, const ActionMessage &st)
-{
-    return sb << static_cast<const ActionSimple &>(st) << st.message;
 }
 
 ByteVectorWriter &operator<<(ByteVectorWriter &sb, const ActionMessage &st)

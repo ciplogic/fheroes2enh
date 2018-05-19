@@ -49,7 +49,6 @@ public:
     void ReadFrom(ByteVectorReader &msg);
 
 protected:
-    friend StreamBase &operator<<(StreamBase &, const MapPosition &);
     friend ByteVectorWriter &operator<<(ByteVectorWriter &, const MapPosition &);
 
     friend ByteVectorReader &operator>>(ByteVectorReader &, MapPosition &);
@@ -57,7 +56,7 @@ protected:
     Point center;
 };
 
-StreamBase &operator<<(StreamBase &, const MapPosition &);
+ByteVectorWriter &operator<<(ByteVectorWriter &, const MapPosition &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, MapPosition &);
 

@@ -45,6 +45,7 @@ public:
     { return id1.second > id2.second; };
 };
 
+ByteVectorWriter &operator<<(ByteVectorWriter &, const IndexDistance &);
 ByteVectorReader &operator>>(ByteVectorReader &, IndexDistance &);
 
 class IndexObject
@@ -66,9 +67,7 @@ public:
 };
 
 ByteVectorReader &operator>>(ByteVectorReader &, IndexObject &);
-
-StreamBase &operator<<(StreamBase &, IndexObject &);
-ByteVectorWriter &operator<<(ByteVectorWriter &, IndexObject &);
+ByteVectorWriter &operator<<(ByteVectorWriter &sb, const IndexObject &st);
 
 class ObjectColor : public pair<int, int>
 {
@@ -86,6 +85,7 @@ public:
     { return colors & second; };
 };
 
+ByteVectorWriter &operator<<(ByteVectorWriter &sb, const ObjectColor &st);
 ByteVectorReader &operator>>(ByteVectorReader &, ObjectColor &);
 
 class ResourceCount : public pair<int, uint32_t>
@@ -104,4 +104,5 @@ public:
     { return (first & Resource::ALL) && second; };
 };
 
+ByteVectorWriter &operator<<(ByteVectorWriter &sb, const ResourceCount &st);
 ByteVectorReader &operator>>(ByteVectorReader &, ResourceCount &);

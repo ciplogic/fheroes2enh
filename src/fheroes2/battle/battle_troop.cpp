@@ -958,7 +958,7 @@ string Battle::Unit::String(bool more) const
     return ss.str();
 }
 
-StreamBase &Battle::operator<<(StreamBase &msg, const ModesAffected &v)
+ByteVectorWriter &Battle::operator<<(ByteVectorWriter &msg, const ModesAffected &v)
 {
     msg << static_cast<uint32_t>(v.size());
 
