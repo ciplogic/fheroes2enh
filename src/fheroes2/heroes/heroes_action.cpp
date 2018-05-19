@@ -782,7 +782,7 @@ Battle::Result BattleHeroWithMonster(Heroes &hero, Army &army, s32 dst_index)
             ByteVectorReader bvr(armyVec);
             bvr >> army;
             ByteVectorReader heroArmyReader(heroVec);
-            hero.ReadFrom(heroArmyReader);
+            heroArmyReader >> hero;
         }
     } while (res.fightAgain == Battle::FightResultType::FightAgain);
     Settings::Get().SetQuickCombat(true);
@@ -811,7 +811,7 @@ Battle::Result BattleHeroWithHero(Heroes &hero, Heroes &other_hero, s32 dst_inde
             ByteVectorReader bvr(armyVec);
             bvr >> other_hero;
             ByteVectorReader heroArmyReader(heroVec);
-            hero.ReadFrom(heroArmyReader);
+            heroArmyReader>>hero;
         }
     } while (res.fightAgain == Battle::FightResultType::FightAgain);
     Settings::Get().SetQuickCombat(true);
