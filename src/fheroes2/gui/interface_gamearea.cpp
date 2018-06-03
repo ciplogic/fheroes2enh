@@ -183,12 +183,12 @@ void Interface::GameArea::Redraw(Surface &dst, int flag, const Rect &rt) const
 {
     // tile
 
-    for (s32 stepY = 0; stepY < rt.h; ++stepY)
-    {
-        auto oy = rt.y + rectMaps.y + stepY;
         for (s32 stepX = 0; stepX < rt.w; ++stepX)
         {
             auto ox = rt.x + rectMaps.x + stepX;
+    for (s32 stepY = 0; stepY < rt.h; ++stepY)
+    {
+        auto oy = rt.y + rectMaps.y + stepY;
             auto &currentTile = world.GetTiles(ox, oy);
             currentTile.RedrawTile(dst);
 
@@ -205,6 +205,7 @@ void Interface::GameArea::Redraw(Surface &dst, int flag, const Rect &rt) const
                 currentTile.RedrawTop(dst);
         }
     }
+
     // heroes
     for (s32 oy = rt.y; oy < rt.y + rt.h; ++oy)
         for (s32 ox = rt.x; ox < rt.x + rt.w; ++ox)
