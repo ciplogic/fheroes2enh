@@ -104,6 +104,8 @@ public:
         return *this;
     }
 
+    std::string readString();
+
 };
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, u8 &val);

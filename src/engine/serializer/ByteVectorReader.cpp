@@ -1,6 +1,15 @@
 #include "ByteVectorReader.h"
 #include "rect.h"
+namespace 
+{
+    namespace Endian
+    {
+        constexpr uint32_t uint32_ = 0x01020304;
+        constexpr uint8_t magic_ = (const uint8_t&)uint32_;
+        const bool isLittle = magic_ == 0x04;
+    };
 
+}
 ByteVectorReader::ByteVectorReader(const std::vector<u8> &data)
         : _data(data), _pos(0)
 {
@@ -20,16 +29,40 @@ uint32_t ByteVectorReader::Get8()
 
 uint32_t ByteVectorReader::getLE16()
 {
-    uint32_t lo = Get8();
-    uint32_t hi = Get8();
-    return lo + (hi << 8);
+    if (!Endian::isLittle)
+    {
+        uint32_t lo = Get8();
+        uint32_t hi = Get8();
+        return lo + (hi << 8);
+    }else
+    {
+        auto * resultPtr = reinterpret_cast<const uint16_t *>(_data.data() + _pos);
+        _pos += 2;
+        uint16_t result = *resultPtr;
+        return result;
+    }
 }
 
 uint32_t ByteVectorReader::getLE32()
 {
-    uint32_t lo = getLE16();
-    uint32_t hi = getLE16();
-    return lo + (hi << 16);
+    if(!Endian::isLittle)
+    {
+        auto llo = Get8();
+        auto lhi = Get8();
+        auto hlo = Get8();
+        auto hhi = Get8();
+        uint32_t lo = llo + (lhi << 8);
+        uint32_t hi = (hlo << 16) + (hhi << 24);
+        uint32_t  result = lo + hi;
+        return result;
+    } else
+    {
+        auto * resultPtr = reinterpret_cast<const uint32_t *>(_data.data() + _pos);
+        _pos += 4;
+        uint32_t result = *resultPtr;
+        return result;
+    }
+
 }
 
 u16 ByteVectorReader::get16()
@@ -46,20 +79,37 @@ uint32_t ByteVectorReader::get32()
 
 uint32_t ByteVectorReader::getBE16()
 {
-    uint32_t lo = Get8();
-    uint32_t hi = Get8();
-    return hi + (lo << 8);
+    if (Endian::isLittle)
+    {
+        uint32_t lo = Get8();
+        uint32_t hi = Get8();
+        return hi + (lo << 8);
+    }
+    else
+    {
+        auto * resultPtr = reinterpret_cast<const uint16_t *>(_data.data() + _pos);
+        _pos += 2;
+        uint16_t result = *resultPtr;
+        return result;
+    }
 }
 
 uint32_t ByteVectorReader::getBE32()
 {
-    uint32_t lo1 = Get8();
-    uint32_t hi1 = Get8();
-    uint32_t lo2 = Get8();
-    uint32_t hi2 = Get8();
-    uint32_t lo = hi1 + (lo1 << 8);
-    uint32_t hi = hi2 + (lo2 << 8);
-    return hi + (lo << 16);
+    if (Endian::isLittle)
+    {
+        uint32_t lo1 = Get8();
+        uint32_t hi1 = Get8();
+        uint32_t lo2 = Get8();
+        uint32_t hi2 = Get8();
+        uint32_t lo = (hi1 << 16) + (lo1 << 24);
+        uint32_t hi = hi2 + (lo2 << 8);
+        return hi + lo;
+    }
+    auto * resultPtr = reinterpret_cast<const uint32_t *>(_data.data() + _pos);
+    _pos += 4;
+    uint32_t result = *resultPtr;
+    return result;
 }
 
 uint32_t ByteVectorReader::size() const
@@ -139,13 +189,17 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, bool &v)
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, std::string &v)
 {
-    uint32_t size = msg.get32();
-    v.resize(size);
-
-    for (char &it : v)
-        it = msg.Get8();
-
+    v = msg.readString();
     return msg;
+}
+
+std::string ByteVectorReader::readString()
+{
+    const uint32_t size = get32();
+    const auto* vData = reinterpret_cast<const char*>(_data.data() + _pos);
+    std::string v(vData, size);
+    _pos += size;
+    return v;
 }
 
 ByteVectorReader &operator>>(ByteVectorReader &msg, u8 &val)
