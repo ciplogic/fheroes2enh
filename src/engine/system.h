@@ -71,8 +71,6 @@ namespace System
 
     int Unlink(const std::string &);
 
-    bool isEmbededDevice();
-
     bool isRunning();
 
     int CreateTrayIcon(bool);

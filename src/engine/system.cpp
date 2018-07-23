@@ -480,14 +480,6 @@ int System::ShellCommand(const char *cmd)
     return system(cmd);
 }
 
-bool System::isEmbededDevice()
-{
-#if defined(ANDROID) || defined(__SYMBIAN32__)
-    return true;
-#endif
-    return false;
-}
-
 int System::GetRenderFlags()
 {
 #if defined(__MINGW32CE__) || defined(__SYMBIAN32__)

@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2INTERFACE_BORDER_H
-#define H2INTERFACE_BORDER_H
+#pragma once
 
 #include "dialog.h"
 #include "rect.h"
@@ -35,8 +34,7 @@ namespace Interface
     public:
         explicit BorderWindow(const Rect &);
 
-        virtual ~BorderWindow()
-        {}
+        virtual ~BorderWindow() = default;
 
         virtual void SetPos(s32, s32) = 0;
 
@@ -60,4 +58,4 @@ namespace Interface
     };
 }
 
-#endif
+

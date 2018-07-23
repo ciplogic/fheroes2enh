@@ -25,7 +25,7 @@
 
 std::string Difficulty::String(int difficulty)
 {
-    std::string str_difficulty[] = {_("difficulty|Easy"), _("difficulty|Normal"), _("difficulty|Hard"),
+    static std::string str_difficulty[] = {_("difficulty|Easy"), _("difficulty|Normal"), _("difficulty|Hard"),
                                     _("difficulty|Expert"), _("difficulty|Impossible"), "Unknown"};
 
     switch (difficulty)

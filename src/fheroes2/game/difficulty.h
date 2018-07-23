@@ -19,8 +19,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef H2DIFFICULTY_H
-#define H2DIFFICULTY_H
+
+#pragma once
+
 #include <string>
 
 namespace Difficulty
@@ -36,5 +37,3 @@ namespace Difficulty
 
     std::string String(int);
 }
-
-#endif

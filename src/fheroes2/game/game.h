@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2GAME_H
-#define H2GAME_H
+#pragma once
 
 #include <string>
 #include "types.h"
@@ -327,4 +326,3 @@ namespace Game
 
 #define HotKeyCloseWindow (Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT) || Game::HotKeyPressEvent(Game::EVENT_DEFAULT_READY))
 
-#endif

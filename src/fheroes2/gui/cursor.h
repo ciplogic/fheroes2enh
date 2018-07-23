@@ -19,8 +19,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef H2CURSOR_H
-#define H2CURSOR_H
+
+#pragma once
+
 
 #include "gamedefs.h"
 
@@ -160,4 +161,3 @@ private:
     s32 offset_y;
 };
 
-#endif

@@ -238,13 +238,6 @@ Settings::Settings()
     opt_global.SetModes(GLOBAL_SHOWICONS);
     opt_global.SetModes(GLOBAL_SHOWBUTTONS);
     opt_global.SetModes(GLOBAL_SHOWSTATUS);
-    if (System::isEmbededDevice())
-    {
-        opt_global.SetModes(GLOBAL_POCKETPC);
-        ExtSetModes(POCKETPC_HIDE_CURSOR);
-        ExtSetModes(POCKETPC_TAP_MODE);
-        ExtSetModes(POCKETPC_DRAG_DROP_SCROLL);
-    }
 }
 
 Settings::~Settings()
