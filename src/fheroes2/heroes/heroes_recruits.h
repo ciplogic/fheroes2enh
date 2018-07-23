@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2RECRUITS_H
-#define H2RECRUITS_H
+#pragma once
 
 #include <utility>
 #include "gamedefs.h"
@@ -54,4 +53,3 @@ public:
 
 ByteVectorReader &operator>>(ByteVectorReader &, Recruits &);
 
-#endif

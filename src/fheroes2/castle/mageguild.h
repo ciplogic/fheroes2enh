@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2MAGEGUILD_H
-#define H2MAGEGUILD_H
+#pragma once
 
 #include "gamedefs.h"
 #include "spell_storage.h"
@@ -69,5 +68,3 @@ private:
     Rects coords;
     SpellStorage spells;
 };
-
-#endif

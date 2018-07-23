@@ -27,8 +27,7 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                           *
  *******************************************************************************/
 
-#ifndef H2AI_SIMPLE_H
-#define H2AI_SIMPLE_H
+#pragma once
 
 #include <map>
 #include <list>
@@ -99,5 +98,3 @@ private:
     AIHeroes() : vector<AIHero>(HEROESMAXCOUNT + 2)
     {};
 };
-
-#endif

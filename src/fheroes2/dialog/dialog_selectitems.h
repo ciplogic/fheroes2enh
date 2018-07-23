@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2EDITOR_DIALOGS_H
-#define H2EDITOR_DIALOGS_H
+#pragma once
 
 #include "dialog.h"
 #include "monster.h"
@@ -42,5 +41,3 @@ namespace Dialog
 
     Skill::Secondary SelectSecondarySkill();
 }
-
-#endif

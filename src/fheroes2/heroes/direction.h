@@ -19,8 +19,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef H2DIRECTION_H
-#define H2DIRECTION_H
+
+
+#pragma once
 
 #include <string>
 #include <vector>
@@ -69,5 +70,3 @@ namespace Direction
 #define DIRECTION_TOP_LEFT_CORNER    (Direction::TOP | Direction::TOP_LEFT | Direction::LEFT)
 #define DIRECTION_BOTTOM_RIGHT_CORNER    (Direction::BOTTOM | Direction::BOTTOM_RIGHT | Direction::RIGHT)
 #define DIRECTION_BOTTOM_LEFT_CORNER    (Direction::BOTTOM | Direction::BOTTOM_LEFT | Direction::LEFT)
-
-#endif

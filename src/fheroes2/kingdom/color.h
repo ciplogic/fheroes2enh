@@ -19,8 +19,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef H2COLOR_H
-#define H2COLOR_H
+
+
+#pragma once
 
 #include <vector>
 #include "serialize.h"
@@ -103,5 +104,3 @@ public:
 
 StreamBase &operator<<(StreamBase &, const ColorBase &);
 ByteVectorReader &operator>>(ByteVectorReader &msg, ColorBase &col);
-
-#endif

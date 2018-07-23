@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2TRANSLATIONS_H
-#define H2TRANSLATIONS_H
+#pragma once
 
 #include <string>
 
@@ -35,5 +34,3 @@ namespace Translation
 
     const std::string dngettext(const char *domain, const char *str, const char *plural, size_t num);
 }
-
-#endif

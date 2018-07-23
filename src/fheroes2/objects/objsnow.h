@@ -20,9 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2OBJSNOW_H
-#define H2OBJSNOW_H
-
+#pragma once
 
 namespace ObjSnow
 {
@@ -34,5 +32,3 @@ namespace ObjSnow
 
     int GetActionObject(uint32_t index);
 }
-
-#endif

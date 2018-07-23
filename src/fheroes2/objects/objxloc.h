@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2OBJXLOC_H
-#define H2OBJXLOC_H
+#pragma once
 
 #include "gamedefs.h"
 
@@ -57,5 +56,3 @@ namespace ObjXlc3
 
     int GetActionObject(uint32_t index);
 }
-
-#endif

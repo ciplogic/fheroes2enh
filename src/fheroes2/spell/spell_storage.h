@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2SPELLSTORAGE_H
-#define H2SPELLSTORAGE_H
+#pragma once
 
 #include <vector>
 #include "spell.h"
@@ -54,5 +53,3 @@ public:
 
     long getSpellCountOfLevel(int level) const;
 };
-
-#endif

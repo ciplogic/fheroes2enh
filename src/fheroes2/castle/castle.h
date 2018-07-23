@@ -19,8 +19,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef H2CASTLE_H
-#define H2CASTLE_H
+
+#pragma once
 
 #include <vector>
 #include <string>
@@ -375,5 +375,3 @@ ByteVectorReader &operator>>(ByteVectorReader &, AllCastles &);
 
 ByteVectorWriter &operator<<(ByteVectorWriter &, const Castle &);
 ByteVectorReader &operator>>(ByteVectorReader &, Castle &);
-
-#endif

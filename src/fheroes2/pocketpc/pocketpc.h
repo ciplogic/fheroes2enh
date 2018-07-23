@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2POCKETPC_H
-#define H2POCKETPC_H
+#pragma once
 
 #include "gamedefs.h"
 
@@ -29,5 +28,3 @@ namespace PocketPC
 {
     uint32_t GetCursorAttackDialog(const Point &, int direction);
 }
-
-#endif

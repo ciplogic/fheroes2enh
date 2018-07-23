@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2ZLIB_H
-#define H2ZLIB_H
+#pragma once
 
 #include "serialize.h"
 
@@ -36,4 +35,3 @@ public:
     bool write(const string &, bool append = false) const;
 };
 
-#endif

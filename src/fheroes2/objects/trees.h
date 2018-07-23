@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2TREES_H
-#define H2TREES_H
+#pragma once
 
 #include "gamedefs.h"
 
@@ -35,5 +34,3 @@ namespace ObjTree
 
     int GetActionObject(uint32_t index);
 }
-
-#endif

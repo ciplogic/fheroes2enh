@@ -19,8 +19,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef H2DISPLAY_H
-#define H2DISPLAY_H
+#pragma once
 
 #include "surface.h"
 
@@ -73,5 +72,3 @@ protected:
 
     Display();
 };
-
-#endif

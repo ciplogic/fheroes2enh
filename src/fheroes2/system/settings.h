@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2SETTINGS_H
-#define H2SETTINGS_H
+#pragma once
 
 #include "ByteVectorReader.h"
 #include <list>
@@ -649,5 +648,3 @@ private:
 ByteVectorWriter &operator<<(ByteVectorWriter &, const Settings &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, Settings &);
-
-#endif

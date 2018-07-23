@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2BATTLE_CATAPULT_H
-#define H2BATTLE_CATAPULT_H
+#pragma once
 
 #include "gamedefs.h"
 #include "battle_arena.h"
@@ -65,4 +64,3 @@ namespace Battle
     };
 }
 
-#endif

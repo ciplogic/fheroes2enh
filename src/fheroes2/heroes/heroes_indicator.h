@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2HEROESIND_H
-#define H2HEROESIND_H
+#pragma once
 
 #include <string>
 #include "gamedefs.h"
@@ -91,5 +90,3 @@ public:
 
     void QueueEventProcessing();
 };
-
-#endif

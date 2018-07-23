@@ -19,8 +19,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef H2SPRITE_H
-#define H2SPRITE_H
+
+#pragma once
 
 #include "sprites.h"
 
@@ -53,5 +53,3 @@ public:
 
     static Sprite ScaleQVGASprite(const Sprite &);
 };
-
-#endif

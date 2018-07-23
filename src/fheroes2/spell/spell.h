@@ -19,8 +19,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef H2SPELL_H
-#define H2SPELL_H
+
+#pragma once
 
 #include "payment.h"
 #include "gamedefs.h"
@@ -200,7 +200,6 @@ public:
     void ReadFrom(ByteVectorReader &msg);
 
 private:
-    friend StreamBase &operator<<(StreamBase &, const Spell &);
     friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Spell &);
 
 
@@ -209,10 +208,5 @@ private:
     int id;
 };
 
-StreamBase &operator<<(StreamBase &, const Spell &);
 ByteVectorWriter &operator<<(ByteVectorWriter &, const Spell &);
-
 ByteVectorReader &operator>>(ByteVectorReader &, Spell &);
-
-#endif
-

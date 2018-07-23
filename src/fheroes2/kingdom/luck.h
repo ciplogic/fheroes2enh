@@ -19,8 +19,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef H2LUCK_H
-#define H2LUCK_H
+
+#pragma once
 
 namespace Luck
 {
@@ -41,4 +41,3 @@ namespace Luck
     std::string Description(int);
 }
 
-#endif

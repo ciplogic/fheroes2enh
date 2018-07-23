@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2BATTLE_ONLY_H
-#define H2BATTLE_ONLY_H
+#pragma once
 
 #include "army.h"
 #include "players.h"
@@ -127,5 +126,3 @@ namespace Battle
 ByteVectorWriter &operator<<(ByteVectorWriter &, const Battle::Only &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, Battle::Only &);
-
-#endif

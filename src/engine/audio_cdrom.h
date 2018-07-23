@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2AUDIO_CDROM_H
-#define H2AUDIO_CDROM_H
+#pragma once
 
 #ifdef WITH_AUDIOCD
 #include "types.h"
@@ -33,5 +32,4 @@ namespace Cdrom
     void	Pause();
 }
 
-#endif
 #endif

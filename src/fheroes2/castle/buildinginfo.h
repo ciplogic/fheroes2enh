@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2BUILDINGINFO_H
-#define H2BUILDINGINFO_H
+#pragma once
 
 #include "payment.h"
 #include "castle.h"
@@ -99,5 +98,3 @@ protected:
     Surface backsf;
     vector<DwellingItem> content;
 };
-
-#endif

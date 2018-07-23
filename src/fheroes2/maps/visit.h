@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2MAPSVISIT_H
-#define H2MAPSVISIT_H
+#pragma once
 
 class IndexObject;
 
@@ -40,5 +39,3 @@ namespace Visit
 
     bool isBattleLife(const IndexObject &visit);
 }
-
-#endif

@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             * 
  ***************************************************************************/
 
-#ifndef H2PROFIT_H
-#define H2PROFIT_H
+#pragma once
 
 #include "payment.h"
 
@@ -35,5 +34,3 @@ namespace ProfitConditions
 
     void UpdateCosts(const string &);
 }
-
-#endif

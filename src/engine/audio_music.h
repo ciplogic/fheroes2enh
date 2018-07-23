@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2AUDIO_MUSIC_H
-#define H2AUDIO_MUSIC_H
+#pragma once
 
 #include "types.h"
 #include <vector>
@@ -52,5 +51,3 @@ namespace Music
 
     std::vector<u8> Xmi2Mid(const std::vector<u8> &);
 }
-
-#endif

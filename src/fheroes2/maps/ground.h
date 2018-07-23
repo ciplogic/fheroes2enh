@@ -19,8 +19,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef H2MAPSGROUND_H
-#define H2MAPSGROUND_H
+#pragma once
 
 #include <string>
 #include "gamedefs.h"
@@ -51,5 +50,3 @@ namespace Maps
         uint32_t GetPenalty(s32, int direction, uint32_t pathfinding);
     }
 }
-
-#endif

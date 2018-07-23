@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             * 
  ***************************************************************************/
 
-#ifndef H2PAYMENT_H
-#define H2PAYMENT_H
+#pragma once
 
 #include <string>
 #include "resource.h"
@@ -47,5 +46,3 @@ namespace PaymentConditions
 
     void UpdateCosts(const string &);
 }
-
-#endif

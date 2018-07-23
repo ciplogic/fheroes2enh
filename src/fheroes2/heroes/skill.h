@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2SKILL_H
-#define H2SKILL_H
+#pragma once
 
 #include <string>
 #include <vector>
@@ -270,5 +269,3 @@ protected:
     bool can_change;
     string msg;
 };
-
-#endif

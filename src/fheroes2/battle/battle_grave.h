@@ -20,9 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2BATTLE_GRAVEYARD_H
-#define H2BATTLE_GRAVEYARD_H
-
+#pragma once
 #include <vector>
 #include <map>
 
@@ -53,5 +51,3 @@ namespace Battle
         uint32_t GetLastTroopUID(s32) const;
     };
 }
-
-#endif

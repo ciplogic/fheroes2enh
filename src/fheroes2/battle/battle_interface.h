@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2BATTLE_INTERFACE_H
-#define H2BATTLE_INTERFACE_H
+#pragma once
 
 #include <string>
 #include "button.h"
@@ -363,5 +362,3 @@ namespace Battle
         ArmiesOrder armies_order;
     };
 }
-
-#endif

@@ -19,8 +19,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef H2DIR_H
-#define H2DIR_H
+#pragma once
 
 #include <string>
 #include <vector>
@@ -43,5 +42,3 @@ struct ListDirs : std::vector<std::string>
 {
     void Append(const std::vector<std::string> &);
 };
-
-#endif

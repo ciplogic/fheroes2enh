@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2OBJLAVA_H
-#define H2OBJLAVA_H
+#pragma once
 
 #include "gamedefs.h"
 
@@ -58,4 +57,3 @@ namespace ObjLava
     int GetActionObject(uint32_t index);
 }
 
-#endif

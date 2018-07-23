@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2BATTLE_BOARD_H
-#define H2BATTLE_BOARD_H
+#pragma once
 
 #include <functional>
 
@@ -129,5 +128,3 @@ namespace Battle
         s32 center;
     };
 }
-
-#endif

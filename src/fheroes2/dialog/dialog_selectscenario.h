@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2SELECT_SCENARIO_H
-#define H2SELECT_SCENARIO_H
+#pragma once
 
 #include "maps_fileinfo.h"
 #include "interface_list.h"
@@ -57,5 +56,3 @@ namespace Dialog
 {
     const Maps::FileInfo *SelectScenario(const MapsFileInfoList &);
 }
-
-#endif

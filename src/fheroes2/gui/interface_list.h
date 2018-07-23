@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2INTERFACE_LIST_H
-#define H2INTERFACE_LIST_H
+#pragma once
 
 #include <algorithm>
 
@@ -393,5 +392,3 @@ namespace Interface
         ItemsIterator top;
     };
 }
-
-#endif

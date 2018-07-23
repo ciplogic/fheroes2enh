@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef H2STATUSBAR_H
-#define H2STATUSBAR_H
+#pragma once
 
 #include "text.h"
 
@@ -44,5 +43,3 @@ private:
     Point center;
     string prev;
 };
-
-#endif

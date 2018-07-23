@@ -19,8 +19,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef H2MAPS_ACTIONS_H
-#define H2MAPS_ACTIONS_H
+
+#pragma once
 
 #include "artifact.h"
 #include "resource.h"
@@ -120,4 +120,3 @@ struct ActionResources : ActionSimple
     static bool Action(ActionResources *, s32, Heroes &);
 };
 
-#endif

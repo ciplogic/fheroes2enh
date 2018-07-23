@@ -19,8 +19,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef H2GAMEDEFS_H
-#define H2GAMEDEFS_H
+#pragma once
 
 #include "engine.h"
 #include <memory>
@@ -68,5 +67,3 @@ template<class T>
 using sp = std::shared_ptr<T>;
 template<class T>
 using up = std::unique_ptr<T>;
-
-#endif
