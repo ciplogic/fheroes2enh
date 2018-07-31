@@ -1102,6 +1102,19 @@ float rfPartOfNumber(float x)
 // to draw on screen
 void Surface::drawPixel(int x, int y, float brightness, const uint32_t col)
 {
+    int finalColA = 255 * brightness;
+    if (finalColA > 255)
+        finalColA = 255;
+
+    uint32_t uCol = (col & 0xffffff) + (finalColA << 24);
+    SetPixel4(x, y, uCol);
+}
+
+// draws a pixel on screen of given brightness
+// 0<=brightness<=1. We can use your own library
+// to draw on screen
+void Surface::drawPixelSafe(int x, int y, float brightness, const uint32_t col)
+{
     if (x < 0 || y < 0)
         return;
     if (x >= surface->w || y >= surface->h)

@@ -4192,17 +4192,17 @@ void Battle::Interface::RedrawTargetsWithFrameAnimation(const TargetsInfo &targe
 
 void RedrawSparksEffects(const Point &src, const Point &dst)
 {
-    const auto& display = Display::Get();    
+    auto& display = Display::Get();    
     if(drawPoints.empty())
     {
-        display.DrawLine(src, dst, RGBA(0xff, 0xff, 0));
+        display.drawAALine(src.x, src.y, dst.x, dst.y, RGBA(0xff, 0xff, 0));
         return;
     }
     auto start = drawPoints[0];
     for(int i = 0;i<steps;i++)
     {
         auto end = drawPoints[i+1];
-        display.DrawLine(start, end, RGBA(0xff, 0xff, 0));
+        display.drawAALine(start.x, start.y, end.x, end.y, RGBA(0xff, 0xff, 0));
         start = end;
     }
 }
