@@ -218,6 +218,22 @@ int main(int argc, char **argv)
             return EXIT_FAILURE;
 
         atexit(&AGG::Quit);
+
+        try 
+        {
+            AGG::GetICN(ICN::ADVMCO, 0);
+        }
+        catch (...) 
+        {
+            std::cout << "Cannot load picture. Make sure you have Heroes 2 assets extracted here" << "\n";
+
+            std::cout << "If no Heroes 2 is accessible, you can use Heroes 2 Demo files\n"
+                << "at address: "
+                << "https://github.com/ciplogic/fheroes2enh/releases/download/0.9.1/h2demo.zip" << "\n"
+                << " Quitting" << "\n";
+
+            return -1;
+        }
         extractFrames();
         conf.SetBlitSpeed(TestBlitSpeed());
 

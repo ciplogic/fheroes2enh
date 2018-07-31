@@ -36,3 +36,9 @@ obj
 /src/Fh2Launcher/lib/*
 /VisualStudio/FH2Launcher/FH2Launcher/bin/
 *.pdb
+/FILE_ID.DIZ
+/H2DEMOW.EXE
+/HELP/HEROES2.CNT
+/HELP/HEROES2.HLP
+/license.txt
+/README.TXT
