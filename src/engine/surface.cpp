@@ -1102,6 +1102,10 @@ float rfPartOfNumber(float x)
 // to draw on screen
 void Surface::drawPixel(int x, int y, float brightness, const uint32_t col)
 {
+    if (x < 0 || y < 0)
+        return;
+    if (x >= surface->w || y >= surface->h)
+        return;
     int finalColA = 255 * brightness;
     if (finalColA > 255)
         finalColA = 255;
