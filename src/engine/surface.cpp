@@ -1165,9 +1165,9 @@ void Surface::drawAALine(int x0, int y0, int x1, int y1, const RGBA &col)
             // pixel coverage is determined by fractional
             // part of y co-ordinate
             int y = iPartOfNumber(intersectY);
-            drawPixel(y, x,
+            drawPixelSafe(y, x,
                       rfPartOfNumber(intersectY), uCol);
-            drawPixel(y - 1, x,
+            drawPixelSafe(y - 1, x,
                       fPartOfNumber(intersectY), uCol);
             intersectY += gradient;
         }
@@ -1178,9 +1178,9 @@ void Surface::drawAALine(int x0, int y0, int x1, int y1, const RGBA &col)
             // pixel coverage is determined by fractional
             // part of y co-ordinate
             int y = iPartOfNumber(intersectY);
-            drawPixel(x, y,
+            drawPixelSafe(x, y,
                       rfPartOfNumber(intersectY), uCol);
-            drawPixel(x, y - 1,
+            drawPixelSafe(x, y - 1,
                       fPartOfNumber(intersectY), uCol);
             intersectY += gradient;
         }
