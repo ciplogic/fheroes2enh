@@ -38,7 +38,7 @@
 
 struct IndexObjectMap : map<s32, int>
 {
-    void DumpObjects(const IndexDistance &id);
+    static void DumpObjects(const IndexDistance &id);
 };
 
 struct AIKingdom

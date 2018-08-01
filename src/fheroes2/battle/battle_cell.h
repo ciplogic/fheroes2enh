@@ -58,7 +58,7 @@ namespace Battle
     public:
         Cell();
 
-        Cell(s32);
+        explicit Cell(s32);
 
         void ResetQuality();
 

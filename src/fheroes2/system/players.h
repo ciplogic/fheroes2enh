@@ -103,7 +103,7 @@ struct Control
 class Player : public Control
 {
 public:
-    Player(int col = Color::NONE);
+    explicit Player(int col = Color::NONE);
 
     bool isID(uint32_t) const;
 

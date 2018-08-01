@@ -56,7 +56,7 @@ namespace Rand
     class Queue : private vector<ValuePercent>
     {
     public:
-        Queue(uint32_t size = 0);
+        explicit Queue(uint32_t size = 0);
 
         void Reset();
 

@@ -31,7 +31,7 @@
 class TinyConfig : protected std::multimap<std::string, std::string>
 {
 public:
-    TinyConfig(char sep = '=', char com = ';');
+    explicit TinyConfig(char sep = '=', char com = ';');
 
     bool Load(const std::string &);
 

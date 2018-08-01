@@ -197,7 +197,7 @@ struct XMIData
 {
     XMITracks tracks;
 
-    XMIData(const vector<u8> &buf)
+    explicit XMIData(const vector<u8> &buf)
     {
         ByteVectorReader sb(buf);
 
@@ -344,7 +344,7 @@ struct MidEvents : public vector<MidEvent>
     MidEvents()
     = default;
 
-    MidEvents(const XMITrack &t)
+    explicit MidEvents(const XMITrack &t)
     {
         const u8 *ptr = &t.evnt[0];
         const u8 *end = ptr + t.evnt.size();
@@ -477,7 +477,7 @@ struct MidTrack
     MidTrack() : mtrk(TAG_MTRK, 0)
     {}
 
-    MidTrack(const XMITrack &t) : mtrk(TAG_MTRK, 0), events(t)
+    explicit MidTrack(const XMITrack &t) : mtrk(TAG_MTRK, 0), events(t)
     { mtrk.length = events.size(); }
 
     size_t size() const
@@ -508,10 +508,9 @@ struct MidTracks : vector<MidTrack>
         return res;
     }
 
-    MidTracks()
-    = default;
+    MidTracks() = default;
 
-    MidTracks(const XMITracks &tracks)
+    explicit MidTracks(const XMITracks &tracks)
     {
         for (const auto &track : tracks)
             push_back(MidTrack(track));

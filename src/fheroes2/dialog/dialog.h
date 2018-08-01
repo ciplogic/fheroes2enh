@@ -164,7 +164,7 @@ namespace Dialog
     class FrameBox
     {
     public:
-        FrameBox(int height, bool buttons = false);
+        explicit FrameBox(int height, bool buttons = false);
 
         ~FrameBox();
 
@@ -179,9 +179,9 @@ namespace Dialog
     class FrameBorder
     {
     public:
-        FrameBorder(int v = BORDERWIDTH);
+        explicit FrameBorder(int v = BORDERWIDTH);
 
-        FrameBorder(const Size &);
+        explicit FrameBorder(const Size &);
 
         FrameBorder(const Size &, const Surface &);
 

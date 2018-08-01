@@ -722,24 +722,21 @@ bool BagArtifacts::isPresentArtifact(const Artifact &art) const
 
 bool BagArtifacts::PushArtifact(const Artifact &art)
 {
-    if (art.isValid())
-    {
-        if (art() == Artifact::MAGIC_BOOK && isPresentArtifact(art))
-            return false;
+    if (!art.isValid())
+        return false;
+    if (art() == Artifact::MAGIC_BOOK && isPresentArtifact(art))
+        return false;
 
-        auto it = find(begin(), end(), Artifact(Artifact::UNKNOWN));
-        if (it == end()) return false;
+    auto it = find(begin(), end(), Artifact(Artifact::UNKNOWN));
+    if (it == end()) return false;
 
-        *it = art;
+    *it = art;
 
-        // book insert first
-        if (art() == Artifact::MAGIC_BOOK)
-            std::swap(*it, front());
+    // book insert first
+    if (art() == Artifact::MAGIC_BOOK)
+        std::swap(*it, front());
 
-        return true;
-    }
-
-    return false;
+    return true;
 }
 
 void BagArtifacts::RemoveArtifact(const Artifact &art)
@@ -845,7 +842,7 @@ ArtifactsBar::ArtifactsBar(const Heroes *ptr, bool mini, bool ro, bool change /*
     {
         const Sprite &sprite = AGG::GetICN(ICN::ARTIFACT, 0);
         SetItemSize(sprite.w(), sprite.h());
-        spcursor = AGG::GetICN(ICN::NGEXTRA, 62);
+        spcursor = SpriteMove(AGG::GetICN(ICN::NGEXTRA, 62));
     }
 }
 

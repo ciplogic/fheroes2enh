@@ -170,9 +170,9 @@ public:
 
     static void DrawMons32LineShort(const Troops &, s32, s32, uint32_t, uint32_t, uint32_t);
 
-    Army(HeroBase *s = nullptr);
+    explicit Army(HeroBase *s = nullptr);
 
-    Army(const Maps::Tiles &);
+    explicit Army(const Maps::Tiles &);
 
     ~Army();
 

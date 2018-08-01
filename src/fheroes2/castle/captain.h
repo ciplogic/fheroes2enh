@@ -28,7 +28,7 @@
 class Captain : public HeroBase
 {
 public:
-    Captain(Castle &);
+    explicit Captain(Castle &);
 
     bool isValid() const;
 

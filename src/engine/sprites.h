@@ -52,7 +52,7 @@ class SpriteBack : protected Surface
 public:
     SpriteBack();
 
-    SpriteBack(const Rect &);
+    explicit SpriteBack(const Rect &);
 
     bool isValid() const;
 
@@ -84,7 +84,7 @@ class SpriteMove : public Surface
 public:
     SpriteMove();
 
-    SpriteMove(const Surface &);
+    explicit SpriteMove(const Surface &);
 
     void Move(const Point &);
 

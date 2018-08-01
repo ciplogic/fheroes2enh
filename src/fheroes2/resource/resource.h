@@ -66,9 +66,9 @@ public:
 
     Funds(int rs, uint32_t count);
 
-    Funds(const cost_t &);
+    explicit Funds(const cost_t &);
 
-    Funds(const ResourceCount &);
+    explicit Funds(const ResourceCount &);
 
     Funds operator+(const Funds &) const;
 
