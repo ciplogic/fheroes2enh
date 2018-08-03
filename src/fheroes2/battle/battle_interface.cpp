@@ -3493,8 +3493,8 @@ namespace
         for (int i = 1; i<steps; i++)
         {
             Point interpolated = pointLerp(start, endPoint, pos);
-            interpolated.x += Rand::Get(-20, 20);
-            interpolated.y += Rand::Get(-20, 20);
+            interpolated.x += (20 - Rand::Get(0, 40));
+            interpolated.y += (20 - Rand::Get(0, 40));
             drawPoints.push_back(interpolated);
             pos += floatPart;
         }
