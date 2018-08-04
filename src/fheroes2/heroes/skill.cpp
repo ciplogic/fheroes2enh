@@ -631,7 +631,7 @@ void Skill::SecSkills::AddSkill(const Secondary &skill)
 {
     if (skill.isValid())
     {
-        iterator it = find_if(begin(), end(),
+        auto it = find_if(begin(), end(),
                               bind2nd(mem_fun_ref(&Secondary::isSkill), skill.Skill()));
         if (it != end())
             (*it).SetLevel(skill.Level());

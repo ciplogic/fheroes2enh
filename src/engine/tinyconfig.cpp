@@ -122,13 +122,13 @@ void TinyConfig::AddEntry(const string &key, int val, bool uniq)
 
 int TinyConfig::IntParams(const string &key) const
 {
-    auto it = find(ModifyKey(key));
+    const auto it = find(ModifyKey(key));
     return it != end() ? GetInt(it->second) : 0;
 }
 
 string TinyConfig::StrParams(const string &key) const
 {
-    auto it = find(ModifyKey(key));
+    const auto it = find(ModifyKey(key));
     return it != end() ? it->second : "";
 }
 

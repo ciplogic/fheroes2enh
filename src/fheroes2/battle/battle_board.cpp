@@ -273,7 +273,7 @@ Battle::Indexes Battle::Board::GetAStarPath(const Unit &b, const Position &dst, 
         // skip moat position
         if (castle && castle->isBuild(BUILD_MOAT) && !isMoatIndex(b.GetHeadIndex()))
         {
-            Indexes::iterator moat = find_if(result.begin(), result.end(), isMoatIndex);
+            auto moat = find_if(result.begin(), result.end(), isMoatIndex);
             if (moat != result.end())
                 result.resize(distance(result.begin(), ++moat));
         }
@@ -970,7 +970,7 @@ Battle::Indexes Battle::Board::GetAroundIndexes(const Unit &b)
         const Indexes &tail = GetAroundIndexes(b.GetTailIndex());
         around.insert(around.end(), tail.begin(), tail.end());
 
-        Indexes::iterator it_end = around.end();
+        auto it_end = around.end();
         it_end = remove(around.begin(), it_end, b.GetHeadIndex());
         it_end = remove(around.begin(), it_end, b.GetTailIndex());
         around.resize(distance(around.begin(), it_end));

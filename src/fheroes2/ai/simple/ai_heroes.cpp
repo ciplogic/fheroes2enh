@@ -432,7 +432,7 @@ bool AI::HeroesGetTask(Heroes &hero)
         {
             const Maps::Indexes &results = Maps::ScanAroundObjects(hero.GetIndex(),
                                                                    hero.GetSquarePatrol(), objs1);
-            for (int result : results)
+            for (auto result : results)
             {
                 if (!HeroesValidObject(hero, result) || !hero.GetPath().Calculate(result))
                     continue;
@@ -558,8 +558,8 @@ bool AI::HeroesGetTask(Heroes &hero)
     // random shuffle
     if (1 < task.size() && Rand::Get(1))
     {
-        Queue::iterator it1 = task.begin();
-        Queue::iterator it2 = it1;
+        const auto it1 = task.begin();
+        auto it2 = it1;
         ++it2;
 
         swap(*it1, *it2);

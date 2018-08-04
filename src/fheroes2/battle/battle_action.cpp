@@ -531,8 +531,8 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForSpells(const HeroBase *hero, con
                 }
 
                 // save targets
-                for (Indexes::iterator
-                             it = trgts.begin(); it != trgts.end(); ++it)
+                for (auto
+                     it = trgts.begin(); it != trgts.end(); ++it)
                 {
                     Unit *target = GetTroopBoard(*it);
 
@@ -605,7 +605,7 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForSpells(const HeroBase *hero, con
         }
 
     // remove resistent magic troop
-    TargetsInfo::iterator it = targets.begin();
+    auto it = targets.begin();
     while (it != targets.end())
     {
         const uint32_t resist = (*it).defender->GetMagicResist(spell, hero ? hero->GetPower() : 0);

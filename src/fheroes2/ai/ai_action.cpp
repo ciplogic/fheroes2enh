@@ -185,7 +185,9 @@ int AISelectPrimarySkill(Heroes &hero)
 
 void AIBattleLose(Heroes &hero, const Battle::Result &res, bool attacker, int color = Color::NONE)
 {
-    uint32_t reason = attacker ? res.AttackerResult() : res.DefenderResult();
+    const uint32_t reason = attacker 
+        ? res.AttackerResult() 
+        : res.DefenderResult();
 
     if (Settings::Get().ExtHeroSurrenderingGiveExp() &&
         Battle::RESULT_SURRENDER == reason)
@@ -603,7 +605,7 @@ void AIToMonster(Heroes &hero, uint32_t obj, s32 dst_index)
 {
     bool destroy = false;
     Maps::Tiles &tile = world.GetTiles(dst_index);
-    MapMonster *map_troop = static_cast<MapMonster *>(world.GetMapObject(tile.GetObjectUID(obj)));
+    auto*map_troop = static_cast<MapMonster *>(world.GetMapObject(tile.GetObjectUID(obj)));
     Troop troop = map_troop ? map_troop->QuantityTroop() : tile.QuantityTroop();
     //const Settings & conf = Settings::Get();
 
@@ -699,7 +701,7 @@ void AIToMonster(Heroes &hero, uint32_t obj, s32 dst_index)
 void AIToPickupResource(Heroes &hero, uint32_t obj, s32 dst_index)
 {
     Maps::Tiles &tile = world.GetTiles(dst_index);
-    MapResource *map_resource = static_cast<MapResource *>(world.GetMapObject(tile.GetObjectUID(obj)));
+    auto*map_resource = static_cast<MapResource *>(world.GetMapObject(tile.GetObjectUID(obj)));
 
     if (obj != MP2::OBJ_BOTTLE)
         hero.GetKingdom().AddFundsResource(map_resource ? Funds(map_resource->resource) : tile.QuantityFunds());
@@ -890,13 +892,11 @@ void AIToMagellanMaps(Heroes &hero, uint32_t obj, s32 dst_index)
 
 void AIToTeleports(Heroes &hero, s32 index_from)
 {
-    s32 index_to = world.NextTeleport(index_from);
+    const s32 index_to = world.NextTeleport(index_from);
     hero.ApplyPenaltyMovement();
 
     if (index_from == index_to)
-    {
         return;
-    }
 
     if (MP2::OBJ_HEROES == world.GetTiles(index_to).GetObject())
     {
@@ -936,7 +936,7 @@ void AIToWhirlpools(Heroes &hero, s32 index_from)
 
     if (troop && Rand::Get(1) && 1 < troop->GetCount())
     {
-        Monster monster(troop->GetID());
+        const Monster monster(troop->GetID());
         troop->SetCount(
                 Monster::GetCountFromHitPoints(monster, troop->GetHitPointsTroop() - troop->GetHitPointsTroop() *
                                                                                      Game::GetWhirlpoolPercent() /
@@ -1402,7 +1402,7 @@ void AIToShipwreckSurvivor(Heroes &hero, uint32_t obj, s32 dst_index)
 void AIToArtifact(Heroes &hero, uint32_t obj, s32 dst_index)
 {
     Maps::Tiles &tile = world.GetTiles(dst_index);
-    MapArtifact *map_artifact = static_cast<MapArtifact *>(world.GetMapObject(tile.GetObjectUID(obj)));
+    auto*map_artifact = static_cast<MapArtifact *>(world.GetMapObject(tile.GetObjectUID(obj)));
 
     if (!hero.IsFullBagArtifacts())
     {
@@ -1972,7 +1972,7 @@ void AI::HeroesMove(Heroes &hero)
     {
         if (hero.isFreeman() || !hero.isEnableMove()) break;
 
-        bool hide_move = (0 == conf.AIMoveSpeed()) ||
+        const bool hide_move = (0 == conf.AIMoveSpeed()) ||
                          (!IS_DEVEL() && !AIHeroesShowAnimation(hero));
 
         if (hide_move)
@@ -2000,7 +2000,7 @@ void AI::HeroesMove(Heroes &hero)
         }
     }
 
-    bool hide_move = (0 == conf.AIMoveSpeed()) ||
+    const bool hide_move = (0 == conf.AIMoveSpeed()) ||
                      (!IS_DEVEL() && !AIHeroesShowAnimation(hero));
 
     // 0.2 sec delay for show enemy hero position

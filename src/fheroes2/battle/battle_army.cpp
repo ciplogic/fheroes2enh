@@ -186,7 +186,7 @@ Battle::Unit *Battle::Units::FindUID(uint32_t pid)
 
 Battle::Unit *Battle::Units::FindMode(uint32_t mod)
 {
-    iterator it = find_if(begin(), end(),
+    auto it = find_if(begin(), end(),
                           bind2nd(mem_fun(&Unit::Modes), mod));
 
     return it == end() ? nullptr : *it;

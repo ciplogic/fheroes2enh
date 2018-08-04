@@ -2428,7 +2428,7 @@ void Battle::Interface::RedrawActionAttackPart1(Unit &attacker, Unit &defender, 
         const Point line_to = Point(pos2.x + (defender.isReflect() ? 0 : pos1.w), pos2.y);
 
         const Points points = GetLinePoints(line_from, line_to, step);
-        Points::const_iterator pnt = points.begin();
+        auto pnt = points.begin();
 
         while (le.HandleEvents(false) && pnt != points.end())
         {
@@ -2697,7 +2697,7 @@ void Battle::Interface::RedrawActionFly(Unit &b, const Position &pos)
     const uint32_t step = b.isWide() ? 80 : 40;
 
     const Points points = GetLinePoints(pt1, pt2, step);
-    Points::const_iterator pnt = points.begin();
+    auto pnt = points.begin();
 
     // jump up
     b_current = nullptr;
@@ -3132,7 +3132,7 @@ void Battle::Interface::RedrawActionTowerPart1(Tower &tower, Unit &defender)
                                         pos1.x > pos2.x);
 
     const Points points = GetLinePoints(pos1, Point(pos2.x + pos2.w, pos2.y), missile.w());
-    Points::const_iterator pnt = points.begin();
+    auto pnt = points.begin();
 
     while (le.HandleEvents(false) && pnt != points.end())
     {
@@ -3300,7 +3300,7 @@ void Battle::Interface::RedrawActionArrowSpell(const Unit &target)
                                         pt_from.x > pt_to.x);
 
     const Points points = GetLinePoints(pt_from, pt_to, missile.w());
-    Points::const_iterator pnt = points.begin();
+    auto pnt = points.begin();
 
     cursor.SetThemes(Cursor::WAR_NONE);
     AGG::PlaySound(M82::MAGCAROW);
@@ -3428,7 +3428,7 @@ void Battle::Interface::RedrawActionMirrorImageSpell(const Unit &target, const P
     const Rect &rt2 = pos.GetRect();
 
     const Points points = GetLinePoints(rt1, rt2, 5);
-    Points::const_iterator pnt = points.begin();
+    auto pnt = points.begin();
 
     cursor.SetThemes(Cursor::WAR_NONE);
     cursor.Hide();
@@ -3613,7 +3613,7 @@ void Battle::Interface::RedrawActionColdRaySpell(Unit &target)
 
 
     const Points points = GetLinePoints(pt_from, pt_to, step);
-    Points::const_iterator pnt = points.begin();
+    auto pnt = points.begin();
 
     cursor.SetThemes(Cursor::WAR_NONE);
     AGG::PlaySound(M82::COLDRAY);
@@ -3705,7 +3705,7 @@ void Battle::Interface::RedrawActionDisruptingRaySpell(Unit &target)
     const uint32_t step = (dx > dy ? dx / AGG::GetICNCount(icn) : dy / AGG::GetICNCount(icn));
 
     const Points points = GetLinePoints(pt_from, pt_to, step);
-    Points::const_iterator pnt = points.begin();
+    auto pnt = points.begin();
 
     cursor.SetThemes(Cursor::WAR_NONE);
     AGG::PlaySound(M82::DISRUPTR);

@@ -385,8 +385,8 @@ void Dialog::ThievesGuild(bool oracle)
 
     // head 2
     ii = 0;
-    for (Colors::const_iterator
-                 color = colors.begin(); color != colors.end(); ++color)
+    for (auto
+         color = colors.begin(); color != colors.end(); ++color)
     {
         text.Set(Color::String(*color));
         dst_pt.x = cur_pt.x + startx + maxw / (colors.size() * 2) + ii * maxw / colors.size() - text.w() / 2;

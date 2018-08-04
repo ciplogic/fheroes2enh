@@ -402,7 +402,7 @@ bool Surface::Load(const std::string &fn)
 
 bool Surface::Save(const std::string &fn) const
 {
-    int res = IMG_SavePNG(fn.c_str(), surface, -1);
+    const int res = IMG_SavePNG(fn.c_str(), surface, -1);
 
     if (0 != res)
     {
@@ -625,8 +625,8 @@ void Surface::BlitAlpha(const Rect &srt, const Point &dpt, Surface &dst) const
     {
         for (int y = 0; y < h; y++)
         {
-            uint32_t srcPix = this->GetPixel4(srt.x + x, srt.y + y);
-            uint32_t alpha = srcPix >> 24;
+            const uint32_t srcPix = this->GetPixel4(srt.x + x, srt.y + y);
+            const uint32_t alpha = srcPix >> 24;
             if (alpha == 0)
                 continue;
 
@@ -635,23 +635,23 @@ void Surface::BlitAlpha(const Rect &srt, const Point &dpt, Surface &dst) const
                 dst.SetPixel4(dpt.x + x, dpt.y + y, srcPix);
                 continue;
             }
-            uint32_t dstPix = dst.GetPixel4(dpt.x + x, dpt.y + y);
-            uint32_t dstRed = dstPix & 0xff;
-            uint32_t dstGreen = (dstPix >> 8) & 0xff;
-            uint32_t dstBlue = (dstPix >> 16) & 0xff;
-            uint32_t srcRed = srcPix & 0xff;
-            uint32_t srcGreen = (srcPix >> 8) & 0xff;
-            uint32_t srcBlue = (srcPix >> 16) & 0xff;
-            uint32_t opacity = alpha;
-            uint32_t revOpacity = 255 - opacity;
-            uint32_t finalRed = (opacity * srcRed + revOpacity * dstRed) >> 8;
-            if (finalRed > 255) finalRed = 255;
-            uint32_t finalGreen = (opacity * srcGreen + revOpacity * dstGreen) >> 8;
-            if (finalGreen > 255) finalGreen = 255;
+            const uint32_t dstPix = dst.GetPixel4(dpt.x + x, dpt.y + y);
+            const uint32_t dstRed = dstPix & 0xff;
+            const uint32_t dstGreen = (dstPix >> 8) & 0xff;
+            const uint32_t dstBlue = (dstPix >> 16) & 0xff;
+            const uint32_t srcRed = srcPix & 0xff;
+            const uint32_t srcGreen = (srcPix >> 8) & 0xff;
+            const uint32_t srcBlue = (srcPix >> 16) & 0xff;
+            const uint32_t opacity = alpha;
+            const uint32_t revOpacity = 255 - opacity;
+            uint32_t final_red = (opacity * srcRed + revOpacity * dstRed) >> 8;
+            if (final_red > 255) final_red = 255;
+            uint32_t final_green = (opacity * srcGreen + revOpacity * dstGreen) >> 8;
+            if (final_green > 255) final_green = 255;
             uint32_t finalBlue = (opacity * srcBlue + revOpacity * dstBlue) >> 8;
             if (finalBlue > 255) finalBlue = 255;
 
-            uint32_t finalPix = 0xff000000 | (finalBlue << 16) | (finalGreen << 8) | (finalRed);
+            const uint32_t finalPix = 0xff000000 | (finalBlue << 16) | (final_green << 8) | (final_red);
             dst.SetPixel4(dpt.x + x, dpt.y + y, finalPix);
 
         }
@@ -1148,15 +1148,15 @@ void Surface::drawAALine(int x0, int y0, int x1, int y1, const RGBA &col)
     }
 
     //compute the slope
-    float dx = x1 - x0;
-    float dy = y1 - y0;
+    const float dx = x1 - x0;
+    const float dy = y1 - y0;
     float gradient = dy / dx;
     if (dx == 0.0)
         gradient = 1;
 
-    int xpxl1 = x0;
-    int xpxl2 = x1;
-    float intersectY = y0;
+    const int xpxl1 = x0;
+    const int xpxl2 = x1;
+    float intersect_y = y0;
 
     // main loop
     if (steep)
@@ -1165,12 +1165,12 @@ void Surface::drawAALine(int x0, int y0, int x1, int y1, const RGBA &col)
         {
             // pixel coverage is determined by fractional
             // part of y co-ordinate
-            int y = iPartOfNumber(intersectY);
+            const int y = iPartOfNumber(intersect_y);
             drawPixelSafe(y, x,
-                      rfPartOfNumber(intersectY), uCol);
+                      rfPartOfNumber(intersect_y), uCol);
             drawPixelSafe(y - 1, x,
-                      fPartOfNumber(intersectY), uCol);
-            intersectY += gradient;
+                      fPartOfNumber(intersect_y), uCol);
+            intersect_y += gradient;
         }
     } else
     {
@@ -1178,12 +1178,12 @@ void Surface::drawAALine(int x0, int y0, int x1, int y1, const RGBA &col)
         {
             // pixel coverage is determined by fractional
             // part of y co-ordinate
-            int y = iPartOfNumber(intersectY);
+            const int y = iPartOfNumber(intersect_y);
             drawPixelSafe(x, y,
-                      rfPartOfNumber(intersectY), uCol);
+                      rfPartOfNumber(intersect_y), uCol);
             drawPixelSafe(x, y - 1,
-                      fPartOfNumber(intersectY), uCol);
-            intersectY += gradient;
+                      fPartOfNumber(intersect_y), uCol);
+            intersect_y += gradient;
         }
     }
 
@@ -1320,19 +1320,19 @@ Surface Surface::RenderSurface(const Rect &srcrt, const Size &sz) const
 {
     const Surface &srcsf = *this;
     Surface dstsf(sz, false);
-    Rect dstrt = Rect(0, 0, sz.w, sz.h);
-    uint32_t mw = dstrt.w < srcrt.w ? dstrt.w : srcrt.w;
-    uint32_t mh = dstrt.h < srcrt.h ? dstrt.h : srcrt.h;
+    const Rect dstrt = Rect(0, 0, sz.w, sz.h);
+    const uint32_t mw = dstrt.w < srcrt.w ? dstrt.w : srcrt.w;
+    const uint32_t mh = dstrt.h < srcrt.h ? dstrt.h : srcrt.h;
 
-    uint32_t cw = mw / 3;
-    uint32_t ch = mh / 3;
-    s32 cx = srcrt.x + (srcrt.w - cw) / 2;
-    s32 cy = srcrt.y + (srcrt.h - ch) / 2;
-    uint32_t bw = mw - 2 * cw;
-    uint32_t bh = mh - 2 * ch;
+    const uint32_t cw = mw / 3;
+    const uint32_t ch = mh / 3;
+    const s32 cx = srcrt.x + (srcrt.w - cw) / 2;
+    const s32 cy = srcrt.y + (srcrt.h - ch) / 2;
+    const uint32_t bw = mw - 2 * cw;
+    const uint32_t bh = mh - 2 * ch;
 
-    uint32_t ox = (dstrt.w - (dstrt.w / bw) * bw) / 2;
-    uint32_t oy = (dstrt.h - (dstrt.h / bh) * bh) / 2;
+    const uint32_t ox = (dstrt.w - (dstrt.w / bw) * bw) / 2;
+    const uint32_t oy = (dstrt.h - (dstrt.h / bh) * bh) / 2;
 
     // body
     if (bw < dstrt.w && bh < dstrt.h)
@@ -1343,7 +1343,7 @@ Surface Surface::RenderSurface(const Rect &srcrt, const Size &sz) const
     // top, bottom bar
     for (uint32_t xx = 0; xx < (dstrt.w / bw); ++xx)
     {
-        s32 dstx = dstrt.x + ox + xx * bw;
+        const s32 dstx = dstrt.x + ox + xx * bw;
         srcsf.Blit(Rect(cx, srcrt.y, bw, ch), dstx, dstrt.y, dstsf);
         srcsf.Blit(Rect(cx, srcrt.y + srcrt.h - ch, bw, ch), dstx, dstrt.y + dstrt.h - ch, dstsf);
     }
@@ -1351,7 +1351,7 @@ Surface Surface::RenderSurface(const Rect &srcrt, const Size &sz) const
     // left, right bar
     for (uint32_t yy = 0; yy < (dstrt.h / bh); ++yy)
     {
-        s32 dsty = dstrt.y + oy + yy * bh;
+        const s32 dsty = dstrt.y + oy + yy * bh;
         srcsf.Blit(Rect(srcrt.x, cy, cw, bh), dstrt.x, dsty, dstsf);
         srcsf.Blit(Rect(srcrt.x + srcrt.w - cw, cy, cw, bh), dstrt.x + dstrt.w - cw, dsty, dstsf);
     }

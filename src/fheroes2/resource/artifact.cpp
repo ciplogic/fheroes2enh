@@ -752,9 +752,9 @@ bool BagArtifacts::isFull() const
 
 bool BagArtifacts::MakeBattleGarb()
 {
-    iterator it1 = find(begin(), end(), Artifact(Artifact::BREASTPLATE_ANDURAN));
-    iterator it2 = find(begin(), end(), Artifact(Artifact::HELMET_ANDURAN));
-    iterator it3 = find(begin(), end(), Artifact(Artifact::SWORD_ANDURAN));
+    auto it1 = find(begin(), end(), Artifact(Artifact::BREASTPLATE_ANDURAN));
+    auto it2 = find(begin(), end(), Artifact(Artifact::HELMET_ANDURAN));
+    auto it3 = find(begin(), end(), Artifact(Artifact::SWORD_ANDURAN));
     if (it1 == end() || it2 == end() || it3 == end()) return false;
 
     *it1 = Artifact::UNKNOWN;
@@ -781,7 +781,7 @@ void BagArtifacts::RemoveScroll(const Artifact &art)
     Spell spell(art.GetSpell());
     if (spell.isValid())
     {
-        iterator it = find(begin(), end(), spell);
+        auto it = find(begin(), end(), spell);
         if (it != end()) (*it).Reset();
     }
 }

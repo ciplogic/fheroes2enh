@@ -187,7 +187,7 @@ namespace Interface
             }
 
             dstpt = barsz;
-            ItemsIterator posItem = GetTopItemIter();
+            auto posItem = GetTopItemIter();
 
             for (uint32_t yy = 0; yy < colrows.h; ++yy)
             {
@@ -275,7 +275,7 @@ namespace Interface
         ItemIterPos GetItemIterPos(const Point &pt)
         {
             Rect dstrt(barsz, itemsz.w, itemsz.h);
-            ItemsIterator posItem = GetTopItemIter();
+            auto posItem = GetTopItemIter();
 
             for (uint32_t yy = 0; yy < colrows.h; ++yy)
             {

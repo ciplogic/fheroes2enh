@@ -1574,7 +1574,7 @@ void ActionToSign(Heroes &hero, uint32_t obj, s32 dst_index)
 {
     PlaySoundWarning;
     Maps::Tiles &tile = world.GetTiles(dst_index);
-    MapSign *sign = static_cast<MapSign *>(world.GetMapObject(tile.GetObjectUID(obj)));
+    auto*sign = static_cast<MapSign *>(world.GetMapObject(tile.GetObjectUID(obj)));
     Message(_("Sign"), (sign ? sign->message : ""), Font::BIG, Dialog::OK);
 }
 
@@ -1887,7 +1887,7 @@ void ActionToShipwreckSurvivor(Heroes &hero, uint32_t obj, s32 dst_index)
 void ActionToArtifact(Heroes &hero, uint32_t obj, s32 dst_index)
 {
     Maps::Tiles &tile = world.GetTiles(dst_index);
-    MapArtifact *map_artifact = static_cast<MapArtifact *>(world.GetMapObject(tile.GetObjectUID(obj)));
+    auto*map_artifact = static_cast<MapArtifact *>(world.GetMapObject(tile.GetObjectUID(obj)));
 
     if (hero.IsFullBagArtifacts())
         Message("", _("You have no room to carry another artifact!"), Font::BIG, Dialog::OK);
@@ -3242,7 +3242,7 @@ void ActionToEyeMagi(Heroes &hero, uint32_t obj, s32 dst_index)
 void ActionToSphinx(Heroes &hero, uint32_t obj, s32 dst_index)
 {
     Maps::Tiles &tile = world.GetTiles(dst_index);
-    MapSphinx *riddle = static_cast<MapSphinx *>(world.GetMapObject(tile.GetObjectUID(obj)));
+    auto*riddle = static_cast<MapSphinx *>(world.GetMapObject(tile.GetObjectUID(obj)));
 
     if (!riddle || !riddle->valid)
     {

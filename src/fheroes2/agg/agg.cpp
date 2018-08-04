@@ -793,9 +793,8 @@ void AGG::RenderICNSprite(int icn, uint32_t index, const Rect &srt, const Point 
 
 std::string joinValues(const std::vector<u8> &body, int maxSize)
 {
-    std:
-    string result = std::to_string(body.size()) + ": ";
-    int maxIndex = std::min((int) body.size(), maxSize);
+    std::string result = std::to_string(body.size()) + ": ";
+    const int maxIndex = std::min((int) body.size(), maxSize);
     bool isFirst = true;
 
     for (int i = 0; i < maxIndex; i++)
@@ -820,12 +819,12 @@ ICNSprite AGG::RenderICNSprite(int icn, uint32_t index)
 
     ByteVectorReader st(body);
 
-    uint32_t count = st.getLE16();
+    const auto count = st.getLE16();
     if (index >= count)
     {
         return res;
     }
-    uint32_t blockSize = st.getLE32();
+    const auto blockSize = st.getLE32();
 
     if (index) st.skip(index * 13);
 
@@ -853,7 +852,7 @@ ICNSprite AGG::RenderICNSprite(int icn, uint32_t index)
 
     sf1.Set(sz.w, sz.h, false);
 
-    uint32_t shadowCol = RGBA::packRgba(0, 0, 0, 0x40);
+    const uint32_t shadowCol = RGBA::packRgba(0, 0, 0, 0x40);
 
     uint32_t c = 0;
     Point pt(0, 0);
@@ -1218,7 +1217,7 @@ void AGG::LoadWAV(int m82, vector<u8> &v)
     if (conf.UseAltResource())
     {
         std::string name = StringLower(M82::GetString(m82));
-        std::string prefix_sounds = System::ConcatePath("files", "sounds");
+        const std::string prefix_sounds = System::ConcatePath("files", "sounds");
 
         // ogg
         StringReplace(name, ".82m", ".ogg");
@@ -1303,7 +1302,7 @@ void AGG::LoadLOOPXXSounds(const vector<int> &vols)
         if (M82::UNKNOWN == m82) continue;
 
         // find loops
-        auto itl = find(loop_sounds.begin(), loop_sounds.end(), m82);
+        const auto itl = find(loop_sounds.begin(), loop_sounds.end(), m82);
 
         if (itl != loop_sounds.end())
         {
@@ -1361,7 +1360,7 @@ void AGG::PlaySound(int m82)
 
     if (!conf.Sound()) return;
     const vector<u8> &v = GetWAV(m82);
-    int ch = Mixer::Play(&v[0], v.size(), -1, false);
+    const int ch = Mixer::Play(&v[0], v.size(), -1, false);
     Mixer::Pause(ch);
     Mixer::Volume(ch, Mixer::MaxVolume() * conf.SoundVolume() / 10);
     Mixer::Resume(ch);
@@ -1414,7 +1413,7 @@ void AGG::PlayMusic(int mus, bool loop)
 #endif
     if (conf.MusicMIDI())
     {
-        int xmi = XMI::FromMUS(mus);
+        const int xmi = XMI::FromMUS(mus);
         if (XMI::UNKNOWN != xmi)
         {
 #ifdef WITH_MIXER
@@ -1606,6 +1605,6 @@ RGBA AGG::GetPaletteColor(uint32_t index)
 
 void AGG::DrawPointFast(Surface &srf, int x, int y, u8 palette)
 {
-    auto palColor = pal_colors_u32[palette];
+    const auto palColor = pal_colors_u32[palette];
     srf.SetPixel4(x, y, palColor);
 }

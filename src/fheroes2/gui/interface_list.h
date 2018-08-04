@@ -190,9 +190,9 @@ namespace Interface
             buttonPgDn.Draw();
             splitter.RedrawCursor();
 
-            ItemsIterator curt = top;
+            auto curt = top;
             auto startIndex = top - content->begin();
-            ItemsIterator last = startIndex + maxItems < content->size() ? top + maxItems : content->end();
+            auto last = startIndex + maxItems < content->size() ? top + maxItems : content->end();
             for (; curt != last; ++curt)
                 RedrawItem(*curt, rtAreaItems.x, rtAreaItems.y + (curt - top) * rtAreaItems.h / maxItems, curt == cur);
         }

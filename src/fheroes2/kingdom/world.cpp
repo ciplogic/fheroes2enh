@@ -631,7 +631,7 @@ MapsIndexes World::GetTeleportEndPoints(s32 center) const
             result.clear();
         } else
         {
-            MapsIndexes::iterator itend = result.end();
+            auto itend = result.end();
 
             // remove if not type
             itend = remove_if(result.begin(), itend,

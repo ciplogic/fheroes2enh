@@ -96,7 +96,7 @@ s32 Battle::AIAreaSpellDst(const HeroBase &hero)
     }
 
     // find max
-    auto max = max_element(dstcount.begin(), dstcount.end(), MaxDstCount);
+    const auto max = max_element(dstcount.begin(), dstcount.end(), MaxDstCount);
 
     return max != dstcount.end() ? (*max).first : -1;
 }
@@ -106,14 +106,14 @@ s32 Battle::AIMaxQualityPosition(const Indexes &positions)
     s32 res = -1;
 
     for (int position : positions)
-        if (Board::isValidIndex(position))
-        {
-            if (res < 0)
-                res = position;
-            else if (Board::GetCell(res)->GetQuality() < Board::GetCell(position)->GetQuality())
-                res = position;
-        }
-
+    {
+        if (!Board::isValidIndex(position))
+            continue;
+        if (res < 0)
+            res = position;
+        else if (Board::GetCell(res)->GetQuality() < Board::GetCell(position)->GetQuality())
+            res = position;
+    }
     return res;
 }
 
@@ -380,7 +380,7 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
     {
         const u8 areasp[] = {Spell::METEORSHOWER, Spell::FIREBLAST, Spell::CHAINLIGHTNING, Spell::FIREBALL,
                              Spell::COLDRING};
-        s32 dst = AIAreaSpellDst(*hero);
+        const s32 dst = AIAreaSpellDst(*hero);
 
         if (Board::isValidIndex(dst))
             for (unsigned char ii : areasp)
@@ -424,7 +424,7 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
     if (hero->HaveSpell(Spell::HASTE) && !enemy)
     {
         // sort strongest
-        auto it = find_if(friends.begin(), friends.end(),
+        const auto it = find_if(friends.begin(), friends.end(),
             [](Unit *unit)
         {
             return !unit->Modes(SP_HASTE);
