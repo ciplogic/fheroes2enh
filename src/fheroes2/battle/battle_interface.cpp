@@ -2224,7 +2224,7 @@ void Battle::Interface::MouseLeftClickBoardAction(uint32_t themes, const Cell &c
             // or show direction attack
         else if (b)
         {
-            int res = PocketPC::GetCursorAttackDialog(cell.GetPos(), GetAllowSwordDirection(index));
+            const int res = PocketPC::GetCursorAttackDialog(cell.GetPos(), GetAllowSwordDirection(index));
 
             switch (res)
             {
@@ -3473,9 +3473,11 @@ namespace
         return lerp(start, end, theta);
     }
 
-    Point pointLerp(Point start, Point end, double theta)
+    Point pointLerp(const Point& start, const Point& end, double theta)
     {
-        return Point(iLerp(start.x, end.x, theta), iLerp(start.y, end.y, theta));
+        return {
+            iLerp(start.x, end.x, theta), 
+            iLerp(start.y, end.y, theta)};
     }
 
     void populateSpark(const Point &src, const Point &dst)
@@ -3493,8 +3495,8 @@ namespace
         for (int i = 1; i<steps; i++)
         {
             Point interpolated = pointLerp(start, endPoint, pos);
-            interpolated.x += Rand::Get(-20, 20);
-            interpolated.y += Rand::Get(-20, 20);
+            interpolated.x += Rand::Get(-30, 30);
+            interpolated.y += Rand::Get(-30, 30);
             drawPoints.push_back(interpolated);
             pos += floatPart;
         }

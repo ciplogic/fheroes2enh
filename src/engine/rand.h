@@ -43,14 +43,6 @@ namespace Rand
         return it == vec.end() ? nullptr : &(*it);
     }
 
-    template<typename T>
-    const T *Get(const list <T> &lst)
-    {
-        auto it = lst.begin();
-        std::advance(it, Rand::Get(lst.size() - 1));
-        return it == lst.end() ? nullptr : &(*it);
-    }
-
     typedef pair<s32, uint32_t> ValuePercent;
 
     class Queue : private vector<ValuePercent>

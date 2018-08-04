@@ -46,11 +46,11 @@ namespace Battle
 
     Unit *ForceGetCurrentUnitPart(Units &units1, Units &units2, bool part1, bool units1_first, bool orders_mode)
     {
-        Units::iterator it1 = part1 ? find_if(units1.begin(), units1.end(),
+        const auto it1 = part1 ? find_if(units1.begin(), units1.end(),
                                               bind2nd(ptr_fun(&AllowPart1), orders_mode)) :
                               find_if(units1.begin(), units1.end(),
                                       bind2nd(ptr_fun(&AllowPart2), orders_mode));
-        Units::iterator it2 = part1 ? find_if(units2.begin(), units2.end(),
+        const auto it2 = part1 ? find_if(units2.begin(), units2.end(),
                                               bind2nd(ptr_fun(&AllowPart1), orders_mode)) :
                               find_if(units2.begin(), units2.end(),
                                       bind2nd(ptr_fun(&AllowPart2), orders_mode));

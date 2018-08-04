@@ -511,7 +511,7 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, Players &players)
 
     for (uint32_t ii = 0; ii < vcolors.size(); ++ii)
     {
-        sp<Player> player = make_shared<Player>();
+        const sp<Player> player = make_shared<Player>();
         msg >> *player;
         _players[Color::GetIndex(player->GetColor())] = player;
         players._items.push_back(player);
@@ -802,12 +802,12 @@ bool Interface::PlayersInfo::QueueEventProcessing()
             // change players
         if (show_swap && nullptr != (player = GetFromOpponentChangeClick(le.GetMouseCursor())))
         {
-            auto it = find(begin(), end(), player);
+            const auto it = find(begin(), end(), player);
             if (it != end() && (it + 1) != end())
             {
                 Players &players = conf.GetPlayers();
-                auto it1 = find(players._items.begin(), players._items.end(), (*it).player);
-                auto it2 = find(players._items.begin(), players._items.end(), (*(it + 1)).player);
+                const auto it1 = find(players._items.begin(), players._items.end(), (*it).player);
+                const auto it2 = find(players._items.begin(), players._items.end(), (*(it + 1)).player);
 
                 if (it1 != players._items.end() && it2 != players._items.end())
                 {

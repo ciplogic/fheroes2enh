@@ -167,7 +167,7 @@ std::string System::GetDirname(const std::string &str)
 {
     if (str.empty())
         return str;
-    size_t pos = str.rfind(SEPARATOR);
+    const size_t pos = str.rfind(SEPARATOR);
 
     if (std::string::npos == pos)
         return std::string(".");
@@ -182,7 +182,7 @@ std::string System::GetBasename(const std::string &str)
 {
     if (str.empty())
         return str;
-    size_t pos = str.rfind(SEPARATOR);
+    const size_t pos = str.rfind(SEPARATOR);
 
     if (std::string::npos == pos ||
         pos == 0)
@@ -320,7 +320,7 @@ bool System::IsFile(const std::string &name, bool writable)
 #ifdef WIN32
 bool dirExists(const std::string& dirName_in)
 {
-    DWORD ftyp = GetFileAttributesA(dirName_in.c_str());
+    const DWORD ftyp = GetFileAttributesA(dirName_in.c_str());
     if (ftyp == INVALID_FILE_ATTRIBUTES)
         return false;  //something is wrong with your path!
 

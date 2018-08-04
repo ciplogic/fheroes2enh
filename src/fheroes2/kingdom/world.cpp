@@ -63,7 +63,7 @@ void MapObjects::add(MapObjectSimple *obj)
 
 MapObjectSimple *MapObjects::get(uint32_t uid)
 {
-    auto it = find(uid);
+    const auto it = find(uid);
     return it != end() ? (*it).second : nullptr;
 }
 
@@ -865,7 +865,7 @@ bool IsObeliskOnMaps(const Maps::Tiles &tile)
 
 uint32_t World::CountObeliskOnMaps()
 {
-    uint32_t res = count_if(vec_tiles.begin(), vec_tiles.end(), IsObeliskOnMaps);
+    const uint32_t res = count_if(vec_tiles.begin(), vec_tiles.end(), IsObeliskOnMaps);
     return res ? res : 6;
 }
 
@@ -879,12 +879,11 @@ void World::ActionToEyeMagi(int color) const
 {
     MapsIndexes vec_eyes = Maps::GetObjectPositions(MP2::OBJ_EYEMAGI, true);
 
-    if (!vec_eyes.empty())
-    {
-        for (MapsIndexes::const_iterator
-                     it = vec_eyes.begin(); it != vec_eyes.end(); ++it)
-            Maps::ClearFog(*it, GetViewDistance(Game::VIEW_MAGI_EYES), color);
-    }
+    if (vec_eyes.empty())
+        return;
+    for (MapsIndexes::const_iterator
+         it = vec_eyes.begin(); it != vec_eyes.end(); ++it)
+        Maps::ClearFog(*it, GetViewDistance(Game::VIEW_MAGI_EYES), color);
 }
 
 MapEvent *World::GetMapEvent(const Point &pos)
@@ -1033,12 +1032,12 @@ int World::CheckKingdomLoss(const Kingdom &kingdom) const
     // firs check priority: other WINS_GOLD or WINS_ARTIFACT
     if (conf.ConditionWins() & GameOver::WINS_GOLD)
     {
-        int priority = vec_kingdoms.FindWins(GameOver::WINS_GOLD);
+        const int priority = vec_kingdoms.FindWins(GameOver::WINS_GOLD);
         if (priority && priority != kingdom.GetColor())
             return GameOver::LOSS_ALL;
     } else if (conf.ConditionWins() & GameOver::WINS_ARTIFACT)
     {
-        int priority = vec_kingdoms.FindWins(GameOver::WINS_ARTIFACT);
+        const int priority = vec_kingdoms.FindWins(GameOver::WINS_ARTIFACT);
         if (priority && priority != kingdom.GetColor())
             return GameOver::LOSS_ALL;
     }

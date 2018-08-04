@@ -122,7 +122,7 @@ Mixer::chunk_t *Mixer::LoadWAV(const u8 *ptr, uint32_t size)
 
 int Mixer::Play(chunk_t *sample, int channel, bool loop)
 {
-    int res = Mix_PlayChannel(channel, sample, loop ? -1 : 0);
+    const int res = Mix_PlayChannel(channel, sample, loop ? -1 : 0);
     if (res == -1)
     ERROR(SDL_GetError());
     return res;

@@ -1179,18 +1179,18 @@ bool TopObjectDisable(const Maps::TilesAddon &ta)
 
 bool Maps::Tiles::isLongObject(int direction)
 {
-    Size wSize(world.w(), world.h());
-    if (isValidDirection(GetIndex(), direction, wSize))
+    const Size wSize(world.w(), world.h());
+    if (!isValidDirection(GetIndex(), direction, wSize))
     {
-        Tiles &tile = world.GetTiles(GetDirectionIndex(GetIndex(), direction));
-
-        for (Addons::const_iterator
-                     it = addons_level1.begin(); it != addons_level1.end(); ++it)
-            if (!Exclude4LongObject(*it) &&
-                (HaveLongObjectUniq(tile.addons_level1, (*it).uniq) ||
-                 (!TilesAddon::isTrees(*it) && HaveLongObjectUniq(tile.addons_level2, (*it).uniq))))
-                return true;
+        return false;
     }
+    Tiles &tile = world.GetTiles(GetDirectionIndex(GetIndex(), direction));
+
+    for (auto it = addons_level1.begin(); it != addons_level1.end(); ++it)
+        if (!Exclude4LongObject(*it) &&
+            (HaveLongObjectUniq(tile.addons_level1, (*it).uniq) ||
+                (!TilesAddon::isTrees(*it) && HaveLongObjectUniq(tile.addons_level2, (*it).uniq))))
+            return true;
     return false;
 }
 
@@ -1708,7 +1708,7 @@ void Maps::Tiles::RedrawTop4Hero(Surface &dst, bool skip_ground) const
 
 Maps::TilesAddon *Maps::Tiles::FindAddonICN1(int icn1)
 {
-    auto it = find_if(addons_level1.begin(), addons_level1.end(),
+    const auto it = find_if(addons_level1.begin(), addons_level1.end(),
                       bind2nd(mem_fun_ref(&TilesAddon::isICN), icn1));
 
     return it != addons_level1.end() ? &(*it) : nullptr;
@@ -2397,9 +2397,9 @@ void Maps::Tiles::RemoveJailSprite()
 
 void Maps::Tiles::UpdateAbandoneMineSprite(Tiles &tile)
 {
-    auto it = find_if(tile.addons_level1.begin(), tile.addons_level1.end(),
+    const auto it = find_if(tile.addons_level1.begin(), tile.addons_level1.end(),
                       TilesAddon::isAbandoneMineSprite);
-    uint32_t uniq = it != tile.addons_level1.end() ? (*it).uniq : 0;
+    const uint32_t uniq = it != tile.addons_level1.end() ? (*it).uniq : 0;
 
     Size wSize(world.w(), world.h());
     if (uniq)
@@ -2425,22 +2425,21 @@ void Maps::Tiles::UpdateAbandoneMineSprite(Tiles &tile)
         if (tile2.GetObject() == MP2::OBJN_ABANDONEDMINE) tile2.SetObject(MP2::OBJN_MINES);
     }
 
-    if (isValidDirection(tile.GetIndex(), Direction::TOP, wSize))
+    if (!isValidDirection(tile.GetIndex(), Direction::TOP, wSize))
+        return;
+    Tiles &tile2 = world.GetTiles(GetDirectionIndex(tile.GetIndex(), Direction::TOP));
+    if (tile2.GetObject() == MP2::OBJN_ABANDONEDMINE) tile2.SetObject(MP2::OBJN_MINES);
+
+    if (isValidDirection(tile2.GetIndex(), Direction::LEFT, wSize))
     {
-        Tiles &tile2 = world.GetTiles(GetDirectionIndex(tile.GetIndex(), Direction::TOP));
-        if (tile2.GetObject() == MP2::OBJN_ABANDONEDMINE) tile2.SetObject(MP2::OBJN_MINES);
+        Tiles &tile3 = world.GetTiles(GetDirectionIndex(tile2.GetIndex(), Direction::LEFT));
+        if (tile3.GetObject() == MP2::OBJN_ABANDONEDMINE) tile3.SetObject(MP2::OBJN_MINES);
+    }
 
-        if (isValidDirection(tile2.GetIndex(), Direction::LEFT, wSize))
-        {
-            Tiles &tile3 = world.GetTiles(GetDirectionIndex(tile2.GetIndex(), Direction::LEFT));
-            if (tile3.GetObject() == MP2::OBJN_ABANDONEDMINE) tile3.SetObject(MP2::OBJN_MINES);
-        }
-
-        if (isValidDirection(tile2.GetIndex(), Direction::RIGHT, wSize))
-        {
-            Tiles &tile3 = world.GetTiles(GetDirectionIndex(tile2.GetIndex(), Direction::RIGHT));
-            if (tile3.GetObject() == MP2::OBJN_ABANDONEDMINE) tile3.SetObject(MP2::OBJN_MINES);
-        }
+    if (isValidDirection(tile2.GetIndex(), Direction::RIGHT, wSize))
+    {
+        Tiles &tile3 = world.GetTiles(GetDirectionIndex(tile2.GetIndex(), Direction::RIGHT));
+        if (tile3.GetObject() == MP2::OBJN_ABANDONEDMINE) tile3.SetObject(MP2::OBJN_MINES);
     }
 }
 
@@ -2551,7 +2550,7 @@ void Maps::Tiles::RedrawFogs(Surface &dst, int color) const
     int around = 0;
     const Directions &directions = Direction::All();
 
-    Size wSize(world.w(), world.h());
+    const Size wSize(world.w(), world.h());
     for (int direction : directions)
         if (!isValidDirection(GetIndex(), direction, wSize) ||
             world.GetTiles(GetDirectionIndex(GetIndex(), direction)).isFog(color))

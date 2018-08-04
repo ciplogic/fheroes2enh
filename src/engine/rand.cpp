@@ -85,7 +85,7 @@ s32 Rand::Queue::Get()
     for (auto &it : *this)
         max += it.second;
 
-    u8 rand = Rand::Get(max);
+    const u8 rand = Rand::Get(max);
     u8 amount = 0;
 
 

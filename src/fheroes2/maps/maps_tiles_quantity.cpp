@@ -846,7 +846,7 @@ void Maps::Tiles::QuantityUpdate()
 
         case MP2::OBJ_BARRIER:
         {
-            Addons::const_reverse_iterator it = find_if(addons_level1.rbegin(), addons_level1.rend(),
+            const Addons::const_reverse_iterator it = find_if(addons_level1.rbegin(), addons_level1.rend(),
                                                         ptr_fun(&TilesAddon::ColorFromBarrierSprite));
             if (it != addons_level1.rend())
                 QuantitySetColor(TilesAddon::ColorFromBarrierSprite(*it));

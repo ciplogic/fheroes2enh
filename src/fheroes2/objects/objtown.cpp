@@ -26,7 +26,7 @@
 
 int ObjTown::GetPassable(uint32_t index0)
 {
-    uint32_t index = index0 % 32;
+    const uint32_t index = index0 % 32;
 
     // 13, 29, 45, 61, 77, 93, 109, 125, 141, 157, 173, 189
     if (13 == index || 29 == index)
@@ -41,7 +41,7 @@ int ObjTown::GetPassable(uint32_t index0)
 
 int ObjTwba::GetPassable(uint32_t index0)
 {
-    uint32_t index = index0 % 10;
+    const uint32_t index = index0 % 10;
 
     // 2, 12, 22, 32, 42, 52, 62, 72
     if (2 == index)

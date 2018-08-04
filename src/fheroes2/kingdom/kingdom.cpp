@@ -214,17 +214,16 @@ void Kingdom::ActionNewMonth()
 
 void Kingdom::AddHeroes(Heroes *hero)
 {
-    if (hero)
-    {
-        if (heroes._items.end() == find(heroes._items.begin(), heroes._items.end(), hero))
-            heroes._items.push_back(hero);
+    if (!hero)
+        return;
+    if (heroes._items.end() == find(heroes._items.begin(), heroes._items.end(), hero))
+        heroes._items.push_back(hero);
 
-        auto player = Settings::Get().GetPlayers().GetCurrent();
-        if (player && player->isColor(GetColor()))
-            Interface::Basic::Get().GetIconsPanel().ResetIcons(ICON_HEROES);
+    auto player = Settings::Get().GetPlayers().GetCurrent();
+    if (player && player->isColor(GetColor()))
+        Interface::Basic::Get().GetIconsPanel().ResetIcons(ICON_HEROES);
 
-        AI::HeroesAdd(*hero);
-    }
+    AI::HeroesAdd(*hero);
 }
 
 void Kingdom::AddHeroStartCondLoss(Heroes *hero)
@@ -340,7 +339,7 @@ bool Kingdom::isVisited(const Maps::Tiles &tile) const
 
 bool Kingdom::isVisited(s32 index, int object) const
 {
-    auto it = find_if(visit_object.begin(), visit_object.end(),
+    const auto it = find_if(visit_object.begin(), visit_object.end(),
                       bind2nd(mem_fun_ref(&IndexObject::isIndex),
                               index));
     return visit_object.end() != it && (*it).isObject(object);
@@ -453,7 +452,7 @@ void Kingdom::ApplyPlayWithStartingHero()
         // and move manual set hero to castle
         if (hero && hero->GetColor() == GetColor())
         {
-            bool patrol = hero->Modes(Heroes::PATROL);
+            const bool patrol = hero->Modes(Heroes::PATROL);
             hero->SetFreeman(0);
             hero->Recruit(*first);
 

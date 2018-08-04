@@ -115,7 +115,7 @@ int Game::ScenarioInfo()
     // set first maps settings
     if (reset_starting_settings)
     {
-        auto it = std::find_if(lists.begin(), lists.end(), [](auto &_map) {
+        const auto it = std::find_if(lists.begin(), lists.end(), [](auto &_map) {
             return _map.name == "Broken Alliance";
         });
         if (it != lists.end())
@@ -278,7 +278,7 @@ int Game::ScenarioInfo()
 
         if (lower.size() > 3)
         {
-            string ext = lower.substr(lower.size() - 3);
+            const string ext = lower.substr(lower.size() - 3);
 
             if (ext == "mp2" || ext == "mx2")
                 result = world.LoadMapMP2(conf.MapsFile()) ? STARTGAME : MAINMENU;
@@ -323,7 +323,7 @@ void RedrawDifficultyInfo(const Point &dst, bool label)
     {
         const Sprite &sprite = AGG::GetICN(ICN::NGHSBKG, 0);
         Rect src_rt(24, 94, 65, 65);
-        uint32_t offset = current * (src_rt.w + 12);
+        const uint32_t offset = current * (src_rt.w + 12);
         src_rt.x = src_rt.x + offset;
         sprite.Blit(src_rt, dst.x + offset, dst.y);
 

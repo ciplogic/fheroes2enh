@@ -254,13 +254,13 @@ Battle::Indexes Battle::Board::GetAStarPath(const Unit &b, const Position &dst, 
 
             if (result.back() == head)
             {
-                int side = RIGHT == GetDirection(head, tail) ? RIGHT_SIDE : LEFT_SIDE;
+                const int side = RIGHT == GetDirection(head, tail) ? RIGHT_SIDE : LEFT_SIDE;
 
                 if (!(side & GetDirection(head, prev)))
                     result.push_back(tail);
             } else if (result.back() == tail)
             {
-                int side = RIGHT == GetDirection(head, tail) ? LEFT_SIDE : RIGHT_SIDE;
+                const int side = RIGHT == GetDirection(head, tail) ? LEFT_SIDE : RIGHT_SIDE;
 
                 if (!(side & GetDirection(tail, prev)))
                     result.push_back(head);
@@ -573,8 +573,8 @@ bool Battle::Board::isMoatIndex(s32 index)
 void Battle::Board::SetCobjObjects(const Maps::Tiles &tile)
 {
 //    bool trees = Maps::ScanAroundObject(center, MP2::OBJ_TREES).size();
-    bool grave = MP2::OBJ_GRAVEYARD == tile.GetObject(false);
-    int ground = tile.GetGround();
+    const bool grave = MP2::OBJ_GRAVEYARD == tile.GetObject(false);
+    const int ground = tile.GetGround();
     vector<int> objs;
 
     if (grave)
@@ -1006,7 +1006,7 @@ Battle::Indexes Battle::Board::GetDistanceIndexes(s32 center, uint32_t radius)
 
             abroad.resize(tm.size());
 
-            Indexes::iterator abroad_end =
+            const auto abroad_end =
                     set_difference(tm.begin(), tm.end(), st.begin(), st.end(), abroad.begin());
 
             abroad.resize(distance(abroad.begin(), abroad_end));

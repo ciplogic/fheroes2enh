@@ -41,7 +41,7 @@ namespace ModernTranslation
 
     public:
         void clear();
-        bool readFile(const std::string& fileName);
+        bool readFile(const std::string& fileName) const;
         void addDirectTranslation(StringVector& id, StringVector& trans);
         void addMultiTranslation(StringVector& messageIds, StringVector& messagePlurals, StringVector& messageStr1, StringVector& messageStr2);
         
@@ -60,7 +60,7 @@ namespace ModernTranslation
             if (findIt == stringTable.end())
                 result = item;
             else result = findIt->second;
-            auto posFind = result.find('|');
+            const auto posFind = result.find('|');
             if (posFind == std::string::npos)
                 return result;
             result = result.substr(posFind+1);
@@ -95,7 +95,7 @@ namespace ModernTranslation
     {
         if(text.size()< subStr.size())
             return false;
-        auto subText = text.substr(0, subStr.size());
+        const auto subText = text.substr(0, subStr.size());
         return subText == subStr;
     }
 
@@ -204,7 +204,7 @@ namespace ModernTranslation
         }
     };
 
-    bool TranslationTable::readFile(const std::string& fileName)
+    bool TranslationTable::readFile(const std::string& fileName) const
     {
         std::ifstream infile(fileName);
         if(!infile.is_open())
@@ -214,7 +214,7 @@ namespace ModernTranslation
         BuildVector buildVector;
         while (std::getline(infile, line))
         {
-            ClassifiedLine classLine = classifyLine(line);
+            const ClassifiedLine classLine = classifyLine(line);
             if (classLine.translationLineType == TranslationLineType::QuoteLine) {
                 buildVector.addString(current, classLine.line);
                 continue;

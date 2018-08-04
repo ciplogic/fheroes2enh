@@ -98,8 +98,8 @@ bool Game::Save(const string &fn)
 
     ByteVectorWriter bfs(250*1024);
     bfs.SetBigEndian(true);
-    
-    u16 loadver = GetLoadVersion();
+
+    const u16 loadver = GetLoadVersion();
     if (!autosave) SetLastSavename(fn);
 
 
@@ -152,7 +152,7 @@ bool Game::Load(const string &fn)
 
     // read raw info
     byteFs >> strver >> binver >> header;
-    size_t offset = byteFs.tell();
+    const size_t offset = byteFs.tell();
 
 
     if (header.status & HeaderSAV::IS_COMPRESS)
@@ -173,7 +173,7 @@ bool Game::Load(const string &fn)
     {
         bfz->setBigEndian(true);
         bfz->seek(offset);
-        int size = bfz->get32();
+        const int size = bfz->get32();
         fileVector = bfz->getRaw(size);
         bfz = make_shared<ByteVectorReader>(fileVector);
         bfz->setBigEndian(true);

@@ -172,7 +172,7 @@ bool PassableFromToTile(const Heroes &hero, s32 from, const s32 &to, int direct,
     if (hero.isShipMaster() &&
         (direct & (Direction::TOP_LEFT | Direction::TOP_RIGHT | Direction::BOTTOM_RIGHT | Direction::BOTTOM_LEFT)))
     {
-        Size wSize(world.w(), world.h());
+        const Size wSize(world.w(), world.h());
         switch (direct)
         {
             case Direction::TOP_LEFT:
@@ -264,8 +264,8 @@ namespace
 
         cell_t &get(int key)
         {
-            int hash = hashInt(key);
-            int maskedHash = hash & mask;
+            const int hash = hashInt(key);
+            const int maskedHash = hash & mask;
             RowInMap row;
             row.Key = key;
             row.Hash = hash;
@@ -331,7 +331,7 @@ bool Route::Path::Find(s32 to, int limit)
     const Directions directions = Direction::All();
     clear();
 
-    Size wSize(world.w(), world.h());
+    const Size wSize(world.w(), world.h());
     LocalEvent::Get().HandleEvents(false);
     while (cur != to)
     {

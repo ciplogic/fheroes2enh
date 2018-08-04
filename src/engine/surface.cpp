@@ -146,25 +146,25 @@ RGBA::RGBA()
 
 int RGBA::r() const
 {
-    int red = (color >> 24) & 0x000000FF;
+    const int red = (color >> 24) & 0x000000FF;
     return red;
 }
 
 int RGBA::g() const
 {
-    int green = (color >> 16) & 0x000000FF;
+    const int green = (color >> 16) & 0x000000FF;
     return green;
 }
 
 int RGBA::b() const
 {
-    int blue = (color >> 8) & 0x000000FF;
+    const int blue = (color >> 8) & 0x000000FF;
     return blue;
 }
 
 int RGBA::a() const
 {
-    int alpha = color & 0x000000FF;
+    const int alpha = color & 0x000000FF;
     return alpha;
 }
 
@@ -188,10 +188,10 @@ uint32_t RGBA::pack() const
 
 RGBA RGBA::unpack(int v)
 {
-    int r = (v >> 24) & 0x000000FF;
-    int g = (v >> 16) & 0x000000FF;
-    int b = (v >> 8) & 0x000000FF;
-    int a = v & 0x000000FF;
+    const int r = (v >> 24) & 0x000000FF;
+    const int g = (v >> 16) & 0x000000FF;
+    const int b = (v >> 8) & 0x000000FF;
+    const int a = v & 0x000000FF;
 
     return RGBA(r, g, b, a);
 }
@@ -230,7 +230,7 @@ Surface::Surface(SDL_Surface *sf) : surface(nullptr)
 Surface::Surface(const void *pixels, uint32_t width, uint32_t height, uint32_t bytes_per_pixel /* 1, 2, 3, 4 */, bool amask)
         : surface(nullptr)
 {
-    SurfaceFormat fm = GetRGBAMask(8 * bytes_per_pixel);
+    const SurfaceFormat fm = GetRGBAMask(8 * bytes_per_pixel);
 
     if (8 == fm.depth)
     {
@@ -619,7 +619,8 @@ uint32_t Surface::GetPixel(int x, int y) const
 
 void Surface::BlitAlpha(const Rect &srt, const Point &dpt, Surface &dst) const
 {
-    auto w = srt.w, h = srt.h;
+    const auto w = srt.w;
+    const auto h = srt.h;
     for (int x = 0; x < w; x++)
     {
         for (int y = 0; y < h; y++)
@@ -979,8 +980,8 @@ Surface Surface::RenderSepia() const
     const uint32_t colkey = GetColorKey();
 
     res.Lock();
-    int width = w();
-    int height = h();
+    const int width = w();
+    const int height = h();
     for (int y = 0; y < height; y++)
         for (int x = 0; x < width; x++)
         {
@@ -989,11 +990,11 @@ Surface Surface::RenderSepia() const
             {
                 RGBA col = GetRGB(pixel);
                 //Numbers derived from http://blogs.techrepublic.com.com/howdoi/?p=120
-                uint32_t outR = CLAMP255(static_cast<uint32_t>(col.r() * 0.693f + col.g() * 0.769f + col.b() * 0.189f));
-                uint32_t outG = CLAMP255(static_cast<uint32_t>(col.r() * 0.449f + col.g() * 0.686f + col.b() * 0.168f));
-                uint32_t outB = CLAMP255(static_cast<uint32_t>(col.r() * 0.272f + col.g() * 0.534f + col.b() * 0.131f));
+                const uint32_t outR = CLAMP255(static_cast<uint32_t>(col.r() * 0.693f + col.g() * 0.769f + col.b() * 0.189f));
+                const uint32_t outG = CLAMP255(static_cast<uint32_t>(col.r() * 0.449f + col.g() * 0.686f + col.b() * 0.168f));
+                const uint32_t outB = CLAMP255(static_cast<uint32_t>(col.r() * 0.272f + col.g() * 0.534f + col.b() * 0.131f));
 
-                uint32_t outPixel = RGBA::packRgba(outR, outG, outB, col.a());
+                const uint32_t outPixel = RGBA::packRgba(outR, outG, outB, col.a());
                 res.SetPixel4(x, y, outPixel);
             }
         }

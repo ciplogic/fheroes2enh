@@ -95,8 +95,8 @@ ByteVectorWriter& ByteVectorWriter::operator<<(const s32&v)
 
 ByteVectorWriter& ByteVectorWriter::operator<<(const float&v)
 {
-    auto intpart = static_cast<s32>(v);
-    float decpart = (v - intpart) * 100000000;
+    const auto intpart = static_cast<s32>(v);
+    const float decpart = (v - intpart) * 100000000;
     return *this << intpart << static_cast<s32>(decpart);
 }
 
@@ -116,7 +116,7 @@ ByteVectorWriter& ByteVectorWriter::operator<<(const std::string& v)
 
     for (char it : v)
     {
-        u8 val = it;
+        const u8 val = it;
         put8(val);
     }
 

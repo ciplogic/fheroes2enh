@@ -1067,7 +1067,7 @@ uint32_t Battle::Arena::GetObstaclesPenalty(const Unit &attacker, const Unit &de
         // check castle walls defensed
         const Points points = GetLinePoints(attacker.GetBackPoint(), defender.GetBackPoint(), step);
 
-        for (auto point : points)
+        for (const auto point : points)
         {
             if (0 == board[8].GetObject() && (board[8].GetPos() & point)) return 0;
             if (0 == board[29].GetObject() && (board[29].GetPos() & point)) return 0;
@@ -1082,7 +1082,7 @@ uint32_t Battle::Arena::GetObstaclesPenalty(const Unit &attacker, const Unit &de
         Indexes indexes;
         indexes.reserve(points.size());
 
-        for (auto point : points)
+        for (const auto point : points)
         {
             const s32 index = board.GetIndexAbsPosition(point);
             if (Board::isValidIndex(index)) indexes.push_back(index);
@@ -1094,11 +1094,10 @@ uint32_t Battle::Arena::GetObstaclesPenalty(const Unit &attacker, const Unit &de
             indexes.resize(distance(indexes.begin(), unique(indexes.begin(), indexes.end())));
         }
 
-        for (Indexes::const_iterator
-                     it = indexes.begin(); it != indexes.end(); ++it)
+        for (auto it : indexes)
         {
             // obstacles
-            switch (board[*it].GetObject())
+            switch (board[it].GetObject())
             {
                 // tree
                 case 0x82:

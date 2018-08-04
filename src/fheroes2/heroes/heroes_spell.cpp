@@ -505,9 +505,9 @@ bool ActionSpellVisions(Heroes &hero)
         for (auto monster : monsters)
         {
             const Maps::Tiles &tile = world.GetTiles(monster);
-            MapMonster *map_troop = static_cast<MapMonster *>(world.GetMapObject(tile.GetObjectUID(MP2::OBJ_MONSTER)));
+            const auto map_troop = static_cast<MapMonster *>(world.GetMapObject(tile.GetObjectUID(MP2::OBJ_MONSTER)));
             Troop troop = map_troop ? map_troop->QuantityTroop() : tile.QuantityTroop();
-            JoinCount join = Army::GetJoinSolution(hero, tile, troop);
+            const JoinCount join = Army::GetJoinSolution(hero, tile, troop);
 
             string msg;
 

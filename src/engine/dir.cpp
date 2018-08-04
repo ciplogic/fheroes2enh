@@ -62,9 +62,9 @@ vector<string> GetFilesOfDir(const string &path)
     vector<string> dirsInCurrent;
     if ((hFind = FindFirstFile(wPath.c_str(), &FindFileData)) != INVALID_HANDLE_VALUE) {
         do {
-            wstring wFileName = FindFileData.cFileName;
-            string fileName = ws2s(wFileName);
-            string fullFileName = path + "\\" + fileName;
+            const wstring wFileName = FindFileData.cFileName;
+            const string fileName = ws2s(wFileName);
+            const string fullFileName = path + "\\" + fileName;
             if (System::IsFile(fullFileName))
             {
                 dirsInCurrent.push_back(fullFileName);

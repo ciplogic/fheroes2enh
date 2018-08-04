@@ -66,9 +66,9 @@ Point Point::operator-(const Point &pt) const
 
 bool Point::inABC(const Point &pt1, const Point &pt2, const Point &pt3) const
 {
-    s32 a = (pt1.x - x) * (pt2.y - pt1.y) - (pt2.x - pt1.x) * (pt1.y - y);
-    s32 b = (pt2.x - x) * (pt3.y - pt2.y) - (pt3.x - pt2.x) * (pt2.y - y);
-    s32 c = (pt3.x - x) * (pt1.y - pt3.y) - (pt1.x - pt3.x) * (pt3.y - y);
+    const s32 a = (pt1.x - x) * (pt2.y - pt1.y) - (pt2.x - pt1.x) * (pt1.y - y);
+    const s32 b = (pt2.x - x) * (pt3.y - pt2.y) - (pt3.x - pt2.x) * (pt2.y - y);
+    const auto c = (pt3.x - x) * (pt1.y - pt3.y) - (pt1.x - pt3.x) * (pt3.y - y);
 
     return ((a >= 0 && b >= 0 && c >= 0) || (a < 0 && b < 0 && c < 0));
 }

@@ -164,7 +164,7 @@ int GetInt(const std::string &str)
     } else
         // str
     {
-        std::string lower = StringLower(str);
+        const std::string lower = StringLower(str);
 
         if (lower == "on") return 1;
         if (lower == "one") return 1;
@@ -492,7 +492,7 @@ size_t InsertKeySym(std::string &res, size_t pos, KeySym sym, u16 mod)
 
         default:
         {
-            char c = CharFromKeySym(sym, mod);
+            const char c = CharFromKeySym(sym, mod);
 
             if (c)
             {
@@ -949,29 +949,30 @@ std::vector<u8> decodeBase64(const std::string &src)
 {
     std::vector<u8> res;
 
-    if (src.size() % 4 == 0)
+    if (src.size() % 4 != 0)
     {
-        uint32_t size = 3 * src.size() / 4;
+        return res;
+    }
+    uint32_t size = 3 * src.size() / 4;
 
-        if (src[src.size() - 1] == '=') size--;
-        if (src[src.size() - 2] == '=') size--;
+    if (src[src.size() - 1] == '=') size--;
+    if (src[src.size() - 2] == '=') size--;
 
-        res.reserve(size);
+    res.reserve(size);
 
-        for (uint32_t ii = 0; ii < src.size(); ii += 4)
-        {
-            uint32_t sextet_a = decodeChar(src[ii]);
-            uint32_t sextet_b = decodeChar(src[ii + 1]);
-            uint32_t sextet_c = decodeChar(src[ii + 2]);
-            uint32_t sextet_d = decodeChar(src[ii + 3]);
+    for (uint32_t ii = 0; ii < src.size(); ii += 4)
+    {
+        const uint32_t sextet_a = decodeChar(src[ii]);
+        const uint32_t sextet_b = decodeChar(src[ii + 1]);
+        const uint32_t sextet_c = decodeChar(src[ii + 2]);
+        const uint32_t sextet_d = decodeChar(src[ii + 3]);
 
-            uint32_t triple = (sextet_a << 18) + (sextet_b << 12) +
-                         (sextet_c << 6) + sextet_d;
+        const uint32_t triple = (sextet_a << 18) + (sextet_b << 12) +
+            (sextet_c << 6) + sextet_d;
 
-            if (res.size() < size) res.push_back((triple >> 16) & 0xFF);
-            if (res.size() < size) res.push_back((triple >> 8) & 0xFF);
-            if (res.size() < size) res.push_back(triple & 0xFF);
-        }
+        if (res.size() < size) res.push_back((triple >> 16) & 0xFF);
+        if (res.size() < size) res.push_back((triple >> 8) & 0xFF);
+        if (res.size() < size) res.push_back(triple & 0xFF);
     }
 
     return res;
@@ -984,10 +985,10 @@ int CheckSum(const std::vector<u8> &v)
 
     do
     {
-        uint32_t b1 = it < v.end() ? *it++ : 0;
-        uint32_t b2 = it < v.end() ? *it++ : 0;
-        uint32_t b3 = it < v.end() ? *it++ : 0;
-        uint32_t b4 = it < v.end() ? *it++ : 0;
+        const uint32_t b1 = it < v.end() ? *it++ : 0;
+        const uint32_t b2 = it < v.end() ? *it++ : 0;
+        const uint32_t b3 = it < v.end() ? *it++ : 0;
+        const uint32_t b4 = it < v.end() ? *it++ : 0;
 
         ret += (b1 << 24) | (b2 << 16) | (b3 << 8) | b4;
     } while (it != v.end());

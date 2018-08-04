@@ -71,8 +71,8 @@ int IsFullScreen(SDL_Surface *surface)
 int SDL_ToggleFS(SDL_Surface *surface)
 {
     Uint32 flags = surface->flags; // Get the video surface flags
-    int w = surface->w;
-    int h = surface->h;
+    const int w = surface->w;
+    const auto h = surface->h;
     if (IsFullScreen(surface))
     {
         // Swith to WINDOWED mode
@@ -87,7 +87,7 @@ int SDL_ToggleFS(SDL_Surface *surface)
 
 void Display::ToggleFullScreen() const
 {
-    int result = SDL_WM_ToggleFullScreen(surface);
+    const int result = SDL_WM_ToggleFullScreen(surface);
     if (result == 0)
     {
         SDL_ToggleFS(surface);
@@ -192,7 +192,7 @@ void Display::Fade(const Surface &top, const Surface &back, const Point &pt, int
 
 void Display::Fade(int delay)
 {
-    Surface top = GetSurface();
+    const Surface top = GetSurface();
     Surface back(GetSize(), false);
     back.Fill(ColorBlack);
     Fade(top, back, Point(0, 0), 5, delay);

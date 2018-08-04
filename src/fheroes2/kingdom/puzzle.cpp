@@ -74,7 +74,7 @@ Puzzle &Puzzle::operator=(const char *str)
 
 void Puzzle::Update(uint32_t open_obelisk, uint32_t total_obelisk)
 {
-    uint32_t open_puzzle = open_obelisk * PUZZLETILES / total_obelisk;
+    const uint32_t open_puzzle = open_obelisk * PUZZLETILES / total_obelisk;
     uint32_t need_puzzle = open_puzzle > count() ? open_puzzle - count() : 0;
 
     if (need_puzzle && ClosedTilesExists(*this, zone1_order, ARRAY_COUNT_END(zone1_order)))
@@ -144,14 +144,14 @@ void ShowStandardDialog(const Puzzle &pzl, const Surface &sf)
 
     Interface::Radar &radar = Interface::Basic::Get().GetRadar();
     const Rect &radar_pos = radar.GetArea();
-    bool evil_interface = Settings::Get().ExtGameEvilInterface();
+    const bool evil_interface = Settings::Get().ExtGameEvilInterface();
 
     SpriteBack back(Rect(BORDERWIDTH, BORDERWIDTH, sf.w(), sf.h()));
 
     AGG::GetICN((evil_interface ? ICN::EVIWPUZL : ICN::VIEWPUZL), 0).Blit(radar_pos);
     sf.Blit(BORDERWIDTH, BORDERWIDTH, display);
 
-    Point dst_pt(radar_pos.x + 32, radar_pos.y + radar_pos.h - 37);
+    const Point dst_pt(radar_pos.x + 32, radar_pos.y + radar_pos.h - 37);
     Button buttonExit(dst_pt.x, dst_pt.y, (evil_interface ? ICN::LGNDXTRE : ICN::LGNDXTRA), 4, 5);
 
     buttonExit.Draw();

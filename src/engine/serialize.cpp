@@ -146,7 +146,7 @@ StreamBase &StreamBase::operator>>(float &v)
 
 StreamBase &StreamBase::operator>>(string &v)
 {
-    uint32_t size = get32();
+    const uint32_t size = get32();
     v.resize(size);
 
     for (char &it : v)
@@ -233,8 +233,8 @@ StreamBase &StreamBase::operator<<(const uint32_t &v)
 
 StreamBase &StreamBase::operator<<(const float &v)
 {
-    auto intpart = static_cast<s32>(v);
-    float decpart = (v - intpart) * 100000000;
+    const auto intpart = static_cast<s32>(v);
+    const float decpart = (v - intpart) * 100000000;
     return *this << intpart << static_cast<s32>(decpart);
 }
 
@@ -380,7 +380,7 @@ void StreamBuf::realloc(size_t sz)
     {
         if (sz < MINCAPACITY) sz = MINCAPACITY;
 
-        auto ptr = new u8[sz];
+        const auto ptr = new u8[sz];
 
         fill(ptr, ptr + sz, 0);
         std::copy(itbeg, itput, ptr);
@@ -551,9 +551,9 @@ size_t StreamFile::size() const
 {
     if (rw)
     {
-        size_t pos = SDL_RWtell(rw);
+        const size_t pos = SDL_RWtell(rw);
         SDL_RWseek(rw, 0, RW_SEEK_END);
-        size_t len = SDL_RWseek(rw, 0, SEEK_END);
+        const size_t len = SDL_RWseek(rw, 0, SEEK_END);
         SDL_RWseek(rw, pos, RW_SEEK_SET);
         return len;
     }
@@ -574,8 +574,8 @@ size_t StreamFile::sizeg() const
 {
     if (rw)
     {
-        size_t pos = SDL_RWtell(rw);
-        size_t len = SDL_RWseek(rw, 0, RW_SEEK_END);
+        const size_t pos = SDL_RWtell(rw);
+        const size_t len = SDL_RWseek(rw, 0, RW_SEEK_END);
         SDL_RWseek(rw, pos, RW_SEEK_SET);
         return len - pos;
     }
@@ -677,6 +677,6 @@ StreamBuf StreamFile::toStreamBuf(size_t sz)
 string StreamFile::toString(size_t sz)
 {
     const vector<u8> buf = getRaw(sz);
-    auto itend = find(buf.begin(), buf.end(), 0);
+    const auto itend = find(buf.begin(), buf.end(), 0);
     return string(buf.begin(), itend != buf.end() ? itend : buf.end());
 }

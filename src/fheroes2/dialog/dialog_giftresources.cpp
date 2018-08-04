@@ -137,7 +137,7 @@ struct ResourceBar
 
         for (auto it = positions.begin(); it != positions.end(); ++it)
         {
-            int rs = Resource::FromIndexSprite2(distance(positions.begin(), it));
+            const int rs = Resource::FromIndexSprite2(distance(positions.begin(), it));
             RedrawResource(rs, res->Get(rs), (*it).x, (*it).y);
         }
     }
@@ -151,42 +151,45 @@ struct ResourceBar
     {
         const s32 index = GetIndexClick();
 
-        if (index >= 0)
+        if (index < 0)
         {
-            int rs = Resource::FromIndexSprite2(index);
-            uint32_t step = rs == Resource::GOLD ? 100 : 1;
+            return false;
+        }
+        const int rs = Resource::FromIndexSprite2(index);
+        const uint32_t step = rs == Resource::GOLD ? 100 : 1;
 
-            uint32_t cur = resource.Get(rs);
-            uint32_t sel = cur;
-            uint32_t max = mul > 1 ? (funds.Get(rs) + resource.Get(rs)) / mul : funds.Get(rs) + resource.Get(rs);
+        const uint32_t cur = resource.Get(rs);
+        uint32_t sel = cur;
+        const uint32_t max = mul > 1 
+                                 ? (funds.Get(rs) + resource.Get(rs)) / mul 
+                                 : funds.Get(rs) + resource.Get(rs);
 
-            if (0 == mul)
-            {
-                Message("", "First select recipients!", Font::BIG, Dialog::OK);
-            } else if (0 == max)
-            {
-                string msg = _("You cannot select %{resource}!");
-                StringReplace(msg, "%{resource}", Resource::String(rs));
-                Message("", msg, Font::BIG, Dialog::OK);
-            } else
-            {
-                string msg = _("Select count %{resource}:");
-                StringReplace(msg, "%{resource}", Resource::String(rs));
+        if (0 == mul)
+        {
+            Message("", "First select recipients!", Font::BIG, Dialog::OK);
+        } else if (0 == max)
+        {
+            string msg = _("You cannot select %{resource}!");
+            StringReplace(msg, "%{resource}", Resource::String(rs));
+            Message("", msg, Font::BIG, Dialog::OK);
+        } else
+        {
+            string msg = _("Select count %{resource}:");
+            StringReplace(msg, "%{resource}", Resource::String(rs));
 
-                if (Dialog::SelectCount(msg, 0, max, sel, step) && cur != sel)
+            if (Dialog::SelectCount(msg, 0, max, sel, step) && cur != sel)
+            {
+                s32 *from = funds.GetPtr(rs);
+                s32 *to = resource.GetPtr(rs);
+
+                if (from && to)
                 {
-                    s32 *from = funds.GetPtr(rs);
-                    s32 *to = resource.GetPtr(rs);
+                    s32 count = sel - cur;
 
-                    if (from && to)
-                    {
-                        s32 count = sel - cur;
+                    *from -= mul > 1 ? count * mul : count;
+                    *to += count;
 
-                        *from -= mul > 1 ? count * mul : count;
-                        *to += count;
-
-                        return true;
-                    }
+                    return true;
                 }
             }
         }

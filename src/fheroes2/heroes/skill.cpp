@@ -146,7 +146,7 @@ int Skill::Primary::LevelUp(int race, int level)
         }
     }
 
-    int result = percents.Size() ? percents.Get() : UNKNOWN;
+    const int result = percents.Size() ? percents.Get() : UNKNOWN;
 
     switch (result)
     {
@@ -442,7 +442,7 @@ std::string Skill::Secondary::GetName() const
 
 string Skill::Secondary::GetDescription() const
 {
-    uint32_t count = GetValues();
+    const uint32_t count = GetValues();
     string str = "unknown";
 
     switch (Skill())
@@ -608,7 +608,7 @@ Skill::SecSkills::SecSkills(int race)
 
 int Skill::SecSkills::GetLevel(int skill) const
 {
-    const_iterator it = find_if(begin(), end(),
+    const auto it = find_if(begin(), end(),
                                 bind2nd(mem_fun_ref(&Secondary::isSkill), skill));
 
     return it == end() ? Level::NONE : (*it).Level();
@@ -616,7 +616,7 @@ int Skill::SecSkills::GetLevel(int skill) const
 
 uint32_t Skill::SecSkills::GetValues(int skill) const
 {
-    const_iterator it = find_if(begin(), end(),
+    const auto it = find_if(begin(), end(),
                                 bind2nd(mem_fun_ref(&Secondary::isSkill), skill));
 
     return it == end() ? 0 : (*it).GetValues();
@@ -649,7 +649,7 @@ void Skill::SecSkills::AddSkill(const Secondary &skill)
 
 Skill::Secondary *Skill::SecSkills::FindSkill(int skill)
 {
-    iterator it = find_if(begin(), end(),
+    const auto it = find_if(begin(), end(),
                           bind2nd(mem_fun_ref(&Secondary::isSkill), skill));
     return it != end() ? &(*it) : nullptr;
 }
@@ -960,7 +960,7 @@ bool PrimarySkillsBar::ActionBarCursor(const Point &cursor, int &skill, const Re
 bool PrimarySkillsBar::QueueEventProcessing(string *str)
 {
     msg.clear();
-    bool res = ItemsBar<int>::QueueEventProcessing();
+    const bool res = ItemsBar<int>::QueueEventProcessing();
     if (str) *str = msg;
     return res;
 }
@@ -1057,7 +1057,7 @@ bool SecondarySkillsBar::ActionBarCursor(const Point &cursor, Skill::Secondary &
 bool SecondarySkillsBar::QueueEventProcessing(string *str)
 {
     msg.clear();
-    bool res = ItemsBar<Skill::Secondary>::QueueEventProcessing();
+    const bool res = ItemsBar<Skill::Secondary>::QueueEventProcessing();
     if (str) *str = msg;
     return res;
 }

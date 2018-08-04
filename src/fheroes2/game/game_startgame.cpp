@@ -458,12 +458,12 @@ int Interface::Basic::GetCursorFocusHeroes(const Heroes &from_hero, const Maps::
                     return Cursor::HEROES;
                 if (from_hero.GetColor() == to_hero->GetColor())
                 {
-                    int newcur = Cursor::DistanceThemes(Cursor::CHANGE, from_hero.GetRangeRouteDays(tile.GetIndex()));
+                    const int newcur = Cursor::DistanceThemes(Cursor::CHANGE, from_hero.GetRangeRouteDays(tile.GetIndex()));
                     return newcur != Cursor::POINTER ? newcur : Cursor::HEROES;
                 }
                 if (from_hero.isFriends(to_hero->GetColor()))
                 {
-                    int newcur = Cursor::DistanceThemes(Cursor::CHANGE, from_hero.GetRangeRouteDays(tile.GetIndex()));
+                    const int newcur = Cursor::DistanceThemes(Cursor::CHANGE, from_hero.GetRangeRouteDays(tile.GetIndex()));
                     return conf.ExtUnionsAllowHeroesMeetings() ? newcur : Cursor::POINTER;
                 }
                 return Cursor::DistanceThemes(Cursor::FIGHT, from_hero.GetRangeRouteDays(tile.GetIndex()));
@@ -481,7 +481,7 @@ int Interface::Basic::GetCursorFocusHeroes(const Heroes &from_hero, const Maps::
                 return Cursor::POINTER;
             if (MP2::isGroundObject(tile.GetObject()))
             {
-                bool protection = (MP2::isPickupObject(tile.GetObject())
+                const bool protection = (MP2::isPickupObject(tile.GetObject())
                                    ? false
                                    : (Maps::TileIsUnderProtection(tile.GetIndex()) ||
                                       (!from_hero.isFriends(tile.QuantityColor()) &&
@@ -492,7 +492,7 @@ int Interface::Basic::GetCursorFocusHeroes(const Heroes &from_hero, const Maps::
             }
             if (tile.isPassable(&from_hero, Direction::CENTER, false))
             {
-                bool protection = Maps::TileIsUnderProtection(tile.GetIndex());
+                const bool protection = Maps::TileIsUnderProtection(tile.GetIndex());
 
                 return Cursor::DistanceThemes((protection ? Cursor::FIGHT : Cursor::MOVE),
                                               from_hero.GetRangeRouteDays(tile.GetIndex()));

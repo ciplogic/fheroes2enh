@@ -45,7 +45,7 @@
 
 using namespace std;
 
-bool AlphabeticalCompare(const std::string &lhs, const std::string &rhs)
+bool alphabetical_compare(const std::string &lhs, const std::string &rhs)
 {
     return lhs < rhs;
 }
@@ -355,12 +355,12 @@ void Maps::FileInfo::FillUnions()
 
 bool Maps::FileInfo::FileSorting(const FileInfo &fi1, const FileInfo &fi2)
 {
-    return AlphabeticalCompare(fi1.file, fi2.file);
+    return alphabetical_compare(fi1.file, fi2.file);
 }
 
 bool Maps::FileInfo::NameSorting(const FileInfo &fi1, const FileInfo &fi2)
 {
-    return AlphabeticalCompare(fi1.name, fi2.name);
+    return alphabetical_compare(fi1.name, fi2.name);
 }
 
 bool Maps::FileInfo::NameCompare(const FileInfo &fi1, const FileInfo &fi2)
@@ -500,8 +500,8 @@ int Maps::FileInfo::ComputerOnlyColors() const
 
 bool Maps::FileInfo::isAllowCountPlayers(uint32_t colors) const
 {
-    uint32_t human_only = Color::Count(HumanOnlyColors());
-    uint32_t comp_human = Color::Count(AllowCompHumanColors());
+    const uint32_t human_only = Color::Count(HumanOnlyColors());
+    const uint32_t comp_human = Color::Count(AllowCompHumanColors());
 
     return human_only <= colors && colors <= human_only + comp_human;
 }

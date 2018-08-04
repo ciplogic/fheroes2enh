@@ -464,8 +464,8 @@ bool Settings::Read(const string &filename)
 
         if (string::npos != pos)
         {
-            string width(value.substr(0, pos));
-            string height(value.substr(pos + 1, value.length() - pos - 1));
+            const string width(value.substr(0, pos));
+            const string height(value.substr(pos + 1, value.length() - pos - 1));
 
             video_mode.w = GetInt(width);
             video_mode.h = GetInt(height);
@@ -676,7 +676,7 @@ ListFiles Settings::GetListFiles(const string &prefix, const string &filter)
 
     for (const auto &dir : dirs)
     {
-        string path = !prefix.empty() ? System::ConcatePath(dir, prefix) : dir;
+        const string path = !prefix.empty() ? System::ConcatePath(dir, prefix) : dir;
 
         if (System::IsDirectory(path))
             res.ReadDir(path, filter, false);
@@ -719,7 +719,7 @@ string Settings::GetWriteableDir(const char *subdir)
 
     for (auto &dir : dirs)
     {
-        string dir_files = System::ConcatePath(dir, "files");
+        const string dir_files = System::ConcatePath(dir, "files");
 
         // create files
         if (System::IsDirectory(dir, true) &&
@@ -1590,7 +1590,7 @@ uint32_t Settings::MemoryLimit() const
 
 bool Settings::FullScreen() const
 {
-    auto isFullScreen = fullScreen;
+    const auto isFullScreen = fullScreen;
     return isFullScreen;
 }
 

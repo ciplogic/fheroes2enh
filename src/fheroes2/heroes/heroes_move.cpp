@@ -228,7 +228,7 @@ Sprite SpriteFlag(const Heroes &hero, int index, bool reflect, bool rotate)
 
 Sprite SpriteShad(const Heroes &hero, int index)
 {
-    int icn_shad = hero.isShipMaster() ? ICN::BOATSHAD : ICN::SHADOW32;
+    const int icn_shad = hero.isShipMaster() ? ICN::BOATSHAD : ICN::SHADOW32;
     int index_sprite = 0;
 
     switch (hero.GetDirection())
@@ -324,8 +324,8 @@ void Heroes::Redraw(Surface &dst, bool with_shadow) const
 {
     const Point &mp = GetCenter();
     const Interface::GameArea &gamearea = Interface::Basic::Get().GetGameArea();
-    s32 dx = gamearea.GetMapsPos().x + TILEWIDTH * (mp.x - gamearea.GetRectMaps().x);
-    s32 dy = gamearea.GetMapsPos().y + TILEWIDTH * (mp.y - gamearea.GetRectMaps().y);
+    const s32 dx = gamearea.GetMapsPos().x + TILEWIDTH * (mp.x - gamearea.GetRectMaps().x);
+    const s32 dy = gamearea.GetMapsPos().y + TILEWIDTH * (mp.y - gamearea.GetRectMaps().y);
 
     Redraw(dst, dx, dy, with_shadow);
 }
@@ -336,7 +336,7 @@ void Heroes::Redraw(Surface &dst, s32 dx, s32 dy, bool with_shadow) const
     const Interface::GameArea &gamearea = Interface::Basic::Get().GetGameArea();
     if (!(gamearea.GetRectMaps() & mp)) return;
 
-    bool reflect = ReflectSprite(direction);
+    const bool reflect = ReflectSprite(direction);
 
     const Sprite &sprite1 = SpriteHero(*this, sprite_index, reflect, false);
     const Sprite &sprite2 = SpriteFlag(*this, sprite_index, reflect, false);
@@ -353,7 +353,7 @@ void Heroes::Redraw(Surface &dst, s32 dx, s32 dy, bool with_shadow) const
     {
         s32 ox = 0;
         s32 oy = 0;
-        int frame = (sprite_index % 9);
+        auto frame = (sprite_index % 9);
 
         switch (direction)
         {
@@ -420,11 +420,11 @@ void Heroes::Redraw(Surface &dst, s32 dx, s32 dy, bool with_shadow) const
     // redraw dependences tiles
     Maps::Tiles &tile = world.GetTiles(center.x, center.y);
     const s32 centerIndex = GetIndex();
-    bool skip_ground = MP2::isActionObject(tile.GetObject(false), isShipMaster());
+    const bool skip_ground = MP2::isActionObject(tile.GetObject(false), isShipMaster());
 
     tile.RedrawTop(dst);
 
-    Size wSize(world.w(), world.h());
+    const Size wSize(world.w(), world.h());
     if (Maps::isValidDirection(centerIndex, Direction::TOP, wSize))
         world.GetTiles(Maps::GetDirectionIndex(centerIndex, Direction::TOP)).RedrawTop4Hero(dst, skip_ground);
 
@@ -500,9 +500,9 @@ void Heroes::MoveStep(Heroes &hero, s32 index_from, s32 index_to, bool newpos)
 
 bool Heroes::MoveStep(bool fast)
 {
-    s32 index_from = GetIndex();
-    s32 index_to = Maps::GetDirectionIndex(index_from, path.GetFrontDirection());
-    s32 index_dst = path.GetDestinationIndex();
+    const s32 index_from = GetIndex();
+    const s32 index_to = Maps::GetDirectionIndex(index_from, path.GetFrontDirection());
+    const s32 index_dst = path.GetDestinationIndex();
     const Point &mp = GetCenter();
 
     if (fast)
@@ -714,10 +714,10 @@ void Heroes::FadeOut() const
 
     Display &display = Display::Get();
 
-    bool reflect = ReflectSprite(direction);
+    const bool reflect = ReflectSprite(direction);
 
-    s32 dx = gamearea.GetMapsPos().x + TILEWIDTH * (mp.x - gamearea.GetRectMaps().x);
-    s32 dy = gamearea.GetMapsPos().y + TILEWIDTH * (mp.y - gamearea.GetRectMaps().y);
+    const s32 dx = gamearea.GetMapsPos().x + TILEWIDTH * (mp.x - gamearea.GetRectMaps().x);
+    const s32 dy = gamearea.GetMapsPos().y + TILEWIDTH * (mp.y - gamearea.GetRectMaps().y);
 
     Sprite sphero = SpriteHero(*this, sprite_index, reflect, false);
     Sprite sprite1 = Sprite(sphero.GetSurface(), sphero.x(), sphero.y());
@@ -773,10 +773,10 @@ void Heroes::FadeIn() const
 
     Display &display = Display::Get();
 
-    bool reflect = ReflectSprite(direction);
+    const bool reflect = ReflectSprite(direction);
 
-    s32 dx = gamearea.GetMapsPos().x + TILEWIDTH * (mp.x - gamearea.GetRectMaps().x);
-    s32 dy = gamearea.GetMapsPos().y + TILEWIDTH * (mp.y - gamearea.GetRectMaps().y);
+    const s32 dx = gamearea.GetMapsPos().x + TILEWIDTH * (mp.x - gamearea.GetRectMaps().x);
+    const s32 dy = gamearea.GetMapsPos().y + TILEWIDTH * (mp.y - gamearea.GetRectMaps().y);
 
     Sprite sphero = SpriteHero(*this, sprite_index, reflect, false);
     Sprite sprite1 = Sprite(sphero.GetSurface(), sphero.x(), sphero.y());
@@ -789,37 +789,36 @@ void Heroes::FadeIn() const
 
     while (le.HandleEvents() && alpha < 250)
     {
-        if (AnimateInfrequentDelay(Game::HEROES_FADE_DELAY))
-        {
-            Cursor::Get().Hide();
+        if (!AnimateInfrequentDelay(Game::HEROES_FADE_DELAY))
+            continue;
+        Cursor::Get().Hide();
 
-            for (s32 y = mp.y - 1; y <= mp.y + 1; ++y)
-                for (s32 x = mp.x - 1; x <= mp.x + 1; ++x)
-                    if (Maps::isValidAbsPoint(x, y))
-                    {
-                        const Maps::Tiles &tile = world.GetTiles(Maps::GetIndexFromAbsPoint(x, y));
+        for (s32 y = mp.y - 1; y <= mp.y + 1; ++y)
+            for (s32 x = mp.x - 1; x <= mp.x + 1; ++x)
+                if (Maps::isValidAbsPoint(x, y))
+                {
+                    const Maps::Tiles &tile = world.GetTiles(Maps::GetIndexFromAbsPoint(x, y));
 
-                        tile.RedrawTile(display);
-                        tile.RedrawBottom(display);
-                        tile.RedrawObjects(display);
-                    }
+                    tile.RedrawTile(display);
+                    tile.RedrawBottom(display);
+                    tile.RedrawObjects(display);
+                }
 
-            sprite1.SetAlphaMod(alpha);
-            sprite1.Blit(src_rt, dst_pt1, display);
+        sprite1.SetAlphaMod(alpha);
+        sprite1.Blit(src_rt, dst_pt1, display);
 
-            for (s32 y = mp.y - 1; y <= mp.y + 1; ++y)
-                for (s32 x = mp.x - 1; x <= mp.x + 1; ++x)
-                    if (Maps::isValidAbsPoint(x, y))
-                    {
-                        const Maps::Tiles &tile = world.GetTiles(Maps::GetIndexFromAbsPoint(x, y));
+        for (s32 y = mp.y - 1; y <= mp.y + 1; ++y)
+            for (s32 x = mp.x - 1; x <= mp.x + 1; ++x)
+                if (Maps::isValidAbsPoint(x, y))
+                {
+                    const Maps::Tiles &tile = world.GetTiles(Maps::GetIndexFromAbsPoint(x, y));
 
-                        tile.RedrawTop(display);
-                    }
+                    tile.RedrawTop(display);
+                }
 
-            Cursor::Get().Show();
-            display.Flip();
-            alpha += 10;
-        }
+        Cursor::Get().Show();
+        display.Flip();
+        alpha += 10;
     }
 }
 

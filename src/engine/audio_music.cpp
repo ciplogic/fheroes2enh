@@ -44,8 +44,9 @@ void Music::Play(Mix_Music *mix, uint32_t id, bool loop)
 {
     Reset();
 
-    int res = fadein ?
-              Mix_FadeInMusic(mix, loop ? -1 : 0, fadein) : Mix_PlayMusic(mix, loop ? -1 : 0);
+    const int res = fadein 
+        ? Mix_FadeInMusic(mix, loop ? -1 : 0, fadein) 
+        : Mix_PlayMusic(mix, loop ? -1 : 0);
 
     if (res < 0)
     {
@@ -58,7 +59,7 @@ void Music::Play(const std::vector<u8> &v, bool loop)
 {
     if (!Mixer::isValid() || v.empty())
         return;
-    uint32_t id = CheckSum(v);
+    const uint32_t id = CheckSum(v);
     SDL_RWops *rwops = SDL_RWFromConstMem(&v[0], v.size());
 
     Mix_Music *mix = Mix_LoadMUS_RW(rwops);
@@ -71,7 +72,7 @@ void Music::Play(const std::string &file, bool loop)
 {
     if (!Mixer::isValid())
         return;
-    uint32_t id = CheckSum(file);
+    const uint32_t id = CheckSum(file);
     Mix_Music *mix = Mix_LoadMUS(file.c_str());
 
     if (!mix)

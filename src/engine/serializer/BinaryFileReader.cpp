@@ -27,7 +27,7 @@ void BinaryFileReader::seek(uint32_t pos) const
 uint32_t BinaryFileReader::size()
 {
     fseek(_file, 0L, SEEK_END);
-    uint32_t sz = ftell(_file);
+    const uint32_t sz = ftell(_file);
     seek(0);
     return sz;
 }
@@ -35,7 +35,7 @@ uint32_t BinaryFileReader::size()
 uint32_t BinaryFileReader::getLE16()
 {
     fread(defaultBuf, 1, 2, _file);
-    uint32_t result = defaultBuf[0] + (defaultBuf[1] << 8);
+    const uint32_t result = defaultBuf[0] + (defaultBuf[1] << 8);
     return result;
 }
 
@@ -74,7 +74,7 @@ bool BinaryFileReader::fail() const
 int BinaryFileReader::get()
 {
     fread(defaultBuf, 1, 0, _file);
-    int result = defaultBuf[0];
+    const int result = defaultBuf[0];
     return result;
 }
 
@@ -116,7 +116,7 @@ namespace FileUtils
         {
             return result;
         }
-        int fileSize = reader.size();
+        const int fileSize = reader.size();
         reader.seek(0);
         result = reader.getRaw(fileSize);
         return result;

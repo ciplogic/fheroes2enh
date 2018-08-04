@@ -40,7 +40,7 @@ string ModifyKey(const string &str)
     string keyString = StringTrim(StringLower(str));
 
     // remove multiple space
-    string::iterator it = unique(keyString.begin(), keyString.end(), SpaceCompare);
+    const string::iterator it = unique(keyString.begin(), keyString.end(), SpaceCompare);
     keyString.resize(it - keyString.begin());
 
     // change space
@@ -69,17 +69,16 @@ bool TinyConfig::Load(const string &cfile)
         string str = StringTrim(row);
         if (str.empty() || str[0] == comment) continue;
 
-        size_t pos = str.find(separator);
-        if (string::npos != pos)
-        {
-            string left(str.substr(0, pos));
-            string right(str.substr(pos + 1, str.length() - pos - 1));
+        const auto pos = str.find(separator);
+        if (string::npos == pos)
+            continue;
+        auto left = str.substr(0, pos);
+        auto right=str.substr(pos + 1, str.length() - pos - 1);
 
-            left = StringTrim(left);
-            right = StringTrim(right);
+        left = StringTrim(left);
+        right = StringTrim(right);
 
-            AddEntry(left, right, false);
-        }
+        AddEntry(left, right, false);
     }
 
     return true;
@@ -135,7 +134,7 @@ string TinyConfig::StrParams(const string &key) const
 
 vector<string> TinyConfig::ListStr(const string &key) const
 {
-    pair<const_iterator, const_iterator> ret = equal_range(ModifyKey(key));
+    const auto ret = equal_range(ModifyKey(key));
     vector<string> res;
 
     for (auto it = ret.first; it != ret.second; ++it)
@@ -146,7 +145,7 @@ vector<string> TinyConfig::ListStr(const string &key) const
 
 vector<int> TinyConfig::ListInt(const string &key) const
 {
-    pair<const_iterator, const_iterator> ret = equal_range(ModifyKey(key));
+    const auto ret = equal_range(ModifyKey(key));
     vector<int> res;
 
     for (auto it = ret.first; it != ret.second; ++it)

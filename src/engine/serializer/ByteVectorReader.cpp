@@ -38,7 +38,7 @@ uint32_t ByteVectorReader::getLE16()
     {
         auto * resultPtr = reinterpret_cast<const uint16_t *>(_data.data() + _pos);
         _pos += 2;
-        uint16_t result = *resultPtr;
+        const uint16_t result = *resultPtr;
         return result;
     }
 }
@@ -59,7 +59,7 @@ uint32_t ByteVectorReader::getLE32()
     {
         auto * resultPtr = reinterpret_cast<const uint32_t *>(_data.data() + _pos);
         _pos += 4;
-        uint32_t result = *resultPtr;
+        const auto result = *resultPtr;
         return result;
     }
 
@@ -67,13 +67,13 @@ uint32_t ByteVectorReader::getLE32()
 
 u16 ByteVectorReader::get16()
 {
-    u16 value = _isBigEndian ? getBE16() : getLE16();
+    const u16 value = _isBigEndian ? getBE16() : getLE16();
     return value;
 }
 
 uint32_t ByteVectorReader::get32()
 {
-    uint32_t value = _isBigEndian ? getBE32() : getLE32();
+    const uint32_t value = _isBigEndian ? getBE32() : getLE32();
     return value;
 }
 
@@ -81,8 +81,8 @@ uint32_t ByteVectorReader::getBE16()
 {
     if (Endian::isLittle)
     {
-        uint32_t lo = Get8();
-        uint32_t hi = Get8();
+        const uint32_t lo = Get8();
+        const uint32_t hi = Get8();
         return hi + (lo << 8);
     }
     else
@@ -98,12 +98,12 @@ uint32_t ByteVectorReader::getBE32()
 {
     if (Endian::isLittle)
     {
-        uint32_t lo1 = Get8();
-        uint32_t hi1 = Get8();
-        uint32_t lo2 = Get8();
-        uint32_t hi2 = Get8();
-        uint32_t lo = (hi1 << 16) + (lo1 << 24);
-        uint32_t hi = hi2 + (lo2 << 8);
+        const uint32_t lo1 = Get8();
+        const uint32_t hi1 = Get8();
+        const uint32_t lo2 = Get8();
+        const uint32_t hi2 = Get8();
+        const uint32_t lo = (hi1 << 16) + (lo1 << 24);
+        const uint32_t hi = hi2 + (lo2 << 8);
         return hi + lo;
     }
     auto * resultPtr = reinterpret_cast<const uint32_t *>(_data.data() + _pos);
@@ -138,11 +138,11 @@ std::vector<u8> ByteVectorReader::getRaw(size_t sizeblock)
     {
         sizeblock = size() - tell();
     }
-    auto start = _data.begin() + _pos;
-    auto endPos = start + sizeblock;
+    const auto start = _data.begin() + _pos;
+    const auto end_pos = start + sizeblock;
 
     std::vector<u8> result;
-    result.assign(start, endPos);
+    result.assign(start, end_pos);
     _pos += sizeblock;
     return result;
 }

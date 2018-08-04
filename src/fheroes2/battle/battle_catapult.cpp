@@ -52,7 +52,7 @@ Battle::Catapult::Catapult(const HeroBase &hero, bool fortification) : cat_shots
             break;
     }
 
-    uint32_t acount = hero.HasArtifact(Artifact::BALLISTA);
+    const uint32_t acount = hero.HasArtifact(Artifact::BALLISTA);
     if (acount) cat_shots += acount * Artifact(Artifact::BALLISTA).ExtraValue();
 }
 

@@ -63,16 +63,16 @@ namespace
 
 void fillPalette(std::vector<SDL_Color> &pal_colors, std::vector<uint32_t> &pal_colors_u32)
 {
-    uint32_t ncolors = ARRAY_COUNT(kb_pal) / 3;
+    const uint32_t ncolors = ARRAY_COUNT(kb_pal) / 3;
     pal_colors.reserve(ncolors);
 
     for (uint32_t ii = 0; ii < ncolors; ++ii)
     {
-        uint32_t index = ii * 3;
+        const uint32_t index = ii * 3;
         SDL_Color cols{};
-        uint32_t r = kb_pal[index] << 2;
-        uint32_t g = kb_pal[index + 1] << 2;
-        uint32_t b = kb_pal[index + 2] << 2;
+        const uint32_t r = kb_pal[index] << 2;
+        const uint32_t g = kb_pal[index + 1] << 2;
+        const uint32_t b = kb_pal[index + 2] << 2;
         cols.r = r;
         cols.g = g;
         cols.b = b;

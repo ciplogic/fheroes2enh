@@ -301,7 +301,7 @@ int Artifact::Type() const
 
 string Artifact::GetDescription() const
 {
-    uint32_t count = ExtraValue();
+    const uint32_t count = ExtraValue();
     string str = GetPluralDescription(*this, count);
 
     StringReplace(str, "%{name}", GetName());

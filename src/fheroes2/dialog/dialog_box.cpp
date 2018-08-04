@@ -47,7 +47,7 @@ Dialog::FrameBox::FrameBox(int height, bool buttons)
 
     if (buttons) height += BUTTON_HEIGHT;
 
-    bool evil = Settings::Get().ExtGameEvilInterface();
+    const bool evil = Settings::Get().ExtGameEvilInterface();
     const uint32_t count_middle = (height <= BOXAREA_TOP + BOXAREA_BOTTOM ? 0 : 1 + (height - BOXAREA_TOP - BOXAREA_BOTTOM) /
                                                                                BOXAREA_MIDDLE);
     const uint32_t height_middle = count_middle * BOXAREA_MIDDLE;
@@ -56,8 +56,8 @@ Dialog::FrameBox::FrameBox(int height, bool buttons)
     area.w = BOXAREA_WIDTH;
     area.h = BOXAREA_TOP + BOXAREA_BOTTOM + height_middle;
 
-    s32 posx = (display.w() - BOX_WIDTH) / 2;
-    s32 posy = (display.h() - height_top_bottom - height_middle) / 2;
+    const s32 posx = (display.w() - BOX_WIDTH) / 2;
+    const s32 posy = (display.h() - height_top_bottom - height_middle) / 2;
 
     background.Save(Rect(posx, posy, BOX_WIDTH, height_top_bottom + height_middle));
 

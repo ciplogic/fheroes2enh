@@ -46,7 +46,7 @@ int IMG_SavePNG(const char *file, SDL_Surface *surf, int compression)
         return (-1);
     }
 
-    int ret = IMG_SavePNG_RW(fp, surf, compression);
+    const int ret = IMG_SavePNG_RW(fp, surf, compression);
     SDL_RWclose(fp);
     return ret;
 }

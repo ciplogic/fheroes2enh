@@ -473,8 +473,10 @@ string Route::Path::String() const
 
 bool StepIsObstacle(const Route::Step &s)
 {
-    s32 index = s.GetIndex();
-    int obj = 0 <= index ? world.GetTiles(index).GetObject() : MP2::OBJ_ZERO;
+    const s32 index = s.GetIndex();
+    int obj = 0 <= index 
+        ? world.GetTiles(index).GetObject() 
+        : MP2::OBJ_ZERO;
 
     switch (obj)
     {
@@ -496,23 +498,22 @@ bool StepIsPassable(const Route::Step &s, const Heroes *h)
 
 bool Route::Path::hasObstacle() const
 {
-    const_iterator it = find_if(begin(), end(), StepIsObstacle);
+    const auto it = find_if(begin(), end(), StepIsObstacle);
     return it != end() && (*it).GetIndex() != GetLastIndex();
 }
 
 void Route::Path::RescanObstacle()
 {
     // scan obstacle
-    iterator it = find_if(begin(), end(), StepIsObstacle);
+    const auto it = find_if(begin(), end(), StepIsObstacle);
 
-    if (it != end() && (*it).GetIndex() != GetLastIndex())
-    {
-        size_t size1 = size();
-        s32 reduce = (*it).GetFrom();
-        Calculate(dst);
-        // reduce
-        if (size() > size1 * 2) Calculate(reduce);
-    }
+    if (it == end() || (*it).GetIndex() == GetLastIndex())
+        return;
+    const size_t size1 = size();
+    const s32 reduce = (*it).GetFrom();
+    Calculate(dst);
+    // reduce
+    if (size() > size1 * 2) Calculate(reduce);
 }
 
 void Route::Path::RescanPassable()

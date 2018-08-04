@@ -389,7 +389,7 @@ int Dialog::ArmyJoinFree(const Troop &troop, Heroes &hero)
 
     // cursor
     Cursor &cursor = Cursor::Get();
-    int oldthemes = cursor.Themes();
+    const int oldthemes = cursor.Themes();
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
@@ -402,7 +402,7 @@ int Dialog::ArmyJoinFree(const Troop &troop, Heroes &hero)
     FrameBox box(10 + textbox.h() + 10, buttons);
     const Rect &pos = box.GetArea();
 
-    int posy = pos.y + 10;
+    const int posy = pos.y + 10;
     textbox.Blit(pos.x, posy);
 
     ButtonGroups btnGroups(pos, buttons);
@@ -467,7 +467,7 @@ int Dialog::ArmyJoinWithCost(const Troop &troop, uint32_t join, uint32_t gold, H
 
     // cursor
     Cursor &cursor = Cursor::Get();
-    int oldthemes = cursor.Themes();
+    const int oldthemes = cursor.Themes();
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 

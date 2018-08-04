@@ -247,13 +247,13 @@ bool AGG::File::Open(const string &fname)
     stream->seek(2);
     for (uint32_t ii = 0; ii < count_items; ++ii)
     {
-        string itemName = vectorNames[ii];
+        const string& itemName = vectorNames[ii];
         FAT f;
-        auto crc = stream->getLE32();
+        const auto crc = stream->getLE32();
         f.crc = crc;
-        auto offset = stream->getLE32();
+        const auto offset = stream->getLE32();
         f.offset = offset;
-        auto sizeChunk = stream->getLE32();
+        const auto sizeChunk = stream->getLE32();
         f.size = sizeChunk;
         fat[itemName] = f;
     }
@@ -842,7 +842,7 @@ ICNSprite AGG::RenderICNSprite(int icn, uint32_t index)
         sizeData = blockSize - header1.offsetData;
 
     // start render
-    Size sz = Size(header1.width, header1.height);
+    const Size sz = Size(header1.width, header1.height);
 
     const u8 *buf = &body[6 + header1.offsetData];
     const u8 *max = buf + sizeData;
@@ -966,7 +966,7 @@ bool AGG::LoadOrgICN(Sprite &sp, int icn, uint32_t index, bool reflect)
 
     if (icnSprite.isValid())
     {
-        auto picSp = icnSprite.CreateSprite(reflect, !ICN::SkipLocalAlpha(icn));
+        const auto picSp = icnSprite.CreateSprite(reflect, !ICN::SkipLocalAlpha(icn));
         sp = *picSp;
         return true;
     }
@@ -1097,12 +1097,12 @@ bool AGG::LoadOrgTIL(int til, uint32_t max)
         return false;
     ByteVectorReader st(body);
 
-    uint32_t count = st.getLE16();
-    uint32_t width = st.getLE16();
-    uint32_t height = st.getLE16();
+    const uint32_t count = st.getLE16();
+    const uint32_t width = st.getLE16();
+    const uint32_t height = st.getLE16();
 
-    uint32_t tile_size = width * height;
-    uint32_t body_size = 6 + count * tile_size;
+    const uint32_t tile_size = width * height;
+    const uint32_t body_size = 6 + count * tile_size;
 
     til_cache_t &v = til_cache[til];
 
@@ -1293,40 +1293,40 @@ void AGG::LoadLOOPXXSounds(const vector<int> &vols)
 {
     const Settings &conf = Settings::Get();
 
-    if (conf.Sound())
+    if (!conf.Sound())
+        return;
+    // set volume loop sounds
+    for (auto itv = vols.begin(); itv != vols.end(); ++itv)
     {
-        // set volume loop sounds
-        for (auto itv = vols.begin(); itv != vols.end(); ++itv)
+        const int vol = *itv;
+        int m82 = M82::GetLOOP00XX(distance(vols.begin(), itv));
+        if (M82::UNKNOWN == m82) continue;
+
+        // find loops
+        auto itl = find(loop_sounds.begin(), loop_sounds.end(), m82);
+
+        if (itl != loop_sounds.end())
         {
-            int vol = *itv;
-            int m82 = M82::GetLOOP00XX(distance(vols.begin(), itv));
-            if (M82::UNKNOWN == m82) continue;
-
-            // find loops
-            auto itl = find(loop_sounds.begin(), loop_sounds.end(), m82);
-
-            if (itl != loop_sounds.end())
+            // unused and free
+            if (0 == vol)
             {
-                // unused and free
-                if (0 == vol)
-                {
-                    if (Mixer::isPlaying((*itl).channel))
-                    {
-                        Mixer::Pause((*itl).channel);
-                        Mixer::Volume((*itl).channel, Mixer::MaxVolume() * conf.SoundVolume() / 10);
-                        Mixer::Stop((*itl).channel);
-                    }
-                    (*itl).sound = M82::UNKNOWN;
-                }
-                    // used and set vols
-                else if (Mixer::isPlaying((*itl).channel))
+                if (Mixer::isPlaying((*itl).channel))
                 {
                     Mixer::Pause((*itl).channel);
-                    Mixer::Volume((*itl).channel, vol * conf.SoundVolume() / 10);
-                    Mixer::Resume((*itl).channel);
+                    Mixer::Volume((*itl).channel, Mixer::MaxVolume() * conf.SoundVolume() / 10);
+                    Mixer::Stop((*itl).channel);
                 }
-            } else
-                // new sound
+                (*itl).sound = M82::UNKNOWN;
+            }
+                // used and set vols
+            else if (Mixer::isPlaying((*itl).channel))
+            {
+                Mixer::Pause((*itl).channel);
+                Mixer::Volume((*itl).channel, vol * conf.SoundVolume() / 10);
+                Mixer::Resume((*itl).channel);
+            }
+        } else
+            // new sound
             if (0 != vol)
             {
                 const vector<u8> &v = GetWAV(m82);
@@ -1351,7 +1351,6 @@ void AGG::LoadLOOPXXSounds(const vector<int> &vols)
 
                 }
             }
-        }
     }
 }
 
@@ -1360,14 +1359,12 @@ void AGG::PlaySound(int m82)
 {
     const Settings &conf = Settings::Get();
 
-    if (conf.Sound())
-    {
-        const vector<u8> &v = GetWAV(m82);
-        int ch = Mixer::Play(&v[0], v.size(), -1, false);
-        Mixer::Pause(ch);
-        Mixer::Volume(ch, Mixer::MaxVolume() * conf.SoundVolume() / 10);
-        Mixer::Resume(ch);
-    }
+    if (!conf.Sound()) return;
+    const vector<u8> &v = GetWAV(m82);
+    int ch = Mixer::Play(&v[0], v.size(), -1, false);
+    Mixer::Pause(ch);
+    Mixer::Volume(ch, Mixer::MaxVolume() * conf.SoundVolume() / 10);
+    Mixer::Resume(ch);
 }
 
 /* wrapper Audio::Play */
@@ -1460,15 +1457,15 @@ void AGG::LoadTTFChar(uint32_t ch)
 
 void AGG::LoadFNT()
 {
-    const Settings &conf = Settings::Get();
+    const auto& conf = Settings::Get();
 
     if (!fnt_cache.empty())
         return;
     const std::string letters =
             "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
-    std::vector<u16> unicode = StringUTF8_to_UNICODE(letters);
+    auto unicode = StringUTF8_to_UNICODE(letters);
 
-    for (unsigned short &it : unicode)
+    for (auto& it : unicode)
         LoadTTFChar(it);
 }
 
@@ -1480,7 +1477,7 @@ uint32_t AGG::GetFontHeight(bool small)
 /* return letter sprite */
 Surface AGG::GetUnicodeLetter(uint32_t ch, uint32_t ft)
 {
-    bool ttf_valid = fonts[0].isValid() && fonts[1].isValid();
+    const bool ttf_valid = fonts[0].isValid() && fonts[1].isValid();
 
     if (!ttf_valid)
         return GetLetter(ch, ft);

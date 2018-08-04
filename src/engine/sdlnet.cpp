@@ -139,7 +139,7 @@ bool Network::Socket::Recv32(uint32_t & v)
 {
     if(Recv(reinterpret_cast<char*>(&v), sizeof(v)))
     {
-        auto swappedV = swap_endian(v);
+        const auto swappedV = swap_endian(v);
         v = swappedV;
         return true;
     }
@@ -150,7 +150,7 @@ bool Network::Socket::Recv16(u16 & v)
 {
     if(Recv(reinterpret_cast<char*>(&v), sizeof(v)))
     {
-        auto swappedV = swap_endian(v);
+        const auto swappedV = swap_endian(v);
         v = swappedV;
         return true;
     }
@@ -160,7 +160,7 @@ bool Network::Socket::Recv16(u16 & v)
 bool Network::Socket::Send32(const uint32_t & v0)
 {
     uint32_t v = v0;
-    auto swappedV = swap_endian(v);
+    const auto swappedV = swap_endian(v);
     v = swappedV;
 
     return Send(reinterpret_cast<char*>(&v), sizeof(v));
@@ -169,7 +169,7 @@ bool Network::Socket::Send32(const uint32_t & v0)
 bool Network::Socket::Send16(const u16 & v0)
 {
     u16 v = v0;
-    auto swappedV = swap_endian(v);
+    const auto swappedV = swap_endian(v);
     v = swappedV;
     return Send(reinterpret_cast<char*>(&v), sizeof(v));
 }

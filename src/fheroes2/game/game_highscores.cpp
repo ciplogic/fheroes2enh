@@ -158,7 +158,7 @@ void HGSData::RedrawList(s32 ox, s32 oy)
     sort(list.begin(), list.end(), RatingSort);
 
     vector<hgs_t>::const_iterator it1 = list.begin();
-    vector<hgs_t>::const_iterator it2 = list.end();
+    const vector<hgs_t>::const_iterator it2 = list.end();
 
     Text text;
     text.Set(Font::BIG);

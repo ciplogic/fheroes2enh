@@ -181,10 +181,10 @@ void Battle::Arena::ApplyActionSpellCast(Command &cmd)
 
 void Battle::Arena::ApplyActionAttack(Command &cmd)
 {
-    uint32_t uid1 = cmd.GetValue();
-    uint32_t uid2 = cmd.GetValue();
-    s32 dst = cmd.GetValue();
-    int dir = cmd.GetValue();
+    const uint32_t uid1 = cmd.GetValue();
+    const uint32_t uid2 = cmd.GetValue();
+    const s32 dst = cmd.GetValue();
+    const int dir = cmd.GetValue();
 
     Unit *b1 = GetTroopUID(uid1);
     Unit *b2 = GetTroopUID(uid2);
@@ -664,7 +664,7 @@ void Battle::Arena::ApplyActionCatapult(Command &cmd)
 
 void Battle::Arena::ApplyActionAutoBattle(Command &cmd)
 {
-    int color = cmd.GetValue();
+    const int color = cmd.GetValue();
 
     if (current_color != color)
         return;
@@ -702,8 +702,8 @@ void Battle::Arena::ApplyActionSpellDefaults(Command &cmd, const Spell &spell)
 
 void Battle::Arena::ApplyActionSpellTeleport(Command &cmd)
 {
-    s32 src = cmd.GetValue();
-    s32 dst = cmd.GetValue();
+    const s32 src = cmd.GetValue();
+    const s32 dst = cmd.GetValue();
 
     Unit *b = GetTroopBoard(src);
     const Spell spell(Spell::TELEPORT);
@@ -721,7 +721,7 @@ void Battle::Arena::ApplyActionSpellTeleport(Command &cmd)
 
 void Battle::Arena::ApplyActionSpellEarthQuake(Command &cmd)
 {
-    vector<int> targets = GetCastleTargets();
+    const vector<int> targets = GetCastleTargets();
 
     if (interface) interface->RedrawActionEarthQuakeSpell(targets);
 
@@ -747,7 +747,7 @@ void Battle::Arena::ApplyActionSpellMirrorImage(Command &cmd)
         return;
     Indexes distances = Board::GetDistanceIndexes(b->GetHeadIndex(), 4);
 
-    ShortestDistance SortingDistance(b->GetHeadIndex());
+    const ShortestDistance SortingDistance(b->GetHeadIndex());
     sort(distances.begin(), distances.end(), SortingDistance);
 
     auto it = find_if(distances.begin(), distances.end(),

@@ -54,10 +54,10 @@ struct pack_t : public pair<uint32_t, uint32_t> /* delta offset */
 
 vector<u8> packValue(uint32_t delta)
 {
-    u8 c1 = delta & 0x0000007F;
-    u8 c2 = (delta & 0x00003F80) >> 7;
-    u8 c3 = (delta & 0x001FC000) >> 14;
-    u8 c4 = (delta & 0x0FE00000) >> 21;
+    const u8 c1 = delta & 0x0000007F;
+    const u8 c2 = (delta & 0x00003F80) >> 7;
+    const u8 c3 = (delta & 0x001FC000) >> 14;
+    const u8 c4 = (delta & 0x0FE00000) >> 21;
 
     vector<u8> res;
     res.reserve(4);
@@ -206,72 +206,76 @@ struct XMIData
 
         // FORM XDIR
         sb >> group;
-        if (group.ID == TAG_FORM && group.type == TAG_XDIR)
+        if (group.ID != TAG_FORM || group.type != TAG_XDIR)
         {
-            // INFO
-            sb >> iff;
-            if (iff.ID == TAG_INFO && iff.length == 2)
-            {
-                int numTracks = sb.getLE16();
-
-                // CAT XMID
-                sb >> group;
-                if (group.ID == TAG_CAT0 && group.type == TAG_XMID)
-                {
-                    for (int track = 0; track < numTracks; ++track)
-                    {
-                        tracks.push_back(XMITrack());
-
-                        vector<u8> &timb = tracks.back().timb;
-                        vector<u8> &evnt = tracks.back().evnt;
-
-                        sb >> group;
-                        // FORM XMID
-                        if (group.ID == TAG_FORM && group.type == TAG_XMID)
-                        {
-                            sb >> iff;
-                            // [TIMB]
-                            if (iff.ID == TAG_TIMB)
-                            {
-                                timb = sb.getRaw(iff.length);
-                                if (timb.size() != iff.length)
-                                {
-                                    ERROR("parse error: " << "out of range");
-                                    break;
-                                }
-                                sb >> iff;
-                            }
-
-                            // [RBRN]
-                            if (iff.ID == TAG_RBRN)
-                            {
-                                sb.skip(iff.length);
-                                sb >> iff;
-                            }
-
-                            // EVNT
-                            if (iff.ID != TAG_EVNT)
-                            {
-                                ERROR("parse error: " << "evnt");
-                                break;
-                            }
-
-                            evnt = sb.getRaw(iff.length);
-
-                            if (evnt.size() != iff.length)
-                            {
-                                ERROR("parse error: " << "out of range");
-                                break;
-                            }
-                        } else
-                        ERROR("unknown tag: " << group.ID << " (expected FORM), " << group.type << " (expected XMID)");
-                    }
-                } else
-                ERROR("parse error: " << "cat xmid");
-            } else
+            ERROR("parse error: " << "form xdir")
+            return;
+        }
+        // INFO
+        sb >> iff;
+        if (iff.ID != TAG_INFO || iff.length != 2)
+        {
             ERROR("parse error: " << "info");
-        } else
-        ERROR("parse error: " << "form xdir");
+            return;
+        }
+        const int numTracks = sb.getLE16();
+
+        // CAT XMID
+        sb >> group;
+        if (group.ID != TAG_CAT0 || group.type != TAG_XMID)
+        {
+            ERROR("parse error: " << "cat xmid")
+            return;
+        }
+        for (int track = 0; track < numTracks; ++track)
+        {
+            tracks.push_back(XMITrack());
+
+            vector<u8> &timb = tracks.back().timb;
+            vector<u8> &evnt = tracks.back().evnt;
+
+            sb >> group;
+            // FORM XMID
+            if (group.ID != TAG_FORM || group.type != TAG_XMID)
+            {
+                ERROR("unknown tag: " << group.ID << " (expected FORM), " << group.type << " (expected XMID)");
+                continue;
+            }
+            sb >> iff;
+            // [TIMB]
+            if (iff.ID == TAG_TIMB)
+            {
+                timb = sb.getRaw(iff.length);
+                if (timb.size() != iff.length)
+                {
+                    ERROR("parse error: " << "out of range");
+                    break;
+                }
+                sb >> iff;
+            }
+
+            // [RBRN]
+            if (iff.ID == TAG_RBRN)
+            {
+                sb.skip(iff.length);
+                sb >> iff;
+            }
+
+            // EVNT
+            if (iff.ID != TAG_EVNT)
+            {
+                ERROR("parse error: " << "evnt");
+                break;
+            }
+
+            evnt = sb.getRaw(iff.length);
+
+            if (evnt.size() != iff.length)
+            {
+                ERROR("parse error: " << "out of range");
+                break;
+            };
+        }
     }
 
     bool isvalid() const
@@ -361,7 +365,7 @@ struct MidEvents : public vector<MidEvent>
                 notesoff.sort();
 
                 auto it1 = notesoff.begin();
-                auto it2 = notesoff.end();
+                const auto it2 = notesoff.end();
                 uint32_t delta2 = 0;
 
                 // apply delta
@@ -406,7 +410,7 @@ struct MidEvents : public vector<MidEvent>
                     // meta
                     case 0x0F:
                     {
-                        pack_t pack = unpackValue(ptr + 2);
+                        const pack_t pack = unpackValue(ptr + 2);
                         ptr += pack.first + pack.second + 1;
                         delta = 0;
                     }
@@ -555,7 +559,7 @@ vector<u8> Music::Xmi2Mid(const vector<u8> &buf)
 
     if (xmi.isvalid())
     {
-        MidData mid(xmi.tracks, 64);
+        const MidData mid(xmi.tracks, 64);
         sb << mid;
     }
 

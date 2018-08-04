@@ -14,6 +14,6 @@ void TimeAction(const std::string& message, std::function<void()> &runAction)
     const auto startTime = GetTickCount();
     runAction();
     const auto endTime = GetTickCount();
-    auto delta = endTime - startTime;
+    const auto delta = endTime - startTime;
     Dialog::Message("", message + ": " + to_string(delta), Font::BIG, Dialog::YES);
 }
