@@ -110,8 +110,8 @@ namespace SDL
         void Print(const char *header = nullptr) const;
 
     private:
-        uint32_t tick1;
-        uint32_t tick2;
+        uint32_t tick1{};
+        uint32_t tick2{};
     };
 
 }
