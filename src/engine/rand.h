@@ -33,7 +33,7 @@ namespace Rand
 {
     void Init();
 
-    uint32_t Get(uint32_t min, uint32_t max = 0);
+    int32_t Get(int32_t min, int32_t max = 0);
 
     template<typename T>
     const T *Get(const vector<T> &vec)

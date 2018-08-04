@@ -45,17 +45,17 @@ namespace
     };
 }
 
-void PlayerFocusReset(sp<Player> player)
+void PlayerFocusReset(const sp<Player>& player)
 {
     if (player) player->GetFocus().Reset();
 }
 
-void PlayerFixMultiControl(sp<Player> player)
+void PlayerFixMultiControl(const sp<Player>& player)
 {
     if (player && player->GetControl() == (CONTROL_HUMAN | CONTROL_AI)) player->SetControl(CONTROL_AI);
 }
 
-void PlayerFixRandomRace(sp<Player> player)
+void PlayerFixRandomRace(const sp<Player>& player)
 {
     if (player && player->GetRace() == Race::RAND) player->SetRace(Race::Rand());
 }
@@ -520,7 +520,7 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, Players &players)
     return msg;
 }
 
-bool Interface::PlayerInfo::operator==(const sp<Player> p) const
+bool Interface::PlayerInfo::operator==(const sp<Player>& p) const
 {
     return player == p;
 }

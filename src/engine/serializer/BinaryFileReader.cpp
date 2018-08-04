@@ -108,7 +108,7 @@ void BinaryFileReader::close()
 
 namespace FileUtils
 {
-    std::vector<u8> readFileBytes(std::string fileName)
+    std::vector<u8> readFileBytes(const std::string& fileName)
     {
         std::vector<u8> result;
         BinaryFileReader reader;
@@ -121,12 +121,12 @@ namespace FileUtils
         result = reader.getRaw(fileSize);
         return result;
     }
-    bool Exists(std::string fileName)
+    bool Exists(const std::string& fileName)
     {
         std::ifstream infile(fileName);
         return infile.is_open();
     }
-    std::vector<std::string> readFileLines(std::string fileName)
+    std::vector<std::string> readFileLines(const std::string& fileName)
     {
         std::vector<std::string> result;
         std::string line;
@@ -139,13 +139,13 @@ namespace FileUtils
         }
         return result;
     }
-    void writeFileBytes(std::string fileName, const std::vector<u8>& v)
+    void writeFileBytes(const std::string& fileName, const std::vector<u8>& v)
     {
         std::ofstream outfile(fileName, std::ios::out | std::ios::binary);
         outfile.write((const char*)&v[0], v.size());
     }
 
-    void writeFileString(std::string fileName, std::string text)
+    void writeFileString(const std::string& fileName, const std::string& text)
     {
         std::ofstream outfile(fileName);
         outfile << text;

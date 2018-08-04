@@ -9,7 +9,7 @@ unsigned long long GetTickCount()
     return duration_cast<microseconds>(steady_clock::now().time_since_epoch()).count();
 }
 
-void TimeAction(std::string message, std::function<void()> &runAction)
+void TimeAction(const std::string& message, std::function<void()> &runAction)
 {
     const auto startTime = GetTickCount();
     runAction();

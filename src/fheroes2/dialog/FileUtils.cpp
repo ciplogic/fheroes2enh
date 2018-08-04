@@ -20,7 +20,7 @@
 
 namespace FileUtils
 {
-    long GetFileTime(std::string filename)
+    long GetFileTime(const std::string& filename)
     {
         struct stat result{};
         if (stat(filename.c_str(), &result) != 0)

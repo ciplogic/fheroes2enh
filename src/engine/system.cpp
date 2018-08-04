@@ -248,7 +248,7 @@ std::string System::GetMessageLocale(int length /* 1, 2, 3 */)
     return locname;
 }
 
-int System::GetCommandOptions(int argc, std::vector<std::string> argv, const char *optstring)
+int System::GetCommandOptions(int argc, const std::vector<std::string>& argv, const char *optstring)
 {
 #if defined(__MINGW32CE__)
     return -1;

@@ -61,7 +61,7 @@ namespace System
 
     size_t GetMemoryUsage();
 
-    int GetCommandOptions(int argc, std::vector<std::string> argv, const char *optstring);
+    int GetCommandOptions(int argc, const std::vector<std::string>& argv, const char *optstring);
 
     char *GetOptionsArgument();
 

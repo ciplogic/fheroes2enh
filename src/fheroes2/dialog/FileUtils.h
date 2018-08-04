@@ -15,6 +15,6 @@ namespace FileUtils
         memset(&t, 0, sizeof(T));
     }
 
-    long GetFileTime(std::string filename);
+    long GetFileTime(const std::string& filename);
 }
 

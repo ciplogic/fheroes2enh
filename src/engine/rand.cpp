@@ -33,7 +33,7 @@ void Rand::Init()
     srand((uint32_t) time(nullptr));
 }
 
-uint32_t Rand::Get(uint32_t min, uint32_t max)
+int32_t Rand::Get(int32_t min, int32_t max)
 {
     if (max)
     {

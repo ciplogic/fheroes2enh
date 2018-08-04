@@ -82,11 +82,11 @@ void ListFiles::ReadDir(const string &path, const string &filter, bool sensitive
     auto files = GetFilesOfDir(path);
     if (filter.empty())
     {
-        for(auto fullname : files)
+        for(const auto fullname : files)
             push_back(fullname);
         return;
     }
-    for (auto fullname : files)
+    for (const auto fullname : files)
     {
         auto insensitiveFile = StringLower(fullname);
         if (insensitiveFile.find(filter) != string::npos)

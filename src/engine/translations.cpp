@@ -41,7 +41,7 @@ namespace ModernTranslation
 
     public:
         void clear();
-        bool readFile(std::string fileName);
+        bool readFile(const std::string& fileName);
         void addDirectTranslation(StringVector& id, StringVector& trans);
         void addMultiTranslation(StringVector& messageIds, StringVector& messagePlurals, StringVector& messageStr1, StringVector& messageStr2);
         
@@ -91,7 +91,7 @@ namespace ModernTranslation
         std::string line;
     };
 
-    bool startsWith(string text, string subStr)
+    bool startsWith(const string& text, const string& subStr)
     {
         if(text.size()< subStr.size())
             return false;
@@ -99,7 +99,7 @@ namespace ModernTranslation
         return subText == subStr;
     }
 
-    bool cutTextIfMatchStart(string text, string subStr, string& outStr)
+    bool cutTextIfMatchStart(const string& text, const string& subStr, string& outStr)
     {
         outStr = "";
         if(!startsWith(text, subStr))
@@ -181,7 +181,7 @@ namespace ModernTranslation
             messageStr1.clear();  
             messageStr2.clear();
         }
-        void addString(TranslationLineType lineType, std::string line)
+        void addString(TranslationLineType lineType, const std::string& line)
         {
             switch (lineType)
             {
@@ -204,7 +204,7 @@ namespace ModernTranslation
         }
     };
 
-    bool TranslationTable::readFile(std::string fileName)
+    bool TranslationTable::readFile(const std::string& fileName)
     {
         std::ifstream infile(fileName);
         if(!infile.is_open())

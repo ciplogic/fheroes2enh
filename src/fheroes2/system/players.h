@@ -222,7 +222,7 @@ namespace Interface
         PlayerInfo() : player(nullptr)
         {}
 
-        bool operator==(const sp<Player> ) const;
+        bool operator==(const sp<Player>&) const;
 
         sp<Player> player;
         Rect rect1; // opponent
