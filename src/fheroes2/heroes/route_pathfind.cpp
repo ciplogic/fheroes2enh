@@ -54,7 +54,7 @@ int GetCurrentLength(map<s32, cell_t> &list, s32 from)
 bool CheckMonsterProtectionAndNotDst(const s32 &to, const s32 &dst)
 {
     const MapsIndexes &monsters = Maps::GetTilesUnderProtection(to);
-    return monsters.size() && monsters.end() == find(monsters.begin(), monsters.end(), dst);
+    return !monsters.empty() && monsters.end() == find(monsters.begin(), monsters.end(), dst);
 }
 
 bool PassableToTile(const Heroes &hero, const Maps::Tiles &toTile, int direct, s32 dst)
@@ -72,11 +72,11 @@ bool PassableToTile(const Heroes &hero, const Maps::Tiles &toTile, int direct, s
 
         if (MP2::OBJ_HEROES == toTile.GetObject())
             return toTile.isPassable(nullptr, Direction::Reflect(direct),
-                                     (hero.isControlAI() ? AI::HeroesSkipFog() : false));
+                                     hero.isControlAI() ? AI::HeroesSkipFog() : false);
     }
 
     // check to tile direct
-    if (!toTile.isPassable(&hero, Direction::Reflect(direct), (hero.isControlAI() ? AI::HeroesSkipFog() : false)))
+    if (!toTile.isPassable(&hero, Direction::Reflect(direct), hero.isControlAI() ? AI::HeroesSkipFog() : false))
         return false;
 
     if (toTile.GetIndex() != dst)
@@ -120,7 +120,7 @@ bool PassableFromToTile(const Heroes &hero, s32 from, const s32 &to, int direct,
         } else
         {
             // check from tile direct
-            if (!fromTile.isPassable(&hero, direct, (hero.isControlAI() ? AI::HeroesSkipFog() : false)))
+            if (!fromTile.isPassable(&hero, direct, hero.isControlAI() ? AI::HeroesSkipFog() : false))
                 return false;
         }
     } else
@@ -133,7 +133,7 @@ bool PassableFromToTile(const Heroes &hero, s32 from, const s32 &to, int direct,
         } else
         {
             // check from tile direct
-            if (!fromTile.isPassable(&hero, direct, (hero.isControlAI() ? AI::HeroesSkipFog() : false)))
+            if (!fromTile.isPassable(&hero, direct, hero.isControlAI() ? AI::HeroesSkipFog() : false))
                 return false;
         }
     }
@@ -170,40 +170,40 @@ bool PassableFromToTile(const Heroes &hero, s32 from, const s32 &to, int direct,
 
     // check corner water/coast
     if (hero.isShipMaster() &&
-        (direct & (Direction::TOP_LEFT | Direction::TOP_RIGHT | Direction::BOTTOM_RIGHT | Direction::BOTTOM_LEFT)))
+        direct & (Direction::TOP_LEFT | Direction::TOP_RIGHT | Direction::BOTTOM_RIGHT | Direction::BOTTOM_LEFT))
     {
         const Size wSize(world.w(), world.h());
         switch (direct)
         {
             case Direction::TOP_LEFT:
-                if ((Maps::isValidDirection(from, Direction::TOP, wSize) &&
-                     !world.GetTiles(Maps::GetDirectionIndex(from, Direction::TOP)).isWater()) ||
-                    (Maps::isValidDirection(from, Direction::LEFT, wSize) &&
-                     !world.GetTiles(Maps::GetDirectionIndex(from, Direction::LEFT)).isWater()))
+                if (Maps::isValidDirection(from, Direction::TOP, wSize) &&
+                    !world.GetTiles(Maps::GetDirectionIndex(from, Direction::TOP)).isWater() ||
+                    Maps::isValidDirection(from, Direction::LEFT, wSize) &&
+                    !world.GetTiles(Maps::GetDirectionIndex(from, Direction::LEFT)).isWater())
                     return false;
                 break;
 
             case Direction::TOP_RIGHT:
-                if ((Maps::isValidDirection(from, Direction::TOP, wSize) &&
-                     !world.GetTiles(Maps::GetDirectionIndex(from, Direction::TOP)).isWater()) ||
-                    (Maps::isValidDirection(from, Direction::RIGHT, wSize) &&
-                     !world.GetTiles(Maps::GetDirectionIndex(from, Direction::RIGHT)).isWater()))
+                if (Maps::isValidDirection(from, Direction::TOP, wSize) &&
+                    !world.GetTiles(Maps::GetDirectionIndex(from, Direction::TOP)).isWater() ||
+                    Maps::isValidDirection(from, Direction::RIGHT, wSize) &&
+                    !world.GetTiles(Maps::GetDirectionIndex(from, Direction::RIGHT)).isWater())
                     return false;
                 break;
 
             case Direction::BOTTOM_RIGHT:
-                if ((Maps::isValidDirection(from, Direction::BOTTOM, wSize) &&
-                     !world.GetTiles(Maps::GetDirectionIndex(from, Direction::BOTTOM)).isWater()) ||
-                    (Maps::isValidDirection(from, Direction::RIGHT, wSize) &&
-                     !world.GetTiles(Maps::GetDirectionIndex(from, Direction::RIGHT)).isWater()))
+                if (Maps::isValidDirection(from, Direction::BOTTOM, wSize) &&
+                    !world.GetTiles(Maps::GetDirectionIndex(from, Direction::BOTTOM)).isWater() ||
+                    Maps::isValidDirection(from, Direction::RIGHT, wSize) &&
+                    !world.GetTiles(Maps::GetDirectionIndex(from, Direction::RIGHT)).isWater())
                     return false;
                 break;
 
             case Direction::BOTTOM_LEFT:
-                if ((Maps::isValidDirection(from, Direction::BOTTOM, wSize) &&
-                     !world.GetTiles(Maps::GetDirectionIndex(from, Direction::BOTTOM)).isWater()) ||
-                    (Maps::isValidDirection(from, Direction::LEFT, wSize) &&
-                     !world.GetTiles(Maps::GetDirectionIndex(from, Direction::LEFT)).isWater()))
+                if (Maps::isValidDirection(from, Direction::BOTTOM, wSize) &&
+                    !world.GetTiles(Maps::GetDirectionIndex(from, Direction::BOTTOM)).isWater() ||
+                    Maps::isValidDirection(from, Direction::LEFT, wSize) &&
+                    !world.GetTiles(Maps::GetDirectionIndex(from, Direction::LEFT)).isWater())
                     return false;
                 break;
 
@@ -219,7 +219,7 @@ uint32_t GetPenaltyFromTo(s32 from, s32 to, int direct, int pathfinding)
 {
     const uint32_t cost1 = Maps::Ground::GetPenalty(from, direct, pathfinding); // penalty: for [cur] out
     const uint32_t cost2 = Maps::Ground::GetPenalty(to, Direction::Reflect(direct), pathfinding); // penalty: for [tmp] in
-    return (cost1 + cost2) >> 1;
+    return cost1 + cost2 >> 1;
 }
 
 namespace
@@ -349,7 +349,7 @@ bool Route::Path::Find(s32 to, int limit)
             // new
             if (-1 == tmpItem2.parent)
             {
-                if ((curItem2.passbl & direction) ||
+                if (curItem2.passbl & direction ||
                     PassableFromToTile(*hero, cur, tmp, direction, to))
                 {
                     curItem2.passbl |= direction;
@@ -376,7 +376,7 @@ bool Route::Path::Find(s32 to, int limit)
             {
 
                 if (tmpItem2.cost_t > curItem2.cost_t + costg &&
-                    ((curItem2.passbl & direction) || PassableFromToTile(*hero, cur, tmp, direction, to)))
+                    (curItem2.passbl & direction || PassableFromToTile(*hero, cur, tmp, direction, to)))
                 {
                     curItem2.passbl |= direction;
 

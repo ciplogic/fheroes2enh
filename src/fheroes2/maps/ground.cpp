@@ -117,7 +117,7 @@ uint32_t Maps::Ground::GetPenalty(s32 index, int direct, uint32_t level)
 
         case WASTELAND:
         case BEACH:
-            result += (Skill::Level::NONE == level ? 25 : 0);
+            result += Skill::Level::NONE == level ? 25 : 0;
             break;
 
         default:

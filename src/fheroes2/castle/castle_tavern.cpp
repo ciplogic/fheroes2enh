@@ -34,7 +34,7 @@
 void Castle::OpenTavern() const
 {
     const string &header = _("A generous tip for the barkeep yields the following rumor:");
-    const int system = (Settings::Get().ExtGameEvilInterface() ? ICN::SYSTEME : ICN::SYSTEM);
+    const int system = Settings::Get().ExtGameEvilInterface() ? ICN::SYSTEME : ICN::SYSTEM;
     const int tavwin = ICN::TAVWIN;
     const string &tavern = GetStringBuilding(BUILD_TAVERN);
     const string &message = world.GetRumors();

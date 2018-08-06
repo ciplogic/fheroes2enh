@@ -158,8 +158,8 @@ int Battle::Catapult::GetTarget(const vector<uint32_t> &values) const
     if (!targets.empty())
     {
         // miss for 30%
-        return cat_miss && 7 > Rand::Get(1, 20) ? CAT_MISS : (1 < targets.size() ? *Rand::Get(targets)
-                                                                                 : targets.front());
+        return cat_miss && 7 > Rand::Get(1, 20) ? CAT_MISS : 1 < targets.size() ? *Rand::Get(targets)
+                   : targets.front();
     }
 
     return 0;

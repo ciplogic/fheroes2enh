@@ -158,7 +158,7 @@ payment_t BuildingInfo::GetCost(uint32_t build, int race)
     payment_t payment;
     const buildstats_t *ptr = &_builds[0];
 
-    while (BUILD_NOTHING != ptr->id2 && !(ptr->id2 == build && (!race || (race & ptr->race)))) ++ptr;
+    while (BUILD_NOTHING != ptr->id2 && !(ptr->id2 == build && (!race || race & ptr->race))) ++ptr;
 
     if (BUILD_NOTHING != ptr->id2)
     {
@@ -292,7 +292,7 @@ BuildingInfo::BuildingInfo(const Castle &c, building_t b) : castle(c), building(
     if (b == BUILD_CAPTAIN)
     {
         const Sprite &sprite = AGG::GetICN(ICN::Get4Captain(castle.GetRace()),
-                                           (building & BUILD_CAPTAIN ? 1 : 0));
+                                           building & BUILD_CAPTAIN ? 1 : 0);
         area.w = sprite.w();
         area.h = sprite.h();
     }
@@ -340,7 +340,7 @@ bool BuildingInfo::IsDwelling() const
 void BuildingInfo::RedrawCaptain()
 {
     AGG::GetICN(ICN::Get4Captain(castle.GetRace()),
-                (building & BUILD_CAPTAIN ? 1 : 0)).Blit(area.x, area.y);
+                building & BUILD_CAPTAIN ? 1 : 0).Blit(area.x, area.y);
 
     const Sprite &sprite_allow = AGG::GetICN(ICN::TOWNWIND, 11);
     const Sprite &sprite_deny = AGG::GetICN(ICN::TOWNWIND, 12);
@@ -487,7 +487,7 @@ bool BuildingInfo::DialogBuyBuilding(bool buttons) const
 {
     Display &display = Display::Get();
 
-    const int system = (Settings::Get().ExtGameEvilInterface() ? ICN::SYSTEME : ICN::SYSTEM);
+    const int system = Settings::Get().ExtGameEvilInterface() ? ICN::SYSTEME : ICN::SYSTEM;
 
     Cursor &cursor = Cursor::Get();
     cursor.Hide();
@@ -513,7 +513,7 @@ bool BuildingInfo::DialogBuyBuilding(bool buttons) const
     const char *sep = ", ";
 
     for (uint32_t itr = 0x00000001; itr; itr <<= 1)
-        if ((requires & itr) && !castle.isBuild(itr))
+        if (requires & itr && !castle.isBuild(itr))
         {
             str.append(Castle::GetStringBuilding(itr, castle.GetRace()));
             str.append(sep);
@@ -706,7 +706,7 @@ bool BuildingInfo::CanQuickBuild(const Point &cursor, Rect area)
 {
     int dx = area.w - (cursor.x - area.x);
     int dy = cursor.y - area.y;
-    if ((dy < 20) && (dx < 20))
+    if (dy < 20 && dx < 20)
     {
         return true;
     }

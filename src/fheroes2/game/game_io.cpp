@@ -84,12 +84,12 @@ namespace Game
 }
 bool Game::Save(const string &fn)
 {
-    const bool autosave = (System::GetBasename(fn) == "autosave.sav");
+    const bool autosave = System::GetBasename(fn) == "autosave.sav";
     const Settings &conf = Settings::Get();
 
     // ask overwrite?
     if (System::IsFile(fn) &&
-        ((!autosave && conf.ExtGameRewriteConfirm()) || (autosave && Settings::Get().ExtGameAutosaveConfirm())) &&
+        (!autosave && conf.ExtGameRewriteConfirm() || autosave && Settings::Get().ExtGameAutosaveConfirm()) &&
         Dialog::NO == Dialog::Message("", _("Are you sure you want to overwrite the save with this name?"), Font::BIG,
             Dialog::YES | Dialog::NO))
     {
@@ -138,7 +138,7 @@ bool Game::Load(const string &fn)
     byteFs >> major >> minor;
 
 
-    const u16 savid = (static_cast<u16>(major) << 8) | static_cast<u16>(minor);
+    const u16 savid = static_cast<u16>(major) << 8 | static_cast<u16>(minor);
 
     // check version sav file
     if (savid != SAV2ID2 && savid != SAV2ID3)
@@ -179,7 +179,7 @@ bool Game::Load(const string &fn)
         bfz->setBigEndian(true);
     }
 
-    if ((header.status & HeaderSAV::IS_LOYALTY) && !conf.PriceLoyaltyVersion())
+    if (header.status & HeaderSAV::IS_LOYALTY && !conf.PriceLoyaltyVersion())
     {
         Message("Warning", _("This file is saved in the \"Price Loyalty\" version.\nSome items may be unavailable."),
                 Font::BIG, Dialog::OK);
@@ -213,7 +213,7 @@ bool Game::Load(const string &fn)
          >> end_check;
     World::Get().PostFixLoad();
 
-    if ( (end_check != SAV2ID2 && end_check != SAV2ID3))
+    if ( end_check != SAV2ID2 && end_check != SAV2ID3)
     {
         return false;
     }
@@ -236,7 +236,7 @@ bool Game::LoadSAV2FileInfo(const string &fn, Maps::FileInfo &finfo)
     char major, minor;
     fs >> major >> minor;
 
-    const u16 savid = (static_cast<u16>(major) << 8) | static_cast<u16>(minor);
+    const u16 savid = static_cast<u16>(major) << 8 | static_cast<u16>(minor);
 
     // check version sav file
     if (savid != SAV2ID2 && savid != SAV2ID3)

@@ -39,7 +39,7 @@ struct SpellFiltered : binary_function<Spell, int, bool>
 {
     bool operator()(Spell s, int f) const
     {
-        return ((SpellBook::ADVN & f) && s.isCombat()) || ((SpellBook::CMBT & f) && !s.isCombat());
+        return SpellBook::ADVN & f && s.isCombat() || SpellBook::CMBT & f && !s.isCombat();
     }
 };
 
@@ -51,8 +51,8 @@ void SpellBookRedrawMP(const Point &, uint32_t);
 
 bool SpellBookSortingSpell(const Spell &spell1, const Spell &spell2)
 {
-    return ((spell1.isCombat() != spell2.isCombat() && spell1.isCombat()) ||
-            (string(spell1.GetName()) < string(spell2.GetName())));
+    return spell1.isCombat() != spell2.isCombat() && spell1.isCombat() ||
+        string(spell1.GetName()) < string(spell2.GetName());
 }
 
 Spell SpellBook::Open(const HeroBase &hero, int filter, bool canselect) const
@@ -126,12 +126,12 @@ Spell SpellBook::Open(const HeroBase &hero, int filter, bool canselect) const
             current_index -= SPELL_PER_PAGE * 2;
             redraw = true;
         } else if (le.MouseClickLeft(next_list) &&
-                   spells2.size() > (current_index + SPELL_PER_PAGE * 2))
+                   spells2.size() > current_index + SPELL_PER_PAGE * 2)
         {
             current_index += SPELL_PER_PAGE * 2;
             redraw = true;
-        } else if ((le.MouseClickLeft(info_rt)) ||
-                   (le.MousePressRight(info_rt)))
+        } else if (le.MouseClickLeft(info_rt) ||
+                   le.MousePressRight(info_rt))
         {
             string str = _("Your hero has %{point} spell points remaining");
             StringReplace(str, "%{point}", hero.GetSpellPoints());
@@ -271,7 +271,7 @@ void SpellBook::Edit(const HeroBase &hero)
         {
             current_index -= SPELL_PER_PAGE * 2;
             redraw = true;
-        } else if (le.MouseClickLeft(next_list) && size() > (current_index + SPELL_PER_PAGE * 2))
+        } else if (le.MouseClickLeft(next_list) && size() > current_index + SPELL_PER_PAGE * 2)
         {
             current_index += SPELL_PER_PAGE * 2;
             redraw = true;
@@ -370,7 +370,7 @@ void SpellBookRedrawMP(const Point &dst, uint32_t mp)
         for (uint32_t i = 100; i >= 1; i /= 10)
             if (mp >= i)
             {
-                Text text(Int2Str((mp % (i * 10)) / i), Font::SMALL);
+                Text text(Int2Str(mp % (i * 10) / i), Font::SMALL);
                 text.Blit(tp.x - text.w() / 2, tp.y);
                 tp.y += 0 + text.h();
             }
@@ -419,7 +419,7 @@ SpellBookRedrawSpells(const SpellStorage &spells, Rects &coords, const size_t cu
     for (uint32_t ii = 0; ii < SPELL_PER_PAGE; ++ii)
         if (spells.size() > cur + ii)
         {
-            if (0 == (ii % (SPELL_PER_PAGE / 2)))
+            if (0 == ii % (SPELL_PER_PAGE / 2))
             {
                 oy = 50;
                 ox += 80;

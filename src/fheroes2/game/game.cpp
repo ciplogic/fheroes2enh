@@ -203,7 +203,7 @@ void Game::EnvironmentSoundMixer()
             // calculation volume
             const int length = max(abs(xx - abs_pt.x), abs(yy - abs_pt.y));
             const int volume =
-                    (2 < length ? 4 : (1 < length ? 8 : (0 < length ? 12 : 16))) * Mixer::MaxVolume() / 16;
+                    (2 < length ? 4 : 1 < length ? 8 : 0 < length ? 12 : 16) * Mixer::MaxVolume() / 16;
 
             if (volume > reserved_vols[channel]) reserved_vols[channel] = volume;
         }

@@ -48,10 +48,10 @@ Dialog::FrameBox::FrameBox(int height, bool buttons)
     if (buttons) height += BUTTON_HEIGHT;
 
     const bool evil = Settings::Get().ExtGameEvilInterface();
-    const uint32_t count_middle = (height <= BOXAREA_TOP + BOXAREA_BOTTOM ? 0 : 1 + (height - BOXAREA_TOP - BOXAREA_BOTTOM) /
-                                                                               BOXAREA_MIDDLE);
+    const uint32_t count_middle = height <= BOXAREA_TOP + BOXAREA_BOTTOM ? 0 : 1 + (height - BOXAREA_TOP - BOXAREA_BOTTOM) /
+                                      BOXAREA_MIDDLE;
     const uint32_t height_middle = count_middle * BOXAREA_MIDDLE;
-    const uint32_t height_top_bottom = (evil ? BOXE_TOP + BOXE_BOTTOM : BOX_TOP + BOX_BOTTOM);
+    const uint32_t height_top_bottom = evil ? BOXE_TOP + BOXE_BOTTOM : BOX_TOP + BOX_BOTTOM;
 
     area.w = BOXAREA_WIDTH;
     area.h = BOXAREA_TOP + BOXAREA_BOTTOM + height_middle;

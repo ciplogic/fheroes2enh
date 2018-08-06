@@ -451,22 +451,22 @@ uint32_t World::CountWeek() const
 
 bool World::BeginWeek() const
 {
-    return 1 == (day % DAYOFWEEK);
+    return 1 == day % DAYOFWEEK;
 }
 
 bool World::BeginMonth() const
 {
-    return 1 == (week % WEEKOFMONTH) && BeginWeek();
+    return 1 == week % WEEKOFMONTH && BeginWeek();
 }
 
 bool World::LastDay() const
 {
-    return (0 == (day % DAYOFWEEK));
+    return 0 == day % DAYOFWEEK;
 }
 
 bool World::LastWeek() const
 {
-    return (0 == (week % WEEKOFMONTH));
+    return 0 == week % WEEKOFMONTH;
 }
 
 const Week &World::GetWeekType() const
@@ -593,7 +593,7 @@ void World::MonthOfMonstersAction(const Monster &mons)
         }
 
         const uint32_t area = 12;
-        const uint32_t maxc = (w() / area) * (h() / area);
+        const uint32_t maxc = w() / area * (h() / area);
         random_shuffle(tiles.begin(), tiles.end());
         if (tiles.size() > maxc) tiles.resize(maxc);
 
@@ -940,9 +940,9 @@ bool World::KingdomIsWins(const Kingdom &kingdom, int wins) const
         case GameOver::WINS_HERO:
         {
             const Heroes *hero = GetHeroesCondWins();
-            return (hero && Heroes::UNKNOWN != heroes_cond_wins &&
-                    hero->isFreeman() &&
-                    hero->GetKillerColor() == kingdom.GetColor());
+            return hero && Heroes::UNKNOWN != heroes_cond_wins &&
+                hero->isFreeman() &&
+                hero->GetKillerColor() == kingdom.GetColor();
         }
 
         case GameOver::WINS_ARTIFACT:
@@ -950,13 +950,13 @@ bool World::KingdomIsWins(const Kingdom &kingdom, int wins) const
             const KingdomHeroes &heroes = kingdom.GetHeroes();
             if (conf.WinsFindUltimateArtifact())
             {
-                return (heroes._items.end() != find_if(heroes._items.begin(), heroes._items.end(),
-                                                mem_fun(&Heroes::HasUltimateArtifact)));
+                return heroes._items.end() != find_if(heroes._items.begin(), heroes._items.end(),
+                                                      mem_fun(&Heroes::HasUltimateArtifact));
             } else
             {
                 const Artifact art = conf.WinsFindArtifactID();
-                return (heroes._items.end() != find_if(heroes._items.begin(), heroes._items.end(),
-                                                bind2nd(HeroHasArtifact(), art)));
+                return heroes._items.end() != find_if(heroes._items.begin(), heroes._items.end(),
+                                                      bind2nd(HeroHasArtifact(), art));
             }
         }
 
@@ -967,9 +967,9 @@ bool World::KingdomIsWins(const Kingdom &kingdom, int wins) const
 
         case GameOver::WINS_GOLD:
             // check comp also wins
-            return ((kingdom.isControlHuman() || conf.WinsCompAlsoWins()) &&
-                    0 < kingdom.GetFunds().Get(Resource::GOLD) &&
-                    static_cast<uint32_t>(kingdom.GetFunds().Get(Resource::GOLD)) >= conf.WinsAccumulateGold());
+            return (kingdom.isControlHuman() || conf.WinsCompAlsoWins()) &&
+                0 < kingdom.GetFunds().Get(Resource::GOLD) &&
+                static_cast<uint32_t>(kingdom.GetFunds().Get(Resource::GOLD)) >= conf.WinsAccumulateGold();
 
         default:
             break;
@@ -990,19 +990,19 @@ bool World::KingdomIsLoss(const Kingdom &kingdom, int loss) const
         case GameOver::LOSS_TOWN:
         {
             const Castle *town = GetCastle(conf.LossMapsPositionObject());
-            return (town && town->GetColor() != kingdom.GetColor());
+            return town && town->GetColor() != kingdom.GetColor();
         }
 
         case GameOver::LOSS_HERO:
         {
             const Heroes *hero = GetHeroesCondLoss();
-            return (hero && Heroes::UNKNOWN != heroes_cond_loss &&
-                    hero->isFreeman() &&
-                    hero->GetKillerColor() != kingdom.GetColor());
+            return hero && Heroes::UNKNOWN != heroes_cond_loss &&
+                hero->isFreeman() &&
+                hero->GetKillerColor() != kingdom.GetColor();
         }
 
         case GameOver::LOSS_TIME:
-            return (CountDay() > conf.LossCountDays() && kingdom.isControlHuman());
+            return CountDay() > conf.LossCountDays() && kingdom.isControlHuman();
 
         default:
             break;
@@ -1018,7 +1018,7 @@ int World::CheckKingdomWins(const Kingdom &kingdom) const
                         GameOver::WINS_SIDE, GameOver::WINS_GOLD, 0};
 
     for (uint32_t ii = 0; wins[ii]; ++ii)
-        if ((conf.ConditionWins() & wins[ii]) &&
+        if (conf.ConditionWins() & wins[ii] &&
             KingdomIsWins(kingdom, wins[ii]))
             return wins[ii];
 
@@ -1045,7 +1045,7 @@ int World::CheckKingdomLoss(const Kingdom &kingdom) const
     const int loss[] = {GameOver::LOSS_ALL, GameOver::LOSS_TOWN, GameOver::LOSS_HERO, GameOver::LOSS_TIME, 0};
 
     for (uint32_t ii = 0; loss[ii]; ++ii)
-        if ((conf.ConditionLoss() & loss[ii]) &&
+        if (conf.ConditionLoss() & loss[ii] &&
             KingdomIsLoss(kingdom, loss[ii]))
             return loss[ii];
 
@@ -1321,9 +1321,9 @@ bool EventDate::isDeprecated(uint32_t date) const
 
 bool EventDate::isAllow(int col, uint32_t date) const
 {
-    return ((first == date ||
-             (subsequent && (first < date && 0 == ((date - first) % subsequent)))) &&
-            (col & colors));
+    return (first == date ||
+            subsequent && (first < date && 0 == (date - first) % subsequent)) &&
+        col & colors;
 }
 
 ByteVectorWriter &operator<<(ByteVectorWriter &msg, const EventDate &obj)

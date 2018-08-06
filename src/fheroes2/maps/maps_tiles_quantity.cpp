@@ -90,7 +90,7 @@ void Maps::Tiles::QuantitySetVariant(int variant)
 void Maps::Tiles::QuantitySetExt(int ext)
 {
     quantity2 &= 0xf0;
-    quantity2 |= (0x0f & ext);
+    quantity2 |= 0x0f & ext;
 }
 
 Skill::Secondary Maps::Tiles::QuantitySkill() const
@@ -637,7 +637,7 @@ void Maps::Tiles::QuantityUpdate()
 
         case MP2::OBJ_WATERWHEEL:
             // first week 500 gold, next week 1000 gold
-            QuantitySetResource(Resource::GOLD, (0 == world.CountDay() ? 500 : 1000));
+            QuantitySetResource(Resource::GOLD, 0 == world.CountDay() ? 500 : 1000);
             break;
 
         case MP2::OBJ_WINDMILL:
@@ -1035,7 +1035,7 @@ void Maps::Tiles::MonsterSetJoinCondition(int cond)
     if (!addon)
         return;
     addon->tmp &= 0xFC;
-    addon->tmp |= (cond & 0x03);
+    addon->tmp |= cond & 0x03;
 }
 
 void Maps::Tiles::MonsterSetFixedCount()
@@ -1072,7 +1072,7 @@ bool Maps::Tiles::MonsterJoinConditionForce() const
 
 uint32_t Maps::Tiles::MonsterCount() const
 {
-    return (static_cast<uint32_t>(quantity1) << 8) | quantity2;
+    return static_cast<uint32_t>(quantity1) << 8 | quantity2;
 }
 
 void Maps::Tiles::MonsterSetCount(uint32_t count)
@@ -1127,8 +1127,8 @@ void Maps::Tiles::PlaceMonsterOnTile(Tiles &tile, const Monster &mons, uint32_t 
         // fixed count: for money
     if (tile.MonsterFixedCount() ||
         // month of monster
-        (world.GetWeekType().GetType() == Week::MONSTERS &&
-         world.GetWeekType().GetMonster() == mons()))
+        world.GetWeekType().GetType() == Week::MONSTERS &&
+        world.GetWeekType().GetMonster() == mons())
         tile.MonsterSetJoinCondition(Monster::JOIN_CONDITION_MONEY);
     else
     {

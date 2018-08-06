@@ -274,11 +274,11 @@ size_t System::GetMemoryUsage()
 #elif defined(__WIN32__)
     static MEMORYSTATUS ms;
 
-    ZeroMemory(&ms, sizeof(ms));
+    ZeroMemory(&ms, sizeof ms);
     ms.dwLength = sizeof(MEMORYSTATUS);
     GlobalMemoryStatus(&ms);
 
-    return (ms.dwTotalVirtual - ms.dwAvailVirtual);
+    return ms.dwTotalVirtual - ms.dwAvailVirtual;
 #elif defined(__LINUX__)
     unsigned int size = 0;
     std::ostringstream os;
@@ -306,7 +306,7 @@ std::string System::GetTime()
     time(&raw);
     tmi = localtime(&raw);
 
-    strftime(buf, sizeof(buf) - 1, "%X", tmi);
+    strftime(buf, sizeof buf - 1, "%X", tmi);
 
     return std::string(buf);
 }
@@ -325,7 +325,7 @@ bool dirExists(const std::string& dirName_in)
         return false;  //something is wrong with your path!
 
     // this is a directory!
-    return (ftyp & FILE_ATTRIBUTE_DIRECTORY);
+    return ftyp & FILE_ATTRIBUTE_DIRECTORY;
 
 }
 #endif

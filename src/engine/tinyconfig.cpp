@@ -103,7 +103,7 @@ void TinyConfig::AddEntry(const string &key, const string &val, bool uniq)
     auto it = end();
 
     if (uniq &&
-        (end() != (it = find(ModifyKey(key)))))
+        end() != (it = find(ModifyKey(key))))
         it->second = val;
     else
         insert(std::pair<string, string>(ModifyKey(key), val));
@@ -114,7 +114,7 @@ void TinyConfig::AddEntry(const string &key, int val, bool uniq)
     auto it = end();
 
     if (uniq &&
-        (end() != (it = find(ModifyKey(key)))))
+        end() != (it = find(ModifyKey(key))))
         it->second = Int2Str(val);
     else
         insert(std::pair<string, string>(ModifyKey(key), Int2Str(val)));

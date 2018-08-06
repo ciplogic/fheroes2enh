@@ -58,23 +58,23 @@ namespace
         switch (ground)
         {
             case Maps::Ground::DESERT:
-                return (COLOR_DESERT);
+                return COLOR_DESERT;
             case Maps::Ground::SNOW:
-                return (COLOR_SNOW);
+                return COLOR_SNOW;
             case Maps::Ground::SWAMP:
-                return (COLOR_SWAMP);
+                return COLOR_SWAMP;
             case Maps::Ground::WASTELAND:
-                return (COLOR_WASTELAND);
+                return COLOR_WASTELAND;
             case Maps::Ground::BEACH:
-                return (COLOR_BEACH);
+                return COLOR_BEACH;
             case Maps::Ground::LAVA:
-                return (COLOR_LAVA);
+                return COLOR_LAVA;
             case Maps::Ground::DIRT:
-                return (COLOR_DIRT);
+                return COLOR_DIRT;
             case Maps::Ground::GRASS:
-                return (COLOR_GRASS);
+                return COLOR_GRASS;
             case Maps::Ground::WATER:
-                return (COLOR_WATER);
+                return COLOR_WATER;
             default:
                 break;
         }
@@ -184,14 +184,14 @@ void Interface::Radar::Generate()
 
         if (world_w < world_h)
         {
-            new_sz.w = (world_w * area.h) / world_h;
+            new_sz.w = world_w * area.h / world_h;
             new_sz.h = area.h;
             offset.x = (area.w - new_sz.w) / 2;
             offset.y = 0;
         } else if (world_w > world_h)
         {
             new_sz.w = area.w;
-            new_sz.h = (world_h * area.w) / world_w;
+            new_sz.h = world_h * area.w / world_w;
             offset.x = 0;
             offset.y = (area.h - new_sz.h) / 2;
         } else
@@ -231,7 +231,7 @@ void Interface::Radar::Redraw()
     if (!conf.ExtGameHideInterface() || conf.ShowRadar())
     {
         if (hide)
-            AGG::GetICN((conf.ExtGameEvilInterface() ? ICN::HEROLOGE : ICN::HEROLOGO), 0).Blit(area.x, area.y);
+            AGG::GetICN(conf.ExtGameEvilInterface() ? ICN::HEROLOGE : ICN::HEROLOGO, 0).Blit(area.x, area.y);
         else
         {
             if (world.w() != world.h()) display.FillRect(area, ColorBlack);
@@ -249,8 +249,8 @@ void Interface::Radar::RedrawObjects(int color)
     const Rect &area = GetArea();
     const s32 world_w = world.w();
     const s32 world_h = world.h();
-    const int areaw = (offset.x ? area.w - 2 * offset.x : area.w);
-    const int areah = (offset.y ? area.h - 2 * offset.y : area.h);
+    const int areaw = offset.x ? area.w - 2 * offset.x : area.w;
+    const int areah = offset.y ? area.h - 2 * offset.y : area.h;
 
     int stepx = world_w / area.w;
     int stepy = world_h / area.h;
@@ -313,8 +313,8 @@ void Interface::Radar::RedrawObjects(int color)
 
             }
 
-            const int dstx = area.x + offset.x + (xx * areaw) / world_w;
-            const int dsty = area.y + offset.y + (yy * areah) / world_h;
+            const int dstx = area.x + offset.x + xx * areaw / world_w;
+            const int dsty = area.y + offset.y + yy * areah / world_h;
 
             if (sw > 1)
             {
@@ -336,11 +336,11 @@ void Interface::Radar::RedrawCursor()
         const Rect &area = GetArea();
         const Rect &rectMaps = interface.GetGameArea().GetRectMaps();
 
-        s32 areaw = (offset.x ? area.w - 2 * offset.x : area.w);
-        s32 areah = (offset.y ? area.h - 2 * offset.y : area.h);
+        s32 areaw = offset.x ? area.w - 2 * offset.x : area.w;
+        s32 areah = offset.y ? area.h - 2 * offset.y : area.h;
 
-        const Size sz((rectMaps.w * areaw) / world.w(),
-                      (rectMaps.h * areah) / world.h());
+        const Size sz(rectMaps.w * areaw / world.w(),
+                      rectMaps.h * areah / world.h());
 
         // check change game area
         if (cursorArea.GetSize() != sz)
@@ -349,8 +349,8 @@ void Interface::Radar::RedrawCursor()
             cursorArea.DrawBorder(AGG::GetPaletteColor(RADARCOLOR), false);
         }
 
-        cursorArea.Move(area.x + offset.x + (rectMaps.x * areaw) / world.w(),
-                        area.y + offset.y + (rectMaps.y * areah) / world.h());
+        cursorArea.Move(area.x + offset.x + rectMaps.x * areaw / world.w(),
+                        area.y + offset.y + rectMaps.y * areah / world.h());
     }
 }
 

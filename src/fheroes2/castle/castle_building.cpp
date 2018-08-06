@@ -145,7 +145,7 @@ void CastleRedrawCurrentBuilding(const Castle &castle, const Point &dst_pt,
     }
 
     // sea anime
-    if (Race::WZRD == castle.GetRace() || (!castle.isBuild(BUILD_SHIPYARD) && castle.HaveNearlySea()))
+    if (Race::WZRD == castle.GetRace() || !castle.isBuild(BUILD_SHIPYARD) && castle.HaveNearlySea())
     {
         Sprite sprite50, sprite51;
 

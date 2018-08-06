@@ -111,12 +111,12 @@ void CastleIndexListBox::RedrawBackground(const Point &dst)
 
     AGG::GetICN(ICN::LISTBOX, 0).Blit(dst.x + 2, dst.y + 55);
     for (uint32_t ii = 1; ii < 5; ++ii)
-        AGG::GetICN(ICN::LISTBOX, 1).Blit(dst.x + 2, dst.y + 55 + (ii * 19));
+        AGG::GetICN(ICN::LISTBOX, 1).Blit(dst.x + 2, dst.y + 55 + ii * 19);
     AGG::GetICN(ICN::LISTBOX, 2).Blit(dst.x + 2, dst.y + 145);
 
     AGG::GetICN(ICN::LISTBOX, 7).Blit(dst.x + 256, dst.y + 75);
     for (uint32_t ii = 1; ii < 3; ++ii)
-        AGG::GetICN(ICN::LISTBOX, 8).Blit(dst.x + 256, dst.y + 74 + (ii * 19));
+        AGG::GetICN(ICN::LISTBOX, 8).Blit(dst.x + 256, dst.y + 74 + ii * 19);
     AGG::GetICN(ICN::LISTBOX, 9).Blit(dst.x + 256, dst.y + 126);
 }
 
@@ -131,7 +131,7 @@ bool Heroes::ActionSpellCast(const Spell &spell)
         return false;
     } else if (spell == Spell::NONE || spell.isCombat() || !CanCastSpell(spell, &error))
     {
-        if (error.size()) Message("Error", error, Font::BIG, Dialog::OK);
+        if (!error.empty()) Message("Error", error, Font::BIG, Dialog::OK);
         return false;
     }
 

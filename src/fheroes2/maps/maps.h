@@ -75,25 +75,25 @@ namespace Maps
         switch (vector)
         {
             case Direction::TOP:
-                return (from >= world.w);
+                return from >= world.w;
             case Direction::RIGHT:
-                return ((from % world.w) < (world.w - 1));
+                return from % world.w < world.w - 1;
             case Direction::BOTTOM:
-                return (from < world.w * (world.h - 1));
+                return from < world.w * (world.h - 1);
             case Direction::LEFT:
-                return (from % world.w);
+                return from % world.w;
 
             case Direction::TOP_RIGHT:
-                return (from >= world.w) && ((from % world.w) < (world.w - 1));
+                return from >= world.w && from % world.w < world.w - 1;
 
             case Direction::BOTTOM_RIGHT:
-                return (from < world.w * (world.h - 1)) && ((from % world.w) < (world.w - 1));
+                return from < world.w * (world.h - 1) && from % world.w < world.w - 1;
 
             case Direction::BOTTOM_LEFT:
-                return (from < world.w * (world.h - 1)) && (from % world.w);
+                return from < world.w * (world.h - 1) && from % world.w;
 
             case Direction::TOP_LEFT:
-                return (from >= world.w) && (from % world.w);
+                return from >= world.w && from % world.w;
 
             default:
                 break;

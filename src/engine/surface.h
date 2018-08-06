@@ -35,9 +35,9 @@ public:
     RGBA();
 
     constexpr RGBA(int r, int g, int b, int a = 255) 
-        : color( ((r << 24) & 0xFF000000) |
-            ((g << 16) & 0x00FF0000) |
-            ((b << 8) & 0x0000FF00) |
+        : color((r << 24 & 0xFF000000) |
+            (g << 16 & 0x00FF0000) |
+            (b << 8 & 0x0000FF00) |
             (a & 0x000000FF)){
     }
 

@@ -205,7 +205,7 @@ bool Battle::Only::ChangeSettings()
         buttonStart.isEnable() &&
         le.MousePressLeft(buttonStart) ? buttonStart.PressDraw() : buttonStart.ReleaseDraw();
 
-        if ((buttonStart.isEnable() && le.MouseClickLeft(buttonStart)) ||
+        if (buttonStart.isEnable() && le.MouseClickLeft(buttonStart) ||
             HotKeyPressEvent(Game::EVENT_DEFAULT_READY))
         {
             result = true;
@@ -571,7 +571,7 @@ void Battle::Only::RedrawBaseInfo(const Point &top) const
     StringReplace(message, "%{name1}", string(Race::String(hero1->GetRace())) + " " + hero1->GetName());
     if (hero2)
         StringReplace(message, "%{name2}",
-                      (hero2 ? string(Race::String(hero2->GetRace())) + " " + hero2->GetName() : "Monsters"));
+                      hero2 ? string(Race::String(hero2->GetRace())) + " " + hero2->GetName() : "Monsters");
 
     Text text(message, Font::BIG);
     text.Blit(top.x + 320 - text.w() / 2, top.y + 26);

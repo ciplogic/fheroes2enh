@@ -26,7 +26,6 @@
 #include <algorithm>
 #include "gamedefs.h"
 #include "display.h"
-#include "system.h"
 #include "tools.h"
 
 namespace Interface

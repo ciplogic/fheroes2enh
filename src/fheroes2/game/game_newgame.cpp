@@ -234,7 +234,7 @@ int Game::NewMulti()
 {
     Settings &conf = Settings::Get();
 
-    if (!(conf.GameType(TYPE_BATTLEONLY)))
+    if (!conf.GameType(TYPE_BATTLEONLY))
         conf.SetGameType(TYPE_STANDARD);
 
     // cursor

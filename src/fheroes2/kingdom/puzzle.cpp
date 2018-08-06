@@ -148,7 +148,7 @@ void ShowStandardDialog(const Puzzle &pzl, const Surface &sf)
 
     SpriteBack back(Rect(BORDERWIDTH, BORDERWIDTH, sf.w(), sf.h()));
 
-    AGG::GetICN((evil_interface ? ICN::EVIWPUZL : ICN::VIEWPUZL), 0).Blit(radar_pos);
+    AGG::GetICN(evil_interface ? ICN::EVIWPUZL : ICN::VIEWPUZL, 0).Blit(radar_pos);
     sf.Blit(BORDERWIDTH, BORDERWIDTH, display);
 
     const Point dst_pt(radar_pos.x + 32, radar_pos.y + radar_pos.h - 37);

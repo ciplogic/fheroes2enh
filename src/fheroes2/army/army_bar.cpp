@@ -71,7 +71,7 @@ bool DoUpgradeOnPlusClick(const Point &cursor, ArmyTroop &troop, const Rect &pos
     auto isUpgradable = false;
 
     Text textPlus = {"+"};
-    if ((pos.w - posXInArea < textPlus.w() + 4) && (posYInArea < textPlus.h() + 4))
+    if (pos.w - posXInArea < textPlus.w() + 4 && posYInArea < textPlus.h() + 4)
     {
         isUpgradable = true;
     }
@@ -100,7 +100,7 @@ void RedistributeArmy(ArmyTroop &troop1 /* from */, ArmyTroop &troop2 /* to */)
         const uint32_t free_slots = (army1 == army2 ? 1 : 0) + army2->m_troops.Size() - army2->m_troops.GetCount();
         const uint32_t max_count = save_last_troop ? troop1.GetCount() - 1 : troop1.GetCount();
         uint32_t redistr_count = troop1.GetCount() / 2;
-        const uint32_t slotCount = Dialog::ArmySplitTroop((free_slots > max_count ? max_count : free_slots), max_count,
+        const uint32_t slotCount = Dialog::ArmySplitTroop(free_slots > max_count ? max_count : free_slots, max_count,
                                                      redistr_count, save_last_troop);
 
         switch (slotCount)
@@ -484,7 +484,7 @@ bool ArmyBar::ActionBarDoubleClick(const Point &cursor, ArmyTroop &troop, const 
         if (DoUpgradeOnPlusClick(cursor, troop, pos, army))
             return true;
 
-        int flags = (read_only || army->SaveLastTroop() ? Dialog::READONLY | Dialog::BUTTONS : Dialog::BUTTONS);
+        int flags = read_only || army->SaveLastTroop() ? Dialog::READONLY | Dialog::BUTTONS : Dialog::BUTTONS;
         const Castle *castle = army->inCastle();
 
         if (troop.isAllowUpgrade() &&

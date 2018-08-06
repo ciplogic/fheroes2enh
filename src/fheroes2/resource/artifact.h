@@ -219,7 +219,6 @@ public:
     void ReadFrom(ByteVectorReader &msg);
 
 private:
-    friend StreamBase &operator<<(StreamBase &, const Artifact &);
     friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Artifact &);
     
     friend ByteVectorReader &operator>>(ByteVectorReader &, Artifact &);
@@ -228,7 +227,6 @@ private:
     int ext;
 };
 
-StreamBase &operator<<(StreamBase &, const Artifact &);
 ByteVectorWriter &operator<<(ByteVectorWriter &, const Artifact &);
 
 ByteVectorReader &operator>>(ByteVectorReader &, Artifact &);

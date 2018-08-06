@@ -55,7 +55,7 @@ void Battle::SpeedRedraw(const Point &dst)
 
     StringReplace(str, "%{speed}", speed);
     Text text(str, Font::SMALL);
-    const Sprite &sprite = AGG::GetICN(ICN::CSPANEL, (speed < 3 ? 0 : (speed < 7 ? 1 : 2)));
+    const Sprite &sprite = AGG::GetICN(ICN::CSPANEL, speed < 3 ? 0 : speed < 7 ? 1 : 2);
 
     sprite.Blit(dst);
     text.Blit(dst.x + (sprite.w() - text.w()) / 2, dst.y + sprite.h() - 15);
@@ -70,7 +70,7 @@ void Battle::DialogBattleSettings()
 
     cursor.Hide();
 
-    const Sprite &dialog = AGG::GetICN((conf.ExtGameEvilInterface() ? ICN::CSPANBKE : ICN::CSPANBKG), 0);
+    const Sprite &dialog = AGG::GetICN(conf.ExtGameEvilInterface() ? ICN::CSPANBKE : ICN::CSPANBKG, 0);
 
     Rect pos_rt;
     pos_rt.x = (display.w() - dialog.w()) / 2;
@@ -213,11 +213,11 @@ void Battle::Arena::DialogBattleSummary(const Result &res) const
     string msg;
     int icn_anim = ICN::UNKNOWN;
 
-    if ((res.army1 & RESULT_WINS) && army1->GetCommander() && army1->GetCommander()->isControlHuman())
+    if (res.army1 & RESULT_WINS && army1->GetCommander() && army1->GetCommander()->isControlHuman())
     {
         GetSummaryParams(res.army1, res.army2, *army1->GetCommander(), res.exp1, icn_anim, msg);
         if (conf.Music()) AGG::PlayMusic(MUS::BATTLEWIN, false);
-    } else if ((res.army2 & RESULT_WINS) && army2->GetCommander() && army2->GetCommander()->isControlHuman())
+    } else if (res.army2 & RESULT_WINS && army2->GetCommander() && army2->GetCommander()->isControlHuman())
     {
         GetSummaryParams(res.army2, res.army1, *army2->GetCommander(), res.exp2, icn_anim, msg);
         if (conf.Music()) AGG::PlayMusic(MUS::BATTLEWIN, false);
@@ -247,7 +247,7 @@ void Battle::Arena::DialogBattleSummary(const Result &res) const
         }
     }
 
-    const Sprite &dialog = AGG::GetICN((conf.ExtGameEvilInterface() ? ICN::WINLOSEE : ICN::WINLOSE), 0);
+    const Sprite &dialog = AGG::GetICN(conf.ExtGameEvilInterface() ? ICN::WINLOSEE : ICN::WINLOSE, 0);
 
     Rect pos_rt;
     pos_rt.x = (display.w() - dialog.w()) / 2;
@@ -362,7 +362,7 @@ int Battle::Arena::DialogBattleHero(const HeroBase &hero, bool buttons) const
     cursor.SetThemes(Cursor::POINTER);
 
     const bool readonly = current_color != hero.GetColor() || !buttons;
-    const Sprite &dialog = AGG::GetICN((conf.ExtGameEvilInterface() ? ICN::VGENBKGE : ICN::VGENBKG), 0);
+    const Sprite &dialog = AGG::GetICN(conf.ExtGameEvilInterface() ? ICN::VGENBKGE : ICN::VGENBKG, 0);
 
     Rect pos_rt;
     pos_rt.x = (display.w() - dialog.w()) / 2;
@@ -375,7 +375,7 @@ int Battle::Arena::DialogBattleHero(const HeroBase &hero, bool buttons) const
     dialog.Blit(pos_rt.x, pos_rt.y);
     hero.PortraitRedraw(pos_rt.x + 27, pos_rt.y + 42, PORT_BIG, display);
 
-    int col = (Color::NONE == hero.GetColor() ? 1 : Color::GetIndex(hero.GetColor()) + 1);
+    int col = Color::NONE == hero.GetColor() ? 1 : Color::GetIndex(hero.GetColor()) + 1;
     AGG::GetICN(ICN::VIEWGEN, col).Blit(pos_rt.x + 148, pos_rt.y + 36);
 
     Point tp(pos_rt);
@@ -463,15 +463,15 @@ int Battle::Arena::DialogBattleHero(const HeroBase &hero, bool buttons) const
         if (!buttons && !le.MousePressRight()) break;
 
         if (HotKeyPressEvent(Game::EVENT_BATTLE_CASTSPELL) ||
-            (btnCast.isEnable() && le.MouseClickLeft(btnCast)))
+            btnCast.isEnable() && le.MouseClickLeft(btnCast))
             result = 1;
 
         if (HotKeyPressEvent(Game::EVENT_BATTLE_RETREAT) ||
-            (btnRetreat.isEnable() && le.MouseClickLeft(btnRetreat)))
+            btnRetreat.isEnable() && le.MouseClickLeft(btnRetreat))
             result = 2;
 
         if (HotKeyPressEvent(Game::EVENT_BATTLE_SURRENDER) ||
-            (btnSurrender.isEnable() && le.MouseClickLeft(btnSurrender)))
+            btnSurrender.isEnable() && le.MouseClickLeft(btnSurrender))
             result = 3;
 
         if (le.MousePressRight(btnCast))

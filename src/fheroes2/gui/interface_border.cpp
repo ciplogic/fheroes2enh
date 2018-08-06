@@ -38,7 +38,7 @@ void Interface::GameBorderRedraw()
     const bool evil = Settings::Get().ExtGameEvilInterface();
     uint32_t count_w = (display.w() - 640) / TILEWIDTH;
     uint32_t count_h = (display.h() - 480) / TILEWIDTH;
-    const uint32_t count_icons = count_h > 3 ? 8 : (count_h < 3 ? 4 : 7);
+    const uint32_t count_icons = count_h > 3 ? 8 : count_h < 3 ? 4 : 7;
 
     if (display.w() % TILEWIDTH) ++count_w;
     if (display.h() % TILEWIDTH) ++count_h;

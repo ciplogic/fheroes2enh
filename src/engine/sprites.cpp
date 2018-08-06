@@ -58,14 +58,14 @@ void SpritePos::Reset()
 
 uint32_t SpritePos::GetMemoryUsage() const
 {
-    return Surface::GetMemoryUsage() + sizeof(pos);
+    return Surface::GetMemoryUsage() + sizeof pos;
 }
 
 SpriteBack::SpriteBack() = default;
 
 uint32_t SpriteBack::GetMemoryUsage() const
 {
-    return Surface::GetMemoryUsage() + sizeof(pos);
+    return Surface::GetMemoryUsage() + sizeof pos;
 }
 
 SpriteBack::SpriteBack(const Rect &rt)
@@ -168,7 +168,7 @@ void SpriteMove::Hide()
     if (!isVisible())
         return;
     background.Restore();
-    mode &= ~(_VISIBLE);
+    mode &= ~_VISIBLE;
 }
 
 void SpriteMove::Show(const Point &pos)
@@ -209,5 +209,5 @@ const Rect &SpriteMove::GetArea() const
 uint32_t SpriteMove::GetMemoryUsage() const
 {
     return Surface::GetMemoryUsage() +
-           background.GetMemoryUsage() + sizeof(mode);
+           background.GetMemoryUsage() + sizeof mode;
 }

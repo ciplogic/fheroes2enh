@@ -82,7 +82,7 @@ namespace Dialog
         UPGRADE_DISABLE = MAX,
 
         READONLY = 0x2000,
-        BUTTONS = (YES | OK | NO | CANCEL)
+        BUTTONS = YES | OK | NO | CANCEL
     };
 
     int AdventureOptions(bool enabledig);

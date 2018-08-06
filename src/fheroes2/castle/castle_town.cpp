@@ -37,7 +37,7 @@ int Castle::DialogBuyHero(const Heroes *hero)
 {
     if (!hero) return Dialog::CANCEL;
 
-    const int system = (Settings::Get().ExtGameEvilInterface() ? ICN::SYSTEME : ICN::SYSTEM);
+    const int system = Settings::Get().ExtGameEvilInterface() ? ICN::SYSTEME : ICN::SYSTEM;
 
     Display &display = Display::Get();
     Cursor &cursor = Cursor::Get();
@@ -427,7 +427,7 @@ uint32_t Castle::OpenTown()
         if (le.MouseCursor(buildingMageGuild.GetArea()) && buildingMageGuild.QueueEventProcessing())
             return buildingMageGuild();
         if (le.MouseCursor(buildingTavern.GetArea()) && buildingTavern.QueueEventProcessing())
-            return (Race::NECR == race ? BUILD_SHRINE : BUILD_TAVERN);
+            return Race::NECR == race ? BUILD_SHRINE : BUILD_TAVERN;
         if (le.MouseCursor(buildingThievesGuild.GetArea()) && buildingThievesGuild.QueueEventProcessing())
             return BUILD_THIEVESGUILD;
         if (le.MouseCursor(buildingShipyard.GetArea()) && buildingShipyard.QueueEventProcessing())

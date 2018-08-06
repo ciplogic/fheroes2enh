@@ -392,11 +392,11 @@ uint32_t Kingdom::GetLostTownDays() const
 Recruits &Kingdom::GetRecruits()
 {
     // update hero1
-    if (Heroes::UNKNOWN == recruits.GetID1() || (recruits.GetHero1() && !recruits.GetHero1()->isFreeman()))
+    if (Heroes::UNKNOWN == recruits.GetID1() || recruits.GetHero1() && !recruits.GetHero1()->isFreeman())
         recruits.SetHero1(world.GetFreemanHeroes(GetRace()));
 
     // update hero2
-    if (Heroes::UNKNOWN == recruits.GetID2() || (recruits.GetHero2() && !recruits.GetHero2()->isFreeman()))
+    if (Heroes::UNKNOWN == recruits.GetID2() || recruits.GetHero2() && !recruits.GetHero2()->isFreeman())
         recruits.SetHero2(world.GetFreemanHeroes());
 
     if (recruits.GetID1() == recruits.GetID2()) world.UpdateRecruits(recruits);
@@ -434,7 +434,7 @@ bool Kingdom::IsVisitTravelersTent(int col) const
 
 bool Kingdom::AllowRecruitHero(bool check_payment, int level) const
 {
-    return (heroes._items.size() < GetMaxHeroes()) && (!check_payment || AllowPayment(PaymentConditions::RecruitHero(level)));
+    return heroes._items.size() < GetMaxHeroes() && (!check_payment || AllowPayment(PaymentConditions::RecruitHero(level)));
 }
 
 void Kingdom::ApplyPlayWithStartingHero()
@@ -446,7 +446,7 @@ void Kingdom::ApplyPlayWithStartingHero()
         if (nullptr == first) first = castles.front();
 
         // check manual set hero (castle position + point(0, 1))?
-        const Point &cp = (first)->GetCenter();
+        const Point &cp = first->GetCenter();
         Heroes *hero = world.GetTiles(cp.x, cp.y + 1).GetHeroes();
 
         // and move manual set hero to castle
@@ -504,7 +504,7 @@ Funds Kingdom::GetIncome(int type /* INCOME_ALL */) const
             const Castle &castle = *it;
 
             // castle or town profit
-            resource += ProfitConditions::FromBuilding((castle.isCastle() ? BUILD_CASTLE : BUILD_TENT), 0);
+            resource += ProfitConditions::FromBuilding(castle.isCastle() ? BUILD_CASTLE : BUILD_TENT, 0);
 
             // statue
             if (castle.isBuild(BUILD_STATUE))

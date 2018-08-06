@@ -43,7 +43,7 @@ int IMG_SavePNG(const char *file, SDL_Surface *surf, int compression)
 
     if (fp == nullptr)
     {
-        return (-1);
+        return -1;
     }
 
     const int ret = IMG_SavePNG_RW(fp, surf, compression);
@@ -148,7 +148,7 @@ int IMG_SavePNG_RW(SDL_RWops *src, SDL_Surface *surf, int compression)
             }
             memset(palette_alpha, 0, (colorkey + 1) * sizeof(Uint8));
             palette_alpha[colorkey] = 0;
-            png_set_tRNS(png_ptr, info_ptr, palette_alpha, (colorkey + 1), nullptr);
+            png_set_tRNS(png_ptr, info_ptr, palette_alpha, colorkey + 1, nullptr);
         }
     } else
     { /* Truecolor */
@@ -163,7 +163,7 @@ int IMG_SavePNG_RW(SDL_RWops *src, SDL_Surface *surf, int compression)
     { /* Paletted */
         for (i = 0; (signed int) i < surf->h; i++)
         {
-            row_pointers[i] = ((png_byte *) surf->pixels) + i * surf->pitch;
+            row_pointers[i] = (png_byte *) surf->pixels + i * surf->pitch;
         }
         if (SDL_MUSTLOCK(surf))
         {
@@ -260,7 +260,7 @@ int IMG_SavePNG_RW(SDL_RWops *src, SDL_Surface *surf, int compression)
             }
             for (i = 0; (signed int) i < tempsurf->h; i++)
             {
-                row_pointers[i] = ((png_byte *) tempsurf->pixels) + i * tempsurf->pitch;
+                row_pointers[i] = (png_byte *) tempsurf->pixels + i * tempsurf->pitch;
             }
             if (SDL_MUSTLOCK(tempsurf))
             {
@@ -276,7 +276,7 @@ int IMG_SavePNG_RW(SDL_RWops *src, SDL_Surface *surf, int compression)
         {
             for (i = 0; (signed int) i < surf->h; i++)
             {
-                row_pointers[i] = ((png_byte *) surf->pixels) + i * surf->pitch;
+                row_pointers[i] = (png_byte *) surf->pixels + i * surf->pitch;
             }
             if (SDL_MUSTLOCK(surf))
             {

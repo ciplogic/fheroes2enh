@@ -123,7 +123,7 @@ const Rect &Dialog::FrameBorder::GetArea() const
 
 void Dialog::FrameBorder::RenderRegular(const Rect &dstrt)
 {
-    const Sprite &sf = AGG::GetICN((Settings::Get().ExtGameEvilInterface() ? ICN::SURDRBKE : ICN::SURDRBKG), 0);
+    const Sprite &sf = AGG::GetICN(Settings::Get().ExtGameEvilInterface() ? ICN::SURDRBKE : ICN::SURDRBKG, 0);
     const uint32_t shadow = 16;
     sf.RenderSurface(Rect(shadow, 0, sf.w() - shadow, sf.h() - shadow), Size(dstrt.w, dstrt.h)).Blit(dstrt.x, dstrt.y,
                                                                                                      Display::Get());

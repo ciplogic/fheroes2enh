@@ -110,7 +110,7 @@ string GameOver::GetActualDescription(int cond)
         StringReplace(msg, "%{count}", conf.WinsAccumulateGold());
     }
 
-    if (WINS_ALL != cond && (WINS_ALL & cond))
+    if (WINS_ALL != cond && WINS_ALL & cond)
         msg.append(_(", or you may win by defeating all enemy heroes and capturing all enemy towns and castles."));
 
     if (LOSS_ALL == cond)
@@ -134,9 +134,9 @@ string GameOver::GetActualDescription(int cond)
     } else if (LOSS_TIME & cond)
     {
         msg = _("Fail to win by the end of month %{month}, week %{week}, day %{day}.");
-        StringReplace(msg, "%{day}", (conf.LossCountDays() % DAYOFWEEK));
-        StringReplace(msg, "%{week}", (conf.LossCountDays() / DAYOFWEEK) + 1);
-        StringReplace(msg, "%{month}", (conf.LossCountDays() / (DAYOFWEEK * WEEKOFMONTH)) + 1);
+        StringReplace(msg, "%{day}", conf.LossCountDays() % DAYOFWEEK);
+        StringReplace(msg, "%{week}", conf.LossCountDays() / DAYOFWEEK + 1);
+        StringReplace(msg, "%{month}", conf.LossCountDays() / (DAYOFWEEK * WEEKOFMONTH) + 1);
     }
 
     if (conf.ExtWorldStartHeroLossCond4Humans())
@@ -325,7 +325,7 @@ int GameOver::Result::LocalCheckGameOver()
         if (!world.GetKingdom(it).isPlay())
         {
             Game::DialogPlayers(it, _("%{color} has been vanquished!"));
-            colors &= (~it);
+            colors &= ~it;
         }
 
     int res = Game::CANCEL;

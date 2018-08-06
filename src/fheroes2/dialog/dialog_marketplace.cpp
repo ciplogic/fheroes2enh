@@ -100,7 +100,7 @@ void TradeWindowGUI::ShowTradeArea(int resourceFrom, int resourceTo, uint32_t ma
     Display &display = Display::Get();
     bool disable = world.GetKingdom(Settings::Get().CurrentColor()).GetFunds().Get(resourceFrom) <= 0;
 
-    if (disable || resourceFrom == resourceTo || (Resource::GOLD != resourceTo && 0 == max_buy))
+    if (disable || resourceFrom == resourceTo || Resource::GOLD != resourceTo && 0 == max_buy)
     {
         cursor.Hide();
         splitter.HideCursor();
@@ -127,7 +127,7 @@ void TradeWindowGUI::ShowTradeArea(int resourceFrom, int resourceTo, uint32_t ma
         dst_pt.x = pos_rt.x + (pos_rt.w - bar.w()) / 2 - 2;
         dst_pt.y = pos_rt.y + 128;
         bar.Blit(dst_pt);
-        splitter.SetRange(0, (Resource::GOLD == resourceTo ? max_sell : max_buy));
+        splitter.SetRange(0, Resource::GOLD == resourceTo ? max_sell : max_buy);
         uint32_t exchange_rate = GetTradeCosts(resourceFrom, resourceTo, fromTradingPost);
         string message;
         if (Resource::GOLD == resourceTo)
@@ -474,7 +474,7 @@ void Dialog::Marketplace(bool fromTradingPost)
 
         // decrease trade resource
         if (count_buy &&
-            ((buttonLeft.isEnable() && le.MouseClickLeft(gui.buttonLeft)) ||
+            (buttonLeft.isEnable() && le.MouseClickLeft(gui.buttonLeft) ||
              le.MouseWheelDn(splitter.GetRect())))
         {
             count_buy -= Resource::GOLD == resourceTo ? GetTradeCosts(resourceFrom, resourceTo, fromTradingPost) : 1;
@@ -490,7 +490,7 @@ void Dialog::Marketplace(bool fromTradingPost)
 
         // increase trade resource
         if (count_buy < max_buy &&
-            ((buttonRight.isEnable() && le.MouseClickLeft(buttonRight)) ||
+            (buttonRight.isEnable() && le.MouseClickLeft(buttonRight) ||
              le.MouseWheelUp(splitter.GetRect())))
         {
             count_buy += Resource::GOLD == resourceTo ? GetTradeCosts(resourceFrom, resourceTo, fromTradingPost) : 1;

@@ -476,7 +476,7 @@ bool LocalEvent::HandleEvents(bool delay)
     }
 
     // emulate press right
-    if ((modes & TAP_MODE) && (modes & CLOCK_ON))
+    if (modes & TAP_MODE && modes & CLOCK_ON)
     {
         clock.Stop();
         if (clock_delay < clock.Get())
@@ -506,7 +506,7 @@ bool LocalEvent::MouseMotion(const Rect &rt) const
 
 bool LocalEvent::MousePressLeft() const
 {
-    return (modes & MOUSE_PRESSED) && SDL_BUTTON_LEFT == mouse_button;
+    return modes & MOUSE_PRESSED && SDL_BUTTON_LEFT == mouse_button;
 }
 
 bool LocalEvent::MouseReleaseLeft() const
@@ -516,7 +516,7 @@ bool LocalEvent::MouseReleaseLeft() const
 
 bool LocalEvent::MousePressMiddle() const
 {
-    return (modes & MOUSE_PRESSED) && SDL_BUTTON_MIDDLE == mouse_button;
+    return modes & MOUSE_PRESSED && SDL_BUTTON_MIDDLE == mouse_button;
 }
 
 bool LocalEvent::MouseReleaseMiddle() const
@@ -526,7 +526,7 @@ bool LocalEvent::MouseReleaseMiddle() const
 
 bool LocalEvent::MousePressRight() const
 {
-    return (modes & MOUSE_PRESSED) && SDL_BUTTON_RIGHT == mouse_button;
+    return modes & MOUSE_PRESSED && SDL_BUTTON_RIGHT == mouse_button;
 }
 
 bool LocalEvent::MouseReleaseRight() const
@@ -538,7 +538,7 @@ void LocalEvent::HandleKeyboardEvent(SDL_KeyboardEvent &event)
 {
     if (KEY_NONE != GetKeySym(event.keysym.sym))
     {
-        (event.type == SDL_KEYDOWN) ? SetModes(KEY_PRESSED) : ResetModes(KEY_PRESSED);
+        event.type == SDL_KEYDOWN ? SetModes(KEY_PRESSED) : ResetModes(KEY_PRESSED);
 
 #ifdef WITHOUT_MOUSE
         if(emulate_mouse && EmulateMouseAction(GetKeySym(event.keysym.sym))) return;
@@ -632,7 +632,7 @@ void LocalEvent::HandleMouseButtonEvent(const SDL_MouseButtonEvent &button)
 
 bool LocalEvent::MouseClickLeft()
 {
-    if (MouseReleaseLeft() && (CLICK_LEFT & modes))
+    if (MouseReleaseLeft() && CLICK_LEFT & modes)
     {
         ResetModes(CLICK_LEFT);
         return true;
@@ -644,7 +644,7 @@ bool LocalEvent::MouseClickLeft()
 bool LocalEvent::MouseClickLeft(const Rect &rt)
 {
     //if(MouseReleaseLeft() && (rt & mouse_rl) && (CLICK_LEFT & modes) && ((modes & TAP_MODE) || (rt & mouse_pl)))
-    if (MouseReleaseLeft() && (rt & mouse_pl) && (rt & mouse_rl) && (CLICK_LEFT & modes))
+    if (MouseReleaseLeft() && rt & mouse_pl && rt & mouse_rl && CLICK_LEFT & modes)
     {
         ResetModes(CLICK_LEFT);
         return true;
@@ -655,7 +655,7 @@ bool LocalEvent::MouseClickLeft(const Rect &rt)
 
 bool LocalEvent::MouseClickMiddle()
 {
-    if (MouseReleaseMiddle() && (CLICK_MIDDLE & modes))
+    if (MouseReleaseMiddle() && CLICK_MIDDLE & modes)
     {
         ResetModes(CLICK_MIDDLE);
         return true;
@@ -666,7 +666,7 @@ bool LocalEvent::MouseClickMiddle()
 
 bool LocalEvent::MouseClickMiddle(const Rect &rt)
 {
-    if (MouseReleaseMiddle() && (rt & mouse_pm) && (rt & mouse_rm) && (CLICK_MIDDLE & modes))
+    if (MouseReleaseMiddle() && rt & mouse_pm && rt & mouse_rm && CLICK_MIDDLE & modes)
     {
         ResetModes(CLICK_MIDDLE);
         return true;
@@ -677,7 +677,7 @@ bool LocalEvent::MouseClickMiddle(const Rect &rt)
 
 bool LocalEvent::MouseClickRight()
 {
-    if (MouseReleaseRight() && (CLICK_RIGHT & modes))
+    if (MouseReleaseRight() && CLICK_RIGHT & modes)
     {
         ResetModes(CLICK_RIGHT);
         return true;
@@ -688,7 +688,7 @@ bool LocalEvent::MouseClickRight()
 
 bool LocalEvent::MouseClickRight(const Rect &rt)
 {
-    if (MouseReleaseRight() && (rt & mouse_pr) && (rt & mouse_rr) && (CLICK_RIGHT & modes))
+    if (MouseReleaseRight() && rt & mouse_pr && rt & mouse_rr && CLICK_RIGHT & modes)
     {
         ResetModes(CLICK_RIGHT);
         return true;
@@ -699,47 +699,47 @@ bool LocalEvent::MouseClickRight(const Rect &rt)
 
 bool LocalEvent::MouseWheelUp() const
 {
-    return (modes & MOUSE_PRESSED) && SDL_BUTTON_WHEELUP == mouse_button;
+    return modes & MOUSE_PRESSED && SDL_BUTTON_WHEELUP == mouse_button;
 }
 
 bool LocalEvent::MouseWheelDn() const
 {
-    return (modes & MOUSE_PRESSED) && SDL_BUTTON_WHEELDOWN == mouse_button;
+    return modes & MOUSE_PRESSED && SDL_BUTTON_WHEELDOWN == mouse_button;
 }
 
 bool LocalEvent::MousePressLeft(const Rect &rt) const
 {
-    return MousePressLeft() && (rt & mouse_pl);
+    return MousePressLeft() && rt & mouse_pl;
 }
 
 bool LocalEvent::MousePressLeft(const Point &pt, uint32_t w, uint32_t h) const
 {
-    return MousePressLeft() && (Rect(pt.x, pt.y, w, h) & mouse_pl);
+    return MousePressLeft() && Rect(pt.x, pt.y, w, h) & mouse_pl;
 }
 
 bool LocalEvent::MousePressMiddle(const Rect &rt) const
 {
-    return MousePressMiddle() && (rt & mouse_pm);
+    return MousePressMiddle() && rt & mouse_pm;
 }
 
 bool LocalEvent::MousePressRight(const Rect &rt) const
 {
-    return MousePressRight() && (rt & mouse_pr);
+    return MousePressRight() && rt & mouse_pr;
 }
 
 bool LocalEvent::MouseReleaseLeft(const Rect &rt) const
 {
-    return MouseReleaseLeft() && (rt & mouse_rl);
+    return MouseReleaseLeft() && rt & mouse_rl;
 }
 
 bool LocalEvent::MouseReleaseMiddle(const Rect &rt) const
 {
-    return MouseReleaseMiddle() && (rt & mouse_rm);
+    return MouseReleaseMiddle() && rt & mouse_rm;
 }
 
 bool LocalEvent::MouseReleaseRight(const Rect &rt) const
 {
-    return MouseReleaseRight() && (rt & mouse_rr);
+    return MouseReleaseRight() && rt & mouse_rr;
 }
 
 void LocalEvent::ResetPressLeft()
@@ -780,12 +780,12 @@ void LocalEvent::ResetReleaseMiddle()
 
 bool LocalEvent::MouseWheelUp(const Rect &rt) const
 {
-    return MouseWheelUp() && (rt & mouse_cu);
+    return MouseWheelUp() && rt & mouse_cu;
 }
 
 bool LocalEvent::MouseWheelDn(const Rect &rt) const
 {
-    return MouseWheelDn() && (rt & mouse_cu);
+    return MouseWheelDn() && rt & mouse_cu;
 }
 
 bool LocalEvent::MouseCursor(const Rect &rt) const
@@ -830,7 +830,7 @@ bool LocalEvent::KeyPress() const
 
 bool LocalEvent::KeyPress(KeySym key) const
 {
-    return key == key_value && (modes & KEY_PRESSED);
+    return key == key_value && modes & KEY_PRESSED;
 }
 
 void LocalEvent::SetGlobalFilterMouseEvents(void (*pf)(s32, s32))
@@ -849,24 +849,24 @@ int LocalEvent::GlobalFilterEvents(const SDL_Event *event)
     LocalEvent &le = Get();
 
     // motion
-    if ((le.modes & GLOBAL_FILTER) && SDL_MOUSEMOTION == event->type)
+    if (le.modes & GLOBAL_FILTER && SDL_MOUSEMOTION == event->type)
     {
         // redraw cursor
         if (le.redraw_cursor_func)
         {
             if (le.modes & MOUSE_OFFSET)
-                (*(le.redraw_cursor_func))(event->motion.x + le.mouse_st.x, event->motion.y + le.mouse_st.y);
+                (*le.redraw_cursor_func)(event->motion.x + le.mouse_st.x, event->motion.y + le.mouse_st.y);
             else
-                (*(le.redraw_cursor_func))(event->motion.x, event->motion.y);
+                (*le.redraw_cursor_func)(event->motion.x, event->motion.y);
         }
     }
 
     // key
-    if ((le.modes & GLOBAL_FILTER) && SDL_KEYDOWN == event->type)
+    if (le.modes & GLOBAL_FILTER && SDL_KEYDOWN == event->type)
     {
         // key event
         if (le.keyboard_filter_func)
-            (*(le.keyboard_filter_func))(event->key.keysym.sym, event->key.keysym.mod);
+            (*le.keyboard_filter_func)(event->key.keysym.sym, event->key.keysym.mod);
     }
 
     return 1;

@@ -82,7 +82,7 @@ Funds::Funds(const ResourceCount &rs)
 
 int Resource::Rand(bool with_gold)
 {
-    switch (Rand::Get(1, (with_gold ? 7 : 6)))
+    switch (Rand::Get(1, with_gold ? 7 : 6))
     {
         case 1:
             return WOOD;
@@ -487,7 +487,7 @@ void Funds::Reset()
 Resource::BoxSprite::BoxSprite(const Funds &f, uint32_t w) : Rect(0, 0, w, 0), rs(f)
 {
     const uint32_t count = rs.GetValidItemsCount();
-    h = 4 > count ? 45 : (7 > count ? 90 : 135);
+    h = 4 > count ? 45 : 7 > count ? 90 : 135;
 }
 
 const Rect &Resource::BoxSprite::GetArea() const

@@ -144,7 +144,7 @@ void Route::Path::Reset()
 bool Route::Path::isComplete() const
 {
     return dst == hero->GetIndex() ||
-           (empty() && Direction::UNKNOWN != Direction::Get(hero->GetIndex(), dst));
+           empty() && Direction::UNKNOWN != Direction::Get(hero->GetIndex(), dst);
 }
 
 bool Route::Path::isValid() const

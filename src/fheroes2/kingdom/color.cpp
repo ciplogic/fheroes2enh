@@ -167,7 +167,7 @@ bool ColorBase::operator==(int col) const
 
 bool ColorBase::isFriends(int col) const
 {
-    return (col & Color::ALL) && (color == col || Players::isFriends(color, col));
+    return col & Color::ALL && (color == col || Players::isFriends(color, col));
 }
 
 void ColorBase::SetColor(int col)

@@ -151,7 +151,7 @@ string Battle::Tower::GetInfo(const Castle &cstl)
             } else
                 msg.append(".");
 
-            if ((it + 1) != towers.end())
+            if (it + 1 != towers.end())
                 msg.append("\n \n");
         }
     }

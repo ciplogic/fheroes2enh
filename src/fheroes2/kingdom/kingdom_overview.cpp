@@ -157,40 +157,40 @@ void StatsHeroesList::ActionListDoubleClick(HeroRow &row, const Point &cursor, s
 void StatsHeroesList::ActionListSingleClick(HeroRow &row, const Point &cursor, s32 ox, s32 oy)
 {
     if (row.hero &&
-        (Rect(ox + 5, oy + 4, Interface::IconsBar::GetItemWidth(), Interface::IconsBar::GetItemHeight()) & cursor))
+        Rect(ox + 5, oy + 4, Interface::IconsBar::GetItemWidth(), Interface::IconsBar::GetItemHeight()) & cursor)
         Game::OpenHeroesDialog(*row.hero);
 }
 
 void StatsHeroesList::ActionListPressRight(HeroRow &row, const Point &cursor, s32 ox, s32 oy)
 {
     if (row.hero &&
-        (Rect(ox + 5, oy + 4, Interface::IconsBar::GetItemWidth(), Interface::IconsBar::GetItemHeight()) & cursor))
+        Rect(ox + 5, oy + 4, Interface::IconsBar::GetItemWidth(), Interface::IconsBar::GetItemHeight()) & cursor)
         Dialog::QuickInfo(*row.hero);
 }
 
 bool StatsHeroesList::ActionListCursor(HeroRow &row, const Point &cursor, s32 ox, s32 oy)
 {
-    if ((row.armyBar->GetArea() & cursor) &&
+    if (row.armyBar->GetArea() & cursor &&
         row.armyBar->QueueEventProcessing())
     {
         if (row.artifactsBar->isSelected()) row.artifactsBar->ResetSelected();
         Cursor::Get().Hide();
         return true;
     }
-    if ((row.artifactsBar->GetArea() & cursor) &&
+    if (row.artifactsBar->GetArea() & cursor &&
         row.artifactsBar->QueueEventProcessing())
     {
         if (row.armyBar->isSelected()) row.armyBar->ResetSelected();
         Cursor::Get().Hide();
         return true;
     }
-    if ((row.primskillsBar->GetArea() & cursor) &&
+    if (row.primskillsBar->GetArea() & cursor &&
         row.primskillsBar->QueueEventProcessing())
     {
         Cursor::Get().Hide();
         return true;
     }
-    if ((row.secskillsBar->GetArea() & cursor) &&
+    if (row.secskillsBar->GetArea() & cursor &&
         row.secskillsBar->QueueEventProcessing())
     {
         Cursor::Get().Hide();
@@ -404,8 +404,8 @@ void StatsCastlesList::ActionListPressRight(CstlRow &row, const Point &cursor, s
 {
     if (!row.castle)
         return;
-    if ((Rect(ox + 17, oy + 19, Interface::IconsBar::GetItemWidth(), Interface::IconsBar::GetItemHeight()) &
-         cursor))
+    if (Rect(ox + 17, oy + 19, Interface::IconsBar::GetItemWidth(), Interface::IconsBar::GetItemHeight()) &
+        cursor)
         Dialog::QuickInfo(*row.castle);
     else if (Rect(ox + 82, oy + 19, Interface::IconsBar::GetItemWidth(), Interface::IconsBar::GetItemHeight()) &
              cursor)
@@ -417,21 +417,21 @@ void StatsCastlesList::ActionListPressRight(CstlRow &row, const Point &cursor, s
 
 bool StatsCastlesList::ActionListCursor(CstlRow &row, const Point &cursor, s32 ox, s32 oy)
 {
-    if (row.armyBarGuard && (row.armyBarGuard->GetArea() & cursor) &&
+    if (row.armyBarGuard && row.armyBarGuard->GetArea() & cursor &&
         (row.armyBarGuest ? row.armyBarGuard->QueueEventProcessing(*row.armyBarGuest)
                           : row.armyBarGuard->QueueEventProcessing()))
     {
         Cursor::Get().Hide();
         if (row.armyBarGuest && row.armyBarGuest->isSelected()) row.armyBarGuest->ResetSelected();
         return true;
-    } else if (row.armyBarGuest && (row.armyBarGuest->GetArea() & cursor) &&
+    } else if (row.armyBarGuest && row.armyBarGuest->GetArea() & cursor &&
                (row.armyBarGuard ? row.armyBarGuest->QueueEventProcessing(*row.armyBarGuard)
                                  : row.armyBarGuest->QueueEventProcessing()))
     {
         Cursor::Get().Hide();
         if (row.armyBarGuard && row.armyBarGuard->isSelected()) row.armyBarGuard->ResetSelected();
         return true;
-    } else if (row.dwellingsBar && (row.dwellingsBar->GetArea() & cursor) &&
+    } else if (row.dwellingsBar && row.dwellingsBar->GetArea() & cursor &&
                row.dwellingsBar->QueueEventProcessing())
     {
         Cursor::Get().Hide();

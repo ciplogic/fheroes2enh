@@ -87,8 +87,8 @@ void Interface::GameArea::SetAreaPosition(s32 x, s32 y, uint32_t w, uint32_t h)
     rectMaps.x = 0;
     rectMaps.y = 0;
 
-    rectMaps.w = (areaPosition.w / TILEWIDTH) + 2;
-    rectMaps.h = (areaPosition.h / TILEWIDTH) + 2;
+    rectMaps.w = areaPosition.w / TILEWIDTH + 2;
+    rectMaps.h = areaPosition.h / TILEWIDTH + 2;
 
     scrollOffset.x = 0;
     scrollOffset.y = 0;
@@ -97,13 +97,13 @@ void Interface::GameArea::SetAreaPosition(s32 x, s32 y, uint32_t w, uint32_t h)
 
     if (world.w() < rectMaps.w)
     {
-        rectMaps.w = (areaPosition.w / TILEWIDTH);
+        rectMaps.w = areaPosition.w / TILEWIDTH;
         scrollStepX = SCROLL_MAX;
     }
 
     if (world.h() < rectMaps.h)
     {
-        rectMaps.h = (areaPosition.h / TILEWIDTH);
+        rectMaps.h = areaPosition.h / TILEWIDTH;
         scrollStepY = SCROLL_MAX;
     }
 
@@ -146,7 +146,7 @@ void Interface::GameArea::DrawHeroRoute(Surface &dst, int flag, const Rect &rt) 
     //s32 from = hero->GetIndex();
     s32 green = hero->GetPath().GetAllowStep();
 
-    const bool skipfirst = hero->isEnableMove() && 45 > hero->GetSpriteIndex() && 2 < (hero->GetSpriteIndex() % 9);
+    const bool skipfirst = hero->isEnableMove() && 45 > hero->GetSpriteIndex() && 2 < hero->GetSpriteIndex() % 9;
 
     auto it1 = hero->GetPath().begin();
     auto it2 = hero->GetPath().end();
@@ -161,15 +161,15 @@ void Interface::GameArea::DrawHeroRoute(Surface &dst, int flag, const Rect &rt) 
         --green;
 
         // is visible
-        if ((Rect(rectMaps.x + rt.x, rectMaps.y + rt.y, rt.w, rt.h) & mp) &&
+        if (Rect(rectMaps.x + rt.x, rectMaps.y + rt.y, rt.w, rt.h) & mp &&
             // check skip first?
             !(it1 == hero->GetPath().begin() && skipfirst))
         {
-            const uint32_t index = (it3 == it2 ? 0 :
-                               Route::Path::GetIndexSprite((*it1).GetDirection(), (*it3).GetDirection(),
-                                                           Maps::Ground::GetPenalty(from, Direction::CENTER,
-                                                                                    hero->GetLevelSkill(
-                                                                                            Skill::Secondary::PATHFINDING))));
+            const uint32_t index = it3 == it2 ? 0 :
+                                       Route::Path::GetIndexSprite((*it1).GetDirection(), (*it3).GetDirection(),
+                                                                   Maps::Ground::GetPenalty(from, Direction::CENTER,
+                                                                                            hero->GetLevelSkill(
+                                                                                                Skill::Secondary::PATHFINDING)));
 
             Sprite sprite = AGG::GetICN(0 > green ? ICN::ROUTERED : ICN::ROUTE, index);
             sprite.SetAlphaMod(180);
@@ -219,7 +219,7 @@ void Interface::GameArea::Redraw(Surface &dst, int flag, const Rect &rt) const
         {
             const Maps::Tiles &tile = world.GetTiles(rectMaps.x + ox, rectMaps.y + oy);
 
-            if (tile.GetObject() == MP2::OBJ_HEROES && (flag & LEVEL_HEROES))
+            if (tile.GetObject() == MP2::OBJ_HEROES && flag & LEVEL_HEROES)
             {
                 const Heroes *hero = tile.GetHeroes();
                 if (hero)
@@ -318,22 +318,22 @@ void Interface::GameArea::SetCenter(s32 px, s32 py)
     if (pos.x == rectMaps.x && pos.y == rectMaps.y) return;
 
     // possible fast scroll
-    if (pos.y == rectMaps.y && 1 == (pos.x - rectMaps.x)) scrollDirection |= SCROLL_RIGHT;
-    else if (pos.y == rectMaps.y && -1 == (pos.x - rectMaps.x)) scrollDirection |= SCROLL_LEFT;
-    else if (pos.x == rectMaps.x && 1 == (pos.y - rectMaps.y)) scrollDirection |= SCROLL_BOTTOM;
-    else if (pos.x == rectMaps.x && -1 == (pos.y - rectMaps.y)) scrollDirection |= SCROLL_TOP;
+    if (pos.y == rectMaps.y && 1 == pos.x - rectMaps.x) scrollDirection |= SCROLL_RIGHT;
+    else if (pos.y == rectMaps.y && -1 == pos.x - rectMaps.x) scrollDirection |= SCROLL_LEFT;
+    else if (pos.x == rectMaps.x && 1 == pos.y - rectMaps.y) scrollDirection |= SCROLL_BOTTOM;
+    else if (pos.x == rectMaps.x && -1 == pos.y - rectMaps.y) scrollDirection |= SCROLL_TOP;
     else
         // diagonal
-    if (-1 == (pos.y - rectMaps.y) && 1 == (pos.x - rectMaps.x))
+    if (-1 == pos.y - rectMaps.y && 1 == pos.x - rectMaps.x)
     {
         scrollDirection |= SCROLL_TOP | SCROLL_RIGHT;
-    } else if (-1 == (pos.y - rectMaps.y) && -1 == (pos.x - rectMaps.x))
+    } else if (-1 == pos.y - rectMaps.y && -1 == pos.x - rectMaps.x)
     {
         scrollDirection |= SCROLL_TOP | SCROLL_LEFT;
-    } else if (1 == (pos.y - rectMaps.y) && 1 == (pos.x - rectMaps.x))
+    } else if (1 == pos.y - rectMaps.y && 1 == pos.x - rectMaps.x)
     {
         scrollDirection |= SCROLL_BOTTOM | SCROLL_RIGHT;
-    } else if (1 == (pos.y - rectMaps.y) && -1 == (pos.x - rectMaps.x))
+    } else if (1 == pos.y - rectMaps.y && -1 == pos.x - rectMaps.x)
     {
         scrollDirection |= SCROLL_BOTTOM | SCROLL_LEFT;
     } else
@@ -414,7 +414,7 @@ Surface Interface::GameArea::GenerateUltimateArtifactAreaSurface(s32 index)
                     areaPosition.y + pt.y * TILEWIDTH - gamearea.scrollOffset.y);
     marker.Blit(dst.x, dst.y + 8, sf);
 
-    sf = (Settings::Get().ExtGameEvilInterface() ? sf.RenderGrayScale() : sf.RenderSepia());
+    sf = Settings::Get().ExtGameEvilInterface() ? sf.RenderGrayScale() : sf.RenderSepia();
 
     gamearea.SetAreaPosition(origPosition.x, origPosition.y, origPosition.w, origPosition.h);
 
@@ -525,8 +525,8 @@ void Interface::GameArea::QueueEventProcessing()
     // out of range
     if (index < 0) return;
 
-    const Rect tile_pos(rectMapsPosition.x + ((mp.x - rectMapsPosition.x) / TILEWIDTH) * TILEWIDTH,
-                        rectMapsPosition.y + ((mp.y - rectMapsPosition.y) / TILEWIDTH) * TILEWIDTH,
+    const Rect tile_pos(rectMapsPosition.x + (mp.x - rectMapsPosition.x) / TILEWIDTH * TILEWIDTH,
+                        rectMapsPosition.y + (mp.y - rectMapsPosition.y) / TILEWIDTH * TILEWIDTH,
                         TILEWIDTH, TILEWIDTH);
 
     // change cusor if need

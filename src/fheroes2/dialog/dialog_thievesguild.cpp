@@ -199,7 +199,7 @@ void DrawFlags(const vector<ValueColors> &v, const Point &pos, uint32_t width, u
         if (ii >= v.size()) continue;
         const Colors colors(v[ii].second);
         const uint32_t sw = AGG::GetICN(ICN::FLAG32, 1).w();
-        s32 px = pos.x + chunk / 2 + ii * chunk - (colors.size() * sw) / 2;
+        s32 px = pos.x + chunk / 2 + ii * chunk - colors.size() * sw / 2;
 
         for (auto color : colors)
         {

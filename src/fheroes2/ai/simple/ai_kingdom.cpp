@@ -228,7 +228,7 @@ void AI::KingdomTurn(Kingdom &kingdom)
 
             if (it != heroes._items.end() &&
                 !ai.capital->GetHeroes().Guest())
-                AIHeroesSetHunterWithTarget((*it), ai.capital->GetIndex());
+                AIHeroesSetHunterWithTarget(*it, ai.capital->GetIndex());
         } else
             // each month
         if (world.BeginMonth() && 1 < world.CountDay())

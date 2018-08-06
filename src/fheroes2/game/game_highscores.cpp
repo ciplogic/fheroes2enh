@@ -163,7 +163,7 @@ void HGSData::RedrawList(s32 ox, s32 oy)
     Text text;
     text.Set(Font::BIG);
 
-    for (; it1 != it2 && (it1 - list.begin() < HGS_MAX); ++it1)
+    for (; it1 != it2 && it1 - list.begin() < HGS_MAX; ++it1)
     {
         const hgs_t &hgs = *it1;
 
@@ -225,7 +225,7 @@ int Game::HighScores(bool fill)
     const uint32_t days = world.CountDay();
     GameOver::Result &gameResult = GameOver::Result::Get();
 
-    if (rating && (gameResult.GetResult() & GameOver::WINS))
+    if (rating && gameResult.GetResult() & GameOver::WINS)
     {
         string player(_("Unknown Hero"));
         Dialog::InputString(_("Your Name"), player);

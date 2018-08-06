@@ -99,13 +99,13 @@ std::string Week::GetName() const
 
 int Week::WeekRand()
 {
-    return (0 == (world.CountWeek() + 1) % 3) && (!Settings::Get().ExtWorldBanWeekOf()) ? MONSTERS :
+    return 0 == (world.CountWeek() + 1) % 3 && !Settings::Get().ExtWorldBanWeekOf() ? MONSTERS :
            Rand::Get(ANT, CONDOR);
 }
 
 int Week::MonthRand()
 {
-    return (0 == (world.GetMonth() + 1) % 3) && (!Settings::Get().ExtWorldBanWeekOf()) ? MONSTERS :
+    return 0 == (world.GetMonth() + 1) % 3 && !Settings::Get().ExtWorldBanWeekOf() ? MONSTERS :
            Rand::Get(Settings::Get().ExtWorldBanPlagues() ? ANT : PLAGUE, CONDOR);
 }
 

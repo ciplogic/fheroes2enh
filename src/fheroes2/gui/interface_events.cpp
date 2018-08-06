@@ -95,8 +95,8 @@ void Interface::Basic::MoveHeroFromArrowKeys(Heroes &hero, int direct)
             break;
 
         default:
-            allow = (tile.isPassable(&hero, Direction::CENTER, false) ||
-                     MP2::isActionObject(tile.GetObject(), hero.isShipMaster()));
+            allow = tile.isPassable(&hero, Direction::CENTER, false) ||
+                MP2::isActionObject(tile.GetObject(), hero.isShipMaster());
             break;
     }
 

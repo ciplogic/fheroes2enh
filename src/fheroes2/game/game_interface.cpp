@@ -176,25 +176,25 @@ void Interface::Basic::Redraw(int force)
 
     if ((redraw | force) & REDRAW_GAMEAREA) gameArea.Redraw(Display::Get(), LEVEL_ALL);
 
-    if ((conf.ExtGameHideInterface() && conf.ShowRadar()) || ((redraw | force) & REDRAW_RADAR)) radar.Redraw();
+    if (conf.ExtGameHideInterface() && conf.ShowRadar() || (redraw | force) & REDRAW_RADAR) radar.Redraw();
     if (conf.UiHeroesBar())
     {
         heroesBar.Redraw();
     }
-    if ((conf.ExtGameHideInterface() && conf.ShowIcons()) || ((redraw | force) & REDRAW_ICONS)) iconsPanel.Redraw();
+    if (conf.ExtGameHideInterface() && conf.ShowIcons() || (redraw | force) & REDRAW_ICONS) iconsPanel.Redraw();
     else if ((redraw | force) & REDRAW_HEROES) iconsPanel.RedrawIcons(ICON_HEROES);
     else if ((redraw | force) & REDRAW_CASTLES) iconsPanel.RedrawIcons(ICON_CASTLES);
 
-    if ((conf.ExtGameHideInterface() && conf.ShowButtons()) || ((redraw | force) & REDRAW_BUTTONS))
+    if (conf.ExtGameHideInterface() && conf.ShowButtons() || (redraw | force) & REDRAW_BUTTONS)
         buttonsArea.Redraw();
 
-    if ((conf.ExtGameHideInterface() && conf.ShowStatus()) || ((redraw | force) & REDRAW_STATUS)) statusWindow.Redraw();
+    if (conf.ExtGameHideInterface() && conf.ShowStatus() || (redraw | force) & REDRAW_STATUS) statusWindow.Redraw();
 
-    if (conf.ExtGameHideInterface() && conf.ShowControlPanel() && (redraw & REDRAW_GAMEAREA)) controlPanel.Redraw();
+    if (conf.ExtGameHideInterface() && conf.ShowControlPanel() && redraw & REDRAW_GAMEAREA) controlPanel.Redraw();
 
     // show system info
     if (conf.ExtGameShowSystemInfo())
-        RedrawSystemInfo((conf.ExtGameHideInterface() ? 10 : 26),
+        RedrawSystemInfo(conf.ExtGameHideInterface() ? 10 : 26,
                          Display::Get().h() - (conf.ExtGameHideInterface() ? 14 : 30), System::GetMemoryUsage());
 
     if ((redraw | force) & REDRAW_BORDER)
@@ -236,12 +236,12 @@ s32 Interface::Basic::GetDimensionDoorDestination(s32 from, uint32_t distance, b
 
         const Maps::Tiles &tile = world.GetTiles(dst);
 
-        const bool valid = ((gameArea.GetArea() & mp) &&
-                            dst >= 0 &&
-                            (!tile.isFog(conf.CurrentColor())) &&
-                            MP2::isClearGroundObject(tile.GetObject()) &&
-                            water == world.GetTiles(dst).isWater() &&
-                            distance >= Maps::GetApproximateDistance(from, dst));
+        const bool valid = gameArea.GetArea() & mp &&
+            dst >= 0 &&
+            !tile.isFog(conf.CurrentColor()) &&
+            MP2::isClearGroundObject(tile.GetObject()) &&
+            water == world.GetTiles(dst).isWater() &&
+            distance >= Maps::GetApproximateDistance(from, dst);
 
         cursor.SetThemes(valid ? (water ? Cursor::BOAT : Cursor::MOVE) : Cursor::WAR_NONE);
 

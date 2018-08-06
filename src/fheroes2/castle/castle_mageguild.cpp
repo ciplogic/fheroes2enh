@@ -39,7 +39,7 @@ RowSpells::RowSpells(const Point &pos, const Castle &castle, int lvl)
     bool hide = castle.GetLevelMageGuild() < lvl;
     const Sprite &roll_show = AGG::GetICN(ICN::TOWNWIND, 0);
     const Sprite &roll_hide = AGG::GetICN(ICN::TOWNWIND, 1);
-    const Sprite &roll = (hide ? roll_hide : roll_show);
+    const Sprite &roll = hide ? roll_hide : roll_show;
 
     uint32_t count = 0;
 
@@ -89,7 +89,7 @@ void RowSpells::Redraw()
 
     for (auto it = coords.begin(); it != coords.end(); ++it)
     {
-        const Rect &dst = (*it);
+        const Rect &dst = *it;
         const Spell &spell = spells[distance(coords.begin(), it)];
 
         // roll hide

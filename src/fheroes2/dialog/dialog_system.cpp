@@ -252,9 +252,9 @@ void Dialog::DrawSystemInfo(const Rects &rects)
     text.Blit(rect5.x + (rect5.w - text.w()) / 2, rect5.y + rect5.h + 5);
 
     // scroll speed
-    const uint32_t is6 = (conf.ScrollSpeed() < SCROLL_FAST2 ? (conf.ScrollSpeed() < SCROLL_FAST1 ? (conf.ScrollSpeed() <
-                                                                                               SCROLL_NORMAL ? 4 : 5)
-                                                                                            : 6) : 7);
+    const uint32_t is6 = conf.ScrollSpeed() < SCROLL_FAST2 ? (conf.ScrollSpeed() < SCROLL_FAST1 ? (conf.ScrollSpeed() <
+                                                                                                   SCROLL_NORMAL ? 4 : 5)
+                                                                  : 6) : 7;
     const Sprite &sprite6 = AGG::GetICN(ICN::SPANEL, is6);
     const Rect &rect6 = rects[5];
     sprite6.Blit(rect6);
@@ -265,7 +265,7 @@ void Dialog::DrawSystemInfo(const Rects &rects)
     text.Blit(rect6.x + (rect6.w - text.w()) / 2, rect6.y + rect6.h + 5);
 
     // interface themes
-    const Sprite &sprite7 = AGG::GetICN(ICN::SPANEL, (conf.ExtGameEvilInterface() ? 17 : 16));
+    const Sprite &sprite7 = AGG::GetICN(ICN::SPANEL, conf.ExtGameEvilInterface() ? 17 : 16);
     const Rect &rect7 = rects[6];
     sprite7.Blit(rect7);
     str.clear();

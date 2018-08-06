@@ -263,7 +263,7 @@ bool World::LoadMapMP2(const string &filename)
         map_captureobj.Set(Maps::GetIndexFromAbsPoint(cx, cy), MP2::OBJ_CASTLE, Color::NONE);
     }
 
-    fs.seek(endof_addons + (72 * 3));
+    fs.seek(endof_addons + 72 * 3);
 
     // cood resource kingdoms
     // 144 x 3 byte (cx, cy, id)
@@ -315,7 +315,7 @@ bool World::LoadMapMP2(const string &filename)
         }
     }
 
-    fs.seek(endof_addons + (72 * 3) + (144 * 3));
+    fs.seek(endof_addons + 72 * 3 + 144 * 3);
 
     // byte: num obelisks (01 default)
     fs.skip(1);
@@ -348,11 +348,11 @@ bool World::LoadMapMP2(const string &filename)
             const Maps::Tiles &tile = vec_tiles[*it_index];
 
             // orders(quantity2, quantity1)
-            uint32_t orders = (tile.GetQuantity2() ? tile.GetQuantity2() : 0);
+            uint32_t orders = tile.GetQuantity2() ? tile.GetQuantity2() : 0;
             orders <<= 8;
             orders |= tile.GetQuantity1();
 
-            if (orders && !(orders % 0x08) && (ii + 1 == orders / 0x08))
+            if (orders && !(orders % 0x08) && ii + 1 == orders / 0x08)
                 findobject = *it_index;
         }
 

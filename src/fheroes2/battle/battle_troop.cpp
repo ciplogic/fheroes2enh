@@ -153,7 +153,7 @@ Battle::ModeDuration::ModeDuration(uint32_t mode, uint32_t duration) : pair<uint
 
 bool Battle::ModeDuration::isMode(uint32_t mode) const
 {
-    return (first & mode);
+    return first & mode;
 }
 
 bool Battle::ModeDuration::isZeroDuration() const
@@ -218,7 +218,7 @@ Battle::Unit::Unit(const Troop &t, s32 pos, bool ref) : ArmyTroop(nullptr, t),
     // set position
     if (Board::isValidIndex(pos))
     {
-        if (t.isWide()) pos += (reflect ? -1 : 1);
+        if (t.isWide()) pos += reflect ? -1 : 1;
         SetPosition(pos);
     }
 
@@ -492,7 +492,7 @@ bool Battle::Unit::isReflect() const
 bool Battle::Unit::OutOfWalls() const
 {
     return Board::isOutOfWallsIndex(GetHeadIndex()) ||
-           (isWide() && Board::isOutOfWallsIndex(GetTailIndex()));
+           isWide() && Board::isOutOfWallsIndex(GetTailIndex());
 }
 
 bool Battle::Unit::isHandFighting() const
@@ -515,9 +515,9 @@ bool Battle::Unit::isHandFighting(const Unit &a, const Unit &b)
 {
     return a.isValid() && !a.Modes(CAP_TOWER) && b.isValid() && b.GetColor() != a.GetColor() &&
            (Board::isNearIndexes(a.GetHeadIndex(), b.GetHeadIndex()) ||
-            (b.isWide() && Board::isNearIndexes(a.GetHeadIndex(), b.GetTailIndex())) ||
-            (a.isWide() && (Board::isNearIndexes(a.GetTailIndex(), b.GetHeadIndex()) ||
-                            (b.isWide() && Board::isNearIndexes(a.GetTailIndex(), b.GetTailIndex())))));
+            b.isWide() && Board::isNearIndexes(a.GetHeadIndex(), b.GetTailIndex()) ||
+            a.isWide() && (Board::isNearIndexes(a.GetTailIndex(), b.GetHeadIndex()) ||
+                b.isWide() && Board::isNearIndexes(a.GetTailIndex(), b.GetTailIndex())));
 }
 
 void Battle::Unit::NewTurn()
@@ -618,7 +618,7 @@ uint32_t Battle::Unit::CalculateDamageUnit(const Unit &enemy, double dmg) const
             // check skill archery +%10, +%25, +%50
             if (GetCommander())
             {
-                dmg += (dmg * GetCommander()->GetSecondaryValues(Skill::Secondary::ARCHERY) / 100);
+                dmg += dmg * GetCommander()->GetSecondaryValues(Skill::Secondary::ARCHERY) / 100;
             }
 
             // check castle defense
@@ -719,7 +719,7 @@ uint32_t Battle::Unit::ApplyDamage(uint32_t dmg)
         dead += killed;
         SetCount(GetCount() - killed);
     }
-    hp -= (dmg >= hp ? hp : dmg);
+    hp -= dmg >= hp ? hp : dmg;
 
     if (!isValid()) PostKilledAction();
 
@@ -783,7 +783,7 @@ uint32_t Battle::Unit::Resurrect(uint32_t points, bool allow_overflow, bool skip
     }
 
     if (!skip_dead)
-        dead -= (resurrect < dead ? resurrect : dead);
+        dead -= resurrect < dead ? resurrect : dead;
 
     return resurrect;
 }
@@ -865,7 +865,7 @@ bool Battle::Unit::AllowApplySpell(const Spell &spell, const HeroBase *hero, str
 
     if (hero && spell.isApplyToFriends() && GetColor() != hero->GetColor()) return false;
     if (hero && spell.isApplyToEnemies() && GetColor() == hero->GetColor()) return false;
-    if (isMagicResist(spell, (hero ? hero->GetPower() : 0))) return false;
+    if (isMagicResist(spell, hero ? hero->GetPower() : 0)) return false;
 
     const HeroBase *myhero = GetCommander();
     if (!myhero) return true;
@@ -1352,7 +1352,7 @@ void Battle::Unit::SpellModesAction(const Spell &spell, uint32_t duration, const
         {
             SetModes(SP_HYPNOTIZE);
             uint32_t acount = hero ? hero->HasArtifact(Artifact::GOLD_WATCH) : 0;
-            affected.AddMode(SP_HYPNOTIZE, (acount ? duration * acount * 2 : duration));
+            affected.AddMode(SP_HYPNOTIZE, acount ? duration * acount * 2 : duration);
         }
             break;
 
@@ -1553,7 +1553,7 @@ void Battle::Unit::SpellRestoreAction(const Spell &spell, uint32_t spoint, const
                 affected.RemoveMode(IS_BAD_MAGIC);
             }
             // restore
-            hp += (spell.Restore() * spoint);
+            hp += spell.Restore() * spoint;
             if (hp > ArmyTroop::GetHitPointsTroop()) hp = ArmyTroop::GetHitPointsTroop();
             break;
 
@@ -1572,7 +1572,7 @@ void Battle::Unit::SpellRestoreAction(const Spell &spell, uint32_t spoint, const
             uint32_t acount = hero ? hero->HasArtifact(Artifact::ANKH) : 0;
             if (acount) restore *= acount * 2;
 
-            const uint32_t resurrect = Resurrect(restore, false, (spell == Spell::RESURRECT));
+            const uint32_t resurrect = Resurrect(restore, false, spell == Spell::RESURRECT);
 
             if (Arena::GetInterface())
             {
@@ -1732,7 +1732,7 @@ uint32_t Battle::Unit::GetMagicResist(const Spell &spell, uint32_t spower) const
         case Spell::RESURRECT:
         case Spell::RESURRECTTRUE:
         case Spell::ANIMATEDEAD:
-            if (isElemental() || (GetCount() == count0)) return 100;
+            if (isElemental() || GetCount() == count0) return 100;
             break;
 
         case Spell::DISPEL:

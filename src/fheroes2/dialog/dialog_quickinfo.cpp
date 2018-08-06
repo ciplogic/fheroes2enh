@@ -379,8 +379,8 @@ void Dialog::QuickInfo(const Maps::Tiles &tile)
         tile.CaptureObjectIsProtection())
     {
         name_object = ShowGuardiansInfo(tile,
-                                        (settings.CurrentColor() == tile.QuantityColor() ? Skill::Level::EXPERT
-                                                                                         : scoute));
+                                        settings.CurrentColor() == tile.QuantityColor() ? Skill::Level::EXPERT
+                                            : scoute);
     } else
         switch (tile.GetObject())
         {
@@ -456,7 +456,7 @@ void Dialog::QuickInfo(const Maps::Tiles &tile)
             case MP2::OBJ_DRAGONCITY:
             case MP2::OBJ_CITYDEAD:
             case MP2::OBJ_TROLLBRIDGE:
-                name_object = ShowDwellingInfo(tile, (kingdom.isVisited(tile) ? Skill::Level::EXPERT : scoute));
+                name_object = ShowDwellingInfo(tile, kingdom.isVisited(tile) ? Skill::Level::EXPERT : scoute);
                 break;
 
             case MP2::OBJ_GAZEBO:
@@ -489,12 +489,12 @@ void Dialog::QuickInfo(const Maps::Tiles &tile)
             case MP2::OBJ_SHRINE2:
             case MP2::OBJ_SHRINE3:
                 name_object = ShowShrineInfo(tile, from_hero,
-                                             (show && kingdom.isVisited(tile) ? Skill::Level::EXPERT : scoute));
+                                             show && kingdom.isVisited(tile) ? Skill::Level::EXPERT : scoute);
                 break;
 
             case MP2::OBJ_WITCHSHUT:
                 name_object = ShowWitchHutInfo(tile, from_hero,
-                                               ((show && kingdom.isVisited(tile)) || scoute == Skill::Level::EXPERT));
+                                               show && kingdom.isVisited(tile) || scoute == Skill::Level::EXPERT);
                 break;
 
             case MP2::OBJ_OBELISK:
@@ -585,22 +585,22 @@ void Dialog::QuickInfo(const Castle &castle)
     switch (castle.GetRace())
     {
         case Race::KNGT:
-            index = (castle.isCastle() ? 9 : 15);
+            index = castle.isCastle() ? 9 : 15;
             break;
         case Race::BARB:
-            index = (castle.isCastle() ? 10 : 16);
+            index = castle.isCastle() ? 10 : 16;
             break;
         case Race::SORC:
-            index = (castle.isCastle() ? 11 : 17);
+            index = castle.isCastle() ? 11 : 17;
             break;
         case Race::WRLK:
-            index = (castle.isCastle() ? 12 : 18);
+            index = castle.isCastle() ? 12 : 18;
             break;
         case Race::WZRD:
-            index = (castle.isCastle() ? 13 : 19);
+            index = castle.isCastle() ? 13 : 19;
             break;
         case Race::NECR:
-            index = (castle.isCastle() ? 14 : 20);
+            index = castle.isCastle() ? 14 : 20;
             break;
         default:
             return;
@@ -667,8 +667,8 @@ void Dialog::QuickInfo(const Castle &castle)
         // my  colors
         (castle.isFriends(conf.CurrentColor()) ||
          // show guardians (scouting: advanced)
-         (from_hero &&
-          Skill::Level::ADVANCED <= from_hero->GetSecondaryValues(Skill::Secondary::SCOUTING))))
+         from_hero &&
+         Skill::Level::ADVANCED <= from_hero->GetSecondaryValues(Skill::Secondary::SCOUTING)))
     {
         // heroes name
         text.Set(guardian->GetName(), Font::SMALL);
@@ -699,9 +699,9 @@ void Dialog::QuickInfo(const Castle &castle)
     else
         // show limited
         Army::DrawMons32LineWithScoute(castle.GetArmy().m_troops, cur_rt.x - 5, cur_rt.y + 100, 192, 0, 0,
-                                       (from_hero && from_hero->CanScouteTile(castle.GetIndex())
-                                        ? from_hero->GetSecondaryValues(Skill::Secondary::SCOUTING)
-                                        : Skill::Level::NONE));
+                                       from_hero && from_hero->CanScouteTile(castle.GetIndex())
+                                           ? from_hero->GetSecondaryValues(Skill::Secondary::SCOUTING)
+                                           : Skill::Level::NONE);
 
     cursor.Show();
     display.Flip();
@@ -792,8 +792,8 @@ void Dialog::QuickInfo(const Heroes &hero)
     if (hero.isFriends(conf.CurrentColor()))
     {
         const s32 luck = hero.GetLuckWithModificators(nullptr);
-        const Sprite &sprite = AGG::GetICN(ICN::MINILKMR, (0 > luck ? 0 : (0 < luck ? 1 : 2)));
-        uint32_t count = (0 == luck ? 1 : abs(luck));
+        const Sprite &sprite = AGG::GetICN(ICN::MINILKMR, 0 > luck ? 0 : 0 < luck ? 1 : 2);
+        uint32_t count = 0 == luck ? 1 : abs(luck);
         dst_pt.x = cur_rt.x + 120;
         dst_pt.y = cur_rt.y + (count == 1 ? 20 : 13);
 
@@ -808,8 +808,8 @@ void Dialog::QuickInfo(const Heroes &hero)
     if (hero.isFriends(conf.CurrentColor()))
     {
         const s32 morale = hero.GetMoraleWithModificators(nullptr);
-        const Sprite &sprite = AGG::GetICN(ICN::MINILKMR, (0 > morale ? 3 : (0 < morale ? 4 : 5)));
-        uint32_t count = (0 == morale ? 1 : abs(morale));
+        const Sprite &sprite = AGG::GetICN(ICN::MINILKMR, 0 > morale ? 3 : 0 < morale ? 4 : 5);
+        uint32_t count = 0 == morale ? 1 : abs(morale);
         dst_pt.x = cur_rt.x + 10;
         dst_pt.y = cur_rt.y + (count == 1 ? 20 : 13);
 
@@ -930,9 +930,9 @@ void Dialog::QuickInfo(const Heroes &hero)
     else
         // show limited
         Army::DrawMons32LineWithScoute(hero.GetArmy().m_troops, cur_rt.x - 5, cur_rt.y + 114, 160, 0, 0,
-                                       (from_hero && from_hero->CanScouteTile(hero.GetIndex())
-                                        ? from_hero->GetSecondaryValues(Skill::Secondary::SCOUTING)
-                                        : Skill::Level::NONE));
+                                       from_hero && from_hero->CanScouteTile(hero.GetIndex())
+                                           ? from_hero->GetSecondaryValues(Skill::Secondary::SCOUTING)
+                                           : Skill::Level::NONE);
 
     cursor.Show();
     display.Flip();

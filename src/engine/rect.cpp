@@ -30,7 +30,7 @@ Point::Point(int px, int py) : x(static_cast<s16>(px)), y(static_cast<s16>(py))
 
 bool Point::operator==(const Point &pt) const
 {
-    return (x == pt.x && y == pt.y);
+    return x == pt.x && y == pt.y;
 }
 
 bool Point::operator!=(const Point &pt) const
@@ -70,7 +70,7 @@ bool Point::inABC(const Point &pt1, const Point &pt2, const Point &pt3) const
     const s32 b = (pt2.x - x) * (pt3.y - pt2.y) - (pt3.x - pt2.x) * (pt2.y - y);
     const auto c = (pt3.x - x) * (pt1.y - pt3.y) - (pt1.x - pt3.x) * (pt3.y - y);
 
-    return ((a >= 0 && b >= 0 && c >= 0) || (a < 0 && b < 0 && c < 0));
+    return a >= 0 && b >= 0 && c >= 0 || a < 0 && b < 0 && c < 0;
 }
 
 Size::Size() : w(0), h(0)
@@ -87,7 +87,7 @@ Size::Size(const Point &pt) : w(abs(pt.x)), h(abs(pt.y))
 
 bool Size::operator==(const Size &sz) const
 {
-    return (w == sz.w && h == sz.h);
+    return w == sz.w && h == sz.h;
 }
 
 bool Size::operator!=(const Size &sz) const
@@ -187,7 +187,7 @@ Rect &Rect::operator=(const Point &pt)
 
 bool Rect::operator==(const Rect &rt) const
 {
-    return (x == rt.x && y == rt.y && w == rt.w && h == rt.h);
+    return x == rt.x && y == rt.y && w == rt.w && h == rt.h;
 }
 
 bool Rect::operator!=(const Rect &rt) const
@@ -197,7 +197,7 @@ bool Rect::operator!=(const Rect &rt) const
 
 bool Rect::operator&(const Point &pt) const
 {
-    return !(pt.x < x || pt.y < y || pt.x >= (x + w) || pt.y >= (y + h));
+    return !(pt.x < x || pt.y < y || pt.x >= x + w || pt.y >= y + h);
 }
 
 bool Rect::operator&(const Rect &rt) const

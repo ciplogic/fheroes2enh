@@ -375,7 +375,7 @@ uint32_t Monster::GetRNDSize(bool skip_factor) const
                 break;
         }
 
-        res = (res * factor / 100);
+        res = res * factor / 100;
         // force minimal
         if (res == 0) res = 1;
     }
@@ -1548,7 +1548,7 @@ uint32_t Monster::GetCountFromHitPoints(const Monster &mons, uint32_t hp)
         return 0;
     const uint32_t hp1 = Monster::GetHitPoints(mons);
     const uint32_t count = hp / hp1;
-    return (count * hp1) < hp ? count + 1 : count;
+    return count * hp1 < hp ? count + 1 : count;
 }
 
 MonsterStaticData &MonsterStaticData::Get()

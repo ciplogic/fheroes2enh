@@ -434,13 +434,13 @@ int Maps::FileInfo::ConditionLoss() const
 
 bool Maps::FileInfo::WinsCompAlsoWins() const
 {
-    return comp_also_wins && ((GameOver::WINS_TOWN | GameOver::WINS_GOLD) & ConditionWins());
+    return comp_also_wins && (GameOver::WINS_TOWN | GameOver::WINS_GOLD) & ConditionWins();
 }
 
 bool Maps::FileInfo::WinsAllowNormalVictory() const
 {
     return allow_normal_victory &&
-           ((GameOver::WINS_TOWN | GameOver::WINS_ARTIFACT | GameOver::WINS_GOLD) & ConditionWins());
+           (GameOver::WINS_TOWN | GameOver::WINS_ARTIFACT | GameOver::WINS_GOLD) & ConditionWins();
 }
 
 int Maps::FileInfo::WinsFindArtifactID() const
@@ -490,12 +490,12 @@ int Maps::FileInfo::AllowComputerColors() const
 
 int Maps::FileInfo::HumanOnlyColors() const
 {
-    return allow_human_colors & ~(allow_comp_colors);
+    return allow_human_colors & ~allow_comp_colors;
 }
 
 int Maps::FileInfo::ComputerOnlyColors() const
 {
-    return allow_comp_colors & ~(allow_human_colors);
+    return allow_comp_colors & ~allow_human_colors;
 }
 
 bool Maps::FileInfo::isAllowCountPlayers(uint32_t colors) const

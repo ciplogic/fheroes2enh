@@ -75,7 +75,7 @@ void AICastleDevelopment(Castle &c)
             if (!c.isBuild(BUILD_TAVERN) && (Race::KNGT == c.GetRace() || Race::SORC == c.GetRace()))
                 c.BuyBuilding(BUILD_TAVERN);
 
-            if (!c.isBuild(BUILD_MAGEGUILD1) && ((Race::SORC | Race::WZRD | Race::WRLK | Race::NECR) & c.GetRace()))
+            if (!c.isBuild(BUILD_MAGEGUILD1) && (Race::SORC | Race::WZRD | Race::WRLK | Race::NECR) & c.GetRace())
                 c.BuyBuilding(BUILD_MAGEGUILD1);
 
             if (!c.isBuild(BUILD_WELL))
@@ -95,7 +95,7 @@ void AICastleDevelopment(Castle &c)
                 c.BuyBuilding(DWELLING_MONSTER4);
 
 
-            if (!c.isBuild(BUILD_THIEVESGUILD) && ((Race::NECR) & c.GetRace()))
+            if (!c.isBuild(BUILD_THIEVESGUILD) && Race::NECR & c.GetRace())
                 c.BuyBuilding(BUILD_THIEVESGUILD);
 
             if (!c.isBuild(BUILD_MARKETPLACE))
@@ -104,7 +104,7 @@ void AICastleDevelopment(Castle &c)
             if (!c.isBuild(BUILD_MAGEGUILD1))
                 c.BuyBuilding(BUILD_MAGEGUILD1);
 
-            if (!c.isBuild(BUILD_MAGEGUILD2) && ((Race::SORC | Race::WZRD | Race::WRLK | Race::NECR) & c.GetRace()))
+            if (!c.isBuild(BUILD_MAGEGUILD2) && (Race::SORC | Race::WZRD | Race::WRLK | Race::NECR) & c.GetRace())
                 c.BuyBuilding(BUILD_MAGEGUILD2);
 
             if (!c.isBuild(DWELLING_UPGRADE2))

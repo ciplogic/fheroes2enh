@@ -56,7 +56,7 @@ void Splitter::SetRange(int smin, int smax)
 
     if (min < max)
     {
-        step = 100 * (isVertical() ? (area.h - h()) : (area.w - w())) / (max - min);
+        step = 100 * (isVertical() ? area.h - h() : area.w - w()) / (max - min);
         cur = min;
         move = GetPositionCursor();
     } else

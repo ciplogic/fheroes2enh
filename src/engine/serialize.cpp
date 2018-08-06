@@ -437,22 +437,22 @@ int StreamBuf::get8()
 
 u16 StreamBuf::getBE16()
 {
-    return (get8() << 8) | get8();
+    return get8() << 8 | get8();
 }
 
 u16 StreamBuf::getLE16()
 {
-    return get8() | (get8() << 8);
+    return get8() | get8() << 8;
 }
 
 uint32_t StreamBuf::getBE32()
 {
-    return (get8() << 24) | (get8() << 16) | (get8() << 8) | get8();
+    return get8() << 24 | get8() << 16 | get8() << 8 | get8();
 }
 
 uint32_t StreamBuf::getLE32()
 {
-    return getLE16() | (getLE16() << 16);
+    return getLE16() | getLE16() << 16;
 }
 
 void StreamBuf::putBE16(u16 v)

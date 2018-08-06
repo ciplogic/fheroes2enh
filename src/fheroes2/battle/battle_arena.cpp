@@ -252,7 +252,7 @@ Battle::Arena::Arena(Army &a1, Army &a2, s32 index, bool local) :
         towers[2] = castle->isBuild(BUILD_RIGHTTURRET)
                     ? std::make_unique<Tower>(*castle, TWR_RIGHT)
                     : nullptr;
-        bool fortification = (Race::KNGT == castle->GetRace()) && castle->isBuild(BUILD_SPEC);
+        bool fortification = Race::KNGT == castle->GetRace() && castle->isBuild(BUILD_SPEC);
         catapult = army1->GetCommander()
                    ? std::make_unique<Catapult>(*army1->GetCommander(), fortification)
                    : nullptr;
@@ -343,7 +343,7 @@ void Battle::Arena::TurnTroop(Unit *current_troop)
             else
             {
                 if (current_troop->isControlAI() ||
-                    (current_color & auto_battle))
+                    current_color & auto_battle)
                 {
                     AI::BattleTurn(*this, *current_troop, actions);
                 } else if (current_troop->isControlHuman())
@@ -463,13 +463,13 @@ void Battle::Arena::Turns()
         }
 
     // end turn: fix result
-    if (!army1->isValid() || (result_game.army1 & (RESULT_RETREAT | RESULT_SURRENDER)))
+    if (!army1->isValid() || result_game.army1 & (RESULT_RETREAT | RESULT_SURRENDER))
     {
         result_game.army1 |= RESULT_LOSS;
         if (army2->isValid()) result_game.army2 = RESULT_WINS;
     }
 
-    if (!army2->isValid() || (result_game.army2 & (RESULT_RETREAT | RESULT_SURRENDER)))
+    if (!army2->isValid() || result_game.army2 & (RESULT_RETREAT | RESULT_SURRENDER))
     {
         result_game.army2 |= RESULT_LOSS;
         if (army1->isValid()) result_game.army1 = RESULT_WINS;
@@ -484,8 +484,8 @@ void Battle::Arena::Turns()
         if (army1->GetCommander()) result_game.exp2 += 500;
         if (army2->GetCommander()) result_game.exp1 += 500;
 
-        Force *army_loss = (result_game.army1 & RESULT_LOSS ? army1.get() : (result_game.army2 & RESULT_LOSS
-                                                                             ? army2.get() : nullptr));
+        Force *army_loss = result_game.army1 & RESULT_LOSS ? army1.get() : result_game.army2 & RESULT_LOSS
+                               ? army2.get() : nullptr;
         result_game.killed = army_loss ? army_loss->GetDeadCounts() : 0;
     }
 }
@@ -700,8 +700,8 @@ bool Battle::Arena::isDisableCastSpell(const Spell &spell, string *msg)
     const HeroBase *current_commander = GetCurrentCommander();
 
     // check sphere negation (only for heroes)
-    if ((hero1 && hero1->HasArtifact(Artifact::SPHERE_NEGATION)) ||
-        (hero2 && hero2->HasArtifact(Artifact::SPHERE_NEGATION)))
+    if (hero1 && hero1->HasArtifact(Artifact::SPHERE_NEGATION) ||
+        hero2 && hero2->HasArtifact(Artifact::SPHERE_NEGATION))
     {
         if (msg) *msg = _("The Sphere of Negation artifact is in effect for this battle, disabling all combat spells.");
         return true;
@@ -1069,10 +1069,10 @@ uint32_t Battle::Arena::GetObstaclesPenalty(const Unit &attacker, const Unit &de
 
         for (const auto point : points)
         {
-            if (0 == board[8].GetObject() && (board[8].GetPos() & point)) return 0;
-            if (0 == board[29].GetObject() && (board[29].GetPos() & point)) return 0;
-            if (0 == board[73].GetObject() && (board[73].GetPos() & point)) return 0;
-            if (0 == board[96].GetObject() && (board[96].GetPos() & point)) return 0;
+            if (0 == board[8].GetObject() && board[8].GetPos() & point) return 0;
+            if (0 == board[29].GetObject() && board[29].GetPos() & point) return 0;
+            if (0 == board[73].GetObject() && board[73].GetPos() & point) return 0;
+            if (0 == board[96].GetObject() && board[96].GetPos() & point) return 0;
         }
 
         result = 1;
@@ -1185,7 +1185,7 @@ Battle::Result &Battle::Arena::GetResult()
 
 bool Battle::Arena::CanBreakAutoBattle() const
 {
-    return (auto_battle & current_color) && GetCurrentCommander() &&
+    return auto_battle & current_color && GetCurrentCommander() &&
            !GetCurrentCommander()->isControlAI();
 }
 

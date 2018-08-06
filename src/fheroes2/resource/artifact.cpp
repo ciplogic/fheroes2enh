@@ -600,7 +600,7 @@ int Artifact::Rand(level_t lvl)
 
     // if possibly: make unique on map
     for (uint32_t art = ULTIMATE_BOOK; art < UNKNOWN; ++art)
-        if ((lvl & Artifact(art).Level()) &&
+        if (lvl & Artifact(art).Level() &&
             !(artifacts[art].bits & ART_DISABLED) &&
             !(artifacts[art].bits & ART_RNDUSED))
             v.push_back(art);
@@ -609,12 +609,12 @@ int Artifact::Rand(level_t lvl)
     if (v.empty())
     {
         for (uint32_t art = ULTIMATE_BOOK; art < UNKNOWN; ++art)
-            if ((lvl & Artifact(art).Level()) &&
+            if (lvl & Artifact(art).Level() &&
                 !(artifacts[art].bits & ART_DISABLED))
                 v.push_back(art);
     }
 
-    int res = v.size() ? *Rand::Get(v) : UNKNOWN;
+    int res = !v.empty() ? *Rand::Get(v) : UNKNOWN;
     artifacts[res].bits |= ART_RNDUSED;
 
     return res;

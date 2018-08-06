@@ -81,10 +81,10 @@ Battle::Result Battle::Loader(Army &army1, Army &army2, s32 mapsindex)
     const Result &result = arena.GetResult();
     AGG::ResetMixer();
 
-    HeroBase *hero_wins = (result.army1 & RESULT_WINS ? army1.GetCommander() : (result.army2 & RESULT_WINS
-                                                                                ? army2.GetCommander() : nullptr));
-    HeroBase *hero_loss = (result.army1 & RESULT_LOSS ? army1.GetCommander() : (result.army2 & RESULT_LOSS
-                                                                                ? army2.GetCommander() : nullptr));
+    HeroBase *hero_wins = result.army1 & RESULT_WINS ? army1.GetCommander() : result.army2 & RESULT_WINS
+                              ? army2.GetCommander() : nullptr;
+    HeroBase *hero_loss = result.army1 & RESULT_LOSS ? army1.GetCommander() : result.army2 & RESULT_LOSS
+                              ? army2.GetCommander() : nullptr;
     const uint32_t loss_result = result.army1 & RESULT_LOSS ? result.army1 : result.army2;
 
     if (local)
@@ -141,14 +141,14 @@ Battle::Result Battle::Loader(Army &army1, Army &army2, s32 mapsindex)
     if (army1.GetCommander() && army1.GetCommander()->isHeroes())
     {
         // hard reset army
-        if (!army1.m_troops.isValid() || (result.army1 & RESULT_RETREAT)) army1.Reset(false);
+        if (!army1.m_troops.isValid() || result.army1 & RESULT_RETREAT) army1.Reset(false);
     }
 
     // update army
     if (army2.GetCommander() && army2.GetCommander()->isHeroes())
     {
         // hard reset army
-        if (!army2.m_troops.isValid() || (result.army2 & RESULT_RETREAT)) army2.Reset(false);
+        if (!army2.m_troops.isValid() || result.army2 & RESULT_RETREAT) army2.Reset(false);
     }
 
     return result;
@@ -168,7 +168,7 @@ void Battle::PickupArtifactsAction(HeroBase &hero1, HeroBase &hero2, bool local)
             art = Artifact::UNKNOWN;
         } else if (art() != Artifact::UNKNOWN && art() != Artifact::MAGIC_BOOK)
         {
-            auto it = find(bag1.begin(), bag1.end(), Artifact((Artifact::UNKNOWN)));
+            auto it = find(bag1.begin(), bag1.end(), Artifact(Artifact::UNKNOWN));
             if (bag1.end() != it)
             {
                 *it = art;
@@ -239,7 +239,7 @@ void Battle::NecromancySkillAction(HeroBase &hero, uint32_t killed, bool local)
     Army &army = hero.GetArmy();
 
     if (0 == killed ||
-        (army.isFullHouse() && !army.m_troops.HasMonster(Monster::SKELETON)))
+        army.isFullHouse() && !army.m_troops.HasMonster(Monster::SKELETON))
         return;
 
     // check necromancy shrine build

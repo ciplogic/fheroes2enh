@@ -267,7 +267,7 @@ bool HeroBase::HaveSpellBook() const
 bool HeroBase::HaveSpell(const Spell &spell, bool skip_bag) const
 {
     return HaveSpellBook() &&
-           (spell_book.isPresentSpell(spell) || (!skip_bag && bag_artifacts.ContainSpell(spell)));
+           (spell_book.isPresentSpell(spell) || !skip_bag && bag_artifacts.ContainSpell(spell));
 }
 
 void HeroBase::AppendSpellToBook(const Spell &spell, bool without_wisdom)
@@ -321,7 +321,7 @@ uint32_t HeroBase::HasArtifact(const Artifact &art) const
     }
 
     return !unique ? bag_artifacts.Count(art) :
-           (bag_artifacts.isPresentArtifact(art) ? 1 : 0);
+           bag_artifacts.isPresentArtifact(art) ? 1 : 0;
 }
 
 int HeroBase::GetAttackModificator(string *strs) const
@@ -457,11 +457,11 @@ void HeroBase::SpellCasted(const Spell &spell)
     if (cost.GetValidItemsCount()) kingdom.OddFundsResource(cost);
 
     // spell point cost
-    magic_point -= (spell.SpellPoint(this) < magic_point ? spell.SpellPoint(this) : magic_point);
+    magic_point -= spell.SpellPoint(this) < magic_point ? spell.SpellPoint(this) : magic_point;
 
     // move point cost
     if (spell.MovePoint())
-        move_point -= (spell.MovePoint() < move_point ? spell.MovePoint() : move_point);
+        move_point -= spell.MovePoint() < move_point ? spell.MovePoint() : move_point;
 }
 
 bool HeroBase::CanTranscribeScroll(const Artifact &art) const
@@ -472,9 +472,9 @@ bool HeroBase::CanTranscribeScroll(const Artifact &art) const
     {
         int learning = GetLevelSkill(Skill::Secondary::LEARNING);
 
-        return ((3 < spell.Level() && Skill::Level::EXPERT == learning) ||
-                (3 == spell.Level() && Skill::Level::ADVANCED <= learning) ||
-                (3 > spell.Level() && Skill::Level::BASIC <= learning));
+        return 3 < spell.Level() && Skill::Level::EXPERT == learning ||
+            3 == spell.Level() && Skill::Level::ADVANCED <= learning ||
+            3 > spell.Level() && Skill::Level::BASIC <= learning;
     }
 
     return false;
@@ -484,18 +484,18 @@ bool HeroBase::CanTeachSpell(const Spell &spell) const
 {
     int learning = GetLevelSkill(Skill::Secondary::LEARNING);
 
-    return ((4 == spell.Level() && Skill::Level::EXPERT == learning) ||
-            (3 == spell.Level() && Skill::Level::ADVANCED <= learning) ||
-            (3 > spell.Level() && Skill::Level::BASIC <= learning));
+    return 4 == spell.Level() && Skill::Level::EXPERT == learning ||
+        3 == spell.Level() && Skill::Level::ADVANCED <= learning ||
+        3 > spell.Level() && Skill::Level::BASIC <= learning;
 }
 
 bool HeroBase::CanLearnSpell(const Spell &spell) const
 {
     int wisdom = GetLevelSkill(Skill::Secondary::WISDOM);
 
-    return ((4 < spell.Level() && Skill::Level::EXPERT == wisdom) ||
-            (4 == spell.Level() && Skill::Level::ADVANCED <= wisdom) ||
-            (3 == spell.Level() && Skill::Level::BASIC <= wisdom) || 3 > spell.Level());
+    return 4 < spell.Level() && Skill::Level::EXPERT == wisdom ||
+        4 == spell.Level() && Skill::Level::ADVANCED <= wisdom ||
+        3 == spell.Level() && Skill::Level::BASIC <= wisdom || 3 > spell.Level();
 }
 
 void HeroBase::TranscribeScroll(const Artifact &art)

@@ -62,7 +62,7 @@ void ScenarioListBox::RedrawItem(const Maps::FileInfo &info, s32 dstx, s32 dsty,
     spriteCount.Blit(dstx, dsty);
 
     if (info.size_w != info.size_h ||
-        (info.size_w < (int) mapsize_t::SMALL) || (info.size_w > (int) mapsize_t::XLARGE))
+        info.size_w < (int) mapsize_t::SMALL || info.size_w > (int) mapsize_t::XLARGE)
     {
         GetNonStandardSizeIcon().Blit(dstx + spriteCount.w() + 2, dsty, Display::Get());
     } else
@@ -89,7 +89,7 @@ void ScenarioListBox::RedrawItem(const Maps::FileInfo &info, s32 dstx, s32 dsty,
         spriteSize.Blit(dstx + spriteCount.w() + 2, dsty);
     }
 
-    text.Set(info.name, (current ? Font::YELLOW_BIG : Font::BIG));
+    text.Set(info.name, current ? Font::YELLOW_BIG : Font::BIG);
     text.Blit(dstx + 54, dsty + 2);
 
     index = 30 + info.conditions_wins;
@@ -267,12 +267,12 @@ const Maps::FileInfo *Dialog::SelectScenario(const MapsFileInfoList &all)
 
         listbox.QueueEventProcessing();
 
-        if ((buttonOk.isEnable() && le.MouseClickLeft(buttonOk)) ||
+        if (buttonOk.isEnable() && le.MouseClickLeft(buttonOk) ||
             HotKeyPressEvent(Game::EVENT_DEFAULT_READY) ||
             listbox.selectOk)
         {
             auto it = find(all.begin(), all.end(), listbox.GetCurrent());
-            result = it != all.end() ? &(*it) : nullptr;
+            result = it != all.end() ? &*it : nullptr;
             break;
         } else if (HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
         {

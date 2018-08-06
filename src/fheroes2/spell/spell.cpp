@@ -513,7 +513,7 @@ Spell Spell::Rand(int lvl, bool adv)
     for (uint32_t sp = NONE; sp < STONE; ++sp)
     {
         const Spell spell(sp);
-        if (((adv && !spell.isCombat()) || (!adv && spell.isCombat())) &&
+        if ((adv && !spell.isCombat() || !adv && spell.isCombat()) &&
             lvl == spell.Level() &&
             !(spells[sp].bits & SP_DISABLE))
             v.push_back(spell);
@@ -723,7 +723,7 @@ uint32_t Spell::CalculateDimensionDoorDistance(uint32_t current_sp, uint32_t tot
 {
     if (GameStatic::Spell_DD_Distance() && GameStatic::Spell_DD_HP() && GameStatic::Spell_DD_SP() && total_hp)
     {
-        const uint32_t res = (GameStatic::Spell_DD_Distance() * current_sp * GameStatic::Spell_DD_HP()) /
+        const uint32_t res = GameStatic::Spell_DD_Distance() * current_sp * GameStatic::Spell_DD_HP() /
                         (GameStatic::Spell_DD_SP() * total_hp);
         return res ? (res < 255 ? res : 255) : 1;
     }

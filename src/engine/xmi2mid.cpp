@@ -375,7 +375,7 @@ struct MidEvents : public vector<MidEvent>
                     {
                         // note off
                         push_back(MidEvent((*it1).duration - delta2, (*it1).command, (*it1).quantity, 0x7F));
-                        delta2 += ((*it1).duration - delta2);
+                        delta2 += (*it1).duration - delta2;
                     }
                 }
 
@@ -486,7 +486,7 @@ struct MidTrack
 
     size_t size() const
     {
-        return sizeof(mtrk) + events.size();
+        return sizeof mtrk + events.size();
     }
 };
 

@@ -41,16 +41,16 @@ namespace Battle
 {
     int GetObstaclePosition()
     {
-        return Rand::Get(3, 6) + (11 * Rand::Get(1, 7));
+        return Rand::Get(3, 6) + 11 * Rand::Get(1, 7);
     }
 
     bool WideDifficultDirection(int where, int whereto)
     {
         return
-                ((TOP_LEFT == where) && (whereto & (LEFT | TOP_RIGHT))) ||
-                ((TOP_RIGHT == where) && (whereto & (RIGHT | TOP_LEFT))) ||
-                ((BOTTOM_LEFT == where) && (whereto & (LEFT | BOTTOM_RIGHT))) ||
-                ((BOTTOM_RIGHT == where) && (whereto & (RIGHT | BOTTOM_LEFT)));
+                TOP_LEFT == where && whereto & (LEFT | TOP_RIGHT) ||
+                TOP_RIGHT == where && whereto & (RIGHT | TOP_LEFT) ||
+                BOTTOM_LEFT == where && whereto & (LEFT | BOTTOM_RIGHT) ||
+                BOTTOM_RIGHT == where && whereto & (RIGHT | BOTTOM_LEFT);
     }
 }
 
@@ -130,8 +130,8 @@ s32 Battle::Board::GetDistance(s32 index1, s32 index2)
 {
     if (!isValidIndex(index1) || !isValidIndex(index2))
         return 0;
-    const s32 dx = (index1 % ARENAW) - (index2 % ARENAW);
-    const s32 dy = (index1 / ARENAW) - (index2 / ARENAW);
+    const s32 dx = index1 % ARENAW - index2 % ARENAW;
+    const s32 dy = index1 / ARENAW - index2 / ARENAW;
 
     return Sign(dx) == Sign(dy) ? max(abs(dx), abs(dy)) : abs(dx) + abs(dy);
 }
@@ -185,8 +185,8 @@ Battle::Indexes Battle::Board::GetAStarPath(const Unit &b, const Position &dst, 
         const Cell &center = at(cur);
         Indexes around = b.isWide() ?
                          GetMoveWideIndexes(cur,
-                                            (0 > listCells[cur].prnt ? b.isReflect() : (RIGHT_SIDE & GetDirection(cur,
-                                                                                                                  listCells[cur].prnt))))
+                                            0 > listCells[cur].prnt ? b.isReflect() : RIGHT_SIDE & GetDirection(cur,
+                                                                                                                listCells[cur].prnt))
                                     :
                          GetAroundIndexes(cur);
 
@@ -195,7 +195,7 @@ Battle::Indexes Battle::Board::GetAStarPath(const Unit &b, const Position &dst, 
             Cell &cell = at(*it);
 
             if (!listCells[*it].open || !cell.isPassable4(b, center) ||
-                (bridge && isBridgeIndex(*it)) && !bridge->isPassable(b.GetColor()))
+                bridge && isBridgeIndex(*it) && !bridge->isPassable(b.GetColor()))
                 continue;
             const s32 cost = 100 * GetDistance(*it, dst.GetHead()->GetIndex()) +
                              (b.isWide() && WideDifficultDirection(center.GetDirection(), GetDirection(*it, cur))
@@ -437,17 +437,17 @@ bool Battle::Board::isValidDirection(s32 index, int dir)
             case CENTER:
                 return true;
             case TOP_LEFT:
-                return !(0 == y || (0 == x && (y % 2)));
+                return !(0 == y || 0 == x && y % 2);
             case TOP_RIGHT:
-                return !(0 == y || ((ARENAW - 1) == x && !(y % 2)));
+                return !(0 == y || ARENAW - 1 == x && !(y % 2));
             case LEFT:
                 return !(0 == x);
             case RIGHT:
-                return !((ARENAW - 1) == x);
+                return !(ARENAW - 1 == x);
             case BOTTOM_LEFT:
-                return !((ARENAH - 1) == y || (0 == x && (y % 2)));
+                return !(ARENAH - 1 == y || 0 == x && y % 2);
             case BOTTOM_RIGHT:
-                return !((ARENAH - 1) == y || ((ARENAW - 1) == x && !(y % 2)));
+                return !(ARENAH - 1 == y || ARENAW - 1 == x && !(y % 2));
             default:
                 break;
         }
@@ -469,17 +469,17 @@ s32 Battle::Board::GetIndexDirection(s32 index, int dir)
         case CENTER:
             return index;
         case TOP_LEFT:
-            return index - ((y % 2) ? ARENAW + 1 : ARENAW);
+            return index - (y % 2 ? ARENAW + 1 : ARENAW);
         case TOP_RIGHT:
-            return index - ((y % 2) ? ARENAW : ARENAW - 1);
+            return index - (y % 2 ? ARENAW : ARENAW - 1);
         case LEFT:
             return index - 1;
         case RIGHT:
             return index + 1;
         case BOTTOM_LEFT:
-            return index + ((y % 2) ? ARENAW - 1 : ARENAW);
+            return index + (y % 2 ? ARENAW - 1 : ARENAW);
         case BOTTOM_RIGHT:
-            return index + ((y % 2) ? ARENAW : ARENAW + 1);
+            return index + (y % 2 ? ARENAW : ARENAW + 1);
         default:
             break;
     }
@@ -504,28 +504,28 @@ bool Battle::Board::isValidIndex(s32 index)
 
 bool Battle::Board::isCastleIndex(s32 index)
 {
-    return ((8 < index && index <= 10) ||
-            (19 < index && index <= 21) ||
-            (29 < index && index <= 32) ||
-            (40 < index && index <= 43) ||
-            (50 < index && index <= 54) ||
-            (62 < index && index <= 65) ||
-            (73 < index && index <= 76) ||
-            (85 < index && index <= 87) ||
-            (96 < index && index <= 98));
+    return 8 < index && index <= 10 ||
+        19 < index && index <= 21 ||
+        29 < index && index <= 32 ||
+        40 < index && index <= 43 ||
+        50 < index && index <= 54 ||
+        62 < index && index <= 65 ||
+        73 < index && index <= 76 ||
+        85 < index && index <= 87 ||
+        96 < index && index <= 98;
 }
 
 bool Battle::Board::isOutOfWallsIndex(s32 index)
 {
-    return ((index <= 8) ||
-            (11 <= index && index <= 19) ||
-            (22 <= index && index <= 29) ||
-            (33 <= index && index <= 40) ||
-            (44 <= index && index <= 50) ||
-            (55 <= index && index <= 62) ||
-            (66 <= index && index <= 73) ||
-            (77 <= index && index <= 85) ||
-            (88 <= index && index <= 96));
+    return index <= 8 ||
+        11 <= index && index <= 19 ||
+        22 <= index && index <= 29 ||
+        33 <= index && index <= 40 ||
+        44 <= index && index <= 50 ||
+        55 <= index && index <= 62 ||
+        66 <= index && index <= 73 ||
+        77 <= index && index <= 85 ||
+        88 <= index && index <= 96;
 }
 
 bool Battle::Board::isImpassableIndex(s32 index)

@@ -280,13 +280,13 @@ std::string StringUNICODE_to_UTF8(const std::vector<u16> &unicode)
             utf8.append(1, static_cast<char>(it));
         } else if (it < 2048)
         {
-            utf8.append(1, static_cast<char>(192 + ((it - (it % 64)) / 64)));
-            utf8.append(1, static_cast<char>(128 + (it % 64)));
+            utf8.append(1, static_cast<char>(192 + (it - it % 64) / 64));
+            utf8.append(1, static_cast<char>(128 + it % 64));
         } else
         {
-            utf8.append(1, static_cast<char>(224 + ((it - (it % 4096)) / 4096)));
-            utf8.append(1, static_cast<char>(128 + (((it % 4096) - (it % 64)) / 64)));
-            utf8.append(1, static_cast<char>(128 + (it % 64)));
+            utf8.append(1, static_cast<char>(224 + (it - it % 4096) / 4096));
+            utf8.append(1, static_cast<char>(128 + (it % 4096 - it % 64) / 64));
+            utf8.append(1, static_cast<char>(128 + it % 64));
         }
     }
 
@@ -298,25 +298,25 @@ char CharFromKeySym(KeySym sym, u16 mod)
     switch (sym)
     {
         case KEY_1:
-            return (MOD_SHIFT & mod ? '!' : '1');
+            return MOD_SHIFT & mod ? '!' : '1';
         case KEY_2:
-            return (MOD_SHIFT & mod ? '@' : '2');
+            return MOD_SHIFT & mod ? '@' : '2';
         case KEY_3:
-            return (MOD_SHIFT & mod ? '#' : '3');
+            return MOD_SHIFT & mod ? '#' : '3';
         case KEY_4:
-            return (MOD_SHIFT & mod ? '$' : '4');
+            return MOD_SHIFT & mod ? '$' : '4';
         case KEY_5:
-            return (MOD_SHIFT & mod ? '%' : '5');
+            return MOD_SHIFT & mod ? '%' : '5';
         case KEY_6:
-            return (MOD_SHIFT & mod ? '^' : '6');
+            return MOD_SHIFT & mod ? '^' : '6';
         case KEY_7:
-            return (MOD_SHIFT & mod ? '&' : '7');
+            return MOD_SHIFT & mod ? '&' : '7';
         case KEY_8:
-            return (MOD_SHIFT & mod ? '*' : '8');
+            return MOD_SHIFT & mod ? '*' : '8';
         case KEY_9:
-            return (MOD_SHIFT & mod ? '(' : '9');
+            return MOD_SHIFT & mod ? '(' : '9';
         case KEY_0:
-            return (MOD_SHIFT & mod ? ')' : '0');
+            return MOD_SHIFT & mod ? ')' : '0';
 
         case KEY_KP0:
             if (MOD_NUM & mod) return '0';
@@ -350,25 +350,25 @@ char CharFromKeySym(KeySym sym, u16 mod)
             break;
 
         case KEY_MINUS:
-            return (MOD_SHIFT & mod ? '_' : '-');
+            return MOD_SHIFT & mod ? '_' : '-';
         case KEY_EQUALS:
-            return (MOD_SHIFT & mod ? '+' : '=');
+            return MOD_SHIFT & mod ? '+' : '=';
         case KEY_BACKSLASH:
-            return (MOD_SHIFT & mod ? '|' : '\\');
+            return MOD_SHIFT & mod ? '|' : '\\';
         case KEY_LEFTBRACKET:
-            return (MOD_SHIFT & mod ? '{' : '[');
+            return MOD_SHIFT & mod ? '{' : '[';
         case KEY_RIGHTBRACKET:
-            return (MOD_SHIFT & mod ? '}' : ']');
+            return MOD_SHIFT & mod ? '}' : ']';
         case KEY_SEMICOLON:
-            return (MOD_SHIFT & mod ? ':' : ';');
+            return MOD_SHIFT & mod ? ':' : ';';
         case KEY_QUOTE:
-            return (MOD_SHIFT & mod ? '"' : '\'');
+            return MOD_SHIFT & mod ? '"' : '\'';
         case KEY_COMMA:
-            return (MOD_SHIFT & mod ? '<' : ',');
+            return MOD_SHIFT & mod ? '<' : ',';
         case KEY_PERIOD:
-            return (MOD_SHIFT & mod ? '>' : '.');
+            return MOD_SHIFT & mod ? '>' : '.';
         case KEY_SLASH:
-            return (MOD_SHIFT & mod ? '?' : '/');
+            return MOD_SHIFT & mod ? '?' : '/';
 
         case KEY_EXCLAIM:
             return '!';
@@ -407,57 +407,57 @@ char CharFromKeySym(KeySym sym, u16 mod)
             return ' ';
 
         case KEY_a:
-            return ((MOD_SHIFT | MOD_CAPS) & mod ? 'A' : 'a');
+            return (MOD_SHIFT | MOD_CAPS) & mod ? 'A' : 'a';
         case KEY_b:
-            return ((MOD_SHIFT | MOD_CAPS) & mod ? 'B' : 'b');
+            return (MOD_SHIFT | MOD_CAPS) & mod ? 'B' : 'b';
         case KEY_c:
-            return ((MOD_SHIFT | MOD_CAPS) & mod ? 'C' : 'c');
+            return (MOD_SHIFT | MOD_CAPS) & mod ? 'C' : 'c';
         case KEY_d:
-            return ((MOD_SHIFT | MOD_CAPS) & mod ? 'D' : 'd');
+            return (MOD_SHIFT | MOD_CAPS) & mod ? 'D' : 'd';
         case KEY_e:
-            return ((MOD_SHIFT | MOD_CAPS) & mod ? 'E' : 'e');
+            return (MOD_SHIFT | MOD_CAPS) & mod ? 'E' : 'e';
         case KEY_f:
-            return ((MOD_SHIFT | MOD_CAPS) & mod ? 'F' : 'f');
+            return (MOD_SHIFT | MOD_CAPS) & mod ? 'F' : 'f';
         case KEY_g:
-            return ((MOD_SHIFT | MOD_CAPS) & mod ? 'G' : 'g');
+            return (MOD_SHIFT | MOD_CAPS) & mod ? 'G' : 'g';
         case KEY_h:
-            return ((MOD_SHIFT | MOD_CAPS) & mod ? 'H' : 'h');
+            return (MOD_SHIFT | MOD_CAPS) & mod ? 'H' : 'h';
         case KEY_i:
-            return ((MOD_SHIFT | MOD_CAPS) & mod ? 'I' : 'i');
+            return (MOD_SHIFT | MOD_CAPS) & mod ? 'I' : 'i';
         case KEY_j:
-            return ((MOD_SHIFT | MOD_CAPS) & mod ? 'J' : 'j');
+            return (MOD_SHIFT | MOD_CAPS) & mod ? 'J' : 'j';
         case KEY_k:
-            return ((MOD_SHIFT | MOD_CAPS) & mod ? 'K' : 'k');
+            return (MOD_SHIFT | MOD_CAPS) & mod ? 'K' : 'k';
         case KEY_l:
-            return ((MOD_SHIFT | MOD_CAPS) & mod ? 'L' : 'l');
+            return (MOD_SHIFT | MOD_CAPS) & mod ? 'L' : 'l';
         case KEY_m:
-            return ((MOD_SHIFT | MOD_CAPS) & mod ? 'M' : 'm');
+            return (MOD_SHIFT | MOD_CAPS) & mod ? 'M' : 'm';
         case KEY_n:
-            return ((MOD_SHIFT | MOD_CAPS) & mod ? 'N' : 'n');
+            return (MOD_SHIFT | MOD_CAPS) & mod ? 'N' : 'n';
         case KEY_o:
-            return ((MOD_SHIFT | MOD_CAPS) & mod ? 'O' : 'o');
+            return (MOD_SHIFT | MOD_CAPS) & mod ? 'O' : 'o';
         case KEY_p:
-            return ((MOD_SHIFT | MOD_CAPS) & mod ? 'P' : 'p');
+            return (MOD_SHIFT | MOD_CAPS) & mod ? 'P' : 'p';
         case KEY_q:
-            return ((MOD_SHIFT | MOD_CAPS) & mod ? 'Q' : 'q');
+            return (MOD_SHIFT | MOD_CAPS) & mod ? 'Q' : 'q';
         case KEY_r:
-            return ((MOD_SHIFT | MOD_CAPS) & mod ? 'R' : 'r');
+            return (MOD_SHIFT | MOD_CAPS) & mod ? 'R' : 'r';
         case KEY_s:
-            return ((MOD_SHIFT | MOD_CAPS) & mod ? 'S' : 's');
+            return (MOD_SHIFT | MOD_CAPS) & mod ? 'S' : 's';
         case KEY_t:
-            return ((MOD_SHIFT | MOD_CAPS) & mod ? 'T' : 't');
+            return (MOD_SHIFT | MOD_CAPS) & mod ? 'T' : 't';
         case KEY_u:
-            return ((MOD_SHIFT | MOD_CAPS) & mod ? 'U' : 'u');
+            return (MOD_SHIFT | MOD_CAPS) & mod ? 'U' : 'u';
         case KEY_v:
-            return ((MOD_SHIFT | MOD_CAPS) & mod ? 'V' : 'v');
+            return (MOD_SHIFT | MOD_CAPS) & mod ? 'V' : 'v';
         case KEY_w:
-            return ((MOD_SHIFT | MOD_CAPS) & mod ? 'W' : 'w');
+            return (MOD_SHIFT | MOD_CAPS) & mod ? 'W' : 'w';
         case KEY_x:
-            return ((MOD_SHIFT | MOD_CAPS) & mod ? 'X' : 'x');
+            return (MOD_SHIFT | MOD_CAPS) & mod ? 'X' : 'x';
         case KEY_y:
-            return ((MOD_SHIFT | MOD_CAPS) & mod ? 'Y' : 'y');
+            return (MOD_SHIFT | MOD_CAPS) & mod ? 'Y' : 'y';
         case KEY_z:
-            return ((MOD_SHIFT | MOD_CAPS) & mod ? 'Z' : 'z');
+            return (MOD_SHIFT | MOD_CAPS) & mod ? 'Z' : 'z';
 
         default:
             break;
@@ -507,7 +507,7 @@ size_t InsertKeySym(std::string &res, size_t pos, KeySym sym, u16 mod)
 
 int Sign(int s)
 {
-    return (s < 0 ? -1 : (s > 0 ? 1 : 0));
+    return s < 0 ? -1 : s > 0 ? 1 : 0;
 }
 
 KeySym KeySymFromChar(char c)
@@ -864,7 +864,7 @@ Points GetLinePoints(const Point &pt1, const Point &pt2, u16 step)
     const u16 dx = abs(pt2.x - pt1.x);
     const u16 dy = abs(pt2.y - pt1.y);
 
-    s16 ns = div((dx > dy ? dx : dy), 2).quot;
+    s16 ns = div(dx > dy ? dx : dy, 2).quot;
     Point pt(pt1);
 
     for (u16 i = 0; i <= (dx > dy ? dx : dy); ++i)
@@ -892,7 +892,7 @@ Points GetLinePoints(const Point &pt1, const Point &pt2, u16 step)
             }
         }
 
-        if (0 == (i % step)) res.push_back(pt);
+        if (0 == i % step) res.push_back(pt);
     }
 
     return res;
@@ -970,8 +970,8 @@ std::vector<u8> decodeBase64(const std::string &src)
         const uint32_t triple = (sextet_a << 18) + (sextet_b << 12) +
             (sextet_c << 6) + sextet_d;
 
-        if (res.size() < size) res.push_back((triple >> 16) & 0xFF);
-        if (res.size() < size) res.push_back((triple >> 8) & 0xFF);
+        if (res.size() < size) res.push_back(triple >> 16 & 0xFF);
+        if (res.size() < size) res.push_back(triple >> 8 & 0xFF);
         if (res.size() < size) res.push_back(triple & 0xFF);
     }
 
@@ -990,7 +990,7 @@ int CheckSum(const std::vector<u8> &v)
         const uint32_t b3 = it < v.end() ? *it++ : 0;
         const uint32_t b4 = it < v.end() ? *it++ : 0;
 
-        ret += (b1 << 24) | (b2 << 16) | (b3 << 8) | b4;
+        ret += b1 << 24 | b2 << 16 | b3 << 8 | b4;
     } while (it != v.end());
 
     return ret;

@@ -109,7 +109,7 @@ uint32_t Troop::GetDamageMax() const
 
 uint32_t Troop::GetStrength() const
 {
-    double res = (GetDamageMin() + GetDamageMax()) >> 1;
+    double res = GetDamageMin() + GetDamageMax() >> 1;
 
     // increase strength
     if (isFly()) res += res * 0.5;
@@ -118,7 +118,7 @@ uint32_t Troop::GetStrength() const
     if (isHideAttack()) res += res * 0.5;
 
     // slowly: decrease strength
-    if ((!isFly() && !isArchers()) && Speed::AVERAGE > GetSpeed()) res -= res * 0.5;
+    if (!isFly() && !isArchers() && Speed::AVERAGE > GetSpeed()) res -= res * 0.5;
 
     switch (GetID())
     {

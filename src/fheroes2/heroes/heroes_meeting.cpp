@@ -222,10 +222,10 @@ void Heroes::MeetingDialog(Heroes &heroes2)
         if (le.MouseClickLeft(buttonExit) || HotKeyCloseWindow) break;
 
         // selector troops event
-        if ((le.MouseCursor(selectArmy1.GetArea()) &&
-             selectArmy1.QueueEventProcessing(selectArmy2)) ||
-            (le.MouseCursor(selectArmy2.GetArea()) &&
-             selectArmy2.QueueEventProcessing(selectArmy1)))
+        if (le.MouseCursor(selectArmy1.GetArea()) &&
+            selectArmy1.QueueEventProcessing(selectArmy2) ||
+            le.MouseCursor(selectArmy2.GetArea()) &&
+            selectArmy2.QueueEventProcessing(selectArmy1))
         {
             cursor.Hide();
 
@@ -244,10 +244,10 @@ void Heroes::MeetingDialog(Heroes &heroes2)
         }
 
         // selector artifacts event
-        if ((le.MouseCursor(selectArtifacts1.GetArea()) &&
-             selectArtifacts1.QueueEventProcessing(selectArtifacts2)) ||
-            (le.MouseCursor(selectArtifacts2.GetArea()) &&
-             selectArtifacts2.QueueEventProcessing(selectArtifacts1)))
+        if (le.MouseCursor(selectArtifacts1.GetArea()) &&
+            selectArtifacts1.QueueEventProcessing(selectArtifacts2) ||
+            le.MouseCursor(selectArtifacts2.GetArea()) &&
+            selectArtifacts2.QueueEventProcessing(selectArtifacts1))
         {
             cursor.Hide();
 
@@ -267,10 +267,10 @@ void Heroes::MeetingDialog(Heroes &heroes2)
             display.Flip();
         }
 
-        if ((le.MouseCursor(primskill_bar1.GetArea()) && primskill_bar1.QueueEventProcessing()) ||
-            (le.MouseCursor(primskill_bar2.GetArea()) && primskill_bar2.QueueEventProcessing()) ||
-            (le.MouseCursor(secskill_bar1.GetArea()) && secskill_bar1.QueueEventProcessing()) ||
-            (le.MouseCursor(secskill_bar2.GetArea()) && secskill_bar2.QueueEventProcessing()))
+        if (le.MouseCursor(primskill_bar1.GetArea()) && primskill_bar1.QueueEventProcessing() ||
+            le.MouseCursor(primskill_bar2.GetArea()) && primskill_bar2.QueueEventProcessing() ||
+            le.MouseCursor(secskill_bar1.GetArea()) && secskill_bar1.QueueEventProcessing() ||
+            le.MouseCursor(secskill_bar2.GetArea()) && secskill_bar2.QueueEventProcessing())
         {
             cursor.Show();
             display.Flip();

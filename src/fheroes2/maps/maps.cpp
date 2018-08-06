@@ -320,7 +320,7 @@ void Maps::ClearFog(s32 index, int scoute, int color)
     for (s32 y = center.y - scoute; y <= center.y + scoute; ++y)
         for (s32 x = center.x - scoute; x <= center.x + scoute; ++x)
             if (isValidAbsPoint(x, y) &&
-                (scoute + scoute / 2) >= abs(x - center.x) + abs(y - center.y))
+                scoute + scoute / 2 >= abs(x - center.x) + abs(y - center.y))
                 world.GetTiles(GetIndexFromAbsPoint(x, y)).ClearFog(colors);
 }
 
@@ -395,19 +395,19 @@ bool MapsTileIsUnderProtection(s32 from, s32 index) /* from: center, index: mons
         return result;
     }
     /* if monster can attack to */
-    result = (tile2.GetPassable() & Direction::Get(index, from)) &&
-             (tile1.GetPassable() & Direction::Get(from, index));
+    result = tile2.GetPassable() & Direction::Get(index, from) &&
+             tile1.GetPassable() & Direction::Get(from, index);
 
     if (!result)
     {
         /* h2 specific monster attack: BOTTOM_LEFT impassable! */
         if (Direction::BOTTOM_LEFT == Direction::Get(index, from) &&
-            (Direction::LEFT & tile2.GetPassable()) && (Direction::TOP & tile1.GetPassable()))
+            Direction::LEFT & tile2.GetPassable() && Direction::TOP & tile1.GetPassable())
             result = true;
         else
             /* h2 specific monster attack: BOTTOM_RIGHT impassable! */
         if (Direction::BOTTOM_RIGHT == Direction::Get(index, from) &&
-            (Direction::RIGHT & tile2.GetPassable()) && (Direction::TOP & tile1.GetPassable()))
+            Direction::RIGHT & tile2.GetPassable() && Direction::TOP & tile1.GetPassable())
             result = true;
     }
 
@@ -631,7 +631,7 @@ int Maps::TileIsCoast(s32 center, int filter)
 
     Size wSize(world.w(), world.h());
     for (int direction : directions)
-        if ((direction & filter) && isValidDirection(center, direction, wSize) &&
+        if (direction & filter && isValidDirection(center, direction, wSize) &&
             world.GetTiles(GetDirectionIndex(center, direction)).isWater())
             result |= direction;
 

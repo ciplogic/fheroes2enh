@@ -116,13 +116,13 @@ void LuckIndicator::Redraw()
     descriptions.append(_("Current Modifiers:"));
     descriptions.append("\n \n");
 
-    const Sprite &sprite = AGG::GetICN(ICN::HSICONS, (0 > luck ? 3 : (0 < luck ? 2 : 6)));
+    const Sprite &sprite = AGG::GetICN(ICN::HSICONS, 0 > luck ? 3 : 0 < luck ? 2 : 6);
     const int inter = 6;
-    int count = (0 == luck ? 1 : abs(luck));
+    int count = 0 == luck ? 1 : abs(luck);
     s32 cx = area.x + (area.w - (sprite.w() + inter * (count - 1))) / 2;
     s32 cy = area.y + (area.h - sprite.h()) / 2;
 
-    if (modificators.size())
+    if (!modificators.empty())
         descriptions.append(modificators);
     else
         descriptions.append(_("None"));
@@ -163,13 +163,13 @@ void MoraleIndicator::Redraw()
     descriptions.append(_("Current Modifiers:"));
     descriptions.append("\n \n");
 
-    const Sprite &sprite = AGG::GetICN(ICN::HSICONS, (0 > morale ? 5 : (0 < morale ? 4 : 7)));
+    const Sprite &sprite = AGG::GetICN(ICN::HSICONS, 0 > morale ? 5 : 0 < morale ? 4 : 7);
     const int inter = 6;
-    int count = (0 == morale ? 1 : abs(morale));
+    int count = 0 == morale ? 1 : abs(morale);
     s32 cx = area.x + (area.w - (sprite.w() + inter * (count - 1))) / 2;
     s32 cy = area.y + (area.h - sprite.h()) / 2;
 
-    if (modificators.size())
+    if (!modificators.empty())
         descriptions.append(modificators);
     else
         descriptions.append(_("None"));
@@ -221,7 +221,7 @@ void ExperienceIndicator::QueueEventProcessing()
     {
         string message = _("Level %{level}");
         StringReplace(message, "%{level}", hero.GetLevel());
-        Dialog::Message(message, descriptions, Font::BIG, (le.MousePressRight() ? 0 : Dialog::OK));
+        Dialog::Message(message, descriptions, Font::BIG, le.MousePressRight() ? 0 : Dialog::OK);
     }
 }
 
@@ -252,6 +252,6 @@ void SpellPointsIndicator::QueueEventProcessing()
 
     if (le.MouseClickLeft(area) || le.MousePressRight(area))
     {
-        Dialog::Message(_("Spell Points"), descriptions, Font::BIG, (le.MousePressRight() ? 0 : Dialog::OK));
+        Dialog::Message(_("Spell Points"), descriptions, Font::BIG, le.MousePressRight() ? 0 : Dialog::OK);
     }
 }

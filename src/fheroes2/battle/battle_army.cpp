@@ -205,7 +205,7 @@ Battle::Force::Force(Army &parent, bool opposite) : army(parent)
 
         if (troop && troop->isValid())
         {
-            push_back(new Unit(*troop, (opposite ? position + 10 : position), opposite));
+            push_back(new Unit(*troop, opposite ? position + 10 : position, opposite));
             back()->SetArmy(army);
             uid = back()->GetUID();
         }
@@ -307,7 +307,7 @@ void Battle::Force::NewTurn()
 
 bool isUnitFirst(const Battle::Unit *last, bool part1, int army2_color)
 {
-    return (!last && part1) || (last && army2_color == last->GetColor());
+    return !last && part1 || last && army2_color == last->GetColor();
 }
 
 void Battle::Force::UpdateOrderUnits(const Force &army1, const Force &army2, Units &orders)
@@ -400,7 +400,7 @@ Troops Battle::Force::GetKilledTroops() const
 
     for (auto it : *this)
     {
-        const Unit &b = (*it);
+        const Unit &b = *it;
         killed.PushBack(b, b.GetDead());
     }
 

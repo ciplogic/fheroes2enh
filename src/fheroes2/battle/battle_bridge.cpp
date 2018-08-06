@@ -99,8 +99,8 @@ void Battle::Bridge::SetPassable(const Unit &b)
 
 bool Battle::Bridge::NeedAction(const Unit &b, s32 dst) const
 {
-    return (!isDown() && NeedDown(b, dst)) ||
-           (isValid() && isDown() && AllowUp());
+    return !isDown() && NeedDown(b, dst) ||
+           isValid() && isDown() && AllowUp();
 }
 
 void Battle::Bridge::Action(const Unit &b, s32 dst)

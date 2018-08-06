@@ -222,7 +222,7 @@ int Dialog::LevelUpSelectSkill(const string &name, const string &primary, const 
     if (Skill::Secondary::UNKNOWN == sec1.Skill() && Skill::Secondary::UNKNOWN == sec2.Skill())
         DialogPrimaryOnly(name, primary);
     else if (Skill::Secondary::UNKNOWN == sec1.Skill() || Skill::Secondary::UNKNOWN == sec2.Skill())
-        result = DialogOneSecondary(name, primary, (Skill::Secondary::UNKNOWN == sec2.Skill() ? sec1 : sec2));
+        result = DialogOneSecondary(name, primary, Skill::Secondary::UNKNOWN == sec2.Skill() ? sec1 : sec2);
     else
         result = DialogSelectSecondary(name, primary, sec1, sec2, hero);
 

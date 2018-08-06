@@ -437,7 +437,7 @@ std::string Skill::Secondary::GetName() const
                     _("Basic Estates"), _("Advanced Estates"), _("Expert Estates")
             };
 
-    return isValid() ? name_skill[(Level() - 1) + (Skill() - 1) * 3] : "unknown";
+    return isValid() ? name_skill[Level() - 1 + (Skill() - 1) * 3] : "unknown";
 }
 
 string Skill::Secondary::GetDescription() const
@@ -651,7 +651,7 @@ Skill::Secondary *Skill::SecSkills::FindSkill(int skill)
 {
     const auto it = find_if(begin(), end(),
                           bind2nd(mem_fun_ref(&Secondary::isSkill), skill));
-    return it != end() ? &(*it) : nullptr;
+    return it != end() ? &*it : nullptr;
 }
 
 vector<Skill::Secondary> &Skill::SecSkills::ToVector()

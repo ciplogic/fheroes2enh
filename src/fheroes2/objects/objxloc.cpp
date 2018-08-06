@@ -59,7 +59,7 @@ int ObjXlc2::GetPassable(uint32_t index)
     if (isShadow(index))
         return DIRECTION_ALL;
     if (isAction(index) ||
-        (110 < index && index < 136))
+        110 < index && index < 136)
         return 0;
 
     return ARRAY_COUNT_END(restricted) != std::find(restricted, ARRAY_COUNT_END(restricted), index) ?

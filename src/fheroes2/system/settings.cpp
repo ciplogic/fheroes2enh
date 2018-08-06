@@ -58,12 +58,12 @@ bool IS_DEBUG(int name, int level)
 {
     const int debug = Settings::Get().Debug();
     return
-            ((DBG_ENGINE & name) && ((DBG_ENGINE & debug) >> 2) >= level) ||
-            ((DBG_GAME & name) && ((DBG_GAME & debug) >> 4) >= level) ||
-            ((DBG_BATTLE & name) && ((DBG_BATTLE & debug) >> 6) >= level) ||
-            ((DBG_AI & name) && ((DBG_AI & debug) >> 8) >= level) ||
-            ((DBG_NETWORK & name) && ((DBG_NETWORK & debug) >> 10) >= level) ||
-            ((DBG_DEVEL & name) && ((DBG_DEVEL & debug) >> 12) >= level);
+            DBG_ENGINE & name && (DBG_ENGINE & debug) >> 2 >= level ||
+            DBG_GAME & name && (DBG_GAME & debug) >> 4 >= level ||
+            DBG_BATTLE & name && (DBG_BATTLE & debug) >> 6 >= level ||
+            DBG_AI & name && (DBG_AI & debug) >> 8 >= level ||
+            DBG_NETWORK & name && (DBG_NETWORK & debug) >> 10 >= level ||
+            DBG_DEVEL & name && (DBG_DEVEL & debug) >> 12 >= level;
 }
 
 const char *StringDebug(int name)
@@ -114,7 +114,7 @@ struct settings_t
     std::string str;
 
     bool operator==(const string &s) const
-    { return str.size() && s == str; };
+    { return !str.empty() && s == str; };
 
     bool operator==(uint32_t i) const
     { return id && id == i; };
@@ -483,7 +483,7 @@ bool Settings::Read(const string &filename)
 
 #ifdef BUILD_RELEASE
     // reset devel
-    debug &= ~(DBG_DEVEL);
+    debug &= ~DBG_DEVEL;
 #endif
     BinaryLoad();
 
@@ -545,8 +545,8 @@ string Settings::String() const
     os <<
        "sound = " << (opt_global.Modes(GLOBAL_SOUND) ? "on" : "off") << endl <<
        "music = "
-       << (opt_global.Modes(GLOBAL_MUSIC_CD) ? "cd" : (opt_global.Modes(GLOBAL_MUSIC_MIDI) ? "midi" : (opt_global.Modes(
-               GLOBAL_MUSIC_EXT) ? "ext" : "off"))) << endl <<
+       << (opt_global.Modes(GLOBAL_MUSIC_CD) ? "cd" : opt_global.Modes(GLOBAL_MUSIC_MIDI) ? "midi" : opt_global.Modes(
+                   GLOBAL_MUSIC_EXT) ? "ext" : "off") << endl <<
        "sound volume = " << static_cast<int>(sound_volume) << endl <<
        "music volume = " << static_cast<int>(music_volume) << endl <<
        "fullscreen = " << (fullScreen ? "on" : "off") << endl <<
@@ -656,7 +656,7 @@ ListDirs Settings::GetRootDirs()
     if (!home.empty()) dirs.push_back(home);
     char cCurrentPath[FILENAME_MAX];
 
-    if (GetCurrentDir(cCurrentPath, sizeof(cCurrentPath)))
+    if (GetCurrentDir(cCurrentPath, sizeof cCurrentPath))
     {
         dirs.push_back(cCurrentPath);
     }
@@ -795,15 +795,15 @@ int Settings::ScrollSpeed() const
 
 /* set ai speed: 0 - 10 */
 void Settings::SetAIMoveSpeed(int speed)
-{ ai_speed = (10 <= speed ? 10 : speed); }
+{ ai_speed = 10 <= speed ? 10 : speed; }
 
 /* set hero speed: 0 - 10 */
 void Settings::SetHeroesMoveSpeed(int speed)
-{ heroes_speed = (10 <= speed ? 10 : speed); }
+{ heroes_speed = 10 <= speed ? 10 : speed; }
 
 /* set battle speed: 0 - 10 */
 void Settings::SetBattleSpeed(int speed)
-{ battle_speed = (10 <= speed ? 10 : speed); }
+{ battle_speed = 10 <= speed ? 10 : speed; }
 
 void Settings::SetBlitSpeed(int speed)
 { blit_speed = speed; }
@@ -1091,7 +1091,7 @@ void Settings::SetShowStatus(bool f)
 
 bool Settings::CanChangeInGame(uint32_t f) const
 {
-    return (f >> 28) == 0x01; // GAME_ and POCKETPC_
+    return f >> 28 == 0x01; // GAME_ and POCKETPC_
 }
 
 bool Settings::ExtModes(uint32_t f) const

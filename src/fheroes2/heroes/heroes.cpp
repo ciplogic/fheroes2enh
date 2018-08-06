@@ -400,7 +400,7 @@ void Heroes::PostLoad()
         LevelUp(Modes(CUSTOMSKILLS), true);
     }
 
-    if ((race & (Race::SORC | Race::WRLK | Race::WZRD | Race::NECR)) &&
+    if (race & (Race::SORC | Race::WRLK | Race::WZRD | Race::NECR) &&
         !HaveSpellBook())
     {
         Spell spell = GetInitialSpell(race);
@@ -479,7 +479,7 @@ int Heroes::GetAttack() const
 int Heroes::GetAttack(string *strs) const
 {
     int result = attack + GetAttackModificator(strs);
-    return result < 0 ? 0 : (result > 255 ? 255 : result);
+    return result < 0 ? 0 : result > 255 ? 255 : result;
 }
 
 int Heroes::GetDefense() const
@@ -490,7 +490,7 @@ int Heroes::GetDefense() const
 int Heroes::GetDefense(string *strs) const
 {
     int result = defense + GetDefenseModificator(strs);
-    return result < 0 ? 0 : (result > 255 ? 255 : result);
+    return result < 0 ? 0 : result > 255 ? 255 : result;
 }
 
 int Heroes::GetPower() const
@@ -501,7 +501,7 @@ int Heroes::GetPower() const
 int Heroes::GetPower(string *strs) const
 {
     int result = power + GetPowerModificator(strs);
-    return result < 0 ? 0 : (result > 255 ? 255 : result);
+    return result < 0 ? 0 : result > 255 ? 255 : result;
 }
 
 int Heroes::GetKnowledge() const
@@ -512,7 +512,7 @@ int Heroes::GetKnowledge() const
 int Heroes::GetKnowledge(string *strs) const
 {
     int result = knowledge + GetKnowledgeModificator(strs);
-    return result < 0 ? 0 : (result > 255 ? 255 : result);
+    return result < 0 ? 0 : result > 255 ? 255 : result;
 }
 
 void Heroes::IncreasePrimarySkill(int skill)
@@ -1111,7 +1111,7 @@ uint32_t Heroes::GetExperienceFromLevel(int lvl)
     }
 
     const uint32_t l1 = GetExperienceFromLevel(lvl - 1);
-    return (l1 + static_cast<uint32_t>(round((l1 - GetExperienceFromLevel(lvl - 2)) * 1.2 / 100) * 100));
+    return l1 + static_cast<uint32_t>(round((l1 - GetExperienceFromLevel(lvl - 2)) * 1.2 / 100) * 100);
 }
 
 /* buy book */
@@ -1288,7 +1288,7 @@ int Heroes::GetRangeRouteDays(s32 dst) const
     const uint32_t limit = max * 5 / 100; // limit ~5 day
 
     // approximate distance, this restriction calculation
-    if ((4 * max / 100) < Maps::GetApproximateDistance(GetIndex(), dst))
+    if (4 * max / 100 < Maps::GetApproximateDistance(GetIndex(), dst))
     {
         return 0;
     }
@@ -1317,7 +1317,7 @@ void Heroes::LevelUp(bool skipsecondary, bool autoselect)
 {
     int primary = LevelUpPrimarySkill();
     if (!skipsecondary)
-        LevelUpSecondarySkill(primary, (autoselect || isControlAI()));
+        LevelUpSecondarySkill(primary, autoselect || isControlAI());
     if (isControlAI()) AI::HeroesLevelUp(*this);
 }
 
@@ -1345,7 +1345,7 @@ void Heroes::LevelUpSecondarySkill(int primary, bool autoselect)
             else if (Skill::Secondary::UNKNOWN != sec2.Skill())
                 selected = &sec2;
         } else if (Skill::Secondary::UNKNOWN != sec1.Skill() && Skill::Secondary::UNKNOWN != sec2.Skill())
-            selected = (Rand::Get(0, 1) ? &sec1 : &sec2);
+            selected = Rand::Get(0, 1) ? &sec1 : &sec2;
     } else
     {
         AGG::PlaySound(M82::NWHEROLV);
@@ -1403,7 +1403,7 @@ void Heroes::ResetMovePoints()
 bool Heroes::MayStillMove() const
 {
     if (Modes(SLEEPER | GUARDIAN) || isFreeman()) return false;
-    return path.isValid() ? (move_point >= path.GetFrontPenalty()) : CanMove();
+    return path.isValid() ? move_point >= path.GetFrontPenalty() : CanMove();
 }
 
 bool Heroes::isValid() const
@@ -1428,8 +1428,8 @@ void Heroes::SetFreeman(int reason)
         kingdom.SetLastLostHero(*this);
     }
 
-    if (!army.m_troops.isValid() || (Battle::RESULT_RETREAT & reason)) army.Reset(false);
-    else if ((Battle::RESULT_LOSS & reason) && !(Battle::RESULT_SURRENDER & reason)) army.Reset(true);
+    if (!army.m_troops.isValid() || Battle::RESULT_RETREAT & reason) army.Reset(false);
+    else if (Battle::RESULT_LOSS & reason && !(Battle::RESULT_SURRENDER & reason)) army.Reset(true);
 
     if (GetColor() != Color::NONE) kingdom.RemoveHeroes(this);
 
@@ -1510,7 +1510,7 @@ void Heroes::ActionNewPosition()
     // check around monster
     MapsIndexes targets = Maps::GetTilesUnderProtection(GetIndex());
 
-    if (targets.size())
+    if (!targets.empty())
     {
         bool skip_battle = false;
         SetMove(false);
@@ -1825,7 +1825,7 @@ AllHeroes::~AllHeroes()
 
 void AllHeroes::Init()
 {
-    if (_items.size())
+    if (!_items.empty())
         clear();
 
     const bool loyalty = Settings::Get().PriceLoyaltyVersion();
@@ -2028,7 +2028,7 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, VecHeroes &heroes)
     {
         uint32_t hid;
         msg >> hid;
-        heroe = (hid != Heroes::UNKNOWN ? world.GetHeroes(hid) : nullptr);
+        heroe = hid != Heroes::UNKNOWN ? world.GetHeroes(hid) : nullptr;
     }
 
     return msg;

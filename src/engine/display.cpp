@@ -177,7 +177,7 @@ void Display::Fade(const Surface &top, const Surface &back, const Point &pt, int
     int alpha = 255;
     const int step = 10;
     const int min = step + 5;
-    const int delay2 = (delay * step) / (alpha - min);
+    const int delay2 = delay * step / (alpha - min);
 
     while (alpha > min + level)
     {
@@ -206,7 +206,7 @@ void Display::Rise(const Surface &top, const Surface &back, const Point &pt, int
     int alpha = 0;
     const int step = 10;
     const int max = level - step;
-    const int delay2 = (delay * step) / max;
+    const int delay2 = delay * step / max;
 
     while (alpha < max)
     {

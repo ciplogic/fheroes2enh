@@ -286,7 +286,7 @@ uint32_t DialogMorale(const string &hdr, const string &msg, bool good, uint32_t 
 {
     if (1 > count) count = 1;
     if (3 < count) count = 3;
-    const Sprite &sprite = AGG::GetICN(ICN::EXPMRL, (good ? 2 : 3));
+    const Sprite &sprite = AGG::GetICN(ICN::EXPMRL, good ? 2 : 3);
     uint32_t offset = sprite.w() * 4 / 3;
     Surface image(Size(sprite.w() + offset * (count - 1), sprite.h()), true);
     for (uint32_t ii = 0; ii < count; ++ii) sprite.Blit(offset * ii, 0, image);
@@ -298,7 +298,7 @@ uint32_t DialogLuck(const string &hdr, const string &msg, bool good, uint32_t co
 {
     if (1 > count) count = 1;
     if (3 < count) count = 3;
-    const Sprite &sprite = AGG::GetICN(ICN::EXPMRL, (good ? 0 : 1));
+    const Sprite &sprite = AGG::GetICN(ICN::EXPMRL, good ? 0 : 1);
     uint32_t offset = sprite.w() * 4 / 3;
     Surface image(Size(sprite.w() + offset * (count - 1), sprite.h()), true);
     for (uint32_t ii = 0; ii < count; ++ii) sprite.Blit(offset * ii, 0, image);
@@ -380,7 +380,7 @@ void AnimationRemoveObject(Maps::Tiles &tile)
             sobj.SetAlphaMod(alpha);
             sobj.Blit(dstx, dsty, display);
 
-            if (heroes.size())
+            if (!heroes.empty())
             {
                 for (MapsIndexes::const_iterator
                              it = heroes.begin(); it != heroes.end(); ++it)
@@ -438,8 +438,8 @@ void Heroes::Action(s32 dst_index)
         return AI::HeroesAction(*this, dst_index);
 
     const Maps::Tiles &tile = world.GetTiles(dst_index);
-    const int object = (dst_index == GetIndex() ?
-                        tile.GetObject(false) : tile.GetObject());
+    const int object = dst_index == GetIndex() ?
+                           tile.GetObject(false) : tile.GetObject();
 
     if (MUS::FromMapObject(object) != MUS::UNKNOWN)
         AGG::PlayMusic(MUS::FromMapObject(object), false);
@@ -947,7 +947,7 @@ void ActionToHeroes(Heroes &hero, uint32_t obj, s32 dst_index)
     if (!other_hero) return;
 
     if (hero.GetColor() == other_hero->GetColor() ||
-        (conf.ExtUnionsAllowHeroesMeetings() && Players::isFriends(hero.GetColor(), other_hero->GetColor())))
+        conf.ExtUnionsAllowHeroesMeetings() && Players::isFriends(hero.GetColor(), other_hero->GetColor()))
     {
         hero.MeetingDialog(*other_hero);
     } else if (hero.isFriends(other_hero->GetColor()))
@@ -1007,7 +1007,7 @@ void ActionToCastle(Heroes &hero, uint32_t obj, s32 dst_index)
     if (!castle)
     {
     } else if (hero.GetColor() == castle->GetColor() ||
-               (conf.ExtUnionsAllowCastleVisiting() && Players::isFriends(hero.GetColor(), castle->GetColor())))
+               conf.ExtUnionsAllowCastleVisiting() && Players::isFriends(hero.GetColor(), castle->GetColor()))
     {
 
         Mixer::Reduce();
@@ -1133,7 +1133,7 @@ void ActionToPickupResource(Heroes &hero, uint32_t obj, s32 dst_index)
     if (obj == MP2::OBJ_BOTTLE)
     {
         MapSign *sign = static_cast<MapSign *>(world.GetMapObject(tile.GetObjectUID(obj)));
-        Message(MP2::StringObject(obj), (sign ? sign->message : ""), Font::BIG, Dialog::OK);
+        Message(MP2::StringObject(obj), sign ? sign->message : "", Font::BIG, Dialog::OK);
     } else
     {
         Funds funds = map_resource ? Funds(map_resource->resource) : tile.QuantityFunds();
@@ -1575,7 +1575,7 @@ void ActionToSign(Heroes &hero, uint32_t obj, s32 dst_index)
     PlaySoundWarning;
     Maps::Tiles &tile = world.GetTiles(dst_index);
     auto*sign = static_cast<MapSign *>(world.GetMapObject(tile.GetObjectUID(obj)));
-    Message(_("Sign"), (sign ? sign->message : ""), Font::BIG, Dialog::OK);
+    Message(_("Sign"), sign ? sign->message : "", Font::BIG, Dialog::OK);
 }
 
 void ActionToMagicWell(Heroes &hero, uint32_t obj, s32 dst_index)
@@ -1802,7 +1802,7 @@ void ActionToGoodMoraleObject(Heroes &hero, uint32_t obj, s32 dst_index)
         // modify morale
         hero.SetVisited(dst_index);
         AGG::PlaySound(M82::GOODMRLE);
-        DialogMorale(MP2::StringObject(obj), msg, true, (obj == MP2::OBJ_TEMPLE ? 2 : 1));
+        DialogMorale(MP2::StringObject(obj), msg, true, obj == MP2::OBJ_TEMPLE ? 2 : 1);
         hero.IncreaseMovePoints(move);
 
         // fix double action tile
@@ -1992,7 +1992,7 @@ void ActionToArtifact(Heroes &hero, uint32_t obj, s32 dst_index)
                 {
                     msg = _("Through a clearing you observe an ancient artifact. Unfortunately, it's guarded by a nearby %{monster}. Do you want to fight the %{monster} for the artifact?");
                     StringReplace(msg, "%{monster}", troop->GetName());
-                    battle = (Dialog::YES == Dialog::Message("", msg, Font::BIG, Dialog::YES | Dialog::NO));
+                    battle = Dialog::YES == Dialog::Message("", msg, Font::BIG, Dialog::YES | Dialog::NO);
                 }
             }
 
@@ -2023,7 +2023,7 @@ void ActionToArtifact(Heroes &hero, uint32_t obj, s32 dst_index)
         {
             PlaySoundSuccess;
 
-            if (Artifact::GetScenario(art).size())
+            if (!Artifact::GetScenario(art).empty())
                 msg = Artifact::GetScenario(art);
             else
             {
@@ -2599,7 +2599,7 @@ void ActionToDwellingBattleMonster(Heroes &hero, uint32_t obj, s32 dst_index)
     }
 
     // recruit monster
-    if (str_scss.size())
+    if (!str_scss.empty())
     {
         if (troop.isValid() &&
             Dialog::YES == Dialog::Message(MP2::StringObject(obj), str_scss, Font::BIG, Dialog::YES | Dialog::NO))
@@ -2708,9 +2708,9 @@ bool ActionToUpgradeArmy(Army &army, const Monster &mons, string &str1, string &
     if (army.m_troops.HasMonster(mons))
     {
         army.m_troops.UpgradeMonsters(mons);
-        if (str1.size()) str1 += ", ";
+        if (!str1.empty()) str1 += ", ";
         str1 += mons.GetMultiName();
-        if (str2.size()) str2 += ", ";
+        if (!str2.empty()) str2 += ", ";
         str2 += mons.GetUpgrade().GetMultiName();
         return true;
     }

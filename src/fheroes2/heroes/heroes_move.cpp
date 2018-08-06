@@ -40,33 +40,33 @@ bool isNeedStayFrontObject(const Heroes &hero, const Maps::Tiles &next);
 void PlayWalkSound(int ground)
 {
     int wav = M82::UNKNOWN;
-    const int speed = (4 > Settings::Get().HeroesMoveSpeed() ? 1 : (7 > Settings::Get().HeroesMoveSpeed() ? 2 : 3));
+    const int speed = 4 > Settings::Get().HeroesMoveSpeed() ? 1 : 7 > Settings::Get().HeroesMoveSpeed() ? 2 : 3;
 
     // play sound
     switch (ground)
     {
         case Maps::Ground::WATER:
-            wav = (1 == speed ? M82::WSND00 : (2 == speed ? M82::WSND10 : M82::WSND20));
+            wav = 1 == speed ? M82::WSND00 : 2 == speed ? M82::WSND10 : M82::WSND20;
             break;
         case Maps::Ground::GRASS:
-            wav = (1 == speed ? M82::WSND01 : (2 == speed ? M82::WSND11 : M82::WSND21));
+            wav = 1 == speed ? M82::WSND01 : 2 == speed ? M82::WSND11 : M82::WSND21;
             break;
         case Maps::Ground::WASTELAND:
-            wav = (1 == speed ? M82::WSND02 : (2 == speed ? M82::WSND12 : M82::WSND22));
+            wav = 1 == speed ? M82::WSND02 : 2 == speed ? M82::WSND12 : M82::WSND22;
             break;
         case Maps::Ground::SWAMP:
         case Maps::Ground::BEACH:
-            wav = (1 == speed ? M82::WSND03 : (2 == speed ? M82::WSND13 : M82::WSND23));
+            wav = 1 == speed ? M82::WSND03 : 2 == speed ? M82::WSND13 : M82::WSND23;
             break;
         case Maps::Ground::LAVA:
-            wav = (1 == speed ? M82::WSND04 : (2 == speed ? M82::WSND14 : M82::WSND24));
+            wav = 1 == speed ? M82::WSND04 : 2 == speed ? M82::WSND14 : M82::WSND24;
             break;
         case Maps::Ground::DESERT:
         case Maps::Ground::SNOW:
-            wav = (1 == speed ? M82::WSND05 : (2 == speed ? M82::WSND15 : M82::WSND25));
+            wav = 1 == speed ? M82::WSND05 : 2 == speed ? M82::WSND15 : M82::WSND25;
             break;
         case Maps::Ground::DIRT:
-            wav = (1 == speed ? M82::WSND06 : (2 == speed ? M82::WSND16 : M82::WSND26));
+            wav = 1 == speed ? M82::WSND06 : 2 == speed ? M82::WSND16 : M82::WSND26;
             break;
 
         default:
@@ -157,7 +157,7 @@ Sprite SpriteHero(const Heroes &hero, int index, bool reflect, bool rotate)
                 break;
         }
 
-    return AGG::GetICN(icn_hero, index_sprite + (index % 9), reflect);
+    return AGG::GetICN(icn_hero, index_sprite + index % 9, reflect);
 }
 
 Sprite SpriteFlag(const Heroes &hero, int index, bool reflect, bool rotate)
@@ -223,7 +223,7 @@ Sprite SpriteFlag(const Heroes &hero, int index, bool reflect, bool rotate)
                 break;
         }
 
-    return AGG::GetICN(icn_flag, index_sprite + (index % 9), reflect);
+    return AGG::GetICN(icn_flag, index_sprite + index % 9, reflect);
 }
 
 Sprite SpriteShad(const Heroes &hero, int index)
@@ -262,7 +262,7 @@ Sprite SpriteShad(const Heroes &hero, int index)
             break;
     }
 
-    return AGG::GetICN(icn_shad, index_sprite + (index % 9));
+    return AGG::GetICN(icn_shad, index_sprite + index % 9);
 }
 
 Sprite SpriteFroth(const Heroes &hero, int index, bool reflect)
@@ -300,7 +300,7 @@ Sprite SpriteFroth(const Heroes &hero, int index, bool reflect)
             break;
     }
 
-    return AGG::GetICN(ICN::FROTH, index_sprite + (index % 9), reflect);
+    return AGG::GetICN(ICN::FROTH, index_sprite + index % 9, reflect);
 }
 
 bool isNeedStayFrontObject(const Heroes &hero, const Maps::Tiles &next)
@@ -309,8 +309,8 @@ bool isNeedStayFrontObject(const Heroes &hero, const Maps::Tiles &next)
     {
         const Castle *castle = world.GetCastle(next.GetCenter());
 
-        return (castle &&
-                !hero.isFriends(castle->GetColor()));
+        return castle &&
+            !hero.isFriends(castle->GetColor());
     }
     // to coast action
     if (hero.isShipMaster() &&
@@ -353,7 +353,7 @@ void Heroes::Redraw(Surface &dst, s32 dx, s32 dy, bool with_shadow) const
     {
         s32 ox = 0;
         s32 oy = 0;
-        auto frame = (sprite_index % 9);
+        auto frame = sprite_index % 9;
 
         switch (direction)
         {
@@ -645,28 +645,28 @@ void Heroes::AngleStep(int to_direct)
         switch (next)
         {
             case Direction::TOP:
-                end = (sprite_index == 44);
+                end = sprite_index == 44;
                 break;
             case Direction::TOP_RIGHT:
-                end = (sprite_index == (clockwise ? 47 : 46));
+                end = sprite_index == (clockwise ? 47 : 46);
                 break;
             case Direction::TOP_LEFT:
-                end = (sprite_index == (clockwise ? 46 : 47));
+                end = sprite_index == (clockwise ? 46 : 47);
                 break;
             case Direction::RIGHT:
-                end = (sprite_index == (clockwise ? 49 : 48));
+                end = sprite_index == (clockwise ? 49 : 48);
                 break;
             case Direction::LEFT:
-                end = (sprite_index == (clockwise ? 48 : 49));
+                end = sprite_index == (clockwise ? 48 : 49);
                 break;
             case Direction::BOTTOM_RIGHT:
-                end = (sprite_index == (clockwise ? 51 : 50));
+                end = sprite_index == (clockwise ? 51 : 50);
                 break;
             case Direction::BOTTOM_LEFT:
-                end = (sprite_index == (clockwise ? 50 : 51));
+                end = sprite_index == (clockwise ? 50 : 51);
                 break;
             case Direction::BOTTOM:
-                end = (sprite_index == 53);
+                end = sprite_index == 53;
                 break;
 
             default:
@@ -828,7 +828,7 @@ bool Heroes::Move(bool fast)
 
     // move hero
     if (path.isValid() &&
-        (isEnableMove() || (GetSpriteIndex() < 45 && GetSpriteIndex() % 9) || GetSpriteIndex() >= 45))
+        (isEnableMove() || GetSpriteIndex() < 45 && GetSpriteIndex() % 9 || GetSpriteIndex() >= 45))
     {
         // fast move for hide AI
         if (fast)

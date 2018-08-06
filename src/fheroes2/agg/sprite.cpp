@@ -67,7 +67,7 @@ Surface Sprite::ScaleQVGASurface(const Surface &src)
 {
     const s32 w = src.w() / 2;
     const s32 h = src.h() / 2;
-    return src.RenderScale(Size((w ? w : 1), (h ? h : 1)));
+    return src.RenderScale(Size(w ? w : 1, h ? h : 1));
 }
 
 Sprite Sprite::ScaleQVGASprite(const Sprite &sp)

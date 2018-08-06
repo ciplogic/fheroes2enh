@@ -85,8 +85,8 @@ void SettingsListBox::RedrawBackground(const Point &top)
 
     AGG::GetICN(ICN::STONEBAK, 0).Blit(Rect(15, 25, 280, ah), top.x + 15, top.y + 25);
 
-    for (int ii = 1; ii < (window_h / 25); ++ii)
-        AGG::GetICN(ICN::DROPLISL, 11).Blit(top.x + 295, top.y + 35 + (19 * ii));
+    for (int ii = 1; ii < window_h / 25; ++ii)
+        AGG::GetICN(ICN::DROPLISL, 11).Blit(top.x + 295, top.y + 35 + 19 * ii);
 
     AGG::GetICN(ICN::DROPLISL, 10).Blit(top.x + 295, top.y + 46);
     AGG::GetICN(ICN::DROPLISL, 12).Blit(top.x + 295, top.y + ah - 14);

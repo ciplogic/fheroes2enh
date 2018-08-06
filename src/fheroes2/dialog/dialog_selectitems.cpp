@@ -51,7 +51,7 @@ public:
         AGG::GetICN(ICN::LISTBOX, 7).Blit(dst.x + area.w - 24, dst.y + 45);
 
         for (uint32_t ii = 1; ii < 9; ++ii)
-            AGG::GetICN(ICN::LISTBOX, 8).Blit(dst.x + area.w - 24, dst.y + 44 + (ii * 19));
+            AGG::GetICN(ICN::LISTBOX, 8).Blit(dst.x + area.w - 24, dst.y + 44 + ii * 19);
 
         AGG::GetICN(ICN::LISTBOX, 9).Blit(dst.x + area.w - 24, dst.y + area.h - 74);
     };
@@ -194,7 +194,7 @@ public:
 
     void RedrawItem(const int &index, s32 dstx, s32 dsty, bool current)
     {
-        Skill::Secondary skill(1 + index / 3, 1 + (index % 3));
+        Skill::Secondary skill(1 + index / 3, 1 + index % 3);
         AGG::GetICN(ICN::MINISS, skill.GetIndexSprite2()).Blit(dstx + 5, dsty + 3);
         string str = skill.GetName();
         Text text(str, (current ? Font::YELLOW_BIG : Font::BIG));
@@ -256,8 +256,8 @@ Skill::Secondary Dialog::SelectSecondarySkill()
 
     if (result == OK || listbox.ok)
     {
-        skill.SetSkill(1 + (listbox.GetCurrent() / 3));
-        skill.SetLevel(1 + (listbox.GetCurrent() % 3));
+        skill.SetSkill(1 + listbox.GetCurrent() / 3);
+        skill.SetLevel(1 + listbox.GetCurrent() % 3);
     }
 
     return skill;

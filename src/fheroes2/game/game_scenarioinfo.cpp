@@ -56,7 +56,7 @@ int Game::ScenarioInfo()
     AGG::PlayMusic(MUS::MAINMENU);
 
     MapsFileInfoList lists;
-    if (!PrepareMapsFileInfoList(lists, (conf.GameType(TYPE_MULTI))))
+    if (!PrepareMapsFileInfoList(lists, conf.GameType(TYPE_MULTI)))
     {
         Message(_("Warning"), _("No maps available!"), Font::BIG, Dialog::OK);
         return MAINMENU;
@@ -296,7 +296,7 @@ int Game::ScenarioInfo()
 
 uint32_t Game::GetStep4Player(uint32_t current, uint32_t width, uint32_t count)
 {
-    return current * width * KINGDOMMAX / count + (width * (KINGDOMMAX - count) / (2 * count));
+    return current * width * KINGDOMMAX / count + width * (KINGDOMMAX - count) / (2 * count);
 }
 
 void RedrawScenarioStaticInfo(const Rect &rt)

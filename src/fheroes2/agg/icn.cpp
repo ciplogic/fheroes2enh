@@ -1090,7 +1090,7 @@ uint32_t ICN::AnimationFrame(int icn, uint32_t start, uint32_t ticket, bool quan
             {
                 // buttle
                 case 0x00:
-                    return start + (ticket % 11) + 1;
+                    return start + ticket % 11 + 1;
 
                     // shadow
                 case 0x0C:
@@ -1123,14 +1123,14 @@ uint32_t ICN::AnimationFrame(int icn, uint32_t start, uint32_t ticket, bool quan
                 case 0xE9:
                 case 0xF1:
                 case 0xF8:
-                    return start + (ticket % 6) + 1;
+                    return start + ticket % 6 + 1;
 
                     // seagull on stones
                 case 0x76:
                 case 0x86:
                 case 0x96:
                 case 0xA6:
-                    return start + (ticket % 15) + 1;
+                    return start + ticket % 15 + 1;
 
                     // whirlpool
                 case 0xCA:
@@ -1139,7 +1139,7 @@ uint32_t ICN::AnimationFrame(int icn, uint32_t start, uint32_t ticket, bool quan
                 case 0xD6:
                 case 0xDA:
                 case 0xDE:
-                    return start + (ticket % 3) + 1;
+                    return start + ticket % 3 + 1;
 
                 default:
                     return 0;
@@ -1153,7 +1153,7 @@ uint32_t ICN::AnimationFrame(int icn, uint32_t start, uint32_t ticket, bool quan
                 // sail broken ship (left)
                 case 0x03:
                 case 0x0C:
-                    return start + (ticket % 6) + 1;
+                    return start + ticket % 6 + 1;
 
                 default:
                     return 0;
@@ -1178,7 +1178,7 @@ uint32_t ICN::AnimationFrame(int icn, uint32_t start, uint32_t ticket, bool quan
                 case 0xBE:
                     // shadow smoke
                 case 0xCA:
-                    return start + (ticket % 10) + 1;
+                    return start + ticket % 10 + 1;
 
                 default:
                     return 0;
@@ -1200,7 +1200,7 @@ uint32_t ICN::AnimationFrame(int icn, uint32_t start, uint32_t ticket, bool quan
                 case 0xB5:
                 case 0xB9:
                 case 0xBD:
-                    return start + (ticket % 3) + 1;
+                    return start + ticket % 3 + 1;
 
                 default:
                     return 0;
@@ -1214,7 +1214,7 @@ uint32_t ICN::AnimationFrame(int icn, uint32_t start, uint32_t ticket, bool quan
                 // campfire
                 case 0x36:
                 case 0x3D:
-                    return start + (ticket % 6) + 1;
+                    return start + ticket % 6 + 1;
 
                 default:
                     return 0;
@@ -1236,7 +1236,7 @@ uint32_t ICN::AnimationFrame(int icn, uint32_t start, uint32_t ticket, bool quan
                 case 0x33:
                 case 0x37:
                 case 0x3B:
-                    return start + (ticket % 3) + 1;
+                    return start + ticket % 3 + 1;
 
                     // smoke from chimney
                 case 0x3F:
@@ -1251,7 +1251,7 @@ uint32_t ICN::AnimationFrame(int icn, uint32_t start, uint32_t ticket, bool quan
                 case 0x6B:
                     // peasanthunt
                 case 0x72:
-                    return start + (ticket % 6) + 1;
+                    return start + ticket % 6 + 1;
 
                 default:
                     return 0;
@@ -1269,7 +1269,7 @@ uint32_t ICN::AnimationFrame(int icn, uint32_t start, uint32_t ticket, bool quan
                 case 0x0E:
                     // lava
                 case 0x15:
-                    return start + (ticket % 6) + 1;
+                    return start + ticket % 6 + 1;
 
                     // small volcano
                     // shadow
@@ -1278,7 +1278,7 @@ uint32_t ICN::AnimationFrame(int icn, uint32_t start, uint32_t ticket, bool quan
                     // lava
                 case 0x37:
                 case 0x43:
-                    return start + (ticket % 10) + 1;
+                    return start + ticket % 10 + 1;
 
                 default:
                     return 0;
@@ -1308,7 +1308,7 @@ uint32_t ICN::AnimationFrame(int icn, uint32_t start, uint32_t ticket, bool quan
                 case 0xC3:
                 case 0xD2:
                 case 0xE1:
-                    return start + (ticket % 14) + 1;
+                    return start + ticket % 14 + 1;
 
                 default:
                     return 0;
@@ -1323,7 +1323,7 @@ uint32_t ICN::AnimationFrame(int icn, uint32_t start, uint32_t ticket, bool quan
                 case 0x4E:
                 case 0x58:
                 case 0x62:
-                    return start + (ticket % 9) + 1;
+                    return start + ticket % 9 + 1;
 
                 default:
                     return 0;
@@ -1336,7 +1336,7 @@ uint32_t ICN::AnimationFrame(int icn, uint32_t start, uint32_t ticket, bool quan
             {
                 // lighthouse
                 case 0x3D:
-                    return start + (ticket % 9) + 1;
+                    return start + ticket % 9 + 1;
 
                     // alchemytower
                 case 0x1B:
@@ -1353,11 +1353,11 @@ uint32_t ICN::AnimationFrame(int icn, uint32_t start, uint32_t ticket, bool quan
                 case 0xAD:
                     // shadow smoke
                 case 0xB4:
-                    return start + (ticket % 6) + 1;
+                    return start + ticket % 6 + 1;
 
                     // magic garden
                 case 0xBE:
-                    return quantity ? start + (ticket % 6) + 1 : start + 7;
+                    return quantity ? start + ticket % 6 + 1 : start + 7;
 
                 default:
                     return 0;
@@ -1373,13 +1373,13 @@ uint32_t ICN::AnimationFrame(int icn, uint32_t start, uint32_t ticket, bool quan
                     // shadow
                 case 0x0F:
                 case 0x19:
-                    return start + (ticket % 9) + 1;
+                    return start + ticket % 9 + 1;
 
                     // smoke
                 case 0x24:
                     // shadow
                 case 0x2D:
-                    return start + (ticket % 8) + 1;
+                    return start + ticket % 8 + 1;
 
                     // smoke
                 case 0x5A:
@@ -1389,7 +1389,7 @@ uint32_t ICN::AnimationFrame(int icn, uint32_t start, uint32_t ticket, bool quan
                 case 0x7C:
                     // campfire
                 case 0x83:
-                    return start + (ticket % 6) + 1;
+                    return start + ticket % 6 + 1;
 
                 default:
                     return 0;
@@ -1409,7 +1409,7 @@ uint32_t ICN::AnimationFrame(int icn, uint32_t start, uint32_t ticket, bool quan
                 case 0xA9:
                 case 0xB1:
                 case 0xB8:
-                    return start + (ticket % 6) + 1;
+                    return start + ticket % 6 + 1;
 
                     // mill
                 case 0x60:
@@ -1422,7 +1422,7 @@ uint32_t ICN::AnimationFrame(int icn, uint32_t start, uint32_t ticket, bool quan
                 case 0x7C:
                 case 0x80:
                 case 0x84:
-                    return start + (ticket % 3) + 1;
+                    return start + ticket % 3 + 1;
 
                 default:
                     return 0;
@@ -1446,7 +1446,7 @@ uint32_t ICN::AnimationFrame(int icn, uint32_t start, uint32_t ticket, bool quan
                 case 0x3A:
                 case 0x43:
                 case 0x4A:
-                    return start + (ticket % 6) + 1;
+                    return start + ticket % 6 + 1;
 
                 default:
                     return 0;
@@ -1472,7 +1472,7 @@ uint32_t ICN::AnimationFrame(int icn, uint32_t start, uint32_t ticket, bool quan
                     case 0x55:
                     case 0x5E:
                     case 0x67:
-                        return start + (ticket % 8) + 1;
+                        return start + ticket % 8 + 1;
 
                     default:
                         return 0;
@@ -1498,7 +1498,7 @@ uint32_t ICN::AnimationFrame(int icn, uint32_t start, uint32_t ticket, bool quan
                     case 0x53:
                     case 0x5C:
                     case 0x66:
-                        return start + (ticket % 8) + 1;
+                        return start + ticket % 8 + 1;
 
                     default:
                         return 0;
@@ -1519,7 +1519,7 @@ uint32_t ICN::AnimationFrame(int icn, uint32_t start, uint32_t ticket, bool quan
                     case 0x20:
                     case 0x29:
                     case 0x32:
-                        return start + (ticket % 8) + 1;
+                        return start + ticket % 8 + 1;
 
                         // barrier
                     case 0x3C:
@@ -1530,7 +1530,7 @@ uint32_t ICN::AnimationFrame(int icn, uint32_t start, uint32_t ticket, bool quan
                     case 0x5A:
                     case 0x60:
                     case 0x66:
-                        return start + (ticket % 4) + 1;
+                        return start + ticket % 4 + 1;
 
                     default:
                         return 0;

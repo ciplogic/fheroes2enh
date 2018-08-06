@@ -299,12 +299,12 @@ void Players::Init(const Maps::FileInfo &fi)
         player->SetControl(CONTROL_AI);
         player->SetFriends(vcolor | fi.unions[Color::GetIndex(vcolor)]);
 
-        if ((vcolor & fi.HumanOnlyColors()) && Settings::Get().GameType(Game::TYPE_MULTI))
+        if (vcolor & fi.HumanOnlyColors() && Settings::Get().GameType(Game::TYPE_MULTI))
             player->SetControl(CONTROL_HUMAN);
         else if (vcolor & fi.AllowHumanColors())
             player->SetControl(player->GetControl() | CONTROL_HUMAN);
 
-        if (!first && (player->GetControl() & CONTROL_HUMAN))
+        if (!first && player->GetControl() & CONTROL_HUMAN)
             first = player;
 
         _items.push_back(player);
@@ -346,10 +346,10 @@ int Players::GetColors(int control, bool strong) const
 {
     int res = 0;
 
-    for (auto it : _items)
+    for (const auto& it : _items)
         if (control == 0xFF ||
-            (strong && it->GetControl() == control) ||
-            (!strong && (it->GetControl() & control)))
+            strong && it->GetControl() == control ||
+            !strong && it->GetControl() & control)
             res |= it->GetColor();
 
     return res;
@@ -359,7 +359,7 @@ int Players::GetActualColors() const
 {
     int res = 0;
 
-    for (auto it : _items)
+    for (const auto& it : _items)
         if (it->isPlay()) res |= it->GetColor();
 
     return res;
@@ -457,7 +457,7 @@ string Players::String() const
     ostringstream os;
     os << "Players: ";
 
-    for (auto it : _items)
+    for (const auto& it : _items)
     {
         os << Color::String(it->GetColor()) << "(" << Race::String(it->GetRace()) << ", ";
 
@@ -494,8 +494,8 @@ ByteVectorWriter &operator<<(ByteVectorWriter &msg, const Players &players)
 {
     msg << players.GetColors() << players.current_color;
 
-    for (auto player : players._items)
-        msg << (*player);
+    for (const auto& player : players._items)
+        msg << *player;
 
     return msg;
 }
@@ -552,7 +552,7 @@ void Interface::PlayersInfo::UpdateInfo(Players &players, const Point &pt1, cons
 
     for (auto it = begin(); it != end(); ++it)
     {
-        if ((it + 1) != end())
+        if (it + 1 != end())
         {
             const Rect &rect1 = (*it).rect2;
             const Rect &rect2 = (*(it + 1)).rect2;
@@ -607,7 +607,7 @@ void Interface::PlayersInfo::RedrawInfo(
 
     for (auto it = begin(); it != end(); ++it)
     {
-        const Player &player = *((*it).player);
+        const Player &player = *(*it).player;
         const Rect &rect1 = (*it).rect1;
         const Rect &rect2 = (*it).rect2;
         const Rect &rect3 = (*it).rect3;
@@ -692,14 +692,14 @@ void Interface::PlayersInfo::RedrawInfo(
 
         if (show_race)
         {
-            const string &name = (Race::NECR == player.GetRace() ? _("Necroman") : Race::String(player.GetRace()));
+            const string &name = Race::NECR == player.GetRace() ? _("Necroman") : Race::String(player.GetRace());
             Text text(name, Font::SMALL);
             text.Blit(rect2.x + (rect2.w - text.w()) / 2, rect2.y + rect2.h + 2);
         }
 
         // "swap" sprite
 
-        if (show_swap && (it + 1) != end())
+        if (show_swap && it + 1 != end())
         {
             const Sprite &sprite3 = AGG::GetICN(ICN::ADVMCO, 8);
             sprite3.Blit(rect3.x, rect3.y);
@@ -735,7 +735,7 @@ bool Interface::PlayersInfo::QueueEventProcessing()
             const Maps::FileInfo &fi = conf.CurrentFileInfo();
             Players &players = conf.GetPlayers();
 
-            if ((player->GetColor() & fi.AllowHumanColors()) &&
+            if (player->GetColor() & fi.AllowHumanColors() &&
                 (!Settings::Get().GameType(Game::TYPE_MULTI) || !(player->GetColor() & fi.HumanOnlyColors())))
             {
                 uint32_t humans = players.GetColors(CONTROL_HUMAN, true);
@@ -803,7 +803,7 @@ bool Interface::PlayersInfo::QueueEventProcessing()
         if (show_swap && nullptr != (player = GetFromOpponentChangeClick(le.GetMouseCursor())))
         {
             const auto it = find(begin(), end(), player);
-            if (it != end() && (it + 1) != end())
+            if (it != end() && it + 1 != end())
             {
                 Players &players = conf.GetPlayers();
                 const auto it1 = find(players._items.begin(), players._items.end(), (*it).player);

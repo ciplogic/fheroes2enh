@@ -232,7 +232,7 @@ const char *SwitchMaxMinButtons(Button &btnMax, Button &btnMin, bool max)
 uint32_t CalculateMax(const Monster &monster, const Kingdom &kingdom, uint32_t available)
 {
     uint32_t max = 0;
-    while (kingdom.AllowPayment(monster.GetCost() * (max + 1)) && (max + 1) <= available) ++max;
+    while (kingdom.AllowPayment(monster.GetCost() * (max + 1)) && max + 1 <= available) ++max;
 
     return max;
 }

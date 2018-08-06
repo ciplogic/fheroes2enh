@@ -222,7 +222,7 @@ namespace Interface
         {
             int curIndex = cur - content->begin();
             int topIndex = top - content->begin();
-            if (topIndex > curIndex || ((int) (topIndex + maxItems)) <= curIndex)
+            if (topIndex > curIndex || (int) (topIndex + maxItems) <= curIndex)
             {
                 top = cur + maxItems > content->end() ? content->end() - maxItems : cur;
                 if (top < content->begin()) top = content->begin();
@@ -262,7 +262,7 @@ namespace Interface
 
             if (!content) return false;
 
-            if ((le.MouseClickLeft(buttonPgUp) || (useHotkeys && le.KeyPress(KEY_PAGEUP))) &&
+            if ((le.MouseClickLeft(buttonPgUp) || useHotkeys && le.KeyPress(KEY_PAGEUP)) &&
                 (top > content->begin()))
             {
                 cursor.Hide();
@@ -270,7 +270,7 @@ namespace Interface
                 UpdateSplitterRange();
                 splitter.MoveIndex(top - content->begin());
                 return true;
-            } else if ((le.MouseClickLeft(buttonPgDn) || (useHotkeys && le.KeyPress(KEY_PAGEDOWN))) &&
+            } else if ((le.MouseClickLeft(buttonPgDn) || useHotkeys && le.KeyPress(KEY_PAGEDOWN)) &&
                        (top + maxItems < content->end()))
             {
                 cursor.Hide();
@@ -326,7 +326,7 @@ namespace Interface
 
             if (content->empty())
                 return false;
-            double offset =  ((double)(le.GetMouseCursor().y - rtAreaItems.y) * maxItems / rtAreaItems.h);
+            double offset =  (double)(le.GetMouseCursor().y - rtAreaItems.y) * maxItems / rtAreaItems.h;
 
             if (offset < 0)
                 return false;

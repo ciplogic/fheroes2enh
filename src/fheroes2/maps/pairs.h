@@ -101,7 +101,7 @@ public:
     { return res == first; };
 
     bool isValid() const
-    { return (first & Resource::ALL) && second; };
+    { return first & Resource::ALL && second; };
 };
 
 ByteVectorWriter &operator<<(ByteVectorWriter &sb, const ResourceCount &st);

@@ -198,7 +198,7 @@ void Castle::LoadFromMP2(ByteVectorReader &st)
             race = Race::NECR;
             break;
         default:
-            race = (Color::NONE != GetColor() && (Race::ALL & kingdom_race) ? kingdom_race : Race::Rand());
+            race = Color::NONE != GetColor() && Race::ALL & kingdom_race ? kingdom_race : Race::Rand();
             break;
     }
 
@@ -249,7 +249,7 @@ void Castle::PostLoad()
             building &= ~(DWELLING_UPGRADE2 | DWELLING_UPGRADE4);
             break;
         case Race::NECR:
-            building &= ~(DWELLING_UPGRADE6);
+            building &= ~DWELLING_UPGRADE6;
             break;
         default:
             break;
@@ -272,10 +272,10 @@ void Castle::PostLoad()
         JoinRNDArmy();
 
     // fix shipyard
-    if (!HaveNearlySea()) building &= ~(BUILD_SHIPYARD);
+    if (!HaveNearlySea()) building &= ~BUILD_SHIPYARD;
 
     // remove tavern from necromancer castle
-    if (Race::NECR == race && (building & BUILD_TAVERN))
+    if (Race::NECR == race && building & BUILD_TAVERN)
     {
         building &= ~BUILD_TAVERN;
         if (Settings::Get().PriceLoyaltyVersion())
@@ -309,7 +309,7 @@ bool Castle::isCapital() const
 
 uint32_t Castle::CountBuildings() const
 {
-    const uint32_t tavern = (race == Race::NECR ? (Settings::Get().PriceLoyaltyVersion() ? BUILD_SHRINE : 0) : BUILD_TAVERN);
+    const uint32_t tavern = race == Race::NECR ? (Settings::Get().PriceLoyaltyVersion() ? BUILD_SHRINE : 0) : BUILD_TAVERN;
 
     return CountBits(building & (BUILD_THIEVESGUILD | tavern | BUILD_SHIPYARD | BUILD_WELL |
                                  BUILD_STATUE | BUILD_LEFTTURRET | BUILD_RIGHTTURRET |
@@ -330,8 +330,8 @@ bool Castle::isPosition(const Point &pt) const
         ++X++
 */
 
-    return ((pt.x >= mp.x - 1 && pt.x <= mp.x + 1 && (pt.y == mp.y - 1 || pt.y == mp.y)) ||
-            ((pt.x == mp.x - 2 || pt.x == mp.x + 2) && pt.y == mp.y));
+    return pt.x >= mp.x - 1 && pt.x <= mp.x + 1 && (pt.y == mp.y - 1 || pt.y == mp.y) ||
+        (pt.x == mp.x - 2 || pt.x == mp.x + 2) && pt.y == mp.y;
 }
 
 void Castle::EducateHeroes()
@@ -410,7 +410,7 @@ void Castle::ActionNewWeek()
                 if (building & BUILD_WELL) growth += GetGrownWell();
 
                 // wel2 extras
-                if ((dwellings1[ii] == DWELLING_MONSTER1) && (building & BUILD_WEL2)) growth += GetGrownWel2();
+                if (dwellings1[ii] == DWELLING_MONSTER1 && building & BUILD_WEL2) growth += GetGrownWel2();
 
                 // neutral town: half population (normal for begin month)
                 if (GetColor() == Color::NONE && !world.BeginMonth())
@@ -1318,7 +1318,7 @@ int Castle::CheckBuyBuilding(uint32_t build) const
             if ((Race::BARB | Race::WRLK) & race) return UNKNOWN_UPGRADE;
             break;
         case DWELLING_UPGRADE4:
-            if ((Race::WZRD) & race) return UNKNOWN_UPGRADE;
+            if (Race::WZRD & race) return UNKNOWN_UPGRADE;
             break;
         case DWELLING_UPGRADE5:
             if ((Race::SORC | Race::WRLK) & race) return UNKNOWN_UPGRADE;
@@ -1338,7 +1338,7 @@ int Castle::CheckBuyBuilding(uint32_t build) const
     const uint32_t requires(GetBuildingRequires(build));
 
     for (uint32_t itr = 0x00000001; itr; itr <<= 1)
-        if ((requires & itr) && !(building & itr)) return REQUIRES_BUILD;
+        if (requires & itr && !(building & itr)) return REQUIRES_BUILD;
 
     // check valid payment
     if (!GetKingdom().AllowPayment(PaymentConditions::BuyBuilding(race, build))) return LACK_RESOURCES;
@@ -1354,13 +1354,13 @@ int Castle::GetAllBuildingStatus(const Castle &castle)
     const uint32_t rest = ~castle.building;
 
     for (uint32_t itr = 0x00000001; itr; itr <<= 1)
-        if ((rest & itr) && (ALLOW_BUILD == castle.CheckBuyBuilding(itr))) return ALLOW_BUILD;
+        if (rest & itr && ALLOW_BUILD == castle.CheckBuyBuilding(itr)) return ALLOW_BUILD;
 
     for (uint32_t itr = 0x00000001; itr; itr <<= 1)
-        if ((rest & itr) && (LACK_RESOURCES == castle.CheckBuyBuilding(itr))) return LACK_RESOURCES;
+        if (rest & itr && LACK_RESOURCES == castle.CheckBuyBuilding(itr)) return LACK_RESOURCES;
 
     for (uint32_t itr = 0x00000001; itr; itr <<= 1)
-        if ((rest & itr) && (REQUIRES_BUILD == castle.CheckBuyBuilding(itr))) return REQUIRES_BUILD;
+        if (rest & itr && REQUIRES_BUILD == castle.CheckBuyBuilding(itr)) return REQUIRES_BUILD;
 
     return UNKNOWN_COND;
 }
@@ -1997,8 +1997,8 @@ uint32_t Castle::GetActualDwelling(uint32_t build) const
         case DWELLING_MONSTER5:
             return building & DWELLING_UPGRADE5 ? DWELLING_UPGRADE5 : build;
         case DWELLING_MONSTER6:
-            return building & DWELLING_UPGRADE7 ? DWELLING_UPGRADE7 : (building & DWELLING_UPGRADE6 ? DWELLING_UPGRADE6
-                                                                                                    : build);
+            return building & DWELLING_UPGRADE7 ? DWELLING_UPGRADE7 : building & DWELLING_UPGRADE6 ? DWELLING_UPGRADE6
+                       : build;
         case DWELLING_UPGRADE6:
             return building & DWELLING_UPGRADE7 ? DWELLING_UPGRADE7 : build;
         default:
@@ -2292,7 +2292,7 @@ Army &Castle::GetActualArmy()
 bool Castle::AllowBuyBoat() const
 {
     // check payment and present other boat
-    return (HaveNearlySea() && GetKingdom().AllowPayment(PaymentConditions::BuyBoat()) && !PresentBoat());
+    return HaveNearlySea() && GetKingdom().AllowPayment(PaymentConditions::BuyBoat()) && !PresentBoat();
 }
 
 bool Castle::BuyBoat() const
@@ -2357,7 +2357,7 @@ bool Castle::isBuild(uint32_t bd) const
 
 bool Castle::isNecromancyShrineBuild() const
 {
-    return race == Race::NECR && (BUILD_SHRINE & building);
+    return race == Race::NECR && BUILD_SHRINE & building;
 }
 
 uint32_t Castle::GetGrownWell()
@@ -2572,7 +2572,7 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, VecCastles &castles)
     for (auto &castle : castles)
     {
         msg >> index;
-        castle = (index < 0 ? nullptr : world.GetCastle(Maps::GetPoint(index)));
+        castle = index < 0 ? nullptr : world.GetCastle(Maps::GetPoint(index));
     }
 
     return msg;

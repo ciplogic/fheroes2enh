@@ -86,10 +86,10 @@ void FileInfoListBox::RedrawItem(const Maps::FileInfo &info, s32 dstx, s32 dsty,
         const size_t dotpos = savname.size() - 4;
         if (StringLower(savname.substr(dotpos)) == ".sav") savname.erase(dotpos);
 
-        text.Set(savname, (current ? Font::YELLOW_BIG : Font::BIG));
+        text.Set(savname, current ? Font::YELLOW_BIG : Font::BIG);
         text.Blit(dstx + 5, dsty, 155);
 
-        text.Set(short_date, (current ? Font::YELLOW_BIG : Font::BIG));
+        text.Set(short_date, current ? Font::YELLOW_BIG : Font::BIG);
         text.Blit(dstx + 265 - text.w(), dsty);
     }
 }
@@ -185,7 +185,7 @@ string Dialog::SelectFileSave()
 string Dialog::SelectFileLoad()
 {
     const string lastfile = Game::GetLastSavename();
-    return SelectFileListSimple(_("File to Load:"), (!lastfile.empty() ? lastfile : ""), false);
+    return SelectFileListSimple(_("File to Load:"), !lastfile.empty() ? lastfile : "", false);
 }
 
 string SelectFileListSimple(const string &header, const string &lastfile, bool editor)
@@ -280,7 +280,7 @@ string SelectFileListSimple(const string &header, const string &lastfile, bool e
 
         listbox.QueueEventProcessing();
 
-        if ((buttonOk.isEnable() && le.MouseClickLeft(buttonOk)) || HotKeyPressEvent(Game::EVENT_DEFAULT_READY))
+        if (buttonOk.isEnable() && le.MouseClickLeft(buttonOk) || HotKeyPressEvent(Game::EVENT_DEFAULT_READY))
         {
             if (!filename.empty())
                 result = System::ConcatePath(Settings::GetSaveDir(), filename + ".sav");
@@ -302,7 +302,7 @@ string SelectFileListSimple(const string &header, const string &lastfile, bool e
             buttonOk.SetDisable(filename.empty());
             cursor.Hide();
         }
-        if ((le.KeyPress(KEY_DELETE)) && listbox.isSelected())
+        if (le.KeyPress(KEY_DELETE) && listbox.isSelected())
         {
             string msg(_("Are you sure you want to delete file:"));
             msg.append("\n \n");

@@ -447,7 +447,7 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
         // find enemy archers
         if (it != enemies.end() ||
             // or archers tower
-            (castle && castle->GetColor() != b.GetColor() && castle->isCastle()))
+            castle && castle->GetColor() != b.GetColor() && castle->isCastle())
         {
             // find strongest archers
             for (it = friends.begin(); it != friends.end(); ++it)
@@ -568,7 +568,7 @@ bool Battle::AIApplySpell(const Spell &spell, const Unit *b, const HeroBase &her
 
     if (hero.CanCastSpell(spell) && (!b || b->AllowApplySpell(spell, &hero)))
     {
-        a.push_back(Command(MSG_BATTLE_CAST, spell(), (b ? b->GetHeadIndex() : -1)));
+        a.push_back(Command(MSG_BATTLE_CAST, spell(), b ? b->GetHeadIndex() : -1));
         return true;
     }
 

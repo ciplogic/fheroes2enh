@@ -80,7 +80,7 @@ Battle::Position Battle::Position::GetCorrect(const Unit &b, s32 head)
     result.second = Board::GetCell(head, b.isReflect() ? RIGHT : LEFT);
 
     if (!result.second ||
-        (result.second != b.GetPosition().GetHead() && !result.second->isPassable1(true)))
+        result.second != b.GetPosition().GetHead() && !result.second->isPassable1(true))
     {
         result.second = Board::GetCell(head, b.isReflect() ? LEFT : RIGHT);
 
@@ -102,7 +102,7 @@ bool Battle::Position::isReflect() const
 bool Battle::Position::isValid() const
 {
     return first && (!second ||
-                     ((LEFT | RIGHT) & Board::GetDirection(first->GetIndex(), second->GetIndex())));
+                     (LEFT | RIGHT) & Board::GetDirection(first->GetIndex(), second->GetIndex()));
 }
 
 
@@ -117,8 +117,8 @@ Battle::Cell::Cell(s32 ii) : index(ii), object(0), direction(UNKNOWN), quality(0
 
 void Battle::Cell::SetArea(const Rect &area)
 {
-    pos.x = area.x + 88 - (((index / ARENAW) % 2) ? CELLW / 2 : 0) + (CELLW - 1) * (index % ARENAW);
-    pos.y = area.y + 85 + ((CELLH / 4) * 3 - 1) * (index / ARENAW);
+    pos.x = area.x + 88 - (index / ARENAW % 2 ? CELLW / 2 : 0) + (CELLW - 1) * (index % ARENAW);
+    pos.y = area.y + 85 + (CELLH / 4 * 3 - 1) * (index / ARENAW);
     pos.w = CELLW;
     pos.h = CELLH;
 
@@ -260,10 +260,10 @@ bool Battle::Cell::isPassable3(const Unit &b, bool check_reflect) const
 
     Cell *left = Board::GetCell(index, LEFT);
     Cell *right = Board::GetCell(index, RIGHT);
-    return ((left &&
-             (left->isPassable1(true) || left->index == b.GetTailIndex() || left->index == b.GetHeadIndex())) ||
-            (right && (right->isPassable1(true) || right->index == b.GetTailIndex() ||
-                       right->index == b.GetHeadIndex()))) &&
+    return (left &&
+            (left->isPassable1(true) || left->index == b.GetTailIndex() || left->index == b.GetHeadIndex()) ||
+            right && (right->isPassable1(true) || right->index == b.GetTailIndex() ||
+                right->index == b.GetHeadIndex())) &&
            isPassable1(true);
 
 

@@ -390,7 +390,7 @@ void Interface::IconsPanel::SetPos(s32 ox, s32 oy)
     } else
     {
         const uint32_t count_h = (Display::Get().h() - 480) / TILEWIDTH;
-        iconsCount = count_h > 3 ? 8 : (count_h < 3 ? 4 : 7);
+        iconsCount = count_h > 3 ? 8 : count_h < 3 ? 4 : 7;
     }
 
     SetPosition(ox, oy, 144, iconsCount * ICONS_CURSOR_HEIGHT);

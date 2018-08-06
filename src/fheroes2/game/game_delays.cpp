@@ -127,11 +127,11 @@ void Game::UpdateHeroesMoveSpeed()
     TimeDelay &td_ai = delays[CURRENT_AI_DELAY];
 
     const int hr_value = conf.HeroesMoveSpeed() ?
-                         ((conf.HeroesMoveSpeed() - DEFAULT_SPEED_DELAY) * td_etalon()) / DEFAULT_SPEED_DELAY :
+                         (conf.HeroesMoveSpeed() - DEFAULT_SPEED_DELAY) * td_etalon() / DEFAULT_SPEED_DELAY :
                          td_etalon();
 
     const int ai_value = conf.AIMoveSpeed() ?
-                         ((conf.AIMoveSpeed() - DEFAULT_SPEED_DELAY) * td_etalon()) / DEFAULT_SPEED_DELAY :
+                         (conf.AIMoveSpeed() - DEFAULT_SPEED_DELAY) * td_etalon() / DEFAULT_SPEED_DELAY :
                          td_etalon();
 
     if (conf.HeroesMoveSpeed() == DEFAULT_SPEED_DELAY)

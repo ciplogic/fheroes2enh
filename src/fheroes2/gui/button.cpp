@@ -105,7 +105,7 @@ void Button::SetSprite(const Surface &s1, const Surface &s2)
 void Button::SetDisable(bool f)
 {
     if (f)
-        flags |= (BTN_DISABLE | BTN_PRESSED);
+        flags |= BTN_DISABLE | BTN_PRESSED;
     else
         flags &= ~(BTN_DISABLE | BTN_PRESSED);
 }
@@ -147,7 +147,7 @@ void Button::Draw()
     bool localcursor = false;
     Cursor &cursor = Cursor::Get();
 
-    if ((*this & cursor.GetArea()) && cursor.isVisible())
+    if (*this & cursor.GetArea() && cursor.isVisible())
     {
         cursor.Hide();
         localcursor = true;

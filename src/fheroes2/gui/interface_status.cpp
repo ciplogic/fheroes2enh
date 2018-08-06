@@ -115,7 +115,7 @@ void Interface::StatusWindow::Redraw()
 
         if (STATUS_AITURN == state)
             DrawAITurns();
-        else if (STATUS_UNKNOWN != state && pos.h >= (ston.h() * 3 + 15))
+        else if (STATUS_UNKNOWN != state && pos.h >= ston.h() * 3 + 15)
         {
             DrawDayInfo();
 
@@ -152,7 +152,7 @@ void Interface::StatusWindow::Redraw()
 void Interface::StatusWindow::NextState()
 {
     if (STATUS_DAY == state) state = STATUS_FUNDS;
-    else if (STATUS_FUNDS == state) state = (GameFocus::UNSEL == GetFocusType() ? STATUS_DAY : STATUS_ARMY);
+    else if (STATUS_FUNDS == state) state = GameFocus::UNSEL == GetFocusType() ? STATUS_DAY : STATUS_ARMY;
     else if (STATUS_ARMY == state) state = STATUS_DAY;
     else if (STATUS_RESOURCE == state) state = STATUS_ARMY;
 
@@ -342,9 +342,9 @@ void Interface::StatusWindow::DrawAITurns() const
 
         crest.Blit(dst_x, dst_y);
 
-        const Sprite &sand = AGG::GetICN(ICN::HOURGLAS, 1 + (turn_progress % 10));
+        const Sprite &sand = AGG::GetICN(ICN::HOURGLAS, 1 + turn_progress % 10);
 
-        dst_x += (glass.w() - sand.w() - sand.x() - 3);
+        dst_x += glass.w() - sand.w() - sand.x() - 3;
         dst_y += sand.y();
 
         sand.Blit(dst_x, dst_y);

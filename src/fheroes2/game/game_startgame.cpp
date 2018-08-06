@@ -75,7 +75,7 @@ int Game::StartGame()
 void Game::DialogPlayers(int color, string str)
 {
     const auto player = Players::Get(color);
-    StringReplace(str, "%{color}", (player ? player->GetName() : Color::String(color)));
+    StringReplace(str, "%{color}", player ? player->GetName() : Color::String(color));
 
     const Sprite &border = AGG::GetICN(ICN::BRCREST, 6);
     Surface sign = border.GetSurface();
@@ -276,7 +276,7 @@ void ShowEventDayDialog()
         AGG::PlayMusic(MUS::NEWS, false);
         if (event.resource.GetValidItemsCount())
             Dialog::ResourceInfo("", event.message, event.resource);
-        else if (event.message.size())
+        else if (!event.message.empty())
             Message("", event.message, Font::BIG, Dialog::OK);
     }
 }
@@ -481,20 +481,20 @@ int Interface::Basic::GetCursorFocusHeroes(const Heroes &from_hero, const Maps::
                 return Cursor::POINTER;
             if (MP2::isGroundObject(tile.GetObject()))
             {
-                const bool protection = (MP2::isPickupObject(tile.GetObject())
-                                   ? false
-                                   : (Maps::TileIsUnderProtection(tile.GetIndex()) ||
-                                      (!from_hero.isFriends(tile.QuantityColor()) &&
-                                       tile.CaptureObjectIsProtection())));
+                const bool protection = MP2::isPickupObject(tile.GetObject())
+                                            ? false
+                                            : Maps::TileIsUnderProtection(tile.GetIndex()) ||
+                                            !from_hero.isFriends(tile.QuantityColor()) &&
+                                            tile.CaptureObjectIsProtection();
 
-                return Cursor::DistanceThemes((protection ? Cursor::FIGHT : Cursor::ACTION),
+                return Cursor::DistanceThemes(protection ? Cursor::FIGHT : Cursor::ACTION,
                                               from_hero.GetRangeRouteDays(tile.GetIndex()));
             }
             if (tile.isPassable(&from_hero, Direction::CENTER, false))
             {
                 const bool protection = Maps::TileIsUnderProtection(tile.GetIndex());
 
-                return Cursor::DistanceThemes((protection ? Cursor::FIGHT : Cursor::MOVE),
+                return Cursor::DistanceThemes(protection ? Cursor::FIGHT : Cursor::MOVE,
                                               from_hero.GetRangeRouteDays(tile.GetIndex()));
             }
             break;
@@ -549,15 +549,15 @@ int Interface::Basic::StartGame()
     {
         if (!skip_turns) world.NewDay();
 
-        for (auto it : players._items)
+        for (const auto& it : players._items)
         {
             if (!it)
                 continue;
-            const Player &player = (*it);
+            const Player &player = *it;
             Kingdom &kingdom = world.GetKingdom(player.GetColor());
 
             if (!kingdom.isPlay() ||
-                (skip_turns && !player.isColor(conf.CurrentColor())))
+                skip_turns && !player.isColor(conf.CurrentColor()))
                 continue;
 
 

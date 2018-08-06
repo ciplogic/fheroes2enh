@@ -145,10 +145,10 @@ int Dialog::ArmyInfo(const Troop &troop, int flags)
             continue;
         }
         if (buttonUpgrade.isEnable())
-            le.MousePressLeft(buttonUpgrade) ? (buttonUpgrade).PressDraw() : (buttonUpgrade).ReleaseDraw();
+            le.MousePressLeft(buttonUpgrade) ? buttonUpgrade.PressDraw() : buttonUpgrade.ReleaseDraw();
         if (buttonDismiss.isEnable())
-            le.MousePressLeft(buttonDismiss) ? (buttonDismiss).PressDraw() : (buttonDismiss).ReleaseDraw();
-        le.MousePressLeft(buttonExit) ? (buttonExit).PressDraw() : (buttonExit).ReleaseDraw();
+            le.MousePressLeft(buttonDismiss) ? buttonDismiss.PressDraw() : buttonDismiss.ReleaseDraw();
+        le.MousePressLeft(buttonExit) ? buttonExit.PressDraw() : buttonExit.ReleaseDraw();
 
         // upgrade
         if (buttonUpgrade.isEnable() && le.MouseClickLeft(buttonUpgrade))

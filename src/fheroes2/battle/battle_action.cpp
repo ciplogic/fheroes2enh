@@ -191,7 +191,7 @@ void Battle::Arena::ApplyActionAttack(Command &cmd)
 
     if (!b1 || !b1->isValid()
         || !b2 || !b2->isValid()
-        || (b1->GetColor() == b2->GetColor() && !b2->Modes(SP_HYPNOTIZE)))
+        || b1->GetColor() == b2->GetColor() && !b2->Modes(SP_HYPNOTIZE))
         return;
     // reset blind
     if (b2->Modes(SP_BLIND)) b2->ResetBlind();
@@ -553,7 +553,7 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForSpells(const HeroBase *hero, con
             case Spell::COLDRING:
             case Spell::FIREBLAST:
             {
-                const Indexes positions = Board::GetDistanceIndexes(dst, (spell == Spell::FIREBLAST ? 2 : 1));
+                const Indexes positions = Board::GetDistanceIndexes(dst, spell == Spell::FIREBLAST ? 2 : 1);
 
                 for (int position : positions)
                 {

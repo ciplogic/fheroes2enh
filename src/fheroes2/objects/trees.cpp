@@ -29,8 +29,8 @@ int ObjTree::GetPassable(uint32_t index)
 {
     if (isShadow(index)) return DIRECTION_ALL;
 
-    return (5 == index || 15 == index || 22 == index || 27 == index ?
-            0 : DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW);
+    return 5 == index || 15 == index || 22 == index || 27 == index ?
+               0 : DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW;
 }
 
 bool ObjTree::isAction(uint32_t index)

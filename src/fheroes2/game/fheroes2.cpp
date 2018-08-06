@@ -246,7 +246,7 @@ int main(int argc, char **argv)
         int test = 0;
 
         // goto main menu
-        int rs = (test ? Game::TESTING : Game::MAINMENU);
+        int rs = test ? Game::TESTING : Game::MAINMENU;
 
         while (rs != Game::QUITGAME)
         {

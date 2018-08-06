@@ -59,7 +59,7 @@ size_t TextAscii::Size() const
 
 int TextAscii::CharWidth(int c, int f)
 {
-    return (c < 0x21 ? (Font::SMALL == f || Font::YELLOW_SMALL == f ? 4 : 6) : AGG::GetLetter(c, f).w());
+    return c < 0x21 ? (Font::SMALL == f || Font::YELLOW_SMALL == f ? 4 : 6) : AGG::GetLetter(c, f).w();
 }
 
 int TextAscii::CharHeight(int f)
@@ -147,7 +147,7 @@ void TextAscii::Blit(s32 ax, s32 ay, int maxw, Surface &dst)
     for (string::const_iterator
                  it = message.begin(); it != message.end(); ++it)
     {
-        if (maxw && (ax - sx) >= maxw) break;
+        if (maxw && ax - sx >= maxw) break;
 
         // space or unknown letter
         if (*it < 0x21)
@@ -247,7 +247,7 @@ size_t TextUnicode::Size() const
 
 int TextUnicode::CharWidth(int c, int f)
 {
-    return (c < 0x0021 ? (Font::SMALL == f || Font::YELLOW_SMALL == f ? 4 : 6) : AGG::GetUnicodeLetter(c, f).w());
+    return c < 0x0021 ? (Font::SMALL == f || Font::YELLOW_SMALL == f ? 4 : 6) : AGG::GetUnicodeLetter(c, f).w();
 }
 
 int TextUnicode::CharHeight(int f)
@@ -331,7 +331,7 @@ void TextUnicode::Blit(s32 ax, s32 ay, int maxw, Surface &dst)
 
     for (auto &it : message)
     {
-        if (maxw && (ax - sx) >= maxw) break;
+        if (maxw && ax - sx >= maxw) break;
 
         // end string
         if (0 == it) continue;

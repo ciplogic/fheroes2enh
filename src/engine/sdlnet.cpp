@@ -137,7 +137,7 @@ T swap_endian(T u)
 
 bool Network::Socket::Recv32(uint32_t & v)
 {
-    if(Recv(reinterpret_cast<char*>(&v), sizeof(v)))
+    if(Recv(reinterpret_cast<char*>(&v), sizeof v))
     {
         const auto swappedV = swap_endian(v);
         v = swappedV;
@@ -148,7 +148,7 @@ bool Network::Socket::Recv32(uint32_t & v)
 
 bool Network::Socket::Recv16(u16 & v)
 {
-    if(Recv(reinterpret_cast<char*>(&v), sizeof(v)))
+    if(Recv(reinterpret_cast<char*>(&v), sizeof v))
     {
         const auto swappedV = swap_endian(v);
         v = swappedV;
@@ -163,7 +163,7 @@ bool Network::Socket::Send32(const uint32_t & v0)
     const auto swappedV = swap_endian(v);
     v = swappedV;
 
-    return Send(reinterpret_cast<char*>(&v), sizeof(v));
+    return Send(reinterpret_cast<char*>(&v), sizeof v);
 }
 
 bool Network::Socket::Send16(const u16 & v0)
@@ -171,7 +171,7 @@ bool Network::Socket::Send16(const u16 & v0)
     u16 v = v0;
     const auto swappedV = swap_endian(v);
     v = swappedV;
-    return Send(reinterpret_cast<char*>(&v), sizeof(v));
+    return Send(reinterpret_cast<char*>(&v), sizeof v);
 }
 
 bool Network::Socket::Open(IPaddress & ip)

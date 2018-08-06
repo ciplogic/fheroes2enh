@@ -214,7 +214,7 @@ bool Dialog::InputString(const string &header, string &res)
 
     TextBox textbox(header, Font::BIG, BOXAREA_WIDTH);
     Point dst_pt;
-    const Sprite &sprite = AGG::GetICN((Settings::Get().ExtGameEvilInterface() ? ICN::BUYBUILD : ICN::BUYBUILE), 3);
+    const Sprite &sprite = AGG::GetICN(Settings::Get().ExtGameEvilInterface() ? ICN::BUYBUILD : ICN::BUYBUILE, 3);
 
     FrameBox box(10 + textbox.h() + 10 + sprite.h(), OK | CANCEL);
     const Rect &box_rt = box.GetArea();
@@ -258,7 +258,7 @@ bool Dialog::InputString(const string &header, string &res)
         le.MousePressLeft(buttonCancel) ? buttonCancel.PressDraw() : buttonCancel.ReleaseDraw();
 
         if (HotKeyPressEvent(Game::EVENT_DEFAULT_READY) ||
-            (buttonOk.isEnable() && le.MouseClickLeft(buttonOk)))
+            buttonOk.isEnable() && le.MouseClickLeft(buttonOk))
             break;
         if (HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT) || le.MouseClickLeft(buttonCancel))
         {

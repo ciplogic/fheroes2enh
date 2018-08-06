@@ -404,11 +404,11 @@ bool AGG::CheckMemoryLimit()
 
             usage = System::GetMemoryUsage();
 
-            if (conf.MemoryLimit() < usage + (300 * 1024))
+            if (conf.MemoryLimit() < usage + 300 * 1024)
             {
                 VERBOSE("settings: " << conf.MemoryLimit() << ", too small");
                 // increase + 300Kb
-                conf.SetMemoryLimit(usage + (300 * 1024));
+                conf.SetMemoryLimit(usage + 300 * 1024);
                 VERBOSE("settings: " << "increase limit on 300kb, current value: " << conf.MemoryLimit());
             }
 
@@ -557,7 +557,7 @@ bool AGG::LoadExtICN(int icn, uint32_t index, bool reflect)
 
             case ICN::BTNGIFT:
                 LoadOrgICN(sprite,
-                           (Settings::Get().ExtGameEvilInterface() ? ICN::TRADPOSE : ICN::TRADPOST),
+                           Settings::Get().ExtGameEvilInterface() ? ICN::TRADPOSE : ICN::TRADPOST,
                            17 + index, false);
                 // clean
                 GetICN(ICN::SYSTEM, 11 + index).Blit(Rect(10, 6, 72, 15), 6, 4, sprite);
@@ -895,7 +895,7 @@ ICNSprite AGG::RenderICNSprite(int icn, uint32_t index)
         if (0xC0 == *buf)
         {
             ++buf;
-            c = *buf % 4 ? *buf % 4 : *(++buf);
+            c = *buf % 4 ? *buf % 4 : *++buf;
 
             if (sf1.depth() == 8) // skip alpha
             {
@@ -1041,7 +1041,7 @@ Sprite AGG::GetICN(int icn, uint32_t index, bool reflect)
 
     // need load?
     if (0 == v.count ||
-        ((reflect && (!v.reflect || !v.reflect[index].isValid())) || (!v.sprites || !v.sprites[index].isValid())))
+        (reflect && (!v.reflect || !v.reflect[index].isValid()) || (!v.sprites || !v.sprites[index].isValid())))
     {
         CheckMemoryLimit();
         LoadICN(icn, index, reflect);
@@ -1372,7 +1372,7 @@ void AGG::PlayMusic(int mus, bool loop)
     const Settings &conf = Settings::Get();
 
     if (!conf.Music() || MUS::UNUSED == mus || MUS::UNKNOWN == mus ||
-        (Game::CurrentMusic() == mus && Music::isPlaying()))
+        Game::CurrentMusic() == mus && Music::isPlaying())
         return;
 
     Game::SetCurrentMusic(mus);
