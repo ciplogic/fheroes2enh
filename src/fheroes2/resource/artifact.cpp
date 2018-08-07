@@ -895,7 +895,8 @@ bool ArtifactsBar::ActionBarSingleClick(const Point &cursor, Artifact &art, cons
     {
         swap(art, *GetSelectedItem());
         return false;
-    } else if (art.isValid())
+    }
+    if (art.isValid())
     {
         if (!read_only)
         {

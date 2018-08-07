@@ -1592,13 +1592,11 @@ int Heroes::CanScouteTile(s32 dst) const
             // check crystal ball
             return HasArtifact(Artifact::CRYSTAL_BALL) ?
                    Skill::Level::EXPERT : scouting;
-        } else
-        {
-            // check spell identify hero
-            if (GetKingdom().Modes(Kingdom::IDENTIFYHERO) &&
-                MP2::OBJ_HEROES == world.GetTiles(dst).GetObject())
-                return Skill::Level::EXPERT;
         }
+        // check spell identify hero
+        if (GetKingdom().Modes(Kingdom::IDENTIFYHERO) &&
+            MP2::OBJ_HEROES == world.GetTiles(dst).GetObject())
+            return Skill::Level::EXPERT;
     } else
     {
         if (Settings::Get().ExtWorldScouteExtended())

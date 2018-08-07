@@ -1567,8 +1567,8 @@ bool AI::HeroesValidObject(const Heroes &hero, s32 index)
                 {
                     Army enemy(tile);
                     return !enemy.m_troops.isValid() || Army::TroopsStrongerEnemyTroops(army.m_troops, enemy.m_troops);
-                } else
-                    return true;
+                }
+                return true;
             }
             break;
 
@@ -1591,8 +1591,8 @@ bool AI::HeroesValidObject(const Heroes &hero, s32 index)
                         Army enemy(tile);
                         return !enemy.m_troops.isValid() ||
                                Army::TroopsStrongerEnemyTroops(army.m_troops, enemy.m_troops);
-                    } else
-                        return true;
+                    }
+                    return true;
                 }
             } else if (tile.QuantityIsValid()) return true;
             break;

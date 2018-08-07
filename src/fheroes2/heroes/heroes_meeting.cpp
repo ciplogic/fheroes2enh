@@ -312,7 +312,8 @@ void Heroes::ScholarAction(Heroes &hero1, Heroes &hero2)
     if (!hero1.HaveSpellBook() || !hero2.HaveSpellBook())
     {
         return;
-    } else if (!Settings::Get().ExtWorldEyeEagleAsScholar())
+    }
+    if (!Settings::Get().ExtWorldEyeEagleAsScholar())
     {
         return;
     }

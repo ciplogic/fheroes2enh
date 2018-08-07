@@ -29,7 +29,7 @@
 
 #include <SDL_ttf.h>
 
-FontTTF::FontTTF() : ptr(nullptr)
+FontTTF::FontTTF()
 {
 }
 

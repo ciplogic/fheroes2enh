@@ -149,7 +149,7 @@ int Interface::GetFocusType()
         Focus &focus = player->GetFocus();
 
         if (focus.GetHeroes()) return GameFocus::HEROES;
-        else if (focus.GetCastle()) return GameFocus::CASTLE;
+        if (focus.GetCastle()) return GameFocus::CASTLE;
     }
 
     return GameFocus::UNSEL;
@@ -182,7 +182,7 @@ Point Interface::GetFocusCenter()
         Focus &focus = player->GetFocus();
 
         if (focus.GetHeroes()) return focus.GetHeroes()->GetCenter();
-        else if (focus.GetCastle()) return focus.GetCastle()->GetCenter();
+        if (focus.GetCastle()) return focus.GetCastle()->GetCenter();
     }
 
     return {world.w() / 2, world.h() / 2};

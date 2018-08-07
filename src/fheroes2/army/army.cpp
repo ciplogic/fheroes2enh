@@ -443,7 +443,11 @@ Troop *Troops::GetWeakestTroop()
     auto first = _items.begin();
     auto last = _items.end();
 
-    while (first != last) if ((*first)->isValid()) break; else ++first;
+    while (first != last)
+    {
+        if ((*first)->isValid()) break;
+        ++first;
+    }
 
     if (first == _items.end()) return nullptr;
     auto lowest = first;
@@ -462,7 +466,11 @@ Troop *Troops::GetSlowestTroop()
     auto first = _items.begin();
     auto last = _items.end();
 
-    while (first != last) if ((*first)->isValid()) break; else ++first;
+    while (first != last)
+    {
+        if ((*first)->isValid()) break;
+        ++first;
+    }
 
     if (first == _items.end()) return nullptr;
     auto lowest = first;

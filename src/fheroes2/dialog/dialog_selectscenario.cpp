@@ -274,27 +274,29 @@ const Maps::FileInfo *Dialog::SelectScenario(const MapsFileInfoList &all)
             auto it = find(all.begin(), all.end(), listbox.GetCurrent());
             result = it != all.end() ? &*it : nullptr;
             break;
-        } else if (HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
+        }
+        if (HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
         {
             result = nullptr;
             break;
-        } else if ((le.MouseClickLeft(buttonSelectSmall) || le.KeyPress(KEY_s)) &&
-                   buttonSelectSmall.isEnable() && buttonSelectSmall.isEnable())
+        }
+        if ((le.MouseClickLeft(buttonSelectSmall) || le.KeyPress(KEY_s)) &&
+            buttonSelectSmall.isEnable() && buttonSelectSmall.isEnable())
         {
             listbox.SetListContent(small);
             cursor.Hide();
         } else if ((le.MouseClickLeft(buttonSelectMedium) || le.KeyPress(KEY_m)) &&
-                   buttonSelectMedium.isEnable() && buttonSelectMedium.isEnable())
+            buttonSelectMedium.isEnable() && buttonSelectMedium.isEnable())
         {
             listbox.SetListContent(medium);
             cursor.Hide();
         } else if ((le.MouseClickLeft(buttonSelectLarge) || le.KeyPress(KEY_l)) &&
-                   buttonSelectLarge.isEnable() && buttonSelectLarge.isEnable())
+            buttonSelectLarge.isEnable() && buttonSelectLarge.isEnable())
         {
             listbox.SetListContent(large);
             cursor.Hide();
         } else if ((le.MouseClickLeft(buttonSelectXLarge) || le.KeyPress(KEY_x)) &&
-                   buttonSelectXLarge.isEnable() && buttonSelectXLarge.isEnable())
+            buttonSelectXLarge.isEnable() && buttonSelectXLarge.isEnable())
         {
             listbox.SetListContent(xlarge);
             cursor.Hide();

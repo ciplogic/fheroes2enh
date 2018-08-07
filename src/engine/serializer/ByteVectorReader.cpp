@@ -7,8 +7,7 @@ namespace
         constexpr uint32_t uint32_ = 0x01020304;
         constexpr uint8_t magic_ = (const uint8_t&)uint32_;
         const bool isLittle = magic_ == 0x04;
-    };
-
+    }
 }
 ByteVectorReader::ByteVectorReader(const std::vector<u8> &data)
         : _data(data), _pos(0)
@@ -34,13 +33,11 @@ uint32_t ByteVectorReader::getLE16()
         uint32_t lo = Get8();
         uint32_t hi = Get8();
         return lo + (hi << 8);
-    }else
-    {
-        auto * resultPtr = reinterpret_cast<const uint16_t *>(_data.data() + _pos);
-        _pos += 2;
-        const uint16_t result = *resultPtr;
-        return result;
     }
+    auto * resultPtr = reinterpret_cast<const uint16_t *>(_data.data() + _pos);
+    _pos += 2;
+    const uint16_t result = *resultPtr;
+    return result;
 }
 
 uint32_t ByteVectorReader::getLE32()
@@ -55,14 +52,11 @@ uint32_t ByteVectorReader::getLE32()
         uint32_t hi = (hlo << 16) + (hhi << 24);
         uint32_t  result = lo + hi;
         return result;
-    } else
-    {
-        auto * resultPtr = reinterpret_cast<const uint32_t *>(_data.data() + _pos);
-        _pos += 4;
-        const auto result = *resultPtr;
-        return result;
     }
-
+    auto * resultPtr = reinterpret_cast<const uint32_t *>(_data.data() + _pos);
+    _pos += 4;
+    const auto result = *resultPtr;
+    return result;
 }
 
 u16 ByteVectorReader::get16()
@@ -85,13 +79,10 @@ uint32_t ByteVectorReader::getBE16()
         const uint32_t hi = Get8();
         return hi + (lo << 8);
     }
-    else
-    {
-        auto * resultPtr = reinterpret_cast<const uint16_t *>(_data.data() + _pos);
-        _pos += 2;
-        uint16_t result = *resultPtr;
-        return result;
-    }
+    auto * resultPtr = reinterpret_cast<const uint16_t *>(_data.data() + _pos);
+    _pos += 2;
+    uint16_t result = *resultPtr;
+    return result;
 }
 
 uint32_t ByteVectorReader::getBE32()

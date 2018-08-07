@@ -521,12 +521,10 @@ bool Heroes::MoveStep(bool fast)
             MoveStep(*this, index_from, index_to, false);
 
             return true;
-        } else
-        {
-            // play sound
-            if (GetKingdom().isControlHuman())
-                PlayWalkSound(world.GetTiles(mp.x, mp.y).GetGround());
         }
+        // play sound
+        if (GetKingdom().isControlHuman())
+            PlayWalkSound(world.GetTiles(mp.x, mp.y).GetGround());
     } else if (8 == sprite_index % 9)
     {
         sprite_index -= 8;
@@ -837,21 +835,19 @@ bool Heroes::Move(bool fast)
             MoveStep(true);
 
             return true;
-        } else
+        }
+        // if need change through the circle
+        if (GetDirection() != path.GetFrontDirection())
         {
-            // if need change through the circle
-            if (GetDirection() != path.GetFrontDirection())
-            {
-                AngleStep(path.GetFrontDirection());
-            } else
-                // move
+            AngleStep(path.GetFrontDirection());
+        } else
+            // move
             if (MoveStep())
             {
                 if (isFreeman()) return false;
 
                 return true;
             }
-        }
     } else
     {
         SetMove(false);

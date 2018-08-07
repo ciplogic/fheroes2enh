@@ -250,7 +250,7 @@ void Cursor::Show()
 int Cursor::DistanceThemes(int theme, uint32_t dist)
 {
     if (0 == dist) return POINTER;
-    else if (dist > 4) dist = 4;
+    if (dist > 4) dist = 4;
 
     switch (theme)
     {

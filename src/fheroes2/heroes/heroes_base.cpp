@@ -152,7 +152,7 @@ int ArtifactsModifiersLuck(const HeroBase &base, string *strs)
 }
 
 HeroBase::HeroBase(int type, int race)
-        : magic_point(0), move_point(0), spell_book()
+        : magic_point(0), move_point(0)
 {
     bag_artifacts.assign(HEROESMAXARTIFACT, Artifact::UNKNOWN);
     LoadDefaults(type, race);
@@ -220,7 +220,7 @@ void HeroBase::ReadFrom(ByteVectorReader &msg)
 
 }
 
-HeroBase::HeroBase() : magic_point(0), move_point(0), spell_book()
+HeroBase::HeroBase() : magic_point(0), move_point(0)
 {
 }
 
@@ -432,8 +432,7 @@ bool HeroBase::CanCastSpell(const Spell &spell, string *res) const
                     {
                         if (kingdom.AllowPayment(spell.GetCost()))
                             return true;
-                        else
-                            os << "resource" << " " << "failed";
+                        os << "resource" << " " << "failed";
                     } else
                         os << "move points" << " " << "failed";
                 } else

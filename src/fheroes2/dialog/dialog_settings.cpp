@@ -35,7 +35,7 @@ class SettingsListBox : public Interface::ListBox<uint32_t>
 {
 public:
     SettingsListBox(const Point &pt, bool f) : ListBox<uint32_t>(pt), readonly(f)
-    {};
+    {}
 
     void RedrawItem(const uint32_t &, s32, s32, bool);
 

@@ -274,7 +274,7 @@ struct XMIData
             {
                 ERROR("parse error: " << "out of range");
                 break;
-            };
+            }
         }
     }
 

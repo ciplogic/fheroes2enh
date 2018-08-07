@@ -424,15 +424,17 @@ bool StatsCastlesList::ActionListCursor(CstlRow &row, const Point &cursor, s32 o
         Cursor::Get().Hide();
         if (row.armyBarGuest && row.armyBarGuest->isSelected()) row.armyBarGuest->ResetSelected();
         return true;
-    } else if (row.armyBarGuest && row.armyBarGuest->GetArea() & cursor &&
-               (row.armyBarGuard ? row.armyBarGuest->QueueEventProcessing(*row.armyBarGuard)
-                                 : row.armyBarGuest->QueueEventProcessing()))
+    }
+    if (row.armyBarGuest && row.armyBarGuest->GetArea() & cursor &&
+        (row.armyBarGuard ? row.armyBarGuest->QueueEventProcessing(*row.armyBarGuard)
+             : row.armyBarGuest->QueueEventProcessing()))
     {
         Cursor::Get().Hide();
         if (row.armyBarGuard && row.armyBarGuard->isSelected()) row.armyBarGuard->ResetSelected();
         return true;
-    } else if (row.dwellingsBar && row.dwellingsBar->GetArea() & cursor &&
-               row.dwellingsBar->QueueEventProcessing())
+    }
+    if (row.dwellingsBar && row.dwellingsBar->GetArea() & cursor &&
+        row.dwellingsBar->QueueEventProcessing())
     {
         Cursor::Get().Hide();
         if (row.armyBarGuest && row.armyBarGuest->isSelected()) row.armyBarGuest->ResetSelected();

@@ -129,7 +129,8 @@ bool Heroes::ActionSpellCast(const Spell &spell)
         Message("", _("Your hero is too tired to cast this spell today. Try again tomorrow."), Font::BIG,
                 Dialog::OK);
         return false;
-    } else if (spell == Spell::NONE || spell.isCombat() || !CanCastSpell(spell, &error))
+    }
+    if (spell == Spell::NONE || spell.isCombat() || !CanCastSpell(spell, &error))
     {
         if (!error.empty()) Message("Error", error, Font::BIG, Dialog::OK);
         return false;

@@ -270,8 +270,9 @@ namespace Interface
                 UpdateSplitterRange();
                 splitter.MoveIndex(top - content->begin());
                 return true;
-            } else if ((le.MouseClickLeft(buttonPgDn) || useHotkeys && le.KeyPress(KEY_PAGEDOWN)) &&
-                       (top + maxItems < content->end()))
+            }
+            if ((le.MouseClickLeft(buttonPgDn) || useHotkeys && le.KeyPress(KEY_PAGEDOWN)) &&
+                (top + maxItems < content->end()))
             {
                 cursor.Hide();
                 top += maxItems;
@@ -354,7 +355,8 @@ namespace Interface
                         ActionListSingleClick(*cur, le.GetMouseCursor(), rtAreaItems.x, posy);
                     }
                     return true;
-                } else if (le.MousePressRight(rtAreaItems))
+                }
+                if (le.MousePressRight(rtAreaItems))
                 {
                     auto pos = content->begin() + posIndex;
                     ActionListPressRight(*pos, le.GetMouseCursor(), rtAreaItems.x, posy);

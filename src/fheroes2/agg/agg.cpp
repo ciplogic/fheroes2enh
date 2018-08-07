@@ -1112,8 +1112,6 @@ bool AGG::LoadOrgTIL(int til, uint32_t max)
             v.sprites[ii] = Surface(&body[6 + ii * tile_size], width, height, 1, false);
 
         return true;
-    } else
-    {
     }
 
     return false;

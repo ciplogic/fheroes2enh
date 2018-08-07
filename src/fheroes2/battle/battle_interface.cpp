@@ -1619,25 +1619,23 @@ int Battle::Interface::GetBattleCursor(string &status)
 
                 return arena.GetObstaclesPenalty(*b_current, *b_enemy) ? Cursor::WAR_BROKENARROW
                                                                        : Cursor::WAR_ARROW;
-            } else
+            }
+            const int dir = cell->GetTriangleDirection(LocalEvent::Get().GetMouseCursor());
+            const int cursor = GetSwordCursorDirection(dir);
+
+            if (cursor && Board::isValidDirection(index_pos, dir))
             {
-                const int dir = cell->GetTriangleDirection(LocalEvent::Get().GetMouseCursor());
-                const int cursor = GetSwordCursorDirection(dir);
+                const s32 from = Board::GetIndexDirection(index_pos, dir);
 
-                if (cursor && Board::isValidDirection(index_pos, dir))
+                // if free cell or it is b_current
+                if (UNKNOWN != Board::GetCell(from)->GetDirection() ||
+                    from == b_current->GetHeadIndex() ||
+                    b_current->isWide() && from == b_current->GetTailIndex())
                 {
-                    const s32 from = Board::GetIndexDirection(index_pos, dir);
+                    status = _("Attack %{monster}");
+                    StringReplace(status, "%{monster}", b_enemy->GetName());
 
-                    // if free cell or it is b_current
-                    if (UNKNOWN != Board::GetCell(from)->GetDirection() ||
-                        from == b_current->GetHeadIndex() ||
-                        b_current->isWide() && from == b_current->GetTailIndex())
-                    {
-                        status = _("Attack %{monster}");
-                        StringReplace(status, "%{monster}", b_enemy->GetName());
-
-                        return cursor;
-                    }
+                    return cursor;
                 }
             }
         } else if (cell->isPassable3(*b_current, false) && UNKNOWN != cell->GetDirection())

@@ -171,15 +171,13 @@ Spell SpellBook::Open(const HeroBase &hero, int filter, bool canselect) const
                         {
                             curspell = *spell;
                             break;
-                        } else
-                        {
-                            cursor.Hide();
-                            StringReplace(str, "%{mana}", (*spell).SpellPoint(&hero));
-                            StringReplace(str, "%{point}", hero.GetSpellPoints());
-                            Message("", str, Font::BIG, Dialog::OK);
-                            cursor.Show();
-                            display.Flip();
                         }
+                        cursor.Hide();
+                        StringReplace(str, "%{mana}", (*spell).SpellPoint(&hero));
+                        StringReplace(str, "%{point}", hero.GetSpellPoints());
+                        Message("", str, Font::BIG, Dialog::OK);
+                        cursor.Show();
+                        display.Flip();
                     } else
                     {
                         cursor.Hide();

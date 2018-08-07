@@ -150,7 +150,8 @@ bool AIHeroesPriorityObject(const Heroes &hero, s32 index)
                 return hero.Modes(AI::HEROES_HUNTER) &&
                        castle->GetArmy().m_troops.isValid() &&
                        !hero.isVisited(world.GetTiles(castle->GetIndex()));
-            } else if (!hero.isFriends(castle->GetColor()))
+            }
+            if (!hero.isFriends(castle->GetColor()))
                 return AI::HeroesValidObject(hero, index);
         }
     } else if (MP2::OBJ_HEROES == tile.GetObject())

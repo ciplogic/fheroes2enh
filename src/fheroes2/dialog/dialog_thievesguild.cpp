@@ -35,10 +35,10 @@
 struct ValueColors : pair<int, int>
 {
     ValueColors() : pair<int, int>(0, 0)
-    {};
+    {}
 
     ValueColors(int v, int c) : pair<int, int>(v, c)
-    {};
+    {}
 
     bool IsValue(int v) const
     { return v == first; };

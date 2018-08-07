@@ -292,7 +292,8 @@ int ShowWarningLostTownsDialog()
                             _("%{color} player, your heroes abandon you, and you are banished from this land."));
         GameOver::Result::Get().SetResult(GameOver::LOSS_ALL);
         return Game::MAINMENU;
-    } else if (1 == myKingdom.GetLostTownDays())
+    }
+    if (1 == myKingdom.GetLostTownDays())
     {
         Game::DialogPlayers(myKingdom.GetColor(),
                             _("%{color} player, this is your last day to capture a town, or you will be banished from this land."
@@ -300,7 +301,7 @@ int ShowWarningLostTownsDialog()
     } else if (Game::GetLostTownDays() >= myKingdom.GetLostTownDays())
     {
         string str = _(
-                "%{color} player, you only have %{day} days left to capture a town, or you will be banished from this land.");
+            "%{color} player, you only have %{day} days left to capture a town, or you will be banished from this land.");
         StringReplace(str, "%{day}", myKingdom.GetLostTownDays());
         Game::DialogPlayers(myKingdom.GetColor(), str);
     }
@@ -372,13 +373,13 @@ int Interface::Basic::GetCursorFocusShipmaster(const Heroes &from_hero, const Ma
             {
                 if (!to_hero->isShipMaster())
                     return from_hero.GetColor() == to_hero->GetColor() ? Cursor::HEROES : Cursor::POINTER;
-                else if (to_hero->GetCenter() == from_hero.GetCenter())
+                if (to_hero->GetCenter() == from_hero.GetCenter())
                     return Cursor::HEROES;
-                else if (from_hero.GetColor() == to_hero->GetColor())
+                if (from_hero.GetColor() == to_hero->GetColor())
                     return Cursor::DistanceThemes(Cursor::CHANGE, from_hero.GetRangeRouteDays(tile.GetIndex()));
-                else if (from_hero.isFriends(to_hero->GetColor()))
+                if (from_hero.isFriends(to_hero->GetColor()))
                     return conf.ExtUnionsAllowHeroesMeetings() ? Cursor::CHANGE : Cursor::POINTER;
-                else if (to_hero->AllowBattle(false))
+                if (to_hero->AllowBattle(false))
                     return Cursor::DistanceThemes(Cursor::FIGHT, from_hero.GetRangeRouteDays(tile.GetIndex()));
             }
         }
@@ -392,7 +393,7 @@ int Interface::Basic::GetCursorFocusShipmaster(const Heroes &from_hero, const Ma
             {
                 if (MP2::isWaterObject(tile.GetObject()))
                     return Cursor::DistanceThemes(Cursor::REDBOAT, from_hero.GetRangeRouteDays(tile.GetIndex()));
-                else if (tile.isPassable(&from_hero, Direction::CENTER, false))
+                if (tile.isPassable(&from_hero, Direction::CENTER, false))
                     return Cursor::DistanceThemes(Cursor::BOAT, from_hero.GetRangeRouteDays(tile.GetIndex()));
             }
             break;

@@ -180,10 +180,10 @@ SDL_Color RGBA::packSdlColor() const
 
 uint32_t RGBA::pack() const
 {
-    return (r() << 24 & 0xFF000000) |
-        (g() << 16 & 0x00FF0000) |
-        (b() << 8 & 0x0000FF00) |
-        (a() & 0x000000FF);
+    return r() << 24 & 0xFF000000 |
+        g() << 16 & 0x00FF0000 |
+        b() << 8 & 0x0000FF00 |
+        a() & 0x000000FF;
 }
 
 RGBA RGBA::unpack(int v)
@@ -1088,8 +1088,7 @@ int roundNumber(float x)
 float fPartOfNumber(float x)
 {
     if (x > 0) return x - iPartOfNumber(x);
-    else return x - (iPartOfNumber(x) + 1);
-
+    return x - (iPartOfNumber(x) + 1);
 }
 
 //returns 1 - fractional part of number

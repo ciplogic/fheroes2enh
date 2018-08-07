@@ -396,7 +396,8 @@ bool ArmyBar::ActionBarSingleClick(const Point &cursor, ArmyTroop &troop, const 
             Army::SwapTroops(troop, *troop2);
 
         return false; // reset cursor
-    } else if (troop.isValid())
+    }
+    if (troop.isValid())
     {
         if (!read_only) // select
         {
@@ -413,26 +414,26 @@ bool ArmyBar::ActionBarSingleClick(const Point &cursor, ArmyTroop &troop, const 
             if (army->GetCommander())
                 switch (army->GetCommander()->GetRace())
                 {
-                    case Race::KNGT:
-                        cur = Monster::PEASANT;
-                        break;
-                    case Race::BARB:
-                        cur = Monster::GOBLIN;
-                        break;
-                    case Race::SORC:
-                        cur = Monster::SPRITE;
-                        break;
-                    case Race::WRLK:
-                        cur = Monster::CENTAUR;
-                        break;
-                    case Race::WZRD:
-                        cur = Monster::HALFLING;
-                        break;
-                    case Race::NECR:
-                        cur = Monster::SKELETON;
-                        break;
-                    default:
-                        break;
+                case Race::KNGT:
+                    cur = Monster::PEASANT;
+                    break;
+                case Race::BARB:
+                    cur = Monster::GOBLIN;
+                    break;
+                case Race::SORC:
+                    cur = Monster::SPRITE;
+                    break;
+                case Race::WRLK:
+                    cur = Monster::CENTAUR;
+                    break;
+                case Race::WZRD:
+                    cur = Monster::HALFLING;
+                    break;
+                case Race::NECR:
+                    cur = Monster::SKELETON;
+                    break;
+                default:
+                    break;
                 }
 
             const Monster mons = Dialog::SelectMonster(cur);

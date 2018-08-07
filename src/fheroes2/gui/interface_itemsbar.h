@@ -436,21 +436,20 @@ namespace Interface
 
                 if (ActionBarCursor(cursor, **iterPos.first, iterPos.second))
                     return true;
-                else if (le.MouseClickLeft(iterPos.second))
+                if (le.MouseClickLeft(iterPos.second))
                 {
                     if (iterPos.first == GetCurItemIter())
                     {
                         return ActionBarDoubleClick(cursor, **iterPos.first, iterPos.second);
-                    } else
-                    {
-                        if (ActionBarSingleClick(cursor, **iterPos.first, iterPos.second))
-                            curItemPos = iterPos;
-                        else
-                            ResetSelected();
-
-                        return true;
                     }
-                } else if (le.MousePressRight(iterPos.second))
+                    if (ActionBarSingleClick(cursor, **iterPos.first, iterPos.second))
+                        curItemPos = iterPos;
+                    else
+                        ResetSelected();
+
+                    return true;
+                }
+                if (le.MousePressRight(iterPos.second))
                     return ActionBarPressRight(cursor, **iterPos.first, iterPos.second);
             }
 

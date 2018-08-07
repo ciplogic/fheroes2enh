@@ -36,7 +36,7 @@ public:
     {}
 
     IndexDistance(s32 i, uint32_t d) : pair<s32, uint32_t>(i, d)
-    {};
+    {}
 
     static bool Shortest(const IndexDistance &id1, const IndexDistance &id2)
     { return id1.second < id2.second; };

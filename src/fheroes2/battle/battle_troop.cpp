@@ -576,7 +576,8 @@ uint32_t Battle::Unit::GetSpeed(bool skip_standing_check) const
     {
         spell = Spell::HASTE;
         return spell.ExtraValue() ? speed + spell.ExtraValue() : Speed::GetOriginalFast(speed);
-    } else if (Modes(SP_SLOW))
+    }
+    if (Modes(SP_SLOW))
     {
         spell = Spell::SLOW;
         return spell.ExtraValue() ? speed - spell.ExtraValue() : Speed::GetOriginalSlow(speed);
@@ -1041,8 +1042,7 @@ bool Battle::Unit::AllowResponse() const
     {
         if (Modes(SP_BLIND))
             return blindanswer;
-        else
-            return !Modes(IS_PARALYZE_MAGIC);
+        return !Modes(IS_PARALYZE_MAGIC);
     }
 
     return false;

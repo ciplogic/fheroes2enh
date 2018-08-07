@@ -471,7 +471,7 @@ int Castle::OpenDialog(bool readonly, bool fade)
         {
             result = Dialog::PREV;
             break;
-        } else
+        }
             // next castle
         if (buttonNextCastle.isEnable() && le.MouseClickLeft(buttonNextCastle))
         {

@@ -30,19 +30,19 @@ class CastleHeroes : protected pair<Heroes *, Heroes *>
 {
 public:
     CastleHeroes(Heroes *guest, Heroes *guard) : pair<Heroes *, Heroes *>(guest, guard)
-    {};
+    {}
 
     Heroes *Guest()
     { return first; };
 
     Heroes *Guard()
-    { return second; };
+    { return second; }
 
     const Heroes *Guest() const
-    { return first; };
+    { return first; }
 
     const Heroes *Guard() const
-    { return second; };
+    { return second; }
 
     Heroes *GuestFirst()
     { return first ? first : second; };
