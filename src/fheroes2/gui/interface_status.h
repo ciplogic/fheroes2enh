@@ -91,9 +91,9 @@ namespace Interface
         int state;
         int oldState;
         int lastResource;
-        uint32_t countLastResource;
+        uint32_t countLastResource{};
         SDL::Timer timerShowLastResource;
         SDL::Timer timerRedrawAIStatus;
-        uint32_t turn_progress;
+        uint32_t turn_progress{};
     };
 }

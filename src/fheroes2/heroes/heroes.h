@@ -340,7 +340,7 @@ private:
 public:
     string name;
     ColorBase killer_color;
-    uint32_t experience;
+    uint32_t experience{};
     s32 move_point_scale;
 
     Skill::SecSkills secondary_skills;

@@ -40,10 +40,10 @@ public:
 
     void ShowMapsDialog() const;
 
-    u8 zone1_order[24];
-    u8 zone2_order[16];
-    u8 zone3_order[4];
-    u8 zone4_order[4];
+    u8 zone1_order[24]{};
+    u8 zone2_order[16]{};
+    u8 zone3_order[4]{};
+    u8 zone4_order[4]{};
 };
 
 ByteVectorWriter &operator<<(ByteVectorWriter &, const Puzzle &);

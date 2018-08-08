@@ -287,7 +287,7 @@ struct XMIData
 struct MidEvent
 {
     vector<u8> pack;
-    u8 data[4]; // status, data1, data2, count
+    u8 data[4]{}; // status, data1, data2, count
     //char		status;
     //std::vector<u8>	data;
 
@@ -296,8 +296,9 @@ struct MidEvent
         return pack.size() + data[3] + 1;
     }
 
-    MidEvent()
-    {}
+    MidEvent(): data{}
+    {
+    }
 
     MidEvent(uint32_t delta, u8 st, u8 d1, u8 d2)
     {

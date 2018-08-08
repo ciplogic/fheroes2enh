@@ -29,9 +29,7 @@
 
 #include <SDL_ttf.h>
 
-FontTTF::FontTTF()
-{
-}
+FontTTF::FontTTF() = default;
 
 FontTTF::~FontTTF()
 {

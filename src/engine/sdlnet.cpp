@@ -124,7 +124,7 @@ T swap_endian(T u)
     {
         T u;
         unsigned char u8[sizeof(T)];
-    } source, dest;
+    } source{}, dest{};
 
     source.u = u;
 

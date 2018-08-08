@@ -320,7 +320,7 @@ protected:
 
 class StreamFile : public StreamBase
 {
-    SDL_RWops *rw;
+    SDL_RWops *rw{};
 
 public:
     StreamFile() : rw(nullptr)

@@ -615,8 +615,8 @@ private:
     int size_normal;
     int size_small;
 
-    bool _isQuickCombat;
-    bool _isUiHeroesBar;
+    bool _isQuickCombat{};
+    bool _isUiHeroesBar{};
 
 
     Maps::FileInfo current_maps_file;

@@ -227,10 +227,10 @@ namespace
 
     struct RowInMap
     {
-        int Key;
+        int Key{};
         cell_t Value;
-        int Hash;
-        int PrevIndex;
+        int Hash{};
+        int PrevIndex{};
     };
 
     struct PathMap
@@ -239,7 +239,7 @@ namespace
         std::vector<s32> _jumpTable;
         std::vector<RowInMap> _rows;
         int _sizePow2;
-        int mask;
+        int mask{};
 
         void clear()
         {

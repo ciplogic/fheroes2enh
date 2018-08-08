@@ -305,7 +305,7 @@ void World::NewMaps(uint32_t sw, uint32_t sh)
     for (auto
                  it = vec_tiles.begin(); it != vec_tiles.end(); ++it)
     {
-        MP2::mp2tile_t mp2tile;
+        MP2::mp2tile_t mp2tile{};
 
         mp2tile.tileIndex = Rand::Get(16, 19);    // index sprite ground, see ground32.til
         mp2tile.objectName1 = 0;            // object sprite level 1
