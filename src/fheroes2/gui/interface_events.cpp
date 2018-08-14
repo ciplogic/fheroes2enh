@@ -124,7 +124,7 @@ void Interface::Basic::EventNextHero()
     RedrawFocus();
 }
 
-void Interface::Basic::EventContinueMovement()
+void Interface::Basic::EventContinueMovement() const
 {
     Heroes *hero = GetFocusHeroes();
 
@@ -132,7 +132,7 @@ void Interface::Basic::EventContinueMovement()
         hero->SetMove(!hero->isEnableMove());
 }
 
-void Interface::Basic::EventKingdomInfo()
+void Interface::Basic::EventKingdomInfo() const
 {
     Kingdom &myKingdom = world.GetKingdom(Settings::Get().CurrentColor());
 
@@ -141,7 +141,7 @@ void Interface::Basic::EventKingdomInfo()
     iconsPanel.SetRedraw();
 }
 
-void Interface::Basic::EventCastSpell()
+void Interface::Basic::EventCastSpell() const
 {
     Heroes *hero = GetFocusHeroes();
 
@@ -155,7 +155,7 @@ void Interface::Basic::EventCastSpell()
     }
 }
 
-int Interface::Basic::EventEndTurn()
+int Interface::Basic::EventEndTurn() const
 {
     const Kingdom &myKingdom = world.GetKingdom(Settings::Get().CurrentColor());
 
@@ -198,7 +198,7 @@ int Interface::Basic::EventAdventureDialog()
     return Game::CANCEL;
 }
 
-int Interface::Basic::EventFileDialog()
+int Interface::Basic::EventFileDialog() const
 {
     switch (Dialog::FileOptions())
     {
@@ -262,7 +262,7 @@ void Interface::Basic::EventSystemDialog()
     }
 }
 
-int Interface::Basic::EventExit()
+int Interface::Basic::EventExit() const
 {
     Heroes *hero = GetFocusHeroes();
 
@@ -295,7 +295,7 @@ void Interface::Basic::EventNextTown()
     RedrawFocus();
 }
 
-int Interface::Basic::EventSaveGame()
+int Interface::Basic::EventSaveGame() const
 {
     string filename = Dialog::SelectFileSave();
     if (!filename.empty() && Game::Save(filename))
@@ -315,7 +315,7 @@ void Interface::Basic::EventPuzzleMaps()
     world.GetKingdom(Settings::Get().CurrentColor()).PuzzleMaps().ShowMapsDialog();
 }
 
-void Interface::Basic::EventGameInfo()
+void Interface::Basic::EventGameInfo() const
 {
     Dialog::GameInfo();
 }
@@ -431,7 +431,7 @@ void Interface::Basic::EventDefaultAction()
     }
 }
 
-void Interface::Basic::EventOpenFocus()
+void Interface::Basic::EventOpenFocus() const
 {
     if (GetFocusHeroes())
         Game::OpenHeroesDialog(*GetFocusHeroes());
@@ -439,7 +439,7 @@ void Interface::Basic::EventOpenFocus()
         Game::OpenCastleDialog(*GetFocusCastle());
 }
 
-void Interface::Basic::EventSwitchShowRadar()
+void Interface::Basic::EventSwitchShowRadar() const
 {
     Settings &conf = Settings::Get();
 
@@ -455,7 +455,7 @@ void Interface::Basic::EventSwitchShowRadar()
     radar.SetRedraw();
 }
 
-void Interface::Basic::EventSwitchShowButtons()
+void Interface::Basic::EventSwitchShowButtons() const
 {
     Settings &conf = Settings::Get();
 
@@ -472,7 +472,7 @@ void Interface::Basic::EventSwitchShowButtons()
     buttonsArea.SetRedraw();
 }
 
-void Interface::Basic::EventSwitchShowStatus()
+void Interface::Basic::EventSwitchShowStatus() const
 {
     Settings &conf = Settings::Get();
 
@@ -564,7 +564,7 @@ void Interface::Basic::EventKeyArrowPress(int dir)
     }
 }
 
-void Interface::Basic::EventDebug1()
+void Interface::Basic::EventDebug1() const
 {
     VERBOSE("");
 /*
@@ -580,7 +580,7 @@ void Interface::Basic::EventDebug1()
 */
 }
 
-void Interface::Basic::EventDebug2()
+void Interface::Basic::EventDebug2() const
 {
     VERBOSE("");
 }

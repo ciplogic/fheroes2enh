@@ -53,7 +53,7 @@ int IMG_SavePNG(const char *file, SDL_Surface *surf, int compression)
 
 static void png_write_data(png_structp png_ptr, png_bytep data, png_size_t length)
 {
-    auto *rp = (SDL_RWops *) png_get_io_ptr(png_ptr);
+    auto *rp = static_cast<SDL_RWops *>(png_get_io_ptr(png_ptr));
     SDL_RWwrite(rp, data, 1, length);
 }
 
@@ -76,7 +76,7 @@ int IMG_SavePNG_RW(SDL_RWops *src, SDL_Surface *surf, int compression)
         goto savedone; /* Nothing to do. */
     }
 
-    row_pointers = (png_byte **) malloc(surf->h * sizeof(png_byte *));
+    row_pointers = static_cast<png_byte **>(malloc(surf->h * sizeof(png_byte *)));
     if (!row_pointers)
     {
         SDL_SetError("Couldn't allocate memory for rowpointers");

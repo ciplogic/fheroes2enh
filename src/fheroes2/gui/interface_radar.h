@@ -52,7 +52,7 @@ namespace Interface
 
         void Generate();
 
-        void RedrawObjects(int color = 0xFF);
+        void RedrawObjects(int color = 0xFF) const;
 
         void RedrawCursor();
 

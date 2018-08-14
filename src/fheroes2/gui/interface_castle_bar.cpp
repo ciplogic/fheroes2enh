@@ -60,14 +60,14 @@ void Interface::CastleBar::SetPos(s32 ox, s32 oy)
 }
 
 /* construct gui */
-void Interface::CastleBar::Build()
+void Interface::CastleBar::Build() const
 {
     Generate();
     RedrawCursor();
 }
 
 /* generate mini maps */
-void Interface::CastleBar::Generate()
+void Interface::CastleBar::Generate() const
 {
 }
 
@@ -126,7 +126,7 @@ int Interface::CastleBar::getSelectedIndex() const
 }
 
 /* redraw CastleBar cursor */
-void Interface::CastleBar::RedrawCursor()
+void Interface::CastleBar::RedrawCursor() const
 {
 
 }
@@ -190,11 +190,11 @@ void Interface::CastleBar::ChangeAreaSize(const Size &newSize)
     interface.GetGameArea().SetRedraw();
 }
 
-void Interface::CastleBar::SetHeroes(Interface::HEROES *heroes, int count)
+void Interface::CastleBar::SetHeroes(Interface::HEROES *heroes, int count) const
 {
 }
 
-void Interface::CastleBar::SetListContent(KingdomCastles &castles)
+void Interface::CastleBar::SetListContent(KingdomCastles &castles) const
 {
     kingdomCastles = castles;
 }

@@ -219,7 +219,7 @@ uint32_t GetPenaltyFromTo(s32 from, s32 to, int direct, int pathfinding)
 {
     const uint32_t cost1 = Maps::Ground::GetPenalty(from, direct, pathfinding); // penalty: for [cur] out
     const uint32_t cost2 = Maps::Ground::GetPenalty(to, Direction::Reflect(direct), pathfinding); // penalty: for [tmp] in
-    return cost1 + cost2 >> 1;
+    return (cost1 + cost2) >> 1;
 }
 
 namespace
@@ -257,7 +257,7 @@ namespace
             clear();
         }
 
-        int hashInt(int key)
+        int hashInt(int key) const
         {
             return (key >> 4) * 31 + (key >> 3) * 7 + (key >> 5) * 7 + (key >> 6) * 13;
         }

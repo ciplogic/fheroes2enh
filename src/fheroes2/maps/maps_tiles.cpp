@@ -1961,7 +1961,7 @@ bool Maps::Tiles::isStream() const
     return false;
 }
 
-Maps::TilesAddon *Maps::Tiles::FindObject(int objs)
+Maps::TilesAddon *Maps::Tiles::FindObject(int objs) const
 {
     return const_cast<TilesAddon *>(FindObjectConst(objs));
 }

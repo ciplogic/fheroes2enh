@@ -1169,7 +1169,7 @@ void ActionToObjectResource(Heroes &hero, uint32_t obj, s32 dst_index)
     Maps::Tiles &tile = world.GetTiles(dst_index);
     ResourceCount rc = tile.QuantityResourceCount();
     bool cancapture = Settings::Get().ExtWorldExtObjectsCaptured();
-    bool showinvalid = cancapture && hero.GetColor() == tile.QuantityColor() ? false : true;
+    bool showinvalid = !(cancapture && hero.GetColor() == tile.QuantityColor());
 
     string msg;
 

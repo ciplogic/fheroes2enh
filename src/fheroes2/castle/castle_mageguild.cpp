@@ -134,7 +134,7 @@ bool RowSpells::QueueEventProcessing()
     return 0 <= index;
 }
 
-void Castle::OpenMageGuild()
+void Castle::OpenMageGuild() const
 {
     Display &display = Display::Get();
     Cursor &cursor = Cursor::Get();

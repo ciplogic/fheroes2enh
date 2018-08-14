@@ -47,7 +47,7 @@ namespace Interface
         bool IsShow() const
         { return show; };
 
-        void RedrawBackground(const Point &);
+        void RedrawBackground(const Point &) const;
 
         uint32_t CountIcons() const
         { return iconsCount; }
@@ -103,9 +103,9 @@ namespace Interface
         {}
 
 
-        void SetShow(bool);
+        void SetShow(bool) const;
 
-        void SetHero(HEROES const pHeroes);
+        void SetHero(HEROES const pHeroes) const;
 
     protected:
         void ActionCurrentUp();

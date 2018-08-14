@@ -48,12 +48,12 @@ public:
         pos.h = 30;
     }
 
-    uint32_t Min()
+    uint32_t Min() const
     {
         return vmin;
     }
 
-    uint32_t Max()
+    uint32_t Max() const
     {
         return vmax;
     }
@@ -76,7 +76,7 @@ public:
         return vcur;
     }
 
-    void Redraw()
+    void Redraw() const
     {
         const Sprite &sprite_edit = AGG::GetICN(ICN::TOWNWIND, 4);
         sprite_edit.Blit(pos.x, pos.y + 4);

@@ -66,7 +66,7 @@ void Interface::ControlPanel::ResetTheme()
     btn_quit.SetAlphaMod(alpha);
 }
 
-const Rect &Interface::ControlPanel::GetArea()
+const Rect &Interface::ControlPanel::GetArea() const
 {
     return _area;
 }
@@ -88,7 +88,7 @@ void Interface::ControlPanel::SetPos(s32 ox, s32 oy)
     rt_quit.y = _area.y;
 }
 
-void Interface::ControlPanel::Redraw()
+void Interface::ControlPanel::Redraw() const
 {
     Display &display = Display::Get();
 
@@ -99,7 +99,7 @@ void Interface::ControlPanel::Redraw()
     btn_quit.Blit(_area.x + 144, _area.y, display);
 }
 
-int Interface::ControlPanel::QueueEventProcessing()
+int Interface::ControlPanel::QueueEventProcessing() const
 {
     LocalEvent &le = LocalEvent::Get();
 

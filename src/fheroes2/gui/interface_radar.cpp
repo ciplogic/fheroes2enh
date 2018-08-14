@@ -243,7 +243,7 @@ void Interface::Radar::Redraw()
     }
 }
 /* redraw radar area for color */
-void Interface::Radar::RedrawObjects(int color)
+void Interface::Radar::RedrawObjects(int color) const
 {
     Display &display = Display::Get();
     const Rect &area = GetArea();

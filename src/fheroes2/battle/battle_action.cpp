@@ -388,7 +388,7 @@ void Battle::Arena::ApplyActionSurrender(Command &cmd)
     }
 }
 
-void Battle::Arena::TargetsApplyDamage(Unit &attacker, Unit &defender, TargetsInfo &targets)
+void Battle::Arena::TargetsApplyDamage(Unit &attacker, Unit &defender, TargetsInfo &targets) const
 {
     for (auto &target : targets)
     {
@@ -397,7 +397,7 @@ void Battle::Arena::TargetsApplyDamage(Unit &attacker, Unit &defender, TargetsIn
     }
 }
 
-Battle::TargetsInfo Battle::Arena::GetTargetsForDamage(Unit &attacker, Unit &defender, s32 dst)
+Battle::TargetsInfo Battle::Arena::GetTargetsForDamage(Unit &attacker, Unit &defender, s32 dst) const
 {
     TargetsInfo targets;
     targets.reserve(8);
@@ -465,7 +465,7 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForDamage(Unit &attacker, Unit &def
     return targets;
 }
 
-void Battle::Arena::TargetsApplySpell(const HeroBase *hero, const Spell &spell, TargetsInfo &targets)
+void Battle::Arena::TargetsApplySpell(const HeroBase *hero, const Spell &spell, TargetsInfo &targets) const
 {
     for (auto &target : targets)
     {
@@ -679,7 +679,7 @@ void Battle::Arena::ApplyActionAutoBattle(Command &cmd)
     }
 }
 
-void Battle::Arena::ApplyActionSpellSummonElemental(Command &cmd, const Spell &spell)
+void Battle::Arena::ApplyActionSpellSummonElemental(Command &cmd, const Spell &spell) const
 {
     Unit *elem = CreateElemental(spell);
     if (interface) interface->RedrawActionSummonElementalSpell(*elem);

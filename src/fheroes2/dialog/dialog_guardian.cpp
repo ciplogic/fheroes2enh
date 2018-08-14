@@ -45,7 +45,7 @@ public:
         curs.DrawBorder(RGBA(0xc0, 0x2c, 0));
     }
 
-    void Redraw()
+    void Redraw() const
     {
         Display &display = Display::Get();
 
@@ -83,7 +83,7 @@ public:
     {
     }
 
-    void Redraw(const Troop &troop)
+    void Redraw(const Troop &troop) const
     {
         Text txt1("/1", Font::SMALL);
         Text txt2("/3", Font::SMALL);
@@ -118,7 +118,7 @@ public:
         txt3.Blit(rt3.x + 14, rt3.y + 1);
     }
 
-    bool QueueProcessing(LocalEvent &le, const Troop &troop)
+    bool QueueProcessing(LocalEvent &le, const Troop &troop) const
     {
         if (le.MouseClickLeft(rt1) && 1 != cobj.GetSplit())
         {

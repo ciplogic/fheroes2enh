@@ -38,7 +38,7 @@ Cursor &Cursor::Get()
 }
 
 /* get theme cursor */
-int Cursor::Themes()
+int Cursor::Themes() const
 {
     return SP_ARROW >= theme ? theme : NONE;
 }

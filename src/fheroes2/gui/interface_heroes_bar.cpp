@@ -58,14 +58,14 @@ void Interface::HeroesBar::SetPos(s32 ox, s32 oy)
 }
 
 /* construct gui */
-void Interface::HeroesBar::Build()
+void Interface::HeroesBar::Build() const
 {
     Generate();
     RedrawCursor();
 }
 
 /* generate mini maps */
-void Interface::HeroesBar::Generate()
+void Interface::HeroesBar::Generate() const
 {
 }
 
@@ -129,7 +129,7 @@ int Interface::HeroesBar::getSelectedIndex() const
 
 
 /* redraw HeroesBar cursor */
-void Interface::HeroesBar::RedrawCursor()
+void Interface::HeroesBar::RedrawCursor() const
 {
     const Settings &conf = Settings::Get();
 
@@ -198,7 +198,7 @@ void Interface::HeroesBar::ChangeAreaSize(const Size &newSize)
     interface.GetGameArea().SetRedraw();
 }
 
-void Interface::HeroesBar::SetListContent(KingdomHeroes &heroes)
+void Interface::HeroesBar::SetListContent(KingdomHeroes &heroes) const
 {
     kingdomHeroes = heroes;
 

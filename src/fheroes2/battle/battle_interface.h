@@ -103,7 +103,7 @@ namespace Battle
 
         void SetMessage(const string &, bool = false);
 
-        void Redraw();
+        void Redraw() const;
 
         const string &
         GetMessage() const;
@@ -169,7 +169,7 @@ namespace Battle
 
         void HumanTurn(const Unit &, Actions &);
 
-        bool NetworkTurn(Result &);
+        bool NetworkTurn(Result &) const;
 
         const Rect &GetArea() const;
 
@@ -224,11 +224,11 @@ namespace Battle
 
         void HumanCastSpellTurn(const Unit &, Actions &, string &);
 
-        void RedrawBorder();
+        void RedrawBorder() const;
 
         void RedrawCover();
 
-        void RedrawCoverStatic(Surface &);
+        void RedrawCoverStatic(Surface &) const;
 
         static void RedrawLowObjects(s32, Surface &);
 
@@ -240,7 +240,7 @@ namespace Battle
 
         void RedrawCastle3(const Castle &) const;
 
-        void RedrawKilled();
+        void RedrawKilled() const;
 
         void RedrawInterface();
 
@@ -308,7 +308,7 @@ namespace Battle
 
         void MousePressRightBoardAction(uint32_t, const Cell &, Actions &);
 
-        int GetBattleCursor(string &);
+        int GetBattleCursor(string &) const;
 
         int GetBattleSpellCursor(string &) const;
 

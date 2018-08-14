@@ -40,7 +40,7 @@ namespace Interface
 
         void SetRedraw() const;
 
-        void Build();
+        void Build() const;
 
         void Redraw();
 
@@ -50,14 +50,14 @@ namespace Interface
 
         bool EventProcessing();
 
-        void SetHeroes(HEROES* heroes, int count);
+        void SetHeroes(HEROES* heroes, int count) const;
 
     private:
         void SavePosition();
 
-        void Generate();
+        void Generate() const;
 
-        void RedrawCursor();
+        void RedrawCursor() const;
 
         void ChangeAreaSize(const Size &);
 
@@ -70,7 +70,7 @@ namespace Interface
 
         KingdomCastles& kingdomCastles;
 
-        void SetListContent(KingdomCastles &castles);
+        void SetListContent(KingdomCastles &castles) const;
 
         static void PortraitRedraw(s16 x, s16 y, Castle& hero, Display &display, bool isFocused);
         int getSelectedIndex() const;

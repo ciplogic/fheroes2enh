@@ -143,7 +143,7 @@ public:
 
     static int WithoutDistanceThemes(int);
 
-    int Themes();
+    int Themes() const;
 
     bool SetThemes(int, bool force = false);
 

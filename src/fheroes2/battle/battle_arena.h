@@ -125,13 +125,13 @@ namespace Battle
 
         void ApplyAction(Command &);
 
-        TargetsInfo GetTargetsForDamage(Unit &, Unit &, s32);
+        TargetsInfo GetTargetsForDamage(Unit &, Unit &, s32) const;
 
-        void TargetsApplyDamage(Unit &, Unit &, TargetsInfo &);
+        void TargetsApplyDamage(Unit &, Unit &, TargetsInfo &) const;
 
         TargetsInfo GetTargetsForSpells(const HeroBase *, const Spell &, s32);
 
-        void TargetsApplySpell(const HeroBase *, const Spell &, TargetsInfo &);
+        void TargetsApplySpell(const HeroBase *, const Spell &, TargetsInfo &) const;
 
         bool isDisableCastSpell(const Spell &, string *msg);
 
@@ -145,7 +145,7 @@ namespace Battle
 
         bool CanRetreatOpponent(int color) const;
 
-        void ApplyActionSpellSummonElemental(Command &, const Spell &);
+        void ApplyActionSpellSummonElemental(Command &, const Spell &) const;
 
         void ApplyActionSpellMirrorImage(Command &);
 
@@ -221,9 +221,9 @@ namespace Battle
 
         void BattleProcess(Unit &, Unit &b2, s32 = -1, int = 0);
 
-        Unit *CreateElemental(const Spell &);
+        Unit *CreateElemental(const Spell &) const;
 
-        Unit *CreateMirrorImage(Unit &, s32);
+        Unit *CreateMirrorImage(Unit &, s32) const;
 
         sp<Force> army1;
         sp<Force> army2;

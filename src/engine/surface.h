@@ -140,7 +140,7 @@ public:
 
     bool isValid() const;
 
-    void SetColorKey(const RGBA &);
+    void SetColorKey(const RGBA &) const;
 
     uint32_t GetColorKey() const;
 
@@ -156,14 +156,14 @@ public:
 
     void Blit(const Rect &srt, const Point &, Surface &) const;
 
-    void Fill(const RGBA &);
+    void Fill(const RGBA &) const;
 
     void FillRect(const Rect &, const RGBA &) const;
 
-    void drawPixel(int x, int y, float brightness, uint32_t col);
-    void drawPixelSafe(int x, int y, float brightness, const uint32_t col);
+    void drawPixel(int x, int y, float brightness, uint32_t col) const;
+    void drawPixelSafe(int x, int y, float brightness, const uint32_t col) const;
 
-    void drawAALine(int x0, int y0, int x1, int y1, const RGBA &);
+    void drawAALine(int x0, int y0, int x1, int y1, const RGBA &) const;
 
     void DrawLineAa(const Point &, const Point &, const RGBA &);
 
@@ -173,7 +173,7 @@ public:
 
     void DrawRect(const Rect &, const RGBA &) const;
 
-    void DrawBorder(const RGBA &, bool solid = true);
+    void DrawBorder(const RGBA &, bool solid = true) const;
 
     virtual uint32_t GetMemoryUsage() const;
 
@@ -237,7 +237,7 @@ protected:
 
     void Set(SDL_Surface *);
 
-    void SetPalette();
+    void SetPalette() const;
 
 
     void SetPixel3(s32 x, s32 y, uint32_t color) const;

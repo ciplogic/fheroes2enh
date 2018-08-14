@@ -78,10 +78,10 @@ struct Focus : pair<int, void *>
         second = ptr;
     }
 
-    Castle *GetCastle()
+    Castle *GetCastle() const
     { return first == FOCUS_CASTLE && second ? reinterpret_cast<Castle *>(second) : nullptr; }
 
-    Heroes *GetHeroes()
+    Heroes *GetHeroes() const
     { return first == FOCUS_HEROES && second ? reinterpret_cast<Heroes *>(second) : nullptr; }
 };
 

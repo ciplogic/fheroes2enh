@@ -565,7 +565,7 @@ size_t StreamFile::tell() const
     return tellg();
 }
 
-void StreamFile::seek(size_t pos)
+void StreamFile::seek(size_t pos) const
 {
     if (rw) SDL_RWseek(rw, pos, RW_SEEK_SET);
 }

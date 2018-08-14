@@ -414,14 +414,14 @@ Heroes *World::GetFreemanHeroes(int race) const
     return vec_heroes.GetFreeman(race);
 }
 
-Heroes *World::FromJailHeroes(s32 index)
+Heroes *World::FromJailHeroes(s32 index) const
 {
     return vec_heroes.FromJail(index);
 }
 
 CastleHeroes World::GetHeroes(const Castle &castle) const
 {
-    return CastleHeroes(vec_heroes.GetGuest(castle), vec_heroes.GetGuard(castle));
+    return {vec_heroes.GetGuest(castle), vec_heroes.GetGuard(castle)};
 }
 
 int World::GetDay() const
@@ -602,7 +602,7 @@ void World::MonthOfMonstersAction(const Monster &mons)
     }
 }
 
-const string &World::GetRumors()
+const string &World::GetRumors() const
 {
     // vec_rumors always contain values
     return *Rand::Get(vec_rumors);
@@ -1258,7 +1258,7 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, World &w)
     return msg;
 }
 
-void World::PostFixLoad()
+void World::PostFixLoad() const
 {
 }
 

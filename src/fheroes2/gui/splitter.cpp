@@ -69,7 +69,7 @@ void Splitter::SetRange(int smin, int smax)
     background.SetPos(move);
 }
 
-Point Splitter::GetPositionCursor()
+Point Splitter::GetPositionCursor() const
 {
     Point res;
 

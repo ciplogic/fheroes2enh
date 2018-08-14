@@ -40,7 +40,7 @@ namespace Interface
 
         void SetRedraw() const;
 
-        void Build();
+        void Build() const;
 
         void Redraw();
 
@@ -53,9 +53,9 @@ namespace Interface
     private:
         void SavePosition();
 
-        void Generate();
+        void Generate() const;
 
-        void RedrawCursor();
+        void RedrawCursor() const;
 
         void ChangeAreaSize(const Size &);
 
@@ -68,7 +68,7 @@ namespace Interface
 
         KingdomHeroes& kingdomHeroes;
 
-        void SetListContent(KingdomHeroes &heroes);
+        void SetListContent(KingdomHeroes &heroes) const;
 
         static void PortraitRedraw(s16 x, s16 y, Heroes& hero, bool isFocused);
         int getSelectedIndex() const;

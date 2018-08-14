@@ -133,7 +133,7 @@ struct FastestUnits
     FastestUnits(bool v) : f(v)
     {}
 
-    bool operator()(const Battle::Unit *t1, const Battle::Unit *t2)
+    bool operator()(const Battle::Unit *t1, const Battle::Unit *t2) const
     {
         return t1->GetSpeed(f) > t2->GetSpeed(f);
     }

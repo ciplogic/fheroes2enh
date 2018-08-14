@@ -46,7 +46,7 @@ public:
 
     void Flip();
 
-    void Clear();
+    void Clear() const;
 
     void ToggleFullScreen() const;
 

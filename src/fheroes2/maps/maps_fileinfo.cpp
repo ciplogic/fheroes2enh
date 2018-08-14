@@ -200,7 +200,7 @@ bool Maps::FileInfo::ReadSAV(const string &filename)
     return Game::LoadSAV2FileInfo(filename, *this);
 }
 
-bool Maps::FileInfo::ReadMAP(const string &filename)
+bool Maps::FileInfo::ReadMAP(const string &filename) const
 {
     return false;
 }
@@ -460,12 +460,12 @@ uint32_t Maps::FileInfo::WinsAccumulateGold() const
 
 Point Maps::FileInfo::WinsMapsPositionObject() const
 {
-    return Point(wins1, wins2);
+    return {wins1, wins2};
 }
 
 Point Maps::FileInfo::LossMapsPositionObject() const
 {
-    return Point(loss1, loss2);
+    return {loss1, loss2};
 }
 
 uint32_t Maps::FileInfo::LossCountDays() const

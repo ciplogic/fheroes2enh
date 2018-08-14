@@ -637,7 +637,7 @@ void Battle::Status::SetMessage(const string &str, bool top)
     }
 }
 
-void Battle::Status::Redraw()
+void Battle::Status::Redraw() const
 {
     back1.Blit(x, y);
     back2.Blit(x, y + back1.h());
@@ -740,7 +740,7 @@ void Battle::ArmiesOrder::Redraw(const Unit *current)
         for (auto order : *orders)
         {
             if (!order || !order->isValid()) continue;
-            rects.push_back(UnitPos(order, Rect(ox, oy, ow, ow)));
+            rects.emplace_back(order, Rect(ox, oy, ow, ow));
             RedrawUnit(rects.back().second, *order, (*order).GetColor() == army_color2, current == order);
             ox += ow;
             w += ow;
@@ -1062,7 +1062,7 @@ Point GetTroopPosition(const Battle::Unit &b, const Sprite &sprite)
                    rt.x + (b.isWide() ? rt.w / 4 : rt.w / 2) + sprite.x();
     const s32 sy = rt.y + rt.h + sprite.y() - 10;
 
-    return Point(sx, sy);
+    return {sx, sy};
 }
 
 void Battle::Interface::RedrawTroopSprite(const Unit &b) const
@@ -1206,7 +1206,7 @@ void Battle::Interface::RedrawCover()
     RedrawKilled();
 }
 
-void Battle::Interface::RedrawCoverStatic(Surface &dst)
+void Battle::Interface::RedrawCoverStatic(Surface &dst) const
 {
     const Settings &conf = Settings::Get();
     const Point &topleft = border.GetArea();
@@ -1558,7 +1558,7 @@ void Battle::Interface::RedrawHighObjects(s32 cell_index) const
     }
 }
 
-void Battle::Interface::RedrawKilled()
+void Battle::Interface::RedrawKilled() const
 {
     // redraw killed troop
     const Indexes cells = arena.GraveyardClosedCells();
@@ -1574,7 +1574,7 @@ void Battle::Interface::RedrawKilled()
     }
 }
 
-void Battle::Interface::RedrawBorder()
+void Battle::Interface::RedrawBorder() const
 {
     const Size displaySize = Display::Get().GetSize();
 
@@ -1591,7 +1591,7 @@ void Battle::Interface::RedrawPocketControls() const
     }
 }
 
-int Battle::Interface::GetBattleCursor(string &status)
+int Battle::Interface::GetBattleCursor(string &status) const
 {
     status.clear();
 
@@ -4550,7 +4550,7 @@ void Battle::PopupDamageInfo::Redraw(int maxw, int maxh)
     text2.Blit(area.x, area.y + area.h / 2);
 }
 
-bool Battle::Interface::NetworkTurn(Result &result)
+bool Battle::Interface::NetworkTurn(Result &result) const
 {
     return false;
 }

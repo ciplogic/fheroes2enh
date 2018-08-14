@@ -757,7 +757,7 @@ string Castle::GetDescriptionBuilding(uint32_t build, int race)
     return desc_build[13];
 }
 
-bool Castle::AllowBuyHero(const Heroes &hero, string *msg)
+bool Castle::AllowBuyHero(const Heroes &hero, string *msg) const
 {
     const Kingdom &myKingdom = GetKingdom();
     if (Modes(DISABLEHIRES) || myKingdom.Modes(Kingdom::DISABLEHIRES))

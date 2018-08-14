@@ -167,7 +167,7 @@ public:
 
     void ApplyPlayWithStartingHero();
 
-    void HeroesActionNewPosition();
+    void HeroesActionNewPosition() const;
 
     void AddCastle(const Castle *);
 

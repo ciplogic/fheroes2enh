@@ -142,7 +142,7 @@ void Button::ReleaseDraw()
     }
 }
 
-void Button::Draw()
+void Button::Draw() const
 {
     bool localcursor = false;
     Cursor &cursor = Cursor::Get();
@@ -212,13 +212,13 @@ ButtonGroups::ButtonGroups(const Rect pos, uint32_t btns) : button1(nullptr), bu
     }
 }
 
-void ButtonGroups::Draw()
+void ButtonGroups::Draw() const
 {
     if (button1) (*button1).Draw();
     if (button2) (*button2).Draw();
 }
 
-int ButtonGroups::QueueEventProcessing()
+int ButtonGroups::QueueEventProcessing() const
 {
     LocalEvent &le = LocalEvent::Get();
 
@@ -248,7 +248,7 @@ int ButtonGroups::QueueEventProcessing()
     return Dialog::ZERO;
 }
 
-void ButtonGroups::DisableButton1(bool f)
+void ButtonGroups::DisableButton1(bool f) const
 {
     if (!button1)
         return;
@@ -263,7 +263,7 @@ void ButtonGroups::DisableButton1(bool f)
     }
 }
 
-void ButtonGroups::DisableButton2(bool f)
+void ButtonGroups::DisableButton2(bool f) const
 {
     if (!button2)
         return;

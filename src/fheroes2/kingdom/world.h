@@ -162,7 +162,7 @@ public:
 
     bool LoadMapMP2(const string &);
 
-    bool LoadMapMAP(const string &);
+    bool LoadMapMAP(const string &) const;
 
     void NewMaps(uint32_t, uint32_t);
 
@@ -198,7 +198,7 @@ public:
 
     Heroes *GetHeroes(const Point &);
 
-    Heroes *FromJailHeroes(s32);
+    Heroes *FromJailHeroes(s32) const;
 
     Heroes *GetFreemanHeroes(int race = 0) const;
 
@@ -240,7 +240,7 @@ public:
 
     void NewMonth();
 
-    const string &GetRumors();
+    const string &GetRumors() const;
 
     s32 NextTeleport(s32) const;
 
@@ -296,7 +296,7 @@ public:
 
     static uint32_t GetUniq();
 
-    void PostFixLoad();
+    void PostFixLoad() const;
 
 private:
     World() : Size(0, 0), day(0), week(0), month(0), heroes_cond_wins(0), heroes_cond_loss(0)

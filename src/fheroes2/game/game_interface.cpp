@@ -88,7 +88,7 @@ Interface::ControlPanel &Interface::Basic::GetControlPanel()
 
 void Interface::Basic::SetHideInterface(bool f)
 {
-    Settings &conf = Settings::Get().Get();
+    Settings &conf = Settings::Get();
     const Display &display = Display::Get();
     const uint32_t px = display.w() - BORDERWIDTH - RADARWIDTH;
     const uint32_t scroll_width = BORDERWIDTH;

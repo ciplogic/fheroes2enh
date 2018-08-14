@@ -42,7 +42,7 @@ namespace GameStatic
     extern uint32_t uniq;
 }
 
-bool World::LoadMapMAP(const string &filename)
+bool World::LoadMapMAP(const string &filename) const
 {
     return false;
 }

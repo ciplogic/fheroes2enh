@@ -101,9 +101,9 @@ Skill::Secondary Maps::Tiles::QuantitySkill() const
             switch (QuantityVariant())
             {
                 case 4:
-                    return Skill::Secondary(Skill::Secondary::LEADERSHIP, Skill::Level::BASIC);
+                    return {Skill::Secondary::LEADERSHIP, Skill::Level::BASIC};
                 case 5:
-                    return Skill::Secondary(Skill::Secondary::WISDOM, Skill::Level::BASIC);
+                    return {Skill::Secondary::WISDOM, Skill::Level::BASIC};
                 default:
                     break;
             }
@@ -137,13 +137,13 @@ Spell Maps::Tiles::QuantitySpell() const
     switch (GetObject(false))
     {
         case MP2::OBJ_ARTIFACT:
-            return Spell(QuantityVariant() == 15 ? quantity1 : Spell::NONE);
+            return {QuantityVariant() == 15 ? quantity1 : Spell::NONE};
 
         case MP2::OBJ_SHRINE1:
         case MP2::OBJ_SHRINE2:
         case MP2::OBJ_SHRINE3:
         case MP2::OBJ_PYRAMID:
-            return Spell(quantity1);
+            return {quantity1};
 
         default:
             break;
@@ -174,7 +174,7 @@ Artifact Maps::Tiles::QuantityArtifact() const
     switch (GetObject(false))
     {
         case MP2::OBJ_WAGON:
-            return Artifact(quantity2 ? Artifact::UNKNOWN : quantity1);
+            return {quantity2 ? Artifact::UNKNOWN : quantity1};
 
         case MP2::OBJ_SKELETON:
         case MP2::OBJ_DAEMONCAVE:
@@ -183,7 +183,7 @@ Artifact Maps::Tiles::QuantityArtifact() const
         case MP2::OBJ_SHIPWRECKSURVIROR:
         case MP2::OBJ_SHIPWRECK:
         case MP2::OBJ_GRAVEYARD:
-            return Artifact(quantity1);
+            return {quantity1};
 
         case MP2::OBJ_ARTIFACT:
         {
@@ -290,9 +290,9 @@ ResourceCount Maps::Tiles::QuantityResourceCount() const
             switch (QuantityVariant())
             {
                 case 1:
-                    return ResourceCount(Resource::GOLD, QuantityGold());
+                    return {Resource::GOLD, QuantityGold()};
                 case 2:
-                    return ResourceCount(Resource::FromIndexSprite2(QuantityExt() - 1), 3);
+                    return {Resource::FromIndexSprite2(QuantityExt() - 1), 3};
                 case 3:
                     return ResourceCount(Resource::FromIndexSprite2(QuantityExt() - 1), 5);
                 default:
@@ -345,7 +345,7 @@ Funds Maps::Tiles::QuantityFunds() const
         case MP2::OBJ_SHIPWRECK:
         case MP2::OBJ_GRAVEYARD:
         case MP2::OBJ_DAEMONCAVE:
-            return Funds(Resource::GOLD, QuantityGold());
+            return {Resource::GOLD, QuantityGold()};
 
         default:
             break;
@@ -1029,7 +1029,7 @@ int Maps::Tiles::MonsterJoinCondition() const
     return addon ? 0x03 & addon->tmp : 0;
 }
 
-void Maps::Tiles::MonsterSetJoinCondition(int cond)
+void Maps::Tiles::MonsterSetJoinCondition(int cond) const
 {
     TilesAddon *addon = FindObject(MP2::OBJ_MONSTER);
     if (!addon)
@@ -1038,7 +1038,7 @@ void Maps::Tiles::MonsterSetJoinCondition(int cond)
     addon->tmp |= cond & 0x03;
 }
 
-void Maps::Tiles::MonsterSetFixedCount()
+void Maps::Tiles::MonsterSetFixedCount() const
 {
     TilesAddon *addon = FindObject(MP2::OBJ_MONSTER);
     if (addon) addon->tmp |= 0x80;

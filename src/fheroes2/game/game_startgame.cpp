@@ -1045,7 +1045,7 @@ void Interface::Basic::MouseCursorAreaClickLeft(s32 index_maps)
     }
 }
 
-void Interface::Basic::MouseCursorAreaPressRight(s32 index_maps)
+void Interface::Basic::MouseCursorAreaPressRight(s32 index_maps) const
 {
     Heroes *hero = GetFocusHeroes();
 

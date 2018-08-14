@@ -206,7 +206,7 @@ void Network::Socket::Close()
 
 Network::Server::Server() = default;
 
-TCPsocket Network::Server::Accept()
+TCPsocket Network::Server::Accept() const
 {
     return SDLNet_TCP_Accept(sd);
 }

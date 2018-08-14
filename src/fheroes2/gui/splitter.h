@@ -70,7 +70,7 @@ public:
     { return area; };
 
 private:
-    Point GetPositionCursor();
+    Point GetPositionCursor() const;
 
     Rect area;
     int step;

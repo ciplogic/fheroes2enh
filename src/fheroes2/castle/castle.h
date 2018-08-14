@@ -140,7 +140,7 @@ public:
 
     bool PresentBoat() const;
 
-    bool AllowBuyHero(const Heroes &, string * = nullptr);
+    bool AllowBuyHero(const Heroes &, string * = nullptr) const;
 
     bool isPosition(const Point &) const;
 
@@ -268,7 +268,7 @@ public:
 
     string String() const;
 
-    int DialogBuyHero(const Heroes *);
+    int DialogBuyHero(const Heroes *) const;
 
     int DialogBuyCaptain(bool fixed = true) const;
 
@@ -281,7 +281,7 @@ private:
 
     void EducateHeroes();
 
-    Rect RedrawResourcePanel(const Point &);
+    Rect RedrawResourcePanel(const Point &) const;
 
     uint32_t OpenTown();
 
@@ -291,7 +291,7 @@ private:
 
     void OpenWell();
 
-    void OpenMageGuild();
+    void OpenMageGuild() const;
 
     void WellRedrawInfoArea(const Point &cur_pt);
 

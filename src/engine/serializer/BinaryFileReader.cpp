@@ -24,7 +24,7 @@ void BinaryFileReader::seek(uint32_t pos) const
     fseek(_file, pos, SEEK_SET);
 }
 
-uint32_t BinaryFileReader::size()
+uint32_t BinaryFileReader::size() const
 {
     fseek(_file, 0L, SEEK_END);
     const uint32_t sz = ftell(_file);

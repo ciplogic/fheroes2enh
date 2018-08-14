@@ -844,9 +844,7 @@ bool Heroes::Move(bool fast)
             // move
             if (MoveStep())
             {
-                if (isFreeman()) return false;
-
-                return true;
+                return !isFreeman();
             }
     } else
     {

@@ -109,7 +109,7 @@ uint32_t Troop::GetDamageMax() const
 
 uint32_t Troop::GetStrength() const
 {
-    double res = GetDamageMin() + GetDamageMax() >> 1;
+    double res = (GetDamageMin() + GetDamageMax()) >> 1;
 
     // increase strength
     if (isFly()) res += res * 0.5;

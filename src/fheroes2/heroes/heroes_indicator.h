@@ -76,9 +76,9 @@ class ExperienceIndicator : public HeroesIndicator
 public:
     ExperienceIndicator(const Heroes &);
 
-    void Redraw();
+    void Redraw() const;
 
-    void QueueEventProcessing();
+    void QueueEventProcessing() const;
 };
 
 class SpellPointsIndicator : public HeroesIndicator
@@ -86,7 +86,7 @@ class SpellPointsIndicator : public HeroesIndicator
 public:
     SpellPointsIndicator(const Heroes &);
 
-    void Redraw();
+    void Redraw() const;
 
-    void QueueEventProcessing();
+    void QueueEventProcessing() const;
 };

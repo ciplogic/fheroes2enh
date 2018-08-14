@@ -160,8 +160,7 @@ namespace Battle
 
     struct TargetsInfo : public vector<TargetInfo>
     {
-        TargetsInfo()
-        {}
+        TargetsInfo() = default;
     };
 
     ByteVectorWriter &operator<<(ByteVectorWriter &, const TargetsInfo &);

@@ -48,9 +48,9 @@ public:
 
     bool IsDwelling() const;
 
-    void Redraw();
+    void Redraw() const;
 
-    bool QueueEventProcessing();
+    bool QueueEventProcessing() const;
 
     bool DialogBuyBuilding(bool buttons) const;
 
@@ -59,7 +59,7 @@ public:
     static payment_t GetCost(uint32_t, int);
 
 private:
-    void RedrawCaptain();
+    void RedrawCaptain() const;
 
     string GetConditionDescription() const;
 
@@ -69,7 +69,7 @@ private:
     Rect area;
     int bcond;
 
-    bool CanQuickBuild(const Point &cursor, Rect area);
+    bool CanQuickBuild(const Point &cursor, Rect area) const;
 };
 
 struct DwellingItem

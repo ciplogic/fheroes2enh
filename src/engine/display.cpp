@@ -154,7 +154,7 @@ Surface Display::GetSurface(const Rect &rt) const
     return Surface::GetSurface(rt);
 }
 
-void Display::Clear()
+void Display::Clear() const
 {
     Fill(ColorBlack);
 }

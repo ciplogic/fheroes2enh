@@ -62,7 +62,7 @@ void ScenarioListBox::RedrawItem(const Maps::FileInfo &info, s32 dstx, s32 dsty,
     spriteCount.Blit(dstx, dsty);
 
     if (info.size_w != info.size_h ||
-        info.size_w < (int) mapsize_t::SMALL || info.size_w > (int) mapsize_t::XLARGE)
+        info.size_w < static_cast<int>(mapsize_t::SMALL) || info.size_w > static_cast<int>(mapsize_t::XLARGE))
     {
         GetNonStandardSizeIcon().Blit(dstx + spriteCount.w() + 2, dsty, Display::Get());
     } else

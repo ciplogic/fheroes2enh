@@ -30,7 +30,7 @@
 
 void Rand::Init()
 {
-    srand((uint32_t) time(nullptr));
+    srand(static_cast<uint32_t>(time(nullptr)));
 }
 
 int32_t Rand::Get(int32_t min, int32_t max)

@@ -55,7 +55,7 @@ public:
 
     void SetDisable(bool);
 
-    void Draw();
+    void Draw() const;
 
     void PressDraw();
 
@@ -83,13 +83,13 @@ public:
     ButtonGroups(Rect, uint32_t);
 
 
-    void Draw();
+    void Draw() const;
 
-    int QueueEventProcessing();
+    int QueueEventProcessing() const;
 
-    void DisableButton1(bool);
+    void DisableButton1(bool) const;
 
-    void DisableButton2(bool);
+    void DisableButton2(bool) const;
 
 protected:
     std::unique_ptr<Button> button1;

@@ -117,7 +117,7 @@ void Interface::RedrawHeroesIcon(const Heroes &hero, s32 sx, s32 sy)
     hero.PortraitRedraw(sx, sy, PORT_SMALL, Display::Get());
 }
 
-void Interface::IconsBar::RedrawBackground(const Point &pos)
+void Interface::IconsBar::RedrawBackground(const Point &pos) const
 {
     const Sprite &icnadv = AGG::GetICN(Settings::Get().ExtGameEvilInterface() ? ICN::ADVBORDE : ICN::ADVBORD, 0);
     const Sprite &back = AGG::GetICN(Settings::Get().ExtGameEvilInterface() ? ICN::LOCATORE : ICN::LOCATORS, 1);
@@ -514,7 +514,7 @@ bool Interface::IconsPanel::IsSelected(icons_t type) const
     return false;
 }
 
-void Interface::HeroesBottomIcons::SetShow(bool)
+void Interface::HeroesBottomIcons::SetShow(bool) const
 {
 }
 
@@ -552,7 +552,7 @@ void Interface::HeroesBottomIcons::RedrawBackground(const Point &)
 {
 }
 
-void Interface::HeroesBottomIcons::SetHero(Interface::HEROES const pHeroes)
+void Interface::HeroesBottomIcons::SetHero(Interface::HEROES const pHeroes) const
 {
 
 }

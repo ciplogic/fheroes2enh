@@ -1297,7 +1297,7 @@ JoinCount Army::GetJoinSolution(const Heroes &hero, const Maps::Tiles &tile, con
         check_free_stack && (check_extra_condition && ratios >= 2 || join_force))
     {
         if (join_free || join_force)
-            return JoinCount(JOIN_FREE, troop.GetCount());
+            return {JOIN_FREE, troop.GetCount()};
         if (hero.HasSecondarySkill(Skill::Secondary::DIPLOMACY))
         {
             // skill diplomacy
@@ -1307,7 +1307,7 @@ JoinCount Army::GetJoinSolution(const Heroes &hero, const Maps::Tiles &tile, con
                                                                100);
 
             if (to_join)
-                return JoinCount(JOIN_COST, to_join);
+                return {JOIN_COST, to_join};
         }
     } else if (ratios >= 5)
     {

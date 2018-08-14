@@ -340,7 +340,7 @@ public:
 
     StreamBuf toStreamBuf(size_t = 0 /* all data */);
 
-    void seek(size_t);
+    void seek(size_t) const;
 
     void skip(size_t) override;
 

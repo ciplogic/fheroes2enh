@@ -45,8 +45,8 @@ namespace ModernTranslation
         void addDirectTranslation(StringVector& id, StringVector& trans);
         void addMultiTranslation(StringVector& messageIds, StringVector& messagePlurals, StringVector& messageStr1, StringVector& messageStr2);
         
-        string getTranslation(const string& str);
-        string getTranslationPlural(const string& singular, const string& plural, size_t count);
+        string getTranslation(const string& str) const;
+        string getTranslationPlural(const string& singular, const string& plural, size_t count) const;
 
     private:
         static std::string joinAsRows(StringVector& id);
@@ -87,7 +87,7 @@ namespace ModernTranslation
 
     struct ClassifiedLine
     {
-        TranslationLineType translationLineType;
+        TranslationLineType translationLineType{};
         std::string line;
     };
 
@@ -268,14 +268,14 @@ namespace ModernTranslation
         pluralTranslation[keyPl] = valuePl;
     }
 
-    string TranslationTable::getTranslation(const string& str)
+    string TranslationTable::getTranslation(const string& str) const
     {
         auto result = getDictText(directTranslations, str);
     
 
         return result;
     }
-    string TranslationTable::getTranslationPlural(const string& singular, const string& plural, size_t count)
+    string TranslationTable::getTranslationPlural(const string& singular, const string& plural, size_t count) const
     {
         if (count == 1) {
             return getDictText(singularTranslation, singular);

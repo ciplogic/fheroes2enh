@@ -168,7 +168,7 @@ namespace Dialog
 
         ~FrameBox();
 
-        const Rect &GetArea()
+        const Rect &GetArea() const
         { return area; };
 
     protected:

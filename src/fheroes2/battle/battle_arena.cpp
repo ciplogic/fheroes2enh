@@ -319,9 +319,7 @@ Battle::Arena::Arena(Army &a1, Army &a2, s32 index, bool local) :
     }
 }
 
-Battle::Arena::~Arena()
-{
-}
+Battle::Arena::~Arena() = default;
 
 void Battle::Arena::TurnTroop(Unit *current_troop)
 {
@@ -958,7 +956,7 @@ bool Battle::Arena::NetworkTurn()
     return interface && interface->NetworkTurn(result_game);
 }
 
-Battle::Unit *Battle::Arena::CreateElemental(const Spell &spell)
+Battle::Unit *Battle::Arena::CreateElemental(const Spell &spell) const
 {
     const HeroBase *hero = GetCurrentCommander();
     const s32 pos = GetFreePositionNearHero(current_color);
@@ -1022,7 +1020,7 @@ Battle::Unit *Battle::Arena::CreateElemental(const Spell &spell)
     return elem;
 }
 
-Battle::Unit *Battle::Arena::CreateMirrorImage(Unit &b, s32 pos)
+Battle::Unit *Battle::Arena::CreateMirrorImage(Unit &b, s32 pos) const
 {
     auto *image = new Unit(b, pos, b.isReflect());
 

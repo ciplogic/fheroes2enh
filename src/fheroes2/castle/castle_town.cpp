@@ -33,7 +33,7 @@
 #include "buildinginfo.h"
 #include "icn.h"
 
-int Castle::DialogBuyHero(const Heroes *hero)
+int Castle::DialogBuyHero(const Heroes *hero) const
 {
     if (!hero) return Dialog::CANCEL;
 

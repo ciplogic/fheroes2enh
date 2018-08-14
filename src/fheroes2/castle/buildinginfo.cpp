@@ -337,7 +337,7 @@ bool BuildingInfo::IsDwelling() const
     return false;
 }
 
-void BuildingInfo::RedrawCaptain()
+void BuildingInfo::RedrawCaptain() const
 {
     AGG::GetICN(ICN::Get4Captain(castle.GetRace()),
                 building & BUILD_CAPTAIN ? 1 : 0).Blit(area.x, area.y);
@@ -371,7 +371,7 @@ void BuildingInfo::RedrawCaptain()
 }
 
 
-void BuildingInfo::Redraw()
+void BuildingInfo::Redraw() const
 {
     if (BUILD_CAPTAIN == building)
     {
@@ -452,7 +452,7 @@ const string &BuildingInfo::GetDescription() const
     return description;
 }
 
-bool BuildingInfo::QueueEventProcessing()
+bool BuildingInfo::QueueEventProcessing() const
 {
     LocalEvent &le = LocalEvent::Get();
 
@@ -702,16 +702,11 @@ void BuildingInfo::SetStatusMessage(StatusBar &bar) const
     bar.ShowMessage(str);
 }
 
-bool BuildingInfo::CanQuickBuild(const Point &cursor, Rect area)
+bool BuildingInfo::CanQuickBuild(const Point &cursor, Rect area) const
 {
     int dx = area.w - (cursor.x - area.x);
     int dy = cursor.y - area.y;
-    if (dy < 20 && dx < 20)
-    {
-        return true;
-    }
-
-    return false;
+    return dy < 20 && dx < 20;
 }
 
 DwellingItem::DwellingItem(Castle &castle, uint32_t dw)

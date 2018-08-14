@@ -273,7 +273,7 @@ Funds MapArtifact::QuantityFunds() const
             break;
     }
 
-    return Funds();
+    return {};
 }
 
 ResourceCount MapArtifact::QuantityResourceCount() const
@@ -283,9 +283,9 @@ ResourceCount MapArtifact::QuantityResourceCount() const
         case 1:
             return {Resource::GOLD, 2000};
         case 2:
-            return ResourceCount(extended, 3);
+            return {extended, 3};
         case 3:
-            return ResourceCount(extended, 5);
+            return {extended, 5};
         default:
             break;
     }

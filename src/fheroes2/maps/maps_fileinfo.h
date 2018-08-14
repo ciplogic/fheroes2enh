@@ -38,7 +38,7 @@ namespace Maps
 
         FileInfo &operator=(const FileInfo &);
 
-        bool ReadMAP(const string &);
+        bool ReadMAP(const string &) const;
 
         bool ReadMP2(const string &);
 
@@ -99,29 +99,29 @@ namespace Maps
         string name;
         string description;
 
-        u16 size_w{} {};
-        u16 size_h{} {};
-        u8 difficulty{} {};
-        u8 races[KINGDOMMAX]{} {};
-        u8 unions[KINGDOMMAX]{} {};
+        u16 size_w{};
+        u16 size_h{};
+        u8 difficulty{};
+        u8 races[KINGDOMMAX]{};
+        u8 unions[KINGDOMMAX]{};
 
-        u8 kingdom_colors{} {};
-        u8 allow_human_colors{} {};
-        u8 allow_comp_colors{} {};
-        u8 rnd_races{} {};
+        u8 kingdom_colors{};
+        u8 allow_human_colors{};
+        u8 allow_comp_colors{};
+        u8 rnd_races{};
 
-        u8 conditions_wins{} {}; // 0: wins def, 1: town, 2: hero, 3: artifact, 4: side, 5: gold
-        bool comp_also_wins{} {};
-        bool allow_normal_victory{} {};
-        u16 wins1{} {};
-        u16 wins2{} {};
-        u8 conditions_loss{} {}; // 0: loss def, 1: town, 2: hero, 3: out time
-        u16 loss1{} {};
-        u16 loss2{} {};
+        u8 conditions_wins{}; // 0: wins def, 1: town, 2: hero, 3: artifact, 4: side, 5: gold
+        bool comp_also_wins{};
+        bool allow_normal_victory{};
+        u16 wins1{};
+        u16 wins2{};
+        u8 conditions_loss{}; // 0: loss def, 1: town, 2: hero, 3: out time
+        u16 loss1{};
+        u16 loss2{};
 
-        uint32_t localtime{} {};
+        uint32_t localtime{};
 
-        bool with_heroes{} {};
+        bool with_heroes{};
     };
 
     ByteVectorWriter & operator<<(ByteVectorWriter & msg, const FileInfo & fi);

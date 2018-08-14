@@ -60,7 +60,7 @@ Spell SpellBook::Open(const HeroBase &hero, int filter, bool canselect) const
     if (!hero.HaveSpellBook())
     {
         Message("", _("No spell to cast."), Font::BIG, Dialog::OK);
-        return Spell(Spell::NONE);
+        return {Spell::NONE};
     }
 
     Display &display = Display::Get();

@@ -248,7 +248,7 @@ namespace Maps
 
         TilesAddon *FindAddonLevel2(uint32_t uniq2);
 
-        TilesAddon *FindObject(int);
+        TilesAddon *FindObject(int) const;
 
         const TilesAddon *FindObjectConst(int) const;
 
@@ -315,9 +315,9 @@ namespace Maps
 
         int MonsterJoinCondition() const;
 
-        void MonsterSetJoinCondition(int);
+        void MonsterSetJoinCondition(int) const;
 
-        void MonsterSetFixedCount();
+        void MonsterSetFixedCount() const;
 
         bool MonsterFixedCount() const;
 

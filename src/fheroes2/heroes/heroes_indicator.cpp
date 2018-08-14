@@ -204,7 +204,7 @@ ExperienceIndicator::ExperienceIndicator(const Heroes &h) : HeroesIndicator(h)
                           Heroes::GetLevelFromExperience(hero.GetExperience())));
 }
 
-void ExperienceIndicator::Redraw()
+void ExperienceIndicator::Redraw() const
 {
     const Sprite &sprite3 = AGG::GetICN(ICN::HSICONS, 1);
     sprite3.Blit(area.x, area.y);
@@ -213,7 +213,7 @@ void ExperienceIndicator::Redraw()
     text.Blit(area.x + 18 - text.w() / 2, area.y + 23);
 }
 
-void ExperienceIndicator::QueueEventProcessing()
+void ExperienceIndicator::QueueEventProcessing() const
 {
     LocalEvent &le = LocalEvent::Get();
 
@@ -237,7 +237,7 @@ SpellPointsIndicator::SpellPointsIndicator(const Heroes &h) : HeroesIndicator(h)
     StringReplace(descriptions, "%{max}", hero.GetMaxSpellPoints());
 }
 
-void SpellPointsIndicator::Redraw()
+void SpellPointsIndicator::Redraw() const
 {
     const Sprite &sprite3 = AGG::GetICN(ICN::HSICONS, 8);
     sprite3.Blit(area.x, area.y);
@@ -246,7 +246,7 @@ void SpellPointsIndicator::Redraw()
     text.Blit(area.x + 18 - text.w() / 2, area.y + 21);
 }
 
-void SpellPointsIndicator::QueueEventProcessing()
+void SpellPointsIndicator::QueueEventProcessing() const
 {
     LocalEvent &le = LocalEvent::Get();
 

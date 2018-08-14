@@ -193,7 +193,7 @@ RGBA RGBA::unpack(int v)
     const int b = v >> 8 & 0x000000FF;
     const int a = v & 0x000000FF;
 
-    return RGBA(r, g, b, a);
+    return {r, g, b, a};
 }
 
 Surface::Surface()
@@ -380,7 +380,7 @@ void Surface::SetDefaultDepth(uint32_t depth)
 
 Size Surface::GetSize() const
 {
-    return Size(w(), h());
+    return {w(), h()};
 }
 
 bool Surface::isValid() const
@@ -469,15 +469,15 @@ RGBA Surface::GetRGB(uint32_t pixel) const
     if (amask())
     {
         SDL_GetRGBA(pixel, surface->format, &r, &g, &b, &a);
-        return RGBA(r, g, b, a);
+        return {r, g, b, a};
     }
 
     SDL_GetRGB(pixel, surface->format, &r, &g, &b);
-    return RGBA(r, g, b);
+    return {r, g, b};
 }
 
 /* load static palette (economize 1kb for each surface) only 8bit color! */
-void Surface::SetPalette()
+void Surface::SetPalette() const
 {
     if (isValid() &&
         pal_colors && pal_nums && surface->format->palette)
@@ -497,7 +497,7 @@ uint32_t Surface::GetColorKey() const
     return isValid() && surface->flags & SDL_SRCCOLORKEY ? surface->format->colorkey : 0;
 }
 
-void Surface::SetColorKey(const RGBA &color)
+void Surface::SetColorKey(const RGBA &color) const
 {
     SDL_SetColorKey(surface, SDL_SRCCOLORKEY, MapRGB(color));
 }
@@ -644,11 +644,11 @@ void Surface::BlitAlpha(const Rect &srt, const Point &dpt, Surface &dst) const
             const uint32_t srcBlue = srcPix >> 16 & 0xff;
             const uint32_t opacity = alpha;
             const uint32_t revOpacity = 255 - opacity;
-            uint32_t final_red = opacity * srcRed + revOpacity * dstRed >> 8;
+            uint32_t final_red = (opacity * srcRed + revOpacity * dstRed) >> 8;
             if (final_red > 255) final_red = 255;
-            uint32_t final_green = opacity * srcGreen + revOpacity * dstGreen >> 8;
+            uint32_t final_green = (opacity * srcGreen + revOpacity * dstGreen) >> 8;
             if (final_green > 255) final_green = 255;
-            uint32_t finalBlue = opacity * srcBlue + revOpacity * dstBlue >> 8;
+            uint32_t finalBlue = (opacity * srcBlue + revOpacity * dstBlue) >> 8;
             if (finalBlue > 255) finalBlue = 255;
 
             const uint32_t finalPix = 0xff000000 | finalBlue << 16 | final_green << 8 | final_red;
@@ -1045,7 +1045,7 @@ Surface Surface::GetSurface(const Rect &rt) const
     return res;
 }
 
-void Surface::Fill(const RGBA &col)
+void Surface::Fill(const RGBA &col) const
 {
     FillRect(Rect(0, 0, w(), h()), col);
 }
@@ -1100,7 +1100,7 @@ float rfPartOfNumber(float x)
 // draws a pixel on screen of given brightness
 // 0<=brightness<=1. We can use your own library
 // to draw on screen
-void Surface::drawPixel(int x, int y, float brightness, const uint32_t col)
+void Surface::drawPixel(int x, int y, float brightness, const uint32_t col) const
 {
     int finalColA = 255 * brightness;
     if (finalColA > 255)
@@ -1113,7 +1113,7 @@ void Surface::drawPixel(int x, int y, float brightness, const uint32_t col)
 // draws a pixel on screen of given brightness
 // 0<=brightness<=1. We can use your own library
 // to draw on screen
-void Surface::drawPixelSafe(int x, int y, float brightness, const uint32_t col)
+void Surface::drawPixelSafe(int x, int y, float brightness, const uint32_t col) const
 {
     if (x < 0 || y < 0)
         return;
@@ -1127,7 +1127,7 @@ void Surface::drawPixelSafe(int x, int y, float brightness, const uint32_t col)
     SetPixel4(x, y, uCol);
 }
 
-void Surface::drawAALine(int x0, int y0, int x1, int y1, const RGBA &col)
+void Surface::drawAALine(int x0, int y0, int x1, int y1, const RGBA &col) const
 {
     int steep = absolute(y1 - y0) > absolute(x1 - x0);
 
@@ -1275,7 +1275,7 @@ void Surface::DrawRect(const Rect &rt, const RGBA &color) const
     Unlock();
 }
 
-void Surface::DrawBorder(const RGBA &color, bool solid)
+void Surface::DrawBorder(const RGBA &color, bool solid) const
 {
     if (solid)
         DrawRect(Rect(Point(0, 0), GetSize()), color);

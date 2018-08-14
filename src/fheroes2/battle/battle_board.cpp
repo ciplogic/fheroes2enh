@@ -83,7 +83,7 @@ void Battle::Board::Reset()
     for_each(begin(), end(), mem_fun_ref(&Cell::ResetDirection));
 }
 
-void Battle::Board::SetPositionQuality(const Unit &b)
+void Battle::Board::SetPositionQuality(const Unit &b) const
 {
     Arena *arena = GetArena();
     Units enemies(arena->GetForce(b.GetColor(), true), true);
@@ -104,7 +104,7 @@ void Battle::Board::SetPositionQuality(const Unit &b)
     }
 }
 
-void Battle::Board::SetEnemyQuality(const Unit &b)
+void Battle::Board::SetEnemyQuality(const Unit &b) const
 {
     Arena *arena = GetArena();
     Units enemies(arena->GetForce(b.GetColor(), true), true);
@@ -345,7 +345,7 @@ Battle::Indexes Battle::Board::GetNearestTroopIndexes(s32 pos, const Indexes *bl
         if (black && black->end() != find(black->begin(), black->end(), b->GetHeadIndex())) continue;
         // added
         if (pos != b->GetHeadIndex())
-            dists.push_back(IndexDistance(b->GetHeadIndex(), GetDistance(pos, b->GetHeadIndex())));
+            dists.emplace_back(b->GetHeadIndex(), GetDistance(pos, b->GetHeadIndex()));
     }
 
     if (1 < dists.size())

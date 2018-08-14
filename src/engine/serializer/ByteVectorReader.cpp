@@ -5,7 +5,7 @@ namespace
     namespace Endian
     {
         constexpr uint32_t uint32_ = 0x01020304;
-        constexpr uint8_t magic_ = (const uint8_t&)uint32_;
+        constexpr uint8_t magic_ = static_cast<const uint8_t&>(uint32_);
         const bool isLittle = magic_ == 0x04;
     }
 }

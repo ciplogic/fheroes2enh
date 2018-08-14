@@ -66,7 +66,7 @@ Rect Battle::Position::GetRect() const
     if (first)
         return second ? Rect::Get(first->GetPos(), second->GetPos(), false) : first->GetPos();
 
-    return Rect();
+    return {};
 }
 
 Battle::Position Battle::Position::GetCorrect(const Unit &b, s32 head)

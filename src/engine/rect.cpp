@@ -56,12 +56,12 @@ Point &Point::operator-=(const Point &pt)
 
 Point Point::operator+(const Point &pt) const
 {
-    return Point(x + pt.x, y + pt.y);
+    return {x + pt.x, y + pt.y};
 }
 
 Point Point::operator-(const Point &pt) const
 {
-    return Point(x - pt.x, y - pt.y);
+    return {x - pt.x, y - pt.y};
 }
 
 bool Point::inABC(const Point &pt1, const Point &pt2, const Point &pt3) const
@@ -113,12 +113,12 @@ Size &Size::operator-=(const Size &sz)
 
 Size Size::operator+(const Size &sz) const
 {
-    return Size(w + sz.w, h + sz.h);
+    return {w + sz.w, h + sz.h};
 }
 
 Size Size::operator-(const Size &sz) const
 {
-    return Size(w - sz.w, h - sz.h);
+    return {w - sz.w, h - sz.h};
 }
 
 bool Size::isEmpty() const

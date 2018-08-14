@@ -832,7 +832,7 @@ void Castle::DrawCastleFundsAtPos(Display &display, const Funds &resource, Rect 
 }
 
 /* redraw resource info panel */
-Rect Castle::RedrawResourcePanel(const Point &pt)
+Rect Castle::RedrawResourcePanel(const Point &pt) const
 {
     Display &display = Display::Get();
     const Funds &resource = world.GetKingdom(GetColor()).GetFunds();

@@ -76,7 +76,7 @@ namespace Network
     public:
     Server();
 
-    TCPsocket	Accept();
+    TCPsocket	Accept() const;
     };
 }
 #endif

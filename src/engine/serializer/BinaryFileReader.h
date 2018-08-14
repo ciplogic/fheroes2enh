@@ -18,7 +18,7 @@ public:
 
     void seek(uint32_t pos) const;
 
-    uint32_t size();
+    uint32_t size() const;
 
     uint32_t getLE16();
 

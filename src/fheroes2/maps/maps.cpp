@@ -177,7 +177,7 @@ s32 Maps::GetDirectionIndex(s32 from, int vector)
 
 Point Maps::GetPoint(s32 index)
 {
-    return Point(index % world.w(), index / world.w());
+    return {index % world.w(), index / world.w()};
 }
 
 bool Maps::isValidAbsPoint(const Point &pt)

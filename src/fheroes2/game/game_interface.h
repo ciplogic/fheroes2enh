@@ -122,13 +122,13 @@ namespace Interface
 
         void EventDefaultAction();
 
-        void EventOpenFocus();
+        void EventOpenFocus() const;
 
-        int EventSaveGame();
+        int EventSaveGame() const;
 
         static void EventPuzzleMaps();
 
-        void EventGameInfo();
+        void EventGameInfo() const;
 
         void EventSystemDialog();
 
@@ -136,35 +136,35 @@ namespace Interface
 
         void EventNextTown();
 
-        void EventContinueMovement();
+        void EventContinueMovement() const;
 
-        void EventKingdomInfo();
+        void EventKingdomInfo() const;
 
-        void EventCastSpell();
+        void EventCastSpell() const;
 
-        void EventSwitchShowRadar();
+        void EventSwitchShowRadar() const;
 
-        void EventSwitchShowStatus();
+        void EventSwitchShowStatus() const;
 
-        void EventSwitchShowButtons();
+        void EventSwitchShowButtons() const;
 
         void EventSwitchShowIcons();
 
         void EventSwitchShowControlPanel() const;
 
-        void EventDebug1();
+        void EventDebug1() const;
 
-        void EventDebug2();
+        void EventDebug2() const;
 
         static bool EventLoadGame();
 
         int EventAdventureDialog();
 
-        int EventFileDialog();
+        int EventFileDialog() const;
 
-        int EventEndTurn();
+        int EventEndTurn() const;
 
-        int EventExit();
+        int EventExit() const;
 
         int EventDigArtifact();
 
@@ -174,7 +174,7 @@ namespace Interface
 
         void MouseCursorAreaClickLeft(s32);
 
-        void MouseCursorAreaPressRight(s32);
+        void MouseCursorAreaPressRight(s32) const;
 
         static int GetCursorTileIndex(s32);
 

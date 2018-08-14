@@ -86,7 +86,7 @@ public:
 
     bool Load(const string &);
 
-    bool Save(const string &);
+    bool Save(const string &) const;
 
     void ScoreRegistry(const string &, const string &, uint32_t, uint32_t);
 
@@ -117,7 +117,7 @@ bool HGSData::Load(const string &fn)
     return false;
 }
 
-bool HGSData::Save(const string &fn)
+bool HGSData::Save(const string &fn) const
 {
     ByteVectorWriter hdata;
     hdata.SetBigEndian(true);

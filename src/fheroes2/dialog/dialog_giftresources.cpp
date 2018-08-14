@@ -147,7 +147,7 @@ struct ResourceBar
         return GetIndexClickRects(positions);
     }
 
-    bool QueueEventProcessing(Funds &funds, uint32_t mul)
+    bool QueueEventProcessing(Funds &funds, uint32_t mul) const
     {
         const s32 index = GetIndexClick();
 

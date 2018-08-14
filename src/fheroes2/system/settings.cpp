@@ -956,7 +956,7 @@ int Settings::MapsDifficulty() const
 
 Size Settings::MapsSize() const
 {
-    return Size(current_maps_file.size_w, current_maps_file.size_h);
+    return {current_maps_file.size_w, current_maps_file.size_h};
 }
 
 bool Settings::AllowChangeRace(int f) const
