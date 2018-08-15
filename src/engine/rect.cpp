@@ -130,7 +130,6 @@ bool Size::isEmpty() const
     return 0 == w && 0 == h;
 }
 
-Rect::Rect() = default;
 
 Rect::Rect(const Point &pt, u16 rw, u16 rh) : Point(pt), Size(rw, rh)
 {
@@ -158,7 +157,7 @@ Rect Rect::Get(const Point &pt1, const Point &pt2)
 
 Rect Rect::Get(const Rect &rt1, const Rect &rt2, bool intersect)
 {
-    Rect rt3;
+    Rect rt3{};
 
     if (intersect)
     {

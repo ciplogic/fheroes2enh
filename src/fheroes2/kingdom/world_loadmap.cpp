@@ -20,7 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <functional>
+#include "error.h"
 #include <algorithm>
 #include "agg.h"
 #include "artifact.h"

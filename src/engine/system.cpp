@@ -65,10 +65,6 @@ extern HINSTANCE SDL_Instance;
 extern HWND SDL_Window;
 #endif
 
-#if defined(__WIN32__)
-#include <io.h>
-#endif
-
 #if defined(__SYMBIAN32__)
 #define SEPARATOR '\\'
 #elif defined(__WIN32__)

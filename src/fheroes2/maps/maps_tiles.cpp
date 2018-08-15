@@ -1186,10 +1186,10 @@ bool Maps::Tiles::isLongObject(int direction)
     }
     Tiles &tile = world.GetTiles(GetDirectionIndex(GetIndex(), direction));
 
-    for (auto it = addons_level1.begin(); it != addons_level1.end(); ++it)
-        if (!Exclude4LongObject(*it) &&
-            (HaveLongObjectUniq(tile.addons_level1, (*it).uniq) ||
-                !TilesAddon::isTrees(*it) && HaveLongObjectUniq(tile.addons_level2, (*it).uniq)))
+    for (const auto& it : addons_level1)
+        if (!Exclude4LongObject(it) &&
+            (HaveLongObjectUniq(tile.addons_level1, it.uniq) ||
+                !TilesAddon::isTrees(it) && HaveLongObjectUniq(tile.addons_level2, it.uniq)))
             return true;
     return false;
 }

@@ -160,8 +160,8 @@ ByteVectorWriter &operator<<(ByteVectorWriter &msg, const MonsterStaticData &obj
 {
     const uint32_t monsters_size = ARRAY_COUNT(monsters);
     msg << monsters_size;
-    for (uint32_t ii = 0; ii < monsters_size; ++ii)
-        msg << monsters[ii];
+    for (const auto& monster : monsters)
+        msg << monster;
     return msg;
 }
 

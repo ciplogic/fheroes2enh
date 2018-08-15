@@ -321,11 +321,11 @@ bool ActionSpellSummonBoat(Heroes &hero)
     s32 dst_water = -1;
     MapsIndexes v;
     Maps::ScanAroundObject(center, MP2::OBJ_ZERO, v);
-    for (auto it = v.begin(); it != v.end(); ++it)
+    for (const auto& it : v)
     {
-        if (world.GetTiles(*it).isWater())
+        if (world.GetTiles(it).isWater())
         {
-            dst_water = *it;
+            dst_water = it;
             break;
         }
     }
@@ -446,8 +446,8 @@ bool ActionSpellTownPortal(Heroes &hero)
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
-    for (KingdomCastles::const_iterator it = kingdom.GetCastles().begin(); it != kingdom.GetCastles().end(); ++it)
-        if (*it && !(*it)->GetHeroes().Guest()) castles.push_back((**it).GetIndex());
+    for (const auto it : kingdom.GetCastles())
+        if (it && !it->GetHeroes().Guest()) castles.push_back((*it).GetIndex());
 
     if (castles.empty())
     {

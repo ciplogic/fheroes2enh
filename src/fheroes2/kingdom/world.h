@@ -30,7 +30,6 @@
 #include "maps_tiles.h"
 #include "week.h"
 #include "kingdom.h"
-#include "sprite.h"
 #include "castle_heroes.h"
 #include "maps_objects.h"
 #include "artifact_ultimate.h"

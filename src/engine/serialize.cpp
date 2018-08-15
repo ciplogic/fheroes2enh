@@ -33,8 +33,6 @@
 #include "rect.h"
 #include "system.h"
 #include "serialize.h"
-#include "gamedefs.h"
-
 #define MINCAPACITY 1024
 
 void StreamBase::setconstbuf(bool f)

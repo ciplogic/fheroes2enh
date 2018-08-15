@@ -25,7 +25,6 @@
 #include <iostream>
 
 #include "system.h"
-#include "tools.h"
 
 #include <SDL_ttf.h>
 

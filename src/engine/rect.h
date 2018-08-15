@@ -78,20 +78,18 @@ struct Size
 
 struct Rect : Point, Size
 {
-    Rect();
+    Rect() = default;
 
     Rect(int x, int y, int w, int h)
-
         : Point(static_cast<s16>(x), static_cast<s16>(y)), Size(static_cast<u16>(w), static_cast<u16>(h))
     {
-        
     }
+    explicit Rect(const SDL_Rect &);
 
     Rect(const Point &, u16, u16);
 
     Rect(const Point &, const Size &);
 
-    explicit Rect(const SDL_Rect &);
 
     Rect &operator=(const Point &);
 

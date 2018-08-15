@@ -25,7 +25,6 @@
 #include "tools.h"
 #include "serialize.h"
 #include "tinyconfig.h"
-#include "FileUtils.h"
 #include "BinaryFileReader.h"
 
 using namespace std;

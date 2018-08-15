@@ -29,6 +29,7 @@
 
 #include "agg.h"
 #include "icn.h"
+#include "error.h"
 
 #include "settings.h"
 #include "text.h"

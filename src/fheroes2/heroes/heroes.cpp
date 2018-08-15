@@ -289,12 +289,12 @@ void Heroes::LoadFromMP2(s32 map_index, int cl, int rc, ByteVectorReader &st)
         Troop troops[5];
 
         // set monster id
-        for (uint32_t ii = 0; ii < ARRAY_COUNT(troops); ++ii)
-            troops[ii].SetMonster(st.get() + 1);
+        for (auto& troop : troops)
+            troop.SetMonster(st.get() + 1);
 
         // set count
-        for (uint32_t ii = 0; ii < ARRAY_COUNT(troops); ++ii)
-            troops[ii].SetCount(st.getLE16());
+        for (auto& troop : troops)
+            troop.SetCount(st.getLE16());
 
         army.m_troops.Assign(troops, ARRAY_COUNT_END(troops));
     } else
@@ -341,11 +341,11 @@ void Heroes::LoadFromMP2(s32 map_index, int cl, int rc, ByteVectorReader &st)
         SetModes(CUSTOMSKILLS);
         vector<Skill::Secondary> secs(8);
 
-        for (auto it = secs.begin(); it != secs.end(); ++it)
-            (*it).SetSkill(st.get() + 1);
+        for (auto& sec : secs)
+            sec.SetSkill(st.get() + 1);
 
-        for (auto it = secs.begin(); it != secs.end(); ++it)
-            (*it).SetLevel(st.get());
+        for (auto& sec : secs)
+            sec.SetLevel(st.get());
 
         secondary_skills = Skill::SecSkills();
 
@@ -1766,8 +1766,8 @@ string Heroes::String() const
     if (!visit_object.empty())
     {
         os << "visit objects   : ";
-        for (auto it = visit_object.begin(); it != visit_object.end(); ++it)
-            os << MP2::StringObject((*it).Value.second) << "(" << (*it).Value.first << "), ";
+        for (const auto& it : visit_object)
+            os << MP2::StringObject(it.Value.second) << "(" << it.Value.first << "), ";
         os << endl;
     }
 
