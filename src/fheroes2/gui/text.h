@@ -69,8 +69,7 @@ public:
 class TextAscii : public TextInterface
 {
 public:
-    TextAscii()
-    {};
+    TextAscii() = default;
 
     TextAscii(const string &, int = Font::BIG);
 
@@ -165,7 +164,7 @@ public:
 
     Text(const Text &);
 
-    ~Text();
+    ~Text() = default;
 
     Text &operator=(const Text &);
 

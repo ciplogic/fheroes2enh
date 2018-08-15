@@ -34,8 +34,7 @@ class HeroBase;
 class MageGuild
 {
 public:
-    MageGuild()
-    {}
+    MageGuild() = default;
 
     void Builds(int race, bool libraryCap);
 

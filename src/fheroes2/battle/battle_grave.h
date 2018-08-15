@@ -39,8 +39,7 @@ namespace Battle
     class Graveyard : public map<s32, TroopUIDs>
     {
     public:
-        Graveyard()
-        {}
+        Graveyard() = default;
 
         Indexes GetClosedCells() const;
 

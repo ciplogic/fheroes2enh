@@ -768,7 +768,7 @@ bool BagArtifacts::MakeBattleGarb()
 
 uint32_t BagArtifacts::CountArtifacts() const
 {
-    return count_if(begin(), end(), mem_fun_ref(&Artifact::isValid));
+    return count_if(begin(), end(), [](const auto& it) {return it.isValid(); });
 }
 
 bool BagArtifacts::ContainUltimateArtifact() const

@@ -378,10 +378,6 @@ Text::Text(const u16 *pt, size_t sz, int ft) : message(nullptr), gw(0), gh(0)
     gh = message->h();
 }
 
-Text::~Text()
-{
-}
-
 Text::Text(const Text &t)
 {
     message = sp<TextInterface>(new TextUnicode(static_cast<TextUnicode &>(*t.message)));
@@ -392,7 +388,6 @@ Text::Text(const Text &t)
 
 Text &Text::operator=(const Text &t)
 {
-
     message = sp<TextInterface>(new TextUnicode(static_cast<TextUnicode &>(*t.message)));
 
     gw = t.gw;

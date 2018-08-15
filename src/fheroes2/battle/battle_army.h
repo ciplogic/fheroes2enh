@@ -38,7 +38,7 @@ namespace Battle
 
         Units(const Units &, const Units &);
 
-        virtual ~Units();
+        virtual ~Units() = default;
 
         Units &operator=(const Units &);
 

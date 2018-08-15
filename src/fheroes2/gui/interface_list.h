@@ -34,8 +34,7 @@ namespace Interface
 {
     struct ListBasic
     {
-        virtual ~ListBasic()
-        {}
+        virtual ~ListBasic() = default;
 
         virtual void Redraw() = 0;
 

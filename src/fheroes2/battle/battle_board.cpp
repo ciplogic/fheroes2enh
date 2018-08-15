@@ -24,6 +24,8 @@
 #include <iterator>
 #include <functional>
 #include <algorithm>
+#include <unordered_map>
+#include <sstream>
 #include "world.h"
 #include "ground.h"
 #include "settings.h"
@@ -32,9 +34,7 @@
 #include "battle_troop.h"
 #include "game_static.h"
 #include "icn.h"
-#include <unordered_map>
 #include "rand.h"
-#include <sstream>
 #include "battle_army.h"
 
 namespace Battle
@@ -190,29 +190,29 @@ Battle::Indexes Battle::Board::GetAStarPath(const Unit &b, const Position &dst, 
                                     :
                          GetAroundIndexes(cur);
 
-        for (auto it = around.begin(); it != around.end(); ++it)
+        for (auto& it : around)
         {
-            Cell &cell = at(*it);
+            Cell &cell = at(it);
 
-            if (!listCells[*it].open || !cell.isPassable4(b, center) ||
-                bridge && isBridgeIndex(*it) && !bridge->isPassable(b.GetColor()))
+            if (!listCells[it].open || !cell.isPassable4(b, center) ||
+                bridge && isBridgeIndex(it) && !bridge->isPassable(b.GetColor()))
                 continue;
-            const s32 cost = 100 * GetDistance(*it, dst.GetHead()->GetIndex()) +
-                             (b.isWide() && WideDifficultDirection(center.GetDirection(), GetDirection(*it, cur))
+            const s32 cost = 100 * GetDistance(it, dst.GetHead()->GetIndex()) +
+                             (b.isWide() && WideDifficultDirection(center.GetDirection(), GetDirection(it, cur))
                               ? 100 : 0) +
-                             (castle && castle->isBuild(BUILD_MOAT) && isMoatIndex(*it) ? 100 : 0);
+                             (castle && castle->isBuild(BUILD_MOAT) && isMoatIndex(it) ? 100 : 0);
 
             // new cell
-            if (0 > listCells[*it].prnt)
+            if (0 > listCells[it].prnt)
             {
-                listCells[*it].prnt = cur;
-                listCells[*it].cost = cost + listCells[cur].cost;
+                listCells[it].prnt = cur;
+                listCells[it].cost = cost + listCells[cur].cost;
             } else
                 // change parent
-            if (listCells[*it].cost > cost + listCells[cur].cost)
+            if (listCells[it].cost > cost + listCells[cur].cost)
             {
-                listCells[*it].prnt = cur;
-                listCells[*it].cost = cost + listCells[cur].cost;
+                listCells[it].prnt = cur;
+                listCells[it].cost = cost + listCells[cur].cost;
             }
         }
 
@@ -220,13 +220,13 @@ Battle::Indexes Battle::Board::GetAStarPath(const Unit &b, const Position &dst, 
         s32 cost = MAXU16;
 
         // find min cost opens
-        for (auto it = listCells.begin(); it != listCells.end(); ++it)
-            if ((*it).second.open && cost > (*it).second.cost)
-            {
-                cur = (*it).first;
-                cost = (*it).second.cost;
-            }
-
+        for (const auto& listCell : listCells)
+        {
+            if (!listCell.second.open || cost <= listCell.second.cost)
+                continue;
+            cur = listCell.first;
+            cost = listCell.second.cost;
+        }
         if (MAXU16 == cost) break;
     }
 

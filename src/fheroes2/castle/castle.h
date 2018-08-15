@@ -123,8 +123,7 @@ public:
 
     Castle(s32, s32, int rs);
 
-    virtual ~Castle()
-    {}
+    virtual ~Castle() = default;
 
     void LoadFromMP2(ByteVectorReader &);
 

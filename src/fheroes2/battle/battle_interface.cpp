@@ -879,9 +879,7 @@ Battle::Interface::Interface(Arena &a, s32 center) : arena(a), icn_cbkg(ICN::UNK
         main_tower = Rect(area.x + 570, area.y + 145, 70, 70);
 }
 
-Battle::Interface::~Interface()
-{
-}
+Battle::Interface::~Interface() = default;
 
 void Battle::Interface::SetArmiesOrder(const Units *units)
 {

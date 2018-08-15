@@ -144,18 +144,17 @@ void Castle::OpenWell()
                 uint32_t can_recruit;
                 string str;
 
-                for (auto it = alldwellings.begin(); it != alldwellings.end(); ++it)
+                for (auto& alldwelling : alldwellings)
                 {
-                    if (0 != (can_recruit = HowManyRecruitMonster(*this, *it, total, cur)))
-                    {
-                        results.push_back(dwelling_t(*it, can_recruit));
-                        total += cur;
-                        const Monster ms(race, GetActualDwelling(*it));
-                        str.append(ms.GetPluralName(can_recruit));
-                        str.append(" - ");
-                        str.append(Int2Str(can_recruit));
-                        str.append("\n");
-                    }
+                    if (0 == (can_recruit = HowManyRecruitMonster(*this, alldwelling, total, cur)))
+                        continue;
+                    results.push_back(dwelling_t(alldwelling, can_recruit));
+                    total += cur;
+                    const Monster ms(race, GetActualDwelling(alldwelling));
+                    str.append(ms.GetPluralName(can_recruit));
+                    str.append(" - ");
+                    str.append(Int2Str(can_recruit));
+                    str.append("\n");
                 }
 
                 if (str.empty()) str = "None";
