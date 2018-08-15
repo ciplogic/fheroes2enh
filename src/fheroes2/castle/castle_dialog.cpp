@@ -740,7 +740,7 @@ int Castle::OpenDialog(bool readonly, bool fade)
     return result;
 }
 
-void Castle::DrawCastleFundsAtPos(Display &display, const Funds &resource, Rect src_rt) const
+void Castle::DrawCastleFundsAtPos(Display &display, const Funds &resource, Rect src_rt)
 {
     display.FillRect(src_rt, ColorBlack);
 

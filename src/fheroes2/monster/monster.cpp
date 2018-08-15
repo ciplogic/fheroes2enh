@@ -282,17 +282,17 @@ uint32_t Monster::GetDefense() const
     return monsters[id].defense;
 }
 
-int Monster::GetColor() const
+int Monster::GetColor()
 {
     return Color::NONE;
 }
 
-int Monster::GetMorale() const
+int Monster::GetMorale()
 {
     return Morale::NORMAL;
 }
 
-int Monster::GetLuck() const
+int Monster::GetLuck()
 {
     return Luck::NORMAL;
 }

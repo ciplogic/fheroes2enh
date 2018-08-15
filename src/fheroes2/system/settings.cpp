@@ -1089,7 +1089,7 @@ void Settings::SetShowStatus(bool f)
     f ? opt_global.SetModes(GLOBAL_SHOWSTATUS) : opt_global.ResetModes(GLOBAL_SHOWSTATUS);
 }
 
-bool Settings::CanChangeInGame(uint32_t f) const
+bool Settings::CanChangeInGame(uint32_t f)
 {
     return f >> 28 == 0x01; // GAME_ and POCKETPC_
 }
@@ -1113,7 +1113,7 @@ bool Settings::ExtModes(uint32_t f) const
     return false;
 }
 
-std::string Settings::ExtName(uint32_t f) const
+std::string Settings::ExtName(uint32_t f)
 {
     const settings_t *ptr = find(settingsFHeroes2,
                                  ARRAY_COUNT_END(settingsFHeroes2) - 1, f);
@@ -1280,7 +1280,7 @@ bool Settings::ExtUnionsAllowHeroesMeetings() const
     return ExtModes(UNIONS_ALLOW_HERO_MEETINGS);
 }
 
-bool Settings::ExtUnionsAllowViewMaps() const
+bool Settings::ExtUnionsAllowViewMaps()
 {
     return true;
 }

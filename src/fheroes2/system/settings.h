@@ -290,7 +290,7 @@ public:
 
     void BinaryLoad();
 
-    bool CanChangeInGame(uint32_t) const;
+    static bool CanChangeInGame(uint32_t);
 
     bool ExtModes(uint32_t) const;
 
@@ -298,7 +298,7 @@ public:
 
     void ExtResetModes(uint32_t);
 
-    std::string ExtName(uint32_t) const;
+    static std::string ExtName(uint32_t);
 
     bool ExtHeroLearnSpellsWithDay() const;
 
@@ -326,7 +326,7 @@ public:
 
     bool ExtUnionsAllowHeroesMeetings() const;
 
-    bool ExtUnionsAllowViewMaps() const;
+    static bool ExtUnionsAllowViewMaps();
 
     bool ExtWorldShowVisitedContent() const;
 

@@ -83,7 +83,7 @@ void Battle::Bridge::SetDestroy()
     Board::GetCell(50)->SetObject(0);
 }
 
-void Battle::Bridge::SetPassable(const Unit &b) const
+void Battle::Bridge::SetPassable(const Unit &b)
 {
     if (Board::isCastleIndex(b.GetHeadIndex()) || b.GetColor() == Arena::GetCastle()->GetColor())
     {

@@ -257,7 +257,7 @@ namespace
             clear();
         }
 
-        int hashInt(int key) const
+        static int hashInt(int key)
         {
             return (key >> 4) * 31 + (key >> 3) * 7 + (key >> 5) * 7 + (key >> 6) * 13;
         }

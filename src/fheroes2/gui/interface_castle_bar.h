@@ -38,9 +38,9 @@ namespace Interface
 
         void SetPos(s32, s32);
 
-        void SetRedraw() const;
+        static void SetRedraw();
 
-        void Build() const;
+        static void Build();
 
         void Redraw();
 
@@ -50,14 +50,14 @@ namespace Interface
 
         bool EventProcessing();
 
-        void SetHeroes(HEROES* heroes, int count) const;
+        static void SetHeroes(HEROES* heroes, int count);
 
     private:
         void SavePosition();
 
-        void Generate() const;
+        static void Generate();
 
-        void RedrawCursor() const;
+        static void RedrawCursor();
 
         void ChangeAreaSize(const Size &);
 

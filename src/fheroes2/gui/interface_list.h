@@ -55,7 +55,7 @@ namespace Interface
         {}
 
         virtual ~ListBox()
-        {}
+        = default;
 
         virtual void RedrawItem(const Item &, s32 ox, s32 oy, bool current) = 0;
 

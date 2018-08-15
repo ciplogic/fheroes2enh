@@ -813,7 +813,7 @@ const Point &LocalEvent::GetMouseCursor()
     return mouse_cu;
 }
 
-int LocalEvent::KeyMod() const
+int LocalEvent::KeyMod()
 {
     return SDL_GetModState();
 }

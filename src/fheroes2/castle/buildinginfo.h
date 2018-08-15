@@ -69,7 +69,7 @@ private:
     Rect area;
     int bcond;
 
-    bool CanQuickBuild(const Point &cursor, Rect area) const;
+    static bool CanQuickBuild(const Point &cursor, Rect area);
 };
 
 struct DwellingItem

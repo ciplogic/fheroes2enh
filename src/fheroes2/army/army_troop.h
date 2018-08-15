@@ -85,11 +85,11 @@ public:
 
     string GetSpeedString() const;
 
-    uint32_t GetHitPointsLeft() const;
+    static uint32_t GetHitPointsLeft();
 
     uint32_t GetSpeed() const;
 
-    uint32_t GetAffectedDuration(uint32_t) const;
+    static uint32_t GetAffectedDuration(uint32_t);
 
 protected:
     friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Troop &);

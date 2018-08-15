@@ -278,7 +278,7 @@ namespace Maps
 
         void RedrawFogs(Surface &, int) const;
 
-        void RedrawPassable(Surface &) const;
+        static void RedrawPassable(Surface &);
 
         void AddonsPushLevel1(const MP2::mp2tile_t &);
 

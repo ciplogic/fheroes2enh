@@ -577,7 +577,7 @@ void Kingdoms::Init()
         GetKingdom(color).Init(color);
 }
 
-uint32_t Kingdoms::size() const
+uint32_t Kingdoms::size()
 {
     return KINGDOMMAX + 1;
 }

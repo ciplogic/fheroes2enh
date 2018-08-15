@@ -88,7 +88,7 @@ public:
     {}
 
     virtual ~ColorBase()
-    {}
+    = default;
 
     bool operator==(int) const;
 

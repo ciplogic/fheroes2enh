@@ -280,7 +280,7 @@ public:
 
     KeySym KeyValue() const;
 
-    int KeyMod() const;
+    static int KeyMod();
 
 #ifdef WITHOUT_MOUSE
     void ToggleEmulateMouse();

@@ -388,7 +388,7 @@ void Battle::Arena::ApplyActionSurrender(Command &cmd)
     }
 }
 
-void Battle::Arena::TargetsApplyDamage(Unit &attacker, Unit &defender, TargetsInfo &targets) const
+void Battle::Arena::TargetsApplyDamage(Unit &attacker, Unit &defender, TargetsInfo &targets)
 {
     for (auto &target : targets)
     {
@@ -465,7 +465,7 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForDamage(Unit &attacker, Unit &def
     return targets;
 }
 
-void Battle::Arena::TargetsApplySpell(const HeroBase *hero, const Spell &spell, TargetsInfo &targets) const
+void Battle::Arena::TargetsApplySpell(const HeroBase *hero, const Spell &spell, TargetsInfo &targets)
 {
     for (auto &target : targets)
     {

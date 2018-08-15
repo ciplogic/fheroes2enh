@@ -165,7 +165,7 @@ public:
 
     void drawAALine(int x0, int y0, int x1, int y1, const RGBA &) const;
 
-    void DrawLineAa(const Point &, const Point &, const RGBA &);
+    void DrawLineAa(const Point &, const Point &, const RGBA &) const;
 
     void DrawLine(const Point &, const Point &, const RGBA &) const;
 

@@ -161,7 +161,7 @@ public:
 
     bool LoadMapMP2(const string &);
 
-    bool LoadMapMAP(const string &) const;
+    static bool LoadMapMAP(const string &);
 
     void NewMaps(uint32_t, uint32_t);
 
@@ -295,7 +295,7 @@ public:
 
     static uint32_t GetUniq();
 
-    void PostFixLoad() const;
+    static void PostFixLoad();
 
 private:
     World() : Size(0, 0), day(0), week(0), month(0), heroes_cond_wins(0), heroes_cond_loss(0)

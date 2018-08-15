@@ -46,7 +46,7 @@ public:
     TextInterface(int ft = Font::BIG);
 
     virtual ~TextInterface()
-    {};
+    = default;;
 
     virtual void SetText(const string &) = 0;
 
@@ -109,7 +109,7 @@ class TextUnicode : public TextInterface
 {
 public:
     TextUnicode()
-    {};
+    = default;;
 
     TextUnicode(const std::string &, int ft = Font::BIG);
 

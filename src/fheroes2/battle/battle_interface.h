@@ -169,7 +169,7 @@ namespace Battle
 
         void HumanTurn(const Unit &, Actions &);
 
-        bool NetworkTurn(Result &) const;
+        static bool NetworkTurn(Result &);
 
         const Rect &GetArea() const;
 
@@ -232,7 +232,7 @@ namespace Battle
 
         static void RedrawLowObjects(s32, Surface &);
 
-        void RedrawHighObjects(s32) const;
+        static void RedrawHighObjects(s32);
 
         void RedrawCastle1(const Castle &, Surface &) const;
 
@@ -252,7 +252,7 @@ namespace Battle
 
         void RedrawTroopSprite(const Unit &) const;
 
-        void RedrawTroopCount(const Unit &) const;
+        static void RedrawTroopCount(const Unit &);
 
         void RedrawPocketControls() const;
 

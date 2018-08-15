@@ -200,7 +200,7 @@ bool Maps::FileInfo::ReadSAV(const string &filename)
     return Game::LoadSAV2FileInfo(filename, *this);
 }
 
-bool Maps::FileInfo::ReadMAP(const string &filename) const
+bool Maps::FileInfo::ReadMAP(const string &filename)
 {
     return false;
 }

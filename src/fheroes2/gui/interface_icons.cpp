@@ -514,7 +514,7 @@ bool Interface::IconsPanel::IsSelected(icons_t type) const
     return false;
 }
 
-void Interface::HeroesBottomIcons::SetShow(bool) const
+void Interface::HeroesBottomIcons::SetShow(bool)
 {
 }
 
@@ -552,7 +552,7 @@ void Interface::HeroesBottomIcons::RedrawBackground(const Point &)
 {
 }
 
-void Interface::HeroesBottomIcons::SetHero(Interface::HEROES const pHeroes) const
+void Interface::HeroesBottomIcons::SetHero(Interface::HEROES const pHeroes)
 {
 
 }

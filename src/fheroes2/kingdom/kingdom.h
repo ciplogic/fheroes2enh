@@ -77,7 +77,7 @@ public:
     Kingdom();
 
     virtual ~Kingdom()
-    {}
+    = default;
 
     void Init(int color);
 
@@ -269,7 +269,7 @@ public:
 
     void AddTributeEvents(CapturedObjects &, uint32_t day, int obj);
 
-    uint32_t size() const;
+    static uint32_t size();
 
 private:
     friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Kingdoms &);

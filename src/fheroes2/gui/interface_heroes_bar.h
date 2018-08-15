@@ -38,7 +38,7 @@ namespace Interface
 
         void SetPos(s32, s32);
 
-        void SetRedraw() const;
+        static void SetRedraw();
 
         void Build() const;
 
@@ -53,9 +53,9 @@ namespace Interface
     private:
         void SavePosition();
 
-        void Generate() const;
+        static void Generate();
 
-        void RedrawCursor() const;
+        static void RedrawCursor();
 
         void ChangeAreaSize(const Size &);
 

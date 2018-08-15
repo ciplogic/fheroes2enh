@@ -124,7 +124,7 @@ void Interface::Basic::EventNextHero()
     RedrawFocus();
 }
 
-void Interface::Basic::EventContinueMovement() const
+void Interface::Basic::EventContinueMovement()
 {
     Heroes *hero = GetFocusHeroes();
 
@@ -155,7 +155,7 @@ void Interface::Basic::EventCastSpell() const
     }
 }
 
-int Interface::Basic::EventEndTurn() const
+int Interface::Basic::EventEndTurn()
 {
     const Kingdom &myKingdom = world.GetKingdom(Settings::Get().CurrentColor());
 
@@ -262,7 +262,7 @@ void Interface::Basic::EventSystemDialog()
     }
 }
 
-int Interface::Basic::EventExit() const
+int Interface::Basic::EventExit()
 {
     Heroes *hero = GetFocusHeroes();
 
@@ -315,7 +315,7 @@ void Interface::Basic::EventPuzzleMaps()
     world.GetKingdom(Settings::Get().CurrentColor()).PuzzleMaps().ShowMapsDialog();
 }
 
-void Interface::Basic::EventGameInfo() const
+void Interface::Basic::EventGameInfo()
 {
     Dialog::GameInfo();
 }
@@ -431,7 +431,7 @@ void Interface::Basic::EventDefaultAction()
     }
 }
 
-void Interface::Basic::EventOpenFocus() const
+void Interface::Basic::EventOpenFocus()
 {
     if (GetFocusHeroes())
         Game::OpenHeroesDialog(*GetFocusHeroes());
@@ -564,7 +564,7 @@ void Interface::Basic::EventKeyArrowPress(int dir)
     }
 }
 
-void Interface::Basic::EventDebug1() const
+void Interface::Basic::EventDebug1()
 {
     VERBOSE("");
 /*
@@ -580,7 +580,7 @@ void Interface::Basic::EventDebug1() const
 */
 }
 
-void Interface::Basic::EventDebug2() const
+void Interface::Basic::EventDebug2()
 {
     VERBOSE("");
 }

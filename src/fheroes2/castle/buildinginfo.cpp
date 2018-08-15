@@ -702,7 +702,7 @@ void BuildingInfo::SetStatusMessage(StatusBar &bar) const
     bar.ShowMessage(str);
 }
 
-bool BuildingInfo::CanQuickBuild(const Point &cursor, Rect area) const
+bool BuildingInfo::CanQuickBuild(const Point &cursor, Rect area)
 {
     int dx = area.w - (cursor.x - area.x);
     int dy = cursor.y - area.y;

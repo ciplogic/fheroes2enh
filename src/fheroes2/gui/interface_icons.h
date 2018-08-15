@@ -103,9 +103,9 @@ namespace Interface
         {}
 
 
-        void SetShow(bool) const;
+        static void SetShow(bool);
 
-        void SetHero(HEROES const pHeroes) const;
+        static void SetHero(HEROES const pHeroes);
 
     protected:
         void ActionCurrentUp();

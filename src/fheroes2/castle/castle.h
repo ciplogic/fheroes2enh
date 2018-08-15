@@ -201,15 +201,15 @@ public:
 
     int OpenDialog(bool readonly = false, bool fade = false);
 
-    void DrawCastleFundsAtPos(Display &display, const Funds &resource, Rect src_rt) const;
+    static void DrawCastleFundsAtPos(Display &display, const Funds &resource, Rect src_rt);
 
-    int GetAttackModificator(string *) const;
+    static int GetAttackModificator(string *);
 
-    int GetDefenseModificator(string *) const;
+    static int GetDefenseModificator(string *);
 
     int GetPowerModificator(string *) const;
 
-    int GetKnowledgeModificator(string *) const;
+    static int GetKnowledgeModificator(string *);
 
     int GetMoraleModificator(string *) const;
 

@@ -122,13 +122,13 @@ namespace Interface
 
         void EventDefaultAction();
 
-        void EventOpenFocus() const;
+        static void EventOpenFocus();
 
         int EventSaveGame() const;
 
         static void EventPuzzleMaps();
 
-        void EventGameInfo() const;
+        static void EventGameInfo();
 
         void EventSystemDialog();
 
@@ -136,7 +136,7 @@ namespace Interface
 
         void EventNextTown();
 
-        void EventContinueMovement() const;
+        static void EventContinueMovement();
 
         void EventKingdomInfo() const;
 
@@ -152,9 +152,9 @@ namespace Interface
 
         void EventSwitchShowControlPanel() const;
 
-        void EventDebug1() const;
+        static void EventDebug1();
 
-        void EventDebug2() const;
+        static void EventDebug2();
 
         static bool EventLoadGame();
 
@@ -162,9 +162,9 @@ namespace Interface
 
         int EventFileDialog() const;
 
-        int EventEndTurn() const;
+        static int EventEndTurn();
 
-        int EventExit() const;
+        static int EventExit();
 
         int EventDigArtifact();
 

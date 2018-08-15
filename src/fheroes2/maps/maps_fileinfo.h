@@ -38,7 +38,7 @@ namespace Maps
 
         FileInfo &operator=(const FileInfo &);
 
-        bool ReadMAP(const string &) const;
+        static bool ReadMAP(const string &);
 
         bool ReadMP2(const string &);
 

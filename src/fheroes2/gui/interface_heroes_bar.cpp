@@ -65,7 +65,7 @@ void Interface::HeroesBar::Build() const
 }
 
 /* generate mini maps */
-void Interface::HeroesBar::Generate() const
+void Interface::HeroesBar::Generate()
 {
 }
 
@@ -74,7 +74,7 @@ void Interface::HeroesBar::SetHide(bool f)
     hide = f;
 }
 
-void Interface::HeroesBar::SetRedraw() const
+void Interface::HeroesBar::SetRedraw()
 {
 }
 
@@ -129,7 +129,7 @@ int Interface::HeroesBar::getSelectedIndex() const
 
 
 /* redraw HeroesBar cursor */
-void Interface::HeroesBar::RedrawCursor() const
+void Interface::HeroesBar::RedrawCursor()
 {
     const Settings &conf = Settings::Get();
 

@@ -62,7 +62,7 @@ namespace Battle
 
         string AllUnitsInfo() const;
 
-        void SetEnemyQuality(const Unit &) const;
+        static void SetEnemyQuality(const Unit &);
 
         void SetPositionQuality(const Unit &) const;
 

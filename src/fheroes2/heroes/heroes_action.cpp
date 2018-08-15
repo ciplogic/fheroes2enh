@@ -2733,11 +2733,11 @@ void ActionToUpgradeArmyObject(Heroes &hero, uint32_t obj, s32 dst_index)
     {
         case MP2::OBJ_HILLFORT:
             if (ActionToUpgradeArmy(hero.GetArmy(), Monster(Monster::DWARF), monsters, monsters_upgrade))
-                mons.push_back(Monster(Monster::DWARF));
+                mons.emplace_back(Monster::DWARF);
             if (ActionToUpgradeArmy(hero.GetArmy(), Monster(Monster::ORC), monsters, monsters_upgrade))
-                mons.push_back(Monster(Monster::ORC));
+                mons.emplace_back(Monster::ORC);
             if (ActionToUpgradeArmy(hero.GetArmy(), Monster(Monster::OGRE), monsters, monsters_upgrade))
-                mons.push_back(Monster(Monster::OGRE));
+                mons.emplace_back(Monster::OGRE);
 
             msg1 = _(
                     "All of the %{monsters} you have in your army have been trained by the battle masters of the fort. Your army now contains %{monsters2}.");
@@ -2749,11 +2749,11 @@ void ActionToUpgradeArmyObject(Heroes &hero, uint32_t obj, s32 dst_index)
 
         case MP2::OBJ_FREEMANFOUNDRY:
             if (ActionToUpgradeArmy(hero.GetArmy(), Monster(Monster::PIKEMAN), monsters, monsters_upgrade))
-                mons.push_back(Monster(Monster::PIKEMAN));
+                mons.emplace_back(Monster::PIKEMAN);
             if (ActionToUpgradeArmy(hero.GetArmy(), Monster(Monster::SWORDSMAN), monsters, monsters_upgrade))
-                mons.push_back(Monster(Monster::SWORDSMAN));
+                mons.emplace_back(Monster::SWORDSMAN);
             if (ActionToUpgradeArmy(hero.GetArmy(), Monster(Monster::IRON_GOLEM), monsters, monsters_upgrade))
-                mons.push_back(Monster(Monster::IRON_GOLEM));
+                mons.emplace_back(Monster::IRON_GOLEM);
 
             msg1 = _("All of your %{monsters} have been upgraded into %{monsters2}.");
             StringReplace(msg1, "%{monsters}", monsters);

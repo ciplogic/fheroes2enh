@@ -104,7 +104,7 @@ void Battle::Board::SetPositionQuality(const Unit &b) const
     }
 }
 
-void Battle::Board::SetEnemyQuality(const Unit &b) const
+void Battle::Board::SetEnemyQuality(const Unit &b)
 {
     Arena *arena = GetArena();
     Units enemies(arena->GetForce(b.GetColor(), true), true);

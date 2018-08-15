@@ -7,6 +7,6 @@
 class PlusSignAddon
 {
 public:
-    void draw(int rightMost, int top, bool isEnabled) const;
+    static void draw(int rightMost, int top, bool isEnabled);
 };
 

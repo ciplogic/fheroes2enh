@@ -150,11 +150,11 @@ public:
 
     uint32_t GetDefense() const;
 
-    int GetColor() const;
+    static int GetColor();
 
-    int GetMorale() const;
+    static int GetMorale();
 
-    int GetLuck() const;
+    static int GetLuck();
 
     int GetRace() const;
 

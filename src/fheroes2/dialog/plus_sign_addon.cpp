@@ -8,7 +8,7 @@
 #include "ColorTable.h"
 #include "text.h"
 
-void PlusSignAddon::draw(int rightMost, int top, bool isEnabled) const
+void PlusSignAddon::draw(int rightMost, int top, bool isEnabled)
 {
     Text textPlus = {"+"};
     Rect pos(rightMost - 14, top + 3, 10, 10);

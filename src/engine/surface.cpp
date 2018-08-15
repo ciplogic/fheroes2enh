@@ -1188,7 +1188,7 @@ void Surface::drawAALine(int x0, int y0, int x1, int y1, const RGBA &col) const
 
 }
 
-void Surface::DrawLineAa(const Point &p1, const Point &p2, const RGBA &color)
+void Surface::DrawLineAa(const Point &p1, const Point &p2, const RGBA &color) const
 {
     int x1 = p1.x;
     int y1 = p1.y;

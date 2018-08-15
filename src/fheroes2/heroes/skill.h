@@ -162,7 +162,7 @@ namespace Skill
         Primary();
 
         virtual ~Primary()
-        {};
+        = default;;
 
         enum
         {

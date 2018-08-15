@@ -1142,7 +1142,7 @@ void Battle::Interface::RedrawTroopSprite(const Unit &b) const
     }
 }
 
-void Battle::Interface::RedrawTroopCount(const Unit &b) const
+void Battle::Interface::RedrawTroopCount(const Unit &b)
 {
     const Rect &rt = b.GetRectPosition();
     const Sprite &bar = AGG::GetICN(ICN::TEXTBAR, GetIndexIndicator(b));
@@ -1455,7 +1455,7 @@ void Battle::Interface::RedrawLowObjects(s32 cell_index, Surface &dst)
     }
 }
 
-void Battle::Interface::RedrawHighObjects(s32 cell_index) const
+void Battle::Interface::RedrawHighObjects(s32 cell_index)
 {
     const Cell *cell = Board::GetCell(cell_index);
     Sprite sprite;
@@ -4548,7 +4548,7 @@ void Battle::PopupDamageInfo::Redraw(int maxw, int maxh)
     text2.Blit(area.x, area.y + area.h / 2);
 }
 
-bool Battle::Interface::NetworkTurn(Result &result) const
+bool Battle::Interface::NetworkTurn(Result &result)
 {
     return false;
 }

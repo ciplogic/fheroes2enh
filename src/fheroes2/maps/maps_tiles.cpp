@@ -1461,7 +1461,7 @@ void Maps::Tiles::RedrawBottom(Surface &dst, bool skip_objs) const
     }
 }
 
-void Maps::Tiles::RedrawPassable(Surface &dst) const
+void Maps::Tiles::RedrawPassable(Surface &dst)
 {
 
 }

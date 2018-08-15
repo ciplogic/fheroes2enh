@@ -2163,12 +2163,12 @@ string Castle::String() const
     return os.str();
 }
 
-int Castle::GetAttackModificator(string *strs) const
+int Castle::GetAttackModificator(string *strs)
 {
     return 0;
 }
 
-int Castle::GetDefenseModificator(string *strs) const
+int Castle::GetDefenseModificator(string *strs)
 {
     return 0;
 }
@@ -2191,7 +2191,7 @@ int Castle::GetPowerModificator(string *strs) const
     return result;
 }
 
-int Castle::GetKnowledgeModificator(string *strs) const
+int Castle::GetKnowledgeModificator(string *strs)
 {
     return 0;
 }

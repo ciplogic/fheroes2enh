@@ -39,7 +39,7 @@ public:
     {}
 
     virtual ~BitModes()
-    {}
+    = default;
 
     uint32_t operator()() const
     { return modes; }

@@ -27,7 +27,7 @@
 
 struct paymentstats_t
 {
-    const char *id;
+    std::string id;
     cost_t cost;
 };
 
@@ -41,7 +41,7 @@ paymentstats_t _payments[] = {
         {"recruit_level",               {500,  0,  0, 0, 0, 0, 0}},
         {"alchemist_payment",           {750,  0,  0, 0, 0, 0, 0}},
 
-        {nullptr,                       {0,    0,  0, 0, 0, 0, 0}},
+        {"",                       {0,    0,  0, 0, 0, 0, 0}},
 };
 
 
@@ -59,8 +59,8 @@ payment_t PaymentConditions::BuyBoat()
     payment_t result;
     paymentstats_t *ptr = &_payments[0];
 
-    while (ptr->id && strcmp("buy_boat", ptr->id)) ++ptr;
-    if (ptr->id) result = ptr->cost;
+    while (ptr->id.size() && strcmp("buy_boat", ptr->id.c_str())) ++ptr;
+    if (ptr->id.size()) result = ptr->cost;
 
     return result;
 }
@@ -87,8 +87,8 @@ payment_t PaymentConditions::BuySpellBook(int shrine)
             break;
     }
 
-    while (ptr->id && strcmp(skey, ptr->id)) ++ptr;
-    if (ptr->id) result = ptr->cost;
+    while (ptr->id.size() && strcmp(skey, ptr->id.c_str())) ++ptr;
+    if (ptr->id.size()) result = ptr->cost;
 
     return result;
 }
@@ -97,14 +97,14 @@ payment_t PaymentConditions::RecruitHero(int level)
 {
     payment_t result;
     paymentstats_t *ptr = &_payments[0];
-    while (ptr->id && strcmp("recruit_hero", ptr->id)) ++ptr;
-    if (ptr->id) result = ptr->cost;
+    while (ptr->id.size() && strcmp("recruit_hero", ptr->id.c_str())) ++ptr;
+    if (ptr->id.size()) result = ptr->cost;
 
     // level price
     if (Settings::Get().ExtHeroRecruitCostDependedFromLevel())
     {
         ptr = &_payments[0];
-        while (ptr->id && strcmp("recruit_level", ptr->id)) ++ptr;
+        while (ptr->id.size() && strcmp("recruit_level", ptr->id.c_str())) ++ptr;
         if (ptr && 1 < level)
         {
             if (ptr->cost.gold) result.gold += (level - 1) * ptr->cost.gold;
@@ -124,8 +124,8 @@ payment_t PaymentConditions::ForAlchemist(int arts)
 {
     payment_t result;
     paymentstats_t *ptr = &_payments[0];
-    while (ptr->id && strcmp("alchemist_payment", ptr->id)) ++ptr;
-    if (ptr->id) result = ptr->cost;
+    while (ptr->id.size() && strcmp("alchemist_payment", ptr->id.c_str())) ++ptr;
+    if (ptr->id.size()) result = ptr->cost;
 
     return result;
 }

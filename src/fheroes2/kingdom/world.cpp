@@ -1258,7 +1258,7 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, World &w)
     return msg;
 }
 
-void World::PostFixLoad() const
+void World::PostFixLoad()
 {
 }
 
