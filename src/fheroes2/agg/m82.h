@@ -22,6 +22,8 @@
 
 #pragma once
 
+#include <string>
+
 #define LOOPXX_COUNT 28
 
 namespace M82
@@ -342,7 +344,7 @@ namespace M82
 
     };
 
-    const char *GetString(int);
+    std::string GetString(int);
 
     int FromSpell(int);
 

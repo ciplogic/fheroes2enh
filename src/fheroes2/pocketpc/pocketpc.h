@@ -22,7 +22,6 @@
 
 #pragma once
 
-#include "gamedefs.h"
 
 namespace PocketPC
 {

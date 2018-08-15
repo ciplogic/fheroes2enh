@@ -29,7 +29,7 @@ namespace M82
     const struct
     {
         int type;
-        const char *string;
+        const std::string text;
     } m82map[] = {
             {AELMATTK, "AELMATTK.82M"},
             {AELMKILL, "AELMKILL.82M"},
@@ -344,9 +344,9 @@ namespace M82
     };
 }
 
-const char *M82::GetString(int m82)
+std::string M82::GetString(int m82)
 {
-    return AELMATTK <= m82 && UNKNOWN > m82 ? m82map[m82].string : m82map[UNKNOWN].string;
+    return AELMATTK <= m82 && UNKNOWN > m82 ? m82map[m82].text : m82map[UNKNOWN].text;
 }
 
 int M82::FromSpell(int spell)
