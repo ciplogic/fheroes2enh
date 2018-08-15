@@ -57,6 +57,7 @@ struct Size
     Size();
 
     Size(u16, u16);
+    Size(int, int);
 
     explicit Size(const Point &);
 

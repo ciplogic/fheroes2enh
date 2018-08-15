@@ -81,6 +81,10 @@ Size::Size(u16 sw, u16 sh) : w(sw), h(sh)
 {
 }
 
+Size::Size(int sw, int sh) : w(sw), h(sh)
+{
+}
+
 Size::Size(const Point &pt) : w(abs(pt.x)), h(abs(pt.y))
 {
 }
