@@ -46,18 +46,18 @@ namespace Battle
 
     Unit *ForceGetCurrentUnitPart(Units &units1, Units &units2, bool part1, bool units1_first, bool orders_mode)
     {
-        const auto it1 = part1 ? find_if(units1.begin(), units1.end(),
-                                              bind2nd(ptr_fun(&AllowPart1), orders_mode)) :
-                              find_if(units1.begin(), units1.end(),
-                                      bind2nd(ptr_fun(&AllowPart2), orders_mode));
-        const auto it2 = part1 ? find_if(units2.begin(), units2.end(),
-                                              bind2nd(ptr_fun(&AllowPart1), orders_mode)) :
-                              find_if(units2.begin(), units2.end(),
-                                      bind2nd(ptr_fun(&AllowPart2), orders_mode));
+        const auto it1 = part1 ? find_if(units1._items.begin(), units1._items.end(),
+            [&](const Unit* unit) { return AllowPart1(unit, orders_mode); }) :
+                              find_if(units1._items.begin(), units1._items.end(),
+                                  [&](const Unit* unit) { return AllowPart2(unit, orders_mode); });
+        const auto it2 = part1 ? find_if(units2._items.begin(), units2._items.end(),
+            [&](const Unit* unit) { return AllowPart1(unit, orders_mode); }) :
+                              find_if(units2._items.begin(), units2._items.end(),
+                                  [&](const Unit* unit) { return AllowPart2(unit, orders_mode); });
         Unit *result = nullptr;
 
-        if (it1 != units1.end() &&
-            it2 != units2.end())
+        if (it1 != units1._items.end() &&
+            it2 != units2._items.end())
         {
             if ((*it1)->GetSpeed(orders_mode) == (*it2)->GetSpeed(orders_mode))
             {
@@ -75,17 +75,17 @@ namespace Battle
                 else if ((*it2)->GetSpeed(orders_mode) < (*it1)->GetSpeed(orders_mode))
                     result = *it2;
             }
-        } else if (it1 != units1.end())
+        } else if (it1 != units1._items.end())
             result = *it1;
-        else if (it2 != units2.end())
+        else if (it2 != units2._items.end())
             result = *it2;
 
         if (result && orders_mode)
         {
-            if (it1 != units1.end() && result == *it1)
-                units1.erase(it1);
-            else if (it2 != units2.end() && result == *it2)
-                units2.erase(it2);
+            if (it1 != units1._items.end() && result == *it1)
+                units1._items.erase(it1);
+            else if (it2 != units2._items.end() && result == *it2)
+                units2._items.erase(it2);
         }
 
         return result;
@@ -94,30 +94,30 @@ namespace Battle
 
 Battle::Units::Units()
 {
-    reserve(CAPACITY);
+    _items.reserve(CAPACITY);
 }
 
 Battle::Units::Units(const Units &units, bool filter)
 {
-    reserve(CAPACITY < units.size() ? units.size() : CAPACITY);
-    assign(units.begin(), units.end());
+    _items.reserve(CAPACITY < units._items.size() ? units._items.size() : CAPACITY);
+    _items.assign(units._items.begin(), units._items.end());
     if (filter)
-        resize(distance(begin(),
-                        remove_if(begin(), end(), not1(mem_fun(&Unit::isValid)))));
-}
+        _items.resize(distance(_items.begin(),
+            remove_if(_items.begin(), _items.end(), [](const Unit* unit) {return !unit->isValid(); })));
+} 
 
 Battle::Units::Units(const Units &units1, const Units &units2)
 {
-    const size_t capacity = units1.size() + units2.size();
-    reserve(CAPACITY < capacity ? capacity : CAPACITY);
-    insert(end(), units1.begin(), units1.end());
-    insert(end(), units2.begin(), units2.end());
+    const size_t capacity = units1._items.size() + units2._items.size();
+    _items.reserve(CAPACITY < capacity ? capacity : CAPACITY);
+    _items.insert(_items.end(), units1._items.begin(), units1._items.end());
+    _items.insert(_items.end(), units2._items.begin(), units2._items.end());
 }
 
 Battle::Units &Battle::Units::operator=(const Units &units)
 {
-    reserve(CAPACITY < units.size() ? units.size() : CAPACITY);
-    assign(units.begin(), units.end());
+    _items.reserve(CAPACITY < units._items.size() ? units._items.size() : CAPACITY);
+    _items.assign(units._items.begin(), units._items.end());
 
     return *this;
 }
@@ -152,40 +152,40 @@ void Battle::Units::SortSlowest(bool f)
 {
     SlowestUnits CompareFunc(f);
 
-    sort(begin(), end(), CompareFunc);
+    sort(_items.begin(), _items.end(), CompareFunc);
 }
 
 void Battle::Units::SortFastest(bool f)
 {
     FastestUnits CompareFunc(f);
 
-    sort(begin(), end(), CompareFunc);
+    sort(_items.begin(), _items.end(), CompareFunc);
 }
 
 void Battle::Units::SortStrongest()
 {
-    sort(begin(), end(), Army::StrongestTroop);
+    sort(_items.begin(), _items.end(), Army::StrongestTroop);
 }
 
 void Battle::Units::SortWeakest()
 {
-    sort(begin(), end(), Army::WeakestTroop);
+    sort(_items.begin(), _items.end(), Army::WeakestTroop);
 }
 
 Battle::Unit *Battle::Units::FindUID(uint32_t pid)
 {
-    auto it = find_if(begin(), end(),
+    auto it = find_if(_items.begin(), _items.end(),
                       bind2nd(mem_fun(&Unit::isUID), pid));
 
-    return it == end() ? nullptr : *it;
+    return it == _items.end() ? nullptr : *it;
 }
 
 Battle::Unit *Battle::Units::FindMode(uint32_t mod)
 {
-    auto it = find_if(begin(), end(),
+    auto it = find_if(_items.begin(), _items.end(),
                           bind2nd(mem_fun(&Unit::Modes), mod));
 
-    return it == end() ? nullptr : *it;
+    return it == _items.end() ? nullptr : *it;
 }
 
 
@@ -201,9 +201,9 @@ Battle::Force::Force(Army &parent, bool opposite) : army(parent)
 
         if (troop && troop->isValid())
         {
-            push_back(new Unit(*troop, opposite ? position + 10 : position, opposite));
-            back()->SetArmy(army);
-            uid = back()->GetUID();
+            _items.push_back(new Unit(*troop, opposite ? position + 10 : position, opposite));
+            _items.back()->SetArmy(army);
+            uid = _items.back()->GetUID();
         }
 
         uids.push_back(uid);
@@ -212,7 +212,7 @@ Battle::Force::Force(Army &parent, bool opposite) : army(parent)
 
 Battle::Force::~Force()
 {
-    for (auto &it : *this) delete it;
+    for (auto &it : _items) delete it;
 }
 
 const HeroBase *Battle::Force::GetCommander() const
@@ -237,7 +237,7 @@ int Battle::Force::GetControl() const
 
 bool Battle::Force::isValid() const
 {
-    for (auto &it:*this)
+    for (auto &it:_items)
     {
         if (it->isValid())
             return true;
@@ -249,7 +249,7 @@ uint32_t Battle::Force::GetSurrenderCost() const
 {
     float res = 0;
 
-    for (auto it : *this)
+    for (auto it : _items)
         if (it->isValid())
         {
             // FIXME: orig: 3 titan = 7500
@@ -298,7 +298,7 @@ void Battle::Force::NewTurn()
     if (GetCommander())
         GetCommander()->ResetModes(Heroes::SPELLCASTED);
 
-    for_each(begin(), end(), mem_fun(&Unit::NewTurn));
+    for_each(_items.begin(), _items.end(), mem_fun(&Unit::NewTurn));
 }
 
 bool isUnitFirst(const Battle::Unit *last, bool part1, int army2_color)
@@ -308,7 +308,7 @@ bool isUnitFirst(const Battle::Unit *last, bool part1, int army2_color)
 
 void Battle::Force::UpdateOrderUnits(const Force &army1, const Force &army2, Units &orders)
 {
-    orders.clear();
+    orders._items.clear();
     Unit *last = nullptr;
 
     Units units1(army1, true);
@@ -317,7 +317,7 @@ void Battle::Force::UpdateOrderUnits(const Force &army1, const Force &army2, Uni
     units2.SortFastest(true);
     while (nullptr !=
            (last = ForceGetCurrentUnitPart(units1, units2, true, isUnitFirst(last, true, army2.GetColor()), true)))
-        orders.push_back(last);
+        orders._items.push_back(last);
 
     if (!Settings::Get().ExtBattleSoftWait())
         return;
@@ -337,7 +337,7 @@ void Battle::Force::UpdateOrderUnits(const Force &army1, const Force &army2, Uni
     while (nullptr !=
            (last = ForceGetCurrentUnitPart(units11, units21, false, isUnitFirst(last, false, army2.GetColor()),
                                            true)))
-        orders.push_back(last);
+        orders._items.push_back(last);
 }
 
 Battle::Unit *Battle::Force::GetCurrentUnit(const Force &army1, const Force &army2, Unit *last, bool part1)
@@ -364,9 +364,9 @@ Battle::Unit *Battle::Force::GetCurrentUnit(const Force &army1, const Force &arm
 
 ByteVectorWriter &Battle::operator<<(ByteVectorWriter &msg, const Force &f)
 {
-    msg << static_cast<const BitModes &>(f) << static_cast<uint32_t>(f.size());
+    msg << static_cast<const BitModes &>(f) << static_cast<uint32_t>(f._items.size());
 
-    for (auto it : f)
+    for (auto it : f._items)
         msg << it->GetUID() << *it;
 
     return msg;
@@ -394,7 +394,7 @@ Troops Battle::Force::GetKilledTroops() const
 {
     Troops killed;
 
-    for (auto it : *this)
+    for (auto it : _items)
     {
         const Unit &b = *it;
         killed.PushBack(b, b.GetDead());
@@ -407,7 +407,7 @@ bool Battle::Force::SetIdleAnimation()
 {
     bool res = false;
 
-    for (auto &it : *this)
+    for (auto &it : _items)
     {
         Unit &unit = *it;
 
@@ -430,7 +430,7 @@ bool Battle::Force::NextIdleAnimation()
 {
     bool res = false;
 
-    for (auto &it : *this)
+    for (auto &it : _items)
     {
         Unit &unit = *it;
 
@@ -446,7 +446,7 @@ bool Battle::Force::NextIdleAnimation()
 
 bool Battle::Force::HasMonster(const Monster &mons) const
 {
-    return end() != find_if(begin(), end(),
+    return _items.end() != find_if(_items.begin(), _items.end(),
                             bind2nd(mem_fun(&Troop::isMonster), mons()));
 }
 
@@ -454,7 +454,7 @@ uint32_t Battle::Force::GetDeadCounts() const
 {
     uint32_t res = 0;
 
-    for (auto it : *this)
+    for (auto it : _items)
         res += it->GetDead();
 
     return res;
@@ -464,7 +464,7 @@ uint32_t Battle::Force::GetDeadHitPoints() const
 {
     uint32_t res = 0;
 
-    for (auto it : *this)
+    for (auto it : _items)
     {
         res += Monster::GetHitPoints(*it) * it->GetDead();
     }

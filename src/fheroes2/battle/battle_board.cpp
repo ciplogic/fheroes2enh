@@ -88,7 +88,7 @@ void Battle::Board::SetPositionQuality(const Unit &b) const
     Arena *arena = GetArena();
     Units enemies(arena->GetForce(b.GetColor(), true), true);
 
-    for (auto unit : enemies)
+    for (auto unit : enemies._items)
     {
         if (!unit || !unit->isValid())
             continue;
@@ -109,8 +109,7 @@ void Battle::Board::SetEnemyQuality(const Unit &b)
     Arena *arena = GetArena();
     Units enemies(arena->GetForce(b.GetColor(), true), true);
 
-    for (Units::const_iterator
-                 it = enemies.begin(); it != enemies.end(); ++it)
+    for (auto it = enemies._items.begin(); it != enemies._items.end(); ++it)
     {
         Unit *unit = *it;
 

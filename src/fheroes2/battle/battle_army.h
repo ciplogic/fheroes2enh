@@ -29,9 +29,11 @@ namespace Battle
 {
     class Unit;
 
-    class Units : public vector<Unit *>
+    class Units  
     {
     public:
+        vector<Unit *> _items;
+
         Units();
 
         Units(const Units &, bool filter = false);

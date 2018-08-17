@@ -144,7 +144,7 @@
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <StringPooling>true</StringPooling>
       <FloatingPointExceptions>false</FloatingPointExceptions>
-      <LanguageStandard>stdcpp14</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <CreateHotpatchableImage>false</CreateHotpatchableImage>
@@ -344,7 +344,6 @@
     <ClCompile Include="..\..\src\engine\rand.cpp" />
     <ClCompile Include="..\..\src\engine\rect.cpp" />
     <ClCompile Include="..\..\src\engine\sdlnet.cpp" />
-    <ClCompile Include="..\..\src\engine\serialize.cpp" />
     <ClCompile Include="..\..\src\engine\serializer\BinaryFileReader.cpp" />
     <ClCompile Include="..\..\src\engine\serializer\ByteVectorReader.cpp" />
     <ClCompile Include="..\..\src\engine\serializer\ByteVectorWriter.cpp" />
@@ -357,7 +356,6 @@
     <ClCompile Include="..\..\src\engine\tools.cpp" />
     <ClCompile Include="..\..\src\engine\translations.cpp" />
     <ClCompile Include="..\..\src\engine\xmi2mid.cpp" />
-    <ClCompile Include="..\..\src\engine\zzlib.cpp" />
     <ClCompile Include="..\..\src\fheroes2\agg\agg.cpp" />
     <ClCompile Include="..\..\src\fheroes2\agg\icn.cpp" />
     <ClCompile Include="..\..\src\fheroes2\agg\m82.cpp" />

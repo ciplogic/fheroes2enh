@@ -59,8 +59,8 @@
 
 namespace
 {
-    vector<SDL_Color> pal_colors;
-    vector<uint32_t> pal_colors_u32;
+    std::vector<SDL_Color> pal_colors;
+    std::vector<uint32_t> pal_colors_u32;
 }
 
 namespace AGG
@@ -1209,7 +1209,7 @@ Surface AGG::GetTIL(int til, uint32_t index, uint32_t shape)
 }
 
 /* load 82M object to AGG::Cache in Audio::CVT */
-void AGG::LoadWAV(int m82, vector<u8> &v)
+void AGG::LoadWAV(int m82, std::vector<u8> &v)
 {
     const Settings &conf = Settings::Get();
 
@@ -1221,7 +1221,7 @@ void AGG::LoadWAV(int m82, vector<u8> &v)
         // ogg
         StringReplace(name, ".82m", ".ogg");
         std::string sound = Settings::GetLastFile(prefix_sounds, name);
-        v = LoadFileToMem(sound);
+        v = FileUtils::readFileBytes(sound);
 
         if (v.empty())
         {
@@ -1229,7 +1229,7 @@ void AGG::LoadWAV(int m82, vector<u8> &v)
             StringReplace(name, ".82m", ".mp3");
             sound = Settings::GetLastFile(prefix_sounds, name);
 
-            v = LoadFileToMem(sound);
+            v = FileUtils::readFileBytes(sound);
         }
 
         if (!v.empty()) return;

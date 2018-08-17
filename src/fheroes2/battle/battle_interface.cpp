@@ -673,28 +673,28 @@ void Battle::ArmiesOrder::Set(const Rect &rt, const Units *units, int color)
     area = rt;
     orders = units;
     army_color2 = color;
-    if (units) rects.reserve(units->size());
+    if (units) rects.reserve(units->_items.size());
 }
 
 void Battle::ArmiesOrder::QueueEventProcessing(string &msg)
 {
     LocalEvent &le = LocalEvent::Get();
 
-    for (vector<UnitPos>::const_iterator
-                 it = rects.begin(); it != rects.end(); ++it)
-        if ((*it).first)
+    for (auto it = rects.begin(); it != rects.end(); ++it)
+    {
+        if (!it->first)
+            continue;
+        if (le.MouseCursor((*it).second))
         {
-            if (le.MouseCursor((*it).second))
-            {
-                msg = _("View %{monster} info.");
-                StringReplace(msg, "%{monster}", (*it).first->GetName());
-            }
-
-            if (le.MouseClickLeft((*it).second))
-                Dialog::ArmyInfo(*(*it).first, Dialog::READONLY | Dialog::BUTTONS);
-            else if (le.MousePressRight((*it).second))
-                ArmyInfo(*(*it).first, Dialog::READONLY);
+            msg = _("View %{monster} info.");
+            StringReplace(msg, "%{monster}", (*it).first->GetName());
         }
+
+        if (le.MouseClickLeft((*it).second))
+            Dialog::ArmyInfo(*(*it).first, Dialog::READONLY | Dialog::BUTTONS);
+        else if (le.MousePressRight((*it).second))
+            ArmyInfo(*(*it).first, Dialog::READONLY);
+    }
 }
 
 void Battle::ArmiesOrder::RedrawUnit(const Rect &pos, const Unit &unit, bool revert, bool current) const
@@ -723,28 +723,27 @@ void Battle::ArmiesOrder::RedrawUnit(const Rect &pos, const Unit &unit, bool rev
 
 void Battle::ArmiesOrder::Redraw(const Unit *current)
 {
-    if (orders)
+    if (!orders)
+        return;
+    const uint32_t ow = ARMYORDERW + 2;
+
+    uint32_t ox = area.x + (area.w - ow * count_if(orders->_items.begin(), orders->_items.end(),
+                                                   mem_fun(&Unit::isValid))) / 2;
+    uint32_t oy = area.y;
+
+    x = ox;
+    y = oy;
+    h = ow;
+
+    rects.clear();
+
+    for (auto order : orders->_items)
     {
-        const uint32_t ow = ARMYORDERW + 2;
-
-        uint32_t ox = area.x + (area.w - ow * count_if(orders->begin(), orders->end(),
-                                                  mem_fun(&Unit::isValid))) / 2;
-        uint32_t oy = area.y;
-
-        x = ox;
-        y = oy;
-        h = ow;
-
-        rects.clear();
-
-        for (auto order : *orders)
-        {
-            if (!order || !order->isValid()) continue;
-            rects.emplace_back(order, Rect(ox, oy, ow, ow));
-            RedrawUnit(rects.back().second, *order, (*order).GetColor() == army_color2, current == order);
-            ox += ow;
-            w += ow;
-        }
+        if (!order || !order->isValid()) continue;
+        rects.emplace_back(order, Rect(ox, oy, ow, ow));
+        RedrawUnit(rects.back().second, *order, (*order).GetColor() == army_color2, current == order);
+        ox += ow;
+        w += ow;
     }
 }
 

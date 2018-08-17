@@ -951,11 +951,12 @@ bool World::KingdomIsWins(const Kingdom &kingdom, int wins) const
             if (conf.WinsFindUltimateArtifact())
             {
                 return heroes._items.end() != find_if(heroes._items.begin(), heroes._items.end(),
-                                                      mem_fun(&Heroes::HasUltimateArtifact));
+                    [](const Heroes* hero) {return  hero->HasUltimateArtifact(); });
             }
             const Artifact art = conf.WinsFindArtifactID();
             return heroes._items.end() != find_if(heroes._items.begin(), heroes._items.end(),
-                                                  bind2nd(HeroHasArtifact(), art));
+                [&](const Heroes* hero) {return  hero->HasArtifact(art); });
+                                                  
         }
 
         case GameOver::WINS_SIDE:

@@ -650,9 +650,6 @@
     <ClCompile Include="..\..\src\engine\sdlnet.cpp">
       <Filter>Source Files\engine</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\engine\serialize.cpp">
-      <Filter>Source Files\engine</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\engine\sprites.cpp">
       <Filter>Source Files\engine</Filter>
     </ClCompile>
@@ -675,9 +672,6 @@
       <Filter>Source Files\engine</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\engine\xmi2mid.cpp">
-      <Filter>Source Files\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\engine\zzlib.cpp">
       <Filter>Source Files\engine</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\fheroes2\agg\agg.cpp">

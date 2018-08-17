@@ -27,11 +27,15 @@
 #include <iomanip>
 #include <cstring>
 #include <functional>
+#include <string>
+#include <vector>
 
 #include "types.h"
 #include "system.h"
 #include "tools.h"
 #include <SDL.h>
+
+using namespace std;
 
 enum KeyMod
 {
@@ -145,19 +149,19 @@ int GetInt(const std::string &str)
     int res = 0;
 
     // decimal
-    if (str.end() == find_if(str.begin(), str.end(), not1(std::ptr_fun<int, int>(isdigit))))
+    if (str.end() == find_if(str.begin(), str.end(), [](int ch)->int {return !isdigit(ch);}))
     {
         std::istringstream ss(str);
         ss >> res;
     } else if (str.size() > 2 && (str.at(0) == '+' || str.at(0) == '-') &&
-               str.end() == find_if(str.begin() + 1, str.end(), not1(std::ptr_fun<int, int>(isdigit))))
+               str.end() == find_if(str.begin() + 1, str.end(), [](int ch)->int {return !isdigit(ch); }))
     {
         std::istringstream ss(str);
         ss >> res;
     } else
         // hex
     if (str.size() > 3 && str.at(0) == '0' && tolower(str.at(1)) == 'x' &&
-        str.end() == find_if(str.begin() + 2, str.end(), not1(std::ptr_fun<int, int>(isxdigit))))
+        str.end() == find_if(str.begin() + 2, str.end(), [](int ch)->int {return !isxdigit(ch); }))
     {
         std::istringstream ss(str);
         ss >> std::hex >> res;
@@ -231,8 +235,7 @@ std::vector<u16> StringUTF8_to_UNICODE(const std::string &utf8)
     std::vector<u16> unicode;
     unicode.reserve(utf8.size());
 
-    for (std::string::const_iterator
-                 it = utf8.begin(); it < utf8.end(); ++it)
+    for (auto it = utf8.begin(); it < utf8.end(); ++it)
     {
         u16 ch = static_cast<u8>(*it);
 
@@ -662,25 +665,6 @@ bool SaveMemToFile(const std::vector<u8> &data, const std::string &file)
     }
 
     return true;
-}
-
-std::vector<u8> LoadFileToMem(const std::string &file)
-{
-    std::vector<u8> data;
-    SDL_RWops *rw = SDL_RWFromFile(file.c_str(), "rb");
-
-    if (rw && SDL_RWseek(rw, 0, RW_SEEK_END) != -1)
-    {
-        data.resize(SDL_RWtell(rw));
-        SDL_RWseek(rw, 0, RW_SEEK_SET);
-        SDL_RWread(rw, &data[0], data.size(), 1);
-        SDL_RWclose(rw);
-    } else
-    {
-        ERROR(SDL_GetError());
-    }
-
-    return data;
 }
 
 bool PressIntKey(uint32_t min, uint32_t max, uint32_t &result)

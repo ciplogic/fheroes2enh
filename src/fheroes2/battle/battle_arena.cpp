@@ -226,14 +226,14 @@ Battle::Arena::Arena(Army &a1, Army &a2, s32 index, bool local) :
         interface = std::make_unique<Interface>(*this, index);
         board.SetArea(interface->GetArea());
 
-        for_each(army1->begin(), army1->end(), mem_fun(&Unit::InitContours));
-        for_each(army2->begin(), army2->end(), mem_fun(&Unit::InitContours));
+        for_each(army1->_items.begin(), army1->_items.end(), mem_fun(&Unit::InitContours));
+        for_each(army2->_items.begin(), army2->_items.end(), mem_fun(&Unit::InitContours));
 
         if (conf.Sound())
             AGG::PlaySound(M82::PREBATTL);
 
         armies_order = std::make_unique<Units>();
-        armies_order->reserve(25);
+        armies_order->_items.reserve(25);
         interface->SetArmiesOrder(armies_order.get());
     }
 
@@ -597,28 +597,28 @@ int Battle::Arena::GetOppositeColor(int col) const
 
 Battle::Unit *Battle::Arena::GetTroopUID(uint32_t uid)
 {
-    auto it = find_if(army1->begin(), army1->end(),
+    auto it = find_if(army1->_items.begin(), army1->_items.end(),
                       bind2nd(mem_fun(&Unit::isUID), uid));
 
-    if (it != army1->end()) return *it;
+    if (it != army1->_items.end()) return *it;
 
-    it = find_if(army2->begin(), army2->end(),
+    it = find_if(army2->_items.begin(), army2->_items.end(),
                  bind2nd(mem_fun(&Unit::isUID), uid));
 
-    return it != army2->end() ? *it : nullptr;
+    return it != army2->_items.end() ? *it : nullptr;
 }
 
 const Battle::Unit *Battle::Arena::GetTroopUID(uint32_t uid) const
 {
-    Units::const_iterator it = find_if(army1->begin(), army1->end(),
+    auto it = find_if(army1->_items.begin(), army1->_items.end(),
                                        bind2nd(mem_fun(&Unit::isUID), uid));
 
-    if (it != army1->end()) return *it;
+    if (it != army1->_items.end()) return *it;
 
-    it = find_if(army2->begin(), army2->end(),
+    it = find_if(army2->_items.begin(), army2->_items.end(),
                  bind2nd(mem_fun(&Unit::isUID), uid));
 
-    return it != army2->end() ? *it : nullptr;
+    return it != army2->_items.end() ? *it : nullptr;
 }
 
 const Battle::Unit *Battle::Arena::GetEnemyMaxQuality(int my_color) const
@@ -1012,7 +1012,7 @@ Battle::Unit *Battle::Arena::CreateElemental(const Spell &spell) const
         elem->SetModes(CAP_SUMMONELEM);
         elem->SetArmy(hero->GetArmy());
         if (interface) elem->InitContours();
-        army.push_back(elem);
+        army._items.push_back(elem);
     } else
     {
     }
@@ -1031,7 +1031,7 @@ Battle::Unit *Battle::Arena::CreateMirrorImage(Unit &b, s32 pos) const
     if (interface) image->InitContours();
     b.SetModes(CAP_MIRROROWNER);
 
-    GetCurrentForce().push_back(image);
+    GetCurrentForce()._items.push_back(image);
 
 
     return image;

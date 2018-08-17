@@ -61,7 +61,7 @@ namespace Battle
 
     int countAlive(Units friends)
     {
-        return count_if(friends.begin(), friends.end(), 
+        return count_if(friends._items.begin(), friends._items.end(),
             [](Unit *unit)
         {
             return unit->isAlive();
@@ -70,7 +70,7 @@ namespace Battle
 
     int countUndead(Units friends)
     {
-        return count_if(friends.begin(), friends.end(),
+        return count_if(friends._items.begin(), friends._items.end(),
             [](Unit *unit)
         {
             return unit->isUndead();
@@ -87,7 +87,7 @@ s32 Battle::AIAreaSpellDst(const HeroBase &hero)
     Arena *arena = GetArena();
     Units enemies(arena->GetForce(hero.GetColor(), true), true);
 
-    for (auto &enemie : enemies)
+    for (auto &enemie : enemies._items)
     {
         const Indexes around = Board::GetAroundIndexes(*enemie);
 
@@ -190,16 +190,16 @@ s32 Battle::AIAttackPosition(Arena &arena, const Unit &b, const Indexes &positio
 
         const Units enemies(arena.GetForce(b.GetColor(), true), true);
 
-        if (1 < enemies.size())
+        if (1 < enemies._items.size())
         {
-            for (auto it1 = enemies.begin(); it1 != enemies.end(); ++it1)
+            for (auto it1 = enemies._items.begin(); it1 != enemies._items.end(); ++it1)
             {
                 const Indexes around = Board::GetAroundIndexes(**it1);
 
                 for (int it2 : around)
                 {
                     const Unit *unit = Board::GetCell(it2)->GetUnit();
-                    if (unit && enemies.end() != find(enemies.begin(), enemies.end(), unit))
+                    if (unit && enemies._items.end() != find(enemies._items.begin(), enemies._items.end(), unit))
                         results.push_back(it2);
                 }
             }
@@ -364,12 +364,12 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
     // troop bad spell - clean
     {
         // sort strongest
-        auto it = find_if(friends.begin(), friends.end(),
+        auto it = find_if(friends._items.begin(), friends._items.end(),
             [](Unit *unit)
         {
             return unit->Modes(IS_BAD_MAGIC);
         });
-        if (it != friends.end())
+        if (it != friends._items.end())
         {
             if (AIApplySpell(Spell::DISPEL, *it, *hero, a)) return true;
             if (AIApplySpell(Spell::CURE, *it, *hero, a)) return true;
@@ -424,19 +424,19 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
     if (hero->HaveSpell(Spell::HASTE) && !enemy)
     {
         // sort strongest
-        const auto it = find_if(friends.begin(), friends.end(),
+        const auto it = find_if(friends._items.begin(), friends._items.end(),
             [](Unit *unit)
         {
             return !unit->Modes(SP_HASTE);
         });
-        if (it != friends.end() &&
+        if (it != friends._items.end() &&
             AIApplySpell(Spell::HASTE, *it, *hero, a))
             return true;
     }
 
     // shield spell conditions
     {
-        auto it = find_if(enemies.begin(), enemies.end(),
+        auto it = find_if(enemies._items.begin(), enemies._items.end(),
             [](Unit *unit)
         {
             return unit->isArchers();
@@ -445,23 +445,23 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
         const Castle *castle = Arena::GetCastle();
 
         // find enemy archers
-        if (it != enemies.end() ||
+        if (it != enemies._items.end() ||
             // or archers tower
             castle && castle->GetColor() != b.GetColor() && castle->isCastle())
         {
             // find strongest archers
-            for (it = friends.begin(); it != friends.end(); ++it)
+            for (it = friends._items.begin(); it != friends._items.end(); ++it)
                 if ((*it)->isArchers() && !(*it)->Modes(SP_SHIELD)) break;
 
             // or other strongest friends
-            if (it == friends.end())
-                it = find_if(friends.begin(), friends.end(),
+            if (it == friends._items.end())
+                it = find_if(friends._items.begin(), friends._items.end(),
                     [](Unit *unit)
             {
                 return !unit->Modes(SP_SHIELD);
             });
 
-            if (it != friends.end() &&
+            if (it != friends._items.end() &&
                 AIApplySpell(Spell::SHIELD, *it, *hero, a))
                 return true;
         }
@@ -471,26 +471,26 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
     // enemy army spell
     {
         // find mirror image or summon elem
-        auto it = find_if(enemies.begin(), enemies.end(),
+        auto it = find_if(enemies._items.begin(), enemies._items.end(),
             [](Unit *unit)
         {
             return unit->Modes(CAP_MIRRORIMAGE | CAP_SUMMONELEM);
         });
 
-        if (it != enemies.end())
+        if (it != enemies._items.end())
         {
             if (AIApplySpell(Spell::ARROW, *it, *hero, a)) return true;
             if (AIApplySpell(Spell::LIGHTNINGBOLT, *it, *hero, a)) return true;
         }
 
         // find good magic
-        it = find_if(enemies.begin(), enemies.end(),
+        it = find_if(enemies._items.begin(), enemies._items.end(),
             [](Unit *unit)
             {
                 return unit->Modes(IS_GOOD_MAGIC);
             });
 
-        if (it != enemies.end())
+        if (it != enemies._items.end())
         {
             // slow
             if ((*it)->Modes(SP_HASTE) && AIApplySpell(Spell::SLOW, *it, *hero, a)) return true;
@@ -514,7 +514,7 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
             if (AIApplySpell(Spell::DEATHWAVE, nullptr, *hero, a)) return true;
         }
 
-        Unit *stats = *Rand::Get(enemies);
+        Unit *stats = *Rand::Get(enemies._items);
 
         if (AIApplySpell(Spell::LIGHTNINGBOLT, stats, *hero, a)) return true;
         if (AIApplySpell(Spell::ARROW, stats, *hero, a)) return true;

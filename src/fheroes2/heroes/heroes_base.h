@@ -156,14 +156,6 @@ protected:
     BagArtifacts bag_artifacts;
 };
 
-struct HeroHasArtifact : public binary_function<const HeroBase *, Artifact, bool>
-{
-    bool operator()(const HeroBase *hero, Artifact art) const
-    {
-        return hero->HasArtifact(art);
-    }
-};
-
 ByteVectorWriter &operator<<(ByteVectorWriter &, const HeroBase &);
 
 
