@@ -296,18 +296,18 @@ void Maps::ClearFog(s32 index, int scoute, int color)
     // AI advantage
     if (world.GetKingdom(color).isControlAI())
     {
-        switch (conf.GameDifficulty())
+        switch ((DifficultyEnum)conf.GameDifficulty())
         {
-            case Difficulty::NORMAL:
+            case DifficultyEnum::NORMAL:
                 scoute += 2;
                 break;
-            case Difficulty::HARD:
+            case DifficultyEnum::HARD:
                 scoute += 3;
                 break;
-            case Difficulty::EXPERT:
+            case DifficultyEnum::EXPERT:
                 scoute += 4;
                 break;
-            case Difficulty::IMPOSSIBLE:
+            case DifficultyEnum::IMPOSSIBLE:
                 scoute += 6;
                 break;
             default:

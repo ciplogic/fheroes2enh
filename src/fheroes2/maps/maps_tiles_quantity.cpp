@@ -1096,21 +1096,21 @@ void Maps::Tiles::PlaceMonsterOnTile(Tiles &tile, const Monster &mons, uint32_t 
         int mul = 4;
 
         // set random count
-        switch (Settings::Get().GameDifficulty())
+        switch ((DifficultyEnum)Settings::Get().GameDifficulty())
         {
-            case Difficulty::EASY:
+            case DifficultyEnum::EASY:
                 mul = 3;
                 break;
-            case Difficulty::NORMAL:
+            case DifficultyEnum::NORMAL:
                 mul = 4;
                 break;
-            case Difficulty::HARD:
+            case DifficultyEnum::HARD:
                 mul = 4;
                 break;
-            case Difficulty::EXPERT:
+            case DifficultyEnum::EXPERT:
                 mul = 5;
                 break;
-            case Difficulty::IMPOSSIBLE:
+            case DifficultyEnum::IMPOSSIBLE:
                 mul = 6;
                 break;
             default:

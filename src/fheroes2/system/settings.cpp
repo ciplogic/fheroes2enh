@@ -225,7 +225,7 @@ string Settings::GetVersion()
 
 /* constructor */
 Settings::Settings() 
-    : debug(DEFAULT_DEBUG), video_mode(0, 0), fullScreen(false), game_difficulty(Difficulty::NORMAL),
+    : debug(DEFAULT_DEBUG), video_mode(0, 0), fullScreen(false), game_difficulty((int)DifficultyEnum::NORMAL),
     font_normal("dejavusans.ttf"), font_small("dejavusans.ttf"), size_normal(15), size_small(10),
     sound_volume(6), music_volume(6), heroes_speed(DEFAULT_SPEED_DELAY),
     ai_speed(DEFAULT_SPEED_DELAY), scroll_speed(SCROLL_NORMAL), battle_speed(DEFAULT_SPEED_DELAY),
@@ -588,7 +588,7 @@ void Settings::SetCurrentFileInfo(const Maps::FileInfo &fi)
     players.Init(current_maps_file);
 
     // game difficulty
-    game_difficulty = Difficulty::NORMAL;
+    game_difficulty = (int)DifficultyEnum::NORMAL;
     preferably_count_players = 0;
 }
 

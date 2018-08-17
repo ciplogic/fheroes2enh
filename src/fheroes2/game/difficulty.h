@@ -24,9 +24,7 @@
 
 #include <string>
 
-namespace Difficulty
-{
-    enum
+    enum class DifficultyEnum
     {
         EASY,
         NORMAL,
@@ -35,5 +33,7 @@ namespace Difficulty
         IMPOSSIBLE
     };
 
+namespace Difficulty
+{
     std::string String(int);
 }

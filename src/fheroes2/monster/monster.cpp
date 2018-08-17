@@ -354,21 +354,21 @@ uint32_t Monster::GetRNDSize(bool skip_factor) const
     {
         uint32_t factor = 100;
 
-        switch (Settings::Get().GameDifficulty())
+        switch ((DifficultyEnum)Settings::Get().GameDifficulty())
         {
-            case Difficulty::EASY:
+            case DifficultyEnum::EASY:
                 factor = 80;
                 break;
-            case Difficulty::NORMAL:
+            case DifficultyEnum::NORMAL:
                 factor = 100;
                 break;
-            case Difficulty::HARD:
+            case DifficultyEnum::HARD:
                 factor = 130;
                 break;
-            case Difficulty::EXPERT:
+            case DifficultyEnum::EXPERT:
                 factor = 160;
                 break;
-            case Difficulty::IMPOSSIBLE:
+            case DifficultyEnum::IMPOSSIBLE:
                 factor = 190;
                 break;
             default:

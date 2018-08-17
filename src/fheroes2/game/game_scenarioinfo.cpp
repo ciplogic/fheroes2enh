@@ -144,21 +144,21 @@ int Game::ScenarioInfo()
 
     SpriteMove levelCursor(ngextra);
 
-    switch (conf.GameDifficulty())
+    switch ((DifficultyEnum)conf.GameDifficulty())
     {
-        case Difficulty::EASY:
+        case DifficultyEnum::EASY:
             levelCursor.Move(coordDifficulty[0]);
             break;
-        case Difficulty::NORMAL:
+        case DifficultyEnum::NORMAL:
             levelCursor.Move(coordDifficulty[1]);
             break;
-        case Difficulty::HARD:
+        case DifficultyEnum::HARD:
             levelCursor.Move(coordDifficulty[2]);
             break;
-        case Difficulty::EXPERT:
+        case DifficultyEnum::EXPERT:
             levelCursor.Move(coordDifficulty[3]);
             break;
-        case Difficulty::IMPOSSIBLE:
+        case DifficultyEnum::IMPOSSIBLE:
             levelCursor.Move(coordDifficulty[4]);
             break;
     }
@@ -196,7 +196,7 @@ int Game::ScenarioInfo()
                 if (rating) RedrawRatingInfo(*rating);
                 // default difficulty normal
                 levelCursor.Move(coordDifficulty[1]);
-                conf.SetGameDifficulty(Difficulty::NORMAL);
+                conf.SetGameDifficulty((int)DifficultyEnum::NORMAL);
                 buttonOk->Draw();
                 buttonCancel->Draw();
             }
@@ -319,7 +319,7 @@ void RedrawScenarioStaticInfo(const Rect &rt)
 
 void RedrawDifficultyInfo(const Point &dst, bool label)
 {
-    for (uint32_t current = Difficulty::EASY; current <= Difficulty::IMPOSSIBLE; ++current)
+    for (uint32_t current = (uint32_t)DifficultyEnum::EASY; current <= (uint32_t)DifficultyEnum::IMPOSSIBLE; ++current)
     {
         const Sprite &sprite = AGG::GetICN(ICN::NGHSBKG, 0);
         Rect src_rt(24, 94, 65, 65);

@@ -252,18 +252,18 @@ void AIHeroesAddedRescueTask(Heroes &hero)
 
     uint32_t scoute = hero.GetScoute();
 
-    switch (Settings::Get().GameDifficulty())
+    switch ((DifficultyEnum)Settings::Get().GameDifficulty())
     {
-        case Difficulty::NORMAL:
+        case DifficultyEnum::NORMAL:
             scoute += 2;
             break;
-        case Difficulty::HARD:
+        case DifficultyEnum::HARD:
             scoute += 3;
             break;
-        case Difficulty::EXPERT:
+        case DifficultyEnum::EXPERT:
             scoute += 4;
             break;
-        case Difficulty::IMPOSSIBLE:
+        case DifficultyEnum::IMPOSSIBLE:
             scoute += 6;
             break;
         default:

@@ -129,18 +129,18 @@ void Castle::LoadFromMP2(ByteVectorReader &st)
         // default building
         building |= DWELLING_MONSTER1;
         uint32_t dwelling2 = 0;
-        switch (Settings::Get().GameDifficulty())
+        switch ((DifficultyEnum)Settings::Get().GameDifficulty())
         {
-            case Difficulty::EASY:
+            case DifficultyEnum::EASY:
                 dwelling2 = 75;
                 break;
-            case Difficulty::NORMAL:
+            case DifficultyEnum::NORMAL:
                 dwelling2 = 50;
                 break;
-            case Difficulty::HARD:
+            case DifficultyEnum::HARD:
                 dwelling2 = 25;
                 break;
-            case Difficulty::EXPERT:
+            case DifficultyEnum::EXPERT:
                 dwelling2 = 10;
                 break;
             default:

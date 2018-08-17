@@ -225,34 +225,34 @@ uint32_t Game::GetRating()
     Settings &conf = Settings::Get();
     uint32_t rating = 50;
 
-    switch (conf.MapsDifficulty())
+    switch ((DifficultyEnum)conf.MapsDifficulty())
     {
-        case Difficulty::NORMAL:
+        case DifficultyEnum::NORMAL:
             rating += 20;
             break;
-        case Difficulty::HARD:
+        case DifficultyEnum::HARD:
             rating += 40;
             break;
-        case Difficulty::EXPERT:
-        case Difficulty::IMPOSSIBLE:
+        case DifficultyEnum::EXPERT:
+        case DifficultyEnum::IMPOSSIBLE:
             rating += 80;
             break;
         default:
             break;
     }
 
-    switch (conf.GameDifficulty())
+    switch ((DifficultyEnum)conf.GameDifficulty())
     {
-        case Difficulty::NORMAL:
+        case DifficultyEnum::NORMAL:
             rating += 30;
             break;
-        case Difficulty::HARD:
+        case DifficultyEnum::HARD:
             rating += 50;
             break;
-        case Difficulty::EXPERT:
+        case DifficultyEnum::EXPERT:
             rating += 70;
             break;
-        case Difficulty::IMPOSSIBLE:
+        case DifficultyEnum::IMPOSSIBLE:
             rating += 90;
             break;
         default:

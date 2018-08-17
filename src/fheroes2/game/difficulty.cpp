@@ -28,17 +28,17 @@ std::string Difficulty::String(int difficulty)
     static std::string str_difficulty[] = {_("difficulty|Easy"), _("difficulty|Normal"), _("difficulty|Hard"),
                                     _("difficulty|Expert"), _("difficulty|Impossible"), "Unknown"};
 
-    switch (difficulty)
+    switch ((DifficultyEnum)difficulty)
     {
-        case EASY:
+        case DifficultyEnum::EASY:
             return str_difficulty[0];
-        case NORMAL:
+        case DifficultyEnum::NORMAL:
             return str_difficulty[1];
-        case HARD:
+        case DifficultyEnum::HARD:
             return str_difficulty[2];
-        case EXPERT:
+        case DifficultyEnum::EXPERT:
             return str_difficulty[3];
-        case IMPOSSIBLE:
+        case DifficultyEnum::IMPOSSIBLE:
             return str_difficulty[4];
         default:
             break;

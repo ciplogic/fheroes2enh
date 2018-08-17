@@ -295,17 +295,17 @@ uint32_t GameStatic::GetGameOverLostDays()
 
 cost_t &GameStatic::GetKingdomStartingResource(int df)
 {
-    switch (df)
+    switch ((DifficultyEnum)df)
     {
-        case Difficulty::EASY:
+        case DifficultyEnum::EASY:
             return kingdom_starting_resource[0];
-        case Difficulty::NORMAL:
+        case DifficultyEnum::NORMAL:
             return kingdom_starting_resource[1];
-        case Difficulty::HARD:
+        case DifficultyEnum::HARD:
             return kingdom_starting_resource[2];
-        case Difficulty::EXPERT:
+        case DifficultyEnum::EXPERT:
             return kingdom_starting_resource[3];
-        case Difficulty::IMPOSSIBLE:
+        case DifficultyEnum::IMPOSSIBLE:
             return kingdom_starting_resource[4];
         default:
             break;

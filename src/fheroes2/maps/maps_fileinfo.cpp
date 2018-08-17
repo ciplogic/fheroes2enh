@@ -230,19 +230,19 @@ bool Maps::FileInfo::ReadMP2(const string &filename)
     switch (fs.getLE16())
     {
         case 0x00:
-            difficulty = Difficulty::EASY;
+            difficulty = (u8)DifficultyEnum::EASY;
             break;
         case 0x01:
-            difficulty = Difficulty::NORMAL;
+            difficulty = (u8)DifficultyEnum::NORMAL;
             break;
         case 0x02:
-            difficulty = Difficulty::HARD;
+            difficulty = (u8)DifficultyEnum::HARD;
             break;
         case 0x03:
-            difficulty = Difficulty::EXPERT;
+            difficulty = (u8)DifficultyEnum::EXPERT;
             break;
         default:
-            difficulty = Difficulty::NORMAL;
+            difficulty = (u8)DifficultyEnum::NORMAL;
             break;
     }
 
