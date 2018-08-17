@@ -40,7 +40,6 @@
 #define TAG_MTRK    0x4D54726B
 
 #include "system.h"
-#include "serialize.h"
 #include "ByteVectorReader.h"
 #include "ByteVectorWriter.h"
 

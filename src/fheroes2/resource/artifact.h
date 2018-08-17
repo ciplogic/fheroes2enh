@@ -32,10 +32,6 @@ class Spell;
 
 class Heroes;
 
-class StreamBase;
-
-class StreamBase;
-
 class Artifact
 {
 public:

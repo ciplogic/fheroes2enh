@@ -59,8 +59,6 @@ set(SOURCE_FILES
         src/engine/rect.h
         src/engine/sdlnet.cpp
         src/engine/sdlnet.h
-        src/engine/serialize.cpp
-        src/engine/serialize.h
         src/engine/sprites.cpp
         src/engine/sprites.h
         src/engine/surface.cpp
@@ -76,8 +74,6 @@ set(SOURCE_FILES
         src/engine/translations.h
         src/engine/types.h
         src/engine/xmi2mid.cpp
-        src/engine/zzlib.cpp
-        src/engine/zzlib.h
         src/engine/serializer/ByteVectorReader.cpp
         src/engine/serializer/ByteVectorReader.h
         src/engine/serializer/BinaryFileReader.cpp

@@ -39,6 +39,7 @@
 #include "game.h"
 #include "game_io.h"
 #include "game_over.h"
+#include "BinaryFileReader.h"
 
 #define LENGTHNAME        16
 #define LENGTHDESCRIPTION    143
@@ -208,12 +209,9 @@ bool Maps::FileInfo::ReadMAP(const string &filename)
 bool Maps::FileInfo::ReadMP2(const string &filename)
 {
     Reset();
-    StreamFile fs;
+    auto fileData = FileUtils::readFileBytes(filename);
+    ByteVectorReader fs(fileData);
 
-    if (!fs.open(filename, "rb"))
-    {
-        return false;
-    }
 
     file = filename;
     kingdom_colors = 0;

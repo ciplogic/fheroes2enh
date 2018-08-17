@@ -23,7 +23,6 @@
 #include <algorithm>
 
 #include "tools.h"
-#include "serialize.h"
 #include "tinyconfig.h"
 #include "BinaryFileReader.h"
 

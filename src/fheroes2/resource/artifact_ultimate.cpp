@@ -23,7 +23,6 @@
 #include "maps.h"
 #include "interface_gamearea.h"
 #include "artifact_ultimate.h"
-#include "serialize.h"
 
 UltimateArtifact::UltimateArtifact() : index(-1), isfound(false)
 {

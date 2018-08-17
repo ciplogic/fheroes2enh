@@ -23,12 +23,12 @@
 #include <map>
 
 #include "engine.h"
-#include "serialize.h"
 #include "system.h"
 #include "tools.h"
 #include <fstream>
 
 
+using namespace std;
 namespace ModernTranslation
 {
     using StringVector = std::vector <string>;

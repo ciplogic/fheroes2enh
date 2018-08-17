@@ -22,7 +22,6 @@
 
 #include <sstream>
 #include <ctime>
-#include "zzlib.h"
 #include "text.h"
 #include "settings.h"
 #include "kingdom.h"

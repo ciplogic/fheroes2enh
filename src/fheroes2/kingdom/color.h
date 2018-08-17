@@ -24,7 +24,6 @@
 #pragma once
 
 #include <vector>
-#include "serialize.h"
 #include "ByteVectorReader.h"
 #include "ByteVectorWriter.h"
 
@@ -78,7 +77,6 @@ class ColorBase
 {
     int color;
 
-    friend StreamBase &operator<<(StreamBase &, const ColorBase &);
     friend ByteVectorWriter &operator<<(ByteVectorWriter &, const ColorBase &);
 
     friend ByteVectorReader &operator>>(ByteVectorReader &msg, ColorBase &col);
@@ -102,5 +100,4 @@ public:
     { return color; }
 };
 
-StreamBase &operator<<(StreamBase &, const ColorBase &);
 ByteVectorReader &operator>>(ByteVectorReader &msg, ColorBase &col);

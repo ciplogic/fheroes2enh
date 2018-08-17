@@ -34,7 +34,6 @@
 #include "dialog.h"
 #include "settings.h"
 #include "world.h"
-#include "zzlib.h"
 #include "game.h"
 #include "game_over.h"
 #include "mus.h"

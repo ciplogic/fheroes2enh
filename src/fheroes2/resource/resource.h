@@ -21,7 +21,6 @@
  ***************************************************************************/
 #pragma once
 
-#include "serialize.h"
 #include "ByteVectorWriter.h"
 #include "ByteVectorReader.h"
 #include "rect.h"

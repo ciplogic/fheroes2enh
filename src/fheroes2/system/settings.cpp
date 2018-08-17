@@ -519,10 +519,17 @@ bool Settings::Save(const string &filename) const
 {
     if (filename.empty()) return false;
 
-    StreamFile fs;
-    if (!fs.open(filename, "wb")) return false;
+    ByteVectorWriter fs;
     fs << String();
+    try
+    {
 
+        FileUtils::writeFileBytes(filename, fs.data());
+    }
+    catch (...)
+    {
+        return false;
+    }
     return true;
 }
 

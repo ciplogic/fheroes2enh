@@ -28,9 +28,6 @@
 
 #define MODES_ALL 0xFFFFFFFF
 
-class StreamBase;
-
-class StreamBase;
 
 class BitModes
 {

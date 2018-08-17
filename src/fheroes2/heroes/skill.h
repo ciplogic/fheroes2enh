@@ -25,7 +25,6 @@
 #include <string>
 #include <vector>
 #include <utility>
-#include "serialize.h"
 
 #include "ByteVectorReader.h"
 #include "ByteVectorWriter.h"
