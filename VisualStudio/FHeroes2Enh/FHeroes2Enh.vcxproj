@@ -148,7 +148,6 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <CreateHotpatchableImage>false</CreateHotpatchableImage>
-      <EnforceTypeConversionRules>true</EnforceTypeConversionRules>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <CallingConvention>Cdecl</CallingConvention>
     </ClCompile>

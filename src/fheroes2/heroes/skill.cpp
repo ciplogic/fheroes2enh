@@ -565,12 +565,12 @@ string Skill::Secondary::GetDescription() const
 
 Skill::SecSkills::SecSkills()
 {
-    reserve(HEROESMAXSKILL);
+    _items.reserve(HEROESMAXSKILL);
 }
 
 Skill::SecSkills::SecSkills(int race)
 {
-    reserve(HEROESMAXSKILL);
+    _items.reserve(HEROESMAXSKILL);
 
     if (race & Race::ALL)
     {
@@ -608,55 +608,55 @@ Skill::SecSkills::SecSkills(int race)
 
 int Skill::SecSkills::GetLevel(int skill) const
 {
-    const auto it = find_if(begin(), end(),
+    const auto it = find_if(_items.begin(), _items.end(),
                                 bind2nd(mem_fun_ref(&Secondary::isSkill), skill));
 
-    return it == end() ? Level::NONE : (*it).Level();
+    return it == _items.end() ? Level::NONE : (*it).Level();
 }
 
 uint32_t Skill::SecSkills::GetValues(int skill) const
 {
-    const auto it = find_if(begin(), end(),
+    const auto it = find_if(_items.begin(), _items.end(),
                                 bind2nd(mem_fun_ref(&Secondary::isSkill), skill));
 
-    return it == end() ? 0 : (*it).GetValues();
+    return it == _items.end() ? 0 : (*it).GetValues();
 }
 
 int Skill::SecSkills::Count() const
 {
-    return count_if(begin(), end(), mem_fun_ref(&Secondary::isValid));
+    return count_if(_items.begin(), _items.end(), mem_fun_ref(&Secondary::isValid));
 }
 
 void Skill::SecSkills::AddSkill(const Secondary &skill)
 {
     if (skill.isValid())
     {
-        auto it = find_if(begin(), end(),
+        auto it = find_if(_items.begin(), _items.end(),
                               bind2nd(mem_fun_ref(&Secondary::isSkill), skill.Skill()));
-        if (it != end())
+        if (it != _items.end())
             (*it).SetLevel(skill.Level());
         else
         {
-            it = find_if(begin(), end(),
+            it = find_if(_items.begin(), _items.end(),
                          not1(mem_fun_ref(&Secondary::isValid)));
-            if (it != end())
+            if (it != _items.end())
                 (*it).Set(skill);
-            else if (size() < HEROESMAXSKILL)
-                push_back(skill);
+            else if (_items.size() < HEROESMAXSKILL)
+                _items.push_back(skill);
         }
     }
 }
 
 Skill::Secondary *Skill::SecSkills::FindSkill(int skill)
 {
-    const auto it = find_if(begin(), end(),
+    const auto it = find_if(_items.begin(), _items.end(),
                           bind2nd(mem_fun_ref(&Secondary::isSkill), skill));
-    return it != end() ? &*it : nullptr;
+    return it != _items.end() ? &*it : nullptr;
 }
 
 vector<Skill::Secondary> &Skill::SecSkills::ToVector()
 {
-    vector<Secondary> &v = *this;
+    vector<Secondary> &v = _items;
     return v;
 }
 
@@ -664,7 +664,7 @@ string Skill::SecSkills::String() const
 {
     ostringstream os;
 
-    for (const auto &it : *this)
+    for (const auto &it : _items)
         os << it.GetName() << ", ";
 
     return os.str();
@@ -672,8 +672,8 @@ string Skill::SecSkills::String() const
 
 void Skill::SecSkills::FillMax(const Secondary &skill)
 {
-    if (size() < HEROESMAXSKILL)
-        resize(HEROESMAXSKILL, skill);
+    if (_items.size() < HEROESMAXSKILL)
+        _items.resize(HEROESMAXSKILL, skill);
 }
 
 int Skill::SecondaryGetWeightSkillFromRace(int race, int skill)
@@ -730,7 +730,7 @@ void Skill::SecSkills::FindSkillsForLevelUp(int race, Secondary &sec1, Secondary
     exclude_skills.reserve(MAXSECONDARYSKILL + HEROESMAXSKILL);
 
     // exclude for expert
-    for (const auto &it : *this)
+    for (const auto &it : _items)
         if (it.Level() == Level::EXPERT) exclude_skills.push_back(it.Skill());
 
     // exclude is full, add other.
@@ -754,11 +754,11 @@ void Skill::SecSkills::FindSkillsForLevelUp(int race, Secondary &sec1, Secondary
         sec2.NextLevel();
     } else if (Settings::Get().ExtHeroAllowBannedSecSkillsUpgrade())
     {
-        auto it = find_if(begin(), end(),
+        auto it = find_if(_items.begin(), _items.end(),
                                     [](auto& skill){
                                         return !skill.isLevel(static_cast<int>(Level::EXPERT));
                                     });
-        if (it != end())
+        if (it != _items.end())
         {
             sec1.SetSkill((*it).Skill());
             sec1.SetLevel(GetLevel(sec1.Skill()));
@@ -1068,13 +1068,13 @@ ByteVectorReader &Skill::operator>>(ByteVectorReader &sb, Secondary &st)
 }
 ByteVectorWriter &Skill::operator<<(ByteVectorWriter &sb, const SecSkills &ss)
 {
-    const vector<Secondary> &v = ss;
+    const vector<Secondary> &v = ss._items;
     return sb << v;
 }
 
 ByteVectorReader &Skill::operator>>(ByteVectorReader &sb, SecSkills &ss)
 {
-    vector<Secondary> &v = ss;
+    vector<Secondary> &v = ss._items;
     sb >> v;
 
     if (FORMAT_VERSION_3255 > Game::GetLoadVersion())

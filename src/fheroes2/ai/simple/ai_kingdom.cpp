@@ -57,13 +57,13 @@ AIKingdoms &AIKingdoms::Get()
 
 AIKingdom &AIKingdoms::Get(int color)
 {
-    return Get().at(Color::GetIndex(color));
+    return Get()._items.at(Color::GetIndex(color));
 }
 
 void AIKingdoms::Reset()
 {
     AIKingdoms &ai = Get();
-    for_each(ai.begin(), ai.end(), mem_fun_ref(&AIKingdom::Reset));
+    for_each(ai._items.begin(), ai._items.end(), mem_fun_ref(&AIKingdom::Reset));
 }
 
 void AIKingdom::Reset()

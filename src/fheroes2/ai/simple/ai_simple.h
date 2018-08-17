@@ -52,9 +52,9 @@ struct AIKingdom
     IndexObjectMap scans;
 };
 
-class AIKingdoms : public vector<AIKingdom>
-{
+class AIKingdoms {
 public:
+    vector<AIKingdom> _items;
     static AIKingdom &Get(int color);
 
     static void Reset();
@@ -62,7 +62,7 @@ public:
 private:
     static AIKingdoms &Get();
 
-    AIKingdoms() : vector<AIKingdom>(KINGDOMMAX + 1)
+    AIKingdoms() : _items(KINGDOMMAX + 1)
     {};
 };
 

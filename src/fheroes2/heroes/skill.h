@@ -120,9 +120,10 @@ namespace Skill
     
     ByteVectorReader &operator>>(ByteVectorReader &, Secondary &);
 
-    class SecSkills : protected vector<Secondary>
+    class SecSkills 
     {
     public:
+        vector<Secondary> _items;
         SecSkills();
 
         SecSkills(int race);
