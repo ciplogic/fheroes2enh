@@ -25,6 +25,7 @@
 #include <dirent.h>
 
 #else
+#define LEAN_AND_MEAN
 #include <Windows.h>
 #endif
 

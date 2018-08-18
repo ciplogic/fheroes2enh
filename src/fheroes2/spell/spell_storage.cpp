@@ -58,8 +58,7 @@ uint32_t SpellStorage::Size(int lvl) const
 
 long SpellStorage::getSpellCountOfLevel(int level) const
 {
-    return count_if(begin(), end(),
-                    bind2nd(mem_fun_ref(&Spell::isLevel), level));
+    return count_if(begin(), end(), [&](const Spell&s) {return s.isLevel(level); });
 }
 
 SpellStorage SpellStorage::GetSpells(int lvl) const

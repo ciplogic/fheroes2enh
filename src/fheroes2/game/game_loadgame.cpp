@@ -34,13 +34,13 @@
 
 int Game::LoadCampain()
 {
-    VERBOSE("Load Campain Game: under construction.");
+    H2VERBOSE("Load Campain Game: under construction.");
     return LOADGAME;
 }
 
 int Game::LoadMulti()
 {
-    VERBOSE("Load Multi Game: under construction.");
+    H2VERBOSE("Load Multi Game: under construction.");
     return LOADGAME;
 }
 

@@ -41,7 +41,7 @@ FontTTF::~FontTTF()
 void FontTTF::Init()
 {
     if (0 != TTF_Init())
-    ERROR(SDL_GetError());
+    H2ERROR(SDL_GetError());
 }
 
 void FontTTF::Quit()
@@ -59,7 +59,7 @@ bool FontTTF::Open(const std::string &filename, int size)
     if (ptr) TTF_CloseFont(ptr);
     ptr = TTF_OpenFont(filename.c_str(), size);
     if (!ptr)
-    ERROR(SDL_GetError());
+    H2ERROR(SDL_GetError());
     return ptr;
 }
 

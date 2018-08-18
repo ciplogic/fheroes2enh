@@ -29,6 +29,7 @@
 #include "surface.h"
 #include "error.h"
 #include "system.h"
+#include "error.h"
 
 #ifdef WITH_IMAGE
 
@@ -366,7 +367,7 @@ void Surface::SetDefaultDepth(uint32_t depth)
     switch (depth)
     {
         case 24:
-        ERROR("switch to 32 bpp colors");
+        H2ERROR("switch to 32 bpp colors");
             default_depth = 32;
             break;
 
@@ -402,7 +403,7 @@ bool Surface::Load(const std::string &fn)
     surface = IMG_Load(fn.c_str());
 
     if (!surface)
-    ERROR(SDL_GetError());
+    H2ERROR(SDL_GetError());
 
     return surface;
 }
@@ -413,7 +414,7 @@ bool Surface::Save(const std::string &fn) const
 
     if (0 != res)
     {
-        ERROR(SDL_GetError());
+        H2ERROR(SDL_GetError());
         return false;
     }
 

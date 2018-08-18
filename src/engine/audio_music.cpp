@@ -50,7 +50,7 @@ void Music::Play(Mix_Music *mix, uint32_t id, bool loop)
 
     if (res < 0)
     {
-        ERROR(Mix_GetError());
+        H2ERROR(Mix_GetError());
     } else
         music = mix;
 }
@@ -77,7 +77,7 @@ void Music::Play(const std::string &file, bool loop)
 
     if (!mix)
     {
-        ERROR(Mix_GetError());
+        H2ERROR(Mix_GetError());
     } else
         Music::Play(mix, id, loop);
 }

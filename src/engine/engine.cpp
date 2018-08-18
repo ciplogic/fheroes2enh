@@ -52,7 +52,7 @@ bool SDL::Init(uint32_t system)
 
     if (0 > SDL_Init(system))
     {
-        ERROR(SDL_GetError());
+        H2ERROR(SDL_GetError());
         return false;
     }
 

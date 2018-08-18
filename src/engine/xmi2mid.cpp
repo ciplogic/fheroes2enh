@@ -91,7 +91,7 @@ pack_t unpackValue(const u8 *ptr)
     {
         if (4 <= p - ptr)
         {
-            ERROR("unpack delta mistake");
+            H2ERROR("unpack delta mistake");
             break;
         }
 
@@ -207,14 +207,14 @@ struct XMIData
         sb >> group;
         if (group.ID != TAG_FORM || group.type != TAG_XDIR)
         {
-            ERROR("parse error: " << "form xdir")
+            H2ERROR("parse H2ERROR: " << "form xdir")
             return;
         }
         // INFO
         sb >> iff;
         if (iff.ID != TAG_INFO || iff.length != 2)
         {
-            ERROR("parse error: " << "info");
+            H2ERROR("parse H2ERROR: " << "info");
             return;
         }
         const int numTracks = sb.getLE16();
@@ -223,7 +223,7 @@ struct XMIData
         sb >> group;
         if (group.ID != TAG_CAT0 || group.type != TAG_XMID)
         {
-            ERROR("parse error: " << "cat xmid")
+            H2ERROR("parse H2ERROR: " << "cat xmid")
             return;
         }
         for (int track = 0; track < numTracks; ++track)
@@ -237,7 +237,7 @@ struct XMIData
             // FORM XMID
             if (group.ID != TAG_FORM || group.type != TAG_XMID)
             {
-                ERROR("unknown tag: " << group.ID << " (expected FORM), " << group.type << " (expected XMID)");
+                H2ERROR("unknown tag: " << group.ID << " (expected FORM), " << group.type << " (expected XMID)");
                 continue;
             }
             sb >> iff;
@@ -247,7 +247,7 @@ struct XMIData
                 timb = sb.getRaw(iff.length);
                 if (timb.size() != iff.length)
                 {
-                    ERROR("parse error: " << "out of range");
+                    H2ERROR("parse H2ERROR: " << "out of range");
                     break;
                 }
                 sb >> iff;
@@ -263,7 +263,7 @@ struct XMIData
             // EVNT
             if (iff.ID != TAG_EVNT)
             {
-                ERROR("parse error: " << "evnt");
+                H2ERROR("parse H2ERROR: " << "evnt");
                 break;
             }
 
@@ -271,7 +271,7 @@ struct XMIData
 
             if (evnt.size() != iff.length)
             {
-                ERROR("parse error: " << "out of range");
+                H2ERROR("parse H2ERROR: " << "out of range");
                 break;
             }
         }
@@ -456,7 +456,7 @@ struct MidEvents : public vector<MidEvent>
                         // unused command
                     default:
                         push_back(MidEvent(0, 0xFF, 0x2F, 0));
-                        ERROR("unknown st: 0x" << std::setw(2) << std::setfill('0') << std::hex <<
+                        H2ERROR("unknown st: 0x" << std::setw(2) << std::setfill('0') << std::hex <<
                                                static_cast<int>(*ptr) << ", ln: "
                                                << static_cast<int>(&t.evnt[0] + t.evnt.size() - ptr));
                         break;

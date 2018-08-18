@@ -660,7 +660,7 @@ bool SaveMemToFile(const std::vector<u8> &data, const std::string &file)
         SDL_RWclose(rw);
     else
     {
-        ERROR(SDL_GetError());
+        H2ERROR(SDL_GetError());
         return false;
     }
 

@@ -58,7 +58,7 @@ void Mixer::Init()
 {
     if (!SDL::SubSystem(SDL_INIT_AUDIO))
     {
-        ERROR("audio subsystem not initialize");
+        H2ERROR("audio subsystem not initialize");
         valid = false;
         return;
     }
@@ -71,7 +71,7 @@ void Mixer::Init()
 
     if (0 != Mix_OpenAudio(hardware.freq, hardware.format, hardware.channels, hardware.samples))
     {
-        ERROR(SDL_GetError());
+        H2ERROR(SDL_GetError());
         valid = false;
         return;
     }
@@ -108,7 +108,7 @@ Mixer::chunk_t *Mixer::LoadWAV(const char *file)
 {
     Mix_Chunk *sample = Mix_LoadWAV(file);
     if (!sample)
-    ERROR(SDL_GetError());
+    H2ERROR(SDL_GetError());
     return sample;
 }
 
@@ -116,7 +116,7 @@ Mixer::chunk_t *Mixer::LoadWAV(const u8 *ptr, uint32_t size)
 {
     Mix_Chunk *sample = Mix_LoadWAV_RW(SDL_RWFromConstMem(ptr, size), 1);
     if (!sample)
-    ERROR(SDL_GetError());
+    H2ERROR(SDL_GetError());
     return sample;
 }
 
@@ -124,7 +124,7 @@ int Mixer::Play(chunk_t *sample, int channel, bool loop)
 {
     const int res = Mix_PlayChannel(channel, sample, loop ? -1 : 0);
     if (res == -1)
-    ERROR(SDL_GetError());
+    H2ERROR(SDL_GetError());
     return res;
 }
 

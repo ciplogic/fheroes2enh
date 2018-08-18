@@ -399,18 +399,18 @@ bool AGG::CheckMemoryLimit()
 
         if (0 < usage && conf.MemoryLimit() < usage)
         {
-            VERBOSE("settings: " << conf.MemoryLimit() << ", game usage: " << usage);
+            H2VERBOSE("settings: " << conf.MemoryLimit() << ", game usage: " << usage);
             const uint32_t freemem = ClearFreeObjects();
-            VERBOSE("free " << freemem);
+            H2VERBOSE("free " << freemem);
 
             usage = System::GetMemoryUsage();
 
             if (conf.MemoryLimit() < usage + 300 * 1024)
             {
-                VERBOSE("settings: " << conf.MemoryLimit() << ", too small");
+                H2VERBOSE("settings: " << conf.MemoryLimit() << ", too small");
                 // increase + 300Kb
                 conf.SetMemoryLimit(usage + 300 * 1024);
-                VERBOSE("settings: " << "increase limit on 300kb, current value: " << conf.MemoryLimit());
+                H2VERBOSE("settings: " << "increase limit on 300kb, current value: " << conf.MemoryLimit());
             }
 
             return true;

@@ -112,7 +112,7 @@ Size Display::GetMaxMode(bool rotate) const
     if (modes == (SDL_Rect **) nullptr ||
         modes == (SDL_Rect **) -1)
     {
-        ERROR("GetMaxMode: " << "no modes available");
+        H2ERROR("GetMaxMode: " << "no modes available");
     } else
     {
         int max = 0;

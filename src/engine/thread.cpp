@@ -153,5 +153,5 @@ uint32_t Time::Get() const
 
 void Time::Print(const char *header) const
 {
-    ERROR((header ? header : "time: ") << Get() << " ms");
+    H2ERROR((header ? header : "time: ") << Get() << " ms");
 }

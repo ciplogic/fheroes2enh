@@ -76,7 +76,7 @@ int Game::NewHotSeat()
 int Game::NewCampain()
 {
     Settings::Get().SetGameType(TYPE_CAMPAIGN);
-    VERBOSE("New Campain Game: under construction.");
+    H2VERBOSE("New Campain Game: under construction.");
     return NEWGAME;
 }
 

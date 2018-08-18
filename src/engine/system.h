@@ -26,8 +26,8 @@
 
 #define COUT(x) { std::cerr << x << std::endl; }
 
-#define VERBOSE(x) { COUT(System::GetTime() << ": [VERBOSE]\t" << __FUNCTION__ << ":  " << x); }
-#define ERROR(x) { COUT(System::GetTime() << ": [ERROR]\t" << __FUNCTION__ << ":  " << x); }
+#define H2VERBOSE(x) { COUT(System::GetTime() << ": [VERBOSE]\t" << __FUNCTION__ << ":  " << x); }
+#define H2ERROR(x) { COUT(System::GetTime() << ": [ERROR]\t" << __FUNCTION__ << ":  " << x); }
 
 #include "dir.h"
 #include <vector>

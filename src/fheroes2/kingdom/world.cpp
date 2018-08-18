@@ -503,7 +503,13 @@ void World::NewDay()
     }
 
     // remove deprecated events
-    if (day) vec_eventsday.remove_if(bind2nd(mem_fun_ref(&EventDate::isDeprecated), day - 1));
+    if (day) 
+    {
+        vec_eventsday.remove_if([&](const EventDate& evDate)
+        {
+            return evDate.isDeprecated(day - 1);
+        });            
+    }
 }
 
 void World::NewWeek()
@@ -539,7 +545,11 @@ void World::NewWeek()
 
     // new day - reset option: "heroes: remember MP/SP for retreat/surrender result"
     for_each(vec_heroes._items.begin(), vec_heroes._items.end(),
-             bind2nd(mem_fun(&Heroes::ResetModes), Heroes::SAVEPOINTS));
+        [](Heroes *hero)
+    {
+        return hero->ResetModes(Heroes::SAVEPOINTS);
+    });
+             
 }
 
 void World::NewMonth()

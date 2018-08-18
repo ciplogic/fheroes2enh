@@ -95,6 +95,6 @@ s32 Rand::Queue::Get()
         if (rand <= amount) return it.first;
     }
 
-    ERROR("weight not found, return 0");
+    H2ERROR("weight not found, return 0");
     return 0;
 }

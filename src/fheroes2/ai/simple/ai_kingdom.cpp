@@ -217,7 +217,10 @@ void AI::KingdomTurn(Kingdom &kingdom)
     {
         const size_t hunters =
                 count_if(heroes._items.begin(), heroes._items.end(),
-                         bind2nd(mem_fun(&Heroes::Modes), HEROES_HUNTER));
+                    [&](const Heroes* hero)
+        {
+            return hero->Modes(HEROES_HUNTER);
+        });
 
         // every time
         if (0 == hunters && !heroes._items.empty())

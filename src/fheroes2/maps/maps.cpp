@@ -207,7 +207,7 @@ s32 Maps::GetIndexFromAbsPoint(s32 px, s32 py)
 
     if (px < 0 || py < 0)
     {
-        VERBOSE("Maps::GetIndexFromAbsPoint: error coods, " << "x: " << px << ", y: " << py);
+        H2VERBOSE("Maps::GetIndexFromAbsPoint: error coods, " << "x: " << px << ", y: " << py);
         return -1;
     }
 
