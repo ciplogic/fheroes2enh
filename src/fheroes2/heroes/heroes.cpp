@@ -1806,31 +1806,25 @@ string Heroes::String() const
     return os.str();
 }
 
-struct InCastleAndGuardian : binary_function<const Castle *, Heroes *, bool>
-{
-    bool operator()(const Castle* castle, Heroes* hero) const
-    {
-        const Point& cpt = castle->GetCenter();
-        const Point& hpt = hero->GetCenter();
-        return cpt.x == hpt.x && cpt.y == hpt.y + 1 && hero->Modes(Heroes::GUARDIAN);
-    }
-};
 
-struct InCastleNotGuardian : binary_function<const Castle *, Heroes *, bool>
+bool InCastleAndGuardian(const Castle* castle, Heroes* hero)
 {
-    bool operator()(const Castle* castle, Heroes* hero) const
-    {
-        return castle->GetCenter() == hero->GetCenter() && !hero->Modes(Heroes::GUARDIAN);
-    }
-};
+    const Point& cpt = castle->GetCenter();
+    const Point& hpt = hero->GetCenter();
+    return cpt.x == hpt.x && cpt.y == hpt.y + 1 && hero->Modes(Heroes::GUARDIAN);
+}
 
-struct InJailMode : binary_function<s32, Heroes *, bool>
+
+bool InCastleNotGuardian(const Castle* castle, Heroes* hero) 
 {
-    bool operator()(s32 index, Heroes* hero) const
-    {
-        return hero->Modes(Heroes::JAIL) && index == hero->GetIndex();
-    }
-};
+    return castle->GetCenter() == hero->GetCenter() && !hero->Modes(Heroes::GUARDIAN);
+}
+
+bool InJailMode(s32 index, Heroes* hero)
+{
+    return hero->Modes(Heroes::JAIL) && index == hero->GetIndex();
+}
+
 
 AllHeroes::AllHeroes()
 {
@@ -1921,15 +1915,20 @@ Heroes* VecHeroes::Get(const Point& center) const
 
 Heroes* AllHeroes::GetGuest(const Castle& castle) const
 {
-    auto it = find_if(_items.begin(), _items.end(),
-                      bind1st(InCastleNotGuardian(), &castle));
+    const auto it = find_if(_items.begin(), _items.end(),
+        [&](Heroes* hero)
+    {
+        return InCastleNotGuardian(&castle, hero);
+    });
     return _items.end() != it ? *it : nullptr;
 }
 
 Heroes* AllHeroes::GetGuard(const Castle& castle) const
 {
     auto it = Settings::Get().ExtCastleAllowGuardians()
-                  ? find_if(_items.begin(), _items.end(), bind1st(InCastleAndGuardian(), &castle))
+                  ? find_if(_items.begin(), _items.end(), 
+                      [&](Heroes* hero) {return InCastleAndGuardian(&castle, hero); }
+                      )
                   : _items.end();
     return _items.end() != it ? *it : nullptr;
 }
@@ -2020,7 +2019,10 @@ void AllHeroes::Scoute(int colors) const
 Heroes* AllHeroes::FromJail(s32 index) const
 {
     auto it = find_if(_items.begin(), _items.end(),
-                      bind1st(InJailMode(), index));
+        [=](Heroes* it)
+    {
+        return InJailMode(index, it);
+    });
     return _items.end() != it ? *it : nullptr;
 }
 
