@@ -41,9 +41,10 @@ namespace Battle
 
     typedef vector<s32> Indexes;
 
-    class Board : public vector<Cell>
+    class Board  
     {
     public:
+        vector<Cell> _items;
         Board();
 
         void Reset();

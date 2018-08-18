@@ -56,22 +56,22 @@ namespace Battle
 
 Battle::Board::Board()
 {
-    reserve(ARENASIZE);
-    for (uint32_t ii = 0; ii < ARENASIZE; ++ii) push_back(Cell(ii));
+    _items.reserve(ARENASIZE);
+    for (uint32_t ii = 0; ii < ARENASIZE; ++ii) _items.push_back(Cell(ii));
 }
 
 void Battle::Board::SetArea(const Rect &area)
 {
-    for (auto &it : *this)
+    for (auto &it : _items)
         it.SetArea(area);
 }
 
 Rect Battle::Board::GetArea() const
 {
     Rects rects;
-    rects.reserve(size());
+    rects.reserve(_items.size());
 
-    for (const auto &it : *this)
+    for (const auto &it : _items)
         rects.push_back(it.GetPos());
 
     return rects.GetRect();
@@ -79,8 +79,8 @@ Rect Battle::Board::GetArea() const
 
 void Battle::Board::Reset()
 {
-    for_each(begin(), end(), mem_fun_ref(&Cell::ResetQuality));
-    for_each(begin(), end(), mem_fun_ref(&Cell::ResetDirection));
+    for_each(_items.begin(), _items.end(), mem_fun_ref(&Cell::ResetQuality));
+    for_each(_items.begin(), _items.end(), mem_fun_ref(&Cell::ResetDirection));
 }
 
 void Battle::Board::SetPositionQuality(const Unit &b) const
@@ -137,13 +137,13 @@ s32 Battle::Board::GetDistance(s32 index1, s32 index2)
 
 void Battle::Board::SetScanPassability(const Unit &b)
 {
-    for_each(begin(), end(), mem_fun_ref(&Cell::ResetDirection));
+    for_each(_items.begin(), _items.end(), mem_fun_ref(&Cell::ResetDirection));
 
-    at(b.GetHeadIndex()).SetDirection(CENTER);
+    _items.at(b.GetHeadIndex()).SetDirection(CENTER);
 
     if (b.isFly())
     {
-        for (auto &it : *this)
+        for (auto &it : _items)
             if (it.isPassable3(b, false)) it.SetDirection(CENTER);
     } else
     {
@@ -181,7 +181,7 @@ Battle::Indexes Battle::Board::GetAStarPath(const Unit &b, const Position &dst, 
 
     while (cur != dst.GetHead()->GetIndex())
     {
-        const Cell &center = at(cur);
+        const Cell &center = _items.at(cur);
         Indexes around = b.isWide() ?
                          GetMoveWideIndexes(cur,
                                             0 > listCells[cur].prnt ? b.isReflect() : RIGHT_SIDE & GetDirection(cur,
@@ -189,9 +189,9 @@ Battle::Indexes Battle::Board::GetAStarPath(const Unit &b, const Position &dst, 
                                     :
                          GetAroundIndexes(cur);
 
-        for (auto& it : around)
+        for (const auto& it : around)
         {
-            Cell &cell = at(it);
+            Cell &cell = _items.at(it);
 
             if (!listCells[it].open || !cell.isPassable4(b, center) ||
                 bridge && isBridgeIndex(it) && !bridge->isPassable(b.GetColor()))
@@ -302,7 +302,7 @@ string Battle::Board::AllUnitsInfo() const
 {
     ostringstream os;
 
-    for (const auto &it : *this)
+    for (const auto &it : _items)
     {
         const Unit *b = it.GetUnit();
         if (b) os << "\t" << b->String(true) << endl;
@@ -316,7 +316,7 @@ Battle::Indexes Battle::Board::GetPassableQualityPositions(const Unit &b)
     Indexes result;
     result.reserve(30);
 
-    for (auto &it : *this)
+    for (auto &it : _items)
         if (it.isPassable3(b, false) && it.GetQuality())
             result.push_back(it.GetIndex());
     return result;
@@ -334,7 +334,7 @@ Battle::Indexes Battle::Board::GetNearestTroopIndexes(s32 pos, const Indexes *bl
     vector<IndexDistance> dists;
     dists.reserve(15);
 
-    for (const auto &it : *this)
+    for (const auto &it : _items)
     {
         const Unit *b = it.GetUnit();
 
@@ -488,12 +488,12 @@ s32 Battle::Board::GetIndexDirection(s32 index, int dir)
 
 s32 Battle::Board::GetIndexAbsPosition(const Point &pt) const
 {
-    auto it = begin();
+    auto it = _items.begin();
 
-    for (; it != end(); ++it)
+    for (; it != _items.end(); ++it)
         if ((*it).isPositionIncludePoint(pt)) break;
 
-    return it != end() ? (*it).GetIndex() : -1;
+    return it != _items.end() ? (*it).GetIndex() : -1;
 }
 
 bool Battle::Board::isValidIndex(s32 index)
@@ -650,11 +650,11 @@ void Battle::Board::SetCobjObjects(const Maps::Tiles &tile)
         SetCobjObject(*Rand::Get(objs), dst);
 
         // 50% 2 obj
-        while (at(dst).GetObject()) dst = GetObstaclePosition();
+        while (_items.at(dst).GetObject()) dst = GetObstaclePosition();
         if (objs.size() > 1 && 5 < Rand::Get(1, 10)) SetCobjObject(*Rand::Get(objs), dst);
 
         // 30% 3 obj
-        while (at(dst).GetObject()) dst = GetObstaclePosition();
+        while (_items.at(dst).GetObject()) dst = GetObstaclePosition();
         if (objs.size() > 1 && 7 < Rand::Get(1, 10)) SetCobjObject(*Rand::Get(objs), dst);
     }
 }
@@ -664,100 +664,100 @@ void Battle::Board::SetCobjObject(int icn, s32 dst)
     switch (icn)
     {
         case ICN::COBJ0000:
-            at(dst).SetObject(0x80);
+            _items.at(dst).SetObject(0x80);
             break;
         case ICN::COBJ0001:
-            at(dst).SetObject(0x81);
+            _items.at(dst).SetObject(0x81);
             break;
         case ICN::COBJ0002:
-            at(dst).SetObject(0x82);
+            _items.at(dst).SetObject(0x82);
             break;
         case ICN::COBJ0003:
-            at(dst).SetObject(0x83);
+            _items.at(dst).SetObject(0x83);
             break;
         case ICN::COBJ0004:
-            at(dst).SetObject(0x84);
+            _items.at(dst).SetObject(0x84);
             break;
         case ICN::COBJ0005:
-            at(dst).SetObject(0x85);
+            _items.at(dst).SetObject(0x85);
             break;
         case ICN::COBJ0006:
-            at(dst).SetObject(0x86);
+            _items.at(dst).SetObject(0x86);
             break;
         case ICN::COBJ0007:
-            at(dst).SetObject(0x87);
+            _items.at(dst).SetObject(0x87);
             break;
         case ICN::COBJ0008:
-            at(dst).SetObject(0x88);
+            _items.at(dst).SetObject(0x88);
             break;
         case ICN::COBJ0009:
-            at(dst).SetObject(0x89);
+            _items.at(dst).SetObject(0x89);
             break;
         case ICN::COBJ0010:
-            at(dst).SetObject(0x8A);
+            _items.at(dst).SetObject(0x8A);
             break;
         case ICN::COBJ0011:
-            at(dst).SetObject(0x8B);
+            _items.at(dst).SetObject(0x8B);
             break;
         case ICN::COBJ0012:
-            at(dst).SetObject(0x8C);
+            _items.at(dst).SetObject(0x8C);
             break;
         case ICN::COBJ0013:
-            at(dst).SetObject(0x8D);
+            _items.at(dst).SetObject(0x8D);
             break;
         case ICN::COBJ0014:
-            at(dst).SetObject(0x8E);
+            _items.at(dst).SetObject(0x8E);
             break;
         case ICN::COBJ0015:
-            at(dst).SetObject(0x8F);
+            _items.at(dst).SetObject(0x8F);
             break;
         case ICN::COBJ0016:
-            at(dst).SetObject(0x90);
+            _items.at(dst).SetObject(0x90);
             break;
         case ICN::COBJ0017:
-            at(dst).SetObject(0x91);
+            _items.at(dst).SetObject(0x91);
             break;
         case ICN::COBJ0018:
-            at(dst).SetObject(0x92);
+            _items.at(dst).SetObject(0x92);
             break;
         case ICN::COBJ0019:
-            at(dst).SetObject(0x93);
+            _items.at(dst).SetObject(0x93);
             break;
         case ICN::COBJ0020:
-            at(dst).SetObject(0x94);
+            _items.at(dst).SetObject(0x94);
             break;
         case ICN::COBJ0021:
-            at(dst).SetObject(0x95);
+            _items.at(dst).SetObject(0x95);
             break;
         case ICN::COBJ0022:
-            at(dst).SetObject(0x96);
+            _items.at(dst).SetObject(0x96);
             break;
         case ICN::COBJ0023:
-            at(dst).SetObject(0x97);
+            _items.at(dst).SetObject(0x97);
             break;
         case ICN::COBJ0024:
-            at(dst).SetObject(0x98);
+            _items.at(dst).SetObject(0x98);
             break;
         case ICN::COBJ0025:
-            at(dst).SetObject(0x99);
+            _items.at(dst).SetObject(0x99);
             break;
         case ICN::COBJ0026:
-            at(dst).SetObject(0x9A);
+            _items.at(dst).SetObject(0x9A);
             break;
         case ICN::COBJ0027:
-            at(dst).SetObject(0x9B);
+            _items.at(dst).SetObject(0x9B);
             break;
         case ICN::COBJ0028:
-            at(dst).SetObject(0x9C);
+            _items.at(dst).SetObject(0x9C);
             break;
         case ICN::COBJ0029:
-            at(dst).SetObject(0x9D);
+            _items.at(dst).SetObject(0x9D);
             break;
         case ICN::COBJ0030:
-            at(dst).SetObject(0x9E);
+            _items.at(dst).SetObject(0x9E);
             break;
         case ICN::COBJ0031:
-            at(dst).SetObject(0x9F);
+            _items.at(dst).SetObject(0x9F);
             break;
 
         default:
@@ -779,7 +779,7 @@ void Battle::Board::SetCobjObject(int icn, s32 dst)
         case ICN::COBJ0022:
         case ICN::COBJ0030:
         case ICN::COBJ0031:
-            at(dst + 1).SetObject(0x40);
+            _items.at(dst + 1).SetObject(0x40);
             break;
 
         default:
@@ -795,110 +795,110 @@ void Battle::Board::SetCovrObjects(int icn)
         case ICN::COVR0007:
         case ICN::COVR0013:
         case ICN::COVR0019:
-            at(15).SetObject(0x40);
-            at(16).SetObject(0x40);
-            at(17).SetObject(0x40);
-            at(25).SetObject(0x40);
-            at(26).SetObject(0x40);
-            at(27).SetObject(0x40);
-            at(28).SetObject(0x40);
-            at(40).SetObject(0x40);
-            at(51).SetObject(0x40);
+            _items.at(15).SetObject(0x40);
+            _items.at(16).SetObject(0x40);
+            _items.at(17).SetObject(0x40);
+            _items.at(25).SetObject(0x40);
+            _items.at(26).SetObject(0x40);
+            _items.at(27).SetObject(0x40);
+            _items.at(28).SetObject(0x40);
+            _items.at(40).SetObject(0x40);
+            _items.at(51).SetObject(0x40);
             break;
 
         case ICN::COVR0002:
         case ICN::COVR0008:
         case ICN::COVR0014:
         case ICN::COVR0020:
-            at(47).SetObject(0x40);
-            at(48).SetObject(0x40);
-            at(49).SetObject(0x40);
-            at(50).SetObject(0x40);
-            at(51).SetObject(0x40);
+            _items.at(47).SetObject(0x40);
+            _items.at(48).SetObject(0x40);
+            _items.at(49).SetObject(0x40);
+            _items.at(50).SetObject(0x40);
+            _items.at(51).SetObject(0x40);
             break;
 
         case ICN::COVR0003:
         case ICN::COVR0009:
         case ICN::COVR0015:
         case ICN::COVR0021:
-            at(35).SetObject(0x40);
-            at(41).SetObject(0x40);
-            at(46).SetObject(0x40);
-            at(47).SetObject(0x40);
-            at(48).SetObject(0x40);
-            at(49).SetObject(0x40);
-            at(50).SetObject(0x40);
-            at(51).SetObject(0x40);
+            _items.at(35).SetObject(0x40);
+            _items.at(41).SetObject(0x40);
+            _items.at(46).SetObject(0x40);
+            _items.at(47).SetObject(0x40);
+            _items.at(48).SetObject(0x40);
+            _items.at(49).SetObject(0x40);
+            _items.at(50).SetObject(0x40);
+            _items.at(51).SetObject(0x40);
             break;
 
         case ICN::COVR0004:
         case ICN::COVR0010:
         case ICN::COVR0016:
         case ICN::COVR0022:
-            at(41).SetObject(0x40);
-            at(51).SetObject(0x40);
-            at(58).SetObject(0x40);
-            at(59).SetObject(0x40);
-            at(60).SetObject(0x40);
-            at(61).SetObject(0x40);
-            at(62).SetObject(0x40);
+            _items.at(41).SetObject(0x40);
+            _items.at(51).SetObject(0x40);
+            _items.at(58).SetObject(0x40);
+            _items.at(59).SetObject(0x40);
+            _items.at(60).SetObject(0x40);
+            _items.at(61).SetObject(0x40);
+            _items.at(62).SetObject(0x40);
             break;
 
         case ICN::COVR0005:
         case ICN::COVR0017:
-            at(24).SetObject(0x40);
-            at(25).SetObject(0x40);
-            at(26).SetObject(0x40);
-            at(27).SetObject(0x40);
-            at(28).SetObject(0x40);
-            at(29).SetObject(0x40);
-            at(30).SetObject(0x40);
-            at(58).SetObject(0x40);
-            at(59).SetObject(0x40);
-            at(60).SetObject(0x40);
-            at(61).SetObject(0x40);
-            at(62).SetObject(0x40);
-            at(63).SetObject(0x40);
-            at(68).SetObject(0x40);
-            at(74).SetObject(0x40);
+            _items.at(24).SetObject(0x40);
+            _items.at(25).SetObject(0x40);
+            _items.at(26).SetObject(0x40);
+            _items.at(27).SetObject(0x40);
+            _items.at(28).SetObject(0x40);
+            _items.at(29).SetObject(0x40);
+            _items.at(30).SetObject(0x40);
+            _items.at(58).SetObject(0x40);
+            _items.at(59).SetObject(0x40);
+            _items.at(60).SetObject(0x40);
+            _items.at(61).SetObject(0x40);
+            _items.at(62).SetObject(0x40);
+            _items.at(63).SetObject(0x40);
+            _items.at(68).SetObject(0x40);
+            _items.at(74).SetObject(0x40);
             break;
 
         case ICN::COVR0006:
         case ICN::COVR0018:
-            at(14).SetObject(0x40);
-            at(15).SetObject(0x40);
-            at(16).SetObject(0x40);
-            at(17).SetObject(0x40);
-            at(18).SetObject(0x40);
-            at(24).SetObject(0x40);
-            at(68).SetObject(0x40);
-            at(80).SetObject(0x40);
-            at(81).SetObject(0x40);
-            at(82).SetObject(0x40);
-            at(83).SetObject(0x40);
-            at(84).SetObject(0x40);
+            _items.at(14).SetObject(0x40);
+            _items.at(15).SetObject(0x40);
+            _items.at(16).SetObject(0x40);
+            _items.at(17).SetObject(0x40);
+            _items.at(18).SetObject(0x40);
+            _items.at(24).SetObject(0x40);
+            _items.at(68).SetObject(0x40);
+            _items.at(80).SetObject(0x40);
+            _items.at(81).SetObject(0x40);
+            _items.at(82).SetObject(0x40);
+            _items.at(83).SetObject(0x40);
+            _items.at(84).SetObject(0x40);
             break;
 
         case ICN::COVR0011:
         case ICN::COVR0023:
-            at(15).SetObject(0x40);
-            at(25).SetObject(0x40);
-            at(36).SetObject(0x40);
-            at(51).SetObject(0x40);
-            at(62).SetObject(0x40);
-            at(71).SetObject(0x40);
-            at(72).SetObject(0x40);
+            _items.at(15).SetObject(0x40);
+            _items.at(25).SetObject(0x40);
+            _items.at(36).SetObject(0x40);
+            _items.at(51).SetObject(0x40);
+            _items.at(62).SetObject(0x40);
+            _items.at(71).SetObject(0x40);
+            _items.at(72).SetObject(0x40);
             break;
 
         case ICN::COVR0012:
         case ICN::COVR0024:
-            at(18).SetObject(0x40);
-            at(29).SetObject(0x40);
-            at(41).SetObject(0x40);
-            at(59).SetObject(0x40);
-            at(70).SetObject(0x40);
-            at(82).SetObject(0x40);
-            at(83).SetObject(0x40);
+            _items.at(18).SetObject(0x40);
+            _items.at(29).SetObject(0x40);
+            _items.at(41).SetObject(0x40);
+            _items.at(59).SetObject(0x40);
+            _items.at(70).SetObject(0x40);
+            _items.at(82).SetObject(0x40);
+            _items.at(83).SetObject(0x40);
             break;
 
         default:
@@ -915,9 +915,9 @@ Battle::Cell *Battle::Board::GetCell(s32 position, int dir)
         return nullptr;
     }
     if (dir == CENTER)
-        return &board->at(position);
+        return &board->_items.at(position);
     if (isValidDirection(position, dir))
-        return &board->at(GetIndexDirection(position, dir));
+        return &board->_items.at(GetIndexDirection(position, dir));
 
     return nullptr;
 }

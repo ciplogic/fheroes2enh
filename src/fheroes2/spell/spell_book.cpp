@@ -415,44 +415,45 @@ SpellBookRedrawSpells(const SpellStorage &spells, Rects &coords, const size_t cu
     s32 oy = 0;
 
     for (uint32_t ii = 0; ii < SPELL_PER_PAGE; ++ii)
-        if (spells.size() > cur + ii)
+    {
+        if (spells.size() <= cur + ii)
+            continue;
+        if (0 == ii % (SPELL_PER_PAGE / 2))
         {
-            if (0 == ii % (SPELL_PER_PAGE / 2))
-            {
-                oy = 50;
-                ox += 80;
-            }
-
-            const Spell &spell = spells[ii + cur];
-            const Sprite &icon = AGG::GetICN(ICN::SPELLS, spell.IndexSprite());
-            const Rect rect(px + ox - icon.w() / 2, py + oy - icon.h() / 2, icon.w(), icon.h() + 10);
-
-            icon.Blit(rect.x, rect.y);
-
-            // multiple icons for mass spells
-            switch (spell())
-            {
-                case Spell::MASSBLESS:
-                case Spell::MASSCURE:
-                case Spell::MASSHASTE:
-                case Spell::MASSSLOW:
-                case Spell::MASSCURSE:
-                case Spell::MASSDISPEL:
-                case Spell::MASSSHIELD:
-                    icon.Blit(rect.x - 10, rect.y + 8);
-                    icon.Blit(rect.x + 10, rect.y + 8);
-                    break;
-
-                default:
-                    break;
-            }
-
-            TextBox box(string(spell.GetName()) + " [" + Int2Str(spell.SpellPoint(&hero)) + "]", Font::SMALL,
-                        80);
-            box.Blit(px + ox - 40, py + oy + 25);
-
-            oy += 80;
-
-            coords.push_back(rect);
+            oy = 50;
+            ox += 80;
         }
+
+        const Spell &spell = spells[ii + cur];
+        const Sprite &icon = AGG::GetICN(ICN::SPELLS, spell.IndexSprite());
+        const Rect rect(px + ox - icon.w() / 2, py + oy - icon.h() / 2, icon.w(), icon.h() + 10);
+
+        icon.Blit(rect.x, rect.y);
+
+        // multiple icons for mass spells
+        switch (spell())
+        {
+        case Spell::MASSBLESS:
+        case Spell::MASSCURE:
+        case Spell::MASSHASTE:
+        case Spell::MASSSLOW:
+        case Spell::MASSCURSE:
+        case Spell::MASSDISPEL:
+        case Spell::MASSSHIELD:
+            icon.Blit(rect.x - 10, rect.y + 8);
+            icon.Blit(rect.x + 10, rect.y + 8);
+            break;
+
+        default:
+            break;
+        }
+
+        TextBox box(string(spell.GetName()) + " [" + Int2Str(spell.SpellPoint(&hero)) + "]", Font::SMALL,
+                    80);
+        box.Blit(px + ox - 40, py + oy + 25);
+
+        oy += 80;
+
+        coords.push_back(rect);
+    }
 }

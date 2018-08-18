@@ -452,7 +452,10 @@ bool Battle::Force::NextIdleAnimation()
 bool Battle::Force::HasMonster(const Monster &mons) const
 {
     return _items.end() != find_if(_items.begin(), _items.end(),
-                            bind2nd(mem_fun(&Troop::isMonster), mons()));
+        [&](const Unit * it)
+    {
+        return it->isMonster(mons());
+    });
 }
 
 uint32_t Battle::Force::GetDeadCounts() const

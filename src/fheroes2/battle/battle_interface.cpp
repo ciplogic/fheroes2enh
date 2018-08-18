@@ -1179,7 +1179,7 @@ void Battle::Interface::RedrawCover()
         !b_current->isControlAI())
     {
         const Board &board = *Arena::GetBoard();
-        for (const auto &it : board)
+        for (const auto &it : board._items)
             if (it.isPassable1(true) && UNKNOWN != it.GetDirection())
                 sf_shadow.Blit(it.GetPos().x, it.GetPos().y, display);
     }
@@ -1239,7 +1239,7 @@ void Battle::Interface::RedrawCoverStatic(Surface &dst) const
     // grid
     if (conf.ExtBattleShowGrid())
     {
-        for (const auto &it : board)
+        for (const auto &it : board._items)
             if (it.GetObject() == 0)
             {
                 Rect sizeHex(Point(0, 0), sf_hexagon.GetSize());

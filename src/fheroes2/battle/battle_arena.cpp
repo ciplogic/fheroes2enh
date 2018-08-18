@@ -259,25 +259,25 @@ Battle::Arena::Arena(Army &a1, Army &a2, s32 index, bool local) :
         bridge = new Bridge();
 
         // catapult cell
-        board[77].SetObject(1);
+        board._items[77].SetObject(1);
 
         // wall (3,2,1,0)
-        board[8].SetObject(fortification ? 3 : 2);
-        board[29].SetObject(fortification ? 3 : 2);
-        board[73].SetObject(fortification ? 3 : 2);
-        board[96].SetObject(fortification ? 3 : 2);
+        board._items[8].SetObject(fortification ? 3 : 2);
+        board._items[29].SetObject(fortification ? 3 : 2);
+        board._items[73].SetObject(fortification ? 3 : 2);
+        board._items[96].SetObject(fortification ? 3 : 2);
 
         // tower
-        board[40].SetObject(2);
-        board[62].SetObject(2);
+        board._items[40].SetObject(2);
+        board._items[62].SetObject(2);
 
         // archers tower
-        board[19].SetObject(2);
-        board[85].SetObject(2);
+        board._items[19].SetObject(2);
+        board._items[85].SetObject(2);
 
         // bridge
-        board[49].SetObject(1);
-        board[50].SetObject(1);
+        board._items[49].SetObject(1);
+        board._items[50].SetObject(1);
     } else
         // set obstacles
     {
@@ -557,12 +557,12 @@ Battle::Indexes Battle::Arena::GetPath(const Unit &b, const Position &dst)
 
 Battle::Unit *Battle::Arena::GetTroopBoard(s32 index)
 {
-    return Board::isValidIndex(index) ? board[index].GetUnit() : nullptr;
+    return Board::isValidIndex(index) ? board._items[index].GetUnit() : nullptr;
 }
 
 const Battle::Unit *Battle::Arena::GetTroopBoard(s32 index) const
 {
-    return Board::isValidIndex(index) ? board[index].GetUnit() : nullptr;
+    return Board::isValidIndex(index) ? board._items[index].GetUnit() : nullptr;
 }
 
 const HeroBase *Battle::Arena::GetCommander1() const
@@ -626,7 +626,7 @@ const Battle::Unit *Battle::Arena::GetEnemyMaxQuality(int my_color) const
     const Unit *res = nullptr;
     s32 quality = 0;
 
-    for (const auto &it : board)
+    for (const auto &it : board._items)
     {
         const Unit *enemy = it.GetUnit();
 
@@ -667,8 +667,8 @@ s32 Battle::Arena::GetFreePositionNearHero(int color) const
     }
     for (uint32_t ii = 0; ii < 3; ++ii)
     {
-        if (board[cells[ii]].isPassable1(true)
-            && nullptr == board[cells[ii]].GetUnit())
+        if (board._items[cells[ii]].isPassable1(true)
+            && nullptr == board._items[cells[ii]].GetUnit())
         {
             return cells[ii];
         }
@@ -756,8 +756,7 @@ bool Battle::Arena::isDisableCastSpell(const Spell &spell, string *msg)
         } else if (spell.isValid())
         {
             // check army
-            for (Board::const_iterator
-                         it = board.begin(); it != board.end(); ++it)
+            for (auto it = board._items.begin(); it != board._items.end(); ++it)
             {
                 const Unit *b = (*it).GetUnit();
 
@@ -808,16 +807,16 @@ void Battle::Arena::SetCastleTargetValue(int target, uint32_t value)
     switch (target)
     {
         case CAT_WALL1:
-            board[8].SetObject(value);
+            board._items[8].SetObject(value);
             break;
         case CAT_WALL2:
-            board[29].SetObject(value);
+            board._items[29].SetObject(value);
             break;
         case CAT_WALL3:
-            board[73].SetObject(value);
+            board._items[73].SetObject(value);
             break;
         case CAT_WALL4:
-            board[96].SetObject(value);
+            board._items[96].SetObject(value);
             break;
 
         case CAT_TOWER1:
@@ -849,13 +848,13 @@ uint32_t Battle::Arena::GetCastleTargetValue(int target) const
     switch (target)
     {
         case CAT_WALL1:
-            return board[8].GetObject();
+            return board._items[8].GetObject();
         case CAT_WALL2:
-            return board[29].GetObject();
+            return board._items[29].GetObject();
         case CAT_WALL3:
-            return board[73].GetObject();
+            return board._items[73].GetObject();
         case CAT_WALL4:
-            return board[96].GetObject();
+            return board._items[96].GetObject();
 
         case CAT_TOWER1:
             return towers[0] && towers[0]->isValid();
@@ -879,10 +878,10 @@ vector<int> Battle::Arena::GetCastleTargets() const
     targets.reserve(8);
 
     // check walls
-    if (0 != board[8].GetObject()) targets.push_back(CAT_WALL1);
-    if (0 != board[29].GetObject()) targets.push_back(CAT_WALL2);
-    if (0 != board[73].GetObject()) targets.push_back(CAT_WALL3);
-    if (0 != board[96].GetObject()) targets.push_back(CAT_WALL4);
+    if (0 != board._items[8].GetObject()) targets.push_back(CAT_WALL1);
+    if (0 != board._items[29].GetObject()) targets.push_back(CAT_WALL2);
+    if (0 != board._items[73].GetObject()) targets.push_back(CAT_WALL3);
+    if (0 != board._items[96].GetObject()) targets.push_back(CAT_WALL4);
 
     // check right/left towers
     if (towers[0] && towers[0]->isValid()) targets.push_back(CAT_TOWER1);
@@ -894,7 +893,7 @@ vector<int> Battle::Arena::GetCastleTargets() const
 ByteVectorWriter &Battle::operator<<(ByteVectorWriter &msg, const Arena &a)
 {
     msg <<
-        a.current_turn << a.board <<
+        a.current_turn << a.board._items <<
         *a.army1 << *a.army2;
 
     const HeroBase *hero1 = a.army1->GetCommander();
@@ -915,7 +914,7 @@ ByteVectorWriter &Battle::operator<<(ByteVectorWriter &msg, const Arena &a)
 
 ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, Arena &a)
 {
-    msg >> a.current_turn >> a.board >>
+    msg >> a.current_turn >> a.board._items >>
         *a.army1 >> *a.army2;
 
     int type;
@@ -1067,10 +1066,10 @@ uint32_t Battle::Arena::GetObstaclesPenalty(const Unit &attacker, const Unit &de
 
         for (const auto point : points)
         {
-            if (0 == board[8].GetObject() && board[8].GetPos() & point) return 0;
-            if (0 == board[29].GetObject() && board[29].GetPos() & point) return 0;
-            if (0 == board[73].GetObject() && board[73].GetPos() & point) return 0;
-            if (0 == board[96].GetObject() && board[96].GetPos() & point) return 0;
+            if (0 == board._items[8].GetObject() && board._items[8].GetPos() & point) return 0;
+            if (0 == board._items[29].GetObject() && board._items[29].GetPos() & point) return 0;
+            if (0 == board._items[73].GetObject() && board._items[73].GetPos() & point) return 0;
+            if (0 == board._items[96].GetObject() && board._items[96].GetPos() & point) return 0;
         }
 
         result = 1;
@@ -1095,7 +1094,7 @@ uint32_t Battle::Arena::GetObstaclesPenalty(const Unit &attacker, const Unit &de
         for (auto it : indexes)
         {
             // obstacles
-            switch (board[it].GetObject())
+            switch (board._items[it].GetObject())
             {
                 // tree
                 case 0x82:

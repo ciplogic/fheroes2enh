@@ -42,22 +42,22 @@ void Battle::Arena::BattleProcess(Unit &attacker, Unit &defender, s32 dst, int d
         if (attacker.isWide())
         {
             if (!Board::isNearIndexes(attacker.GetHeadIndex(), dst))
-                attacker.UpdateDirection(board[dst].GetPos());
+                attacker.UpdateDirection(board._items[dst].GetPos());
             if (defender.AllowResponse())
-                defender.UpdateDirection(board[attacker.GetHeadIndex()].GetPos());
+                defender.UpdateDirection(board._items[attacker.GetHeadIndex()].GetPos());
         } else
         {
-            attacker.UpdateDirection(board[dst].GetPos());
+            attacker.UpdateDirection(board._items[dst].GetPos());
             if (defender.AllowResponse())
-                defender.UpdateDirection(board[attacker.GetHeadIndex()].GetPos());
+                defender.UpdateDirection(board._items[attacker.GetHeadIndex()].GetPos());
         }
     } else
-        attacker.UpdateDirection(board[dst].GetPos());
+        attacker.UpdateDirection(board._items[dst].GetPos());
 
     TargetsInfo targets = GetTargetsForDamage(attacker, defender, dst);
 
     if (Board::isReflectDirection(dir) != attacker.isReflect())
-        attacker.UpdateDirection(board[dst].GetPos());
+        attacker.UpdateDirection(board._items[dst].GetPos());
 
     if (interface) interface->RedrawActionAttackPart1(attacker, defender, targets);
 
@@ -585,7 +585,7 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForSpells(const HeroBase *hero, con
             case Spell::MASSSHIELD:
             case Spell::MASSSLOW:
             {
-                for (auto &it : board)
+                for (auto &it : board._items)
                 {
                     target = it.GetUnit();
                     if (target && target->AllowApplySpell(spell, hero))
@@ -728,10 +728,10 @@ void Battle::Arena::ApplyActionSpellEarthQuake(Command &cmd)
     // FIXME: Arena::ApplyActionSpellEarthQuake: check hero spell power
 
     // apply random damage
-    if (0 != board[8].GetObject()) board[8].SetObject(Rand::Get(board[8].GetObject()));
-    if (0 != board[29].GetObject()) board[29].SetObject(Rand::Get(board[29].GetObject()));
-    if (0 != board[73].GetObject()) board[73].SetObject(Rand::Get(board[73].GetObject()));
-    if (0 != board[96].GetObject()) board[96].SetObject(Rand::Get(board[96].GetObject()));
+    if (0 != board._items[8].GetObject()) board._items[8].SetObject(Rand::Get(board._items[8].GetObject()));
+    if (0 != board._items[29].GetObject()) board._items[29].SetObject(Rand::Get(board._items[29].GetObject()));
+    if (0 != board._items[73].GetObject()) board._items[73].SetObject(Rand::Get(board._items[73].GetObject()));
+    if (0 != board._items[96].GetObject()) board._items[96].SetObject(Rand::Get(board._items[96].GetObject()));
 
     if (towers[0] && towers[0]->isValid() && Rand::Get(1)) towers[0]->SetDestroy();
     if (towers[2] && towers[2]->isValid() && Rand::Get(1)) towers[2]->SetDestroy();

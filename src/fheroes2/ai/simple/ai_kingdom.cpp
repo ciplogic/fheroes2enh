@@ -255,20 +255,26 @@ void AI::KingdomTurn(Kingdom &kingdom)
     // update roles
     {
         for_each(heroes._items.begin(), heroes._items.end(),
-                 bind2nd(mem_fun(&Heroes::ResetModes), HEROES_STUPID | HEROES_WAITING));
+            [&](Heroes* it)
+        {
+            it->ResetModes(HEROES_STUPID | HEROES_WAITING);
+        });
 
         // init roles
         if (heroes._items.end() != find_if(heroes._items.begin(), heroes._items.end(),
-                                    not1(bind2nd(mem_fun(&Heroes::Modes),
-                                                 HEROES_SCOUTER | HEROES_HUNTER))))
+            [&](Heroes* it)
+        {
+            return !it->Modes(HEROES_SCOUTER | HEROES_HUNTER);
+        }))
         {
             vector<Heroes *>::iterator ith, first = heroes._items.end();
 
             while (heroes._items.end() != (ith = find_if(heroes._items.begin(), heroes._items.end(),
-                                                  not1(bind2nd(mem_fun(&Heroes::Modes),
-                                                          // also skip patrol
-                                                               HEROES_HUNTER | HEROES_SCOUTER |
-                                                               Heroes::PATROL)))))
+                [&](Heroes* it)
+            {
+                return !it->Modes(HEROES_HUNTER | HEROES_SCOUTER |
+                    Heroes::PATROL);
+            })))
             {
                 if (first == heroes._items.end())
                 {
