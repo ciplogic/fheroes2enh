@@ -33,7 +33,12 @@ class Heroes;
 
 enum
 {
-    STATUS_UNKNOWN, STATUS_DAY, STATUS_FUNDS, STATUS_ARMY, STATUS_RESOURCE, STATUS_AITURN
+    STATUS_UNKNOWN,
+    STATUS_DAY,
+    STATUS_FUNDS,
+    STATUS_ARMY,
+    STATUS_RESOURCE,
+    STATUS_AITURN
 };
 
 namespace Interface
@@ -43,7 +48,7 @@ namespace Interface
     class StatusWindow : public BorderWindow
     {
     public:
-        StatusWindow(Basic &);
+        StatusWindow(Basic&);
 
         void SetPos(s32, s32);
 
@@ -82,11 +87,11 @@ namespace Interface
 
         void DrawAITurns() const;
 
-        static uint32_t ResetResourceStatus(uint32_t, void *);
+        static uint32_t ResetResourceStatus(uint32_t, void*);
 
-        static uint32_t RedrawAIStatus(uint32_t, void *);
+        static uint32_t RedrawAIStatus(uint32_t, void*);
 
-        Basic &interface;
+        Basic& interface;
 
         int state;
         int oldState;

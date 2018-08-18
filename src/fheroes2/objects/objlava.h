@@ -56,4 +56,3 @@ namespace ObjLava
 
     int GetActionObject(uint32_t index);
 }
-

@@ -61,15 +61,18 @@ namespace GameFocus
 {
     enum
     {
-        UNSEL = FOCUS_UNSEL, HEROES = FOCUS_HEROES, CASTLE = FOCUS_CASTLE, FIRSTHERO
+        UNSEL = FOCUS_UNSEL,
+        HEROES = FOCUS_HEROES,
+        CASTLE = FOCUS_CASTLE,
+        FIRSTHERO
     };
 }
 
 namespace Interface
 {
-    Castle *GetFocusCastle();
+    Castle* GetFocusCastle();
 
-    Heroes *GetFocusHeroes();
+    Heroes* GetFocusHeroes();
 
     int GetFocusType();
 
@@ -78,7 +81,7 @@ namespace Interface
     class Basic
     {
     public:
-        static Basic &Get();
+        static Basic& Get();
 
         bool NeedRedraw() const;
 
@@ -86,31 +89,31 @@ namespace Interface
 
         void Redraw(int f = 0);
 
-        const Rect &GetScrollLeft() const;
+        const Rect& GetScrollLeft() const;
 
-        const Rect &GetScrollRight() const;
+        const Rect& GetScrollRight() const;
 
-        const Rect &GetScrollTop() const;
+        const Rect& GetScrollTop() const;
 
-        const Rect &GetScrollBottom() const;
+        const Rect& GetScrollBottom() const;
 
         s32 GetDimensionDoorDestination(s32, uint32_t, bool) const;
 
-        GameArea &GetGameArea();
+        GameArea& GetGameArea();
 
-        Radar &GetRadar();
+        Radar& GetRadar();
 
-        IconsPanel &GetIconsPanel();
+        IconsPanel& GetIconsPanel();
 
-        ButtonsArea &GetButtonsArea();
+        ButtonsArea& GetButtonsArea();
 
-        StatusWindow &GetStatusWindow();
+        StatusWindow& GetStatusWindow();
 
-        ControlPanel &GetControlPanel();
+        ControlPanel& GetControlPanel();
 
-        void SetFocus(Heroes *);
+        void SetFocus(Heroes*);
 
-        void SetFocus(Castle *);
+        void SetFocus(Castle*);
 
         void ResetFocus(int);
 
@@ -178,20 +181,20 @@ namespace Interface
 
         static int GetCursorTileIndex(s32);
 
-        static int GetCursorFocusCastle(const Castle &, const Maps::Tiles &);
+        static int GetCursorFocusCastle(const Castle&, const Maps::Tiles&);
 
-        static int GetCursorFocusHeroes(const Heroes &, const Maps::Tiles &);
+        static int GetCursorFocusHeroes(const Heroes&, const Maps::Tiles&);
 
-        static int GetCursorFocusShipmaster(const Heroes &, const Maps::Tiles &);
+        static int GetCursorFocusShipmaster(const Heroes&, const Maps::Tiles&);
 
     private:
         Basic();
 
         void RedrawSystemInfo(s32, s32, uint32_t);
 
-        void ShowPathOrStartMoveHero(Heroes *, s32);
+        void ShowPathOrStartMoveHero(Heroes*, s32);
 
-        void MoveHeroFromArrowKeys(Heroes &hero, int direct);
+        void MoveHeroFromArrowKeys(Heroes& hero, int direct);
 
         int HumanTurn(bool);
 

@@ -32,7 +32,7 @@ namespace Interface
     class ButtonsArea : public BorderWindow
     {
     public:
-        explicit ButtonsArea(Basic &);
+        explicit ButtonsArea(Basic&);
 
         void SetPos(s32, s32) override;
 
@@ -45,7 +45,7 @@ namespace Interface
         int QueueEventProcessing();
 
     private:
-        Basic &interface;
+        Basic& interface;
 
         Button buttonNextHero;
         Button buttonMovement;

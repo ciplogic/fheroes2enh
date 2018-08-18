@@ -47,9 +47,10 @@
 struct hgs_t
 {
     hgs_t() : localtime(0), days(0), rating(0)
-    {};
+    {
+    };
 
-    bool operator==(const hgs_t &) const;
+    bool operator==(const hgs_t&) const;
 
     string player;
     string land;
@@ -58,22 +59,22 @@ struct hgs_t
     uint32_t rating;
 };
 
-ByteVectorWriter &operator<<(ByteVectorWriter &msg, const hgs_t &hgs)
+ByteVectorWriter& operator<<(ByteVectorWriter& msg, const hgs_t& hgs)
 {
     return msg << hgs.player << hgs.land << hgs.localtime << hgs.days << hgs.rating;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, hgs_t &hgs)
+ByteVectorReader& operator>>(ByteVectorReader& msg, hgs_t& hgs)
 {
     return msg >> hgs.player >> hgs.land >> hgs.localtime >> hgs.days >> hgs.rating;
 }
 
-bool hgs_t::operator==(const hgs_t &h) const
+bool hgs_t::operator==(const hgs_t& h) const
 {
     return player == h.player && land == h.land && days == h.days;
 }
 
-bool RatingSort(const hgs_t &h1, const hgs_t &h2)
+bool RatingSort(const hgs_t& h1, const hgs_t& h2)
 {
     return h1.rating > h2.rating;
 }
@@ -83,11 +84,11 @@ class HGSData
 public:
     HGSData() = default;
 
-    bool Load(const string &);
+    bool Load(const string&);
 
-    bool Save(const string &) const;
+    bool Save(const string&) const;
 
-    void ScoreRegistry(const string &, const string &, uint32_t, uint32_t);
+    void ScoreRegistry(const string&, const string&, uint32_t, uint32_t);
 
     void RedrawList(s32, s32);
 
@@ -95,9 +96,9 @@ private:
     vector<hgs_t> list;
 };
 
-bool HGSData::Load(const string &fn)
+bool HGSData::Load(const string& fn)
 {
-    if(!FileUtils::Exists(fn))
+    if (!FileUtils::Exists(fn))
         return false;
     const auto vectorBytes = FileUtils::readFileBytes(fn);
     ByteVectorReader hdata(vectorBytes);
@@ -116,7 +117,7 @@ bool HGSData::Load(const string &fn)
     return false;
 }
 
-bool HGSData::Save(const string &fn) const
+bool HGSData::Save(const string& fn) const
 {
     ByteVectorWriter hdata;
     hdata.SetBigEndian(true);
@@ -125,7 +126,7 @@ bool HGSData::Save(const string &fn) const
     return true;
 }
 
-void HGSData::ScoreRegistry(const string &p, const string &m, uint32_t r, uint32_t s)
+void HGSData::ScoreRegistry(const string& p, const string& m, uint32_t r, uint32_t s)
 {
     hgs_t h;
 
@@ -145,13 +146,13 @@ void HGSData::ScoreRegistry(const string &p, const string &m, uint32_t r, uint32
 
 void HGSData::RedrawList(s32 ox, s32 oy)
 {
-    const Settings &conf = Settings::Get();
+    const Settings& conf = Settings::Get();
 
     // image background
-    const Sprite &back = AGG::GetICN(ICN::HSBKG, 0);
+    const Sprite& back = AGG::GetICN(ICN::HSBKG, 0);
     back.Blit(ox, oy);
 
-    const Sprite &head = AGG::GetICN(ICN::HISCORE, 6);
+    const Sprite& head = AGG::GetICN(ICN::HISCORE, 6);
     head.Blit(ox + 50, oy + 31);
 
     sort(list.begin(), list.end(), RatingSort);
@@ -164,7 +165,7 @@ void HGSData::RedrawList(s32 ox, s32 oy)
 
     for (; it1 != it2 && it1 - list.begin() < HGS_MAX; ++it1)
     {
-        const hgs_t &hgs = *it1;
+        const hgs_t& hgs = *it1;
 
         text.Set(hgs.player);
         text.Blit(ox + 88, oy + 70);
@@ -184,9 +185,9 @@ void HGSData::RedrawList(s32 ox, s32 oy)
 
 int Game::HighScores(bool fill)
 {
-    Cursor &cursor = Cursor::Get();
-    Display &display = Display::Get();
-    const Settings &conf = Settings::Get();
+    Cursor& cursor = Cursor::Get();
+    Display& display = Display::Get();
+    const Settings& conf = Settings::Get();
 
     cursor.Hide();
     if (fill) display.Fill(ColorBlack);
@@ -201,14 +202,14 @@ int Game::HighScores(bool fill)
     AGG::PlayMusic(MUS::MAINMENU);
     hgs.Load(stream.str());
 
-    const Sprite &back = AGG::GetICN(ICN::HSBKG, 0);
+    const Sprite& back = AGG::GetICN(ICN::HSBKG, 0);
 
     cursor.Hide();
     const Point top((display.w() - back.w()) / 2, (display.h() - back.h()) / 2);
 
     hgs.RedrawList(top.x, top.y);
 
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     Button buttonCampain(top.x + 9, top.y + 315, ICN::HISCORE, 0, 1);
     Button buttonExit(top.x + back.w() - 36, top.y + 315, ICN::HISCORE, 4,
@@ -222,7 +223,7 @@ int Game::HighScores(bool fill)
 
     const uint32_t rating = GetGameOverScores();
     const uint32_t days = world.CountDay();
-    GameOver::Result &gameResult = GameOver::Result::Get();
+    GameOver::Result& gameResult = GameOver::Result::Get();
 
     if (rating && gameResult.GetResult() & GameOver::WINS)
     {

@@ -43,35 +43,37 @@
 #include "FileUtils.h"
 
 
-string SelectFileListSimple(const string &, const string &, bool);
+string SelectFileListSimple(const string&, const string&, bool);
 
-bool RedrawExtraInfo(const Point &, const string &, const string &, const Rect &);
+bool RedrawExtraInfo(const Point&, const string&, const string&, const Rect&);
 
 class FileInfoListBox : public Interface::ListBox<Maps::FileInfo>
 {
 public:
-    FileInfoListBox(const Point &pt, bool &edit) : ListBox<Maps::FileInfo>(pt), edit_mode(edit)
-    {};
+    FileInfoListBox(const Point& pt, bool& edit) : ListBox<Maps::FileInfo>(pt), edit_mode(edit)
+    {
+    };
 
-    void RedrawItem(const Maps::FileInfo &, s32, s32, bool);
+    void RedrawItem(const Maps::FileInfo&, s32, s32, bool);
 
-    void RedrawBackground(const Point &);
+    void RedrawBackground(const Point&);
 
     void ActionCurrentUp();
 
     void ActionCurrentDn();
 
-    void ActionListDoubleClick(Maps::FileInfo &);
+    void ActionListDoubleClick(Maps::FileInfo&);
 
-    void ActionListSingleClick(Maps::FileInfo &);
+    void ActionListSingleClick(Maps::FileInfo&);
 
-    void ActionListPressRight(Maps::FileInfo &)
-    {};
+    void ActionListPressRight(Maps::FileInfo&)
+    {
+    };
 
-    bool &edit_mode;
+    bool& edit_mode;
 };
 
-void FileInfoListBox::RedrawItem(const Maps::FileInfo &info, s32 dstx, s32 dsty, bool current)
+void FileInfoListBox::RedrawItem(const Maps::FileInfo& info, s32 dstx, s32 dsty, bool current)
 {
     char short_date[20];
     time_t timeval = info.localtime;
@@ -94,9 +96,9 @@ void FileInfoListBox::RedrawItem(const Maps::FileInfo &info, s32 dstx, s32 dsty,
     }
 }
 
-void FileInfoListBox::RedrawBackground(const Point &dst)
+void FileInfoListBox::RedrawBackground(const Point& dst)
 {
-    const Sprite &panel = AGG::GetICN(ICN::REQBKG, 0);
+    const Sprite& panel = AGG::GetICN(ICN::REQBKG, 0);
 
     panel.Blit(dst);
 }
@@ -111,17 +113,17 @@ void FileInfoListBox::ActionCurrentDn()
     edit_mode = false;
 }
 
-void FileInfoListBox::ActionListDoubleClick(Maps::FileInfo &)
+void FileInfoListBox::ActionListDoubleClick(Maps::FileInfo&)
 {
     edit_mode = false;
 }
 
-void FileInfoListBox::ActionListSingleClick(Maps::FileInfo &)
+void FileInfoListBox::ActionListSingleClick(Maps::FileInfo&)
 {
     edit_mode = false;
 }
 
-string ResizeToShortName(const string &str)
+string ResizeToShortName(const string& str)
 {
     string res = System::GetBasename(str);
     size_t it = res.find('.');
@@ -129,13 +131,15 @@ string ResizeToShortName(const string &str)
     return res;
 }
 
-size_t GetInsertPosition(const string &name, s32 cx, s32 posx)
+size_t GetInsertPosition(const string& name, s32 cx, s32 posx)
 {
     if (name.empty())
         return 0;
     s32 tw = Text::width(name, Font::SMALL);
     if (cx <= posx)
-    { return 0; }
+    {
+        return 0;
+    }
     if (cx >= posx + tw)
         return name.size();
     float cw = tw / name.size();
@@ -143,7 +147,7 @@ size_t GetInsertPosition(const string &name, s32 cx, s32 posx)
 }
 
 
-bool FileSortingByTime(const Maps::FileInfo &fi1, const Maps::FileInfo &fi2)
+bool FileSortingByTime(const Maps::FileInfo& fi1, const Maps::FileInfo& fi2)
 {
     long timeF1 = FileUtils::GetFileTime(fi1.file);
     long timeF2 = FileUtils::GetFileTime(fi2.file);
@@ -167,8 +171,8 @@ MapsFileInfoList GetSortedMapsFileInfoList()
 
 string Dialog::SelectFileSave()
 {
-    const Settings &conf = Settings::Get();
-    const string &name = conf.CurrentFileInfo().name;
+    const Settings& conf = Settings::Get();
+    const string& name = conf.CurrentFileInfo().name;
 
     string base = !name.empty() ? name : "newgame";
     base.resize(distance(base.begin(), find_if(base.begin(), base.end(), ::ispunct)));
@@ -176,8 +180,8 @@ string Dialog::SelectFileSave()
     ostringstream os;
 
     os << System::ConcatePath(Settings::GetSaveDir(), base) <<
-       // add postfix:
-       '_' << setw(3) << setfill('0') << world.CountDay() << ".sav";
+        // add postfix:
+        '_' << setw(3) << setfill('0') << world.CountDay() << ".sav";
     string lastfile = os.str();
     return SelectFileListSimple(_("File to Save:"), lastfile, true);
 }
@@ -188,22 +192,22 @@ string Dialog::SelectFileLoad()
     return SelectFileListSimple(_("File to Load:"), !lastfile.empty() ? lastfile : "", false);
 }
 
-string SelectFileListSimple(const string &header, const string &lastfile, bool editor)
+string SelectFileListSimple(const string& header, const string& lastfile, bool editor)
 {
-    Display &display = Display::Get();
-    Cursor &cursor = Cursor::Get();
-    LocalEvent &le = LocalEvent::Get();
+    Display& display = Display::Get();
+    Cursor& cursor = Cursor::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
-    const Sprite &sprite = AGG::GetICN(ICN::REQBKG, 0);
+    const Sprite& sprite = AGG::GetICN(ICN::REQBKG, 0);
     Size panel(sprite.w(), sprite.h());
 
 
     SpriteBack back(Rect((display.w() - panel.w) / 2, (display.h() - panel.h) / 2, panel.w, panel.h));
 
-    const Rect &rt = back.GetArea();
+    const Rect& rt = back.GetArea();
     const Rect enter_field(rt.x + 42, rt.y + 286, 260, 16);
 
     bool edit_mode = false;
@@ -252,7 +256,8 @@ string SelectFileListSimple(const string &header, const string &lastfile, bool e
     listbox.Redraw();
     RedrawExtraInfo(rt, header, filename, enter_field);
 
-    std::function<void()> actionClear = [&]() {
+    std::function<void()> actionClear = [&]()
+    {
         Rect sourceRect(buttonOk.x + 61, btnTop, 40, buttonOk.h + 4);
         Point destPoint(rt.x + 31, btnTop);
         for (int step = 0; step < 8; step++)
@@ -260,7 +265,6 @@ string SelectFileListSimple(const string &header, const string &lastfile, bool e
             display.Blit(sourceRect, destPoint, display);
             destPoint.x += sourceRect.w;
         }
-
     };
     actionClear();
 
@@ -286,17 +290,20 @@ string SelectFileListSimple(const string &header, const string &lastfile, bool e
                 result = System::ConcatePath(Settings::GetSaveDir(), filename + ".sav");
             else if (listbox.isSelected())
                 result = listbox.GetCurrent().file;
-        } else if (le.MouseClickLeft(buttonCancel) || HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
+        }
+        else if (le.MouseClickLeft(buttonCancel) || HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
         {
             break;
-        } else if (le.MouseClickLeft(enter_field) && editor)
+        }
+        else if (le.MouseClickLeft(enter_field) && editor)
         {
             edit_mode = true;
             charInsertPos = GetInsertPosition(filename, le.GetMouseCursor().x, enter_field.x);
             buttonOk.SetDisable(filename.empty());
             cursor.Hide();
-        } else if (edit_mode && le.KeyPress() &&
-                   (!is_limit || KEY_BACKSPACE == le.KeyValue()))
+        }
+        else if (edit_mode && le.KeyPress() &&
+            (!is_limit || KEY_BACKSPACE == le.KeyValue()))
         {
             charInsertPos = InsertKeySym(filename, charInsertPos, le.KeyValue(), le.KeyMod());
             buttonOk.SetDisable(filename.empty());
@@ -328,7 +335,8 @@ string SelectFileListSimple(const string &header, const string &lastfile, bool e
                 filename = ResizeToShortName(listbox.GetCurrent().file);
                 charInsertPos = filename.size();
                 is_limit = RedrawExtraInfo(rt, header, filename, enter_field);
-            } else
+            }
+            else
                 is_limit = RedrawExtraInfo(rt, header, filename, enter_field);
 
             actionClear();
@@ -345,7 +353,7 @@ string SelectFileListSimple(const string &header, const string &lastfile, bool e
     return result;
 }
 
-bool RedrawExtraInfo(const Point &dst, const string &header, const string &filename, const Rect &field)
+bool RedrawExtraInfo(const Point& dst, const string& header, const string& filename, const Rect& field)
 {
     Text text(header, Font::BIG);
     text.Blit(dst.x + 175 - text.w() / 2, dst.y + 30);

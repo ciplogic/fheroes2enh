@@ -36,12 +36,12 @@
 
 #define PRIMARY_MAX_VALUE    20
 
-void RedrawPrimarySkillInfo(const Point &, PrimarySkillsBar *, PrimarySkillsBar *); /* heroes_meeting.cpp */
+void RedrawPrimarySkillInfo(const Point&, PrimarySkillsBar*, PrimarySkillsBar*); /* heroes_meeting.cpp */
 
 void Battle::ControlInfo::Redraw() const
 {
-    const Sprite &cell = AGG::GetICN(ICN::CELLWIN, 1);
-    const Sprite &mark = AGG::GetICN(ICN::CELLWIN, 2);
+    const Sprite& cell = AGG::GetICN(ICN::CELLWIN, 1);
+    const Sprite& mark = AGG::GetICN(ICN::CELLWIN, 2);
 
     cell.Blit(rtLocal.x, rtLocal.y);
     if (result & CONTROL_HUMAN) mark.Blit(rtLocal.x + 3, rtLocal.y + 2);
@@ -65,7 +65,7 @@ Battle::Only::Only() : hero1(nullptr), hero2(nullptr), player1(Color::BLUE), pla
     player1.SetControl(CONTROL_HUMAN);
     player2.SetControl(CONTROL_AI);
 
-    const Sprite &backSprite = AGG::GetICN(ICN::SWAPWIN, 0);
+    const Sprite& backSprite = AGG::GetICN(ICN::SWAPWIN, 0);
 
     backSprite.Blit(rt1, 0, 0, sfb1);
     backSprite.Blit(rt2, 0, 0, sfb2);
@@ -79,15 +79,15 @@ Battle::Only::Only() : hero1(nullptr), hero2(nullptr), player1(Color::BLUE), pla
     sfc2.DrawBorder(gray);
 }
 
-ByteVectorWriter &operator<<(ByteVectorWriter &msg, const Battle::Only &b)
+ByteVectorWriter& operator<<(ByteVectorWriter& msg, const Battle::Only& b)
 {
     return msg <<
-               b.hero1->GetID() << *b.hero1 <<
-               b.hero2->GetID() << *b.hero2 <<
-               b.player1 << b.player2;
+        b.hero1->GetID() << *b.hero1 <<
+        b.hero2->GetID() << *b.hero2 <<
+        b.player1 << b.player2;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, Battle::Only &b)
+ByteVectorReader& operator>>(ByteVectorReader& msg, Battle::Only& b)
 {
     int id = 0;
 
@@ -109,17 +109,17 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, Battle::Only &b)
 
 bool Battle::Only::ChangeSettings()
 {
-    Settings &conf = Settings::Get();
-    Display &display = Display::Get();
-    Cursor &cursor = Cursor::Get();
-    LocalEvent &le = LocalEvent::Get();
+    Settings& conf = Settings::Get();
+    Display& display = Display::Get();
+    Cursor& cursor = Cursor::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     cursor.Hide();
     cursor.SetThemes(Cursor::POINTER);
 
     Dialog::FrameBorder frameborder(Size(640, 480));
 
-    const Point &cur_pt = frameborder.GetArea();
+    const Point& cur_pt = frameborder.GetArea();
 
     rtPortrait1 = Rect(cur_pt.x + 93, cur_pt.y + 72, 101, 93);
     rtPortrait2 = Rect(cur_pt.x + 445, cur_pt.y + 72, 101, 93);
@@ -203,14 +203,17 @@ bool Battle::Only::ChangeSettings()
     while (!exit && le.HandleEvents())
     {
         buttonStart.isEnable() &&
-        le.MousePressLeft(buttonStart) ? buttonStart.PressDraw() : buttonStart.ReleaseDraw();
+            le.MousePressLeft(buttonStart)
+                ? buttonStart.PressDraw()
+                : buttonStart.ReleaseDraw();
 
         if (buttonStart.isEnable() && le.MouseClickLeft(buttonStart) ||
             HotKeyPressEvent(Game::EVENT_DEFAULT_READY))
         {
             result = true;
             exit = true;
-        } else if (HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT)) exit = true;
+        }
+        else if (HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT)) exit = true;
 
         if (allow1 && le.MouseClickLeft(rtPortrait1))
         {
@@ -218,20 +221,23 @@ bool Battle::Only::ChangeSettings()
             if (hero2 && hid == hero2->GetID())
             {
                 Message("Error", "Please, select other hero.", Font::BIG, Dialog::OK);
-            } else if (Heroes::UNKNOWN != hid)
+            }
+            else if (Heroes::UNKNOWN != hid)
             {
                 hero1 = world.GetHeroes(hid);
                 if (hero1) hero1->GetSecondarySkills().FillMax(Skill::Secondary());
                 UpdateHero1(cur_pt);
                 redraw = true;
             }
-        } else if (allow2 && le.MouseClickLeft(rtPortrait2))
+        }
+        else if (allow2 && le.MouseClickLeft(rtPortrait2))
         {
             int hid = Dialog::SelectHeroes(hero2 ? hero2->GetID() : Heroes::UNKNOWN);
             if (hid == hero1->GetID())
             {
                 Message("Error", "Please, select other hero.", Font::BIG, Dialog::OK);
-            } else if (Heroes::UNKNOWN != hid)
+            }
+            else if (Heroes::UNKNOWN != hid)
             {
                 hero2 = world.GetHeroes(hid);
                 if (hero2) hero2->GetSecondarySkills().FillMax(Skill::Secondary());
@@ -252,7 +258,8 @@ bool Battle::Only::ChangeSettings()
                     hero1->attack = value;
                     redraw = true;
                 }
-            } else if (le.MouseClickLeft(rtDefense1))
+            }
+            else if (le.MouseClickLeft(rtDefense1))
             {
                 uint32_t value = hero1->defense;
                 if (Dialog::SelectCount("Set Defense Skill", 0, PRIMARY_MAX_VALUE, value))
@@ -260,7 +267,8 @@ bool Battle::Only::ChangeSettings()
                     hero1->defense = value;
                     redraw = true;
                 }
-            } else if (le.MouseClickLeft(rtPower1))
+            }
+            else if (le.MouseClickLeft(rtPower1))
             {
                 uint32_t value = hero1->power;
                 if (Dialog::SelectCount("Set Power Skill", 0, PRIMARY_MAX_VALUE, value))
@@ -268,7 +276,8 @@ bool Battle::Only::ChangeSettings()
                     hero1->power = value;
                     redraw = true;
                 }
-            } else if (le.MouseClickLeft(rtKnowledge1))
+            }
+            else if (le.MouseClickLeft(rtKnowledge1))
             {
                 uint32_t value = hero1->knowledge;
                 if (Dialog::SelectCount("Set Knowledge Skill", 0, PRIMARY_MAX_VALUE, value))
@@ -289,7 +298,8 @@ bool Battle::Only::ChangeSettings()
                     hero2->attack = value;
                     redraw = true;
                 }
-            } else if (le.MouseClickLeft(rtDefense2))
+            }
+            else if (le.MouseClickLeft(rtDefense2))
             {
                 uint32_t value = hero2->defense;
                 if (Dialog::SelectCount("Set Defense Skill", 0, PRIMARY_MAX_VALUE, value))
@@ -297,7 +307,8 @@ bool Battle::Only::ChangeSettings()
                     hero2->defense = value;
                     redraw = true;
                 }
-            } else if (le.MouseClickLeft(rtPower2))
+            }
+            else if (le.MouseClickLeft(rtPower2))
             {
                 uint32_t value = hero2->power;
                 if (Dialog::SelectCount("Set Power Skill", 0, PRIMARY_MAX_VALUE, value))
@@ -305,7 +316,8 @@ bool Battle::Only::ChangeSettings()
                     hero2->power = value;
                     redraw = true;
                 }
-            } else if (le.MouseClickLeft(rtKnowledge2))
+            }
+            else if (le.MouseClickLeft(rtKnowledge2))
             {
                 uint32_t value = hero2->knowledge;
                 if (Dialog::SelectCount("Set Knowledge Skill", 0, PRIMARY_MAX_VALUE, value))
@@ -386,7 +398,8 @@ bool Battle::Only::ChangeSettings()
             {
                 player2.SetControl(CONTROL_HUMAN);
                 redraw = true;
-            } else if (le.MouseClickLeft(cinfo2->rtAI) && player2.isControlHuman())
+            }
+            else if (le.MouseClickLeft(cinfo2->rtAI) && player2.isControlHuman())
             {
                 player2.SetControl(CONTROL_AI);
                 redraw = true;
@@ -438,7 +451,7 @@ bool Battle::Only::ChangeSettings()
     return result;
 }
 
-void Battle::Only::UpdateHero1(const Point &cur_pt)
+void Battle::Only::UpdateHero1(const Point& cur_pt)
 {
     moraleIndicator1 = nullptr;
     luckIndicator1 = nullptr;
@@ -485,7 +498,7 @@ void Battle::Only::UpdateHero1(const Point &cur_pt)
     }
 }
 
-void Battle::Only::UpdateHero2(const Point &cur_pt)
+void Battle::Only::UpdateHero2(const Point& cur_pt)
 {
     if (moraleIndicator2)
     {
@@ -559,9 +572,9 @@ void Battle::Only::UpdateHero2(const Point &cur_pt)
     }
 }
 
-void Battle::Only::RedrawBaseInfo(const Point &top) const
+void Battle::Only::RedrawBaseInfo(const Point& top) const
 {
-    Display &display = Display::Get();
+    Display& display = Display::Get();
 
     AGG::GetICN(ICN::SWAPWIN, 0).Blit(top);
 
@@ -584,7 +597,8 @@ void Battle::Only::RedrawBaseInfo(const Point &top) const
     {
         Surface port2 = hero2->GetPortrait(PORT_BIG);
         if (port2.isValid()) port2.Blit(rtPortrait2.x, rtPortrait2.y, display);
-    } else
+    }
+    else
     {
         display.FillRect(rtPortrait2, ColorBlack);
         text.Set("N/A", Font::BIG);
@@ -597,9 +611,9 @@ void Battle::Only::RedrawBaseInfo(const Point &top) const
 
 void Battle::Only::StartBattle()
 {
-    Settings &conf = Settings::Get();
+    Settings& conf = Settings::Get();
 
-    Players &players = conf.GetPlayers();
+    Players& players = conf.GetPlayers();
     players.Init(player1.GetColor() | player2.GetColor());
     world.InitKingdoms();
 
@@ -624,10 +638,10 @@ void Battle::Only::StartBattle()
         if (hero2)
         {
             BattleHeroWithHero(*hero1, *hero2, hero1->GetIndex() + 1);
-        } else
+        }
+        else
         {
             BattleHeroWithMonster(*hero1, monsters, hero1->GetIndex() + 1);
         }
-
     }
 }

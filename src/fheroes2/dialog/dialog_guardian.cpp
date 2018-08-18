@@ -35,10 +35,10 @@
 class ArmyCell : public Rect
 {
 public:
-    ArmyCell(const Troop &t, const Point &pt, const bool &ro)
-            : Rect(pt.x, pt.y, 43, 53), troop(t), select(false), readonly(ro)
+    ArmyCell(const Troop& t, const Point& pt, const bool& ro)
+        : Rect(pt.x, pt.y, 43, 53), troop(t), select(false), readonly(ro)
     {
-        const Sprite &backSprite = AGG::GetICN(ICN::SWAPWIN, 0);
+        const Sprite& backSprite = AGG::GetICN(ICN::SWAPWIN, 0);
         back = backSprite.GetSurface(Rect(36, 267, w, h));
 
         curs.Set(w, h - 10, true);
@@ -47,12 +47,12 @@ public:
 
     void Redraw() const
     {
-        Display &display = Display::Get();
+        Display& display = Display::Get();
 
         back.Blit(*this, display);
         if (troop.isValid())
         {
-            const Sprite &mons32 = AGG::GetICN(ICN::MONS32, troop.GetSpriteIndex());
+            const Sprite& mons32 = AGG::GetICN(ICN::MONS32, troop.GetSpriteIndex());
             mons32.Blit(x + (back.w() - mons32.w()) / 2, y + back.h() - mons32.h() - 11);
 
             if (readonly)
@@ -66,7 +66,7 @@ public:
             curs.Blit(*this, display);
     };
 
-    const Troop &troop;
+    const Troop& troop;
     bool select;
     Surface back;
     Surface curs;
@@ -76,21 +76,21 @@ public:
 class ArmySplit
 {
 public:
-    ArmySplit(const Point &pt, CapturedObject &co) : cobj(co),
+    ArmySplit(const Point& pt, CapturedObject& co) : cobj(co),
                                                      rt1(pt.x + 140, pt.y + 19, 20, 10),
                                                      rt2(pt.x + 140, pt.y + 33, 20, 10),
                                                      rt3(pt.x + 140, pt.y + 47, 20, 10)
     {
     }
 
-    void Redraw(const Troop &troop) const
+    void Redraw(const Troop& troop) const
     {
         Text txt1("/1", Font::SMALL);
         Text txt2("/3", Font::SMALL);
         Text txt3("/5", Font::SMALL);
 
-        const Sprite &sp = AGG::GetICN(ICN::CAMPXTRG, 8);
-        const Sprite &cr = AGG::GetICN(ICN::CELLWIN, 5);
+        const Sprite& sp = AGG::GetICN(ICN::CAMPXTRG, 8);
+        const Sprite& cr = AGG::GetICN(ICN::CELLWIN, 5);
 
         sp.Blit(rt1);
         sp.Blit(rt2);
@@ -100,17 +100,18 @@ public:
         {
             switch (cobj.GetSplit())
             {
-                case 3:
-                    cr.Blit(rt2.x + 1, rt2.y + 1);
-                    break;
-                case 5:
-                    cr.Blit(rt3.x + 1, rt3.y + 1);
-                    break;
-                default:
-                    cr.Blit(rt1.x + 1, rt1.y + 1);
-                    break;
+            case 3:
+                cr.Blit(rt2.x + 1, rt2.y + 1);
+                break;
+            case 5:
+                cr.Blit(rt3.x + 1, rt3.y + 1);
+                break;
+            default:
+                cr.Blit(rt1.x + 1, rt1.y + 1);
+                break;
             }
-        } else if (1 != cobj.GetSplit())
+        }
+        else if (1 != cobj.GetSplit())
             cobj.SetSplit(1);
 
         txt1.Blit(rt1.x + 14, rt1.y + 1);
@@ -118,7 +119,7 @@ public:
         txt3.Blit(rt3.x + 14, rt3.y + 1);
     }
 
-    bool QueueProcessing(LocalEvent &le, const Troop &troop) const
+    bool QueueProcessing(LocalEvent& le, const Troop& troop) const
     {
         if (le.MouseClickLeft(rt1) && 1 != cobj.GetSplit())
         {
@@ -138,30 +139,30 @@ public:
         return false;
     }
 
-    CapturedObject &cobj;
+    CapturedObject& cobj;
 
     const Rect rt1;
     const Rect rt2;
     const Rect rt3;
 };
 
-bool Dialog::SetGuardian(Heroes &hero, Troop &troop, CapturedObject &co, bool readonly)
+bool Dialog::SetGuardian(Heroes& hero, Troop& troop, CapturedObject& co, bool readonly)
 {
-    Display &display = Display::Get();
+    Display& display = Display::Get();
     //const Settings & conf = Settings::Get();
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     // cursor
-    Cursor &cursor = Cursor::Get();
+    Cursor& cursor = Cursor::Get();
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
     FrameBorder frameborder(Size(230, 160));
-    const Rect &area = frameborder.GetArea();
+    const Rect& area = frameborder.GetArea();
     Point dst_pt;
 
     // portrait
-    const Sprite &window = AGG::GetICN(ICN::BRCREST, 6);
+    const Sprite& window = AGG::GetICN(ICN::BRCREST, 6);
     dst_pt.x = area.x + 3;
     dst_pt.y = area.y + 5;
     window.Blit(dst_pt);
@@ -224,7 +225,7 @@ bool Dialog::SetGuardian(Heroes &hero, Troop &troop, CapturedObject &co, bool re
         {
             if (guardian.select && le.MouseClickLeft(selectArmy.GetArea()))
             {
-                Troop *troop1 = selectArmy.GetItem(le.GetMouseCursor());
+                Troop* troop1 = selectArmy.GetItem(le.GetMouseCursor());
 
                 if (troop1)
                 {
@@ -233,7 +234,8 @@ bool Dialog::SetGuardian(Heroes &hero, Troop &troop, CapturedObject &co, bool re
                     {
                         troop1->SetCount(troop.GetCount() + troop1->GetCount());
                         troop.Reset();
-                    } else if (troop1->GetCount() >= MAXU16)
+                    }
+                    else if (troop1->GetCount() >= MAXU16)
                         Message("", _("Your army too big!"), Font::BIG, OK);
                         // swap
                     else
@@ -244,13 +246,15 @@ bool Dialog::SetGuardian(Heroes &hero, Troop &troop, CapturedObject &co, bool re
 
                 guardian.select = false;
                 cursor.Hide();
-            } else if (selectArmy.QueueEventProcessing())
+            }
+            else if (selectArmy.QueueEventProcessing())
             {
                 guardian.select = false;
                 cursor.Hide();
                 selectArmy.Redraw();
             }
-        } else if (le.MouseCursor(moraleIndicator.GetArea()))
+        }
+        else if (le.MouseCursor(moraleIndicator.GetArea()))
             MoraleIndicator::QueueEventProcessing(moraleIndicator);
         else if (le.MouseCursor(luckIndicator.GetArea()))
             LuckIndicator::QueueEventProcessing(luckIndicator);
@@ -260,9 +264,10 @@ bool Dialog::SetGuardian(Heroes &hero, Troop &troop, CapturedObject &co, bool re
             {
                 ArmyInfo(troop, READONLY | BUTTONS);
                 cursor.Hide();
-            } else if (selectArmy.isSelected() && !readonly && !hero.GetArmy().SaveLastTroop())
+            }
+            else if (selectArmy.isSelected() && !readonly && !hero.GetArmy().SaveLastTroop())
             {
-                Troop *troop1 = selectArmy.GetSelectedItem();
+                Troop* troop1 = selectArmy.GetSelectedItem();
 
                 if (troop1)
                 {
@@ -273,12 +278,14 @@ bool Dialog::SetGuardian(Heroes &hero, Troop &troop, CapturedObject &co, bool re
                         {
                             troop.SetCount(troop1->GetCount() + troop.GetCount());
                             troop1->Reset();
-                        } else
+                        }
+                        else
                         {
                             troop1->SetCount(troop1->GetCount() + troop.GetCount() - MAXU16);
                             troop.SetCount(MAXU16);
                         }
-                    } else if (troop1->GetCount() >= MAXU16)
+                    }
+                    else if (troop1->GetCount() >= MAXU16)
                         Message("", _("Your army too big!"), Font::BIG, OK);
                         // swap
                     else
@@ -289,20 +296,23 @@ bool Dialog::SetGuardian(Heroes &hero, Troop &troop, CapturedObject &co, bool re
 
                 selectArmy.ResetSelected();
                 cursor.Hide();
-            } else
-                // select
-            if (troop.isValid() && !readonly)
-            {
-                selectArmy.ResetSelected();
-                guardian.select = true;
-                cursor.Hide();
             }
-        } else if (le.MousePressRight(guardian) && troop.isValid())
+            else
+                // select
+                if (troop.isValid() && !readonly)
+                {
+                    selectArmy.ResetSelected();
+                    guardian.select = true;
+                    cursor.Hide();
+                }
+        }
+        else if (le.MousePressRight(guardian) && troop.isValid())
         {
             selectArmy.ResetSelected();
             ArmyInfo(troop, 0);
             cursor.Hide();
-        } else if (armySplit.QueueProcessing(le, troop))
+        }
+        else if (armySplit.QueueProcessing(le, troop))
             cursor.Hide();
 
 

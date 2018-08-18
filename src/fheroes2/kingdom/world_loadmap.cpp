@@ -42,16 +42,16 @@ namespace GameStatic
     extern uint32_t uniq;
 }
 
-bool World::LoadMapMAP(const string &filename)
+bool World::LoadMapMAP(const string& filename)
 {
     return false;
 }
 
-bool World::LoadMapMP2(const string &filename)
+bool World::LoadMapMP2(const string& filename)
 {
     Reset();
     Defaults();
-    if(!FileUtils::Exists(filename))
+    if (!FileUtils::Exists(filename))
     {
         Error::Except(__FUNCTION__, "load maps");
     }
@@ -78,41 +78,41 @@ bool World::LoadMapMP2(const string &filename)
     // width
     switch (static_cast<mapsize_t>(fs.getLE32()))
     {
-        case mapsize_t::SMALL:
-            Size::w = static_cast<u16>(mapsize_t::SMALL);
-            break;
-        case mapsize_t::MEDIUM:
-            Size::w = static_cast<u16>(mapsize_t::MEDIUM);
-            break;
-        case mapsize_t::LARGE:
-            Size::w = static_cast<u16>(mapsize_t::LARGE);
-            break;
-        case mapsize_t::XLARGE:
-            Size::w = static_cast<u16>(mapsize_t::XLARGE);
-            break;
-        default:
-            Size::w = 0;
-            break;
+    case mapsize_t::SMALL:
+        Size::w = static_cast<u16>(mapsize_t::SMALL);
+        break;
+    case mapsize_t::MEDIUM:
+        Size::w = static_cast<u16>(mapsize_t::MEDIUM);
+        break;
+    case mapsize_t::LARGE:
+        Size::w = static_cast<u16>(mapsize_t::LARGE);
+        break;
+    case mapsize_t::XLARGE:
+        Size::w = static_cast<u16>(mapsize_t::XLARGE);
+        break;
+    default:
+        Size::w = 0;
+        break;
     }
 
     // height
     switch (static_cast<mapsize_t>(fs.getLE32()))
     {
-        case mapsize_t::SMALL:
-            Size::h = static_cast<u16>(mapsize_t::SMALL);
-            break;
-        case mapsize_t::MEDIUM:
-            Size::h = static_cast<u16>(mapsize_t::MEDIUM);
-            break;
-        case mapsize_t::LARGE:
-            Size::h = static_cast<u16>(mapsize_t::LARGE);
-            break;
-        case mapsize_t::XLARGE:
-            Size::h = static_cast<u16>(mapsize_t::XLARGE);
-            break;
-        default:
-            Size::h = 0;
-            break;
+    case mapsize_t::SMALL:
+        Size::h = static_cast<u16>(mapsize_t::SMALL);
+        break;
+    case mapsize_t::MEDIUM:
+        Size::h = static_cast<u16>(mapsize_t::MEDIUM);
+        break;
+    case mapsize_t::LARGE:
+        Size::h = static_cast<u16>(mapsize_t::LARGE);
+        break;
+    case mapsize_t::XLARGE:
+        Size::h = static_cast<u16>(mapsize_t::XLARGE);
+        break;
+    default:
+        Size::h = 0;
+        break;
     }
 
     if (Size::w == 0 || Size::h == 0 || Size::w != Size::h)
@@ -126,7 +126,7 @@ bool World::LoadMapMP2(const string &filename)
     // read all addons
     vector<MP2::mp2addon_t> vec_mp2addons(fs.getLE32() /* count mp2addon_t */);
 
-    for (auto &mp2addon : vec_mp2addons)
+    for (auto& mp2addon : vec_mp2addons)
     {
         mp2addon.indexAddon = fs.getLE16();
         mp2addon.objectNameN1 = fs.get() * 2;
@@ -150,7 +150,7 @@ bool World::LoadMapMP2(const string &filename)
     for (auto it = vec_tiles.begin(); it != vec_tiles.end(); ++it)
     {
         const size_t index = distance(vec_tiles.begin(), it);
-        Maps::Tiles &tile = *it;
+        Maps::Tiles& tile = *it;
 
         MP2::mp2tile_t mp2tile{};
 
@@ -166,19 +166,19 @@ bool World::LoadMapMP2(const string &filename)
 
         switch (mp2tile.generalObject)
         {
-            case MP2::OBJ_RNDTOWN:
-            case MP2::OBJ_RNDCASTLE:
-            case MP2::OBJ_CASTLE:
-            case MP2::OBJ_HEROES:
-            case MP2::OBJ_SIGN:
-            case MP2::OBJ_BOTTLE:
-            case MP2::OBJ_EVENT:
-            case MP2::OBJ_SPHINX:
-            case MP2::OBJ_JAIL:
-                vec_object.push_back(index);
-                break;
-            default:
-                break;
+        case MP2::OBJ_RNDTOWN:
+        case MP2::OBJ_RNDCASTLE:
+        case MP2::OBJ_CASTLE:
+        case MP2::OBJ_HEROES:
+        case MP2::OBJ_SIGN:
+        case MP2::OBJ_BOTTLE:
+        case MP2::OBJ_EVENT:
+        case MP2::OBJ_SPHINX:
+        case MP2::OBJ_JAIL:
+            vec_object.push_back(index);
+            break;
+        default:
+            break;
         }
 
         // offset first addon
@@ -221,43 +221,43 @@ bool World::LoadMapMP2(const string &filename)
 
         switch (id)
         {
-            case 0x00: // tower: knight
-            case 0x80: // castle: knight
-                vec_castles.push_back(new Castle(cx, cy, Race::KNGT));
-                break;
+        case 0x00: // tower: knight
+        case 0x80: // castle: knight
+            vec_castles.push_back(new Castle(cx, cy, Race::KNGT));
+            break;
 
-            case 0x01: // tower: barbarian
-            case 0x81: // castle: barbarian
-                vec_castles.push_back(new Castle(cx, cy, Race::BARB));
-                break;
+        case 0x01: // tower: barbarian
+        case 0x81: // castle: barbarian
+            vec_castles.push_back(new Castle(cx, cy, Race::BARB));
+            break;
 
-            case 0x02: // tower: sorceress
-            case 0x82: // castle: sorceress
-                vec_castles.push_back(new Castle(cx, cy, Race::SORC));
-                break;
+        case 0x02: // tower: sorceress
+        case 0x82: // castle: sorceress
+            vec_castles.push_back(new Castle(cx, cy, Race::SORC));
+            break;
 
-            case 0x03: // tower: warlock
-            case 0x83: // castle: warlock
-                vec_castles.push_back(new Castle(cx, cy, Race::WRLK));
-                break;
+        case 0x03: // tower: warlock
+        case 0x83: // castle: warlock
+            vec_castles.push_back(new Castle(cx, cy, Race::WRLK));
+            break;
 
-            case 0x04: // tower: wizard
-            case 0x84: // castle: wizard
-                vec_castles.push_back(new Castle(cx, cy, Race::WZRD));
-                break;
+        case 0x04: // tower: wizard
+        case 0x84: // castle: wizard
+            vec_castles.push_back(new Castle(cx, cy, Race::WZRD));
+            break;
 
-            case 0x05: // tower: necromancer
-            case 0x85: // castle: necromancer
-                vec_castles.push_back(new Castle(cx, cy, Race::NECR));
-                break;
+        case 0x05: // tower: necromancer
+        case 0x85: // castle: necromancer
+            vec_castles.push_back(new Castle(cx, cy, Race::NECR));
+            break;
 
-            case 0x06: // tower: random
-            case 0x86: // castle: random
-                vec_castles.push_back(new Castle(cx, cy, Race::NONE));
-                break;
+        case 0x06: // tower: random
+        case 0x86: // castle: random
+            vec_castles.push_back(new Castle(cx, cy, Race::NONE));
+            break;
 
-            default:
-                break;
+        default:
+            break;
         }
         // preload in to capture objects cache
         map_captureobj.Set(Maps::GetIndexFromAbsPoint(cx, cy), MP2::OBJ_CASTLE, Color::NONE);
@@ -279,39 +279,39 @@ bool World::LoadMapMP2(const string &filename)
         switch (id)
         {
             // mines: wood
-            case 0x00:
-                map_captureobj.Set(Maps::GetIndexFromAbsPoint(cx, cy), MP2::OBJ_SAWMILL, Color::NONE);
-                break;
-                // mines: mercury
-            case 0x01:
-                map_captureobj.Set(Maps::GetIndexFromAbsPoint(cx, cy), MP2::OBJ_ALCHEMYLAB, Color::NONE);
-                break;
-                // mines: ore
-            case 0x02:
-                // mines: sulfur
-            case 0x03:
-                // mines: crystal
-            case 0x04:
-                // mines: gems
-            case 0x05:
-                // mines: gold
-            case 0x06:
-                map_captureobj.Set(Maps::GetIndexFromAbsPoint(cx, cy), MP2::OBJ_MINES, Color::NONE);
-                break;
-                // lighthouse
-            case 0x64:
-                map_captureobj.Set(Maps::GetIndexFromAbsPoint(cx, cy), MP2::OBJ_LIGHTHOUSE, Color::NONE);
-                break;
-                // dragon city
-            case 0x65:
-                map_captureobj.Set(Maps::GetIndexFromAbsPoint(cx, cy), MP2::OBJ_DRAGONCITY, Color::NONE);
-                break;
-                // abandoned mines
-            case 0x67:
-                map_captureobj.Set(Maps::GetIndexFromAbsPoint(cx, cy), MP2::OBJ_ABANDONEDMINE, Color::NONE);
-                break;
-            default:
-                break;
+        case 0x00:
+            map_captureobj.Set(Maps::GetIndexFromAbsPoint(cx, cy), MP2::OBJ_SAWMILL, Color::NONE);
+            break;
+            // mines: mercury
+        case 0x01:
+            map_captureobj.Set(Maps::GetIndexFromAbsPoint(cx, cy), MP2::OBJ_ALCHEMYLAB, Color::NONE);
+            break;
+            // mines: ore
+        case 0x02:
+            // mines: sulfur
+        case 0x03:
+            // mines: crystal
+        case 0x04:
+            // mines: gems
+        case 0x05:
+            // mines: gold
+        case 0x06:
+            map_captureobj.Set(Maps::GetIndexFromAbsPoint(cx, cy), MP2::OBJ_MINES, Color::NONE);
+            break;
+            // lighthouse
+        case 0x64:
+            map_captureobj.Set(Maps::GetIndexFromAbsPoint(cx, cy), MP2::OBJ_LIGHTHOUSE, Color::NONE);
+            break;
+            // dragon city
+        case 0x65:
+            map_captureobj.Set(Maps::GetIndexFromAbsPoint(cx, cy), MP2::OBJ_DRAGONCITY, Color::NONE);
+            break;
+            // abandoned mines
+        case 0x67:
+            map_captureobj.Set(Maps::GetIndexFromAbsPoint(cx, cy), MP2::OBJ_ABANDONEDMINE, Color::NONE);
+            break;
+        default:
+            break;
         }
     }
 
@@ -345,7 +345,7 @@ bool World::LoadMapMP2(const string &filename)
 
         for (auto it_index = vec_object.begin(); it_index != vec_object.end() && findobject < 0; ++it_index)
         {
-            const Maps::Tiles &tile = vec_tiles[*it_index];
+            const Maps::Tiles& tile = vec_tiles[*it_index];
 
             // orders(quantity2, quantity1)
             uint32_t orders = tile.GetQuantity2() ? tile.GetQuantity2() : 0;
@@ -358,152 +358,156 @@ bool World::LoadMapMP2(const string &filename)
 
         if (0 <= findobject)
         {
-            const Maps::Tiles &tile = vec_tiles[findobject];
-            const Maps::TilesAddon *addon;
+            const Maps::Tiles& tile = vec_tiles[findobject];
+            const Maps::TilesAddon* addon;
 
             switch (tile.GetObject())
             {
-                case MP2::OBJ_CASTLE:
-                    // add castle
-                    if (SIZEOFMP2CASTLE != pblock.size())
+            case MP2::OBJ_CASTLE:
+                // add castle
+                if (SIZEOFMP2CASTLE != pblock.size())
+                {
+                }
+                else
+                {
+                    Castle* castle = GetCastle(Maps::GetPoint(findobject));
+                    if (castle)
                     {
-
-                    } else
-                    {
-                        Castle *castle = GetCastle(Maps::GetPoint(findobject));
-                        if (castle)
-                        {
-                            ByteVectorReader bvr(pblock);
-                            castle->LoadFromMP2(bvr);
-                            Maps::MinimizeAreaForCastle(castle->GetCenter());
-                            map_captureobj.SetColor(tile.GetIndex(), castle->GetColor());
-                        }
+                        ByteVectorReader bvr(pblock);
+                        castle->LoadFromMP2(bvr);
+                        Maps::MinimizeAreaForCastle(castle->GetCenter());
+                        map_captureobj.SetColor(tile.GetIndex(), castle->GetColor());
                     }
-                    break;
-                case MP2::OBJ_RNDTOWN:
-                case MP2::OBJ_RNDCASTLE:
-                    // add rnd castle
-                    if (SIZEOFMP2CASTLE != pblock.size())
+                }
+                break;
+            case MP2::OBJ_RNDTOWN:
+            case MP2::OBJ_RNDCASTLE:
+                // add rnd castle
+                if (SIZEOFMP2CASTLE != pblock.size())
+                {
+                }
+                else
+                {
+                    Castle* castle = GetCastle(Maps::GetPoint(findobject));
+                    if (castle)
                     {
-                    } else
-                    {
-                        Castle *castle = GetCastle(Maps::GetPoint(findobject));
-                        if (castle)
-                        {
-                            ByteVectorReader bvr(pblock);
-                            castle->LoadFromMP2(bvr);
-                            Maps::UpdateRNDSpriteForCastle(castle->GetCenter(), castle->GetRace(), castle->isCastle());
-                            Maps::MinimizeAreaForCastle(castle->GetCenter());
-                            map_captureobj.SetColor(tile.GetIndex(), castle->GetColor());
-                        } else
-                        {
-                        }
+                        ByteVectorReader bvr(pblock);
+                        castle->LoadFromMP2(bvr);
+                        Maps::UpdateRNDSpriteForCastle(castle->GetCenter(), castle->GetRace(), castle->isCastle());
+                        Maps::MinimizeAreaForCastle(castle->GetCenter());
+                        map_captureobj.SetColor(tile.GetIndex(), castle->GetColor());
                     }
-                    break;
-                case MP2::OBJ_JAIL:
-                    // add jail
-                    if (SIZEOFMP2HEROES != pblock.size())
+                    else
                     {
-                    } else
+                    }
+                }
+                break;
+            case MP2::OBJ_JAIL:
+                // add jail
+                if (SIZEOFMP2HEROES != pblock.size())
+                {
+                }
+                else
+                {
+                    int race = Race::KNGT;
+                    switch (pblock[0x3c])
                     {
-                        int race = Race::KNGT;
-                        switch (pblock[0x3c])
-                        {
-                            case 1:
-                                race = Race::BARB;
-                                break;
-                            case 2:
-                                race = Race::SORC;
-                                break;
-                            case 3:
-                                race = Race::WRLK;
-                                break;
-                            case 4:
-                                race = Race::WZRD;
-                                break;
-                            case 5:
-                                race = Race::NECR;
-                                break;
-                            default:
-                                break;
-                        }
+                    case 1:
+                        race = Race::BARB;
+                        break;
+                    case 2:
+                        race = Race::SORC;
+                        break;
+                    case 3:
+                        race = Race::WRLK;
+                        break;
+                    case 4:
+                        race = Race::WZRD;
+                        break;
+                    case 5:
+                        race = Race::NECR;
+                        break;
+                    default:
+                        break;
+                    }
 
-                        Heroes *hero = GetFreemanHeroes(race);
+                    Heroes* hero = GetFreemanHeroes(race);
+
+                    if (hero)
+                    {
+                        ByteVectorReader bvr(pblock);
+                        hero->LoadFromMP2(findobject, Color::NONE, hero->GetRace(), bvr);
+                        hero->SetModes(Heroes::JAIL);
+                    }
+                }
+                break;
+            case MP2::OBJ_HEROES:
+                // add heroes
+                if (SIZEOFMP2HEROES != pblock.size())
+                {
+                }
+                else if (nullptr != (addon = tile.FindObjectConst(MP2::OBJ_HEROES)))
+                {
+                    pair<int, int> colorRace = Maps::TilesAddon::ColorRaceFromHeroSprite(*addon);
+                    Kingdom& kingdom = GetKingdom(colorRace.first);
+
+                    if (colorRace.second == Race::RAND &&
+                        colorRace.first != Color::NONE)
+                        colorRace.second = kingdom.GetRace();
+
+                    // check heroes max count
+                    if (kingdom.AllowRecruitHero(false, 0))
+                    {
+                        Heroes* hero = nullptr;
+
+                        if (pblock[17] &&
+                            pblock[18] < Heroes::BAX)
+                            hero = vec_heroes.Get(pblock[18]);
+
+                        if (!hero || !hero->isFreeman())
+                            hero = vec_heroes.GetFreeman(colorRace.second);
 
                         if (hero)
                         {
                             ByteVectorReader bvr(pblock);
-                            hero->LoadFromMP2(findobject, Color::NONE, hero->GetRace(), bvr);
-                            hero->SetModes(Heroes::JAIL);
+                            hero->LoadFromMP2(findobject, colorRace.first, colorRace.second, bvr);
                         }
                     }
-                    break;
-                case MP2::OBJ_HEROES:
-                    // add heroes
-                    if (SIZEOFMP2HEROES != pblock.size())
-                    {
-                    } else if (nullptr != (addon = tile.FindObjectConst(MP2::OBJ_HEROES)))
-                    {
-                        pair<int, int> colorRace = Maps::TilesAddon::ColorRaceFromHeroSprite(*addon);
-                        Kingdom &kingdom = GetKingdom(colorRace.first);
-
-                        if (colorRace.second == Race::RAND &&
-                            colorRace.first != Color::NONE)
-                            colorRace.second = kingdom.GetRace();
-
-                        // check heroes max count
-                        if (kingdom.AllowRecruitHero(false, 0))
-                        {
-                            Heroes *hero = nullptr;
-
-                            if (pblock[17] &&
-                                pblock[18] < Heroes::BAX)
-                                hero = vec_heroes.Get(pblock[18]);
-
-                            if (!hero || !hero->isFreeman())
-                                hero = vec_heroes.GetFreeman(colorRace.second);
-
-                            if (hero)
-                            {
-                                ByteVectorReader bvr(pblock);
-                                hero->LoadFromMP2(findobject, colorRace.first, colorRace.second, bvr);
-                            }
-                        }
-                    }
-                    break;
-                case MP2::OBJ_SIGN:
-                case MP2::OBJ_BOTTLE:
-                    // add sign or buttle
-                    if (SIZEOFMP2SIGN - 1 < pblock.size() && 0x01 == pblock[0])
-                    {
-                        auto *obj = new MapSign();
-                        ByteVectorReader bvr(pblock);
-                        obj->LoadFromMP2(findobject, bvr);
-                        map_objects.add(obj);
-                    }
-                    break;
-                case MP2::OBJ_EVENT:
-                    // add event maps
-                    if (SIZEOFMP2EVENT - 1 < pblock.size() && 0x01 == pblock[0])
-                    {
-                        auto *obj = new MapEvent();
-                        ByteVectorReader bvr(pblock);
-                        obj->LoadFromMP2(findobject, bvr);
-                        map_objects.add(obj);
-                    }
-                    break;
-                case MP2::OBJ_SPHINX:
-                    // add riddle sphinx
-                    if (SIZEOFMP2RIDDLE - 1 < pblock.size() && 0x00 == pblock[0])
-                    {
-                        auto *obj = new MapSphinx();
-                        ByteVectorReader bvr(pblock);
-                        obj->LoadFromMP2(findobject, bvr);
-                        map_objects.add(obj);
-                    }
-                    break;
-                default:
-                    break;
+                }
+                break;
+            case MP2::OBJ_SIGN:
+            case MP2::OBJ_BOTTLE:
+                // add sign or buttle
+                if (SIZEOFMP2SIGN - 1 < pblock.size() && 0x01 == pblock[0])
+                {
+                    auto* obj = new MapSign();
+                    ByteVectorReader bvr(pblock);
+                    obj->LoadFromMP2(findobject, bvr);
+                    map_objects.add(obj);
+                }
+                break;
+            case MP2::OBJ_EVENT:
+                // add event maps
+                if (SIZEOFMP2EVENT - 1 < pblock.size() && 0x01 == pblock[0])
+                {
+                    auto* obj = new MapEvent();
+                    ByteVectorReader bvr(pblock);
+                    obj->LoadFromMP2(findobject, bvr);
+                    map_objects.add(obj);
+                }
+                break;
+            case MP2::OBJ_SPHINX:
+                // add riddle sphinx
+                if (SIZEOFMP2RIDDLE - 1 < pblock.size() && 0x00 == pblock[0])
+                {
+                    auto* obj = new MapSphinx();
+                    ByteVectorReader bvr(pblock);
+                    obj->LoadFromMP2(findobject, bvr);
+                    map_objects.add(obj);
+                }
+                break;
+            default:
+                break;
             }
         }
             // other events
@@ -544,99 +548,99 @@ void World::PostLoad()
     // modify other objects
     for (size_t ii = 0; ii < vec_tiles.size(); ++ii)
     {
-        Maps::Tiles &tile = vec_tiles[ii];
+        Maps::Tiles& tile = vec_tiles[ii];
 
         Maps::Tiles::FixedPreload(tile);
 
         //
         switch (tile.GetObject())
         {
-            case MP2::OBJ_WITCHSHUT:
-            case MP2::OBJ_SHRINE1:
-            case MP2::OBJ_SHRINE2:
-            case MP2::OBJ_SHRINE3:
-            case MP2::OBJ_STONELIGHTS:
-            case MP2::OBJ_FOUNTAIN:
-            case MP2::OBJ_EVENT:
-            case MP2::OBJ_BOAT:
-            case MP2::OBJ_RNDARTIFACT:
-            case MP2::OBJ_RNDARTIFACT1:
-            case MP2::OBJ_RNDARTIFACT2:
-            case MP2::OBJ_RNDARTIFACT3:
-            case MP2::OBJ_RNDRESOURCE:
-            case MP2::OBJ_WATERCHEST:
-            case MP2::OBJ_TREASURECHEST:
-            case MP2::OBJ_ARTIFACT:
-            case MP2::OBJ_RESOURCE:
-            case MP2::OBJ_MAGICGARDEN:
-            case MP2::OBJ_WATERWHEEL:
-            case MP2::OBJ_WINDMILL:
-            case MP2::OBJ_WAGON:
-            case MP2::OBJ_SKELETON:
-            case MP2::OBJ_LEANTO:
-            case MP2::OBJ_CAMPFIRE:
-            case MP2::OBJ_FLOTSAM:
-            case MP2::OBJ_SHIPWRECKSURVIROR:
-            case MP2::OBJ_DERELICTSHIP:
-            case MP2::OBJ_SHIPWRECK:
-            case MP2::OBJ_GRAVEYARD:
-            case MP2::OBJ_PYRAMID:
-            case MP2::OBJ_DAEMONCAVE:
-            case MP2::OBJ_ABANDONEDMINE:
-            case MP2::OBJ_ALCHEMYLAB:
-            case MP2::OBJ_SAWMILL:
-            case MP2::OBJ_MINES:
-            case MP2::OBJ_TREEKNOWLEDGE:
-            case MP2::OBJ_BARRIER:
-            case MP2::OBJ_TRAVELLERTENT:
-            case MP2::OBJ_MONSTER:
-            case MP2::OBJ_RNDMONSTER:
-            case MP2::OBJ_RNDMONSTER1:
-            case MP2::OBJ_RNDMONSTER2:
-            case MP2::OBJ_RNDMONSTER3:
-            case MP2::OBJ_RNDMONSTER4:
-            case MP2::OBJ_ANCIENTLAMP:
-            case MP2::OBJ_WATCHTOWER:
-            case MP2::OBJ_EXCAVATION:
-            case MP2::OBJ_CAVE:
-            case MP2::OBJ_TREEHOUSE:
-            case MP2::OBJ_ARCHERHOUSE:
-            case MP2::OBJ_GOBLINHUT:
-            case MP2::OBJ_DWARFCOTT:
-            case MP2::OBJ_HALFLINGHOLE:
-            case MP2::OBJ_PEASANTHUT:
-            case MP2::OBJ_THATCHEDHUT:
-            case MP2::OBJ_RUINS:
-            case MP2::OBJ_TREECITY:
-            case MP2::OBJ_WAGONCAMP:
-            case MP2::OBJ_DESERTTENT:
-            case MP2::OBJ_TROLLBRIDGE:
-            case MP2::OBJ_DRAGONCITY:
-            case MP2::OBJ_CITYDEAD:
-                tile.QuantityUpdate();
-                break;
+        case MP2::OBJ_WITCHSHUT:
+        case MP2::OBJ_SHRINE1:
+        case MP2::OBJ_SHRINE2:
+        case MP2::OBJ_SHRINE3:
+        case MP2::OBJ_STONELIGHTS:
+        case MP2::OBJ_FOUNTAIN:
+        case MP2::OBJ_EVENT:
+        case MP2::OBJ_BOAT:
+        case MP2::OBJ_RNDARTIFACT:
+        case MP2::OBJ_RNDARTIFACT1:
+        case MP2::OBJ_RNDARTIFACT2:
+        case MP2::OBJ_RNDARTIFACT3:
+        case MP2::OBJ_RNDRESOURCE:
+        case MP2::OBJ_WATERCHEST:
+        case MP2::OBJ_TREASURECHEST:
+        case MP2::OBJ_ARTIFACT:
+        case MP2::OBJ_RESOURCE:
+        case MP2::OBJ_MAGICGARDEN:
+        case MP2::OBJ_WATERWHEEL:
+        case MP2::OBJ_WINDMILL:
+        case MP2::OBJ_WAGON:
+        case MP2::OBJ_SKELETON:
+        case MP2::OBJ_LEANTO:
+        case MP2::OBJ_CAMPFIRE:
+        case MP2::OBJ_FLOTSAM:
+        case MP2::OBJ_SHIPWRECKSURVIROR:
+        case MP2::OBJ_DERELICTSHIP:
+        case MP2::OBJ_SHIPWRECK:
+        case MP2::OBJ_GRAVEYARD:
+        case MP2::OBJ_PYRAMID:
+        case MP2::OBJ_DAEMONCAVE:
+        case MP2::OBJ_ABANDONEDMINE:
+        case MP2::OBJ_ALCHEMYLAB:
+        case MP2::OBJ_SAWMILL:
+        case MP2::OBJ_MINES:
+        case MP2::OBJ_TREEKNOWLEDGE:
+        case MP2::OBJ_BARRIER:
+        case MP2::OBJ_TRAVELLERTENT:
+        case MP2::OBJ_MONSTER:
+        case MP2::OBJ_RNDMONSTER:
+        case MP2::OBJ_RNDMONSTER1:
+        case MP2::OBJ_RNDMONSTER2:
+        case MP2::OBJ_RNDMONSTER3:
+        case MP2::OBJ_RNDMONSTER4:
+        case MP2::OBJ_ANCIENTLAMP:
+        case MP2::OBJ_WATCHTOWER:
+        case MP2::OBJ_EXCAVATION:
+        case MP2::OBJ_CAVE:
+        case MP2::OBJ_TREEHOUSE:
+        case MP2::OBJ_ARCHERHOUSE:
+        case MP2::OBJ_GOBLINHUT:
+        case MP2::OBJ_DWARFCOTT:
+        case MP2::OBJ_HALFLINGHOLE:
+        case MP2::OBJ_PEASANTHUT:
+        case MP2::OBJ_THATCHEDHUT:
+        case MP2::OBJ_RUINS:
+        case MP2::OBJ_TREECITY:
+        case MP2::OBJ_WAGONCAMP:
+        case MP2::OBJ_DESERTTENT:
+        case MP2::OBJ_TROLLBRIDGE:
+        case MP2::OBJ_DRAGONCITY:
+        case MP2::OBJ_CITYDEAD:
+            tile.QuantityUpdate();
+            break;
 
-            case MP2::OBJ_WATERALTAR:
-            case MP2::OBJ_AIRALTAR:
-            case MP2::OBJ_FIREALTAR:
-            case MP2::OBJ_EARTHALTAR:
-            case MP2::OBJ_BARROWMOUNDS:
-                tile.QuantityReset();
-                tile.QuantityUpdate();
-                break;
+        case MP2::OBJ_WATERALTAR:
+        case MP2::OBJ_AIRALTAR:
+        case MP2::OBJ_FIREALTAR:
+        case MP2::OBJ_EARTHALTAR:
+        case MP2::OBJ_BARROWMOUNDS:
+            tile.QuantityReset();
+            tile.QuantityUpdate();
+            break;
 
-            case MP2::OBJ_HEROES:
+        case MP2::OBJ_HEROES:
             {
-                Maps::TilesAddon *addon = tile.FindAddonICN1(ICN::MINIHERO);
+                Maps::TilesAddon* addon = tile.FindAddonICN1(ICN::MINIHERO);
                 // remove event sprite
                 if (addon) tile.Remove(addon->uniq);
 
                 tile.SetHeroes(GetHeroes(Maps::GetPoint(ii)));
             }
-                break;
+            break;
 
-            default:
-                break;
+        default:
+            break;
         }
     }
 
@@ -649,12 +653,12 @@ void World::PostLoad()
     // update wins, loss conditions
     if (GameOver::WINS_HERO & Settings::Get().ConditionWins())
     {
-        Heroes *hero = GetHeroes(Settings::Get().WinsMapsPositionObject());
+        Heroes* hero = GetHeroes(Settings::Get().WinsMapsPositionObject());
         heroes_cond_wins = hero ? hero->GetID() : Heroes::UNKNOWN;
     }
     if (GameOver::LOSS_HERO & Settings::Get().ConditionLoss())
     {
-        Heroes *hero = GetHeroes(Settings::Get().LossMapsPositionObject());
+        Heroes* hero = GetHeroes(Settings::Get().LossMapsPositionObject());
         if (hero)
         {
             heroes_cond_loss = hero->GetID();
@@ -664,10 +668,10 @@ void World::PostLoad()
 
     // update tile passable
     for_each(vec_tiles.begin(), vec_tiles.end(),
-        [](Maps::Tiles& tile)
-    {
-        tile.UpdatePassable();
-    });
+             [](Maps::Tiles& tile)
+             {
+                 tile.UpdatePassable();
+             });
 
     // play with hero
     vec_kingdoms.ApplyPlayWithStartingHero();
@@ -679,16 +683,16 @@ void World::PostLoad()
     if (IS_DEVEL())
     {
         // get first castle position
-        Kingdom &kingdom = GetKingdom(Color::GetFirst(Players::HumanColors()));
+        Kingdom& kingdom = GetKingdom(Color::GetFirst(Players::HumanColors()));
 
         if (!kingdom.GetCastles().empty())
         {
-            const Castle *castle = kingdom.GetCastles().front();
-            Heroes *hero = vec_heroes.Get(Heroes::SANDYSANDY);
+            const Castle* castle = kingdom.GetCastles().front();
+            Heroes* hero = vec_heroes.Get(Heroes::SANDYSANDY);
 
             if (hero)
             {
-                const Point &cp = castle->GetCenter();
+                const Point& cp = castle->GetCenter();
                 hero->Recruit(castle->GetColor(), Point(cp.x, cp.y + 1));
             }
         }
@@ -696,10 +700,10 @@ void World::PostLoad()
 
     // set ultimate
     auto it = find_if(vec_tiles.begin(), vec_tiles.end(),
-        [](Maps::Tiles& tile)
-    {
-        return tile.isObject(static_cast<int>(MP2::OBJ_RNDULTIMATEARTIFACT));
-    });
+                      [](Maps::Tiles& tile)
+                      {
+                          return tile.isObject(static_cast<int>(MP2::OBJ_RNDULTIMATEARTIFACT));
+                      });
 
     Point ultimate_pos;
 
@@ -710,7 +714,7 @@ void World::PostLoad()
         MapsIndexes pools;
         pools.reserve(vec_tiles.size() / 2);
 
-        for (const auto &tile : vec_tiles)
+        for (const auto& tile : vec_tiles)
         {
             const s32 x = tile.GetIndex() % w();
             const s32 y = tile.GetIndex() / w();
@@ -725,9 +729,10 @@ void World::PostLoad()
             ultimate_artifact.Set(pos, Artifact::Rand(Artifact::ART_ULTIMATE));
             ultimate_pos = Maps::GetPoint(pos);
         }
-    } else
+    }
+    else
     {
-        const Maps::TilesAddon *addon = it->FindObjectConst(MP2::OBJ_RNDULTIMATEARTIFACT);
+        const Maps::TilesAddon* addon = it->FindObjectConst(MP2::OBJ_RNDULTIMATEARTIFACT);
 
         // remove ultimate artifact sprite
         if (addon)
@@ -753,7 +758,8 @@ void World::PostLoad()
             StringReplace(rumor, "%{name}", _("north"));
         else
             StringReplace(rumor, "%{name}", _("north-east"));
-    } else if (2 * world.h() / 3 > ultimate_pos.y)
+    }
+    else if (2 * world.h() / 3 > ultimate_pos.y)
     {
         if (world.w() / 3 > ultimate_pos.x)
             StringReplace(rumor, "%{name}", _("west"));
@@ -761,7 +767,8 @@ void World::PostLoad()
             StringReplace(rumor, "%{name}", _("center"));
         else
             StringReplace(rumor, "%{name}", _("east"));
-    } else
+    }
+    else
     {
         if (world.w() / 3 > ultimate_pos.x)
             StringReplace(rumor, "%{name}", _("south-west"));
@@ -780,6 +787,6 @@ void World::PostLoad()
     vec_rumors.emplace_back(_("He told her: Yada yada yada...  and then she said: Blah, blah, blah..."));
 
     vec_rumors.emplace_back(
-            _("You can load the newest version of game from a site:\n http://sf.net/projects/fheroes2"));
+        _("You can load the newest version of game from a site:\n http://sf.net/projects/fheroes2"));
     vec_rumors.emplace_back(_("This game is now in beta development version. ;)"));
 }

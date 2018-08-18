@@ -30,7 +30,7 @@
 
 namespace Interface
 {
-    template<class Item>
+    template <class Item>
     class ItemsBar
     {
     protected:
@@ -47,7 +47,8 @@ namespace Interface
 
     public:
         ItemsBar() : colrows(0, 0), hspace(0), vspace(0)
-        {}
+        {
+        }
 
         virtual ~ItemsBar() = default;
 
@@ -69,20 +70,28 @@ namespace Interface
 	bool		QueueEventProcessing();
 */
 
-        virtual void RedrawBackground(const Rect &, Surface &)
-        {}
+        virtual void RedrawBackground(const Rect&, Surface&)
+        {
+        }
 
-        virtual void RedrawItem(Item &, const Rect &, Surface &)
-        {}
+        virtual void RedrawItem(Item&, const Rect&, Surface&)
+        {
+        }
 
-        virtual bool ActionBarSingleClick(const Point &, Item &item, const Rect &)
-        { return false; }
+        virtual bool ActionBarSingleClick(const Point&, Item& item, const Rect&)
+        {
+            return false;
+        }
 
-        virtual bool ActionBarPressRight(const Point &, Item &item, const Rect &)
-        { return false; }
+        virtual bool ActionBarPressRight(const Point&, Item& item, const Rect&)
+        {
+            return false;
+        }
 
-        virtual bool ActionBarCursor(const Point &, Item &, const Rect &)
-        { return false; }
+        virtual bool ActionBarCursor(const Point&, Item&, const Rect&)
+        {
+            return false;
+        }
 
         //body
         void SetColRows(uint32_t col, uint32_t row)
@@ -92,20 +101,20 @@ namespace Interface
             RescanSize();
         }
 
-        void SetContent(list<Item> &content)
+        void SetContent(list<Item>& content)
         {
             items.clear();
             for (typename list<Item>::iterator
-                         it = content.begin(); it != content.end(); ++it)
+                 it = content.begin(); it != content.end(); ++it)
                 items.push_back(&(*it));
             SetContentItems();
         }
 
-        void SetContent(vector<Item> &content)
+        void SetContent(vector<Item>& content)
         {
             items.clear();
             for (typename vector<Item>::iterator
-                         it = content.begin(); it != content.end(); ++it)
+                 it = content.begin(); it != content.end(); ++it)
                 items.push_back(&(*it));
             SetContentItems();
         }
@@ -135,40 +144,40 @@ namespace Interface
             RescanSize();
         }
 
-        Item *GetItem(const Point &pt)
+        Item* GetItem(const Point& pt)
         {
             ItemsIterator posItem = GetItemIter(pt);
             return posItem != items.end() ? *posItem : nullptr;
         }
 
-        Rect *GetItemPos(const Point &pt)
+        Rect* GetItemPos(const Point& pt)
         {
             ItemIterPos posItem = GetItemIterPos(pt);
             return posItem.first != items.end() ? &posItem.second : nullptr;
         }
 
-        s32 GetIndex(const Point &pt)
+        s32 GetIndex(const Point& pt)
         {
             ItemsIterator posItem = GetItemIter(pt);
             return posItem != items.end() ? std::distance(items.end(), posItem) : -1;
         }
 
-        const Point &GetPos() const
+        const Point& GetPos() const
         {
             return barsz;
         }
 
-        const Rect &GetArea() const
+        const Rect& GetArea() const
         {
             return barsz;
         }
 
-        const Size &GetColRows() const
+        const Size& GetColRows() const
         {
             return colrows;
         }
 
-        virtual void Redraw(Surface &dstsf = Display::Get())
+        virtual void Redraw(Surface& dstsf = Display::Get())
         {
             Point dstpt(barsz);
 
@@ -209,7 +218,7 @@ namespace Interface
 
         bool QueueEventProcessing()
         {
-            const Point &cursor = LocalEvent::Get().GetMouseCursor();
+            const Point& cursor = LocalEvent::Get().GetMouseCursor();
 
             return !isItemsEmpty() && ActionCursorItemIter(cursor, GetItemIterPos(cursor));
         }
@@ -239,16 +248,16 @@ namespace Interface
             return items.end();
         }
 
-        virtual void RedrawItemIter(ItemsIterator it, const Rect &pos, Surface &dstsf)
+        virtual void RedrawItemIter(ItemsIterator it, const Rect& pos, Surface& dstsf)
         {
             RedrawItem(**it, pos, dstsf);
         }
 
-        virtual bool ActionCursorItemIter(const Point &cursor, ItemIterPos iterPos)
+        virtual bool ActionCursorItemIter(const Point& cursor, ItemIterPos iterPos)
         {
             if (iterPos.first != GetEndItemIter())
             {
-                LocalEvent &le = LocalEvent::Get();
+                LocalEvent& le = LocalEvent::Get();
 
                 if (ActionBarCursor(cursor, **iterPos.first, iterPos.second))
                     return true;
@@ -266,12 +275,12 @@ namespace Interface
             return items.empty();
         }
 
-        ItemsIterator GetItemIter(const Point &pt)
+        ItemsIterator GetItemIter(const Point& pt)
         {
             return GetItemIterPos(pt).first;
         }
 
-        ItemIterPos GetItemIterPos(const Point &pt)
+        ItemIterPos GetItemIterPos(const Point& pt)
         {
             Rect dstrt(barsz, itemsz.w, itemsz.h);
             auto posItem = GetTopItemIter();
@@ -305,7 +314,7 @@ namespace Interface
         }
     };
 
-    template<class Item>
+    template <class Item>
     class ItemsActionBar : public ItemsBar<Item>
     {
     protected:
@@ -336,40 +345,56 @@ namespace Interface
 	bool QueueEventProcessing(ItemsActionBar<Item> &);
 */
 
-        virtual void RedrawItem(Item &, const Rect &, Surface &)
-        {}
+        virtual void RedrawItem(Item&, const Rect&, Surface&)
+        {
+        }
 
-        virtual void RedrawItem(Item &, const Rect &, bool, Surface &)
-        {}
+        virtual void RedrawItem(Item&, const Rect&, bool, Surface&)
+        {
+        }
 
-        virtual bool ActionBarSingleClick(const Point &, Item &, const Rect &, Item &, const Rect &)
-        { return false; }
+        virtual bool ActionBarSingleClick(const Point&, Item&, const Rect&, Item&, const Rect&)
+        {
+            return false;
+        }
 
-        virtual bool ActionBarPressRight(const Point &, Item &, const Rect &, Item &, const Rect &)
-        { return false; }
+        virtual bool ActionBarPressRight(const Point&, Item&, const Rect&, Item&, const Rect&)
+        {
+            return false;
+        }
 
-        virtual bool ActionBarSingleClick(const Point &, Item &item, const Rect &)
-        { return false; }
+        virtual bool ActionBarSingleClick(const Point&, Item& item, const Rect&)
+        {
+            return false;
+        }
 
-        virtual bool ActionBarDoubleClick(const Point &cursor, Item &item, const Rect &pos)
-        { return ActionBarSingleClick(cursor, item, pos); }
+        virtual bool ActionBarDoubleClick(const Point& cursor, Item& item, const Rect& pos)
+        {
+            return ActionBarSingleClick(cursor, item, pos);
+        }
 
-        virtual bool ActionBarPressRight(const Point &, Item &item, const Rect &)
-        { return false; }
+        virtual bool ActionBarPressRight(const Point&, Item& item, const Rect&)
+        {
+            return false;
+        }
 
-        virtual bool ActionBarCursor(const Point &, Item &, const Rect &)
-        { return false; }
+        virtual bool ActionBarCursor(const Point&, Item&, const Rect&)
+        {
+            return false;
+        }
 
-        virtual bool ActionBarCursor(const Point &, Item &, const Rect &, Item &, const Rect &)
-        { return false; }
+        virtual bool ActionBarCursor(const Point&, Item&, const Rect&, Item&, const Rect&)
+        {
+            return false;
+        }
 
         // body
-        Item *GetSelectedItem()
+        Item* GetSelectedItem()
         {
             return *GetCurItemIter();
         }
 
-        Rect *GetSelectedPos()
+        Rect* GetSelectedPos()
         {
             return &curItemPos.second;
         }
@@ -395,16 +420,17 @@ namespace Interface
             return ItemsBar<Item>::QueueEventProcessing();
         }
 
-        bool QueueEventProcessing(ItemsActionBar<Item> &other)
+        bool QueueEventProcessing(ItemsActionBar<Item>& other)
         {
-            const Point &cursor = LocalEvent::Get().GetMouseCursor();
+            const Point& cursor = LocalEvent::Get().GetMouseCursor();
 
             if (ItemsBar<Item>::isItemsEmpty() && other.isItemsEmpty())
                 return false;
 
-            return other.isSelected() ?
-                   ActionCursorItemIter(cursor, other) : ActionCursorItemIter(cursor,
-                                                                              ItemsBar<Item>::GetItemIterPos(cursor));
+            return other.isSelected()
+                       ? ActionCursorItemIter(cursor, other)
+                       : ActionCursorItemIter(cursor,
+                                              ItemsBar<Item>::GetItemIterPos(cursor));
         }
 
     protected:
@@ -423,16 +449,16 @@ namespace Interface
             ResetSelected();
         }
 
-        void RedrawItemIter(ItemsIterator it, const Rect &pos, Surface &dstsf)
+        void RedrawItemIter(ItemsIterator it, const Rect& pos, Surface& dstsf)
         {
             RedrawItem(**it, pos, GetCurItemIter() == it, dstsf);
         }
 
-        bool ActionCursorItemIter(const Point &cursor, ItemIterPos iterPos)
+        bool ActionCursorItemIter(const Point& cursor, ItemIterPos iterPos)
         {
             if (iterPos.first != ItemsBar<Item>::GetEndItemIter())
             {
-                LocalEvent &le = LocalEvent::Get();
+                LocalEvent& le = LocalEvent::Get();
 
                 if (ActionBarCursor(cursor, **iterPos.first, iterPos.second))
                     return true;
@@ -456,14 +482,14 @@ namespace Interface
             return false;
         }
 
-        bool ActionCursorItemIter(const Point &cursor, ItemsActionBar<Item> &other)
+        bool ActionCursorItemIter(const Point& cursor, ItemsActionBar<Item>& other)
         {
             ItemIterPos iterPos1 = ItemsBar<Item>::GetItemIterPos(cursor);
             ItemIterPos iterPos2 = other.curItemPos;
 
             if (iterPos1.first != ItemsBar<Item>::GetEndItemIter())
             {
-                LocalEvent &le = LocalEvent::Get();
+                LocalEvent& le = LocalEvent::Get();
 
                 if (ActionBarCursor(cursor, **iterPos1.first, iterPos1.second, **iterPos2.first, iterPos2.second))
                     return true;
@@ -496,7 +522,7 @@ namespace Interface
 
 namespace Interface
 {
-    template<class Item>
+    template <class Item>
     class ItemsScroll : public ItemsActionBar<Item>
     {
     protected:
@@ -509,4 +535,3 @@ namespace Interface
         = default;
     };
 }
-

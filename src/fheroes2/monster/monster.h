@@ -34,12 +34,19 @@ class Monster
 public:
     enum
     {
-        JOIN_CONDITION_SKIP = 0, JOIN_CONDITION_MONEY = 1, JOIN_CONDITION_FREE = 2, JOIN_CONDITION_FORCE = 3
+        JOIN_CONDITION_SKIP = 0,
+        JOIN_CONDITION_MONEY = 1,
+        JOIN_CONDITION_FREE = 2,
+        JOIN_CONDITION_FORCE = 3
     };
 
     enum level_t
     {
-        LEVEL0, LEVEL1, LEVEL2, LEVEL3, LEVEL4
+        LEVEL0,
+        LEVEL1,
+        LEVEL2,
+        LEVEL3,
+        LEVEL4
     };
 
     enum monster_t
@@ -123,18 +130,18 @@ public:
 
     Monster(int = UNKNOWN);
 
-    explicit Monster(const Spell &);
+    explicit Monster(const Spell&);
 
     Monster(int race, uint32_t dw);
 
     virtual ~Monster()
     = default;
 
-    bool operator<(const Monster &) const;
+    bool operator<(const Monster&) const;
 
-    bool operator==(const Monster &) const;
+    bool operator==(const Monster&) const;
 
-    bool operator!=(const Monster &) const;
+    bool operator!=(const Monster&) const;
 
     int operator()() const;
 
@@ -164,7 +171,7 @@ public:
 
     uint32_t GetShots() const;
 
-    static uint32_t GetHitPoints(const Monster &m);
+    static uint32_t GetHitPoints(const Monster& m);
 
     uint32_t GetHitPoints() const;
 
@@ -230,9 +237,9 @@ public:
 
     static uint32_t Rand4MonthOf();
 
-    static uint32_t GetCountFromHitPoints(const Monster &, uint32_t);
+    static uint32_t GetCountFromHitPoints(const Monster&, uint32_t);
 
-    static void UpdateStats(const string &);
+    static void UpdateStats(const string&);
 
     static float GetUpgradeRatio();
 
@@ -245,12 +252,11 @@ protected:
 struct MonsterStaticData
 {
     // wrapper for stream
-    static MonsterStaticData &Get();
+    static MonsterStaticData& Get();
 };
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const Monster &);
-ByteVectorReader &operator>>(ByteVectorReader &, Monster &);
+ByteVectorWriter& operator<<(ByteVectorWriter&, const Monster&);
+ByteVectorReader& operator>>(ByteVectorReader&, Monster&);
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const MonsterStaticData &);
-ByteVectorReader &operator>>(ByteVectorReader &, MonsterStaticData &);
-
+ByteVectorWriter& operator<<(ByteVectorWriter&, const MonsterStaticData&);
+ByteVectorReader& operator>>(ByteVectorReader&, MonsterStaticData&);

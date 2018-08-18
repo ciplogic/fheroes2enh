@@ -31,7 +31,7 @@
 class SelectEnum : public Interface::ListBox<int>
 {
 public:
-    SelectEnum(const Rect &rt) : ListBox<int>(rt), area(rt), ok(false)
+    SelectEnum(const Rect& rt) : ListBox<int>(rt), area(rt), ok(false)
     {
         RedrawBackground(rt);
         SetScrollButtonUp(ICN::LISTBOX, 3, 4, Point(rt.x + rt.w - 24, rt.y + 25));
@@ -42,9 +42,9 @@ public:
         SetAreaItems(Rect(rt.x + 10, rt.y + 30, rt.w - 30, rt.h - 70));
     };
 
-    void RedrawBackground(const Point &dst)
+    void RedrawBackground(const Point& dst)
     {
-        const Sprite &sf = AGG::GetICN(ICN::CELLWIN, 1);
+        const Sprite& sf = AGG::GetICN(ICN::CELLWIN, 1);
         Dialog::FrameBorder::RenderOther(sf, Rect(dst.x, dst.y + 25, rtAreaItems.w + 5, rtAreaItems.h + 10));
 
         // scroll
@@ -56,25 +56,30 @@ public:
         AGG::GetICN(ICN::LISTBOX, 9).Blit(dst.x + area.w - 24, dst.y + area.h - 74);
     };
 
-    void ActionListDoubleClick(int &index)
+    void ActionListDoubleClick(int& index)
     {
         ok = true;
     };
 
-    void RedrawItem(const int &, s32, s32, bool)
-    {};
+    void RedrawItem(const int&, s32, s32, bool)
+    {
+    };
 
     void ActionCurrentUp()
-    {};
+    {
+    };
 
     void ActionCurrentDn()
-    {};
+    {
+    };
 
-    void ActionListSingleClick(int &)
-    {};
+    void ActionListSingleClick(int&)
+    {
+    };
 
-    void ActionListPressRight(int &)
-    {};
+    void ActionListPressRight(int&)
+    {
+    };
 
     Rect area;
     bool ok;
@@ -83,11 +88,12 @@ public:
 class SelectEnumMonster : public SelectEnum
 {
 public:
-    SelectEnumMonster(const Rect &rt) : SelectEnum(rt)
-    {};
+    SelectEnumMonster(const Rect& rt) : SelectEnum(rt)
+    {
+    };
 
 
-    void RedrawItem(const int &index, s32 dstx, s32 dsty, bool current)
+    void RedrawItem(const int& index, s32 dstx, s32 dsty, bool current)
     {
         Monster mons(index);
         AGG::GetICN(ICN::MONS32, mons.GetSpriteIndex()).Blit(dstx + 5, dsty + 3);
@@ -96,7 +102,7 @@ public:
         text.Blit(dstx + 50, dsty + 10);
     };
 
-    void RedrawBackground(const Point &dst)
+    void RedrawBackground(const Point& dst)
     {
         Text text("Select Monster:", Font::YELLOW_BIG);
         text.Blit(dst.x + (area.w - text.w()) / 2, dst.y);
@@ -104,7 +110,7 @@ public:
         SelectEnum::RedrawBackground(dst);
     };
 
-    void ActionListPressRight(int &index)
+    void ActionListPressRight(int& index)
     {
         Troop troop(Monster(index), 1);
         Dialog::ArmyInfo(troop, 0);
@@ -114,12 +120,14 @@ public:
 class SelectEnumHeroes : public SelectEnum
 {
 public:
-    SelectEnumHeroes(const Rect &rt) : SelectEnum(rt)
-    { SetAreaMaxItems(6); };
-
-    void RedrawItem(const int &index, s32 dstx, s32 dsty, bool current)
+    SelectEnumHeroes(const Rect& rt) : SelectEnum(rt)
     {
-        Display &display = Display::Get();
+        SetAreaMaxItems(6);
+    };
+
+    void RedrawItem(const int& index, s32 dstx, s32 dsty, bool current)
+    {
+        Display& display = Display::Get();
         Surface port = Heroes::GetPortrait(index, PORT_SMALL);
 
         if (port.isValid())
@@ -129,7 +137,7 @@ public:
         text.Blit(dstx + 50, dsty + 5);
     };
 
-    void RedrawBackground(const Point &dst)
+    void RedrawBackground(const Point& dst)
     {
         Text text("Select Hero:", Font::YELLOW_BIG);
         text.Blit(dst.x + (area.w - text.w()) / 2, dst.y);
@@ -141,10 +149,11 @@ public:
 class SelectEnumArtifact : public SelectEnum
 {
 public:
-    SelectEnumArtifact(const Rect &rt) : SelectEnum(rt)
-    {};
+    SelectEnumArtifact(const Rect& rt) : SelectEnum(rt)
+    {
+    };
 
-    void RedrawItem(const int &index, s32 dstx, s32 dsty, bool current)
+    void RedrawItem(const int& index, s32 dstx, s32 dsty, bool current)
     {
         Artifact art(index);
         AGG::GetICN(ICN::ARTFX, art.IndexSprite32()).Blit(dstx + 5, dsty + 3);
@@ -153,7 +162,7 @@ public:
         text.Blit(dstx + 50, dsty + 10);
     };
 
-    void RedrawBackground(const Point &dst)
+    void RedrawBackground(const Point& dst)
     {
         Text text("Select Artifact:", Font::YELLOW_BIG);
         text.Blit(dst.x + (area.w - text.w()) / 2, dst.y);
@@ -165,10 +174,12 @@ public:
 class SelectEnumSpell : public SelectEnum
 {
 public:
-    SelectEnumSpell(const Rect &rt) : SelectEnum(rt)
-    { SetAreaMaxItems(4); };
+    SelectEnumSpell(const Rect& rt) : SelectEnum(rt)
+    {
+        SetAreaMaxItems(4);
+    };
 
-    void RedrawItem(const int &index, s32 dstx, s32 dsty, bool current)
+    void RedrawItem(const int& index, s32 dstx, s32 dsty, bool current)
     {
         Spell spell(index);
         AGG::GetICN(ICN::SPELLS, spell.IndexSprite()).Blit(dstx + 5, dsty + 3);
@@ -177,7 +188,7 @@ public:
         text.Blit(dstx + 80, dsty + 10);
     };
 
-    void RedrawBackground(const Point &dst)
+    void RedrawBackground(const Point& dst)
     {
         Text text("Select Spell:", Font::YELLOW_BIG);
         text.Blit(dst.x + (area.w - text.w()) / 2, dst.y);
@@ -189,10 +200,12 @@ public:
 class SelectEnumSecSkill : public SelectEnum
 {
 public:
-    SelectEnumSecSkill(const Rect &rt) : SelectEnum(rt)
-    { SetAreaMaxItems(5); };
+    SelectEnumSecSkill(const Rect& rt) : SelectEnum(rt)
+    {
+        SetAreaMaxItems(5);
+    };
 
-    void RedrawItem(const int &index, s32 dstx, s32 dsty, bool current)
+    void RedrawItem(const int& index, s32 dstx, s32 dsty, bool current)
     {
         Skill::Secondary skill(1 + index / 3, 1 + index % 3);
         AGG::GetICN(ICN::MINISS, skill.GetIndexSprite2()).Blit(dstx + 5, dsty + 3);
@@ -201,7 +214,7 @@ public:
         text.Blit(dstx + 50, dsty + 10);
     };
 
-    void RedrawBackground(const Point &dst)
+    void RedrawBackground(const Point& dst)
     {
         Text text("Select Skill:", Font::YELLOW_BIG);
         text.Blit(dst.x + (area.w - text.w()) / 2, dst.y);
@@ -212,9 +225,9 @@ public:
 
 Skill::Secondary Dialog::SelectSecondarySkill()
 {
-    Display &display = Display::Get();
-    Cursor &cursor = Cursor::Get();
-    LocalEvent &le = LocalEvent::Get();
+    Display& display = Display::Get();
+    Cursor& cursor = Cursor::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     vector<int> skills(MAXSECONDARYSKILL * 3, 0);
 
@@ -224,7 +237,7 @@ Skill::Secondary Dialog::SelectSecondarySkill()
     for (size_t ii = 0; ii < MAXSECONDARYSKILL * 3; ++ii) skills[ii] = ii;
 
     FrameBorder frameborder(Size(310, 280), AGG::GetICN(ICN::TEXTBAK2, 0));
-    const Rect &area = frameborder.GetArea();
+    const Rect& area = frameborder.GetArea();
 
     SelectEnumSecSkill listbox(area);
 
@@ -265,9 +278,9 @@ Skill::Secondary Dialog::SelectSecondarySkill()
 
 Spell Dialog::SelectSpell(int cur)
 {
-    Display &display = Display::Get();
-    Cursor &cursor = Cursor::Get();
-    LocalEvent &le = LocalEvent::Get();
+    Display& display = Display::Get();
+    Cursor& cursor = Cursor::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     vector<int> spells(static_cast<int>(Spell::STONE - 1), Spell::NONE);
 
@@ -277,7 +290,7 @@ Spell Dialog::SelectSpell(int cur)
     for (size_t ii = 0; ii < spells.size(); ++ii) spells[ii] = ii + 1;
 
     FrameBorder frameborder(Size(340, 280), AGG::GetICN(ICN::TEXTBAK2, 0));
-    const Rect &area = frameborder.GetArea();
+    const Rect& area = frameborder.GetArea();
 
     SelectEnumSpell listbox(area);
 
@@ -306,16 +319,15 @@ Spell Dialog::SelectSpell(int cur)
         }
     }
 
-    return result == OK || listbox.ok ?
-           Spell(listbox.GetCurrent()) : Spell(Spell::NONE);
+    return result == OK || listbox.ok ? Spell(listbox.GetCurrent()) : Spell(Spell::NONE);
 }
 
 
 Artifact Dialog::SelectArtifact(int cur)
 {
-    Display &display = Display::Get();
-    Cursor &cursor = Cursor::Get();
-    LocalEvent &le = LocalEvent::Get();
+    Display& display = Display::Get();
+    Cursor& cursor = Cursor::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     vector<int> artifacts(static_cast<int>(Artifact::UNKNOWN), Artifact::UNKNOWN);
 
@@ -326,7 +338,7 @@ Artifact Dialog::SelectArtifact(int cur)
     for (size_t ii = 0; ii < artifacts.size(); ++ii) artifacts[ii] = ii;
 
     FrameBorder frameborder(Size(370, 280), AGG::GetICN(ICN::TEXTBAK2, 0));
-    const Rect &area = frameborder.GetArea();
+    const Rect& area = frameborder.GetArea();
 
     SelectEnumArtifact listbox(area);
 
@@ -355,15 +367,14 @@ Artifact Dialog::SelectArtifact(int cur)
         }
     }
 
-    return result == OK || listbox.ok ?
-           Artifact(listbox.GetCurrent()) : Artifact(Artifact::UNKNOWN);
+    return result == OK || listbox.ok ? Artifact(listbox.GetCurrent()) : Artifact(Artifact::UNKNOWN);
 }
 
 Monster Dialog::SelectMonster(int id)
 {
-    Display &display = Display::Get();
-    Cursor &cursor = Cursor::Get();
-    LocalEvent &le = LocalEvent::Get();
+    Display& display = Display::Get();
+    Cursor& cursor = Cursor::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     vector<int> monsters(static_cast<int>(Monster::WATER_ELEMENT), Monster::UNKNOWN);
 
@@ -374,7 +385,7 @@ Monster Dialog::SelectMonster(int id)
     for (size_t ii = 0; ii < monsters.size(); ++ii) monsters[ii] = ii + 1; // skip Monser::UNKNOWN
 
     FrameBorder frameborder(Size(260, 280), AGG::GetICN(ICN::TEXTBAK2, 0));
-    const Rect &area = frameborder.GetArea();
+    const Rect& area = frameborder.GetArea();
 
     SelectEnumMonster listbox(area);
 
@@ -403,15 +414,14 @@ Monster Dialog::SelectMonster(int id)
         }
     }
 
-    return result == OK || listbox.ok ?
-           Monster(listbox.GetCurrent()) : Monster(Monster::UNKNOWN);
+    return result == OK || listbox.ok ? Monster(listbox.GetCurrent()) : Monster(Monster::UNKNOWN);
 }
 
 int Dialog::SelectHeroes(int cur)
 {
-    Display &display = Display::Get();
-    Cursor &cursor = Cursor::Get();
-    LocalEvent &le = LocalEvent::Get();
+    Display& display = Display::Get();
+    Cursor& cursor = Cursor::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     vector<int> heroes(static_cast<int>(Heroes::SANDYSANDY), Heroes::UNKNOWN);
 
@@ -422,7 +432,7 @@ int Dialog::SelectHeroes(int cur)
     for (size_t ii = 0; ii < heroes.size(); ++ii) heroes[ii] = ii;
 
     FrameBorder frameborder(Size(240, 280), AGG::GetICN(ICN::TEXTBAK2, 0));
-    const Rect &area = frameborder.GetArea();
+    const Rect& area = frameborder.GetArea();
 
     SelectEnumHeroes listbox(area);
 
@@ -451,6 +461,5 @@ int Dialog::SelectHeroes(int cur)
         }
     }
 
-    return result == OK || listbox.ok ?
-           listbox.GetCurrent() : Heroes::UNKNOWN;
+    return result == OK || listbox.ok ? listbox.GetCurrent() : Heroes::UNKNOWN;
 }

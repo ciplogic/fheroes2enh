@@ -29,7 +29,11 @@ typedef Funds payment_t;
 
 enum
 {
-    INCOME_CAPTURED = 0x01, INCOME_CASTLES = 0x02, INCOME_ARTIFACTS = 0x04, INCOME_HEROSKILLS = 0x08, INCOME_ALL = 0xFF
+    INCOME_CAPTURED = 0x01,
+    INCOME_CASTLES = 0x02,
+    INCOME_ARTIFACTS = 0x04,
+    INCOME_HEROSKILLS = 0x08,
+    INCOME_ALL = 0xFF
 };
 
 namespace PaymentConditions
@@ -44,5 +48,5 @@ namespace PaymentConditions
 
     payment_t ForAlchemist(int arts);
 
-    void UpdateCosts(const string &);
+    void UpdateCosts(const string&);
 }

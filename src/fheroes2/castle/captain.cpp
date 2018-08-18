@@ -27,7 +27,7 @@
 #include "agg.h"
 #include "icn.h"
 
-Captain::Captain(Castle &cstl) : HeroBase(CAPTAIN, cstl.GetRace()), home(cstl)
+Captain::Captain(Castle& cstl) : HeroBase(CAPTAIN, cstl.GetRace()), home(cstl)
 {
     SetCenter(home.GetCenter());
 }
@@ -103,7 +103,7 @@ int Captain::GetColor() const
     return home.GetColor();
 }
 
-const string &Captain::GetName() const
+const string& Captain::GetName() const
 {
     return home.GetName();
 }
@@ -123,12 +123,12 @@ uint32_t Captain::GetSecondaryValues(int) const
     return 0;
 }
 
-const Army &Captain::GetArmy() const
+const Army& Captain::GetArmy() const
 {
     return home.GetArmy();
 }
 
-Army &Captain::GetArmy()
+Army& Captain::GetArmy()
 {
     return home.GetArmy();
 }
@@ -158,7 +158,7 @@ void Captain::ActionPreBattle()
     SetSpellPoints(GetMaxSpellPoints());
 }
 
-const Castle *Captain::inCastle() const
+const Castle* Captain::inCastle() const
 {
     return &home;
 }
@@ -167,52 +167,52 @@ Surface Captain::GetPortrait(int type) const
 {
     switch (type)
     {
-        case PORT_BIG:
-            switch (GetRace())
-            {
-                case Race::KNGT:
-                    return AGG::GetICN(ICN::PORT0090, 0);
-                case Race::BARB:
-                    return AGG::GetICN(ICN::PORT0091, 0);
-                case Race::SORC:
-                    return AGG::GetICN(ICN::PORT0092, 0);
-                case Race::WRLK:
-                    return AGG::GetICN(ICN::PORT0093, 0);
-                case Race::WZRD:
-                    return AGG::GetICN(ICN::PORT0094, 0);
-                case Race::NECR:
-                    return AGG::GetICN(ICN::PORT0095, 0);
-                default:
-                    break;
-            }
+    case PORT_BIG:
+        switch (GetRace())
+        {
+        case Race::KNGT:
+            return AGG::GetICN(ICN::PORT0090, 0);
+        case Race::BARB:
+            return AGG::GetICN(ICN::PORT0091, 0);
+        case Race::SORC:
+            return AGG::GetICN(ICN::PORT0092, 0);
+        case Race::WRLK:
+            return AGG::GetICN(ICN::PORT0093, 0);
+        case Race::WZRD:
+            return AGG::GetICN(ICN::PORT0094, 0);
+        case Race::NECR:
+            return AGG::GetICN(ICN::PORT0095, 0);
+        default:
             break;
+        }
+        break;
 
-        case PORT_MEDIUM:
-        case PORT_SMALL:
-            switch (GetRace())
-            {
-                case Race::KNGT:
-                    return AGG::GetICN(ICN::MINICAPT, 0);
-                case Race::BARB:
-                    return AGG::GetICN(ICN::MINICAPT, 1);
-                case Race::SORC:
-                    return AGG::GetICN(ICN::MINICAPT, 2);
-                case Race::WRLK:
-                    return AGG::GetICN(ICN::MINICAPT, 3);
-                case Race::WZRD:
-                    return AGG::GetICN(ICN::MINICAPT, 4);
-                case Race::NECR:
-                    return AGG::GetICN(ICN::MINICAPT, 5);
-                default:
-                    break;
-            }
+    case PORT_MEDIUM:
+    case PORT_SMALL:
+        switch (GetRace())
+        {
+        case Race::KNGT:
+            return AGG::GetICN(ICN::MINICAPT, 0);
+        case Race::BARB:
+            return AGG::GetICN(ICN::MINICAPT, 1);
+        case Race::SORC:
+            return AGG::GetICN(ICN::MINICAPT, 2);
+        case Race::WRLK:
+            return AGG::GetICN(ICN::MINICAPT, 3);
+        case Race::WZRD:
+            return AGG::GetICN(ICN::MINICAPT, 4);
+        case Race::NECR:
+            return AGG::GetICN(ICN::MINICAPT, 5);
+        default:
             break;
+        }
+        break;
     }
 
     return Surface();
 }
 
-void Captain::PortraitRedraw(s32 px, s32 py, int type, Surface &dstsf) const
+void Captain::PortraitRedraw(s32 px, s32 py, int type, Surface& dstsf) const
 {
     GetPortrait(type).Blit(px, py, dstsf);
 }

@@ -33,7 +33,6 @@
 
 namespace SDL
 {
-
     class Thread
     {
     public:
@@ -41,11 +40,11 @@ namespace SDL
 
         ~Thread();
 
-        Thread(const Thread &);
+        Thread(const Thread&);
 
-        Thread &operator=(const Thread &);
+        Thread& operator=(const Thread&);
 
-        void Create(int (*)(void *), void *param = nullptr);
+        void Create(int (*)(void*), void* param = nullptr);
 
         int Wait();
 
@@ -56,7 +55,7 @@ namespace SDL
         uint32_t GetID() const;
 
     private:
-        SDL_Thread *thread;
+        SDL_Thread* thread;
     };
 
     class Mutex
@@ -64,11 +63,11 @@ namespace SDL
     public:
         explicit Mutex(bool init = false);
 
-        Mutex(const Mutex &);
+        Mutex(const Mutex&);
 
         ~Mutex();
 
-        Mutex &operator=(const Mutex &);
+        Mutex& operator=(const Mutex&);
 
         void Create();
 
@@ -78,7 +77,7 @@ namespace SDL
 
     private:
 
-        SDL_mutex *mutex;
+        SDL_mutex* mutex;
     };
 
     class Timer
@@ -88,7 +87,7 @@ namespace SDL
 
         bool IsValid() const;
 
-        void Run(uint32_t, uint32_t (*)(uint32_t, void *), void *param = nullptr);
+        void Run(uint32_t, uint32_t (*)(uint32_t, void*), void* param = nullptr);
 
         void Remove();
 
@@ -107,12 +106,10 @@ namespace SDL
 
         uint32_t Get() const;
 
-        void Print(const char *header = nullptr) const;
+        void Print(const char* header = nullptr) const;
 
     private:
         uint32_t tick1{};
         uint32_t tick2{};
     };
-
 }
-

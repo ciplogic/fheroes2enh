@@ -28,7 +28,7 @@
 #include "localevent.h"
 #include "icn.h"
 
-Interface::ButtonsArea::ButtonsArea(Basic &basic) : BorderWindow(Rect(0, 0, 144, 72)), interface(basic)
+Interface::ButtonsArea::ButtonsArea(Basic& basic) : BorderWindow(Rect(0, 0, 144, 72)), interface(basic)
 {
 }
 
@@ -75,7 +75,7 @@ void Interface::ButtonsArea::SetPos(s32 ox, s32 oy)
 
 void Interface::ButtonsArea::Redraw()
 {
-    const Settings &conf = Settings::Get();
+    const Settings& conf = Settings::Get();
 
     if (conf.ExtGameHideInterface() && !conf.ShowButtons()) return;
     const int icnbtn = Settings::Get().ExtGameEvilInterface() ? ICN::ADVEBTNS : ICN::ADVBTNS;
@@ -104,8 +104,8 @@ void Interface::ButtonsArea::Redraw()
 
 int Interface::ButtonsArea::QueueEventProcessing()
 {
-    Settings &conf = Settings::Get();
-    LocalEvent &le = LocalEvent::Get();
+    Settings& conf = Settings::Get();
+    LocalEvent& le = LocalEvent::Get();
     int res = Game::CANCEL;
 
     le.MousePressLeft(buttonNextHero) ? buttonNextHero.PressDraw() : buttonNextHero.ReleaseDraw();
@@ -121,28 +121,36 @@ int Interface::ButtonsArea::QueueEventProcessing()
         // move border window
         BorderWindow::QueueEventProcessing())
     {
-    } else if (le.MouseClickLeft(buttonNextHero))
+    }
+    else if (le.MouseClickLeft(buttonNextHero))
     {
         interface.EventNextHero();
-    } else if (le.MouseClickLeft(buttonMovement))
+    }
+    else if (le.MouseClickLeft(buttonMovement))
     {
         interface.EventContinueMovement();
-    } else if (le.MouseClickLeft(buttonKingdom))
+    }
+    else if (le.MouseClickLeft(buttonKingdom))
     {
         interface.EventKingdomInfo();
-    } else if (le.MouseClickLeft(buttonSpell))
+    }
+    else if (le.MouseClickLeft(buttonSpell))
     {
         interface.EventCastSpell();
-    } else if (le.MouseClickLeft(buttonEndTur))
+    }
+    else if (le.MouseClickLeft(buttonEndTur))
     {
         res = interface.EventEndTurn();
-    } else if (le.MouseClickLeft(buttonAdventure))
+    }
+    else if (le.MouseClickLeft(buttonAdventure))
     {
         res = interface.EventAdventureDialog();
-    } else if (le.MouseClickLeft(buttonFile))
+    }
+    else if (le.MouseClickLeft(buttonFile))
     {
         res = interface.EventFileDialog();
-    } else if (le.MouseClickLeft(buttonSystem))
+    }
+    else if (le.MouseClickLeft(buttonSystem))
     {
         interface.EventSystemDialog();
     }

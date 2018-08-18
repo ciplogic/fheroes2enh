@@ -9,4 +9,3 @@ class PlusSignAddon
 public:
     static void draw(int rightMost, int top, bool isEnabled);
 };
-

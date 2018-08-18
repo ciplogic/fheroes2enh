@@ -31,7 +31,15 @@ namespace BarrierColor
 {
     enum
     {
-        NONE = 0, AQUA = 1, BLUE = 2, BROWN = 3, GOLD = 4, GREEN = 5, ORANGE = 6, PURPLE = 7, RED = 8
+        NONE = 0,
+        AQUA = 1,
+        BLUE = 2,
+        BROWN = 3,
+        GOLD = 4,
+        GREEN = 5,
+        ORANGE = 6,
+        PURPLE = 7,
+        RED = 8
     };
 
     std::string String(int);
@@ -77,13 +85,14 @@ class ColorBase
 {
     int color;
 
-    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const ColorBase &);
+    friend ByteVectorWriter& operator<<(ByteVectorWriter&, const ColorBase&);
 
-    friend ByteVectorReader &operator>>(ByteVectorReader &msg, ColorBase &col);
+    friend ByteVectorReader& operator>>(ByteVectorReader& msg, ColorBase& col);
 
 public:
     ColorBase(int col = Color::NONE) : color(col)
-    {}
+    {
+    }
 
     virtual ~ColorBase()
     = default;
@@ -94,10 +103,12 @@ public:
 
     void SetColor(int);
 
-    Kingdom &GetKingdom() const;
+    Kingdom& GetKingdom() const;
 
     int GetColor() const
-    { return color; }
+    {
+        return color;
+    }
 };
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, ColorBase &col);
+ByteVectorReader& operator>>(ByteVectorReader& msg, ColorBase& col);

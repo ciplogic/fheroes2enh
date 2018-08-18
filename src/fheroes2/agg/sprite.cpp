@@ -29,19 +29,19 @@ bool SkipLocalAlpha(int icn)
 {
     switch (icn)
     {
-        case ICN::SYSTEM:
-        case ICN::SYSTEME:
-        case ICN::BUYBUILD:
-        case ICN::BUYBUILE:
-        case ICN::BOOK:
-        case ICN::CSPANBKE:
-        case ICN::CPANBKGE:
-        case ICN::CAMPBKGE:
+    case ICN::SYSTEM:
+    case ICN::SYSTEME:
+    case ICN::BUYBUILD:
+    case ICN::BUYBUILE:
+    case ICN::BOOK:
+    case ICN::CSPANBKE:
+    case ICN::CPANBKGE:
+    case ICN::CAMPBKGE:
 
-            return true;
+        return true;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     return false;
@@ -49,7 +49,7 @@ bool SkipLocalAlpha(int icn)
 
 Sprite::Sprite() = default;
 
-Sprite::Sprite(const Surface &sf, s32 ox, s32 oy) : SpritePos(sf, Point(ox, oy))
+Sprite::Sprite(const Surface& sf, s32 ox, s32 oy) : SpritePos(sf, Point(ox, oy))
 {
 }
 
@@ -63,17 +63,17 @@ int Sprite::y() const
     return pos.y;
 }
 
-Surface Sprite::ScaleQVGASurface(const Surface &src)
+Surface Sprite::ScaleQVGASurface(const Surface& src)
 {
     const s32 w = src.w() / 2;
     const s32 h = src.h() / 2;
     return src.RenderScale(Size(w ? w : 1, h ? h : 1));
 }
 
-Sprite Sprite::ScaleQVGASprite(const Sprite &sp)
+Sprite Sprite::ScaleQVGASprite(const Sprite& sp)
 {
-    Cursor &cursor = Cursor::Get();
-    Display &display = Display::Get();
+    Cursor& cursor = Cursor::Get();
+    Display& display = Display::Get();
     Sprite res;
 
     if (sp.w() > 3 && sp.h() > 3)
@@ -118,17 +118,17 @@ void Sprite::Blit(s32 dx, s32 dy) const
     Blit(Point(dx, dy), Display::Get());
 }
 
-void Sprite::Blit(const Point &dpt) const
+void Sprite::Blit(const Point& dpt) const
 {
     Blit(Rect(Point(0, 0), GetSize()), dpt, Display::Get());
 }
 
-void Sprite::Blit(const Rect &srt, s32 dx, s32 dy) const
+void Sprite::Blit(const Rect& srt, s32 dx, s32 dy) const
 {
     Blit(srt, Point(dx, dy), Display::Get());
 }
 
-void Sprite::Blit(const Rect &srt, const Point &dpt) const
+void Sprite::Blit(const Rect& srt, const Point& dpt) const
 {
     Blit(srt, dpt, Display::Get());
 }

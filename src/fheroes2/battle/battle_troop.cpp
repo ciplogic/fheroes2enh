@@ -43,103 +43,319 @@ namespace Battle
 {
     monstersprite_t monsters_info[] = {
 
-            {ICN::UNKNOWN,  {0,  0},  {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0},  {0,  0},  {0,  0}, {0,  0},  M82::UNKNOWN,  M82::UNKNOWN,  M82::UNKNOWN,  M82::UNKNOWN},
+        {
+            ICN::UNKNOWN, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0},
+            {0, 0}, {0, 0}, {0, 0}, {0, 0}, M82::UNKNOWN, M82::UNKNOWN, M82::UNKNOWN, M82::UNKNOWN
+        },
 
-            // icn_file      idle     move     fly1     fly2     fly3     shot0    shot1    shot2    shot3    attk0    attk1    attk2    attk3    wcne     kill     m82_attk       m82_kill       m82_move       m82_wnce
-            {ICN::PEASANT,  {1,  4},  {5,  8},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {16, 6},  {22, 6},  {28, 6},  {13, 3}, {34, 4},  M82::PSNTATTK, M82::PSNTKILL, M82::PSNTMOVE, M82::PSNTWNCE},
-            {ICN::ARCHER,   {1,  4},  {5,  8},  {0,  0}, {0,  0}, {0,  0}, {16, 4},  {20, 4}, {24, 4}, {28, 4}, {32, 4}, {36, 3},  {39, 3},  {42, 3},  {13, 3}, {45, 6},  M82::ARCHATTK, M82::ARCHKILL, M82::ARCHMOVE, M82::ARCHWNCE},
-            {ICN::ARCHER2,  {1,  4},  {5,  8},  {0,  0}, {0,  0}, {0,  0}, {16, 4},  {20, 4}, {24, 4}, {28, 4}, {32, 4}, {36, 3},  {39, 3},  {42, 3},  {13, 3}, {45, 6},  M82::ARCHATTK, M82::ARCHKILL, M82::ARCHMOVE, M82::ARCHWNCE},
-            {ICN::PIKEMAN,  {1,  4},  {5,  8},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {17, 3},  {20, 4},  {24, 6},  {13, 4}, {30, 6},  M82::PIKEATTK, M82::PIKEKILL, M82::PIKEMOVE, M82::PIKEWNCE},
-            {ICN::PIKEMAN2, {1,  4},  {5,  8},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {17, 3},  {20, 4},  {24, 6},  {13, 4}, {30, 6},  M82::PIKEATTK, M82::PIKEKILL, M82::PIKEMOVE, M82::PIKEWNCE},
-            {ICN::SWORDSMN, {39, 6},  {2,  8},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {12, 2}, {19, 5},  {14, 5},  {24, 5},  {36, 3}, {29, 7},  M82::SWDMATTK, M82::SWDMKILL, M82::SWDMMOVE, M82::SWDMWNCE},
-            {ICN::SWORDSM2, {39, 6},  {2,  8},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {12, 2}, {19, 5},  {14, 5},  {24, 5},  {36, 3}, {29, 7},  M82::SWDMATTK, M82::SWDMKILL, M82::SWDMMOVE, M82::SWDMWNCE},
-            {ICN::CAVALRYR, {19, 4},  {1,  7},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {8,  1}, {12, 3},  {9,  3},  {15, 2},  {28, 2}, {23, 5},  M82::CAVLATTK, M82::CAVLKILL, M82::CAVLMOVE, M82::CAVLWNCE},
-            {ICN::CAVALRYB, {19, 4},  {1,  7},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {8,  1}, {12, 3},  {9,  3},  {15, 2},  {28, 2}, {23, 5},  M82::CAVLATTK, M82::CAVLKILL, M82::CAVLMOVE, M82::CAVLWNCE},
-            {ICN::PALADIN,  {1,  11}, {12, 8},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {20, 2}, {22, 3},  {25, 3},  {28, 3},  {31, 2}, {34, 5},  M82::PLDNATTK, M82::PLDNKILL, M82::PLDNMOVE, M82::PLDNWNCE},
-            {ICN::PALADIN2, {1,  11}, {12, 8},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {20, 2}, {22, 3},  {25, 3},  {28, 3},  {31, 2}, {34, 5},  M82::PLDNATTK, M82::PLDNKILL, M82::PLDNMOVE, M82::PLDNWNCE},
+        // icn_file      idle     move     fly1     fly2     fly3     shot0    shot1    shot2    shot3    attk0    attk1    attk2    attk3    wcne     kill     m82_attk       m82_kill       m82_move       m82_wnce
+        {
+            ICN::PEASANT, {1, 4}, {5, 8}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {16, 6},
+            {22, 6}, {28, 6}, {13, 3}, {34, 4}, M82::PSNTATTK, M82::PSNTKILL, M82::PSNTMOVE, M82::PSNTWNCE
+        },
+        {
+            ICN::ARCHER, {1, 4}, {5, 8}, {0, 0}, {0, 0}, {0, 0}, {16, 4}, {20, 4}, {24, 4}, {28, 4}, {32, 4}, {36, 3},
+            {39, 3}, {42, 3}, {13, 3}, {45, 6}, M82::ARCHATTK, M82::ARCHKILL, M82::ARCHMOVE, M82::ARCHWNCE
+        },
+        {
+            ICN::ARCHER2, {1, 4}, {5, 8}, {0, 0}, {0, 0}, {0, 0}, {16, 4}, {20, 4}, {24, 4}, {28, 4}, {32, 4}, {36, 3},
+            {39, 3}, {42, 3}, {13, 3}, {45, 6}, M82::ARCHATTK, M82::ARCHKILL, M82::ARCHMOVE, M82::ARCHWNCE
+        },
+        {
+            ICN::PIKEMAN, {1, 4}, {5, 8}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {17, 3},
+            {20, 4}, {24, 6}, {13, 4}, {30, 6}, M82::PIKEATTK, M82::PIKEKILL, M82::PIKEMOVE, M82::PIKEWNCE
+        },
+        {
+            ICN::PIKEMAN2, {1, 4}, {5, 8}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {17, 3},
+            {20, 4}, {24, 6}, {13, 4}, {30, 6}, M82::PIKEATTK, M82::PIKEKILL, M82::PIKEMOVE, M82::PIKEWNCE
+        },
+        {
+            ICN::SWORDSMN, {39, 6}, {2, 8}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {12, 2}, {19, 5},
+            {14, 5}, {24, 5}, {36, 3}, {29, 7}, M82::SWDMATTK, M82::SWDMKILL, M82::SWDMMOVE, M82::SWDMWNCE
+        },
+        {
+            ICN::SWORDSM2, {39, 6}, {2, 8}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {12, 2}, {19, 5},
+            {14, 5}, {24, 5}, {36, 3}, {29, 7}, M82::SWDMATTK, M82::SWDMKILL, M82::SWDMMOVE, M82::SWDMWNCE
+        },
+        {
+            ICN::CAVALRYR, {19, 4}, {1, 7}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {8, 1}, {12, 3},
+            {9, 3}, {15, 2}, {28, 2}, {23, 5}, M82::CAVLATTK, M82::CAVLKILL, M82::CAVLMOVE, M82::CAVLWNCE
+        },
+        {
+            ICN::CAVALRYB, {19, 4}, {1, 7}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {8, 1}, {12, 3},
+            {9, 3}, {15, 2}, {28, 2}, {23, 5}, M82::CAVLATTK, M82::CAVLKILL, M82::CAVLMOVE, M82::CAVLWNCE
+        },
+        {
+            ICN::PALADIN, {1, 11}, {12, 8}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {20, 2}, {22, 3},
+            {25, 3}, {28, 3}, {31, 2}, {34, 5}, M82::PLDNATTK, M82::PLDNKILL, M82::PLDNMOVE, M82::PLDNWNCE
+        },
+        {
+            ICN::PALADIN2, {1, 11}, {12, 8}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {20, 2}, {22, 3},
+            {25, 3}, {28, 3}, {31, 2}, {34, 5}, M82::PLDNATTK, M82::PLDNKILL, M82::PLDNMOVE, M82::PLDNWNCE
+        },
 
-            // icn_file      idle     move     fly1     fly2     fly3     shot0    shot1    shot2    shot3    attk0    attk1    attk2    attk3    wcne     kill     m82_attk       m82_kill       m82_move       m82_wnce
-            {ICN::GOBLIN,   {33, 7},  {1,  9},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {10, 3}, {17, 4},  {13, 4},  {21, 4},  {25, 4}, {29, 4},  M82::GBLNATTK, M82::GBLNKILL, M82::GBLNMOVE, M82::GBLNWNCE},
-            {ICN::ORC,      {1,  4},  {5,  8},  {0,  0}, {0,  0}, {0,  0}, {16, 13}, {0,  0}, {0,  0}, {0,  0}, {28, 2}, {30, 3},  {33, 4},  {37, 3},  {13, 3}, {40, 4},  M82::ORC_ATTK, M82::ORC_KILL, M82::ORC_MOVE, M82::ORC_WNCE},
-            {ICN::ORC2,     {1,  4},  {5,  8},  {0,  0}, {0,  0}, {0,  0}, {16, 13}, {0,  0}, {0,  0}, {0,  0}, {28, 2}, {30, 3},  {33, 4},  {37, 3},  {13, 3}, {40, 4},  M82::ORC_ATTK, M82::ORC_KILL, M82::ORC_MOVE, M82::ORC_WNCE},
-            {ICN::WOLF,     {20, 6},  {7,  6},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {13, 3},  {2,  5},  {16, 4},  {26, 3}, {28, 5},  M82::WOLFATTK, M82::WOLFKILL, M82::WOLFMOVE, M82::WOLFWNCE},
-            {ICN::OGRE,     {1,  4},  {5,  8},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {16, 6},  {22, 7},  {29, 8},  {13, 3}, {37, 4},  M82::OGREATTK, M82::OGREKILL, M82::OGREMOVE, M82::OGREWNCE},
-            {ICN::OGRE2,    {1,  4},  {5,  8},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {16, 6},  {22, 7},  {29, 8},  {13, 3}, {37, 4},  M82::OGREATTK, M82::OGREKILL, M82::OGREMOVE, M82::OGREWNCE},
-            {ICN::TROLL,    {16, 7},  {1,  15}, {0,  0}, {0,  0}, {0,  0}, {23, 5},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {48, 6},  {23, 6},  {29, 5},  {54, 3}, {57, 9},  M82::TRLLATTK, M82::TRLLKILL, M82::TRLLMOVE, M82::TRLLWNCE},
-            {ICN::TROLL2,   {16, 7},  {1,  15}, {0,  0}, {0,  0}, {0,  0}, {23, 5},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {48, 6},  {23, 6},  {29, 5},  {54, 3}, {57, 9},  M82::TRLLATTK, M82::TRLLKILL, M82::TRLLMOVE, M82::TRLLWNCE},
-            {ICN::CYCLOPS,  {30, 9},  {1,  7},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {16, 2}, {11, 2}, {21, 2}, {0,  0}, {14, 3},  {8,  3},  {18, 3},  {23, 2}, {25, 5},  M82::CYCLATTK, M82::CYCLKILL, M82::CYCLMOVE, M82::CYCLWNCE},
+        // icn_file      idle     move     fly1     fly2     fly3     shot0    shot1    shot2    shot3    attk0    attk1    attk2    attk3    wcne     kill     m82_attk       m82_kill       m82_move       m82_wnce
+        {
+            ICN::GOBLIN, {33, 7}, {1, 9}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {10, 3}, {17, 4},
+            {13, 4}, {21, 4}, {25, 4}, {29, 4}, M82::GBLNATTK, M82::GBLNKILL, M82::GBLNMOVE, M82::GBLNWNCE
+        },
+        {
+            ICN::ORC, {1, 4}, {5, 8}, {0, 0}, {0, 0}, {0, 0}, {16, 13}, {0, 0}, {0, 0}, {0, 0}, {28, 2}, {30, 3},
+            {33, 4}, {37, 3}, {13, 3}, {40, 4}, M82::ORC_ATTK, M82::ORC_KILL, M82::ORC_MOVE, M82::ORC_WNCE
+        },
+        {
+            ICN::ORC2, {1, 4}, {5, 8}, {0, 0}, {0, 0}, {0, 0}, {16, 13}, {0, 0}, {0, 0}, {0, 0}, {28, 2}, {30, 3},
+            {33, 4}, {37, 3}, {13, 3}, {40, 4}, M82::ORC_ATTK, M82::ORC_KILL, M82::ORC_MOVE, M82::ORC_WNCE
+        },
+        {
+            ICN::WOLF, {20, 6}, {7, 6}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {13, 3}, {2, 5},
+            {16, 4}, {26, 3}, {28, 5}, M82::WOLFATTK, M82::WOLFKILL, M82::WOLFMOVE, M82::WOLFWNCE
+        },
+        {
+            ICN::OGRE, {1, 4}, {5, 8}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {16, 6}, {22, 7},
+            {29, 8}, {13, 3}, {37, 4}, M82::OGREATTK, M82::OGREKILL, M82::OGREMOVE, M82::OGREWNCE
+        },
+        {
+            ICN::OGRE2, {1, 4}, {5, 8}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {16, 6},
+            {22, 7}, {29, 8}, {13, 3}, {37, 4}, M82::OGREATTK, M82::OGREKILL, M82::OGREMOVE, M82::OGREWNCE
+        },
+        {
+            ICN::TROLL, {16, 7}, {1, 15}, {0, 0}, {0, 0}, {0, 0}, {23, 5}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {48, 6},
+            {23, 6}, {29, 5}, {54, 3}, {57, 9}, M82::TRLLATTK, M82::TRLLKILL, M82::TRLLMOVE, M82::TRLLWNCE
+        },
+        {
+            ICN::TROLL2, {16, 7}, {1, 15}, {0, 0}, {0, 0}, {0, 0}, {23, 5}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {48, 6},
+            {23, 6}, {29, 5}, {54, 3}, {57, 9}, M82::TRLLATTK, M82::TRLLKILL, M82::TRLLMOVE, M82::TRLLWNCE
+        },
+        {
+            ICN::CYCLOPS, {30, 9}, {1, 7}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {16, 2}, {11, 2}, {21, 2}, {0, 0}, {14, 3},
+            {8, 3}, {18, 3}, {23, 2}, {25, 5}, M82::CYCLATTK, M82::CYCLKILL, M82::CYCLMOVE, M82::CYCLWNCE
+        },
 
-            // icn_file      idle     move     fly1     fly2     fly3     shot0    shot1    shot2    shot3    attk0    attk1    attk2    attk3    wcne     kill     m82_attk       m82_kill       m82_move       m82_wnce
-            {ICN::SPRITE,   {16, 9},  {0,  0},  {1,  3}, {4,  4}, {7,  2}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {30, 6},  {25, 5},  {36, 5},  {9,  2}, {11, 5},  M82::SPRTATTK, M82::SPRTKILL, M82::SPRTMOVE, M82::SPRTWNCE},
-            {ICN::DWARF,    {44, 5},  {1,  9},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {20, 7},  {10, 10}, {27, 9},  {36, 8}, {49, 7},  M82::DWRFATTK, M82::DWRFKILL, M82::DWRFMOVE, M82::DWRFWNCE},
-            {ICN::DWARF2,   {44, 5},  {1,  9},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {20, 7},  {10, 10}, {27, 9},  {36, 8}, {49, 7},  M82::DWRFATTK, M82::DWRFKILL, M82::DWRFMOVE, M82::DWRFWNCE},
-            {ICN::ELF,      {42, 6},  {1,  12}, {0,  0}, {0,  0}, {0,  0}, {13, 10}, {0,  0}, {0,  0}, {0,  0}, {23, 3}, {26, 3},  {29, 3},  {32, 4},  {36, 2}, {38, 4},  M82::ELF_ATTK, M82::ELF_KILL, M82::ELF_MOVE, M82::ELF_WNCE},
-            {ICN::ELF2,     {42, 6},  {1,  12}, {0,  0}, {0,  0}, {0,  0}, {13, 10}, {0,  0}, {0,  0}, {0,  0}, {23, 3}, {26, 3},  {29, 3},  {32, 4},  {36, 2}, {38, 4},  M82::ELF_ATTK, M82::ELF_KILL, M82::ELF_MOVE, M82::ELF_WNCE},
-            {ICN::DRUID,    {46, 4},  {3,  11}, {0,  0}, {0,  0}, {0,  0}, {14, 8},  {35, 4}, {22, 4}, {39, 5}, {14, 8}, {35, 4},  {22, 4},  {39, 4},  {44, 2}, {26, 9},  M82::DRUIATTK, M82::DRUIKILL, M82::DRUIMOVE, M82::DRUIWNCE},
-            {ICN::DRUID2,   {46, 4},  {3,  11}, {0,  0}, {0,  0}, {0,  0}, {14, 8},  {35, 4}, {22, 4}, {39, 5}, {14, 8}, {35, 4},  {22, 4},  {39, 4},  {44, 2}, {26, 9},  M82::DRUIATTK, M82::DRUIKILL, M82::DRUIMOVE, M82::DRUIWNCE},
-            {ICN::UNICORN,  {1,  9},  {10, 8},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {18, 9},  {27, 7},  {34, 7},  {41, 4}, {45, 7},  M82::UNICATTK, M82::UNICKILL, M82::UNICMOVE, M82::UNICWNCE},
-            {ICN::PHOENIX,  {30, 5},  {0,  0},  {1,  3}, {4,  6}, {0,  0}, {0,  0},  {25, 3}, {23, 2}, {28, 2}, {0,  0}, {13, 4},  {10, 4},  {17, 4},  {35, 2}, {37, 11}, M82::PHOEATTK, M82::PHOEKILL, M82::PHOEMOVE, M82::PHOEWNCE},
+        // icn_file      idle     move     fly1     fly2     fly3     shot0    shot1    shot2    shot3    attk0    attk1    attk2    attk3    wcne     kill     m82_attk       m82_kill       m82_move       m82_wnce
+        {
+            ICN::SPRITE, {16, 9}, {0, 0}, {1, 3}, {4, 4}, {7, 2}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {30, 6},
+            {25, 5}, {36, 5}, {9, 2}, {11, 5}, M82::SPRTATTK, M82::SPRTKILL, M82::SPRTMOVE, M82::SPRTWNCE
+        },
+        {
+            ICN::DWARF, {44, 5}, {1, 9}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {20, 7},
+            {10, 10}, {27, 9}, {36, 8}, {49, 7}, M82::DWRFATTK, M82::DWRFKILL, M82::DWRFMOVE, M82::DWRFWNCE
+        },
+        {
+            ICN::DWARF2, {44, 5}, {1, 9}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {20, 7},
+            {10, 10}, {27, 9}, {36, 8}, {49, 7}, M82::DWRFATTK, M82::DWRFKILL, M82::DWRFMOVE, M82::DWRFWNCE
+        },
+        {
+            ICN::ELF, {42, 6}, {1, 12}, {0, 0}, {0, 0}, {0, 0}, {13, 10}, {0, 0}, {0, 0}, {0, 0}, {23, 3}, {26, 3},
+            {29, 3}, {32, 4}, {36, 2}, {38, 4}, M82::ELF_ATTK, M82::ELF_KILL, M82::ELF_MOVE, M82::ELF_WNCE
+        },
+        {
+            ICN::ELF2, {42, 6}, {1, 12}, {0, 0}, {0, 0}, {0, 0}, {13, 10}, {0, 0}, {0, 0}, {0, 0}, {23, 3}, {26, 3},
+            {29, 3}, {32, 4}, {36, 2}, {38, 4}, M82::ELF_ATTK, M82::ELF_KILL, M82::ELF_MOVE, M82::ELF_WNCE
+        },
+        {
+            ICN::DRUID, {46, 4}, {3, 11}, {0, 0}, {0, 0}, {0, 0}, {14, 8}, {35, 4}, {22, 4}, {39, 5}, {14, 8}, {35, 4},
+            {22, 4}, {39, 4}, {44, 2}, {26, 9}, M82::DRUIATTK, M82::DRUIKILL, M82::DRUIMOVE, M82::DRUIWNCE
+        },
+        {
+            ICN::DRUID2, {46, 4}, {3, 11}, {0, 0}, {0, 0}, {0, 0}, {14, 8}, {35, 4}, {22, 4}, {39, 5}, {14, 8}, {35, 4},
+            {22, 4}, {39, 4}, {44, 2}, {26, 9}, M82::DRUIATTK, M82::DRUIKILL, M82::DRUIMOVE, M82::DRUIWNCE
+        },
+        {
+            ICN::UNICORN, {1, 9}, {10, 8}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {18, 9},
+            {27, 7}, {34, 7}, {41, 4}, {45, 7}, M82::UNICATTK, M82::UNICKILL, M82::UNICMOVE, M82::UNICWNCE
+        },
+        {
+            ICN::PHOENIX, {30, 5}, {0, 0}, {1, 3}, {4, 6}, {0, 0}, {0, 0}, {25, 3}, {23, 2}, {28, 2}, {0, 0}, {13, 4},
+            {10, 4}, {17, 4}, {35, 2}, {37, 11}, M82::PHOEATTK, M82::PHOEKILL, M82::PHOEMOVE, M82::PHOEWNCE
+        },
 
-            // icn_file      idle     move     fly1     fly2     fly3     shot0    shot1    shot2    shot3    attk0    attk1    attk2    attk3    wcne     kill     m82_attk       m82_kill       m82_move       m82_wnce
-            {ICN::CENTAUR,  {65, 6},  {2,  6},  {0,  0}, {0,  0}, {0,  0}, {18, 4},  {27, 3}, {22, 5}, {30, 3}, {33, 1}, {38, 4},  {34, 4},  {42, 4},  {46, 2}, {48, 7},  M82::CNTRATTK, M82::CNTRKILL, M82::CNTRMOVE, M82::CNTRWNCE},
-            {ICN::GARGOYLE, {1,  4},  {0,  0},  {5,  2}, {7,  4}, {11, 1}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {14, 1}, {15, 4},  {19, 4},  {23, 4},  {12, 2}, {27, 5},  M82::GARGATTK, M82::GARGKILL, M82::GARGMOVE, M82::GARGWNCE},
-            {ICN::GRIFFIN,  {16, 9},  {0,  0},  {1,  3}, {3,  3}, {5,  2}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {7,  1}, {8,  2},  {14, 2},  {11, 3},  {9,  2}, {25, 9},  M82::GRIFATTK, M82::GRIFKILL, M82::GRIFMOVE, M82::GRIFWNCE},
-            {ICN::MINOTAUR, {1,  5},  {6,  7},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {13, 3}, {20, 3},  {16, 4},  {23, 4},  {27, 2}, {29, 6},  M82::MINOATTK, M82::MINOKILL, M82::MINOMOVE, M82::MINOWNCE},
-            {ICN::MINOTAU2, {1,  5},  {6,  7},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {13, 3}, {20, 3},  {16, 4},  {23, 4},  {27, 2}, {29, 6},  M82::MINOATTK, M82::MINOKILL, M82::MINOMOVE, M82::MINOWNCE},
-            {ICN::HYDRA,    {28, 15}, {1,  8},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {9,  8},  {9,  8},  {9,  8},  {17, 5}, {21, 7},  M82::HYDRATTK, M82::HYDRKILL, M82::HYDRMOVE, M82::HYDRWNCE},
-            {ICN::DRAGGREE, {41, 13}, {0,  0},  {1,  4}, {5,  3}, {8,  5}, {13, 1},  {17, 3}, {23, 3}, {30, 2}, {13, 1}, {14, 3},  {20, 3},  {26, 4},  {32, 3}, {35, 6},  M82::DRGNATTK, M82::DRGNKILL, M82::DRGNMOVE, M82::DRGNWNCE},
-            {ICN::DRAGRED,  {41, 13}, {0,  0},  {1,  4}, {5,  3}, {8,  5}, {13, 1},  {17, 3}, {23, 3}, {30, 2}, {13, 1}, {14, 3},  {20, 3},  {26, 4},  {32, 3}, {35, 6},  M82::DRGNATTK, M82::DRGNKILL, M82::DRGNMOVE, M82::DRGNWNCE},
-            {ICN::DRAGBLAK, {41, 13}, {0,  0},  {1,  4}, {5,  3}, {8,  5}, {13, 1},  {17, 3}, {23, 3}, {30, 2}, {13, 1}, {14, 3},  {20, 3},  {26, 4},  {32, 3}, {35, 6},  M82::DRGNATTK, M82::DRGNKILL, M82::DRGNMOVE, M82::DRGNWNCE},
+        // icn_file      idle     move     fly1     fly2     fly3     shot0    shot1    shot2    shot3    attk0    attk1    attk2    attk3    wcne     kill     m82_attk       m82_kill       m82_move       m82_wnce
+        {
+            ICN::CENTAUR, {65, 6}, {2, 6}, {0, 0}, {0, 0}, {0, 0}, {18, 4}, {27, 3}, {22, 5}, {30, 3}, {33, 1}, {38, 4},
+            {34, 4}, {42, 4}, {46, 2}, {48, 7}, M82::CNTRATTK, M82::CNTRKILL, M82::CNTRMOVE, M82::CNTRWNCE
+        },
+        {
+            ICN::GARGOYLE, {1, 4}, {0, 0}, {5, 2}, {7, 4}, {11, 1}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {14, 1}, {15, 4},
+            {19, 4}, {23, 4}, {12, 2}, {27, 5}, M82::GARGATTK, M82::GARGKILL, M82::GARGMOVE, M82::GARGWNCE
+        },
+        {
+            ICN::GRIFFIN, {16, 9}, {0, 0}, {1, 3}, {3, 3}, {5, 2}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {7, 1}, {8, 2},
+            {14, 2}, {11, 3}, {9, 2}, {25, 9}, M82::GRIFATTK, M82::GRIFKILL, M82::GRIFMOVE, M82::GRIFWNCE
+        },
+        {
+            ICN::MINOTAUR, {1, 5}, {6, 7}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {13, 3}, {20, 3},
+            {16, 4}, {23, 4}, {27, 2}, {29, 6}, M82::MINOATTK, M82::MINOKILL, M82::MINOMOVE, M82::MINOWNCE
+        },
+        {
+            ICN::MINOTAU2, {1, 5}, {6, 7}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {13, 3}, {20, 3},
+            {16, 4}, {23, 4}, {27, 2}, {29, 6}, M82::MINOATTK, M82::MINOKILL, M82::MINOMOVE, M82::MINOWNCE
+        },
+        {
+            ICN::HYDRA, {28, 15}, {1, 8}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {9, 8},
+            {9, 8}, {9, 8}, {17, 5}, {21, 7}, M82::HYDRATTK, M82::HYDRKILL, M82::HYDRMOVE, M82::HYDRWNCE
+        },
+        {
+            ICN::DRAGGREE, {41, 13}, {0, 0}, {1, 4}, {5, 3}, {8, 5}, {13, 1}, {17, 3}, {23, 3}, {30, 2}, {13, 1},
+            {14, 3}, {20, 3}, {26, 4}, {32, 3}, {35, 6}, M82::DRGNATTK, M82::DRGNKILL, M82::DRGNMOVE, M82::DRGNWNCE
+        },
+        {
+            ICN::DRAGRED, {41, 13}, {0, 0}, {1, 4}, {5, 3}, {8, 5}, {13, 1}, {17, 3}, {23, 3}, {30, 2}, {13, 1},
+            {14, 3}, {20, 3}, {26, 4}, {32, 3}, {35, 6}, M82::DRGNATTK, M82::DRGNKILL, M82::DRGNMOVE, M82::DRGNWNCE
+        },
+        {
+            ICN::DRAGBLAK, {41, 13}, {0, 0}, {1, 4}, {5, 3}, {8, 5}, {13, 1}, {17, 3}, {23, 3}, {30, 2}, {13, 1},
+            {14, 3}, {20, 3}, {26, 4}, {32, 3}, {35, 6}, M82::DRGNATTK, M82::DRGNKILL, M82::DRGNMOVE, M82::DRGNWNCE
+        },
 
-            // icn_file      idle     move     fly1     fly2     fly3     shot0    shot1    shot2    shot3    attk0    attk1    attk2    attk3    wcne     kill     m82_attk       m82_kill       m82_move       m82_wnce
-            {ICN::HALFLING, {1,  4},  {5,  8},  {0,  0}, {0,  0}, {0,  0}, {17, 5},  {22, 2}, {26, 1}, {27, 2}, {29, 1}, {30, 2},  {32, 3},  {35, 2},  {13, 4}, {37, 4},  M82::HALFATTK, M82::HALFKILL, M82::HALFMOVE, M82::HALFWNCE},
-            {ICN::BOAR,     {1,  4},  {5,  8},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {15, 1}, {16, 3},  {19, 3},  {22, 2},  {13, 2}, {24, 5},  M82::BOARATTK, M82::BOARKILL, M82::BOARMOVE, M82::BOARWNCE},
-            {ICN::GOLEM,    {34, 6},  {1,  12}, {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {22, 4},  {13, 5},  {18, 4},  {32, 4}, {26, 6},  M82::GOLMATTK, M82::GOLMKILL, M82::GOLMMOVE, M82::GOLMWNCE},
-            {ICN::GOLEM2,   {34, 6},  {1,  12}, {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {22, 4},  {13, 5},  {18, 4},  {32, 4}, {26, 6},  M82::GOLMATTK, M82::GOLMKILL, M82::GOLMMOVE, M82::GOLMWNCE},
-            {ICN::ROC,      {18, 7},  {0,  0},  {1,  3}, {4,  3}, {7,  1}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {14, 3},  {8,  3},  {11, 3},  {25, 3}, {25, 9},  M82::ROC_ATTK, M82::ROC_KILL, M82::ROC_MOVE, M82::ROC_WNCE},
-            {ICN::MAGE1,    {1,  7},  {43, 8},  {0,  0}, {0,  0}, {0,  0}, {18, 1},  {21, 2}, {19, 2}, {23, 4}, {27, 1}, {34, 3},  {28, 6},  {37, 6},  {8,  3}, {11, 7},  M82::MAGEATTK, M82::MAGEKILL, M82::MAGEMOVE, M82::MAGEWNCE},
-            {ICN::MAGE2,    {1,  7},  {43, 8},  {0,  0}, {0,  0}, {0,  0}, {18, 1},  {21, 2}, {19, 2}, {23, 4}, {27, 1}, {34, 3},  {28, 6},  {37, 6},  {8,  3}, {11, 7},  M82::MAGEATTK, M82::MAGEKILL, M82::MAGEMOVE, M82::MAGEWNCE},
-            {ICN::TITANBLU, {1,  6},  {7,  7},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {19, 5},  {14, 5},  {24, 5},  {29, 2}, {31, 7},  M82::TITNATTK, M82::TITNKILL, M82::TITNMOVE, M82::TITNWNCE},
-            {ICN::TITANBLA, {1,  6},  {7,  7},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {45, 5}, {38, 5}, {50, 5}, {0,  0}, {19, 5},  {14, 5},  {24, 5},  {29, 2}, {31, 7},  M82::TITNATTK, M82::TITNKILL, M82::TITNMOVE, M82::TITNWNCE},
+        // icn_file      idle     move     fly1     fly2     fly3     shot0    shot1    shot2    shot3    attk0    attk1    attk2    attk3    wcne     kill     m82_attk       m82_kill       m82_move       m82_wnce
+        {
+            ICN::HALFLING, {1, 4}, {5, 8}, {0, 0}, {0, 0}, {0, 0}, {17, 5}, {22, 2}, {26, 1}, {27, 2}, {29, 1}, {30, 2},
+            {32, 3}, {35, 2}, {13, 4}, {37, 4}, M82::HALFATTK, M82::HALFKILL, M82::HALFMOVE, M82::HALFWNCE
+        },
+        {
+            ICN::BOAR, {1, 4}, {5, 8}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {15, 1}, {16, 3},
+            {19, 3}, {22, 2}, {13, 2}, {24, 5}, M82::BOARATTK, M82::BOARKILL, M82::BOARMOVE, M82::BOARWNCE
+        },
+        {
+            ICN::GOLEM, {34, 6}, {1, 12}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {22, 4},
+            {13, 5}, {18, 4}, {32, 4}, {26, 6}, M82::GOLMATTK, M82::GOLMKILL, M82::GOLMMOVE, M82::GOLMWNCE
+        },
+        {
+            ICN::GOLEM2, {34, 6}, {1, 12}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {22, 4},
+            {13, 5}, {18, 4}, {32, 4}, {26, 6}, M82::GOLMATTK, M82::GOLMKILL, M82::GOLMMOVE, M82::GOLMWNCE
+        },
+        {
+            ICN::ROC, {18, 7}, {0, 0}, {1, 3}, {4, 3}, {7, 1}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {14, 3}, {8, 3},
+            {11, 3}, {25, 3}, {25, 9}, M82::ROC_ATTK, M82::ROC_KILL, M82::ROC_MOVE, M82::ROC_WNCE
+        },
+        {
+            ICN::MAGE1, {1, 7}, {43, 8}, {0, 0}, {0, 0}, {0, 0}, {18, 1}, {21, 2}, {19, 2}, {23, 4}, {27, 1}, {34, 3},
+            {28, 6}, {37, 6}, {8, 3}, {11, 7}, M82::MAGEATTK, M82::MAGEKILL, M82::MAGEMOVE, M82::MAGEWNCE
+        },
+        {
+            ICN::MAGE2, {1, 7}, {43, 8}, {0, 0}, {0, 0}, {0, 0}, {18, 1}, {21, 2}, {19, 2}, {23, 4}, {27, 1}, {34, 3},
+            {28, 6}, {37, 6}, {8, 3}, {11, 7}, M82::MAGEATTK, M82::MAGEKILL, M82::MAGEMOVE, M82::MAGEWNCE
+        },
+        {
+            ICN::TITANBLU, {1, 6}, {7, 7}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {19, 5},
+            {14, 5}, {24, 5}, {29, 2}, {31, 7}, M82::TITNATTK, M82::TITNKILL, M82::TITNMOVE, M82::TITNWNCE
+        },
+        {
+            ICN::TITANBLA, {1, 6}, {7, 7}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {45, 5}, {38, 5}, {50, 5}, {0, 0}, {19, 5},
+            {14, 5}, {24, 5}, {29, 2}, {31, 7}, M82::TITNATTK, M82::TITNKILL, M82::TITNMOVE, M82::TITNWNCE
+        },
 
-            // icn_file      idle     move     fly1     fly2     fly3     shot0    shot1    shot2    shot3    attk0    attk1    attk2    attk3    wcne     kill     m82_attk       m82_kill       m82_move       m82_wnce
-            {ICN::SKELETON, {35, 4},  {3,  8},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {20, 4},  {12, 4},  {16, 4},  {24, 3}, {27, 8},  M82::SKELATTK, M82::SKELKILL, M82::SKELMOVE, M82::SKELWNCE},
-            {ICN::ZOMBIE,   {14, 12}, {1,  13}, {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {26, 5},  {31, 5},  {36, 5},  {40, 3}, {47, 7},  M82::ZOMBATTK, M82::ZOMBKILL, M82::ZOMBMOVE, M82::ZOMBWNCE},
-            {ICN::ZOMBIE2,  {14, 12}, {1,  13}, {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {26, 5},  {31, 5},  {36, 5},  {40, 3}, {47, 7},  M82::ZOMBATTK, M82::ZOMBKILL, M82::ZOMBMOVE, M82::ZOMBWNCE},
-            {ICN::MUMMYW,   {1,  4},  {5,  12}, {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {21, 3},  {24, 3},  {27, 3},  {17, 4}, {30, 10}, M82::MUMYATTK, M82::MUMYKILL, M82::MUMYMOVE, M82::MUMYWNCE},
-            {ICN::MUMMY2,   {1,  4},  {5,  12}, {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {21, 3},  {24, 3},  {27, 3},  {17, 4}, {30, 10}, M82::MUMYATTK, M82::MUMYKILL, M82::MUMYMOVE, M82::MUMYWNCE},
-            {ICN::VAMPIRE,  {1,  4},  {0,  0},  {5,  4}, {9,  4}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {15, 4},  {19, 4},  {23, 5},  {13, 3}, {28, 8},  M82::VAMPATTK, M82::VAMPKILL, M82::VAMPMOVE, M82::VAMPWNCE},
-            {ICN::VAMPIRE2, {1,  4},  {0,  0},  {5,  4}, {9,  4}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {15, 4},  {19, 4},  {23, 5},  {13, 3}, {28, 8},  M82::VAMPATTK, M82::VAMPKILL, M82::VAMPMOVE, M82::VAMPWNCE},
-            {ICN::LICH,     {1,  4},  {5,  8},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {13, 5}, {18, 5}, {23, 5}, {0,  0}, {13, 5},  {18, 5},  {23, 5},  {28, 3}, {31, 7},  M82::LICHATTK, M82::LICHKILL, M82::LICHMOVE, M82::LICHWNCE},
-            {ICN::LICH2,    {1,  4},  {5,  8},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {13, 5}, {18, 8}, {23, 5}, {0,  0}, {13, 5},  {18, 5},  {23, 5},  {28, 3}, {31, 7},  M82::LICHATTK, M82::LICHKILL, M82::LICHMOVE, M82::LICHWNCE},
-            {ICN::DRAGBONE, {22, 7},  {0,  0},  {1,  4}, {5,  3}, {8,  4}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {47, 5},  {12, 4},  {16, 4},  {20, 2}, {41, 6},  M82::BONEATTK, M82::BONEKILL, M82::BONEMOVE, M82::BONEWNCE},
+        // icn_file      idle     move     fly1     fly2     fly3     shot0    shot1    shot2    shot3    attk0    attk1    attk2    attk3    wcne     kill     m82_attk       m82_kill       m82_move       m82_wnce
+        {
+            ICN::SKELETON, {35, 4}, {3, 8}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {20, 4},
+            {12, 4}, {16, 4}, {24, 3}, {27, 8}, M82::SKELATTK, M82::SKELKILL, M82::SKELMOVE, M82::SKELWNCE
+        },
+        {
+            ICN::ZOMBIE, {14, 12}, {1, 13}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {26, 5},
+            {31, 5}, {36, 5}, {40, 3}, {47, 7}, M82::ZOMBATTK, M82::ZOMBKILL, M82::ZOMBMOVE, M82::ZOMBWNCE
+        },
+        {
+            ICN::ZOMBIE2, {14, 12}, {1, 13}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {26, 5},
+            {31, 5}, {36, 5}, {40, 3}, {47, 7}, M82::ZOMBATTK, M82::ZOMBKILL, M82::ZOMBMOVE, M82::ZOMBWNCE
+        },
+        {
+            ICN::MUMMYW, {1, 4}, {5, 12}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {21, 3},
+            {24, 3}, {27, 3}, {17, 4}, {30, 10}, M82::MUMYATTK, M82::MUMYKILL, M82::MUMYMOVE, M82::MUMYWNCE
+        },
+        {
+            ICN::MUMMY2, {1, 4}, {5, 12}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {21, 3},
+            {24, 3}, {27, 3}, {17, 4}, {30, 10}, M82::MUMYATTK, M82::MUMYKILL, M82::MUMYMOVE, M82::MUMYWNCE
+        },
+        {
+            ICN::VAMPIRE, {1, 4}, {0, 0}, {5, 4}, {9, 4}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {15, 4},
+            {19, 4}, {23, 5}, {13, 3}, {28, 8}, M82::VAMPATTK, M82::VAMPKILL, M82::VAMPMOVE, M82::VAMPWNCE
+        },
+        {
+            ICN::VAMPIRE2, {1, 4}, {0, 0}, {5, 4}, {9, 4}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {15, 4},
+            {19, 4}, {23, 5}, {13, 3}, {28, 8}, M82::VAMPATTK, M82::VAMPKILL, M82::VAMPMOVE, M82::VAMPWNCE
+        },
+        {
+            ICN::LICH, {1, 4}, {5, 8}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {13, 5}, {18, 5}, {23, 5}, {0, 0}, {13, 5},
+            {18, 5}, {23, 5}, {28, 3}, {31, 7}, M82::LICHATTK, M82::LICHKILL, M82::LICHMOVE, M82::LICHWNCE
+        },
+        {
+            ICN::LICH2, {1, 4}, {5, 8}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {13, 5}, {18, 8}, {23, 5}, {0, 0}, {13, 5},
+            {18, 5}, {23, 5}, {28, 3}, {31, 7}, M82::LICHATTK, M82::LICHKILL, M82::LICHMOVE, M82::LICHWNCE
+        },
+        {
+            ICN::DRAGBONE, {22, 7}, {0, 0}, {1, 4}, {5, 3}, {8, 4}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {47, 5},
+            {12, 4}, {16, 4}, {20, 2}, {41, 6}, M82::BONEATTK, M82::BONEKILL, M82::BONEMOVE, M82::BONEWNCE
+        },
 
-            // icn_file      idle     move     fly1     fly2     fly3     shot0    shot1    shot2    shot3    attk0    attk1    attk2    attk3    wcne     kill     m82_attk       m82_kill       m82_move       m82_wnce
-            {ICN::ROGUE,    {1,  4},  {5,  8},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {16, 8},  {24, 10}, {34, 9},  {13, 3}, {43, 7},  M82::ROGUATTK, M82::ROGUKILL, M82::ROGUMOVE, M82::ROGUWNCE},
-            {ICN::NOMAD,    {1,  9},  {10, 8},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {18, 2}, {26, 5},  {20, 6},  {31, 4},  {35, 2}, {37, 5},  M82::NMADATTK, M82::NMADKILL, M82::NMADMOVE, M82::NMADWNCE},
-            {ICN::GHOST,    {1,  3},  {0,  0},  {0,  0}, {4,  5}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {10, 3},  {13, 3},  {16, 4},  {20, 2}, {20, 8},  M82::GHSTATTK, M82::GHSTKILL, M82::GHSTMOVE, M82::GHSTWNCE},
-            {ICN::GENIE,    {1,  9},  {0,  0},  {10, 1}, {11, 4}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {26, 5},  {16, 5},  {21, 5},  {31, 2}, {33, 7},  M82::GENIATTK, M82::GENIKILL, M82::GENIMOVE, M82::GENIWNCE},
-            {ICN::MEDUSA,   {17, 7},  {1,  16}, {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {65, 10}, {41, 13}, {54, 11}, {36, 2}, {24, 12}, M82::MEDSATTK, M82::MEDSKILL, M82::MEDSMOVE, M82::MEDSWNCE},
-            {ICN::EELEM,    {1,  4},  {5,  8},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {16, 4},  {20, 5},  {25, 6},  {13, 3}, {31, 11}, M82::EELMATTK, M82::EELMKILL, M82::EELMMOVE, M82::EELMWNCE},
-            {ICN::AELEM,    {1,  4},  {5,  8},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {16, 4},  {20, 5},  {25, 6},  {13, 3}, {31, 11}, M82::AELMATTK, M82::AELMKILL, M82::AELMMOVE, M82::AELMWNCE},
-            {ICN::FELEM,    {1,  4},  {5,  8},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {16, 4},  {20, 5},  {25, 6},  {13, 3}, {31, 11}, M82::FELMATTK, M82::FELMKILL, M82::FELMMOVE, M82::FELMWNCE},
-            {ICN::WELEM,    {1,  4},  {5,  8},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {16, 4},  {20, 5},  {25, 6},  {13, 3}, {31, 11}, M82::WELMATTK, M82::WELMKILL, M82::WELMMOVE, M82::WELMWNCE},
+        // icn_file      idle     move     fly1     fly2     fly3     shot0    shot1    shot2    shot3    attk0    attk1    attk2    attk3    wcne     kill     m82_attk       m82_kill       m82_move       m82_wnce
+        {
+            ICN::ROGUE, {1, 4}, {5, 8}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {16, 8},
+            {24, 10}, {34, 9}, {13, 3}, {43, 7}, M82::ROGUATTK, M82::ROGUKILL, M82::ROGUMOVE, M82::ROGUWNCE
+        },
+        {
+            ICN::NOMAD, {1, 9}, {10, 8}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {18, 2}, {26, 5},
+            {20, 6}, {31, 4}, {35, 2}, {37, 5}, M82::NMADATTK, M82::NMADKILL, M82::NMADMOVE, M82::NMADWNCE
+        },
+        {
+            ICN::GHOST, {1, 3}, {0, 0}, {0, 0}, {4, 5}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {10, 3},
+            {13, 3}, {16, 4}, {20, 2}, {20, 8}, M82::GHSTATTK, M82::GHSTKILL, M82::GHSTMOVE, M82::GHSTWNCE
+        },
+        {
+            ICN::GENIE, {1, 9}, {0, 0}, {10, 1}, {11, 4}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {26, 5},
+            {16, 5}, {21, 5}, {31, 2}, {33, 7}, M82::GENIATTK, M82::GENIKILL, M82::GENIMOVE, M82::GENIWNCE
+        },
+        {
+            ICN::MEDUSA, {17, 7}, {1, 16}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {65, 10},
+            {41, 13}, {54, 11}, {36, 2}, {24, 12}, M82::MEDSATTK, M82::MEDSKILL, M82::MEDSMOVE, M82::MEDSWNCE
+        },
+        {
+            ICN::EELEM, {1, 4}, {5, 8}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {16, 4},
+            {20, 5}, {25, 6}, {13, 3}, {31, 11}, M82::EELMATTK, M82::EELMKILL, M82::EELMMOVE, M82::EELMWNCE
+        },
+        {
+            ICN::AELEM, {1, 4}, {5, 8}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {16, 4},
+            {20, 5}, {25, 6}, {13, 3}, {31, 11}, M82::AELMATTK, M82::AELMKILL, M82::AELMMOVE, M82::AELMWNCE
+        },
+        {
+            ICN::FELEM, {1, 4}, {5, 8}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {16, 4},
+            {20, 5}, {25, 6}, {13, 3}, {31, 11}, M82::FELMATTK, M82::FELMKILL, M82::FELMMOVE, M82::FELMWNCE
+        },
+        {
+            ICN::WELEM, {1, 4}, {5, 8}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {16, 4},
+            {20, 5}, {25, 6}, {13, 3}, {31, 11}, M82::WELMATTK, M82::WELMKILL, M82::WELMMOVE, M82::WELMWNCE
+        },
 
-            {ICN::UNKNOWN,  {0,  0},  {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0},  {0,  0},  {0,  0}, {0,  0},  M82::UNKNOWN,  M82::UNKNOWN,  M82::UNKNOWN,  M82::UNKNOWN},
-            {ICN::UNKNOWN,  {0,  0},  {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0},  {0,  0},  {0,  0}, {0,  0},  M82::UNKNOWN,  M82::UNKNOWN,  M82::UNKNOWN,  M82::UNKNOWN},
-            {ICN::UNKNOWN,  {0,  0},  {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0},  {0,  0},  {0,  0}, {0,  0},  M82::UNKNOWN,  M82::UNKNOWN,  M82::UNKNOWN,  M82::UNKNOWN},
-            {ICN::UNKNOWN,  {0,  0},  {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0},  {0,  0},  {0,  0}, {0,  0},  M82::UNKNOWN,  M82::UNKNOWN,  M82::UNKNOWN,  M82::UNKNOWN},
-            {ICN::UNKNOWN,  {0,  0},  {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0}, {0,  0}, {0,  0}, {0,  0}, {0,  0},  {0,  0},  {0,  0},  {0,  0}, {0,  0},  M82::UNKNOWN,  M82::UNKNOWN,  M82::UNKNOWN,  M82::UNKNOWN},
+        {
+            ICN::UNKNOWN, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0},
+            {0, 0}, {0, 0}, {0, 0}, {0, 0}, M82::UNKNOWN, M82::UNKNOWN, M82::UNKNOWN, M82::UNKNOWN
+        },
+        {
+            ICN::UNKNOWN, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0},
+            {0, 0}, {0, 0}, {0, 0}, {0, 0}, M82::UNKNOWN, M82::UNKNOWN, M82::UNKNOWN, M82::UNKNOWN
+        },
+        {
+            ICN::UNKNOWN, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0},
+            {0, 0}, {0, 0}, {0, 0}, {0, 0}, M82::UNKNOWN, M82::UNKNOWN, M82::UNKNOWN, M82::UNKNOWN
+        },
+        {
+            ICN::UNKNOWN, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0},
+            {0, 0}, {0, 0}, {0, 0}, {0, 0}, M82::UNKNOWN, M82::UNKNOWN, M82::UNKNOWN, M82::UNKNOWN
+        },
+        {
+            ICN::UNKNOWN, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0},
+            {0, 0}, {0, 0}, {0, 0}, {0, 0}, M82::UNKNOWN, M82::UNKNOWN, M82::UNKNOWN, M82::UNKNOWN
+        },
     };
 
     uint32_t genie_enemy_half_percent = 10;
 }
 
-void Battle::UpdateMonsterAttributes(const string &spec)
+void Battle::UpdateMonsterAttributes(const string& spec)
 {
 }
 
-void Battle::UpdateMonsterSpriteAnimation(const string &spec)
+void Battle::UpdateMonsterSpriteAnimation(const string& spec)
 {
 }
 
@@ -209,7 +425,7 @@ uint32_t Battle::ModesAffected::FindZeroDuration() const
     return it == end() ? 0 : (*it).first;
 }
 
-Battle::Unit::Unit(const Troop &t, s32 pos, bool ref) : ArmyTroop(nullptr, t),
+Battle::Unit::Unit(const Troop& t, s32 pos, bool ref) : ArmyTroop(nullptr, t),
                                                         uid(World::GetUniq()), hp(Monster::GetHitPoints(t)),
                                                         count0(t.GetCount()), dead(0), shots(t.GetShots()),
                                                         disruptingray(0), reflect(ref), animstate(0), animframe(0),
@@ -245,7 +461,7 @@ void Battle::Unit::SetPosition(s32 pos)
     if (position.GetTail()) position.GetTail()->SetUnit(this);
 }
 
-void Battle::Unit::SetPosition(const Position &pos)
+void Battle::Unit::SetPosition(const Position& pos)
 {
     if (position.GetHead()) position.GetHead()->SetUnit(nullptr);
     if (position.GetTail()) position.GetTail()->SetUnit(nullptr);
@@ -275,7 +491,7 @@ void Battle::Unit::UpdateDirection()
     SetReflection(GetArena()->GetArmyColor1() != GetArmyColor());
 }
 
-bool Battle::Unit::UpdateDirection(const Rect &pos)
+bool Battle::Unit::UpdateDirection(const Rect& pos)
 {
     bool need = position.GetRect().x > pos.x;
 
@@ -318,16 +534,16 @@ Surface Battle::Unit::GetContour(int val) const
 {
     switch (val)
     {
-        case CONTOUR_MAIN:
-            return contours[0];
-        case CONTOUR_REFLECT:
-            return contours[1];
-        case CONTOUR_BLACK:
-            return contours[2];
-        case CONTOUR_BLACK | CONTOUR_REFLECT:
-            return contours[3];
-        default:
-            break;
+    case CONTOUR_MAIN:
+        return contours[0];
+    case CONTOUR_REFLECT:
+        return contours[1];
+    case CONTOUR_BLACK:
+        return contours[2];
+    case CONTOUR_BLACK | CONTOUR_REFLECT:
+        return contours[3];
+    default:
+        break;
     }
 
     return Surface();
@@ -363,16 +579,16 @@ uint32_t Battle::Unit::GetUID() const
     return uid;
 }
 
-const Battle::monstersprite_t &Battle::Unit::GetMonsterSprite() const
+const Battle::monstersprite_t& Battle::Unit::GetMonsterSprite() const
 {
     return monsters_info[GetID()];
 }
 
 void Battle::Unit::InitContours()
 {
-    const monstersprite_t &msi = GetMonsterSprite();
-    const Sprite &sprite1 = AGG::GetICN(msi.icn_file, msi.frm_idle.start, false);
-    const Sprite &sprite2 = AGG::GetICN(msi.icn_file, msi.frm_idle.start, true);
+    const monstersprite_t& msi = GetMonsterSprite();
+    const Sprite& sprite1 = AGG::GetICN(msi.icn_file, msi.frm_idle.start, false);
+    const Sprite& sprite2 = AGG::GetICN(msi.icn_file, msi.frm_idle.start, true);
 
     // main sprite
     contours[0] = sprite1.RenderContour(RGBA(0xe0, 0xe0, 0));
@@ -385,7 +601,7 @@ void Battle::Unit::InitContours()
     contours[3] = sprite2.RenderGrayScale();
 }
 
-void Battle::Unit::SetMirror(Unit *ptr)
+void Battle::Unit::SetMirror(Unit* ptr)
 {
     mirror = ptr;
 }
@@ -395,7 +611,7 @@ uint32_t Battle::Unit::GetShots() const
     return shots;
 }
 
-const Battle::Position &Battle::Unit::GetPosition() const
+const Battle::Position& Battle::Unit::GetPosition() const
 {
     return position;
 }
@@ -414,26 +630,26 @@ void Battle::Unit::SetRandomMorale()
 {
     switch (GetMorale())
     {
-        case Morale::TREASON:
-            if (9 > Rand::Get(1, 16)) SetModes(MORALE_BAD);
-            break;     // 50%
-        case Morale::AWFUL:
-            if (6 > Rand::Get(1, 15)) SetModes(MORALE_BAD);
-            break;     // 30%
-        case Morale::POOR:
-            if (2 > Rand::Get(1, 15)) SetModes(MORALE_BAD);
-            break;     // 15%
-        case Morale::GOOD:
-            if (2 > Rand::Get(1, 15)) SetModes(MORALE_GOOD);
-            break;    // 15%
-        case Morale::GREAT:
-            if (6 > Rand::Get(1, 15)) SetModes(MORALE_GOOD);
-            break;    // 30%
-        case Morale::BLOOD:
-            if (9 > Rand::Get(1, 16)) SetModes(MORALE_GOOD);
-            break;    // 50%
-        default:
-            break;
+    case Morale::TREASON:
+        if (9 > Rand::Get(1, 16)) SetModes(MORALE_BAD);
+        break; // 50%
+    case Morale::AWFUL:
+        if (6 > Rand::Get(1, 15)) SetModes(MORALE_BAD);
+        break; // 30%
+    case Morale::POOR:
+        if (2 > Rand::Get(1, 15)) SetModes(MORALE_BAD);
+        break; // 15%
+    case Morale::GOOD:
+        if (2 > Rand::Get(1, 15)) SetModes(MORALE_GOOD);
+        break; // 15%
+    case Morale::GREAT:
+        if (6 > Rand::Get(1, 15)) SetModes(MORALE_GOOD);
+        break; // 30%
+    case Morale::BLOOD:
+        if (9 > Rand::Get(1, 16)) SetModes(MORALE_GOOD);
+        break; // 50%
+    default:
+        break;
     }
 }
 
@@ -446,26 +662,26 @@ void Battle::Unit::SetRandomLuck()
 
     switch (f)
     {
-        case Luck::CURSED:
-            if (9 > Rand::Get(1, 16)) SetModes(LUCK_BAD);
-            break;       // 50%
-        case Luck::AWFUL:
-            if (6 > Rand::Get(1, 15)) SetModes(LUCK_BAD);
-            break;       // 30%
-        case Luck::BAD:
-            if (2 > Rand::Get(1, 15)) SetModes(LUCK_BAD);
-            break;       // 15%
-        case Luck::GOOD:
-            if (2 > Rand::Get(1, 15)) SetModes(LUCK_GOOD);
-            break;      // 15%
-        case Luck::GREAT:
-            if (6 > Rand::Get(1, 15)) SetModes(LUCK_GOOD);
-            break;      // 30%
-        case Luck::IRISH:
-            if (9 > Rand::Get(1, 16)) SetModes(LUCK_GOOD);
-            break;      // 50%
-        default:
-            break;
+    case Luck::CURSED:
+        if (9 > Rand::Get(1, 16)) SetModes(LUCK_BAD);
+        break; // 50%
+    case Luck::AWFUL:
+        if (6 > Rand::Get(1, 15)) SetModes(LUCK_BAD);
+        break; // 30%
+    case Luck::BAD:
+        if (2 > Rand::Get(1, 15)) SetModes(LUCK_BAD);
+        break; // 15%
+    case Luck::GOOD:
+        if (2 > Rand::Get(1, 15)) SetModes(LUCK_GOOD);
+        break; // 15%
+    case Luck::GREAT:
+        if (6 > Rand::Get(1, 15)) SetModes(LUCK_GOOD);
+        break; // 30%
+    case Luck::IRISH:
+        if (9 > Rand::Get(1, 16)) SetModes(LUCK_GOOD);
+        break; // 50%
+    default:
+        break;
     }
 
     if (Modes(SP_BLESS) && Modes(LUCK_GOOD))
@@ -492,7 +708,7 @@ bool Battle::Unit::isReflect() const
 bool Battle::Unit::OutOfWalls() const
 {
     return Board::isOutOfWallsIndex(GetHeadIndex()) ||
-           isWide() && Board::isOutOfWallsIndex(GetTailIndex());
+        isWide() && Board::isOutOfWallsIndex(GetTailIndex());
 }
 
 bool Battle::Unit::isHandFighting() const
@@ -503,7 +719,7 @@ bool Battle::Unit::isHandFighting() const
 
         for (int it : around)
         {
-            const Unit *enemy = Board::GetCell(it)->GetUnit();
+            const Unit* enemy = Board::GetCell(it)->GetUnit();
             if (enemy && enemy->GetColor() != GetColor()) return true;
         }
     }
@@ -511,13 +727,13 @@ bool Battle::Unit::isHandFighting() const
     return false;
 }
 
-bool Battle::Unit::isHandFighting(const Unit &a, const Unit &b)
+bool Battle::Unit::isHandFighting(const Unit& a, const Unit& b)
 {
     return a.isValid() && !a.Modes(CAP_TOWER) && b.isValid() && b.GetColor() != a.GetColor() &&
-           (Board::isNearIndexes(a.GetHeadIndex(), b.GetHeadIndex()) ||
-            b.isWide() && Board::isNearIndexes(a.GetHeadIndex(), b.GetTailIndex()) ||
-            a.isWide() && (Board::isNearIndexes(a.GetTailIndex(), b.GetHeadIndex()) ||
-                b.isWide() && Board::isNearIndexes(a.GetTailIndex(), b.GetTailIndex())));
+    (Board::isNearIndexes(a.GetHeadIndex(), b.GetHeadIndex()) ||
+        b.isWide() && Board::isNearIndexes(a.GetHeadIndex(), b.GetTailIndex()) ||
+        a.isWide() && (Board::isNearIndexes(a.GetTailIndex(), b.GetHeadIndex()) ||
+            b.isWide() && Board::isNearIndexes(a.GetTailIndex(), b.GetTailIndex())));
 }
 
 void Battle::Unit::NewTurn()
@@ -586,17 +802,17 @@ uint32_t Battle::Unit::GetSpeed(bool skip_standing_check) const
     return speed;
 }
 
-uint32_t Battle::Unit::GetDamageMin(const Unit &enemy) const
+uint32_t Battle::Unit::GetDamageMin(const Unit& enemy) const
 {
     return CalculateDamageUnit(enemy, ArmyTroop::GetDamageMin());
 }
 
-uint32_t Battle::Unit::GetDamageMax(const Unit &enemy) const
+uint32_t Battle::Unit::GetDamageMax(const Unit& enemy) const
 {
     return CalculateDamageUnit(enemy, ArmyTroop::GetDamageMax());
 }
 
-uint32_t Battle::Unit::CalculateDamageUnit(const Unit &enemy, double dmg) const
+uint32_t Battle::Unit::CalculateDamageUnit(const Unit& enemy, double dmg) const
 {
     if (isArchers())
     {
@@ -605,16 +821,17 @@ uint32_t Battle::Unit::CalculateDamageUnit(const Unit &enemy, double dmg) const
             switch (GetID())
             {
                 // skip
-                case MAGE:
-                case ARCHMAGE:
-                case TITAN:
-                    break;
+            case MAGE:
+            case ARCHMAGE:
+            case TITAN:
+                break;
 
-                default:
-                    dmg /= 2;
-                    break;
+            default:
+                dmg /= 2;
+                break;
             }
-        } else
+        }
+        else
         {
             // check skill archery +%10, +%25, +%50
             if (GetCommander())
@@ -639,13 +856,13 @@ uint32_t Battle::Unit::CalculateDamageUnit(const Unit &enemy, double dmg) const
     // check monster capability
     switch (GetID())
     {
-        case CRUSADER:
-            // double damage for undead
-            if (enemy.isUndead()) dmg *= 2;
-            break;
+    case CRUSADER:
+        // double damage for undead
+        if (enemy.isUndead()) dmg *= 2;
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     // approximate.. from faq
@@ -656,7 +873,7 @@ uint32_t Battle::Unit::CalculateDamageUnit(const Unit &enemy, double dmg) const
     return static_cast<uint32_t>(dmg) < 1 ? 1 : static_cast<uint32_t>(dmg);
 }
 
-uint32_t Battle::Unit::GetDamage(const Unit &enemy) const
+uint32_t Battle::Unit::GetDamage(const Unit& enemy) const
 {
     uint32_t res = 0;
 
@@ -673,13 +890,13 @@ uint32_t Battle::Unit::GetDamage(const Unit &enemy) const
     return res;
 }
 
-uint32_t Battle::Unit::HowManyCanKill(const Unit &b) const
+uint32_t Battle::Unit::HowManyCanKill(const Unit& b) const
 {
     uint32_t dmg = (GetDamageMin(b) + GetDamageMax(b)) / 2;
     return b.HowManyWillKilled(dmg);
 }
 
-uint32_t Battle::Unit::HowManyWillKilled(uint32_t &dmg) const
+uint32_t Battle::Unit::HowManyWillKilled(uint32_t& dmg) const
 {
     int unitLife = Monster::GetHitPoints(*this);
 
@@ -715,7 +932,8 @@ uint32_t Battle::Unit::ApplyDamage(uint32_t dmg)
     {
         dead += GetCount();
         SetCount(0);
-    } else
+    }
+    else
     {
         dead += killed;
         SetCount(GetCount() - killed);
@@ -758,8 +976,8 @@ void Battle::Unit::PostKilledAction()
     if (!Modes(CAP_MIRRORIMAGE) && !Modes(CAP_SUMMONELEM))
         Arena::GetGraveyard()->AddTroop(*this);
 
-    Cell *head = Board::GetCell(GetHeadIndex());
-    Cell *tail = Board::GetCell(GetTailIndex());
+    Cell* head = Board::GetCell(GetHeadIndex());
+    Cell* tail = Board::GetCell(GetTailIndex());
     if (head) head->SetUnit(nullptr);
     if (tail) tail->SetUnit(nullptr);
 
@@ -776,7 +994,8 @@ uint32_t Battle::Unit::Resurrect(uint32_t points, bool allow_overflow, bool skip
     if (allow_overflow)
     {
         if (count0 < GetCount()) count0 = GetCount();
-    } else if (GetCount() > count0)
+    }
+    else if (GetCount() > count0)
     {
         resurrect -= GetCount() - count0;
         SetCount(count0);
@@ -789,50 +1008,50 @@ uint32_t Battle::Unit::Resurrect(uint32_t points, bool allow_overflow, bool skip
     return resurrect;
 }
 
-uint32_t Battle::Unit::ApplyDamage(Unit &enemy, uint32_t dmg)
+uint32_t Battle::Unit::ApplyDamage(Unit& enemy, uint32_t dmg)
 {
     uint32_t killed = ApplyDamage(dmg);
     uint32_t resurrect;
 
     switch (enemy.GetID())
     {
-        case GENIE:
-            // 10% half
-            if (1 < GetCount() && killed < GetCount() &&
-                genie_enemy_half_percent >= Rand::Get(1, 100))
+    case GENIE:
+        // 10% half
+        if (1 < GetCount() && killed < GetCount() &&
+            genie_enemy_half_percent >= Rand::Get(1, 100))
+        {
+            killed = ApplyDamage(hp / 2);
+
+            if (Arena::GetInterface())
             {
-                killed = ApplyDamage(hp / 2);
-
-                if (Arena::GetInterface())
-                {
-                    string str(_("%{name} half the enemy troops!"));
-                    StringReplace(str, "%{name}", enemy.GetName());
-                    Arena::GetInterface()->SetStatus(str, true);
-                }
+                string str(_("%{name} half the enemy troops!"));
+                StringReplace(str, "%{name}", enemy.GetName());
+                Arena::GetInterface()->SetStatus(str, true);
             }
-            break;
+        }
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     if (killed)
         switch (enemy.GetID())
         {
-            case GHOST:
-                resurrect = killed * static_cast<Monster>(enemy).GetHitPoints();
-                // grow troop
-                enemy.Resurrect(resurrect, true, false);
-                break;
+        case GHOST:
+            resurrect = killed * static_cast<Monster>(enemy).GetHitPoints();
+            // grow troop
+            enemy.Resurrect(resurrect, true, false);
+            break;
 
-            case VAMPIRE_LORD:
-                resurrect = killed * Monster::GetHitPoints();
-                // restore hit points
-                enemy.Resurrect(resurrect, false, false);
-                break;
+        case VAMPIRE_LORD:
+            resurrect = killed * Monster::GetHitPoints();
+            // restore hit points
+            enemy.Resurrect(resurrect, false, false);
+            break;
 
-            default:
-                break;
+        default:
+            break;
         }
 
     // clean paralyze or stone magic
@@ -853,7 +1072,7 @@ uint32_t Battle::Unit::ApplyDamage(Unit &enemy, uint32_t dmg)
     return killed;
 }
 
-bool Battle::Unit::AllowApplySpell(const Spell &spell, const HeroBase *hero, string *msg) const
+bool Battle::Unit::AllowApplySpell(const Spell& spell, const HeroBase* hero, string* msg) const
 {
     if (Modes(SP_ANTIMAGIC)) return false;
 
@@ -868,43 +1087,43 @@ bool Battle::Unit::AllowApplySpell(const Spell &spell, const HeroBase *hero, str
     if (hero && spell.isApplyToEnemies() && GetColor() == hero->GetColor()) return false;
     if (isMagicResist(spell, hero ? hero->GetPower() : 0)) return false;
 
-    const HeroBase *myhero = GetCommander();
+    const HeroBase* myhero = GetCommander();
     if (!myhero) return true;
 
     // check artifact
     Artifact guard_art(Artifact::UNKNOWN);
     switch (spell())
     {
-        case Spell::CURSE:
-        case Spell::MASSCURSE:
-            guard_art = Artifact::HOLY_PENDANT;
-            break;
-        case Spell::HYPNOTIZE:
-            guard_art = Artifact::PENDANT_FREE_WILL;
-            break;
-        case Spell::DEATHRIPPLE:
-        case Spell::DEATHWAVE:
-            guard_art = Artifact::PENDANT_LIFE;
-            break;
-        case Spell::BERSERKER:
-            guard_art = Artifact::SERENITY_PENDANT;
-            break;
-        case Spell::BLIND:
-            guard_art = Artifact::SEEING_EYE_PENDANT;
-            break;
-        case Spell::PARALYZE:
-            guard_art = Artifact::KINETIC_PENDANT;
-            break;
-        case Spell::HOLYWORD:
-        case Spell::HOLYSHOUT:
-            guard_art = Artifact::PENDANT_DEATH;
-            break;
-        case Spell::DISPEL:
-            guard_art = Artifact::WAND_NEGATION;
-            break;
+    case Spell::CURSE:
+    case Spell::MASSCURSE:
+        guard_art = Artifact::HOLY_PENDANT;
+        break;
+    case Spell::HYPNOTIZE:
+        guard_art = Artifact::PENDANT_FREE_WILL;
+        break;
+    case Spell::DEATHRIPPLE:
+    case Spell::DEATHWAVE:
+        guard_art = Artifact::PENDANT_LIFE;
+        break;
+    case Spell::BERSERKER:
+        guard_art = Artifact::SERENITY_PENDANT;
+        break;
+    case Spell::BLIND:
+        guard_art = Artifact::SEEING_EYE_PENDANT;
+        break;
+    case Spell::PARALYZE:
+        guard_art = Artifact::KINETIC_PENDANT;
+        break;
+    case Spell::HOLYWORD:
+    case Spell::HOLYSHOUT:
+        guard_art = Artifact::PENDANT_DEATH;
+        break;
+    case Spell::DISPEL:
+        guard_art = Artifact::WAND_NEGATION;
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     if (guard_art.isValid() && myhero->HasArtifact(guard_art))
@@ -921,7 +1140,7 @@ bool Battle::Unit::AllowApplySpell(const Spell &spell, const HeroBase *hero, str
     return true;
 }
 
-bool Battle::Unit::ApplySpell(const Spell &spell, const HeroBase *hero, TargetInfo &target)
+bool Battle::Unit::ApplySpell(const Spell& spell, const HeroBase* hero, TargetInfo& target)
 {
     if (!AllowApplySpell(spell, hero)) return false;
     uint32_t spoint = hero ? hero->GetPower() : 3;
@@ -943,23 +1162,23 @@ string Battle::Unit::String(bool more) const
     stringstream ss;
 
     ss << "Unit: " << "[ " <<
-       // info
-       GetCount() << " " << GetName() << ", " << Color::String(GetColor()) <<
-       ", pos: " << GetHeadIndex() << ", " << GetTailIndex() << (reflect ? ", reflect" : "");
+        // info
+        GetCount() << " " << GetName() << ", " << Color::String(GetColor()) <<
+        ", pos: " << GetHeadIndex() << ", " << GetTailIndex() << (reflect ? ", reflect" : "");
 
     if (more)
         ss <<
-           ", mode(" << "0x" << hex << modes << dec << ")" <<
-           ", uid(" << "0x" << setw(8) << setfill('0') << hex << uid << dec << ")" <<
-           ", speed(" << Speed::String(GetSpeed()) << ", " << static_cast<int>(GetSpeed()) << ")" <<
-           ", hp(" << hp << ")" << ", die(" << dead << ")" << ")";
+            ", mode(" << "0x" << hex << modes << dec << ")" <<
+            ", uid(" << "0x" << setw(8) << setfill('0') << hex << uid << dec << ")" <<
+            ", speed(" << Speed::String(GetSpeed()) << ", " << static_cast<int>(GetSpeed()) << ")" <<
+            ", hp(" << hp << ")" << ", die(" << dead << ")" << ")";
 
     ss << " ]";
 
     return ss.str();
 }
 
-ByteVectorWriter &Battle::operator<<(ByteVectorWriter &msg, const ModesAffected &v)
+ByteVectorWriter& Battle::operator<<(ByteVectorWriter& msg, const ModesAffected& v)
 {
     msg << static_cast<uint32_t>(v.size());
 
@@ -970,7 +1189,7 @@ ByteVectorWriter &Battle::operator<<(ByteVectorWriter &msg, const ModesAffected 
 }
 
 
-ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, ModesAffected &v)
+ByteVectorReader& Battle::operator>>(ByteVectorReader& msg, ModesAffected& v)
 {
     uint32_t size = 0;
     msg >> size;
@@ -987,26 +1206,26 @@ ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, ModesAffected &v)
 }
 
 
-ByteVectorWriter &Battle::operator<<(ByteVectorWriter &msg, const Unit &b)
+ByteVectorWriter& Battle::operator<<(ByteVectorWriter& msg, const Unit& b)
 {
     return msg <<
-               b.modes <<
-               b.id <<
-               b.count <<
-               b.uid <<
-               b.hp <<
-               b.count0 <<
-               b.dead <<
-               b.shots <<
-               b.disruptingray <<
-               b.reflect <<
-               b.GetHeadIndex() <<
-               (b.mirror ? b.mirror->GetUID() : static_cast<uint32_t>(0)) <<
-               b.affected <<
-               b.blindanswer;
+        b.modes <<
+        b.id <<
+        b.count <<
+        b.uid <<
+        b.hp <<
+        b.count0 <<
+        b.dead <<
+        b.shots <<
+        b.disruptingray <<
+        b.reflect <<
+        b.GetHeadIndex() <<
+        (b.mirror ? b.mirror->GetUID() : static_cast<uint32_t>(0)) <<
+        b.affected <<
+        b.blindanswer;
 }
 
-ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, Unit &b)
+ByteVectorReader& Battle::operator>>(ByteVectorReader& msg, Unit& b)
 {
     s32 head = -1;
     uint32_t uid = 0;
@@ -1053,24 +1272,24 @@ void Battle::Unit::SetResponse()
     SetModes(TR_RESPONSED);
 }
 
-void Battle::Unit::PostAttackAction(Unit &enemy)
+void Battle::Unit::PostAttackAction(Unit& enemy)
 {
     switch (GetID())
     {
-        case ARCHMAGE:
-            // 20% clean magic state
-            if (enemy.isValid() && enemy.Modes(IS_GOOD_MAGIC) && 3 > Rand::Get(1, 10)) enemy.ResetModes(IS_GOOD_MAGIC);
-            break;
+    case ARCHMAGE:
+        // 20% clean magic state
+        if (enemy.isValid() && enemy.Modes(IS_GOOD_MAGIC) && 3 > Rand::Get(1, 10)) enemy.ResetModes(IS_GOOD_MAGIC);
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     // decrease shots
     if (isArchers())
     {
         // check ammo cart artifact
-        const HeroBase *hero = GetCommander();
+        const HeroBase* hero = GetCommander();
         if (!hero || !hero->HasArtifact(Artifact::AMMO_CART))
             --shots;
     }
@@ -1149,35 +1368,35 @@ uint32_t Battle::Unit::GetDefense() const
     return res;
 }
 
-s32 Battle::Unit::GetScoreQuality(const Unit &defender) const
+s32 Battle::Unit::GetScoreQuality(const Unit& defender) const
 {
-    const Unit &attacker = *this;
+    const Unit& attacker = *this;
 
     // initial value: (hitpoints)
-    const uint32_t &damage = (attacker.GetDamageMin(defender) + attacker.GetDamageMax(defender)) / 2;
+    const uint32_t& damage = (attacker.GetDamageMin(defender) + attacker.GetDamageMax(defender)) / 2;
     uint32_t dmg = attacker.isTwiceAttack() ? damage * 2 : damage;
-    const uint32_t &kills = defender.HowManyWillKilled(dmg);
+    const uint32_t& kills = defender.HowManyWillKilled(dmg);
     double res = kills * Monster::GetHitPoints(defender);
     bool noscale = false;
 
     // attacker
     switch (attacker.GetID())
     {
-        case GHOST:
-            // priority: from killed only
-            noscale = true;
-            break;
+    case GHOST:
+        // priority: from killed only
+        noscale = true;
+        break;
 
-        case VAMPIRE_LORD:
-            if (attacker.isHaveDamage())
-            {
-                // alive priority
-                if (defender.isElemental() || defender.isUndead()) res /= 2;
-            }
-            break;
+    case VAMPIRE_LORD:
+        if (attacker.isHaveDamage())
+        {
+            // alive priority
+            if (defender.isElemental() || defender.isUndead()) res /= 2;
+        }
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     // scale on ability
@@ -1223,7 +1442,7 @@ bool Battle::Unit::isArchers() const
     return ArmyTroop::isArchers() && shots;
 }
 
-void Battle::Unit::SpellModesAction(const Spell &spell, uint32_t duration, const HeroBase *hero)
+void Battle::Unit::SpellModesAction(const Spell& spell, uint32_t duration, const HeroBase* hero)
 {
     if (hero)
     {
@@ -1235,299 +1454,299 @@ void Battle::Unit::SpellModesAction(const Spell &spell, uint32_t duration, const
 
     switch (spell())
     {
-        case Spell::BLESS:
-        case Spell::MASSBLESS:
-            if (Modes(SP_CURSE))
-            {
-                ResetModes(SP_CURSE);
-                affected.RemoveMode(SP_CURSE);
-            }
-            SetModes(SP_BLESS);
-            affected.AddMode(SP_BLESS, duration);
-            ResetModes(LUCK_GOOD);
-            break;
+    case Spell::BLESS:
+    case Spell::MASSBLESS:
+        if (Modes(SP_CURSE))
+        {
+            ResetModes(SP_CURSE);
+            affected.RemoveMode(SP_CURSE);
+        }
+        SetModes(SP_BLESS);
+        affected.AddMode(SP_BLESS, duration);
+        ResetModes(LUCK_GOOD);
+        break;
 
-        case Spell::BLOODLUST:
-            SetModes(SP_BLOODLUST);
-            affected.AddMode(SP_BLOODLUST, 3);
-            break;
+    case Spell::BLOODLUST:
+        SetModes(SP_BLOODLUST);
+        affected.AddMode(SP_BLOODLUST, 3);
+        break;
 
-        case Spell::CURSE:
-        case Spell::MASSCURSE:
-            if (Modes(SP_BLESS))
-            {
-                ResetModes(SP_BLESS);
-                affected.RemoveMode(SP_BLESS);
-            }
-            SetModes(SP_CURSE);
-            affected.AddMode(SP_CURSE, duration);
-            ResetModes(LUCK_BAD);
-            break;
+    case Spell::CURSE:
+    case Spell::MASSCURSE:
+        if (Modes(SP_BLESS))
+        {
+            ResetModes(SP_BLESS);
+            affected.RemoveMode(SP_BLESS);
+        }
+        SetModes(SP_CURSE);
+        affected.AddMode(SP_CURSE, duration);
+        ResetModes(LUCK_BAD);
+        break;
 
-        case Spell::HASTE:
-        case Spell::MASSHASTE:
-            if (Modes(SP_SLOW))
-            {
-                ResetModes(SP_SLOW);
-                affected.RemoveMode(SP_SLOW);
-            }
-            SetModes(SP_HASTE);
-            affected.AddMode(SP_HASTE, duration);
-            break;
+    case Spell::HASTE:
+    case Spell::MASSHASTE:
+        if (Modes(SP_SLOW))
+        {
+            ResetModes(SP_SLOW);
+            affected.RemoveMode(SP_SLOW);
+        }
+        SetModes(SP_HASTE);
+        affected.AddMode(SP_HASTE, duration);
+        break;
 
-        case Spell::DISPEL:
-        case Spell::MASSDISPEL:
-            if (Modes(IS_MAGIC))
-            {
-                ResetModes(IS_MAGIC);
-                affected.RemoveMode(IS_MAGIC);
-            }
-            break;
-
-        case Spell::SHIELD:
-        case Spell::MASSSHIELD:
-            SetModes(SP_SHIELD);
-            affected.AddMode(SP_SHIELD, duration);
-            break;
-
-        case Spell::SLOW:
-        case Spell::MASSSLOW:
-            if (Modes(SP_HASTE))
-            {
-                ResetModes(SP_HASTE);
-                affected.RemoveMode(SP_HASTE);
-            }
-            SetModes(SP_SLOW);
-            affected.AddMode(SP_SLOW, duration);
-            break;
-
-        case Spell::STONESKIN:
-            if (Modes(SP_STEELSKIN))
-            {
-                ResetModes(SP_STEELSKIN);
-                affected.RemoveMode(SP_STEELSKIN);
-            }
-            SetModes(SP_STONESKIN);
-            affected.AddMode(SP_STONESKIN, duration);
-            break;
-
-        case Spell::BLIND:
-            SetModes(SP_BLIND);
-            blindanswer = false;
-            affected.AddMode(SP_BLIND, duration);
-            break;
-
-        case Spell::DRAGONSLAYER:
-            SetModes(SP_DRAGONSLAYER);
-            affected.AddMode(SP_DRAGONSLAYER, duration);
-            break;
-
-        case Spell::STEELSKIN:
-            if (Modes(SP_STONESKIN))
-            {
-                ResetModes(SP_STONESKIN);
-                affected.RemoveMode(SP_STONESKIN);
-            }
-            SetModes(SP_STEELSKIN);
-            affected.AddMode(SP_STEELSKIN, duration);
-            break;
-
-        case Spell::ANTIMAGIC:
+    case Spell::DISPEL:
+    case Spell::MASSDISPEL:
+        if (Modes(IS_MAGIC))
+        {
             ResetModes(IS_MAGIC);
-            SetModes(SP_ANTIMAGIC);
-            affected.AddMode(SP_ANTIMAGIC, duration);
-            break;
+            affected.RemoveMode(IS_MAGIC);
+        }
+        break;
 
-        case Spell::PARALYZE:
-            SetModes(SP_PARALYZE);
-            affected.AddMode(SP_PARALYZE, duration);
-            break;
+    case Spell::SHIELD:
+    case Spell::MASSSHIELD:
+        SetModes(SP_SHIELD);
+        affected.AddMode(SP_SHIELD, duration);
+        break;
 
-        case Spell::BERSERKER:
-            SetModes(SP_BERSERKER);
-            affected.AddMode(SP_BERSERKER, duration);
-            break;
+    case Spell::SLOW:
+    case Spell::MASSSLOW:
+        if (Modes(SP_HASTE))
+        {
+            ResetModes(SP_HASTE);
+            affected.RemoveMode(SP_HASTE);
+        }
+        SetModes(SP_SLOW);
+        affected.AddMode(SP_SLOW, duration);
+        break;
 
-        case Spell::HYPNOTIZE:
+    case Spell::STONESKIN:
+        if (Modes(SP_STEELSKIN))
+        {
+            ResetModes(SP_STEELSKIN);
+            affected.RemoveMode(SP_STEELSKIN);
+        }
+        SetModes(SP_STONESKIN);
+        affected.AddMode(SP_STONESKIN, duration);
+        break;
+
+    case Spell::BLIND:
+        SetModes(SP_BLIND);
+        blindanswer = false;
+        affected.AddMode(SP_BLIND, duration);
+        break;
+
+    case Spell::DRAGONSLAYER:
+        SetModes(SP_DRAGONSLAYER);
+        affected.AddMode(SP_DRAGONSLAYER, duration);
+        break;
+
+    case Spell::STEELSKIN:
+        if (Modes(SP_STONESKIN))
+        {
+            ResetModes(SP_STONESKIN);
+            affected.RemoveMode(SP_STONESKIN);
+        }
+        SetModes(SP_STEELSKIN);
+        affected.AddMode(SP_STEELSKIN, duration);
+        break;
+
+    case Spell::ANTIMAGIC:
+        ResetModes(IS_MAGIC);
+        SetModes(SP_ANTIMAGIC);
+        affected.AddMode(SP_ANTIMAGIC, duration);
+        break;
+
+    case Spell::PARALYZE:
+        SetModes(SP_PARALYZE);
+        affected.AddMode(SP_PARALYZE, duration);
+        break;
+
+    case Spell::BERSERKER:
+        SetModes(SP_BERSERKER);
+        affected.AddMode(SP_BERSERKER, duration);
+        break;
+
+    case Spell::HYPNOTIZE:
         {
             SetModes(SP_HYPNOTIZE);
             uint32_t acount = hero ? hero->HasArtifact(Artifact::GOLD_WATCH) : 0;
             affected.AddMode(SP_HYPNOTIZE, acount ? duration * acount * 2 : duration);
         }
-            break;
+        break;
 
-        case Spell::STONE:
-            SetModes(SP_STONE);
-            affected.AddMode(SP_STONE, duration);
-            break;
+    case Spell::STONE:
+        SetModes(SP_STONE);
+        affected.AddMode(SP_STONE, duration);
+        break;
 
-        case Spell::MIRRORIMAGE:
-            affected.AddMode(CAP_MIRRORIMAGE, duration);
-            break;
+    case Spell::MIRRORIMAGE:
+        affected.AddMode(CAP_MIRRORIMAGE, duration);
+        break;
 
-        case Spell::DISRUPTINGRAY:
-            ++disruptingray;
-            break;
+    case Spell::DISRUPTINGRAY:
+        ++disruptingray;
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 }
 
-void Battle::Unit::SpellApplyDamage(const Spell &spell, uint32_t spoint, const HeroBase *hero, TargetInfo &target)
+void Battle::Unit::SpellApplyDamage(const Spell& spell, uint32_t spoint, const HeroBase* hero, TargetInfo& target)
 {
     uint32_t dmg = spell.Damage() * spoint;
 
     switch (GetID())
     {
-        case IRON_GOLEM:
-        case STEEL_GOLEM:
-            switch (spell())
-            {
-                // 50% damage
-                case Spell::COLDRAY:
-                case Spell::COLDRING:
-                case Spell::FIREBALL:
-                case Spell::FIREBLAST:
-                case Spell::LIGHTNINGBOLT:
-                case Spell::CHAINLIGHTNING:
-                case Spell::ELEMENTALSTORM:
-                case Spell::ARMAGEDDON:
-                    dmg /= 2;
-                    break;
-                default:
-                    break;
-            }
+    case IRON_GOLEM:
+    case STEEL_GOLEM:
+        switch (spell())
+        {
+            // 50% damage
+        case Spell::COLDRAY:
+        case Spell::COLDRING:
+        case Spell::FIREBALL:
+        case Spell::FIREBLAST:
+        case Spell::LIGHTNINGBOLT:
+        case Spell::CHAINLIGHTNING:
+        case Spell::ELEMENTALSTORM:
+        case Spell::ARMAGEDDON:
+            dmg /= 2;
             break;
-
-        case WATER_ELEMENT:
-            switch (spell())
-            {
-                // 200% damage
-                case Spell::FIREBALL:
-                case Spell::FIREBLAST:
-                    dmg *= 2;
-                    break;
-                default:
-                    break;
-            }
-            break;
-
-        case AIR_ELEMENT:
-            switch (spell())
-            {
-                // 200% damage
-                case Spell::ELEMENTALSTORM:
-                case Spell::LIGHTNINGBOLT:
-                case Spell::CHAINLIGHTNING:
-                    dmg *= 2;
-                    break;
-                default:
-                    break;
-            }
-            break;
-
-        case FIRE_ELEMENT:
-            switch (spell())
-            {
-                // 200% damage
-                case Spell::COLDRAY:
-                case Spell::COLDRING:
-                    dmg *= 2;
-                    break;
-                default:
-                    break;
-            }
-            break;
-
         default:
             break;
+        }
+        break;
+
+    case WATER_ELEMENT:
+        switch (spell())
+        {
+            // 200% damage
+        case Spell::FIREBALL:
+        case Spell::FIREBLAST:
+            dmg *= 2;
+            break;
+        default:
+            break;
+        }
+        break;
+
+    case AIR_ELEMENT:
+        switch (spell())
+        {
+            // 200% damage
+        case Spell::ELEMENTALSTORM:
+        case Spell::LIGHTNINGBOLT:
+        case Spell::CHAINLIGHTNING:
+            dmg *= 2;
+            break;
+        default:
+            break;
+        }
+        break;
+
+    case FIRE_ELEMENT:
+        switch (spell())
+        {
+            // 200% damage
+        case Spell::COLDRAY:
+        case Spell::COLDRING:
+            dmg *= 2;
+            break;
+        default:
+            break;
+        }
+        break;
+
+    default:
+        break;
     }
 
     // check artifact
     if (hero)
     {
-        const HeroBase *myhero = GetCommander();
+        const HeroBase* myhero = GetCommander();
         uint32_t acount = 0;
 
         switch (spell())
         {
-            case Spell::COLDRAY:
-            case Spell::COLDRING:
-                // +50%
-                acount = hero->HasArtifact(Artifact::EVERCOLD_ICICLE);
-                if (acount) dmg += dmg * acount * Artifact(Artifact::EVERCOLD_ICICLE).ExtraValue() / 100;
-                acount = hero->HasArtifact(Artifact::EVERCOLD_ICICLE);
-                if (acount) dmg += dmg * acount * Artifact(Artifact::EVERCOLD_ICICLE).ExtraValue() / 100;
-                // -50%
-                acount = myhero ? myhero->HasArtifact(Artifact::ICE_CLOAK) : 0;
-                if (acount) dmg /= acount * 2;
-                acount = myhero ? myhero->HasArtifact(Artifact::HEART_ICE) : 0;
-                if (acount) dmg -= dmg * acount * Artifact(Artifact::HEART_ICE).ExtraValue() / 100;
-                // 100%
-                acount = myhero ? myhero->HasArtifact(Artifact::HEART_FIRE) : 0;
-                if (acount) dmg *= acount * 2;
-                break;
+        case Spell::COLDRAY:
+        case Spell::COLDRING:
+            // +50%
+            acount = hero->HasArtifact(Artifact::EVERCOLD_ICICLE);
+            if (acount) dmg += dmg * acount * Artifact(Artifact::EVERCOLD_ICICLE).ExtraValue() / 100;
+            acount = hero->HasArtifact(Artifact::EVERCOLD_ICICLE);
+            if (acount) dmg += dmg * acount * Artifact(Artifact::EVERCOLD_ICICLE).ExtraValue() / 100;
+            // -50%
+            acount = myhero ? myhero->HasArtifact(Artifact::ICE_CLOAK) : 0;
+            if (acount) dmg /= acount * 2;
+            acount = myhero ? myhero->HasArtifact(Artifact::HEART_ICE) : 0;
+            if (acount) dmg -= dmg * acount * Artifact(Artifact::HEART_ICE).ExtraValue() / 100;
+            // 100%
+            acount = myhero ? myhero->HasArtifact(Artifact::HEART_FIRE) : 0;
+            if (acount) dmg *= acount * 2;
+            break;
 
-            case Spell::FIREBALL:
-            case Spell::FIREBLAST:
-                // +50%
-                acount = hero->HasArtifact(Artifact::EVERHOT_LAVA_ROCK);
-                if (acount) dmg += dmg * acount * Artifact(Artifact::EVERHOT_LAVA_ROCK).ExtraValue() / 100;
-                // -50%
-                acount = myhero ? myhero->HasArtifact(Artifact::FIRE_CLOAK) : 0;
-                if (acount) dmg /= acount * 2;
-                acount = myhero ? myhero->HasArtifact(Artifact::HEART_FIRE) : 0;
-                if (acount) dmg -= dmg * acount * Artifact(Artifact::HEART_FIRE).ExtraValue() / 100;
-                // 100%
-                acount = myhero ? myhero->HasArtifact(Artifact::HEART_ICE) : 0;
-                if (acount) dmg *= acount * 2;
-                break;
+        case Spell::FIREBALL:
+        case Spell::FIREBLAST:
+            // +50%
+            acount = hero->HasArtifact(Artifact::EVERHOT_LAVA_ROCK);
+            if (acount) dmg += dmg * acount * Artifact(Artifact::EVERHOT_LAVA_ROCK).ExtraValue() / 100;
+            // -50%
+            acount = myhero ? myhero->HasArtifact(Artifact::FIRE_CLOAK) : 0;
+            if (acount) dmg /= acount * 2;
+            acount = myhero ? myhero->HasArtifact(Artifact::HEART_FIRE) : 0;
+            if (acount) dmg -= dmg * acount * Artifact(Artifact::HEART_FIRE).ExtraValue() / 100;
+            // 100%
+            acount = myhero ? myhero->HasArtifact(Artifact::HEART_ICE) : 0;
+            if (acount) dmg *= acount * 2;
+            break;
 
-            case Spell::LIGHTNINGBOLT:
-                // +50%
-                acount = hero->HasArtifact(Artifact::LIGHTNING_ROD);
-                if (acount) dmg += dmg * acount * Artifact(Artifact::LIGHTNING_ROD).ExtraValue() / 100;
-                // -50%
-                acount = myhero ? myhero->HasArtifact(Artifact::LIGHTNING_HELM) : 0;
-                if (acount) dmg /= acount * 2;
-                break;
+        case Spell::LIGHTNINGBOLT:
+            // +50%
+            acount = hero->HasArtifact(Artifact::LIGHTNING_ROD);
+            if (acount) dmg += dmg * acount * Artifact(Artifact::LIGHTNING_ROD).ExtraValue() / 100;
+            // -50%
+            acount = myhero ? myhero->HasArtifact(Artifact::LIGHTNING_HELM) : 0;
+            if (acount) dmg /= acount * 2;
+            break;
 
-            case Spell::CHAINLIGHTNING:
-                // +50%
-                acount = hero->HasArtifact(Artifact::LIGHTNING_ROD);
-                if (acount) dmg += acount * dmg / 2;
-                // -50%
-                acount = myhero ? myhero->HasArtifact(Artifact::LIGHTNING_HELM) : 0;
-                if (acount) dmg /= acount * 2;
-                // update orders damage
-                switch (target.damage)
-                {
-                    case 0:
-                        break;
-                    case 1:
-                        dmg /= 2;
-                        break;
-                    case 2:
-                        dmg /= 4;
-                        break;
-                    case 3:
-                        dmg /= 8;
-                        break;
-                    default:
-                        break;
-                }
+        case Spell::CHAINLIGHTNING:
+            // +50%
+            acount = hero->HasArtifact(Artifact::LIGHTNING_ROD);
+            if (acount) dmg += acount * dmg / 2;
+            // -50%
+            acount = myhero ? myhero->HasArtifact(Artifact::LIGHTNING_HELM) : 0;
+            if (acount) dmg /= acount * 2;
+            // update orders damage
+            switch (target.damage)
+            {
+            case 0:
                 break;
-
-            case Spell::ELEMENTALSTORM:
-            case Spell::ARMAGEDDON:
-                // -50%
-                acount = myhero ? myhero->HasArtifact(Artifact::BROACH_SHIELDING) : 0;
-                if (acount) dmg /= acount * 2;
+            case 1:
+                dmg /= 2;
                 break;
-
+            case 2:
+                dmg /= 4;
+                break;
+            case 3:
+                dmg /= 8;
+                break;
             default:
                 break;
+            }
+            break;
+
+        case Spell::ELEMENTALSTORM:
+        case Spell::ARMAGEDDON:
+            // -50%
+            acount = myhero ? myhero->HasArtifact(Artifact::BROACH_SHIELDING) : 0;
+            if (acount) dmg /= acount * 2;
+            break;
+
+        default:
+            break;
         }
     }
 
@@ -1540,26 +1759,26 @@ void Battle::Unit::SpellApplyDamage(const Spell &spell, uint32_t spoint, const H
     }
 }
 
-void Battle::Unit::SpellRestoreAction(const Spell &spell, uint32_t spoint, const HeroBase *hero)
+void Battle::Unit::SpellRestoreAction(const Spell& spell, uint32_t spoint, const HeroBase* hero)
 {
     switch (spell())
     {
-        case Spell::CURE:
-        case Spell::MASSCURE:
-            // clear bad magic
-            if (Modes(IS_BAD_MAGIC))
-            {
-                ResetModes(IS_BAD_MAGIC);
-                affected.RemoveMode(IS_BAD_MAGIC);
-            }
-            // restore
-            hp += spell.Restore() * spoint;
-            if (hp > ArmyTroop::GetHitPointsTroop()) hp = ArmyTroop::GetHitPointsTroop();
-            break;
+    case Spell::CURE:
+    case Spell::MASSCURE:
+        // clear bad magic
+        if (Modes(IS_BAD_MAGIC))
+        {
+            ResetModes(IS_BAD_MAGIC);
+            affected.RemoveMode(IS_BAD_MAGIC);
+        }
+        // restore
+        hp += spell.Restore() * spoint;
+        if (hp > ArmyTroop::GetHitPointsTroop()) hp = ArmyTroop::GetHitPointsTroop();
+        break;
 
-        case Spell::RESURRECT:
-        case Spell::ANIMATEDEAD:
-        case Spell::RESURRECTTRUE:
+    case Spell::RESURRECT:
+    case Spell::ANIMATEDEAD:
+    case Spell::RESURRECTTRUE:
         {
             uint32_t restore = spell.Resurrect() * spoint;
             // remove from graveyard
@@ -1582,10 +1801,10 @@ void Battle::Unit::SpellRestoreAction(const Spell &spell, uint32_t spoint, const
                 Arena::GetInterface()->SetStatus(str, true);
             }
         }
-            break;
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 }
 
@@ -1593,28 +1812,28 @@ bool Battle::Unit::isTwiceAttack() const
 {
     switch (GetID())
     {
-        case ELF:
-        case GRAND_ELF:
-        case RANGER:
-            return !isHandFighting();
+    case ELF:
+    case GRAND_ELF:
+    case RANGER:
+        return !isHandFighting();
 
-        default:
-            break;
+    default:
+        break;
     }
 
     return ArmyTroop::isTwiceAttack();
 }
 
-bool Battle::Unit::isMagicResist(const Spell &spell, uint32_t spower) const
+bool Battle::Unit::isMagicResist(const Spell& spell, uint32_t spower) const
 {
     return 100 <= GetMagicResist(spell, spower);
 }
 
-uint32_t Battle::Unit::GetMagicResist(const Spell &spell, uint32_t spower) const
+uint32_t Battle::Unit::GetMagicResist(const Spell& spell, uint32_t spower) const
 {
     if (spell.isMindInfluence() &&
         (isUndead() || isElemental() ||
-         GetID() == GIANT || GetID() == TITAN))
+            GetID() == GIANT || GetID() == TITAN))
         return 100;
 
     if (spell.isALiveOnly() &&
@@ -1630,121 +1849,121 @@ uint32_t Battle::Unit::GetMagicResist(const Spell &spell, uint32_t spower) const
 
     switch (GetID())
     {
-        case ARCHMAGE:
-            if (Settings::Get().ExtBattleArchmageCanResistBadMagic() &&
-                (spell.isDamage() || spell.isApplyToEnemies()))
-                return 20;
-            break;
+    case ARCHMAGE:
+        if (Settings::Get().ExtBattleArchmageCanResistBadMagic() &&
+            (spell.isDamage() || spell.isApplyToEnemies()))
+            return 20;
+        break;
 
-            // 25% unfortunatly
-        case DWARF:
-        case BATTLE_DWARF:
-            if (spell.isDamage() || spell.isApplyToEnemies()) return 25;
-            break;
+        // 25% unfortunatly
+    case DWARF:
+    case BATTLE_DWARF:
+        if (spell.isDamage() || spell.isApplyToEnemies()) return 25;
+        break;
 
-        case GREEN_DRAGON:
-        case RED_DRAGON:
-        case BLACK_DRAGON:
+    case GREEN_DRAGON:
+    case RED_DRAGON:
+    case BLACK_DRAGON:
+        return 100;
+
+    case PHOENIX:
+        switch (spell())
+        {
+        case Spell::COLDRAY:
+        case Spell::COLDRING:
+        case Spell::FIREBALL:
+        case Spell::FIREBLAST:
+        case Spell::LIGHTNINGBOLT:
+        case Spell::CHAINLIGHTNING:
+        case Spell::ELEMENTALSTORM:
             return 100;
-
-        case PHOENIX:
-            switch (spell())
-            {
-                case Spell::COLDRAY:
-                case Spell::COLDRING:
-                case Spell::FIREBALL:
-                case Spell::FIREBLAST:
-                case Spell::LIGHTNINGBOLT:
-                case Spell::CHAINLIGHTNING:
-                case Spell::ELEMENTALSTORM:
-                    return 100;
-                default:
-                    break;
-            }
-            break;
-
-        case CRUSADER:
-            switch (spell())
-            {
-                case Spell::CURSE:
-                case Spell::MASSCURSE:
-                    return 100;
-                default:
-                    break;
-            }
-            break;
-
-        case EARTH_ELEMENT:
-            switch (spell())
-            {
-                case Spell::METEORSHOWER:
-                case Spell::LIGHTNINGBOLT:
-                case Spell::CHAINLIGHTNING:
-                    return 100;
-                default:
-                    break;
-            }
-            break;
-
-        case AIR_ELEMENT:
-            switch (spell())
-            {
-                case Spell::METEORSHOWER:
-                    return 100;
-                default:
-                    break;
-            }
-            break;
-
-        case FIRE_ELEMENT:
-            switch (spell())
-            {
-                case Spell::FIREBALL:
-                case Spell::FIREBLAST:
-                    return 100;
-                default:
-                    break;
-            }
-            break;
-
-        case WATER_ELEMENT:
-            switch (spell())
-            {
-                case Spell::COLDRAY:
-                case Spell::COLDRING:
-                    return 100;
-                default:
-                    break;
-            }
-            break;
-
         default:
             break;
+        }
+        break;
+
+    case CRUSADER:
+        switch (spell())
+        {
+        case Spell::CURSE:
+        case Spell::MASSCURSE:
+            return 100;
+        default:
+            break;
+        }
+        break;
+
+    case EARTH_ELEMENT:
+        switch (spell())
+        {
+        case Spell::METEORSHOWER:
+        case Spell::LIGHTNINGBOLT:
+        case Spell::CHAINLIGHTNING:
+            return 100;
+        default:
+            break;
+        }
+        break;
+
+    case AIR_ELEMENT:
+        switch (spell())
+        {
+        case Spell::METEORSHOWER:
+            return 100;
+        default:
+            break;
+        }
+        break;
+
+    case FIRE_ELEMENT:
+        switch (spell())
+        {
+        case Spell::FIREBALL:
+        case Spell::FIREBLAST:
+            return 100;
+        default:
+            break;
+        }
+        break;
+
+    case WATER_ELEMENT:
+        switch (spell())
+        {
+        case Spell::COLDRAY:
+        case Spell::COLDRING:
+            return 100;
+        default:
+            break;
+        }
+        break;
+
+    default:
+        break;
     }
 
     switch (spell())
     {
-        case Spell::CURE:
-        case Spell::MASSCURE:
-            if (!isHaveDamage() && !(modes & IS_MAGIC)) return 100;
-            break;
+    case Spell::CURE:
+    case Spell::MASSCURE:
+        if (!isHaveDamage() && !(modes & IS_MAGIC)) return 100;
+        break;
 
-        case Spell::RESURRECT:
-        case Spell::RESURRECTTRUE:
-        case Spell::ANIMATEDEAD:
-            if (isElemental() || GetCount() == count0) return 100;
-            break;
+    case Spell::RESURRECT:
+    case Spell::RESURRECTTRUE:
+    case Spell::ANIMATEDEAD:
+        if (isElemental() || GetCount() == count0) return 100;
+        break;
 
-        case Spell::DISPEL:
-            if (!(modes & IS_MAGIC)) return 100;
-            break;
+    case Spell::DISPEL:
+        if (!(modes & IS_MAGIC)) return 100;
+        break;
 
-        case Spell::HYPNOTIZE:
-            if (spell.ExtraValue() * spower < hp) return 100;
-            break;
+    case Spell::HYPNOTIZE:
+        if (spell.ExtraValue() * spower < hp) return 100;
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     return 0;
@@ -1760,40 +1979,40 @@ int Battle::Unit::GetSpellMagic(bool force) const
 {
     switch (GetID())
     {
-        case UNICORN:
-            // 20% blind
-            if (force || 3 > Rand::Get(1, 10)) return Spell::BLIND;
-            break;
+    case UNICORN:
+        // 20% blind
+        if (force || 3 > Rand::Get(1, 10)) return Spell::BLIND;
+        break;
 
-        case CYCLOPS:
-            // 20% paralyze
-            if (force || 3 > Rand::Get(1, 10)) return Spell::PARALYZE;
-            break;
+    case CYCLOPS:
+        // 20% paralyze
+        if (force || 3 > Rand::Get(1, 10)) return Spell::PARALYZE;
+        break;
 
-        case MUMMY:
-            // 20% curse
-            if (force || 3 > Rand::Get(1, 10)) return Spell::CURSE;
-            break;
+    case MUMMY:
+        // 20% curse
+        if (force || 3 > Rand::Get(1, 10)) return Spell::CURSE;
+        break;
 
-        case ROYAL_MUMMY:
-            // 30% curse
-            if (force || 4 > Rand::Get(1, 10)) return Spell::CURSE;
-            break;
+    case ROYAL_MUMMY:
+        // 30% curse
+        if (force || 4 > Rand::Get(1, 10)) return Spell::CURSE;
+        break;
 
-            /* skip: see Unit::PostAttackAction
-	case Monster::ARCHMAGE:
-            // 20% dispel
-            if(!force && 3 > Rand::Get(1, 10)) return Spell::DISPEL;
-            break;
-	*/
+        /* skip: see Unit::PostAttackAction
+case Monster::ARCHMAGE:
+        // 20% dispel
+        if(!force && 3 > Rand::Get(1, 10)) return Spell::DISPEL;
+        break;
+*/
 
-        case MEDUSA:
-            // 20% stone
-            if (force || 3 > Rand::Get(1, 10)) return Spell::STONE;
-            break;
+    case MEDUSA:
+        // 20% stone
+        if (force || 3 > Rand::Get(1, 10)) return Spell::STONE;
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     return Spell::NONE;
@@ -1859,50 +2078,50 @@ bool Battle::Unit::isFinishAnimFrame() const
     return true;
 }
 
-const Battle::animframe_t &Battle::Unit::GetFrameState(int state) const
+const Battle::animframe_t& Battle::Unit::GetFrameState(int state) const
 {
-    const monstersprite_t &msi = GetMonsterSprite();
+    const monstersprite_t& msi = GetMonsterSprite();
 
     switch (state)
     {
-        case AS_IDLE:
-            return msi.frm_idle;
-        case AS_MOVE:
-            return msi.frm_move;
-        case AS_FLY1:
-            return msi.frm_fly1;
-        case AS_FLY2:
-            return msi.frm_fly2;
-        case AS_FLY3:
-            return msi.frm_fly3;
-        case AS_SHOT0:
-            return msi.frm_shot0;
-        case AS_SHOT1:
-            return msi.frm_shot1;
-        case AS_SHOT2:
-            return msi.frm_shot2;
-        case AS_SHOT3:
-            return msi.frm_shot3;
-        case AS_ATTK0:
-            return msi.frm_attk0;
-        case AS_ATTK1:
-            return msi.frm_attk1;
-        case AS_ATTK2:
-            return msi.frm_attk2;
-        case AS_ATTK3:
-            return msi.frm_attk3;
-        case AS_WNCE:
-            return msi.frm_wnce;
-        case AS_KILL:
-            return msi.frm_kill;
-        default:
-            break;
+    case AS_IDLE:
+        return msi.frm_idle;
+    case AS_MOVE:
+        return msi.frm_move;
+    case AS_FLY1:
+        return msi.frm_fly1;
+    case AS_FLY2:
+        return msi.frm_fly2;
+    case AS_FLY3:
+        return msi.frm_fly3;
+    case AS_SHOT0:
+        return msi.frm_shot0;
+    case AS_SHOT1:
+        return msi.frm_shot1;
+    case AS_SHOT2:
+        return msi.frm_shot2;
+    case AS_SHOT3:
+        return msi.frm_shot3;
+    case AS_ATTK0:
+        return msi.frm_attk0;
+    case AS_ATTK1:
+        return msi.frm_attk1;
+    case AS_ATTK2:
+        return msi.frm_attk2;
+    case AS_ATTK3:
+        return msi.frm_attk3;
+    case AS_WNCE:
+        return msi.frm_wnce;
+    case AS_KILL:
+        return msi.frm_kill;
+    default:
+        break;
     }
 
     return msi.frm_idle;
 }
 
-const Battle::animframe_t &Battle::Unit::GetFrameState() const
+const Battle::animframe_t& Battle::Unit::GetFrameState() const
 {
     return GetFrameState(animstate);
 }
@@ -1927,35 +2146,35 @@ int Battle::Unit::M82Attk() const
     {
         switch (GetID())
         {
-            case ARCHER:
-            case RANGER:
-                return M82::ARCHSHOT;
-            case ORC:
-            case ORC_CHIEF:
-                return M82::ORC_SHOT;
-            case TROLL:
-            case WAR_TROLL:
-                return M82::TRLLSHOT;
-            case ELF:
-            case GRAND_ELF:
-                return M82::ELF_SHOT;
-            case DRUID:
-            case GREATER_DRUID:
-                return M82::DRUISHOT;
-            case CENTAUR:
-                return M82::CNTRSHOT;
-            case HALFLING:
-                return M82::HALFSHOT;
-            case MAGE:
-            case ARCHMAGE:
-                return M82::MAGESHOT;
-            case TITAN:
-                return M82::TITNSHOT;
-            case LICH:
-            case POWER_LICH:
-                return M82::LICHSHOT;
-            default:
-                break;
+        case ARCHER:
+        case RANGER:
+            return M82::ARCHSHOT;
+        case ORC:
+        case ORC_CHIEF:
+            return M82::ORC_SHOT;
+        case TROLL:
+        case WAR_TROLL:
+            return M82::TRLLSHOT;
+        case ELF:
+        case GRAND_ELF:
+            return M82::ELF_SHOT;
+        case DRUID:
+        case GREATER_DRUID:
+            return M82::DRUISHOT;
+        case CENTAUR:
+            return M82::CNTRSHOT;
+        case HALFLING:
+            return M82::HALFSHOT;
+        case MAGE:
+        case ARCHMAGE:
+            return M82::MAGESHOT;
+        case TITAN:
+            return M82::TITNSHOT;
+        case LICH:
+        case POWER_LICH:
+            return M82::LICHSHOT;
+        default:
+            break;
         }
     }
 
@@ -1981,17 +2200,17 @@ int Battle::Unit::M82Expl() const
 {
     switch (GetID())
     {
-        case VAMPIRE:
-            return M82::VAMPEXT1;
-        case VAMPIRE_LORD:
-            return M82::VAMPEXT1;
-        case LICH:
-            return M82::LICHEXPL;
-        case POWER_LICH:
-            return M82::LICHEXPL;
+    case VAMPIRE:
+        return M82::VAMPEXT1;
+    case VAMPIRE_LORD:
+        return M82::VAMPEXT1;
+    case LICH:
+        return M82::LICHEXPL;
+    case POWER_LICH:
+        return M82::LICHEXPL;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     return M82::UNKNOWN;
@@ -2006,43 +2225,43 @@ int Battle::Unit::ICNMiss() const
 {
     switch (GetID())
     {
-        case ARCHER:
-            return ICN::ARCH_MSL;
-        case RANGER:
-            return ICN::ARCH_MSL;
-        case ORC:
-            return ICN::ORC__MSL;
-        case ORC_CHIEF:
-            return ICN::ORC__MSL;
-        case TROLL:
-            return ICN::TROLLMSL;
-        case WAR_TROLL:
-            return ICN::TROLLMSL;
-        case ELF:
-            return ICN::ELF__MSL;
-        case GRAND_ELF:
-            return ICN::ELF__MSL;
-        case DRUID:
-            return ICN::DRUIDMSL;
-        case GREATER_DRUID:
-            return ICN::DRUIDMSL;
-        case CENTAUR:
-            return ICN::ARCH_MSL;
-        case HALFLING:
-            return ICN::HALFLMSL;
-        case MAGE:
-            return ICN::DRUIDMSL;
-        case ARCHMAGE:
-            return ICN::DRUIDMSL;
-        case TITAN:
-            return ICN::TITANMSL;
-        case LICH:
-            return ICN::LICH_MSL;
-        case POWER_LICH:
-            return ICN::LICH_MSL;
+    case ARCHER:
+        return ICN::ARCH_MSL;
+    case RANGER:
+        return ICN::ARCH_MSL;
+    case ORC:
+        return ICN::ORC__MSL;
+    case ORC_CHIEF:
+        return ICN::ORC__MSL;
+    case TROLL:
+        return ICN::TROLLMSL;
+    case WAR_TROLL:
+        return ICN::TROLLMSL;
+    case ELF:
+        return ICN::ELF__MSL;
+    case GRAND_ELF:
+        return ICN::ELF__MSL;
+    case DRUID:
+        return ICN::DRUIDMSL;
+    case GREATER_DRUID:
+        return ICN::DRUIDMSL;
+    case CENTAUR:
+        return ICN::ARCH_MSL;
+    case HALFLING:
+        return ICN::HALFLMSL;
+    case MAGE:
+        return ICN::DRUIDMSL;
+    case ARCHMAGE:
+        return ICN::DRUIDMSL;
+    case TITAN:
+        return ICN::TITANMSL;
+    case LICH:
+        return ICN::LICH_MSL;
+    case POWER_LICH:
+        return ICN::LICH_MSL;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     return ICN::UNKNOWN;
@@ -2055,7 +2274,7 @@ Rect Battle::Unit::GetRectPosition() const
 
 Point Battle::Unit::GetBackPoint() const
 {
-    const Rect &rt = position.GetRect();
+    const Rect& rt = position.GetRect();
     return reflect ? Point(rt.x + rt.w, rt.y + rt.h / 2) : Point(rt.x, rt.y + rt.h / 2);
 }
 
@@ -2063,133 +2282,133 @@ int Battle::Unit::GetStartMissileOffset(int state) const
 {
     switch (GetID())
     {
-        case ARCHER:
-        case RANGER:
-            switch (state)
-            {
-                case AS_SHOT1:
-                    return -15;
-                case AS_SHOT2:
-                    return -3;
-                case AS_SHOT3:
-                    return 10;
-                default:
-                    break;
-            }
-            break;
-
-        case ORC:
-        case ORC_CHIEF:
-            return 5;
-
-        case TROLL:
-        case WAR_TROLL:
-            return -20;
-
-        case LICH:
-        case POWER_LICH:
-            switch (state)
-            {
-                case AS_SHOT1:
-                    return -30;
-                case AS_SHOT2:
-                    return -20;
-                case AS_SHOT3:
-                    return 0;
-                default:
-                    break;
-            }
-            break;
-
-        case ELF:
-        case GRAND_ELF:
-            switch (state)
-            {
-                case AS_SHOT1:
-                    return -5;
-                case AS_SHOT2:
-                    return 0;
-                case AS_SHOT3:
-                    return 5;
-                default:
-                    break;
-            }
-            break;
-
-        case CENTAUR:
-            switch (state)
-            {
-                case AS_SHOT1:
-                    return -20;
-                case AS_SHOT2:
-                    return -10;
-                case AS_SHOT3:
-                    return 5;
-                default:
-                    break;
-            }
-            break;
-
-        case DRUID:
-        case GREATER_DRUID:
-            switch (state)
-            {
-                case AS_SHOT1:
-                    return -20;
-                case AS_SHOT2:
-                    return -5;
-                case AS_SHOT3:
-                    return 15;
-                default:
-                    break;
-            }
-            break;
-
-        case HALFLING:
-            switch (state)
-            {
-                case AS_SHOT1:
-                    return -20;
-                case AS_SHOT2:
-                    return 10;
-                case AS_SHOT3:
-                    return 20;
-                default:
-                    break;
-            }
-            break;
-
-        case MAGE:
-        case ARCHMAGE:
-            switch (state)
-            {
-                case AS_SHOT1:
-                    return -40;
-                case AS_SHOT2:
-                    return -10;
-                case AS_SHOT3:
-                    return 25;
-                default:
-                    break;
-            }
-            break;
-
-        case TITAN:
-            switch (state)
-            {
-                case AS_SHOT1:
-                    return -80;
-                case AS_SHOT2:
-                    return -20;
-                case AS_SHOT3:
-                    return 15;
-                default:
-                    break;
-            }
-            break;
-
+    case ARCHER:
+    case RANGER:
+        switch (state)
+        {
+        case AS_SHOT1:
+            return -15;
+        case AS_SHOT2:
+            return -3;
+        case AS_SHOT3:
+            return 10;
         default:
             break;
+        }
+        break;
+
+    case ORC:
+    case ORC_CHIEF:
+        return 5;
+
+    case TROLL:
+    case WAR_TROLL:
+        return -20;
+
+    case LICH:
+    case POWER_LICH:
+        switch (state)
+        {
+        case AS_SHOT1:
+            return -30;
+        case AS_SHOT2:
+            return -20;
+        case AS_SHOT3:
+            return 0;
+        default:
+            break;
+        }
+        break;
+
+    case ELF:
+    case GRAND_ELF:
+        switch (state)
+        {
+        case AS_SHOT1:
+            return -5;
+        case AS_SHOT2:
+            return 0;
+        case AS_SHOT3:
+            return 5;
+        default:
+            break;
+        }
+        break;
+
+    case CENTAUR:
+        switch (state)
+        {
+        case AS_SHOT1:
+            return -20;
+        case AS_SHOT2:
+            return -10;
+        case AS_SHOT3:
+            return 5;
+        default:
+            break;
+        }
+        break;
+
+    case DRUID:
+    case GREATER_DRUID:
+        switch (state)
+        {
+        case AS_SHOT1:
+            return -20;
+        case AS_SHOT2:
+            return -5;
+        case AS_SHOT3:
+            return 15;
+        default:
+            break;
+        }
+        break;
+
+    case HALFLING:
+        switch (state)
+        {
+        case AS_SHOT1:
+            return -20;
+        case AS_SHOT2:
+            return 10;
+        case AS_SHOT3:
+            return 20;
+        default:
+            break;
+        }
+        break;
+
+    case MAGE:
+    case ARCHMAGE:
+        switch (state)
+        {
+        case AS_SHOT1:
+            return -40;
+        case AS_SHOT2:
+            return -10;
+        case AS_SHOT3:
+            return 25;
+        default:
+            break;
+        }
+        break;
+
+    case TITAN:
+        switch (state)
+        {
+        case AS_SHOT1:
+            return -80;
+        case AS_SHOT2:
+            return -20;
+        case AS_SHOT3:
+            return 15;
+        default:
+            break;
+        }
+        break;
+
+    default:
+        break;
     }
 
     return 0;
@@ -2211,7 +2430,7 @@ int Battle::Unit::GetColor() const
     return GetArmyColor();
 }
 
-const HeroBase *Battle::Unit::GetCommander() const
+const HeroBase* Battle::Unit::GetCommander() const
 {
     return GetArmy() ? GetArmy()->GetCommander() : nullptr;
 }

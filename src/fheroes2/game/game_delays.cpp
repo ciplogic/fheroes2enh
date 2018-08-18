@@ -42,7 +42,7 @@ struct TimeDelay : pair<SDL::Time, int>
         return second;
     }
 
-    TimeDelay &operator=(int dl)
+    TimeDelay& operator=(int dl)
     {
         second = dl;
         return *this;
@@ -68,35 +68,35 @@ namespace Game
     void AnimateDelaysInitialize();
 
     TimeDelay delays[] = {
-            20,    // SCROLL_DELAY
-            400,    // MAIN_MENU_DELAY
-            700,    // MAPS_DELAY
-            200,    // CASTLE_TAVERN_DELAY
-            400,    // CASTLE_AROUND_DELAY
-            130,    // CASTLE_BUYHERO_DELAY
-            130,    // CASTLE_BUILD_DELAY
-            60,    // HEROES_MOVE_DELAY
-            40,    // HEROES_FADE_DELAY
-            40,    // HEROES_PICKUP_DELAY
-            50,    // PUZZLE_FADE_DELAY
-            300,    // BATTLE_DIALOG_DELAY
-            80,    // BATTLE_FRAME_DELAY
-            40,    // BATTLE_MISSILE_DELAY
-            90,    // BATTLE_SPELL_DELAY
-            20,    // BATTLE_DISRUPTING_DELAY
-            90,    // BATTLE_CATAPULT_DELAY  // catapult
-            40,    // BATTLE_CATAPULT2_DELAY // boulder
-            40,    // BATTLE_CATAPULT3_DELAY // cloud
-            90,    // BATTLE_BRIDGE_DELAY
-            3000,    // BATTLE_IDLE_DELAY
-            200,    // BATTLE_IDLE2_DELAY
-            500,    // BATTLE_OPPONENTS_DELAY
-            300,    // BATTLE_FLAGS_DELAY
-            800,    // BATTLE_POPUP_DELAY
-            300,    // AUTOHIDE_STATUS_DELAY
-            0,    // CURRENT_HERO_DELAY
-            0,    // CURRENT_AI_DELAY
-            0
+        20, // SCROLL_DELAY
+        400, // MAIN_MENU_DELAY
+        700, // MAPS_DELAY
+        200, // CASTLE_TAVERN_DELAY
+        400, // CASTLE_AROUND_DELAY
+        130, // CASTLE_BUYHERO_DELAY
+        130, // CASTLE_BUILD_DELAY
+        60, // HEROES_MOVE_DELAY
+        40, // HEROES_FADE_DELAY
+        40, // HEROES_PICKUP_DELAY
+        50, // PUZZLE_FADE_DELAY
+        300, // BATTLE_DIALOG_DELAY
+        80, // BATTLE_FRAME_DELAY
+        40, // BATTLE_MISSILE_DELAY
+        90, // BATTLE_SPELL_DELAY
+        20, // BATTLE_DISRUPTING_DELAY
+        90, // BATTLE_CATAPULT_DELAY  // catapult
+        40, // BATTLE_CATAPULT2_DELAY // boulder
+        40, // BATTLE_CATAPULT3_DELAY // cloud
+        90, // BATTLE_BRIDGE_DELAY
+        3000, // BATTLE_IDLE_DELAY
+        200, // BATTLE_IDLE2_DELAY
+        500, // BATTLE_OPPONENTS_DELAY
+        300, // BATTLE_FLAGS_DELAY
+        800, // BATTLE_POPUP_DELAY
+        300, // AUTOHIDE_STATUS_DELAY
+        0, // CURRENT_HERO_DELAY
+        0, // CURRENT_AI_DELAY
+        0
     };
 }
 
@@ -120,19 +120,19 @@ bool Game::AnimateInfrequentDelay(int dl)
 
 void Game::UpdateHeroesMoveSpeed()
 {
-    const Settings &conf = Settings::Get();
+    const Settings& conf = Settings::Get();
 
-    const TimeDelay &td_etalon = delays[HEROES_MOVE_DELAY];
-    TimeDelay &td_hero = delays[CURRENT_HERO_DELAY];
-    TimeDelay &td_ai = delays[CURRENT_AI_DELAY];
+    const TimeDelay& td_etalon = delays[HEROES_MOVE_DELAY];
+    TimeDelay& td_hero = delays[CURRENT_HERO_DELAY];
+    TimeDelay& td_ai = delays[CURRENT_AI_DELAY];
 
-    const int hr_value = conf.HeroesMoveSpeed() ?
-                         (conf.HeroesMoveSpeed() - DEFAULT_SPEED_DELAY) * td_etalon() / DEFAULT_SPEED_DELAY :
-                         td_etalon();
+    const int hr_value = conf.HeroesMoveSpeed()
+                             ? (conf.HeroesMoveSpeed() - DEFAULT_SPEED_DELAY) * td_etalon() / DEFAULT_SPEED_DELAY
+                             : td_etalon();
 
-    const int ai_value = conf.AIMoveSpeed() ?
-                         (conf.AIMoveSpeed() - DEFAULT_SPEED_DELAY) * td_etalon() / DEFAULT_SPEED_DELAY :
-                         td_etalon();
+    const int ai_value = conf.AIMoveSpeed()
+                             ? (conf.AIMoveSpeed() - DEFAULT_SPEED_DELAY) * td_etalon() / DEFAULT_SPEED_DELAY
+                             : td_etalon();
 
     if (conf.HeroesMoveSpeed() == DEFAULT_SPEED_DELAY)
         td_hero = td_etalon();
@@ -147,7 +147,7 @@ void Game::UpdateHeroesMoveSpeed()
 
 void Game::UpdateBattleSpeed()
 {
-    const Settings &conf = Settings::Get();
+    const Settings& conf = Settings::Get();
     const int value = 5;
 
     delays[BATTLE_FRAME_DELAY] = 80 - (conf.BattleSpeed() - value) * 15;
@@ -163,8 +163,10 @@ void Game::UpdateBattleSpeed()
     {
         const float etalon = 15.0;
         const float div = conf.BlitSpeed() / etalon;
-        const int ids[] = {BATTLE_FRAME_DELAY, BATTLE_MISSILE_DELAY, BATTLE_SPELL_DELAY, BATTLE_DISRUPTING_DELAY,
-                           BATTLE_CATAPULT_DELAY, BATTLE_CATAPULT2_DELAY, BATTLE_CATAPULT3_DELAY, BATTLE_BRIDGE_DELAY};
+        const int ids[] = {
+            BATTLE_FRAME_DELAY, BATTLE_MISSILE_DELAY, BATTLE_SPELL_DELAY, BATTLE_DISRUPTING_DELAY,
+            BATTLE_CATAPULT_DELAY, BATTLE_CATAPULT2_DELAY, BATTLE_CATAPULT3_DELAY, BATTLE_BRIDGE_DELAY
+        };
 
         ostringstream os;
 

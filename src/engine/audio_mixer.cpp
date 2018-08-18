@@ -50,7 +50,7 @@ bool Mixer::isValid()
 
 void FreeChannel(int channel)
 {
-    Mixer::chunk_t *sample = Mix_GetChunk(channel);
+    Mixer::chunk_t* sample = Mix_GetChunk(channel);
     if (sample) Mix_FreeChunk(sample);
 }
 
@@ -63,7 +63,7 @@ void Mixer::Init()
         return;
     }
 
-    Audio::Spec &hardware = Audio::GetHardwareSpec();
+    Audio::Spec& hardware = Audio::GetHardwareSpec();
     hardware.freq = 22050;
     hardware.format = AUDIO_S16;
     hardware.channels = 2;
@@ -98,29 +98,29 @@ void Mixer::SetChannels(u8 num)
     Mix_ReserveChannels(1);
 }
 
-void Mixer::FreeChunk(chunk_t *sample)
+void Mixer::FreeChunk(chunk_t* sample)
 {
     if (sample) Mix_FreeChunk(sample);
 }
 
 
-Mixer::chunk_t *Mixer::LoadWAV(const char *file)
+Mixer::chunk_t* Mixer::LoadWAV(const char* file)
 {
-    Mix_Chunk *sample = Mix_LoadWAV(file);
+    Mix_Chunk* sample = Mix_LoadWAV(file);
     if (!sample)
     H2ERROR(SDL_GetError());
     return sample;
 }
 
-Mixer::chunk_t *Mixer::LoadWAV(const u8 *ptr, uint32_t size)
+Mixer::chunk_t* Mixer::LoadWAV(const u8* ptr, uint32_t size)
 {
-    Mix_Chunk *sample = Mix_LoadWAV_RW(SDL_RWFromConstMem(ptr, size), 1);
+    Mix_Chunk* sample = Mix_LoadWAV_RW(SDL_RWFromConstMem(ptr, size), 1);
     if (!sample)
     H2ERROR(SDL_GetError());
     return sample;
 }
 
-int Mixer::Play(chunk_t *sample, int channel, bool loop)
+int Mixer::Play(chunk_t* sample, int channel, bool loop)
 {
     const int res = Mix_PlayChannel(channel, sample, loop ? -1 : 0);
     if (res == -1)
@@ -128,25 +128,25 @@ int Mixer::Play(chunk_t *sample, int channel, bool loop)
     return res;
 }
 
-int Mixer::Play(const char *file, int channel, bool loop)
+int Mixer::Play(const char* file, int channel, bool loop)
 {
     if (!valid)
         return -1;
 
-    chunk_t *sample = LoadWAV(file);
+    chunk_t* sample = LoadWAV(file);
     if (!sample)
         return -1;
     Mix_ChannelFinished(FreeChannel);
     return Play(sample, channel, loop);
 }
 
-int Mixer::Play(const u8 *ptr, uint32_t size, int channel, bool loop)
+int Mixer::Play(const u8* ptr, uint32_t size, int channel, bool loop)
 {
     if (!valid || !ptr)
     {
         return -1;
     }
-    chunk_t *sample = LoadWAV(ptr, size);
+    chunk_t* sample = LoadWAV(ptr, size);
     if (!sample)
         return -1;
     Mix_ChannelFinished(FreeChannel);

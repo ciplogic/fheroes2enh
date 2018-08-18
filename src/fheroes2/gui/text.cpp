@@ -32,18 +32,18 @@ TextInterface::TextInterface(int ft) : font(ft)
 {
 }
 
-TextAscii::TextAscii(const string &msg, int ft) : TextInterface(ft), message(msg)
+TextAscii::TextAscii(const string& msg, int ft) : TextInterface(ft), message(msg)
 {
 }
 
-void TextAscii::SetText(const string &msg)
+void TextAscii::SetText(const string& msg)
 {
     message = msg;
 }
 
 void TextAscii::SetFont(int ft)
 {
-    const Settings &conf = Settings::Get();
+    const Settings& conf = Settings::Get();
     font = ft;
 }
 
@@ -79,7 +79,6 @@ int TextAscii::CharDescent(int f)
 
 int TextAscii::w(uint32_t s, uint32_t c) const
 {
-
     uint32_t res = 0;
     uint32_t size = message.size();
 
@@ -137,7 +136,7 @@ int TextAscii::h(int width) const
     return res;
 }
 
-void TextAscii::Blit(s32 ax, s32 ay, int maxw, Surface &dst)
+void TextAscii::Blit(s32 ax, s32 ay, int maxw, Surface& dst)
 {
     if (message.empty()) return;
 
@@ -145,7 +144,7 @@ void TextAscii::Blit(s32 ax, s32 ay, int maxw, Surface &dst)
     int sx = ax;
 
     for (string::const_iterator
-                 it = message.begin(); it != message.end(); ++it)
+         it = message.begin(); it != message.end(); ++it)
     {
         if (maxw && ax - sx >= maxw) break;
 
@@ -156,38 +155,38 @@ void TextAscii::Blit(s32 ax, s32 ay, int maxw, Surface &dst)
             continue;
         }
 
-        const Surface &sprite = AGG::GetLetter(*it, font);
+        const Surface& sprite = AGG::GetLetter(*it, font);
         if (!sprite.isValid()) return;
 
         // valign
         switch (*it)
         {
-            case '-':
-                oy = CharAscent(font) / 2;
-                break;
+        case '-':
+            oy = CharAscent(font) / 2;
+            break;
 
-            case '_':
-                oy = CharAscent(font);
-                break;
+        case '_':
+            oy = CharAscent(font);
+            break;
 
-                // "
-            case 0x22:
-                // '
-            case 0x27:
-                oy = 0;
-                break;
+            // "
+        case 0x22:
+            // '
+        case 0x27:
+            oy = 0;
+            break;
 
-            case 'y':
-            case 'g':
-            case 'p':
-            case 'q':
-            case 'j':
-                oy = CharAscent(font) + CharDescent(font) - sprite.h();
-                break;
+        case 'y':
+        case 'g':
+        case 'p':
+        case 'q':
+        case 'j':
+            oy = CharAscent(font) + CharDescent(font) - sprite.h();
+            break;
 
-            default:
-                oy = CharAscent(font) - sprite.h();
-                break;
+        default:
+            oy = CharAscent(font) - sprite.h();
+            break;
         }
 
         sprite.Blit(ax, ay + 2 + oy, dst);
@@ -197,11 +196,11 @@ void TextAscii::Blit(s32 ax, s32 ay, int maxw, Surface &dst)
 
 #ifdef WITH_TTF
 
-TextUnicode::TextUnicode(const std::string &msg, int ft) : TextInterface(ft), message(StringUTF8_to_UNICODE(msg))
+TextUnicode::TextUnicode(const std::string& msg, int ft) : TextInterface(ft), message(StringUTF8_to_UNICODE(msg))
 {
 }
 
-TextUnicode::TextUnicode(const u16 *pt, size_t sz, int ft) : TextInterface(ft), message(pt, pt + sz)
+TextUnicode::TextUnicode(const u16* pt, size_t sz, int ft) : TextInterface(ft), message(pt, pt + sz)
 {
 }
 
@@ -209,29 +208,29 @@ bool TextUnicode::isspace(int c)
 {
     switch (c)
     {
-        case 0x0009:
-        case 0x000a:
-        case 0x000b:
-        case 0x000c:
-        case 0x000d:
-        case 0x0020:
-            return true;
+    case 0x0009:
+    case 0x000a:
+    case 0x000b:
+    case 0x000c:
+    case 0x000d:
+    case 0x0020:
+        return true;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     return false;
 }
 
-void TextUnicode::SetText(const std::string &msg)
+void TextUnicode::SetText(const std::string& msg)
 {
     message = StringUTF8_to_UNICODE(msg);
 }
 
 void TextUnicode::SetFont(int ft)
 {
-    const Settings &conf = Settings::Get();
+    const Settings& conf = Settings::Get();
     font = ft;
 }
 
@@ -325,11 +324,11 @@ int TextUnicode::h(int width) const
     return res;
 }
 
-void TextUnicode::Blit(s32 ax, s32 ay, int maxw, Surface &dst)
+void TextUnicode::Blit(s32 ax, s32 ay, int maxw, Surface& dst)
 {
     const s32 sx = ax;
 
-    for (auto &it : message)
+    for (auto& it : message)
     {
         if (maxw && ax - sx >= maxw) break;
 
@@ -343,10 +342,10 @@ void TextUnicode::Blit(s32 ax, s32 ay, int maxw, Surface &dst)
             continue;
         }
 
-        const Surface &sprite = AGG::GetUnicodeLetter(it, font);
+        const Surface& sprite = AGG::GetUnicodeLetter(it, font);
         if (!sprite.isValid()) return;
 
-        const Surface &shaddow = AGG::GetUnicodeLetter(it, font == 4 || font == 2 ? Font::SHADDOW_BIG : Font::SHADDOW);
+        const Surface& shaddow = AGG::GetUnicodeLetter(it, font == 4 || font == 2 ? Font::SHADDOW_BIG : Font::SHADDOW);
         shaddow.Blit(ax + 1, ay + 1, dst);
         sprite.Blit(ax, ay, dst);
         ax += sprite.w();
@@ -361,7 +360,7 @@ Text::Text() : message(nullptr), gw(0), gh(0)
     message = sp<TextInterface>(new TextUnicode());
 }
 
-Text::Text(const string &msg, int ft) : message(nullptr), gw(0), gh(0)
+Text::Text(const string& msg, int ft) : message(nullptr), gw(0), gh(0)
 {
     message = sp<TextInterface>(new TextUnicode(msg, ft));
 
@@ -369,7 +368,7 @@ Text::Text(const string &msg, int ft) : message(nullptr), gw(0), gh(0)
     gh = message->h();
 }
 
-Text::Text(const u16 *pt, size_t sz, int ft) : message(nullptr), gw(0), gh(0)
+Text::Text(const u16* pt, size_t sz, int ft) : message(nullptr), gw(0), gh(0)
 {
     if (!pt) return;
     message = sp<TextInterface>(new TextUnicode(pt, sz, ft));
@@ -378,7 +377,7 @@ Text::Text(const u16 *pt, size_t sz, int ft) : message(nullptr), gw(0), gh(0)
     gh = message->h();
 }
 
-Text::Text(const Text &t)
+Text::Text(const Text& t)
 {
     message = sp<TextInterface>(new TextUnicode(static_cast<TextUnicode &>(*t.message)));
 
@@ -386,7 +385,7 @@ Text::Text(const Text &t)
     gh = t.gh;
 }
 
-Text &Text::operator=(const Text &t)
+Text& Text::operator=(const Text& t)
 {
     message = sp<TextInterface>(new TextUnicode(static_cast<TextUnicode &>(*t.message)));
 
@@ -396,7 +395,7 @@ Text &Text::operator=(const Text &t)
     return *this;
 }
 
-void Text::Set(const string &msg, int ft)
+void Text::Set(const string& msg, int ft)
 {
     message->SetText(msg);
     message->SetFont(ft);
@@ -404,7 +403,7 @@ void Text::Set(const string &msg, int ft)
     gh = message->h();
 }
 
-void Text::Set(const string &msg)
+void Text::Set(const string& msg)
 {
     message->SetText(msg);
     gw = message->w();
@@ -430,22 +429,22 @@ size_t Text::Size() const
     return message->Size();
 }
 
-void Text::Blit(const Point &dst_pt, Surface &dst) const
+void Text::Blit(const Point& dst_pt, Surface& dst) const
 {
     return message->Blit(dst_pt.x, dst_pt.y, 0, dst);
 }
 
-void Text::Blit(s32 ax, s32 ay, Surface &dst) const
+void Text::Blit(s32 ax, s32 ay, Surface& dst) const
 {
     return message->Blit(ax, ay, 0, dst);
 }
 
-void Text::Blit(s32 ax, s32 ay, int maxw, Surface &dst) const
+void Text::Blit(s32 ax, s32 ay, int maxw, Surface& dst) const
 {
     return message->Blit(ax, ay, maxw, dst);
 }
 
-uint32_t Text::width(const string &str, int ft, uint32_t start, uint32_t count)
+uint32_t Text::width(const string& str, int ft, uint32_t start, uint32_t count)
 {
     if (Settings::Get().Unicode())
     {
@@ -456,7 +455,7 @@ uint32_t Text::width(const string &str, int ft, uint32_t start, uint32_t count)
     return text.w(start, count);
 }
 
-uint32_t Text::height(const string &str, int ft, uint32_t width)
+uint32_t Text::height(const string& str, int ft, uint32_t width)
 {
     if (str.empty())
         return 0;
@@ -473,18 +472,18 @@ TextBox::TextBox() : align(ALIGN_CENTER)
 {
 }
 
-TextBox::TextBox(const string &msg, int ft, uint32_t width) : align(ALIGN_CENTER)
+TextBox::TextBox(const string& msg, int ft, uint32_t width) : align(ALIGN_CENTER)
 {
     Set(msg, ft, width);
 }
 
-TextBox::TextBox(const string &msg, int ft, const Rect &rt) : align(ALIGN_CENTER)
+TextBox::TextBox(const string& msg, int ft, const Rect& rt) : align(ALIGN_CENTER)
 {
     Set(msg, ft, rt.w);
     Blit(rt.x, rt.y);
 }
 
-void TextBox::Set(const string &msg, int ft, uint32_t width)
+void TextBox::Set(const string& msg, int ft, uint32_t width)
 {
     messages.clear();
     if (msg.empty()) return;
@@ -509,7 +508,8 @@ void TextBox::Set(const string &msg, int ft, uint32_t width)
             substr.assign(pos1, unicode.end());
             Append(substr, ft, width);
         }
-    } else
+    }
+    else
     {
         const char sep = '\n';
         string substr;
@@ -535,9 +535,9 @@ void TextBox::SetAlign(int f)
     align = f;
 }
 
-void TextBox::Append(const string &msg, int ft, uint32_t width)
+void TextBox::Append(const string& msg, int ft, uint32_t width)
 {
-    const Settings &conf = Settings::Get();
+    const Settings& conf = Settings::Get();
     uint32_t www = 0;
     Rect::w = width;
 
@@ -578,9 +578,9 @@ void TextBox::Append(const string &msg, int ft, uint32_t width)
     }
 }
 
-void TextBox::Append(const std::vector<u16> &msg, int ft, uint32_t width)
+void TextBox::Append(const std::vector<u16>& msg, int ft, uint32_t width)
 {
-    const Settings &conf = Settings::Get();
+    const Settings& conf = Settings::Get();
 
     uint32_t www = 0;
     Rect::w = width;
@@ -622,34 +622,34 @@ void TextBox::Append(const std::vector<u16> &msg, int ft, uint32_t width)
     }
 }
 
-void TextBox::Blit(s32 ax, s32 ay, Surface &sf)
+void TextBox::Blit(s32 ax, s32 ay, Surface& sf)
 {
     Rect::x = ax;
     Rect::y = ay;
 
-    for (auto &message : messages)
+    for (auto& message : messages)
     {
         switch (align)
         {
-            case ALIGN_LEFT:
-                message.Blit(ax, ay);
-                break;
+        case ALIGN_LEFT:
+            message.Blit(ax, ay);
+            break;
 
-            case ALIGN_RIGHT:
-                message.Blit(ax + Rect::w - message.w(), ay);
-                break;
+        case ALIGN_RIGHT:
+            message.Blit(ax + Rect::w - message.w(), ay);
+            break;
 
-                // center
-            default:
-                message.Blit(ax + (Rect::w - message.w()) / 2, ay);
-                break;
+            // center
+        default:
+            message.Blit(ax + (Rect::w - message.w()) / 2, ay);
+            break;
         }
 
         ay += message.h();
     }
 }
 
-void TextBox::Blit(const Point &pt, Surface &sf)
+void TextBox::Blit(const Point& pt, Surface& sf)
 {
     Blit(pt.x, pt.y, sf);
 }
@@ -658,12 +658,12 @@ TextSprite::TextSprite() : hide(true)
 {
 }
 
-TextSprite::TextSprite(const string &msg, int ft, const Point &pt) : Text(msg, ft), hide(true)
+TextSprite::TextSprite(const string& msg, int ft, const Point& pt) : Text(msg, ft), hide(true)
 {
     back.Save(Rect(pt, gw, gh + 5));
 }
 
-TextSprite::TextSprite(const string &msg, int ft, s32 ax, s32 ay) : Text(msg, ft), hide(true)
+TextSprite::TextSprite(const string& msg, int ft, s32 ax, s32 ay) : Text(msg, ft), hide(true)
 {
     back.Save(Rect(ax, ay, gw, gh + 5));
 }
@@ -680,14 +680,14 @@ void TextSprite::Hide()
     hide = true;
 }
 
-void TextSprite::SetText(const string &msg)
+void TextSprite::SetText(const string& msg)
 {
     Hide();
     Set(msg);
     back.Save(Rect(back.GetPos(), gw, gh + 5));
 }
 
-void TextSprite::SetText(const string &msg, int ft)
+void TextSprite::SetText(const string& msg, int ft)
 {
     Hide();
     Set(msg, ft);
@@ -726,7 +726,7 @@ bool TextSprite::isShow() const
     return !hide;
 }
 
-const Rect &TextSprite::GetRect() const
+const Rect& TextSprite::GetRect() const
 {
     return back.GetArea();
 }

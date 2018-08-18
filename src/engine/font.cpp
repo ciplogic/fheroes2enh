@@ -54,7 +54,7 @@ bool FontTTF::isValid() const
     return ptr;
 }
 
-bool FontTTF::Open(const std::string &filename, int size)
+bool FontTTF::Open(const std::string& filename, int size)
 {
     if (ptr) TTF_CloseFont(ptr);
     ptr = TTF_OpenFont(filename.c_str(), size);
@@ -88,40 +88,38 @@ int FontTTF::LineSkip() const
     return TTF_FontLineSkip(ptr);
 }
 
-Surface FontTTF::RenderText(const std::string &msg, const RGBA &clr, bool solid) const
+Surface FontTTF::RenderText(const std::string& msg, const RGBA& clr, bool solid) const
 {
     const SDL_Color fgColor = clr.packSdlColor();
-    auto *paintedSurface = solid ? TTF_RenderUTF8_Solid(ptr, msg.c_str(), fgColor) :
-                           TTF_RenderUTF8_Blended(ptr, msg.c_str(), fgColor);
+    auto* paintedSurface = solid
+                               ? TTF_RenderUTF8_Solid(ptr, msg.c_str(), fgColor)
+                               : TTF_RenderUTF8_Blended(ptr, msg.c_str(), fgColor);
     return Surface(paintedSurface);
 }
 
-Surface FontTTF::RenderChar(char ch, const RGBA &clr, bool solid) const
+Surface FontTTF::RenderChar(char ch, const RGBA& clr, bool solid) const
 {
     char buf[2] = {'\0', '\0'};
     buf[0] = ch;
     const SDL_Color fgColor = clr.packSdlColor();
-    auto *paintedSurface = solid ? TTF_RenderUTF8_Solid(ptr, buf, fgColor) :
-                           TTF_RenderUTF8_Blended(ptr, buf, fgColor);
+    auto* paintedSurface = solid ? TTF_RenderUTF8_Solid(ptr, buf, fgColor) : TTF_RenderUTF8_Blended(ptr, buf, fgColor);
     return Surface(paintedSurface);
 }
 
-Surface FontTTF::RenderUnicodeText(const std::vector<u16> &msg, const RGBA &clr, bool solid) const
+Surface FontTTF::RenderUnicodeText(const std::vector<u16>& msg, const RGBA& clr, bool solid) const
 {
     const SDL_Color fgColor = clr.packSdlColor();
     solid = false;
-    return Surface(solid ? TTF_RenderUNICODE_Solid(ptr, &msg[0], fgColor) :
-                   TTF_RenderUNICODE_Blended(ptr, &msg[0], fgColor));
+    return Surface(solid
+                       ? TTF_RenderUNICODE_Solid(ptr, &msg[0], fgColor)
+                       : TTF_RenderUNICODE_Blended(ptr, &msg[0], fgColor));
 }
 
-Surface FontTTF::RenderUnicodeChar(u16 ch, const RGBA &clr, bool solid) const
+Surface FontTTF::RenderUnicodeChar(u16 ch, const RGBA& clr, bool solid) const
 {
     u16 buf[2] = {L'\0', L'\0'};
     buf[0] = ch;
     solid = false;
     const SDL_Color fgColor = clr.packSdlColor();
-    return Surface(solid ? TTF_RenderUNICODE_Solid(ptr, buf, fgColor) :
-                   TTF_RenderUNICODE_Blended(ptr, buf, fgColor));
+    return Surface(solid ? TTF_RenderUNICODE_Solid(ptr, buf, fgColor) : TTF_RenderUNICODE_Blended(ptr, buf, fgColor));
 }
-
-

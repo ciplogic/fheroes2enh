@@ -71,25 +71,25 @@ s32 Rand::Queue::Get()
     // get max
 
     uint32_t max = 0;
-    for (auto &it : *this)
+    for (auto& it : *this)
         max += it.second;
 
     // set weight (from 100)
 
-    for (auto &it : *this)
+    for (auto& it : *this)
         it.second = 100 * it.second / max;
 
     // get max
     max = 0;
 
-    for (auto &it : *this)
+    for (auto& it : *this)
         max += it.second;
 
     const u8 rand = Rand::Get(max);
     u8 amount = 0;
 
 
-    for (auto &it : *this)
+    for (auto& it : *this)
     {
         amount += it.second;
         if (rand <= amount) return it.first;

@@ -40,14 +40,16 @@ public:
 
     ~FontTTF();
 
-    TTF_Font *operator()() const
-    { return ptr; }
+    TTF_Font* operator()() const
+    {
+        return ptr;
+    }
 
     static void Init();
 
     static void Quit();
 
-    bool Open(const std::string &, int size);
+    bool Open(const std::string&, int size);
 
     bool isValid() const;
 
@@ -61,22 +63,24 @@ public:
 
     int LineSkip() const;
 
-    Surface RenderText(const std::string &, const RGBA &, bool solid /* or blended */) const;
+    Surface RenderText(const std::string&, const RGBA&, bool solid /* or blended */) const;
 
-    Surface RenderChar(char, const RGBA &, bool solid /* or blended */) const;
+    Surface RenderChar(char, const RGBA&, bool solid /* or blended */) const;
 
-    Surface RenderUnicodeText(const std::vector<u16> &, const RGBA &, bool solid /* or blended */) const;
+    Surface RenderUnicodeText(const std::vector<u16>&, const RGBA&, bool solid /* or blended */) const;
 
-    Surface RenderUnicodeChar(u16, const RGBA &, bool solid /* or blended */) const;
+    Surface RenderUnicodeChar(u16, const RGBA&, bool solid /* or blended */) const;
 
 protected:
-    TTF_Font *ptr = nullptr;
+    TTF_Font* ptr = nullptr;
 
 private:
-    FontTTF(const FontTTF &)
-    {}
+    FontTTF(const FontTTF&)
+    {
+    }
 
-    FontTTF &operator=(const FontTTF &)
-    { return *this; }
+    FontTTF& operator=(const FontTTF&)
+    {
+        return *this;
+    }
 };
-

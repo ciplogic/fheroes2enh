@@ -29,9 +29,9 @@ namespace Maps
 
 namespace Game
 {
-    bool Save(const string &);
+    bool Save(const string&);
 
-    bool Load(const string &);
+    bool Load(const string&);
 
-    bool LoadSAV2FileInfo(const string &, Maps::FileInfo &);
+    bool LoadSAV2FileInfo(const string&, Maps::FileInfo&);
 }

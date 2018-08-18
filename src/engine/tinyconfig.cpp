@@ -33,7 +33,7 @@ bool SpaceCompare(char a, char b)
     return isspace(a) && isspace(b);
 }
 
-string ModifyKey(const string &str)
+string ModifyKey(const string& str)
 {
     string keyString = StringTrim(StringLower(str));
 
@@ -42,7 +42,7 @@ string ModifyKey(const string &str)
     keyString.resize(it - keyString.begin());
 
     // change space
-    for (auto &c:keyString)
+    for (auto& c : keyString)
     {
         if (isspace(c))
             c = ' ';
@@ -55,14 +55,14 @@ TinyConfig::TinyConfig(char sep, char com) : separator(sep), comment(com)
 {
 }
 
-bool TinyConfig::Load(const string &cfile)
+bool TinyConfig::Load(const string& cfile)
 {
-    if(!FileUtils::Exists(cfile))
+    if (!FileUtils::Exists(cfile))
         return false;
 
     auto rows = FileUtils::readFileLines(cfile);
 
-    for (auto &row : rows)
+    for (auto& row : rows)
     {
         string str = StringTrim(row);
         if (str.empty() || str[0] == comment) continue;
@@ -71,7 +71,7 @@ bool TinyConfig::Load(const string &cfile)
         if (string::npos == pos)
             continue;
         auto left = str.substr(0, pos);
-        auto right=str.substr(pos + 1, str.length() - pos - 1);
+        auto right = str.substr(pos + 1, str.length() - pos - 1);
 
         left = StringTrim(left);
         right = StringTrim(right);
@@ -82,11 +82,11 @@ bool TinyConfig::Load(const string &cfile)
     return true;
 }
 
-bool TinyConfig::Save(const string &cfile) const
+bool TinyConfig::Save(const string& cfile) const
 {
     std::string outText;
-    for (const auto &it : *this)
-        outText += it.first+" " + separator + " " + it.second + '\n';
+    for (const auto& it : *this)
+        outText += it.first + " " + separator + " " + it.second + '\n';
     FileUtils::writeFileString(cfile, outText);
     return true;
 }
@@ -96,7 +96,7 @@ void TinyConfig::Clear()
     clear();
 }
 
-void TinyConfig::AddEntry(const string &key, const string &val, bool uniq)
+void TinyConfig::AddEntry(const string& key, const string& val, bool uniq)
 {
     auto it = end();
 
@@ -107,7 +107,7 @@ void TinyConfig::AddEntry(const string &key, const string &val, bool uniq)
         insert(std::pair<string, string>(ModifyKey(key), val));
 }
 
-void TinyConfig::AddEntry(const string &key, int val, bool uniq)
+void TinyConfig::AddEntry(const string& key, int val, bool uniq)
 {
     auto it = end();
 
@@ -118,19 +118,19 @@ void TinyConfig::AddEntry(const string &key, int val, bool uniq)
         insert(std::pair<string, string>(ModifyKey(key), Int2Str(val)));
 }
 
-int TinyConfig::IntParams(const string &key) const
+int TinyConfig::IntParams(const string& key) const
 {
     const auto it = find(ModifyKey(key));
     return it != end() ? GetInt(it->second) : 0;
 }
 
-string TinyConfig::StrParams(const string &key) const
+string TinyConfig::StrParams(const string& key) const
 {
     const auto it = find(ModifyKey(key));
     return it != end() ? it->second : "";
 }
 
-vector<string> TinyConfig::ListStr(const string &key) const
+vector<string> TinyConfig::ListStr(const string& key) const
 {
     const auto ret = equal_range(ModifyKey(key));
     vector<string> res;
@@ -141,7 +141,7 @@ vector<string> TinyConfig::ListStr(const string &key) const
     return res;
 }
 
-vector<int> TinyConfig::ListInt(const string &key) const
+vector<int> TinyConfig::ListInt(const string& key) const
 {
     const auto ret = equal_range(ModifyKey(key));
     vector<int> res;
@@ -152,7 +152,7 @@ vector<int> TinyConfig::ListInt(const string &key) const
     return res;
 }
 
-bool TinyConfig::Exists(const string &key) const
+bool TinyConfig::Exists(const string& key) const
 {
     return end() != find(ModifyKey(key));
 }

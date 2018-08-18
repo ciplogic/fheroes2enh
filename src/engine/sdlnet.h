@@ -30,53 +30,53 @@
 
 namespace Network
 {
-    bool		Init();
-    void		Quit();
-    bool		ResolveHost(IPaddress &, const char*, u16);
-    const char*		GetError();
+    bool Init();
+    void Quit();
+    bool ResolveHost(IPaddress&, const char*, u16);
+    const char* GetError();
 
     class Socket
     {
     public:
-    Socket();
-    Socket(TCPsocket);
-    ~Socket();
+        Socket();
+        explicit Socket(TCPsocket);
+        ~Socket();
 
-    void		Assign(TCPsocket);
+        void Assign(TCPsocket);
 
-    bool		Ready() const;
+        bool Ready() const;
 
-        bool            Recv(char*, int);
-        bool            Send(const char*, int);
+        bool Recv(char*, int);
+        bool Send(const char*, int);
 
-        bool            Recv32(uint32_t &);
-        bool            Send32(const uint32_t &);
+        bool Recv32(uint32_t&);
+        bool Send32(const uint32_t&);
 
-        bool            Recv16(u16 &);
-        bool            Send16(const u16 &);
+        bool Recv16(u16&);
+        bool Send16(const u16&);
 
-    uint32_t		Host() const;
-    u16		Port() const;
+        uint32_t Host() const;
+        u16 Port() const;
 
-    bool		Open(IPaddress &);
-    bool		isValid() const;
-    void		Close();
+        bool Open(IPaddress&);
+        bool isValid() const;
+        void Close();
 
     protected:
-    Socket(const Socket &);
-    Socket &	operator= (const Socket &);
+        Socket(const Socket&);
+        Socket& operator=(const Socket&);
 
-    TCPsocket	 sd;
-    SDLNet_SocketSet sdset;
-    size_t		 status;
+        TCPsocket sd;
+        SDLNet_SocketSet sdset;
+        size_t status;
     };
 
     class Server : public Socket
     {
     public:
-    Server();
+        Server();
 
-    TCPsocket	Accept() const;
+        TCPsocket Accept() const;
     };
 }
 #endif

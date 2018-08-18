@@ -32,20 +32,20 @@ struct paymentstats_t
 };
 
 paymentstats_t _payments[] = {
-        {"buy_boat",                    {1000, 10, 0, 0, 0, 0, 0}},
-        {"buy_spell_book",              {500,  0,  0, 0, 0, 0, 0}},
-        {"buy_spell_book_from_shrine1", {1250, 0,  0, 0, 0, 0, 0}},
-        {"buy_spell_book_from_shrine2", {1000, 0,  0, 0, 0, 0, 0}},
-        {"buy_spell_book_from_shrine3", {750,  0,  0, 0, 0, 0, 0}},
-        {"recruit_hero",                {2500, 0,  0, 0, 0, 0, 0}},
-        {"recruit_level",               {500,  0,  0, 0, 0, 0, 0}},
-        {"alchemist_payment",           {750,  0,  0, 0, 0, 0, 0}},
+    {"buy_boat", {1000, 10, 0, 0, 0, 0, 0}},
+    {"buy_spell_book", {500, 0, 0, 0, 0, 0, 0}},
+    {"buy_spell_book_from_shrine1", {1250, 0, 0, 0, 0, 0, 0}},
+    {"buy_spell_book_from_shrine2", {1000, 0, 0, 0, 0, 0, 0}},
+    {"buy_spell_book_from_shrine3", {750, 0, 0, 0, 0, 0, 0}},
+    {"recruit_hero", {2500, 0, 0, 0, 0, 0, 0}},
+    {"recruit_level", {500, 0, 0, 0, 0, 0, 0}},
+    {"alchemist_payment", {750, 0, 0, 0, 0, 0, 0}},
 
-        {"",                       {0,    0,  0, 0, 0, 0, 0}},
+    {"", {0, 0, 0, 0, 0, 0, 0}},
 };
 
 
-void PaymentConditions::UpdateCosts(const string &spec)
+void PaymentConditions::UpdateCosts(const string& spec)
 {
 }
 
@@ -57,7 +57,7 @@ payment_t PaymentConditions::BuyBuilding(int race, uint32_t build)
 payment_t PaymentConditions::BuyBoat()
 {
     payment_t result;
-    paymentstats_t *ptr = &_payments[0];
+    paymentstats_t* ptr = &_payments[0];
 
     while (ptr->id.size() && strcmp("buy_boat", ptr->id.c_str())) ++ptr;
     if (ptr->id.size()) result = ptr->cost;
@@ -68,23 +68,23 @@ payment_t PaymentConditions::BuyBoat()
 payment_t PaymentConditions::BuySpellBook(int shrine)
 {
     payment_t result;
-    paymentstats_t *ptr = &_payments[0];
-    const char *skey = nullptr;
+    paymentstats_t* ptr = &_payments[0];
+    const char* skey = nullptr;
 
     switch (shrine)
     {
-        case 1:
-            skey = "buy_spell_book_from_shrine1";
-            break;
-        case 2:
-            skey = "buy_spell_book_from_shrine2";
-            break;
-        case 3:
-            skey = "buy_spell_book_from_shrine3";
-            break;
-        default:
-            skey = "buy_spell_book";
-            break;
+    case 1:
+        skey = "buy_spell_book_from_shrine1";
+        break;
+    case 2:
+        skey = "buy_spell_book_from_shrine2";
+        break;
+    case 3:
+        skey = "buy_spell_book_from_shrine3";
+        break;
+    default:
+        skey = "buy_spell_book";
+        break;
     }
 
     while (ptr->id.size() && strcmp(skey, ptr->id.c_str())) ++ptr;
@@ -96,7 +96,7 @@ payment_t PaymentConditions::BuySpellBook(int shrine)
 payment_t PaymentConditions::RecruitHero(int level)
 {
     payment_t result;
-    paymentstats_t *ptr = &_payments[0];
+    paymentstats_t* ptr = &_payments[0];
     while (ptr->id.size() && strcmp("recruit_hero", ptr->id.c_str())) ++ptr;
     if (ptr->id.size()) result = ptr->cost;
 
@@ -123,7 +123,7 @@ payment_t PaymentConditions::RecruitHero(int level)
 payment_t PaymentConditions::ForAlchemist(int arts)
 {
     payment_t result;
-    paymentstats_t *ptr = &_payments[0];
+    paymentstats_t* ptr = &_payments[0];
     while (ptr->id.size() && strcmp("alchemist_payment", ptr->id.c_str())) ++ptr;
     if (ptr->id.size()) result = ptr->cost;
 

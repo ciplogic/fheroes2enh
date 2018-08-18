@@ -37,10 +37,12 @@ namespace Route
     {
     public:
         Step() : from(-1), direction(Direction::CENTER), penalty(0)
-        {}
+        {
+        }
 
         Step(s32 index, int dir, uint32_t cost) : from(index), direction(dir), penalty(cost)
-        {}
+        {
+        }
 
         s32 GetIndex() const;
 
@@ -53,9 +55,9 @@ namespace Route
         bool isBad() const;
 
     protected:
-        friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Step &);
-        
-        friend ByteVectorReader &operator>>(ByteVectorReader &, Step &);
+        friend ByteVectorWriter& operator<<(ByteVectorWriter&, const Step&);
+
+        friend ByteVectorReader& operator>>(ByteVectorReader&, Step&);
 
         s32 from;
         int direction;
@@ -65,11 +67,11 @@ namespace Route
     class Path : public list<Step>
     {
     public:
-        Path(const Heroes &);
+        Path(const Heroes&);
 
-        Path(const Path &);
+        Path(const Path&);
 
-        Path &operator=(const Path &);
+        Path& operator=(const Path&);
 
         s32 GetDestinationIndex() const;
 
@@ -83,13 +85,17 @@ namespace Route
 
         uint32_t GetTotalPenalty() const;
 
-        bool Calculate(const s32 &, int limit = -1);
+        bool Calculate(const s32&, int limit = -1);
 
         void Show()
-        { hide = false; }
+        {
+            hide = false;
+        }
 
         void Hide()
-        { hide = true; }
+        {
+            hide = true;
+        }
 
         void Reset();
 
@@ -106,7 +112,9 @@ namespace Route
         bool isValid() const;
 
         bool isShow() const
-        { return !hide; }
+        {
+            return !hide;
+        }
 
         bool hasObstacle() const;
 
@@ -119,19 +127,19 @@ namespace Route
     private:
         bool Find(s32, int limit = -1);
 
-        friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Path &);
+        friend ByteVectorWriter& operator<<(ByteVectorWriter&, const Path&);
 
-        friend ByteVectorReader &operator>>(ByteVectorReader &, Path &);
+        friend ByteVectorReader& operator>>(ByteVectorReader&, Path&);
 
-        const Heroes *hero;
+        const Heroes* hero;
         s32 dst;
         bool hide;
     };
-    ByteVectorWriter &operator<<(ByteVectorWriter &, const Step &);
-    ByteVectorWriter &operator<<(ByteVectorWriter &, const Path &);
+
+    ByteVectorWriter& operator<<(ByteVectorWriter&, const Step&);
+    ByteVectorWriter& operator<<(ByteVectorWriter&, const Path&);
 
 
-    ByteVectorReader &operator>>(ByteVectorReader &, Step &);
-    ByteVectorReader &operator>>(ByteVectorReader &, Path &);
+    ByteVectorReader& operator>>(ByteVectorReader&, Step&);
+    ByteVectorReader& operator>>(ByteVectorReader&, Path&);
 }
-

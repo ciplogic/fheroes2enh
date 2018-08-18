@@ -28,17 +28,17 @@ Point::Point(int px, int py) : x(static_cast<s16>(px)), y(static_cast<s16>(py))
 {
 }
 
-bool Point::operator==(const Point &pt) const
+bool Point::operator==(const Point& pt) const
 {
     return x == pt.x && y == pt.y;
 }
 
-bool Point::operator!=(const Point &pt) const
+bool Point::operator!=(const Point& pt) const
 {
     return !(*this == pt);
 }
 
-Point &Point::operator+=(const Point &pt)
+Point& Point::operator+=(const Point& pt)
 {
     x += pt.x;
     y += pt.y;
@@ -46,7 +46,7 @@ Point &Point::operator+=(const Point &pt)
     return *this;
 }
 
-Point &Point::operator-=(const Point &pt)
+Point& Point::operator-=(const Point& pt)
 {
     x -= pt.x;
     y -= pt.y;
@@ -54,17 +54,17 @@ Point &Point::operator-=(const Point &pt)
     return *this;
 }
 
-Point Point::operator+(const Point &pt) const
+Point Point::operator+(const Point& pt) const
 {
     return {x + pt.x, y + pt.y};
 }
 
-Point Point::operator-(const Point &pt) const
+Point Point::operator-(const Point& pt) const
 {
     return {x - pt.x, y - pt.y};
 }
 
-bool Point::inABC(const Point &pt1, const Point &pt2, const Point &pt3) const
+bool Point::inABC(const Point& pt1, const Point& pt2, const Point& pt3) const
 {
     const s32 a = (pt1.x - x) * (pt2.y - pt1.y) - (pt2.x - pt1.x) * (pt1.y - y);
     const s32 b = (pt2.x - x) * (pt3.y - pt2.y) - (pt3.x - pt2.x) * (pt2.y - y);
@@ -85,21 +85,21 @@ Size::Size(int sw, int sh) : w(sw), h(sh)
 {
 }
 
-Size::Size(const Point &pt) : w(abs(pt.x)), h(abs(pt.y))
+Size::Size(const Point& pt) : w(abs(pt.x)), h(abs(pt.y))
 {
 }
 
-bool Size::operator==(const Size &sz) const
+bool Size::operator==(const Size& sz) const
 {
     return w == sz.w && h == sz.h;
 }
 
-bool Size::operator!=(const Size &sz) const
+bool Size::operator!=(const Size& sz) const
 {
     return !(*this == sz);
 }
 
-Size &Size::operator+=(const Size &sz)
+Size& Size::operator+=(const Size& sz)
 {
     w += sz.w;
     h += sz.h;
@@ -107,7 +107,7 @@ Size &Size::operator+=(const Size &sz)
     return *this;
 }
 
-Size &Size::operator-=(const Size &sz)
+Size& Size::operator-=(const Size& sz)
 {
     w -= sz.w;
     h -= sz.h;
@@ -115,12 +115,12 @@ Size &Size::operator-=(const Size &sz)
     return *this;
 }
 
-Size Size::operator+(const Size &sz) const
+Size Size::operator+(const Size& sz) const
 {
     return {w + sz.w, h + sz.h};
 }
 
-Size Size::operator-(const Size &sz) const
+Size Size::operator-(const Size& sz) const
 {
     return {w - sz.w, h - sz.h};
 }
@@ -131,19 +131,19 @@ bool Size::isEmpty() const
 }
 
 
-Rect::Rect(const Point &pt, u16 rw, u16 rh) : Point(pt), Size(rw, rh)
+Rect::Rect(const Point& pt, u16 rw, u16 rh) : Point(pt), Size(rw, rh)
 {
 }
 
-Rect::Rect(const Point &pt, const Size &sz) : Point(pt), Size(sz)
+Rect::Rect(const Point& pt, const Size& sz) : Point(pt), Size(sz)
 {
 }
 
-Rect::Rect(const SDL_Rect &rt) : Point(rt.x, rt.y), Size(rt.w, rt.h)
+Rect::Rect(const SDL_Rect& rt) : Point(rt.x, rt.y), Size(rt.w, rt.h)
 {
 }
 
-Rect Rect::Get(const Point &pt1, const Point &pt2)
+Rect Rect::Get(const Point& pt1, const Point& pt2)
 {
     Rect res;
 
@@ -155,7 +155,7 @@ Rect Rect::Get(const Point &pt1, const Point &pt2)
     return res;
 }
 
-Rect Rect::Get(const Rect &rt1, const Rect &rt2, bool intersect)
+Rect Rect::Get(const Rect& rt1, const Rect& rt2, bool intersect)
 {
     Rect rt3{};
 
@@ -168,7 +168,8 @@ Rect Rect::Get(const Rect &rt1, const Rect &rt2, bool intersect)
             rt3.w = std::min(rt1.x + rt1.w, rt2.x + rt2.w) - rt3.x;
             rt3.h = std::min(rt1.y + rt1.h, rt2.y + rt2.h) - rt3.y;
         }
-    } else
+    }
+    else
         // max
     {
         rt3.x = rt1.x < rt2.x ? rt1.x : rt2.x;
@@ -180,7 +181,7 @@ Rect Rect::Get(const Rect &rt1, const Rect &rt2, bool intersect)
     return rt3;
 }
 
-Rect &Rect::operator=(const Point &pt)
+Rect& Rect::operator=(const Point& pt)
 {
     x = pt.x;
     y = pt.y;
@@ -188,22 +189,22 @@ Rect &Rect::operator=(const Point &pt)
     return *this;
 }
 
-bool Rect::operator==(const Rect &rt) const
+bool Rect::operator==(const Rect& rt) const
 {
     return x == rt.x && y == rt.y && w == rt.w && h == rt.h;
 }
 
-bool Rect::operator!=(const Rect &rt) const
+bool Rect::operator!=(const Rect& rt) const
 {
     return !(*this == rt);
 }
 
-bool Rect::operator&(const Point &pt) const
+bool Rect::operator&(const Point& pt) const
 {
     return !(pt.x < x || pt.y < y || pt.x >= x + w || pt.y >= y + h);
 }
 
-bool Rect::operator&(const Rect &rt) const
+bool Rect::operator&(const Rect& rt) const
 {
     return !(x > rt.x + rt.w || x + w < rt.x || y > rt.y + rt.h || y + h < rt.y);
 }
@@ -247,18 +248,18 @@ Rect Rects::GetRect() const
     return res;
 }
 
-s32 Rects::GetIndex(const Point &pt) const
+s32 Rects::GetIndex(const Point& pt) const
 {
     for (auto it = begin(); it != end(); ++it)
         if (*it & pt) return distance(begin(), it);
     return -1;
 }
 
-std::pair<Rect, Point> Rect::Fixed4Blit(const Rect &srcrt, const Rect &dstrt)
+std::pair<Rect, Point> Rect::Fixed4Blit(const Rect& srcrt, const Rect& dstrt)
 {
     std::pair<Rect, Point> res = std::make_pair(Rect(), Point());
-    Rect &srcrtfix = res.first;
-    Point &dstptfix = res.second;
+    Rect& srcrtfix = res.first;
+    Point& dstptfix = res.second;
 
     if (srcrt.w && srcrt.h &&
         srcrt.x + srcrt.w > dstrt.x && srcrt.y + srcrt.h > dstrt.y &&
@@ -291,24 +292,22 @@ std::pair<Rect, Point> Rect::Fixed4Blit(const Rect &srcrt, const Rect &dstrt)
     return res;
 }
 
-void SDLRect(s32 x, s32 y, uint32_t w, uint32_t h, SDL_Rect &writeTo)
+void SDLRect(s32 x, s32 y, uint32_t w, uint32_t h, SDL_Rect& writeTo)
 {
-    SDL_Rect &res = writeTo;
+    SDL_Rect& res = writeTo;
 
     res.x = x;
     res.y = y;
     res.w = w;
     res.h = h;
-
 }
 
-void SDLRect(const Rect &rt2, SDL_Rect &writeTo)
+void SDLRect(const Rect& rt2, SDL_Rect& writeTo)
 {
-    SDL_Rect &res = writeTo;
+    SDL_Rect& res = writeTo;
 
     res.x = rt2.x;
     res.y = rt2.y;
     res.w = rt2.w;
     res.h = rt2.h;
-
 }

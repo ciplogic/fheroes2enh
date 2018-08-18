@@ -76,7 +76,7 @@ namespace Game
 
     string GetLastSavename();
 
-    void SetLastSavename(const string &);
+    void SetLastSavename(const string&);
 
     void SetLoadVersion(int);
 
@@ -94,6 +94,7 @@ namespace Game
         TYPE_LOADFILE = 0x80,
         TYPE_MULTI = TYPE_HOTSEAT | TYPE_NETWORK
     };
+
     // distance_t
     enum
     {
@@ -206,10 +207,10 @@ namespace Game
         BATTLE_POPUP_DELAY,
         AUTOHIDE_STATUS_DELAY,
         //
-                CURRENT_HERO_DELAY,
+        CURRENT_HERO_DELAY,
         CURRENT_AI_DELAY,
         //
-                LAST_DELAY
+        LAST_DELAY
     };
 
     bool AnimateInfrequentDelay(int);
@@ -278,9 +279,9 @@ namespace Game
 
     int CurrentMusic();
 
-    uint32_t &CastleAnimationFrame();
+    uint32_t& CastleAnimationFrame();
 
-    uint32_t &MapsAnimationFrame();
+    uint32_t& MapsAnimationFrame();
 
     uint32_t GetRating();
 
@@ -302,11 +303,11 @@ namespace Game
 
     bool ChangeMusicDisabled();
 
-    void OpenHeroesDialog(Heroes &);
+    void OpenHeroesDialog(Heroes&);
 
-    void OpenCastleDialog(Castle &);
+    void OpenCastleDialog(Castle&);
 
-    string GetEncodeString(const std::string &);
+    string GetEncodeString(const std::string&);
 
     namespace Editor
     {
@@ -325,4 +326,3 @@ namespace Game
 }
 
 #define HotKeyCloseWindow (Game::HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT) || Game::HotKeyPressEvent(Game::EVENT_DEFAULT_READY))
-

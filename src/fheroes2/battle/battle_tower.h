@@ -31,13 +31,15 @@ namespace Battle
 {
     enum
     {
-        TWR_LEFT = 0x01, TWR_CENTER = 0x02, TWR_RIGHT = 0x04
+        TWR_LEFT = 0x01,
+        TWR_CENTER = 0x02,
+        TWR_RIGHT = 0x04
     };
 
     class Tower : public Unit
     {
     public:
-        Tower(const Castle &, int);
+        Tower(const Castle&, int);
 
         bool isValid() const;
 
@@ -55,7 +57,7 @@ namespace Battle
 
         Point GetPortPosition() const;
 
-        static string GetInfo(const Castle &);
+        static string GetInfo(const Castle&);
 
     private:
         int type;

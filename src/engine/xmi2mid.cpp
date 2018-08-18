@@ -48,7 +48,8 @@ using namespace std;
 struct pack_t : public pair<uint32_t, uint32_t> /* delta offset */
 {
     pack_t() : pair<uint32_t, uint32_t>(0, 0)
-    {}
+    {
+    }
 };
 
 vector<u8> packValue(uint32_t delta)
@@ -67,24 +68,27 @@ vector<u8> packValue(uint32_t delta)
         res.push_back(c3 | 0x80);
         res.push_back(c2 | 0x80);
         res.push_back(c1);
-    } else if (c3)
+    }
+    else if (c3)
     {
         res.push_back(c3 | 0x80);
         res.push_back(c2 | 0x80);
         res.push_back(c1);
-    } else if (c2)
+    }
+    else if (c2)
     {
         res.push_back(c2 | 0x80);
         res.push_back(c1);
-    } else
+    }
+    else
         res.push_back(c1);
 
     return res;
 }
 
-pack_t unpackValue(const u8 *ptr)
+pack_t unpackValue(const u8* ptr)
 {
-    const u8 *p = ptr;
+    const u8* p = ptr;
     pack_t res;
 
     while (*p & 0x80)
@@ -109,16 +113,22 @@ pack_t unpackValue(const u8 *ptr)
 struct meta_t
 {
     meta_t() : command(0), quantity(0), duration(0)
-    {}
+    {
+    }
 
     meta_t(u8 c, u8 q, uint32_t d) : command(c), quantity(q), duration(d)
-    {}
+    {
+    }
 
-    bool operator<(const meta_t &m) const
-    { return duration < m.duration; }
+    bool operator<(const meta_t& m) const
+    {
+        return duration < m.duration;
+    }
 
     void decrease_duration(uint32_t delta)
-    { duration -= delta; }
+    {
+        duration -= delta;
+    }
 
     u8 command;
     u8 quantity;
@@ -127,26 +137,27 @@ struct meta_t
 
 struct IFFChunkHeader
 {
-    uint32_t ID;      // 4 upper case ASCII chars, padded with 0x20 (space)
-    uint32_t length;  // big-endian
+    uint32_t ID; // 4 upper case ASCII chars, padded with 0x20 (space)
+    uint32_t length; // big-endian
 
     IFFChunkHeader(uint32_t id, uint32_t sz) : ID(id), length(sz)
-    {}
+    {
+    }
 
     IFFChunkHeader() : ID(0), length(0)
-    {}
-
+    {
+    }
 };
 
 
-ByteVectorReader &operator>>(ByteVectorReader &sb, IFFChunkHeader &st)
+ByteVectorReader& operator>>(ByteVectorReader& sb, IFFChunkHeader& st)
 {
     st.ID = sb.getBE32();
     st.length = sb.getBE32();
     return sb;
 }
 
-ByteVectorWriter &operator<<(ByteVectorWriter &sb, const IFFChunkHeader &st)
+ByteVectorWriter& operator<<(ByteVectorWriter& sb, const IFFChunkHeader& st)
 {
     sb.putBE32(st.ID);
     sb.putBE32(st.length);
@@ -155,18 +166,20 @@ ByteVectorWriter &operator<<(ByteVectorWriter &sb, const IFFChunkHeader &st)
 
 struct GroupChunkHeader
 {
-    uint32_t ID;        // 4 byte ASCII string, either 'FORM', 'CAT ' or 'LIST'
+    uint32_t ID; // 4 byte ASCII string, either 'FORM', 'CAT ' or 'LIST'
     uint32_t length;
-    uint32_t type;      // 4 byte ASCII string
+    uint32_t type; // 4 byte ASCII string
 
     GroupChunkHeader(uint32_t id, uint32_t sz, uint32_t tp) : ID(id), length(sz), type(tp)
-    {}
+    {
+    }
 
     GroupChunkHeader() : ID(0), length(0), type(0)
-    {}
+    {
+    }
 };
 
-ByteVectorWriter &operator<<(ByteVectorWriter &sb, const GroupChunkHeader &st)
+ByteVectorWriter& operator<<(ByteVectorWriter& sb, const GroupChunkHeader& st)
 {
     sb.putBE32(st.ID);
     sb.putBE32(st.length);
@@ -174,7 +187,7 @@ ByteVectorWriter &operator<<(ByteVectorWriter &sb, const GroupChunkHeader &st)
     return sb;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &sb, GroupChunkHeader &st)
+ByteVectorReader& operator>>(ByteVectorReader& sb, GroupChunkHeader& st)
 {
     st.ID = sb.getBE32();
     st.length = sb.getBE32();
@@ -196,7 +209,7 @@ struct XMIData
 {
     XMITracks tracks;
 
-    explicit XMIData(const vector<u8> &buf)
+    explicit XMIData(const vector<u8>& buf)
     {
         ByteVectorReader sb(buf);
 
@@ -230,8 +243,8 @@ struct XMIData
         {
             tracks.push_back(XMITrack());
 
-            vector<u8> &timb = tracks.back().timb;
-            vector<u8> &evnt = tracks.back().evnt;
+            vector<u8>& timb = tracks.back().timb;
+            vector<u8>& evnt = tracks.back().evnt;
 
             sb >> group;
             // FORM XMID
@@ -318,7 +331,7 @@ struct MidEvent
     }
 };
 
-ByteVectorWriter &operator<<(ByteVectorWriter &sb, const MidEvent &st)
+ByteVectorWriter& operator<<(ByteVectorWriter& sb, const MidEvent& st)
 {
     for (unsigned char it : st.pack)
         sb << it;
@@ -340,7 +353,7 @@ struct MidEvents : public vector<MidEvent>
     size_t size() const
     {
         size_t res = 0;
-        for (const auto &it : *this)
+        for (const auto& it : *this)
             res += it.size();
         return res;
     }
@@ -348,10 +361,10 @@ struct MidEvents : public vector<MidEvent>
     MidEvents()
     = default;
 
-    explicit MidEvents(const XMITrack &t)
+    explicit MidEvents(const XMITrack& t)
     {
-        const u8 *ptr = &t.evnt[0];
-        const u8 *end = ptr + t.evnt.size();
+        const u8* ptr = &t.evnt[0];
+        const u8* end = ptr + t.evnt.size();
 
         uint32_t delta = 0;
         list<meta_t> notesoff;
@@ -387,7 +400,7 @@ struct MidEvents : public vector<MidEvent>
                 if (delta2) delta -= delta2;
 
                 // decrease duration
-                for (auto &it : notesoff)
+                for (auto& it : notesoff)
                     it.decrease_duration(delta);
             }
 
@@ -396,7 +409,8 @@ struct MidEvents : public vector<MidEvent>
             {
                 delta += *ptr;
                 ++ptr;
-            } else
+            }
+            else
                 // command
             {
                 // end
@@ -408,31 +422,31 @@ struct MidEvents : public vector<MidEvent>
                 switch (*ptr >> 4)
                 {
                     // meta
-                    case 0x0F:
+                case 0x0F:
                     {
                         const pack_t pack = unpackValue(ptr + 2);
                         ptr += pack.first + pack.second + 1;
                         delta = 0;
                     }
-                        break;
+                    break;
 
-                        // key pressure
-                    case 0x0A:
-                        // control change
-                    case 0x0B:
-                        // pitch bend
-                    case 0x0E:
+                    // key pressure
+                case 0x0A:
+                    // control change
+                case 0x0B:
+                    // pitch bend
+                case 0x0E:
                     {
                         push_back(MidEvent(delta, *ptr, *(ptr + 1), *(ptr + 2)));
                         ptr += 3;
                         delta = 0;
                     }
-                        break;
+                    break;
 
-                        // note off
-                    case 0x08:
-                        // note on
-                    case 0x09:
+                    // note off
+                case 0x08:
+                    // note on
+                case 0x09:
                     {
                         push_back(MidEvent(delta, *ptr, *(ptr + 1), *(ptr + 2)));
                         pack_t pack = unpackValue(ptr + 3);
@@ -440,35 +454,35 @@ struct MidEvents : public vector<MidEvent>
                         ptr += 3 + pack.second;
                         delta = 0;
                     }
-                        break;
+                    break;
 
-                        // program change
-                    case 0x0C:
-                        // chanel pressure
-                    case 0x0D:
+                    // program change
+                case 0x0C:
+                    // chanel pressure
+                case 0x0D:
                     {
                         push_back(MidEvent(delta, *ptr, *(ptr + 1)));
                         ptr += 2;
                         delta = 0;
                     }
-                        break;
+                    break;
 
-                        // unused command
-                    default:
-                        push_back(MidEvent(0, 0xFF, 0x2F, 0));
-                        H2ERROR("unknown st: 0x" << std::setw(2) << std::setfill('0') << std::hex <<
-                                               static_cast<int>(*ptr) << ", ln: "
-                                               << static_cast<int>(&t.evnt[0] + t.evnt.size() - ptr));
-                        break;
+                    // unused command
+                default:
+                    push_back(MidEvent(0, 0xFF, 0x2F, 0));
+                    H2ERROR("unknown st: 0x" << std::setw(2) << std::setfill('0') << std::hex <<
+                        static_cast<int>(*ptr) << ", ln: "
+                        << static_cast<int>(&t.evnt[0] + t.evnt.size() - ptr));
+                    break;
                 }
             }
         }
     }
 };
 
-ByteVectorWriter &operator<<(ByteVectorWriter &sb, const MidEvents &st)
+ByteVectorWriter& operator<<(ByteVectorWriter& sb, const MidEvents& st)
 {
-    for (const auto &it : st)
+    for (const auto& it : st)
         sb << it;
     return sb;
 }
@@ -479,10 +493,13 @@ struct MidTrack
     MidEvents events;
 
     MidTrack() : mtrk(TAG_MTRK, 0)
-    {}
+    {
+    }
 
-    explicit MidTrack(const XMITrack &t) : mtrk(TAG_MTRK, 0), events(t)
-    { mtrk.length = events.size(); }
+    explicit MidTrack(const XMITrack& t) : mtrk(TAG_MTRK, 0), events(t)
+    {
+        mtrk.length = events.size();
+    }
 
     size_t size() const
     {
@@ -490,7 +507,7 @@ struct MidTrack
     }
 };
 
-ByteVectorWriter &operator<<(ByteVectorWriter &sb, const MidTrack &st)
+ByteVectorWriter& operator<<(ByteVectorWriter& sb, const MidTrack& st)
 {
     sb << st.mtrk;
     sb << st.events;
@@ -507,23 +524,23 @@ struct MidTracks : vector<MidTrack>
     size_t size() const
     {
         size_t res = 0;
-        for (const auto &it : *this)
+        for (const auto& it : *this)
             res += it.size();
         return res;
     }
 
     MidTracks() = default;
 
-    explicit MidTracks(const XMITracks &tracks)
+    explicit MidTracks(const XMITracks& tracks)
     {
-        for (const auto &track : tracks)
+        for (const auto& track : tracks)
             push_back(MidTrack(track));
     }
 };
 
-ByteVectorWriter &operator<<(ByteVectorWriter &sb, const MidTracks &st)
+ByteVectorWriter& operator<<(ByteVectorWriter& sb, const MidTracks& st)
 {
-    for (const auto &it : st)
+    for (const auto& it : st)
         sb << it;
     return sb;
 }
@@ -536,13 +553,15 @@ struct MidData
     MidTracks tracks;
 
     MidData() : mthd(TAG_MTHD, 6), format(0), ppqn(0)
-    {}
+    {
+    }
 
-    MidData(const XMITracks &t, int p) : mthd(TAG_MTHD, 6), format(0), ppqn(p), tracks(t)
-    {}
+    MidData(const XMITracks& t, int p) : mthd(TAG_MTHD, 6), format(0), ppqn(p), tracks(t)
+    {
+    }
 };
 
-ByteVectorWriter &operator<<(ByteVectorWriter &sb, const MidData &st)
+ByteVectorWriter& operator<<(ByteVectorWriter& sb, const MidData& st)
 {
     sb << st.mthd;
     sb.putBE16(st.format);
@@ -552,7 +571,7 @@ ByteVectorWriter &operator<<(ByteVectorWriter &sb, const MidData &st)
     return sb;
 }
 
-vector<u8> Music::Xmi2Mid(const vector<u8> &buf)
+vector<u8> Music::Xmi2Mid(const vector<u8>& buf)
 {
     XMIData xmi(buf);
     ByteVectorWriter sb(16 * 4096);

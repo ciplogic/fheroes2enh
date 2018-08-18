@@ -43,12 +43,14 @@ void BoxRedraw(s32 posx, s32 posy, uint32_t count);
 
 Dialog::FrameBox::FrameBox(int height, bool buttons)
 {
-    Display &display = Display::Get();
+    Display& display = Display::Get();
 
     if (buttons) height += BUTTON_HEIGHT;
 
     const bool evil = Settings::Get().ExtGameEvilInterface();
-    const uint32_t count_middle = height <= BOXAREA_TOP + BOXAREA_BOTTOM ? 0 : 1 + (height - BOXAREA_TOP - BOXAREA_BOTTOM) /
+    const uint32_t count_middle = height <= BOXAREA_TOP + BOXAREA_BOTTOM
+                                      ? 0
+                                      : 1 + (height - BOXAREA_TOP - BOXAREA_BOTTOM) /
                                       BOXAREA_MIDDLE;
     const uint32_t height_middle = count_middle * BOXAREA_MIDDLE;
     const uint32_t height_top_bottom = evil ? BOXE_TOP + BOXE_BOTTOM : BOX_TOP + BOX_BOTTOM;
@@ -69,14 +71,15 @@ Dialog::FrameBox::FrameBox(int height, bool buttons)
 
 Dialog::FrameBox::~FrameBox()
 {
-    Cursor &cursor = Cursor::Get();
+    Cursor& cursor = Cursor::Get();
 
     if (cursor.isVisible())
     {
         cursor.Hide();
         background.Restore();
         cursor.Show();
-    } else
+    }
+    else
         background.Restore();
 
     Display::Get().Flip();
@@ -100,13 +103,13 @@ void BoxRedraw(s32 posx, s32 posy, uint32_t count)
     {
         // left middle sprite
         pt.x = posx;
-        const Sprite &sl = AGG::GetICN(buybuild, 5);
+        const Sprite& sl = AGG::GetICN(buybuild, 5);
         sl.Blit(Rect(0, 10, sl.w(), BOXAREA_MIDDLE), pt);
 
         // right middle sprite
         pt.x += sl.w();
         if (!Settings::Get().ExtGameEvilInterface()) pt.x -= 1;
-        const Sprite &sr = AGG::GetICN(buybuild, 1);
+        const Sprite& sr = AGG::GetICN(buybuild, 1);
         sr.Blit(Rect(0, 10, sr.w(), BOXAREA_MIDDLE), pt);
         pt.y += BOXAREA_MIDDLE;
     }

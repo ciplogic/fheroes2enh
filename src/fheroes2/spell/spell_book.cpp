@@ -43,19 +43,19 @@ struct SpellFiltered : binary_function<Spell, int, bool>
     }
 };
 
-void SpellBookRedrawLists(const SpellStorage &, Rects &, size_t, const Point &, uint32_t, int only, const HeroBase &hero);
+void SpellBookRedrawLists(const SpellStorage&, Rects&, size_t, const Point&, uint32_t, int only, const HeroBase& hero);
 
-void SpellBookRedrawSpells(const SpellStorage &, Rects &, size_t, s32, s32, const HeroBase &hero);
+void SpellBookRedrawSpells(const SpellStorage&, Rects&, size_t, s32, s32, const HeroBase& hero);
 
-void SpellBookRedrawMP(const Point &, uint32_t);
+void SpellBookRedrawMP(const Point&, uint32_t);
 
-bool SpellBookSortingSpell(const Spell &spell1, const Spell &spell2)
+bool SpellBookSortingSpell(const Spell& spell1, const Spell& spell2)
 {
     return spell1.isCombat() != spell2.isCombat() && spell1.isCombat() ||
         string(spell1.GetName()) < string(spell2.GetName());
 }
 
-Spell SpellBook::Open(const HeroBase &hero, int filter, bool canselect) const
+Spell SpellBook::Open(const HeroBase& hero, int filter, bool canselect) const
 {
     if (!hero.HaveSpellBook())
     {
@@ -63,13 +63,13 @@ Spell SpellBook::Open(const HeroBase &hero, int filter, bool canselect) const
         return {Spell::NONE};
     }
 
-    Display &display = Display::Get();
-    Cursor &cursor = Cursor::Get();
+    Display& display = Display::Get();
+    Cursor& cursor = Cursor::Get();
 
     const int oldcursor = cursor.Themes();
 
-    const Sprite &r_list = AGG::GetICN(ICN::BOOK, 0);
-    const Sprite &l_list = AGG::GetICN(ICN::BOOK, 0, true);
+    const Sprite& r_list = AGG::GetICN(ICN::BOOK, 0);
+    const Sprite& l_list = AGG::GetICN(ICN::BOOK, 0, true);
 
     int filterLocal = filter;
     SpellStorage spells2 = SetFilter(filterLocal, &hero);
@@ -88,10 +88,10 @@ Spell SpellBook::Open(const HeroBase &hero, int filter, bool canselect) const
     cursor.Hide();
     cursor.SetThemes(Cursor::POINTER);
 
-    const Sprite &bookmark_info = AGG::GetICN(ICN::BOOK, 6);
-    const Sprite &bookmark_advn = AGG::GetICN(ICN::BOOK, 3);
-    const Sprite &bookmark_cmbt = AGG::GetICN(ICN::BOOK, 4);
-    const Sprite &bookmark_clos = AGG::GetICN(ICN::BOOK, 5);
+    const Sprite& bookmark_info = AGG::GetICN(ICN::BOOK, 6);
+    const Sprite& bookmark_advn = AGG::GetICN(ICN::BOOK, 3);
+    const Sprite& bookmark_cmbt = AGG::GetICN(ICN::BOOK, 4);
+    const Sprite& bookmark_clos = AGG::GetICN(ICN::BOOK, 5);
 
     const Rect pos((display.w() - (r_list.w() + l_list.w())) / 2, (display.h() - r_list.h()) / 2,
                    r_list.w() + l_list.w(), r_list.h() + 70);
@@ -116,7 +116,7 @@ Spell SpellBook::Open(const HeroBase &hero, int filter, bool canselect) const
     cursor.Show();
     display.Flip();
 
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     // message loop
     while (le.HandleEvents())
@@ -125,13 +125,15 @@ Spell SpellBook::Open(const HeroBase &hero, int filter, bool canselect) const
         {
             current_index -= SPELL_PER_PAGE * 2;
             redraw = true;
-        } else if (le.MouseClickLeft(next_list) &&
-                   spells2.size() > current_index + SPELL_PER_PAGE * 2)
+        }
+        else if (le.MouseClickLeft(next_list) &&
+            spells2.size() > current_index + SPELL_PER_PAGE * 2)
         {
             current_index += SPELL_PER_PAGE * 2;
             redraw = true;
-        } else if (le.MouseClickLeft(info_rt) ||
-                   le.MousePressRight(info_rt))
+        }
+        else if (le.MouseClickLeft(info_rt) ||
+            le.MousePressRight(info_rt))
         {
             string str = _("Your hero has %{point} spell points remaining");
             StringReplace(str, "%{point}", hero.GetSpellPoints());
@@ -139,20 +141,23 @@ Spell SpellBook::Open(const HeroBase &hero, int filter, bool canselect) const
             Message("", str, Font::BIG, Dialog::OK);
             cursor.Show();
             display.Flip();
-        } else if (le.MouseClickLeft(advn_rt) && filterLocal != ADVN && filter != CMBT)
+        }
+        else if (le.MouseClickLeft(advn_rt) && filterLocal != ADVN && filter != CMBT)
         {
             filterLocal = ADVN;
             current_index = 0;
             spells2 = SetFilter(filterLocal, &hero);
             redraw = true;
-        } else if (le.MouseClickLeft(cmbt_rt) && filterLocal != CMBT && filter != ADVN)
+        }
+        else if (le.MouseClickLeft(cmbt_rt) && filterLocal != CMBT && filter != ADVN)
         {
             filterLocal = CMBT;
             current_index = 0;
             spells2 = SetFilter(filterLocal, &hero);
             redraw = true;
-        } else if (le.MouseClickLeft(clos_rt) ||
-                   HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
+        }
+        else if (le.MouseClickLeft(clos_rt) ||
+            HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
             break;
         else if (le.MouseClickLeft(pos))
         {
@@ -178,7 +183,8 @@ Spell SpellBook::Open(const HeroBase &hero, int filter, bool canselect) const
                         Message("", str, Font::BIG, Dialog::OK);
                         cursor.Show();
                         display.Flip();
-                    } else
+                    }
+                    else
                     {
                         cursor.Hide();
                         Dialog::SpellInfo(*spell, true);
@@ -225,15 +231,15 @@ Spell SpellBook::Open(const HeroBase &hero, int filter, bool canselect) const
     return curspell;
 }
 
-void SpellBook::Edit(const HeroBase &hero)
+void SpellBook::Edit(const HeroBase& hero)
 {
-    Display &display = Display::Get();
-    Cursor &cursor = Cursor::Get();
+    Display& display = Display::Get();
+    Cursor& cursor = Cursor::Get();
 
     const int oldcursor = cursor.Themes();
 
-    const Sprite &r_list = AGG::GetICN(ICN::BOOK, 0);
-    const Sprite &l_list = AGG::GetICN(ICN::BOOK, 0, true);
+    const Sprite& r_list = AGG::GetICN(ICN::BOOK, 0);
+    const Sprite& l_list = AGG::GetICN(ICN::BOOK, 0, true);
 
     size_t current_index = 0;
     SpellStorage spells2 = SetFilter(ALL, &hero);
@@ -241,7 +247,7 @@ void SpellBook::Edit(const HeroBase &hero)
     cursor.Hide();
     cursor.SetThemes(Cursor::POINTER);
 
-    const Sprite &bookmark_clos = AGG::GetICN(ICN::BOOK, 5);
+    const Sprite& bookmark_clos = AGG::GetICN(ICN::BOOK, 5);
 
     const Rect pos((display.w() - (r_list.w() + l_list.w())) / 2, (display.h() - r_list.h()) / 2,
                    r_list.w() + l_list.w(), r_list.h() + 70);
@@ -260,7 +266,7 @@ void SpellBook::Edit(const HeroBase &hero)
     cursor.Show();
     display.Flip();
 
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     // message loop
     while (le.HandleEvents())
@@ -269,12 +275,14 @@ void SpellBook::Edit(const HeroBase &hero)
         {
             current_index -= SPELL_PER_PAGE * 2;
             redraw = true;
-        } else if (le.MouseClickLeft(next_list) && size() > current_index + SPELL_PER_PAGE * 2)
+        }
+        else if (le.MouseClickLeft(next_list) && size() > current_index + SPELL_PER_PAGE * 2)
         {
             current_index += SPELL_PER_PAGE * 2;
             redraw = true;
-        } else if (le.MouseClickLeft(clos_rt) ||
-                   HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
+        }
+        else if (le.MouseClickLeft(clos_rt) ||
+            HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT))
             break;
         else if (le.MouseClickLeft(pos))
         {
@@ -289,7 +297,8 @@ void SpellBook::Edit(const HeroBase &hero)
                     Dialog::SpellInfo(*spell, true);
                     redraw = true;
                 }
-            } else
+            }
+            else
             {
                 Spell spell = Dialog::SelectSpell();
                 spells2.Append(spell);
@@ -331,7 +340,7 @@ void SpellBook::Edit(const HeroBase &hero)
     display.Flip();
 }
 
-SpellStorage SpellBook::SetFilter(int filter, const HeroBase *hero) const
+SpellStorage SpellBook::SetFilter(int filter, const HeroBase* hero) const
 {
     SpellStorage res(*this);
 
@@ -357,14 +366,15 @@ SpellStorage SpellBook::SetFilter(int filter, const HeroBase *hero) const
     return res;
 }
 
-void SpellBookRedrawMP(const Point &dst, uint32_t mp)
+void SpellBookRedrawMP(const Point& dst, uint32_t mp)
 {
     Point tp(dst.x + 11, dst.y + 9);
     if (0 == mp)
     {
         Text text("0", Font::SMALL);
         text.Blit(tp.x - text.w() / 2, tp.y);
-    } else
+    }
+    else
         for (uint32_t i = 100; i >= 1; i /= 10)
             if (mp >= i)
             {
@@ -375,15 +385,16 @@ void SpellBookRedrawMP(const Point &dst, uint32_t mp)
 }
 
 void
-SpellBookRedrawLists(const SpellStorage &spells, Rects &coords, const size_t cur, const Point &pt, uint32_t sp, int only,
-                     const HeroBase &hero)
+SpellBookRedrawLists(const SpellStorage& spells, Rects& coords, const size_t cur, const Point& pt, uint32_t sp,
+                     int only,
+                     const HeroBase& hero)
 {
-    const Sprite &r_list = AGG::GetICN(ICN::BOOK, 0);
-    const Sprite &l_list = AGG::GetICN(ICN::BOOK, 0, true);
-    const Sprite &bookmark_info = AGG::GetICN(ICN::BOOK, 6);
-    const Sprite &bookmark_advn = AGG::GetICN(ICN::BOOK, 3);
-    const Sprite &bookmark_cmbt = AGG::GetICN(ICN::BOOK, 4);
-    const Sprite &bookmark_clos = AGG::GetICN(ICN::BOOK, 5);
+    const Sprite& r_list = AGG::GetICN(ICN::BOOK, 0);
+    const Sprite& l_list = AGG::GetICN(ICN::BOOK, 0, true);
+    const Sprite& bookmark_info = AGG::GetICN(ICN::BOOK, 6);
+    const Sprite& bookmark_advn = AGG::GetICN(ICN::BOOK, 3);
+    const Sprite& bookmark_cmbt = AGG::GetICN(ICN::BOOK, 4);
+    const Sprite& bookmark_clos = AGG::GetICN(ICN::BOOK, 5);
 
     const Rect info_rt(pt.x + 125, pt.y + 275, bookmark_info.w(), bookmark_info.h());
     const Rect advn_rt(pt.x + 270, pt.y + 270, bookmark_advn.w(), bookmark_advn.h());
@@ -408,9 +419,8 @@ SpellBookRedrawLists(const SpellStorage &spells, Rects &coords, const size_t cur
 }
 
 void
-SpellBookRedrawSpells(const SpellStorage &spells, Rects &coords, const size_t cur, s32 px, s32 py, const HeroBase &hero)
+SpellBookRedrawSpells(const SpellStorage& spells, Rects& coords, const size_t cur, s32 px, s32 py, const HeroBase& hero)
 {
-
     s32 ox = 0;
     s32 oy = 0;
 
@@ -424,8 +434,8 @@ SpellBookRedrawSpells(const SpellStorage &spells, Rects &coords, const size_t cu
             ox += 80;
         }
 
-        const Spell &spell = spells[ii + cur];
-        const Sprite &icon = AGG::GetICN(ICN::SPELLS, spell.IndexSprite());
+        const Spell& spell = spells[ii + cur];
+        const Sprite& icon = AGG::GetICN(ICN::SPELLS, spell.IndexSprite());
         const Rect rect(px + ox - icon.w() / 2, py + oy - icon.h() / 2, icon.w(), icon.h() + 10);
 
         icon.Blit(rect.x, rect.y);

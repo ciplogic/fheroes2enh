@@ -47,19 +47,19 @@
 
 namespace Game
 {
-    uint32_t GetMixerChannelFromObject(const Maps::Tiles &);
+    uint32_t GetMixerChannelFromObject(const Maps::Tiles&);
 
     void AnimateDelaysInitialize();
 
     void KeyboardGlobalFilter(int, int);
 
-    void UpdateGlobalDefines(const string &);
+    void UpdateGlobalDefines(const string&);
 
-    void LoadExternalResource(const Settings &);
+    void LoadExternalResource(const Settings&);
 
     void HotKeysDefaults();
 
-    void HotKeysLoad(const string &);
+    void HotKeysLoad(const string&);
 
     bool disable_change_music = false;
     int current_music = MUS::UNKNOWN;
@@ -68,7 +68,7 @@ namespace Game
     string last_name;
     int save_version = CURRENT_FORMAT_VERSION;
     vector<int>
-            reserved_vols(LOOPXX_COUNT, 0);
+    reserved_vols(LOOPXX_COUNT, 0);
 }
 
 void Game::SetLoadVersion(int ver)
@@ -86,7 +86,7 @@ string Game::GetLastSavename()
     return last_name;
 }
 
-void Game::SetLastSavename(const string &name)
+void Game::SetLastSavename(const string& name)
 {
     last_name = name;
 }
@@ -138,8 +138,8 @@ void Game::DisableChangeMusic(bool f)
 
 void Game::Init()
 {
-    Settings &conf = Settings::Get();
-    LocalEvent &le = LocalEvent::Get();
+    Settings& conf = Settings::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     // update all global defines
     if (conf.UseAltResource()) LoadExternalResource(conf);
@@ -172,12 +172,12 @@ void Game::SetCurrentMusic(int mus)
     current_music = mus;
 }
 
-uint32_t &Game::MapsAnimationFrame()
+uint32_t& Game::MapsAnimationFrame()
 {
     return maps_animation_frame;
 }
 
-uint32_t &Game::CastleAnimationFrame()
+uint32_t& Game::CastleAnimationFrame()
 {
     return castle_animation_frame;
 }
@@ -186,7 +186,7 @@ uint32_t &Game::CastleAnimationFrame()
 void Game::EnvironmentSoundMixer()
 {
     const Point abs_pt(Interface::GetFocusCenter());
-    const Settings &conf = Settings::Get();
+    const Settings& conf = Settings::Get();
 
     if (!conf.Sound()) return;
     fill(reserved_vols.begin(), reserved_vols.end(), 0);
@@ -203,7 +203,7 @@ void Game::EnvironmentSoundMixer()
             // calculation volume
             const int length = max(abs(xx - abs_pt.x), abs(yy - abs_pt.y));
             const int volume =
-                    (2 < length ? 4 : 1 < length ? 8 : 0 < length ? 12 : 16) * Mixer::MaxVolume() / 16;
+                (2 < length ? 4 : 1 < length ? 8 : 0 < length ? 12 : 16) * Mixer::MaxVolume() / 16;
 
             if (volume > reserved_vols[channel]) reserved_vols[channel] = volume;
         }
@@ -212,7 +212,7 @@ void Game::EnvironmentSoundMixer()
     AGG::LoadLOOPXXSounds(reserved_vols);
 }
 
-uint32_t Game::GetMixerChannelFromObject(const Maps::Tiles &tile)
+uint32_t Game::GetMixerChannelFromObject(const Maps::Tiles& tile)
 {
     // force: check stream
     if (tile.isStream()) return 13;
@@ -222,41 +222,41 @@ uint32_t Game::GetMixerChannelFromObject(const Maps::Tiles &tile)
 
 uint32_t Game::GetRating()
 {
-    Settings &conf = Settings::Get();
+    Settings& conf = Settings::Get();
     uint32_t rating = 50;
 
     switch ((DifficultyEnum)conf.MapsDifficulty())
     {
-        case DifficultyEnum::NORMAL:
-            rating += 20;
-            break;
-        case DifficultyEnum::HARD:
-            rating += 40;
-            break;
-        case DifficultyEnum::EXPERT:
-        case DifficultyEnum::IMPOSSIBLE:
-            rating += 80;
-            break;
-        default:
-            break;
+    case DifficultyEnum::NORMAL:
+        rating += 20;
+        break;
+    case DifficultyEnum::HARD:
+        rating += 40;
+        break;
+    case DifficultyEnum::EXPERT:
+    case DifficultyEnum::IMPOSSIBLE:
+        rating += 80;
+        break;
+    default:
+        break;
     }
 
     switch ((DifficultyEnum)conf.GameDifficulty())
     {
-        case DifficultyEnum::NORMAL:
-            rating += 30;
-            break;
-        case DifficultyEnum::HARD:
-            rating += 50;
-            break;
-        case DifficultyEnum::EXPERT:
-            rating += 70;
-            break;
-        case DifficultyEnum::IMPOSSIBLE:
-            rating += 90;
-            break;
-        default:
-            break;
+    case DifficultyEnum::NORMAL:
+        rating += 30;
+        break;
+    case DifficultyEnum::HARD:
+        rating += 50;
+        break;
+    case DifficultyEnum::EXPERT:
+        rating += 70;
+        break;
+    case DifficultyEnum::IMPOSSIBLE:
+        rating += 90;
+        break;
+    default:
+        break;
     }
 
     return rating;
@@ -264,26 +264,26 @@ uint32_t Game::GetRating()
 
 uint32_t Game::GetGameOverScores()
 {
-    Settings &conf = Settings::Get();
+    Settings& conf = Settings::Get();
 
     uint32_t k_size = 0;
 
-    switch ((mapsize_t) conf.MapsSize().w)
+    switch ((mapsize_t)conf.MapsSize().w)
     {
-        case mapsize_t::SMALL:
-            k_size = 140;
-            break;
-        case mapsize_t::MEDIUM:
-            k_size = 100;
-            break;
-        case mapsize_t::LARGE:
-            k_size = 80;
-            break;
-        case mapsize_t::XLARGE:
-            k_size = 60;
-            break;
-        default:
-            break;
+    case mapsize_t::SMALL:
+        k_size = 140;
+        break;
+    case mapsize_t::MEDIUM:
+        k_size = 100;
+        break;
+    case mapsize_t::LARGE:
+        k_size = 80;
+        break;
+    case mapsize_t::XLARGE:
+        k_size = 60;
+        break;
+    default:
+        break;
     }
 
     uint32_t flag = 0;
@@ -298,7 +298,8 @@ uint32_t Game::GetGameOverScores()
         {
             end_days = ii + (world.CountDay() - ii) / 2;
             flag = 1;
-        } else if (1 == flag && nk > 120) end_days = ii + (world.CountDay() - ii) / 2;
+        }
+        else if (1 == flag && nk > 120) end_days = ii + (world.CountDay() - ii) / 2;
         else if (nk > 180) break;
     }
 
@@ -307,7 +308,7 @@ uint32_t Game::GetGameOverScores()
 
 void Game::ShowLoadMapsText()
 {
-    Display &display = Display::Get();
+    Display& display = Display::Get();
     const Rect pos(0, display.h() / 2, display.w(), display.h() / 2);
     TextBox text(_("Maps Loading..."), Font::BIG, pos.w);
 
@@ -327,7 +328,7 @@ uint32_t Game::GetViewDistance(uint32_t d)
     return GameStatic::GetOverViewDistance(d);
 }
 
-void Game::UpdateGlobalDefines(const string &spec)
+void Game::UpdateGlobalDefines(const string& spec)
 {
 }
 
@@ -336,7 +337,7 @@ uint32_t Game::GetWhirlpoolPercent()
     return GameStatic::GetLostOnWhirlpoolPercent();
 }
 
-void Game::LoadExternalResource(const Settings &conf)
+void Game::LoadExternalResource(const Settings& conf)
 {
     string spec;
     const string prefix_stats = System::ConcatePath("files", "stats");
@@ -402,9 +403,9 @@ void Game::LoadExternalResource(const Settings &conf)
         Skill::UpdateStats(spec);
 }
 
-string Game::GetEncodeString(const string &str1)
+string Game::GetEncodeString(const string& str1)
 {
-    const Settings &conf = Settings::Get();
+    const Settings& conf = Settings::Get();
 
     // encode name
     if (conf.Unicode() && !conf.MapsCharset().empty())
@@ -432,33 +433,34 @@ string Game::CountScoute(uint32_t count, int scoute, bool shorts)
 
     switch (scoute)
     {
-        case Skill::Level::BASIC:
-            infelicity = count * 30 / 100.0;
-            break;
+    case Skill::Level::BASIC:
+        infelicity = count * 30 / 100.0;
+        break;
 
-        case Skill::Level::ADVANCED:
-            infelicity = count * 15 / 100.0;
-            break;
+    case Skill::Level::ADVANCED:
+        infelicity = count * 15 / 100.0;
+        break;
 
-        case Skill::Level::EXPERT:
-            res = shorts ? GetStringShort(count) : Int2Str(count);
-            break;
+    case Skill::Level::EXPERT:
+        res = shorts ? GetStringShort(count) : Int2Str(count);
+        break;
 
-        default:
-            return Army::SizeString(count);
+    default:
+        return Army::SizeString(count);
     }
 
     if (res.empty())
     {
         uint32_t min = Rand::Get(static_cast<uint32_t>(floor(count - infelicity + 0.5)),
-                            static_cast<uint32_t>(floor(count + infelicity + 0.5)));
+                                 static_cast<uint32_t>(floor(count + infelicity + 0.5)));
         uint32_t max = 0;
 
         if (min > count)
         {
             max = min;
             min = static_cast<uint32_t>(floor(count - infelicity + 0.5));
-        } else
+        }
+        else
             max = static_cast<uint32_t>(floor(count + infelicity + 0.5));
 
         res = Int2Str(min);
@@ -479,30 +481,30 @@ void Game::PlayPickupSound()
 
     switch (Rand::Get(1, 7))
     {
-        case 1:
-            wav = M82::PICKUP01;
-            break;
-        case 2:
-            wav = M82::PICKUP02;
-            break;
-        case 3:
-            wav = M82::PICKUP03;
-            break;
-        case 4:
-            wav = M82::PICKUP04;
-            break;
-        case 5:
-            wav = M82::PICKUP05;
-            break;
-        case 6:
-            wav = M82::PICKUP06;
-            break;
-        case 7:
-            wav = M82::PICKUP07;
-            break;
+    case 1:
+        wav = M82::PICKUP01;
+        break;
+    case 2:
+        wav = M82::PICKUP02;
+        break;
+    case 3:
+        wav = M82::PICKUP03;
+        break;
+    case 4:
+        wav = M82::PICKUP04;
+        break;
+    case 5:
+        wav = M82::PICKUP05;
+        break;
+    case 6:
+        wav = M82::PICKUP06;
+        break;
+    case 7:
+        wav = M82::PICKUP07;
+        break;
 
-        default:
-            return;
+    default:
+        return;
     }
 
     AGG::PlaySound(wav);

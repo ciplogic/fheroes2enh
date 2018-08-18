@@ -45,14 +45,16 @@ namespace Battle
     class Catapult
     {
     public:
-        Catapult(const HeroBase &, bool);
+        Catapult(const HeroBase&, bool);
 
         static Point GetTargetPosition(int);
 
         uint32_t GetShots() const
-        { return cat_shots; }
+        {
+            return cat_shots;
+        }
 
-        int GetTarget(const vector<uint32_t> &) const;
+        int GetTarget(const vector<uint32_t>&) const;
 
         uint32_t GetDamage(int, uint32_t) const;
 
@@ -63,4 +65,3 @@ namespace Battle
         //bool	cat_fort;
     };
 }
-

@@ -29,15 +29,15 @@ class StatusBar : public TextSprite
 public:
     StatusBar();
 
-    void SetCenter(const Point &pt);
+    void SetCenter(const Point& pt);
 
     void SetCenter(s32 cx, s32 cy);
 
-    void ShowMessage(const string &msg);
+    void ShowMessage(const string& msg);
 
     void Redraw();
 
-    const string &GetMessage() const;
+    const string& GetMessage() const;
 
 private:
     Point center;

@@ -34,7 +34,7 @@ class Puzzle : public std::bitset<PUZZLETILES>
 public:
     Puzzle();
 
-    Puzzle &operator=(const char *);
+    Puzzle& operator=(const char*);
 
     void Update(uint32_t open, uint32_t total);
 
@@ -46,5 +46,5 @@ public:
     u8 zone4_order[4]{};
 };
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const Puzzle &);
-ByteVectorReader &operator>>(ByteVectorReader &, Puzzle &);
+ByteVectorWriter& operator<<(ByteVectorWriter&, const Puzzle&);
+ByteVectorReader& operator>>(ByteVectorReader&, Puzzle&);

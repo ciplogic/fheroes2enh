@@ -24,14 +24,14 @@
 
 #include <string>
 
-    enum class DifficultyEnum
-    {
-        EASY,
-        NORMAL,
-        HARD,
-        EXPERT,
-        IMPOSSIBLE
-    };
+enum class DifficultyEnum
+{
+    EASY,
+    NORMAL,
+    HARD,
+    EXPERT,
+    IMPOSSIBLE
+};
 
 namespace Difficulty
 {

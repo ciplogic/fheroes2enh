@@ -30,16 +30,16 @@ class Heroes;
 class HeroesIndicator
 {
 public:
-    HeroesIndicator(const Heroes &);
+    HeroesIndicator(const Heroes&);
 
-    const Rect &GetArea() const;
+    const Rect& GetArea() const;
 
-    const string &GetDescriptions() const;
+    const string& GetDescriptions() const;
 
-    void SetPos(const Point &, bool skip_back = false);
+    void SetPos(const Point&, bool skip_back = false);
 
 protected:
-    const Heroes &hero;
+    const Heroes& hero;
     Rect area;
     SpriteBack back;
     string descriptions;
@@ -48,11 +48,11 @@ protected:
 class LuckIndicator : public HeroesIndicator
 {
 public:
-    LuckIndicator(const Heroes &);
+    LuckIndicator(const Heroes&);
 
     void Redraw();
 
-    static void QueueEventProcessing(LuckIndicator &);
+    static void QueueEventProcessing(LuckIndicator&);
 
 private:
     int luck;
@@ -61,11 +61,11 @@ private:
 class MoraleIndicator : public HeroesIndicator
 {
 public:
-    MoraleIndicator(const Heroes &);
+    MoraleIndicator(const Heroes&);
 
     void Redraw();
 
-    static void QueueEventProcessing(MoraleIndicator &);
+    static void QueueEventProcessing(MoraleIndicator&);
 
 private:
     int morale;
@@ -74,7 +74,7 @@ private:
 class ExperienceIndicator : public HeroesIndicator
 {
 public:
-    ExperienceIndicator(const Heroes &);
+    ExperienceIndicator(const Heroes&);
 
     void Redraw() const;
 
@@ -84,7 +84,7 @@ public:
 class SpellPointsIndicator : public HeroesIndicator
 {
 public:
-    SpellPointsIndicator(const Heroes &);
+    SpellPointsIndicator(const Heroes&);
 
     void Redraw() const;
 

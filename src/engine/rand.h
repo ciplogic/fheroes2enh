@@ -35,8 +35,8 @@ namespace Rand
 
     int32_t Get(int32_t min, int32_t max = 0);
 
-    template<typename T>
-    const T *Get(const vector<T> &vec)
+    template <typename T>
+    const T* Get(const vector<T>& vec)
     {
         typename vector<T>::const_iterator it = vec.begin();
         std::advance(it, Rand::Get(vec.size() - 1));
@@ -59,4 +59,3 @@ namespace Rand
         s32 Get();
     };
 }
-

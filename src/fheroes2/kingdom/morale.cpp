@@ -25,27 +25,29 @@
 
 const std::string Morale::String(int morale)
 {
-    std::string str_morale[] = {"Unknown", _("morale|Treason"), _("morale|Awful"), _("morale|Poor"), _("morale|Normal"),
-                                _("morale|Good"), _("morale|Great"), _("morale|Blood!")};
+    std::string str_morale[] = {
+        "Unknown", _("morale|Treason"), _("morale|Awful"), _("morale|Poor"), _("morale|Normal"),
+        _("morale|Good"), _("morale|Great"), _("morale|Blood!")
+    };
 
     switch (morale)
     {
-        case TREASON:
-            return str_morale[1];
-        case AWFUL:
-            return str_morale[2];
-        case POOR:
-            return str_morale[3];
-        case NORMAL:
-            return str_morale[4];
-        case GOOD:
-            return str_morale[5];
-        case GREAT:
-            return str_morale[6];
-        case BLOOD:
-            return str_morale[7];
-        default:
-            break;
+    case TREASON:
+        return str_morale[1];
+    case AWFUL:
+        return str_morale[2];
+    case POOR:
+        return str_morale[3];
+    case NORMAL:
+        return str_morale[4];
+    case GOOD:
+        return str_morale[5];
+    case GREAT:
+        return str_morale[6];
+    case BLOOD:
+        return str_morale[7];
+    default:
+        break;
     }
 
     return str_morale[0];
@@ -53,25 +55,27 @@ const std::string Morale::String(int morale)
 
 const std::string Morale::Description(int morale)
 {
-    std::string str_desc_morale[] = {"Unknown",
-                                     _("Bad morale may cause your armies to freeze in combat."),
-                                     _("Neutral morale means your armies will never be blessed with extra attacks or freeze in combat."),
-                                     _("Good morale may give your armies extra attacks in combat.")};
+    std::string str_desc_morale[] = {
+        "Unknown",
+        _("Bad morale may cause your armies to freeze in combat."),
+        _("Neutral morale means your armies will never be blessed with extra attacks or freeze in combat."),
+        _("Good morale may give your armies extra attacks in combat.")
+    };
 
     switch (morale)
     {
-        case TREASON:
-        case AWFUL:
-        case POOR:
-            return str_desc_morale[1];
-        case NORMAL:
-            return str_desc_morale[2];
-        case GOOD:
-        case GREAT:
-        case BLOOD:
-            return str_desc_morale[3];
-        default:
-            break;
+    case TREASON:
+    case AWFUL:
+    case POOR:
+        return str_desc_morale[1];
+    case NORMAL:
+        return str_desc_morale[2];
+    case GOOD:
+    case GREAT:
+    case BLOOD:
+        return str_desc_morale[3];
+    default:
+        break;
     }
 
     return str_desc_morale[0];

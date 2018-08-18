@@ -26,6 +26,7 @@
 #include "ByteVectorWriter.h"
 
 struct cost_t;
+
 namespace Skill
 {
     struct stats_t;
@@ -37,13 +38,13 @@ namespace GameStatic
 {
     struct Data
     {
-        static Data &Get();
+        static Data& Get();
         // wrapper for stream
     };
 
-    ByteVectorWriter &operator<<(ByteVectorWriter &, const Data &);
+    ByteVectorWriter& operator<<(ByteVectorWriter&, const Data&);
 
-    ByteVectorReader &operator>>(ByteVectorReader &, Data &);
+    ByteVectorReader& operator>>(ByteVectorReader&, Data&);
 
     uint32_t GetLostOnWhirlpoolPercent();
 
@@ -51,7 +52,7 @@ namespace GameStatic
 
     uint32_t GetOverViewDistance(uint32_t);
 
-    cost_t &GetKingdomStartingResource(int difficulty);
+    cost_t& GetKingdomStartingResource(int difficulty);
 
     uint32_t GetKingdomMaxHeroes();
 
@@ -73,11 +74,11 @@ namespace GameStatic
 
     int GetBattleMoatReduceDefense();
 
-    const Skill::stats_t *GetSkillStats(int race);
+    const Skill::stats_t* GetSkillStats(int race);
 
-    const Skill::values_t *GetSkillValues(int skill);
+    const Skill::values_t* GetSkillValues(int skill);
 
-    const Skill::secondary_t *GetSkillForWitchsHut();
+    const Skill::secondary_t* GetSkillForWitchsHut();
 
     uint32_t Spell_DD_Distance();
 
@@ -91,4 +92,3 @@ namespace GameStatic
 
     void SetSpell_DD_HP(int);
 }
-

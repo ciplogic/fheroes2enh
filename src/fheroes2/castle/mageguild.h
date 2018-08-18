@@ -38,26 +38,26 @@ public:
 
     void Builds(int race, bool libraryCap);
 
-    void EducateHero(HeroBase &, int lvlmage, bool isLibraryBuild) const;
+    void EducateHero(HeroBase&, int lvlmage, bool isLibraryBuild) const;
 
     SpellStorage GetSpells(int lvlmage, bool islibrary, int) const;
 
 private:
-    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const MageGuild &);    
-    friend ByteVectorReader &operator>>(ByteVectorReader &, MageGuild &);
+    friend ByteVectorWriter& operator<<(ByteVectorWriter&, const MageGuild&);
+    friend ByteVectorReader& operator>>(ByteVectorReader&, MageGuild&);
 
     SpellStorage general;
     SpellStorage library;
 };
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const MageGuild &);
+ByteVectorWriter& operator<<(ByteVectorWriter&, const MageGuild&);
 
-ByteVectorReader &operator>>(ByteVectorReader &, MageGuild &);
+ByteVectorReader& operator>>(ByteVectorReader&, MageGuild&);
 
 class RowSpells
 {
 public:
-    RowSpells(const Point &, const Castle &, int);
+    RowSpells(const Point&, const Castle&, int);
 
     void Redraw();
 

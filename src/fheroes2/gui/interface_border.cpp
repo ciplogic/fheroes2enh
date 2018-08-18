@@ -30,10 +30,10 @@
 
 void Interface::GameBorderRedraw()
 {
-    const Settings &conf = Settings::Get();
+    const Settings& conf = Settings::Get();
     if (conf.ExtGameHideInterface()) return;
 
-    Display &display = Display::Get();
+    Display& display = Display::Get();
 
     const bool evil = Settings::Get().ExtGameEvilInterface();
     uint32_t count_w = (display.w() - 640) / TILEWIDTH;
@@ -45,7 +45,7 @@ void Interface::GameBorderRedraw()
 
     Rect srcrt;
     Point dstpt;
-    const Sprite &icnadv = AGG::GetICN(evil ? ICN::ADVBORDE : ICN::ADVBORD, 0);
+    const Sprite& icnadv = AGG::GetICN(evil ? ICN::ADVBORDE : ICN::ADVBORD, 0);
 
     // TOP BORDER
     srcrt.x = 0;
@@ -166,17 +166,16 @@ void Interface::GameBorderRedraw()
     icnadv.Blit(srcrt, dstpt);
 }
 
-Interface::BorderWindow::BorderWindow(const Rect &rt) : area(rt)
+Interface::BorderWindow::BorderWindow(const Rect& rt) : area(rt)
 {
 }
 
-const Rect &Interface::BorderWindow::GetRect() const
+const Rect& Interface::BorderWindow::GetRect() const
 {
-    return Settings::Get().ExtGameHideInterface() && border.isValid() ?
-           border.GetRect() : GetArea();
+    return Settings::Get().ExtGameHideInterface() && border.isValid() ? border.GetRect() : GetArea();
 }
 
-const Rect &Interface::BorderWindow::GetArea() const
+const Rect& Interface::BorderWindow::GetArea() const
 {
     return area;
 }
@@ -202,7 +201,7 @@ void Interface::BorderWindow::SetPosition(s32 px, s32 py)
         area.y = py;
         return;
     }
-    Display &display = Display::Get();
+    Display& display = Display::Get();
 
     if (px + area.w < 0) px = 0;
     else if (px > display.w() - area.w + border.BorderWidth()) px = display.w() - area.w;
@@ -219,18 +218,18 @@ void Interface::BorderWindow::SetPosition(s32 px, s32 py)
 
 bool Interface::BorderWindow::QueueEventProcessing()
 {
-    Settings &conf = Settings::Get();
-    LocalEvent &le = LocalEvent::Get();
+    Settings& conf = Settings::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     if (!conf.ExtGameHideInterface() || !le.MousePressLeft(border.GetTop()))
     {
         return false;
     }
-    Display &display = Display::Get();
-    Cursor &cursor = Cursor::Get();
+    Display& display = Display::Get();
+    Cursor& cursor = Cursor::Get();
 
-    const Point &mp = le.GetMouseCursor();
-    const Rect &pos = GetRect();
+    const Point& mp = le.GetMouseCursor();
+    const Rect& pos = GetRect();
 
     SpriteMove moveIndicator(Surface(pos, false));
     moveIndicator.DrawBorder(RGBA(0xD0, 0xC0, 0x48), false);
@@ -260,5 +259,4 @@ bool Interface::BorderWindow::QueueEventProcessing()
     Basic::Get().SetRedraw(REDRAW_GAMEAREA);
 
     return true;
-
 }

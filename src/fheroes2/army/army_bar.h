@@ -29,42 +29,42 @@
 class ArmyBar : public Interface::ItemsActionBar<ArmyTroop>
 {
 public:
-    ArmyBar(Army *, bool mini, bool ro, bool change = false);
+    ArmyBar(Army*, bool mini, bool ro, bool change = false);
 
-    void RedrawBackground(const Rect &, Surface &);
+    void RedrawBackground(const Rect&, Surface&);
 
-    void RedrawItem(ArmyTroop &, const Rect &, bool, Surface &);
+    void RedrawItem(ArmyTroop&, const Rect&, bool, Surface&);
 
-    void SetBackground(const Size &, const RGBA &);
+    void SetBackground(const Size&, const RGBA&);
 
-    void SetArmy(Army *);
+    void SetArmy(Army*);
 
     bool isValid() const;
 
     void ResetSelected();
 
-    void Redraw(Surface &dstsf = Display::Get());
+    void Redraw(Surface& dstsf = Display::Get());
 
-    bool ActionBarSingleClick(const Point &, ArmyTroop &, const Rect &);
+    bool ActionBarSingleClick(const Point&, ArmyTroop&, const Rect&);
 
-    bool ActionBarSingleClick(const Point &, ArmyTroop &, const Rect &, ArmyTroop &, const Rect &);
+    bool ActionBarSingleClick(const Point&, ArmyTroop&, const Rect&, ArmyTroop&, const Rect&);
 
-    bool ActionBarDoubleClick(const Point &, ArmyTroop &, const Rect &);
+    bool ActionBarDoubleClick(const Point&, ArmyTroop&, const Rect&);
 
-    bool ActionBarPressRight(const Point &, ArmyTroop &, const Rect &);
+    bool ActionBarPressRight(const Point&, ArmyTroop&, const Rect&);
 
-    bool ActionBarPressRight(const Point &, ArmyTroop &, const Rect &, ArmyTroop &, const Rect &);
+    bool ActionBarPressRight(const Point&, ArmyTroop&, const Rect&, ArmyTroop&, const Rect&);
 
-    bool ActionBarCursor(const Point &, ArmyTroop &, const Rect &);
+    bool ActionBarCursor(const Point&, ArmyTroop&, const Rect&);
 
-    bool ActionBarCursor(const Point &, ArmyTroop &, const Rect &, ArmyTroop &, const Rect &);
+    bool ActionBarCursor(const Point&, ArmyTroop&, const Rect&, ArmyTroop&, const Rect&);
 
-    bool QueueEventProcessing(string * = nullptr);
+    bool QueueEventProcessing(string* = nullptr);
 
-    bool QueueEventProcessing(ArmyBar &, string * = nullptr);
+    bool QueueEventProcessing(ArmyBar&, string* = nullptr);
 
 protected:
-    Army *army;
+    Army* army;
     Surface backsf;
     SpriteMove spcursor;
     bool use_mini_sprite;
@@ -73,4 +73,4 @@ protected:
     string msg;
 };
 
-bool CanUpgradeTroop(Troop &troop, Army *army);
+bool CanUpgradeTroop(Troop& troop, Army* army);

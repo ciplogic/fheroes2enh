@@ -33,25 +33,25 @@ class TinyConfig : protected std::multimap<std::string, std::string>
 public:
     explicit TinyConfig(char sep = '=', char com = ';');
 
-    bool Load(const std::string &);
+    bool Load(const std::string&);
 
-    bool Save(const std::string &) const;
+    bool Save(const std::string&) const;
 
     void Clear();
 
-    void AddEntry(const std::string &, const std::string &, bool uniq = true);
+    void AddEntry(const std::string&, const std::string&, bool uniq = true);
 
-    void AddEntry(const std::string &, int, bool uniq = true);
+    void AddEntry(const std::string&, int, bool uniq = true);
 
-    bool Exists(const std::string &) const;
+    bool Exists(const std::string&) const;
 
-    int IntParams(const std::string &) const;
+    int IntParams(const std::string&) const;
 
-    std::string StrParams(const std::string &) const;
+    std::string StrParams(const std::string&) const;
 
-    std::vector<std::string> ListStr(const std::string &) const;
+    std::vector<std::string> ListStr(const std::string&) const;
 
-    std::vector<int> ListInt(const std::string &) const;
+    std::vector<int> ListInt(const std::string&) const;
 
 protected:
     char separator;

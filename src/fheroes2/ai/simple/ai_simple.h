@@ -38,32 +38,35 @@
 
 struct IndexObjectMap : map<s32, int>
 {
-    static void DumpObjects(const IndexDistance &id);
+    static void DumpObjects(const IndexDistance& id);
 };
 
 struct AIKingdom
 {
     AIKingdom() : capital(nullptr)
-    {};
+    {
+    };
 
     void Reset();
 
-    Castle *capital;
+    Castle* capital;
     IndexObjectMap scans;
 };
 
-class AIKingdoms {
+class AIKingdoms
+{
 public:
     vector<AIKingdom> _items;
-    static AIKingdom &Get(int color);
+    static AIKingdom& Get(int color);
 
     static void Reset();
 
 private:
-    static AIKingdoms &Get();
+    static AIKingdoms& Get();
 
     AIKingdoms() : _items(KINGDOMMAX + 1)
-    {};
+    {
+    };
 };
 
 struct Queue : public list<s32>
@@ -74,10 +77,13 @@ struct Queue : public list<s32>
 struct AIHero
 {
     AIHero() : primary_target(-1), fix_loop(0)
-    {};
+    {
+    };
 
     void ClearTasks()
-    { sheduled_visit.clear(); }
+    {
+        sheduled_visit.clear();
+    }
 
     void Reset();
 
@@ -88,13 +94,14 @@ struct AIHero
 
 struct AIHeroes : vector<AIHero>
 {
-    static AIHero &Get(const Heroes &);
+    static AIHero& Get(const Heroes&);
 
     static void Reset();
 
 private:
-    static AIHeroes &Get();
+    static AIHeroes& Get();
 
     AIHeroes() : vector<AIHero>(HEROESMAXCOUNT + 2)
-    {};
+    {
+    };
 };

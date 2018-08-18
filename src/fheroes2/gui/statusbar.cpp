@@ -26,7 +26,7 @@
 StatusBar::StatusBar()
 = default;
 
-void StatusBar::SetCenter(const Point &pt)
+void StatusBar::SetCenter(const Point& pt)
 {
     center = pt;
 }
@@ -37,7 +37,7 @@ void StatusBar::SetCenter(s32 cx, s32 cy)
     center.y = cy;
 }
 
-void StatusBar::ShowMessage(const string &msg)
+void StatusBar::ShowMessage(const string& msg)
 {
     if (msg == prev)
         return;
@@ -56,7 +56,7 @@ void StatusBar::Redraw()
     Show();
 }
 
-const string &StatusBar::GetMessage() const
+const string& StatusBar::GetMessage() const
 {
     return prev;
 }

@@ -62,13 +62,13 @@ void Display::Flip()
     SDL_Flip(displaySurface.surface);
 }
 
-int IsFullScreen(SDL_Surface *surface)
+int IsFullScreen(SDL_Surface* surface)
 {
     if (surface->flags & SDL_FULLSCREEN) return 1; // return true if surface is fullscreen
     return 0; // Return false if surface is windowed
 }
 
-int SDL_ToggleFS(SDL_Surface *surface)
+int SDL_ToggleFS(SDL_Surface* surface)
 {
     Uint32 flags = surface->flags; // Get the video surface flags
     const int w = surface->w;
@@ -94,12 +94,12 @@ void Display::ToggleFullScreen() const
     }
 }
 
-void Display::SetCaption(const char *str)
+void Display::SetCaption(const char* str)
 {
     SDL_WM_SetCaption(str, nullptr);
 }
 
-void Display::SetIcons(Surface &icons)
+void Display::SetIcons(Surface& icons)
 {
     SDL_WM_SetIcon(icons(), nullptr);
 }
@@ -107,13 +107,14 @@ void Display::SetIcons(Surface &icons)
 Size Display::GetMaxMode(bool rotate) const
 {
     Size result;
-    SDL_Rect **modes = SDL_ListModes(nullptr, SDL_ANYFORMAT);
+    SDL_Rect** modes = SDL_ListModes(nullptr, SDL_ANYFORMAT);
 
-    if (modes == (SDL_Rect **) nullptr ||
-        modes == (SDL_Rect **) -1)
+    if (modes == (SDL_Rect **)nullptr ||
+        modes == (SDL_Rect **)-1)
     {
         H2ERROR("GetMaxMode: " << "no modes available");
-    } else
+    }
+    else
     {
         int max = 0;
         int cur = 0;
@@ -143,13 +144,13 @@ string Display::GetInfo() const
     char namebuf[12];
 
     os << "Display::" << "GetInfo: " <<
-       GetString(GetSize()) << ", " <<
-       "driver: " << SDL_VideoDriverName(namebuf, 12);
+        GetString(GetSize()) << ", " <<
+        "driver: " << SDL_VideoDriverName(namebuf, 12);
 
     return os.str();
 }
 
-Surface Display::GetSurface(const Rect &rt) const
+Surface Display::GetSurface(const Rect& rt) const
 {
     return Surface::GetSurface(rt);
 }
@@ -171,7 +172,7 @@ void Display::ShowCursor()
     SDL_ShowCursor(SDL_ENABLE);
 }
 
-void Display::Fade(const Surface &top, const Surface &back, const Point &pt, int level, int delay)
+void Display::Fade(const Surface& top, const Surface& back, const Point& pt, int level, int delay)
 {
     Surface shadow = top.GetSurface();
     int alpha = 255;
@@ -200,7 +201,7 @@ void Display::Fade(int delay)
     Flip();
 }
 
-void Display::Rise(const Surface &top, const Surface &back, const Point &pt, int level, int delay)
+void Display::Rise(const Surface& top, const Surface& back, const Point& pt, int level, int delay)
 {
     Surface shadow = top.GetSurface();
     int alpha = 0;
@@ -230,7 +231,7 @@ void Display::Rise(int delay)
 }
 
 /* get video display */
-Display &Display::Get()
+Display& Display::Get()
 {
     static Display inside;
     return inside;
@@ -240,4 +241,3 @@ Surface Display::GetSurface() const
 {
     return GetSurface(Rect(Point(0, 0), GetSize()));
 }
-

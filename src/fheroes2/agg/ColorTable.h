@@ -8,7 +8,6 @@
 
 namespace ColorsTable
 {
-
     static RGBA Green(64, 196, 0, 255);
     static RGBA Gray(127, 127, 127, 255);
 }

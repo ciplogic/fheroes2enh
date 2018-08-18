@@ -51,15 +51,14 @@ enum class mapsize_t
 
 namespace Maps
 {
-
     typedef MapsIndexes Indexes;
 
     class IndexesDistance : public std::vector<IndexDistance>
     {
-        void Assign(s32, const Indexes &, int sort /* 0: none, 1: short first, 2: long first */);
+        void Assign(s32, const Indexes&, int sort /* 0: none, 1: short first, 2: long first */);
 
     public:
-        IndexesDistance(s32, const Indexes &, int sort = 0);
+        IndexesDistance(s32, const Indexes&, int sort = 0);
 
         IndexesDistance(s32, s32, uint32_t dist, int sort = 0);
     };
@@ -74,29 +73,29 @@ namespace Maps
     {
         switch (vector)
         {
-            case Direction::TOP:
-                return from >= world.w;
-            case Direction::RIGHT:
-                return from % world.w < world.w - 1;
-            case Direction::BOTTOM:
-                return from < world.w * (world.h - 1);
-            case Direction::LEFT:
-                return from % world.w;
+        case Direction::TOP:
+            return from >= world.w;
+        case Direction::RIGHT:
+            return from % world.w < world.w - 1;
+        case Direction::BOTTOM:
+            return from < world.w * (world.h - 1);
+        case Direction::LEFT:
+            return from % world.w;
 
-            case Direction::TOP_RIGHT:
-                return from >= world.w && from % world.w < world.w - 1;
+        case Direction::TOP_RIGHT:
+            return from >= world.w && from % world.w < world.w - 1;
 
-            case Direction::BOTTOM_RIGHT:
-                return from < world.w * (world.h - 1) && from % world.w < world.w - 1;
+        case Direction::BOTTOM_RIGHT:
+            return from < world.w * (world.h - 1) && from % world.w < world.w - 1;
 
-            case Direction::BOTTOM_LEFT:
-                return from < world.w * (world.h - 1) && from % world.w;
+        case Direction::BOTTOM_LEFT:
+            return from < world.w * (world.h - 1) && from % world.w;
 
-            case Direction::TOP_LEFT:
-                return from >= world.w && from % world.w;
+        case Direction::TOP_LEFT:
+            return from >= world.w && from % world.w;
 
-            default:
-                break;
+        default:
+            break;
         }
 
         return false;
@@ -105,30 +104,30 @@ namespace Maps
 
     bool isValidAbsIndex(s32);
 
-    bool isValidAbsPoint(const Point &pt);
+    bool isValidAbsPoint(const Point& pt);
 
     bool isValidAbsPoint(s32 x, s32 y);
 
     Point GetPoint(s32);
 
-    s32 GetIndexFromAbsPoint(const Point &mp);
+    s32 GetIndexFromAbsPoint(const Point& mp);
 
     s32 GetIndexFromAbsPoint(s32 px, s32 py);
 
     Indexes GetAllIndexes();
 
-    void GetAroundIndexes(s32, Indexes &);
+    void GetAroundIndexes(s32, Indexes&);
 
-    void GetAroundIndexes(s32, int dist, bool, Indexes &); // sorting distance
+    void GetAroundIndexes(s32, int dist, bool, Indexes&); // sorting distance
     Indexes GetDistanceIndexes(s32 center, int dist);
 
-    void ScanAroundObject(s32, int obj, MapsIndexes &);
+    void ScanAroundObject(s32, int obj, MapsIndexes&);
 
-    Indexes ScanAroundObjects(s32, const u8 *objs);
+    Indexes ScanAroundObjects(s32, const u8* objs);
 
     Indexes ScanAroundObject(s32, uint32_t dist, int obj);
 
-    Indexes ScanAroundObjects(s32, uint32_t dist, const u8 *objs);
+    Indexes ScanAroundObjects(s32, uint32_t dist, const u8* objs);
 
     Indexes GetTilesUnderProtection(s32);
 
@@ -140,7 +139,7 @@ namespace Maps
 
     Indexes GetObjectPositions(s32, int obj, bool check_hero);
 
-    Indexes GetObjectsPositions(const u8 *objs);
+    Indexes GetObjectsPositions(const u8* objs);
 
     int TileIsCoast(s32, int direct = DIRECTION_ALL);
 
@@ -148,10 +147,9 @@ namespace Maps
 
     uint32_t GetApproximateDistance(s32, s32);
 
-    void UpdateRNDSpriteForCastle(const Point &, int race, bool castle);
+    void UpdateRNDSpriteForCastle(const Point&, int race, bool castle);
 
-    void UpdateSpritesFromTownToCastle(const Point &);
+    void UpdateSpritesFromTownToCastle(const Point&);
 
-    void MinimizeAreaForCastle(const Point &);
+    void MinimizeAreaForCastle(const Point&);
 }
-

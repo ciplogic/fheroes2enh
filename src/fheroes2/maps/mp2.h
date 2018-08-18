@@ -40,38 +40,38 @@ namespace MP2
     // origin mp2 tile
     struct mp2tile_t
     {
-        u16 tileIndex;        // tile (ocean, grass, snow, swamp, lava, desert, dirt, wasteland, beach)
-        u8 objectName1;    // level 1.0
-        u8 indexName1;    // index level 1.0 or 0xFF
-        u8 quantity1;        // count
-        u8 quantity2;        // count
-        u8 objectName2;    // level 2.0
-        u8 indexName2;    // index level 2.0 or 0xFF
-        u8 shape;        // shape reflect % 4, 0 none, 1 vertical, 2 horizontal, 3 any
-        u8 generalObject;    // zero or object
-        u16 indexAddon;    // zero or index addons_t
-        uint32_t uniqNumber1;    // level 1.0
-        uint32_t uniqNumber2;    // level 2.0
+        u16 tileIndex; // tile (ocean, grass, snow, swamp, lava, desert, dirt, wasteland, beach)
+        u8 objectName1; // level 1.0
+        u8 indexName1; // index level 1.0 or 0xFF
+        u8 quantity1; // count
+        u8 quantity2; // count
+        u8 objectName2; // level 2.0
+        u8 indexName2; // index level 2.0 or 0xFF
+        u8 shape; // shape reflect % 4, 0 none, 1 vertical, 2 horizontal, 3 any
+        u8 generalObject; // zero or object
+        u16 indexAddon; // zero or index addons_t
+        uint32_t uniqNumber1; // level 1.0
+        uint32_t uniqNumber2; // level 2.0
     };
 
     // origin mp2 addons tile
     struct mp2addon_t
     {
-        u16 indexAddon;    // zero or next addons_t
-        u8 objectNameN1;    // level 1.N
-        u8 indexNameN1;    // level 1.N or 0xFF
-        u8 quantityN;    //
-        u8 objectNameN2;    // level 2.N
-        u8 indexNameN2;    // level 1.N or 0xFF
-        uint32_t uniqNumberN1;    // level 1.N
-        uint32_t uniqNumberN2;    // level 2.N
+        u16 indexAddon; // zero or next addons_t
+        u8 objectNameN1; // level 1.N
+        u8 indexNameN1; // level 1.N or 0xFF
+        u8 quantityN; //
+        u8 objectNameN2; // level 2.N
+        u8 indexNameN2; // level 1.N or 0xFF
+        uint32_t uniqNumberN1; // level 1.N
+        uint32_t uniqNumberN2; // level 2.N
     };
 
     // origin mp2 castle
     // 0x0046 - size
     struct mp2castle_t
     {
-        u8 color;        // 00 blue, 01 green, 02 red, 03 yellow, 04 orange, 05 purpl, ff unknown
+        u8 color; // 00 blue, 01 green, 02 red, 03 yellow, 04 orange, 05 purpl, ff unknown
         bool customBuilding;
         u16 building;
         /*
@@ -115,10 +115,10 @@ namespace MP2
         u16 count5;
         bool capitan;
         bool customCastleName;
-        char castleName[13];    // name + '\0'
-        u8 type;        // 00 knight, 01 barb, 02 sorc, 03 warl, 04 wiz, 05 necr, 06 rnd
+        char castleName[13]; // name + '\0'
+        u8 type; // 00 knight, 01 barb, 02 sorc, 03 warl, 04 wiz, 05 necr, 06 rnd
         bool castle;
-        u8 allowCastle;    // 00 TRUE, 01 FALSE
+        u8 allowCastle; // 00 TRUE, 01 FALSE
         u8 unknown[29];
     };
 
@@ -128,11 +128,11 @@ namespace MP2
     {
         u8 unknown;
         bool customTroops;
-        u8 monster1;    // 0xff none
-        u8 monster2;    // 0xff none
-        u8 monster3;    // 0xff none
-        u8 monster4;    // 0xff none
-        u8 monster5;    // 0xff none
+        u8 monster1; // 0xff none
+        u8 monster2; // 0xff none
+        u8 monster3; // 0xff none
+        u8 monster4; // 0xff none
+        u8 monster5; // 0xff none
         u16 countMonter1;
         u16 countMonter2;
         u16 countMonter3;
@@ -140,16 +140,16 @@ namespace MP2
         u16 countMonter5;
         u8 customPortrate;
         u8 portrate;
-        u8 artifact1;    // 0xff none
-        u8 artifact2;    // 0xff none
-        u8 artifact3;    // 0xff none
-        u8 unknown2;    // 0
+        u8 artifact1; // 0xff none
+        u8 artifact2; // 0xff none
+        u8 artifact3; // 0xff none
+        u8 unknown2; // 0
         uint32_t exerience;
         bool customSkill;
-        u8 skill1;        // 0xff none
-        u8 skill2;        // pathfinding, archery, logistic, scouting,
-        u8 skill3;        // diplomacy, navigation, leadership, wisdom,
-        u8 skill4;        // mysticism, luck, ballistics, eagle, necromance, estate
+        u8 skill1; // 0xff none
+        u8 skill2; // pathfinding, archery, logistic, scouting,
+        u8 skill3; // diplomacy, navigation, leadership, wisdom,
+        u8 skill4; // mysticism, luck, ballistics, eagle, necromance, estate
         u8 skill5;
         u8 skill6;
         u8 skill7;
@@ -162,26 +162,26 @@ namespace MP2
         u8 skillLevel6;
         u8 skillLevel7;
         u8 skillLevel8;
-        u8 unknown3;    // 0
+        u8 unknown3; // 0
         u8 customName;
-        char name[13];    // name + '\0'
+        char name[13]; // name + '\0'
         bool patrol;
-        u8 countSquare;    // for patrol
-        u8 unknown4[15];    // 0
+        u8 countSquare; // for patrol
+        u8 unknown4[15]; // 0
     };
 
     // origin mp2 sign or buttle
     struct mp2info_t
     {
-        u8 id;        // 0x01
-        u8 zero[8];    // 8 byte 0x00
-        char text;        // message  + '/0'
+        u8 id; // 0x01
+        u8 zero[8]; // 8 byte 0x00
+        char text; // message  + '/0'
     };
 
     // origin mp2 event for coord
     struct mp2eventcoord_t
     {
-        u8 id;        // 0x01
+        u8 id; // 0x01
         uint32_t wood;
         uint32_t mercury;
         uint32_t ore;
@@ -189,24 +189,24 @@ namespace MP2
         uint32_t crystal;
         uint32_t gems;
         uint32_t golds;
-        u16 artifact;    // 0xffff - none
-        bool computer;    // allow events for computer
-        bool cancel;        // cancel event after first visit
-        u8 zero[10];    // 10 byte 0x00
+        u16 artifact; // 0xffff - none
+        bool computer; // allow events for computer
+        bool cancel; // cancel event after first visit
+        u8 zero[10]; // 10 byte 0x00
         bool blue;
         bool green;
         bool red;
         bool yellow;
         bool orange;
         bool purple;
-        char text;        // message + '/0'
+        char text; // message + '/0'
     };
 
 
     // origin mp2 event for day
     struct mp2eventday_t
     {
-        u8 id;        // 0x00
+        u8 id; // 0x00
         uint32_t wood;
         uint32_t mercury;
         uint32_t ore;
@@ -214,32 +214,32 @@ namespace MP2
         uint32_t crystal;
         uint32_t gems;
         uint32_t golds;
-        u16 artifact;    // always 0xffff - none
-        u16 computer;    // allow events for computer
-        u16 first;        // day of first occurent
-        u16 subsequent;    // subsequent occurrences
-        u8 zero[6];    // 6 byte 0x00 and end 0x01
+        u16 artifact; // always 0xffff - none
+        u16 computer; // allow events for computer
+        u16 first; // day of first occurent
+        u16 subsequent; // subsequent occurrences
+        u8 zero[6]; // 6 byte 0x00 and end 0x01
         bool blue;
         bool green;
         bool red;
         bool yellow;
         bool orange;
         bool purple;
-        char text;        // message + '/0'
+        char text; // message + '/0'
     };
 
     // origin mp2 rumor
     struct mp2rumor_t
     {
-        u8 id;        // 0x00
-        u8 zero[7];    // 7 byte 0x00
-        char text;    // message + '/0'
+        u8 id; // 0x00
+        u8 zero[7]; // 7 byte 0x00
+        char text; // message + '/0'
     };
 
     // origin mp2 riddle sphinx
     struct mp2riddle_t
     {
-        u8 id;        // 0x00
+        u8 id; // 0x00
         uint32_t wood;
         uint32_t mercury;
         uint32_t ore;
@@ -247,8 +247,8 @@ namespace MP2
         uint32_t crystal;
         uint32_t gems;
         uint32_t golds;
-        u16 artifact;    // 0xffff - none
-        u8 count;        // count answers (1, 8)
+        u16 artifact; // 0xffff - none
+        u8 count; // count answers (1, 8)
         char answer1[13];
         char answer2[13];
         char answer3[13];
@@ -257,7 +257,7 @@ namespace MP2
         char answer6[13];
         char answer7[13];
         char answer8[13];
-        char text;        // message + '/0'
+        char text; // message + '/0'
     };
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -535,7 +535,6 @@ namespace MP2
         OBJ_AIRALTAR = 0xFD,
         OBJ_EARTHALTAR = 0xFE,
         OBJ_WATERALTAR = 0xFF
-
     };
 
     int GetICNObject(int type);

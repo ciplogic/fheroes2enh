@@ -35,6 +35,5 @@ namespace TIL
         LASTTIL
     };
 
-    const char *GetString(int);
+    const char* GetString(int);
 }
-

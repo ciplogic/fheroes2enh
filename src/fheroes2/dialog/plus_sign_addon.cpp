@@ -25,5 +25,4 @@ void PlusSignAddon::draw(int rightMost, int top, bool isEnabled)
     const Point ptPlus(pos.x + pos.w - greenUp.w() - 1, pos.y + 2);
     greenUp.Blit(ptPlus.x, ptPlus.y, Display::Get());
     textPlus.Blit(ptPlus.x + 2, ptPlus.y + 1, Display::Get());
-
 }

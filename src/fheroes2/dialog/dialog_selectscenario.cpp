@@ -36,9 +36,9 @@
 #include "system.h"
 #include "tools.h"
 
-void LossConditionInfo(const Maps::FileInfo &);
+void LossConditionInfo(const Maps::FileInfo&);
 
-void VictoryConditionInfo(const Maps::FileInfo &);
+void VictoryConditionInfo(const Maps::FileInfo&);
 
 Surface GetNonStandardSizeIcon()
 {
@@ -50,7 +50,7 @@ Surface GetNonStandardSizeIcon()
     return res;
 }
 
-void ScenarioListBox::RedrawItem(const Maps::FileInfo &info, s32 dstx, s32 dsty, bool current)
+void ScenarioListBox::RedrawItem(const Maps::FileInfo& info, s32 dstx, s32 dsty, bool current)
 {
     Text text;
     int index = 19 + Color::Count(info.kingdom_colors);
@@ -58,67 +58,18 @@ void ScenarioListBox::RedrawItem(const Maps::FileInfo &info, s32 dstx, s32 dsty,
     dstx = dstx - 10;
     dsty = dsty + 2;
 
-    const Sprite &spriteCount = AGG::GetICN(ICN::REQUESTS, index);
+    const Sprite& spriteCount = AGG::GetICN(ICN::REQUESTS, index);
     spriteCount.Blit(dstx, dsty);
 
     if (info.size_w != info.size_h ||
         info.size_w < static_cast<int>(mapsize_t::SMALL) || info.size_w > static_cast<int>(mapsize_t::XLARGE))
     {
         GetNonStandardSizeIcon().Blit(dstx + spriteCount.w() + 2, dsty, Display::Get());
-    } else
-    {
-        switch ((mapsize_t) info.size_w)
-        {
-            case mapsize_t::SMALL:
-                index = 26;
-                break;
-            case mapsize_t::MEDIUM:
-                index = 27;
-                break;
-            case mapsize_t::LARGE:
-                index = 28;
-                break;
-            case mapsize_t::XLARGE:
-                index = 29;
-                break;
-            default:
-                break;
-        }
-
-        const Sprite &spriteSize = AGG::GetICN(ICN::REQUESTS, index);
-        spriteSize.Blit(dstx + spriteCount.w() + 2, dsty);
     }
-
-    text.Set(info.name, current ? Font::YELLOW_BIG : Font::BIG);
-    text.Blit(dstx + 54, dsty + 2);
-
-    index = 30 + info.conditions_wins;
-    const Sprite &spriteWins = AGG::GetICN(ICN::REQUESTS, index);
-    spriteWins.Blit(dstx + 224, dsty);
-
-    index = 36 + info.conditions_loss;
-    const Sprite &spriteLoss = AGG::GetICN(ICN::REQUESTS, index);
-    spriteLoss.Blit(dstx + 224 + spriteWins.w() + 2, dsty);
-}
-
-void ScenarioListBox::ActionListDoubleClick(Maps::FileInfo &)
-{
-    selectOk = true;
-}
-
-void ScenarioListBox::RedrawBackground(const Point &dst)
-{
-    AGG::GetICN(ICN::REQSBKG, 0).Blit(dst);
-    if (!content || cur == content->end()) return;
-    Text text;
-    const Maps::FileInfo &info = *cur;
-    int index = 19 + Color::Count(info.kingdom_colors);
-
-    const Sprite &spriteCount = AGG::GetICN(ICN::REQUESTS, index);
-    spriteCount.Blit(dst.x + 65, dst.y + 265);
-
-    switch ((mapsize_t) info.size_w)
+    else
     {
+        switch ((mapsize_t)info.size_w)
+        {
         case mapsize_t::SMALL:
             index = 26;
             break;
@@ -132,22 +83,72 @@ void ScenarioListBox::RedrawBackground(const Point &dst)
             index = 29;
             break;
         default:
-            index = 30;
             break;
+        }
+
+        const Sprite& spriteSize = AGG::GetICN(ICN::REQUESTS, index);
+        spriteSize.Blit(dstx + spriteCount.w() + 2, dsty);
     }
 
-    const Sprite &spriteSize = AGG::GetICN(ICN::REQUESTS, index);
+    text.Set(info.name, current ? Font::YELLOW_BIG : Font::BIG);
+    text.Blit(dstx + 54, dsty + 2);
+
+    index = 30 + info.conditions_wins;
+    const Sprite& spriteWins = AGG::GetICN(ICN::REQUESTS, index);
+    spriteWins.Blit(dstx + 224, dsty);
+
+    index = 36 + info.conditions_loss;
+    const Sprite& spriteLoss = AGG::GetICN(ICN::REQUESTS, index);
+    spriteLoss.Blit(dstx + 224 + spriteWins.w() + 2, dsty);
+}
+
+void ScenarioListBox::ActionListDoubleClick(Maps::FileInfo&)
+{
+    selectOk = true;
+}
+
+void ScenarioListBox::RedrawBackground(const Point& dst)
+{
+    AGG::GetICN(ICN::REQSBKG, 0).Blit(dst);
+    if (!content || cur == content->end()) return;
+    Text text;
+    const Maps::FileInfo& info = *cur;
+    int index = 19 + Color::Count(info.kingdom_colors);
+
+    const Sprite& spriteCount = AGG::GetICN(ICN::REQUESTS, index);
+    spriteCount.Blit(dst.x + 65, dst.y + 265);
+
+    switch ((mapsize_t)info.size_w)
+    {
+    case mapsize_t::SMALL:
+        index = 26;
+        break;
+    case mapsize_t::MEDIUM:
+        index = 27;
+        break;
+    case mapsize_t::LARGE:
+        index = 28;
+        break;
+    case mapsize_t::XLARGE:
+        index = 29;
+        break;
+    default:
+        index = 30;
+        break;
+    }
+
+    const Sprite& spriteSize = AGG::GetICN(ICN::REQUESTS, index);
     spriteSize.Blit(dst.x + 65 + spriteCount.w() + 2, dst.y + 265);
 
     text.Set(info.name, Font::BIG);
     text.Blit(dst.x + 190 - text.w() / 2, dst.y + 265);
 
     index = 30 + info.conditions_wins;
-    const Sprite &spriteWins = AGG::GetICN(ICN::REQUESTS, index);
+    const Sprite& spriteWins = AGG::GetICN(ICN::REQUESTS, index);
     spriteWins.Blit(dst.x + 275, dst.y + 265);
 
     index = 36 + info.conditions_loss;
-    const Sprite &spriteLoss = AGG::GetICN(ICN::REQUESTS, index);
+    const Sprite& spriteLoss = AGG::GetICN(ICN::REQUESTS, index);
     spriteLoss.Blit(dst.x + 275 + spriteWins.w() + 2, dst.y + 265);
 
     text.Set(_("Maps Difficulty:"), Font::BIG);
@@ -160,16 +161,16 @@ void ScenarioListBox::RedrawBackground(const Point &dst)
     box.Blit(dst.x + 45, dst.y + 320);
 }
 
-const Maps::FileInfo *Dialog::SelectScenario(const MapsFileInfoList &all)
+const Maps::FileInfo* Dialog::SelectScenario(const MapsFileInfoList& all)
 {
-    Cursor &cursor = Cursor::Get();
-    Display &display = Display::Get();
-    LocalEvent &le = LocalEvent::Get();
+    Cursor& cursor = Cursor::Get();
+    Display& display = Display::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
-    const Maps::FileInfo *result = nullptr;
+    const Maps::FileInfo* result = nullptr;
     MapsFileInfoList small;
     MapsFileInfoList medium;
     MapsFileInfoList large;
@@ -180,30 +181,30 @@ const Maps::FileInfo *Dialog::SelectScenario(const MapsFileInfoList &all)
     large.reserve(all.size());
     xlarge.reserve(all.size());
 
-    for (const auto &cur : all)
+    for (const auto& cur : all)
     {
-        switch ((mapsize_t) cur.size_w)
+        switch ((mapsize_t)cur.size_w)
         {
-            case mapsize_t::SMALL:
-                small.push_back(cur);
-                break;
-            case mapsize_t::MEDIUM:
-                medium.push_back(cur);
-                break;
-            case mapsize_t::LARGE:
-                large.push_back(cur);
-                break;
-            case mapsize_t::XLARGE:
-                xlarge.push_back(cur);
-                break;
-            default:
-                continue;
+        case mapsize_t::SMALL:
+            small.push_back(cur);
+            break;
+        case mapsize_t::MEDIUM:
+            medium.push_back(cur);
+            break;
+        case mapsize_t::LARGE:
+            large.push_back(cur);
+            break;
+        case mapsize_t::XLARGE:
+            xlarge.push_back(cur);
+            break;
+        default:
+            continue;
         }
     }
 
-    const Sprite &panel = AGG::GetICN(ICN::REQSBKG, 0);
+    const Sprite& panel = AGG::GetICN(ICN::REQSBKG, 0);
     SpriteBack back(Rect((display.w() - panel.w()) / 2, (display.h() - panel.h()) / 2, panel.w(), panel.h()));
-    const Rect &rt = back.GetArea();
+    const Rect& rt = back.GetArea();
 
     const Rect countPlayers(rt.x + 45, rt.y + 55, 20, 175);
     const Rect sizeMaps(rt.x + 62, rt.y + 55, 20, 175);
@@ -255,14 +256,18 @@ const Maps::FileInfo *Dialog::SelectScenario(const MapsFileInfoList &all)
     while (le.HandleEvents())
     {
         if (buttonOk.isEnable()) le.MousePressLeft(buttonOk) ? buttonOk.PressDraw() : buttonOk.ReleaseDraw();
-        le.MousePressLeft(buttonSelectSmall) && buttonSelectSmall.isEnable() ? buttonSelectSmall.PressDraw()
-                                                                             : buttonSelectSmall.ReleaseDraw();
-        le.MousePressLeft(buttonSelectMedium) && buttonSelectMedium.isEnable() ? buttonSelectMedium.PressDraw()
-                                                                               : buttonSelectMedium.ReleaseDraw();
-        le.MousePressLeft(buttonSelectLarge) && buttonSelectLarge.isEnable() ? buttonSelectLarge.PressDraw()
-                                                                             : buttonSelectLarge.ReleaseDraw();
-        le.MousePressLeft(buttonSelectXLarge) && buttonSelectXLarge.isEnable() ? buttonSelectXLarge.PressDraw()
-                                                                               : buttonSelectXLarge.ReleaseDraw();
+        le.MousePressLeft(buttonSelectSmall) && buttonSelectSmall.isEnable()
+            ? buttonSelectSmall.PressDraw()
+            : buttonSelectSmall.ReleaseDraw();
+        le.MousePressLeft(buttonSelectMedium) && buttonSelectMedium.isEnable()
+            ? buttonSelectMedium.PressDraw()
+            : buttonSelectMedium.ReleaseDraw();
+        le.MousePressLeft(buttonSelectLarge) && buttonSelectLarge.isEnable()
+            ? buttonSelectLarge.PressDraw()
+            : buttonSelectLarge.ReleaseDraw();
+        le.MousePressLeft(buttonSelectXLarge) && buttonSelectXLarge.isEnable()
+            ? buttonSelectXLarge.PressDraw()
+            : buttonSelectXLarge.ReleaseDraw();
         le.MousePressLeft(buttonSelectAll) ? buttonSelectAll.PressDraw() : buttonSelectAll.ReleaseDraw();
 
         listbox.QueueEventProcessing();
@@ -285,22 +290,26 @@ const Maps::FileInfo *Dialog::SelectScenario(const MapsFileInfoList &all)
         {
             listbox.SetListContent(small);
             cursor.Hide();
-        } else if ((le.MouseClickLeft(buttonSelectMedium) || le.KeyPress(KEY_m)) &&
+        }
+        else if ((le.MouseClickLeft(buttonSelectMedium) || le.KeyPress(KEY_m)) &&
             buttonSelectMedium.isEnable() && buttonSelectMedium.isEnable())
         {
             listbox.SetListContent(medium);
             cursor.Hide();
-        } else if ((le.MouseClickLeft(buttonSelectLarge) || le.KeyPress(KEY_l)) &&
+        }
+        else if ((le.MouseClickLeft(buttonSelectLarge) || le.KeyPress(KEY_l)) &&
             buttonSelectLarge.isEnable() && buttonSelectLarge.isEnable())
         {
             listbox.SetListContent(large);
             cursor.Hide();
-        } else if ((le.MouseClickLeft(buttonSelectXLarge) || le.KeyPress(KEY_x)) &&
+        }
+        else if ((le.MouseClickLeft(buttonSelectXLarge) || le.KeyPress(KEY_x)) &&
             buttonSelectXLarge.isEnable() && buttonSelectXLarge.isEnable())
         {
             listbox.SetListContent(xlarge);
             cursor.Hide();
-        } else if (le.MouseClickLeft(buttonSelectAll) || le.KeyPress(KEY_a))
+        }
+        else if (le.MouseClickLeft(buttonSelectAll) || le.KeyPress(KEY_a))
         {
             listbox.SetListContent(const_cast<MapsFileInfoList &>(all));
             cursor.Hide();
@@ -319,27 +328,33 @@ const Maps::FileInfo *Dialog::SelectScenario(const MapsFileInfoList &all)
             Message(_("All Maps"), _("View all maps, regardless of size."), Font::BIG);
         else if (le.MousePressRight(countPlayers) || le.MousePressRight(curCountPlayer))
             Message(_("Players Icon"),
-                    _("Indicates how many players total are in the EditScenario. Any positions not occupied by humans will be occupied by computer players."),
+                    _("Indicates how many players total are in the EditScenario. Any positions not occupied by humans will be occupied by computer players."
+                    ),
                     Font::BIG);
         else if (le.MousePressRight(sizeMaps) || le.MousePressRight(curMapSize))
             Message(_("Size Icon"),
-                    _("Indicates whether the maps is small (36x36), medium (72x72), large (108x108), or extra large (144x144)."),
+                    _("Indicates whether the maps is small (36x36), medium (72x72), large (108x108), or extra large (144x144)."
+                    ),
                     Font::BIG);
         else if (le.MousePressRight(curMapName))
             Message(_("Selected Name"), _("The name of the currently selected map."), Font::BIG);
         else if (le.MousePressRight(victoryConds))
         {
-            const Maps::FileInfo *item = listbox.GetFromPosition(le.GetMouseCursor());
+            const Maps::FileInfo* item = listbox.GetFromPosition(le.GetMouseCursor());
             if (item) VictoryConditionInfo(*item);
-        } else if (le.MousePressRight(lossConds))
+        }
+        else if (le.MousePressRight(lossConds))
         {
-            const Maps::FileInfo *item = listbox.GetFromPosition(le.GetMouseCursor());
+            const Maps::FileInfo* item = listbox.GetFromPosition(le.GetMouseCursor());
             if (item) LossConditionInfo(*item);
-        } else if (le.MousePressRight(curVictoryCond)) VictoryConditionInfo(listbox.GetCurrent());
+        }
+        else if (le.MousePressRight(curVictoryCond)) VictoryConditionInfo(listbox.GetCurrent());
         else if (le.MousePressRight(curLossCond)) LossConditionInfo(listbox.GetCurrent());
         else if (le.MousePressRight(curDifficulty))
             Message(_("Selected Map Difficulty"),
-                    _("The map difficulty of the currently selected map.  The map difficulty is determined by the EditScenario designer. More difficult maps might include more or stronger enemies, fewer resources, or other special conditions making things tougher for the human player."),
+                    _(
+                        "The map difficulty of the currently selected map.  The map difficulty is determined by the EditScenario designer. More difficult maps might include more or stronger enemies, fewer resources, or other special conditions making things tougher for the human player."
+                    ),
                     Font::BIG);
         else if (le.MousePressRight(curDescription))
             Message(_("Selected Description"), _("The description of the currently selected map."), Font::BIG);
@@ -365,56 +380,56 @@ const Maps::FileInfo *Dialog::SelectScenario(const MapsFileInfoList &all)
     return result;
 }
 
-void LossConditionInfo(const Maps::FileInfo &info)
+void LossConditionInfo(const Maps::FileInfo& info)
 {
     string msg;
 
     switch (info.conditions_loss)
     {
-        case 0:
-            msg = _("Lose all your heroes and towns.");
-            break;
-        case 1:
-            msg = _("Lose a specific town.");
-            break;
-        case 2:
-            msg = _("Lose a specific hero.");
-            break;
-        case 3:
-            msg = _("Run out of time. Fail to win by a certain point.");
-            break;
-        default:
-            return;
+    case 0:
+        msg = _("Lose all your heroes and towns.");
+        break;
+    case 1:
+        msg = _("Lose a specific town.");
+        break;
+    case 2:
+        msg = _("Lose a specific hero.");
+        break;
+    case 3:
+        msg = _("Run out of time. Fail to win by a certain point.");
+        break;
+    default:
+        return;
     }
     Dialog::Message(_("Loss Condition"), msg, Font::BIG);
 }
 
-void VictoryConditionInfo(const Maps::FileInfo &info)
+void VictoryConditionInfo(const Maps::FileInfo& info)
 {
     string msg;
 
     switch (info.conditions_wins)
     {
-        case 0:
-            msg = _("Defeat all enemy heroes and towns.");
-            break;
-        case 1:
-            msg = _("Capture a specific town.");
-            break;
-        case 2:
-            msg = _("Defeat a specific hero.");
-            break;
-        case 3:
-            msg = _("Find a specific artifact.");
-            break;
-        case 4:
-            msg = _("Your side defeats the opposing side.");
-            break;
-        case 5:
-            msg = _("Accumulate a large amount of gold.");
-            break;
-        default:
-            return;
+    case 0:
+        msg = _("Defeat all enemy heroes and towns.");
+        break;
+    case 1:
+        msg = _("Capture a specific town.");
+        break;
+    case 2:
+        msg = _("Defeat a specific hero.");
+        break;
+    case 3:
+        msg = _("Find a specific artifact.");
+        break;
+    case 4:
+        msg = _("Your side defeats the opposing side.");
+        break;
+    case 5:
+        msg = _("Accumulate a large amount of gold.");
+        break;
+    default:
+        return;
     }
     Dialog::Message(_("Victory Condition"), msg, Font::BIG);
 }

@@ -39,30 +39,30 @@
 #include "ai_simple.h"
 #include "mus.h"
 
-void AICastleTurn(Castle *);
+void AICastleTurn(Castle*);
 
-void AIHeroesTurn(Heroes *);
+void AIHeroesTurn(Heroes*);
 
-void AIHeroesEnd(Heroes *);
+void AIHeroesEnd(Heroes*);
 
-void AIHeroesCaptureNearestTown(Heroes *);
+void AIHeroesCaptureNearestTown(Heroes*);
 
-void AIHeroesSetHunterWithTarget(Heroes *, s32);
+void AIHeroesSetHunterWithTarget(Heroes*, s32);
 
-AIKingdoms &AIKingdoms::Get()
+AIKingdoms& AIKingdoms::Get()
 {
     static AIKingdoms ai_kingdoms;
     return ai_kingdoms;
 }
 
-AIKingdom &AIKingdoms::Get(int color)
+AIKingdom& AIKingdoms::Get(int color)
 {
     return Get()._items.at(Color::GetIndex(color));
 }
 
 void AIKingdoms::Reset()
 {
-    AIKingdoms &ai = Get();
+    AIKingdoms& ai = Get();
     for_each(ai._items.begin(), ai._items.end(), mem_fun_ref(&AIKingdom::Reset));
 }
 
@@ -72,16 +72,16 @@ void AIKingdom::Reset()
     scans.clear();
 }
 
-void IndexObjectMap::DumpObjects(const IndexDistance &id)
+void IndexObjectMap::DumpObjects(const IndexDistance& id)
 {
 }
 
-void WorldStoreObjects(int color, IndexObjectMap &store)
+void WorldStoreObjects(int color, IndexObjectMap& store)
 {
     const auto worldSize = world.w() * world.h();
     for (s32 it = 0; it < worldSize; ++it)
     {
-        const Maps::Tiles &tile = world.GetTiles(it);
+        const Maps::Tiles& tile = world.GetTiles(it);
         if (tile.isFog(color)) continue;
 
         if (MP2::isGroundObject(tile.GetObject()) ||
@@ -100,20 +100,20 @@ void WorldStoreObjects(int color, IndexObjectMap &store)
             // skip for meeting heroes
             if (MP2::OBJ_HEROES == tile.GetObject())
             {
-                const Heroes *hero = tile.GetHeroes();
+                const Heroes* hero = tile.GetHeroes();
                 if (hero && color == hero->GetColor()) continue;
             }
 
             // check: is visited objects
             switch (tile.GetObject())
             {
-                case MP2::OBJ_MAGELLANMAPS:
-                case MP2::OBJ_OBSERVATIONTOWER:
-                    if (world.GetKingdom(color).isVisited(tile)) continue;
-                    break;
+            case MP2::OBJ_MAGELLANMAPS:
+            case MP2::OBJ_OBSERVATIONTOWER:
+                if (world.GetKingdom(color).isVisited(tile)) continue;
+                break;
 
-                default:
-                    break;
+            default:
+                break;
             }
 
             store[it] = tile.GetObject();
@@ -121,10 +121,10 @@ void WorldStoreObjects(int color, IndexObjectMap &store)
     }
 }
 
-void AI::KingdomTurn(Kingdom &kingdom)
+void AI::KingdomTurn(Kingdom& kingdom)
 {
-    KingdomHeroes &heroes = kingdom.GetHeroes();
-    KingdomCastles &castles = kingdom.GetCastles();
+    KingdomHeroes& heroes = kingdom.GetHeroes();
+    KingdomCastles& castles = kingdom.GetCastles();
 
     const int color = kingdom.GetColor();
 
@@ -136,8 +136,8 @@ void AI::KingdomTurn(Kingdom &kingdom)
 
     if (!Settings::Get().MusicMIDI()) AGG::PlayMusic(MUS::COMPUTER);
 
-    Interface::StatusWindow &status = Interface::Basic::Get().GetStatusWindow();
-    AIKingdom &ai = AIKingdoms::Get(color);
+    Interface::StatusWindow& status = Interface::Basic::Get().GetStatusWindow();
+    AIKingdom& ai = AIKingdoms::Get(color);
 
     // turn indicator
     status.RedrawTurnProgress(0);
@@ -158,7 +158,8 @@ void AI::KingdomTurn(Kingdom &kingdom)
                 ai.capital = *it;
                 ai.capital->SetModes(Castle::CAPITAL);
             }
-        } else
+        }
+        else
             // first town
         {
             ai.capital = castles.front();
@@ -170,11 +171,12 @@ void AI::KingdomTurn(Kingdom &kingdom)
     status.RedrawTurnProgress(1);
 
     // castles AI turn
-    for_each(castles.begin(), castles.end(), [](auto *castle) { AICastleTurn(castle); });
+    for_each(castles.begin(), castles.end(), [](auto* castle) { AICastleTurn(castle); });
 
     // need capture town?
     if (castles.empty())
-        for_each(heroes._items.begin(), heroes._items.end(), [](auto *castle) {
+        for_each(heroes._items.begin(), heroes._items.end(), [](auto* castle)
+        {
             AIHeroesCaptureNearestTown(castle);
         });
 
@@ -182,28 +184,31 @@ void AI::KingdomTurn(Kingdom &kingdom)
     if (ai.capital && ai.capital->isCastle())
     {
         uint32_t modes = 0;
-        const uint32_t maxhero = (s32) mapsize_t::XLARGE > world.w() ? ((s32) mapsize_t::LARGE > world.w() ? 3 : 2) : 4;
+        const uint32_t maxhero = (s32)mapsize_t::XLARGE > world.w() ? ((s32)mapsize_t::LARGE > world.w() ? 3 : 2) : 4;
 
         if (heroes._items.empty())
             modes = HEROES_HUNTER | HEROES_SCOUTER;
         else if (heroes._items.size() < maxhero ||
-                 0 == count_if(heroes._items.begin(), heroes._items.end(),
-                     [&](const Heroes* unit) {
-                         return unit->Modes(HEROES_SCOUTER);
-                     }))        
-                    modes = HEROES_SCOUTER;
+            0 == count_if(heroes._items.begin(), heroes._items.end(),
+                          [&](const Heroes* unit)
+                          {
+                              return unit->Modes(HEROES_SCOUTER);
+                          }))
+            modes = HEROES_SCOUTER;
 
         if (modes &&
             heroes._items.size() < Kingdom::GetMaxHeroes())
         {
-            Recruits &rec = kingdom.GetRecruits();
-            Heroes *hero = ai.capital->GetHeroes().Guest();
+            Recruits& rec = kingdom.GetRecruits();
+            Heroes* hero = ai.capital->GetHeroes().Guest();
 
             if (!hero)
             {
                 if (rec.GetHero1() && rec.GetHero2())
                     hero = ai.capital->RecruitHero(
-                            rec.GetHero1()->GetLevel() >= rec.GetHero2()->GetLevel() ? rec.GetHero1() : rec.GetHero2());
+                        rec.GetHero1()->GetLevel() >= rec.GetHero2()->GetLevel()
+                            ? rec.GetHero1()
+                            : rec.GetHero2());
                 else if (rec.GetHero1())
                     hero = ai.capital->RecruitHero(rec.GetHero1());
                 else if (rec.GetHero2())
@@ -219,68 +224,70 @@ void AI::KingdomTurn(Kingdom &kingdom)
     if (ai.capital)
     {
         const size_t hunters =
-                count_if(heroes._items.begin(), heroes._items.end(),
-                    [&](const Heroes* hero)
-        {
-            return hero->Modes(HEROES_HUNTER);
-        });
+            count_if(heroes._items.begin(), heroes._items.end(),
+                     [&](const Heroes* hero)
+                     {
+                         return hero->Modes(HEROES_HUNTER);
+                     });
 
         // every time
         if (0 == hunters && !heroes._items.empty())
         {
             auto it = find_if(heroes._items.begin(), heroes._items.end(),
-                [&](const Heroes* unit)
-            {
-                return !unit->Modes(Heroes::PATROL);
-            });
-            if (it != heroes._items.end() &&
-                !ai.capital->GetHeroes().Guest())
-                AIHeroesSetHunterWithTarget(*it, ai.capital->GetIndex());
-        } else
-            // each month
-        if (world.BeginMonth() && 1 < world.CountDay())
-        {
-            auto it = find_if(heroes._items.begin(), heroes._items.end(),
-                [&](const Heroes* unit)
-            {
-                return unit->Modes(HEROES_HUNTER);
-            });
-
+                              [&](const Heroes* unit)
+                              {
+                                  return !unit->Modes(Heroes::PATROL);
+                              });
             if (it != heroes._items.end() &&
                 !ai.capital->GetHeroes().Guest())
                 AIHeroesSetHunterWithTarget(*it, ai.capital->GetIndex());
         }
+        else
+            // each month
+            if (world.BeginMonth() && 1 < world.CountDay())
+            {
+                auto it = find_if(heroes._items.begin(), heroes._items.end(),
+                                  [&](const Heroes* unit)
+                                  {
+                                      return unit->Modes(HEROES_HUNTER);
+                                  });
+
+                if (it != heroes._items.end() &&
+                    !ai.capital->GetHeroes().Guest())
+                    AIHeroesSetHunterWithTarget(*it, ai.capital->GetIndex());
+            }
     }
 
     // update roles
     {
         for_each(heroes._items.begin(), heroes._items.end(),
-            [&](Heroes* it)
-        {
-            it->ResetModes(HEROES_STUPID | HEROES_WAITING);
-        });
+                 [&](Heroes* it)
+                 {
+                     it->ResetModes(HEROES_STUPID | HEROES_WAITING);
+                 });
 
         // init roles
         if (heroes._items.end() != find_if(heroes._items.begin(), heroes._items.end(),
-            [&](Heroes* it)
-        {
-            return !it->Modes(HEROES_SCOUTER | HEROES_HUNTER);
-        }))
+                                           [&](Heroes* it)
+                                           {
+                                               return !it->Modes(HEROES_SCOUTER | HEROES_HUNTER);
+                                           }))
         {
             vector<Heroes *>::iterator ith, first = heroes._items.end();
 
             while (heroes._items.end() != (ith = find_if(heroes._items.begin(), heroes._items.end(),
-                [&](Heroes* it)
-            {
-                return !it->Modes(HEROES_HUNTER | HEROES_SCOUTER |
-                    Heroes::PATROL);
-            })))
+                                                         [&](Heroes* it)
+                                                         {
+                                                             return !it->Modes(HEROES_HUNTER | HEROES_SCOUTER |
+                                                                 Heroes::PATROL);
+                                                         })))
             {
                 if (first == heroes._items.end())
                 {
                     first = ith;
                     if (*ith) (*ith)->SetModes(HEROES_HUNTER | HEROES_SCOUTER);
-                } else if (*ith) (*ith)->SetModes(HEROES_SCOUTER);
+                }
+                else if (*ith) (*ith)->SetModes(HEROES_SCOUTER);
             }
         }
     }
@@ -289,10 +296,10 @@ void AI::KingdomTurn(Kingdom &kingdom)
     status.RedrawTurnProgress(2);
 
     // heroes turns
-    for_each(heroes._items.begin(), heroes._items.end(), [](Heroes *hero) { AIHeroesTurn(hero); });
+    for_each(heroes._items.begin(), heroes._items.end(), [](Heroes* hero) { AIHeroesTurn(hero); });
     //std::for_each(heroes.begin(), heroes.end(), std::bind2nd(std::mem_fun(&Heroes::ResetModes), AI::HEROES_STUPID|AI::HEROES_WAITING));
-    for_each(heroes._items.begin(), heroes._items.end(), [](Heroes *hero) { AIHeroesTurn(hero); });
-    for_each(heroes._items.begin(), heroes._items.end(), [](Heroes *hero) { AIHeroesEnd(hero); });
+    for_each(heroes._items.begin(), heroes._items.end(), [](Heroes* hero) { AIHeroesTurn(hero); });
+    for_each(heroes._items.begin(), heroes._items.end(), [](Heroes* hero) { AIHeroesEnd(hero); });
 
     // turn indicator
     status.RedrawTurnProgress(9);

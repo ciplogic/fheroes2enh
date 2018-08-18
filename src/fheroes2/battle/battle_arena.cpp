@@ -49,7 +49,7 @@
 
 namespace Battle
 {
-    Arena *arena = nullptr;
+    Arena* arena = nullptr;
 }
 
 int GetCovr(int ground)
@@ -58,57 +58,57 @@ int GetCovr(int ground)
 
     switch (ground)
     {
-        case Maps::Ground::SNOW:
-            covrs.push_back(ICN::COVR0007);
-            covrs.push_back(ICN::COVR0008);
-            covrs.push_back(ICN::COVR0009);
-            covrs.push_back(ICN::COVR0010);
-            covrs.push_back(ICN::COVR0011);
-            covrs.push_back(ICN::COVR0012);
-            break;
+    case Maps::Ground::SNOW:
+        covrs.push_back(ICN::COVR0007);
+        covrs.push_back(ICN::COVR0008);
+        covrs.push_back(ICN::COVR0009);
+        covrs.push_back(ICN::COVR0010);
+        covrs.push_back(ICN::COVR0011);
+        covrs.push_back(ICN::COVR0012);
+        break;
 
-        case Maps::Ground::WASTELAND:
-            covrs.push_back(ICN::COVR0019);
-            covrs.push_back(ICN::COVR0020);
-            covrs.push_back(ICN::COVR0021);
-            covrs.push_back(ICN::COVR0022);
-            covrs.push_back(ICN::COVR0023);
-            covrs.push_back(ICN::COVR0024);
-            break;
+    case Maps::Ground::WASTELAND:
+        covrs.push_back(ICN::COVR0019);
+        covrs.push_back(ICN::COVR0020);
+        covrs.push_back(ICN::COVR0021);
+        covrs.push_back(ICN::COVR0022);
+        covrs.push_back(ICN::COVR0023);
+        covrs.push_back(ICN::COVR0024);
+        break;
 
-        case Maps::Ground::DIRT:
-            covrs.push_back(ICN::COVR0013);
-            covrs.push_back(ICN::COVR0014);
-            covrs.push_back(ICN::COVR0015);
-            covrs.push_back(ICN::COVR0016);
-            covrs.push_back(ICN::COVR0017);
-            covrs.push_back(ICN::COVR0018);
-            break;
+    case Maps::Ground::DIRT:
+        covrs.push_back(ICN::COVR0013);
+        covrs.push_back(ICN::COVR0014);
+        covrs.push_back(ICN::COVR0015);
+        covrs.push_back(ICN::COVR0016);
+        covrs.push_back(ICN::COVR0017);
+        covrs.push_back(ICN::COVR0018);
+        break;
 
-        case Maps::Ground::GRASS:
-            covrs.push_back(ICN::COVR0001);
-            covrs.push_back(ICN::COVR0002);
-            covrs.push_back(ICN::COVR0003);
-            covrs.push_back(ICN::COVR0004);
-            covrs.push_back(ICN::COVR0005);
-            covrs.push_back(ICN::COVR0006);
-            break;
+    case Maps::Ground::GRASS:
+        covrs.push_back(ICN::COVR0001);
+        covrs.push_back(ICN::COVR0002);
+        covrs.push_back(ICN::COVR0003);
+        covrs.push_back(ICN::COVR0004);
+        covrs.push_back(ICN::COVR0005);
+        covrs.push_back(ICN::COVR0006);
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     return covrs.empty() ? ICN::UNKNOWN : *Rand::Get(covrs);
 }
 
-ByteVectorWriter &Battle::operator<<(ByteVectorWriter &msg, const TargetInfo &t)
+ByteVectorWriter& Battle::operator<<(ByteVectorWriter& msg, const TargetInfo& t)
 {
     return msg <<
-               (t.defender ? t.defender->GetUID() : static_cast<uint32_t>(0)) <<
-               t.damage << t.killed << t.resist;
+        (t.defender ? t.defender->GetUID() : static_cast<uint32_t>(0)) <<
+        t.damage << t.killed << t.resist;
 }
 
-ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, TargetInfo &t)
+ByteVectorReader& Battle::operator>>(ByteVectorReader& msg, TargetInfo& t)
 {
     uint32_t uid = 0;
 
@@ -120,85 +120,85 @@ ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, TargetInfo &t)
     return msg;
 }
 
-ByteVectorWriter &Battle::operator<<(ByteVectorWriter &msg, const TargetsInfo &ts)
+ByteVectorWriter& Battle::operator<<(ByteVectorWriter& msg, const TargetsInfo& ts)
 {
     msg << static_cast<uint32_t>(ts.size());
 
-    for (const auto &t : ts)
+    for (const auto& t : ts)
         msg << t;
 
     return msg;
 }
 
-ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, TargetsInfo &ts)
+ByteVectorReader& Battle::operator>>(ByteVectorReader& msg, TargetsInfo& ts)
 {
     uint32_t size = 0;
 
     msg >> size;
     ts.resize(size);
 
-    for (auto &t : ts)
+    for (auto& t : ts)
         msg >> t;
 
     return msg;
 }
 
-bool Battle::TargetInfo::operator==(const TargetInfo &ta) const
+bool Battle::TargetInfo::operator==(const TargetInfo& ta) const
 {
     return defender == ta.defender;
 }
 
-Battle::Arena *Battle::GetArena()
+Battle::Arena* Battle::GetArena()
 {
     return arena;
 }
 
-const Castle *Battle::Arena::GetCastle()
+const Castle* Battle::Arena::GetCastle()
 {
     return arena->castle;
 }
 
-Battle::Bridge *Battle::Arena::GetBridge()
+Battle::Bridge* Battle::Arena::GetBridge()
 {
     return arena->bridge;
 }
 
-Battle::Board *Battle::Arena::GetBoard()
+Battle::Board* Battle::Arena::GetBoard()
 {
     return &arena->board;
 }
 
-Battle::Graveyard *Battle::Arena::GetGraveyard()
+Battle::Graveyard* Battle::Arena::GetGraveyard()
 {
     return &arena->graveyard;
 }
 
-Battle::Interface *Battle::Arena::GetInterface()
+Battle::Interface* Battle::Arena::GetInterface()
 {
     return arena->interface.get();
 }
 
-Battle::Tower *Battle::Arena::GetTower(int type)
+Battle::Tower* Battle::Arena::GetTower(int type)
 {
     switch (type)
     {
-        case TWR_LEFT:
-            return arena->towers[0].get();
-        case TWR_CENTER:
-            return arena->towers[1].get();
-        case TWR_RIGHT:
-            return arena->towers[2].get();
-        default:
-            break;
+    case TWR_LEFT:
+        return arena->towers[0].get();
+    case TWR_CENTER:
+        return arena->towers[1].get();
+    case TWR_RIGHT:
+        return arena->towers[2].get();
+    default:
+        break;
     }
     return nullptr;
 }
 
-Battle::Arena::Arena(Army &a1, Army &a2, s32 index, bool local) :
-        army1(nullptr), army2(nullptr), armies_order(nullptr), castle(nullptr), current_color(0), catapult(nullptr),
-        bridge(nullptr), interface(nullptr), icn_covr(ICN::UNKNOWN), current_turn(0), auto_battle(0), end_turn(false)
+Battle::Arena::Arena(Army& a1, Army& a2, s32 index, bool local) :
+    army1(nullptr), army2(nullptr), armies_order(nullptr), castle(nullptr), current_color(0), catapult(nullptr),
+    bridge(nullptr), interface(nullptr), icn_covr(ICN::UNKNOWN), current_turn(0), auto_battle(0), end_turn(false)
 {
-    const Settings &conf = Settings::Get();
+    const Settings& conf = Settings::Get();
     auto_battle = conf.QuickCombat();
     usage_spells.reserve(20);
 
@@ -246,16 +246,16 @@ Battle::Arena::Arena(Army &a1, Army &a2, s32 index, bool local) :
     {
         // init
         towers[0] = castle->isBuild(BUILD_LEFTTURRET)
-                    ? std::make_unique<Tower>(*castle, TWR_LEFT)
-                    : nullptr;
+                        ? std::make_unique<Tower>(*castle, TWR_LEFT)
+                        : nullptr;
         towers[1] = std::make_unique<Tower>(*castle, TWR_CENTER);
         towers[2] = castle->isBuild(BUILD_RIGHTTURRET)
-                    ? std::make_unique<Tower>(*castle, TWR_RIGHT)
-                    : nullptr;
+                        ? std::make_unique<Tower>(*castle, TWR_RIGHT)
+                        : nullptr;
         bool fortification = Race::KNGT == castle->GetRace() && castle->isBuild(BUILD_SPEC);
         catapult = army1->GetCommander()
-                   ? std::make_unique<Catapult>(*army1->GetCommander(), fortification)
-                   : nullptr;
+                       ? std::make_unique<Catapult>(*army1->GetCommander(), fortification)
+                       : nullptr;
         bridge = new Bridge();
 
         // catapult cell
@@ -278,13 +278,13 @@ Battle::Arena::Arena(Army &a1, Army &a2, s32 index, bool local) :
         // bridge
         board._items[49].SetObject(1);
         board._items[50].SetObject(1);
-    } else
+    }
+    else
         // set obstacles
     {
         MapsIndexes mapIndexes;
         Maps::ScanAroundObject(index, MP2::OBJ_CRATER, mapIndexes);
-        icn_covr = !mapIndexes.empty() ?
-                   GetCovr(world.GetTiles(index).GetGround()) : ICN::UNKNOWN;
+        icn_covr = !mapIndexes.empty() ? GetCovr(world.GetTiles(index).GetGround()) : ICN::UNKNOWN;
 
         if (icn_covr != ICN::UNKNOWN)
             board.SetCovrObjects(icn_covr);
@@ -301,8 +301,8 @@ Battle::Arena::Arena(Army &a1, Army &a2, s32 index, bool local) :
     //
     if (interface)
     {
-        Cursor &cursor = Cursor::Get();
-        Display &display = Display::Get();
+        Cursor& cursor = Cursor::Get();
+        Display& display = Display::Get();
 
         cursor.Hide();
         cursor.SetThemes(Cursor::WAR_NONE);
@@ -321,7 +321,7 @@ Battle::Arena::Arena(Army &a1, Army &a2, s32 index, bool local) :
 
 Battle::Arena::~Arena() = default;
 
-void Battle::Arena::TurnTroop(Unit *current_troop)
+void Battle::Arena::TurnTroop(Unit* current_troop)
 {
     Actions actions;
     end_turn = false;
@@ -333,7 +333,8 @@ void Battle::Arena::TurnTroop(Unit *current_troop)
         {
             actions.push_back(Command(MSG_BATTLE_MORALE, current_troop->GetUID(), false));
             end_turn = true;
-        } else
+        }
+        else
         {
             // turn opponents
             if (current_troop->isControlRemote())
@@ -344,7 +345,8 @@ void Battle::Arena::TurnTroop(Unit *current_troop)
                     current_color & auto_battle)
                 {
                     AI::BattleTurn(*this, *current_troop, actions);
-                } else if (current_troop->isControlHuman())
+                }
+                else if (current_troop->isControlHuman())
                     HumanTurn(*current_troop, actions);
             }
         }
@@ -388,12 +390,12 @@ void Battle::Arena::TurnTroop(Unit *current_troop)
 bool Battle::Arena::BattleValid() const
 {
     return army1->isValid() && army2->isValid() &&
-           0 == result_game.army1 && 0 == result_game.army2;
+        0 == result_game.army1 && 0 == result_game.army2;
 }
 
 void Battle::Arena::Turns()
 {
-    const Settings &conf = Settings::Get();
+    const Settings& conf = Settings::Get();
 
     ++current_turn;
 
@@ -406,13 +408,13 @@ void Battle::Arena::Turns()
     bool tower_moved = false;
     bool catapult_moved = false;
 
-    Unit *current_troop = nullptr;
+    Unit* current_troop = nullptr;
 
     // rescan orders
     if (armies_order) Force::UpdateOrderUnits(*army1, *army2, *armies_order);
 
     while (BattleValid() &&
-           nullptr != (current_troop = Force::GetCurrentUnit(*army1, *army2, current_troop, true)))
+        nullptr != (current_troop = Force::GetCurrentUnit(*army1, *army2, current_troop, true)))
     {
         current_color = current_troop->GetArmyColor();
 
@@ -449,7 +451,7 @@ void Battle::Arena::Turns()
     // can skip move ?
     if (Settings::Get().ExtBattleSoftWait())
         while (BattleValid() &&
-               nullptr != (current_troop = Force::GetCurrentUnit(*army1, *army2, current_troop, false)))
+            nullptr != (current_troop = Force::GetCurrentUnit(*army1, *army2, current_troop, false)))
         {
             current_color = current_troop->GetArmyColor();
 
@@ -482,18 +484,21 @@ void Battle::Arena::Turns()
         if (army1->GetCommander()) result_game.exp2 += 500;
         if (army2->GetCommander()) result_game.exp1 += 500;
 
-        Force *army_loss = result_game.army1 & RESULT_LOSS ? army1.get() : result_game.army2 & RESULT_LOSS
-                               ? army2.get() : nullptr;
+        Force* army_loss = result_game.army1 & RESULT_LOSS
+                               ? army1.get()
+                               : result_game.army2 & RESULT_LOSS
+                               ? army2.get()
+                               : nullptr;
         result_game.killed = army_loss ? army_loss->GetDeadCounts() : 0;
     }
 }
 
-void Battle::Arena::RemoteTurn(const Unit &b, Actions &a)
+void Battle::Arena::RemoteTurn(const Unit& b, Actions& a)
 {
     AI::BattleTurn(*this, b, a);
 }
 
-void Battle::Arena::HumanTurn(const Unit &b, Actions &a)
+void Battle::Arena::HumanTurn(const Unit& b, Actions& a)
 {
     if (Settings::Get().QuickCombat())
     {
@@ -504,11 +509,11 @@ void Battle::Arena::HumanTurn(const Unit &b, Actions &a)
         interface->HumanTurn(b, a);
 }
 
-void Battle::Arena::TowerAction(const Tower &twr)
+void Battle::Arena::TowerAction(const Tower& twr)
 {
     board.Reset();
     board.SetEnemyQuality(twr);
-    const Unit *enemy = GetEnemyMaxQuality(twr.GetColor());
+    const Unit* enemy = GetEnemyMaxQuality(twr.GetColor());
 
     if (enemy)
     {
@@ -548,29 +553,29 @@ void Battle::Arena::CatapultAction()
     }
 }
 
-Battle::Indexes Battle::Arena::GetPath(const Unit &b, const Position &dst)
+Battle::Indexes Battle::Arena::GetPath(const Unit& b, const Position& dst)
 {
     Indexes result = board.GetAStarPath(b, dst);
 
     return result;
 }
 
-Battle::Unit *Battle::Arena::GetTroopBoard(s32 index)
+Battle::Unit* Battle::Arena::GetTroopBoard(s32 index)
 {
     return Board::isValidIndex(index) ? board._items[index].GetUnit() : nullptr;
 }
 
-const Battle::Unit *Battle::Arena::GetTroopBoard(s32 index) const
+const Battle::Unit* Battle::Arena::GetTroopBoard(s32 index) const
 {
     return Board::isValidIndex(index) ? board._items[index].GetUnit() : nullptr;
 }
 
-const HeroBase *Battle::Arena::GetCommander1() const
+const HeroBase* Battle::Arena::GetCommander1() const
 {
     return army1->GetCommander();
 }
 
-const HeroBase *Battle::Arena::GetCommander2() const
+const HeroBase* Battle::Arena::GetCommander2() const
 {
     return army2->GetCommander();
 }
@@ -595,7 +600,7 @@ int Battle::Arena::GetOppositeColor(int col) const
     return col == GetArmyColor1() ? GetArmyColor2() : GetArmyColor1();
 }
 
-Battle::Unit *Battle::Arena::GetTroopUID(uint32_t uid)
+Battle::Unit* Battle::Arena::GetTroopUID(uint32_t uid)
 {
     auto it = find_if(army1->_items.begin(), army1->_items.end(),
                       bind2nd(mem_fun(&Unit::isUID), uid));
@@ -608,10 +613,10 @@ Battle::Unit *Battle::Arena::GetTroopUID(uint32_t uid)
     return it != army2->_items.end() ? *it : nullptr;
 }
 
-const Battle::Unit *Battle::Arena::GetTroopUID(uint32_t uid) const
+const Battle::Unit* Battle::Arena::GetTroopUID(uint32_t uid) const
 {
     auto it = find_if(army1->_items.begin(), army1->_items.end(),
-                                       bind2nd(mem_fun(&Unit::isUID), uid));
+                      bind2nd(mem_fun(&Unit::isUID), uid));
 
     if (it != army1->_items.end()) return *it;
 
@@ -621,14 +626,14 @@ const Battle::Unit *Battle::Arena::GetTroopUID(uint32_t uid) const
     return it != army2->_items.end() ? *it : nullptr;
 }
 
-const Battle::Unit *Battle::Arena::GetEnemyMaxQuality(int my_color) const
+const Battle::Unit* Battle::Arena::GetEnemyMaxQuality(int my_color) const
 {
-    const Unit *res = nullptr;
+    const Unit* res = nullptr;
     s32 quality = 0;
 
-    for (const auto &it : board._items)
+    for (const auto& it : board._items)
     {
-        const Unit *enemy = it.GetUnit();
+        const Unit* enemy = it.GetUnit();
 
         if (enemy && enemy->GetColor() != my_color &&
             (!enemy->isWide() || enemy->GetTailIndex() != it.GetIndex()) &&
@@ -647,7 +652,7 @@ void Battle::Arena::FadeArena() const
     if (interface) interface->FadeArena();
 }
 
-const SpellStorage &Battle::Arena::GetUsageSpells() const
+const SpellStorage& Battle::Arena::GetUsageSpells() const
 {
     return usage_spells;
 }
@@ -656,7 +661,7 @@ s32 Battle::Arena::GetFreePositionNearHero(int color) const
 {
     const int cells1[] = {11, 22, 33};
     const int cells2[] = {21, 32, 43};
-    const int *cells = nullptr;
+    const int* cells = nullptr;
 
     if (army1->GetColor() == color) cells = cells1;
     else if (army2->GetColor() == color) cells = cells2;
@@ -678,24 +683,24 @@ s32 Battle::Arena::GetFreePositionNearHero(int color) const
 
 bool Battle::Arena::CanSurrenderOpponent(int color) const
 {
-    const HeroBase *hero1 = GetCommander(color, false); // enemy
-    const HeroBase *hero2 = GetCommander(color, true);
+    const HeroBase* hero1 = GetCommander(color, false); // enemy
+    const HeroBase* hero2 = GetCommander(color, true);
     return hero1 && hero1->isHeroes() && hero2 &&
-           !world.GetKingdom(hero2->GetColor()).GetCastles().empty();
+        !world.GetKingdom(hero2->GetColor()).GetCastles().empty();
 }
 
 bool Battle::Arena::CanRetreatOpponent(int color) const
 {
-    const HeroBase *hero = army1->GetColor() == color ? army1->GetCommander() : army2->GetCommander();
+    const HeroBase* hero = army1->GetColor() == color ? army1->GetCommander() : army2->GetCommander();
     return hero && hero->isHeroes() && nullptr == hero->inCastle() &&
-           !world.GetKingdom(hero->GetColor()).GetCastles().empty();
+        !world.GetKingdom(hero->GetColor()).GetCastles().empty();
 }
 
-bool Battle::Arena::isDisableCastSpell(const Spell &spell, string *msg)
+bool Battle::Arena::isDisableCastSpell(const Spell& spell, string* msg)
 {
-    const HeroBase *hero1 = army1->GetCommander();
-    const HeroBase *hero2 = army2->GetCommander();
-    const HeroBase *current_commander = GetCurrentCommander();
+    const HeroBase* hero1 = army1->GetCommander();
+    const HeroBase* hero2 = army2->GetCommander();
+    const HeroBase* current_commander = GetCurrentCommander();
 
     // check sphere negation (only for heroes)
     if (hero1 && hero1->HasArtifact(Artifact::SPHERE_NEGATION) ||
@@ -721,26 +726,26 @@ bool Battle::Arena::isDisableCastSpell(const Spell &spell, string *msg)
         }
         if (spell.isSummon())
         {
-            const Unit *elem = GetCurrentForce().FindMode(CAP_SUMMONELEM);
+            const Unit* elem = GetCurrentForce().FindMode(CAP_SUMMONELEM);
             bool affect = true;
 
             if (elem)
                 switch (spell())
                 {
-                    case Spell::SUMMONEELEMENT:
-                        if (elem->GetID() != Monster::EARTH_ELEMENT) affect = false;
-                        break;
-                    case Spell::SUMMONAELEMENT:
-                        if (elem->GetID() != Monster::AIR_ELEMENT) affect = false;
-                        break;
-                    case Spell::SUMMONFELEMENT:
-                        if (elem->GetID() != Monster::FIRE_ELEMENT) affect = false;
-                        break;
-                    case Spell::SUMMONWELEMENT:
-                        if (elem->GetID() != Monster::WATER_ELEMENT) affect = false;
-                        break;
-                    default:
-                        break;
+                case Spell::SUMMONEELEMENT:
+                    if (elem->GetID() != Monster::EARTH_ELEMENT) affect = false;
+                    break;
+                case Spell::SUMMONAELEMENT:
+                    if (elem->GetID() != Monster::AIR_ELEMENT) affect = false;
+                    break;
+                case Spell::SUMMONFELEMENT:
+                    if (elem->GetID() != Monster::FIRE_ELEMENT) affect = false;
+                    break;
+                case Spell::SUMMONWELEMENT:
+                    if (elem->GetID() != Monster::WATER_ELEMENT) affect = false;
+                    break;
+                default:
+                    break;
                 }
             if (!affect)
             {
@@ -753,21 +758,23 @@ bool Battle::Arena::isDisableCastSpell(const Spell &spell, string *msg)
                 *msg = _("There is no open space adjacent to your hero to summon an Elemental to.");
                 return true;
             }
-        } else if (spell.isValid())
+        }
+        else if (spell.isValid())
         {
             // check army
             for (auto it = board._items.begin(); it != board._items.end(); ++it)
             {
-                const Unit *b = (*it).GetUnit();
+                const Unit* b = (*it).GetUnit();
 
                 if (b)
                 {
                     if (b->AllowApplySpell(spell, current_commander, nullptr))
                         return false;
-                } else
+                }
+                else
                     // check graveyard
-                if (GraveyardAllowResurrect((*it).GetIndex(), spell))
-                    return false;
+                    if (GraveyardAllowResurrect((*it).GetIndex(), spell))
+                        return false;
             }
             *msg = _("That spell will affect no one!");
             return true;
@@ -781,18 +788,19 @@ bool Battle::Arena::isDisableCastSpell(const Spell &spell, string *msg)
     return false;
 }
 
-bool Battle::Arena::GraveyardAllowResurrect(s32 index, const Spell &spell) const
+bool Battle::Arena::GraveyardAllowResurrect(s32 index, const Spell& spell) const
 {
-    const HeroBase *hero = GetCurrentCommander();
-    const Unit *killed = GetTroopUID(graveyard.GetLastTroopUID(index));
-    const Unit *tail = killed && killed->isWide() ?
-                       GetTroopUID(graveyard.GetLastTroopUID(killed->GetTailIndex())) : nullptr;
+    const HeroBase* hero = GetCurrentCommander();
+    const Unit* killed = GetTroopUID(graveyard.GetLastTroopUID(index));
+    const Unit* tail = killed && killed->isWide()
+                           ? GetTroopUID(graveyard.GetLastTroopUID(killed->GetTailIndex()))
+                           : nullptr;
 
     return killed && (!killed->isWide() || killed == tail) &&
-           hero && spell.isResurrect() && killed->AllowApplySpell(spell, hero, nullptr);
+        hero && spell.isResurrect() && killed->AllowApplySpell(spell, hero, nullptr);
 }
 
-const Battle::Unit *Battle::Arena::GraveyardLastTroop(s32 index) const
+const Battle::Unit* Battle::Arena::GraveyardLastTroop(s32 index) const
 {
     return GetTroopUID(graveyard.GetLastTroopUID(index));
 }
@@ -806,40 +814,40 @@ void Battle::Arena::SetCastleTargetValue(int target, uint32_t value)
 {
     switch (target)
     {
-        case CAT_WALL1:
-            board._items[8].SetObject(value);
-            break;
-        case CAT_WALL2:
-            board._items[29].SetObject(value);
-            break;
-        case CAT_WALL3:
-            board._items[73].SetObject(value);
-            break;
-        case CAT_WALL4:
-            board._items[96].SetObject(value);
-            break;
+    case CAT_WALL1:
+        board._items[8].SetObject(value);
+        break;
+    case CAT_WALL2:
+        board._items[29].SetObject(value);
+        break;
+    case CAT_WALL3:
+        board._items[73].SetObject(value);
+        break;
+    case CAT_WALL4:
+        board._items[96].SetObject(value);
+        break;
 
-        case CAT_TOWER1:
-            if (towers[0] && towers[0]->isValid()) towers[0]->SetDestroy();
-            break;
-        case CAT_TOWER2:
-            if (towers[2] && towers[2]->isValid()) towers[2]->SetDestroy();
-            break;
-        case CAT_TOWER3:
-            if (towers[1] && towers[1]->isValid()) towers[1]->SetDestroy();
-            break;
+    case CAT_TOWER1:
+        if (towers[0] && towers[0]->isValid()) towers[0]->SetDestroy();
+        break;
+    case CAT_TOWER2:
+        if (towers[2] && towers[2]->isValid()) towers[2]->SetDestroy();
+        break;
+    case CAT_TOWER3:
+        if (towers[1] && towers[1]->isValid()) towers[1]->SetDestroy();
+        break;
 
-        case CAT_BRIDGE:
-            if (bridge->isValid())
-            {
-                if (interface) interface->RedrawBridgeAnimation(true);
-                bridge->SetDown(true);
-                bridge->SetDestroy();
-            }
-            break;
+    case CAT_BRIDGE:
+        if (bridge->isValid())
+        {
+            if (interface) interface->RedrawBridgeAnimation(true);
+            bridge->SetDown(true);
+            bridge->SetDestroy();
+        }
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 }
 
@@ -847,27 +855,27 @@ uint32_t Battle::Arena::GetCastleTargetValue(int target) const
 {
     switch (target)
     {
-        case CAT_WALL1:
-            return board._items[8].GetObject();
-        case CAT_WALL2:
-            return board._items[29].GetObject();
-        case CAT_WALL3:
-            return board._items[73].GetObject();
-        case CAT_WALL4:
-            return board._items[96].GetObject();
+    case CAT_WALL1:
+        return board._items[8].GetObject();
+    case CAT_WALL2:
+        return board._items[29].GetObject();
+    case CAT_WALL3:
+        return board._items[73].GetObject();
+    case CAT_WALL4:
+        return board._items[96].GetObject();
 
-        case CAT_TOWER1:
-            return towers[0] && towers[0]->isValid();
-        case CAT_TOWER2:
-            return towers[2] && towers[2]->isValid();
-        case CAT_TOWER3:
-            return towers[1] && towers[1]->isValid();
+    case CAT_TOWER1:
+        return towers[0] && towers[0]->isValid();
+    case CAT_TOWER2:
+        return towers[2] && towers[2]->isValid();
+    case CAT_TOWER3:
+        return towers[1] && towers[1]->isValid();
 
-        case CAT_BRIDGE:
-            return bridge->isValid();
+    case CAT_BRIDGE:
+        return bridge->isValid();
 
-        default:
-            break;
+    default:
+        break;
     }
     return 0;
 }
@@ -890,14 +898,14 @@ vector<int> Battle::Arena::GetCastleTargets() const
     return targets;
 }
 
-ByteVectorWriter &Battle::operator<<(ByteVectorWriter &msg, const Arena &a)
+ByteVectorWriter& Battle::operator<<(ByteVectorWriter& msg, const Arena& a)
 {
     msg <<
         a.current_turn << a.board._items <<
         *a.army1 << *a.army2;
 
-    const HeroBase *hero1 = a.army1->GetCommander();
-    const HeroBase *hero2 = a.army2->GetCommander();
+    const HeroBase* hero1 = a.army1->GetCommander();
+    const HeroBase* hero2 = a.army2->GetCommander();
 
     if (hero1)
         msg << hero1->GetType() << *hero1;
@@ -912,14 +920,14 @@ ByteVectorWriter &Battle::operator<<(ByteVectorWriter &msg, const Arena &a)
     return msg;
 }
 
-ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, Arena &a)
+ByteVectorReader& Battle::operator>>(ByteVectorReader& msg, Arena& a)
 {
     msg >> a.current_turn >> a.board._items >>
         *a.army1 >> *a.army2;
 
     int type;
-    HeroBase *hero1 = a.army1->GetCommander();
-    HeroBase *hero2 = a.army2->GetCommander();
+    HeroBase* hero1 = a.army1->GetCommander();
+    HeroBase* hero2 = a.army2->GetCommander();
 
     msg >> type;
     if (hero1 && type == hero1->GetType()) msg >> *hero1;
@@ -930,14 +938,15 @@ ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, Arena &a)
     return msg;
 }
 
-const HeroBase *Battle::Arena::GetCommander(int color, bool invert) const
+const HeroBase* Battle::Arena::GetCommander(int color, bool invert) const
 {
-    const HeroBase *commander = nullptr;
+    const HeroBase* commander = nullptr;
 
     if (army1->GetColor() == color)
     {
         commander = invert ? army2->GetCommander() : army1->GetCommander();
-    } else
+    }
+    else
     {
         commander = invert ? army1->GetCommander() : army2->GetCommander();
     }
@@ -945,7 +954,7 @@ const HeroBase *Battle::Arena::GetCommander(int color, bool invert) const
     return commander;
 }
 
-const HeroBase *Battle::Arena::GetCurrentCommander() const
+const HeroBase* Battle::Arena::GetCurrentCommander() const
 {
     return GetCommander(current_color);
 }
@@ -955,9 +964,9 @@ bool Battle::Arena::NetworkTurn()
     return interface && interface->NetworkTurn(result_game);
 }
 
-Battle::Unit *Battle::Arena::CreateElemental(const Spell &spell) const
+Battle::Unit* Battle::Arena::CreateElemental(const Spell& spell) const
 {
-    const HeroBase *hero = GetCurrentCommander();
+    const HeroBase* hero = GetCurrentCommander();
     const s32 pos = GetFreePositionNearHero(current_color);
 
     if (0 > pos || !hero)
@@ -965,27 +974,27 @@ Battle::Unit *Battle::Arena::CreateElemental(const Spell &spell) const
         return nullptr;
     }
 
-    Force &army = GetCurrentForce();
-    Unit *elem = army.FindMode(CAP_SUMMONELEM);
+    Force& army = GetCurrentForce();
+    Unit* elem = army.FindMode(CAP_SUMMONELEM);
     bool affect = true;
 
     if (elem)
         switch (spell())
         {
-            case Spell::SUMMONEELEMENT:
-                if (elem->GetID() != Monster::EARTH_ELEMENT) affect = false;
-                break;
-            case Spell::SUMMONAELEMENT:
-                if (elem->GetID() != Monster::AIR_ELEMENT) affect = false;
-                break;
-            case Spell::SUMMONFELEMENT:
-                if (elem->GetID() != Monster::FIRE_ELEMENT) affect = false;
-                break;
-            case Spell::SUMMONWELEMENT:
-                if (elem->GetID() != Monster::WATER_ELEMENT) affect = false;
-                break;
-            default:
-                break;
+        case Spell::SUMMONEELEMENT:
+            if (elem->GetID() != Monster::EARTH_ELEMENT) affect = false;
+            break;
+        case Spell::SUMMONAELEMENT:
+            if (elem->GetID() != Monster::AIR_ELEMENT) affect = false;
+            break;
+        case Spell::SUMMONFELEMENT:
+            if (elem->GetID() != Monster::FIRE_ELEMENT) affect = false;
+            break;
+        case Spell::SUMMONWELEMENT:
+            if (elem->GetID() != Monster::WATER_ELEMENT) affect = false;
+            break;
+        default:
+            break;
         }
 
     if (!affect)
@@ -1012,16 +1021,17 @@ Battle::Unit *Battle::Arena::CreateElemental(const Spell &spell) const
         elem->SetArmy(hero->GetArmy());
         if (interface) elem->InitContours();
         army._items.push_back(elem);
-    } else
+    }
+    else
     {
     }
 
     return elem;
 }
 
-Battle::Unit *Battle::Arena::CreateMirrorImage(Unit &b, s32 pos) const
+Battle::Unit* Battle::Arena::CreateMirrorImage(Unit& b, s32 pos) const
 {
-    auto *image = new Unit(b, pos, b.isReflect());
+    auto* image = new Unit(b, pos, b.isReflect());
 
     b.SetMirror(image);
     image->SetArmy(*b.GetArmy());
@@ -1036,12 +1046,12 @@ Battle::Unit *Battle::Arena::CreateMirrorImage(Unit &b, s32 pos) const
     return image;
 }
 
-uint32_t Battle::Arena::GetObstaclesPenalty(const Unit &attacker, const Unit &defender) const
+uint32_t Battle::Arena::GetObstaclesPenalty(const Unit& attacker, const Unit& defender) const
 {
     if (defender.Modes(CAP_TOWER) || attacker.Modes(CAP_TOWER)) return 0;
 
     // check golden bow artifact
-    const HeroBase *enemy = attacker.GetCommander();
+    const HeroBase* enemy = attacker.GetCommander();
     if (enemy && enemy->HasArtifact(Artifact::GOLDEN_BOW)) return 0;
 
     uint32_t result = 0;
@@ -1073,7 +1083,8 @@ uint32_t Battle::Arena::GetObstaclesPenalty(const Unit &attacker, const Unit &de
         }
 
         result = 1;
-    } else if (Settings::Get().ExtBattleObjectsArchersPenalty())
+    }
+    else if (Settings::Get().ExtBattleObjectsArchersPenalty())
     {
         const Points points = GetLinePoints(attacker.GetBackPoint(), defender.GetBackPoint(), step);
         Indexes indexes;
@@ -1097,27 +1108,27 @@ uint32_t Battle::Arena::GetObstaclesPenalty(const Unit &attacker, const Unit &de
             switch (board._items[it].GetObject())
             {
                 // tree
-                case 0x82:
-                    // trock
-                case 0x85:
-                    // tree
-                case 0x89:
-                    // tree
-                case 0x8D:
-                    // rock
-                case 0x95:
-                case 0x96:
-                    // stub
-                case 0x9A:
-                    // dead tree
-                case 0x9B:
-                    // tree
-                case 0x9C:
-                    ++result;
-                    break;
+            case 0x82:
+                // trock
+            case 0x85:
+                // tree
+            case 0x89:
+                // tree
+            case 0x8D:
+                // rock
+            case 0x95:
+            case 0x96:
+                // stub
+            case 0x9A:
+                // dead tree
+            case 0x9B:
+                // tree
+            case 0x9C:
+                ++result;
+                break;
 
-                default:
-                    break;
+            default:
+                break;
             }
         }
 
@@ -1125,16 +1136,16 @@ uint32_t Battle::Arena::GetObstaclesPenalty(const Unit &attacker, const Unit &de
         {
             switch (enemy->GetLevelSkill(Skill::Secondary::ARCHERY))
             {
-                case Skill::Level::BASIC:
-                    if (result < 2) return 0;
-                    break;
-                case Skill::Level::ADVANCED:
-                    if (result < 3) return 0;
-                    break;
-                case Skill::Level::EXPERT:
-                    return 0;
-                default:
-                    break;
+            case Skill::Level::BASIC:
+                if (result < 2) return 0;
+                break;
+            case Skill::Level::ADVANCED:
+                if (result < 3) return 0;
+                break;
+            case Skill::Level::EXPERT:
+                return 0;
+            default:
+                break;
             }
         }
     }
@@ -1142,17 +1153,17 @@ uint32_t Battle::Arena::GetObstaclesPenalty(const Unit &attacker, const Unit &de
     return result;
 }
 
-Battle::Force &Battle::Arena::GetForce1() const
+Battle::Force& Battle::Arena::GetForce1() const
 {
     return *army1;
 }
 
-Battle::Force &Battle::Arena::GetForce2() const
+Battle::Force& Battle::Arena::GetForce2() const
 {
     return *army2;
 }
 
-Battle::Force &Battle::Arena::GetForce(int color, bool invert) const
+Battle::Force& Battle::Arena::GetForce(int color, bool invert) const
 {
     if (army1->GetColor() == color)
         return invert ? *army2 : *army1;
@@ -1160,7 +1171,7 @@ Battle::Force &Battle::Arena::GetForce(int color, bool invert) const
     return invert ? *army1 : *army2;
 }
 
-Battle::Force &Battle::Arena::GetCurrentForce() const
+Battle::Force& Battle::Arena::GetCurrentForce() const
 {
     return GetForce(current_color, false);
 }
@@ -1175,7 +1186,7 @@ uint32_t Battle::Arena::GetCurrentTurn() const
     return current_turn;
 }
 
-Battle::Result &Battle::Arena::GetResult()
+Battle::Result& Battle::Arena::GetResult()
 {
     return result_game;
 }
@@ -1183,7 +1194,7 @@ Battle::Result &Battle::Arena::GetResult()
 bool Battle::Arena::CanBreakAutoBattle() const
 {
     return auto_battle & current_color && GetCurrentCommander() &&
-           !GetCurrentCommander()->isControlAI();
+        !GetCurrentCommander()->isControlAI();
 }
 
 void Battle::Arena::BreakAutoBattle()

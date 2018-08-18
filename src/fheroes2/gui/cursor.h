@@ -35,7 +35,7 @@ public:
     {
         NONE = 0x0000,
         // ADVMCO.ICN
-                POINTER = 0x1000,
+        POINTER = 0x1000,
         WAIT = 0x1001,
         HEROES = 0x1002,
         CASTLE = 0x1003,
@@ -77,7 +77,7 @@ public:
         SCROLL_TOPLEFT = 0x1027,
         POINTER2 = 0x1028,
         // CMSECO.ICN
-                WAR_NONE = 0x2000,
+        WAR_NONE = 0x2000,
         WAR_MOVE = 0x2001,
         WAR_FLY = 0x2002,
         WAR_ARROW = 0x2003,
@@ -94,7 +94,7 @@ public:
         SWORD_BOTTOM = 0x200E,
         WAR_BROKENARROW = 0x200F,
         // SPELCO.ICN
-                SP_NONE = WAR_NONE,
+        SP_NONE = WAR_NONE,
         SP_SLOW = 0x3001,
         SP_UNKNOWN = 0x3002,
         SP_CURSE = 0x3003,
@@ -135,7 +135,7 @@ public:
         SP_ARROW = 0x3026
     };
 
-    static Cursor &Get();
+    static Cursor& Get();
 
     static void Redraw(s32, s32);
 
@@ -160,4 +160,3 @@ private:
     s32 offset_x;
     s32 offset_y;
 };
-

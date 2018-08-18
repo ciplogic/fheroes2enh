@@ -27,31 +27,33 @@
 
 string Race::String(int race)
 {
-    string str_race[] = {_("Knight"), _("Barbarian"), _("Sorceress"),
-                              _("Warlock"), _("Wizard"), _("Necromancer"), _("Multi"), "Random", "Neutral"};
+    string str_race[] = {
+        _("Knight"), _("Barbarian"), _("Sorceress"),
+        _("Warlock"), _("Wizard"), _("Necromancer"), _("Multi"), "Random", "Neutral"
+    };
 
     switch (race)
     {
-        case KNGT:
-            return str_race[0];
-        case BARB:
-            return str_race[1];
-        case SORC:
-            return str_race[2];
-        case WRLK:
-            return str_race[3];
-        case WZRD:
-            return str_race[4];
-        case NECR:
-            return str_race[5];
-        case MULT:
-            return str_race[6];
-        case RAND:
-            return str_race[7];
-        case NONE:
-            return str_race[8];
-        default:
-            break;
+    case KNGT:
+        return str_race[0];
+    case BARB:
+        return str_race[1];
+    case SORC:
+        return str_race[2];
+    case WRLK:
+        return str_race[3];
+    case WZRD:
+        return str_race[4];
+    case NECR:
+        return str_race[5];
+    case MULT:
+        return str_race[6];
+    case RAND:
+        return str_race[7];
+    case NONE:
+        return str_race[8];
+    default:
+        break;
     }
 
     return str_race[8];
@@ -61,18 +63,18 @@ int Race::Rand()
 {
     switch (Rand::Get(1, 6))
     {
-        case 1:
-            return KNGT;
-        case 2:
-            return BARB;
-        case 3:
-            return SORC;
-        case 4:
-            return WRLK;
-        case 5:
-            return WZRD;
-        default:
-            break;
+    case 1:
+        return KNGT;
+    case 2:
+        return BARB;
+    case 3:
+        return SORC;
+    case 4:
+        return WRLK;
+    case 5:
+        return WZRD;
+    default:
+        break;
     }
 
     return NECR;
@@ -82,17 +84,17 @@ int Race::FromInt(int race)
 {
     switch (race)
     {
-        case KNGT:
-        case BARB:
-        case SORC:
-        case WRLK:
-        case WZRD:
-        case NECR:
-        case MULT:
-        case RAND:
-            return race;
-        default:
-            break;
+    case KNGT:
+    case BARB:
+    case SORC:
+    case WRLK:
+    case WZRD:
+    case NECR:
+    case MULT:
+    case RAND:
+        return race;
+    default:
+        break;
     }
 
     return NONE;

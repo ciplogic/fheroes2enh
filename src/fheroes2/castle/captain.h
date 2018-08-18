@@ -28,7 +28,7 @@
 class Captain : public HeroBase
 {
 public:
-    explicit Captain(Castle &);
+    explicit Captain(Castle&);
 
     bool isValid() const;
 
@@ -54,17 +54,17 @@ public:
 
     s32 GetIndex() const;
 
-    const string &GetName() const;
+    const string& GetName() const;
 
-    const Castle *inCastle() const;
+    const Castle* inCastle() const;
 
     int GetLevelSkill(int) const;
 
     uint32_t GetSecondaryValues(int) const;
 
-    const Army &GetArmy() const;
+    const Army& GetArmy() const;
 
-    Army &GetArmy();
+    Army& GetArmy();
 
     uint32_t GetMaxSpellPoints() const;
 
@@ -72,10 +72,10 @@ public:
 
     void ActionAfterBattle();
 
-    void PortraitRedraw(s32, s32, int type, Surface &) const;
+    void PortraitRedraw(s32, s32, int type, Surface&) const;
 
     Surface GetPortrait(int type) const;
 
 private:
-    Castle &home;
+    Castle& home;
 };

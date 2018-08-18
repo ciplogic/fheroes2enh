@@ -32,7 +32,8 @@
 
 enum
 {
-    BTN_PRESSED = 0x0080, BTN_DISABLE = 0x0008
+    BTN_PRESSED = 0x0080,
+    BTN_DISABLE = 0x0008
 };
 
 Button::Button() : flags(0)
@@ -81,7 +82,7 @@ void Button::SetSize(uint32_t ow, uint32_t oh)
     h = oh;
 }
 
-void Button::SetPos(const Point &pos)
+void Button::SetPos(const Point& pos)
 {
     SetPos(pos.x, pos.y);
 }
@@ -94,7 +95,7 @@ void Button::SetSprite(int icn, uint32_t index1, uint32_t index2)
     SetSize(sf1.w(), sf1.h());
 }
 
-void Button::SetSprite(const Surface &s1, const Surface &s2)
+void Button::SetSprite(const Surface& s1, const Surface& s2)
 {
     sf1 = s1;
     sf2 = s2;
@@ -145,7 +146,7 @@ void Button::ReleaseDraw()
 void Button::Draw() const
 {
     bool localcursor = false;
-    Cursor &cursor = Cursor::Get();
+    Cursor& cursor = Cursor::Get();
 
     if (*this & cursor.GetArea() && cursor.isVisible())
     {
@@ -162,53 +163,53 @@ void Button::Draw() const
 }
 
 ButtonGroups::ButtonGroups(const Rect pos, uint32_t btns) : button1(nullptr), button2(nullptr), result1(Dialog::ZERO),
-                                                       result2(Dialog::ZERO), buttons(btns)
+                                                            result2(Dialog::ZERO), buttons(btns)
 {
     Point pt;
     const int system = Settings::Get().ExtGameEvilInterface() ? ICN::SYSTEME : ICN::SYSTEM;
 
     switch (buttons)
     {
-        case Dialog::YES | Dialog::NO:
-            //pt.x = pos.x;
-            pt.x = pos.x + pos.w - AGG::GetICN(system, 5).w() - AGG::GetICN(system, 7).w() - 5;
-            pt.y = pos.y + pos.h - AGG::GetICN(system, 5).h();
-            button1 = std::make_unique<Button>(pt.x, pt.y, system, 5, 6);
-            result1 = Dialog::YES;
-            pt.x = pos.x + pos.w - AGG::GetICN(system, 7).w();
-            pt.y = pos.y + pos.h - AGG::GetICN(system, 7).h();
-            button2 = std::make_unique<Button>(pt.x, pt.y, system, 7, 8);
-            result2 = Dialog::NO;
-            break;
+    case Dialog::YES | Dialog::NO:
+        //pt.x = pos.x;
+        pt.x = pos.x + pos.w - AGG::GetICN(system, 5).w() - AGG::GetICN(system, 7).w() - 5;
+        pt.y = pos.y + pos.h - AGG::GetICN(system, 5).h();
+        button1 = std::make_unique<Button>(pt.x, pt.y, system, 5, 6);
+        result1 = Dialog::YES;
+        pt.x = pos.x + pos.w - AGG::GetICN(system, 7).w();
+        pt.y = pos.y + pos.h - AGG::GetICN(system, 7).h();
+        button2 = std::make_unique<Button>(pt.x, pt.y, system, 7, 8);
+        result2 = Dialog::NO;
+        break;
 
-        case Dialog::OK | Dialog::CANCEL:
-            ///pt.x = pos.x;
-            pt.x = pos.x + pos.w - AGG::GetICN(system, 1).w() - AGG::GetICN(system, 3).w() - 5;
-            pt.y = pos.y + pos.h - AGG::GetICN(system, 1).h();
-            button1 = std::make_unique<Button>(pt.x, pt.y, system, 1, 2);
-            result1 = Dialog::OK;
-            pt.x = pos.x + pos.w - AGG::GetICN(system, 3).w();
-            pt.y = pos.y + pos.h - AGG::GetICN(system, 3).h();
-            button2 = std::make_unique<Button>(pt.x, pt.y, system, 3, 4);
-            result2 = Dialog::CANCEL;
-            break;
+    case Dialog::OK | Dialog::CANCEL:
+        ///pt.x = pos.x;
+        pt.x = pos.x + pos.w - AGG::GetICN(system, 1).w() - AGG::GetICN(system, 3).w() - 5;
+        pt.y = pos.y + pos.h - AGG::GetICN(system, 1).h();
+        button1 = std::make_unique<Button>(pt.x, pt.y, system, 1, 2);
+        result1 = Dialog::OK;
+        pt.x = pos.x + pos.w - AGG::GetICN(system, 3).w();
+        pt.y = pos.y + pos.h - AGG::GetICN(system, 3).h();
+        button2 = std::make_unique<Button>(pt.x, pt.y, system, 3, 4);
+        result2 = Dialog::CANCEL;
+        break;
 
-        case Dialog::OK:
-            pt.x = pos.x + (pos.w - AGG::GetICN(system, 1).w()) - 4;
-            pt.y = pos.y + pos.h - AGG::GetICN(system, 1).h();
-            button1 = std::make_unique<Button>(pt.x, pt.y, system, 1, 2);
-            result1 = Dialog::OK;
-            break;
+    case Dialog::OK:
+        pt.x = pos.x + (pos.w - AGG::GetICN(system, 1).w()) - 4;
+        pt.y = pos.y + pos.h - AGG::GetICN(system, 1).h();
+        button1 = std::make_unique<Button>(pt.x, pt.y, system, 1, 2);
+        result1 = Dialog::OK;
+        break;
 
-        case Dialog::CANCEL:
-            pt.x = pos.x + (pos.w - AGG::GetICN(system, 3).w()) - 4;
-            pt.y = pos.y + pos.h - AGG::GetICN(system, 3).h();
-            button2 = std::make_unique<Button>(pt.x, pt.y, system, 3, 4);
-            result2 = Dialog::CANCEL;
-            break;
+    case Dialog::CANCEL:
+        pt.x = pos.x + (pos.w - AGG::GetICN(system, 3).w()) - 4;
+        pt.y = pos.y + pos.h - AGG::GetICN(system, 3).h();
+        button2 = std::make_unique<Button>(pt.x, pt.y, system, 3, 4);
+        result2 = Dialog::CANCEL;
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 }
 
@@ -220,7 +221,7 @@ void ButtonGroups::Draw() const
 
 int ButtonGroups::QueueEventProcessing() const
 {
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     if (button1 && button1->isEnable()) le.MousePressLeft(*button1) ? button1->PressDraw() : button1->ReleaseDraw();
     if (button2 && button2->isEnable()) le.MousePressLeft(*button2) ? button2->PressDraw() : button2->ReleaseDraw();
@@ -239,7 +240,8 @@ int ButtonGroups::QueueEventProcessing() const
 
         if (HotKeyPressEvent(Game::EVENT_DEFAULT_LEFT)) return result1;
         if (HotKeyPressEvent(Game::EVENT_DEFAULT_RIGHT)) return result2;
-    } else
+    }
+    else
         // one button
     {
         if (HotKeyCloseWindow) return buttons;
@@ -256,7 +258,8 @@ void ButtonGroups::DisableButton1(bool f) const
     {
         button1->Press();
         button1->SetDisable(true);
-    } else
+    }
+    else
     {
         button1->Release();
         button1->SetDisable(false);
@@ -271,7 +274,8 @@ void ButtonGroups::DisableButton2(bool f) const
     {
         button2->Press();
         button2->SetDisable(true);
-    } else
+    }
+    else
     {
         button2->Release();
         button2->SetDisable(false);

@@ -38,7 +38,7 @@
 #include "game_interface.h"
 
 
-void RedrawPrimarySkillInfo(const Point &cur_pt, PrimarySkillsBar* bar1, PrimarySkillsBar* bar2)
+void RedrawPrimarySkillInfo(const Point& cur_pt, PrimarySkillsBar* bar1, PrimarySkillsBar* bar2)
 {
     // attack skill
     Text text(_("Attack Skill"), Font::SMALL);
@@ -61,16 +61,16 @@ void RedrawPrimarySkillInfo(const Point &cur_pt, PrimarySkillsBar* bar1, Primary
 }
 
 
-void Heroes::MeetingDialog(Heroes &heroes2)
+void Heroes::MeetingDialog(Heroes& heroes2)
 {
-    Display &display = Display::Get();
+    Display& display = Display::Get();
 
     // cursor
-    Cursor &cursor = Cursor::Get();
+    Cursor& cursor = Cursor::Get();
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
-    const Sprite &backSprite = AGG::GetICN(ICN::SWAPWIN, 0);
+    const Sprite& backSprite = AGG::GetICN(ICN::SWAPWIN, 0);
     const Point cur_pt((display.w() - backSprite.w()) / 2, (display.h() - backSprite.h()) / 2);
     SpriteBack background(Rect(cur_pt, backSprite.w(), backSprite.h()));
     Point dst_pt(cur_pt);
@@ -213,7 +213,7 @@ void Heroes::MeetingDialog(Heroes &heroes2)
     if (Settings::Get().ExtWorldEyeEagleAsScholar())
         ScholarAction(*this, heroes2);
 
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     // message loop
     while (le.HandleEvents())
@@ -297,17 +297,21 @@ void Heroes::MeetingDialog(Heroes &heroes2)
 // spell_book.cpp
 struct HeroesCanTeachSpell : binary_function<const HeroBase *, Spell, bool>
 {
-    bool operator()(const HeroBase *hero, Spell spell) const
-    { return hero->CanTeachSpell(spell); };
+    bool operator()(const HeroBase* hero, Spell spell) const
+    {
+        return hero->CanTeachSpell(spell);
+    };
 };
 
 struct HeroesHaveSpell : binary_function<const HeroBase *, Spell, bool>
 {
-    bool operator()(const HeroBase *hero, Spell spell) const
-    { return hero->HaveSpell(spell); };
+    bool operator()(const HeroBase* hero, Spell spell) const
+    {
+        return hero->HaveSpell(spell);
+    };
 };
 
-void Heroes::ScholarAction(Heroes &hero1, Heroes &hero2)
+void Heroes::ScholarAction(Heroes& hero1, Heroes& hero2)
 {
     if (!hero1.HaveSpellBook() || !hero2.HaveSpellBook())
     {
@@ -322,20 +326,22 @@ void Heroes::ScholarAction(Heroes &hero1, Heroes &hero2)
     const int scholar2 = hero2.GetLevelSkill(Skill::Secondary::EAGLEEYE);
     int scholar = 0;
 
-    Heroes *teacher = nullptr;
-    Heroes *learner = nullptr;
+    Heroes* teacher = nullptr;
+    Heroes* learner = nullptr;
 
     if (scholar1 && scholar1 >= scholar2)
     {
         teacher = &hero1;
         learner = &hero2;
         scholar = scholar1;
-    } else if (scholar2 && scholar2 >= scholar1)
+    }
+    else if (scholar2 && scholar2 >= scholar1)
     {
         teacher = &hero2;
         learner = &hero1;
         scholar = scholar2;
-    } else
+    }
+    else
     {
         return;
     }
@@ -348,15 +354,15 @@ void Heroes::ScholarAction(Heroes &hero1, Heroes &hero2)
     if (!learn.empty())
     {
         auto
-                res = remove_if(learn.begin(), learn.end(), bind1st(HeroesHaveSpell(), teacher));
+            res = remove_if(learn.begin(), learn.end(), bind1st(HeroesHaveSpell(), teacher));
         learn.resize(distance(learn.begin(), res));
     }
 
     if (!learn.empty())
     {
         auto
-                res = remove_if(learn.begin(), learn.end(),
-                                not1(bind1st(HeroesCanTeachSpell(), teacher)));
+            res = remove_if(learn.begin(), learn.end(),
+                            not1(bind1st(HeroesCanTeachSpell(), teacher)));
         learn.resize(distance(learn.begin(), res));
     }
 
@@ -364,15 +370,15 @@ void Heroes::ScholarAction(Heroes &hero1, Heroes &hero2)
     if (!teach.empty())
     {
         auto
-                res = remove_if(teach.begin(), teach.end(), bind1st(HeroesHaveSpell(), learner));
+            res = remove_if(teach.begin(), teach.end(), bind1st(HeroesHaveSpell(), learner));
         teach.resize(distance(teach.begin(), res));
     }
 
     if (!teach.empty())
     {
         auto
-                res = remove_if(teach.begin(), teach.end(),
-                                not1(bind1st(HeroesCanTeachSpell(), teacher)));
+            res = remove_if(teach.begin(), teach.end(),
+                            not1(bind1st(HeroesCanTeachSpell(), teacher)));
         teach.resize(distance(teach.begin(), res));
     }
 
@@ -380,7 +386,7 @@ void Heroes::ScholarAction(Heroes &hero1, Heroes &hero2)
 
     // learning
     for (SpellStorage::const_iterator
-                 it = learn.begin(); it != learn.end(); ++it)
+         it = learn.begin(); it != learn.end(); ++it)
     {
         teacher->AppendSpellToBook(*it);
         if (!spells1.empty())
@@ -390,7 +396,7 @@ void Heroes::ScholarAction(Heroes &hero1, Heroes &hero2)
 
     // teacher
     for (SpellStorage::const_iterator
-                 it = teach.begin(); it != teach.end(); ++it)
+         it = teach.begin(); it != teach.end(); ++it)
     {
         learner->AppendSpellToBook(*it);
         if (!spells2.empty())
@@ -403,13 +409,14 @@ void Heroes::ScholarAction(Heroes &hero1, Heroes &hero2)
     {
         if (!spells1.empty() && !spells2.empty())
             message = _(
-                    "%{teacher}, whose %{level} %{scholar} knows many magical secrets, learns %{spells1} from %{learner}, and teaches %{spells2} to %{learner}.");
+                "%{teacher}, whose %{level} %{scholar} knows many magical secrets, learns %{spells1} from %{learner}, and teaches %{spells2} to %{learner}."
+            );
         else if (!spells1.empty())
             message = _(
-                    "%{teacher}, whose %{level} %{scholar} knows many magical secrets, learns %{spells1} from %{learner}.");
+                "%{teacher}, whose %{level} %{scholar} knows many magical secrets, learns %{spells1} from %{learner}.");
         else if (!spells2.empty())
             message = _(
-                    "%{teacher}, whose %{level} %{scholar} knows many magical secrets, teaches %{spells2} to %{learner}.");
+                "%{teacher}, whose %{level} %{scholar} knows many magical secrets, teaches %{spells2} to %{learner}.");
 
         if (!message.empty())
         {

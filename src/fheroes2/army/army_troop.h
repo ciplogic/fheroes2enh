@@ -34,17 +34,17 @@ class Troop : public Monster
 public:
     Troop();
 
-    Troop(const Monster &, uint32_t);
+    Troop(const Monster&, uint32_t);
 
-    bool operator==(const Monster &) const;
+    bool operator==(const Monster&) const;
 
     Monster operator()() const;
 
-    void Set(const Troop &);
+    void Set(const Troop&);
 
-    void Set(const Monster &, uint32_t);
+    void Set(const Monster&, uint32_t);
 
-    void SetMonster(const Monster &);
+    void SetMonster(const Monster&);
 
     void SetCount(uint32_t);
 
@@ -92,25 +92,25 @@ public:
     static uint32_t GetAffectedDuration(uint32_t);
 
 protected:
-    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Troop &);
+    friend ByteVectorWriter& operator<<(ByteVectorWriter&, const Troop&);
 
-    friend ByteVectorReader &operator>>(ByteVectorReader &msg, Troop &troop);
+    friend ByteVectorReader& operator>>(ByteVectorReader& msg, Troop& troop);
 
     uint32_t count;
 };
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const Troop &);
+ByteVectorWriter& operator<<(ByteVectorWriter&, const Troop&);
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, Troop &troop);
+ByteVectorReader& operator>>(ByteVectorReader& msg, Troop& troop);
 
 class ArmyTroop : public Troop
 {
 public:
-    ArmyTroop(Army *);
+    ArmyTroop(Army*);
 
-    ArmyTroop(Army *, const Troop &);
+    ArmyTroop(Army*, const Troop&);
 
-    ArmyTroop &operator=(const Troop &);
+    ArmyTroop& operator=(const Troop&);
 
     uint32_t GetAttack() const;
 
@@ -122,15 +122,14 @@ public:
 
     int GetLuck() const;
 
-    void SetArmy(const Army &);
+    void SetArmy(const Army&);
 
-    const Army *GetArmy() const;
+    const Army* GetArmy() const;
 
     string GetAttackString() const;
 
     string GetDefenseString() const;
 
 protected:
-    const Army *army;
+    const Army* army;
 };
-

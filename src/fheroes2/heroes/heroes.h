@@ -39,6 +39,7 @@ class Recruits;
 class Surface;
 
 class MageGuild;
+
 namespace Battle
 {
     class Only;
@@ -50,23 +51,87 @@ public:
     enum
     {
         // knight
-                LORDKILBURN, SIRGALLANTH, ECTOR, GVENNETH, TYRO, AMBROSE, RUBY, MAXIMUS, DIMITRY,
+        LORDKILBURN,
+        SIRGALLANTH,
+        ECTOR,
+        GVENNETH,
+        TYRO,
+        AMBROSE,
+        RUBY,
+        MAXIMUS,
+        DIMITRY,
         // barbarian
-                THUNDAX, FINEOUS, JOJOSH, CRAGHACK, JEZEBEL, JACLYN, ERGON, TSABU, ATLAS,
+        THUNDAX,
+        FINEOUS,
+        JOJOSH,
+        CRAGHACK,
+        JEZEBEL,
+        JACLYN,
+        ERGON,
+        TSABU,
+        ATLAS,
         // sorceress
-                ASTRA, NATASHA, TROYAN, VATAWNA, REBECCA, GEM, ARIEL, CARLAWN, LUNA,
+        ASTRA,
+        NATASHA,
+        TROYAN,
+        VATAWNA,
+        REBECCA,
+        GEM,
+        ARIEL,
+        CARLAWN,
+        LUNA,
         // warlock
-                ARIE, ALAMAR, VESPER, CRODO, BAROK, KASTORE, AGAR, FALAGAR, WRATHMONT,
+        ARIE,
+        ALAMAR,
+        VESPER,
+        CRODO,
+        BAROK,
+        KASTORE,
+        AGAR,
+        FALAGAR,
+        WRATHMONT,
         // wizard
-                MYRA, FLINT, DAWN, HALON, MYRINI, WILFREY, SARAKIN, KALINDRA, MANDIGAL,
+        MYRA,
+        FLINT,
+        DAWN,
+        HALON,
+        MYRINI,
+        WILFREY,
+        SARAKIN,
+        KALINDRA,
+        MANDIGAL,
         // necromancer
-                ZOM, DARLANA, ZAM, RANLOO, CHARITY, RIALDO, ROXANA, SANDRO, CELIA,
+        ZOM,
+        DARLANA,
+        ZAM,
+        RANLOO,
+        CHARITY,
+        RIALDO,
+        ROXANA,
+        SANDRO,
+        CELIA,
         // from campain
-                ROLAND, CORLAGON, ELIZA, ARCHIBALD, HALTON, BAX,
+        ROLAND,
+        CORLAGON,
+        ELIZA,
+        ARCHIBALD,
+        HALTON,
+        BAX,
         // from extended
-                SOLMYR, DAINWIN, MOG, UNCLEIVAN, JOSEPH, GALLAVANT, ELDERIAN, CEALLACH, DRAKONIA, MARTINE, JARKONAS,
+        SOLMYR,
+        DAINWIN,
+        MOG,
+        UNCLEIVAN,
+        JOSEPH,
+        GALLAVANT,
+        ELDERIAN,
+        CEALLACH,
+        DRAKONIA,
+        MARTINE,
+        JARKONAS,
         // debugger
-                SANDYSANDY, UNKNOWN
+        SANDYSANDY,
+        UNKNOWN
     };
 
     static Surface GetPortrait(int heroid, int type);
@@ -77,12 +142,12 @@ public:
     {
         SHIPMASTER = 0x00000001,
         //UNUSED	= 0x00000002,
-                SPELLCASTED = 0x00000004,
+        SPELLCASTED = 0x00000004,
         ENABLEMOVE = 0x00000008,
         //UNUSED	= 0x00000010,
         //UNUSED	= 0x00000020,
         //UNUSED	= 0x00000040,
-                JAIL = 0x00000080,
+        JAIL = 0x00000080,
         ACTION = 0x00000100,
         SAVEPOINTS = 0x00000200,
         SLEEPER = 0x00000400,
@@ -105,17 +170,17 @@ public:
 
     void SetFreeman(int reason);
 
-    const Castle *inCastle() const;
+    const Castle* inCastle() const;
 
-    Castle *inCastle();
+    Castle* inCastle();
 
-    void LoadFromMP2(s32 map_index, int cl, int rc, ByteVectorReader &);
+    void LoadFromMP2(s32 map_index, int cl, int rc, ByteVectorReader&);
 
     void PostLoad();
 
     int GetRace() const;
 
-    const string &GetName() const;
+    const string& GetName() const;
 
     int GetColor() const;
 
@@ -127,9 +192,9 @@ public:
 
     void SetKillerColor(int);
 
-    const Army &GetArmy() const;
+    const Army& GetArmy() const;
 
-    Army &GetArmy();
+    Army& GetArmy();
 
     int GetID() const;
 
@@ -141,13 +206,13 @@ public:
 
     int GetKnowledge() const;
 
-    int GetAttack(string *) const;
+    int GetAttack(string*) const;
 
-    int GetDefense(string *) const;
+    int GetDefense(string*) const;
 
-    int GetPower(string *) const;
+    int GetPower(string*) const;
 
-    int GetKnowledge(string *) const;
+    int GetKnowledge(string*) const;
 
     void IncreasePrimarySkill(int skill);
 
@@ -155,9 +220,9 @@ public:
 
     int GetLuck() const;
 
-    int GetMoraleWithModificators(string *str = nullptr) const;
+    int GetMoraleWithModificators(string* str = nullptr) const;
 
-    int GetLuckWithModificators(string *str = nullptr) const;
+    int GetLuckWithModificators(string* str = nullptr) const;
 
     int GetLevel() const;
 
@@ -165,9 +230,9 @@ public:
 
     void SetMapsObject(int);
 
-    const Point &GetCenterPatrol() const;
+    const Point& GetCenterPatrol() const;
 
-    void SetCenterPatrol(const Point &);
+    void SetCenterPatrol(const Point&);
 
     int GetSquarePatrol() const;
 
@@ -195,11 +260,11 @@ public:
 
     uint32_t GetSecondaryValues(int) const;
 
-    void LearnSkill(const Skill::Secondary &);
+    void LearnSkill(const Skill::Secondary&);
 
-    Skill::SecSkills &GetSecondarySkills();
+    Skill::SecSkills& GetSecondarySkills();
 
-    bool PickupArtifact(const Artifact &);
+    bool PickupArtifact(const Artifact&);
 
     bool HasUltimateArtifact() const;
 
@@ -213,11 +278,11 @@ public:
 
     int OpenDialog(bool readonly = false, bool fade = false);
 
-    void MeetingDialog(Heroes &);
+    void MeetingDialog(Heroes&);
 
-    bool Recruit(int col, const Point &pt);
+    bool Recruit(int col, const Point& pt);
 
-    bool Recruit(const Castle &castle);
+    bool Recruit(const Castle& castle);
 
     void ActionNewDay();
 
@@ -229,11 +294,11 @@ public:
 
     void ActionPreBattle();
 
-    bool BuySpellBook(const Castle *, int shrine = 0);
+    bool BuySpellBook(const Castle*, int shrine = 0);
 
-    const Route::Path &GetPath() const;
+    const Route::Path& GetPath() const;
 
-    Route::Path &GetPath();
+    Route::Path& GetPath();
 
     int GetRangeRouteDays(s32) const;
 
@@ -251,11 +316,11 @@ public:
 
     bool isVisited(int object, Visit::type_t = Visit::LOCAL) const;
 
-    bool isVisited(const Maps::Tiles &, Visit::type_t = Visit::LOCAL) const;
+    bool isVisited(const Maps::Tiles&, Visit::type_t = Visit::LOCAL) const;
 
     bool Move(bool fast = false);
 
-    void Move2Dest(const s32 &, bool skip_action = false);
+    void Move2Dest(const s32&, bool skip_action = false);
 
     bool isEnableMove() const;
 
@@ -273,13 +338,13 @@ public:
 
     bool ApplyPenaltyMovement();
 
-    bool ActionSpellCast(const Spell &);
+    bool ActionSpellCast(const Spell&);
 
-    void Redraw(Surface &, bool) const;
+    void Redraw(Surface&, bool) const;
 
-    void Redraw(Surface &, s32, s32, bool) const;
+    void Redraw(Surface&, s32, s32, bool) const;
 
-    void PortraitRedraw(s32, s32, int type, Surface &) const;
+    void PortraitRedraw(s32, s32, int type, Surface&) const;
 
     int GetSpriteIndex() const;
 
@@ -313,12 +378,12 @@ public:
 
     static uint32_t GetExperienceFromLevel(int);
 
-    static void ScholarAction(Heroes &, Heroes &);
-    
-private:
-    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Heroes &);
+    static void ScholarAction(Heroes&, Heroes&);
 
-    friend ByteVectorReader &operator>>(ByteVectorReader &msg, Heroes &hero);
+private:
+    friend ByteVectorWriter& operator<<(ByteVectorWriter&, const Heroes&);
+
+    friend ByteVectorReader& operator>>(ByteVectorReader& msg, Heroes& hero);
 
     friend class Recruits;
 
@@ -334,7 +399,7 @@ private:
 
     bool MoveStep(bool fast = false);
 
-    static void MoveStep(Heroes &, s32 from, s32 to, bool newpos);
+    static void MoveStep(Heroes&, s32 from, s32 to, bool newpos);
 public:
     string name;
     ColorBase killer_color;
@@ -345,8 +410,8 @@ public:
 
     Army army;
 
-    int hid;        /* hero id */
-    int portrait;    /* hero id */
+    int hid; /* hero id */
+    int portrait; /* hero id */
     int race;
     int save_maps_object;
 
@@ -361,12 +426,12 @@ public:
     vector<IndexObject> visit_object;
 };
 
-struct VecHeroes 
+struct VecHeroes
 {
     vector<Heroes *> _items;
-    Heroes *Get(int /* hero id */) const;
+    Heroes* Get(int /* hero id */) const;
 
-    Heroes *Get(const Point &) const;
+    Heroes* Get(const Point&) const;
 };
 
 struct AllHeroes : public VecHeroes
@@ -381,28 +446,26 @@ struct AllHeroes : public VecHeroes
 
     void Scoute(int) const;
 
-    Heroes *GetGuest(const Castle &) const;
+    Heroes* GetGuest(const Castle&) const;
 
-    Heroes *GetGuard(const Castle &) const;
+    Heroes* GetGuard(const Castle&) const;
 
-    Heroes *GetFreeman(int race) const;
+    Heroes* GetFreeman(int race) const;
 
-    Heroes *FromJail(s32) const;
+    Heroes* FromJail(s32) const;
 
     bool HaveTwoFreemans() const;
-
 };
 
-Battle::Result BattleHeroWithMonster(Heroes &hero, Army &army, s32 dst_index);
+Battle::Result BattleHeroWithMonster(Heroes& hero, Army& army, s32 dst_index);
 
-Battle::Result BattleHeroWithHero(Heroes &hero, Heroes &other_hero, s32 dst_index);
+Battle::Result BattleHeroWithHero(Heroes& hero, Heroes& other_hero, s32 dst_index);
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const VecHeroes &);
-ByteVectorReader &operator>>(ByteVectorReader &, VecHeroes &);
+ByteVectorWriter& operator<<(ByteVectorWriter&, const VecHeroes&);
+ByteVectorReader& operator>>(ByteVectorReader&, VecHeroes&);
 
-ByteVectorWriter &operator<<(ByteVectorWriter &msg, const Heroes &hero);
-ByteVectorReader &operator>>(ByteVectorReader &, Heroes &);
+ByteVectorWriter& operator<<(ByteVectorWriter& msg, const Heroes& hero);
+ByteVectorReader& operator>>(ByteVectorReader&, Heroes&);
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const AllHeroes &);
-ByteVectorReader &operator>>(ByteVectorReader &msg, AllHeroes &heroes);
-
+ByteVectorWriter& operator<<(ByteVectorWriter&, const AllHeroes&);
+ByteVectorReader& operator>>(ByteVectorReader& msg, AllHeroes& heroes);

@@ -27,8 +27,8 @@
 #include "localevent.h"
 #include "icn.h"
 
-Interface::ControlPanel::ControlPanel(Basic &basic)
-        : interface(basic)
+Interface::ControlPanel::ControlPanel(Basic& basic)
+    : interface(basic)
 {
     _area.w = 180;
     _area.h = 36;
@@ -66,7 +66,7 @@ void Interface::ControlPanel::ResetTheme()
     btn_quit.SetAlphaMod(alpha);
 }
 
-const Rect &Interface::ControlPanel::GetArea() const
+const Rect& Interface::ControlPanel::GetArea() const
 {
     return _area;
 }
@@ -90,7 +90,7 @@ void Interface::ControlPanel::SetPos(s32 ox, s32 oy)
 
 void Interface::ControlPanel::Redraw() const
 {
-    Display &display = Display::Get();
+    Display& display = Display::Get();
 
     btn_radr.Blit(_area.x, _area.y, display);
     btn_icon.Blit(_area.x + 36, _area.y, display);
@@ -101,7 +101,7 @@ void Interface::ControlPanel::Redraw() const
 
 int Interface::ControlPanel::QueueEventProcessing() const
 {
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     if (le.MouseClickLeft(rt_radr)) interface.EventSwitchShowRadar();
     else if (le.MouseClickLeft(rt_icon)) interface.EventSwitchShowIcons();

@@ -32,7 +32,7 @@
 #include "game.h"
 #include "ai_simple.h"
 
-void AICastleDefense(Castle &c)
+void AICastleDefense(Castle& c)
 {
     if (c.isCastle())
     {
@@ -57,9 +57,9 @@ void AICastleDefense(Castle &c)
     c.RecruitAllMonster();
 }
 
-void AICastleDevelopment(Castle &c)
+void AICastleDevelopment(Castle& c)
 {
-    const Kingdom &kingdom = c.GetKingdom();
+    const Kingdom& kingdom = c.GetKingdom();
 
     if (c.isCastle())
     {
@@ -149,7 +149,8 @@ void AICastleDevelopment(Castle &c)
             if (!c.isBuild(DWELLING_UPGRADE6))
                 c.BuyBuilding(DWELLING_UPGRADE6);
         }
-    } else
+    }
+    else
     {
         // build castle only monday or tuesday or for capital
         if (c.isCapital() || 3 > world.GetDay()) c.BuyBuilding(BUILD_CASTLE);
@@ -159,29 +160,29 @@ void AICastleDevelopment(Castle &c)
     if (world.LastDay()) c.RecruitAllMonster();
 }
 
-void AICastleTurn(Castle *castle)
+void AICastleTurn(Castle* castle)
 {
     if (castle) AI::CastleTurn(*castle);
 }
 
-void AI::CastleTurn(Castle &castle)
+void AI::CastleTurn(Castle& castle)
 {
     // skip neutral town
     if (castle.GetColor() != Color::NONE)
     {
         s32 range = GetViewDistance(castle.isCastle() ? Game::VIEW_CASTLE : Game::VIEW_TOWN);
-        const Heroes *enemy = nullptr;
+        const Heroes* enemy = nullptr;
 
         // find enemy hero
         for (s32 y = -range; y <= range; ++y)
             for (s32 x = -range; x <= range; ++x)
             {
                 if (!y && !x) continue;
-                const Point &center = castle.GetCenter();
+                const Point& center = castle.GetCenter();
 
                 if (Maps::isValidAbsPoint(center.x + x, center.y + y))
                 {
-                    const Maps::Tiles &tile = world.GetTiles(Maps::GetIndexFromAbsPoint(center.x + x, center.y + y));
+                    const Maps::Tiles& tile = world.GetTiles(Maps::GetIndexFromAbsPoint(center.x + x, center.y + y));
 
                     if (MP2::OBJ_HEROES == tile.GetObject())
                         enemy = tile.GetHeroes();
@@ -195,8 +196,8 @@ void AI::CastleTurn(Castle &castle)
 
         enemy ? AICastleDefense(castle) : AICastleDevelopment(castle);
 
-        Kingdom &kingdom = castle.GetKingdom();
-        Heroes *hero = castle.GetHeroes().Guest();
+        Kingdom& kingdom = castle.GetKingdom();
+        Heroes* hero = castle.GetHeroes().Guest();
         bool can_recruit = castle.isCastle() && !hero && kingdom.GetHeroes()._items.size() < Kingdom::GetMaxHeroes();
 
         // part II
@@ -206,7 +207,7 @@ void AI::CastleTurn(Castle &castle)
         {
             if (can_recruit)
             {
-                Recruits &rec = kingdom.GetRecruits();
+                Recruits& rec = kingdom.GetRecruits();
 
                 if (rec.GetHero1())
                     hero = castle.RecruitHero(rec.GetHero1());
@@ -219,14 +220,14 @@ void AI::CastleTurn(Castle &castle)
         }
 
         // part III
-        AIKingdom &ai = AIKingdoms::Get(castle.GetColor());
+        AIKingdom& ai = AIKingdoms::Get(castle.GetColor());
         if (ai.capital != &castle &&
             castle.GetArmy().m_troops.isValid() && !hero &&
             2 < castle.GetArmy().m_troops.GetCount() &&
             150 < castle.GetArmy().m_troops.GetHitPoints() &&
             can_recruit)
         {
-            Recruits &rec = kingdom.GetRecruits();
+            Recruits& rec = kingdom.GetRecruits();
 
             if (rec.GetHero1())
                 hero = castle.RecruitHero(rec.GetHero1());
@@ -239,13 +240,13 @@ void AI::CastleTurn(Castle &castle)
     }
 }
 
-void AI::CastlePreBattle(Castle &castle)
+void AI::CastlePreBattle(Castle& castle)
 {
-    Heroes *hero = castle.GetHeroes().GuardFirst();
+    Heroes* hero = castle.GetHeroes().GuardFirst();
     if (hero && castle.GetArmy().m_troops.isValid())
         hero->GetArmy().JoinStrongestFromArmy(castle.GetArmy());
 }
 
-void AI::CastleAfterBattle(Castle &, bool attacker_wins)
+void AI::CastleAfterBattle(Castle&, bool attacker_wins)
 {
 }

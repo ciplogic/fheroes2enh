@@ -24,12 +24,12 @@
 #include "bitmodes.h"
 #include "players.h"
 
-ByteVectorWriter&operator<<(ByteVectorWriter&msg, const BitModes &b)
+ByteVectorWriter& operator<<(ByteVectorWriter& msg, const BitModes& b)
 {
     return msg << b.modes;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, BitModes &b)
+ByteVectorReader& operator>>(ByteVectorReader& msg, BitModes& b)
 {
     return msg >> b.modes;
 }

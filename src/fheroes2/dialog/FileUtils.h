@@ -9,12 +9,11 @@
 
 namespace FileUtils
 {
-    template<class T>
-    void ZeroMem(T &t)
+    template <class T>
+    void ZeroMem(T& t)
     {
         memset(&t, 0, sizeof(T));
     }
 
     long GetFileTime(const std::string& filename);
 }
-

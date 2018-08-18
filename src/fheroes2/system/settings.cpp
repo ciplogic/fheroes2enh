@@ -58,15 +58,15 @@ bool IS_DEBUG(int name, int level)
 {
     const int debug = Settings::Get().Debug();
     return
-            DBG_ENGINE & name && (DBG_ENGINE & debug) >> 2 >= level ||
-            DBG_GAME & name && (DBG_GAME & debug) >> 4 >= level ||
-            DBG_BATTLE & name && (DBG_BATTLE & debug) >> 6 >= level ||
-            DBG_AI & name && (DBG_AI & debug) >> 8 >= level ||
-            DBG_NETWORK & name && (DBG_NETWORK & debug) >> 10 >= level ||
-            DBG_DEVEL & name && (DBG_DEVEL & debug) >> 12 >= level;
+        DBG_ENGINE & name && (DBG_ENGINE & debug) >> 2 >= level ||
+        DBG_GAME & name && (DBG_GAME & debug) >> 4 >= level ||
+        DBG_BATTLE & name && (DBG_BATTLE & debug) >> 6 >= level ||
+        DBG_AI & name && (DBG_AI & debug) >> 8 >= level ||
+        DBG_NETWORK & name && (DBG_NETWORK & debug) >> 10 >= level ||
+        DBG_DEVEL & name && (DBG_DEVEL & debug) >> 12 >= level;
 }
 
-const char *StringDebug(int name)
+const char* StringDebug(int name)
 {
     if (name & DBG_ENGINE) return "DBG_ENGINE";
     if (name & DBG_GAME) return "DBG_GAME";
@@ -102,7 +102,7 @@ enum
     GLOBAL_MUSIC_MIDI = 0x08000000,
 
     //GLOBAL_UNUSED          = 0x20000000,
-            GLOBAL_USEUNICODE = 0x40000000,
+    GLOBAL_USEUNICODE = 0x40000000,
     GLOBAL_ALTRESOURCE = 0x80000000,
 
     GLOBAL_MUSIC = GLOBAL_MUSIC_CD | GLOBAL_MUSIC_EXT | GLOBAL_MUSIC_MIDI
@@ -113,101 +113,111 @@ struct settings_t
     uint32_t id;
     std::string str;
 
-    bool operator==(const string &s) const
-    { return !str.empty() && s == str; };
+    bool operator==(const string& s) const
+    {
+        return !str.empty() && s == str;
+    };
 
     bool operator==(uint32_t i) const
-    { return id && id == i; };
+    {
+        return id && id == i;
+    };
 };
 
 // external settings
 const settings_t settingsGeneral[] =
-        {
-                {GLOBAL_SOUND,        "sound",},
-                {GLOBAL_MUSIC_MIDI,   "music",},
-                {GLOBAL_USEUNICODE,   "unicode",},
-                {GLOBAL_ALTRESOURCE,  "alt resource",},
-                {GLOBAL_POCKETPC,     "pocketpc",},
-                {GLOBAL_POCKETPC,     "pocket pc",},
-                {GLOBAL_USESWSURFACE, "use swsurface only",}
-        };
+{
+    {GLOBAL_SOUND, "sound",},
+    {GLOBAL_MUSIC_MIDI, "music",},
+    {GLOBAL_USEUNICODE, "unicode",},
+    {GLOBAL_ALTRESOURCE, "alt resource",},
+    {GLOBAL_POCKETPC, "pocketpc",},
+    {GLOBAL_POCKETPC, "pocket pc",},
+    {GLOBAL_USESWSURFACE, "use swsurface only",}
+};
 
 // internal settings
 const settings_t settingsFHeroes2[] =
-        {
-                {Settings::GAME_QUICKCOMBAT_ON,              _("game: quick combat on"),},
-                {Settings::GAME_SAVE_REWRITE_CONFIRM,        _("game: always confirm for rewrite savefile"),},
-                {Settings::GAME_ALSO_CONFIRM_AUTOSAVE,       _("game: also confirm autosave"),},
-                {Settings::GAME_REMEMBER_LAST_FOCUS,         _("game: remember last focus"),},
-                {Settings::GAME_BATTLE_SHOW_GRID,            _("game: battle show grid"),},
-                {Settings::GAME_BATTLE_SHOW_MOUSE_SHADOW,    _("game: battle mouse shadow")},
-                {Settings::GAME_BATTLE_SHOW_MOVE_SHADOW,     _("game: battle move shadow"),},
-                {Settings::GAME_BATTLE_SHOW_DAMAGE,          _("game: battle show damage info"),},
-                {Settings::GAME_CASTLE_FLASH_BUILDING,       _("game: castle flash building"),},
-                {Settings::WORLD_SHOW_VISITED_CONTENT,       _("world: show visited content from objects"),},
-                {Settings::WORLD_SCOUTING_EXTENDED,          _("world: scouting skill show extended content info"),},
-                {Settings::WORLD_ABANDONED_MINE_RANDOM,      _("world: abandoned mine random resource"),},
-                {Settings::WORLD_SAVE_MONSTER_BATTLE,        _("world: save count monster after battle"),},
-                {Settings::WORLD_ALLOW_SET_GUARDIAN,         _("world: allow set guardian to objects"),},
-                {Settings::WORLD_GUARDIAN_TWO_DEFENSE,       _("world: guardian objects gets +2 defense"),},
-                {Settings::WORLD_NOREQ_FOR_ARTIFACTS,        _("world: no in-built requirements or guardians for placed artifacts"),},
-                {Settings::WORLD_ONLY_FIRST_MONSTER_ATTACK,  _("world: only the first monster will attack (H2 bug)."),},
-                {Settings::WORLD_EYE_EAGLE_AS_SCHOLAR,       _("world: Eagle Eye also works like Scholar in H3."),},
-                {Settings::WORLD_BAN_WEEKOF,                 _("world: ban for WeekOf/MonthOf Monsters"),},
-                {Settings::WORLD_NEW_VERSION_WEEKOF,         _("world: new version WeekOf (+growth)"),},
-                {Settings::WORLD_BAN_PLAGUES,                _("world: ban plagues months"),},
-                {Settings::WORLD_BAN_MONTHOF_MONSTERS,       _("world: Months Of Monsters do not place creatures on map"),},
-                {Settings::WORLD_ARTIFACT_CRYSTAL_BALL,      _("world: Crystal Ball also added Identify Hero and Visions spells"),},
-                {Settings::WORLD_ARTSPRING_SEPARATELY_VISIT, _("world: Artesian Springs have two separately visitable squares (h3 ver)"),},
-                {Settings::WORLD_STARTHERO_LOSSCOND4HUMANS,  _("world: Starting heroes as Loss Conditions for Human Players"),},
-                {Settings::WORLD_1HERO_HIRED_EVERY_WEEK,     _("world: Only 1 hero can be hired by the one player every week"),},
-                {Settings::CASTLE_1HERO_HIRED_EVERY_WEEK,    _("world: each castle allows one hero to be recruited every week"),},
-                {Settings::WORLD_DWELLING_ACCUMULATE_UNITS,  _("world: Outer creature dwellings should accumulate units"),},
-                {Settings::WORLD_USE_UNIQUE_ARTIFACTS_ML,    _("world: use unique artifacts for morale/luck"),},
-                {Settings::WORLD_USE_UNIQUE_ARTIFACTS_RS,    _("world: use unique artifacts for resource affecting"),},
-                {Settings::WORLD_USE_UNIQUE_ARTIFACTS_PS,    _("world: use unique artifacts for primary skills"),},
-                {Settings::WORLD_USE_UNIQUE_ARTIFACTS_SS,    _("world: use unique artifacts for secondary skills"),},
-                {Settings::WORLD_EXT_OBJECTS_CAPTURED,       _("world: Wind/Water Mills and Magic Garden can be captured"),},
-                {Settings::WORLD_DISABLE_BARROW_MOUNDS,      _("world: disable Barrow Mounds"),},
-                {Settings::CASTLE_ALLOW_BUY_FROM_WELL,       _("castle: allow buy from well"),},
-                {Settings::CASTLE_ALLOW_GUARDIANS,           _("castle: allow guardians"),},
-                {Settings::CASTLE_MAGEGUILD_POINTS_TURN,     _("castle: higher mage guilds regenerate more spell points/turn (20/40/60/80/100%)"),},
-                {Settings::CASTLE_ALLOW_RECRUITS_SPECIAL,    _("castle: allow recruits special/expansion heroes"),},
-                {Settings::HEROES_BUY_BOOK_FROM_SHRINES,     _("heroes: allow buy a spellbook from Shrines"),},
-                {Settings::HEROES_LEARN_SPELLS_WITH_DAY,     _("heroes: learn new spells with day"),},
-                {Settings::HEROES_COST_DEPENDED_FROM_LEVEL,  _("heroes: recruit cost to be dependent on hero level"),},
-                {Settings::HEROES_REMEMBER_POINTS_RETREAT,   _("heroes: remember MP/SP for retreat/surrender result"),},
-                {Settings::HEROES_SURRENDERING_GIVE_EXP,     _("heroes: surrendering gives some experience"),},
-                {Settings::HEROES_RECALCULATE_MOVEMENT,      _("heroes: recalculate movement points after creatures movement"),},
-                {Settings::HEROES_PATROL_ALLOW_PICKUP,       _("heroes: allow pickup objects for patrol"),},
-                {Settings::HEROES_AUTO_MOVE_BATTLE_DST,      _("heroes: after battle move to target cell"),},
-                {Settings::HEROES_TRANSCRIBING_SCROLLS,      _("heroes: allow transcribing scrolls (needs: Eye Eagle skill)"),},
-                {Settings::HEROES_ALLOW_BANNED_SECSKILLS,    _("heroes: allow banned sec. skills upgrade"),},
-                {Settings::HEROES_ARENA_ANY_SKILLS,          _("heroes: in Arena can choose any of primary skills"),},
-                {Settings::UNIONS_ALLOW_HERO_MEETINGS,       _("unions: allow meeting heroes"),},
-                {Settings::UNIONS_ALLOW_CASTLE_VISITING,     _("unions: allow castle visiting"),},
-                {Settings::BATTLE_SOFT_WAITING,              _("battle: soft wait troop"),},
-                {Settings::BATTLE_OBJECTS_ARCHERS_PENALTY,   _("battle: high objects are an obstacle for archers"),},
-                {Settings::BATTLE_MERGE_ARMIES,              _("battle: merge armies for hero from castle"),},
-                {Settings::BATTLE_ARCHMAGE_RESIST_BAD_SPELL, _("battle: archmage can resists (20%) bad spells"),},
-                {Settings::BATTLE_MAGIC_TROOP_RESIST,        _("battle: magical creature resists (20%) the same magic"),},
-                {Settings::BATTLE_SKIP_INCREASE_DEFENSE,     _("battle: skip increase +2 defense"),},
-                {Settings::BATTLE_REVERSE_WAIT_ORDER,        _("battle: reverse wait order (fast, average, slow)"),},
-                {Settings::GAME_SHOW_SYSTEM_INFO,            _("game: show system info"),},
-                {Settings::GAME_AUTOSAVE_ON,                 _("game: autosave on"),},
-                {Settings::GAME_AUTOSAVE_BEGIN_DAY,          _("game: autosave will be made at the beginning of the day"),},
-                {Settings::GAME_USE_FADE,                    _("game: use fade"),},
-                {Settings::GAME_SHOW_SDL_LOGO,               _("game: show SDL logo"),},
-                {Settings::GAME_EVIL_INTERFACE,              _("game: use evil interface"),},
-                {Settings::GAME_DYNAMIC_INTERFACE,           _("game: also use dynamic interface for castles"),},
-                {Settings::GAME_HIDE_INTERFACE,              _("game: hide interface"),},
-                {Settings::GAME_CONTINUE_AFTER_VICTORY,      _("game: offer to continue the game afer victory condition"),},
-                {Settings::POCKETPC_HIDE_CURSOR,             _("pocketpc: hide cursor"),},
-                {Settings::POCKETPC_TAP_MODE,                _("pocketpc: tap mode"),},
-                {Settings::POCKETPC_DRAG_DROP_SCROLL,        _("pocketpc: drag&drop gamearea as scroll"),},
-                {Settings::POCKETPC_LOW_MEMORY,              _("pocketpc: low memory"),},
+{
+    {Settings::GAME_QUICKCOMBAT_ON, _("game: quick combat on"),},
+    {Settings::GAME_SAVE_REWRITE_CONFIRM, _("game: always confirm for rewrite savefile"),},
+    {Settings::GAME_ALSO_CONFIRM_AUTOSAVE, _("game: also confirm autosave"),},
+    {Settings::GAME_REMEMBER_LAST_FOCUS, _("game: remember last focus"),},
+    {Settings::GAME_BATTLE_SHOW_GRID, _("game: battle show grid"),},
+    {Settings::GAME_BATTLE_SHOW_MOUSE_SHADOW, _("game: battle mouse shadow")},
+    {Settings::GAME_BATTLE_SHOW_MOVE_SHADOW, _("game: battle move shadow"),},
+    {Settings::GAME_BATTLE_SHOW_DAMAGE, _("game: battle show damage info"),},
+    {Settings::GAME_CASTLE_FLASH_BUILDING, _("game: castle flash building"),},
+    {Settings::WORLD_SHOW_VISITED_CONTENT, _("world: show visited content from objects"),},
+    {Settings::WORLD_SCOUTING_EXTENDED, _("world: scouting skill show extended content info"),},
+    {Settings::WORLD_ABANDONED_MINE_RANDOM, _("world: abandoned mine random resource"),},
+    {Settings::WORLD_SAVE_MONSTER_BATTLE, _("world: save count monster after battle"),},
+    {Settings::WORLD_ALLOW_SET_GUARDIAN, _("world: allow set guardian to objects"),},
+    {Settings::WORLD_GUARDIAN_TWO_DEFENSE, _("world: guardian objects gets +2 defense"),},
+    {Settings::WORLD_NOREQ_FOR_ARTIFACTS, _("world: no in-built requirements or guardians for placed artifacts"),},
+    {Settings::WORLD_ONLY_FIRST_MONSTER_ATTACK, _("world: only the first monster will attack (H2 bug)."),},
+    {Settings::WORLD_EYE_EAGLE_AS_SCHOLAR, _("world: Eagle Eye also works like Scholar in H3."),},
+    {Settings::WORLD_BAN_WEEKOF, _("world: ban for WeekOf/MonthOf Monsters"),},
+    {Settings::WORLD_NEW_VERSION_WEEKOF, _("world: new version WeekOf (+growth)"),},
+    {Settings::WORLD_BAN_PLAGUES, _("world: ban plagues months"),},
+    {Settings::WORLD_BAN_MONTHOF_MONSTERS, _("world: Months Of Monsters do not place creatures on map"),},
+    {Settings::WORLD_ARTIFACT_CRYSTAL_BALL, _("world: Crystal Ball also added Identify Hero and Visions spells"),},
+    {
+        Settings::WORLD_ARTSPRING_SEPARATELY_VISIT,
+        _("world: Artesian Springs have two separately visitable squares (h3 ver)"),
+    },
+    {Settings::WORLD_STARTHERO_LOSSCOND4HUMANS, _("world: Starting heroes as Loss Conditions for Human Players"),},
+    {Settings::WORLD_1HERO_HIRED_EVERY_WEEK, _("world: Only 1 hero can be hired by the one player every week"),},
+    {Settings::CASTLE_1HERO_HIRED_EVERY_WEEK, _("world: each castle allows one hero to be recruited every week"),},
+    {Settings::WORLD_DWELLING_ACCUMULATE_UNITS, _("world: Outer creature dwellings should accumulate units"),},
+    {Settings::WORLD_USE_UNIQUE_ARTIFACTS_ML, _("world: use unique artifacts for morale/luck"),},
+    {Settings::WORLD_USE_UNIQUE_ARTIFACTS_RS, _("world: use unique artifacts for resource affecting"),},
+    {Settings::WORLD_USE_UNIQUE_ARTIFACTS_PS, _("world: use unique artifacts for primary skills"),},
+    {Settings::WORLD_USE_UNIQUE_ARTIFACTS_SS, _("world: use unique artifacts for secondary skills"),},
+    {Settings::WORLD_EXT_OBJECTS_CAPTURED, _("world: Wind/Water Mills and Magic Garden can be captured"),},
+    {Settings::WORLD_DISABLE_BARROW_MOUNDS, _("world: disable Barrow Mounds"),},
+    {Settings::CASTLE_ALLOW_BUY_FROM_WELL, _("castle: allow buy from well"),},
+    {Settings::CASTLE_ALLOW_GUARDIANS, _("castle: allow guardians"),},
+    {
+        Settings::CASTLE_MAGEGUILD_POINTS_TURN,
+        _("castle: higher mage guilds regenerate more spell points/turn (20/40/60/80/100%)"),
+    },
+    {Settings::CASTLE_ALLOW_RECRUITS_SPECIAL, _("castle: allow recruits special/expansion heroes"),},
+    {Settings::HEROES_BUY_BOOK_FROM_SHRINES, _("heroes: allow buy a spellbook from Shrines"),},
+    {Settings::HEROES_LEARN_SPELLS_WITH_DAY, _("heroes: learn new spells with day"),},
+    {Settings::HEROES_COST_DEPENDED_FROM_LEVEL, _("heroes: recruit cost to be dependent on hero level"),},
+    {Settings::HEROES_REMEMBER_POINTS_RETREAT, _("heroes: remember MP/SP for retreat/surrender result"),},
+    {Settings::HEROES_SURRENDERING_GIVE_EXP, _("heroes: surrendering gives some experience"),},
+    {Settings::HEROES_RECALCULATE_MOVEMENT, _("heroes: recalculate movement points after creatures movement"),},
+    {Settings::HEROES_PATROL_ALLOW_PICKUP, _("heroes: allow pickup objects for patrol"),},
+    {Settings::HEROES_AUTO_MOVE_BATTLE_DST, _("heroes: after battle move to target cell"),},
+    {Settings::HEROES_TRANSCRIBING_SCROLLS, _("heroes: allow transcribing scrolls (needs: Eye Eagle skill)"),},
+    {Settings::HEROES_ALLOW_BANNED_SECSKILLS, _("heroes: allow banned sec. skills upgrade"),},
+    {Settings::HEROES_ARENA_ANY_SKILLS, _("heroes: in Arena can choose any of primary skills"),},
+    {Settings::UNIONS_ALLOW_HERO_MEETINGS, _("unions: allow meeting heroes"),},
+    {Settings::UNIONS_ALLOW_CASTLE_VISITING, _("unions: allow castle visiting"),},
+    {Settings::BATTLE_SOFT_WAITING, _("battle: soft wait troop"),},
+    {Settings::BATTLE_OBJECTS_ARCHERS_PENALTY, _("battle: high objects are an obstacle for archers"),},
+    {Settings::BATTLE_MERGE_ARMIES, _("battle: merge armies for hero from castle"),},
+    {Settings::BATTLE_ARCHMAGE_RESIST_BAD_SPELL, _("battle: archmage can resists (20%) bad spells"),},
+    {Settings::BATTLE_MAGIC_TROOP_RESIST, _("battle: magical creature resists (20%) the same magic"),},
+    {Settings::BATTLE_SKIP_INCREASE_DEFENSE, _("battle: skip increase +2 defense"),},
+    {Settings::BATTLE_REVERSE_WAIT_ORDER, _("battle: reverse wait order (fast, average, slow)"),},
+    {Settings::GAME_SHOW_SYSTEM_INFO, _("game: show system info"),},
+    {Settings::GAME_AUTOSAVE_ON, _("game: autosave on"),},
+    {Settings::GAME_AUTOSAVE_BEGIN_DAY, _("game: autosave will be made at the beginning of the day"),},
+    {Settings::GAME_USE_FADE, _("game: use fade"),},
+    {Settings::GAME_SHOW_SDL_LOGO, _("game: show SDL logo"),},
+    {Settings::GAME_EVIL_INTERFACE, _("game: use evil interface"),},
+    {Settings::GAME_DYNAMIC_INTERFACE, _("game: also use dynamic interface for castles"),},
+    {Settings::GAME_HIDE_INTERFACE, _("game: hide interface"),},
+    {Settings::GAME_CONTINUE_AFTER_VICTORY, _("game: offer to continue the game afer victory condition"),},
+    {Settings::POCKETPC_HIDE_CURSOR, _("pocketpc: hide cursor"),},
+    {Settings::POCKETPC_TAP_MODE, _("pocketpc: tap mode"),},
+    {Settings::POCKETPC_DRAG_DROP_SCROLL, _("pocketpc: drag&drop gamearea as scroll"),},
+    {Settings::POCKETPC_LOW_MEMORY, _("pocketpc: low memory"),},
 
-        };
+};
 
 string Settings::GetVersion()
 {
@@ -217,19 +227,19 @@ string Settings::GetVersion()
 #ifdef SVN_REVISION
             SVN_REVISION;
 #else
-            "0000";
+        "0000";
 #endif
 
     return os.str();
 }
 
 /* constructor */
-Settings::Settings() 
+Settings::Settings()
     : debug(DEFAULT_DEBUG), video_mode(0, 0), fullScreen(false), game_difficulty((int)DifficultyEnum::NORMAL),
-    font_normal("dejavusans.ttf"), font_small("dejavusans.ttf"), size_normal(15), size_small(10),
-    sound_volume(6), music_volume(6), heroes_speed(DEFAULT_SPEED_DELAY),
-    ai_speed(DEFAULT_SPEED_DELAY), scroll_speed(SCROLL_NORMAL), battle_speed(DEFAULT_SPEED_DELAY),
-    blit_speed(0), game_type(0), preferably_count_players(0), port(DEFAULT_PORT), memory_limit(0)
+      font_normal("dejavusans.ttf"), font_small("dejavusans.ttf"), size_normal(15), size_small(10),
+      sound_volume(6), music_volume(6), heroes_speed(DEFAULT_SPEED_DELAY),
+      ai_speed(DEFAULT_SPEED_DELAY), scroll_speed(SCROLL_NORMAL), battle_speed(DEFAULT_SPEED_DELAY),
+      blit_speed(0), game_type(0), preferably_count_players(0), port(DEFAULT_PORT), memory_limit(0)
 {
     ExtSetModes(GAME_SHOW_SDL_LOGO);
     ExtSetModes(GAME_AUTOSAVE_ON);
@@ -245,18 +255,18 @@ Settings::~Settings()
     if (!LoadedGameVersion()) BinarySave();
 }
 
-Settings &Settings::Get()
+Settings& Settings::Get()
 {
     static Settings conf;
 
     return conf;
 }
 
-bool Settings::Read(const string &filename)
+bool Settings::Read(const string& filename)
 {
     TinyConfig config('=', '#');
     int ival;
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     if (!config.Load(filename)) return false;
 
@@ -265,43 +275,43 @@ bool Settings::Read(const string &filename)
 
     switch (ival)
     {
-        case 0:
-            debug = DBG_ALL_WARN;
-            break;
-        case 1:
-            debug = DBG_ENGINE_INFO;
-            break;
-        case 2:
-            debug = DBG_ENGINE_INFO | DBG_GAME_INFO;
-            break;
-        case 3:
-            debug = DBG_ENGINE_INFO | DBG_BATTLE_INFO;
-            break;
-        case 4:
-            debug = DBG_ENGINE_INFO | DBG_BATTLE_INFO | DBG_AI_INFO;
-            break;
-        case 5:
-            debug = DBG_ALL_INFO;
-            break;
-        case 6:
-            debug = DBG_GAME_TRACE;
-            break;
-        case 7:
-            debug = DBG_GAME_TRACE | DBG_AI_TRACE;
-            break;
-        case 8:
-            debug = DBG_ENGINE_TRACE | DBG_GAME_TRACE | DBG_AI_TRACE;
-            break;
-        case 9:
-            debug = DBG_ALL_TRACE;
-            break;
-        default:
-            debug = ival;
-            break;
+    case 0:
+        debug = DBG_ALL_WARN;
+        break;
+    case 1:
+        debug = DBG_ENGINE_INFO;
+        break;
+    case 2:
+        debug = DBG_ENGINE_INFO | DBG_GAME_INFO;
+        break;
+    case 3:
+        debug = DBG_ENGINE_INFO | DBG_BATTLE_INFO;
+        break;
+    case 4:
+        debug = DBG_ENGINE_INFO | DBG_BATTLE_INFO | DBG_AI_INFO;
+        break;
+    case 5:
+        debug = DBG_ALL_INFO;
+        break;
+    case 6:
+        debug = DBG_GAME_TRACE;
+        break;
+    case 7:
+        debug = DBG_GAME_TRACE | DBG_AI_TRACE;
+        break;
+    case 8:
+        debug = DBG_ENGINE_TRACE | DBG_GAME_TRACE | DBG_AI_TRACE;
+        break;
+    case 9:
+        debug = DBG_ALL_TRACE;
+        break;
+    default:
+        debug = ival;
+        break;
     }
 
     // opt_globals
-    const settings_t *ptr = settingsGeneral;
+    const settings_t* ptr = settingsGeneral;
     while (ptr->id)
     {
         if (config.Exists(ptr->str))
@@ -369,11 +379,13 @@ bool Settings::Read(const string &filename)
         {
             opt_global.ResetModes(GLOBAL_MUSIC);
             opt_global.SetModes(GLOBAL_MUSIC_MIDI);
-        } else if (sval == "cd")
+        }
+        else if (sval == "cd")
         {
             opt_global.ResetModes(GLOBAL_MUSIC);
             opt_global.SetModes(GLOBAL_MUSIC_CD);
-        } else if (sval == "ext")
+        }
+        else if (sval == "ext")
         {
             opt_global.ResetModes(GLOBAL_MUSIC);
             opt_global.SetModes(GLOBAL_MUSIC_EXT);
@@ -417,21 +429,21 @@ bool Settings::Read(const string &filename)
     // scroll speed
     switch (config.IntParams("scroll speed"))
     {
-        case 1:
-            scroll_speed = SCROLL_SLOW;
-            break;
-        case 2:
-            scroll_speed = SCROLL_NORMAL;
-            break;
-        case 3:
-            scroll_speed = SCROLL_FAST1;
-            break;
-        case 4:
-            scroll_speed = SCROLL_FAST2;
-            break;
-        default:
-            scroll_speed = SCROLL_NORMAL;
-            break;
+    case 1:
+        scroll_speed = SCROLL_SLOW;
+        break;
+    case 2:
+        scroll_speed = SCROLL_NORMAL;
+        break;
+    case 3:
+        scroll_speed = SCROLL_FAST1;
+        break;
+    case 4:
+        scroll_speed = SCROLL_FAST2;
+        break;
+    default:
+        scroll_speed = SCROLL_NORMAL;
+        break;
     }
 
     if (config.Exists("battle speed"))
@@ -469,7 +481,8 @@ bool Settings::Read(const string &filename)
 
             video_mode.w = GetInt(width);
             video_mode.h = GetInt(height);
-        } else if (value == "auto")
+        }
+        else if (value == "auto")
         {
             video_mode.w = 0;
             video_mode.h = 0;
@@ -498,7 +511,6 @@ bool Settings::Read(const string &filename)
 
 void Settings::PostLoad()
 {
-
     if (ExtModes(GAME_HIDE_INTERFACE))
     {
         opt_global.SetModes(GLOBAL_SHOWCPANEL);
@@ -515,7 +527,7 @@ void Settings::SetAutoVideoMode()
     PostLoad();
 }
 
-bool Settings::Save(const string &filename) const
+bool Settings::Save(const string& filename) const
 {
     if (filename.empty()) return false;
 
@@ -523,7 +535,6 @@ bool Settings::Save(const string &filename) const
     fs << String();
     try
     {
-
         FileUtils::writeFileBytes(filename, fs.data());
     }
     catch (...)
@@ -540,7 +551,7 @@ string Settings::String() const
     os << "# fheroes2 config, version: " << GetVersion() << endl;
     os << "data = " << data_params << endl;
 
-    for (const auto &maps_param : maps_params)
+    for (const auto& maps_param : maps_params)
         os << "maps = " << maps_param << endl;
 
     os << "videomode = ";
@@ -550,23 +561,29 @@ string Settings::String() const
         os << "auto" << endl;
 
     os <<
-       "sound = " << (opt_global.Modes(GLOBAL_SOUND) ? "on" : "off") << endl <<
-       "music = "
-       << (opt_global.Modes(GLOBAL_MUSIC_CD) ? "cd" : opt_global.Modes(GLOBAL_MUSIC_MIDI) ? "midi" : opt_global.Modes(
-                   GLOBAL_MUSIC_EXT) ? "ext" : "off") << endl <<
-       "sound volume = " << static_cast<int>(sound_volume) << endl <<
-       "music volume = " << static_cast<int>(music_volume) << endl <<
-       "fullscreen = " << (fullScreen ? "on" : "off") << endl <<
-       "alt resource = " << (opt_global.Modes(GLOBAL_ALTRESOURCE) ? "on" : "off") << endl <<
-       "debug = " << (debug ? "on" : "off") << endl;
+        "sound = " << (opt_global.Modes(GLOBAL_SOUND) ? "on" : "off") << endl <<
+        "music = "
+        << (opt_global.Modes(GLOBAL_MUSIC_CD)
+                ? "cd"
+                : opt_global.Modes(GLOBAL_MUSIC_MIDI)
+                ? "midi"
+                : opt_global.Modes(
+                    GLOBAL_MUSIC_EXT)
+                ? "ext"
+                : "off") << endl <<
+        "sound volume = " << static_cast<int>(sound_volume) << endl <<
+        "music volume = " << static_cast<int>(music_volume) << endl <<
+        "fullscreen = " << (fullScreen ? "on" : "off") << endl <<
+        "alt resource = " << (opt_global.Modes(GLOBAL_ALTRESOURCE) ? "on" : "off") << endl <<
+        "debug = " << (debug ? "on" : "off") << endl;
 
 #ifdef WITH_TTF
     os <<
-       "fonts normal = " << font_normal << std::endl <<
-       "fonts small = " << font_small << std::endl <<
-       "fonts normal size = " << static_cast<int>(size_normal) << std::endl <<
-       "fonts small size = " << static_cast<int>(size_small) << std::endl <<
-       "unicode = " << (opt_global.Modes(GLOBAL_USEUNICODE) ? "on" : "off") << std::endl;
+        "fonts normal = " << font_normal << std::endl <<
+        "fonts small = " << font_small << std::endl <<
+        "fonts normal size = " << static_cast<int>(size_normal) << std::endl <<
+        "fonts small size = " << static_cast<int>(size_small) << std::endl <<
+        "unicode = " << (opt_global.Modes(GLOBAL_USEUNICODE) ? "on" : "off") << std::endl;
     if (!force_lang.empty())
         os << "lang = " << force_lang << std::endl;
 #endif
@@ -581,7 +598,7 @@ string Settings::String() const
 }
 
 /* read maps info */
-void Settings::SetCurrentFileInfo(const Maps::FileInfo &fi)
+void Settings::SetCurrentFileInfo(const Maps::FileInfo& fi)
 {
     current_maps_file = fi;
 
@@ -592,58 +609,82 @@ void Settings::SetCurrentFileInfo(const Maps::FileInfo &fi)
     preferably_count_players = 0;
 }
 
-const Maps::FileInfo &Settings::CurrentFileInfo() const
+const Maps::FileInfo& Settings::CurrentFileInfo() const
 {
     return current_maps_file;
 }
 
 /* return debug */
 int Settings::Debug() const
-{ return debug; }
+{
+    return debug;
+}
 
 /* return game difficulty */
 int Settings::GameDifficulty() const
-{ return game_difficulty; }
+{
+    return game_difficulty;
+}
 
 int Settings::CurrentColor() const
-{ return players.current_color; }
+{
+    return players.current_color;
+}
 
-const string &Settings::SelectVideoDriver() const
-{ return video_driver; }
+const string& Settings::SelectVideoDriver() const
+{
+    return video_driver;
+}
 
 /* return fontname */
-const string &Settings::FontsNormal() const
-{ return font_normal; }
+const string& Settings::FontsNormal() const
+{
+    return font_normal;
+}
 
-const string &Settings::FontsSmall() const
-{ return font_small; }
+const string& Settings::FontsSmall() const
+{
+    return font_small;
+}
 
-const string &Settings::ForceLang() const
-{ return force_lang; }
+const string& Settings::ForceLang() const
+{
+    return force_lang;
+}
 
-const string &Settings::MapsCharset() const
-{ return maps_charset; }
+const string& Settings::MapsCharset() const
+{
+    return maps_charset;
+}
 
 int Settings::FontsNormalSize() const
-{ return size_normal; }
+{
+    return size_normal;
+}
 
 int Settings::FontsSmallSize() const
-{ return size_small; }
+{
+    return size_small;
+}
 
 bool Settings::FontSmallRenderBlended() const
-{ return opt_global.Modes(GLOBAL_FONTRENDERBLENDED1); }
+{
+    return opt_global.Modes(GLOBAL_FONTRENDERBLENDED1);
+}
 
 bool Settings::FontNormalRenderBlended() const
-{ return opt_global.Modes(GLOBAL_FONTRENDERBLENDED2); }
+{
+    return opt_global.Modes(GLOBAL_FONTRENDERBLENDED2);
+}
 
-void Settings::SetProgramPath(const string &argv0)
+void Settings::SetProgramPath(const string& argv0)
 {
     if (!argv0.empty()) path_program = argv0;
 }
 
 ListDirs Settings::GetRootDirs()
 {
-    const Settings &conf = Get();
+    const Settings& conf = Get();
     ListDirs dirs;
 
     // from build
@@ -659,7 +700,7 @@ ListDirs Settings::GetRootDirs()
     dirs.push_back(System::GetDirname(conf.path_program));
 
     // from HOME
-    const string &home = System::GetHomeDirectory("fheroes2");
+    const string& home = System::GetHomeDirectory("fheroes2");
     if (!home.empty()) dirs.push_back(home);
     char cCurrentPath[FILENAME_MAX];
 
@@ -673,7 +714,7 @@ ListDirs Settings::GetRootDirs()
 }
 
 /* return list files */
-ListFiles Settings::GetListFiles(const string &prefix, const string &filter)
+ListFiles Settings::GetListFiles(const string& prefix, const string& filter)
 {
     const ListDirs dirs = GetRootDirs();
     ListFiles res;
@@ -681,7 +722,7 @@ ListFiles Settings::GetListFiles(const string &prefix, const string &filter)
     if (!prefix.empty() && System::IsDirectory(prefix))
         res.ReadDir(prefix, filter, false);
 
-    for (const auto &dir : dirs)
+    for (const auto& dir : dirs)
     {
         const string path = !prefix.empty() ? System::ConcatePath(dir, prefix) : dir;
 
@@ -694,9 +735,9 @@ ListFiles Settings::GetListFiles(const string &prefix, const string &filter)
     return res;
 }
 
-string Settings::GetLastFile(const string &prefix, const string &name)
+string Settings::GetLastFile(const string& prefix, const string& name)
 {
-    const ListFiles &files = GetListFiles(prefix, name);
+    const ListFiles& files = GetListFiles(prefix, name);
     return files.empty() ? name : files.back();
 }
 
@@ -709,7 +750,7 @@ string Settings::GetLangDir()
     const ListDirs dirs = GetRootDirs();
 
     for (auto
-                 it = dirs.rbegin(); it != dirs.rend(); ++it)
+         it = dirs.rbegin(); it != dirs.rend(); ++it)
     {
         string res = System::ConcatePath(System::ConcatePath(*it, "files"), "lang");
         if (System::IsDirectory(res)) return res;
@@ -719,12 +760,12 @@ string Settings::GetLangDir()
     return "";
 }
 
-string Settings::GetWriteableDir(const char *subdir)
+string Settings::GetWriteableDir(const char* subdir)
 {
     ListDirs dirs = GetRootDirs();
     dirs.Append(System::GetDataDirectories("fheroes2"));
 
-    for (auto &dir : dirs)
+    for (auto& dir : dirs)
     {
         const string dir_files = System::ConcatePath(dir, "files");
 
@@ -754,21 +795,31 @@ string Settings::GetSaveDir()
 }
 
 bool Settings::MusicExt() const
-{ return opt_global.Modes(GLOBAL_MUSIC_EXT); }
+{
+    return opt_global.Modes(GLOBAL_MUSIC_EXT);
+}
 
 bool Settings::MusicMIDI() const
-{ return opt_global.Modes(GLOBAL_MUSIC_MIDI); }
+{
+    return opt_global.Modes(GLOBAL_MUSIC_MIDI);
+}
 
 bool Settings::MusicCD() const
-{ return opt_global.Modes(GLOBAL_MUSIC_CD); }
+{
+    return opt_global.Modes(GLOBAL_MUSIC_CD);
+}
 
 /* return sound */
 bool Settings::Sound() const
-{ return opt_global.Modes(GLOBAL_SOUND); }
+{
+    return opt_global.Modes(GLOBAL_SOUND);
+}
 
 /* return music */
 bool Settings::Music() const
-{ return opt_global.Modes(GLOBAL_MUSIC); }
+{
+    return opt_global.Modes(GLOBAL_MUSIC);
+}
 
 
 /* return music */
@@ -781,6 +832,7 @@ bool Settings::QuickCombat() const
 {
     return _isQuickCombat;
 }
+
 bool Settings::UiHeroesBar() const
 {
     return _isUiHeroesBar;
@@ -788,82 +840,116 @@ bool Settings::UiHeroesBar() const
 
 /* return move speed */
 int Settings::HeroesMoveSpeed() const
-{ return heroes_speed; }
+{
+    return heroes_speed;
+}
 
 int Settings::AIMoveSpeed() const
-{ return ai_speed; }
+{
+    return ai_speed;
+}
 
 int Settings::BattleSpeed() const
-{ return battle_speed; }
+{
+    return battle_speed;
+}
 
 /* return scroll speed */
 int Settings::ScrollSpeed() const
-{ return scroll_speed; }
+{
+    return scroll_speed;
+}
 
 /* set ai speed: 0 - 10 */
 void Settings::SetAIMoveSpeed(int speed)
-{ ai_speed = 10 <= speed ? 10 : speed; }
+{
+    ai_speed = 10 <= speed ? 10 : speed;
+}
 
 /* set hero speed: 0 - 10 */
 void Settings::SetHeroesMoveSpeed(int speed)
-{ heroes_speed = 10 <= speed ? 10 : speed; }
+{
+    heroes_speed = 10 <= speed ? 10 : speed;
+}
 
 /* set battle speed: 0 - 10 */
 void Settings::SetBattleSpeed(int speed)
-{ battle_speed = 10 <= speed ? 10 : speed; }
+{
+    battle_speed = 10 <= speed ? 10 : speed;
+}
 
 void Settings::SetBlitSpeed(int speed)
-{ blit_speed = speed; }
+{
+    blit_speed = speed;
+}
 
 int Settings::BlitSpeed() const
-{ return blit_speed; }
+{
+    return blit_speed;
+}
 
 /* set scroll speed: 1 - 4 */
 void Settings::SetScrollSpeed(int speed)
 {
     switch (speed)
     {
-        case SCROLL_SLOW:
-            scroll_speed = SCROLL_SLOW;
-            break;
-        case SCROLL_NORMAL:
-            scroll_speed = SCROLL_NORMAL;
-            break;
-        case SCROLL_FAST1:
-            scroll_speed = SCROLL_FAST1;
-            break;
-        case SCROLL_FAST2:
-            scroll_speed = SCROLL_FAST2;
-            break;
-        default:
-            scroll_speed = SCROLL_NORMAL;
-            break;
+    case SCROLL_SLOW:
+        scroll_speed = SCROLL_SLOW;
+        break;
+    case SCROLL_NORMAL:
+        scroll_speed = SCROLL_NORMAL;
+        break;
+    case SCROLL_FAST1:
+        scroll_speed = SCROLL_FAST1;
+        break;
+    case SCROLL_FAST2:
+        scroll_speed = SCROLL_FAST2;
+        break;
+    default:
+        scroll_speed = SCROLL_NORMAL;
+        break;
     }
 }
 
 bool Settings::UseAltResource() const
-{ return opt_global.Modes(GLOBAL_ALTRESOURCE); }
+{
+    return opt_global.Modes(GLOBAL_ALTRESOURCE);
+}
 
 bool Settings::PriceLoyaltyVersion() const
-{ return opt_global.Modes(GLOBAL_PRICELOYALTY); }
+{
+    return opt_global.Modes(GLOBAL_PRICELOYALTY);
+}
 
 bool Settings::LoadedGameVersion() const
-{ return game_type & Game::TYPE_LOADFILE; }
+{
+    return game_type & Game::TYPE_LOADFILE;
+}
 
 bool Settings::ShowControlPanel() const
-{ return opt_global.Modes(GLOBAL_SHOWCPANEL); }
+{
+    return opt_global.Modes(GLOBAL_SHOWCPANEL);
+}
 
 bool Settings::ShowRadar() const
-{ return opt_global.Modes(GLOBAL_SHOWRADAR); }
+{
+    return opt_global.Modes(GLOBAL_SHOWRADAR);
+}
 
 bool Settings::ShowIcons() const
-{ return opt_global.Modes(GLOBAL_SHOWICONS); }
+{
+    return opt_global.Modes(GLOBAL_SHOWICONS);
+}
 
 bool Settings::ShowButtons() const
-{ return opt_global.Modes(GLOBAL_SHOWBUTTONS); }
+{
+    return opt_global.Modes(GLOBAL_SHOWBUTTONS);
+}
 
 bool Settings::ShowStatus() const
-{ return opt_global.Modes(GLOBAL_SHOWSTATUS); }
+{
+    return opt_global.Modes(GLOBAL_SHOWSTATUS);
+}
 
 /* unicode support */
 bool Settings::Unicode() const
@@ -874,54 +960,78 @@ bool Settings::Unicode() const
 
 /* pocketpc mode */
 bool Settings::PocketPC() const
-{ return opt_global.Modes(GLOBAL_POCKETPC); }
+{
+    return opt_global.Modes(GLOBAL_POCKETPC);
+}
 
 /* get video mode */
-const Size &Settings::VideoMode() const
-{ return video_mode; }
+const Size& Settings::VideoMode() const
+{
+    return video_mode;
+}
 
 /* set level debug */
 void Settings::SetDebug(int d)
-{ debug = d; }
+{
+    debug = d;
+}
 
 /**/
 void Settings::SetGameDifficulty(int d)
-{ game_difficulty = d; }
+{
+    game_difficulty = d;
+}
 
 void Settings::SetCurrentColor(int color)
-{ players.current_color = color; }
+{
+    players.current_color = color;
+}
 
 int Settings::SoundVolume() const
-{ return sound_volume; }
+{
+    return sound_volume;
+}
 
 int Settings::MusicVolume() const
-{ return music_volume; }
+{
+    return music_volume;
+}
 
 /* sound volume: 0 - 10 */
 void Settings::SetSoundVolume(int v)
-{ sound_volume = 10 <= v ? 10 : v; }
+{
+    sound_volume = 10 <= v ? 10 : v;
+}
 
 /* music volume: 0 - 10 */
 void Settings::SetMusicVolume(int v)
-{ music_volume = 10 <= v ? 10 : v; }
+{
+    music_volume = 10 <= v ? 10 : v;
+}
 
 /* check game type */
 bool Settings::GameType(int f) const
-{ return game_type & f; }
+{
+    return game_type & f;
+}
 
 int Settings::GameType() const
-{ return game_type; }
+{
+    return game_type;
+}
 
 /* set game type */
 void Settings::SetGameType(int type)
-{ game_type = type; }
+{
+    game_type = type;
+}
 
-const Players &Settings::GetPlayers() const
+const Players& Settings::GetPlayers() const
 {
     return players;
 }
 
-Players &Settings::GetPlayers()
+Players& Settings::GetPlayers()
 {
     return players;
 }
@@ -941,17 +1051,17 @@ int Settings::GetPort() const
     return port;
 }
 
-const string &Settings::MapsFile() const
+const string& Settings::MapsFile() const
 {
     return current_maps_file.file;
 }
 
-const string &Settings::MapsName() const
+const string& Settings::MapsName() const
 {
     return current_maps_file.name;
 }
 
-const string &Settings::MapsDescription() const
+const string& Settings::MapsDescription() const
 {
     return current_maps_file.description;
 }
@@ -1106,23 +1216,23 @@ bool Settings::ExtModes(uint32_t f) const
     const uint32_t mask = 0x0FFFFFFF;
     switch (f >> 28)
     {
-        case 0x01:
-            return opt_game.Modes(f & mask);
-        case 0x02:
-            return opt_world.Modes(f & mask);
-        case 0x03:
-            return opt_addons.Modes(f & mask);
-        case 0x04:
-            return opt_battle.Modes(f & mask);
-        default:
-            break;
+    case 0x01:
+        return opt_game.Modes(f & mask);
+    case 0x02:
+        return opt_world.Modes(f & mask);
+    case 0x03:
+        return opt_addons.Modes(f & mask);
+    case 0x04:
+        return opt_battle.Modes(f & mask);
+    default:
+        break;
     }
     return false;
 }
 
 std::string Settings::ExtName(uint32_t f)
 {
-    const settings_t *ptr = find(settingsFHeroes2,
+    const settings_t* ptr = find(settingsFHeroes2,
                                  ARRAY_COUNT_END(settingsFHeroes2) - 1, f);
 
     return ptr ? _(ptr->str) : nullptr;
@@ -1133,20 +1243,20 @@ void Settings::ExtSetModes(uint32_t f)
     const uint32_t mask = 0x0FFFFFFF;
     switch (f >> 28)
     {
-        case 0x01:
-            opt_game.SetModes(f & mask);
-            break;
-        case 0x02:
-            opt_world.SetModes(f & mask);
-            break;
-        case 0x03:
-            opt_addons.SetModes(f & mask);
-            break;
-        case 0x04:
-            opt_battle.SetModes(f & mask);
-            break;
-        default:
-            break;
+    case 0x01:
+        opt_game.SetModes(f & mask);
+        break;
+    case 0x02:
+        opt_world.SetModes(f & mask);
+        break;
+    case 0x03:
+        opt_addons.SetModes(f & mask);
+        break;
+    case 0x04:
+        opt_battle.SetModes(f & mask);
+        break;
+    default:
+        break;
     }
 }
 
@@ -1155,20 +1265,20 @@ void Settings::ExtResetModes(uint32_t f)
     const uint32_t mask = 0x0FFFFFFF;
     switch (f >> 28)
     {
-        case 0x01:
-            opt_game.ResetModes(f & mask);
-            break;
-        case 0x02:
-            opt_world.ResetModes(f & mask);
-            break;
-        case 0x03:
-            opt_addons.ResetModes(f & mask);
-            break;
-        case 0x04:
-            opt_battle.ResetModes(f & mask);
-            break;
-        default:
-            break;
+    case 0x01:
+        opt_game.ResetModes(f & mask);
+        break;
+    case 0x02:
+        opt_world.ResetModes(f & mask);
+        break;
+    case 0x03:
+        opt_addons.ResetModes(f & mask);
+        break;
+    case 0x04:
+        opt_battle.ResetModes(f & mask);
+        break;
+    default:
+        break;
     }
 }
 
@@ -1527,29 +1637,45 @@ bool Settings::ExtGameContinueAfterVictory() const
     return ExtModes(GAME_CONTINUE_AFTER_VICTORY);
 }
 
-const Point &Settings::PosRadar() const
-{ return pos_radr; }
+const Point& Settings::PosRadar() const
+{
+    return pos_radr;
+}
 
-const Point &Settings::PosButtons() const
-{ return pos_bttn; }
+const Point& Settings::PosButtons() const
+{
+    return pos_bttn;
+}
 
-const Point &Settings::PosIcons() const
-{ return pos_icon; }
+const Point& Settings::PosIcons() const
+{
+    return pos_icon;
+}
 
-const Point &Settings::PosStatus() const
-{ return pos_stat; }
+const Point& Settings::PosStatus() const
+{
+    return pos_stat;
+}
 
-void Settings::SetPosRadar(const Point &pt)
-{ pos_radr = pt; }
+void Settings::SetPosRadar(const Point& pt)
+{
+    pos_radr = pt;
+}
 
-void Settings::SetPosButtons(const Point &pt)
-{ pos_bttn = pt; }
+void Settings::SetPosButtons(const Point& pt)
+{
+    pos_bttn = pt;
+}
 
-void Settings::SetPosIcons(const Point &pt)
-{ pos_icon = pt; }
+void Settings::SetPosIcons(const Point& pt)
+{
+    pos_icon = pt;
+}
 
-void Settings::SetPosStatus(const Point &pt)
-{ pos_stat = pt; }
+void Settings::SetPosStatus(const Point& pt)
+{
+    pos_stat = pt;
+}
 
 void Settings::BinarySave() const
 {
@@ -1557,10 +1683,10 @@ void Settings::BinarySave() const
 
     ByteVectorWriter fs;
     fs.SetBigEndian(true);
-    
+
     fs << static_cast<u16>(CURRENT_FORMAT_VERSION) <<
-       opt_game << opt_world << opt_battle << opt_addons <<
-       pos_radr << pos_bttn << pos_icon << pos_stat;
+        opt_game << opt_world << opt_battle << opt_addons <<
+        pos_radr << pos_bttn << pos_icon << pos_stat;
 
     FileUtils::writeFileBytes(fname, fs.data());
 }
@@ -1571,7 +1697,7 @@ void Settings::BinaryLoad()
 
     if (!System::IsFile(fname))
         fname = GetLastFile("", "fheroes2.bin");
-    if(!FileUtils::Exists(fname))
+    if (!FileUtils::Exists(fname))
         return;
     const auto vectorBytes = FileUtils::readFileBytes(fname);
 
@@ -1601,7 +1727,7 @@ bool Settings::FullScreen() const
     return isFullScreen;
 }
 
-ByteVectorWriter &operator<<(ByteVectorWriter &msg, const Settings &conf)
+ByteVectorWriter& operator<<(ByteVectorWriter& msg, const Settings& conf)
 {
     return msg <<
         // lang
@@ -1617,7 +1743,7 @@ ByteVectorWriter &operator<<(ByteVectorWriter &msg, const Settings &conf)
         conf.players;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, Settings &conf)
+ByteVectorReader& operator>>(ByteVectorReader& msg, Settings& conf)
 {
     string lang;
 

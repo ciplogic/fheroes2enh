@@ -37,15 +37,15 @@ const u8 zone2_index[] = {7, 8, 9, 10, 13, 16, 19, 22, 25, 28, 31, 34, 37, 38, 3
 const u8 zone3_index[] = {14, 15, 32, 33};
 const u8 zone4_index[] = {20, 21, 26, 27};
 
-bool ClosedTilesExists(const Puzzle &, const u8 *, const u8 *);
+bool ClosedTilesExists(const Puzzle&, const u8*, const u8*);
 
-void ZoneOpenFirstTiles(Puzzle &, uint32_t &, const u8 *, const u8 *);
+void ZoneOpenFirstTiles(Puzzle&, uint32_t&, const u8*, const u8*);
 
-void ShowStandardDialog(const Puzzle &, const Surface &);
+void ShowStandardDialog(const Puzzle&, const Surface&);
 
-void ShowExtendedDialog(const Puzzle &, const Surface &);
+void ShowExtendedDialog(const Puzzle&, const Surface&);
 
-void PuzzlesDraw(const Puzzle &, const Surface &, s32, s32);
+void PuzzlesDraw(const Puzzle&, const Surface&, s32, s32);
 
 Puzzle::Puzzle()
 {
@@ -60,7 +60,7 @@ Puzzle::Puzzle()
     random_shuffle(zone4_order, zone4_order + ARRAY_COUNT(zone4_order));
 }
 
-Puzzle &Puzzle::operator=(const char *str)
+Puzzle& Puzzle::operator=(const char* str)
 {
     while (str && *str)
     {
@@ -92,13 +92,13 @@ void Puzzle::Update(uint32_t open_obelisk, uint32_t total_obelisk)
 
 void Puzzle::ShowMapsDialog() const
 {
-    Cursor &cursor = Cursor::Get();
-    Display &display = Display::Get();
+    Cursor& cursor = Cursor::Get();
+    Display& display = Display::Get();
     int old_cursor = cursor.Themes();
 
     if (!Settings::Get().MusicMIDI()) AGG::PlayMusic(MUS::PUZZLE);
 
-    const Surface &sf = world.GetUltimateArtifact().GetPuzzleMapSurface();
+    const Surface& sf = world.GetUltimateArtifact().GetPuzzleMapSurface();
 
     if (sf.isValid())
     {
@@ -115,35 +115,36 @@ void Puzzle::ShowMapsDialog() const
     }
 }
 
-bool ClosedTilesExists(const Puzzle &pzl, const u8 *it1, const u8 *it2)
+bool ClosedTilesExists(const Puzzle& pzl, const u8* it1, const u8* it2)
 {
     while (it1 < it2) if (!pzl.test(*it1++)) return true;
     return false;
 }
 
-void ZoneOpenFirstTiles(Puzzle &pzl, uint32_t &opens, const u8 *it1, const u8 *it2)
+void ZoneOpenFirstTiles(Puzzle& pzl, uint32_t& opens, const u8* it1, const u8* it2)
 {
     while (opens)
     {
-        const u8 *it = it1;
+        const u8* it = it1;
         while (it < it2 && pzl.test(*it)) ++it;
 
         if (it != it2)
         {
             pzl.set(*it);
             --opens;
-        } else
+        }
+        else
             break;
     }
 }
 
-void ShowStandardDialog(const Puzzle &pzl, const Surface &sf)
+void ShowStandardDialog(const Puzzle& pzl, const Surface& sf)
 {
-    Display &display = Display::Get();
-    Cursor &cursor = Cursor::Get();
+    Display& display = Display::Get();
+    Cursor& cursor = Cursor::Get();
 
-    Interface::Radar &radar = Interface::Basic::Get().GetRadar();
-    const Rect &radar_pos = radar.GetArea();
+    Interface::Radar& radar = Interface::Basic::Get().GetRadar();
+    const Rect& radar_pos = radar.GetArea();
     const bool evil_interface = Settings::Get().ExtGameEvilInterface();
 
     SpriteBack back(Rect(BORDERWIDTH, BORDERWIDTH, sf.w(), sf.h()));
@@ -160,7 +161,7 @@ void ShowStandardDialog(const Puzzle &pzl, const Surface &sf)
     cursor.SetThemes(Cursor::POINTER);
     cursor.Show();
     display.Flip();
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     while (le.HandleEvents())
     {
@@ -174,12 +175,12 @@ void ShowStandardDialog(const Puzzle &pzl, const Surface &sf)
     back.Restore();
 }
 
-void ShowExtendedDialog(const Puzzle &pzl, const Surface &sf)
+void ShowExtendedDialog(const Puzzle& pzl, const Surface& sf)
 {
-    Display &display = Display::Get();
-    Cursor &cursor = Cursor::Get();
-    const Settings &conf = Settings::Get();
-    const Rect &gameArea = Interface::Basic::Get().GetGameArea().GetArea();
+    Display& display = Display::Get();
+    Cursor& cursor = Cursor::Get();
+    const Settings& conf = Settings::Get();
+    const Rect& gameArea = Interface::Basic::Get().GetGameArea().GetArea();
 
     Dialog::FrameBorder frameborder(gameArea.x + (gameArea.w - sf.w() - BORDERWIDTH * 2) / 2,
                                     gameArea.y + (gameArea.h - sf.h() - BORDERWIDTH * 2) / 2,
@@ -201,7 +202,7 @@ void ShowExtendedDialog(const Puzzle &pzl, const Surface &sf)
     cursor.SetThemes(Cursor::POINTER);
     cursor.Show();
     display.Flip();
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     while (le.HandleEvents())
     {
@@ -210,16 +211,16 @@ void ShowExtendedDialog(const Puzzle &pzl, const Surface &sf)
     }
 }
 
-void PuzzlesDraw(const Puzzle &pzl, const Surface &sf, s32 dstx, s32 dsty)
+void PuzzlesDraw(const Puzzle& pzl, const Surface& sf, s32 dstx, s32 dsty)
 {
-    Display &display = Display::Get();
-    Cursor &cursor = Cursor::Get();
+    Display& display = Display::Get();
+    Cursor& cursor = Cursor::Get();
 
     // show all for debug
     if (IS_DEVEL()) return;
 
     int alpha = 250;
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     while (le.HandleEvents() && 0 < alpha)
     {
@@ -229,7 +230,7 @@ void PuzzlesDraw(const Puzzle &pzl, const Surface &sf, s32 dstx, s32 dsty)
             sf.Blit(dstx, dsty, display);
             for (size_t ii = 0; ii < pzl.size(); ++ii)
             {
-                const Sprite &sprite = AGG::GetICN(ICN::PUZZLE, ii);
+                const Sprite& sprite = AGG::GetICN(ICN::PUZZLE, ii);
                 Sprite piece = Sprite(sprite.GetSurface(), sprite.x(), sprite.y());
 
                 if (pzl.test(ii))
@@ -245,9 +246,9 @@ void PuzzlesDraw(const Puzzle &pzl, const Surface &sf, s32 dstx, s32 dsty)
     cursor.Hide();
 }
 
-ByteVectorWriter& operator<<(ByteVectorWriter&msg, const Puzzle &pzl)
+ByteVectorWriter& operator<<(ByteVectorWriter& msg, const Puzzle& pzl)
 {
-    msg << pzl.to_string<char, char_traits<char>, allocator<char> >();
+    msg << pzl.to_string<char, char_traits<char>, allocator<char>>();
 
     // orders
     msg << static_cast<u8>(ARRAY_COUNT(pzl.zone1_order));
@@ -265,7 +266,7 @@ ByteVectorWriter& operator<<(ByteVectorWriter&msg, const Puzzle &pzl)
     return msg;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, Puzzle &pzl)
+ByteVectorReader& operator>>(ByteVectorReader& msg, Puzzle& pzl)
 {
     string str;
 

@@ -61,7 +61,7 @@ namespace Skill
 
     struct stats_t
     {
-        const char *id;
+        const char* id;
         primary_t captain_primary;
         primary_t initial_primary;
         u8 initial_book;
@@ -75,7 +75,7 @@ namespace Skill
 
     struct values_t
     {
-        const char *id;
+        const char* id;
         level_t values;
     };
 }

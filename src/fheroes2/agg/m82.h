@@ -341,7 +341,6 @@ namespace M82
         ZOMBWNCE,
 
         UNKNOWN
-
     };
 
     std::string GetString(int);

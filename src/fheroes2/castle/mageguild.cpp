@@ -25,7 +25,7 @@
 #include "settings.h"
 #include "rand.h"
 
-Spell GetUniqueCombatSpellCompatibility(const SpellStorage &, int race, int level);
+Spell GetUniqueCombatSpellCompatibility(const SpellStorage&, int race, int level);
 
 Spell GetCombatSpellCompatibility(int race, int level);
 
@@ -77,7 +77,7 @@ SpellStorage MageGuild::GetSpells(int lvlmage, bool islibrary, int level) const
     return result;
 }
 
-void MageGuild::EducateHero(HeroBase &hero, int lvlmage, bool isLibraryBuild) const
+void MageGuild::EducateHero(HeroBase& hero, int lvlmage, bool isLibraryBuild) const
 {
     if (!hero.HaveSpellBook() || !lvlmage)
         return;
@@ -93,7 +93,7 @@ void MageGuild::EducateHero(HeroBase &hero, int lvlmage, bool isLibraryBuild) co
     hero.AppendSpellsToBook(spells);
 }
 
-Spell GetUniqueCombatSpellCompatibility(const SpellStorage &spells, int race, int lvl)
+Spell GetUniqueCombatSpellCompatibility(const SpellStorage& spells, int race, int lvl)
 {
     Spell spell = GetCombatSpellCompatibility(race, lvl);
     while (spells.isPresentSpell(spell)) spell = GetCombatSpellCompatibility(race, lvl);
@@ -107,12 +107,12 @@ Spell GetCombatSpellCompatibility(int race, int level)
     return spell;
 }
 
-ByteVectorWriter &operator<<(ByteVectorWriter &msg, const MageGuild &guild)
+ByteVectorWriter& operator<<(ByteVectorWriter& msg, const MageGuild& guild)
 {
     return msg << guild.general << guild.library;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, MageGuild &guild)
+ByteVectorReader& operator>>(ByteVectorReader& msg, MageGuild& guild)
 {
     return msg >> guild.general >> guild.library;
 }

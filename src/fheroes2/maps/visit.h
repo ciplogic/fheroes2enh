@@ -28,14 +28,15 @@ namespace Visit
 {
     enum type_t
     {
-        LOCAL, GLOBAL
+        LOCAL,
+        GLOBAL
     };
 
-    bool isDayLife(const IndexObject &visit);
+    bool isDayLife(const IndexObject& visit);
 
-    bool isWeekLife(const IndexObject &visit);
+    bool isWeekLife(const IndexObject& visit);
 
-    bool isMonthLife(const IndexObject &visit);
+    bool isMonthLife(const IndexObject& visit);
 
-    bool isBattleLife(const IndexObject &visit);
+    bool isBattleLife(const IndexObject& visit);
 }

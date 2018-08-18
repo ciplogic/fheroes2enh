@@ -66,7 +66,7 @@ Audio::CVT::CVT() : SDL_AudioCVT()
     filter_index = 0;
 }
 
-bool Audio::CVT::Build(const Spec &src, const Spec &dst)
+bool Audio::CVT::Build(const Spec& src, const Spec& dst)
 {
     if (1 == SDL_BuildAudioCVT(this, src.format, src.channels, src.freq, dst.format, dst.channels, dst.freq))
         return true;
@@ -83,7 +83,7 @@ bool Audio::CVT::Convert()
     return false;
 }
 
-Audio::Spec &Audio::GetHardwareSpec()
+Audio::Spec& Audio::GetHardwareSpec()
 {
     return hardware;
 }

@@ -46,19 +46,26 @@ enum
     CONTROL_NONE = 0,
     CONTROL_HUMAN = 1,
     CONTROL_AI = 4,
-    CONTROL_REMOTE = 2 /*, CONTROL_LOCAL = CONTROL_AI | CONTROL_HUMAN */ };
+    CONTROL_REMOTE = 2 /*, CONTROL_LOCAL = CONTROL_AI | CONTROL_HUMAN */
+};
+
 enum
 {
-    FOCUS_UNSEL = 0, FOCUS_HEROES = 1, FOCUS_CASTLE = 2
+    FOCUS_UNSEL = 0,
+    FOCUS_HEROES = 1,
+    FOCUS_CASTLE = 2
 };
 
 struct Focus : pair<int, void *>
 {
     Focus() : pair<int, void *>(FOCUS_UNSEL, nullptr)
-    {}
+    {
+    }
 
     bool isValid() const
-    { return first != FOCUS_UNSEL && second; }
+    {
+        return first != FOCUS_UNSEL && second;
+    }
 
     void Reset()
     {
@@ -66,23 +73,27 @@ struct Focus : pair<int, void *>
         second = nullptr;
     }
 
-    void Set(Castle *ptr)
+    void Set(Castle* ptr)
     {
         first = FOCUS_CASTLE;
         second = ptr;
     }
 
-    void Set(Heroes *ptr)
+    void Set(Heroes* ptr)
     {
         first = FOCUS_HEROES;
         second = ptr;
     }
 
-    Castle *GetCastle() const
-    { return first == FOCUS_CASTLE && second ? reinterpret_cast<Castle *>(second) : nullptr; }
+    Castle* GetCastle() const
+    {
+        return first == FOCUS_CASTLE && second ? reinterpret_cast<Castle *>(second) : nullptr;
+    }
 
-    Heroes *GetHeroes() const
-    { return first == FOCUS_HEROES && second ? reinterpret_cast<Heroes *>(second) : nullptr; }
+    Heroes* GetHeroes() const
+    {
+        return first == FOCUS_HEROES && second ? reinterpret_cast<Heroes *>(second) : nullptr;
+    }
 };
 
 struct Control
@@ -109,7 +120,7 @@ public:
 
     bool isColor(int) const;
 
-    bool isName(const string &) const;
+    bool isName(const string&) const;
 
     bool isPlay() const;
 
@@ -123,7 +134,7 @@ public:
 
     void SetFriends(int);
 
-    void SetName(const string &);
+    void SetName(const string&);
 
     int GetControl() const;
 
@@ -135,18 +146,18 @@ public:
 
     int GetID() const;
 
-    const string &GetName() const;
+    const string& GetName() const;
 
-    Focus &GetFocus();
+    Focus& GetFocus();
 
-    const Focus &GetFocus() const;
+    const Focus& GetFocus() const;
 
     BitModes _bitModes;
 
 protected:
-    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Player &);
+    friend ByteVectorWriter& operator<<(ByteVectorWriter&, const Player&);
 
-    friend ByteVectorReader &operator>>(ByteVectorReader &, Player &);
+    friend ByteVectorReader& operator>>(ByteVectorReader&, Player&);
 
     int control;
     int color;
@@ -157,9 +168,9 @@ protected:
     Focus focus;
 };
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const Player &);
+ByteVectorWriter& operator<<(ByteVectorWriter&, const Player&);
 
-ByteVectorReader &operator>>(ByteVectorReader &, Player &);
+ByteVectorReader& operator>>(ByteVectorReader&, Player&);
 
 class Players
 {
@@ -170,7 +181,7 @@ public:
 
     void Init(int colors);
 
-    void Init(const Maps::FileInfo &);
+    void Init(const Maps::FileInfo&);
 
     void clear();
 
@@ -208,19 +219,20 @@ public:
 
     static int FriendColors();
 
-    vector<sp<Player> > _items;
+    vector<sp<Player>> _items;
     int current_color;
 };
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const Players &);
-ByteVectorReader &operator>>(ByteVectorReader &, Players &);
+ByteVectorWriter& operator<<(ByteVectorWriter&, const Players&);
+ByteVectorReader& operator>>(ByteVectorReader&, Players&);
 
 namespace Interface
 {
     struct PlayerInfo
     {
         PlayerInfo() : player(nullptr)
-        {}
+        {
+        }
 
         bool operator==(const sp<Player>&) const;
 
@@ -234,15 +246,15 @@ namespace Interface
     {
         PlayersInfo(bool /* show name */, bool /* show race */, bool /* show swap button */);
 
-        void UpdateInfo(Players &, const Point &opponents, const Point &classes);
+        void UpdateInfo(Players&, const Point& opponents, const Point& classes);
 
-        sp<Player> GetFromOpponentClick(const Point &pt);
+        sp<Player> GetFromOpponentClick(const Point& pt);
 
-        sp<Player> GetFromOpponentNameClick(const Point &pt);
+        sp<Player> GetFromOpponentNameClick(const Point& pt);
 
-        sp<Player> GetFromOpponentChangeClick(const Point &pt);
+        sp<Player> GetFromOpponentChangeClick(const Point& pt);
 
-        sp<Player> GetFromClassClick(const Point &pt);
+        sp<Player> GetFromClassClick(const Point& pt);
 
         void RedrawInfo(bool show_play_info = false) const;
 
@@ -253,4 +265,3 @@ namespace Interface
         bool show_swap;
     };
 }
-

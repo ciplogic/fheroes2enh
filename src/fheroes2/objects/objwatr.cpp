@@ -40,8 +40,9 @@ int ObjWat2::GetPassable(uint32_t index)
         ARRAY_COUNT_END(disabled) != std::find(disabled, ARRAY_COUNT_END(disabled), index))
         return 0;
 
-    return ARRAY_COUNT_END(restricted) != std::find(restricted, ARRAY_COUNT_END(restricted), index) ?
-           DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW : DIRECTION_ALL;
+    return ARRAY_COUNT_END(restricted) != std::find(restricted, ARRAY_COUNT_END(restricted), index)
+               ? DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW
+               : DIRECTION_ALL;
 }
 
 int ObjWatr::GetPassable(uint32_t index)
@@ -55,8 +56,9 @@ int ObjWatr::GetPassable(uint32_t index)
         ARRAY_COUNT_END(disabled) != std::find(disabled, ARRAY_COUNT_END(disabled), index))
         return 0;
 
-    return ARRAY_COUNT_END(restricted) != std::find(restricted, ARRAY_COUNT_END(restricted), index) ?
-           DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW : DIRECTION_ALL;
+    return ARRAY_COUNT_END(restricted) != std::find(restricted, ARRAY_COUNT_END(restricted), index)
+               ? DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW
+               : DIRECTION_ALL;
 }
 
 bool ObjWat2::isAction(uint32_t index)
@@ -85,21 +87,21 @@ int ObjWatr::GetActionObject(uint32_t index)
 {
     switch (index)
     {
-        case 62:
-            return MP2::OBJ_MAGELLANMAPS;
-        case 195:
-            return MP2::OBJ_BUOY;
-        case 202:
-        case 206:
-        case 210:
-        case 214:
-        case 218:
-        case 222:
-            return MP2::OBJ_WHIRLPOOL;
-        case 241:
-            return MP2::OBJ_SHIPWRECK;
-        default:
-            break;
+    case 62:
+        return MP2::OBJ_MAGELLANMAPS;
+    case 195:
+        return MP2::OBJ_BUOY;
+    case 202:
+    case 206:
+    case 210:
+    case 214:
+    case 218:
+    case 222:
+        return MP2::OBJ_WHIRLPOOL;
+    case 241:
+        return MP2::OBJ_SHIPWRECK;
+    default:
+        break;
     }
 
     return MP2::OBJ_ZERO;
@@ -109,10 +111,10 @@ int ObjWat2::GetActionObject(uint32_t index)
 {
     switch (index)
     {
-        case 21:
-            return MP2::OBJ_DERELICTSHIP;
-        default:
-            break;
+    case 21:
+        return MP2::OBJ_DERELICTSHIP;
+    default:
+        break;
     }
 
     return MP2::OBJ_ZERO;

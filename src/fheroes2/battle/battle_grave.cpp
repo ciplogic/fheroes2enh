@@ -28,15 +28,15 @@ Battle::Indexes Battle::Graveyard::GetClosedCells() const
     Indexes res;
     res.reserve(size());
 
-    for (const auto &it : *this)
+    for (const auto& it : *this)
         res.push_back(it.first);
 
     return res;
 }
 
-void Battle::Graveyard::AddTroop(const Unit &b)
+void Battle::Graveyard::AddTroop(const Unit& b)
 {
-    Graveyard &map = *this;
+    Graveyard& map = *this;
 
     map[b.GetHeadIndex()].push_back(b.GetUID());
 
@@ -44,16 +44,16 @@ void Battle::Graveyard::AddTroop(const Unit &b)
         map[b.GetTailIndex()].push_back(b.GetUID());
 }
 
-void Battle::Graveyard::RemoveTroop(const Unit &b)
+void Battle::Graveyard::RemoveTroop(const Unit& b)
 {
-    Graveyard &map = *this;
-    TroopUIDs &ids = map[b.GetHeadIndex()];
+    Graveyard& map = *this;
+    TroopUIDs& ids = map[b.GetHeadIndex()];
 
     auto it = std::find(ids.begin(), ids.end(), b.GetUID());
     if (it != ids.end()) ids.erase(it);
 
     if (!b.isWide()) return;
-    TroopUIDs &ids2 = map[b.GetTailIndex()];
+    TroopUIDs& ids2 = map[b.GetTailIndex()];
 
     it = std::find(ids2.begin(), ids2.end(), b.GetUID());
     if (it != ids2.end()) ids2.erase(it);
@@ -61,7 +61,7 @@ void Battle::Graveyard::RemoveTroop(const Unit &b)
 
 uint32_t Battle::Graveyard::GetLastTroopUID(s32 index) const
 {
-    for (auto troop: *this)
+    for (auto troop : *this)
         if (index == troop.first && !troop.second.empty())
             return troop.second.back();
 

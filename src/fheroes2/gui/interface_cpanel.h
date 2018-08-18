@@ -31,7 +31,7 @@ namespace Interface
     class ControlPanel
     {
     public:
-        explicit ControlPanel(Basic &);
+        explicit ControlPanel(Basic&);
 
         void SetPos(s32, s32);
 
@@ -41,11 +41,11 @@ namespace Interface
 
         int QueueEventProcessing() const;
 
-        const Rect &GetArea() const;
+        const Rect& GetArea() const;
 
     private:
         Rect _area;
-        Basic &interface;
+        Basic& interface;
 
         Surface btn_radr;
         Surface btn_icon;
@@ -60,4 +60,3 @@ namespace Interface
         Rect rt_quit;
     };
 }
-

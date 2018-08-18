@@ -54,16 +54,17 @@ string GetMinesIncomeString(int type)
     return res;
 }
 
-string ShowGuardiansInfo(const Maps::Tiles &tile, int scoute)
+string ShowGuardiansInfo(const Maps::Tiles& tile, int scoute)
 {
     string str;
-    const Troop &troop = tile.QuantityTroop();
+    const Troop& troop = tile.QuantityTroop();
 
     if (MP2::OBJ_MINES == tile.GetObject())
     {
         str = Maps::GetMinesName(tile.QuantityResourceCount().first);
         str.append(GetMinesIncomeString(tile.QuantityResourceCount().first));
-    } else
+    }
+    else
         str = MP2::StringObject(tile.GetObject());
 
     if (troop.isValid())
@@ -78,23 +79,24 @@ string ShowGuardiansInfo(const Maps::Tiles &tile, int scoute)
     return str;
 }
 
-string ShowMonsterInfo(const Maps::Tiles &tile, int scoute)
+string ShowMonsterInfo(const Maps::Tiles& tile, int scoute)
 {
     string str;
-    const Troop &troop = tile.QuantityTroop();
+    const Troop& troop = tile.QuantityTroop();
 
     if (scoute)
     {
         str = "%{count} %{monster}";
         StringReplace(str, "%{count}", Game::CountScoute(troop.GetCount(), scoute));
         StringReplace(str, "%{monster}", StringLower(troop.GetMultiName()));
-    } else
+    }
+    else
         str = Army::TroopSizeString(troop);
 
     return str;
 }
 
-string ShowArtifactInfo(const Maps::Tiles &tile, bool show)
+string ShowArtifactInfo(const Maps::Tiles& tile, bool show)
 {
     string str = MP2::StringObject(tile.GetObject());
 
@@ -108,13 +110,13 @@ string ShowArtifactInfo(const Maps::Tiles &tile, bool show)
     return str;
 }
 
-string ShowResourceInfo(const Maps::Tiles &tile, bool show, int scoute)
+string ShowResourceInfo(const Maps::Tiles& tile, bool show, int scoute)
 {
     string str = MP2::StringObject(tile.GetObject());
 
     if (!show)
         return str;
-    const ResourceCount &rc = tile.QuantityResourceCount();
+    const ResourceCount& rc = tile.QuantityResourceCount();
 
     str.append("\n(");
     str.append(Resource::String(rc.first));
@@ -129,47 +131,48 @@ string ShowResourceInfo(const Maps::Tiles &tile, bool show, int scoute)
     return str;
 }
 
-string ShowDwellingInfo(const Maps::Tiles &tile, int scoute)
+string ShowDwellingInfo(const Maps::Tiles& tile, int scoute)
 {
     string str = MP2::StringObject(tile.GetObject());
 
     if (!scoute)
         return str;
     str.append("\n");
-    const Troop &troop = tile.QuantityTroop();
+    const Troop& troop = tile.QuantityTroop();
     if (troop.isValid())
     {
         str.append(_("(available: %{count})"));
         StringReplace(str, "%{count}", Game::CountScoute(troop.GetCount(), scoute));
-    } else
+    }
+    else
         str.append("(empty)");
 
     return str;
 }
 
-string ShowShrineInfo(const Maps::Tiles &tile, const Heroes *hero, int scoute)
+string ShowShrineInfo(const Maps::Tiles& tile, const Heroes* hero, int scoute)
 {
     string str = MP2::StringObject(tile.GetObject());
     bool show = false;
 
     switch (tile.GetObject())
     {
-        case MP2::OBJ_SHRINE1:
-            show = scoute >= Skill::Level::BASIC;
-            break;
-        case MP2::OBJ_SHRINE2:
-            show = scoute >= Skill::Level::ADVANCED;
-            break;
-        case MP2::OBJ_SHRINE3:
-            show = scoute == Skill::Level::EXPERT;
-            break;
-        default:
-            break;
+    case MP2::OBJ_SHRINE1:
+        show = scoute >= Skill::Level::BASIC;
+        break;
+    case MP2::OBJ_SHRINE2:
+        show = scoute >= Skill::Level::ADVANCED;
+        break;
+    case MP2::OBJ_SHRINE3:
+        show = scoute == Skill::Level::EXPERT;
+        break;
+    default:
+        break;
     }
 
     if (!show)
         return str;
-    const Spell &spell = tile.QuantitySpell();
+    const Spell& spell = tile.QuantitySpell();
     str.append("\n(");
     str.append(spell.GetName());
     str.append(")");
@@ -183,13 +186,13 @@ string ShowShrineInfo(const Maps::Tiles &tile, const Heroes *hero, int scoute)
     return str;
 }
 
-string ShowWitchHutInfo(const Maps::Tiles &tile, const Heroes *hero, bool show)
+string ShowWitchHutInfo(const Maps::Tiles& tile, const Heroes* hero, bool show)
 {
     string str = MP2::StringObject(tile.GetObject());
 
     if (!show)
         return str;
-    const Skill::Secondary &skill = tile.QuantitySkill();
+    const Skill::Secondary& skill = tile.QuantitySkill();
     str.append("\n(");
     str.append(Skill::Secondary::String(skill.Skill()));
     str.append(")");
@@ -201,7 +204,8 @@ string ShowWitchHutInfo(const Maps::Tiles &tile, const Heroes *hero, bool show)
         str.append("\n(");
         str.append(_("already knows this skill"));
         str.append(")");
-    } else if (hero->HasMaxSecondarySkill())
+    }
+    else if (hero->HasMaxSecondarySkill())
     {
         str.append("\n(");
         str.append(_("already has max skills"));
@@ -211,7 +215,7 @@ string ShowWitchHutInfo(const Maps::Tiles &tile, const Heroes *hero, bool show)
     return str;
 }
 
-string ShowLocalVisitTileInfo(const Maps::Tiles &tile, const Heroes *hero)
+string ShowLocalVisitTileInfo(const Maps::Tiles& tile, const Heroes* hero)
 {
     string str = MP2::StringObject(tile.GetObject());
     if (hero)
@@ -223,7 +227,7 @@ string ShowLocalVisitTileInfo(const Maps::Tiles &tile, const Heroes *hero)
     return str;
 }
 
-string ShowLocalVisitObjectInfo(const Maps::Tiles &tile, const Heroes *hero)
+string ShowLocalVisitObjectInfo(const Maps::Tiles& tile, const Heroes* hero)
 {
     string str = MP2::StringObject(tile.GetObject());
     if (!hero)
@@ -234,7 +238,7 @@ string ShowLocalVisitObjectInfo(const Maps::Tiles &tile, const Heroes *hero)
     return str;
 }
 
-string ShowGlobalVisitInfo(const Maps::Tiles &tile, const Kingdom &kingdom)
+string ShowGlobalVisitInfo(const Maps::Tiles& tile, const Kingdom& kingdom)
 {
     string str = MP2::StringObject(tile.GetObject());
     str.append("\n");
@@ -243,7 +247,7 @@ string ShowGlobalVisitInfo(const Maps::Tiles &tile, const Kingdom &kingdom)
     return str;
 }
 
-string ShowGlobalVisitInfo(const Maps::Tiles &tile, const Kingdom &kingdom, bool ext)
+string ShowGlobalVisitInfo(const Maps::Tiles& tile, const Kingdom& kingdom, bool ext)
 {
     string str = MP2::StringObject(tile.GetObject());
     if (ext && kingdom.isVisited(tile))
@@ -255,7 +259,7 @@ string ShowGlobalVisitInfo(const Maps::Tiles &tile, const Kingdom &kingdom, bool
     return str;
 }
 
-string ShowBarrierTentInfo(const Maps::Tiles &tile, const Kingdom &kingdom)
+string ShowBarrierTentInfo(const Maps::Tiles& tile, const Kingdom& kingdom)
 {
     string str = BarrierColor::String(tile.QuantityColor());
     str.append(" ");
@@ -271,7 +275,7 @@ string ShowBarrierTentInfo(const Maps::Tiles &tile, const Kingdom &kingdom)
     return str;
 }
 
-string ShowGroundInfo(const Maps::Tiles &tile, bool show, const Heroes *hero)
+string ShowGroundInfo(const Maps::Tiles& tile, bool show, const Heroes* hero)
 {
     string str = Maps::Ground::String(tile.GetGround());
 
@@ -281,7 +285,7 @@ string ShowGroundInfo(const Maps::Tiles &tile, bool show, const Heroes *hero)
     if (!(dir != Direction::UNKNOWN))
         return str;
     uint32_t cost = Maps::Ground::GetPenalty(tile.GetIndex(), Direction::Reflect(dir),
-                                        hero->GetLevelSkill(Skill::Secondary::PATHFINDING));
+                                             hero->GetLevelSkill(Skill::Secondary::PATHFINDING));
     if (cost)
     {
         str.append("\n");
@@ -292,19 +296,19 @@ string ShowGroundInfo(const Maps::Tiles &tile, bool show, const Heroes *hero)
     return str;
 }
 
-void Dialog::QuickInfo(const Maps::Tiles &tile)
+void Dialog::QuickInfo(const Maps::Tiles& tile)
 {
     // check
     switch (tile.GetObject())
     {
-        case MP2::OBJN_MINES:
-        case MP2::OBJN_ABANDONEDMINE:
-        case MP2::OBJN_SAWMILL:
-        case MP2::OBJN_ALCHEMYLAB:
+    case MP2::OBJN_MINES:
+    case MP2::OBJN_ABANDONEDMINE:
+    case MP2::OBJN_SAWMILL:
+    case MP2::OBJN_ALCHEMYLAB:
         {
-            const Maps::Tiles &left = world.GetTiles(tile.GetIndex() - 1);
-            const Maps::Tiles &right = world.GetTiles(tile.GetIndex() + 1);
-            const Maps::Tiles *center = nullptr;
+            const Maps::Tiles& left = world.GetTiles(tile.GetIndex() - 1);
+            const Maps::Tiles& right = world.GetTiles(tile.GetIndex() + 1);
+            const Maps::Tiles* center = nullptr;
 
             if (MP2::isGroundObject(left.GetObject())) center = &left;
             else if (MP2::isGroundObject(right.GetObject())) center = &right;
@@ -315,15 +319,15 @@ void Dialog::QuickInfo(const Maps::Tiles &tile)
                 return;
             }
         }
-            break;
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 
-    const Settings &settings = Settings::Get();
-    Display &display = Display::Get();
-    Cursor &cursor = Cursor::Get();
+    const Settings& settings = Settings::Get();
+    Display& display = Display::Get();
+    Cursor& cursor = Cursor::Get();
     cursor.Hide();
 
     // preload
@@ -331,12 +335,12 @@ void Dialog::QuickInfo(const Maps::Tiles &tile)
 
     // image box
     auto boxInfo = AGG::GetICN(qwikinfo, 0);
-    Sprite &box = boxInfo;
-    const Interface::GameArea &gamearea = Interface::Basic::Get().GetGameArea();
+    Sprite& box = boxInfo;
+    const Interface::GameArea& gamearea = Interface::Basic::Get().GetGameArea();
     const Rect ar(BORDERWIDTH, BORDERWIDTH, gamearea.GetArea().w, gamearea.GetArea().h);
 
-    LocalEvent &le = LocalEvent::Get();
-    const Point &mp = le.GetMouseCursor();
+    LocalEvent& le = LocalEvent::Get();
+    const Point& mp = le.GetMouseCursor();
 
     Rect pos;
     s32 mx = (mp.x - BORDERWIDTH) / TILEWIDTH;
@@ -349,15 +353,15 @@ void Dialog::QuickInfo(const Maps::Tiles &tile)
         pos = Rect(mx + TILEWIDTH, my + TILEWIDTH, box.w(), box.h());
     else
         // top right
-    if (mx > ar.x + ar.w / 2 && my <= ar.y + ar.h / 2)
-        pos = Rect(mx - box.w(), my + TILEWIDTH, box.w(), box.h());
-    else
-        // bottom left
-    if (mx <= ar.x + ar.w / 2 && my > ar.y + ar.h / 2)
-        pos = Rect(mx + TILEWIDTH, my - box.h(), box.w(), box.h());
-    else
-        // bottom right
-        pos = Rect(mx - box.w(), my - box.h(), box.w(), box.h());
+        if (mx > ar.x + ar.w / 2 && my <= ar.y + ar.h / 2)
+            pos = Rect(mx - box.w(), my + TILEWIDTH, box.w(), box.h());
+        else
+            // bottom left
+            if (mx <= ar.x + ar.w / 2 && my > ar.y + ar.h / 2)
+                pos = Rect(mx + TILEWIDTH, my - box.h(), box.w(), box.h());
+            else
+                // bottom right
+                pos = Rect(mx - box.w(), my - box.h(), box.w(), box.h());
 
     SpriteBack back(pos);
 
@@ -366,8 +370,8 @@ void Dialog::QuickInfo(const Maps::Tiles &tile)
 
     string name_object;
 
-    const Heroes *from_hero = Interface::GetFocusHeroes();
-    const Kingdom &kingdom = world.GetKingdom(settings.CurrentColor());
+    const Heroes* from_hero = Interface::GetFocusHeroes();
+    const Kingdom& kingdom = world.GetKingdom(settings.CurrentColor());
     int scoute = from_hero ? from_hero->CanScouteTile(tile.GetIndex()) : 0;
     const bool show = settings.ExtWorldShowVisitedContent();
 
@@ -375,15 +379,17 @@ void Dialog::QuickInfo(const Maps::Tiles &tile)
         name_object = _("Unchartered Territory");
     else
         // check guardians mine
-    if (MP2::OBJ_ABANDONEDMINE == tile.GetObject() ||
-        tile.CaptureObjectIsProtection())
-    {
-        name_object = ShowGuardiansInfo(tile,
-                                        settings.CurrentColor() == tile.QuantityColor() ? Skill::Level::EXPERT
-                                            : scoute);
-    } else
-        switch (tile.GetObject())
+        if (MP2::OBJ_ABANDONEDMINE == tile.GetObject() ||
+            tile.CaptureObjectIsProtection())
         {
+            name_object = ShowGuardiansInfo(tile,
+                                            settings.CurrentColor() == tile.QuantityColor()
+                                                ? Skill::Level::EXPERT
+                                                : scoute);
+        }
+        else
+            switch (tile.GetObject())
+            {
             case MP2::OBJ_MONSTER:
                 name_object = ShowMonsterInfo(tile, scoute);
                 break;
@@ -407,8 +413,9 @@ void Dialog::QuickInfo(const Maps::Tiles &tile)
             case MP2::OBJ_WINDMILL:
             case MP2::OBJ_WATERWHEEL:
             case MP2::OBJ_MAGICGARDEN:
-                name_object = Settings::Get().ExtWorldExtObjectsCaptured() ?
-                              MP2::StringObject(tile.GetObject()) : ShowGlobalVisitInfo(tile, kingdom, show);
+                name_object = Settings::Get().ExtWorldExtObjectsCaptured()
+                                  ? MP2::StringObject(tile.GetObject())
+                                  : ShowGlobalVisitInfo(tile, kingdom, show);
                 break;
 
             case MP2::OBJ_CAMPFIRE:
@@ -509,7 +516,7 @@ void Dialog::QuickInfo(const Maps::Tiles &tile)
             default:
                 name_object = MP2::StringObject(tile.GetObject());
                 break;
-        }
+            }
 
     TextBox text(name_object, Font::SMALL, 118);
     text.Blit(pos.x + BORDERWIDTH + (pos.w - BORDERWIDTH - text.w()) / 2, pos.y + (pos.h - BORDERWIDTH - text.h()) / 2);
@@ -527,23 +534,23 @@ void Dialog::QuickInfo(const Maps::Tiles &tile)
     display.Flip();
 }
 
-void Dialog::QuickInfo(const Castle &castle)
+void Dialog::QuickInfo(const Castle& castle)
 {
-    Display &display = Display::Get();
+    Display& display = Display::Get();
 
-    Cursor &cursor = Cursor::Get();
+    Cursor& cursor = Cursor::Get();
     cursor.Hide();
 
     const int qwiktown = ICN::QWIKTOWN;
 
     // image box
     auto boxInfo = AGG::GetICN(qwiktown, 0);
-    Sprite &box = boxInfo;
-    const Interface::GameArea &gamearea = Interface::Basic::Get().GetGameArea();
+    Sprite& box = boxInfo;
+    const Interface::GameArea& gamearea = Interface::Basic::Get().GetGameArea();
     const Rect ar(BORDERWIDTH, BORDERWIDTH, gamearea.GetArea().w, gamearea.GetArea().h);
 
-    LocalEvent &le = LocalEvent::Get();
-    const Point &mp = le.GetMouseCursor();
+    LocalEvent& le = LocalEvent::Get();
+    const Point& mp = le.GetMouseCursor();
 
     Rect cur_rt;
     s32 mx = (mp.x - BORDERWIDTH) / TILEWIDTH;
@@ -556,15 +563,15 @@ void Dialog::QuickInfo(const Castle &castle)
         cur_rt = Rect(mx + TILEWIDTH, my + TILEWIDTH, box.w(), box.h());
     else
         // top right
-    if (mx > ar.x + ar.w / 2 && my <= ar.y + ar.h / 2)
-        cur_rt = Rect(mx - box.w(), my + TILEWIDTH, box.w(), box.h());
-    else
-        // bottom left
-    if (mx <= ar.x + ar.w / 2 && my > ar.y + ar.h / 2)
-        cur_rt = Rect(mx + TILEWIDTH, my - box.h(), box.w(), box.h());
-    else
-        // bottom right
-        cur_rt = Rect(mx - box.w(), my - box.h(), box.w(), box.h());
+        if (mx > ar.x + ar.w / 2 && my <= ar.y + ar.h / 2)
+            cur_rt = Rect(mx - box.w(), my + TILEWIDTH, box.w(), box.h());
+        else
+            // bottom left
+            if (mx <= ar.x + ar.w / 2 && my > ar.y + ar.h / 2)
+                cur_rt = Rect(mx + TILEWIDTH, my - box.h(), box.w(), box.h());
+            else
+                // bottom right
+                cur_rt = Rect(mx - box.w(), my - box.h(), box.w(), box.h());
 
     box.SetAlphaMod(210);
     SpriteBack back(cur_rt);
@@ -584,30 +591,30 @@ void Dialog::QuickInfo(const Castle &castle)
 
     switch (castle.GetRace())
     {
-        case Race::KNGT:
-            index = castle.isCastle() ? 9 : 15;
-            break;
-        case Race::BARB:
-            index = castle.isCastle() ? 10 : 16;
-            break;
-        case Race::SORC:
-            index = castle.isCastle() ? 11 : 17;
-            break;
-        case Race::WRLK:
-            index = castle.isCastle() ? 12 : 18;
-            break;
-        case Race::WZRD:
-            index = castle.isCastle() ? 13 : 19;
-            break;
-        case Race::NECR:
-            index = castle.isCastle() ? 14 : 20;
-            break;
-        default:
-            return;
+    case Race::KNGT:
+        index = castle.isCastle() ? 9 : 15;
+        break;
+    case Race::BARB:
+        index = castle.isCastle() ? 10 : 16;
+        break;
+    case Race::SORC:
+        index = castle.isCastle() ? 11 : 17;
+        break;
+    case Race::WRLK:
+        index = castle.isCastle() ? 12 : 18;
+        break;
+    case Race::WZRD:
+        index = castle.isCastle() ? 13 : 19;
+        break;
+    case Race::NECR:
+        index = castle.isCastle() ? 14 : 20;
+        break;
+    default:
+        return;
     }
 
     // castle icon
-    const Sprite &sprite = AGG::GetICN(ICN::LOCATORS, index);
+    const Sprite& sprite = AGG::GetICN(ICN::LOCATORS, index);
 
     dst_pt.x = cur_rt.x + (cur_rt.w - sprite.w()) / 2;
     dst_pt.y += 18;
@@ -616,36 +623,36 @@ void Dialog::QuickInfo(const Castle &castle)
     // color flags
     switch (castle.GetColor())
     {
-        case Color::BLUE:
-            index = 0;
-            break;
-        case Color::GREEN:
-            index = 2;
-            break;
-        case Color::RED:
-            index = 4;
-            break;
-        case Color::YELLOW:
-            index = 6;
-            break;
-        case Color::ORANGE:
-            index = 8;
-            break;
-        case Color::PURPLE:
-            index = 10;
-            break;
-        case Color::NONE:
-            index = 12;
-            break;
-        default:
-            break;
+    case Color::BLUE:
+        index = 0;
+        break;
+    case Color::GREEN:
+        index = 2;
+        break;
+    case Color::RED:
+        index = 4;
+        break;
+    case Color::YELLOW:
+        index = 6;
+        break;
+    case Color::ORANGE:
+        index = 8;
+        break;
+    case Color::PURPLE:
+        index = 10;
+        break;
+    case Color::NONE:
+        index = 12;
+        break;
+    default:
+        break;
     }
 
-    const Sprite &l_flag = AGG::GetICN(ICN::FLAG32, index);
+    const Sprite& l_flag = AGG::GetICN(ICN::FLAG32, index);
     dst_pt.x = cur_rt.x + (cur_rt.w - 60) / 2 - l_flag.w();
     l_flag.Blit(dst_pt);
 
-    const Sprite &r_flag = AGG::GetICN(ICN::FLAG32, index + 1);
+    const Sprite& r_flag = AGG::GetICN(ICN::FLAG32, index + 1);
     dst_pt.x = cur_rt.x + (cur_rt.w + 60) / 2;
     r_flag.Blit(dst_pt);
 
@@ -657,18 +664,18 @@ void Dialog::QuickInfo(const Castle &castle)
 
     //
     uint32_t count = castle.GetArmy().m_troops.GetCount();
-    const Settings &conf = Settings::Get();
+    const Settings& conf = Settings::Get();
 
-    const Heroes *from_hero = Interface::GetFocusHeroes();
-    const Heroes *guardian = castle.GetHeroes().Guard();
+    const Heroes* from_hero = Interface::GetFocusHeroes();
+    const Heroes* guardian = castle.GetHeroes().Guard();
 
     // draw guardian portrait
     if (guardian &&
         // my  colors
         (castle.isFriends(conf.CurrentColor()) ||
-         // show guardians (scouting: advanced)
-         from_hero &&
-         Skill::Level::ADVANCED <= from_hero->GetSecondaryValues(Skill::Secondary::SCOUTING)))
+            // show guardians (scouting: advanced)
+            from_hero &&
+            Skill::Level::ADVANCED <= from_hero->GetSecondaryValues(Skill::Secondary::SCOUTING)))
     {
         // heroes name
         text.Set(guardian->GetName(), Font::SMALL);
@@ -693,7 +700,8 @@ void Dialog::QuickInfo(const Castle &castle)
         dst_pt.x = cur_rt.x + (cur_rt.w - text.w()) / 2;
         dst_pt.y += 45;
         text.Blit(dst_pt);
-    } else if (castle.isFriends(conf.CurrentColor()))
+    }
+    else if (castle.isFriends(conf.CurrentColor()))
         // show all
         Army::DrawMons32Line(castle.GetArmy().m_troops, cur_rt.x - 5, cur_rt.y + 100, 192);
     else
@@ -716,24 +724,24 @@ void Dialog::QuickInfo(const Castle &castle)
     display.Flip();
 }
 
-void Dialog::QuickInfo(const Heroes &hero)
+void Dialog::QuickInfo(const Heroes& hero)
 {
-    Display &display = Display::Get();
-    const Settings &conf = Settings::Get();
+    Display& display = Display::Get();
+    const Settings& conf = Settings::Get();
 
-    Cursor &cursor = Cursor::Get();
+    Cursor& cursor = Cursor::Get();
     cursor.Hide();
 
     const int qwikhero = ICN::QWIKHERO;
 
     // image box
     auto boxInfo = AGG::GetICN(qwikhero, 0);
-    Sprite &box = boxInfo;
-    const Interface::GameArea &gamearea = Interface::Basic::Get().GetGameArea();
+    Sprite& box = boxInfo;
+    const Interface::GameArea& gamearea = Interface::Basic::Get().GetGameArea();
     const Rect ar(BORDERWIDTH, BORDERWIDTH, gamearea.GetArea().w, gamearea.GetArea().h);
 
-    LocalEvent &le = LocalEvent::Get();
-    const Point &mp = le.GetMouseCursor();
+    LocalEvent& le = LocalEvent::Get();
+    const Point& mp = le.GetMouseCursor();
 
     Rect cur_rt;
     s32 mx = (mp.x - BORDERWIDTH) / TILEWIDTH;
@@ -746,15 +754,15 @@ void Dialog::QuickInfo(const Heroes &hero)
         cur_rt = Rect(mx + TILEWIDTH, my + TILEWIDTH, box.w(), box.h());
     else
         // top right
-    if (mx > ar.x + ar.w / 2 && my <= ar.y + ar.h / 2)
-        cur_rt = Rect(mx - box.w(), my + TILEWIDTH, box.w(), box.h());
-    else
-        // bottom left
-    if (mx <= ar.x + ar.w / 2 && my > ar.y + ar.h / 2)
-        cur_rt = Rect(mx + TILEWIDTH, my - box.h(), box.w(), box.h());
-    else
-        // bottom right
-        cur_rt = Rect(mx - box.w(), my - box.h(), box.w(), box.h());
+        if (mx > ar.x + ar.w / 2 && my <= ar.y + ar.h / 2)
+            cur_rt = Rect(mx - box.w(), my + TILEWIDTH, box.w(), box.h());
+        else
+            // bottom left
+            if (mx <= ar.x + ar.w / 2 && my > ar.y + ar.h / 2)
+                cur_rt = Rect(mx + TILEWIDTH, my - box.h(), box.w(), box.h());
+            else
+                // bottom right
+                cur_rt = Rect(mx - box.w(), my - box.h(), box.w(), box.h());
 
 
     box.SetAlphaMod(210);
@@ -772,7 +780,8 @@ void Dialog::QuickInfo(const Heroes &hero)
         message = _("%{name} ( Level %{level} )");
         StringReplace(message, "%{name}", hero.GetName());
         StringReplace(message, "%{level}", hero.GetLevel());
-    } else
+    }
+    else
         message = hero.GetName();
     text.Set(message, Font::SMALL);
     dst_pt.x = cur_rt.x + (cur_rt.w - text.w()) / 2;
@@ -792,7 +801,7 @@ void Dialog::QuickInfo(const Heroes &hero)
     if (hero.isFriends(conf.CurrentColor()))
     {
         const s32 luck = hero.GetLuckWithModificators(nullptr);
-        const Sprite &sprite = AGG::GetICN(ICN::MINILKMR, 0 > luck ? 0 : 0 < luck ? 1 : 2);
+        const Sprite& sprite = AGG::GetICN(ICN::MINILKMR, 0 > luck ? 0 : 0 < luck ? 1 : 2);
         uint32_t count = 0 == luck ? 1 : abs(luck);
         dst_pt.x = cur_rt.x + 120;
         dst_pt.y = cur_rt.y + (count == 1 ? 20 : 13);
@@ -808,7 +817,7 @@ void Dialog::QuickInfo(const Heroes &hero)
     if (hero.isFriends(conf.CurrentColor()))
     {
         const s32 morale = hero.GetMoraleWithModificators(nullptr);
-        const Sprite &sprite = AGG::GetICN(ICN::MINILKMR, 0 > morale ? 3 : 0 < morale ? 4 : 5);
+        const Sprite& sprite = AGG::GetICN(ICN::MINILKMR, 0 > morale ? 3 : 0 < morale ? 4 : 5);
         uint32_t count = 0 == morale ? 1 : abs(morale);
         dst_pt.x = cur_rt.x + 10;
         dst_pt.y = cur_rt.y + (count == 1 ? 20 : 13);
@@ -825,38 +834,38 @@ void Dialog::QuickInfo(const Heroes &hero)
 
     switch (hero.GetColor())
     {
-        case Color::BLUE:
-            index = 0;
-            break;
-        case Color::GREEN:
-            index = 2;
-            break;
-        case Color::RED:
-            index = 4;
-            break;
-        case Color::YELLOW:
-            index = 6;
-            break;
-        case Color::ORANGE:
-            index = 8;
-            break;
-        case Color::PURPLE:
-            index = 10;
-            break;
-        case Color::NONE:
-            index = 12;
-            break;
-        default:
-            break;
+    case Color::BLUE:
+        index = 0;
+        break;
+    case Color::GREEN:
+        index = 2;
+        break;
+    case Color::RED:
+        index = 4;
+        break;
+    case Color::YELLOW:
+        index = 6;
+        break;
+    case Color::ORANGE:
+        index = 8;
+        break;
+    case Color::PURPLE:
+        index = 10;
+        break;
+    case Color::NONE:
+        index = 12;
+        break;
+    default:
+        break;
     }
 
     dst_pt.y = cur_rt.y + 13;
 
-    const Sprite &l_flag = AGG::GetICN(ICN::FLAG32, index);
+    const Sprite& l_flag = AGG::GetICN(ICN::FLAG32, index);
     dst_pt.x = cur_rt.x + (cur_rt.w - 40) / 2 - l_flag.w();
     l_flag.Blit(dst_pt);
 
-    const Sprite &r_flag = AGG::GetICN(ICN::FLAG32, index + 1);
+    const Sprite& r_flag = AGG::GetICN(ICN::FLAG32, index + 1);
     dst_pt.x = cur_rt.x + (cur_rt.w + 40) / 2;
     r_flag.Blit(dst_pt);
 
@@ -917,12 +926,12 @@ void Dialog::QuickInfo(const Heroes &hero)
     text.Blit(dst_pt);
 
     text.Set(Int2Str(hero.GetMobilityIndexSprite()) + "/" + Int2Str(hero.GetMovePoints()) + "/" +
-             Int2Str(hero.GetMaxMovePoints()));
+        Int2Str(hero.GetMaxMovePoints()));
     dst_pt.x += 75;
     text.Blit(dst_pt);
 
     // draw monster sprite in one string
-    const Heroes *from_hero = Interface::GetFocusHeroes();
+    const Heroes* from_hero = Interface::GetFocusHeroes();
 
     if (hero.isFriends(conf.CurrentColor()))
         // show all

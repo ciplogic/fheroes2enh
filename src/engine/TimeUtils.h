@@ -5,4 +5,4 @@
 
 unsigned long long GetTickCount();
 
-void TimeAction(const std::string& message, std::function<void()> &runAction);
+void TimeAction(const std::string& message, std::function<void()>& runAction);

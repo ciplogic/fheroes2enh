@@ -32,29 +32,31 @@
 
 namespace Battle
 {
-    bool AllowPart1(const Unit *b, bool f)
+    bool AllowPart1(const Unit* b, bool f)
     {
         return (f ? !b->Modes(TR_SKIPMOVE) || b->Modes(TR_HARDSKIP) : !b->Modes(TR_SKIPMOVE)) &&
-               Speed::STANDING != b->GetSpeed(f);
+            Speed::STANDING != b->GetSpeed(f);
     }
 
-    bool AllowPart2(const Unit *b, bool f)
+    bool AllowPart2(const Unit* b, bool f)
     {
         return (f ? b->Modes(TR_SKIPMOVE) && !b->Modes(TR_HARDSKIP) : b->Modes(TR_SKIPMOVE)) &&
-               Speed::STANDING != b->GetSpeed(f);
+            Speed::STANDING != b->GetSpeed(f);
     }
 
-    Unit *ForceGetCurrentUnitPart(Units &units1, Units &units2, bool part1, bool units1_first, bool orders_mode)
+    Unit* ForceGetCurrentUnitPart(Units& units1, Units& units2, bool part1, bool units1_first, bool orders_mode)
     {
-        const auto it1 = part1 ? find_if(units1._items.begin(), units1._items.end(),
-            [&](const Unit* unit) { return AllowPart1(unit, orders_mode); }) :
-                              find_if(units1._items.begin(), units1._items.end(),
-                                  [&](const Unit* unit) { return AllowPart2(unit, orders_mode); });
-        const auto it2 = part1 ? find_if(units2._items.begin(), units2._items.end(),
-            [&](const Unit* unit) { return AllowPart1(unit, orders_mode); }) :
-                              find_if(units2._items.begin(), units2._items.end(),
-                                  [&](const Unit* unit) { return AllowPart2(unit, orders_mode); });
-        Unit *result = nullptr;
+        const auto it1 = part1
+                             ? find_if(units1._items.begin(), units1._items.end(),
+                                       [&](const Unit* unit) { return AllowPart1(unit, orders_mode); })
+                             : find_if(units1._items.begin(), units1._items.end(),
+                                       [&](const Unit* unit) { return AllowPart2(unit, orders_mode); });
+        const auto it2 = part1
+                             ? find_if(units2._items.begin(), units2._items.end(),
+                                       [&](const Unit* unit) { return AllowPart1(unit, orders_mode); })
+                             : find_if(units2._items.begin(), units2._items.end(),
+                                       [&](const Unit* unit) { return AllowPart2(unit, orders_mode); });
+        Unit* result = nullptr;
 
         if (it1 != units1._items.end() &&
             it2 != units2._items.end())
@@ -62,20 +64,23 @@ namespace Battle
             if ((*it1)->GetSpeed(orders_mode) == (*it2)->GetSpeed(orders_mode))
             {
                 result = units1_first ? *it1 : *it2;
-            } else if (part1 || Settings::Get().ExtBattleReverseWaitOrder())
+            }
+            else if (part1 || Settings::Get().ExtBattleReverseWaitOrder())
             {
                 if ((*it1)->GetSpeed(orders_mode) > (*it2)->GetSpeed(orders_mode))
                     result = *it1;
                 else if ((*it2)->GetSpeed(orders_mode) > (*it1)->GetSpeed(orders_mode))
                     result = *it2;
-            } else
+            }
+            else
             {
                 if ((*it1)->GetSpeed(orders_mode) < (*it2)->GetSpeed(orders_mode))
                     result = *it1;
                 else if ((*it2)->GetSpeed(orders_mode) < (*it1)->GetSpeed(orders_mode))
                     result = *it2;
             }
-        } else if (it1 != units1._items.end())
+        }
+        else if (it1 != units1._items.end())
             result = *it1;
         else if (it2 != units2._items.end())
             result = *it2;
@@ -97,16 +102,17 @@ Battle::Units::Units()
     _items.reserve(CAPACITY);
 }
 
-Battle::Units::Units(const Units &units, bool filter)
+Battle::Units::Units(const Units& units, bool filter)
 {
     _items.reserve(CAPACITY < units._items.size() ? units._items.size() : CAPACITY);
     _items.assign(units._items.begin(), units._items.end());
     if (filter)
         _items.resize(distance(_items.begin(),
-            remove_if(_items.begin(), _items.end(), [](const Unit* unit) {return !unit->isValid(); })));
-} 
+                               remove_if(_items.begin(), _items.end(),
+                                         [](const Unit* unit) { return !unit->isValid(); })));
+}
 
-Battle::Units::Units(const Units &units1, const Units &units2)
+Battle::Units::Units(const Units& units1, const Units& units2)
 {
     const size_t capacity = units1._items.size() + units2._items.size();
     _items.reserve(CAPACITY < capacity ? capacity : CAPACITY);
@@ -114,7 +120,7 @@ Battle::Units::Units(const Units &units1, const Units &units2)
     _items.insert(_items.end(), units2._items.begin(), units2._items.end());
 }
 
-Battle::Units &Battle::Units::operator=(const Units &units)
+Battle::Units& Battle::Units::operator=(const Units& units)
 {
     _items.reserve(CAPACITY < units._items.size() ? units._items.size() : CAPACITY);
     _items.assign(units._items.begin(), units._items.end());
@@ -127,9 +133,10 @@ struct FastestUnits
     bool f;
 
     FastestUnits(bool v) : f(v)
-    {}
+    {
+    }
 
-    bool operator()(const Battle::Unit *t1, const Battle::Unit *t2) const
+    bool operator()(const Battle::Unit* t1, const Battle::Unit* t2) const
     {
         return t1->GetSpeed(f) > t2->GetSpeed(f);
     }
@@ -140,9 +147,10 @@ struct SlowestUnits
     bool f;
 
     SlowestUnits(bool v) : f(v)
-    {}
+    {
+    }
 
-    bool operator()(const Battle::Unit *t1, const Battle::Unit *t2) const
+    bool operator()(const Battle::Unit* t1, const Battle::Unit* t2) const
     {
         return t1->GetSpeed(f) < t2->GetSpeed(f);
     }
@@ -172,35 +180,35 @@ void Battle::Units::SortWeakest()
     sort(_items.begin(), _items.end(), Army::WeakestTroop);
 }
 
-Battle::Unit *Battle::Units::FindUID(uint32_t pid)
-{
-    auto it = find_if(_items.begin(), _items.end(), 
-        [&](const Unit* unit)
-    {
-        return unit->isUID(pid);
-    });
-
-    return it == _items.end() ? nullptr : *it;
-}
-
-Battle::Unit *Battle::Units::FindMode(uint32_t mod)
+Battle::Unit* Battle::Units::FindUID(uint32_t pid)
 {
     auto it = find_if(_items.begin(), _items.end(),
-        [&](const Unit* unit)
-    {
-        return unit->Modes(mod);
-    });
+                      [&](const Unit* unit)
+                      {
+                          return unit->isUID(pid);
+                      });
+
+    return it == _items.end() ? nullptr : *it;
+}
+
+Battle::Unit* Battle::Units::FindMode(uint32_t mod)
+{
+    auto it = find_if(_items.begin(), _items.end(),
+                      [&](const Unit* unit)
+                      {
+                          return unit->Modes(mod);
+                      });
     return it == _items.end() ? nullptr : *it;
 }
 
 
-Battle::Force::Force(Army &parent, bool opposite) : army(parent)
+Battle::Force::Force(Army& parent, bool opposite) : army(parent)
 {
     uids.reserve(army.m_troops.Size());
 
     for (uint32_t index = 0; index < army.m_troops.Size(); ++index)
     {
-        const Troop *troop = army.m_troops.GetTroop(index);
+        const Troop* troop = army.m_troops.GetTroop(index);
         const uint32_t position = army.isSpreadFormat() ? index * 22 : 22 + index * 11;
         uint32_t uid = 0;
 
@@ -217,15 +225,15 @@ Battle::Force::Force(Army &parent, bool opposite) : army(parent)
 
 Battle::Force::~Force()
 {
-    for (auto &it : _items) delete it;
+    for (auto& it : _items) delete it;
 }
 
-const HeroBase *Battle::Force::GetCommander() const
+const HeroBase* Battle::Force::GetCommander() const
 {
     return army.GetCommander();
 }
 
-HeroBase *Battle::Force::GetCommander()
+HeroBase* Battle::Force::GetCommander()
 {
     return army.GetCommander();
 }
@@ -242,7 +250,7 @@ int Battle::Force::GetControl() const
 
 bool Battle::Force::isValid() const
 {
-    for (auto &it:_items)
+    for (auto& it : _items)
     {
         if (it->isValid())
             return true;
@@ -262,28 +270,28 @@ uint32_t Battle::Force::GetSurrenderCost() const
             res += payment.gold;
         }
 
-    const HeroBase *commander = GetCommander();
+    const HeroBase* commander = GetCommander();
 
     if (commander)
     {
         switch (commander->GetLevelSkill(Skill::Secondary::DIPLOMACY))
         {
             // 40%
-            case Skill::Level::BASIC:
-                res = res * 40 / 100;
-                break;
-                // 30%
-            case Skill::Level::ADVANCED:
-                res = res * 30 / 100;
-                break;
-                // 20%
-            case Skill::Level::EXPERT:
-                res = res * 20 / 100;
-                break;
-                // 50%
-            default:
-                res = res * 50 / 100;
-                break;
+        case Skill::Level::BASIC:
+            res = res * 40 / 100;
+            break;
+            // 30%
+        case Skill::Level::ADVANCED:
+            res = res * 30 / 100;
+            break;
+            // 20%
+        case Skill::Level::EXPERT:
+            res = res * 20 / 100;
+            break;
+            // 50%
+        default:
+            res = res * 50 / 100;
+            break;
         }
 
         Artifact art(Artifact::STATESMAN_QUILL);
@@ -306,22 +314,22 @@ void Battle::Force::NewTurn()
     for_each(_items.begin(), _items.end(), mem_fun(&Unit::NewTurn));
 }
 
-bool isUnitFirst(const Battle::Unit *last, bool part1, int army2_color)
+bool isUnitFirst(const Battle::Unit* last, bool part1, int army2_color)
 {
     return !last && part1 || last && army2_color == last->GetColor();
 }
 
-void Battle::Force::UpdateOrderUnits(const Force &army1, const Force &army2, Units &orders)
+void Battle::Force::UpdateOrderUnits(const Force& army1, const Force& army2, Units& orders)
 {
     orders._items.clear();
-    Unit *last = nullptr;
+    Unit* last = nullptr;
 
     Units units1(army1, true);
     Units units2(army2, true);
     units1.SortFastest(true);
     units2.SortFastest(true);
     while (nullptr !=
-           (last = ForceGetCurrentUnitPart(units1, units2, true, isUnitFirst(last, true, army2.GetColor()), true)))
+        (last = ForceGetCurrentUnitPart(units1, units2, true, isUnitFirst(last, true, army2.GetColor()), true)))
         orders._items.push_back(last);
 
     if (!Settings::Get().ExtBattleSoftWait())
@@ -333,19 +341,20 @@ void Battle::Force::UpdateOrderUnits(const Force &army1, const Force &army2, Uni
     {
         units11.SortFastest(true);
         units21.SortFastest(true);
-    } else
+    }
+    else
     {
         units11.SortSlowest(true);
         units21.SortSlowest(true);
     }
 
     while (nullptr !=
-           (last = ForceGetCurrentUnitPart(units11, units21, false, isUnitFirst(last, false, army2.GetColor()),
-                                           true)))
+        (last = ForceGetCurrentUnitPart(units11, units21, false, isUnitFirst(last, false, army2.GetColor()),
+                                        true)))
         orders._items.push_back(last);
 }
 
-Battle::Unit *Battle::Force::GetCurrentUnit(const Force &army1, const Force &army2, Unit *last, bool part1)
+Battle::Unit* Battle::Force::GetCurrentUnit(const Force& army1, const Force& army2, Unit* last, bool part1)
 {
     Units units1(army1, true);
     Units units2(army2, true);
@@ -354,20 +363,23 @@ Battle::Unit *Battle::Force::GetCurrentUnit(const Force &army1, const Force &arm
     {
         units1.SortFastest(false);
         units2.SortFastest(false);
-    } else
+    }
+    else
     {
         units1.SortSlowest(false);
         units2.SortSlowest(false);
     }
 
-    Unit *result = ForceGetCurrentUnitPart(units1, units2, part1, isUnitFirst(last, part1, army2.GetColor()), false);
+    Unit* result = ForceGetCurrentUnitPart(units1, units2, part1, isUnitFirst(last, part1, army2.GetColor()), false);
 
     return result &&
            result->isValid() &&
-           result->GetSpeed() > Speed::STANDING ? result : nullptr;
+           result->GetSpeed() > Speed::STANDING
+               ? result
+               : nullptr;
 }
 
-ByteVectorWriter &Battle::operator<<(ByteVectorWriter &msg, const Force &f)
+ByteVectorWriter& Battle::operator<<(ByteVectorWriter& msg, const Force& f)
 {
     msg << static_cast<const BitModes &>(f) << static_cast<uint32_t>(f._items.size());
 
@@ -378,7 +390,7 @@ ByteVectorWriter &Battle::operator<<(ByteVectorWriter &msg, const Force &f)
 }
 
 
-ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, Force &f)
+ByteVectorReader& Battle::operator>>(ByteVectorReader& msg, Force& f)
 {
     uint32_t size = 0;
     uint32_t uid = 0;
@@ -388,7 +400,7 @@ ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, Force &f)
     for (uint32_t ii = 0; ii < size; ++ii)
     {
         msg >> uid;
-        Unit *b = f.FindUID(uid);
+        Unit* b = f.FindUID(uid);
         if (b) msg >> *b;
     }
 
@@ -401,7 +413,7 @@ Troops Battle::Force::GetKilledTroops() const
 
     for (auto it : _items)
     {
-        const Unit &b = *it;
+        const Unit& b = *it;
         killed.PushBack(b, b.GetDead());
     }
 
@@ -412,9 +424,9 @@ bool Battle::Force::SetIdleAnimation()
 {
     bool res = false;
 
-    for (auto &it : _items)
+    for (auto& it : _items)
     {
-        Unit &unit = *it;
+        Unit& unit = *it;
 
         if (unit.isValid())
         {
@@ -435,9 +447,9 @@ bool Battle::Force::NextIdleAnimation()
 {
     bool res = false;
 
-    for (auto &it : _items)
+    for (auto& it : _items)
     {
-        Unit &unit = *it;
+        Unit& unit = *it;
 
         if (unit.isValid() && !unit.isStartAnimFrame())
         {
@@ -449,13 +461,13 @@ bool Battle::Force::NextIdleAnimation()
     return res;
 }
 
-bool Battle::Force::HasMonster(const Monster &mons) const
+bool Battle::Force::HasMonster(const Monster& mons) const
 {
     return _items.end() != find_if(_items.begin(), _items.end(),
-        [&](const Unit * it)
-    {
-        return it->isMonster(mons());
-    });
+                                   [&](const Unit* it)
+                                   {
+                                       return it->isMonster(mons());
+                                   });
 }
 
 uint32_t Battle::Force::GetDeadCounts() const
@@ -484,11 +496,11 @@ void Battle::Force::SyncArmyCount()
 {
     for (uint32_t index = 0; index < army.m_troops.Size(); ++index)
     {
-        Troop *troop = army.m_troops.GetTroop(index);
+        Troop* troop = army.m_troops.GetTroop(index);
 
         if (!troop || !troop->isValid())
             continue;
-        const Unit *unit = FindUID(uids.at(index));
+        const Unit* unit = FindUID(uids.at(index));
 
         if (unit && unit->GetDead())
             troop->SetCount(unit->GetDead() > troop->GetCount() ? 0 : troop->GetCount() - unit->GetDead());

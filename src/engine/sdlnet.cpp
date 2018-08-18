@@ -39,29 +39,29 @@ Network::Socket::Socket(const TCPsocket csd) : sd(nullptr), sdset(nullptr), stat
     Assign(csd);
 }
 
-Network::Socket::Socket(const Socket &) : sd(nullptr), sdset(nullptr), status(0)
+Network::Socket::Socket(const Socket&) : sd(nullptr), sdset(nullptr), status(0)
 {
 }
 
-Network::Socket & Network::Socket::operator= (const Socket &)
+Network::Socket& Network::Socket::operator=(const Socket&)
 {
     return *this;
 }
 
 Network::Socket::~Socket()
 {
-    if(sd) Close();
+    if (sd) Close();
 }
 
 void Network::Socket::Assign(const TCPsocket csd)
 {
-    if(sd) Close();
+    if (sd) Close();
 
-    if(csd)
+    if (csd)
     {
-    sd = csd;
-    sdset = SDLNet_AllocSocketSet(1);
-    if(sdset) SDLNet_TCP_AddSocket(sdset, sd);
+        sd = csd;
+        sdset = SDLNet_AllocSocketSet(1);
+        if (sdset) SDLNet_TCP_AddSocket(sdset, sd);
     }
 }
 
@@ -69,7 +69,7 @@ void Network::Socket::Assign(const TCPsocket csd)
 uint32_t Network::Socket::Host() const
 {
     IPaddress* remoteIP = sd ? SDLNet_TCP_GetPeerAddress(sd) : nullptr;
-    if(remoteIP) return SDLNet_Read32(&remoteIP->host);
+    if (remoteIP) return SDLNet_Read32(&remoteIP->host);
     H2ERROR(SDLNet_GetError());
     return 0;
 }
@@ -77,7 +77,7 @@ uint32_t Network::Socket::Host() const
 u16 Network::Socket::Port() const
 {
     IPaddress* remoteIP = sd ? SDLNet_TCP_GetPeerAddress(sd) : nullptr;
-    if(remoteIP) return SDLNet_Read16(&remoteIP->port);
+    if (remoteIP) return SDLNet_Read16(&remoteIP->port);
     H2ERROR(SDLNet_GetError());
     return 0;
 }
@@ -86,23 +86,24 @@ bool Network::Socket::Ready() const
 {
     return 0 < SDLNet_CheckSockets(sdset, 1) && 0 < SDLNet_SocketReady(sd);
 }
+
 #define ERROR_RECV 5 // any non zero ? // WEBOS
 #define ERROR_SEND 6 // any non zero ? // WEBOS
 
-bool Network::Socket::Recv(char *buf, int len)
+bool Network::Socket::Recv(char* buf, int len)
 {
-    if(sd && buf && len)
+    if (sd && buf && len)
     {
-    int rcv = 0;
+        int rcv = 0;
 
-    while((rcv = SDLNet_TCP_Recv(sd, buf, len)) > 0 && rcv < len)
-    {
-        buf += rcv;
-        len -= rcv;
-    }
+        while ((rcv = SDLNet_TCP_Recv(sd, buf, len)) > 0 && rcv < len)
+        {
+            buf += rcv;
+            len -= rcv;
+        }
 
-    if(rcv != len)
-        status |= ERROR_RECV;
+        if (rcv != len)
+            status |= ERROR_RECV;
     }
 
     return ! (status & ERROR_RECV);
@@ -110,11 +111,12 @@ bool Network::Socket::Recv(char *buf, int len)
 
 bool Network::Socket::Send(const char* buf, int len)
 {
-    if(sd && len != SDLNet_TCP_Send(sd, (void*) buf, len))
-    status |= ERROR_SEND;
+    if (sd && len != SDLNet_TCP_Send(sd, (void*)buf, len))
+        status |= ERROR_SEND;
 
     return ! (status & ERROR_SEND);
 }
+
 template <typename T>
 T swap_endian(T u)
 {
@@ -135,9 +137,9 @@ T swap_endian(T u)
 }
 
 
-bool Network::Socket::Recv32(uint32_t & v)
+bool Network::Socket::Recv32(uint32_t& v)
 {
-    if(Recv(reinterpret_cast<char*>(&v), sizeof v))
+    if (Recv(reinterpret_cast<char*>(&v), sizeof v))
     {
         const auto swappedV = swap_endian(v);
         v = swappedV;
@@ -146,9 +148,9 @@ bool Network::Socket::Recv32(uint32_t & v)
     return false;
 }
 
-bool Network::Socket::Recv16(u16 & v)
+bool Network::Socket::Recv16(u16& v)
 {
-    if(Recv(reinterpret_cast<char*>(&v), sizeof v))
+    if (Recv(reinterpret_cast<char*>(&v), sizeof v))
     {
         const auto swappedV = swap_endian(v);
         v = swappedV;
@@ -157,7 +159,7 @@ bool Network::Socket::Recv16(u16 & v)
     return false;
 }
 
-bool Network::Socket::Send32(const uint32_t & v0)
+bool Network::Socket::Send32(const uint32_t& v0)
 {
     uint32_t v = v0;
     const auto swappedV = swap_endian(v);
@@ -166,7 +168,7 @@ bool Network::Socket::Send32(const uint32_t & v0)
     return Send(reinterpret_cast<char*>(&v), sizeof v);
 }
 
-bool Network::Socket::Send16(const u16 & v0)
+bool Network::Socket::Send16(const u16& v0)
 {
     u16 v = v0;
     const auto swappedV = swap_endian(v);
@@ -174,11 +176,11 @@ bool Network::Socket::Send16(const u16 & v0)
     return Send(reinterpret_cast<char*>(&v), sizeof v);
 }
 
-bool Network::Socket::Open(IPaddress & ip)
+bool Network::Socket::Open(IPaddress& ip)
 {
     Assign(SDLNet_TCP_Open(&ip));
 
-    if(! sd)
+    if (! sd)
     H2ERROR(SDLNet_GetError());
 
     return sd;
@@ -191,16 +193,16 @@ bool Network::Socket::isValid() const
 
 void Network::Socket::Close()
 {
-    if(sd)
+    if (sd)
     {
-    if(sdset)
-    {
-        SDLNet_TCP_DelSocket(sdset, sd);
-        SDLNet_FreeSocketSet(sdset);
-        sdset = nullptr;
-    }
-    SDLNet_TCP_Close(sd);
-    sd = nullptr;
+        if (sdset)
+        {
+            SDLNet_TCP_DelSocket(sdset, sd);
+            SDLNet_FreeSocketSet(sdset);
+            sdset = nullptr;
+        }
+        SDLNet_TCP_Close(sd);
+        sd = nullptr;
     }
 }
 
@@ -213,9 +215,9 @@ TCPsocket Network::Server::Accept() const
 
 bool Network::Init()
 {
-    if(SDLNet_Init() < 0)
+    if (SDLNet_Init() < 0)
     {
-    H2ERROR(SDLNet_GetError());
+        H2ERROR(SDLNet_GetError());
         return false;
     }
     return true;
@@ -226,12 +228,12 @@ void Network::Quit()
     SDLNet_Quit();
 }
 
-bool Network::ResolveHost(IPaddress & ip, const char* host, u16 port)
+bool Network::ResolveHost(IPaddress& ip, const char* host, u16 port)
 {
-    if(SDLNet_ResolveHost(&ip, host, port) < 0)
+    if (SDLNet_ResolveHost(&ip, host, port) < 0)
     {
-    H2ERROR(SDLNet_GetError());
-    return false;
+        H2ERROR(SDLNet_GetError());
+        return false;
     }
     return true;
 }

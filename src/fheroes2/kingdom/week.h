@@ -55,17 +55,22 @@ struct Week : pair<int, int>
         HEDGEHOG,
         CONDOR,
 
-        MONSTERS    // week of monsters game
+        MONSTERS // week of monsters game
     };
 
     Week(int type = UNNAMED, int mons = Monster::UNKNOWN) : pair<int, int>(type, mons)
-    {}
+    {
+    }
 
     int GetType() const
-    { return first; }
+    {
+        return first;
+    }
 
     int GetMonster() const
-    { return second; }
+    {
+        return second;
+    }
 
     std::string GetName() const;
 
@@ -74,4 +79,4 @@ struct Week : pair<int, int>
     static int MonthRand();
 };
 
-ByteVectorReader &operator>>(ByteVectorReader &sb, Week &st);
+ByteVectorReader& operator>>(ByteVectorReader& sb, Week& st);

@@ -29,24 +29,24 @@ namespace Battle
 {
     class Unit;
 
-    class Units  
+    class Units
     {
     public:
         vector<Unit *> _items;
 
         Units();
 
-        Units(const Units &, bool filter = false);
+        Units(const Units&, bool filter = false);
 
-        Units(const Units &, const Units &);
+        Units(const Units&, const Units&);
 
         virtual ~Units() = default;
 
-        Units &operator=(const Units &);
+        Units& operator=(const Units&);
 
-        Unit *FindMode(uint32_t);
+        Unit* FindMode(uint32_t);
 
-        Unit *FindUID(uint32_t);
+        Unit* FindUID(uint32_t);
 
         void SortSlowest(bool);
 
@@ -65,17 +65,17 @@ namespace Battle
     class Force : public Units, public BitModes
     {
     public:
-        Force(Army &, bool);
+        Force(Army&, bool);
 
         ~Force();
 
-        HeroBase *GetCommander();
+        HeroBase* GetCommander();
 
-        const HeroBase *GetCommander() const;
+        const HeroBase* GetCommander() const;
 
         bool isValid() const;
 
-        bool HasMonster(const Monster &) const;
+        bool HasMonster(const Monster&) const;
 
         uint32_t GetDeadHitPoints() const;
 
@@ -97,19 +97,18 @@ namespace Battle
 
         void SyncArmyCount();
 
-        static Unit *GetCurrentUnit(const Force &, const Force &, Unit *last, Units *all, bool part1);
+        static Unit* GetCurrentUnit(const Force&, const Force&, Unit* last, Units* all, bool part1);
 
-        static Unit *GetCurrentUnit(const Force &, const Force &, Unit *last, bool part1);
+        static Unit* GetCurrentUnit(const Force&, const Force&, Unit* last, bool part1);
 
-        static void UpdateOrderUnits(const Force &, const Force &, Units &);
+        static void UpdateOrderUnits(const Force&, const Force&, Units&);
 
     private:
-        Army &army;
+        Army& army;
         vector<uint32_t> uids;
     };
 
-    ByteVectorWriter &operator<<(ByteVectorWriter &, const Force &);
+    ByteVectorWriter& operator<<(ByteVectorWriter&, const Force&);
 
-    ByteVectorReader &operator>>(ByteVectorReader &, Force &);
+    ByteVectorReader& operator>>(ByteVectorReader&, Force&);
 }
-

@@ -42,7 +42,7 @@ namespace
 {
     uint32_t default_depth = 32;
     RGBA default_color_key;
-    SDL_Color *pal_colors = nullptr;
+    SDL_Color* pal_colors = nullptr;
     uint32_t pal_nums = 0;
 }
 
@@ -54,59 +54,59 @@ SurfaceFormat GetRGBAMask(uint32_t bpp)
 
     switch (bpp)
     {
-        case 32:
+    case 32:
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
             fm.rmask = 0xff000000;
             fm.gmask = 0x00ff0000;
             fm.bmask = 0x0000ff00;
             fm.amask = 0x000000ff;
 #else
-            fm.rmask = 0x000000ff;
-            fm.gmask = 0x0000ff00;
-            fm.bmask = 0x00ff0000;
-            fm.amask = 0xff000000;
+        fm.rmask = 0x000000ff;
+        fm.gmask = 0x0000ff00;
+        fm.bmask = 0x00ff0000;
+        fm.amask = 0xff000000;
 #endif
-            break;
+        break;
 
-        case 24:
+    case 24:
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
             fm.rmask = 0x00fc0000;
             fm.gmask = 0x0003f000;
             fm.bmask = 0x00000fc0;
             fm.amask = 0x0000003f;
 #else
-            fm.rmask = 0x0000003f;
-            fm.gmask = 0x00000fc0;
-            fm.bmask = 0x0003f000;
-            fm.amask = 0x00fc0000;
+        fm.rmask = 0x0000003f;
+        fm.gmask = 0x00000fc0;
+        fm.bmask = 0x0003f000;
+        fm.amask = 0x00fc0000;
 #endif
-            break;
+        break;
 
-        case 16:
+    case 16:
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
             fm.rmask = 0x0000f000;
             fm.gmask = 0x00000f00;
             fm.bmask = 0x000000f0;
             fm.amask = 0x0000000f;
 #else
-            fm.rmask = 0x0000000f;
-            fm.gmask = 0x000000f0;
-            fm.bmask = 0x00000f00;
-            fm.amask = 0x0000f000;
+        fm.rmask = 0x0000000f;
+        fm.gmask = 0x000000f0;
+        fm.bmask = 0x00000f00;
+        fm.amask = 0x0000f000;
 #endif
-            break;
+        break;
 
-        default:
-            fm.rmask = 0;
-            fm.gmask = 0;
-            fm.bmask = 0;
-            fm.amask = 0;
-            break;
+    default:
+        fm.rmask = 0;
+        fm.gmask = 0;
+        fm.bmask = 0;
+        fm.amask = 0;
+        break;
     }
     return fm;
 }
 
-uint32_t GetPixel24(const u8 *ptr)
+uint32_t GetPixel24(const u8* ptr)
 {
     uint32_t color = 0;
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
@@ -125,7 +125,7 @@ uint32_t GetPixel24(const u8 *ptr)
     return color;
 }
 
-void SetPixel24(u8 *ptr, uint32_t color)
+void SetPixel24(u8* ptr, uint32_t color)
 {
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
     ptr[2] = color;
@@ -142,12 +142,13 @@ RGBA::RGBA()
 {
     color = 0;
 }
+
 RGBA::RGBA(int r, int g, int b, int a)
     : color(
-    (r << 24 & 0xFF000000) |
-    (g << 16 & 0x00FF0000) |
-    (b << 8 & 0x0000FF00) |
-    (a & 0x000000FF))
+        (r << 24 & 0xFF000000) |
+        (g << 16 & 0x00FF0000) |
+        (b << 8 & 0x0000FF00) |
+        (a & 0x000000FF))
 {
 }
 
@@ -205,51 +206,52 @@ RGBA RGBA::unpack(int v)
 }
 
 Surface::Surface()
-        : surface(nullptr)
+    : surface(nullptr)
 {
 }
 
-Surface::Surface(const Size &sz, bool amask)
-        : surface(nullptr)
+Surface::Surface(const Size& sz, bool amask)
+    : surface(nullptr)
 {
     Set(sz.w, sz.h, amask);
 }
 
-Surface::Surface(const Size &sz, const SurfaceFormat &fm) : surface(nullptr)
+Surface::Surface(const Size& sz, const SurfaceFormat& fm) : surface(nullptr)
 {
     Set(sz.w, sz.h, fm);
 }
 
-Surface::Surface(const Surface &bs) : surface(nullptr)
+Surface::Surface(const Surface& bs) : surface(nullptr)
 {
     Set(bs, false);
 }
 
-Surface::Surface(const std::string &file) : surface(nullptr)
+Surface::Surface(const std::string& file) : surface(nullptr)
 {
     Load(file);
 }
 
-Surface::Surface(SDL_Surface *sf) : surface(nullptr)
+Surface::Surface(SDL_Surface* sf) : surface(nullptr)
 {
     Set(sf);
 }
 
-Surface::Surface(const void *pixels, uint32_t width, uint32_t height, uint32_t bytes_per_pixel /* 1, 2, 3, 4 */, bool amask)
-        : surface(nullptr)
+Surface::Surface(const void* pixels, uint32_t width, uint32_t height, uint32_t bytes_per_pixel /* 1, 2, 3, 4 */,
+                 bool amask)
+    : surface(nullptr)
 {
     const SurfaceFormat fm = GetRGBAMask(8 * bytes_per_pixel);
 
     if (8 == fm.depth)
     {
-
         surface = SDL_CreateRGBSurface(SDL_HWSURFACE, width, height, fm.depth, fm.rmask, fm.gmask, fm.bmask,
                                        amask ? fm.amask : 0);
         SetPalette();
         Lock();
         memcpy(surface->pixels, pixels, width * height);
         Unlock();
-    } else
+    }
+    else
     {
         surface = SDL_CreateRGBSurfaceFrom(const_cast<void *>(pixels), width, height, fm.depth, width * bytes_per_pixel,
                                            fm.rmask, fm.gmask, fm.bmask, amask ? fm.amask : 0);
@@ -265,13 +267,13 @@ Surface::~Surface()
 }
 
 /* operator = */
-Surface &Surface::operator=(const Surface &bs)
+Surface& Surface::operator=(const Surface& bs)
 {
     Set(bs, false);
     return *this;
 }
 
-bool Surface::operator==(const Surface &bs) const
+bool Surface::operator==(const Surface& bs) const
 {
     return surface && bs.surface ? surface == bs.surface : false;
 }
@@ -282,13 +284,13 @@ void Surface::Reset()
     surface = nullptr; /* hard set: for ref copy */
 }
 
-void Surface::Set(SDL_Surface *sf)
+void Surface::Set(SDL_Surface* sf)
 {
     FreeSurface(*this);
     surface = sf;
 }
 
-void Surface::Set(const Surface &bs, bool refcopy)
+void Surface::Set(const Surface& bs, bool refcopy)
 {
     FreeSurface(*this);
 
@@ -298,7 +300,6 @@ void Surface::Set(const Surface &bs, bool refcopy)
 
         if (!surface)
             Error::Except(__FUNCTION__, SDL_GetError());
-
     }
 }
 
@@ -318,7 +319,7 @@ void Surface::Set(uint32_t sw, uint32_t sh, uint32_t bpp /* bpp: 8, 16, 24, 32 *
     Set(sw, sh, fm);
 }
 
-void Surface::Set(uint32_t sw, uint32_t sh, const SurfaceFormat &fm)
+void Surface::Set(uint32_t sw, uint32_t sh, const SurfaceFormat& fm)
 {
     FreeSurface(*this);
 
@@ -332,11 +333,13 @@ void Surface::Set(uint32_t sw, uint32_t sh, const SurfaceFormat &fm)
         SetPalette();
         Fill(fm.ckey);
         SetColorKey(fm.ckey);
-    } else if (amask())
+    }
+    else if (amask())
     {
         Fill(RGBA(fm.ckey.r(), fm.ckey.g(), fm.ckey.b(), 0));
         SetColorKey(fm.ckey);
-    } else if (fm.ckey.pack())
+    }
+    else if (fm.ckey.pack())
     {
         Fill(fm.ckey);
         SetColorKey(fm.ckey);
@@ -345,13 +348,14 @@ void Surface::Set(uint32_t sw, uint32_t sh, const SurfaceFormat &fm)
     if (amask())
     {
         SDL_SetAlpha(surface, SDL_SRCALPHA, 255);
-    } else
+    }
+    else
     {
         SDL_SetAlpha(surface, 0, 0);
     }
 }
 
-void Surface::SetDefaultPalette(SDL_Color *ptr, int num)
+void Surface::SetDefaultPalette(SDL_Color* ptr, int num)
 {
     pal_colors = ptr;
     pal_nums = num;
@@ -366,23 +370,23 @@ void Surface::SetDefaultDepth(uint32_t depth)
 {
     switch (depth)
     {
-        case 24:
+    case 24:
         H2ERROR("switch to 32 bpp colors");
-            default_depth = 32;
-            break;
+        default_depth = 32;
+        break;
 
-        case 8:
-        case 15:
-        case 16:
-            default_depth = depth;
-            break;
+    case 8:
+    case 15:
+    case 16:
+        default_depth = depth;
+        break;
 
-        case 32:
-            default_depth = depth;
-            break;
+    case 32:
+        default_depth = depth;
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 }
 
@@ -396,7 +400,7 @@ bool Surface::isValid() const
     return surface && surface->format;
 }
 
-bool Surface::Load(const std::string &fn)
+bool Surface::Load(const std::string& fn)
 {
     FreeSurface(*this);
 
@@ -408,7 +412,7 @@ bool Surface::Load(const std::string &fn)
     return surface;
 }
 
-bool Surface::Save(const std::string &fn) const
+bool Surface::Save(const std::string& fn) const
 {
     const int res = IMG_SavePNG(fn.c_str(), surface, -1);
 
@@ -461,10 +465,12 @@ SurfaceFormat Surface::GetFormat() const
     return res;
 }
 
-uint32_t Surface::MapRGB(const RGBA &color) const
+uint32_t Surface::MapRGB(const RGBA& color) const
 {
-    return amask() ? SDL_MapRGBA(surface->format, color.r(), color.g(), color.b(), color.a()) : SDL_MapRGB(
-            surface->format, color.r(), color.g(), color.b());
+    return amask()
+               ? SDL_MapRGBA(surface->format, color.r(), color.g(), color.b(), color.a())
+               : SDL_MapRGB(
+                   surface->format, color.r(), color.g(), color.b());
 }
 
 RGBA Surface::GetRGB(uint32_t pixel) const
@@ -505,7 +511,7 @@ uint32_t Surface::GetColorKey() const
     return isValid() && surface->flags & SDL_SRCCOLORKEY ? surface->format->colorkey : 0;
 }
 
-void Surface::SetColorKey(const RGBA &color) const
+void Surface::SetColorKey(const RGBA& color) const
 {
     SDL_SetColorKey(surface, SDL_SRCCOLORKEY, MapRGB(color));
 }
@@ -513,28 +519,28 @@ void Surface::SetColorKey(const RGBA &color) const
 /* draw uint32_t pixel */
 void Surface::SetPixel4(s32 x, s32 y, uint32_t color) const
 {
-    uint32_t *bufp = static_cast<uint32_t *>(surface->pixels) + y * (surface->pitch >> 2) + x;
+    uint32_t* bufp = static_cast<uint32_t *>(surface->pixels) + y * (surface->pitch >> 2) + x;
     *bufp = color;
 }
 
 /* draw u24 pixel */
 void Surface::SetPixel3(s32 x, s32 y, uint32_t color) const
 {
-    u8 *bufp = static_cast<u8 *>(surface->pixels) + y * surface->pitch + x * 3;
+    u8* bufp = static_cast<u8 *>(surface->pixels) + y * surface->pitch + x * 3;
     SetPixel24(bufp, color);
 }
 
 /* draw u16 pixel */
 void Surface::SetPixel2(s32 x, s32 y, uint32_t color) const
 {
-    u16 *bufp = static_cast<u16 *>(surface->pixels) + y * (surface->pitch >> 1) + x;
+    u16* bufp = static_cast<u16 *>(surface->pixels) + y * (surface->pitch >> 1) + x;
     *bufp = static_cast<u16>(color);
 }
 
 /* draw u8 pixel */
 void Surface::SetPixel1(s32 x, s32 y, uint32_t color) const
 {
-    u8 *bufp = static_cast<u8 *>(surface->pixels) + y * surface->pitch + x;
+    u8* bufp = static_cast<u8 *>(surface->pixels) + y * surface->pitch + x;
     *bufp = static_cast<u8>(color);
 }
 
@@ -546,52 +552,53 @@ void Surface::SetPixel(int x, int y, uint32_t pixel) const
     {
         switch (depth())
         {
-            case 8:
-                SetPixel1(x, y, pixel);
-                break;
-            case 15:
-            case 16:
-                SetPixel2(x, y, pixel);
-                break;
-            case 24:
-                SetPixel3(x, y, pixel);
-                break;
-            case 32:
-                SetPixel4(x, y, pixel);
-                break;
-            default:
-                break;
+        case 8:
+            SetPixel1(x, y, pixel);
+            break;
+        case 15:
+        case 16:
+            SetPixel2(x, y, pixel);
+            break;
+        case 24:
+            SetPixel3(x, y, pixel);
+            break;
+        case 32:
+            SetPixel4(x, y, pixel);
+            break;
+        default:
+            break;
         }
-    } else
+    }
+    else
     {
         std::ostringstream os;
         os << "out of range: " << "x: " << x << ", " << "y: " << y << ", " << "width: " << w() << ", " << "height: "
-           << h();
+            << h();
         Error::Except(__FUNCTION__, os.str().c_str());
     }
 }
 
 uint32_t Surface::GetPixel4(s32 x, s32 y) const
 {
-    uint32_t *bufp = static_cast<uint32_t *>(surface->pixels) + y * (surface->pitch >> 2) + x;
+    uint32_t* bufp = static_cast<uint32_t *>(surface->pixels) + y * (surface->pitch >> 2) + x;
     return *bufp;
 }
 
 uint32_t Surface::GetPixel3(s32 x, s32 y) const
 {
-    u8 *bufp = static_cast<u8 *>(surface->pixels) + y * surface->pitch + x * 3;
+    u8* bufp = static_cast<u8 *>(surface->pixels) + y * surface->pitch + x * 3;
     return GetPixel24(bufp);
 }
 
 uint32_t Surface::GetPixel2(s32 x, s32 y) const
 {
-    u16 *bufp = static_cast<u16 *>(surface->pixels) + y * (surface->pitch >> 1) + x;
+    u16* bufp = static_cast<u16 *>(surface->pixels) + y * (surface->pitch >> 1) + x;
     return static_cast<uint32_t>(*bufp);
 }
 
 uint32_t Surface::GetPixel1(s32 x, s32 y) const
 {
-    u8 *bufp = static_cast<u8 *>(surface->pixels) + y * surface->pitch + x;
+    u8* bufp = static_cast<u8 *>(surface->pixels) + y * surface->pitch + x;
     return static_cast<uint32_t>(*bufp);
 }
 
@@ -603,29 +610,30 @@ uint32_t Surface::GetPixel(int x, int y) const
     {
         switch (depth())
         {
-            case 8:
-                pixel = GetPixel1(x, y);
-                break;
-            case 15:
-            case 16:
-                pixel = GetPixel2(x, y);
-                break;
-            case 24:
-                pixel = GetPixel3(x, y);
-                break;
-            case 32:
-                pixel = GetPixel4(x, y);
-                break;
-            default:
-                break;
+        case 8:
+            pixel = GetPixel1(x, y);
+            break;
+        case 15:
+        case 16:
+            pixel = GetPixel2(x, y);
+            break;
+        case 24:
+            pixel = GetPixel3(x, y);
+            break;
+        case 32:
+            pixel = GetPixel4(x, y);
+            break;
+        default:
+            break;
         }
-    } else
+    }
+    else
         Error::Except(__FUNCTION__, "out of range");
 
     return pixel;
 }
 
-void Surface::BlitAlpha(const Rect &srt, const Point &dpt, Surface &dst) const
+void Surface::BlitAlpha(const Rect& srt, const Point& dpt, Surface& dst) const
 {
     const auto w = srt.w;
     const auto h = srt.h;
@@ -661,12 +669,11 @@ void Surface::BlitAlpha(const Rect &srt, const Point &dpt, Surface &dst) const
 
             const uint32_t finalPix = 0xff000000 | finalBlue << 16 | final_green << 8 | final_red;
             dst.SetPixel4(dpt.x + x, dpt.y + y, finalPix);
-
         }
     }
 }
 
-void Surface::Blit(const Rect &srt, const Point &dpt, Surface &dst) const
+void Surface::Blit(const Rect& srt, const Point& dpt, Surface& dst) const
 {
     SDL_Rect dstrect;
     SDLRect(dpt.x, dpt.y, srt.w, srt.h, dstrect);
@@ -678,26 +685,27 @@ void Surface::Blit(const Rect &srt, const Point &dpt, Surface &dst) const
         SDL_SetAlpha(surface, 0, 0);
         SDL_BlitSurface(surface, &srcrect, dst.surface, &dstrect);
         SDL_SetAlpha(surface, SDL_SRCALPHA, 255);
-    } else
+    }
+    else
         SDL_BlitSurface(surface, &srcrect, dst.surface, &dstrect);
 }
 
-void Surface::Blit(Surface &dst) const
+void Surface::Blit(Surface& dst) const
 {
     Blit(Rect(Point(0, 0), GetSize()), Point(0, 0), dst);
 }
 
-void Surface::Blit(s32 dx, s32 dy, Surface &dst) const
+void Surface::Blit(s32 dx, s32 dy, Surface& dst) const
 {
     Blit(Point(dx, dy), dst);
 }
 
-void Surface::Blit(const Rect &srt, s32 dx, s32 dy, Surface &dst) const
+void Surface::Blit(const Rect& srt, s32 dx, s32 dy, Surface& dst) const
 {
     Blit(srt, Point(dx, dy), dst);
 }
 
-void Surface::Blit(const Point &dpt, Surface &dst) const
+void Surface::Blit(const Point& dpt, Surface& dst) const
 {
     Blit(Rect(Point(0, 0), GetSize()), dpt, dst);
 }
@@ -733,7 +741,7 @@ bool Surface::isRefCopy() const
     return surface != nullptr && 1 < surface->refcount;
 }
 
-void Surface::FreeSurface(Surface &sf)
+void Surface::FreeSurface(Surface& sf)
 {
     if (!sf.surface)
         return;
@@ -774,28 +782,30 @@ std::string Surface::Info() const
     if (isValid())
     {
         os <<
-           "flags" << "(" << surface->flags << ", " << (surface->flags & SDL_SRCALPHA ? "SRCALPHA" : "")
-           << (surface->flags & SDL_SRCCOLORKEY ? "SRCCOLORKEY" : "") << "), " <<
-           "w" << "(" << surface->w << "), " <<
-           "h" << "(" << surface->h << "), " <<
-           "size" << "(" << GetMemoryUsage() << "), " <<
-           "bpp" << "(" << depth() << "), " <<
-           "Amask" << "(" << "0x" << std::setw(8) << std::setfill('0') << std::hex << surface->format->Amask << "), " <<
-           "colorkey" << "(" << "0x" << std::setw(8) << std::setfill('0') << surface->format->colorkey << "), "
-           << std::dec <<
-           "alpha" << "(" << alpha() << "), ";
-    } else
+            "flags" << "(" << surface->flags << ", " << (surface->flags & SDL_SRCALPHA ? "SRCALPHA" : "")
+            << (surface->flags & SDL_SRCCOLORKEY ? "SRCCOLORKEY" : "") << "), " <<
+            "w" << "(" << surface->w << "), " <<
+            "h" << "(" << surface->h << "), " <<
+            "size" << "(" << GetMemoryUsage() << "), " <<
+            "bpp" << "(" << depth() << "), " <<
+            "Amask" << "(" << "0x" << std::setw(8) << std::setfill('0') << std::hex << surface->format->Amask << "), "
+            <<
+            "colorkey" << "(" << "0x" << std::setw(8) << std::setfill('0') << surface->format->colorkey << "), "
+            << std::dec <<
+            "alpha" << "(" << alpha() << "), ";
+    }
+    else
         os << "invalid surface";
 
     return os.str();
 }
 
-void Surface::Swap(Surface &sf1, Surface &sf2)
+void Surface::Swap(Surface& sf1, Surface& sf2)
 {
     std::swap(sf1.surface, sf2.surface);
 }
 
-Surface Surface::RenderScale(const Size &size) const
+Surface Surface::RenderScale(const Size& size) const
 {
     Surface res(size, GetFormat());
 
@@ -826,36 +836,36 @@ Surface Surface::RenderReflect(int shape /* 0: none, 1 : vert, 2: horz, 3: both 
     switch (shape % 4)
     {
         // normal
-        default:
-            Blit(res);
-            break;
+    default:
+        Blit(res);
+        break;
 
-            // vertical reflect
-        case 1:
-            res.Lock();
-            for (int yy = 0; yy < h(); ++yy)
-                for (int xx = 0; xx < w(); ++xx)
-                    res.SetPixel(xx, h() - yy - 1, GetPixel(xx, yy));
-            res.Unlock();
-            break;
+        // vertical reflect
+    case 1:
+        res.Lock();
+        for (int yy = 0; yy < h(); ++yy)
+            for (int xx = 0; xx < w(); ++xx)
+                res.SetPixel(xx, h() - yy - 1, GetPixel(xx, yy));
+        res.Unlock();
+        break;
 
-            // horizontal reflect
-        case 2:
-            res.Lock();
-            for (int yy = 0; yy < h(); ++yy)
-                for (int xx = 0; xx < w(); ++xx)
-                    res.SetPixel(w() - xx - 1, yy, GetPixel(xx, yy));
-            res.Unlock();
-            break;
+        // horizontal reflect
+    case 2:
+        res.Lock();
+        for (int yy = 0; yy < h(); ++yy)
+            for (int xx = 0; xx < w(); ++xx)
+                res.SetPixel(w() - xx - 1, yy, GetPixel(xx, yy));
+        res.Unlock();
+        break;
 
-            // both variants
-        case 3:
-            res.Lock();
-            for (int yy = 0; yy < h(); ++yy)
-                for (int xx = 0; xx < w(); ++xx)
-                    res.SetPixel(w() - xx - 1, h() - yy - 1, GetPixel(xx, yy));
-            res.Unlock();
-            break;
+        // both variants
+    case 3:
+        res.Lock();
+        for (int yy = 0; yy < h(); ++yy)
+            for (int xx = 0; xx < w(); ++xx)
+                res.SetPixel(w() - xx - 1, h() - yy - 1, GetPixel(xx, yy));
+        res.Unlock();
+        break;
     }
     return res;
 }
@@ -885,7 +895,7 @@ Surface Surface::RenderRotate(int parm /* 0: none, 1 : 90 CW, 2: 90 CCW, 3: 180 
     return RenderReflect(0);
 }
 
-Surface Surface::RenderStencil(const RGBA &color) const
+Surface Surface::RenderStencil(const RGBA& color) const
 {
     Surface res(GetSize(), GetFormat());
     uint32_t clkey0 = GetColorKey();
@@ -904,7 +914,7 @@ Surface Surface::RenderStencil(const RGBA &color) const
     return res;
 }
 
-Surface Surface::RenderContour(const RGBA &color) const
+Surface Surface::RenderContour(const RGBA& color) const
 {
     const RGBA fake = RGBA(0x00, 0xFF, 0xFF);
     Surface res(GetSize(), GetFormat());
@@ -974,9 +984,9 @@ Surface Surface::RenderGrayScale() const
     return res;
 }
 
-namespace 
+namespace
 {
-    uint32_t CLAMP255(int val) 
+    uint32_t CLAMP255(int val)
     {
         return std::min<uint32_t>(val, 255);
     }
@@ -998,9 +1008,12 @@ Surface Surface::RenderSepia() const
             {
                 RGBA col = GetRGB(pixel);
                 //Numbers derived from http://blogs.techrepublic.com.com/howdoi/?p=120
-                const uint32_t outR = CLAMP255(static_cast<uint32_t>(col.r() * 0.693f + col.g() * 0.769f + col.b() * 0.189f));
-                const uint32_t outG = CLAMP255(static_cast<uint32_t>(col.r() * 0.449f + col.g() * 0.686f + col.b() * 0.168f));
-                const uint32_t outB = CLAMP255(static_cast<uint32_t>(col.r() * 0.272f + col.g() * 0.534f + col.b() * 0.131f));
+                const uint32_t outR = CLAMP255(
+                    static_cast<uint32_t>(col.r() * 0.693f + col.g() * 0.769f + col.b() * 0.189f));
+                const uint32_t outG = CLAMP255(
+                    static_cast<uint32_t>(col.r() * 0.449f + col.g() * 0.686f + col.b() * 0.168f));
+                const uint32_t outB = CLAMP255(
+                    static_cast<uint32_t>(col.r() * 0.272f + col.g() * 0.534f + col.b() * 0.131f));
 
                 const uint32_t outPixel = RGBA::packRgba(outR, outG, outB, col.a());
                 res.SetPixel4(x, y, outPixel);
@@ -1010,7 +1023,7 @@ Surface Surface::RenderSepia() const
     return res;
 }
 
-Surface Surface::RenderChangeColor(const RGBA &col1, const RGBA &col2) const
+Surface Surface::RenderChangeColor(const RGBA& col1, const RGBA& col2) const
 {
     Surface res = GetSurface();
     uint32_t fc = MapRGB(col1);
@@ -1036,7 +1049,7 @@ Surface Surface::GetSurface() const
     return GetSurface(Rect(Point(0, 0), GetSize()));
 }
 
-Surface Surface::GetSurface(const Rect &rt) const
+Surface Surface::GetSurface(const Rect& rt) const
 {
     SurfaceFormat fm = GetFormat();
 
@@ -1053,12 +1066,12 @@ Surface Surface::GetSurface(const Rect &rt) const
     return res;
 }
 
-void Surface::Fill(const RGBA &col) const
+void Surface::Fill(const RGBA& col) const
 {
     FillRect(Rect(0, 0, w(), h()), col);
 }
 
-void Surface::FillRect(const Rect &rect, const RGBA &col) const
+void Surface::FillRect(const Rect& rect, const RGBA& col) const
 {
     SDL_Rect dstrect;
     SDLRect(rect, dstrect);
@@ -1066,7 +1079,7 @@ void Surface::FillRect(const Rect &rect, const RGBA &col) const
 }
 
 // swaps two numbers
-void swap(int *a, int *b)
+void swap(int* a, int* b)
 {
     int temp = *a;
     *a = *b;
@@ -1135,7 +1148,7 @@ void Surface::drawPixelSafe(int x, int y, float brightness, const uint32_t col) 
     SetPixel4(x, y, uCol);
 }
 
-void Surface::drawAALine(int x0, int y0, int x1, int y1, const RGBA &col) const
+void Surface::drawAALine(int x0, int y0, int x1, int y1, const RGBA& col) const
 {
     int steep = absolute(y1 - y0) > absolute(x1 - x0);
 
@@ -1174,12 +1187,13 @@ void Surface::drawAALine(int x0, int y0, int x1, int y1, const RGBA &col) const
             // part of y co-ordinate
             const int y = iPartOfNumber(intersect_y);
             drawPixelSafe(y, x,
-                      rfPartOfNumber(intersect_y), uCol);
+                          rfPartOfNumber(intersect_y), uCol);
             drawPixelSafe(y - 1, x,
-                      fPartOfNumber(intersect_y), uCol);
+                          fPartOfNumber(intersect_y), uCol);
             intersect_y += gradient;
         }
-    } else
+    }
+    else
     {
         for (int x = xpxl1; x <= xpxl2; x++)
         {
@@ -1187,16 +1201,15 @@ void Surface::drawAALine(int x0, int y0, int x1, int y1, const RGBA &col) const
             // part of y co-ordinate
             const int y = iPartOfNumber(intersect_y);
             drawPixelSafe(x, y,
-                      rfPartOfNumber(intersect_y), uCol);
+                          rfPartOfNumber(intersect_y), uCol);
             drawPixelSafe(x, y - 1,
-                      fPartOfNumber(intersect_y), uCol);
+                          fPartOfNumber(intersect_y), uCol);
             intersect_y += gradient;
         }
     }
-
 }
 
-void Surface::DrawLineAa(const Point &p1, const Point &p2, const RGBA &color) const
+void Surface::DrawLineAa(const Point& p1, const Point& p2, const RGBA& color) const
 {
     int x1 = p1.x;
     int y1 = p1.y;
@@ -1211,7 +1224,7 @@ void Surface::DrawLineAa(const Point &p1, const Point &p2, const RGBA &color) co
     Unlock();
 }
 
-void Surface::DrawLine(const Point &p1, const Point &p2, const RGBA &color) const
+void Surface::DrawLine(const Point& p1, const Point& p2, const RGBA& color) const
 {
     int x1 = p1.x;
     int y1 = p1.y;
@@ -1238,7 +1251,8 @@ void Surface::DrawLine(const Point &p1, const Point &p2, const RGBA &color) cons
                 ns += dx;
             }
         }
-    } else
+    }
+    else
     {
         int ns = div(dy, 2).quot;
 
@@ -1257,14 +1271,14 @@ void Surface::DrawLine(const Point &p1, const Point &p2, const RGBA &color) cons
     Unlock();
 }
 
-void Surface::DrawPoint(const Point &pt, const RGBA &color) const
+void Surface::DrawPoint(const Point& pt, const RGBA& color) const
 {
     Lock();
     SetPixel(pt.x, pt.y, MapRGB(color));
     Unlock();
 }
 
-void Surface::DrawRect(const Rect &rt, const RGBA &color) const
+void Surface::DrawRect(const Rect& rt, const RGBA& color) const
 {
     const uint32_t pixel = MapRGB(color);
 
@@ -1283,7 +1297,7 @@ void Surface::DrawRect(const Rect &rt, const RGBA &color) const
     Unlock();
 }
 
-void Surface::DrawBorder(const RGBA &color, bool solid) const
+void Surface::DrawBorder(const RGBA& color, bool solid) const
 {
     if (solid)
         DrawRect(Rect(Point(0, 0), GetSize()), color);
@@ -1318,14 +1332,14 @@ void Surface::DrawBorder(const RGBA &color, bool solid) const
     }
 }
 
-Surface Surface::RenderSurface(const Size &sz) const
+Surface Surface::RenderSurface(const Size& sz) const
 {
     return RenderSurface(Rect(Point(0, 0), GetSize()), sz);
 }
 
-Surface Surface::RenderSurface(const Rect &srcrt, const Size &sz) const
+Surface Surface::RenderSurface(const Rect& srcrt, const Size& sz) const
 {
-    const Surface &srcsf = *this;
+    const Surface& srcsf = *this;
     Surface dstsf(sz, false);
     const Rect dstrt = Rect(0, 0, sz.w, sz.h);
     const uint32_t mw = dstrt.w < srcrt.w ? dstrt.w : srcrt.w;

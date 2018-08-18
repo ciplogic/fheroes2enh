@@ -46,45 +46,45 @@ public:
 
     virtual ~Troops();
 
-    void Assign(const Troop *, const Troop *);
+    void Assign(const Troop*, const Troop*);
 
-    void Assign(const Troops &);
+    void Assign(const Troops&);
 
-    void Insert(const Troops &);
+    void Insert(const Troops&);
 
-    void PushBack(const Monster &, uint32_t);
+    void PushBack(const Monster&, uint32_t);
 
     void PopBack();
 
     size_t Size() const;
 
-    Troop *GetTroop(size_t);
+    Troop* GetTroop(size_t);
 
-    const Troop *GetTroop(size_t) const;
+    const Troop* GetTroop(size_t) const;
 
-    void UpgradeMonsters(const Monster &);
+    void UpgradeMonsters(const Monster&);
 
-    uint32_t GetCountMonsters(const Monster &) const;
+    uint32_t GetCountMonsters(const Monster&) const;
 
     uint32_t GetCount() const;
 
     bool isValid() const;
 
-    bool HasMonster(const Monster &) const;
+    bool HasMonster(const Monster&) const;
 
     bool AllTroopsIsRace(int) const;
 
     uint32_t GetUniqueCount() const;
 
-    bool JoinTroop(const Troop &);
+    bool JoinTroop(const Troop&);
 
-    bool JoinTroop(const Monster &, uint32_t);
+    bool JoinTroop(const Monster&, uint32_t);
 
-    bool CanJoinTroop(const Monster &) const;
+    bool CanJoinTroop(const Monster&) const;
 
-    void JoinTroops(Troops &);
+    void JoinTroops(Troops&);
 
-    bool CanJoinTroops(const Troops &) const;
+    bool CanJoinTroops(const Troops&) const;
 
     Troops GetOptimized() const;
 
@@ -102,39 +102,44 @@ public:
 
     void Clean();
 
-    void UpgradeTroops(const Castle &);
+    void UpgradeTroops(const Castle&);
 
-    Troop *GetFirstValid();
+    Troop* GetFirstValid();
 
-    Troop *GetWeakestTroop();
+    Troop* GetWeakestTroop();
 
-    Troop *GetSlowestTroop();
+    Troop* GetSlowestTroop();
 
     void ArrangeForBattle(bool = false);
 
-    void JoinStrongest(Troops &, bool);
+    void JoinStrongest(Troops&, bool);
 
-    void KeepOnlyWeakest(Troops &, bool);
+    void KeepOnlyWeakest(Troops&, bool);
 
     void DrawMons32LineWithScoute(s32, s32, uint32_t, uint32_t, uint32_t, uint32_t, bool) const;
 
-    void SplitTroopIntoFreeSlots(const Troop &, uint32_t);
+    void SplitTroopIntoFreeSlots(const Troop&, uint32_t);
 
     vector<sp<Troop>> _items;
 };
 
 enum
 {
-    JOIN_NONE, JOIN_FREE, JOIN_COST, JOIN_FLEE
+    JOIN_NONE,
+    JOIN_FREE,
+    JOIN_COST,
+    JOIN_FLEE
 };
 
 struct JoinCount : pair<int, uint32_t>
 {
     JoinCount() : pair<int, uint32_t>(JOIN_NONE, 0)
-    {}
+    {
+    }
 
     JoinCount(int reason, uint32_t count) : pair<int, uint32_t>(reason, count)
-    {}
+    {
+    }
 };
 
 class Army : public Control
@@ -144,39 +149,39 @@ public:
 
     static string SizeString(uint32_t);
 
-    static string TroopSizeString(const Troop &);
+    static string TroopSizeString(const Troop&);
 
     // compare
-    static bool WeakestTroop(const Troop *, const Troop *);
+    static bool WeakestTroop(const Troop*, const Troop*);
 
-    static bool StrongestTroop(const Troop *, const Troop *);
+    static bool StrongestTroop(const Troop*, const Troop*);
 
-    static bool SlowestTroop(const Troop *, const Troop *);
+    static bool SlowestTroop(const Troop*, const Troop*);
 
-    static bool FastestTroop(const Troop *, const Troop *);
+    static bool FastestTroop(const Troop*, const Troop*);
 
-    static void SwapTroops(Troop &, Troop &);
+    static void SwapTroops(Troop&, Troop&);
 
-    static uint32_t UniqueCount(const Army &);
+    static uint32_t UniqueCount(const Army&);
 
     // 0: fight, 1: free join, 2: join with gold, 3: flee
-    static JoinCount GetJoinSolution(const Heroes &, const Maps::Tiles &, const Troop &);
+    static JoinCount GetJoinSolution(const Heroes&, const Maps::Tiles&, const Troop&);
 
-    static bool TroopsStrongerEnemyTroops(const Troops &, const Troops &);
+    static bool TroopsStrongerEnemyTroops(const Troops&, const Troops&);
 
-    static void DrawMons32Line(const Troops &, s32, s32, uint32_t, uint32_t = 0, uint32_t = 0);
+    static void DrawMons32Line(const Troops&, s32, s32, uint32_t, uint32_t = 0, uint32_t = 0);
 
-    static void DrawMons32LineWithScoute(const Troops &, s32, s32, uint32_t, uint32_t, uint32_t, uint32_t);
+    static void DrawMons32LineWithScoute(const Troops&, s32, s32, uint32_t, uint32_t, uint32_t, uint32_t);
 
-    static void DrawMons32LineShort(const Troops &, s32, s32, uint32_t, uint32_t, uint32_t);
+    static void DrawMons32LineShort(const Troops&, s32, s32, uint32_t, uint32_t, uint32_t);
 
-    explicit Army(HeroBase *s = nullptr);
+    explicit Army(HeroBase* s = nullptr);
 
-    explicit Army(const Maps::Tiles &);
+    explicit Army(const Maps::Tiles&);
 
     ~Army();
 
-    void Reset(bool = false);    // reset: soft or hard
+    void Reset(bool = false); // reset: soft or hard
 
     int GetRace() const;
 
@@ -194,25 +199,25 @@ public:
 
     int GetLuck() const;
 
-    int GetMoraleModificator(string *) const;
+    int GetMoraleModificator(string*) const;
 
-    static int GetLuckModificator(string *);
+    static int GetLuckModificator(string*);
 
     uint32_t ActionToSirens();
 
-    const HeroBase *GetCommander() const;
+    const HeroBase* GetCommander() const;
 
-    HeroBase *GetCommander();
+    HeroBase* GetCommander();
 
-    void SetCommander(HeroBase *);
+    void SetCommander(HeroBase*);
 
-    const Castle *inCastle() const;
+    const Castle* inCastle() const;
 
     string String() const;
 
-    void JoinStrongestFromArmy(Army &);
+    void JoinStrongestFromArmy(Army&);
 
-    void KeepOnlyWeakestTroops(Army &);
+    void KeepOnlyWeakestTroops(Army&);
 
     void SetSpreadFormat(bool);
 
@@ -223,19 +228,20 @@ public:
     bool SaveLastTroop() const;
 
 protected:
-    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Army &);
+    friend ByteVectorWriter& operator<<(ByteVectorWriter&, const Army&);
 
-    friend ByteVectorReader &operator>>(ByteVectorReader &msg, Army &army);
+    friend ByteVectorReader& operator>>(ByteVectorReader& msg, Army& army);
 
-    HeroBase *commander;
+    HeroBase* commander;
     bool combat_format;
     int color;
 
 private:
-    Army &operator=(const Army &)
-    { return *this; }
+    Army& operator=(const Army&)
+    {
+        return *this;
+    }
 };
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const Army &);
-ByteVectorReader &operator>>(ByteVectorReader &, Army &);
-
+ByteVectorWriter& operator<<(ByteVectorWriter&, const Army&);
+ByteVectorReader& operator>>(ByteVectorReader&, Army&);

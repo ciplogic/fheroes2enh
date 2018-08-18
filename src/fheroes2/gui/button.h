@@ -45,13 +45,13 @@ public:
 
     void SetPos(s32, s32);
 
-    void SetPos(const Point &);
+    void SetPos(const Point&);
 
     void SetSize(uint32_t, uint32_t);
 
     void SetSprite(int icn, uint32_t, uint32_t);
 
-    void SetSprite(const Surface &, const Surface &);
+    void SetSprite(const Surface&, const Surface&);
 
     void SetDisable(bool);
 
@@ -98,5 +98,3 @@ protected:
     int result2;
     int buttons;
 };
-
-

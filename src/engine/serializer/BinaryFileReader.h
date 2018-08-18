@@ -7,14 +7,14 @@
 
 class BinaryFileReader
 {
-    FILE *_file;
+    FILE* _file;
     u8 defaultBuf[4];
 public:
     BinaryFileReader();
 
     ~BinaryFileReader();
 
-    bool open(const std::string &cs, const char *rb);
+    bool open(const std::string& cs, const char* rb);
 
     void seek(uint32_t pos) const;
 
@@ -40,7 +40,8 @@ public:
 
     void close();
 };
-namespace FileUtils 
+
+namespace FileUtils
 {
     std::vector<u8> readFileBytes(const std::string& fileName);
 

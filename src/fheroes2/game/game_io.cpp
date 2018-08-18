@@ -46,14 +46,15 @@ namespace Game
     {
         enum
         {
-            IS_COMPRESS = 0x8000, IS_LOYALTY = 0x4000
+            IS_COMPRESS = 0x8000,
+            IS_LOYALTY = 0x4000
         };
 
         HeaderSAV() : status(0)
         {
         }
 
-        HeaderSAV(const Maps::FileInfo &fi, bool loyalty) : status(0), info(fi)
+        HeaderSAV(const Maps::FileInfo& fi, bool loyalty) : status(0), info(fi)
         {
             time_t rawtime;
             time(&rawtime);
@@ -71,31 +72,32 @@ namespace Game
         Maps::FileInfo info;
     };
 
-    ByteVectorWriter&operator<<(ByteVectorWriter &msg, const HeaderSAV &hdr)
+    ByteVectorWriter& operator<<(ByteVectorWriter& msg, const HeaderSAV& hdr)
     {
         return msg << hdr.status << hdr.info;
     }
-    
-    ByteVectorReader &operator>>(ByteVectorReader &msg, HeaderSAV &hdr)
+
+    ByteVectorReader& operator>>(ByteVectorReader& msg, HeaderSAV& hdr)
     {
         return msg >> hdr.status >> hdr.info;
     }
 }
-bool Game::Save(const string &fn)
+
+bool Game::Save(const string& fn)
 {
     const bool autosave = System::GetBasename(fn) == "autosave.sav";
-    const Settings &conf = Settings::Get();
+    const Settings& conf = Settings::Get();
 
     // ask overwrite?
     if (System::IsFile(fn) &&
         (!autosave && conf.ExtGameRewriteConfirm() || autosave && Settings::Get().ExtGameAutosaveConfirm()) &&
         Dialog::NO == Dialog::Message("", _("Are you sure you want to overwrite the save with this name?"), Font::BIG,
-            Dialog::YES | Dialog::NO))
+                                      Dialog::YES | Dialog::NO))
     {
         return false;
     }
 
-    ByteVectorWriter bfs(250*1024);
+    ByteVectorWriter bfs(250 * 1024);
     bfs.SetBigEndian(true);
 
     const u16 loadver = GetLoadVersion();
@@ -114,14 +116,13 @@ bool Game::Save(const string &fn)
     const auto savedFileData = bfs.data();
     FileUtils::writeFileBytes(fn, savedFileData);
     return true;
-
 }
 
 //#define OLDMETHOD
 
-bool Game::Load(const string &fn)
+bool Game::Load(const string& fn)
 {
-    Settings &conf = Settings::Get();
+    Settings& conf = Settings::Get();
     // loading info
     ShowLoadMapsText();
 
@@ -158,12 +159,12 @@ bool Game::Load(const string &fn)
     {
         return false;
     }
-    
+
     auto fileDataZ = FileUtils::readFileBytes(fn);
     ByteVectorReader fz(fileDataZ);
 
     fz.setBigEndian(true);
-    if(fileDataZ.empty())
+    if (fileDataZ.empty())
         return false;
     fileVector = FileUtils::readFileBytes(fn);
     if (fileVector.empty())
@@ -193,26 +194,26 @@ bool Game::Load(const string &fn)
     {
         ostringstream os;
         os << "usupported save format: " << binver << endl <<
-           "game version: " << CURRENT_FORMAT_VERSION << endl <<
-           "last version: " << LAST_FORMAT_VERSION;
+            "game version: " << CURRENT_FORMAT_VERSION << endl <<
+            "last version: " << LAST_FORMAT_VERSION;
         Message("Error", os.str(), Font::BIG, Dialog::OK);
         return false;
     }
     SetLoadVersion(binver);
     u16 end_check = 0;
-    auto &world = World::Get();
-    auto &settings = Settings::Get();
-    auto &gameOverResult = GameOver::Result::Get();
-    auto &gameStatic = GameStatic::Data::Get();
-    auto &monsterData = MonsterStaticData::Get();
+    auto& world = World::Get();
+    auto& settings = Settings::Get();
+    auto& gameOverResult = GameOver::Result::Get();
+    auto& gameStatic = GameStatic::Data::Get();
+    auto& monsterData = MonsterStaticData::Get();
 
     *bfz >> world >> settings >>
-         gameOverResult >> gameStatic
-         >> monsterData
-         >> end_check;
+        gameOverResult >> gameStatic
+        >> monsterData
+        >> end_check;
     World::Get().PostFixLoad();
 
-    if ( end_check != SAV2ID2 && end_check != SAV2ID3)
+    if (end_check != SAV2ID2 && end_check != SAV2ID3)
     {
         return false;
     }
@@ -225,7 +226,7 @@ bool Game::Load(const string &fn)
     return true;
 }
 
-bool Game::LoadSAV2FileInfo(const string &fn, Maps::FileInfo &finfo)
+bool Game::LoadSAV2FileInfo(const string& fn, Maps::FileInfo& finfo)
 {
     auto fileBytes = FileUtils::readFileBytes(fn);
     if (fileBytes.empty())

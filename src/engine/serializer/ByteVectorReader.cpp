@@ -1,6 +1,7 @@
 #include "ByteVectorReader.h"
 #include "rect.h"
-namespace 
+
+namespace
 {
     namespace Endian
     {
@@ -9,8 +10,9 @@ namespace
         const bool isLittle = magic_ == 0x04;
     }
 }
-ByteVectorReader::ByteVectorReader(const std::vector<u8> &data)
-        : _data(data), _pos(0)
+
+ByteVectorReader::ByteVectorReader(const std::vector<u8>& data)
+    : _data(data), _pos(0)
 {
 }
 
@@ -34,7 +36,7 @@ uint32_t ByteVectorReader::getLE16()
         uint32_t hi = Get8();
         return lo + (hi << 8);
     }
-    auto * resultPtr = reinterpret_cast<const uint16_t *>(_data.data() + _pos);
+    auto* resultPtr = reinterpret_cast<const uint16_t *>(_data.data() + _pos);
     _pos += 2;
     const uint16_t result = *resultPtr;
     return result;
@@ -42,7 +44,7 @@ uint32_t ByteVectorReader::getLE16()
 
 uint32_t ByteVectorReader::getLE32()
 {
-    if(!Endian::isLittle)
+    if (!Endian::isLittle)
     {
         auto llo = Get8();
         auto lhi = Get8();
@@ -50,10 +52,10 @@ uint32_t ByteVectorReader::getLE32()
         auto hhi = Get8();
         uint32_t lo = llo + (lhi << 8);
         uint32_t hi = (hlo << 16) + (hhi << 24);
-        uint32_t  result = lo + hi;
+        uint32_t result = lo + hi;
         return result;
     }
-    auto * resultPtr = reinterpret_cast<const uint32_t *>(_data.data() + _pos);
+    auto* resultPtr = reinterpret_cast<const uint32_t *>(_data.data() + _pos);
     _pos += 4;
     const auto result = *resultPtr;
     return result;
@@ -79,7 +81,7 @@ uint32_t ByteVectorReader::getBE16()
         const uint32_t hi = Get8();
         return hi + (lo << 8);
     }
-    auto * resultPtr = reinterpret_cast<const uint16_t *>(_data.data() + _pos);
+    auto* resultPtr = reinterpret_cast<const uint16_t *>(_data.data() + _pos);
     _pos += 2;
     uint16_t result = *resultPtr;
     return result;
@@ -97,7 +99,7 @@ uint32_t ByteVectorReader::getBE32()
         const uint32_t hi = hi2 + (lo2 << 8);
         return hi + lo;
     }
-    auto * resultPtr = reinterpret_cast<const uint32_t *>(_data.data() + _pos);
+    auto* resultPtr = reinterpret_cast<const uint32_t *>(_data.data() + _pos);
     _pos += 4;
     uint32_t result = *resultPtr;
     return result;
@@ -152,12 +154,12 @@ void ByteVectorReader::setBigEndian(int value)
 }
 
 
-ByteVectorReader &ByteVectorReader::operator>>(Size &v)
+ByteVectorReader& ByteVectorReader::operator>>(Size& v)
 {
     return *this >> v.w >> v.h;
 }
 
-ByteVectorReader &ByteVectorReader::operator>>(float &v)
+ByteVectorReader& ByteVectorReader::operator>>(float& v)
 {
     s32 intpart;
     s32 decpart;
@@ -166,19 +168,19 @@ ByteVectorReader &ByteVectorReader::operator>>(float &v)
     return *this;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, uint32_t &val)
+ByteVectorReader& operator>>(ByteVectorReader& msg, uint32_t& val)
 {
     val = msg.get32();
     return msg;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, bool &v)
+ByteVectorReader& operator>>(ByteVectorReader& msg, bool& v)
 {
     v = msg.Get8();
     return msg;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, std::string &v)
+ByteVectorReader& operator>>(ByteVectorReader& msg, std::string& v)
 {
     v = msg.readString();
     return msg;
@@ -193,43 +195,43 @@ std::string ByteVectorReader::readString()
     return v;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, u8 &val)
+ByteVectorReader& operator>>(ByteVectorReader& msg, u8& val)
 {
     val = msg.Get8();
     return msg;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, s8 &val)
+ByteVectorReader& operator>>(ByteVectorReader& msg, s8& val)
 {
     val = msg.Get8();
     return msg;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, char &val)
+ByteVectorReader& operator>>(ByteVectorReader& msg, char& val)
 {
     val = msg.Get8();
     return msg;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, u16 &val)
+ByteVectorReader& operator>>(ByteVectorReader& msg, u16& val)
 {
     val = msg.get16();
     return msg;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, s16 &val)
+ByteVectorReader& operator>>(ByteVectorReader& msg, s16& val)
 {
     val = msg.get16();
     return msg;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, s32 &val)
+ByteVectorReader& operator>>(ByteVectorReader& msg, s32& val)
 {
     val = msg.get32();
     return msg;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, Point &v)
+ByteVectorReader& operator>>(ByteVectorReader& msg, Point& v)
 {
     return msg >> v.x >> v.y;
 }

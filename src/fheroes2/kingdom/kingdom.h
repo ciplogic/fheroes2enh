@@ -46,10 +46,11 @@ struct CapturedObjects;
 struct LastLoseHero : pair<int, uint32_t> /* Heroes, date */
 {
     LastLoseHero() : pair<int, uint32_t>(Heroes::UNKNOWN, 0)
-    {}
+    {
+    }
 };
 
-ByteVectorReader &operator>>(ByteVectorReader &, LastLoseHero &);
+ByteVectorReader& operator>>(ByteVectorReader&, LastLoseHero&);
 
 struct KingdomCastles : public VecCastles
 {
@@ -62,14 +63,13 @@ struct KingdomHeroes : public VecHeroes
 };
 
 
-
 class Kingdom : public BitModes, public Control
 {
 public:
     enum
     {
         //UNDEF	     = 0x0001,
-                IDENTIFYHERO = 0x0002,
+        IDENTIFYHERO = 0x0002,
         DISABLEHIRES = 0x0004,
         OVERVIEWCSTL = 0x0008
     };
@@ -91,24 +91,24 @@ public:
 
     bool isLoss() const;
 
-    bool AllowPayment(const Funds &) const;
+    bool AllowPayment(const Funds&) const;
 
     bool AllowRecruitHero(bool check_payment, int level) const;
 
-    void SetLastLostHero(Heroes &);
+    void SetLastLostHero(Heroes&);
 
     void ResetLastLostHero();
 
-    void AddHeroStartCondLoss(Heroes *);
+    void AddHeroStartCondLoss(Heroes*);
 
     string GetNamesHeroStartCondLoss() const;
 
-    Heroes *GetLastLostHero() const;
+    Heroes* GetLastLostHero() const;
 
-    const Heroes *
+    const Heroes*
     GetFirstHeroStartCondLoss() const;
 
-    const Heroes *
+    const Heroes*
     GetBestHero() const;
 
     int GetControl() const;
@@ -117,17 +117,19 @@ public:
 
     int GetRace() const;
 
-    const Funds &
+    const Funds&
     GetFunds() const
-    { return resource; }
+    {
+        return resource;
+    }
 
     Funds GetIncome(int = INCOME_ALL) const;
 
     uint32_t GetArmiesStrength() const;
 
-    void AddFundsResource(const Funds &);
+    void AddFundsResource(const Funds&);
 
-    void OddFundsResource(const Funds &);
+    void OddFundsResource(const Funds&);
 
     uint32_t GetCountCastle() const;
 
@@ -143,35 +145,43 @@ public:
 
     uint32_t GetCountBuilding(uint32_t) const;
 
-    Recruits &GetRecruits();
+    Recruits& GetRecruits();
 
-    const KingdomHeroes &
+    const KingdomHeroes&
     GetHeroes() const
-    { return heroes; }
+    {
+        return heroes;
+    }
 
-    const KingdomCastles &
+    const KingdomCastles&
     GetCastles() const
-    { return castles; }
+    {
+        return castles;
+    }
 
-    KingdomHeroes &
+    KingdomHeroes&
     GetHeroes()
-    { return heroes; }
+    {
+        return heroes;
+    }
 
-    KingdomCastles &
+    KingdomCastles&
     GetCastles()
-    { return castles; }
+    {
+        return castles;
+    }
 
-    void AddHeroes(Heroes *);
+    void AddHeroes(Heroes*);
 
-    void RemoveHeroes(const Heroes *);
+    void RemoveHeroes(const Heroes*);
 
     void ApplyPlayWithStartingHero();
 
     void HeroesActionNewPosition() const;
 
-    void AddCastle(const Castle *);
+    void AddCastle(const Castle*);
 
-    void RemoveCastle(const Castle *);
+    void RemoveCastle(const Castle*);
 
     void ActionBeforeTurn();
 
@@ -187,16 +197,16 @@ public:
 
     bool isVisited(int object) const;
 
-    bool isVisited(const Maps::Tiles &) const;
+    bool isVisited(const Maps::Tiles&) const;
 
     bool isVisited(s32, int obj) const;
 
     bool HeroesMayStillMove() const;
 
-    const Puzzle &
+    const Puzzle&
     PuzzleMaps() const;
 
-    Puzzle &PuzzleMaps();
+    Puzzle& PuzzleMaps();
 
     void SetVisitTravelersTent(int);
 
@@ -209,9 +219,9 @@ public:
     static uint32_t GetMaxHeroes();
 
 private:
-    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Kingdom &);
+    friend ByteVectorWriter& operator<<(ByteVectorWriter&, const Kingdom&);
 
-    friend ByteVectorReader &operator>>(ByteVectorReader &, Kingdom &);
+    friend ByteVectorReader& operator>>(ByteVectorReader&, Kingdom&);
 
     int color;
     Funds resource;
@@ -225,7 +235,7 @@ private:
     LastLoseHero lost_hero;
 
     list<IndexObject>
-            visit_object;
+    visit_object;
 
     Puzzle puzzle_maps;
     uint32_t visited_tents_colors;
@@ -250,9 +260,9 @@ public:
 
     void NewMonth();
 
-    Kingdom &GetKingdom(int color);
+    Kingdom& GetKingdom(int color);
 
-    const Kingdom &
+    const Kingdom&
     GetKingdom(int color) const;
 
     int GetLossColors() const;
@@ -261,26 +271,26 @@ public:
 
     int FindWins(int) const;
 
-    void AddHeroes(const AllHeroes &);
+    void AddHeroes(const AllHeroes&);
 
-    void AddCastles(const AllCastles &);
+    void AddCastles(const AllCastles&);
 
-    void AddCondLossHeroes(const AllHeroes &);
+    void AddCondLossHeroes(const AllHeroes&);
 
-    void AddTributeEvents(CapturedObjects &, uint32_t day, int obj);
+    void AddTributeEvents(CapturedObjects&, uint32_t day, int obj);
 
     static uint32_t size();
 
 private:
-    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Kingdoms &);
+    friend ByteVectorWriter& operator<<(ByteVectorWriter&, const Kingdoms&);
 
-    friend ByteVectorReader &operator>>(ByteVectorReader &, Kingdoms &);
+    friend ByteVectorReader& operator>>(ByteVectorReader&, Kingdoms&);
 
     Kingdom kingdoms[KINGDOMMAX + 1];
 };
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const Kingdom &);
-ByteVectorReader &operator>>(ByteVectorReader &, Kingdom &);
+ByteVectorWriter& operator<<(ByteVectorWriter&, const Kingdom&);
+ByteVectorReader& operator>>(ByteVectorReader&, Kingdom&);
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const Kingdoms &);
-ByteVectorReader &operator>>(ByteVectorReader &, Kingdoms &);
+ByteVectorWriter& operator<<(ByteVectorWriter&, const Kingdoms&);
+ByteVectorReader& operator>>(ByteVectorReader&, Kingdoms&);

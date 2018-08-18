@@ -41,47 +41,57 @@ namespace Interface
         virtual bool QueueEventProcessing() = 0;
     };
 
-    template<class Item>
+    template <class Item>
     class ListBox : public ListBasic
     {
     public:
         typedef vector<Item> Items;
         typedef typename vector<Item>::iterator ItemsIterator;
 
-        ListBox(const Point &pt) : ptRedraw(pt), maxItems(0), useHotkeys(true), content(nullptr)
-        {}
+        ListBox(const Point& pt) : ptRedraw(pt), maxItems(0), useHotkeys(true), content(nullptr)
+        {
+        }
 
         ListBox() : maxItems(0), useHotkeys(true), content(nullptr)
-        {}
+        {
+        }
 
         virtual ~ListBox()
         = default;
 
-        virtual void RedrawItem(const Item &, s32 ox, s32 oy, bool current) = 0;
+        virtual void RedrawItem(const Item&, s32 ox, s32 oy, bool current) = 0;
 
-        virtual void RedrawBackground(const Point &) = 0;
+        virtual void RedrawBackground(const Point&) = 0;
 
         virtual void ActionCurrentUp() = 0;
 
         virtual void ActionCurrentDn() = 0;
 
-        virtual void ActionListDoubleClick(Item &) = 0;
+        virtual void ActionListDoubleClick(Item&) = 0;
 
-        virtual void ActionListSingleClick(Item &) = 0;
+        virtual void ActionListSingleClick(Item&) = 0;
 
-        virtual void ActionListPressRight(Item &) = 0;
+        virtual void ActionListPressRight(Item&) = 0;
 
-        virtual void ActionListDoubleClick(Item &item, const Point &cursor, s32 ox, s32 oy)
-        { ActionListDoubleClick(item); };
+        virtual void ActionListDoubleClick(Item& item, const Point& cursor, s32 ox, s32 oy)
+        {
+            ActionListDoubleClick(item);
+        };
 
-        virtual void ActionListSingleClick(Item &item, const Point &cursor, s32 ox, s32 oy)
-        { ActionListSingleClick(item); };
+        virtual void ActionListSingleClick(Item& item, const Point& cursor, s32 ox, s32 oy)
+        {
+            ActionListSingleClick(item);
+        };
 
-        virtual void ActionListPressRight(Item &item, const Point &cursor, s32 ox, s32 oy)
-        { ActionListPressRight(item); };
+        virtual void ActionListPressRight(Item& item, const Point& cursor, s32 ox, s32 oy)
+        {
+            ActionListPressRight(item);
+        };
 
-        virtual bool ActionListCursor(Item &item, const Point &cursor, s32 ox, s32 oy)
-        { return false; };
+        virtual bool ActionListCursor(Item& item, const Point& cursor, s32 ox, s32 oy)
+        {
+            return false;
+        };
 
         /*
         void SetTopLeft(const Point & top);
@@ -104,30 +114,30 @@ namespace Interface
         void Reset();
         */
 
-        void SetTopLeft(const Point &tl)
+        void SetTopLeft(const Point& tl)
         {
             ptRedraw = tl;
         }
 
-        void SetScrollButtonUp(int icn, uint32_t index1, uint32_t index2, const Point &pos)
+        void SetScrollButtonUp(int icn, uint32_t index1, uint32_t index2, const Point& pos)
         {
             buttonPgUp.SetSprite(icn, index1, index2);
             buttonPgUp.SetPos(pos);
         }
 
-        void SetScrollButtonDn(int icn, uint32_t index1, uint32_t index2, const Point &pos)
+        void SetScrollButtonDn(int icn, uint32_t index1, uint32_t index2, const Point& pos)
         {
             buttonPgDn.SetSprite(icn, index1, index2);
             buttonPgDn.SetPos(pos);
         }
 
-        void SetScrollSplitter(const Sprite &sp, const Rect &area)
+        void SetScrollSplitter(const Sprite& sp, const Rect& area)
         {
             splitter.SetArea(area);
             splitter.SetSprite(sp);
         }
 
-        Splitter &GetSplitter()
+        Splitter& GetSplitter()
         {
             return splitter;
         }
@@ -137,12 +147,12 @@ namespace Interface
             maxItems = max;
         }
 
-        void SetAreaItems(const Rect &rt)
+        void SetAreaItems(const Rect& rt)
         {
             rtAreaItems = rt;
         }
 
-        void SetListContent(vector<Item> &list)
+        void SetListContent(vector<Item>& list)
         {
             content = &list;
             cur = content->begin();
@@ -151,7 +161,8 @@ namespace Interface
             {
                 splitter.SetRange(0, list.size() - maxItems);
                 splitter.MoveIndex(0);
-            } else
+            }
+            else
             {
                 splitter.SetRange(0, 0);
                 splitter.MoveCenter();
@@ -196,12 +207,12 @@ namespace Interface
                 RedrawItem(*curt, rtAreaItems.x, rtAreaItems.y + (curt - top) * rtAreaItems.h / maxItems, curt == cur);
         }
 
-        Item &GetCurrent()
+        Item& GetCurrent()
         {
             return *cur;
         }
 
-        Item *GetFromPosition(const Point &mp)
+        Item* GetFromPosition(const Point& mp)
         {
             ItemsIterator click = content->end();
             float offset = (mp.y - rtAreaItems.y) * maxItems / rtAreaItems.h;
@@ -221,7 +232,7 @@ namespace Interface
         {
             int curIndex = cur - content->begin();
             int topIndex = top - content->begin();
-            if (topIndex > curIndex || (int) (topIndex + maxItems) <= curIndex)
+            if (topIndex > curIndex || (int)(topIndex + maxItems) <= curIndex)
             {
                 top = cur + maxItems > content->end() ? content->end() - maxItems : cur;
                 if (top < content->begin()) top = content->begin();
@@ -230,7 +241,7 @@ namespace Interface
             }
         }
 
-        void SetCurrent(const Item &item)
+        void SetCurrent(const Item& item)
         {
             cur = std::find(content->begin(), content->end(), item);
             SetCurrentVisible();
@@ -253,8 +264,8 @@ namespace Interface
 
         bool QueueEventProcessing()
         {
-            LocalEvent &le = LocalEvent::Get();
-            Cursor &cursor = Cursor::Get();
+            LocalEvent& le = LocalEvent::Get();
+            Cursor& cursor = Cursor::Get();
 
             le.MousePressLeft(buttonPgUp) ? buttonPgUp.PressDraw() : buttonPgUp.ReleaseDraw();
             le.MousePressLeft(buttonPgDn) ? buttonPgDn.PressDraw() : buttonPgDn.ReleaseDraw();
@@ -326,7 +337,7 @@ namespace Interface
 
             if (content->empty())
                 return false;
-            double offset =  (double)(le.GetMouseCursor().y - rtAreaItems.y) * maxItems / rtAreaItems.h;
+            double offset = (double)(le.GetMouseCursor().y - rtAreaItems.y) * maxItems / rtAreaItems.h;
 
             if (offset < 0)
                 return false;
@@ -334,9 +345,9 @@ namespace Interface
 
             int curIndex = cur - content->begin();
             int topIndex = top - content->begin();
-            int posIndex = topIndex + (int) offset;
+            int posIndex = topIndex + (int)offset;
 
-            if (posIndex >= 0 && posIndex < (int) content->size())
+            if (posIndex >= 0 && posIndex < (int)content->size())
             {
                 const s32 posy = rtAreaItems.y + (posIndex - topIndex) * rtAreaItems.h / maxItems;
 
@@ -348,7 +359,8 @@ namespace Interface
                     if (posIndex == curIndex)
                     {
                         ActionListDoubleClick(*cur, le.GetMouseCursor(), rtAreaItems.x, posy);
-                    } else
+                    }
+                    else
                     {
                         cur = content->begin() + posIndex;
                         ActionListSingleClick(*cur, le.GetMouseCursor(), rtAreaItems.x, posy);
@@ -388,7 +400,7 @@ namespace Interface
         uint32_t maxItems;
         bool useHotkeys;
 
-        Items *content;
+        Items* content;
         ItemsIterator cur;
         ItemsIterator top;
     };

@@ -41,14 +41,17 @@ int ObjMnts1::GetPassable(int icn, uint32_t index)
         (25 == index || 43 == index || 44 == index || 53 == index || 54 == index || 78 == index))
         return 0;
 
-    return ARRAY_COUNT_END(disabled2) != std::find(disabled2, ARRAY_COUNT_END(disabled2), index) ?
-           0 : DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW;
+    return ARRAY_COUNT_END(disabled2) != std::find(disabled2, ARRAY_COUNT_END(disabled2), index)
+               ? 0
+               : DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW;
 }
 
 int ObjMnts2::GetPassable(int icn, uint32_t index)
 {
-    const u8 disabled1[] = {6, 7, 8, 9, 14, 15, 16, 28, 29, 30, 31, 33, 34, 35, 50, 51, 52, 65, 77, 78, 87, 94, 99,
-                            112};
+    const u8 disabled1[] = {
+        6, 7, 8, 9, 14, 15, 16, 28, 29, 30, 31, 33, 34, 35, 50, 51, 52, 65, 77, 78, 87, 94, 99,
+        112
+    };
 
     if (isShadow(index)) return DIRECTION_ALL;
     // fix: disable passable: invalid top sprite
@@ -56,8 +59,9 @@ int ObjMnts2::GetPassable(int icn, uint32_t index)
         (73 == index || 84 == index || 86 == index))
         return 0;
 
-    return ARRAY_COUNT_END(disabled1) != std::find(disabled1, ARRAY_COUNT_END(disabled1), index) ?
-           0 : DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW;
+    return ARRAY_COUNT_END(disabled1) != std::find(disabled1, ARRAY_COUNT_END(disabled1), index)
+               ? 0
+               : DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW;
 }
 
 bool ObjMnts1::isAction(uint32_t index)
@@ -88,7 +92,9 @@ bool ObjMnts1::isShadow(uint32_t index)
 
 bool ObjMnts2::isShadow(uint32_t index)
 {
-    const u8 shadows2[] = {0, 5, 11, 17, 21, 26, 32, 38, 42, 46, 47, 53, 57, 58, 62,
-                           68, 72, 75, 79, 82, 85, 89, 92, 95, 98, 101, 104, 105, 109, 110};
+    const u8 shadows2[] = {
+        0, 5, 11, 17, 21, 26, 32, 38, 42, 46, 47, 53, 57, 58, 62,
+        68, 72, 75, 79, 82, 85, 89, 92, 95, 98, 101, 104, 105, 109, 110
+    };
     return ARRAY_COUNT_END(shadows2) != std::find(shadows2, ARRAY_COUNT_END(shadows2), index);
 }

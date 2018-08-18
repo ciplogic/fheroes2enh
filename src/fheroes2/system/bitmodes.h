@@ -33,34 +33,45 @@ class BitModes
 {
 public:
     BitModes() : modes(0)
-    {}
+    {
+    }
 
     virtual ~BitModes()
     = default;
 
     uint32_t operator()() const
-    { return modes; }
+    {
+        return modes;
+    }
 
     void SetModes(uint32_t f)
-    { modes |= f; }
+    {
+        modes |= f;
+    }
 
     void ResetModes(uint32_t f)
-    { modes &= ~f; }
+    {
+        modes &= ~f;
+    }
 
     void ToggleModes(uint32_t f)
-    { modes ^= f; }
+    {
+        modes ^= f;
+    }
 
     bool Modes(uint32_t f) const
-    { return (modes & f) != 0; }
+    {
+        return (modes & f) != 0;
+    }
 
 protected:
-    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const BitModes &);
+    friend ByteVectorWriter& operator<<(ByteVectorWriter&, const BitModes&);
 
-    friend ByteVectorReader &operator>>(ByteVectorReader &, BitModes &);
+    friend ByteVectorReader& operator>>(ByteVectorReader&, BitModes&);
 
     uint32_t modes;
 };
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const BitModes &);
+ByteVectorWriter& operator<<(ByteVectorWriter&, const BitModes&);
 
-ByteVectorReader &operator>>(ByteVectorReader &, BitModes &);
+ByteVectorReader& operator>>(ByteVectorReader&, BitModes&);

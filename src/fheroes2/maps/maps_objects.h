@@ -36,32 +36,38 @@ class MapObjectSimple : public MapPosition
 {
 public:
     explicit MapObjectSimple(int v = 0) : uid(0), type(v)
-    {}
+    {
+    }
 
     virtual ~MapObjectSimple() = default;
 
     int GetType() const
-    { return type; }
+    {
+        return type;
+    }
 
     uint32_t GetUID() const
-    { return uid; }
+    {
+        return uid;
+    }
 
     void SetUID(uint32_t v)
-    { uid = v; }
+    {
+        uid = v;
+    }
 
     uint32_t uid;
     int type;
-
 };
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const MapObjectSimple &);
-ByteVectorReader &operator>>(ByteVectorReader &, MapObjectSimple &);
+ByteVectorWriter& operator<<(ByteVectorWriter&, const MapObjectSimple&);
+ByteVectorReader& operator>>(ByteVectorReader&, MapObjectSimple&);
 
 struct MapEvent : MapObjectSimple
 {
     MapEvent();
 
-    void LoadFromMP2(s32 index, ByteVectorReader &);
+    void LoadFromMP2(s32 index, ByteVectorReader&);
 
     bool isAllow(int color) const;
 
@@ -75,9 +81,9 @@ struct MapEvent : MapObjectSimple
     string message;
 };
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const MapEvent &);
+ByteVectorWriter& operator<<(ByteVectorWriter&, const MapEvent&);
 
-ByteVectorReader &operator>>(ByteVectorReader &, MapEvent &);
+ByteVectorReader& operator>>(ByteVectorReader&, MapEvent&);
 
 typedef vector<string> RiddleAnswers;
 
@@ -85,9 +91,9 @@ struct MapSphinx : MapObjectSimple
 {
     MapSphinx();
 
-    void LoadFromMP2(s32 index, ByteVectorReader &);
+    void LoadFromMP2(s32 index, ByteVectorReader&);
 
-    bool AnswerCorrect(const string &answer);
+    bool AnswerCorrect(const string& answer);
 
     void SetQuiet();
 
@@ -98,24 +104,24 @@ struct MapSphinx : MapObjectSimple
     bool valid;
 };
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const MapSphinx &);
+ByteVectorWriter& operator<<(ByteVectorWriter&, const MapSphinx&);
 
-ByteVectorReader &operator>>(ByteVectorReader &, MapSphinx &);
+ByteVectorReader& operator>>(ByteVectorReader&, MapSphinx&);
 
 struct MapSign : MapObjectSimple
 {
     MapSign();
 
-    MapSign(s32 index, const string &);
+    MapSign(s32 index, const string&);
 
-    void LoadFromMP2(s32 index, ByteVectorReader &);
+    void LoadFromMP2(s32 index, ByteVectorReader&);
 
     string message;
 };
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const MapSign &);
+ByteVectorWriter& operator<<(ByteVectorWriter&, const MapSign&);
 
-ByteVectorReader &operator>>(ByteVectorReader &, MapSign &);
+ByteVectorReader& operator>>(ByteVectorReader&, MapSign&);
 
 struct MapResource : MapObjectSimple
 {
@@ -124,9 +130,9 @@ struct MapResource : MapObjectSimple
     ResourceCount resource;
 };
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const MapResource &);
+ByteVectorWriter& operator<<(ByteVectorWriter&, const MapResource&);
 
-ByteVectorReader &operator>>(ByteVectorReader &, MapResource &);
+ByteVectorReader& operator>>(ByteVectorReader&, MapResource&);
 
 struct MapArtifact : MapObjectSimple
 {
@@ -141,9 +147,9 @@ struct MapArtifact : MapObjectSimple
     ResourceCount QuantityResourceCount() const;
 };
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const MapArtifact &);
+ByteVectorWriter& operator<<(ByteVectorWriter&, const MapArtifact&);
 
-ByteVectorReader &operator>>(ByteVectorReader &, MapArtifact &);
+ByteVectorReader& operator>>(ByteVectorReader&, MapArtifact&);
 
 struct MapMonster : MapObjectSimple
 {
@@ -165,7 +171,6 @@ struct MapMonster : MapObjectSimple
     bool JoinConditionForce() const;
 };
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const MapMonster &);
+ByteVectorWriter& operator<<(ByteVectorWriter&, const MapMonster&);
 
-ByteVectorReader &operator>>(ByteVectorReader &, MapMonster &);
-
+ByteVectorReader& operator>>(ByteVectorReader&, MapMonster&);

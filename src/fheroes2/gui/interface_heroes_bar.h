@@ -27,14 +27,13 @@
 
 namespace Interface
 {
-
-    typedef Heroes *HEROES;
+    typedef Heroes* HEROES;
     class Basic;
 
     class HeroesBar : public BorderWindow
     {
     public:
-        explicit HeroesBar(Basic &);
+        explicit HeroesBar(Basic&);
 
         void SetPos(s32, s32);
 
@@ -57,9 +56,9 @@ namespace Interface
 
         static void RedrawCursor();
 
-        void ChangeAreaSize(const Size &);
+        void ChangeAreaSize(const Size&);
 
-        Basic &interface;
+        Basic& interface;
 
         Surface spriteArea;
         SpriteMove cursorArea;
@@ -68,7 +67,7 @@ namespace Interface
 
         KingdomHeroes& kingdomHeroes;
 
-        void SetListContent(KingdomHeroes &heroes) const;
+        void SetListContent(KingdomHeroes& heroes) const;
 
         static void PortraitRedraw(s16 x, s16 y, Heroes& hero, bool isFocused);
         int getSelectedIndex() const;

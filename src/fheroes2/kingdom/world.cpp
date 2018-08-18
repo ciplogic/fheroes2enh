@@ -48,39 +48,39 @@ MapObjects::~MapObjects()
 
 void MapObjects::clear()
 {
-    for (auto &it : *this)
+    for (auto& it : *this)
         delete it.second;
     unordered_map<uint32_t, MapObjectSimple *>::clear();
 }
 
-void MapObjects::add(MapObjectSimple *obj)
+void MapObjects::add(MapObjectSimple* obj)
 {
     if (!obj) return;
-    auto &map = *this;
+    auto& map = *this;
     if (map[obj->GetUID()]) delete map[obj->GetUID()];
     map[obj->GetUID()] = obj;
 }
 
-MapObjectSimple *MapObjects::get(uint32_t uid)
+MapObjectSimple* MapObjects::get(uint32_t uid)
 {
     const auto it = find(uid);
     return it != end() ? (*it).second : nullptr;
 }
 
-vector<MapObjectSimple *> MapObjects::get(const Point &pos)
+vector<MapObjectSimple *> MapObjects::get(const Point& pos)
 {
     vector<MapObjectSimple *> res;
-    for (auto &it : *this)
+    for (auto& it : *this)
         if (it.second && it.second->isPosition(pos))
             res.push_back(it.second);
     return res;
 }
 
-void MapObjects::remove(const Point &pos)
+void MapObjects::remove(const Point& pos)
 {
     vector<uint32_t> uids;
 
-    for (auto &it : *this)
+    for (auto& it : *this)
         if (it.second && it.second->isPosition(pos))
             uids.push_back(it.second->GetUID());
 
@@ -95,9 +95,9 @@ void MapObjects::remove(uint32_t uid)
     erase(it);
 }
 
-CapturedObject &CapturedObjects::Get(s32 index)
+CapturedObject& CapturedObjects::Get(s32 index)
 {
-    auto &my = *this;
+    auto& my = *this;
     return my[index];
 }
 
@@ -108,7 +108,7 @@ void CapturedObjects::SetColor(s32 index, int col)
 
 void CapturedObjects::Set(s32 index, int obj, int col)
 {
-    CapturedObject &co = Get(index);
+    CapturedObject& co = Get(index);
 
     if (co.GetColor() != col && co.guardians.isValid())
         co.guardians.Reset();
@@ -122,7 +122,7 @@ uint32_t CapturedObjects::GetCount(int obj, int col) const
 
     const ObjectColor objcol(obj, col);
 
-    for (const auto &it : *this)
+    for (const auto& it : *this)
         if (objcol == it.second.objcol)
             ++result;
 
@@ -136,14 +136,14 @@ uint32_t CapturedObjects::GetCountMines(int type, int col) const
     const ObjectColor objcol1(MP2::OBJ_MINES, col);
     const ObjectColor objcol2(MP2::OBJ_HEROES, col);
 
-    for (const auto &it : *this)
+    for (const auto& it : *this)
     {
-        const ObjectColor &objcol = it.second.objcol;
+        const ObjectColor& objcol = it.second.objcol;
 
         if (objcol == objcol1 || objcol == objcol2)
         {
             // scan for find mines
-            const Maps::TilesAddon *addon = world.GetTiles(it.first).FindObject(MP2::OBJ_MINES);
+            const Maps::TilesAddon* addon = world.GetTiles(it.first).FindObject(MP2::OBJ_MINES);
 
             if (addon)
             {
@@ -169,9 +169,9 @@ int CapturedObjects::GetColor(s32 index) const
 void CapturedObjects::ClearFog(int colors)
 {
     // clear abroad objects
-    for (auto &it : *this)
+    for (auto& it : *this)
     {
-        const ObjectColor &objcol = it.second.objcol;
+        const ObjectColor& objcol = it.second.objcol;
 
         if (objcol.isColor(colors))
         {
@@ -179,18 +179,18 @@ void CapturedObjects::ClearFog(int colors)
 
             switch (objcol.first)
             {
-                case MP2::OBJ_MINES:
-                case MP2::OBJ_ALCHEMYLAB:
-                case MP2::OBJ_SAWMILL:
-                    scoute = 2;
-                    break;
+            case MP2::OBJ_MINES:
+            case MP2::OBJ_ALCHEMYLAB:
+            case MP2::OBJ_SAWMILL:
+                scoute = 2;
+                break;
 
-                case MP2::OBJ_LIGHTHOUSE:
-                    scoute = 4;
-                    break; // FIXME: scoute and lighthouse
+            case MP2::OBJ_LIGHTHOUSE:
+                scoute = 4;
+                break; // FIXME: scoute and lighthouse
 
-                default:
-                    break;
+            default:
+                break;
             }
 
             if (scoute) Maps::ClearFog(it.first, scoute, colors);
@@ -200,9 +200,9 @@ void CapturedObjects::ClearFog(int colors)
 
 void CapturedObjects::ResetColor(int color)
 {
-    for (auto &it : *this)
+    for (auto& it : *this)
     {
-        ObjectColor &objcol = it.second.objcol;
+        ObjectColor& objcol = it.second.objcol;
 
         if (objcol.isColor(color))
         {
@@ -216,13 +216,13 @@ Funds CapturedObjects::TributeCapturedObject(int color, int obj)
 {
     Funds result;
 
-    for (auto &it : *this)
+    for (auto& it : *this)
     {
-        const ObjectColor &objcol = it.second.objcol;
+        const ObjectColor& objcol = it.second.objcol;
 
         if (objcol.isObject(obj) && objcol.isColor(color))
         {
-            Maps::Tiles &tile = world.GetTiles(it.first);
+            Maps::Tiles& tile = world.GetTiles(it.first);
 
             result += Funds(tile.QuantityResourceCount());
             tile.QuantityReset();
@@ -232,9 +232,9 @@ Funds CapturedObjects::TributeCapturedObject(int color, int obj)
     return result;
 }
 
-World &world = World::Get();
+World& world = World::Get();
 
-World &World::Get()
+World& World::Get()
 {
     static World insideWorld;
 
@@ -303,18 +303,18 @@ void World::NewMaps(uint32_t sw, uint32_t sh)
 
     // init all tiles
     for (auto
-                 it = vec_tiles.begin(); it != vec_tiles.end(); ++it)
+         it = vec_tiles.begin(); it != vec_tiles.end(); ++it)
     {
         MP2::mp2tile_t mp2tile{};
 
-        mp2tile.tileIndex = Rand::Get(16, 19);    // index sprite ground, see ground32.til
-        mp2tile.objectName1 = 0;            // object sprite level 1
-        mp2tile.indexName1 = 0xff;            // index sprite level 1
+        mp2tile.tileIndex = Rand::Get(16, 19); // index sprite ground, see ground32.til
+        mp2tile.objectName1 = 0; // object sprite level 1
+        mp2tile.indexName1 = 0xff; // index sprite level 1
         mp2tile.quantity1 = 0;
         mp2tile.quantity2 = 0;
-        mp2tile.objectName2 = 0;            // object sprite level 2
-        mp2tile.indexName2 = 0xff;            // index sprite level 2
-        mp2tile.shape = Rand::Get(0, 3);    // shape reflect % 4, 0 none, 1 vertical, 2 horizontal, 3 any
+        mp2tile.objectName2 = 0; // object sprite level 2
+        mp2tile.indexName2 = 0xff; // index sprite level 2
+        mp2tile.shape = Rand::Get(0, 3); // shape reflect % 4, 0 none, 1 vertical, 2 horizontal, 3 any
         mp2tile.generalObject = MP2::OBJ_ZERO;
         mp2tile.indexAddon = 0;
         mp2tile.uniqNumber1 = 0;
@@ -346,80 +346,80 @@ s32 World::h() const
     return Size::h;
 }
 
-const Maps::Tiles &World::GetTiles(uint32_t ax, uint32_t ay) const
+const Maps::Tiles& World::GetTiles(uint32_t ax, uint32_t ay) const
 {
     return GetTiles(ay * w() + ax);
 }
 
-Maps::Tiles &World::GetTiles(uint32_t ax, uint32_t ay)
+Maps::Tiles& World::GetTiles(uint32_t ax, uint32_t ay)
 {
     return GetTiles(ay * w() + ax);
 }
 
-const Maps::Tiles &World::GetTiles(s32 index) const
+const Maps::Tiles& World::GetTiles(s32 index) const
 {
     return vec_tiles[index];
 }
 
-Maps::Tiles &World::GetTiles(s32 index)
+Maps::Tiles& World::GetTiles(s32 index)
 {
     return vec_tiles[index];
 }
 
 /* get kingdom */
-Kingdom &World::GetKingdom(int color)
+Kingdom& World::GetKingdom(int color)
 {
     return vec_kingdoms.GetKingdom(color);
 }
 
-const Kingdom &World::GetKingdom(int color) const
+const Kingdom& World::GetKingdom(int color) const
 {
     return vec_kingdoms.GetKingdom(color);
 }
 
 /* get castle from index maps */
-Castle *World::GetCastle(const Point &center)
+Castle* World::GetCastle(const Point& center)
 {
     return vec_castles.Get(center);
 }
 
-const Castle *World::GetCastle(const Point &center) const
+const Castle* World::GetCastle(const Point& center) const
 {
     return vec_castles.Get(center);
 }
 
-Heroes *World::GetHeroes(int id)
+Heroes* World::GetHeroes(int id)
 {
     return vec_heroes.Get(id);
 }
 
-const Heroes *World::GetHeroes(int id) const
+const Heroes* World::GetHeroes(int id) const
 {
     return vec_heroes.Get(id);
 }
 
 /* get heroes from index maps */
-Heroes *World::GetHeroes(const Point &center)
+Heroes* World::GetHeroes(const Point& center)
 {
     return vec_heroes.Get(center);
 }
 
-const Heroes *World::GetHeroes(const Point &center) const
+const Heroes* World::GetHeroes(const Point& center) const
 {
     return vec_heroes.Get(center);
 }
 
-Heroes *World::GetFreemanHeroes(int race) const
+Heroes* World::GetFreemanHeroes(int race) const
 {
     return vec_heroes.GetFreeman(race);
 }
 
-Heroes *World::FromJailHeroes(s32 index) const
+Heroes* World::FromJailHeroes(s32 index) const
 {
     return vec_heroes.FromJail(index);
 }
 
-CastleHeroes World::GetHeroes(const Castle &castle) const
+CastleHeroes World::GetHeroes(const Castle& castle) const
 {
     return {vec_heroes.GetGuest(castle), vec_heroes.GetGuard(castle)};
 }
@@ -469,7 +469,7 @@ bool World::LastWeek() const
     return 0 == week % WEEKOFMONTH;
 }
 
-const Week &World::GetWeekType() const
+const Week& World::GetWeekType() const
 {
     return week_current;
 }
@@ -503,12 +503,12 @@ void World::NewDay()
     }
 
     // remove deprecated events
-    if (day) 
+    if (day)
     {
         vec_eventsday.remove_if([&](const EventDate& evDate)
         {
             return evDate.isDeprecated(day - 1);
-        });            
+        });
     }
 }
 
@@ -525,13 +525,13 @@ void World::NewWeek()
     if (1 < week)
     {
         // update week object
-        for (auto &vec_tile : vec_tiles)
+        for (auto& vec_tile : vec_tiles)
             if (MP2::isWeekLife(vec_tile.GetObject(false)) ||
                 MP2::OBJ_MONSTER == vec_tile.GetObject())
                 vec_tile.QuantityUpdate();
 
         // update gray towns
-        for (auto &vec_castle : vec_castles)
+        for (auto& vec_castle : vec_castles)
             if (vec_castle->GetColor() == Color::NONE) vec_castle->ActionNewWeek();
     }
 
@@ -545,11 +545,10 @@ void World::NewWeek()
 
     // new day - reset option: "heroes: remember MP/SP for retreat/surrender result"
     for_each(vec_heroes._items.begin(), vec_heroes._items.end(),
-        [](Heroes *hero)
-    {
-        return hero->ResetModes(Heroes::SAVEPOINTS);
-    });
-             
+             [](Heroes* hero)
+             {
+                 return hero->ResetModes(Heroes::SAVEPOINTS);
+             });
 }
 
 void World::NewMonth()
@@ -559,11 +558,11 @@ void World::NewMonth()
         MonthOfMonstersAction(Monster(week_current.GetMonster()));
 
     // update gray towns
-    for (auto &vec_castle : vec_castles)
+    for (auto& vec_castle : vec_castles)
         if (vec_castle->GetColor() == Color::NONE) vec_castle->ActionNewMonth();
 }
 
-void World::MonthOfMonstersAction(const Monster &mons)
+void World::MonthOfMonstersAction(const Monster& mons)
 {
     if (mons.isValid())
     {
@@ -577,7 +576,7 @@ void World::MonthOfMonstersAction(const Monster &mons)
         MapsIndexes obja;
         // create exclude list
         {
-            const MapsIndexes &objv = Maps::GetObjectsPositions(objs);
+            const MapsIndexes& objv = Maps::GetObjectsPositions(objs);
 
             for (int it : objv)
             {
@@ -589,7 +588,7 @@ void World::MonthOfMonstersAction(const Monster &mons)
         // create valid points
         for (auto it = vec_tiles.begin(); it != vec_tiles.end(); ++it)
         {
-            const Maps::Tiles &tile = *it;
+            const Maps::Tiles& tile = *it;
 
             if (!tile.isWater() &&
                 MP2::OBJ_ZERO == tile.GetObject() &&
@@ -607,12 +606,12 @@ void World::MonthOfMonstersAction(const Monster &mons)
         random_shuffle(tiles.begin(), tiles.end());
         if (tiles.size() > maxc) tiles.resize(maxc);
 
-        for (auto &tile : tiles)
+        for (auto& tile : tiles)
             Maps::Tiles::PlaceMonsterOnTile(vec_tiles[tile], mons, 0 /* random */);
     }
 }
 
-const string &World::GetRumors() const
+const string& World::GetRumors() const
 {
     // vec_rumors always contain values
     return *Rand::Get(vec_rumors);
@@ -639,7 +638,8 @@ MapsIndexes World::GetTeleportEndPoints(s32 center) const
         if (2 > result.size())
         {
             result.clear();
-        } else
+        }
+        else
         {
             auto itend = result.end();
 
@@ -679,9 +679,9 @@ MapsIndexes World::GetWhirlpoolEndPoints(s32 center) const
         map<s32, MapsIndexes> uniq_whirlpools;
 
         for (MapsIndexes::const_iterator
-                     it = whilrpools.begin(); it != whilrpools.end(); ++it)
+             it = whilrpools.begin(); it != whilrpools.end(); ++it)
         {
-            const Maps::TilesAddon *addon = GetTiles(*it).FindObjectConst(MP2::OBJ_WHIRLPOOL);
+            const Maps::TilesAddon* addon = GetTiles(*it).FindObjectConst(MP2::OBJ_WHIRLPOOL);
             if (addon) uniq_whirlpools[addon->uniq].push_back(*it);
         }
         whilrpools.clear();
@@ -691,7 +691,7 @@ MapsIndexes World::GetWhirlpoolEndPoints(s32 center) const
             return MapsIndexes();
         }
 
-        const Maps::TilesAddon *addon = GetTiles(center).FindObjectConst(MP2::OBJ_WHIRLPOOL);
+        const Maps::TilesAddon* addon = GetTiles(center).FindObjectConst(MP2::OBJ_WHIRLPOOL);
         MapsIndexes uniqs;
         uniqs.reserve(uniq_whirlpools.size());
 
@@ -699,7 +699,7 @@ MapsIndexes World::GetWhirlpoolEndPoints(s32 center) const
         {
             for (auto it = uniq_whirlpools.begin(); it != uniq_whirlpools.end(); ++it)
             {
-                const uint32_t &uniq = (*it).first;
+                const uint32_t& uniq = (*it).first;
                 if (uniq == addon->uniq) continue;
                 uniqs.push_back(uniq);
             }
@@ -733,12 +733,12 @@ uint32_t World::CountCapturedMines(int type, int color) const
 {
     switch (type)
     {
-        case Resource::WOOD:
-            return CountCapturedObject(MP2::OBJ_SAWMILL, color);
-        case Resource::MERCURY:
-            return CountCapturedObject(MP2::OBJ_ALCHEMYLAB, color);
-        default:
-            break;
+    case Resource::WOOD:
+        return CountCapturedObject(MP2::OBJ_SAWMILL, color);
+    case Resource::MERCURY:
+        return CountCapturedObject(MP2::OBJ_ALCHEMYLAB, color);
+    default:
+        break;
     }
 
     return map_captureobj.GetCountMines(type, color);
@@ -752,7 +752,7 @@ void World::CaptureObject(s32 index, int color)
 
     if (MP2::OBJ_CASTLE == obj)
     {
-        Castle *castle = GetCastle(Maps::GetPoint(index));
+        Castle* castle = GetCastle(Maps::GetPoint(index));
         if (castle && castle->GetColor() != color) castle->ChangeColor(color);
     }
 
@@ -766,13 +766,13 @@ int World::ColorCapturedObject(s32 index) const
     return map_captureobj.GetColor(index);
 }
 
-ListActions *World::GetListActions(s32 index)
+ListActions* World::GetListActions(s32 index)
 {
     const auto it = map_actions.find(index);
     return it != map_actions.end() ? &(*it).second : nullptr;
 }
 
-CapturedObject &World::GetCapturedObject(s32 index)
+CapturedObject& World::GetCapturedObject(s32 index)
 {
     return map_captureobj.Get(index);
 }
@@ -796,14 +796,14 @@ void World::ClearFog(int colors)
     map_captureobj.ClearFog(colors);
 }
 
-const UltimateArtifact &World::GetUltimateArtifact() const
+const UltimateArtifact& World::GetUltimateArtifact() const
 {
     return ultimate_artifact;
 }
 
-bool World::DiggingForUltimateArtifact(const Point &center)
+bool World::DiggingForUltimateArtifact(const Point& center)
 {
-    Maps::Tiles &tile = GetTiles(center.x, center.y);
+    Maps::Tiles& tile = GetTiles(center.x, center.y);
 
     // puts hole sprite
     int obj = 0;
@@ -811,27 +811,27 @@ bool World::DiggingForUltimateArtifact(const Point &center)
 
     switch (tile.GetGround())
     {
-        case Maps::Ground::WASTELAND:
-            obj = 0xE4;
-            idx = 70;
-            break;    // ICN::OBJNCRCK
-        case Maps::Ground::DIRT:
-            obj = 0xE0;
-            idx = 140;
-            break;    // ICN::OBJNDIRT
-        case Maps::Ground::DESERT:
-            obj = 0xDC;
-            idx = 68;
-            break;    // ICN::OBJNDSRT
-        case Maps::Ground::LAVA:
-            obj = 0xD8;
-            idx = 26;
-            break;    // ICN::OBJNLAVA
-        case Maps::Ground::GRASS:
-        default:
-            obj = 0xC0;
-            idx = 9;
-            break;    // ICN::OBJNGRA2
+    case Maps::Ground::WASTELAND:
+        obj = 0xE4;
+        idx = 70;
+        break; // ICN::OBJNCRCK
+    case Maps::Ground::DIRT:
+        obj = 0xE0;
+        idx = 140;
+        break; // ICN::OBJNDIRT
+    case Maps::Ground::DESERT:
+        obj = 0xDC;
+        idx = 68;
+        break; // ICN::OBJNDSRT
+    case Maps::Ground::LAVA:
+        obj = 0xD8;
+        idx = 26;
+        break; // ICN::OBJNLAVA
+    case Maps::Ground::GRASS:
+    default:
+        obj = 0xC0;
+        idx = 9;
+        break; // ICN::OBJNGRA2
     }
     tile.AddonsPushLevel1(Maps::TilesAddon(0, GetUniq(), obj, idx));
 
@@ -845,7 +845,7 @@ bool World::DiggingForUltimateArtifact(const Point &center)
     return false;
 }
 
-void World::AddEventDate(const EventDate &event)
+void World::AddEventDate(const EventDate& event)
 {
     vec_eventsday.push_back(event);
 }
@@ -854,7 +854,7 @@ EventsDate World::GetEventsDate(int color) const
 {
     EventsDate res;
 
-    for (const auto &it : vec_eventsday)
+    for (const auto& it : vec_eventsday)
         if (it.isAllow(color, day)) res.push_back(it);
 
     return res;
@@ -864,11 +864,11 @@ string World::DateString() const
 {
     ostringstream os;
     os << "month: " << static_cast<int>(GetMonth()) <<
-       ", " << "week: " << static_cast<int>(GetWeek()) << ", " << "day: " << static_cast<int>(GetDay());
+        ", " << "week: " << static_cast<int>(GetWeek()) << ", " << "day: " << static_cast<int>(GetDay());
     return os.str();
 }
 
-bool IsObeliskOnMaps(const Maps::Tiles &tile)
+bool IsObeliskOnMaps(const Maps::Tiles& tile)
 {
     return MP2::OBJ_OBELISK == tile.GetObject(false);
 }
@@ -881,7 +881,7 @@ uint32_t World::CountObeliskOnMaps()
 
 void World::ActionForMagellanMaps(int color)
 {
-    for (auto &vec_tile : vec_tiles)
+    for (auto& vec_tile : vec_tiles)
         if (vec_tile.isWater()) vec_tile.ClearFog(color);
 }
 
@@ -896,23 +896,23 @@ void World::ActionToEyeMagi(int color) const
         Maps::ClearFog(*it, GetViewDistance(Game::VIEW_MAGI_EYES), color);
 }
 
-MapEvent *World::GetMapEvent(const Point &pos)
+MapEvent* World::GetMapEvent(const Point& pos)
 {
     vector<MapObjectSimple *> res = map_objects.get(pos);
     return !res.empty() ? static_cast<MapEvent *>(res.front()) : nullptr;
 }
 
-MapObjectSimple *World::GetMapObject(uint32_t uid)
+MapObjectSimple* World::GetMapObject(uint32_t uid)
 {
     return uid ? map_objects.get(uid) : nullptr;
 }
 
-void World::RemoveMapObject(const MapObjectSimple *obj)
+void World::RemoveMapObject(const MapObjectSimple* obj)
 {
     if (obj) map_objects.remove(obj->GetUID());
 }
 
-void World::UpdateRecruits(Recruits &recruits) const
+void World::UpdateRecruits(Recruits& recruits) const
 {
     if (vec_heroes.HaveTwoFreemans())
         while (recruits.GetID1() == recruits.GetID2()) recruits.SetHero2(GetFreemanHeroes());
@@ -920,111 +920,112 @@ void World::UpdateRecruits(Recruits &recruits) const
         recruits.SetHero2(nullptr);
 }
 
-const Heroes *World::GetHeroesCondWins() const
+const Heroes* World::GetHeroesCondWins() const
 {
     return GetHeroes(heroes_cond_wins);
 }
 
-const Heroes *World::GetHeroesCondLoss() const
+const Heroes* World::GetHeroesCondLoss() const
 {
     return GetHeroes(heroes_cond_loss);
 }
 
-bool World::KingdomIsWins(const Kingdom &kingdom, int wins) const
+bool World::KingdomIsWins(const Kingdom& kingdom, int wins) const
 {
-    const Settings &conf = Settings::Get();
+    const Settings& conf = Settings::Get();
 
     switch (wins)
     {
-        case GameOver::WINS_ALL:
-            return kingdom.GetColor() == vec_kingdoms.GetNotLossColors();
+    case GameOver::WINS_ALL:
+        return kingdom.GetColor() == vec_kingdoms.GetNotLossColors();
 
-        case GameOver::WINS_TOWN:
+    case GameOver::WINS_TOWN:
         {
-            const Castle *town = GetCastle(conf.WinsMapsPositionObject());
+            const Castle* town = GetCastle(conf.WinsMapsPositionObject());
             // check comp also wins
             return (kingdom.isControlHuman() || conf.WinsCompAlsoWins()) &&
-                   (town && town->GetColor() == kingdom.GetColor());
+                (town && town->GetColor() == kingdom.GetColor());
         }
 
-        case GameOver::WINS_HERO:
+    case GameOver::WINS_HERO:
         {
-            const Heroes *hero = GetHeroesCondWins();
+            const Heroes* hero = GetHeroesCondWins();
             return hero && Heroes::UNKNOWN != heroes_cond_wins &&
                 hero->isFreeman() &&
                 hero->GetKillerColor() == kingdom.GetColor();
         }
 
-        case GameOver::WINS_ARTIFACT:
+    case GameOver::WINS_ARTIFACT:
         {
-            const KingdomHeroes &heroes = kingdom.GetHeroes();
+            const KingdomHeroes& heroes = kingdom.GetHeroes();
             if (conf.WinsFindUltimateArtifact())
             {
                 return heroes._items.end() != find_if(heroes._items.begin(), heroes._items.end(),
-                    [](const Heroes* hero) {return  hero->HasUltimateArtifact(); });
+                                                      [](const Heroes* hero) { return hero->HasUltimateArtifact(); });
             }
             const Artifact art = conf.WinsFindArtifactID();
             return heroes._items.end() != find_if(heroes._items.begin(), heroes._items.end(),
-                [&](const Heroes* hero) {return  hero->HasArtifact(art); });
-                                                  
+                                                  [&](const Heroes* hero) { return hero->HasArtifact(art); });
         }
 
-        case GameOver::WINS_SIDE:
+    case GameOver::WINS_SIDE:
         {
             return !(Game::GetActualKingdomColors() & ~Players::GetPlayerFriends(kingdom.GetColor()));
         }
 
-        case GameOver::WINS_GOLD:
-            // check comp also wins
-            return (kingdom.isControlHuman() || conf.WinsCompAlsoWins()) &&
-                0 < kingdom.GetFunds().Get(Resource::GOLD) &&
-                static_cast<uint32_t>(kingdom.GetFunds().Get(Resource::GOLD)) >= conf.WinsAccumulateGold();
+    case GameOver::WINS_GOLD:
+        // check comp also wins
+        return (kingdom.isControlHuman() || conf.WinsCompAlsoWins()) &&
+            0 < kingdom.GetFunds().Get(Resource::GOLD) &&
+            static_cast<uint32_t>(kingdom.GetFunds().Get(Resource::GOLD)) >= conf.WinsAccumulateGold();
 
-        default:
-            break;
+    default:
+        break;
     }
 
     return false;
 }
 
-bool World::KingdomIsLoss(const Kingdom &kingdom, int loss) const
+bool World::KingdomIsLoss(const Kingdom& kingdom, int loss) const
 {
-    const Settings &conf = Settings::Get();
+    const Settings& conf = Settings::Get();
 
     switch (loss)
     {
-        case GameOver::LOSS_ALL:
-            return kingdom.isLoss();
+    case GameOver::LOSS_ALL:
+        return kingdom.isLoss();
 
-        case GameOver::LOSS_TOWN:
+    case GameOver::LOSS_TOWN:
         {
-            const Castle *town = GetCastle(conf.LossMapsPositionObject());
+            const Castle* town = GetCastle(conf.LossMapsPositionObject());
             return town && town->GetColor() != kingdom.GetColor();
         }
 
-        case GameOver::LOSS_HERO:
+    case GameOver::LOSS_HERO:
         {
-            const Heroes *hero = GetHeroesCondLoss();
+            const Heroes* hero = GetHeroesCondLoss();
             return hero && Heroes::UNKNOWN != heroes_cond_loss &&
                 hero->isFreeman() &&
                 hero->GetKillerColor() != kingdom.GetColor();
         }
 
-        case GameOver::LOSS_TIME:
-            return CountDay() > conf.LossCountDays() && kingdom.isControlHuman();
+    case GameOver::LOSS_TIME:
+        return CountDay() > conf.LossCountDays() && kingdom.isControlHuman();
 
-        default:
-            break;
+    default:
+        break;
     }
 
     return false;
 }
 
-int World::CheckKingdomWins(const Kingdom &kingdom) const
+int World::CheckKingdomWins(const Kingdom& kingdom) const
 {
-    const Settings &conf = Settings::Get();
-    const int wins[] = {GameOver::WINS_ALL, GameOver::WINS_TOWN, GameOver::WINS_HERO, GameOver::WINS_ARTIFACT,
-                        GameOver::WINS_SIDE, GameOver::WINS_GOLD, 0};
+    const Settings& conf = Settings::Get();
+    const int wins[] = {
+        GameOver::WINS_ALL, GameOver::WINS_TOWN, GameOver::WINS_HERO, GameOver::WINS_ARTIFACT,
+        GameOver::WINS_SIDE, GameOver::WINS_GOLD, 0
+    };
 
     for (uint32_t ii = 0; wins[ii]; ++ii)
         if (conf.ConditionWins() & wins[ii] &&
@@ -1034,9 +1035,9 @@ int World::CheckKingdomWins(const Kingdom &kingdom) const
     return GameOver::COND_NONE;
 }
 
-int World::CheckKingdomLoss(const Kingdom &kingdom) const
+int World::CheckKingdomLoss(const Kingdom& kingdom) const
 {
-    const Settings &conf = Settings::Get();
+    const Settings& conf = Settings::Get();
 
     // firs check priority: other WINS_GOLD or WINS_ARTIFACT
     if (conf.ConditionWins() & GameOver::WINS_GOLD)
@@ -1044,7 +1045,8 @@ int World::CheckKingdomLoss(const Kingdom &kingdom) const
         const int priority = vec_kingdoms.FindWins(GameOver::WINS_GOLD);
         if (priority && priority != kingdom.GetColor())
             return GameOver::LOSS_ALL;
-    } else if (conf.ConditionWins() & GameOver::WINS_ARTIFACT)
+    }
+    else if (conf.ConditionWins() & GameOver::WINS_ARTIFACT)
     {
         const int priority = vec_kingdoms.FindWins(GameOver::WINS_ARTIFACT);
         if (priority && priority != kingdom.GetColor())
@@ -1071,25 +1073,26 @@ uint32_t World::GetUniq()
 {
     return ++GameStatic::uniq;
 }
-ByteVectorWriter &operator<<(ByteVectorWriter &msg, const CapturedObject &obj)
+
+ByteVectorWriter& operator<<(ByteVectorWriter& msg, const CapturedObject& obj)
 {
     return msg << obj.objcol << obj.guardians << obj.split;
 }
 
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, CapturedObject &obj)
+ByteVectorReader& operator>>(ByteVectorReader& msg, CapturedObject& obj)
 {
     return msg >> obj.objcol >> obj.guardians >> obj.split;
 }
 
-ByteVectorWriter &operator<<(ByteVectorWriter &msg, const MapObjects &objs)
+ByteVectorWriter& operator<<(ByteVectorWriter& msg, const MapObjects& objs)
 {
     msg << static_cast<uint32_t>(objs.size());
-    for (const auto &it : objs)
+    for (const auto& it : objs)
     {
         if (!it.second)
             continue;
-        const MapObjectSimple &obj = *it.second;
+        const MapObjectSimple& obj = *it.second;
         msg << it.first << obj.GetType();
 
         switch (obj.GetType())
@@ -1126,7 +1129,7 @@ ByteVectorWriter &operator<<(ByteVectorWriter &msg, const MapObjects &objs)
     return msg;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, MapObjects &objs)
+ByteVectorReader& operator>>(ByteVectorReader& msg, MapObjects& objs)
 {
     uint32_t size = 0;
     msg >> size;
@@ -1141,70 +1144,70 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, MapObjects &objs)
 
         switch (type)
         {
-            case MP2::OBJ_EVENT:
+        case MP2::OBJ_EVENT:
             {
-                auto *ptr = new MapEvent();
+                auto* ptr = new MapEvent();
                 msg >> *ptr;
                 objs[index] = ptr;
             }
-                break;
+            break;
 
-            case MP2::OBJ_SPHINX:
+        case MP2::OBJ_SPHINX:
             {
-                auto *ptr = new MapSphinx();
+                auto* ptr = new MapSphinx();
                 msg >> *ptr;
                 objs[index] = ptr;
             }
-                break;
+            break;
 
-            case MP2::OBJ_SIGN:
+        case MP2::OBJ_SIGN:
             {
-                auto *ptr = new MapSign();
+                auto* ptr = new MapSign();
                 msg >> *ptr;
                 objs[index] = ptr;
             }
-                break;
+            break;
 
-            case MP2::OBJ_RESOURCE:
+        case MP2::OBJ_RESOURCE:
             {
-                auto *ptr = new MapResource();
+                auto* ptr = new MapResource();
                 if (FORMAT_VERSION_3269 > Game::GetLoadVersion())
                     msg >> *static_cast<MapObjectSimple *>(ptr);
                 else
                     msg >> *ptr;
                 objs[index] = ptr;
             }
-                break;
+            break;
 
-            case MP2::OBJ_ARTIFACT:
+        case MP2::OBJ_ARTIFACT:
             {
-                auto *ptr = new MapArtifact();
+                auto* ptr = new MapArtifact();
                 if (FORMAT_VERSION_3269 > Game::GetLoadVersion())
                     msg >> *static_cast<MapObjectSimple *>(ptr);
                 else
                     msg >> *ptr;
                 objs[index] = ptr;
             }
-                break;
+            break;
 
-            case MP2::OBJ_MONSTER:
+        case MP2::OBJ_MONSTER:
             {
-                auto *ptr = new MapMonster();
+                auto* ptr = new MapMonster();
                 if (FORMAT_VERSION_3269 > Game::GetLoadVersion())
                     msg >> *static_cast<MapObjectSimple *>(ptr);
                 else
                     msg >> *ptr;
                 objs[index] = ptr;
             }
-                break;
+            break;
 
-            default:
+        default:
             {
-                auto *ptr = new MapObjectSimple();
+                auto* ptr = new MapObjectSimple();
                 msg >> *ptr;
                 objs[index] = ptr;
             }
-                break;
+            break;
         }
     }
 
@@ -1212,9 +1215,9 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, MapObjects &objs)
 }
 
 
-ByteVectorWriter &operator<<(ByteVectorWriter &msg, const World &w)
+ByteVectorWriter& operator<<(ByteVectorWriter& msg, const World& w)
 {
-    const Size &sz = w;
+    const Size& sz = w;
 
     msg << sz <<
         w.vec_tiles <<
@@ -1237,9 +1240,9 @@ ByteVectorWriter &operator<<(ByteVectorWriter &msg, const World &w)
 }
 
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, World &w)
+ByteVectorReader& operator>>(ByteVectorReader& msg, World& w)
 {
-    Size &sz = w;
+    Size& sz = w;
 
     msg >> sz;
     msg >> w.vec_tiles;
@@ -1264,7 +1267,7 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, World &w)
 
     // heroes postfix
     for_each(w.vec_heroes._items.begin(), w.vec_heroes._items.end(),
-        [](Heroes* &hero) { hero->RescanPathPassable(); });
+             [](Heroes* & hero) { hero->RescanPathPassable(); });
 
     return msg;
 }
@@ -1273,7 +1276,7 @@ void World::PostFixLoad()
 {
 }
 
-void EventDate::LoadFromMP2(ByteVectorReader &st)
+void EventDate::LoadFromMP2(ByteVectorReader& st)
 {
     // id
     if (0 != st.get())
@@ -1320,7 +1323,6 @@ void EventDate::LoadFromMP2(ByteVectorReader &st)
 
     // message
     message = Game::GetEncodeString(st.toString(0));
-
 }
 
 bool EventDate::isDeprecated(uint32_t date) const
@@ -1335,7 +1337,7 @@ bool EventDate::isAllow(int col, uint32_t date) const
         col & colors;
 }
 
-ByteVectorWriter &operator<<(ByteVectorWriter &msg, const EventDate &obj)
+ByteVectorWriter& operator<<(ByteVectorWriter& msg, const EventDate& obj)
 {
     return msg <<
         obj.resource <<
@@ -1346,13 +1348,13 @@ ByteVectorWriter &operator<<(ByteVectorWriter &msg, const EventDate &obj)
         obj.message;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, EventDate &obj)
+ByteVectorReader& operator>>(ByteVectorReader& msg, EventDate& obj)
 {
     return msg >>
-               obj.resource >>
-               obj.computer >>
-               obj.first >>
-               obj.subsequent >>
-               obj.colors >>
-               obj.message;
+        obj.resource >>
+        obj.computer >>
+        obj.first >>
+        obj.subsequent >>
+        obj.colors >>
+        obj.message;
 }

@@ -32,12 +32,21 @@ namespace Font
 {
     enum
     {
-        SMALL = 0x01, BIG = 0x02, YELLOW_BIG = 0x04, YELLOW_SMALL = 0x08, SHADDOW = 0x10, SHADDOW_BIG = 0x20
+        SMALL = 0x01,
+        BIG = 0x02,
+        YELLOW_BIG = 0x04,
+        YELLOW_SMALL = 0x08,
+        SHADDOW = 0x10,
+        SHADDOW_BIG = 0x20
     };
 }
+
 enum
 {
-    ALIGN_NONE, ALIGN_LEFT, ALIGN_CENTER, ALIGN_RIGHT
+    ALIGN_NONE,
+    ALIGN_LEFT,
+    ALIGN_CENTER,
+    ALIGN_RIGHT
 };
 
 class TextInterface
@@ -48,7 +57,7 @@ public:
     virtual ~TextInterface()
     = default;;
 
-    virtual void SetText(const string &) = 0;
+    virtual void SetText(const string&) = 0;
 
     virtual void SetFont(int) = 0;
 
@@ -60,7 +69,7 @@ public:
 
     virtual size_t Size() const = 0;
 
-    virtual void Blit(s32, s32, int maxw, Surface &sf = Display::Get()) = 0;
+    virtual void Blit(s32, s32, int maxw, Surface& sf = Display::Get()) = 0;
 
     int font;
 };
@@ -71,9 +80,9 @@ class TextAscii : public TextInterface
 public:
     TextAscii() = default;
 
-    TextAscii(const string &, int = Font::BIG);
+    TextAscii(const string&, int = Font::BIG);
 
-    void SetText(const string &);
+    void SetText(const string&);
 
     void SetFont(int);
 
@@ -89,7 +98,7 @@ public:
 
     size_t Size() const;
 
-    void Blit(s32, s32, int maxw, Surface &sf = Display::Get());
+    void Blit(s32, s32, int maxw, Surface& sf = Display::Get());
 
     static int CharWidth(int, int ft);
 
@@ -111,11 +120,11 @@ public:
     TextUnicode()
     = default;;
 
-    TextUnicode(const std::string &, int ft = Font::BIG);
+    TextUnicode(const std::string&, int ft = Font::BIG);
 
-    TextUnicode(const u16 *, size_t, int ft = Font::BIG);
+    TextUnicode(const u16*, size_t, int ft = Font::BIG);
 
-    void SetText(const std::string &);
+    void SetText(const std::string&);
 
     void SetFont(int);
 
@@ -131,7 +140,7 @@ public:
 
     size_t Size() const;
 
-    void Blit(s32, s32, int maxw, Surface &sf = Display::Get());
+    void Blit(s32, s32, int maxw, Surface& sf = Display::Get());
 
     static bool isspace(int);
 
@@ -154,23 +163,23 @@ class Text
 public:
     Text();
 
-    Text(const string &, int ft = Font::BIG);
+    Text(const string&, int ft = Font::BIG);
 
 #ifdef WITH_TTF
 
-    Text(const u16 *, size_t, int ft = Font::BIG);
+    Text(const u16*, size_t, int ft = Font::BIG);
 
 #endif
 
-    Text(const Text &);
+    Text(const Text&);
 
     ~Text() = default;
 
-    Text &operator=(const Text &);
+    Text& operator=(const Text&);
 
-    void Set(const string &, int);
+    void Set(const string&, int);
 
-    void Set(const string &);
+    void Set(const string&);
 
     void Set(int);
 
@@ -179,20 +188,24 @@ public:
     size_t Size() const;
 
     int w() const
-    { return gw; }
+    {
+        return gw;
+    }
 
     int h() const
-    { return gh; }
+    {
+        return gh;
+    }
 
-    void Blit(s32, s32, Surface &sf = Display::Get()) const;
+    void Blit(s32, s32, Surface& sf = Display::Get()) const;
 
-    void Blit(s32, s32, int maxw, Surface &sf = Display::Get()) const;
+    void Blit(s32, s32, int maxw, Surface& sf = Display::Get()) const;
 
-    void Blit(const Point &, Surface &sf = Display::Get()) const;
+    void Blit(const Point&, Surface& sf = Display::Get()) const;
 
-    static uint32_t width(const string &, int ft, uint32_t start = 0, uint32_t count = 0);
+    static uint32_t width(const string&, int ft, uint32_t start = 0, uint32_t count = 0);
 
-    static uint32_t height(const string &, int ft, uint32_t width = 0);
+    static uint32_t height(const string&, int ft, uint32_t width = 0);
 
 protected:
     sp<TextInterface> message;
@@ -205,18 +218,20 @@ class TextSprite : protected Text
 public:
     TextSprite();
 
-    TextSprite(const string &, int ft, const Point &pt);
+    TextSprite(const string&, int ft, const Point& pt);
 
-    TextSprite(const string &, int ft, s32, s32);
+    TextSprite(const string&, int ft, s32, s32);
 
-    void SetPos(const Point &pt)
-    { SetPos(pt.x, pt.y); }
+    void SetPos(const Point& pt)
+    {
+        SetPos(pt.x, pt.y);
+    }
 
     void SetPos(s32, s32);
 
-    void SetText(const string &);
+    void SetText(const string&);
 
-    void SetText(const string &, int);
+    void SetText(const string&, int);
 
     void SetFont(int);
 
@@ -232,7 +247,7 @@ public:
 
     int h() const;
 
-    const Rect &
+    const Rect&
     GetRect() const;
 
 private:
@@ -245,42 +260,54 @@ class TextBox : protected Rect
 public:
     TextBox();
 
-    TextBox(const string &, int, uint32_t width);
+    TextBox(const string&, int, uint32_t width);
 
-    TextBox(const string &, int, const Rect &);
+    TextBox(const string&, int, const Rect&);
 
-    void Set(const string &, int, uint32_t width);
+    void Set(const string&, int, uint32_t width);
 
     void SetAlign(int type);
 
-    const Rect &GetRect() const
-    { return *this; }
+    const Rect& GetRect() const
+    {
+        return *this;
+    }
 
     s32 x() const
-    { return Rect::x; }
+    {
+        return Rect::x;
+    }
 
     s32 y() const
-    { return Rect::y; }
+    {
+        return Rect::y;
+    }
 
     int w() const
-    { return Rect::w; }
+    {
+        return Rect::w;
+    }
 
     int h() const
-    { return Rect::h; }
+    {
+        return Rect::h;
+    }
 
     uint32_t row() const
-    { return messages.size(); }
+    {
+        return messages.size();
+    }
 
-    void Blit(s32, s32, Surface &sf = Display::Get());
+    void Blit(s32, s32, Surface& sf = Display::Get());
 
-    void Blit(const Point &, Surface &sf = Display::Get());
+    void Blit(const Point&, Surface& sf = Display::Get());
 
 private:
-    void Append(const string &, int, uint32_t);
+    void Append(const string&, int, uint32_t);
 
 #ifdef WITH_TTF
 
-    void Append(const std::vector<u16> &, int, uint32_t);
+    void Append(const std::vector<u16>&, int, uint32_t);
 
 #endif
 

@@ -41,7 +41,7 @@
 
 bool Interface::IconsBar::IsVisible()
 {
-    const Settings &conf = Settings::Get();
+    const Settings& conf = Settings::Get();
     return !conf.ExtGameHideInterface() || conf.ShowIcons();
 }
 
@@ -55,31 +55,31 @@ uint32_t Interface::IconsBar::GetItemHeight()
     return ICONS_HEIGHT;
 }
 
-void Interface::RedrawCastleIcon(const Castle &castle, s32 sx, s32 sy, Surface& destSurface)
+void Interface::RedrawCastleIcon(const Castle& castle, s32 sx, s32 sy, Surface& destSurface)
 {
     const bool evil = Settings::Get().ExtGameEvilInterface();
     uint32_t index_sprite = 1;
 
     switch (castle.GetRace())
     {
-        case Race::KNGT:
-            index_sprite = castle.isCastle() ? 9 : 15;
-            break;
-        case Race::BARB:
-            index_sprite = castle.isCastle() ? 10 : 16;
-            break;
-        case Race::SORC:
-            index_sprite = castle.isCastle() ? 11 : 17;
-            break;
-        case Race::WRLK:
-            index_sprite = castle.isCastle() ? 12 : 18;
-            break;
-        case Race::WZRD:
-            index_sprite = castle.isCastle() ? 13 : 19;
-            break;
-        case Race::NECR:
-            index_sprite = castle.isCastle() ? 14 : 20;
-            break;
+    case Race::KNGT:
+        index_sprite = castle.isCastle() ? 9 : 15;
+        break;
+    case Race::BARB:
+        index_sprite = castle.isCastle() ? 10 : 16;
+        break;
+    case Race::SORC:
+        index_sprite = castle.isCastle() ? 11 : 17;
+        break;
+    case Race::WRLK:
+        index_sprite = castle.isCastle() ? 12 : 18;
+        break;
+    case Race::WZRD:
+        index_sprite = castle.isCastle() ? 13 : 19;
+        break;
+    case Race::NECR:
+        index_sprite = castle.isCastle() ? 14 : 20;
+        break;
     }
 
     AGG::GetICN(evil ? ICN::LOCATORE : ICN::LOCATORS, index_sprite).Blit(sx, sy, destSurface);
@@ -88,39 +88,39 @@ void Interface::RedrawCastleIcon(const Castle &castle, s32 sx, s32 sy, Surface& 
     switch (Castle::GetAllBuildingStatus(castle))
     {
         // white marker
-        case UNKNOWN_COND:
-        case NOT_TODAY:
-            AGG::GetICN(ICN::CSLMARKER, 0).Blit(sx + 39, sy + 1, destSurface);
-            break;
+    case UNKNOWN_COND:
+    case NOT_TODAY:
+        AGG::GetICN(ICN::CSLMARKER, 0).Blit(sx + 39, sy + 1, destSurface);
+        break;
 
         // green marker
-        case LACK_RESOURCES:
-            AGG::GetICN(ICN::CSLMARKER, 2).Blit(sx + 39, sy + 1, destSurface);
-            break;
+    case LACK_RESOURCES:
+        AGG::GetICN(ICN::CSLMARKER, 2).Blit(sx + 39, sy + 1, destSurface);
+        break;
 
-            // red marker
-        case NEED_CASTLE:
-        case REQUIRES_BUILD:
-            AGG::GetICN(ICN::CSLMARKER, 1).Blit(sx + 39, sy + 1, destSurface);
-            break;
+        // red marker
+    case NEED_CASTLE:
+    case REQUIRES_BUILD:
+        AGG::GetICN(ICN::CSLMARKER, 1).Blit(sx + 39, sy + 1, destSurface);
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
-//
-//    if(! castle.AllowBuild())
-//        AGG::GetICN(ICN::CSLMARKER, 0).Blit(sx + 39, sy + 1);
+    //
+    //    if(! castle.AllowBuild())
+    //        AGG::GetICN(ICN::CSLMARKER, 0).Blit(sx + 39, sy + 1);
 }
 
-void Interface::RedrawHeroesIcon(const Heroes &hero, s32 sx, s32 sy)
+void Interface::RedrawHeroesIcon(const Heroes& hero, s32 sx, s32 sy)
 {
     hero.PortraitRedraw(sx, sy, PORT_SMALL, Display::Get());
 }
 
-void Interface::IconsBar::RedrawBackground(const Point &pos) const
+void Interface::IconsBar::RedrawBackground(const Point& pos) const
 {
-    const Sprite &icnadv = AGG::GetICN(Settings::Get().ExtGameEvilInterface() ? ICN::ADVBORDE : ICN::ADVBORD, 0);
-    const Sprite &back = AGG::GetICN(Settings::Get().ExtGameEvilInterface() ? ICN::LOCATORE : ICN::LOCATORS, 1);
+    const Sprite& icnadv = AGG::GetICN(Settings::Get().ExtGameEvilInterface() ? ICN::ADVBORDE : ICN::ADVBORD, 0);
+    const Sprite& back = AGG::GetICN(Settings::Get().ExtGameEvilInterface() ? ICN::LOCATORE : ICN::LOCATORS, 1);
     Rect srcrt;
     Point dstpt;
 
@@ -153,7 +153,7 @@ void Interface::IconsBar::RedrawBackground(const Point &pos) const
 }
 
 /* Interface::CastleIcons */
-void Interface::CastleIcons::RedrawItem(const CASTLE &item, s32 ox, s32 oy, bool current)
+void Interface::CastleIcons::RedrawItem(const CASTLE& item, s32 ox, s32 oy, bool current)
 {
     if (item && show)
     {
@@ -164,7 +164,7 @@ void Interface::CastleIcons::RedrawItem(const CASTLE &item, s32 ox, s32 oy, bool
     }
 }
 
-void Interface::CastleIcons::RedrawBackground(const Point &pos)
+void Interface::CastleIcons::RedrawBackground(const Point& pos)
 {
     IconsBar::RedrawBackground(pos);
 }
@@ -179,7 +179,7 @@ void Interface::CastleIcons::ActionCurrentDn()
     Basic::Get().SetFocus(GetCurrent());
 }
 
-void Interface::CastleIcons::ActionListDoubleClick(CASTLE &item)
+void Interface::CastleIcons::ActionListDoubleClick(CASTLE& item)
 {
     if (item)
     {
@@ -187,18 +187,18 @@ void Interface::CastleIcons::ActionListDoubleClick(CASTLE &item)
     }
 }
 
-void Interface::CastleIcons::ActionListSingleClick(CASTLE &item)
+void Interface::CastleIcons::ActionListSingleClick(CASTLE& item)
 {
     if (item)
     {
-        Basic &I = Basic::Get();
+        Basic& I = Basic::Get();
 
         I.SetFocus(item);
         I.RedrawFocus();
     }
 }
 
-void Interface::CastleIcons::ActionListPressRight(CASTLE &item)
+void Interface::CastleIcons::ActionListPressRight(CASTLE& item)
 {
     if (item)
     {
@@ -240,7 +240,7 @@ void Interface::CastleIcons::SetPos(s32 px, s32 py)
 }
 
 /* Interface::HeroesIcons */
-void Interface::HeroesIcons::RedrawItem(const HEROES &item, s32 ox, s32 oy, bool current)
+void Interface::HeroesIcons::RedrawItem(const HEROES& item, s32 ox, s32 oy, bool current)
 {
     if (item && show)
     {
@@ -251,7 +251,7 @@ void Interface::HeroesIcons::RedrawItem(const HEROES &item, s32 ox, s32 oy, bool
     }
 }
 
-void Interface::HeroesIcons::RedrawBackground(const Point &pos)
+void Interface::HeroesIcons::RedrawBackground(const Point& pos)
 {
     IconsBar::RedrawBackground(pos);
 }
@@ -266,34 +266,32 @@ void Interface::HeroesIcons::ActionCurrentDn()
     Basic::Get().SetFocus(GetCurrent());
 }
 
-void Interface::HeroesIcons::ActionListDoubleClick(HEROES &item)
+void Interface::HeroesIcons::ActionListDoubleClick(HEROES& item)
 {
     if (item)
     {
         if (item->Modes(Heroes::GUARDIAN))
         {
-            Castle *castle = world.GetCastle(item->GetCenter());
+            Castle* castle = world.GetCastle(item->GetCenter());
             if (castle) Game::OpenCastleDialog(*castle);
-        } else
+        }
+        else
             Game::OpenHeroesDialog(*item);
-
     }
 }
 
-void Interface::HeroesIcons::ActionListSingleClick(HEROES &item)
+void Interface::HeroesIcons::ActionListSingleClick(HEROES& item)
 {
     if (item)
     {
-        Basic &I = Basic::Get();
+        Basic& I = Basic::Get();
 
         I.SetFocus(item);
         I.RedrawFocus();
-
-
     }
 }
 
-void Interface::HeroesIcons::ActionListPressRight(HEROES &item)
+void Interface::HeroesIcons::ActionListPressRight(HEROES& item)
 {
     if (item)
     {
@@ -335,7 +333,7 @@ void Interface::HeroesIcons::SetPos(s32 px, s32 py)
 }
 
 /* Interface::IconsPanel */
-Interface::IconsPanel::IconsPanel(Basic &basic) : BorderWindow(Rect(0, 0, 144, 128)),
+Interface::IconsPanel::IconsPanel(Basic& basic) : BorderWindow(Rect(0, 0, 144, 128)),
                                                   interface(basic), castleIcons(4, sfMarker),
                                                   heroesIcons(4, sfMarker),
                                                   heroesBottom(4, sfMarker)
@@ -361,14 +359,14 @@ void Interface::IconsPanel::SetRedraw(icons_t type) const
     {
         switch (type)
         {
-            case ICON_HEROES:
-                interface.SetRedraw(REDRAW_HEROES);
-                break;
-            case ICON_CASTLES:
-                interface.SetRedraw(REDRAW_CASTLES);
-                break;
-            default:
-                break;
+        case ICON_HEROES:
+            interface.SetRedraw(REDRAW_HEROES);
+            break;
+        case ICON_CASTLES:
+            interface.SetRedraw(REDRAW_CASTLES);
+            break;
+        default:
+            break;
         }
 
         interface.SetRedraw(REDRAW_ICONS);
@@ -387,7 +385,8 @@ void Interface::IconsPanel::SetPos(s32 ox, s32 oy)
     if (Settings::Get().ExtGameHideInterface())
     {
         iconsCount = 2;
-    } else
+    }
+    else
     {
         const uint32_t count_h = (Display::Get().h() - 480) / TILEWIDTH;
         iconsCount = count_h > 3 ? 8 : count_h < 3 ? 4 : 7;
@@ -395,7 +394,7 @@ void Interface::IconsPanel::SetPos(s32 ox, s32 oy)
 
     SetPosition(ox, oy, 144, iconsCount * ICONS_CURSOR_HEIGHT);
 
-    const Rect &area = GetArea();
+    const Rect& area = GetArea();
 
     heroesIcons.SetIconsCount(iconsCount);
     castleIcons.SetIconsCount(iconsCount);
@@ -426,13 +425,15 @@ void Interface::IconsPanel::QueueEventProcessing()
     {
         interface.RedrawFocus();
         SetRedraw();
-    } else if (heroesIcons.QueueEventProcessing())
+    }
+    else if (heroesIcons.QueueEventProcessing())
     {
         if (heroesIcons.isSelected())
             castleIcons.Unselect();
 
         SetRedraw();
-    } else if (castleIcons.QueueEventProcessing())
+    }
+    else if (castleIcons.QueueEventProcessing())
     {
         if (castleIcons.isSelected())
             heroesIcons.Unselect();
@@ -441,23 +442,23 @@ void Interface::IconsPanel::QueueEventProcessing()
     }
 }
 
-void Interface::IconsPanel::Select(const Heroes &hr)
+void Interface::IconsPanel::Select(const Heroes& hr)
 {
     castleIcons.Unselect();
-    heroesIcons.SetCurrent((const HEROES) &hr);
+    heroesIcons.SetCurrent((const HEROES)&hr);
 
-    heroesBottom.SetHero((const HEROES) &hr);
+    heroesBottom.SetHero((const HEROES)&hr);
 }
 
-void Interface::IconsPanel::Select(const Castle &cs)
+void Interface::IconsPanel::Select(const Castle& cs)
 {
     heroesIcons.Unselect();
-    castleIcons.SetCurrent((const CASTLE) &cs);
+    castleIcons.SetCurrent((const CASTLE)&cs);
 }
 
 void Interface::IconsPanel::ResetIcons(icons_t type)
 {
-    Kingdom &kingdom = world.GetKingdom(Settings::Get().CurrentColor());
+    Kingdom& kingdom = world.GetKingdom(Settings::Get().CurrentColor());
 
     if (!kingdom.isControlAI())
     {
@@ -493,7 +494,8 @@ void Interface::IconsPanel::SetCurrentVisible()
     {
         heroesIcons.SetCurrentVisible();
         heroesIcons.Redraw();
-    } else if (castleIcons.isSelected())
+    }
+    else if (castleIcons.isSelected())
     {
         castleIcons.SetCurrentVisible();
         castleIcons.Redraw();
@@ -520,39 +522,32 @@ void Interface::HeroesBottomIcons::SetShow(bool)
 
 void Interface::HeroesBottomIcons::ActionCurrentUp()
 {
-
 }
 
 void Interface::HeroesBottomIcons::ActionCurrentDn()
 {
-
 }
 
-void Interface::HeroesBottomIcons::ActionListDoubleClick(Interface::HEROES &)
+void Interface::HeroesBottomIcons::ActionListDoubleClick(Interface::HEROES&)
 {
-
 }
 
-void Interface::HeroesBottomIcons::ActionListSingleClick(Interface::HEROES &)
+void Interface::HeroesBottomIcons::ActionListSingleClick(Interface::HEROES&)
 {
-
 }
 
-void Interface::HeroesBottomIcons::ActionListPressRight(Interface::HEROES &)
+void Interface::HeroesBottomIcons::ActionListPressRight(Interface::HEROES&)
 {
-
 }
 
-void Interface::HeroesBottomIcons::RedrawItem(Interface::HEROES const &, s32 ox, s32 oy, bool current)
+void Interface::HeroesBottomIcons::RedrawItem(Interface::HEROES const&, s32 ox, s32 oy, bool current)
 {
-
 }
 
-void Interface::HeroesBottomIcons::RedrawBackground(const Point &)
+void Interface::HeroesBottomIcons::RedrawBackground(const Point&)
 {
 }
 
 void Interface::HeroesBottomIcons::SetHero(Interface::HEROES const pHeroes)
 {
-
 }

@@ -33,24 +33,24 @@
 
 void Castle::OpenTavern() const
 {
-    const string &header = _("A generous tip for the barkeep yields the following rumor:");
+    const string& header = _("A generous tip for the barkeep yields the following rumor:");
     const int system = Settings::Get().ExtGameEvilInterface() ? ICN::SYSTEME : ICN::SYSTEM;
     const int tavwin = ICN::TAVWIN;
-    const string &tavern = GetStringBuilding(BUILD_TAVERN);
-    const string &message = world.GetRumors();
+    const string& tavern = GetStringBuilding(BUILD_TAVERN);
+    const string& message = world.GetRumors();
 
-    Display &display = Display::Get();
-    Cursor &cursor = Cursor::Get();
+    Display& display = Display::Get();
+    Cursor& cursor = Cursor::Get();
     cursor.Hide();
 
     Text text(tavern, Font::BIG);
-    const Sprite &s1 = AGG::GetICN(tavwin, 0);
+    const Sprite& s1 = AGG::GetICN(tavwin, 0);
     TextBox box1(header, Font::BIG, BOXAREA_WIDTH);
     TextBox box2(message, Font::BIG, BOXAREA_WIDTH);
 
     Dialog::FrameBox box(text.h() + 10 + s1.h() + 13 + box1.h() + 20 + box2.h(), true);
 
-    const Rect &pos = box.GetArea();
+    const Rect& pos = box.GetArea();
     Point dst_pt(pos.x, pos.y);
 
     text.Blit(pos.x + (pos.w - text.w()) / 2, dst_pt.y);
@@ -62,12 +62,12 @@ void Castle::OpenTavern() const
     dst_pt.x += 3;
     dst_pt.y += 3;
 
-    const Sprite &s20 = AGG::GetICN(tavwin, 1);
+    const Sprite& s20 = AGG::GetICN(tavwin, 1);
     s20.Blit(dst_pt);
 
     if (const uint32_t index = ICN::AnimationFrame(tavwin, 0, 0))
     {
-        const Sprite &s21 = AGG::GetICN(tavwin, index);
+        const Sprite& s21 = AGG::GetICN(tavwin, index);
         s21.Blit(dst_pt.x + s21.x(), dst_pt.y + s21.y());
     }
 
@@ -75,7 +75,7 @@ void Castle::OpenTavern() const
     box2.Blit(pos.x, dst_pt.y + s1.h() + 10 + box1.h() + 20);
 
     // button yes
-    const Sprite &s4 = AGG::GetICN(system, 5);
+    const Sprite& s4 = AGG::GetICN(system, 5);
     Button buttonYes(pos.x + (pos.w - s4.w()) / 2, pos.y + pos.h - s4.h(), system, 5, 6);
 
     buttonYes.Draw();
@@ -83,7 +83,7 @@ void Castle::OpenTavern() const
     cursor.Show();
     display.Flip();
 
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
     uint32_t frame = 0;
 
     // message loop
@@ -100,7 +100,7 @@ void Castle::OpenTavern() const
 
         if (const uint32_t index1 = ICN::AnimationFrame(tavwin, 0, frame++))
         {
-            const Sprite &s22 = AGG::GetICN(tavwin, index1);
+            const Sprite& s22 = AGG::GetICN(tavwin, index1);
             s22.Blit(dst_pt.x + s22.x(), dst_pt.y + s22.y());
         }
 

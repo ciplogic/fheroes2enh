@@ -30,7 +30,7 @@
 #include "dialog.h"
 #include "icn.h"
 
-void DialogPrimaryOnly(const string &name, const string &primary)
+void DialogPrimaryOnly(const string& name, const string& primary)
 {
     string message = _("%{name} has gained a level.");
     message.append("\n \n");
@@ -40,7 +40,7 @@ void DialogPrimaryOnly(const string &name, const string &primary)
     Message("", message, Font::BIG, Dialog::OK);
 }
 
-int DialogOneSecondary(const string &name, const string &primary, const Skill::Secondary &sec)
+int DialogOneSecondary(const string& name, const string& primary, const Skill::Secondary& sec)
 {
     string message = _("%{name} has gained a level.");
     message.append("\n \n");
@@ -52,11 +52,11 @@ int DialogOneSecondary(const string &name, const string &primary, const Skill::S
     message.append(_("You have learned %{skill}."));
     StringReplace(message, "%{skill}", sec.GetName());
 
-    const Sprite &sprite_frame = AGG::GetICN(ICN::SECSKILL, 15);
+    const Sprite& sprite_frame = AGG::GetICN(ICN::SECSKILL, 15);
     Surface sf = sprite_frame.GetSurface();
 
     // sprite
-    const Sprite &sprite_skill = AGG::GetICN(ICN::SECSKILL, sec.GetIndexSprite1());
+    const Sprite& sprite_skill = AGG::GetICN(ICN::SECSKILL, sec.GetIndexSprite1());
     sprite_skill.Blit(3, 3, sf);
     // text
     Text text_skill(Skill::Secondary::String(sec.Skill()), Font::SMALL);
@@ -69,8 +69,8 @@ int DialogOneSecondary(const string &name, const string &primary, const Skill::S
     return sec.Skill();
 }
 
-int DialogSelectSecondary(const string &name, const string &primary, const Skill::Secondary &sec1,
-                          const Skill::Secondary &sec2, Heroes &hero)
+int DialogSelectSecondary(const string& name, const string& primary, const Skill::Secondary& sec1,
+                          const Skill::Secondary& sec2, Heroes& hero)
 {
     string header = _("%{name} has gained a level.");
     header.append("\n \n");
@@ -78,18 +78,18 @@ int DialogSelectSecondary(const string &name, const string &primary, const Skill
     StringReplace(header, "%{name}", name);
     StringReplace(header, "%{skill}", primary);
 
-    Display &display = Display::Get();
+    Display& display = Display::Get();
     const int system = Settings::Get().ExtGameEvilInterface() ? ICN::SYSTEME : ICN::SYSTEM;
 
     // cursor
-    Cursor &cursor = Cursor::Get();
+    Cursor& cursor = Cursor::Get();
 
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
-    const Sprite &sprite_frame = AGG::GetICN(ICN::SECSKILL, 15);
-    const Sprite &sprite_skill1 = AGG::GetICN(ICN::SECSKILL, sec1.GetIndexSprite1());
-    const Sprite &sprite_skill2 = AGG::GetICN(ICN::SECSKILL, sec2.GetIndexSprite1());
+    const Sprite& sprite_frame = AGG::GetICN(ICN::SECSKILL, 15);
+    const Sprite& sprite_skill1 = AGG::GetICN(ICN::SECSKILL, sec1.GetIndexSprite1());
+    const Sprite& sprite_skill2 = AGG::GetICN(ICN::SECSKILL, sec2.GetIndexSprite1());
 
     Point pt;
     string message = _("You may learn either:");
@@ -162,7 +162,7 @@ int DialogSelectSecondary(const string &name, const string &primary, const Skill
 
     cursor.Show();
     display.Flip();
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     // message loop
     while (le.HandleEvents())
@@ -187,7 +187,8 @@ int DialogSelectSecondary(const string &name, const string &primary, const Skill
             Dialog::SecondarySkillInfo(sec1);
             cursor.Show();
             display.Flip();
-        } else if (le.MouseClickLeft(rect_image2))
+        }
+        else if (le.MouseClickLeft(rect_image2))
         {
             cursor.Hide();
             Dialog::SecondarySkillInfo(sec2);
@@ -201,7 +202,8 @@ int DialogSelectSecondary(const string &name, const string &primary, const Skill
             Dialog::SecondarySkillInfo(sec1, false);
             cursor.Show();
             display.Flip();
-        } else if (le.MousePressRight(rect_image2))
+        }
+        else if (le.MousePressRight(rect_image2))
         {
             cursor.Hide();
             Dialog::SecondarySkillInfo(sec2, false);
@@ -214,8 +216,8 @@ int DialogSelectSecondary(const string &name, const string &primary, const Skill
     return Skill::Secondary::UNKNOWN;
 }
 
-int Dialog::LevelUpSelectSkill(const string &name, const string &primary, const Skill::Secondary &sec1,
-                               const Skill::Secondary &sec2, Heroes &hero)
+int Dialog::LevelUpSelectSkill(const string& name, const string& primary, const Skill::Secondary& sec1,
+                               const Skill::Secondary& sec2, Heroes& hero)
 {
     int result = Skill::Secondary::UNKNOWN;
 
@@ -228,4 +230,3 @@ int Dialog::LevelUpSelectSkill(const string &name, const string &primary, const 
 
     return result;
 }
-

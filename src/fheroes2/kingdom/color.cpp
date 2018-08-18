@@ -28,25 +28,27 @@
 
 std::string Color::String(int color)
 {
-    std::string str_color[] = {"None", _("Blue"), _("Green"), _("Red"), _("Yellow"), _("Orange"), _("Purple"),
-                               "uknown"};
+    std::string str_color[] = {
+        "None", _("Blue"), _("Green"), _("Red"), _("Yellow"), _("Orange"), _("Purple"),
+        "uknown"
+    };
 
     switch (color)
     {
-        case BLUE:
-            return str_color[1];
-        case GREEN:
-            return str_color[2];
-        case RED:
-            return str_color[3];
-        case YELLOW:
-            return str_color[4];
-        case ORANGE:
-            return str_color[5];
-        case PURPLE:
-            return str_color[6];
-        case UNUSED:
-            return str_color[7];
+    case BLUE:
+        return str_color[1];
+    case GREEN:
+        return str_color[2];
+    case RED:
+        return str_color[3];
+    case YELLOW:
+        return str_color[4];
+    case ORANGE:
+        return str_color[5];
+    case PURPLE:
+        return str_color[6];
+    case UNUSED:
+        return str_color[7];
     }
 
     return str_color[0];
@@ -56,20 +58,20 @@ int Color::GetIndex(int color)
 {
     switch (color)
     {
-        case BLUE:
-            return 0;
-        case GREEN:
-            return 1;
-        case RED:
-            return 2;
-        case YELLOW:
-            return 3;
-        case ORANGE:
-            return 4;
-        case PURPLE:
-            return 5;
-        default:
-            break;
+    case BLUE:
+        return 0;
+    case GREEN:
+        return 1;
+    case RED:
+        return 2;
+    case YELLOW:
+        return 3;
+    case ORANGE:
+        return 4;
+    case PURPLE:
+        return 5;
+    default:
+        break;
     }
 
     // NONE
@@ -85,15 +87,15 @@ int Color::FromInt(int col)
 {
     switch (col)
     {
-        case BLUE:
-        case GREEN:
-        case RED:
-        case YELLOW:
-        case ORANGE:
-        case PURPLE:
-            return col;
-        default:
-            break;
+    case BLUE:
+    case GREEN:
+    case RED:
+    case YELLOW:
+    case ORANGE:
+    case PURPLE:
+        return col;
+    default:
+        break;
     }
 
     return NONE;
@@ -115,24 +117,24 @@ std::string BarrierColor::String(int val)
 {
     switch (val)
     {
-        case AQUA:
-            return _("Aqua");
-        case BLUE:
-            return _("Blue");
-        case BROWN:
-            return _("Brown");
-        case GOLD:
-            return _("Gold");
-        case GREEN:
-            return _("Green");
-        case ORANGE:
-            return _("Orange");
-        case PURPLE:
-            return _("Purple");
-        case RED:
-            return _("Red");
-        default:
-            break;
+    case AQUA:
+        return _("Aqua");
+    case BLUE:
+        return _("Blue");
+    case BROWN:
+        return _("Brown");
+    case GOLD:
+        return _("Gold");
+    case GREEN:
+        return _("Green");
+    case ORANGE:
+        return _("Orange");
+    case PURPLE:
+        return _("Purple");
+    case RED:
+        return _("Red");
+    default:
+        break;
     }
 
     return "None";
@@ -175,17 +177,17 @@ void ColorBase::SetColor(int col)
     color = Color::FromInt(col);
 }
 
-Kingdom &ColorBase::GetKingdom() const
+Kingdom& ColorBase::GetKingdom() const
 {
     return world.GetKingdom(color);
 }
 
-ByteVectorWriter &operator<<(ByteVectorWriter &msg, const ColorBase &col)
+ByteVectorWriter& operator<<(ByteVectorWriter& msg, const ColorBase& col)
 {
     return msg << col.color;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, ColorBase &col)
+ByteVectorReader& operator>>(ByteVectorReader& msg, ColorBase& col)
 {
     return msg >> col.color;
 }

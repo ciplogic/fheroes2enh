@@ -32,5 +32,5 @@ namespace ProfitConditions
 
     payment_t FromMine(int);
 
-    void UpdateCosts(const string &);
+    void UpdateCosts(const string&);
 }

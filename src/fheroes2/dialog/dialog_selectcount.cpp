@@ -63,7 +63,7 @@ public:
         vcur = v;
     }
 
-    void SetPos(const Point &pt)
+    void SetPos(const Point& pt)
     {
         pos = pt;
 
@@ -78,7 +78,7 @@ public:
 
     void Redraw() const
     {
-        const Sprite &sprite_edit = AGG::GetICN(ICN::TOWNWIND, 4);
+        const Sprite& sprite_edit = AGG::GetICN(ICN::TOWNWIND, 4);
         sprite_edit.Blit(pos.x, pos.y + 4);
 
         Text text(Int2Str(vcur), Font::BIG);
@@ -90,13 +90,13 @@ public:
 
     bool QueueEventProcessing()
     {
-        LocalEvent &le = LocalEvent::Get();
+        LocalEvent& le = LocalEvent::Get();
 
         le.MousePressLeft(btnUp) ? btnUp.PressDraw() : btnUp.ReleaseDraw();
         le.MousePressLeft(btnDn) ? btnDn.PressDraw() : btnDn.ReleaseDraw();
 
         if ((le.MouseWheelUp(pos) ||
-             le.MouseClickLeft(btnUp)) && vcur < vmax)
+            le.MouseClickLeft(btnUp)) && vcur < vmax)
         {
             vcur += vcur + step <= vmax ? step : vmax - vcur;
             return true;
@@ -104,14 +104,12 @@ public:
 
         // down
         if (!(le.MouseWheelDn(pos) ||
-              le.MouseClickLeft(btnDn)) || vmin >= vcur)
+            le.MouseClickLeft(btnDn)) || vmin >= vcur)
         {
             return false;
         }
         vcur -= vmin + vcur >= step ? step : vcur;
         return true;
-
-
     }
 
 protected:
@@ -126,12 +124,12 @@ protected:
     Button btnDn;
 };
 
-bool Dialog::SelectCount(const string &header, uint32_t min, uint32_t max, uint32_t &cur, int step)
+bool Dialog::SelectCount(const string& header, uint32_t min, uint32_t max, uint32_t& cur, int step)
 {
-    Display &display = Display::Get();
+    Display& display = Display::Get();
 
     // cursor
-    Cursor &cursor = Cursor::Get();
+    Cursor& cursor = Cursor::Get();
     cursor.Hide();
 
     Text text(header, Font::BIG);
@@ -140,7 +138,7 @@ bool Dialog::SelectCount(const string &header, uint32_t min, uint32_t max, uint3
     FrameBox box(text.h() + spacer + 30, true);
     SelectValue sel(min, max, cur, step);
 
-    const Rect &pos = box.GetArea();
+    const Rect& pos = box.GetArea();
 
     text.Blit(pos.x + (pos.w - text.w()) / 2, pos.y);
 
@@ -154,7 +152,7 @@ bool Dialog::SelectCount(const string &header, uint32_t min, uint32_t max, uint3
     const Rect rectMax(pos.x + 173, pos.y + 38, text.w(), text.h());
     text.Blit(rectMax.x, rectMax.y);
 
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     bool redraw_count = false;
     cursor.Show();
@@ -197,12 +195,12 @@ bool Dialog::SelectCount(const string &header, uint32_t min, uint32_t max, uint3
     return result == OK;
 }
 
-bool Dialog::InputString(const string &header, string &res)
+bool Dialog::InputString(const string& header, string& res)
 {
     const int system = Settings::Get().ExtGameEvilInterface() ? ICN::SYSTEME : ICN::SYSTEM;
 
-    Display &display = Display::Get();
-    Cursor &cursor = Cursor::Get();
+    Display& display = Display::Get();
+    Cursor& cursor = Cursor::Get();
     cursor.Hide();
     int oldcursor = cursor.Themes();
     cursor.SetThemes(cursor.POINTER);
@@ -214,10 +212,10 @@ bool Dialog::InputString(const string &header, string &res)
 
     TextBox textbox(header, Font::BIG, BOXAREA_WIDTH);
     Point dst_pt;
-    const Sprite &sprite = AGG::GetICN(Settings::Get().ExtGameEvilInterface() ? ICN::BUYBUILD : ICN::BUYBUILE, 3);
+    const Sprite& sprite = AGG::GetICN(Settings::Get().ExtGameEvilInterface() ? ICN::BUYBUILD : ICN::BUYBUILE, 3);
 
     FrameBox box(10 + textbox.h() + 10 + sprite.h(), OK | CANCEL);
-    const Rect &box_rt = box.GetArea();
+    const Rect& box_rt = box.GetArea();
 
     // text
     dst_pt.x = box_rt.x + (box_rt.w - textbox.w()) / 2;
@@ -248,7 +246,7 @@ bool Dialog::InputString(const string &header, string &res)
     cursor.Show();
     display.Flip();
 
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
     bool redraw = true;
 
     // message loop
@@ -296,12 +294,12 @@ bool Dialog::InputString(const string &header, string &res)
     return !res.empty();
 }
 
-int Dialog::ArmySplitTroop(int free_slots, uint32_t max, uint32_t &cur, bool savelast)
+int Dialog::ArmySplitTroop(int free_slots, uint32_t max, uint32_t& cur, bool savelast)
 {
-    Display &display = Display::Get();
+    Display& display = Display::Get();
 
     // cursor
-    Cursor &cursor = Cursor::Get();
+    Cursor& cursor = Cursor::Get();
     cursor.Hide();
 
     const uint32_t min = 1;
@@ -311,7 +309,7 @@ int Dialog::ArmySplitTroop(int free_slots, uint32_t max, uint32_t &cur, bool sav
     SelectValue sel(min, max, cur, 1);
     Text text;
 
-    const Rect &pos = box.GetArea();
+    const Rect& pos = box.GetArea();
     const int center = pos.x + pos.w / 2;
 
     text.Set(_("Move how many troops?"), Font::BIG);
@@ -325,35 +323,35 @@ int Dialog::ArmySplitTroop(int free_slots, uint32_t max, uint32_t &cur, bool sav
 
     vector<Rect> vrts(3);
 
-    Rect &rt3 = vrts[0];
-    Rect &rt4 = vrts[1];
-    Rect &rt5 = vrts[2];
+    Rect& rt3 = vrts[0];
+    Rect& rt4 = vrts[1];
+    Rect& rt5 = vrts[2];
 
     switch (free_slots)
     {
-        case 0:
-            break;
+    case 0:
+        break;
 
-        case 3:
-            sp3 = AGG::GetICN(ICN::REQUESTS, 22);
-            rt3 = Rect(center - sp3.w() / 2, pos.y + 95, sp3.w(), sp3.h());
-            break;
+    case 3:
+        sp3 = AGG::GetICN(ICN::REQUESTS, 22);
+        rt3 = Rect(center - sp3.w() / 2, pos.y + 95, sp3.w(), sp3.h());
+        break;
 
-        case 4:
-            sp3 = AGG::GetICN(ICN::REQUESTS, 22);
-            sp4 = AGG::GetICN(ICN::REQUESTS, 23);
-            rt3 = Rect(center - 5 - sp3.w(), pos.y + 95, sp3.w(), sp3.h());
-            rt4 = Rect(center + 5, pos.y + 95, sp4.w(), sp4.h());
-            break;
+    case 4:
+        sp3 = AGG::GetICN(ICN::REQUESTS, 22);
+        sp4 = AGG::GetICN(ICN::REQUESTS, 23);
+        rt3 = Rect(center - 5 - sp3.w(), pos.y + 95, sp3.w(), sp3.h());
+        rt4 = Rect(center + 5, pos.y + 95, sp4.w(), sp4.h());
+        break;
 
-        case 5:
-            sp3 = AGG::GetICN(ICN::REQUESTS, 22);
-            sp4 = AGG::GetICN(ICN::REQUESTS, 23);
-            sp5 = AGG::GetICN(ICN::REQUESTS, 24);
-            rt3 = Rect(center - sp3.w() / 2 - 10 - sp3.w(), pos.y + 95, sp3.w(), sp3.h());
-            rt4 = Rect(center - sp4.w() / 2, pos.y + 95, sp4.w(), sp4.h());
-            rt5 = Rect(center + sp5.w() / 2 + 10, pos.y + 95, sp5.w(), sp5.h());
-            break;
+    case 5:
+        sp3 = AGG::GetICN(ICN::REQUESTS, 22);
+        sp4 = AGG::GetICN(ICN::REQUESTS, 23);
+        sp5 = AGG::GetICN(ICN::REQUESTS, 24);
+        rt3 = Rect(center - sp3.w() / 2 - 10 - sp3.w(), pos.y + 95, sp3.w(), sp3.h());
+        rt4 = Rect(center - sp4.w() / 2, pos.y + 95, sp4.w(), sp4.h());
+        rt5 = Rect(center + sp5.w() / 2 + 10, pos.y + 95, sp5.w(), sp5.h());
+        break;
     }
 
     if (sp3.isValid())
@@ -383,7 +381,7 @@ int Dialog::ArmySplitTroop(int free_slots, uint32_t max, uint32_t &cur, bool sav
     const Rect rectMin(pos.x + 163, pos.y + 45, text.w(), text.h());
     text.Blit(rectMin.x, rectMin.y);
 
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     bool redraw_count = false;
     cursor.Show();
@@ -397,20 +395,23 @@ int Dialog::ArmySplitTroop(int free_slots, uint32_t max, uint32_t &cur, bool sav
         {
             sel.SetCur(cur);
             redraw_count = true;
-        } else if (le.MouseClickLeft(rectMax))
+        }
+        else if (le.MouseClickLeft(rectMax))
         {
             sel.SetCur(savelast ? max : max - 1);
             redraw_count = true;
-        } else if (le.MouseClickLeft(rectMin))
+        }
+        else if (le.MouseClickLeft(rectMin))
         {
             sel.SetCur(min);
             redraw_count = true;
-        } else if (sel.QueueEventProcessing())
+        }
+        else if (sel.QueueEventProcessing())
             redraw_count = true;
 
         if (ssp.isValid())
             for (vector<Rect>::const_iterator
-                         it = vrts.begin(); it != vrts.end(); ++it)
+                 it = vrts.begin(); it != vrts.end(); ++it)
             {
                 if (le.MouseClickLeft(*it))
                 {
@@ -443,7 +444,7 @@ int Dialog::ArmySplitTroop(int free_slots, uint32_t max, uint32_t &cur, bool sav
 
         if (ssp.isVisible())
         {
-            const Rect &rt = ssp.GetArea();
+            const Rect& rt = ssp.GetArea();
 
             if (rt == rt3)
                 result = 3;
@@ -451,7 +452,8 @@ int Dialog::ArmySplitTroop(int free_slots, uint32_t max, uint32_t &cur, bool sav
                 result = 4;
             else if (rt == rt5)
                 result = 5;
-        } else
+        }
+        else
             result = 2;
     }
 

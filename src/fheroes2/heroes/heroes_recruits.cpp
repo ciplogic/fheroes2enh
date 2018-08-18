@@ -42,37 +42,37 @@ int Recruits::GetID2() const
     return second;
 }
 
-const Heroes *Recruits::GetHero1() const
+const Heroes* Recruits::GetHero1() const
 {
     return world.GetHeroes(first);
 }
 
-const Heroes *Recruits::GetHero2() const
+const Heroes* Recruits::GetHero2() const
 {
     return world.GetHeroes(second);
 }
 
-Heroes *Recruits::GetHero1()
+Heroes* Recruits::GetHero1()
 {
     return world.GetHeroes(first);
 }
 
-Heroes *Recruits::GetHero2()
+Heroes* Recruits::GetHero2()
 {
     return world.GetHeroes(second);
 }
 
-void Recruits::SetHero1(const Heroes *hero)
+void Recruits::SetHero1(const Heroes* hero)
 {
     first = hero ? hero->hid : Heroes::UNKNOWN;
 }
 
-void Recruits::SetHero2(const Heroes *hero)
+void Recruits::SetHero2(const Heroes* hero)
 {
     second = hero ? hero->hid : Heroes::UNKNOWN;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &sb, Recruits &rt)
+ByteVectorReader& operator>>(ByteVectorReader& sb, Recruits& rt)
 {
     return sb >> rt.first >> rt.second;
 }

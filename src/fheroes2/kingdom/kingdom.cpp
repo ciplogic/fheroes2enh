@@ -34,7 +34,7 @@
 #include "ai.h"
 #include "bitmodes.h"
 
-bool HeroesStrongestArmy(const Heroes *h1, const Heroes *h2)
+bool HeroesStrongestArmy(const Heroes* h1, const Heroes* h2)
 {
     return h1 && h2 && Army::TroopsStrongerEnemyTroops(h2->GetArmy().m_troops, h1->GetArmy().m_troops);
 }
@@ -162,7 +162,7 @@ void Kingdom::ActionNewDay()
     // check event day AI
     EventsDate events = world.GetEventsDate(GetColor());
     for (EventsDate::const_iterator
-                 it = events.begin(); it != events.end(); ++it)
+         it = events.begin(); it != events.end(); ++it)
         AddFundsResource((*it).resource);
 
     // remove day visit object
@@ -212,7 +212,7 @@ void Kingdom::ActionNewMonth()
     visit_object.remove_if(Visit::isMonthLife);
 }
 
-void Kingdom::AddHeroes(Heroes *hero)
+void Kingdom::AddHeroes(Heroes* hero)
 {
     if (!hero)
         return;
@@ -226,13 +226,13 @@ void Kingdom::AddHeroes(Heroes *hero)
     AI::HeroesAdd(*hero);
 }
 
-void Kingdom::AddHeroStartCondLoss(Heroes *hero)
+void Kingdom::AddHeroStartCondLoss(Heroes* hero)
 {
     // see: Settings::ExtWorldStartHeroLossCond4Humans
     heroes_cond_loss._items.push_back(hero);
 }
 
-const Heroes *Kingdom::GetFirstHeroStartCondLoss() const
+const Heroes* Kingdom::GetFirstHeroStartCondLoss() const
 {
     for (auto heroes_cond_los : heroes_cond_loss._items)
         if (heroes_cond_los->isFreeman() || heroes_cond_los->GetColor() != GetColor())
@@ -251,7 +251,7 @@ string Kingdom::GetNamesHeroStartCondLoss() const
     return result;
 }
 
-void Kingdom::RemoveHeroes(const Heroes *hero)
+void Kingdom::RemoveHeroes(const Heroes* hero)
 {
     if (hero)
     {
@@ -264,7 +264,7 @@ void Kingdom::RemoveHeroes(const Heroes *hero)
     if (isLoss()) LossPostActions();
 }
 
-void Kingdom::AddCastle(const Castle *castle)
+void Kingdom::AddCastle(const Castle* castle)
 {
     if (castle)
     {
@@ -281,7 +281,7 @@ void Kingdom::AddCastle(const Castle *castle)
     lost_town_days = Game::GetLostTownDays() + 1;
 }
 
-void Kingdom::RemoveCastle(const Castle *castle)
+void Kingdom::RemoveCastle(const Castle* castle)
 {
     if (castle)
     {
@@ -319,20 +319,20 @@ uint32_t Kingdom::GetCountBuilding(uint32_t build) const
     return count_if(castles.begin(), castles.end(), bind2nd(mem_fun(&Castle::isBuild), build));
 }
 
-bool Kingdom::AllowPayment(const Funds &funds) const
+bool Kingdom::AllowPayment(const Funds& funds) const
 {
     return
-            (resource.wood >= funds.wood || 0 == funds.wood) &&
-            (resource.mercury >= funds.mercury || 0 == funds.mercury) &&
-            (resource.ore >= funds.ore || 0 == funds.ore) &&
-            (resource.sulfur >= funds.sulfur || 0 == funds.sulfur) &&
-            (resource.crystal >= funds.crystal || 0 == funds.crystal) &&
-            (resource.gems >= funds.gems || 0 == funds.gems) &&
-            (resource.gold >= funds.gold || 0 == funds.gold);
+        (resource.wood >= funds.wood || 0 == funds.wood) &&
+        (resource.mercury >= funds.mercury || 0 == funds.mercury) &&
+        (resource.ore >= funds.ore || 0 == funds.ore) &&
+        (resource.sulfur >= funds.sulfur || 0 == funds.sulfur) &&
+        (resource.crystal >= funds.crystal || 0 == funds.crystal) &&
+        (resource.gems >= funds.gems || 0 == funds.gems) &&
+        (resource.gold >= funds.gold || 0 == funds.gold);
 }
 
 /* is visited cell */
-bool Kingdom::isVisited(const Maps::Tiles &tile) const
+bool Kingdom::isVisited(const Maps::Tiles& tile) const
 {
     return isVisited(tile.GetIndex(), tile.GetObject());
 }
@@ -340,8 +340,8 @@ bool Kingdom::isVisited(const Maps::Tiles &tile) const
 bool Kingdom::isVisited(s32 index, int object) const
 {
     const auto it = find_if(visit_object.begin(), visit_object.end(),
-                      bind2nd(mem_fun_ref(&IndexObject::isIndex),
-                              index));
+                            bind2nd(mem_fun_ref(&IndexObject::isIndex),
+                                    index));
     return visit_object.end() != it && (*it).isObject(object);
 }
 
@@ -374,12 +374,12 @@ uint32_t Kingdom::GetCountCapital() const
     return count_if(castles.begin(), castles.end(), Castle::PredicateIsCapital);
 }
 
-void Kingdom::AddFundsResource(const Funds &funds)
+void Kingdom::AddFundsResource(const Funds& funds)
 {
     resource = resource + funds;
 }
 
-void Kingdom::OddFundsResource(const Funds &funds)
+void Kingdom::OddFundsResource(const Funds& funds)
 {
     resource = resource - funds;
 }
@@ -389,7 +389,7 @@ uint32_t Kingdom::GetLostTownDays() const
     return lost_town_days;
 }
 
-Recruits &Kingdom::GetRecruits()
+Recruits& Kingdom::GetRecruits()
 {
     // update hero1
     if (Heroes::UNKNOWN == recruits.GetID1() || recruits.GetHero1() && !recruits.GetHero1()->isFreeman())
@@ -412,12 +412,12 @@ void Kingdom::UpdateRecruits()
     if (recruits.GetID1() == recruits.GetID2()) world.UpdateRecruits(recruits);
 }
 
-const Puzzle &Kingdom::PuzzleMaps() const
+const Puzzle& Kingdom::PuzzleMaps() const
 {
     return puzzle_maps;
 }
 
-Puzzle &Kingdom::PuzzleMaps()
+Puzzle& Kingdom::PuzzleMaps()
 {
     return puzzle_maps;
 }
@@ -434,7 +434,8 @@ bool Kingdom::IsVisitTravelersTent(int col) const
 
 bool Kingdom::AllowRecruitHero(bool check_payment, int level) const
 {
-    return heroes._items.size() < GetMaxHeroes() && (!check_payment || AllowPayment(PaymentConditions::RecruitHero(level)));
+    return heroes._items.size() < GetMaxHeroes() && (!check_payment || AllowPayment(
+        PaymentConditions::RecruitHero(level)));
 }
 
 void Kingdom::ApplyPlayWithStartingHero()
@@ -442,12 +443,12 @@ void Kingdom::ApplyPlayWithStartingHero()
     if (isPlay() && !castles.empty())
     {
         // get first castle
-        Castle *first = castles.GetFirstCastle();
+        Castle* first = castles.GetFirstCastle();
         if (nullptr == first) first = castles.front();
 
         // check manual set hero (castle position + point(0, 1))?
-        const Point &cp = first->GetCenter();
-        Heroes *hero = world.GetTiles(cp.x, cp.y + 1).GetHeroes();
+        const Point& cp = first->GetCenter();
+        Heroes* hero = world.GetTiles(cp.x, cp.y + 1).GetHeroes();
 
         // and move manual set hero to castle
         if (hero && hero->GetColor() == GetColor())
@@ -461,9 +462,10 @@ void Kingdom::ApplyPlayWithStartingHero()
                 hero->SetModes(Heroes::PATROL);
                 hero->SetCenterPatrol(cp);
             }
-        } else if (Settings::Get().GameStartWithHeroes())
+        }
+        else if (Settings::Get().GameStartWithHeroes())
         {
-            Heroes *hero = world.GetFreemanHeroes(first->GetRace());
+            Heroes* hero = world.GetFreemanHeroes(first->GetRace());
             if (hero && AllowRecruitHero(false, 0)) hero->Recruit(*first);
         }
     }
@@ -488,12 +490,14 @@ Funds Kingdom::GetIncome(int type /* INCOME_ALL */) const
     if (INCOME_CAPTURED & type)
     {
         // captured object
-        const int resources[] = {Resource::WOOD, Resource::ORE, Resource::MERCURY, Resource::SULFUR,
-                                 Resource::CRYSTAL, Resource::GEMS, Resource::GOLD, Resource::UNKNOWN};
+        const int resources[] = {
+            Resource::WOOD, Resource::ORE, Resource::MERCURY, Resource::SULFUR,
+            Resource::CRYSTAL, Resource::GEMS, Resource::GOLD, Resource::UNKNOWN
+        };
 
         for (uint32_t index = 0; resources[index] != Resource::UNKNOWN; ++index)
             resource += ProfitConditions::FromMine(resources[index]) *
-                        world.CountCapturedMines(resources[index], GetColor());
+                world.CountCapturedMines(resources[index], GetColor());
     }
 
     if (INCOME_CASTLES & type)
@@ -501,7 +505,7 @@ Funds Kingdom::GetIncome(int type /* INCOME_ALL */) const
         // castles
         for (auto it : castles)
         {
-            const Castle &castle = *it;
+            const Castle& castle = *it;
 
             // castle or town profit
             resource += ProfitConditions::FromBuilding(castle.isCastle() ? BUILD_CASTLE : BUILD_TENT, 0);
@@ -519,21 +523,23 @@ Funds Kingdom::GetIncome(int type /* INCOME_ALL */) const
     if (INCOME_ARTIFACTS & type)
     {
         // find artifacts
-        const int artifacts[] = {Artifact::GOLDEN_GOOSE, Artifact::ENDLESS_SACK_GOLD, Artifact::ENDLESS_BAG_GOLD,
-                                 Artifact::ENDLESS_PURSE_GOLD, Artifact::ENDLESS_POUCH_SULFUR,
-                                 Artifact::ENDLESS_VIAL_MERCURY,
-                                 Artifact::ENDLESS_POUCH_GEMS, Artifact::ENDLESS_CORD_WOOD, Artifact::ENDLESS_CART_ORE,
-                                 Artifact::ENDLESS_POUCH_CRYSTAL, Artifact::UNKNOWN};
+        const int artifacts[] = {
+            Artifact::GOLDEN_GOOSE, Artifact::ENDLESS_SACK_GOLD, Artifact::ENDLESS_BAG_GOLD,
+            Artifact::ENDLESS_PURSE_GOLD, Artifact::ENDLESS_POUCH_SULFUR,
+            Artifact::ENDLESS_VIAL_MERCURY,
+            Artifact::ENDLESS_POUCH_GEMS, Artifact::ENDLESS_CORD_WOOD, Artifact::ENDLESS_CART_ORE,
+            Artifact::ENDLESS_POUCH_CRYSTAL, Artifact::UNKNOWN
+        };
 
         for (uint32_t index = 0; artifacts[index] != Artifact::UNKNOWN; ++index)
             for (auto heroe : heroes._items)
                 resource += ProfitConditions::FromArtifact(artifacts[index]) *
-                            (*heroe).GetBagArtifacts().Count(Artifact(artifacts[index]));
+                    (*heroe).GetBagArtifacts().Count(Artifact(artifacts[index]));
 
         // TAX_LIEN
         for (auto heroe : heroes._items)
             resource -= ProfitConditions::FromArtifact(Artifact::TAX_LIEN) *
-                        (*heroe).GetBagArtifacts().Count(Artifact(Artifact::TAX_LIEN));
+                (*heroe).GetBagArtifacts().Count(Artifact(Artifact::TAX_LIEN));
     }
 
     if (INCOME_HEROSKILLS & type)
@@ -546,9 +552,11 @@ Funds Kingdom::GetIncome(int type /* INCOME_ALL */) const
     return resource;
 }
 
-const Heroes *Kingdom::GetBestHero() const
+const Heroes* Kingdom::GetBestHero() const
 {
-    return !heroes._items.empty() ? *max_element(heroes._items.begin(), heroes._items.end(), HeroesStrongestArmy) : nullptr;
+    return !heroes._items.empty()
+               ? *max_element(heroes._items.begin(), heroes._items.end(), HeroesStrongestArmy)
+               : nullptr;
 }
 
 uint32_t Kingdom::GetArmiesStrength() const
@@ -594,53 +602,53 @@ void Kingdoms::ApplyPlayWithStartingHero()
         if (kingdoms[ii].isPlay()) kingdoms[ii].ApplyPlayWithStartingHero();
 }
 
-const Kingdom &Kingdoms::GetKingdom(int color) const
+const Kingdom& Kingdoms::GetKingdom(int color) const
 {
     switch (color)
     {
-        case Color::BLUE:
-            return kingdoms[0];
-        case Color::GREEN:
-            return kingdoms[1];
-        case Color::RED:
-            return kingdoms[2];
-        case Color::YELLOW:
-            return kingdoms[3];
-        case Color::ORANGE:
-            return kingdoms[4];
-        case Color::PURPLE:
-            return kingdoms[5];
-        default:
-            break;
+    case Color::BLUE:
+        return kingdoms[0];
+    case Color::GREEN:
+        return kingdoms[1];
+    case Color::RED:
+        return kingdoms[2];
+    case Color::YELLOW:
+        return kingdoms[3];
+    case Color::ORANGE:
+        return kingdoms[4];
+    case Color::PURPLE:
+        return kingdoms[5];
+    default:
+        break;
     }
 
     return kingdoms[6];
 }
 
-Kingdom &Kingdoms::GetKingdom(int color)
+Kingdom& Kingdoms::GetKingdom(int color)
 {
     switch (color)
     {
-        case Color::BLUE:
-            return kingdoms[0];
-        case Color::GREEN:
-            return kingdoms[1];
-        case Color::RED:
-            return kingdoms[2];
-        case Color::YELLOW:
-            return kingdoms[3];
-        case Color::ORANGE:
-            return kingdoms[4];
-        case Color::PURPLE:
-            return kingdoms[5];
-        default:
-            break;
+    case Color::BLUE:
+        return kingdoms[0];
+    case Color::GREEN:
+        return kingdoms[1];
+    case Color::RED:
+        return kingdoms[2];
+    case Color::YELLOW:
+        return kingdoms[3];
+    case Color::ORANGE:
+        return kingdoms[4];
+    case Color::PURPLE:
+        return kingdoms[5];
+    default:
+        break;
     }
 
     return kingdoms[6];
 }
 
-void Kingdom::SetLastLostHero(Heroes &hero)
+void Kingdom::SetLastLostHero(Heroes& hero)
 {
     lost_hero.first = hero.GetID();
     lost_hero.second = world.CountDay();
@@ -652,10 +660,11 @@ void Kingdom::ResetLastLostHero()
     lost_hero.second = 0;
 }
 
-Heroes *Kingdom::GetLastLostHero() const
+Heroes* Kingdom::GetLastLostHero() const
 {
-    return Heroes::UNKNOWN != lost_hero.first && world.CountDay() - lost_hero.second < DAYOFWEEK ?
-           world.GetHeroes(lost_hero.first) : nullptr;
+    return Heroes::UNKNOWN != lost_hero.first && world.CountDay() - lost_hero.second < DAYOFWEEK
+               ? world.GetHeroes(lost_hero.first)
+               : nullptr;
 }
 
 void Kingdoms::NewDay()
@@ -705,20 +714,20 @@ int Kingdoms::FindWins(int cond) const
     return 0;
 }
 
-void Kingdoms::AddHeroes(const AllHeroes &heroes)
+void Kingdoms::AddHeroes(const AllHeroes& heroes)
 {
     for (auto heroe : heroes._items)
         // skip gray color
         if (heroe->GetColor()) GetKingdom(heroe->GetColor()).AddHeroes(heroe);
 }
 
-void Kingdoms::AddCondLossHeroes(const AllHeroes &heroes)
+void Kingdoms::AddCondLossHeroes(const AllHeroes& heroes)
 {
     for (auto heroe : heroes._items)
         // skip gray color
         if (heroe->GetColor())
         {
-            Kingdom &kingdom = GetKingdom(heroe->GetColor());
+            Kingdom& kingdom = GetKingdom(heroe->GetColor());
 
             if (kingdom.isControlHuman())
             {
@@ -728,20 +737,20 @@ void Kingdoms::AddCondLossHeroes(const AllHeroes &heroes)
         }
 }
 
-void Kingdoms::AddCastles(const AllCastles &castles)
+void Kingdoms::AddCastles(const AllCastles& castles)
 {
     for (auto castle : castles)
         // skip gray color
         if (castle->GetColor()) GetKingdom(castle->GetColor()).AddCastle(castle);
 }
 
-void Kingdoms::AddTributeEvents(CapturedObjects &captureobj, uint32_t day, int obj)
+void Kingdoms::AddTributeEvents(CapturedObjects& captureobj, uint32_t day, int obj)
 {
     for (uint32_t ii = 0; ii < size(); ++ii)
         if (kingdoms[ii].isPlay())
         {
             const int color = kingdoms[ii].GetColor();
-            const Funds &funds = captureobj.TributeCapturedObject(color, obj);
+            const Funds& funds = captureobj.TributeCapturedObject(color, obj);
 
             kingdoms[ii].AddFundsResource(funds);
 
@@ -761,7 +770,7 @@ void Kingdoms::AddTributeEvents(CapturedObjects &captureobj, uint32_t day, int o
         }
 }
 
-ByteVectorWriter& operator<<(ByteVectorWriter&msg, const Kingdom &kingdom)
+ByteVectorWriter& operator<<(ByteVectorWriter& msg, const Kingdom& kingdom)
 {
     return msg <<
         kingdom.modes <<
@@ -778,25 +787,25 @@ ByteVectorWriter& operator<<(ByteVectorWriter&msg, const Kingdom &kingdom)
         kingdom.heroes_cond_loss;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, Kingdom &kingdom)
+ByteVectorReader& operator>>(ByteVectorReader& msg, Kingdom& kingdom)
 {
     return msg >>
-               kingdom.modes >>
-               kingdom.color >>
-               kingdom.resource >>
-               kingdom.lost_town_days >>
-               kingdom.castles >>
-               kingdom.heroes >>
-               kingdom.recruits >>
-               kingdom.lost_hero >>
-               kingdom.visit_object >>
-               kingdom.puzzle_maps >>
-               kingdom.visited_tents_colors >>
-               kingdom.heroes_cond_loss;
+        kingdom.modes >>
+        kingdom.color >>
+        kingdom.resource >>
+        kingdom.lost_town_days >>
+        kingdom.castles >>
+        kingdom.heroes >>
+        kingdom.recruits >>
+        kingdom.lost_hero >>
+        kingdom.visit_object >>
+        kingdom.puzzle_maps >>
+        kingdom.visited_tents_colors >>
+        kingdom.heroes_cond_loss;
 }
 
 
-ByteVectorWriter &operator<<(ByteVectorWriter &msg, const Kingdoms &obj)
+ByteVectorWriter& operator<<(ByteVectorWriter& msg, const Kingdoms& obj)
 {
     msg << static_cast<uint32_t>(obj.size());
     for (uint32_t ii = 0; ii < obj.size(); ++ii)
@@ -805,7 +814,7 @@ ByteVectorWriter &operator<<(ByteVectorWriter &msg, const Kingdoms &obj)
     return msg;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, Kingdoms &obj)
+ByteVectorReader& operator>>(ByteVectorReader& msg, Kingdoms& obj)
 {
     uint32_t kingdomscount;
     msg >> kingdomscount; // FIXME: check kingdomscount
@@ -816,7 +825,7 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, Kingdoms &obj)
     return msg;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &sb, LastLoseHero &st)
+ByteVectorReader& operator>>(ByteVectorReader& sb, LastLoseHero& st)
 {
     return sb >> st.first >> st.second;
 }

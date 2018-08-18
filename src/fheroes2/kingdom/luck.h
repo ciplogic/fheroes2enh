@@ -40,4 +40,3 @@ namespace Luck
 
     std::string Description(int);
 }
-

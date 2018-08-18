@@ -43,19 +43,19 @@ using namespace Dialog;
 
 namespace Battle
 {
-    void GetSummaryParams(int res1, int res2, const HeroBase &, uint32_t exp, int &, string &);
+    void GetSummaryParams(int res1, int res2, const HeroBase&, uint32_t exp, int&, string&);
 
-    void SpeedRedraw(const Point &);
+    void SpeedRedraw(const Point&);
 }
 
-void Battle::SpeedRedraw(const Point &dst)
+void Battle::SpeedRedraw(const Point& dst)
 {
     int speed = Settings::Get().BattleSpeed();
     string str = _("speed: %{speed}");
 
     StringReplace(str, "%{speed}", speed);
     Text text(str, Font::SMALL);
-    const Sprite &sprite = AGG::GetICN(ICN::CSPANEL, speed < 3 ? 0 : speed < 7 ? 1 : 2);
+    const Sprite& sprite = AGG::GetICN(ICN::CSPANEL, speed < 3 ? 0 : speed < 7 ? 1 : 2);
 
     sprite.Blit(dst);
     text.Blit(dst.x + (sprite.w() - text.w()) / 2, dst.y + sprite.h() - 15);
@@ -63,14 +63,14 @@ void Battle::SpeedRedraw(const Point &dst)
 
 void Battle::DialogBattleSettings()
 {
-    Display &display = Display::Get();
-    Cursor &cursor = Cursor::Get();
-    LocalEvent &le = LocalEvent::Get();
-    Settings &conf = Settings::Get();
+    Display& display = Display::Get();
+    Cursor& cursor = Cursor::Get();
+    LocalEvent& le = LocalEvent::Get();
+    Settings& conf = Settings::Get();
 
     cursor.Hide();
 
-    const Sprite &dialog = AGG::GetICN(conf.ExtGameEvilInterface() ? ICN::CSPANBKE : ICN::CSPANBKG, 0);
+    const Sprite& dialog = AGG::GetICN(conf.ExtGameEvilInterface() ? ICN::CSPANBKE : ICN::CSPANBKG, 0);
 
     Rect pos_rt;
     pos_rt.x = (display.w() - dialog.w()) / 2;
@@ -160,7 +160,7 @@ void Battle::DialogBattleSettings()
     display.Flip();
 }
 
-void Battle::GetSummaryParams(int res1, int res2, const HeroBase &hero, uint32_t exp, int &icn_anim, string &msg)
+void Battle::GetSummaryParams(int res1, int res2, const HeroBase& hero, uint32_t exp, int& icn_anim, string& msg)
 {
     if (res1 & RESULT_WINS)
     {
@@ -179,17 +179,20 @@ void Battle::GetSummaryParams(int res1, int res2, const HeroBase &hero, uint32_t
             StringReplace(msg, "%{name}", hero.GetName());
             StringReplace(msg, "%{exp}", exp);
         }
-    } else if (res1 & RESULT_RETREAT)
+    }
+    else if (res1 & RESULT_RETREAT)
     {
         icn_anim = ICN::CMBTFLE3;
         msg.append(_("The cowardly %{name} flees from battle."));
         StringReplace(msg, "%{name}", hero.GetName());
-    } else if (res1 & RESULT_SURRENDER)
+    }
+    else if (res1 & RESULT_SURRENDER)
     {
         icn_anim = ICN::CMBTSURR;
         msg.append(_("%{name} surrenders to the enemy, and departs in shame."));
         StringReplace(msg, "%{name}", hero.GetName());
-    } else
+    }
+    else
     {
         icn_anim = ICN::CMBTLOS3;
         msg.append(_("Your force suffer a bitter defeat, and %{name} abandons your cause."));
@@ -197,12 +200,12 @@ void Battle::GetSummaryParams(int res1, int res2, const HeroBase &hero, uint32_t
     }
 }
 
-void Battle::Arena::DialogBattleSummary(const Result &res) const
+void Battle::Arena::DialogBattleSummary(const Result& res) const
 {
-    Display &display = Display::Get();
-    Cursor &cursor = Cursor::Get();
-    LocalEvent &le = LocalEvent::Get();
-    Settings &conf = Settings::Get();
+    Display& display = Display::Get();
+    Cursor& cursor = Cursor::Get();
+    LocalEvent& le = LocalEvent::Get();
+    Settings& conf = Settings::Get();
 
     const Troops killed1 = army1->GetKilledTroops();
     const Troops killed2 = army2->GetKilledTroops();
@@ -217,37 +220,42 @@ void Battle::Arena::DialogBattleSummary(const Result &res) const
     {
         GetSummaryParams(res.army1, res.army2, *army1->GetCommander(), res.exp1, icn_anim, msg);
         if (conf.Music()) AGG::PlayMusic(MUS::BATTLEWIN, false);
-    } else if (res.army2 & RESULT_WINS && army2->GetCommander() && army2->GetCommander()->isControlHuman())
+    }
+    else if (res.army2 & RESULT_WINS && army2->GetCommander() && army2->GetCommander()->isControlHuman())
     {
         GetSummaryParams(res.army2, res.army1, *army2->GetCommander(), res.exp2, icn_anim, msg);
         if (conf.Music()) AGG::PlayMusic(MUS::BATTLEWIN, false);
-    } else if (army1->GetCommander() && army1->GetCommander()->isControlHuman())
+    }
+    else if (army1->GetCommander() && army1->GetCommander()->isControlHuman())
     {
         GetSummaryParams(res.army1, res.army2, *army1->GetCommander(), res.exp1, icn_anim, msg);
         if (conf.Music()) AGG::PlayMusic(MUS::BATTLELOSE, false);
-    } else if (army2->GetCommander() && army2->GetCommander()->isControlHuman())
+    }
+    else if (army2->GetCommander() && army2->GetCommander()->isControlHuman())
     {
         GetSummaryParams(res.army2, res.army1, *army2->GetCommander(), res.exp2, icn_anim, msg);
         if (conf.Music()) AGG::PlayMusic(MUS::BATTLELOSE, false);
-    } else
-        // AI move
-    if (army1->GetCommander() && army1->GetCommander()->isControlAI())
-    {
-        // AI wins
-        if (res.army1 & RESULT_WINS)
-        {
-            icn_anim = ICN::CMBTLOS3;
-            msg.append(_("Your force suffer a bitter defeat."));
-        } else
-            // Human wins
-        if (res.army2 & RESULT_WINS)
-        {
-            icn_anim = ICN::WINCMBT;
-            msg.append(_("A glorious victory!"));
-        }
     }
+    else
+        // AI move
+        if (army1->GetCommander() && army1->GetCommander()->isControlAI())
+        {
+            // AI wins
+            if (res.army1 & RESULT_WINS)
+            {
+                icn_anim = ICN::CMBTLOS3;
+                msg.append(_("Your force suffer a bitter defeat."));
+            }
+            else
+                // Human wins
+                if (res.army2 & RESULT_WINS)
+                {
+                    icn_anim = ICN::WINCMBT;
+                    msg.append(_("A glorious victory!"));
+                }
+        }
 
-    const Sprite &dialog = AGG::GetICN(conf.ExtGameEvilInterface() ? ICN::WINLOSEE : ICN::WINLOSE, 0);
+    const Sprite& dialog = AGG::GetICN(conf.ExtGameEvilInterface() ? ICN::WINLOSEE : ICN::WINLOSE, 0);
 
     Rect pos_rt;
     pos_rt.x = (display.w() - dialog.w()) / 2;
@@ -262,8 +270,8 @@ void Battle::Arena::DialogBattleSummary(const Result &res) const
     const int anime_ox = 47;
     const int anime_oy = 36;
 
-    const Sprite &sprite1 = AGG::GetICN(icn_anim, 0);
-    const Sprite &sprite2 = AGG::GetICN(icn_anim, 1);
+    const Sprite& sprite1 = AGG::GetICN(icn_anim, 0);
+    const Sprite& sprite2 = AGG::GetICN(icn_anim, 1);
     sprite1.Blit(pos_rt.x + anime_ox + sprite1.x(), pos_rt.y + anime_oy + sprite1.y());
     sprite2.Blit(pos_rt.x + anime_ox + sprite2.x(), pos_rt.y + anime_oy + sprite2.y());
 
@@ -331,8 +339,8 @@ void Battle::Arena::DialogBattleSummary(const Result &res) const
         {
             if (0 == frame || 1 != ICN::AnimationFrame(icn_anim, 1, frame))
             {
-                const Sprite &sprite1 = AGG::GetICN(icn_anim, 0);
-                const Sprite &sprite2 = AGG::GetICN(icn_anim, ICN::AnimationFrame(icn_anim, 1, frame));
+                const Sprite& sprite1 = AGG::GetICN(icn_anim, 0);
+                const Sprite& sprite2 = AGG::GetICN(icn_anim, ICN::AnimationFrame(icn_anim, 1, frame));
 
                 cursor.Hide();
                 sprite1.Blit(pos_rt.x + anime_ox + sprite1.x(), pos_rt.y + anime_oy + sprite1.y());
@@ -351,18 +359,18 @@ void Battle::Arena::DialogBattleSummary(const Result &res) const
     display.Flip();
 }
 
-int Battle::Arena::DialogBattleHero(const HeroBase &hero, bool buttons) const
+int Battle::Arena::DialogBattleHero(const HeroBase& hero, bool buttons) const
 {
-    Display &display = Display::Get();
-    Cursor &cursor = Cursor::Get();
-    LocalEvent &le = LocalEvent::Get();
-    Settings &conf = Settings::Get();
+    Display& display = Display::Get();
+    Cursor& cursor = Cursor::Get();
+    LocalEvent& le = LocalEvent::Get();
+    Settings& conf = Settings::Get();
 
     cursor.Hide();
     cursor.SetThemes(Cursor::POINTER);
 
     const bool readonly = current_color != hero.GetColor() || !buttons;
-    const Sprite &dialog = AGG::GetICN(conf.ExtGameEvilInterface() ? ICN::VGENBKGE : ICN::VGENBKG, 0);
+    const Sprite& dialog = AGG::GetICN(conf.ExtGameEvilInterface() ? ICN::VGENBKGE : ICN::VGENBKG, 0);
 
     Rect pos_rt;
     pos_rt.x = (display.w() - dialog.w()) / 2;
@@ -420,7 +428,7 @@ int Battle::Arena::DialogBattleHero(const HeroBase &hero, bool buttons) const
     tp.y = pos_rt.y + 95;
     text.Blit(tp);
     str = _("Spell Points") + ": " + Int2Str(hero.GetSpellPoints()) + "/" +
-          Int2Str(hero.GetMaxSpellPoints());
+        Int2Str(hero.GetMaxSpellPoints());
     text.Set(str);
     tp.x = pos_rt.x + 205 - text.w() / 2;
     tp.y = pos_rt.y + 117;
@@ -456,8 +464,9 @@ int Battle::Arena::DialogBattleHero(const HeroBase &hero, bool buttons) const
     {
         btnCast.isEnable() && le.MousePressLeft(btnCast) ? btnCast.PressDraw() : btnCast.ReleaseDraw();
         btnRetreat.isEnable() && le.MousePressLeft(btnRetreat) ? btnRetreat.PressDraw() : btnRetreat.ReleaseDraw();
-        btnSurrender.isEnable() && le.MousePressLeft(btnSurrender) ? btnSurrender.PressDraw()
-                                                                   : btnSurrender.ReleaseDraw();
+        btnSurrender.isEnable() && le.MousePressLeft(btnSurrender)
+            ? btnSurrender.PressDraw()
+            : btnSurrender.ReleaseDraw();
         le.MousePressLeft(btnClose) ? btnClose.PressDraw() : btnClose.ReleaseDraw();
 
         if (!buttons && !le.MousePressRight()) break;
@@ -476,15 +485,19 @@ int Battle::Arena::DialogBattleHero(const HeroBase &hero, bool buttons) const
 
         if (le.MousePressRight(btnCast))
             Dialog::Message(_("Cast Spell"),
-                            _("Cast a magical spell. You may only cast one spell per combat round. The round is reset when every creature has had a turn"),
+                            _("Cast a magical spell. You may only cast one spell per combat round. The round is reset when every creature has had a turn"
+                            ),
                             Font::BIG);
         else if (le.MousePressRight(btnRetreat))
             Dialog::Message(_("Retreat"),
-                            _("Retreat your hero, abandoning your creatures. Your hero will be available for you to recruit again, however, the hero will have only a novice hero's forces."),
+                            _(
+                                "Retreat your hero, abandoning your creatures. Your hero will be available for you to recruit again, however, the hero will have only a novice hero's forces."
+                            ),
                             Font::BIG);
         else if (le.MousePressRight(btnSurrender))
             Dialog::Message(_("Surrender"),
-                            _("Surrendering costs gold. However if you pay the ransom, the hero and all of his or her surviving creatures will be available to recruit again."),
+                            _("Surrendering costs gold. However if you pay the ransom, the hero and all of his or her surviving creatures will be available to recruit again."
+                            ),
                             Font::BIG);
         else if (le.MousePressRight(btnClose))
             Dialog::Message(_("Cancel"), _("Return to the battle."), Font::BIG);
@@ -501,17 +514,17 @@ int Battle::Arena::DialogBattleHero(const HeroBase &hero, bool buttons) const
     return result;
 }
 
-bool Battle::DialogBattleSurrender(const HeroBase &hero, uint32_t cost)
+bool Battle::DialogBattleSurrender(const HeroBase& hero, uint32_t cost)
 {
-    Display &display = Display::Get();
-    Cursor &cursor = Cursor::Get();
-    LocalEvent &le = LocalEvent::Get();
-    Settings &conf = Settings::Get();
+    Display& display = Display::Get();
+    Cursor& cursor = Cursor::Get();
+    LocalEvent& le = LocalEvent::Get();
+    Settings& conf = Settings::Get();
 
     cursor.Hide();
     cursor.SetThemes(Cursor::POINTER);
 
-    const Sprite &dialog = AGG::GetICN(conf.ExtGameEvilInterface() ? ICN::SURDRBKE : ICN::SURDRBKG, 0);
+    const Sprite& dialog = AGG::GetICN(conf.ExtGameEvilInterface() ? ICN::SURDRBKE : ICN::SURDRBKG, 0);
 
     Rect pos_rt;
     pos_rt.x = (display.w() - dialog.w() + 16) / 2;
@@ -529,7 +542,7 @@ bool Battle::DialogBattleSurrender(const HeroBase &hero, uint32_t cost)
     Button btnDecline(pos_rt.x + 295, pos_rt.y + 150, icn, 2, 3);
     Button btnMarket(pos_rt.x + (pos_rt.w - 16) / 2, pos_rt.y + 145,
                      (conf.ExtGameEvilInterface() ? ICN::ADVEBTNS : ICN::ADVBTNS), 4, 5);
-    const Kingdom &kingdom = world.GetKingdom(hero.GetColor());
+    const Kingdom& kingdom = world.GetKingdom(hero.GetColor());
 
     if (!kingdom.AllowPayment(payment_t(Resource::GOLD, cost)))
     {
@@ -554,7 +567,7 @@ bool Battle::DialogBattleSurrender(const HeroBase &hero, uint32_t cost)
     btnAccept.Draw();
     btnDecline.Draw();
 
-    const Sprite &window = AGG::GetICN(icn, 4);
+    const Sprite& window = AGG::GetICN(icn, 4);
     window.Blit(pos_rt.x + 54, pos_rt.y + 30);
     hero.PortraitRedraw(pos_rt.x + 58, pos_rt.y + 38, PORT_BIG, display);
 

@@ -36,12 +36,12 @@
 
 using namespace std;
 
-wstring s2ws(const string &str)
+wstring s2ws(const string& str)
 {
     return wstring(str.begin(), str.end());
 }
 
-string ws2s(const wstring &wstr)
+string ws2s(const wstring& wstr)
 {
     using convert_typeX = codecvt_utf8<wchar_t>;
     wstring_convert<convert_typeX, wchar_t> converterX;
@@ -49,20 +49,22 @@ string ws2s(const wstring &wstr)
     return converterX.to_bytes(wstr);
 }
 
-void ListFiles::Append(const ListFiles &lst)
+void ListFiles::Append(const ListFiles& lst)
 {
     insert(end(), lst.begin(), lst.end());
 }
 
 #ifdef WIN32
-vector<string> GetFilesOfDir(const string &path)
+vector<string> GetFilesOfDir(const string& path)
 {
     HANDLE hFind;
     WIN32_FIND_DATA FindFileData;
     auto wPath = s2ws(path + "\\*.*");
     vector<string> dirsInCurrent;
-    if ((hFind = FindFirstFile(wPath.c_str(), &FindFileData)) != INVALID_HANDLE_VALUE) {
-        do {
+    if ((hFind = FindFirstFile(wPath.c_str(), &FindFileData)) != INVALID_HANDLE_VALUE)
+    {
+        do
+        {
             const wstring wFileName = FindFileData.cFileName;
             const string fileName = ws2s(wFileName);
             const string fullFileName = path + "\\" + fileName;
@@ -70,20 +72,19 @@ vector<string> GetFilesOfDir(const string &path)
             {
                 dirsInCurrent.push_back(fullFileName);
             }
-
-
-        } while (FindNextFile(hFind, &FindFileData));
+        }
+        while (FindNextFile(hFind, &FindFileData));
         FindClose(hFind);
     }
     return dirsInCurrent;
 }
 
-void ListFiles::ReadDir(const string &path, const string &filter, bool sensitive)
+void ListFiles::ReadDir(const string& path, const string& filter, bool sensitive)
 {
     auto files = GetFilesOfDir(path);
     if (filter.empty())
     {
-        for(const auto& fullname : files)
+        for (const auto& fullname : files)
             push_back(fullname);
         return;
     }
@@ -140,7 +141,7 @@ void ListFiles::ReadDir(const string &path, const string &filter, bool sensitive
 #endif
 
 
-void ListDirs::Append(const vector<string> &dirs)
+void ListDirs::Append(const vector<string>& dirs)
 {
     insert(end(), dirs.begin(), dirs.end());
 }

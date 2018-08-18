@@ -32,31 +32,31 @@
 #include "castle.h"
 #include "ai_simple.h"
 
-const char *AI::Type()
+const char* AI::Type()
 {
     return "simple";
 }
 
-const char *AI::License()
+const char* AI::License()
 {
     return "Non-Commercial";
 }
 
-void AI::HeroesAdd(const Heroes &)
+void AI::HeroesAdd(const Heroes&)
 {
 }
 
-void AI::HeroesRemove(const Heroes &)
+void AI::HeroesRemove(const Heroes&)
 {
 }
 
-void AI::CastleAdd(const Castle &)
+void AI::CastleAdd(const Castle&)
 {
 }
 
-void AI::CastleRemove(const Castle &castle)
+void AI::CastleRemove(const Castle& castle)
 {
-    AIKingdom &ai = AIKingdoms::Get(castle.GetColor());
+    AIKingdom& ai = AIKingdoms::Get(castle.GetColor());
 
     if (ai.capital == &castle)
     {

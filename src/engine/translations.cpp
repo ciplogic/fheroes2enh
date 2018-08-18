@@ -29,10 +29,12 @@
 
 
 using namespace std;
+
 namespace ModernTranslation
 {
-    using StringVector = std::vector <string>;
+    using StringVector = std::vector<string>;
     using StringTable = std::map<std::string, std::string>;
+
     struct TranslationTable
     {
         StringTable directTranslations;
@@ -43,14 +45,16 @@ namespace ModernTranslation
         void clear();
         bool readFile(const std::string& fileName) const;
         void addDirectTranslation(StringVector& id, StringVector& trans);
-        void addMultiTranslation(StringVector& messageIds, StringVector& messagePlurals, StringVector& messageStr1, StringVector& messageStr2);
-        
+        void addMultiTranslation(StringVector& messageIds, StringVector& messagePlurals, StringVector& messageStr1,
+                                 StringVector& messageStr2);
+
         string getTranslation(const string& str) const;
         string getTranslationPlural(const string& singular, const string& plural, size_t count) const;
 
     private:
         static std::string joinAsRows(StringVector& id);
     };
+
     namespace
     {
         std::string getDictText(const StringTable& stringTable, const std::string& item)
@@ -63,10 +67,11 @@ namespace ModernTranslation
             const auto posFind = result.find('|');
             if (posFind == std::string::npos)
                 return result;
-            result = result.substr(posFind+1);
+            result = result.substr(posFind + 1);
             return result;
         }
     }
+
     void TranslationTable::clear()
     {
         directTranslations.clear();
@@ -93,7 +98,7 @@ namespace ModernTranslation
 
     bool startsWith(const string& text, const string& subStr)
     {
-        if(text.size()< subStr.size())
+        if (text.size() < subStr.size())
             return false;
         const auto subText = text.substr(0, subStr.size());
         return subText == subStr;
@@ -102,9 +107,9 @@ namespace ModernTranslation
     bool cutTextIfMatchStart(const string& text, const string& subStr, string& outStr)
     {
         outStr = "";
-        if(!startsWith(text, subStr))
+        if (!startsWith(text, subStr))
             return false;
-        outStr = text.substr(subStr.size()+1);
+        outStr = text.substr(subStr.size() + 1);
         outStr.pop_back();
         return true;
     }
@@ -112,12 +117,12 @@ namespace ModernTranslation
     ClassifiedLine classifyLine(string text)
     {
         ClassifiedLine result;
-        if(text.empty())
+        if (text.empty())
         {
             result.translationLineType = TranslationLineType::Empty;
             return result;
         }
-        if(text[0] == '#')
+        if (text[0] == '#')
         {
             result.translationLineType = TranslationLineType::Empty;
             result.line = text.substr(1);
@@ -131,7 +136,7 @@ namespace ModernTranslation
             result.line = outRow;
             return result;
         }
-        if(cutTextIfMatchStart(text, "msgid ", outRow))
+        if (cutTextIfMatchStart(text, "msgid ", outRow))
         {
             result.translationLineType = TranslationLineType::Msgid;
             result.line = outRow;
@@ -178,9 +183,10 @@ namespace ModernTranslation
         {
             messageIds.clear();
             messageStr.clear();
-            messageStr1.clear();  
+            messageStr1.clear();
             messageStr2.clear();
         }
+
         void addString(TranslationLineType lineType, const std::string& line)
         {
             switch (lineType)
@@ -207,7 +213,7 @@ namespace ModernTranslation
     bool TranslationTable::readFile(const std::string& fileName) const
     {
         std::ifstream infile(fileName);
-        if(!infile.is_open())
+        if (!infile.is_open())
             return false;
         std::string line;
         TranslationLineType current = TranslationLineType::Empty;
@@ -215,7 +221,8 @@ namespace ModernTranslation
         while (std::getline(infile, line))
         {
             const ClassifiedLine classLine = classifyLine(line);
-            if (classLine.translationLineType == TranslationLineType::QuoteLine) {
+            if (classLine.translationLineType == TranslationLineType::QuoteLine)
+            {
                 buildVector.addString(current, classLine.line);
                 continue;
             }
@@ -229,8 +236,8 @@ namespace ModernTranslation
                 }
                 if (current == TranslationLineType::Msgstr2)
                 {
-                    mainTable.addMultiTranslation(buildVector.messageIds, buildVector.messagePlurals, 
-                        buildVector.messageStr1, buildVector.messageStr2);
+                    mainTable.addMultiTranslation(buildVector.messageIds, buildVector.messagePlurals,
+                                                  buildVector.messageStr1, buildVector.messageStr2);
                     buildVector.clear();
                     continue;
                 }
@@ -238,7 +245,6 @@ namespace ModernTranslation
             }
             buildVector.addString(classLine.translationLineType, classLine.line);
             current = classLine.translationLineType;
-        
         }
 
         return true;
@@ -248,13 +254,13 @@ namespace ModernTranslation
     {
         string key = joinAsRows(id);
         string value = joinAsRows(trans);
-        if(key.empty() || value.empty())
+        if (key.empty() || value.empty())
             return;
         directTranslations[key] = value;
     }
 
     void TranslationTable::addMultiTranslation(StringVector& messageIds, StringVector& messagePlurals,
-        StringVector& messageStr1, StringVector& messageStr2)
+                                               StringVector& messageStr1, StringVector& messageStr2)
     {
         string key = joinAsRows(messageIds);
         string value = joinAsRows(messageStr1);
@@ -271,13 +277,15 @@ namespace ModernTranslation
     string TranslationTable::getTranslation(const string& str) const
     {
         auto result = getDictText(directTranslations, str);
-    
+
 
         return result;
     }
+
     string TranslationTable::getTranslationPlural(const string& singular, const string& plural, size_t count) const
     {
-        if (count == 1) {
+        if (count == 1)
+        {
             return getDictText(singularTranslation, singular);
         }
         return getDictText(pluralTranslation, plural);
@@ -289,11 +297,11 @@ namespace ModernTranslation
 
         if (id.empty())
             return result;
-        if(id[0].empty())
+        if (id[0].empty())
         {
             id.erase(id.begin());
         }
-        
+
         bool first = true;
         for (const auto& it : id)
         {
@@ -309,26 +317,26 @@ namespace ModernTranslation
         }
         return result;
     }
-
 }
 
 namespace Translation
 {
-    bool bindDomain(const char *file)
+    bool bindDomain(const char* file)
     {
-        return  ModernTranslation::mainTable.readFile(file);
+        return ModernTranslation::mainTable.readFile(file);
     }
-    const string gettext(const string &str)
+
+    const string gettext(const string& str)
     {
         return ModernTranslation::mainTable.getTranslation(str);
     }
 
-    const string ngettext(const char *str, const char *plural, size_t n)
+    const string ngettext(const char* str, const char* plural, size_t n)
     {
         return ModernTranslation::mainTable.getTranslationPlural(str, plural, n);
     }
 
-    const string dngettext(const char *domain, const char *str, const char *plural, size_t num)
+    const string dngettext(const char* domain, const char* str, const char* plural, size_t num)
     {
         return ngettext(str, plural, num);
     }

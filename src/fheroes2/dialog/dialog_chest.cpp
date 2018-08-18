@@ -31,19 +31,19 @@
 #include "icn.h"
 
 bool
-Dialog::SelectGoldOrExp(const string &header, const string &message, uint32_t gold, uint32_t expr, const Heroes &hero)
+Dialog::SelectGoldOrExp(const string& header, const string& message, uint32_t gold, uint32_t expr, const Heroes& hero)
 {
-    Display &display = Display::Get();
+    Display& display = Display::Get();
     const int system = Settings::Get().ExtGameEvilInterface() ? ICN::SYSTEME : ICN::SYSTEM;
 
     // cursor
-    Cursor &cursor = Cursor::Get();
+    Cursor& cursor = Cursor::Get();
 
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
-    const Sprite &sprite_gold = AGG::GetICN(ICN::RESOURCE, 6);
-    const Sprite &sprite_expr = AGG::GetICN(ICN::EXPMRL, 4);
+    const Sprite& sprite_gold = AGG::GetICN(ICN::RESOURCE, 6);
+    const Sprite& sprite_expr = AGG::GetICN(ICN::EXPMRL, 4);
 
     Point pt;
     TextBox box1(header, Font::YELLOW_BIG, BOXAREA_WIDTH);
@@ -92,7 +92,7 @@ Dialog::SelectGoldOrExp(const string &header, const string &message, uint32_t go
 
     cursor.Show();
     display.Flip();
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
     bool result = false;
 
     // message loop

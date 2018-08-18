@@ -59,13 +59,13 @@ struct MapObjects : public unordered_map<uint32_t, MapObjectSimple *>
 
     void clear();
 
-    void add(MapObjectSimple *);
+    void add(MapObjectSimple*);
 
-    vector<MapObjectSimple *> get(const Point &);
+    vector<MapObjectSimple *> get(const Point&);
 
-    MapObjectSimple *get(uint32_t uid);
+    MapObjectSimple* get(uint32_t uid);
 
-    void remove(const Point &);
+    void remove(const Point&);
 
     void remove(uint32_t uid);
 };
@@ -79,31 +79,48 @@ struct CapturedObject
     int split;
 
     CapturedObject() : split(1)
-    {}
+    {
+    }
 
     int GetSplit() const
-    { return split; }
+    {
+        return split;
+    }
 
     int GetObject() const
-    { return objcol.first; }
+    {
+        return objcol.first;
+    }
 
     int GetColor() const
-    { return objcol.second; }
+    {
+        return objcol.second;
+    }
 
-    Troop &GetTroop()
-    { return guardians; }
+    Troop& GetTroop()
+    {
+        return guardians;
+    }
 
     void Set(int obj, int col)
-    { objcol = ObjectColor(obj, col); }
+    {
+        objcol = ObjectColor(obj, col);
+    }
 
     void SetColor(int col)
-    { objcol.second = col; }
+    {
+        objcol.second = col;
+    }
 
     void SetSplit(int spl)
-    { split = spl; }
+    {
+        split = spl;
+    }
 
     bool GuardiansProtected() const
-    { return guardians.isValid(); }
+    {
+        return guardians.isValid();
+    }
 };
 
 struct CapturedObjects : map<s32, CapturedObject>
@@ -116,7 +133,7 @@ struct CapturedObjects : map<s32, CapturedObject>
 
     void ResetColor(int);
 
-    CapturedObject &Get(s32);
+    CapturedObject& Get(s32);
 
     Funds TributeCapturedObject(int col, int obj);
 
@@ -130,9 +147,10 @@ struct CapturedObjects : map<s32, CapturedObject>
 struct EventDate
 {
     EventDate() : computer(false), first(0), subsequent(0), colors(0)
-    {}
+    {
+    }
 
-    void LoadFromMP2(ByteVectorReader &);
+    void LoadFromMP2(ByteVectorReader&);
 
     bool isAllow(int color, uint32_t date) const;
 
@@ -146,8 +164,8 @@ struct EventDate
     string message;
 };
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const EventDate &);
-ByteVectorReader &operator>>(ByteVectorReader &, EventDate &);
+ByteVectorWriter& operator<<(ByteVectorWriter&, const EventDate&);
+ByteVectorReader& operator>>(ByteVectorReader&, EventDate&);
 
 typedef vector<string> Rumors;
 typedef list<EventDate> EventsDate;
@@ -157,59 +175,61 @@ class World : protected Size
 {
 public:
     ~World()
-    { Reset(); }
+    {
+        Reset();
+    }
 
-    bool LoadMapMP2(const string &);
+    bool LoadMapMP2(const string&);
 
-    static bool LoadMapMAP(const string &);
+    static bool LoadMapMAP(const string&);
 
     void NewMaps(uint32_t, uint32_t);
 
-    static World &Get();
+    static World& Get();
 
     s32 w() const;
 
     s32 h() const;
 
-    const Maps::Tiles &GetTiles(uint32_t, uint32_t) const;
+    const Maps::Tiles& GetTiles(uint32_t, uint32_t) const;
 
-    Maps::Tiles &GetTiles(uint32_t, uint32_t);
+    Maps::Tiles& GetTiles(uint32_t, uint32_t);
 
-    const Maps::Tiles &GetTiles(s32) const;
+    const Maps::Tiles& GetTiles(s32) const;
 
-    Maps::Tiles &GetTiles(s32);
+    Maps::Tiles& GetTiles(s32);
 
     void InitKingdoms();
 
-    Kingdom &GetKingdom(int color);
+    Kingdom& GetKingdom(int color);
 
-    const Kingdom &GetKingdom(int color) const;
+    const Kingdom& GetKingdom(int color) const;
 
-    const Castle *GetCastle(const Point &) const;
+    const Castle* GetCastle(const Point&) const;
 
-    Castle *GetCastle(const Point &);
+    Castle* GetCastle(const Point&);
 
-    const Heroes *GetHeroes(int /* hero id */) const;
+    const Heroes* GetHeroes(int /* hero id */) const;
 
-    Heroes *GetHeroes(int /* hero id */);
+    Heroes* GetHeroes(int /* hero id */);
 
-    const Heroes *GetHeroes(const Point &) const;
+    const Heroes* GetHeroes(const Point&) const;
 
-    Heroes *GetHeroes(const Point &);
+    Heroes* GetHeroes(const Point&);
 
-    Heroes *FromJailHeroes(s32) const;
+    Heroes* FromJailHeroes(s32) const;
 
-    Heroes *GetFreemanHeroes(int race = 0) const;
+    Heroes* GetFreemanHeroes(int race = 0) const;
 
-    const Heroes *GetHeroesCondWins() const;
+    const Heroes* GetHeroesCondWins() const;
 
-    const Heroes *GetHeroesCondLoss() const;
+    const Heroes* GetHeroesCondLoss() const;
 
-    CastleHeroes GetHeroes(const Castle &) const;
+    CastleHeroes GetHeroes(const Castle&) const;
 
-    const UltimateArtifact &GetUltimateArtifact() const;
+    const UltimateArtifact& GetUltimateArtifact() const;
 
-    bool DiggingForUltimateArtifact(const Point &);
+    bool DiggingForUltimateArtifact(const Point&);
 
     int GetDay() const;
 
@@ -229,7 +249,7 @@ public:
 
     bool LastWeek() const;
 
-    const Week &GetWeekType() const;
+    const Week& GetWeekType() const;
 
     string DateString() const;
 
@@ -239,7 +259,7 @@ public:
 
     void NewMonth();
 
-    const string &GetRumors() const;
+    const string& GetRumors() const;
 
     s32 NextTeleport(s32) const;
 
@@ -262,9 +282,9 @@ public:
 
     void ResetCapturedObjects(int);
 
-    CapturedObject &GetCapturedObject(s32);
+    CapturedObject& GetCapturedObject(s32);
 
-    ListActions *GetListActions(s32);
+    ListActions* GetListActions(s32);
 
     void ActionForMagellanMaps(int color);
 
@@ -272,26 +292,26 @@ public:
 
     void ClearFog(int color);
 
-    void UpdateRecruits(Recruits &) const;
+    void UpdateRecruits(Recruits&) const;
 
 
-    int CheckKingdomWins(const Kingdom &) const;
+    int CheckKingdomWins(const Kingdom&) const;
 
-    bool KingdomIsWins(const Kingdom &, int wins) const;
+    bool KingdomIsWins(const Kingdom&, int wins) const;
 
-    int CheckKingdomLoss(const Kingdom &) const;
+    int CheckKingdomLoss(const Kingdom&) const;
 
-    bool KingdomIsLoss(const Kingdom &, int loss) const;
+    bool KingdomIsLoss(const Kingdom&, int loss) const;
 
-    void AddEventDate(const EventDate &);
+    void AddEventDate(const EventDate&);
 
     EventsDate GetEventsDate(int color) const;
 
-    MapEvent *GetMapEvent(const Point &);
+    MapEvent* GetMapEvent(const Point&);
 
-    MapObjectSimple *GetMapObject(uint32_t uid);
+    MapObjectSimple* GetMapObject(uint32_t uid);
 
-    void RemoveMapObject(const MapObjectSimple *);
+    void RemoveMapObject(const MapObjectSimple*);
 
     static uint32_t GetUniq();
 
@@ -299,22 +319,23 @@ public:
 
 private:
     World() : Size(0, 0), day(0), week(0), month(0), heroes_cond_wins(0), heroes_cond_loss(0)
-    {};
+    {
+    };
 
     void Defaults();
 
     void Reset();
 
-    void MonthOfMonstersAction(const Monster &);
+    void MonthOfMonstersAction(const Monster&);
 
     void PostLoad();
 
 private:
     friend class Radar;
 
-    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const World &);
-    
-    friend ByteVectorReader &operator>>(ByteVectorReader &, World &);
+    friend ByteVectorWriter& operator<<(ByteVectorWriter&, const World&);
+
+    friend ByteVectorReader& operator>>(ByteVectorReader&, World&);
 public:
     MapsTiles vec_tiles;
     AllHeroes vec_heroes;
@@ -342,19 +363,18 @@ public:
     MapObjects map_objects;
 };
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const CapturedObject &);
-ByteVectorReader &operator>>(ByteVectorReader &, CapturedObject &);
+ByteVectorWriter& operator<<(ByteVectorWriter&, const CapturedObject&);
+ByteVectorReader& operator>>(ByteVectorReader&, CapturedObject&);
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const World &);
-ByteVectorReader &operator>>(ByteVectorReader &, World &);
+ByteVectorWriter& operator<<(ByteVectorWriter&, const World&);
+ByteVectorReader& operator>>(ByteVectorReader&, World&);
 
-ByteVectorReader &operator>>(ByteVectorReader &, MapActions &);
+ByteVectorReader& operator>>(ByteVectorReader&, MapActions&);
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const ListActions &);
-ByteVectorReader &operator>>(ByteVectorReader &, ListActions &);
+ByteVectorWriter& operator<<(ByteVectorWriter&, const ListActions&);
+ByteVectorReader& operator>>(ByteVectorReader&, ListActions&);
 
-ByteVectorWriter &operator<<(ByteVectorWriter &msg, const MapObjects &objs);
-ByteVectorReader &operator>>(ByteVectorReader &, MapObjects &);
+ByteVectorWriter& operator<<(ByteVectorWriter& msg, const MapObjects& objs);
+ByteVectorReader& operator>>(ByteVectorReader&, MapObjects&);
 
-extern World &world;
-
+extern World& world;

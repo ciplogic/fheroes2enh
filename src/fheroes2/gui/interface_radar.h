@@ -31,7 +31,7 @@ namespace Interface
     class Radar : public BorderWindow
     {
     public:
-        explicit Radar(Basic &);
+        explicit Radar(Basic&);
 
         void SetPos(s32, s32);
 
@@ -56,9 +56,9 @@ namespace Interface
 
         void RedrawCursor();
 
-        void ChangeAreaSize(const Size &);
+        void ChangeAreaSize(const Size&);
 
-        Basic &interface;
+        Basic& interface;
 
         Surface spriteArea;
         SpriteMove cursorArea;

@@ -34,4 +34,3 @@ namespace ObjSwmp
 
     int GetActionObject(uint32_t index);
 }
-

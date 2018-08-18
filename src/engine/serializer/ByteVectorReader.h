@@ -11,12 +11,12 @@ struct Point;
 
 class ByteVectorReader
 {
-    const std::vector<u8> &_data;
+    const std::vector<u8>& _data;
     int _pos;
     bool _isBigEndian = false;
 
 public:
-    explicit ByteVectorReader(const std::vector<u8> &data);
+    explicit ByteVectorReader(const std::vector<u8>& data);
 
     void skip(uint32_t sz);
 
@@ -50,48 +50,48 @@ public:
 
     void setBigEndian(int value);
 
-    ByteVectorReader &operator>>(Size &v);
+    ByteVectorReader& operator>>(Size& v);
 
 
-    ByteVectorReader &operator>>(float &v);
+    ByteVectorReader& operator>>(float& v);
 
-    template<class Type>
-    void readToVec(std::vector<Type> &v)
+    template <class Type>
+    void readToVec(std::vector<Type>& v)
     {
         const uint32_t size = get32();
         v.resize(size);
-        for (auto &it : v)
+        for (auto& it : v)
             it.ReadFrom(*this);
     }
 
-    template<class Type>
-    ByteVectorReader &operator>>(std::vector<Type> &v)
+    template <class Type>
+    ByteVectorReader& operator>>(std::vector<Type>& v)
     {
         const uint32_t size = get32();
         v.resize(size);
-        for (auto &it : v)
+        for (auto& it : v)
             *this >> it;
         return *this;
     }
 
-    template<class Type>
-    ByteVectorReader &operator>>(std::list<Type> &v)
+    template <class Type>
+    ByteVectorReader& operator>>(std::list<Type>& v)
     {
         const uint32_t size = get32();
         v.resize(size);
-        for (auto &it : v)
+        for (auto& it : v)
             *this >> it;
         return *this;
     }
 
-    template<class Type1, class Type2>
-    ByteVectorReader &operator>>(std::pair<Type1, Type2> &p)
+    template <class Type1, class Type2>
+    ByteVectorReader& operator>>(std::pair<Type1, Type2>& p)
     {
         return *this >> p.first >> p.second;
     }
 
-    template<class Type1, class Type2>
-    ByteVectorReader &operator>>(std::map<Type1, Type2> &v)
+    template <class Type1, class Type2>
+    ByteVectorReader& operator>>(std::map<Type1, Type2>& v)
     {
         const uint32_t size = get32();
         v.clear();
@@ -105,25 +105,24 @@ public:
     }
 
     std::string readString();
-
 };
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, u8 &val);
+ByteVectorReader& operator>>(ByteVectorReader& msg, u8& val);
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, s8 &val);
+ByteVectorReader& operator>>(ByteVectorReader& msg, s8& val);
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, char &val);
+ByteVectorReader& operator>>(ByteVectorReader& msg, char& val);
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, u16 &val);
+ByteVectorReader& operator>>(ByteVectorReader& msg, u16& val);
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, s16 &val);
+ByteVectorReader& operator>>(ByteVectorReader& msg, s16& val);
 
-ByteVectorReader &operator>>(ByteVectorReader &, uint32_t &);
+ByteVectorReader& operator>>(ByteVectorReader&, uint32_t&);
 
-ByteVectorReader &operator>>(ByteVectorReader &, s32 &);
+ByteVectorReader& operator>>(ByteVectorReader&, s32&);
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, bool &);
+ByteVectorReader& operator>>(ByteVectorReader& msg, bool&);
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, std::string &v);
+ByteVectorReader& operator>>(ByteVectorReader& msg, std::string& v);
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, Point &v);
+ByteVectorReader& operator>>(ByteVectorReader& msg, Point& v);

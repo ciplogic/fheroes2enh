@@ -33,18 +33,18 @@
 #include "buildinginfo.h"
 #include "icn.h"
 
-int Castle::DialogBuyHero(const Heroes *hero) const
+int Castle::DialogBuyHero(const Heroes* hero) const
 {
     if (!hero) return Dialog::CANCEL;
 
     const int system = Settings::Get().ExtGameEvilInterface() ? ICN::SYSTEME : ICN::SYSTEM;
 
-    Display &display = Display::Get();
-    Cursor &cursor = Cursor::Get();
+    Display& display = Display::Get();
+    Cursor& cursor = Cursor::Get();
     cursor.Hide();
 
     const int spacer = 10;
-    const Sprite &portrait_frame = AGG::GetICN(ICN::SURRENDR, 4);
+    const Sprite& portrait_frame = AGG::GetICN(ICN::SURRENDR, 4);
 
     Text text(_("Recruit Hero"), Font::BIG);
 
@@ -70,8 +70,8 @@ int Castle::DialogBuyHero(const Heroes *hero) const
     Resource::BoxSprite rbs(PaymentConditions::RecruitHero(hero->GetLevel()), BOXAREA_WIDTH);
 
     Dialog::FrameBox box(text.h() + spacer + portrait_frame.h() + spacer + box2.h() + spacer + rbs.GetArea().h, true);
-    const Rect &box_rt = box.GetArea();
-    LocalEvent &le = LocalEvent::Get();
+    const Rect& box_rt = box.GetArea();
+    LocalEvent& le = LocalEvent::Get();
     Point dst_pt;
 
     dst_pt.x = box_rt.x + (box_rt.w - text.w()) / 2;
@@ -122,7 +122,7 @@ int Castle::DialogBuyHero(const Heroes *hero) const
 
         if (button1.isEnable() &&
             (le.MouseClickLeft(button1) ||
-             HotKeyPressEvent(Game::EVENT_DEFAULT_READY)))
+                HotKeyPressEvent(Game::EVENT_DEFAULT_READY)))
             return Dialog::OK;
 
         if (le.MouseClickLeft(button2) ||
@@ -141,13 +141,13 @@ int Castle::DialogBuyCastle(bool buttons) const
 
 uint32_t Castle::OpenTown()
 {
-    Display &display = Display::Get();
-    Cursor &cursor = Cursor::Get();
+    Display& display = Display::Get();
+    Cursor& cursor = Cursor::Get();
     cursor.Hide();
 
     Dialog::FrameBorder background(Size(640, 480));
 
-    const Point &cur_pt = background.GetArea();
+    const Point& cur_pt = background.GetArea();
     Point dst_pt(cur_pt);
 
     AGG::GetICN(ICN::CASLWIND, 0).Blit(dst_pt);
@@ -202,21 +202,21 @@ uint32_t Castle::OpenTown()
     building_t level = BUILD_NOTHING;
     switch (GetLevelMageGuild())
     {
-        case 0:
-            level = BUILD_MAGEGUILD1;
-            break;
-        case 1:
-            level = BUILD_MAGEGUILD2;
-            break;
-        case 2:
-            level = BUILD_MAGEGUILD3;
-            break;
-        case 3:
-            level = BUILD_MAGEGUILD4;
-            break;
-        default:
-            level = BUILD_MAGEGUILD5;
-            break;
+    case 0:
+        level = BUILD_MAGEGUILD1;
+        break;
+    case 1:
+        level = BUILD_MAGEGUILD2;
+        break;
+    case 2:
+        level = BUILD_MAGEGUILD3;
+        break;
+    case 3:
+        level = BUILD_MAGEGUILD4;
+        break;
+    default:
+        level = BUILD_MAGEGUILD5;
+        break;
     }
     BuildingInfo buildingMageGuild(*this, level);
     buildingMageGuild.SetPos(cur_pt.x + 5, cur_pt.y + 157);
@@ -283,16 +283,17 @@ uint32_t Castle::OpenTown()
     buildingCaptain.Redraw();
 
     // combat format
-    const Sprite &spriteSpreadArmyFormat = AGG::GetICN(ICN::HSICONS, 9);
-    const Sprite &spriteGroupedArmyFormat = AGG::GetICN(ICN::HSICONS, 10);
+    const Sprite& spriteSpreadArmyFormat = AGG::GetICN(ICN::HSICONS, 9);
+    const Sprite& spriteGroupedArmyFormat = AGG::GetICN(ICN::HSICONS, 10);
     const Rect rectSpreadArmyFormat(cur_pt.x + 550, cur_pt.y + 220, spriteSpreadArmyFormat.w(),
                                     spriteSpreadArmyFormat.h());
     const Rect rectGroupedArmyFormat(cur_pt.x + 585, cur_pt.y + 220, spriteGroupedArmyFormat.w(),
                                      spriteGroupedArmyFormat.h());
     const string descriptionSpreadArmyFormat(
-            _("'Spread' combat formation spreads your armies from the top to the bottom of the battlefield, with at least one empty space between each army."));
+        _("'Spread' combat formation spreads your armies from the top to the bottom of the battlefield, with at least one empty space between each army."
+        ));
     const string descriptionGroupedArmyFormat(
-            _("'Grouped' combat formation bunches your army toget her in the center of your side of the battlefield."));
+        _("'Grouped' combat formation bunches your army toget her in the center of your side of the battlefield."));
     const Point pointSpreadArmyFormat(rectSpreadArmyFormat.x - 1, rectSpreadArmyFormat.y - 1);
     const Point pointGroupedArmyFormat(rectGroupedArmyFormat.x - 1, rectGroupedArmyFormat.y - 1);
 
@@ -342,11 +343,12 @@ uint32_t Castle::OpenTown()
         cursorFormat.Move(army.isSpreadFormat() ? pointSpreadArmyFormat : pointGroupedArmyFormat);
     }
 
-    Kingdom &kingdom = GetKingdom();
+    Kingdom& kingdom = GetKingdom();
 
-    Heroes *hero1 = kingdom.GetRecruits().GetHero1();
-    Heroes *hero2 = kingdom.GetLastLostHero() && kingdom.GetLastLostHero() != hero1 ? kingdom.GetLastLostHero()
-                                                                                    : kingdom.GetRecruits().GetHero2();
+    Heroes* hero1 = kingdom.GetRecruits().GetHero1();
+    Heroes* hero2 = kingdom.GetLastLostHero() && kingdom.GetLastLostHero() != hero1
+                        ? kingdom.GetLastLostHero()
+                        : kingdom.GetRecruits().GetHero2();
 
     string not_allow1_msg, not_allow2_msg;
     const bool allow_buy_hero1 = hero1 ? AllowBuyHero(*hero1, &not_allow1_msg) : false;
@@ -359,7 +361,8 @@ uint32_t Castle::OpenTown()
     if (hero1)
     {
         hero1->PortraitRedraw(dst_pt.x, dst_pt.y, PORT_BIG, display);
-    } else
+    }
+    else
         display.FillRect(rectHero1, ColorBlack);
     // indicator
     if (!allow_buy_hero1)
@@ -376,7 +379,8 @@ uint32_t Castle::OpenTown()
     if (hero2)
     {
         hero2->PortraitRedraw(dst_pt.x, dst_pt.y, PORT_BIG, display);
-    } else
+    }
+    else
         display.FillRect(rectHero2, ColorBlack);
     // indicator
     if (!allow_buy_hero2)
@@ -389,7 +393,7 @@ uint32_t Castle::OpenTown()
     // bottom bar
     dst_pt.x = cur_pt.x;
     dst_pt.y = cur_pt.y + 461;
-    const Sprite &bar = AGG::GetICN(ICN::CASLBAR, 0);
+    const Sprite& bar = AGG::GetICN(ICN::CASLBAR, 0);
     bar.Blit(dst_pt);
 
     StatusBar statusBar;
@@ -408,7 +412,7 @@ uint32_t Castle::OpenTown()
     cursor.Show();
     display.Flip();
 
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     // message loop
     while (le.HandleEvents())
@@ -468,7 +472,8 @@ uint32_t Castle::OpenTown()
                 cursor.Show();
                 display.Flip();
                 army.SetSpreadFormat(true);
-            } else if (le.MouseClickLeft(rectGroupedArmyFormat) && army.isSpreadFormat())
+            }
+            else if (le.MouseClickLeft(rectGroupedArmyFormat) && army.isSpreadFormat())
             {
                 cursor.Hide();
                 cursorFormat.Move(pointGroupedArmyFormat);
@@ -488,7 +493,8 @@ uint32_t Castle::OpenTown()
             hero1->OpenDialog(true);
             cursor.Show();
             display.Flip();
-        } else if (hero2 && le.MousePressRight(rectHero2))
+        }
+        else if (hero2 && le.MousePressRight(rectHero2))
         {
             hero2->OpenDialog(true);
             cursor.Show();
@@ -526,7 +532,8 @@ uint32_t Castle::OpenTown()
                 StringReplace(str, "%{race}", Race::String(hero1->GetRace()));
                 statusBar.ShowMessage(str);
             }
-        } else if (hero2 && le.MouseCursor(rectHero2))
+        }
+        else if (hero2 && le.MouseCursor(rectHero2))
         {
             if (!allow_buy_hero2)
                 statusBar.ShowMessage(not_allow2_msg);
@@ -537,7 +544,8 @@ uint32_t Castle::OpenTown()
                 StringReplace(str, "%{race}", Race::String(hero2->GetRace()));
                 statusBar.ShowMessage(str);
             }
-        } else if (le.MouseCursor(rectSpreadArmyFormat))
+        }
+        else if (le.MouseCursor(rectSpreadArmyFormat))
             statusBar.ShowMessage(_("Set garrison combat formation to 'Spread'"));
         else if (le.MouseCursor(rectGroupedArmyFormat))
             statusBar.ShowMessage(_("Set garrison combat formation to 'Grouped'"));

@@ -29,32 +29,32 @@
 class MapPosition
 {
 public:
-    explicit MapPosition(const Point & = Point(-1, -1));
+    explicit MapPosition(const Point& = Point(-1, -1));
 
     virtual ~MapPosition();
 
     bool operator==(s32) const;
 
-    const Point &GetCenter() const;
+    const Point& GetCenter() const;
 
     s32 GetIndex() const;
 
-    void SetCenter(const Point &);
+    void SetCenter(const Point&);
 
     void SetIndex(s32);
 
-    bool isPosition(const Point &) const;
+    bool isPosition(const Point&) const;
 
-    void ReadFrom(ByteVectorReader &msg);
+    void ReadFrom(ByteVectorReader& msg);
 
 protected:
-    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const MapPosition &);
+    friend ByteVectorWriter& operator<<(ByteVectorWriter&, const MapPosition&);
 
-    friend ByteVectorReader &operator>>(ByteVectorReader &, MapPosition &);
+    friend ByteVectorReader& operator>>(ByteVectorReader&, MapPosition&);
 
     Point center;
 };
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const MapPosition &);
+ByteVectorWriter& operator<<(ByteVectorWriter&, const MapPosition&);
 
-ByteVectorReader &operator>>(ByteVectorReader &, MapPosition &);
+ByteVectorReader& operator>>(ByteVectorReader&, MapPosition&);

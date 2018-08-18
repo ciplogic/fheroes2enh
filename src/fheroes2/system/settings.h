@@ -83,7 +83,7 @@ enum
     DBG_ENGINE_TRACE | DBG_GAME_TRACE | DBG_BATTLE_TRACE | DBG_AI_TRACE | DBG_NETWORK_TRACE | DBG_OTHER_TRACE
 };
 
-const char *StringDebug(int);
+const char* StringDebug(int);
 
 enum
 {
@@ -115,7 +115,7 @@ public:
         GAME_HIDE_INTERFACE = 0x10002000,
         GAME_ALSO_CONFIRM_AUTOSAVE = 0x10004000,
         //UNUSED			= 0x10008000,
-                GAME_DYNAMIC_INTERFACE = 0x10010000,
+        GAME_DYNAMIC_INTERFACE = 0x10010000,
         GAME_BATTLE_SHOW_GRID = 0x10020000,
         GAME_BATTLE_SHOW_MOUSE_SHADOW = 0x10040000,
         GAME_BATTLE_SHOW_MOVE_SHADOW = 0x10080000,
@@ -129,7 +129,7 @@ public:
         GAME_QUICKCOMBAT_ON = 0x18000000,
 
         /* influence on game balance: save to savefile */
-                WORLD_SHOW_VISITED_CONTENT = 0x20000001,
+        WORLD_SHOW_VISITED_CONTENT = 0x20000001,
         WORLD_ABANDONED_MINE_RANDOM = 0x20000002,
         WORLD_SAVE_MONSTER_BATTLE = 0x20000004,
         WORLD_ALLOW_SET_GUARDIAN = 0x20000008,
@@ -144,7 +144,7 @@ public:
         UNIONS_ALLOW_HERO_MEETINGS = 0x20001000,
         UNIONS_ALLOW_CASTLE_VISITING = 0x20002000,
         //UNUSED			= 0x20004000,
-                HEROES_AUTO_MOVE_BATTLE_DST = 0x20008000,
+        HEROES_AUTO_MOVE_BATTLE_DST = 0x20008000,
         WORLD_BAN_MONTHOF_MONSTERS = 0x20010000,
         HEROES_TRANSCRIBING_SCROLLS = 0x20020000,
         WORLD_NEW_VERSION_WEEKOF = 0x20040000,
@@ -177,7 +177,7 @@ public:
         BATTLE_ARCHMAGE_RESIST_BAD_SPELL = 0x40001000,
         BATTLE_MAGIC_TROOP_RESIST = 0x40002000,
         //UNUSED			= 0x40008000,
-                BATTLE_SOFT_WAITING = 0x40010000,
+        BATTLE_SOFT_WAITING = 0x40010000,
         BATTLE_REVERSE_WAIT_ORDER = 0x40020000,
         BATTLE_MERGE_ARMIES = 0x40100000,
         BATTLE_SKIP_INCREASE_DEFENSE = 0x40200000,
@@ -186,17 +186,17 @@ public:
         SETTINGS_LAST
     };
 
-    static Settings &Get();
+    static Settings& Get();
 
-    bool Read(const string &);
+    bool Read(const string&);
 
-    bool Save(const string &) const;
+    bool Save(const string&) const;
 
     string String() const;
 
-    void SetCurrentFileInfo(const Maps::FileInfo &);
+    void SetCurrentFileInfo(const Maps::FileInfo&);
 
-    const Maps::FileInfo &
+    const Maps::FileInfo&
     CurrentFileInfo() const;
 
     int Debug() const;
@@ -211,19 +211,19 @@ public:
 
     uint32_t MemoryLimit() const;
 
-    const string &PlayMusCommand() const;
+    const string& PlayMusCommand() const;
 
-    const string &SelectVideoDriver() const;
+    const string& SelectVideoDriver() const;
 
     int GameDifficulty() const;
 
-    const string &MapsCharset() const;
+    const string& MapsCharset() const;
 
-    const string &ForceLang() const;
+    const string& ForceLang() const;
 
-    const string &FontsNormal() const;
+    const string& FontsNormal() const;
 
-    const string &FontsSmall() const;
+    const string& FontsSmall() const;
 
     int FontsNormalSize() const;
 
@@ -233,21 +233,21 @@ public:
 
     bool FontNormalRenderBlended() const;
 
-    const Point &PosRadar() const;
+    const Point& PosRadar() const;
 
-    const Point &PosButtons() const;
+    const Point& PosButtons() const;
 
-    const Point &PosIcons() const;
+    const Point& PosIcons() const;
 
-    const Point &PosStatus() const;
+    const Point& PosStatus() const;
 
-    void SetPosRadar(const Point &);
+    void SetPosRadar(const Point&);
 
-    void SetPosButtons(const Point &);
+    void SetPosButtons(const Point&);
 
-    void SetPosIcons(const Point &);
+    void SetPosIcons(const Point&);
 
-    void SetPosStatus(const Point &);
+    void SetPosStatus(const Point&);
 
     bool FullScreen() const;
 
@@ -442,7 +442,7 @@ public:
 
     bool ExtPocketDragDropScroll() const;
 
-    const Size &VideoMode() const;
+    const Size& VideoMode() const;
 
     void SetAutoVideoMode();
 
@@ -506,9 +506,9 @@ public:
 
     void SetGameType(int);
 
-    Players &GetPlayers();
+    Players& GetPlayers();
 
-    const Players &GetPlayers() const;
+    const Players& GetPlayers() const;
 
     int CurrentColor() const;
 
@@ -523,11 +523,11 @@ public:
     // from maps info
     bool AllowChangeRace(int) const;
 
-    const string &MapsFile() const;
+    const string& MapsFile() const;
 
-    const string &MapsName() const;
+    const string& MapsName() const;
 
-    const string &MapsDescription() const;
+    const string& MapsDescription() const;
 
     int MapsDifficulty() const;
 
@@ -556,38 +556,44 @@ public:
     uint32_t LossCountDays() const;
 
     string GetProgramPath() const
-    { return path_program; }
+    {
+        return path_program;
+    }
 
-    void SetProgramPath(const string &);
+    void SetProgramPath(const string&);
 
     static string GetVersion();
 
-    static ListFiles GetListFiles(const string &prefix, const string &filter);
+    static ListFiles GetListFiles(const string& prefix, const string& filter);
 
     static ListDirs GetRootDirs();
 
-    static string GetLastFile(const string &prefix, const string &name);
+    static string GetLastFile(const string& prefix, const string& name);
 
-    static string GetWriteableDir(const char *);
+    static string GetWriteableDir(const char*);
 
     static string GetSaveDir();
 
     static string GetLangDir();
 
     // deprecated
-    const string &GetDataParams() const
-    { return data_params; }
+    const string& GetDataParams() const
+    {
+        return data_params;
+    }
 
     ListDirs GetMapsParams() const
-    { return maps_params; }
+    {
+        return maps_params;
+    }
 
 protected:
     void PostLoad();
 
 private:
-    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Settings &);
-    
-    friend ByteVectorReader &operator>>(ByteVectorReader &, Settings &);
+    friend ByteVectorWriter& operator<<(ByteVectorWriter&, const Settings&);
+
+    friend ByteVectorReader& operator>>(ByteVectorReader&, Settings&);
 
     Settings();
 
@@ -645,6 +651,6 @@ private:
     Players players;
 };
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const Settings &);
+ByteVectorWriter& operator<<(ByteVectorWriter&, const Settings&);
 
-ByteVectorReader &operator>>(ByteVectorReader &, Settings &);
+ByteVectorReader& operator>>(ByteVectorReader&, Settings&);

@@ -33,17 +33,17 @@ std::string Int2Str(int);
 
 std::string GetStringShort(int);
 
-std::string GetString(const Point &);
+std::string GetString(const Point&);
 
-std::string GetString(const Size &);
+std::string GetString(const Size&);
 
-std::string GetString(const Rect &);
+std::string GetString(const Rect&);
 
 std::string GetString(double, u8);
 
 std::string GetHexString(int value, int width = 8);
 
-int GetInt(const std::string &);
+int GetInt(const std::string&);
 
 int Sign(int);
 
@@ -53,38 +53,38 @@ std::string StringLower(std::string);
 
 std::string StringUpper(std::string);
 
-std::vector<std::string> StringSplit(const std::string &, const std::string &);
+std::vector<std::string> StringSplit(const std::string&, const std::string&);
 
-void StringReplace(std::string &, const char *, const std::string &);
+void StringReplace(std::string&, const char*, const std::string&);
 
-void StringReplace(std::string &, const char *, int);
+void StringReplace(std::string&, const char*, int);
 
 int CountBits(uint32_t);
 
-int CheckSum(const std::vector<u8> &);
+int CheckSum(const std::vector<u8>&);
 
-int CheckSum(const std::string &);
+int CheckSum(const std::string&);
 
-std::string EncodeString(const std::string &, const char *charset);
+std::string EncodeString(const std::string&, const char* charset);
 
-std::vector<u16> StringUTF8_to_UNICODE(const std::string &);
+std::vector<u16> StringUTF8_to_UNICODE(const std::string&);
 
-std::string StringUNICODE_to_UTF8(const std::vector<u16> &);
+std::string StringUNICODE_to_UTF8(const std::vector<u16>&);
 
-std::vector<u8> decodeBase64(const std::string &);
+std::vector<u8> decodeBase64(const std::string&);
 
-std::string InsertString(const std::string &, size_t, const char *);
+std::string InsertString(const std::string&, size_t, const char*);
 
-size_t InsertKeySym(std::string &, size_t, KeySym, u16 mod = 0);
+size_t InsertKeySym(std::string&, size_t, KeySym, u16 mod = 0);
 
 KeySym KeySymFromChar(char);
 
 char CharFromKeySym(KeySym, u16 mod = 0);
 
-bool PressIntKey(uint32_t min, uint32_t max, uint32_t &result);
+bool PressIntKey(uint32_t min, uint32_t max, uint32_t& result);
 
-bool SaveMemToFile(const std::vector<u8> &, const std::string &);
+bool SaveMemToFile(const std::vector<u8>&, const std::string&);
 
-Points GetLinePoints(const Point &pt1, const Point &pt2, u16 step);
+Points GetLinePoints(const Point& pt1, const Point& pt2, u16 step);
 
-Points GetArcPoints(const Point &from, const Point &to, const Point &max, u16 step);
+Points GetArcPoints(const Point& from, const Point& to, const Point& max, u16 step);

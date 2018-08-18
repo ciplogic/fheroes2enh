@@ -3,8 +3,8 @@
 #include <fstream>
 
 BinaryFileReader::BinaryFileReader()
-        : _file(nullptr),
-          defaultBuf{}
+    : _file(nullptr),
+      defaultBuf{}
 {
 }
 
@@ -13,7 +13,7 @@ BinaryFileReader::~BinaryFileReader()
     close();
 }
 
-bool BinaryFileReader::open(const std::string &cs, const char *rb)
+bool BinaryFileReader::open(const std::string& cs, const char* rb)
 {
     _file = fopen(cs.c_str(), rb);
     return _file != nullptr;
@@ -121,11 +121,13 @@ namespace FileUtils
         result = reader.getRaw(fileSize);
         return result;
     }
+
     bool Exists(const std::string& fileName)
     {
         std::ifstream infile(fileName);
         return infile.is_open();
     }
+
     std::vector<std::string> readFileLines(const std::string& fileName)
     {
         std::vector<std::string> result;
@@ -139,6 +141,7 @@ namespace FileUtils
         }
         return result;
     }
+
     void writeFileBytes(const std::string& fileName, const std::vector<u8>& v)
     {
         std::ofstream outfile(fileName, std::ios::out | std::ios::binary);

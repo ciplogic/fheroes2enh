@@ -34,26 +34,26 @@
 
 int Dialog::AdventureOptions(bool enabledig)
 {
-    Display &display = Display::Get();
+    Display& display = Display::Get();
 
     // preload
     const int apanbkg = Settings::Get().ExtGameEvilInterface() ? ICN::APANBKGE : ICN::APANBKG;
     const int apanel = Settings::Get().ExtGameEvilInterface() ? ICN::APANELE : ICN::APANEL;
 
     // cursor
-    Cursor &cursor = Cursor::Get();
+    Cursor& cursor = Cursor::Get();
     const int oldcursor = cursor.Themes();
 
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
     // image box
-    const Sprite &box = AGG::GetICN(apanbkg, 0);
+    const Sprite& box = AGG::GetICN(apanbkg, 0);
     SpriteBack back(Rect((display.w() - box.w()) / 2, (display.h() - box.h()) / 2, box.w(), box.h()));
-    const Point &rb = back.GetPos();
+    const Point& rb = back.GetPos();
     box.Blit(rb.x, rb.y);
 
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     Button buttonWorld(rb.x + 62, rb.y + 30, apanel, 0, 1);
     Button buttonPuzzle(rb.x + 195, rb.y + 30, apanel, 2, 3);

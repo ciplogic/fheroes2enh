@@ -29,5 +29,5 @@ struct Error
     {
     };
 
-    static void Except(const char *func, const char *message);
+    static void Except(const char* func, const char* message);
 };

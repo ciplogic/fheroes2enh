@@ -52,57 +52,57 @@ namespace AI
 
     void Init();
 
-    void KingdomTurn(Kingdom &);
+    void KingdomTurn(Kingdom&);
 
-    void BattleTurn(Battle::Arena &, const Battle::Unit &, Battle::Actions &);
+    void BattleTurn(Battle::Arena&, const Battle::Unit&, Battle::Actions&);
 
-    bool BattleMagicTurn(Battle::Arena &, const Battle::Unit &, Battle::Actions &, const Battle::Unit *);
+    bool BattleMagicTurn(Battle::Arena&, const Battle::Unit&, Battle::Actions&, const Battle::Unit*);
 
-    void HeroesAdd(const Heroes &);
+    void HeroesAdd(const Heroes&);
 
-    void HeroesRemove(const Heroes &);
+    void HeroesRemove(const Heroes&);
 
-    void HeroesTurn(Heroes &);
+    void HeroesTurn(Heroes&);
 
-    void HeroesMove(Heroes &);
+    void HeroesMove(Heroes&);
 
-    bool HeroesGetTask(Heroes &);
+    bool HeroesGetTask(Heroes&);
 
-    void HeroesPreBattle(HeroBase &);
+    void HeroesPreBattle(HeroBase&);
 
-    void HeroesAfterBattle(HeroBase &);
+    void HeroesAfterBattle(HeroBase&);
 
-    void HeroesPostLoad(Heroes &);
+    void HeroesPostLoad(Heroes&);
 
-    bool HeroesValidObject(const Heroes &, s32);
+    bool HeroesValidObject(const Heroes&, s32);
 
-    bool HeroesCanMove(const Heroes &);
+    bool HeroesCanMove(const Heroes&);
 
-    void HeroesAction(Heroes &, s32);
+    void HeroesAction(Heroes&, s32);
 
-    void HeroesActionComplete(Heroes &, s32);
+    void HeroesActionComplete(Heroes&, s32);
 
-    void HeroesActionNewPosition(Heroes &);
+    void HeroesActionNewPosition(Heroes&);
 
-    void HeroesLevelUp(Heroes &);
+    void HeroesLevelUp(Heroes&);
 
-    void HeroesClearTask(const Heroes &);
+    void HeroesClearTask(const Heroes&);
 
     bool HeroesSkipFog();
 
-    std::string HeroesString(const Heroes &);
+    std::string HeroesString(const Heroes&);
 
-    void CastleAdd(const Castle &);
+    void CastleAdd(const Castle&);
 
-    void CastleRemove(const Castle &);
+    void CastleRemove(const Castle&);
 
-    void CastleTurn(Castle &);
+    void CastleTurn(Castle&);
 
-    void CastlePreBattle(Castle &);
+    void CastlePreBattle(Castle&);
 
-    void CastleAfterBattle(Castle &, bool attacker_wins);
+    void CastleAfterBattle(Castle&, bool attacker_wins);
 
-    const char *Type();
+    const char* Type();
 
-    const char *License();
+    const char* License();
 }

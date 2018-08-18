@@ -25,27 +25,29 @@
 
 std::string Luck::String(int luck)
 {
-    std::string str_luck[] = {"Unknown", _("luck|Cursed"), _("luck|Awful"), _("luck|Bad"), _("luck|Normal"),
-                              _("luck|Good"), _("luck|Great"), _("luck|Irish")};
+    std::string str_luck[] = {
+        "Unknown", _("luck|Cursed"), _("luck|Awful"), _("luck|Bad"), _("luck|Normal"),
+        _("luck|Good"), _("luck|Great"), _("luck|Irish")
+    };
 
     switch (luck)
     {
-        case CURSED:
-            return str_luck[1];
-        case AWFUL:
-            return str_luck[2];
-        case BAD:
-            return str_luck[3];
-        case NORMAL:
-            return str_luck[4];
-        case GOOD:
-            return str_luck[5];
-        case GREAT:
-            return str_luck[6];
-        case IRISH:
-            return str_luck[7];
-        default:
-            break;
+    case CURSED:
+        return str_luck[1];
+    case AWFUL:
+        return str_luck[2];
+    case BAD:
+        return str_luck[3];
+    case NORMAL:
+        return str_luck[4];
+    case GOOD:
+        return str_luck[5];
+    case GREAT:
+        return str_luck[6];
+    case IRISH:
+        return str_luck[7];
+    default:
+        break;
     }
 
     return str_luck[0];
@@ -53,25 +55,27 @@ std::string Luck::String(int luck)
 
 std::string Luck::Description(int luck)
 {
-    std::string str_desc_luck[] = {"Unknown",
-                                   _("Bad luck sometimes falls on your armies in combat, causing their attacks to only do half damage."),
-                                   _("Neutral luck means your armies will never get lucky or unlucky attacks on the enemy."),
-                                   _("Good luck sometimes lets your armies get lucky attacks (double strength) in combat.")};
+    std::string str_desc_luck[] = {
+        "Unknown",
+        _("Bad luck sometimes falls on your armies in combat, causing their attacks to only do half damage."),
+        _("Neutral luck means your armies will never get lucky or unlucky attacks on the enemy."),
+        _("Good luck sometimes lets your armies get lucky attacks (double strength) in combat.")
+    };
 
     switch (luck)
     {
-        case CURSED:
-        case AWFUL:
-        case BAD:
-            return str_desc_luck[1];
-        case NORMAL:
-            return str_desc_luck[2];
-        case GOOD:
-        case GREAT:
-        case IRISH:
-            return str_desc_luck[3];
-        default:
-            break;
+    case CURSED:
+    case AWFUL:
+    case BAD:
+        return str_desc_luck[1];
+    case NORMAL:
+        return str_desc_luck[2];
+    case GOOD:
+    case GREAT:
+    case IRISH:
+        return str_desc_luck[3];
+    default:
+        break;
     }
 
     return str_desc_luck[0];

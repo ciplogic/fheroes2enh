@@ -42,9 +42,10 @@ namespace Battle
 {
     struct ControlInfo
     {
-        ControlInfo(const Point &pt, int ctrl) : result(ctrl),
+        ControlInfo(const Point& pt, int ctrl) : result(ctrl),
                                                  rtLocal(pt.x, pt.y, 24, 24), rtAI(pt.x + 75, pt.y, 24, 24)
-        {};
+        {
+        };
 
         void Redraw() const;
 
@@ -57,14 +58,14 @@ namespace Battle
     class Only
     {
     public:
-        Heroes *hero1;
-        Heroes *hero2;
+        Heroes* hero1;
+        Heroes* hero2;
 
         Player player1;
         Player player2;
 
-        Army *army1;
-        Army *army2;
+        Army* army1;
+        Army* army2;
         Army monsters;
 
         sp<MoraleIndicator> moraleIndicator1;
@@ -85,7 +86,7 @@ namespace Battle
         sp<ArtifactsBar> selectArtifacts1;
         sp<ArtifactsBar> selectArtifacts2;
 
-        ControlInfo *cinfo2;
+        ControlInfo* cinfo2;
 
         Rect rtPortrait1;
         Rect rtPortrait2;
@@ -109,20 +110,20 @@ namespace Battle
 
         bool ChangeSettings();
 
-        void RedrawBaseInfo(const Point &) const;
+        void RedrawBaseInfo(const Point&) const;
 
         void StartBattle();
 
-        void UpdateHero1(const Point &);
+        void UpdateHero1(const Point&);
 
-        void UpdateHero2(const Point &);
+        void UpdateHero2(const Point&);
 
-        static Only &Get();
+        static Only& Get();
 
         Only();
     };
 }
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const Battle::Only &);
+ByteVectorWriter& operator<<(ByteVectorWriter&, const Battle::Only&);
 
-ByteVectorReader &operator>>(ByteVectorReader &, Battle::Only &);
+ByteVectorReader& operator>>(ByteVectorReader&, Battle::Only&);

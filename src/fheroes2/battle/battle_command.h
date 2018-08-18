@@ -59,20 +59,24 @@ namespace Battle
     public:
         explicit Command(int);
 
-        Command(int cmd, int param1, int param2, const Indexes &);
+        Command(int cmd, int param1, int param2, const Indexes&);
 
         Command(int cmd, int param1, int param2 = -1, int param3 = -1, int param4 = -1);
 
         int GetType() const
-        { return type; }
+        {
+            return type;
+        }
 
         int GetValue();
 
         bool isType(int msg) const
-        { return type == msg; }
+        {
+            return type == msg;
+        }
 
-        Command &operator<<(const int &);
+        Command& operator<<(const int&);
 
-        Command &operator>>(int &);
+        Command& operator>>(int&);
     };
 }

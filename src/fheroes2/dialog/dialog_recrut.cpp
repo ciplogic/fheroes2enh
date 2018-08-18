@@ -30,9 +30,9 @@
 #include "dialog.h"
 #include "icn.h"
 
-void RedrawCurrentInfo(const Point &pos, uint32_t available, uint32_t result,
-                       const payment_t &paymentMonster, const payment_t &paymentCosts, const Funds &funds,
-                       const string &label)
+void RedrawCurrentInfo(const Point& pos, uint32_t available, uint32_t result,
+                       const payment_t& paymentMonster, const payment_t& paymentCosts, const Funds& funds,
+                       const string& label)
 {
     Text text;
 
@@ -43,7 +43,7 @@ void RedrawCurrentInfo(const Point &pos, uint32_t available, uint32_t result,
     text.Set(Int2Str(result), Font::BIG);
     text.Blit(pos.x + 167 - text.w() / 2, pos.y + 160);
     const string sgold =
-            Int2Str(paymentCosts.gold) + " " + "(" + Int2Str(funds.gold - paymentCosts.gold) + ")";
+        Int2Str(paymentCosts.gold) + " " + "(" + Int2Str(funds.gold - paymentCosts.gold) + ")";
     int rsext = paymentMonster.GetValidItems() & ~Resource::GOLD;
 
     if (rsext)
@@ -52,10 +52,11 @@ void RedrawCurrentInfo(const Point &pos, uint32_t available, uint32_t result,
         text.Blit(pos.x + 133 - text.w() / 2, pos.y + 228);
 
         text.Set(
-                Int2Str(paymentCosts.Get(rsext)) + " " + "(" + Int2Str(funds.Get(rsext) - paymentCosts.Get(rsext)) +
-                ")", Font::SMALL);
+            Int2Str(paymentCosts.Get(rsext)) + " " + "(" + Int2Str(funds.Get(rsext) - paymentCosts.Get(rsext)) +
+            ")", Font::SMALL);
         text.Blit(pos.x + 195 - text.w() / 2, pos.y + 228);
-    } else
+    }
+    else
     {
         text.Set(sgold, Font::SMALL);
         text.Blit(pos.x + 160 - text.w() / 2, pos.y + 228);
@@ -65,10 +66,10 @@ void RedrawCurrentInfo(const Point &pos, uint32_t available, uint32_t result,
     text.Blit(pos.x + 165 - text.w() / 2, pos.y + 180);
 }
 
-void RedrawResourceInfo(const Surface &sres, const Point &pos, s32 value,
+void RedrawResourceInfo(const Surface& sres, const Point& pos, s32 value,
                         s32 px1, s32 py1, s32 px2, s32 py2)
 {
-    Display &display = Display::Get();
+    Display& display = Display::Get();
     Point dst_pt;
 
     dst_pt.x = pos.x + px1;
@@ -81,19 +82,19 @@ void RedrawResourceInfo(const Surface &sres, const Point &pos, s32 value,
     text.Blit(dst_pt);
 }
 
-void RedrawStaticInfo(const Rect &pos, const Monster &monster, bool label)
+void RedrawStaticInfo(const Rect& pos, const Monster& monster, bool label)
 {
     Text text;
     Point dst_pt;
 
-    const Sprite &box = AGG::GetICN(ICN::RECRBKG, 0);
+    const Sprite& box = AGG::GetICN(ICN::RECRBKG, 0);
     box.Blit(pos.x, pos.y);
 
     payment_t paymentMonster = monster.GetCost();
     bool extres = 2 == paymentMonster.GetValidItemsCount();
 
     // smear hardcore text "Cost per troop:"
-    const Sprite &smear = AGG::GetICN(ICN::TOWNNAME, 0);
+    const Sprite& smear = AGG::GetICN(ICN::TOWNNAME, 0);
     dst_pt.x = pos.x + 144;
     dst_pt.y = pos.y + 55;
     smear.Blit(Rect(8, 1, 120, 12), dst_pt);
@@ -112,7 +113,7 @@ void RedrawStaticInfo(const Rect &pos, const Monster &monster, bool label)
     text.Blit(dst_pt);
 
     // sprite monster
-    const Sprite &smon = AGG::GetICN(monster.ICNMonh(), 0);
+    const Sprite& smon = AGG::GetICN(monster.ICNMonh(), 0);
     dst_pt.x = pos.x + 70 - smon.w() / 2;
     dst_pt.y = pos.y + 130 - smon.h();
     smon.Blit(dst_pt);
@@ -126,7 +127,7 @@ void RedrawStaticInfo(const Rect &pos, const Monster &monster, bool label)
 
     // info resource
     // gold
-    const Sprite &sgold = AGG::GetICN(ICN::RESOURCE, 6);
+    const Sprite& sgold = AGG::GetICN(ICN::RESOURCE, 6);
     dst_pt.x = pos.x + (extres ? 150 : 175);
     dst_pt.y = pos.y + 75;
     sgold.Blit(dst_pt);
@@ -143,73 +144,77 @@ void RedrawStaticInfo(const Rect &pos, const Monster &monster, bool label)
     // crystal
     if (paymentMonster.crystal)
     {
-        const Sprite &sres = AGG::GetICN(ICN::RESOURCE, 4);
+        const Sprite& sres = AGG::GetICN(ICN::RESOURCE, 4);
         RedrawResourceInfo(sres, pos, paymentMonster.crystal,
                            225, 75, 240, 103);
         dst_pt.x = pos.x + 180;
         dst_pt.y = pos.y + 200;
         sres.Blit(dst_pt);
-    } else
-        // mercury
-    if (paymentMonster.mercury)
-    {
-        const Sprite &sres = AGG::GetICN(ICN::RESOURCE, 1);
-        RedrawResourceInfo(sres, pos, paymentMonster.mercury,
-                           225, 72, 240, 103);
-        dst_pt.x = pos.x + 180;
-        dst_pt.y = pos.y + 197;
-        sres.Blit(dst_pt);
-    } else
-        // wood
-    if (paymentMonster.wood)
-    {
-        const Sprite &sres = AGG::GetICN(ICN::RESOURCE, 0);
-        RedrawResourceInfo(sres, pos, paymentMonster.wood,
-                           225, 72, 240, 103);
-        dst_pt.x = pos.x + 180;
-        dst_pt.y = pos.y + 197;
-        sres.Blit(dst_pt);
-    } else
-        // ore
-    if (paymentMonster.ore)
-    {
-        const Sprite &sres = AGG::GetICN(ICN::RESOURCE, 2);
-        RedrawResourceInfo(sres, pos, paymentMonster.ore,
-                           225, 72, 240, 103);
-        dst_pt.x = pos.x + 180;
-        dst_pt.y = pos.y + 197;
-        sres.Blit(dst_pt);
-    } else
-        // sulfur
-    if (paymentMonster.sulfur)
-    {
-        const Sprite &sres = AGG::GetICN(ICN::RESOURCE, 3);
-        RedrawResourceInfo(sres, pos, paymentMonster.sulfur,
-                           225, 75, 240, 103);
-        dst_pt.x = pos.x + 180;
-        dst_pt.y = pos.y + 200;
-        sres.Blit(dst_pt);
-    } else
-        // gems
-    if (paymentMonster.gems)
-    {
-        const Sprite &sres = AGG::GetICN(ICN::RESOURCE, 5);
-        RedrawResourceInfo(sres, pos, paymentMonster.gems,
-                           225, 75, 240, 103);
-        dst_pt.x = pos.x + 180;
-        dst_pt.y = pos.y + 200;
-        sres.Blit(dst_pt);
     }
+    else
+        // mercury
+        if (paymentMonster.mercury)
+        {
+            const Sprite& sres = AGG::GetICN(ICN::RESOURCE, 1);
+            RedrawResourceInfo(sres, pos, paymentMonster.mercury,
+                               225, 72, 240, 103);
+            dst_pt.x = pos.x + 180;
+            dst_pt.y = pos.y + 197;
+            sres.Blit(dst_pt);
+        }
+        else
+            // wood
+            if (paymentMonster.wood)
+            {
+                const Sprite& sres = AGG::GetICN(ICN::RESOURCE, 0);
+                RedrawResourceInfo(sres, pos, paymentMonster.wood,
+                                   225, 72, 240, 103);
+                dst_pt.x = pos.x + 180;
+                dst_pt.y = pos.y + 197;
+                sres.Blit(dst_pt);
+            }
+            else
+                // ore
+                if (paymentMonster.ore)
+                {
+                    const Sprite& sres = AGG::GetICN(ICN::RESOURCE, 2);
+                    RedrawResourceInfo(sres, pos, paymentMonster.ore,
+                                       225, 72, 240, 103);
+                    dst_pt.x = pos.x + 180;
+                    dst_pt.y = pos.y + 197;
+                    sres.Blit(dst_pt);
+                }
+                else
+                    // sulfur
+                    if (paymentMonster.sulfur)
+                    {
+                        const Sprite& sres = AGG::GetICN(ICN::RESOURCE, 3);
+                        RedrawResourceInfo(sres, pos, paymentMonster.sulfur,
+                                           225, 75, 240, 103);
+                        dst_pt.x = pos.x + 180;
+                        dst_pt.y = pos.y + 200;
+                        sres.Blit(dst_pt);
+                    }
+                    else
+                        // gems
+                        if (paymentMonster.gems)
+                        {
+                            const Sprite& sres = AGG::GetICN(ICN::RESOURCE, 5);
+                            RedrawResourceInfo(sres, pos, paymentMonster.gems,
+                                               225, 75, 240, 103);
+                            dst_pt.x = pos.x + 180;
+                            dst_pt.y = pos.y + 200;
+                            sres.Blit(dst_pt);
+                        }
 
     // text number buy
     text.Set(_("Number to buy:"));
     dst_pt.x = pos.x + 30;
     dst_pt.y = pos.y + 163;
     text.Blit(dst_pt);
-
 }
 
-const char *SwitchMaxMinButtons(Button &btnMax, Button &btnMin, bool max)
+const char* SwitchMaxMinButtons(Button& btnMax, Button& btnMin, bool max)
 {
     if (btnMax.isEnable() || btnMin.isEnable())
     {
@@ -217,7 +222,8 @@ const char *SwitchMaxMinButtons(Button &btnMax, Button &btnMin, bool max)
         {
             btnMax.SetDisable(true);
             btnMin.SetDisable(false);
-        } else
+        }
+        else
         {
             btnMin.SetDisable(true);
             btnMax.SetDisable(false);
@@ -229,7 +235,7 @@ const char *SwitchMaxMinButtons(Button &btnMax, Button &btnMin, bool max)
     return "";
 }
 
-uint32_t CalculateMax(const Monster &monster, const Kingdom &kingdom, uint32_t available)
+uint32_t CalculateMax(const Monster& monster, const Kingdom& kingdom, uint32_t available)
 {
     uint32_t max = 0;
     while (kingdom.AllowPayment(monster.GetCost() * (max + 1)) && max + 1 <= available) ++max;
@@ -237,13 +243,13 @@ uint32_t CalculateMax(const Monster &monster, const Kingdom &kingdom, uint32_t a
     return max;
 }
 
-Troop Dialog::RecruitMonster(const Monster &monster0, uint32_t available, bool ext)
+Troop Dialog::RecruitMonster(const Monster& monster0, uint32_t available, bool ext)
 {
-    Display &display = Display::Get();
-    LocalEvent &le = LocalEvent::Get();
+    Display& display = Display::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     // cursor
-    Cursor &cursor = Cursor::Get();
+    Cursor& cursor = Cursor::Get();
     const int oldcursor = cursor.Themes();
     cursor.Hide();
     cursor.SetThemes(Cursor::POINTER);
@@ -251,19 +257,19 @@ Troop Dialog::RecruitMonster(const Monster &monster0, uint32_t available, bool e
     // calculate max count
     Monster monster = monster0;
     payment_t paymentMonster = monster.GetCost();
-    const Kingdom &kingdom = world.GetKingdom(Settings::Get().CurrentColor());
+    const Kingdom& kingdom = world.GetKingdom(Settings::Get().CurrentColor());
 
     uint32_t max = CalculateMax(monster, kingdom, available);
     uint32_t result = max;
 
     payment_t paymentCosts(paymentMonster * result);
 
-    const Sprite &box = AGG::GetICN(ICN::RECRBKG, 0);
+    const Sprite& box = AGG::GetICN(ICN::RECRBKG, 0);
 
     SpriteBack back(
-            Rect((display.w() - box.w()) / 2, (display.h() - box.h()) / 2 - 65, box.w(),
-                 box.h()));
-    const Rect &pos = back.GetArea();
+        Rect((display.w() - box.w()) / 2, (display.h() - box.h()) / 2 - 65, box.w(),
+             box.h()));
+    const Rect& pos = back.GetArea();
 
     const Rect rtChange(pos.x + 25, pos.y + 35, 85, 95);
     RedrawStaticInfo(pos, monster, ext && monster0.GetDowngrade() != monster0);
@@ -305,7 +311,7 @@ Troop Dialog::RecruitMonster(const Monster &monster0, uint32_t available, bool e
         buttonMax.Draw();
     }
 
-    const Funds &funds = kingdom.GetFunds();
+    const Funds& funds = kingdom.GetFunds();
     string maxmin = SwitchMaxMinButtons(buttonMax, buttonMin, true);
     RedrawCurrentInfo(pos, available, result, paymentMonster, paymentCosts, funds, maxmin);
 
@@ -345,7 +351,8 @@ Troop Dialog::RecruitMonster(const Monster &monster0, uint32_t available, bool e
                 paymentMonster = monster.GetCost();
                 paymentCosts = paymentMonster * result;
                 redraw = true;
-            } else if (monster != monster0)
+            }
+            else if (monster != monster0)
             {
                 monster = monster0;
                 max = CalculateMax(monster, kingdom, available);
@@ -370,7 +377,8 @@ Troop Dialog::RecruitMonster(const Monster &monster0, uint32_t available, bool e
             if (result == max)
             {
                 maxmin = SwitchMaxMinButtons(buttonMax, buttonMin, true);
-            } else if (result == 1)
+            }
+            else if (result == 1)
             {
                 maxmin = SwitchMaxMinButtons(buttonMax, buttonMin, false);
             }
@@ -386,11 +394,13 @@ Troop Dialog::RecruitMonster(const Monster &monster0, uint32_t available, bool e
             if (result == max)
             {
                 maxmin = SwitchMaxMinButtons(buttonMax, buttonMin, true);
-            } else if (result == 1)
+            }
+            else if (result == 1)
             {
                 maxmin = SwitchMaxMinButtons(buttonMax, buttonMin, false);
             }
-        } else if ((le.MouseWheelDn(rtWheel) || le.MouseClickLeft(buttonDn)) && result)
+        }
+        else if ((le.MouseWheelDn(rtWheel) || le.MouseClickLeft(buttonDn)) && result)
         {
             --result;
             paymentCosts -= paymentMonster;
@@ -400,17 +410,20 @@ Troop Dialog::RecruitMonster(const Monster &monster0, uint32_t available, bool e
             if (result == max)
             {
                 maxmin = SwitchMaxMinButtons(buttonMax, buttonMin, true);
-            } else if (result == 1)
+            }
+            else if (result == 1)
             {
                 maxmin = SwitchMaxMinButtons(buttonMax, buttonMin, false);
             }
-        } else if (buttonMax.isEnable() && le.MouseClickLeft(buttonMax) && result != max)
+        }
+        else if (buttonMax.isEnable() && le.MouseClickLeft(buttonMax) && result != max)
         {
             maxmin = SwitchMaxMinButtons(buttonMax, buttonMin, true);
             result = max;
             paymentCosts = paymentMonster * max;
             redraw = true;
-        } else if (buttonMin.isEnable() && le.MouseClickLeft(buttonMin) && result != 1)
+        }
+        else if (buttonMin.isEnable() && le.MouseClickLeft(buttonMin) && result != 1)
         {
             maxmin = SwitchMaxMinButtons(buttonMax, buttonMin, false);
             result = 1;
@@ -429,7 +442,8 @@ Troop Dialog::RecruitMonster(const Monster &monster0, uint32_t available, bool e
                 buttonOk.Press();
                 buttonOk.SetDisable(true);
                 buttonOk.Draw();
-            } else
+            }
+            else
             {
                 buttonOk.Release();
                 buttonOk.SetDisable(false);
@@ -463,25 +477,25 @@ Troop Dialog::RecruitMonster(const Monster &monster0, uint32_t available, bool e
     return Troop(monster, result);
 }
 
-void Dialog::DwellingInfo(const Monster &monster, uint32_t available)
+void Dialog::DwellingInfo(const Monster& monster, uint32_t available)
 {
-    Display &display = Display::Get();
+    Display& display = Display::Get();
 
     // cursor
-    Cursor &cursor = Cursor::Get();
+    Cursor& cursor = Cursor::Get();
     const int oldcursor = cursor.Themes();
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
     const payment_t paymentMonster = monster.GetCost();
-    const Sprite &box = AGG::GetICN(ICN::RECR2BKG, 0);
+    const Sprite& box = AGG::GetICN(ICN::RECR2BKG, 0);
 
     SpriteBack back(Rect((display.w() - box.w()) / 2, (display.h() - box.h()) / 2, box.w(), box.h()));
-    const Rect &pos = back.GetArea();
+    const Rect& pos = back.GetArea();
 
     box.Blit(pos.x, pos.y);
 
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     Point dst_pt;
     Text text;
@@ -494,7 +508,7 @@ void Dialog::DwellingInfo(const Monster &monster, uint32_t available)
     text.Blit(pos.x + (pos.w - text.w()) / 2, pos.y + 25);
 
     // sprite monster
-    const Sprite &smon = AGG::GetICN(monster.ICNMonh(), 0);
+    const Sprite& smon = AGG::GetICN(monster.ICNMonh(), 0);
     dst_pt.x = pos.x + 70 - smon.w() / 2;
     dst_pt.y = pos.y + 120 - smon.h();
     smon.Blit(dst_pt);
@@ -503,7 +517,7 @@ void Dialog::DwellingInfo(const Monster &monster, uint32_t available)
 
     // info resource
     // gold
-    const Sprite &sgold = AGG::GetICN(ICN::RESOURCE, 6);
+    const Sprite& sgold = AGG::GetICN(ICN::RESOURCE, 6);
     dst_pt.x = pos.x + (extres ? 150 : 175);
     dst_pt.y = pos.y + 75;
     sgold.Blit(dst_pt);
@@ -515,45 +529,50 @@ void Dialog::DwellingInfo(const Monster &monster, uint32_t available)
     // crystal
     if (paymentMonster.crystal)
     {
-        const Sprite &sres = AGG::GetICN(ICN::RESOURCE, 4);
+        const Sprite& sres = AGG::GetICN(ICN::RESOURCE, 4);
         RedrawResourceInfo(sres, pos, paymentMonster.crystal,
                            225, 75, 240, 103);
-    } else
-        // mercury
-    if (paymentMonster.mercury)
-    {
-        const Sprite &sres = AGG::GetICN(ICN::RESOURCE, 1);
-        RedrawResourceInfo(sres, pos, paymentMonster.mercury,
-                           225, 72, 240, 103);
-    } else
-        // wood
-    if (paymentMonster.wood)
-    {
-        const Sprite &sres = AGG::GetICN(ICN::RESOURCE, 0);
-        RedrawResourceInfo(sres, pos, paymentMonster.wood,
-                           225, 72, 240, 103);
-    } else
-        // ore
-    if (paymentMonster.ore)
-    {
-        const Sprite &sres = AGG::GetICN(ICN::RESOURCE, 2);
-        RedrawResourceInfo(sres, pos, paymentMonster.ore,
-                           225, 72, 240, 103);
-    } else
-        // sulfur
-    if (paymentMonster.sulfur)
-    {
-        const Sprite &sres = AGG::GetICN(ICN::RESOURCE, 3);
-        RedrawResourceInfo(sres, pos, paymentMonster.sulfur,
-                           225, 75, 240, 103);
-    } else
-        // gems
-    if (paymentMonster.gems)
-    {
-        const Sprite &sres = AGG::GetICN(ICN::RESOURCE, 5);
-        RedrawResourceInfo(sres, pos, paymentMonster.gems,
-                           225, 75, 240, 103);
     }
+    else
+        // mercury
+        if (paymentMonster.mercury)
+        {
+            const Sprite& sres = AGG::GetICN(ICN::RESOURCE, 1);
+            RedrawResourceInfo(sres, pos, paymentMonster.mercury,
+                               225, 72, 240, 103);
+        }
+        else
+            // wood
+            if (paymentMonster.wood)
+            {
+                const Sprite& sres = AGG::GetICN(ICN::RESOURCE, 0);
+                RedrawResourceInfo(sres, pos, paymentMonster.wood,
+                                   225, 72, 240, 103);
+            }
+            else
+                // ore
+                if (paymentMonster.ore)
+                {
+                    const Sprite& sres = AGG::GetICN(ICN::RESOURCE, 2);
+                    RedrawResourceInfo(sres, pos, paymentMonster.ore,
+                                       225, 72, 240, 103);
+                }
+                else
+                    // sulfur
+                    if (paymentMonster.sulfur)
+                    {
+                        const Sprite& sres = AGG::GetICN(ICN::RESOURCE, 3);
+                        RedrawResourceInfo(sres, pos, paymentMonster.sulfur,
+                                           225, 75, 240, 103);
+                    }
+                    else
+                        // gems
+                        if (paymentMonster.gems)
+                        {
+                            const Sprite& sres = AGG::GetICN(ICN::RESOURCE, 5);
+                            RedrawResourceInfo(sres, pos, paymentMonster.gems,
+                                               225, 75, 240, 103);
+                        }
 
     // text available
     str = _("Available: %{count}");

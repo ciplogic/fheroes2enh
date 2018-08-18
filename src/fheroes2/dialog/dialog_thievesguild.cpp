@@ -35,23 +35,29 @@
 struct ValueColors : pair<int, int>
 {
     ValueColors() : pair<int, int>(0, 0)
-    {}
+    {
+    }
 
     ValueColors(int v, int c) : pair<int, int>(v, c)
-    {}
+    {
+    }
 
     bool IsValue(int v) const
-    { return v == first; };
+    {
+        return v == first;
+    };
     //bool IsColor(int c) const { return (c & second); };
 
-    static bool SortValueGreat(const ValueColors &v1, const ValueColors &v2)
-    { return v1.first > v2.first; };
+    static bool SortValueGreat(const ValueColors& v1, const ValueColors& v2)
+    {
+        return v1.first > v2.first;
+    };
 };
 
-void UpdateValuesColors(vector<ValueColors> &v, int value, int color)
+void UpdateValuesColors(vector<ValueColors>& v, int value, int color)
 {
     const auto it =
-            find_if(v.begin(), v.end(), bind2nd(mem_fun_ref(&ValueColors::IsValue), value));
+        find_if(v.begin(), v.end(), bind2nd(mem_fun_ref(&ValueColors::IsValue), value));
 
     if (it == v.end())
         v.emplace_back(value, color);
@@ -59,7 +65,7 @@ void UpdateValuesColors(vector<ValueColors> &v, int value, int color)
         (*it).second |= color;
 }
 
-void GetTownsInfo(vector<ValueColors> &v, const Colors &colors)
+void GetTownsInfo(vector<ValueColors>& v, const Colors& colors)
 {
     v.clear();
 
@@ -72,7 +78,7 @@ void GetTownsInfo(vector<ValueColors> &v, const Colors &colors)
     sort(v.begin(), v.end(), ValueColors::SortValueGreat);
 }
 
-void GetCastlesInfo(vector<ValueColors> &v, const Colors &colors)
+void GetCastlesInfo(vector<ValueColors>& v, const Colors& colors)
 {
     v.clear();
 
@@ -85,7 +91,7 @@ void GetCastlesInfo(vector<ValueColors> &v, const Colors &colors)
     sort(v.begin(), v.end(), ValueColors::SortValueGreat);
 }
 
-void GetHeroesInfo(vector<ValueColors> &v, const Colors &colors)
+void GetHeroesInfo(vector<ValueColors>& v, const Colors& colors)
 {
     v.clear();
 
@@ -98,7 +104,7 @@ void GetHeroesInfo(vector<ValueColors> &v, const Colors &colors)
     sort(v.begin(), v.end(), ValueColors::SortValueGreat);
 }
 
-void GetGoldsInfo(vector<ValueColors> &v, const Colors &colors)
+void GetGoldsInfo(vector<ValueColors>& v, const Colors& colors)
 {
     v.clear();
 
@@ -111,13 +117,13 @@ void GetGoldsInfo(vector<ValueColors> &v, const Colors &colors)
     sort(v.begin(), v.end(), ValueColors::SortValueGreat);
 }
 
-void GetWoodOreInfo(vector<ValueColors> &v, const Colors &colors)
+void GetWoodOreInfo(vector<ValueColors>& v, const Colors& colors)
 {
     v.clear();
 
     for (auto color : colors)
     {
-        const Funds &funds = world.GetKingdom(color).GetFunds();
+        const Funds& funds = world.GetKingdom(color).GetFunds();
         int value = funds.Get(Resource::WOOD) + funds.Get(Resource::ORE);
         UpdateValuesColors(v, value, color);
     }
@@ -125,22 +131,22 @@ void GetWoodOreInfo(vector<ValueColors> &v, const Colors &colors)
     sort(v.begin(), v.end(), ValueColors::SortValueGreat);
 }
 
-void GetGemsCrSlfMerInfo(vector<ValueColors> &v, const Colors &colors)
+void GetGemsCrSlfMerInfo(vector<ValueColors>& v, const Colors& colors)
 {
     v.clear();
 
     for (auto color : colors)
     {
-        const Funds &funds = world.GetKingdom(color).GetFunds();
+        const Funds& funds = world.GetKingdom(color).GetFunds();
         int value = funds.Get(Resource::GEMS) + funds.Get(Resource::CRYSTAL) +
-                    funds.Get(Resource::SULFUR) + funds.Get(Resource::MERCURY);
+            funds.Get(Resource::SULFUR) + funds.Get(Resource::MERCURY);
         UpdateValuesColors(v, value, color);
     }
 
     sort(v.begin(), v.end(), ValueColors::SortValueGreat);
 }
 
-void GetObelisksInfo(vector<ValueColors> &v, const Colors &colors)
+void GetObelisksInfo(vector<ValueColors>& v, const Colors& colors)
 {
     v.clear();
 
@@ -153,7 +159,7 @@ void GetObelisksInfo(vector<ValueColors> &v, const Colors &colors)
     sort(v.begin(), v.end(), ValueColors::SortValueGreat);
 }
 
-void GetArmyInfo(vector<ValueColors> &v, const Colors &colors)
+void GetArmyInfo(vector<ValueColors>& v, const Colors& colors)
 {
     v.clear();
 
@@ -166,7 +172,7 @@ void GetArmyInfo(vector<ValueColors> &v, const Colors &colors)
     sort(v.begin(), v.end(), ValueColors::SortValueGreat);
 }
 
-void GetIncomesInfo(vector<ValueColors> &v, const Colors &colors)
+void GetIncomesInfo(vector<ValueColors>& v, const Colors& colors)
 {
     v.clear();
 
@@ -179,20 +185,19 @@ void GetIncomesInfo(vector<ValueColors> &v, const Colors &colors)
     sort(v.begin(), v.end(), ValueColors::SortValueGreat);
 }
 
-void GetBestHeroArmyInfo(vector<ValueColors> &v, const Colors &colors)
+void GetBestHeroArmyInfo(vector<ValueColors>& v, const Colors& colors)
 {
     v.clear();
 
     for (auto color : colors)
     {
-        const Heroes *hero = world.GetKingdom(color).GetBestHero();
+        const Heroes* hero = world.GetKingdom(color).GetBestHero();
         v.emplace_back(hero ? hero->GetID() : Heroes::UNKNOWN, color);
     }
 }
 
-void DrawFlags(const vector<ValueColors> &v, const Point &pos, uint32_t width, uint32_t count)
+void DrawFlags(const vector<ValueColors>& v, const Point& pos, uint32_t width, uint32_t count)
 {
-
     for (uint32_t ii = 0; ii < count; ++ii)
     {
         const uint32_t chunk = width / count;
@@ -203,26 +208,26 @@ void DrawFlags(const vector<ValueColors> &v, const Point &pos, uint32_t width, u
 
         for (auto color : colors)
         {
-            const Sprite &flag = AGG::GetICN(ICN::FLAG32, Color::GetIndex(color) * 2 + 1);
+            const Sprite& flag = AGG::GetICN(ICN::FLAG32, Color::GetIndex(color) * 2 + 1);
             flag.Blit(px, pos.y);
             px = px + sw;
         }
     }
 }
 
-void DrawHeroIcons(const vector<ValueColors> &v, const Point &pos, uint32_t width)
+void DrawHeroIcons(const vector<ValueColors>& v, const Point& pos, uint32_t width)
 {
     if (v.empty()) return;
-    Display &display = Display::Get();
+    Display& display = Display::Get();
     const int chunk = width / v.size();
 
     for (uint32_t ii = 0; ii < v.size(); ++ii)
     {
-        const Heroes *hero = world.GetHeroes(v[ii].first);
+        const Heroes* hero = world.GetHeroes(v[ii].first);
         if (!hero) continue;
         Surface icons = hero->GetPortrait(PORT_SMALL);
         s32 px = pos.x + chunk / 2 + ii * chunk;
-        const Sprite &window = AGG::GetICN(ICN::LOCATORS, 22);
+        const Sprite& window = AGG::GetICN(ICN::LOCATORS, 22);
         window.Blit(px - window.w() / 2, pos.y - 4, display);
         icons.Blit(px - icons.w() / 2, pos.y, display);
     }
@@ -230,20 +235,22 @@ void DrawHeroIcons(const vector<ValueColors> &v, const Point &pos, uint32_t widt
 
 void Dialog::ThievesGuild(bool oracle)
 {
-    Display &display = Display::Get();
+    Display& display = Display::Get();
 
     // cursor
-    Cursor &cursor = Cursor::Get();
+    Cursor& cursor = Cursor::Get();
 
     cursor.Hide();
     cursor.SetThemes(Cursor::POINTER);
 
     FrameBorder frameborder(Size(640, 480));
-    const Point &cur_pt = frameborder.GetArea();
+    const Point& cur_pt = frameborder.GetArea();
     Point dst_pt(cur_pt);
 
-    const uint32_t count = oracle ? 0xFF : world.GetKingdom(Settings::Get().CurrentColor()).GetCountBuilding(
-            BUILD_THIEVESGUILD);
+    const uint32_t count = oracle
+                               ? 0xFF
+                               : world.GetKingdom(Settings::Get().CurrentColor()).GetCountBuilding(
+                                   BUILD_THIEVESGUILD);
 
     vector<ValueColors> v;
     v.reserve(KINGDOMMAX);
@@ -259,26 +266,26 @@ void Dialog::ThievesGuild(bool oracle)
     {
         switch (ii + 1)
         {
-            case 1:
-                text.Set(_("1st"));
-                break;
-            case 2:
-                text.Set(_("2nd"));
-                break;
-            case 3:
-                text.Set(_("3rd"));
-                break;
-            case 4:
-                text.Set(_("4th"));
-                break;
-            case 5:
-                text.Set(_("5th"));
-                break;
-            case 6:
-                text.Set(_("6th"));
-                break;
-            default:
-                break;
+        case 1:
+            text.Set(_("1st"));
+            break;
+        case 2:
+            text.Set(_("2nd"));
+            break;
+        case 3:
+            text.Set(_("3rd"));
+            break;
+        case 4:
+            text.Set(_("4th"));
+            break;
+        case 5:
+            text.Set(_("5th"));
+            break;
+        case 6:
+            text.Set(_("6th"));
+            break;
+        default:
+            break;
         }
 
         dst_pt.x = cur_pt.x + startx + maxw / (colors.size() * 2) + ii * maxw / colors.size() - text.w() / 2;
@@ -436,7 +443,7 @@ void Dialog::ThievesGuild(bool oracle)
     cursor.Show();
     display.Flip();
 
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     // message loop
     while (le.HandleEvents())

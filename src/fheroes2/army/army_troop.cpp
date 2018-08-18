@@ -31,11 +31,11 @@ Troop::Troop() : Monster(UNKNOWN), count(0)
 {
 }
 
-Troop::Troop(const Monster &m, uint32_t c) : Monster(m), count(c)
+Troop::Troop(const Monster& m, uint32_t c) : Monster(m), count(c)
 {
 }
 
-bool Troop::operator==(const Monster &m) const
+bool Troop::operator==(const Monster& m) const
 {
     return static_cast<Monster>(*this) == m;
 }
@@ -55,18 +55,18 @@ Monster Troop::GetMonster() const
     return *this;
 }
 
-void Troop::Set(const Troop &t)
+void Troop::Set(const Troop& t)
 {
     SetMonster(t.GetMonster());
     SetCount(t.GetCount());
 }
 
-void Troop::Set(const Monster &m, uint32_t c)
+void Troop::Set(const Monster& m, uint32_t c)
 {
     Set(Troop(m, c));
 }
 
-void Troop::SetMonster(const Monster &m)
+void Troop::SetMonster(const Monster& m)
 {
     id = m();
 }
@@ -122,12 +122,12 @@ uint32_t Troop::GetStrength() const
 
     switch (GetID())
     {
-        case GHOST:
-            res *= 2;
-            break;
+    case GHOST:
+        res *= 2;
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     return static_cast<uint32_t>(res);
@@ -194,15 +194,15 @@ uint32_t Troop::GetAffectedDuration(uint32_t)
 }
 
 /* ArmyTroop */
-ArmyTroop::ArmyTroop(Army *a) : army(a)
+ArmyTroop::ArmyTroop(Army* a) : army(a)
 {
 }
 
-ArmyTroop::ArmyTroop(Army *a, const Troop &t) : Troop(t), army(a)
+ArmyTroop::ArmyTroop(Army* a, const Troop& t) : Troop(t), army(a)
 {
 }
 
-ArmyTroop &ArmyTroop::operator=(const Troop &t)
+ArmyTroop& ArmyTroop::operator=(const Troop& t)
 {
     Set(t);
     return *this;
@@ -233,12 +233,12 @@ int ArmyTroop::GetLuck() const
     return army ? army->GetLuck() : Troop::GetLuck();
 }
 
-void ArmyTroop::SetArmy(const Army &a)
+void ArmyTroop::SetArmy(const Army& a)
 {
     army = &a;
 }
 
-const Army *ArmyTroop::GetArmy() const
+const Army* ArmyTroop::GetArmy() const
 {
     return army;
 }
@@ -263,13 +263,12 @@ string ArmyTroop::GetDefenseString() const
     return os.str();
 }
 
-ByteVectorWriter &operator<<(ByteVectorWriter &msg, const Troop &troop)
+ByteVectorWriter& operator<<(ByteVectorWriter& msg, const Troop& troop)
 {
     return msg << troop.id << troop.count;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, Troop &troop)
+ByteVectorReader& operator>>(ByteVectorReader& msg, Troop& troop)
 {
     return msg >> troop.id >> troop.count;
 }
-

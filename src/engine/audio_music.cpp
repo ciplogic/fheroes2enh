@@ -33,52 +33,54 @@
 
 namespace Music
 {
-    void Play(Mix_Music *mix, uint32_t id, bool loop);
+    void Play(Mix_Music* mix, uint32_t id, bool loop);
 
-    Mix_Music *music = nullptr;
+    Mix_Music* music = nullptr;
     int fadein = 0;
     int fadeout = 0;
 }
 
-void Music::Play(Mix_Music *mix, uint32_t id, bool loop)
+void Music::Play(Mix_Music* mix, uint32_t id, bool loop)
 {
     Reset();
 
-    const int res = fadein 
-        ? Mix_FadeInMusic(mix, loop ? -1 : 0, fadein) 
-        : Mix_PlayMusic(mix, loop ? -1 : 0);
+    const int res = fadein
+                        ? Mix_FadeInMusic(mix, loop ? -1 : 0, fadein)
+                        : Mix_PlayMusic(mix, loop ? -1 : 0);
 
     if (res < 0)
     {
         H2ERROR(Mix_GetError());
-    } else
+    }
+    else
         music = mix;
 }
 
-void Music::Play(const std::vector<u8> &v, bool loop)
+void Music::Play(const std::vector<u8>& v, bool loop)
 {
     if (!Mixer::isValid() || v.empty())
         return;
     const uint32_t id = CheckSum(v);
-    SDL_RWops *rwops = SDL_RWFromConstMem(&v[0], v.size());
+    SDL_RWops* rwops = SDL_RWFromConstMem(&v[0], v.size());
 
-    Mix_Music *mix = Mix_LoadMUS_RW(rwops);
+    Mix_Music* mix = Mix_LoadMUS_RW(rwops);
 
     SDL_FreeRW(rwops);
     Music::Play(mix, id, loop);
 }
 
-void Music::Play(const std::string &file, bool loop)
+void Music::Play(const std::string& file, bool loop)
 {
     if (!Mixer::isValid())
         return;
     const uint32_t id = CheckSum(file);
-    Mix_Music *mix = Mix_LoadMUS(file.c_str());
+    Mix_Music* mix = Mix_LoadMUS(file.c_str());
 
     if (!mix)
     {
         H2ERROR(Mix_GetError());
-    } else
+    }
+    else
         Music::Play(mix, id, loop);
 }
 
@@ -114,7 +116,8 @@ void Music::Reset()
     if (fadeout)
     {
         while (!Mix_FadeOutMusic(fadeout) && Mix_PlayingMusic()) SDL_Delay(50);
-    } else
+    }
+    else
         Mix_HaltMusic();
 
     Mix_FreeMusic(music);
@@ -131,7 +134,7 @@ bool Music::isPaused()
     return music && Mix_PausedMusic();
 }
 
-void Music::SetExtCommand(const std::string &)
+void Music::SetExtCommand(const std::string&)
 {
 }
 

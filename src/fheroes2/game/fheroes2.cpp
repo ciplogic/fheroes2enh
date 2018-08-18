@@ -38,11 +38,11 @@
 
 void LoadZLogo();
 
-void SetVideoDriver(const string &);
+void SetVideoDriver(const string&);
 
-void SetTimidityEnvPath(const Settings &);
+void SetTimidityEnvPath(const Settings&);
 
-void SetLangEnvPath(const Settings &);
+void SetLangEnvPath(const Settings&);
 
 void InitHomeDir();
 
@@ -50,7 +50,7 @@ void ReadConfigs();
 
 int TestBlitSpeed();
 
-int PrintHelp(const char *basename)
+int PrintHelp(const char* basename)
 {
     COUT("Usage: " << basename << " [OPTIONS]");
 #ifndef BUILD_RELEASE
@@ -64,7 +64,7 @@ int PrintHelp(const char *basename)
 void extractFrames()
 {
     static bool isExtracted = false;
-    if(isExtracted)
+    if (isExtracted)
         return;
     for (int icnId = 3; icnId < ICN::LASTICN; icnId++)
     {
@@ -83,7 +83,8 @@ void extractFrames()
             }
             frameId++;
             canContinue = sprite.isValid();
-        } while (canContinue);
+        }
+        while (canContinue);
     }
     isExtracted = true;
 }
@@ -96,7 +97,7 @@ string GetCaption()
 #ifdef WIN32
 #include <Windows.h>
 #endif
-std::vector<std::string> extractArgsVector(int argc, char **argv)
+std::vector<std::string> extractArgsVector(int argc, char** argv)
 {
     vector<string> vArgv;
 
@@ -111,8 +112,8 @@ std::vector<std::string> extractArgsVector(int argc, char **argv)
     int nArgs;
     wstring commandLine = GetCommandLineW();
 
-    LPWSTR *szArglist = CommandLineToArgvW(commandLine.c_str(), &nArgs);
-    for (int i = 0; i<nArgs; i++)
+    LPWSTR* szArglist = CommandLineToArgvW(commandLine.c_str(), &nArgs);
+    for (int i = 0; i < nArgs; i++)
     {
         vArgv.emplace_back(ws2s(szArglist[i]));
     }
@@ -126,10 +127,11 @@ int SDL_main(int argc, char **argv)
 {
 #elif WIN32
 #include <Windows.h>
+
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 {
     int argc = 0;
-char **argv = nullptr;
+    char** argv = nullptr;
 #else
 
 int main(int argc, char **argv)
@@ -138,7 +140,7 @@ int main(int argc, char **argv)
 
     vector<string> vArgv = extractArgsVector(argc, argv);
 
-    Settings &conf = Settings::Get();
+    Settings& conf = Settings::Get();
 
     conf.SetProgramPath(vArgv[0]);
 
@@ -160,12 +162,12 @@ int main(int argc, char **argv)
                 conf.SetDebug(System::GetOptionsArgument() ? GetInt(System::GetOptionsArgument()) : 0);
                 break;
 #endif
-                case '?':
-                case 'h':
-                    return PrintHelp(vArgv[0].c_str());
+            case '?':
+            case 'h':
+                return PrintHelp(vArgv[0].c_str());
 
-                default:
-                    break;
+            default:
+                break;
             }
     }
 
@@ -195,7 +197,8 @@ int main(int argc, char **argv)
             {
                 Music::SetFadeIn(3000);
             }
-        } else if (conf.Sound() || conf.Music())
+        }
+        else if (conf.Sound() || conf.Music())
         {
             conf.ResetSound();
             conf.ResetMusic();
@@ -204,7 +207,7 @@ int main(int argc, char **argv)
         if (0 == conf.VideoMode().w || 0 == conf.VideoMode().h)
             conf.SetAutoVideoMode();
 
-        Display &display = Display::Get();
+        Display& display = Display::Get();
         display.SetVideoMode(conf.VideoMode().w, conf.VideoMode().h, conf.FullScreen());
         Display::HideCursor();
         Display::SetCaption(GetCaption().c_str());
@@ -219,11 +222,11 @@ int main(int argc, char **argv)
 
         atexit(&AGG::Quit);
 
-        try 
+        try
         {
             AGG::GetICN(ICN::ADVMCO, 0);
         }
-        catch (...) 
+        catch (...)
         {
             std::cout << "Cannot load picture. Make sure you have Heroes 2 assets extracted here" << "\n";
 
@@ -252,66 +255,66 @@ int main(int argc, char **argv)
         {
             switch (rs)
             {
-                case Game::MAINMENU:
-                    extractFrames();
-                    rs = Game::MainMenu();
-                    break;
-                case Game::NEWGAME:
-                    rs = Game::NewGame();
-                    break;
-                case Game::LOADGAME:
-                    rs = Game::LoadGame();
-                    break;
-                case Game::HIGHSCORES:
-                    rs = Game::HighScores(true);
-                    break;
-                case Game::CREDITS:
-                    rs = Game::Credits();
-                    break;
-                case Game::NEWSTANDARD:
-                    rs = Game::NewStandard();
-                    break;
-                case Game::NEWCAMPAIN:
-                    rs = Game::NewCampain();
-                    break;
-                case Game::NEWMULTI:
-                    rs = Game::NewMulti();
-                    break;
-                case Game::NEWHOTSEAT:
-                    rs = Game::NewHotSeat();
-                    break;
+            case Game::MAINMENU:
+                extractFrames();
+                rs = Game::MainMenu();
+                break;
+            case Game::NEWGAME:
+                rs = Game::NewGame();
+                break;
+            case Game::LOADGAME:
+                rs = Game::LoadGame();
+                break;
+            case Game::HIGHSCORES:
+                rs = Game::HighScores(true);
+                break;
+            case Game::CREDITS:
+                rs = Game::Credits();
+                break;
+            case Game::NEWSTANDARD:
+                rs = Game::NewStandard();
+                break;
+            case Game::NEWCAMPAIN:
+                rs = Game::NewCampain();
+                break;
+            case Game::NEWMULTI:
+                rs = Game::NewMulti();
+                break;
+            case Game::NEWHOTSEAT:
+                rs = Game::NewHotSeat();
+                break;
 #ifdef NETWORK_ENABLE
-                case Game::NEWNETWORK:
-                    rs = Game::NewNetwork();
-                    break;
+            case Game::NEWNETWORK:
+                rs = Game::NewNetwork();
+                break;
 #endif
-                case Game::NEWBATTLEONLY:
-                    rs = Game::NewBattleOnly();
-                    break;
-                case Game::LOADSTANDARD:
-                    rs = Game::LoadStandard();
-                    break;
-                case Game::LOADCAMPAIN:
-                    rs = Game::LoadCampain();
-                    break;
-                case Game::LOADMULTI:
-                    rs = Game::LoadMulti();
-                    break;
-                case Game::SCENARIOINFO:
-                    rs = Game::ScenarioInfo();
-                    break;
-                case Game::SELECTSCENARIO:
-                    rs = Game::SelectScenario();
-                    break;
-                case Game::STARTGAME:
-                    rs = Game::StartGame();
-                    break;
-                case Game::TESTING:
-                    rs = Game::Testing(test);
-                    break;
+            case Game::NEWBATTLEONLY:
+                rs = Game::NewBattleOnly();
+                break;
+            case Game::LOADSTANDARD:
+                rs = Game::LoadStandard();
+                break;
+            case Game::LOADCAMPAIN:
+                rs = Game::LoadCampain();
+                break;
+            case Game::LOADMULTI:
+                rs = Game::LoadMulti();
+                break;
+            case Game::SCENARIOINFO:
+                rs = Game::ScenarioInfo();
+                break;
+            case Game::SELECTSCENARIO:
+                rs = Game::SelectScenario();
+                break;
+            case Game::STARTGAME:
+                rs = Game::StartGame();
+                break;
+            case Game::TESTING:
+                rs = Game::Testing(test);
+                break;
 
-                default:
-                    break;
+            default:
+                break;
             }
         }
     }
@@ -320,7 +323,7 @@ int main(int argc, char **argv)
 
 int TestBlitSpeed()
 {
-    Display &display = Display::Get();
+    Display& display = Display::Get();
     Surface sf(display.GetSize(), true);
     Rect srcrt(0, 0, display.w() / 3, display.h());
     SDL::Time t;
@@ -351,7 +354,7 @@ void LoadZLogo()
     // SDL logo
     if (Settings::Get().ExtGameShowSDL() && !file.empty())
     {
-        Display &display = Display::Get();
+        Display& display = Display::Get();
         Surface sf;
 
         if (sf.Load(file))
@@ -370,10 +373,10 @@ void LoadZLogo()
 
 void ReadConfigs()
 {
-    Settings &conf = Settings::Get();
+    Settings& conf = Settings::Get();
     ListFiles files = Settings::GetListFiles("", "fheroes2.cfg");
 
-    for (auto &file : files)
+    for (auto& file : files)
     {
         if (System::IsFile(file))
         {
@@ -406,12 +409,12 @@ void InitHomeDir()
     }
 }
 
-void SetVideoDriver(const string &driver)
+void SetVideoDriver(const string& driver)
 {
     System::SetEnvironment("SDL_VIDEODRIVER", driver.c_str());
 }
 
-void SetTimidityEnvPath(const Settings &conf)
+void SetTimidityEnvPath(const Settings& conf)
 {
     const string prefix_timidity = System::ConcatePath("files", "timidity");
     const string result = Settings::GetLastFile(prefix_timidity, "timidity.cfg");
@@ -420,21 +423,21 @@ void SetTimidityEnvPath(const Settings &conf)
         System::SetEnvironment("TIMIDITY_PATH", System::GetDirname(result).c_str());
 }
 
-void SetLangEnvPath(const Settings &conf)
+void SetLangEnvPath(const Settings& conf)
 {
     System::SetLocale(LC_ALL, "");
     System::SetLocale(LC_NUMERIC, "C");
 
-    std::string mofile = conf.ForceLang().empty() ?
-                             System::GetMessageLocale(1).append(".po") :
-                             std::string(conf.ForceLang()).append(".po");
+    std::string mofile = conf.ForceLang().empty()
+                             ? System::GetMessageLocale(1).append(".po")
+                             : std::string(conf.ForceLang()).append(".po");
 
     ListFiles translations = Settings::GetListFiles(System::ConcatePath("files", "lang"), mofile);
 
     if (!translations.empty())
     {
         Translation::bindDomain(translations.back().c_str());
-            
-    } else
+    }
+    else
         ERROR("translation not found: " + mofile);
 }

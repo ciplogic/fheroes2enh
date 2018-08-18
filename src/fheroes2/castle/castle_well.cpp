@@ -41,19 +41,22 @@ using namespace std;
 struct dwelling_t : pair<uint32_t, uint32_t>
 {
     dwelling_t(uint32_t type, uint32_t count) : pair<uint32_t, uint32_t>(type, count)
-    {};
+    {
+    };
 };
 
 struct dwellings_t : vector<dwelling_t>
 {
     dwellings_t()
-    { reserve(6); };
+    {
+        reserve(6);
+    };
 };
 
-uint32_t HowManyRecruitMonster(const Castle &castle, uint32_t dw, const Funds &add, Funds &res)
+uint32_t HowManyRecruitMonster(const Castle& castle, uint32_t dw, const Funds& add, Funds& res)
 {
     const Monster ms(castle.GetRace(), castle.GetActualDwelling(dw));
-    const Kingdom &kingdom = castle.GetKingdom();
+    const Kingdom& kingdom = castle.GetKingdom();
 
     if (!castle.GetArmy().m_troops.CanJoinTroop(ms)) return 0;
 
@@ -73,9 +76,9 @@ uint32_t HowManyRecruitMonster(const Castle &castle, uint32_t dw, const Funds &a
 
 void Castle::OpenWell()
 {
-    const Settings &conf = Settings::Get();
-    Display &display = Display::Get();
-    Cursor &cursor = Cursor::Get();
+    const Settings& conf = Settings::Get();
+    Display& display = Display::Get();
+    Cursor& cursor = Cursor::Get();
     cursor.Hide();
 
     Dialog::FrameBorder frameborder(Size(640, 480));
@@ -122,7 +125,7 @@ void Castle::OpenWell()
     display.Flip();
 
     bool redraw = false;
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     // loop
     while (le.HandleEvents())
@@ -130,7 +133,9 @@ void Castle::OpenWell()
         le.MousePressLeft(buttonExit) ? buttonExit.PressDraw() : buttonExit.ReleaseDraw();
 
         buttonMax.isEnable() &&
-        le.MousePressLeft(buttonMax) ? buttonMax.PressDraw() : buttonMax.ReleaseDraw();
+            le.MousePressLeft(buttonMax)
+                ? buttonMax.PressDraw()
+                : buttonMax.ReleaseDraw();
 
         if (le.MouseClickLeft(buttonExit) || HotKeyCloseWindow) break;
 
@@ -163,9 +168,9 @@ void Castle::OpenWell()
                     Dialog::ResourceInfo(_("Buy Monsters:"), str, total, Dialog::YES | Dialog::NO))
                 {
                     for (dwellings_t::const_iterator
-                                 it = results.begin(); it != results.end(); ++it)
+                         it = results.begin(); it != results.end(); ++it)
                     {
-                        const dwelling_t &dw = *it;
+                        const dwelling_t& dw = *it;
                         RecruitMonsterFromDwelling(dw.first, dw.second);
                     }
                     redraw = true;
@@ -174,27 +179,27 @@ void Castle::OpenWell()
 
             if (building & DWELLING_MONSTER1 && dwelling[0] && le.MouseClickLeft(rectMonster1) &&
                 RecruitMonster(Dialog::RecruitMonster(
-                        Monster(race, DWELLING_MONSTER1), dwelling[0], false)))
+                    Monster(race, DWELLING_MONSTER1), dwelling[0], false)))
                 redraw = true;
             else if (building & DWELLING_MONSTER2 && dwelling[1] && le.MouseClickLeft(rectMonster2) &&
-                     RecruitMonster(Dialog::RecruitMonster(
-                             Monster(race, GetActualDwelling(DWELLING_MONSTER2)), dwelling[1], true)))
+                RecruitMonster(Dialog::RecruitMonster(
+                    Monster(race, GetActualDwelling(DWELLING_MONSTER2)), dwelling[1], true)))
                 redraw = true;
             else if (building & DWELLING_MONSTER3 && dwelling[2] && le.MouseClickLeft(rectMonster3) &&
-                     RecruitMonster(Dialog::RecruitMonster(
-                             Monster(race, GetActualDwelling(DWELLING_MONSTER3)), dwelling[2], true)))
+                RecruitMonster(Dialog::RecruitMonster(
+                    Monster(race, GetActualDwelling(DWELLING_MONSTER3)), dwelling[2], true)))
                 redraw = true;
             else if (building & DWELLING_MONSTER4 && dwelling[3] && le.MouseClickLeft(rectMonster4) &&
-                     RecruitMonster(Dialog::RecruitMonster(
-                             Monster(race, GetActualDwelling(DWELLING_MONSTER4)), dwelling[3], true)))
+                RecruitMonster(Dialog::RecruitMonster(
+                    Monster(race, GetActualDwelling(DWELLING_MONSTER4)), dwelling[3], true)))
                 redraw = true;
             else if (building & DWELLING_MONSTER5 && dwelling[4] && le.MouseClickLeft(rectMonster5) &&
-                     RecruitMonster(Dialog::RecruitMonster(
-                             Monster(race, GetActualDwelling(DWELLING_MONSTER5)), dwelling[4], true)))
+                RecruitMonster(Dialog::RecruitMonster(
+                    Monster(race, GetActualDwelling(DWELLING_MONSTER5)), dwelling[4], true)))
                 redraw = true;
             else if (building & DWELLING_MONSTER6 && dwelling[5] && le.MouseClickLeft(rectMonster6) &&
-                     RecruitMonster(Dialog::RecruitMonster(
-                             Monster(race, GetActualDwelling(DWELLING_MONSTER6)), dwelling[5], true)))
+                RecruitMonster(Dialog::RecruitMonster(
+                    Monster(race, GetActualDwelling(DWELLING_MONSTER6)), dwelling[5], true)))
                 redraw = true;
 
             if (redraw)
@@ -210,7 +215,7 @@ void Castle::OpenWell()
     }
 }
 
-void Castle::WellRedrawInfoArea(const Point &cur_pt)
+void Castle::WellRedrawInfoArea(const Point& cur_pt)
 {
     AGG::GetICN(ICN::WELLBKG, 0).Blit(cur_pt);
 
@@ -219,7 +224,7 @@ void Castle::WellRedrawInfoArea(const Point &cur_pt)
 
     if (Settings::Get().ExtCastleAllowBuyFromWell())
     {
-        const Sprite &button = AGG::GetICN(ICN::BUYMAX, 0);
+        const Sprite& button = AGG::GetICN(ICN::BUYMAX, 0);
         Rect src_rt(0, 461, button.w(), 19);
         AGG::GetICN(ICN::WELLBKG, 0).Blit(src_rt, cur_pt.x + button.w(), cur_pt.y + 461);
     }
@@ -240,55 +245,55 @@ void Castle::WellRedrawInfoArea(const Point &cur_pt)
 
         switch (dw)
         {
-            case DWELLING_MONSTER1:
-                pt.x = cur_pt.x;
-                pt.y = cur_pt.y;
-                present = DWELLING_MONSTER1 & building;
-                icnindex = 19;
-                available = dwelling[0];
-                break;
-            case DWELLING_MONSTER2:
-                pt.x = cur_pt.x;
-                pt.y = cur_pt.y + 150;
-                present = DWELLING_MONSTER2 & building;
-                dw_orig = GetActualDwelling(DWELLING_MONSTER2);
-                icnindex = DWELLING_UPGRADE2 & building ? 25 : 20;
-                available = dwelling[1];
-                break;
-            case DWELLING_MONSTER3:
-                pt.x = cur_pt.x;
-                pt.y = cur_pt.y + 300;
-                present = DWELLING_MONSTER3 & building;
-                dw_orig = GetActualDwelling(DWELLING_MONSTER3);
-                icnindex = DWELLING_UPGRADE3 & building ? 26 : 21;
-                available = dwelling[2];
-                break;
-            case DWELLING_MONSTER4:
-                pt.x = cur_pt.x + 314;
-                pt.y = cur_pt.y + 1;
-                present = DWELLING_MONSTER4 & building;
-                dw_orig = GetActualDwelling(DWELLING_MONSTER4);
-                icnindex = DWELLING_UPGRADE4 & building ? 27 : 22;
-                available = dwelling[3];
-                break;
-            case DWELLING_MONSTER5:
-                pt.x = cur_pt.x + 314;
-                pt.y = cur_pt.y + 151;
-                present = DWELLING_MONSTER5 & building;
-                dw_orig = GetActualDwelling(DWELLING_MONSTER5);
-                icnindex = DWELLING_UPGRADE5 & building ? 28 : 23;
-                available = dwelling[4];
-                break;
-            case DWELLING_MONSTER6:
-                pt.x = cur_pt.x + 314;
-                pt.y = cur_pt.y + 301;
-                present = DWELLING_MONSTER6 & building;
-                dw_orig = GetActualDwelling(DWELLING_MONSTER6);
-                icnindex = DWELLING_UPGRADE7 & building ? 30 : DWELLING_UPGRADE6 & building ? 29 : 24;
-                available = dwelling[5];
-                break;
-            default:
-                break;
+        case DWELLING_MONSTER1:
+            pt.x = cur_pt.x;
+            pt.y = cur_pt.y;
+            present = DWELLING_MONSTER1 & building;
+            icnindex = 19;
+            available = dwelling[0];
+            break;
+        case DWELLING_MONSTER2:
+            pt.x = cur_pt.x;
+            pt.y = cur_pt.y + 150;
+            present = DWELLING_MONSTER2 & building;
+            dw_orig = GetActualDwelling(DWELLING_MONSTER2);
+            icnindex = DWELLING_UPGRADE2 & building ? 25 : 20;
+            available = dwelling[1];
+            break;
+        case DWELLING_MONSTER3:
+            pt.x = cur_pt.x;
+            pt.y = cur_pt.y + 300;
+            present = DWELLING_MONSTER3 & building;
+            dw_orig = GetActualDwelling(DWELLING_MONSTER3);
+            icnindex = DWELLING_UPGRADE3 & building ? 26 : 21;
+            available = dwelling[2];
+            break;
+        case DWELLING_MONSTER4:
+            pt.x = cur_pt.x + 314;
+            pt.y = cur_pt.y + 1;
+            present = DWELLING_MONSTER4 & building;
+            dw_orig = GetActualDwelling(DWELLING_MONSTER4);
+            icnindex = DWELLING_UPGRADE4 & building ? 27 : 22;
+            available = dwelling[3];
+            break;
+        case DWELLING_MONSTER5:
+            pt.x = cur_pt.x + 314;
+            pt.y = cur_pt.y + 151;
+            present = DWELLING_MONSTER5 & building;
+            dw_orig = GetActualDwelling(DWELLING_MONSTER5);
+            icnindex = DWELLING_UPGRADE5 & building ? 28 : 23;
+            available = dwelling[4];
+            break;
+        case DWELLING_MONSTER6:
+            pt.x = cur_pt.x + 314;
+            pt.y = cur_pt.y + 301;
+            present = DWELLING_MONSTER6 & building;
+            dw_orig = GetActualDwelling(DWELLING_MONSTER6);
+            icnindex = DWELLING_UPGRADE7 & building ? 30 : DWELLING_UPGRADE6 & building ? 29 : 24;
+            available = dwelling[5];
+            break;
+        default:
+            break;
         }
 
         const Monster monster(race, dw_orig);
@@ -303,7 +308,7 @@ void Castle::WellRedrawInfoArea(const Point &cur_pt)
         dst_pt.y = pt.y + 103;
         text.Blit(dst_pt);
         // monster
-        const Sprite &smonster = AGG::GetICN(monster.ICNMonh(), 0);
+        const Sprite& smonster = AGG::GetICN(monster.ICNMonh(), 0);
         dst_pt.x = pt.x + 193 - smonster.w() / 2;
         dst_pt.y = pt.y + 124 - smonster.h();
         smonster.Blit(dst_pt);
@@ -326,7 +331,7 @@ void Castle::WellRedrawInfoArea(const Point &cur_pt)
         text.Blit(dst_pt);
         // damage
         str = _("Damage") + ": " + Int2Str(monster.GetDamageMin()) + "-" +
-              Int2Str(monster.GetDamageMax());
+            Int2Str(monster.GetDamageMax());
         text.Set(str);
         dst_pt.x = pt.x + 268 - text.w() / 2;
         dst_pt.y = pt.y + 46;

@@ -32,67 +32,74 @@
 
 #include "icn.h"
 
-void DialogSpellFailed(const Spell &);
+void DialogSpellFailed(const Spell&);
 
 void DialogNotAvailable();
 
-bool ActionSpellViewMines(Heroes &);
+bool ActionSpellViewMines(Heroes&);
 
-bool ActionSpellViewResources(Heroes &);
+bool ActionSpellViewResources(Heroes&);
 
-bool ActionSpellViewArtifacts(Heroes &);
+bool ActionSpellViewArtifacts(Heroes&);
 
-bool ActionSpellViewTowns(Heroes &);
+bool ActionSpellViewTowns(Heroes&);
 
-bool ActionSpellViewHeroes(Heroes &);
+bool ActionSpellViewHeroes(Heroes&);
 
-bool ActionSpellViewAll(Heroes &);
+bool ActionSpellViewAll(Heroes&);
 
-bool ActionSpellIdentifyHero(Heroes &);
+bool ActionSpellIdentifyHero(Heroes&);
 
-bool ActionSpellSummonBoat(Heroes &);
+bool ActionSpellSummonBoat(Heroes&);
 
-bool ActionSpellDimensionDoor(Heroes &);
+bool ActionSpellDimensionDoor(Heroes&);
 
-bool ActionSpellTownGate(Heroes &);
+bool ActionSpellTownGate(Heroes&);
 
-bool ActionSpellTownPortal(Heroes &);
+bool ActionSpellTownPortal(Heroes&);
 
-bool ActionSpellVisions(Heroes &);
+bool ActionSpellVisions(Heroes&);
 
-bool ActionSpellSetGuardian(Heroes &, const Spell &, int mons);
+bool ActionSpellSetGuardian(Heroes&, const Spell&, int mons);
 
 class CastleIndexListBox : public Interface::ListBox<s32>
 {
 public:
-    CastleIndexListBox(const Point &pt, int &res) : ListBox<s32>(pt), result(res)
-    {};
+    CastleIndexListBox(const Point& pt, int& res) : ListBox<s32>(pt), result(res)
+    {
+    };
 
-    void RedrawItem(const s32 &, s32, s32, bool);
+    void RedrawItem(const s32&, s32, s32, bool);
 
-    void RedrawBackground(const Point &);
+    void RedrawBackground(const Point&);
 
     void ActionCurrentUp()
-    {};
+    {
+    };
 
     void ActionCurrentDn()
-    {};
+    {
+    };
 
-    void ActionListDoubleClick(s32 &)
-    { result = Dialog::OK; };
+    void ActionListDoubleClick(s32&)
+    {
+        result = Dialog::OK;
+    };
 
-    void ActionListSingleClick(s32 &)
-    {};
+    void ActionListSingleClick(s32&)
+    {
+    };
 
-    void ActionListPressRight(s32 &)
-    {};
+    void ActionListPressRight(s32&)
+    {
+    };
 
-    int &result;
+    int& result;
 };
 
-void CastleIndexListBox::RedrawItem(const s32 &index, s32 dstx, s32 dsty, bool current)
+void CastleIndexListBox::RedrawItem(const s32& index, s32 dstx, s32 dsty, bool current)
 {
-    const Castle *castle = world.GetCastle(Maps::GetPoint(index));
+    const Castle* castle = world.GetCastle(Maps::GetPoint(index));
 
     if (castle)
     {
@@ -101,7 +108,7 @@ void CastleIndexListBox::RedrawItem(const s32 &index, s32 dstx, s32 dsty, bool c
     }
 }
 
-void CastleIndexListBox::RedrawBackground(const Point &dst)
+void CastleIndexListBox::RedrawBackground(const Point& dst)
 {
     Text text(_("Town Portal"), Font::YELLOW_BIG);
     text.Blit(dst.x + 140 - text.w() / 2, dst.y + 6);
@@ -120,7 +127,7 @@ void CastleIndexListBox::RedrawBackground(const Point &dst)
     AGG::GetICN(ICN::LISTBOX, 9).Blit(dst.x + 256, dst.y + 126);
 }
 
-bool Heroes::ActionSpellCast(const Spell &spell)
+bool Heroes::ActionSpellCast(const Spell& spell)
 {
     string error;
 
@@ -140,59 +147,59 @@ bool Heroes::ActionSpellCast(const Spell &spell)
 
     switch (spell())
     {
-        case Spell::VIEWMINES:
-            apply = ActionSpellViewMines(*this);
-            break;
-        case Spell::VIEWRESOURCES:
-            apply = ActionSpellViewResources(*this);
-            break;
-        case Spell::VIEWARTIFACTS:
-            apply = ActionSpellViewArtifacts(*this);
-            break;
-        case Spell::VIEWTOWNS:
-            apply = ActionSpellViewTowns(*this);
-            break;
-        case Spell::VIEWHEROES:
-            apply = ActionSpellViewHeroes(*this);
-            break;
-        case Spell::VIEWALL:
-            apply = ActionSpellViewAll(*this);
-            break;
-        case Spell::IDENTIFYHERO:
-            apply = ActionSpellIdentifyHero(*this);
-            break;
-        case Spell::SUMMONBOAT:
-            apply = ActionSpellSummonBoat(*this);
-            break;
-        case Spell::DIMENSIONDOOR:
-            apply = ActionSpellDimensionDoor(*this);
-            break;
-        case Spell::TOWNGATE:
-            apply = isShipMaster() ? false : ActionSpellTownGate(*this);
-            break;
-        case Spell::TOWNPORTAL:
-            apply = isShipMaster() ? false : ActionSpellTownPortal(*this);
-            break;
-        case Spell::VISIONS:
-            apply = ActionSpellVisions(*this);
-            break;
-        case Spell::HAUNT:
-            apply = ActionSpellSetGuardian(*this, spell, Monster::GHOST);
-            break;
-        case Spell::SETEGUARDIAN:
-            apply = ActionSpellSetGuardian(*this, spell, Monster::EARTH_ELEMENT);
-            break;
-        case Spell::SETAGUARDIAN:
-            apply = ActionSpellSetGuardian(*this, spell, Monster::AIR_ELEMENT);
-            break;
-        case Spell::SETFGUARDIAN:
-            apply = ActionSpellSetGuardian(*this, spell, Monster::FIRE_ELEMENT);
-            break;
-        case Spell::SETWGUARDIAN:
-            apply = ActionSpellSetGuardian(*this, spell, Monster::WATER_ELEMENT);
-            break;
-        default:
-            break;
+    case Spell::VIEWMINES:
+        apply = ActionSpellViewMines(*this);
+        break;
+    case Spell::VIEWRESOURCES:
+        apply = ActionSpellViewResources(*this);
+        break;
+    case Spell::VIEWARTIFACTS:
+        apply = ActionSpellViewArtifacts(*this);
+        break;
+    case Spell::VIEWTOWNS:
+        apply = ActionSpellViewTowns(*this);
+        break;
+    case Spell::VIEWHEROES:
+        apply = ActionSpellViewHeroes(*this);
+        break;
+    case Spell::VIEWALL:
+        apply = ActionSpellViewAll(*this);
+        break;
+    case Spell::IDENTIFYHERO:
+        apply = ActionSpellIdentifyHero(*this);
+        break;
+    case Spell::SUMMONBOAT:
+        apply = ActionSpellSummonBoat(*this);
+        break;
+    case Spell::DIMENSIONDOOR:
+        apply = ActionSpellDimensionDoor(*this);
+        break;
+    case Spell::TOWNGATE:
+        apply = isShipMaster() ? false : ActionSpellTownGate(*this);
+        break;
+    case Spell::TOWNPORTAL:
+        apply = isShipMaster() ? false : ActionSpellTownPortal(*this);
+        break;
+    case Spell::VISIONS:
+        apply = ActionSpellVisions(*this);
+        break;
+    case Spell::HAUNT:
+        apply = ActionSpellSetGuardian(*this, spell, Monster::GHOST);
+        break;
+    case Spell::SETEGUARDIAN:
+        apply = ActionSpellSetGuardian(*this, spell, Monster::EARTH_ELEMENT);
+        break;
+    case Spell::SETAGUARDIAN:
+        apply = ActionSpellSetGuardian(*this, spell, Monster::AIR_ELEMENT);
+        break;
+    case Spell::SETFGUARDIAN:
+        apply = ActionSpellSetGuardian(*this, spell, Monster::FIRE_ELEMENT);
+        break;
+    case Spell::SETWGUARDIAN:
+        apply = ActionSpellSetGuardian(*this, spell, Monster::WATER_ELEMENT);
+        break;
+    default:
+        break;
     }
 
     if (apply)
@@ -203,11 +210,11 @@ bool Heroes::ActionSpellCast(const Spell &spell)
     return false;
 }
 
-bool HeroesTownGate(Heroes &hero, const Castle *castle)
+bool HeroesTownGate(Heroes& hero, const Castle* castle)
 {
     if (castle)
     {
-        Interface::Basic &I = Interface::Basic::Get();
+        Interface::Basic& I = Interface::Basic::Get();
 
         const s32 src = hero.GetIndex();
         const s32 dst = castle->GetIndex();
@@ -238,7 +245,7 @@ bool HeroesTownGate(Heroes &hero, const Castle *castle)
     return false;
 }
 
-void DialogSpellFailed(const Spell &spell)
+void DialogSpellFailed(const Spell& spell)
 {
     // failed
     string str = _("%{spell} failed!!!");
@@ -251,43 +258,43 @@ void DialogNotAvailable()
     Message("", "Not available for current version", Font::BIG, Dialog::OK);
 }
 
-bool ActionSpellViewMines(Heroes &hero)
+bool ActionSpellViewMines(Heroes& hero)
 {
     DialogNotAvailable();
     return false;
 }
 
-bool ActionSpellViewResources(Heroes &hero)
+bool ActionSpellViewResources(Heroes& hero)
 {
     DialogNotAvailable();
     return false;
 }
 
-bool ActionSpellViewArtifacts(Heroes &hero)
+bool ActionSpellViewArtifacts(Heroes& hero)
 {
     DialogNotAvailable();
     return false;
 }
 
-bool ActionSpellViewTowns(Heroes &hero)
+bool ActionSpellViewTowns(Heroes& hero)
 {
     DialogNotAvailable();
     return false;
 }
 
-bool ActionSpellViewHeroes(Heroes &hero)
+bool ActionSpellViewHeroes(Heroes& hero)
 {
     DialogNotAvailable();
     return false;
 }
 
-bool ActionSpellViewAll(Heroes &hero)
+bool ActionSpellViewAll(Heroes& hero)
 {
     DialogNotAvailable();
     return false;
 }
 
-bool ActionSpellIdentifyHero(Heroes &hero)
+bool ActionSpellIdentifyHero(Heroes& hero)
 {
     hero.GetKingdom().SetModes(Kingdom::IDENTIFYHERO);
     Message("", _("Enemy heroes are now fully identifiable."), Font::BIG, Dialog::OK);
@@ -295,24 +302,24 @@ bool ActionSpellIdentifyHero(Heroes &hero)
     return true;
 }
 
-bool ActionSpellSummonBoat(Heroes &hero)
+bool ActionSpellSummonBoat(Heroes& hero)
 {
     uint32_t chance = 0;
 
     switch (hero.GetLevelSkill(Skill::Secondary::WISDOM))
     {
-        case Skill::Level::BASIC:
-            chance = 50;
-            break;
-        case Skill::Level::ADVANCED:
-            chance = 75;
-            break;
-        case Skill::Level::EXPERT:
-            chance = 100;
-            break;
-        default:
-            chance = 30;
-            break;
+    case Skill::Level::BASIC:
+        chance = 50;
+        break;
+    case Skill::Level::ADVANCED:
+        chance = 75;
+        break;
+    case Skill::Level::EXPERT:
+        chance = 100;
+        break;
+    default:
+        chance = 30;
+        break;
     }
 
     const s32 center = hero.GetIndex();
@@ -330,33 +337,35 @@ bool ActionSpellSummonBoat(Heroes &hero)
         }
     }
 
-    const MapsIndexes &boats = Maps::GetObjectPositions(center, MP2::OBJ_BOAT, false);
+    const MapsIndexes& boats = Maps::GetObjectPositions(center, MP2::OBJ_BOAT, false);
 
     if (boats.empty())
     {
-    } else
+    }
+    else
     {
-        const s32 &src = boats.front();
+        const s32& src = boats.front();
 
         if (Rand::Get(1, 100) <= chance &&
             Maps::isValidAbsIndex(src) && Maps::isValidAbsIndex(dst_water))
         {
             world.GetTiles(src).SetObject(MP2::OBJ_ZERO);
             world.GetTiles(dst_water).SetObject(MP2::OBJ_BOAT);
-        } else
+        }
+        else
             DialogSpellFailed(Spell::SUMMONBOAT);
     }
 
     return true;
 }
 
-bool ActionSpellDimensionDoor(Heroes &hero)
+bool ActionSpellDimensionDoor(Heroes& hero)
 {
     const uint32_t distance = Spell::CalculateDimensionDoorDistance(
-            hero.GetPower(), hero.GetArmy().m_troops.GetHitPoints());
+        hero.GetPower(), hero.GetArmy().m_troops.GetHitPoints());
 
-    Interface::Basic &I = Interface::Basic::Get();
-    Cursor &cursor = Cursor::Get();
+    Interface::Basic& I = Interface::Basic::Get();
+    Cursor& cursor = Cursor::Get();
 
     // center hero
     cursor.Hide();
@@ -394,13 +403,13 @@ bool ActionSpellDimensionDoor(Heroes &hero)
     return false;
 }
 
-bool ActionSpellTownGate(Heroes &hero)
+bool ActionSpellTownGate(Heroes& hero)
 {
-    const Kingdom &kingdom = hero.GetKingdom();
-    const KingdomCastles &castles = kingdom.GetCastles();
+    const Kingdom& kingdom = hero.GetKingdom();
+    const KingdomCastles& castles = kingdom.GetCastles();
 
 
-    const Castle *castle = nullptr;
+    const Castle* castle = nullptr;
     const s32 center = hero.GetIndex();
     s32 min = -1;
 
@@ -416,8 +425,8 @@ bool ActionSpellTownGate(Heroes &hero)
             }
         }
 
-    Interface::Basic &I = Interface::Basic::Get();
-    Cursor &cursor = Cursor::Get();
+    Interface::Basic& I = Interface::Basic::Get();
+    Cursor& cursor = Cursor::Get();
 
     // center hero
     cursor.Hide();
@@ -434,14 +443,14 @@ bool ActionSpellTownGate(Heroes &hero)
     return HeroesTownGate(hero, castle);
 }
 
-bool ActionSpellTownPortal(Heroes &hero)
+bool ActionSpellTownPortal(Heroes& hero)
 {
-    const Kingdom &kingdom = hero.GetKingdom();
+    const Kingdom& kingdom = hero.GetKingdom();
     vector<s32> castles;
 
-    Display &display = Display::Get();
-    Cursor &cursor = Cursor::Get();
-    LocalEvent &le = LocalEvent::Get();
+    Display& display = Display::Get();
+    Cursor& cursor = Cursor::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
@@ -457,7 +466,7 @@ bool ActionSpellTownPortal(Heroes &hero)
 
     up<Dialog::FrameBorder> frameborder(new Dialog::FrameBorder(Size(280, 200)));
 
-    const Rect &area = frameborder->GetArea();
+    const Rect& area = frameborder->GetArea();
     int result = Dialog::ZERO;
 
     CastleIndexListBox listbox(area, result);
@@ -496,16 +505,16 @@ bool ActionSpellTownPortal(Heroes &hero)
     return false;
 }
 
-bool ActionSpellVisions(Heroes &hero)
+bool ActionSpellVisions(Heroes& hero)
 {
     const uint32_t dist = hero.GetVisionsDistance();
-    const MapsIndexes &monsters = Maps::ScanAroundObject(hero.GetIndex(), dist, MP2::OBJ_MONSTER);
+    const MapsIndexes& monsters = Maps::ScanAroundObject(hero.GetIndex(), dist, MP2::OBJ_MONSTER);
 
     if (!monsters.empty())
     {
         for (auto monster : monsters)
         {
-            const Maps::Tiles &tile = world.GetTiles(monster);
+            const Maps::Tiles& tile = world.GetTiles(monster);
             const auto map_troop = static_cast<MapMonster *>(world.GetMapObject(tile.GetObjectUID(MP2::OBJ_MONSTER)));
             Troop troop = map_troop ? map_troop->QuantityTroop() : tile.QuantityTroop();
             const JoinCount join = Army::GetJoinSolution(hero, tile, troop);
@@ -517,36 +526,37 @@ bool ActionSpellVisions(Heroes &hero)
 
             switch (join.first)
             {
-                default:
-                    msg = _("I fear these creatures are in the mood for a fight.");
-                    break;
+            default:
+                msg = _("I fear these creatures are in the mood for a fight.");
+                break;
 
-                case JOIN_FREE:
-                    msg = _("The creatures are willing to join us!");
-                    break;
+            case JOIN_FREE:
+                msg = _("The creatures are willing to join us!");
+                break;
 
-                case JOIN_COST:
-                    if (join.second == troop.GetCount())
-                        msg = _("All the creatures will join us...");
-                    else
-                    {
-                        msg = _n("The creature will join us...", "%{count} of the creatures will join us...",
-                                 join.second);
-                        StringReplace(msg, "%{count}", join.second);
-                    }
-                    msg.append("\n");
-                    msg.append("\n for a fee of %{gold} gold.");
-                    StringReplace(msg, "%{gold}", troop.GetCost().gold);
-                    break;
+            case JOIN_COST:
+                if (join.second == troop.GetCount())
+                    msg = _("All the creatures will join us...");
+                else
+                {
+                    msg = _n("The creature will join us...", "%{count} of the creatures will join us...",
+                        join.second);
+                    StringReplace(msg, "%{count}", join.second);
+                }
+                msg.append("\n");
+                msg.append("\n for a fee of %{gold} gold.");
+                StringReplace(msg, "%{gold}", troop.GetCost().gold);
+                break;
 
-                case JOIN_FLEE:
-                    msg = _("These weak creatures will surely flee before us.");
-                    break;
+            case JOIN_FLEE:
+                msg = _("These weak creatures will surely flee before us.");
+                break;
             }
 
             Message(hdr, msg, Font::BIG, Dialog::OK);
         }
-    } else
+    }
+    else
     {
         string msg = _("You must be within %{count} spaces of a monster for the Visions spell to work.");
         StringReplace(msg, "%{count}", dist);
@@ -559,14 +569,15 @@ bool ActionSpellVisions(Heroes &hero)
     return true;
 }
 
-bool ActionSpellSetGuardian(Heroes &hero, const Spell &spell, int mons)
+bool ActionSpellSetGuardian(Heroes& hero, const Spell& spell, int mons)
 {
-    Maps::Tiles &tile = world.GetTiles(hero.GetIndex());
+    Maps::Tiles& tile = world.GetTiles(hero.GetIndex());
 
     if (MP2::OBJ_MINES != tile.GetObject(false))
     {
         Message("",
-                _("You must be standing on the entrance to a mine (sawmills and alchemists don't count) to cast this spell."),
+                _("You must be standing on the entrance to a mine (sawmills and alchemists don't count) to cast this spell."
+                ),
                 Font::BIG, Dialog::OK);
         return false;
     }
@@ -575,7 +586,7 @@ bool ActionSpellSetGuardian(Heroes &hero, const Spell &spell, int mons)
 
     if (count)
     {
-        Maps::TilesAddon *addon = tile.FindObject(MP2::OBJ_MINES);
+        Maps::TilesAddon* addon = tile.FindObject(MP2::OBJ_MINES);
 
         if (addon)
             addon->tmp = spell();

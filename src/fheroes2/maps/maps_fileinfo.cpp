@@ -46,7 +46,7 @@
 
 using namespace std;
 
-bool alphabetical_compare(const std::string &lhs, const std::string &rhs)
+bool alphabetical_compare(const std::string& lhs, const std::string& rhs)
 {
     return lhs < rhs;
 }
@@ -74,21 +74,21 @@ int ByteToColor(int byte)
 {
     switch (byte)
     {
-        case 0:
-            return Color::BLUE;
-        case 1:
-            return Color::GREEN;
-        case 2:
-            return Color::RED;
-        case 3:
-            return Color::YELLOW;
-        case 4:
-            return Color::ORANGE;
-        case 5:
-            return Color::PURPLE;
+    case 0:
+        return Color::BLUE;
+    case 1:
+        return Color::GREEN;
+    case 2:
+        return Color::RED;
+    case 3:
+        return Color::YELLOW;
+    case 4:
+        return Color::ORANGE;
+    case 5:
+        return Color::PURPLE;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     return Color::NONE;
@@ -98,25 +98,25 @@ int ByteToRace(int byte)
 {
     switch (byte)
     {
-        case 0x00:
-            return Race::KNGT;
-        case 0x01:
-            return Race::BARB;
-        case 0x02:
-            return Race::SORC;
-        case 0x03:
-            return Race::WRLK;
-        case 0x04:
-            return Race::WZRD;
-        case 0x05:
-            return Race::NECR;
-        case 0x06:
-            return Race::MULT;
-        case 0x07:
-            return Race::RAND;
+    case 0x00:
+        return Race::KNGT;
+    case 0x01:
+        return Race::BARB;
+    case 0x02:
+        return Race::SORC;
+    case 0x03:
+        return Race::WRLK;
+    case 0x04:
+        return Race::WZRD;
+    case 0x05:
+        return Race::NECR;
+    case 0x06:
+        return Race::MULT;
+    case 0x07:
+        return Race::RAND;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     return Race::NONE;
@@ -127,12 +127,12 @@ Maps::FileInfo::FileInfo()
     Reset();
 }
 
-Maps::FileInfo::FileInfo(const FileInfo &f)
+Maps::FileInfo::FileInfo(const FileInfo& f)
 {
     *this = f;
 }
 
-Maps::FileInfo &Maps::FileInfo::operator=(const FileInfo &f)
+Maps::FileInfo& Maps::FileInfo::operator=(const FileInfo& f)
 {
     file = f.file;
     name = f.name;
@@ -195,18 +195,18 @@ void Maps::FileInfo::Reset()
     }
 }
 
-bool Maps::FileInfo::ReadSAV(const string &filename)
+bool Maps::FileInfo::ReadSAV(const string& filename)
 {
     Reset();
     return Game::LoadSAV2FileInfo(filename, *this);
 }
 
-bool Maps::FileInfo::ReadMAP(const string &filename)
+bool Maps::FileInfo::ReadMAP(const string& filename)
 {
     return false;
 }
 
-bool Maps::FileInfo::ReadMP2(const string &filename)
+bool Maps::FileInfo::ReadMP2(const string& filename)
 {
     Reset();
     auto fileData = FileUtils::readFileBytes(filename);
@@ -229,21 +229,21 @@ bool Maps::FileInfo::ReadMP2(const string &filename)
     // level
     switch (fs.getLE16())
     {
-        case 0x00:
-            difficulty = (u8)DifficultyEnum::EASY;
-            break;
-        case 0x01:
-            difficulty = (u8)DifficultyEnum::NORMAL;
-            break;
-        case 0x02:
-            difficulty = (u8)DifficultyEnum::HARD;
-            break;
-        case 0x03:
-            difficulty = (u8)DifficultyEnum::EXPERT;
-            break;
-        default:
-            difficulty = (u8)DifficultyEnum::NORMAL;
-            break;
+    case 0x00:
+        difficulty = (u8)DifficultyEnum::EASY;
+        break;
+    case 0x01:
+        difficulty = (u8)DifficultyEnum::NORMAL;
+        break;
+    case 0x02:
+        difficulty = (u8)DifficultyEnum::HARD;
+        break;
+    case 0x03:
+        difficulty = (u8)DifficultyEnum::EXPERT;
+        break;
+    default:
+        difficulty = (u8)DifficultyEnum::NORMAL;
+        break;
     }
 
     // width
@@ -256,17 +256,17 @@ bool Maps::FileInfo::ReadMP2(const string &filename)
 
     // kingdom color - blue, green, red, yellow, orange, purple
     for (Colors::const_iterator
-                 it = colors.begin(); it != colors.end(); ++it)
+         it = colors.begin(); it != colors.end(); ++it)
         if (fs.get()) kingdom_colors |= *it;
 
     // allow human color - blue, green, red, yellow, orange, purple
     for (Colors::const_iterator
-                 it = colors.begin(); it != colors.end(); ++it)
+         it = colors.begin(); it != colors.end(); ++it)
         if (fs.get()) allow_human_colors |= *it;
 
     // allow comp color - blue, green, red, yellow, orange, purple
     for (Colors::const_iterator
-                 it = colors.begin(); it != colors.end(); ++it)
+         it = colors.begin(); it != colors.end(); ++it)
         if (fs.get()) allow_comp_colors |= *it;
 
     // kingdom count
@@ -301,7 +301,7 @@ bool Maps::FileInfo::ReadMP2(const string &filename)
 
     // race color
     for (Colors::const_iterator
-                 it = colors.begin(); it != colors.end(); ++it)
+         it = colors.begin(); it != colors.end(); ++it)
     {
         int race = ByteToRace(fs.get());
         races[Color::GetIndex(*it)] = race;
@@ -351,17 +351,17 @@ void Maps::FileInfo::FillUnions()
     }
 }
 
-bool Maps::FileInfo::FileSorting(const FileInfo &fi1, const FileInfo &fi2)
+bool Maps::FileInfo::FileSorting(const FileInfo& fi1, const FileInfo& fi2)
 {
     return alphabetical_compare(fi1.file, fi2.file);
 }
 
-bool Maps::FileInfo::NameSorting(const FileInfo &fi1, const FileInfo &fi2)
+bool Maps::FileInfo::NameSorting(const FileInfo& fi1, const FileInfo& fi2)
 {
     return alphabetical_compare(fi1.name, fi2.name);
 }
 
-bool Maps::FileInfo::NameCompare(const FileInfo &fi1, const FileInfo &fi2)
+bool Maps::FileInfo::NameCompare(const FileInfo& fi1, const FileInfo& fi2)
 {
     return fi1.name == fi2.name;
 }
@@ -370,20 +370,20 @@ int Maps::FileInfo::KingdomRace(int color) const
 {
     switch (color)
     {
-        case Color::BLUE:
-            return races[0];
-        case Color::GREEN:
-            return races[1];
-        case Color::RED:
-            return races[2];
-        case Color::YELLOW:
-            return races[3];
-        case Color::ORANGE:
-            return races[4];
-        case Color::PURPLE:
-            return races[5];
-        default:
-            break;
+    case Color::BLUE:
+        return races[0];
+    case Color::GREEN:
+        return races[1];
+    case Color::RED:
+        return races[2];
+    case Color::YELLOW:
+        return races[3];
+    case Color::ORANGE:
+        return races[4];
+    case Color::PURPLE:
+        return races[5];
+    default:
+        break;
     }
     return 0;
 }
@@ -392,20 +392,20 @@ int Maps::FileInfo::ConditionWins() const
 {
     switch (conditions_wins)
     {
-        case 0:
-            return GameOver::WINS_ALL;
-        case 1:
-            return allow_normal_victory ? GameOver::WINS_TOWN | GameOver::WINS_ALL : GameOver::WINS_TOWN;
-        case 2:
-            return allow_normal_victory ? GameOver::WINS_HERO | GameOver::WINS_ALL : GameOver::WINS_HERO;
-        case 3:
-            return allow_normal_victory ? GameOver::WINS_ARTIFACT | GameOver::WINS_ALL : GameOver::WINS_ARTIFACT;
-        case 4:
-            return GameOver::WINS_SIDE;
-        case 5:
-            return allow_normal_victory ? GameOver::WINS_GOLD | GameOver::WINS_ALL : GameOver::WINS_GOLD;
-        default:
-            break;
+    case 0:
+        return GameOver::WINS_ALL;
+    case 1:
+        return allow_normal_victory ? GameOver::WINS_TOWN | GameOver::WINS_ALL : GameOver::WINS_TOWN;
+    case 2:
+        return allow_normal_victory ? GameOver::WINS_HERO | GameOver::WINS_ALL : GameOver::WINS_HERO;
+    case 3:
+        return allow_normal_victory ? GameOver::WINS_ARTIFACT | GameOver::WINS_ALL : GameOver::WINS_ARTIFACT;
+    case 4:
+        return GameOver::WINS_SIDE;
+    case 5:
+        return allow_normal_victory ? GameOver::WINS_GOLD | GameOver::WINS_ALL : GameOver::WINS_GOLD;
+    default:
+        break;
     }
 
     return GameOver::COND_NONE;
@@ -415,16 +415,16 @@ int Maps::FileInfo::ConditionLoss() const
 {
     switch (conditions_loss)
     {
-        case 0:
-            return GameOver::LOSS_ALL;
-        case 1:
-            return GameOver::LOSS_TOWN;
-        case 2:
-            return GameOver::LOSS_HERO;
-        case 3:
-            return GameOver::LOSS_TIME;
-        default:
-            break;
+    case 0:
+        return GameOver::LOSS_ALL;
+    case 1:
+        return GameOver::LOSS_TOWN;
+    case 2:
+        return GameOver::LOSS_HERO;
+    case 3:
+        return GameOver::LOSS_TIME;
+    default:
+        break;
     }
 
     return GameOver::COND_NONE;
@@ -438,7 +438,7 @@ bool Maps::FileInfo::WinsCompAlsoWins() const
 bool Maps::FileInfo::WinsAllowNormalVictory() const
 {
     return allow_normal_victory &&
-           (GameOver::WINS_TOWN | GameOver::WINS_ARTIFACT | GameOver::WINS_GOLD) & ConditionWins();
+        (GameOver::WINS_TOWN | GameOver::WINS_ARTIFACT | GameOver::WINS_GOLD) & ConditionWins();
 }
 
 int Maps::FileInfo::WinsFindArtifactID() const
@@ -514,43 +514,44 @@ string Maps::FileInfo::String() const
     ostringstream os;
 
     os << "file: " << file << ", " << "name: " << name << ", " << "kingdom colors: " << static_cast<int>(kingdom_colors)
-       << \
-    ", " << "allow human colors: " << static_cast<int>(allow_human_colors) << ", " << "allow comp colors: "
-       << static_cast<int>(allow_comp_colors) << ", " << "rnd races: " << \
-    static_cast<int>(rnd_races) << ", " << "conditions wins: " << static_cast<int>(conditions_wins) << ", "
-       << "comp also wins: " << (comp_also_wins ? "true" : "false") << \
-    ", " << "allow normal victory: " << (allow_normal_victory ? "true" : "false") << ", " << "wins1: " << wins1 << ", "
-       << "wins2: " << wins2 << ", " << "conditions loss: " << static_cast<int>(conditions_loss) << \
+        <<
+        ", " << "allow human colors: " << static_cast<int>(allow_human_colors) << ", " << "allow comp colors: "
+        << static_cast<int>(allow_comp_colors) << ", " << "rnd races: " <<
+        static_cast<int>(rnd_races) << ", " << "conditions wins: " << static_cast<int>(conditions_wins) << ", "
+        << "comp also wins: " << (comp_also_wins ? "true" : "false") <<
+        ", " << "allow normal victory: " << (allow_normal_victory ? "true" : "false") << ", " << "wins1: " << wins1 <<
+        ", "
+        << "wins2: " << wins2 << ", " << "conditions loss: " << static_cast<int>(conditions_loss) <<
         ", " << "loss1: " << loss1 << ", " << "loss2: " << loss2;
 
     return os.str();
 }
 
-ListFiles GetMapsFiles(const char *suffix)
+ListFiles GetMapsFiles(const char* suffix)
 {
-    const Settings &conf = Settings::Get();
+    const Settings& conf = Settings::Get();
     ListFiles maps = conf.GetListFiles("maps", suffix);
-    const ListDirs &list = conf.GetMapsParams();
+    const ListDirs& list = conf.GetMapsParams();
 
     if (list.empty())
         return maps;
-    for (const auto &it : list)
+    for (const auto& it : list)
         if (it != "maps")
             maps.Append(conf.GetListFiles(it, suffix));
 
     return maps;
 }
 
-bool PrepareMapsFileInfoList(MapsFileInfoList &lists, bool multi)
+bool PrepareMapsFileInfoList(MapsFileInfoList& lists, bool multi)
 {
-    const Settings &conf = Settings::Get();
+    const Settings& conf = Settings::Get();
 
     ListFiles maps_old = GetMapsFiles(".mp2");
     if (conf.PriceLoyaltyVersion())
         maps_old.Append(GetMapsFiles(".mx2"));
 
     for (ListFiles::const_iterator
-                 it = maps_old.begin(); it != maps_old.end(); ++it)
+         it = maps_old.begin(); it != maps_old.end(); ++it)
     {
         Maps::FileInfo fi;
         if (fi.ReadMP2(*it)) lists.push_back(fi);
@@ -571,18 +572,17 @@ bool PrepareMapsFileInfoList(MapsFileInfoList &lists, bool multi)
     // set preferably count filter
     if (conf.PreferablyCountPlayers())
     {
-
         auto it = remove_if(lists.begin(), lists.end(),
                             not1(bind2nd(
-                                    mem_fun_ref(&Maps::FileInfo::isAllowCountPlayers),
-                                    conf.PreferablyCountPlayers())));
+                                mem_fun_ref(&Maps::FileInfo::isAllowCountPlayers),
+                                conf.PreferablyCountPlayers())));
         if (it != lists.begin()) lists.resize(distance(lists.begin(), it));
     }
 
     return !lists.empty();
 }
 
-ByteVectorWriter &Maps::operator<<(ByteVectorWriter &msg, const FileInfo &fi)
+ByteVectorWriter& Maps::operator<<(ByteVectorWriter& msg, const FileInfo& fi)
 {
     msg << System::GetBasename(fi.file) << fi.name << fi.description <<
         fi.size_w << fi.size_h << fi.difficulty << static_cast<u8>(KINGDOMMAX);
@@ -598,7 +598,7 @@ ByteVectorWriter &Maps::operator<<(ByteVectorWriter &msg, const FileInfo &fi)
 }
 
 
-ByteVectorReader &Maps::operator>>(ByteVectorReader &msg, FileInfo &fi)
+ByteVectorReader& Maps::operator>>(ByteVectorReader& msg, FileInfo& fi)
 {
     u8 kingdommax;
 

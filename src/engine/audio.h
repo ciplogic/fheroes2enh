@@ -35,10 +35,10 @@ namespace Audio
     {
         CVT();
 
-        bool Build(const Spec &src, const Spec &dst);
+        bool Build(const Spec& src, const Spec& dst);
 
         bool Convert();
     };
 
-    Spec &GetHardwareSpec();
+    Spec& GetHardwareSpec();
 }

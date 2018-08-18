@@ -39,15 +39,15 @@ public:
 
     SpellStorage GetSpells(int) const;
 
-    void Append(const SpellStorage &);
+    void Append(const SpellStorage&);
 
-    void Append(const Spell &);
+    void Append(const Spell&);
 
-    void Append(const BagArtifacts &);
+    void Append(const BagArtifacts&);
 
-    void Append(const Artifact &);
+    void Append(const Artifact&);
 
-    bool isPresentSpell(const Spell &) const;
+    bool isPresentSpell(const Spell&) const;
 
     string String() const;
 

@@ -28,9 +28,9 @@ UltimateArtifact::UltimateArtifact() : index(-1), isfound(false)
 {
 }
 
-void UltimateArtifact::Set(s32 pos, const Artifact &a)
+void UltimateArtifact::Set(s32 pos, const Artifact& a)
 {
-    Artifact &art = *this;
+    Artifact& art = *this;
     art = a.isValid() ? a : Rand(ART_ULTIMATE);
     index = pos;
     isfound = false;
@@ -38,12 +38,12 @@ void UltimateArtifact::Set(s32 pos, const Artifact &a)
     MakeSurface();
 }
 
-const Surface &UltimateArtifact::GetPuzzleMapSurface() const
+const Surface& UltimateArtifact::GetPuzzleMapSurface() const
 {
     return puzzlemap;
 }
 
-const Artifact &UltimateArtifact::GetArtifact() const
+const Artifact& UltimateArtifact::GetArtifact() const
 {
     return *this;
 }
@@ -79,14 +79,14 @@ void UltimateArtifact::MakeSurface()
         puzzlemap.Reset();
 }
 
-ByteVectorWriter &operator<<(ByteVectorWriter &msg, const UltimateArtifact &ultimate)
+ByteVectorWriter& operator<<(ByteVectorWriter& msg, const UltimateArtifact& ultimate)
 {
     return msg << static_cast<Artifact>(ultimate) << ultimate.index << ultimate.isfound;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, UltimateArtifact &ultimate)
+ByteVectorReader& operator>>(ByteVectorReader& msg, UltimateArtifact& ultimate)
 {
-    Artifact &artifact = ultimate;
+    Artifact& artifact = ultimate;
     msg >> artifact >> ultimate.index >> ultimate.isfound;
 
     ultimate.MakeSurface();

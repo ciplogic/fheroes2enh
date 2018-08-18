@@ -36,53 +36,53 @@ namespace MUS
     const struct
     {
         int type;
-        const char *string;
+        const char* string;
     } musmap[] = {
-            {UNUSED,       ""},
-            {DATATRACK,    ""},
-            {BATTLE1,      "Battle (1)"},
-            {BATTLE2,      "Battle (2)"},
-            {BATTLE3,      "Battle (3)"},
-            {BARBARIAN,    "Barbarian Castle"},
-            {SORCERESS,    "Sorceress Castle"},
-            {WARLOCK,      "Warlock Castle"},
-            {WIZARD,       "Wizard Castle"},
-            {NECROMANCER,  "Necromancer Castle"},
-            {KNIGHT,       "Knight Castle"},
-            {LAVA,         "Lava Theme"},
-            {WASTELAND,    "Wasteland Theme"},
-            {DESERT,       "Desert Theme"},
-            {SNOW,         "Snow Theme"},
-            {SWAMP,        "Swamp Theme"},
-            {BEACH,        "Ocean Theme"},
-            {DIRT,         "Dirt Theme"},
-            {GRASS,        "Grass Theme"},
-            {LOSTGAME,     "Lost Game"},
-            {WEEK1,        "Week (1)"},
-            {WEEK2_MONTH1, "Week (2) Month (1)"},
-            {MONTH2,       "Month (2)"},
-            {PUZZLE,       "Map Puzzle"},
-            {ROLAND,       "Roland's Campaign"},
-            {CARAVANS,     "25"},
-            {CARAVANS_2,   "26"},
-            {CARAVANS_3,   "27"},
-            {COMPUTER,     "28"},
-            {BATTLEWIN,    "29"},
-            {BATTLELOSE,   "30"},
-            {DEATH,        "31"},
-            {WATERSPRING,  "32"},
-            {ARABIAN,      "33"},
-            {NOMADTENTS,   "34"},
-            {TREEHOUSE,    "35"},
-            {DEMONCAVE,    "36"},
-            {EXPERIENCE,   "37"},
-            {SKILL,        "38"},
-            {WATCHTOWER,   "39"},
-            {EVENT15,      "40"},
-            {NEWS,         "41"},
-            {MAINMENU,     "Main Menu"},
-            {VICTORY,      "Scenario Victory"},
-            {UNKNOWN,      "UNKNOWN"}
+        {UNUSED, ""},
+        {DATATRACK, ""},
+        {BATTLE1, "Battle (1)"},
+        {BATTLE2, "Battle (2)"},
+        {BATTLE3, "Battle (3)"},
+        {BARBARIAN, "Barbarian Castle"},
+        {SORCERESS, "Sorceress Castle"},
+        {WARLOCK, "Warlock Castle"},
+        {WIZARD, "Wizard Castle"},
+        {NECROMANCER, "Necromancer Castle"},
+        {KNIGHT, "Knight Castle"},
+        {LAVA, "Lava Theme"},
+        {WASTELAND, "Wasteland Theme"},
+        {DESERT, "Desert Theme"},
+        {SNOW, "Snow Theme"},
+        {SWAMP, "Swamp Theme"},
+        {BEACH, "Ocean Theme"},
+        {DIRT, "Dirt Theme"},
+        {GRASS, "Grass Theme"},
+        {LOSTGAME, "Lost Game"},
+        {WEEK1, "Week (1)"},
+        {WEEK2_MONTH1, "Week (2) Month (1)"},
+        {MONTH2, "Month (2)"},
+        {PUZZLE, "Map Puzzle"},
+        {ROLAND, "Roland's Campaign"},
+        {CARAVANS, "25"},
+        {CARAVANS_2, "26"},
+        {CARAVANS_3, "27"},
+        {COMPUTER, "28"},
+        {BATTLEWIN, "29"},
+        {BATTLELOSE, "30"},
+        {DEATH, "31"},
+        {WATERSPRING, "32"},
+        {ARABIAN, "33"},
+        {NOMADTENTS, "34"},
+        {TREEHOUSE, "35"},
+        {DEMONCAVE, "36"},
+        {EXPERIENCE, "37"},
+        {SKILL, "38"},
+        {WATCHTOWER, "39"},
+        {EVENT15, "40"},
+        {NEWS, "41"},
+        {MAINMENU, "Main Menu"},
+        {VICTORY, "Scenario Victory"},
+        {UNKNOWN, "UNKNOWN"}
     };
 
     string GetString(int mus, bool shortname)
@@ -93,7 +93,7 @@ namespace MUS
             sstream << ".ogg";
         else
             sstream << " " <<
-                    (UNUSED <= mus && UNKNOWN > mus ? musmap[mus].string : musmap[UNKNOWN].string) << ".ogg";
+                (UNUSED <= mus && UNKNOWN > mus ? musmap[mus].string : musmap[UNKNOWN].string) << ".ogg";
         return sstream.str();
     }
 }
@@ -102,26 +102,26 @@ int MUS::FromGround(int ground)
 {
     switch (ground)
     {
-        case Maps::Ground::DESERT:
-            return DESERT;
-        case Maps::Ground::SNOW:
-            return SNOW;
-        case Maps::Ground::SWAMP:
-            return SWAMP;
-        case Maps::Ground::WASTELAND:
-            return WASTELAND;
-        case Maps::Ground::BEACH:
-            return BEACH;
-        case Maps::Ground::LAVA:
-            return LAVA;
-        case Maps::Ground::DIRT:
-            return DIRT;
-        case Maps::Ground::GRASS:
-            return GRASS;
-        case Maps::Ground::WATER:
-            return BEACH;
-        default:
-            break;
+    case Maps::Ground::DESERT:
+        return DESERT;
+    case Maps::Ground::SNOW:
+        return SNOW;
+    case Maps::Ground::SWAMP:
+        return SWAMP;
+    case Maps::Ground::WASTELAND:
+        return WASTELAND;
+    case Maps::Ground::BEACH:
+        return BEACH;
+    case Maps::Ground::LAVA:
+        return LAVA;
+    case Maps::Ground::DIRT:
+        return DIRT;
+    case Maps::Ground::GRASS:
+        return GRASS;
+    case Maps::Ground::WATER:
+        return BEACH;
+    default:
+        break;
     }
 
     return UNKNOWN;
@@ -131,20 +131,20 @@ int MUS::FromRace(int race)
 {
     switch (race)
     {
-        case Race::KNGT:
-            return KNIGHT;
-        case Race::BARB:
-            return BARBARIAN;
-        case Race::SORC:
-            return SORCERESS;
-        case Race::WRLK:
-            return WARLOCK;
-        case Race::WZRD:
-            return WIZARD;
-        case Race::NECR:
-            return NECROMANCER;
-        default:
-            break;
+    case Race::KNGT:
+        return KNIGHT;
+    case Race::BARB:
+        return BARBARIAN;
+    case Race::SORC:
+        return SORCERESS;
+    case Race::WRLK:
+        return WARLOCK;
+    case Race::WZRD:
+        return WIZARD;
+    case Race::NECR:
+        return NECROMANCER;
+    default:
+        break;
     }
 
     return UNKNOWN;
@@ -157,41 +157,41 @@ int MUS::FromMapObject(int object)
 
     switch (object)
     {
-        case MP2::OBJ_WITCHSHUT:
-        case MP2::OBJ_FORT:
-        case MP2::OBJ_MERCENARYCAMP:
-        case MP2::OBJ_DOCTORHUT:
-        case MP2::OBJ_STANDINGSTONES:
-            return SKILL;
+    case MP2::OBJ_WITCHSHUT:
+    case MP2::OBJ_FORT:
+    case MP2::OBJ_MERCENARYCAMP:
+    case MP2::OBJ_DOCTORHUT:
+    case MP2::OBJ_STANDINGSTONES:
+        return SKILL;
 
-        case MP2::OBJ_GAZEBO:
-        case MP2::OBJ_TREEKNOWLEDGE:
-            return EXPERIENCE;
+    case MP2::OBJ_GAZEBO:
+    case MP2::OBJ_TREEKNOWLEDGE:
+        return EXPERIENCE;
 
-        case MP2::OBJ_DAEMONCAVE:
-            return DEMONCAVE;
+    case MP2::OBJ_DAEMONCAVE:
+        return DEMONCAVE;
 
-        case MP2::OBJ_TREEHOUSE:
-        case MP2::OBJ_TREECITY:
-            return TREEHOUSE;
+    case MP2::OBJ_TREEHOUSE:
+    case MP2::OBJ_TREECITY:
+        return TREEHOUSE;
 
-        case MP2::OBJ_WATCHTOWER:
-            return WATCHTOWER;
+    case MP2::OBJ_WATCHTOWER:
+        return WATCHTOWER;
 
-        case MP2::OBJ_DESERTTENT:
-            return NOMADTENTS;
+    case MP2::OBJ_DESERTTENT:
+        return NOMADTENTS;
 
-        case MP2::OBJ_ARTESIANSPRING:
-            return WATERSPRING;
+    case MP2::OBJ_ARTESIANSPRING:
+        return WATERSPRING;
 
-        case MP2::OBJ_SPHINX:
-            return ARABIAN;
+    case MP2::OBJ_SPHINX:
+        return ARABIAN;
 
-        case MP2::OBJ_EVENT:
-            return NEWS;
+    case MP2::OBJ_EVENT:
+        return NEWS;
 
-        default:
-            return UNKNOWN;
+    default:
+        return UNKNOWN;
     }
 }
 
@@ -199,14 +199,14 @@ int MUS::GetBattleRandom()
 {
     switch (Rand::Get(1, 3))
     {
-        case 1:
-            return BATTLE1;
-        case 2:
-            return BATTLE2;
-        case 3:
-            return BATTLE3;
-        default:
-            break;
+    case 1:
+        return BATTLE1;
+    case 2:
+        return BATTLE2;
+    case 3:
+        return BATTLE3;
+    default:
+        break;
     }
     return UNKNOWN;
 }

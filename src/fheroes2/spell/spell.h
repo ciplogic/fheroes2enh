@@ -117,11 +117,11 @@ public:
 
     Spell(int = NONE);
 
-    bool operator<(const Spell &) const;
+    bool operator<(const Spell&) const;
 
-    bool operator==(const Spell &) const;
+    bool operator==(const Spell&) const;
 
-    bool operator!=(const Spell &) const;
+    bool operator!=(const Spell&) const;
 
     int operator()() const;
 
@@ -131,7 +131,7 @@ public:
 
     std::string GetDescription() const;
 
-    uint32_t SpellPoint(const HeroBase *hero = nullptr) const;
+    uint32_t SpellPoint(const HeroBase* hero = nullptr) const;
 
     uint32_t MovePoint() const;
 
@@ -193,20 +193,20 @@ public:
 
     static Spell Rand(int lvl, bool adv);
 
-    static void UpdateStats(const string &);
+    static void UpdateStats(const string&);
 
     static uint32_t CalculateDimensionDoorDistance(uint32_t current_sp, uint32_t total_hp);
 
-    void ReadFrom(ByteVectorReader &msg);
+    void ReadFrom(ByteVectorReader& msg);
 
 private:
-    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Spell &);
+    friend ByteVectorWriter& operator<<(ByteVectorWriter&, const Spell&);
 
 
-    friend ByteVectorReader &operator>>(ByteVectorReader &, Spell &);
+    friend ByteVectorReader& operator>>(ByteVectorReader&, Spell&);
 
     int id;
 };
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const Spell &);
-ByteVectorReader &operator>>(ByteVectorReader &, Spell &);
+ByteVectorWriter& operator<<(ByteVectorWriter&, const Spell&);
+ByteVectorReader& operator>>(ByteVectorReader&, Spell&);

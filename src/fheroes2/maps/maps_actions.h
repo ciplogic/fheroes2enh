@@ -30,47 +30,60 @@ class Heroes;
 
 enum
 {
-    ACTION_UNKNOWN = 0, ACTION_DEFAULT, ACTION_ACCESS, ACTION_MESSAGE, ACTION_RESOURCES, ACTION_ARTIFACT
+    ACTION_UNKNOWN = 0,
+    ACTION_DEFAULT,
+    ACTION_ACCESS,
+    ACTION_MESSAGE,
+    ACTION_RESOURCES,
+    ACTION_ARTIFACT
 };
 
 class ActionSimple
 {
 public:
     ActionSimple(int v = 0) : uid(0), type(v)
-    {}
+    {
+    }
 
     virtual ~ActionSimple();
 
     int GetType() const
-    { return type; }
+    {
+        return type;
+    }
 
     uint32_t GetUID() const
-    { return uid; }
+    {
+        return uid;
+    }
 
     void SetUID(uint32_t v)
-    { uid = v; }
+    {
+        uid = v;
+    }
 
 protected:
-    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const ActionSimple &);
+    friend ByteVectorWriter& operator<<(ByteVectorWriter&, const ActionSimple&);
 
-    friend ByteVectorReader &operator>>(ByteVectorReader &, ActionSimple &);
+    friend ByteVectorReader& operator>>(ByteVectorReader&, ActionSimple&);
 
     uint32_t uid;
     int type;
 };
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const ActionSimple &);
+ByteVectorWriter& operator<<(ByteVectorWriter&, const ActionSimple&);
 
-ByteVectorReader &operator>>(ByteVectorReader &, ActionSimple &);
+ByteVectorReader& operator>>(ByteVectorReader&, ActionSimple&);
 
 struct ActionMessage : ActionSimple
 {
     string message;
 
     ActionMessage() : ActionSimple(ACTION_MESSAGE)
-    {}
+    {
+    }
 
-    static bool Action(ActionMessage *, s32, Heroes &);
+    static bool Action(ActionMessage*, s32, Heroes&);
 };
 
 struct ActionDefault : ActionSimple
@@ -79,9 +92,10 @@ struct ActionDefault : ActionSimple
     string message;
 
     ActionDefault() : ActionSimple(ACTION_DEFAULT), enabled(true)
-    {}
+    {
+    }
 
-    static bool Action(ActionDefault *, s32, Heroes &);
+    static bool Action(ActionDefault*, s32, Heroes&);
 };
 
 struct ActionAccess : ActionSimple
@@ -93,9 +107,10 @@ struct ActionAccess : ActionSimple
 
     ActionAccess() : ActionSimple(ACTION_ACCESS), allowPlayers(Color::ALL), allowComputer(true),
                      cancelAfterFirstVisit(false)
-    {}
+    {
+    }
 
-    static bool Action(ActionAccess *, s32, Heroes &);
+    static bool Action(ActionAccess*, s32, Heroes&);
 };
 
 struct ActionArtifact : ActionSimple
@@ -104,9 +119,10 @@ struct ActionArtifact : ActionSimple
     string message;
 
     ActionArtifact() : ActionSimple(ACTION_ARTIFACT)
-    {}
+    {
+    }
 
-    static bool Action(ActionArtifact *, s32, Heroes &);
+    static bool Action(ActionArtifact*, s32, Heroes&);
 };
 
 struct ActionResources : ActionSimple
@@ -115,8 +131,8 @@ struct ActionResources : ActionSimple
     string message;
 
     ActionResources() : ActionSimple(ACTION_RESOURCES)
-    {}
+    {
+    }
 
-    static bool Action(ActionResources *, s32, Heroes &);
+    static bool Action(ActionResources*, s32, Heroes&);
 };
-

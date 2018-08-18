@@ -893,7 +893,7 @@ namespace ICN
         ZOMBIE,
 
         // system
-                ROUTERED,
+        ROUTERED,
         TELEPORT1,
         TELEPORT2,
         TELEPORT3,
@@ -916,9 +916,9 @@ namespace ICN
         LASTICN
     };
 
-    const char *GetString(int);
+    const char* GetString(int);
 
-    int FromString(const char *);
+    int FromString(const char*);
 
     uint32_t AnimationFrame(int icn, uint32_t, uint32_t, bool = false);
 

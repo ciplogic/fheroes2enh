@@ -46,7 +46,7 @@ namespace XMI
         MIDI0043
     };
 
-    const char *GetString(int);
+    const char* GetString(int);
 
     int FromMUS(int);
 }

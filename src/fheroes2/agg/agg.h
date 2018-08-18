@@ -33,18 +33,23 @@ class ICNSprite : public std::pair<Surface, Surface> /* first: image with out al
 public:
     ICNSprite() = default;
 
-    ICNSprite(const Surface &sf1, const Surface &sf2) : std::pair<Surface, Surface>(sf1, sf2)
-    {}
+    ICNSprite(const Surface& sf1, const Surface& sf2) : std::pair<Surface, Surface>(sf1, sf2)
+    {
+    }
 
     bool isValid() const;
 
     sp<Sprite> CreateSprite(bool reflect, bool shadow) const;
 
     Surface First() const
-    { return first; }
+    {
+        return first;
+    }
 
     Surface Second() const
-    { return second; }
+    {
+        return second;
+    }
 
     Point offset;
 };
@@ -55,7 +60,7 @@ namespace AGG
 
     void Quit();
 
-    int PutICN(const Sprite &, bool init_reflect = false);
+    int PutICN(const Sprite&, bool init_reflect = false);
 
     Sprite GetICN(int icn, uint32_t index, bool reflect = false);
 
@@ -73,7 +78,7 @@ namespace AGG
 
 #endif
 
-    void LoadLOOPXXSounds(const std::vector<int> &);
+    void LoadLOOPXXSounds(const std::vector<int>&);
 
     void PlaySound(int m82);
 
@@ -83,9 +88,9 @@ namespace AGG
 
     RGBA GetPaletteColor(uint32_t index);
 
-    void DrawPointFast(Surface &srf, int x, int y, u8 color);
+    void DrawPointFast(Surface& srf, int x, int y, u8 color);
 
     ICNSprite RenderICNSprite(int, uint32_t);
 
-    void RenderICNSprite(int icn, uint32_t index, const Rect &srt, const Point &dpt, Surface &dst);
+    void RenderICNSprite(int icn, uint32_t index, const Rect& srt, const Point& dpt, Surface& dst);
 }

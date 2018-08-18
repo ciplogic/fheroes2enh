@@ -33,7 +33,7 @@
 #include "rand.h"
 #include "battle_army.h"
 
-void Battle::Arena::BattleProcess(Unit &attacker, Unit &defender, s32 dst, int dir)
+void Battle::Arena::BattleProcess(Unit& attacker, Unit& defender, s32 dst, int dir)
 {
     if (0 > dst) dst = defender.GetHeadIndex();
 
@@ -45,13 +45,15 @@ void Battle::Arena::BattleProcess(Unit &attacker, Unit &defender, s32 dst, int d
                 attacker.UpdateDirection(board._items[dst].GetPos());
             if (defender.AllowResponse())
                 defender.UpdateDirection(board._items[attacker.GetHeadIndex()].GetPos());
-        } else
+        }
+        else
         {
             attacker.UpdateDirection(board._items[dst].GetPos());
             if (defender.AllowResponse())
                 defender.UpdateDirection(board._items[attacker.GetHeadIndex()].GetPos());
         }
-    } else
+    }
+    else
         attacker.UpdateDirection(board._items[dst].GetPos());
 
     TargetsInfo targets = GetTargetsForDamage(attacker, defender, dst);
@@ -87,56 +89,56 @@ void Battle::Arena::BattleProcess(Unit &attacker, Unit &defender, s32 dst, int d
     attacker.PostAttackAction(defender);
 }
 
-void Battle::Arena::ApplyAction(Command &cmd)
+void Battle::Arena::ApplyAction(Command& cmd)
 {
     switch (cmd.GetType())
     {
-        case MSG_BATTLE_CAST:
-            ApplyActionSpellCast(cmd);
-            break;
-        case MSG_BATTLE_ATTACK:
-            ApplyActionAttack(cmd);
-            break;
-        case MSG_BATTLE_MOVE:
-            ApplyActionMove(cmd);
-            break;
-        case MSG_BATTLE_SKIP:
-            ApplyActionSkip(cmd);
-            break;
-        case MSG_BATTLE_END_TURN:
-            ApplyActionEnd(cmd);
-            break;
-        case MSG_BATTLE_MORALE:
-            ApplyActionMorale(cmd);
-            break;
+    case MSG_BATTLE_CAST:
+        ApplyActionSpellCast(cmd);
+        break;
+    case MSG_BATTLE_ATTACK:
+        ApplyActionAttack(cmd);
+        break;
+    case MSG_BATTLE_MOVE:
+        ApplyActionMove(cmd);
+        break;
+    case MSG_BATTLE_SKIP:
+        ApplyActionSkip(cmd);
+        break;
+    case MSG_BATTLE_END_TURN:
+        ApplyActionEnd(cmd);
+        break;
+    case MSG_BATTLE_MORALE:
+        ApplyActionMorale(cmd);
+        break;
 
-        case MSG_BATTLE_TOWER:
-            ApplyActionTower(cmd);
-            break;
-        case MSG_BATTLE_CATAPULT:
-            ApplyActionCatapult(cmd);
-            break;
+    case MSG_BATTLE_TOWER:
+        ApplyActionTower(cmd);
+        break;
+    case MSG_BATTLE_CATAPULT:
+        ApplyActionCatapult(cmd);
+        break;
 
-        case MSG_BATTLE_RETREAT:
-            ApplyActionRetreat(cmd);
-            break;
-        case MSG_BATTLE_SURRENDER:
-            ApplyActionSurrender(cmd);
-            break;
+    case MSG_BATTLE_RETREAT:
+        ApplyActionRetreat(cmd);
+        break;
+    case MSG_BATTLE_SURRENDER:
+        ApplyActionSurrender(cmd);
+        break;
 
-        case MSG_BATTLE_AUTO:
-            ApplyActionAutoBattle(cmd);
-            break;
+    case MSG_BATTLE_AUTO:
+        ApplyActionAutoBattle(cmd);
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 }
 
-void Battle::Arena::ApplyActionSpellCast(Command &cmd)
+void Battle::Arena::ApplyActionSpellCast(Command& cmd)
 {
     const Spell spell(cmd.GetValue());
-    HeroBase *current_commander = GetCurrentForce().GetCommander();
+    HeroBase* current_commander = GetCurrentForce().GetCommander();
 
     if (current_commander && current_commander->HaveSpellBook() &&
         !current_commander->Modes(Heroes::SPELLCASTED) &&
@@ -145,28 +147,28 @@ void Battle::Arena::ApplyActionSpellCast(Command &cmd)
         // uniq spells action
         switch (spell())
         {
-            case Spell::TELEPORT:
-                ApplyActionSpellTeleport(cmd);
-                break;
+        case Spell::TELEPORT:
+            ApplyActionSpellTeleport(cmd);
+            break;
 
-            case Spell::EARTHQUAKE:
-                ApplyActionSpellEarthQuake(cmd);
-                break;
+        case Spell::EARTHQUAKE:
+            ApplyActionSpellEarthQuake(cmd);
+            break;
 
-            case Spell::MIRRORIMAGE:
-                ApplyActionSpellMirrorImage(cmd);
-                break;
+        case Spell::MIRRORIMAGE:
+            ApplyActionSpellMirrorImage(cmd);
+            break;
 
-            case Spell::SUMMONEELEMENT:
-            case Spell::SUMMONAELEMENT:
-            case Spell::SUMMONFELEMENT:
-            case Spell::SUMMONWELEMENT:
-                ApplyActionSpellSummonElemental(cmd, spell);
-                break;
+        case Spell::SUMMONEELEMENT:
+        case Spell::SUMMONAELEMENT:
+        case Spell::SUMMONFELEMENT:
+        case Spell::SUMMONWELEMENT:
+            ApplyActionSpellSummonElemental(cmd, spell);
+            break;
 
-            default:
-                ApplyActionSpellDefaults(cmd, spell);
-                break;
+        default:
+            ApplyActionSpellDefaults(cmd, spell);
+            break;
         }
 
         current_commander->SetModes(Heroes::SPELLCASTED);
@@ -174,20 +176,21 @@ void Battle::Arena::ApplyActionSpellCast(Command &cmd)
 
         // save spell for "eagle eye" capability
         usage_spells.Append(spell);
-    } else
+    }
+    else
     {
     }
 }
 
-void Battle::Arena::ApplyActionAttack(Command &cmd)
+void Battle::Arena::ApplyActionAttack(Command& cmd)
 {
     const uint32_t uid1 = cmd.GetValue();
     const uint32_t uid2 = cmd.GetValue();
     const s32 dst = cmd.GetValue();
     const int dir = cmd.GetValue();
 
-    Unit *b1 = GetTroopUID(uid1);
-    Unit *b2 = GetTroopUID(uid2);
+    Unit* b1 = GetTroopUID(uid1);
+    Unit* b2 = GetTroopUID(uid2);
 
     if (!b1 || !b1->isValid()
         || !b2 || !b2->isValid()
@@ -223,14 +226,14 @@ void Battle::Arena::ApplyActionAttack(Command &cmd)
     b2->UpdateDirection();
 }
 
-void Battle::Arena::ApplyActionMove(Command &cmd)
+void Battle::Arena::ApplyActionMove(Command& cmd)
 {
     uint32_t uid = cmd.GetValue();
     s32 dst = cmd.GetValue();
     int path_size = cmd.GetValue();
 
-    Unit *b = GetTroopUID(uid);
-    Cell *cell = Board::GetCell(dst);
+    Unit* b = GetTroopUID(uid);
+    Cell* cell = Board::GetCell(dst);
 
     if (!b || !b->isValid() || !cell || !cell->isPassable3(*b, false))
         return;
@@ -245,7 +248,8 @@ void Battle::Arena::ApplyActionMove(Command &cmd)
         if (b->isReflect() != pos1.isReflect()) pos1.Swap();
         if (interface) interface->RedrawActionFly(*b, pos1);
         pos2 = pos1;
-    } else
+    }
+    else
     {
         Indexes path;
 
@@ -254,7 +258,8 @@ void Battle::Arena::ApplyActionMove(Command &cmd)
         {
             path = GetPath(*b, pos1);
             cmd = Command(MSG_BATTLE_MOVE, b->GetUID(), dst, path);
-        } else
+        }
+        else
             for (int index = 0; index < path_size; ++index)
                 path.push_back(cmd.GetValue());
 
@@ -267,7 +272,7 @@ void Battle::Arena::ApplyActionMove(Command &cmd)
         else if (bridge)
         {
             for (Indexes::const_iterator
-                         it = path.begin(); it != path.end(); ++it)
+                 it = path.begin(); it != path.end(); ++it)
                 if (bridge->NeedAction(*b, *it)) bridge->Action(*b, *it);
         }
 
@@ -277,7 +282,8 @@ void Battle::Arena::ApplyActionMove(Command &cmd)
             const s32 dst2 = 1 < path.size() ? path[path.size() - 2] : head;
 
             pos2.Set(dst1, b->isWide(), RIGHT_SIDE & Board::GetDirection(dst1, dst2));
-        } else
+        }
+        else
             pos2.Set(path.back(), false, b->isReflect());
     }
 
@@ -285,12 +291,12 @@ void Battle::Arena::ApplyActionMove(Command &cmd)
     b->UpdateDirection();
 }
 
-void Battle::Arena::ApplyActionSkip(Command &cmd)
+void Battle::Arena::ApplyActionSkip(Command& cmd)
 {
     uint32_t uid = cmd.GetValue();
     int hard = cmd.GetValue();
 
-    Unit *battle = GetTroopUID(uid);
+    Unit* battle = GetTroopUID(uid);
     if (!battle || !battle->isValid())
         return;
     if (battle->Modes(TR_MOVED))
@@ -301,17 +307,18 @@ void Battle::Arena::ApplyActionSkip(Command &cmd)
         battle->SetModes(TR_SKIPMOVE);
         battle->SetModes(TR_MOVED);
         if (Settings::Get().ExtBattleSkipIncreaseDefense()) battle->SetModes(TR_DEFENSED);
-    } else
+    }
+    else
         battle->SetModes(battle->Modes(TR_SKIPMOVE) ? TR_MOVED : TR_SKIPMOVE);
 
     if (interface) interface->RedrawActionSkipStatus(*battle);
 }
 
-void Battle::Arena::ApplyActionEnd(Command &cmd)
+void Battle::Arena::ApplyActionEnd(Command& cmd)
 {
     uint32_t uid = cmd.GetValue();
 
-    Unit *battle = GetTroopUID(uid);
+    Unit* battle = GetTroopUID(uid);
 
     if (!battle)
         return;
@@ -322,12 +329,12 @@ void Battle::Arena::ApplyActionEnd(Command &cmd)
     if (battle->Modes(TR_SKIPMOVE) && interface) interface->RedrawActionSkipStatus(*battle);
 }
 
-void Battle::Arena::ApplyActionMorale(Command &cmd)
+void Battle::Arena::ApplyActionMorale(Command& cmd)
 {
     uint32_t uid = cmd.GetValue();
     int morale = cmd.GetValue();
 
-    Unit *b = GetTroopUID(uid);
+    Unit* b = GetTroopUID(uid);
 
     if (!b || !b->isValid())
         return;
@@ -349,20 +356,21 @@ void Battle::Arena::ApplyActionMorale(Command &cmd)
     if (interface) interface->RedrawActionMorale(*b, morale);
 }
 
-void Battle::Arena::ApplyActionRetreat(Command &cmd)
+void Battle::Arena::ApplyActionRetreat(Command& cmd)
 {
     if (!CanRetreatOpponent(current_color))
         return;
     if (army1->GetColor() == current_color)
     {
         result_game.army1 = RESULT_RETREAT;
-    } else if (army2->GetColor() == current_color)
+    }
+    else if (army2->GetColor() == current_color)
     {
         result_game.army2 = RESULT_RETREAT;
     }
 }
 
-void Battle::Arena::ApplyActionSurrender(Command &cmd)
+void Battle::Arena::ApplyActionSurrender(Command& cmd)
 {
     if (!CanSurrenderOpponent(current_color))
         return;
@@ -380,7 +388,8 @@ void Battle::Arena::ApplyActionSurrender(Command &cmd)
         result_game.army1 = RESULT_SURRENDER;
         world.GetKingdom(current_color).OddFundsResource(cost);
         world.GetKingdom(army2->GetColor()).AddFundsResource(cost);
-    } else if (army2->GetColor() == current_color)
+    }
+    else if (army2->GetColor() == current_color)
     {
         result_game.army2 = RESULT_SURRENDER;
         world.GetKingdom(current_color).OddFundsResource(cost);
@@ -388,22 +397,22 @@ void Battle::Arena::ApplyActionSurrender(Command &cmd)
     }
 }
 
-void Battle::Arena::TargetsApplyDamage(Unit &attacker, Unit &defender, TargetsInfo &targets)
+void Battle::Arena::TargetsApplyDamage(Unit& attacker, Unit& defender, TargetsInfo& targets)
 {
-    for (auto &target : targets)
+    for (auto& target : targets)
     {
         if (!target.defender) continue;
         target.killed = target.defender->ApplyDamage(attacker, target.damage);
     }
 }
 
-Battle::TargetsInfo Battle::Arena::GetTargetsForDamage(Unit &attacker, Unit &defender, s32 dst) const
+Battle::TargetsInfo Battle::Arena::GetTargetsForDamage(Unit& attacker, Unit& defender, s32 dst) const
 {
     TargetsInfo targets;
     targets.reserve(8);
 
-    Unit *enemy = nullptr;
-    Cell *cell = nullptr;
+    Unit* enemy = nullptr;
+    Cell* cell = nullptr;
     TargetInfo res;
 
     // first target
@@ -425,74 +434,76 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForDamage(Unit &attacker, Unit &def
                 targets.push_back(res);
             }
         }
-    } else
-        // around hydra
-    if (attacker.GetID() == Monster::HYDRA)
-    {
-        vector<Unit *> v;
-        v.reserve(8);
-
-        const Indexes around = Board::GetAroundIndexes(attacker);
-
-        for (int it : around)
-        {
-            if (nullptr != (enemy = Board::GetCell(it)->GetUnit()) &&
-                enemy != &defender && enemy->GetColor() != attacker.GetColor())
-            {
-                res.defender = enemy;
-                res.damage = attacker.GetDamage(*enemy);
-                targets.push_back(res);
-            }
-        }
-    } else
-        // lich cloud damages
-    if ((attacker.GetID() == Monster::LICH ||
-         attacker.GetID() == Monster::POWER_LICH) && !attacker.isHandFighting())
-    {
-        const Indexes around = Board::GetAroundIndexes(defender.GetHeadIndex());
-
-        for (int it : around)
-        {
-            if (nullptr != (enemy = Board::GetCell(it)->GetUnit()) && enemy != &defender)
-            {
-                res.defender = enemy;
-                res.damage = attacker.GetDamage(*enemy);
-                targets.push_back(res);
-            }
-        }
     }
+    else
+        // around hydra
+        if (attacker.GetID() == Monster::HYDRA)
+        {
+            vector<Unit *> v;
+            v.reserve(8);
+
+            const Indexes around = Board::GetAroundIndexes(attacker);
+
+            for (int it : around)
+            {
+                if (nullptr != (enemy = Board::GetCell(it)->GetUnit()) &&
+                    enemy != &defender && enemy->GetColor() != attacker.GetColor())
+                {
+                    res.defender = enemy;
+                    res.damage = attacker.GetDamage(*enemy);
+                    targets.push_back(res);
+                }
+            }
+        }
+        else
+            // lich cloud damages
+            if ((attacker.GetID() == Monster::LICH ||
+                attacker.GetID() == Monster::POWER_LICH) && !attacker.isHandFighting())
+            {
+                const Indexes around = Board::GetAroundIndexes(defender.GetHeadIndex());
+
+                for (int it : around)
+                {
+                    if (nullptr != (enemy = Board::GetCell(it)->GetUnit()) && enemy != &defender)
+                    {
+                        res.defender = enemy;
+                        res.damage = attacker.GetDamage(*enemy);
+                        targets.push_back(res);
+                    }
+                }
+            }
 
     return targets;
 }
 
-void Battle::Arena::TargetsApplySpell(const HeroBase *hero, const Spell &spell, TargetsInfo &targets)
+void Battle::Arena::TargetsApplySpell(const HeroBase* hero, const Spell& spell, TargetsInfo& targets)
 {
-    for (auto &target : targets)
+    for (auto& target : targets)
     {
         if (!target.defender) continue;
         target.defender->ApplySpell(spell, hero, target);
     }
 }
 
-Battle::TargetsInfo Battle::Arena::GetTargetsForSpells(const HeroBase *hero, const Spell &spell, s32 dst)
+Battle::TargetsInfo Battle::Arena::GetTargetsForSpells(const HeroBase* hero, const Spell& spell, s32 dst)
 {
     TargetsInfo targets;
     targets.reserve(8);
 
     TargetInfo res;
-    Unit *target = GetTroopBoard(dst);
+    Unit* target = GetTroopBoard(dst);
 
     // from spells
     switch (spell())
     {
-        case Spell::CHAINLIGHTNING:
-        case Spell::COLDRING:
-            // skip center
-            target = nullptr;
-            break;
+    case Spell::CHAINLIGHTNING:
+    case Spell::COLDRING:
+        // skip center
+        target = nullptr;
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     // first target
@@ -512,11 +523,12 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForSpells(const HeroBase *hero, con
             res.defender = target;
             targets.push_back(res);
         }
-    } else
+    }
+    else
         // check other spells
         switch (spell())
         {
-            case Spell::CHAINLIGHTNING:
+        case Spell::CHAINLIGHTNING:
             {
                 Indexes trgts;
                 trgts.reserve(12);
@@ -534,7 +546,7 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForSpells(const HeroBase *hero, con
                 for (auto
                      it = trgts.begin(); it != trgts.end(); ++it)
                 {
-                    Unit *target = GetTroopBoard(*it);
+                    Unit* target = GetTroopBoard(*it);
 
                     if (target)
                     {
@@ -545,19 +557,19 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForSpells(const HeroBase *hero, con
                     }
                 }
             }
-                break;
+            break;
 
-                // check abroads
-            case Spell::FIREBALL:
-            case Spell::METEORSHOWER:
-            case Spell::COLDRING:
-            case Spell::FIREBLAST:
+            // check abroads
+        case Spell::FIREBALL:
+        case Spell::METEORSHOWER:
+        case Spell::COLDRING:
+        case Spell::FIREBLAST:
             {
                 const Indexes positions = Board::GetDistanceIndexes(dst, spell == Spell::FIREBLAST ? 2 : 1);
 
                 for (int position : positions)
                 {
-                    Unit *target = GetTroopBoard(position);
+                    Unit* target = GetTroopBoard(position);
                     if (target && target->AllowApplySpell(spell, hero))
                     {
                         res.defender = target;
@@ -568,24 +580,24 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForSpells(const HeroBase *hero, con
                 // unique
                 targets.resize(distance(targets.begin(), unique(targets.begin(), targets.end())));
             }
-                break;
+            break;
 
-                // check all troops
-            case Spell::DEATHRIPPLE:
-            case Spell::DEATHWAVE:
-            case Spell::ELEMENTALSTORM:
-            case Spell::HOLYWORD:
-            case Spell::HOLYSHOUT:
-            case Spell::ARMAGEDDON:
-            case Spell::MASSBLESS:
-            case Spell::MASSCURE:
-            case Spell::MASSCURSE:
-            case Spell::MASSDISPEL:
-            case Spell::MASSHASTE:
-            case Spell::MASSSHIELD:
-            case Spell::MASSSLOW:
+            // check all troops
+        case Spell::DEATHRIPPLE:
+        case Spell::DEATHWAVE:
+        case Spell::ELEMENTALSTORM:
+        case Spell::HOLYWORD:
+        case Spell::HOLYSHOUT:
+        case Spell::ARMAGEDDON:
+        case Spell::MASSBLESS:
+        case Spell::MASSCURE:
+        case Spell::MASSCURSE:
+        case Spell::MASSDISPEL:
+        case Spell::MASSHASTE:
+        case Spell::MASSSHIELD:
+        case Spell::MASSSLOW:
             {
-                for (auto &it : board._items)
+                for (auto& it : board._items)
                 {
                     target = it.GetUnit();
                     if (target && target->AllowApplySpell(spell, hero))
@@ -598,10 +610,10 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForSpells(const HeroBase *hero, con
                 // unique
                 targets.resize(distance(targets.begin(), unique(targets.begin(), targets.end())));
             }
-                break;
+            break;
 
-            default:
-                break;
+        default:
+            break;
         }
 
     // remove resistent magic troop
@@ -617,19 +629,20 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForSpells(const HeroBase *hero, con
             // erase(it)
             if (it + 1 != targets.end()) swap(*it, targets.back());
             targets.pop_back();
-        } else ++it;
+        }
+        else ++it;
     }
 
     return targets;
 }
 
-void Battle::Arena::ApplyActionTower(Command &cmd)
+void Battle::Arena::ApplyActionTower(Command& cmd)
 {
     uint32_t type = cmd.GetValue();
     uint32_t uid = cmd.GetValue();
 
-    Tower *tower = GetTower(type);
-    Unit *b2 = GetTroopUID(uid);
+    Tower* tower = GetTower(type);
+    Unit* b2 = GetTroopUID(uid);
 
     if (!b2 || !b2->isValid() || !tower)
         return;
@@ -644,7 +657,7 @@ void Battle::Arena::ApplyActionTower(Command &cmd)
     if (b2->Modes(SP_BLIND)) b2->ResetBlind();
 }
 
-void Battle::Arena::ApplyActionCatapult(Command &cmd)
+void Battle::Arena::ApplyActionCatapult(Command& cmd)
 {
     if (!catapult)
         return;
@@ -662,7 +675,7 @@ void Battle::Arena::ApplyActionCatapult(Command &cmd)
     }
 }
 
-void Battle::Arena::ApplyActionAutoBattle(Command &cmd)
+void Battle::Arena::ApplyActionAutoBattle(Command& cmd)
 {
     const int color = cmd.GetValue();
 
@@ -672,22 +685,23 @@ void Battle::Arena::ApplyActionAutoBattle(Command &cmd)
     {
         if (interface) interface->SetStatus(_("Set auto battle off"), true);
         auto_battle &= ~color;
-    } else
+    }
+    else
     {
         if (interface) interface->SetStatus(_("Set auto battle on"), true);
         auto_battle |= color;
     }
 }
 
-void Battle::Arena::ApplyActionSpellSummonElemental(Command &cmd, const Spell &spell) const
+void Battle::Arena::ApplyActionSpellSummonElemental(Command& cmd, const Spell& spell) const
 {
-    Unit *elem = CreateElemental(spell);
+    Unit* elem = CreateElemental(spell);
     if (interface) interface->RedrawActionSummonElementalSpell(*elem);
 }
 
-void Battle::Arena::ApplyActionSpellDefaults(Command &cmd, const Spell &spell)
+void Battle::Arena::ApplyActionSpellDefaults(Command& cmd, const Spell& spell)
 {
-    const HeroBase *current_commander = GetCurrentCommander();
+    const HeroBase* current_commander = GetCurrentCommander();
     if (!current_commander) return;
 
     s32 dst = cmd.GetValue();
@@ -700,12 +714,12 @@ void Battle::Arena::ApplyActionSpellDefaults(Command &cmd, const Spell &spell)
     if (interface) interface->RedrawActionSpellCastPart2(spell, targets);
 }
 
-void Battle::Arena::ApplyActionSpellTeleport(Command &cmd)
+void Battle::Arena::ApplyActionSpellTeleport(Command& cmd)
 {
     const s32 src = cmd.GetValue();
     const s32 dst = cmd.GetValue();
 
-    Unit *b = GetTroopBoard(src);
+    Unit* b = GetTroopBoard(src);
     const Spell spell(Spell::TELEPORT);
 
     if (!b)
@@ -719,7 +733,7 @@ void Battle::Arena::ApplyActionSpellTeleport(Command &cmd)
     b->UpdateDirection();
 }
 
-void Battle::Arena::ApplyActionSpellEarthQuake(Command &cmd)
+void Battle::Arena::ApplyActionSpellEarthQuake(Command& cmd)
 {
     const vector<int> targets = GetCastleTargets();
 
@@ -735,13 +749,12 @@ void Battle::Arena::ApplyActionSpellEarthQuake(Command &cmd)
 
     if (towers[0] && towers[0]->isValid() && Rand::Get(1)) towers[0]->SetDestroy();
     if (towers[2] && towers[2]->isValid() && Rand::Get(1)) towers[2]->SetDestroy();
-
 }
 
-void Battle::Arena::ApplyActionSpellMirrorImage(Command &cmd)
+void Battle::Arena::ApplyActionSpellMirrorImage(Command& cmd)
 {
     s32 who = cmd.GetValue();
-    Unit *b = GetTroopBoard(who);
+    Unit* b = GetTroopBoard(who);
 
     if (!b)
         return;
@@ -753,9 +766,9 @@ void Battle::Arena::ApplyActionSpellMirrorImage(Command &cmd)
     auto it = find_if(distances.begin(), distances.end(),
                       bind2nd(ptr_fun(&Board::isValidMirrorImageIndex), b));
 
-    for (auto &distance : distances)
+    for (auto& distance : distances)
     {
-        const Cell *cell = Board::GetCell(distance);
+        const Cell* cell = Board::GetCell(distance);
         if (cell && cell->isPassable3(*b, true)) break;
     }
 
@@ -764,9 +777,10 @@ void Battle::Arena::ApplyActionSpellMirrorImage(Command &cmd)
         const Position pos = Position::GetCorrect(*b, *it);
         const s32 dst = pos.GetHead()->GetIndex();
         if (interface) interface->RedrawActionMirrorImageSpell(*b, pos);
-        Unit *mirror = CreateMirrorImage(*b, dst);
+        Unit* mirror = CreateMirrorImage(*b, dst);
         if (mirror) mirror->SetPosition(pos);
-    } else
+    }
+    else
     {
         if (interface) interface->SetStatus(_("spell failed!"), true);
     }

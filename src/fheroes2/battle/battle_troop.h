@@ -67,19 +67,21 @@ namespace Battle
         uint32_t FindZeroDuration() const;
     };
 
-    ByteVectorWriter &operator<<(ByteVectorWriter &, const ModesAffected &);
-    ByteVectorReader &operator>>(ByteVectorReader &, ModesAffected &);
+    ByteVectorWriter& operator<<(ByteVectorWriter&, const ModesAffected&);
+    ByteVectorReader& operator>>(ByteVectorReader&, ModesAffected&);
 
     enum
     {
-        CONTOUR_MAIN = 0, CONTOUR_BLACK = 0x01, CONTOUR_REFLECT = 0x02
+        CONTOUR_MAIN = 0,
+        CONTOUR_BLACK = 0x01,
+        CONTOUR_REFLECT = 0x02
     };
 
     // battle troop stats
     class Unit : public ArmyTroop, public BitModes, public Control
     {
     public:
-        Unit(const Troop &, s32 pos, bool reflect);
+        Unit(const Troop&, s32 pos, bool reflect);
 
         virtual ~Unit();
 
@@ -101,7 +103,7 @@ namespace Battle
 
         void InitContours();
 
-        void SetMirror(Unit *);
+        void SetMirror(Unit*);
 
         void SetRandomMorale();
 
@@ -125,7 +127,7 @@ namespace Battle
 
         bool isHaveDamage() const;
 
-        bool isMagicResist(const Spell &, uint32_t) const;
+        bool isMagicResist(const Spell&, uint32_t) const;
 
         bool isMagicAttack() const;
 
@@ -142,11 +144,11 @@ namespace Battle
 
         s32 GetTailIndex() const;
 
-        const Position &GetPosition() const;
+        const Position& GetPosition() const;
 
         void SetPosition(s32);
 
-        void SetPosition(const Position &);
+        void SetPosition(const Position&);
 
         void SetReflection(bool);
 
@@ -162,9 +164,9 @@ namespace Battle
 
         int GetControl() const;
 
-        uint32_t GetDamage(const Unit &) const;
+        uint32_t GetDamage(const Unit&) const;
 
-        s32 GetScoreQuality(const Unit &) const;
+        s32 GetScoreQuality(const Unit&) const;
 
         uint32_t GetDead() const;
 
@@ -172,39 +174,39 @@ namespace Battle
 
         uint32_t GetShots() const;
 
-        uint32_t ApplyDamage(Unit &, uint32_t);
+        uint32_t ApplyDamage(Unit&, uint32_t);
 
         uint32_t ApplyDamage(uint32_t);
 
-        uint32_t GetDamageMin(const Unit &) const;
+        uint32_t GetDamageMin(const Unit&) const;
 
-        uint32_t GetDamageMax(const Unit &) const;
+        uint32_t GetDamageMax(const Unit&) const;
 
-        uint32_t CalculateDamageUnit(const Unit &, double) const;
+        uint32_t CalculateDamageUnit(const Unit&, double) const;
 
-        bool ApplySpell(const Spell &, const HeroBase *hero, TargetInfo &);
+        bool ApplySpell(const Spell&, const HeroBase* hero, TargetInfo&);
 
-        bool AllowApplySpell(const Spell &, const HeroBase *hero, string *msg = nullptr) const;
+        bool AllowApplySpell(const Spell&, const HeroBase* hero, string* msg = nullptr) const;
 
-        void PostAttackAction(Unit &);
+        void PostAttackAction(Unit&);
 
         void ResetBlind();
 
-        void SpellModesAction(const Spell &, uint32_t, const HeroBase *);
+        void SpellModesAction(const Spell&, uint32_t, const HeroBase*);
 
-        void SpellApplyDamage(const Spell &, uint32_t, const HeroBase *, TargetInfo &);
+        void SpellApplyDamage(const Spell&, uint32_t, const HeroBase*, TargetInfo&);
 
-        void SpellRestoreAction(const Spell &, uint32_t, const HeroBase *);
+        void SpellRestoreAction(const Spell&, uint32_t, const HeroBase*);
 
         uint32_t Resurrect(uint32_t, bool, bool);
 
-        const monstersprite_t &
+        const monstersprite_t&
         GetMonsterSprite() const;
 
-        const animframe_t &
+        const animframe_t&
         GetFrameState() const;
 
-        const animframe_t &
+        const animframe_t&
         GetFrameState(int) const;
 
         void IncreaseAnimFrame(bool loop = false);
@@ -245,9 +247,9 @@ namespace Battle
 
         Rect GetRectPosition() const;
 
-        uint32_t HowManyCanKill(const Unit &) const;
+        uint32_t HowManyCanKill(const Unit&) const;
 
-        uint32_t HowManyWillKilled(uint32_t &) const;
+        uint32_t HowManyWillKilled(uint32_t&) const;
 
         void SetResponse();
 
@@ -255,25 +257,25 @@ namespace Battle
 
         void UpdateDirection();
 
-        bool UpdateDirection(const Rect &);
+        bool UpdateDirection(const Rect&);
 
         void PostKilledAction();
 
-        uint32_t GetMagicResist(const Spell &, uint32_t) const;
+        uint32_t GetMagicResist(const Spell&, uint32_t) const;
 
         int GetSpellMagic(bool force = false) const;
 
-        uint32_t GetObstaclesPenalty(const Unit &) const;
+        uint32_t GetObstaclesPenalty(const Unit&) const;
 
-        const HeroBase *GetCommander() const;
+        const HeroBase* GetCommander() const;
 
-        static bool isHandFighting(const Unit &, const Unit &);
+        static bool isHandFighting(const Unit&, const Unit&);
 
     private:
-        friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Unit &);
+        friend ByteVectorWriter& operator<<(ByteVectorWriter&, const Unit&);
 
-        friend ByteVectorReader &operator>>(ByteVectorReader &, Unit &);
-        
+        friend ByteVectorReader& operator>>(ByteVectorReader&, Unit&);
+
         uint32_t uid;
         uint32_t hp;
         uint32_t count0;
@@ -288,14 +290,13 @@ namespace Battle
 
         Position position;
         ModesAffected affected;
-        Unit *mirror;
+        Unit* mirror;
         Surface contours[4];
 
         bool blindanswer;
     };
 
-    ByteVectorWriter &operator<<(ByteVectorWriter &, const Unit &);
+    ByteVectorWriter& operator<<(ByteVectorWriter&, const Unit&);
 
-    ByteVectorReader &operator>>(ByteVectorReader &, Unit &);
+    ByteVectorReader& operator>>(ByteVectorReader&, Unit&);
 }
-

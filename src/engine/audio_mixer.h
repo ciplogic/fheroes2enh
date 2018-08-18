@@ -35,19 +35,19 @@ namespace Mixer
 #ifdef WITH_MIXER
     typedef Mix_Chunk chunk_t;
 
-    void FreeChunk(chunk_t *);
+    void FreeChunk(chunk_t*);
 
-    chunk_t *LoadWAV(const char *);
+    chunk_t* LoadWAV(const char*);
 
-    chunk_t *LoadWAV(const u8 *, uint32_t);
+    chunk_t* LoadWAV(const u8*, uint32_t);
 
-    int Play(chunk_t *, int, bool);
+    int Play(chunk_t*, int, bool);
 
-    int Play(const char *, int = -1, bool = false);
+    int Play(const char*, int = -1, bool = false);
 
 #endif
 
-    int Play(const u8 *, uint32_t, int = -1, bool = false);
+    int Play(const u8*, uint32_t, int = -1, bool = false);
 
     void SetChannels(u8);
 
@@ -73,4 +73,3 @@ namespace Mixer
 
     void Enhance();
 }
-

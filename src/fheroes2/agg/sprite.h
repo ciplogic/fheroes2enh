@@ -29,7 +29,7 @@ class Sprite : public SpritePos
 public:
     Sprite();
 
-    Sprite(const Surface &, s32, s32);
+    Sprite(const Surface&, s32, s32);
 
     int x() const;
 
@@ -41,15 +41,15 @@ public:
 
     void Blit(s32, s32) const;
 
-    void Blit(const Point &) const;
+    void Blit(const Point&) const;
 
-    void Blit(const Rect &srt, s32, s32) const;
+    void Blit(const Rect& srt, s32, s32) const;
 
-    void Blit(const Rect &srt, const Point &) const;
+    void Blit(const Rect& srt, const Point&) const;
 
     void ChangeColorIndex(uint32_t index1, uint32_t index2);
 
-    static Surface ScaleQVGASurface(const Surface &);
+    static Surface ScaleQVGASurface(const Surface&);
 
-    static Sprite ScaleQVGASprite(const Sprite &);
+    static Sprite ScaleQVGASprite(const Sprite&);
 };

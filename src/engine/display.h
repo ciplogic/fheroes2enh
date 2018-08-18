@@ -30,7 +30,7 @@ class Display : public Surface
 public:
     ~Display() override;
 
-    static Display &Get();
+    static Display& Get();
 
     Size GetSize() const;
 
@@ -40,9 +40,9 @@ public:
 
     void SetVideoMode(int w, int h, bool);
 
-    static void SetCaption(const char *);
+    static void SetCaption(const char*);
 
-    static void SetIcons(Surface &);
+    static void SetIcons(Surface&);
 
     void Flip();
 
@@ -52,11 +52,11 @@ public:
 
     void Fade(int delay = 500);
 
-    void Fade(const Surface &, const Surface &, const Point &, int level, int delay);
+    void Fade(const Surface&, const Surface&, const Point&, int level, int delay);
 
     void Rise(int delay = 500);
 
-    void Rise(const Surface &, const Surface &, const Point &, int level, int delay);
+    void Rise(const Surface&, const Surface&, const Point&, int level, int delay);
 
     static void HideCursor();
 
@@ -64,7 +64,7 @@ public:
 
     Surface GetSurface() const override;
 
-    Surface GetSurface(const Rect &rt) const override;
+    Surface GetSurface(const Rect& rt) const override;
 
 protected:
 

@@ -30,7 +30,7 @@ class Splitter : protected SpriteMove
 public:
     Splitter();
 
-    Splitter(const Surface &, const Rect &);
+    Splitter(const Surface&, const Rect&);
 
     void Forward();
 
@@ -46,28 +46,38 @@ public:
 
     void ShowCursor();
 
-    void SetSprite(const Surface &);
+    void SetSprite(const Surface&);
 
-    void SetArea(const Rect &);
+    void SetArea(const Rect&);
 
     void SetRange(int smin, int smax);
 
     bool isVertical() const;
 
     int GetCurrent() const
-    { return cur; }
+    {
+        return cur;
+    }
 
     int GetStep() const
-    { return step; }
+    {
+        return step;
+    }
 
     int Max() const
-    { return max; };
+    {
+        return max;
+    };
 
     int Min() const
-    { return min; };
+    {
+        return min;
+    };
 
-    const Rect &GetRect() const
-    { return area; };
+    const Rect& GetRect() const
+    {
+        return area;
+    };
 
 private:
     Point GetPositionCursor() const;
@@ -78,4 +88,3 @@ private:
     int max;
     int cur;
 };
-

@@ -65,35 +65,35 @@ public:
 
     Funds(int rs, uint32_t count);
 
-    explicit Funds(const cost_t &);
+    explicit Funds(const cost_t&);
 
-    explicit Funds(const ResourceCount &);
+    explicit Funds(const ResourceCount&);
 
-    Funds operator+(const Funds &) const;
+    Funds operator+(const Funds&) const;
 
     Funds operator*(uint32_t mul) const;
 
-    Funds operator-(const Funds &) const;
+    Funds operator-(const Funds&) const;
 
-    Funds &operator+=(const Funds &);
+    Funds& operator+=(const Funds&);
 
-    Funds &operator*=(uint32_t mul);
+    Funds& operator*=(uint32_t mul);
 
-    Funds &operator-=(const Funds &);
+    Funds& operator-=(const Funds&);
 
-    Funds &operator=(const cost_t &);
+    Funds& operator=(const cost_t&);
 
     s32 Get(int rs) const;
 
-    s32 *GetPtr(int rs);
+    s32* GetPtr(int rs);
 
-    bool operator<(const Funds &) const;
+    bool operator<(const Funds&) const;
 
-    bool operator<=(const Funds &) const;
+    bool operator<=(const Funds&) const;
 
-    bool operator>(const Funds &) const;
+    bool operator>(const Funds&) const;
 
-    bool operator>=(const Funds &) const;
+    bool operator>=(const Funds&) const;
 
     int GetValidItems() const;
 
@@ -112,12 +112,12 @@ public:
     s32 gold;
 };
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const cost_t &);
-ByteVectorReader &operator>>(ByteVectorReader &, cost_t &);
+ByteVectorWriter& operator<<(ByteVectorWriter&, const cost_t&);
+ByteVectorReader& operator>>(ByteVectorReader&, cost_t&);
 
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const Funds &);
-ByteVectorReader &operator>>(ByteVectorReader &, Funds &);
+ByteVectorWriter& operator<<(ByteVectorWriter&, const Funds&);
+ByteVectorReader& operator>>(ByteVectorReader&, Funds&);
 
 namespace Resource
 {
@@ -138,9 +138,9 @@ namespace Resource
     class BoxSprite : protected Rect
     {
     public:
-        BoxSprite(const Funds &, uint32_t);
+        BoxSprite(const Funds&, uint32_t);
 
-        const Rect &GetArea() const;
+        const Rect& GetArea() const;
 
         void SetPos(s32, s32);
 
@@ -149,4 +149,3 @@ namespace Resource
         const Funds rs;
     };
 }
-

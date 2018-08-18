@@ -59,7 +59,7 @@ namespace GameOver
     class Result
     {
     public:
-        static Result &Get();
+        static Result& Get();
 
         void Reset();
 
@@ -70,8 +70,8 @@ namespace GameOver
         int LocalCheckGameOver();
 
     private:
-        friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Result &);
-        friend ByteVectorReader &operator>>(ByteVectorReader &, Result &);
+        friend ByteVectorWriter& operator<<(ByteVectorWriter&, const Result&);
+        friend ByteVectorReader& operator>>(ByteVectorReader&, Result&);
 
         Result();
 
@@ -80,7 +80,6 @@ namespace GameOver
         bool continue_game;
     };
 
-    ByteVectorWriter &operator<<(ByteVectorWriter &, const Result &);
-    ByteVectorReader &operator>>(ByteVectorReader &, Result &);
+    ByteVectorWriter& operator<<(ByteVectorWriter&, const Result&);
+    ByteVectorReader& operator>>(ByteVectorReader&, Result&);
 }
-

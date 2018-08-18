@@ -33,48 +33,48 @@
 #include "text.h"
 #include "icn.h"
 
-RowSpells::RowSpells(const Point &pos, const Castle &castle, int lvl)
+RowSpells::RowSpells(const Point& pos, const Castle& castle, int lvl)
 {
-    const MageGuild &guild = castle.GetMageGuild();
+    const MageGuild& guild = castle.GetMageGuild();
     bool hide = castle.GetLevelMageGuild() < lvl;
-    const Sprite &roll_show = AGG::GetICN(ICN::TOWNWIND, 0);
-    const Sprite &roll_hide = AGG::GetICN(ICN::TOWNWIND, 1);
-    const Sprite &roll = hide ? roll_hide : roll_show;
+    const Sprite& roll_show = AGG::GetICN(ICN::TOWNWIND, 0);
+    const Sprite& roll_hide = AGG::GetICN(ICN::TOWNWIND, 1);
+    const Sprite& roll = hide ? roll_hide : roll_show;
 
     uint32_t count = 0;
 
     switch (lvl)
     {
-        case 1:
-        case 2:
-            count = 3;
-            break;
-        case 3:
-        case 4:
-            count = 2;
-            break;
-        case 5:
-            count = 1;
-            break;
-        default:
-            break;
+    case 1:
+    case 2:
+        count = 3;
+        break;
+    case 3:
+    case 4:
+        count = 2;
+        break;
+    case 5:
+        count = 1;
+        break;
+    default:
+        break;
     }
 
     for (uint32_t ii = 0; ii < count; ++ii)
         coords.push_back(
-                Rect(pos.x + coords.size() * 110 - roll.w() / 2, pos.y, roll.w(),
-                     roll.h()));
+            Rect(pos.x + coords.size() * 110 - roll.w() / 2, pos.y, roll.w(),
+                 roll.h()));
 
     if (castle.HaveLibraryCapability())
     {
         if (!hide && castle.isLibraryBuild())
             coords.push_back(
-                    Rect(pos.x + coords.size() * 110 - roll_show.w() / 2, pos.y,
-                         roll_show.w(), roll_show.h()));
+                Rect(pos.x + coords.size() * 110 - roll_show.w() / 2, pos.y,
+                     roll_show.w(), roll_show.h()));
         else
             coords.push_back(
-                    Rect(pos.x + coords.size() * 110 - roll_hide.w() / 2, pos.y,
-                         roll_hide.w(), roll_hide.h()));
+                Rect(pos.x + coords.size() * 110 - roll_hide.w() / 2, pos.y,
+                     roll_hide.w(), roll_hide.h()));
     }
 
     spells.reserve(6);
@@ -84,13 +84,13 @@ RowSpells::RowSpells(const Point &pos, const Castle &castle, int lvl)
 
 void RowSpells::Redraw()
 {
-    const Sprite &roll_show = AGG::GetICN(ICN::TOWNWIND, 0);
-    const Sprite &roll_hide = AGG::GetICN(ICN::TOWNWIND, 1);
+    const Sprite& roll_show = AGG::GetICN(ICN::TOWNWIND, 0);
+    const Sprite& roll_hide = AGG::GetICN(ICN::TOWNWIND, 1);
 
     for (auto it = coords.begin(); it != coords.end(); ++it)
     {
-        const Rect &dst = *it;
-        const Spell &spell = spells[distance(coords.begin(), it)];
+        const Rect& dst = *it;
+        const Spell& spell = spells[distance(coords.begin(), it)];
 
         // roll hide
         if (dst.w < roll_show.w() || spell == Spell::NONE)
@@ -101,27 +101,26 @@ void RowSpells::Redraw()
         // roll show
         roll_show.Blit(dst);
 
-        const Sprite &icon = AGG::GetICN(ICN::SPELLS, spell.IndexSprite());
+        const Sprite& icon = AGG::GetICN(ICN::SPELLS, spell.IndexSprite());
 
         icon.Blit(dst.x + 5 + (dst.w - icon.w()) / 2, dst.y + 40 - icon.h() / 2);
         TextBox text(string(spell.GetName()) + " [" + Int2Str(spell.SpellPoint(nullptr)) + "]", Font::SMALL,
                      78);
         text.Blit(dst.x + 18, dst.y + 62);
-
     }
 }
 
 bool RowSpells::QueueEventProcessing()
 {
-    LocalEvent &le = LocalEvent::Get();
-    Display &display = Display::Get();
-    Cursor &cursor = Cursor::Get();
+    LocalEvent& le = LocalEvent::Get();
+    Display& display = Display::Get();
+    Cursor& cursor = Cursor::Get();
 
     const s32 index = coords.GetIndex(le.GetMouseCursor());
 
     if (0 > index || !(le.MouseClickLeft() || le.MousePressRight()))
         return 0 <= index;
-    const Spell &spell = spells[index];
+    const Spell& spell = spells[index];
 
     if (spell != Spell::NONE)
     {
@@ -136,12 +135,12 @@ bool RowSpells::QueueEventProcessing()
 
 void Castle::OpenMageGuild() const
 {
-    Display &display = Display::Get();
-    Cursor &cursor = Cursor::Get();
+    Display& display = Display::Get();
+    Cursor& cursor = Cursor::Get();
     cursor.Hide();
 
     Dialog::FrameBorder frameborder(Size(640, 480));
-    const Point &cur_pt = frameborder.GetArea();
+    const Point& cur_pt = frameborder.GetArea();
     Text text;
 
     // bar
@@ -156,28 +155,28 @@ void Castle::OpenMageGuild() const
     int icn = ICN::UNKNOWN;
     switch (race)
     {
-        case Race::KNGT:
-            icn = ICN::MAGEGLDK;
-            break;
-        case Race::BARB:
-            icn = ICN::MAGEGLDB;
-            break;
-        case Race::SORC:
-            icn = ICN::MAGEGLDS;
-            break;
-        case Race::WRLK:
-            icn = ICN::MAGEGLDW;
-            break;
-        case Race::WZRD:
-            icn = ICN::MAGEGLDZ;
-            break;
-        case Race::NECR:
-            icn = ICN::MAGEGLDN;
-            break;
-        default:
-            break;
+    case Race::KNGT:
+        icn = ICN::MAGEGLDK;
+        break;
+    case Race::BARB:
+        icn = ICN::MAGEGLDB;
+        break;
+    case Race::SORC:
+        icn = ICN::MAGEGLDS;
+        break;
+    case Race::WRLK:
+        icn = ICN::MAGEGLDW;
+        break;
+    case Race::WZRD:
+        icn = ICN::MAGEGLDZ;
+        break;
+    case Race::NECR:
+        icn = ICN::MAGEGLDN;
+        break;
+    default:
+        break;
     }
-    const Sprite &sprite = AGG::GetICN(icn, level - 1);
+    const Sprite& sprite = AGG::GetICN(icn, level - 1);
     sprite.Blit(cur_pt.x + 90 - sprite.w() / 2, cur_pt.y + 290 - sprite.h());
 
     RowSpells spells5(Point(cur_pt.x + 250, cur_pt.y + 5), *this, 5);
@@ -199,7 +198,7 @@ void Castle::OpenMageGuild() const
     cursor.Show();
     display.Flip();
 
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     // message loop
     while (le.HandleEvents())
@@ -213,6 +212,7 @@ void Castle::OpenMageGuild() const
             spells3.QueueEventProcessing() ||
             spells4.QueueEventProcessing() ||
             spells5.QueueEventProcessing())
-        {}
+        {
+        }
     }
 }

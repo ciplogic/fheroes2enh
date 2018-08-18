@@ -40,20 +40,20 @@ public:
 
     void SetFound(bool);
 
-    void Set(s32, const Artifact &);
+    void Set(s32, const Artifact&);
 
     void Reset();
 
-    const Surface &
+    const Surface&
     GetPuzzleMapSurface() const;
 
-    const Artifact &
+    const Artifact&
     GetArtifact() const;
 
 private:
-    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const UltimateArtifact &);
-    
-    friend ByteVectorReader &operator>>(ByteVectorReader &, UltimateArtifact &);
+    friend ByteVectorWriter& operator<<(ByteVectorWriter&, const UltimateArtifact&);
+
+    friend ByteVectorReader& operator>>(ByteVectorReader&, UltimateArtifact&);
 
     void MakeSurface();
 
@@ -62,6 +62,6 @@ private:
     bool isfound;
 };
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const UltimateArtifact &);
+ByteVectorWriter& operator<<(ByteVectorWriter&, const UltimateArtifact&);
 
-ByteVectorReader &operator>>(ByteVectorReader &, UltimateArtifact &);
+ByteVectorReader& operator>>(ByteVectorReader&, UltimateArtifact&);

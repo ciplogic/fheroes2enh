@@ -34,35 +34,39 @@
 class SettingsListBox : public Interface::ListBox<uint32_t>
 {
 public:
-    SettingsListBox(const Point &pt, bool f) : ListBox<uint32_t>(pt), readonly(f)
-    {}
+    SettingsListBox(const Point& pt, bool f) : ListBox<uint32_t>(pt), readonly(f)
+    {
+    }
 
-    void RedrawItem(const uint32_t &, s32, s32, bool);
+    void RedrawItem(const uint32_t&, s32, s32, bool);
 
-    void RedrawBackground(const Point &);
+    void RedrawBackground(const Point&);
 
     void ActionCurrentUp()
-    {};
+    {
+    };
 
     void ActionCurrentDn()
-    {};
+    {
+    };
 
-    void ActionListDoubleClick(uint32_t &);
+    void ActionListDoubleClick(uint32_t&);
 
-    void ActionListSingleClick(uint32_t &);
+    void ActionListSingleClick(uint32_t&);
 
-    void ActionListPressRight(uint32_t &)
-    {};
+    void ActionListPressRight(uint32_t&)
+    {
+    };
 
     bool readonly;
 };
 
-void SettingsListBox::RedrawItem(const uint32_t &item, s32 ox, s32 oy, bool current)
+void SettingsListBox::RedrawItem(const uint32_t& item, s32 ox, s32 oy, bool current)
 {
-    const Settings &conf = Settings::Get();
+    const Settings& conf = Settings::Get();
 
-    const Sprite &cell = AGG::GetICN(ICN::CELLWIN, 1);
-    const Sprite &mark = AGG::GetICN(ICN::CELLWIN, 2);
+    const Sprite& cell = AGG::GetICN(ICN::CELLWIN, 1);
+    const Sprite& mark = AGG::GetICN(ICN::CELLWIN, 2);
 
     cell.Blit(ox, oy);
     if (conf.ExtModes(item)) mark.Blit(ox + 3, oy + 2);
@@ -76,9 +80,9 @@ void SettingsListBox::RedrawItem(const uint32_t &item, s32 ox, s32 oy, bool curr
         msg.Blit(ox + cell.w() + 5, oy + 4);
 }
 
-void SettingsListBox::RedrawBackground(const Point &top)
+void SettingsListBox::RedrawBackground(const Point& top)
 {
-    const Settings &conf = Settings::Get();
+    const Settings& conf = Settings::Get();
 
     const int window_h = 400;
     const int ah = window_h - 54;
@@ -92,14 +96,14 @@ void SettingsListBox::RedrawBackground(const Point &top)
     AGG::GetICN(ICN::DROPLISL, 12).Blit(top.x + 295, top.y + ah - 14);
 }
 
-void SettingsListBox::ActionListDoubleClick(uint32_t &item)
+void SettingsListBox::ActionListDoubleClick(uint32_t& item)
 {
     ActionListSingleClick(item);
 }
 
-void SettingsListBox::ActionListSingleClick(uint32_t &item)
+void SettingsListBox::ActionListSingleClick(uint32_t& item)
 {
-    Settings &conf = Settings::Get();
+    Settings& conf = Settings::Get();
 
     if (!readonly || conf.CanChangeInGame(item))
     {
@@ -108,62 +112,62 @@ void SettingsListBox::ActionListSingleClick(uint32_t &item)
         // depends
         switch (item)
         {
-            case Settings::WORLD_1HERO_HIRED_EVERY_WEEK:
-                conf.ExtResetModes(Settings::CASTLE_1HERO_HIRED_EVERY_WEEK);
-                break;
+        case Settings::WORLD_1HERO_HIRED_EVERY_WEEK:
+            conf.ExtResetModes(Settings::CASTLE_1HERO_HIRED_EVERY_WEEK);
+            break;
 
-            case Settings::CASTLE_1HERO_HIRED_EVERY_WEEK:
-                conf.ExtResetModes(Settings::WORLD_1HERO_HIRED_EVERY_WEEK);
-                break;
+        case Settings::CASTLE_1HERO_HIRED_EVERY_WEEK:
+            conf.ExtResetModes(Settings::WORLD_1HERO_HIRED_EVERY_WEEK);
+            break;
 
-            case Settings::GAME_AUTOSAVE_BEGIN_DAY:
-                if (conf.ExtModes(Settings::GAME_AUTOSAVE_BEGIN_DAY))
-                    conf.ExtSetModes(Settings::GAME_AUTOSAVE_ON);
-                else
-                    conf.ExtResetModes(Settings::GAME_AUTOSAVE_ON);
-                break;
+        case Settings::GAME_AUTOSAVE_BEGIN_DAY:
+            if (conf.ExtModes(Settings::GAME_AUTOSAVE_BEGIN_DAY))
+                conf.ExtSetModes(Settings::GAME_AUTOSAVE_ON);
+            else
+                conf.ExtResetModes(Settings::GAME_AUTOSAVE_ON);
+            break;
 
-            case Settings::GAME_QUICKCOMBAT_ON:
+        case Settings::GAME_QUICKCOMBAT_ON:
 
-                if (conf.ExtModes(Settings::GAME_QUICKCOMBAT_ON))
-                    conf.ExtSetModes(Settings::GAME_QUICKCOMBAT_ON);
-                else
-                    conf.ExtResetModes(Settings::GAME_QUICKCOMBAT_ON);
-                break;
+            if (conf.ExtModes(Settings::GAME_QUICKCOMBAT_ON))
+                conf.ExtSetModes(Settings::GAME_QUICKCOMBAT_ON);
+            else
+                conf.ExtResetModes(Settings::GAME_QUICKCOMBAT_ON);
+            break;
 
-            case Settings::WORLD_GUARDIAN_TWO_DEFENSE:
-                if (conf.ExtModes(Settings::WORLD_GUARDIAN_TWO_DEFENSE))
-                    conf.ExtSetModes(Settings::WORLD_ALLOW_SET_GUARDIAN);
-                else
-                    conf.ExtResetModes(Settings::WORLD_ALLOW_SET_GUARDIAN);
-                break;
+        case Settings::WORLD_GUARDIAN_TWO_DEFENSE:
+            if (conf.ExtModes(Settings::WORLD_GUARDIAN_TWO_DEFENSE))
+                conf.ExtSetModes(Settings::WORLD_ALLOW_SET_GUARDIAN);
+            else
+                conf.ExtResetModes(Settings::WORLD_ALLOW_SET_GUARDIAN);
+            break;
 
-            case Settings::WORLD_NEW_VERSION_WEEKOF:
-                if (conf.ExtModes(Settings::WORLD_NEW_VERSION_WEEKOF))
-                    conf.ExtSetModes(Settings::WORLD_BAN_WEEKOF);
-                else
-                    conf.ExtResetModes(Settings::WORLD_BAN_WEEKOF);
-                break;
+        case Settings::WORLD_NEW_VERSION_WEEKOF:
+            if (conf.ExtModes(Settings::WORLD_NEW_VERSION_WEEKOF))
+                conf.ExtSetModes(Settings::WORLD_BAN_WEEKOF);
+            else
+                conf.ExtResetModes(Settings::WORLD_BAN_WEEKOF);
+            break;
 
-            default:
-                break;
+        default:
+            break;
         }
     }
 }
 
 void Dialog::ExtSettings(bool readonly)
 {
-    Display &display = Display::Get();
-    const Settings &conf = Settings::Get();
+    Display& display = Display::Get();
+    const Settings& conf = Settings::Get();
 
     // cursor
-    Cursor &cursor = Cursor::Get();
+    Cursor& cursor = Cursor::Get();
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
     const int window_h = 400;
     FrameBorder frameborder(Size(320, window_h));
-    const Rect &area = frameborder.GetArea();
+    const Rect& area = frameborder.GetArea();
 
     Text text("FHeroes2 Settings", Font::YELLOW_BIG);
     text.Blit(area.x + (area.w - text.w()) / 2, area.y + 6);
@@ -264,7 +268,7 @@ void Dialog::ExtSettings(bool readonly)
     listbox.SetListContent(states);
     listbox.Redraw();
 
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     ButtonGroups btnGroups(area, OK | CANCEL);
     btnGroups.Draw();

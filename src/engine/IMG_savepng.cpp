@@ -37,9 +37,9 @@
 
 #include "png.h"
 
-int IMG_SavePNG(const char *file, SDL_Surface *surf, int compression)
+int IMG_SavePNG(const char* file, SDL_Surface* surf, int compression)
 {
-    SDL_RWops *fp = SDL_RWFromFile(file, "wb");
+    SDL_RWops* fp = SDL_RWFromFile(file, "wb");
 
     if (fp == nullptr)
     {
@@ -53,18 +53,18 @@ int IMG_SavePNG(const char *file, SDL_Surface *surf, int compression)
 
 static void png_write_data(png_structp png_ptr, png_bytep data, png_size_t length)
 {
-    auto *rp = static_cast<SDL_RWops *>(png_get_io_ptr(png_ptr));
+    auto* rp = static_cast<SDL_RWops *>(png_get_io_ptr(png_ptr));
     SDL_RWwrite(rp, data, 1, length);
 }
 
-int IMG_SavePNG_RW(SDL_RWops *src, SDL_Surface *surf, int compression)
+int IMG_SavePNG_RW(SDL_RWops* src, SDL_Surface* surf, int compression)
 {
-    SDL_PixelFormat *fmt = nullptr;
-    SDL_Surface *tempsurf = nullptr;
+    SDL_PixelFormat* fmt = nullptr;
+    SDL_Surface* tempsurf = nullptr;
     unsigned int i;
     Uint8 used_alpha, temp_alpha = 0;
-    Uint8 *palette_alpha = nullptr;
-    png_byte **row_pointers = nullptr;
+    Uint8* palette_alpha = nullptr;
+    png_byte** row_pointers = nullptr;
     png_structp png_ptr = nullptr;
     png_infop info_ptr = nullptr;
     png_colorp palette = nullptr;
@@ -96,7 +96,7 @@ int IMG_SavePNG_RW(SDL_RWops *src, SDL_Surface *surf, int compression)
         goto savedone;
     }
     /* setup custom writer functions */
-    png_set_write_fn(png_ptr, (voidp) src, png_write_data, nullptr);
+    png_set_write_fn(png_ptr, (voidp)src, png_write_data, nullptr);
 
     if (setjmp(png_jmpbuf(png_ptr)))
     {
@@ -111,25 +111,27 @@ int IMG_SavePNG_RW(SDL_RWops *src, SDL_Surface *surf, int compression)
     {
         png_set_filter(png_ptr, 0, PNG_FILTER_NONE);
         png_set_compression_level(png_ptr, Z_NO_COMPRESSION);
-    } else if (compression < 0) // Default compression
+    }
+    else if (compression < 0) // Default compression
         png_set_compression_level(png_ptr, Z_DEFAULT_COMPRESSION);
     else
         png_set_compression_level(png_ptr, compression);
 
     fmt = surf->format;
     if (fmt->BitsPerPixel == 8)
-    { /* Paletted */
+    {
+        /* Paletted */
         png_set_IHDR(png_ptr, info_ptr,
                      surf->w, surf->h, 8, PNG_COLOR_TYPE_PALETTE,
                      PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT,
                      PNG_FILTER_TYPE_DEFAULT);
-        palette = (png_colorp) malloc(fmt->palette->ncolors * sizeof(png_color));
+        palette = (png_colorp)malloc(fmt->palette->ncolors * sizeof(png_color));
         if (!palette)
         {
             SDL_SetError("Couldn't create memory for palette");
             goto savedone;
         }
-        for (i = 0; (signed int) i < fmt->palette->ncolors; i++)
+        for (i = 0; (signed int)i < fmt->palette->ncolors; i++)
         {
             palette[i].red = fmt->palette->colors[i].r;
             palette[i].green = fmt->palette->colors[i].g;
@@ -140,7 +142,7 @@ int IMG_SavePNG_RW(SDL_RWops *src, SDL_Surface *surf, int compression)
         {
             Uint32 colorkey = 0;
             colorkey = fmt->colorkey + 1;
-            palette_alpha = (Uint8 *) malloc((colorkey + 1) * sizeof(Uint8));
+            palette_alpha = (Uint8 *)malloc((colorkey + 1) * sizeof(Uint8));
             if (!palette_alpha)
             {
                 SDL_SetError("Couldn't create memory for palette transparency");
@@ -150,8 +152,10 @@ int IMG_SavePNG_RW(SDL_RWops *src, SDL_Surface *surf, int compression)
             palette_alpha[colorkey] = 0;
             png_set_tRNS(png_ptr, info_ptr, palette_alpha, colorkey + 1, nullptr);
         }
-    } else
-    { /* Truecolor */
+    }
+    else
+    {
+        /* Truecolor */
         png_set_IHDR(png_ptr, info_ptr,
                      surf->w, surf->h, 8, PNG_COLOR_TYPE_RGB_ALPHA,
                      PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT,
@@ -160,10 +164,11 @@ int IMG_SavePNG_RW(SDL_RWops *src, SDL_Surface *surf, int compression)
     png_write_info(png_ptr, info_ptr);
 
     if (fmt->BitsPerPixel == 8)
-    { /* Paletted */
-        for (i = 0; (signed int) i < surf->h; i++)
+    {
+        /* Paletted */
+        for (i = 0; (signed int)i < surf->h; i++)
         {
-            row_pointers[i] = (png_byte *) surf->pixels + i * surf->pitch;
+            row_pointers[i] = (png_byte *)surf->pixels + i * surf->pitch;
         }
         if (SDL_MUSTLOCK(surf))
         {
@@ -174,14 +179,18 @@ int IMG_SavePNG_RW(SDL_RWops *src, SDL_Surface *surf, int compression)
         {
             SDL_UnlockSurface(surf);
         }
-    } else
-    { /* Truecolor */
+    }
+    else
+    {
+        /* Truecolor */
         if (fmt->BytesPerPixel == 3)
         {
             if (fmt->Amask)
-            { /* check for 24 bit with alpha */
+            {
+                /* check for 24 bit with alpha */
                 funky_format = 1;
-            } else
+            }
+            else
             {
                 /* Check for RGB/BGR/GBR/RBG/etc surfaces.*/
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
@@ -197,12 +206,15 @@ int IMG_SavePNG_RW(SDL_RWops *src, SDL_Surface *surf, int compression)
                     funky_format = 1;
                 }
             }
-        } else if (fmt->BytesPerPixel == 4)
+        }
+        else if (fmt->BytesPerPixel == 4)
         {
             if (!fmt->Amask)
-            { /* check for 32bit but no alpha */
+            {
+                /* check for 32bit but no alpha */
                 funky_format = 1;
-            } else
+            }
+            else
             {
                 /* Check for ARGB/ABGR/GBAR/RABG/etc surfaces.*/
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
@@ -220,8 +232,10 @@ int IMG_SavePNG_RW(SDL_RWops *src, SDL_Surface *surf, int compression)
                     funky_format = 1;
                 }
             }
-        } else
-        { /* 555 or 565 16 bit color */
+        }
+        else
+        {
+            /* 555 or 565 16 bit color */
             funky_format = 1;
         }
         if (funky_format)
@@ -244,7 +258,8 @@ int IMG_SavePNG_RW(SDL_RWops *src, SDL_Surface *surf, int compression)
                 temp_alpha = fmt->alpha;
                 used_alpha = 1;
                 SDL_SetAlpha(surf, 0, 255); /* Set for an opaque blit */
-            } else
+            }
+            else
             {
                 used_alpha = 0;
             }
@@ -256,11 +271,11 @@ int IMG_SavePNG_RW(SDL_RWops *src, SDL_Surface *surf, int compression)
             }
             if (used_alpha)
             {
-                SDL_SetAlpha(surf, SDL_SRCALPHA, (Uint8) temp_alpha); /* Restore alpha settings*/
+                SDL_SetAlpha(surf, SDL_SRCALPHA, (Uint8)temp_alpha); /* Restore alpha settings*/
             }
-            for (i = 0; (signed int) i < tempsurf->h; i++)
+            for (i = 0; (signed int)i < tempsurf->h; i++)
             {
-                row_pointers[i] = (png_byte *) tempsurf->pixels + i * tempsurf->pitch;
+                row_pointers[i] = (png_byte *)tempsurf->pixels + i * tempsurf->pitch;
             }
             if (SDL_MUSTLOCK(tempsurf))
             {
@@ -272,11 +287,12 @@ int IMG_SavePNG_RW(SDL_RWops *src, SDL_Surface *surf, int compression)
                 SDL_UnlockSurface(tempsurf);
             }
             SDL_FreeSurface(tempsurf);
-        } else
+        }
+        else
         {
-            for (i = 0; (signed int) i < surf->h; i++)
+            for (i = 0; (signed int)i < surf->h; i++)
             {
-                row_pointers[i] = (png_byte *) surf->pixels + i * surf->pitch;
+                row_pointers[i] = (png_byte *)surf->pixels + i * surf->pitch;
             }
             if (SDL_MUSTLOCK(surf))
             {
@@ -293,7 +309,7 @@ int IMG_SavePNG_RW(SDL_RWops *src, SDL_Surface *surf, int compression)
     png_write_end(png_ptr, nullptr);
     ret = 0; /* got here, so nothing went wrong. YAY! */
 
-    savedone: /* clean up and return */
+savedone: /* clean up and return */
     png_destroy_write_struct(&png_ptr, &info_ptr);
     if (palette)
     {

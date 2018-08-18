@@ -30,11 +30,11 @@
 #include "dialog.h"
 #include "icn.h"
 
-int Dialog::ArtifactInfo(const string &hdr, const string &msg, const Artifact &art, int buttons)
+int Dialog::ArtifactInfo(const string& hdr, const string& msg, const Artifact& art, int buttons)
 {
     Sprite borderInfo = AGG::GetICN(ICN::RESOURCE, 7);
-    Sprite &border = borderInfo;
-    const Sprite &artifact = AGG::GetICN(ICN::ARTIFACT, art.IndexSprite64());
+    Sprite& border = borderInfo;
+    const Sprite& artifact = AGG::GetICN(ICN::ARTIFACT, art.IndexSprite64());
     Surface image = border.GetSurface();
     border.Blit(image);
     artifact.Blit(5, 5, image);
@@ -48,12 +48,12 @@ int Dialog::ArtifactInfo(const string &hdr, const string &msg, const Artifact &a
     return SpriteInfo(hdr, ext, image, buttons);
 }
 
-int Dialog::SpriteInfo(const string &header, const string &message, Surface &sprite, int buttons)
+int Dialog::SpriteInfo(const string& header, const string& message, Surface& sprite, int buttons)
 {
-    Display &display = Display::Get();
+    Display& display = Display::Get();
 
     // cursor
-    Cursor &cursor = Cursor::Get();
+    Cursor& cursor = Cursor::Get();
 
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
@@ -75,7 +75,7 @@ int Dialog::SpriteInfo(const string &header, const string &message, Surface &spr
     pos.x = box.GetArea().x + (pos.w - sprite.w()) / 2;
     sprite.Blit(pos.x, pos.y, display);
 
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     ButtonGroups btnGroups(box.GetArea(), buttons);
     btnGroups.Draw();

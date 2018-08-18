@@ -27,11 +27,15 @@
 
 int ObjCrck::GetPassable(uint32_t index)
 {
-    const u8 disabled[] = {58, 59, 63, 64, 65, 76, 77, 78, 80, 91, 102, 113, 124,
-                           135, 182, 183, 185, 221, 222, 223, 227, 228, 229, 230, 238, 241, 242, 245};
-    const u8 restricted[] = {5, 6, 10, 11, 14, 16, 17, 18, 21, 22, 24, 25, 29, 30, 31, 32, 34,
-                             35, 37, 38, 40, 41, 42, 43, 46, 49, 52, 55, 57, 62, 67, 68, 69, 71, 72, 136, 148, 159,
-                             170, 181, 186, 187, 188, 202, 224, 225, 226, 231, 232, 233, 234, 235, 243, 244, 246};
+    const u8 disabled[] = {
+        58, 59, 63, 64, 65, 76, 77, 78, 80, 91, 102, 113, 124,
+        135, 182, 183, 185, 221, 222, 223, 227, 228, 229, 230, 238, 241, 242, 245
+    };
+    const u8 restricted[] = {
+        5, 6, 10, 11, 14, 16, 17, 18, 21, 22, 24, 25, 29, 30, 31, 32, 34,
+        35, 37, 38, 40, 41, 42, 43, 46, 49, 52, 55, 57, 62, 67, 68, 69, 71, 72, 136, 148, 159,
+        170, 181, 186, 187, 188, 202, 224, 225, 226, 231, 232, 233, 234, 235, 243, 244, 246
+    };
 
     if (isShadow(index))
         return DIRECTION_ALL;
@@ -41,8 +45,9 @@ int ObjCrck::GetPassable(uint32_t index)
         ARRAY_COUNT_END(disabled) != std::find(disabled, ARRAY_COUNT_END(disabled), index))
         return 0;
 
-    return ARRAY_COUNT_END(restricted) != std::find(restricted, ARRAY_COUNT_END(restricted), index) ?
-           DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW : DIRECTION_ALL;
+    return ARRAY_COUNT_END(restricted) != std::find(restricted, ARRAY_COUNT_END(restricted), index)
+               ? DIRECTION_CENTER_ROW | DIRECTION_BOTTOM_ROW
+               : DIRECTION_ALL;
 }
 
 bool ObjCrck::isAction(uint32_t index)
@@ -52,8 +57,10 @@ bool ObjCrck::isAction(uint32_t index)
 
 bool ObjCrck::isShadow(uint32_t index)
 {
-    const u8 shadows[] = {0, 2, 9, 12, 13, 15, 20, 23, 28, 33, 36, 39,
-                          45, 48, 51, 54, 56, 73, 75, 79, 190, 201, 237};
+    const u8 shadows[] = {
+        0, 2, 9, 12, 13, 15, 20, 23, 28, 33, 36, 39,
+        45, 48, 51, 54, 56, 73, 75, 79, 190, 201, 237
+    };
     return ARRAY_COUNT_END(shadows) != std::find(shadows, ARRAY_COUNT_END(shadows), index);
 }
 
@@ -71,24 +78,24 @@ int ObjCrck::GetActionObject(uint32_t index)
 
     switch (index)
     {
-        case 3:
-        case 4:
-            return MP2::OBJ_ARTESIANSPRING;
-        case 74:
-            return MP2::OBJ_WAGON;
-        case 189:
-            return MP2::OBJ_TROLLBRIDGE;
-        case 213:
-            return MP2::OBJ_TRADINGPOST;
-        case 217:
-        case 218:
-        case 219:
-        case 220:
-            return MP2::OBJ_WATERINGHOLE;
-        case 238:
-            return MP2::OBJ_OBELISK;
-        case 245:
-            return MP2::OBJ_SAWMILL;
+    case 3:
+    case 4:
+        return MP2::OBJ_ARTESIANSPRING;
+    case 74:
+        return MP2::OBJ_WAGON;
+    case 189:
+        return MP2::OBJ_TROLLBRIDGE;
+    case 213:
+        return MP2::OBJ_TRADINGPOST;
+    case 217:
+    case 218:
+    case 219:
+    case 220:
+        return MP2::OBJ_WATERINGHOLE;
+    case 238:
+        return MP2::OBJ_OBELISK;
+    case 245:
+        return MP2::OBJ_SAWMILL;
     }
 
     return MP2::OBJ_ZERO;

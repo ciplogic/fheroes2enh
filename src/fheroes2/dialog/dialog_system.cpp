@@ -36,24 +36,24 @@
 
 namespace Dialog
 {
-    void DrawSystemInfo(const Rects &);
+    void DrawSystemInfo(const Rects&);
 }
 
 /* return 0x01 - change speed, 0x02 - change sound, 0x04 - change music, 0x08 - change interface, 0x10 - change scroll  */
 int Dialog::SystemOptions()
 {
-    Display &display = Display::Get();
-    Settings &conf = Settings::Get();
+    Display& display = Display::Get();
+    Settings& conf = Settings::Get();
 
     // cursor
-    Cursor &cursor = Cursor::Get();
+    Cursor& cursor = Cursor::Get();
     const int oldcursor = cursor.Themes();
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
     FrameBorder frameborder((display.w() - 300 - BORDERWIDTH * 2) / 2,
                             (display.h() - 320 - BORDERWIDTH * 2) / 2, 300, 315);
-    const Rect &area = frameborder.GetArea();
+    const Rect& area = frameborder.GetArea();
 
     Rects rects;
     const s32 posx = (area.w - 256) / 2;
@@ -67,20 +67,20 @@ int Dialog::SystemOptions()
     rects.push_back(Rect(area.x + posx + 92, area.y + 197, 64, 64));
     rects.push_back(Rect(area.x + posx + 184, area.y + 197, 64, 64));
 
-    const Rect &rect1 = rects[0];
-    const Rect &rect2 = rects[1];
-//    const Rect & rect3 = rects[2];
-    const Rect &rect4 = rects[3];
-    const Rect &rect5 = rects[4];
-    const Rect &rect6 = rects[5];
-    const Rect &rect7 = rects[6];
-    const Rect &rect8 = rects[7];
-//    const Rect & rect9 = rects[8];
+    const Rect& rect1 = rects[0];
+    const Rect& rect2 = rects[1];
+    //    const Rect & rect3 = rects[2];
+    const Rect& rect4 = rects[3];
+    const Rect& rect5 = rects[4];
+    const Rect& rect6 = rects[5];
+    const Rect& rect7 = rects[6];
+    const Rect& rect8 = rects[7];
+    //    const Rect & rect9 = rects[8];
 
     Surface back2 = display.GetSurface(Rect(area.x, area.y, area.w, area.h - 30));
     DrawSystemInfo(rects);
 
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     ButtonGroups btnGroups(area, OK);
     btnGroups.Draw();
@@ -175,10 +175,10 @@ int Dialog::SystemOptions()
     return result;
 }
 
-void Dialog::DrawSystemInfo(const Rects &rects)
+void Dialog::DrawSystemInfo(const Rects& rects)
 {
-    Display &display = Display::Get();
-    Settings &conf = Settings::Get();
+    Display& display = Display::Get();
+    Settings& conf = Settings::Get();
 
     Text text;
 
@@ -186,8 +186,8 @@ void Dialog::DrawSystemInfo(const Rects &rects)
     black.Fill(ColorBlack);
 
     // sound
-    const Sprite &sprite1 = AGG::GetICN(ICN::SPANEL, conf.Sound() ? 1 : 0);
-    const Rect &rect1 = rects[0];
+    const Sprite& sprite1 = AGG::GetICN(ICN::SPANEL, conf.Sound() ? 1 : 0);
+    const Rect& rect1 = rects[0];
     sprite1.Blit(rect1);
     string str = _("sound");
     str.append(" ");
@@ -199,8 +199,8 @@ void Dialog::DrawSystemInfo(const Rects &rects)
     text.Blit(rect1.x + (rect1.w - text.w()) / 2, rect1.y + rect1.h + 5);
 
     // music
-    const Sprite &sprite2 = AGG::GetICN(ICN::SPANEL, conf.Music() ? 3 : 2);
-    const Rect &rect2 = rects[1];
+    const Sprite& sprite2 = AGG::GetICN(ICN::SPANEL, conf.Music() ? 3 : 2);
+    const Rect& rect2 = rects[1];
     sprite2.Blit(rect2);
     str = _("music");
     str.append(" ");
@@ -213,7 +213,7 @@ void Dialog::DrawSystemInfo(const Rects &rects)
 
     // unused
     //const Sprite & sprite3 = AGG::GetICN(ICN::SPANEL, 17);
-    const Rect &rect3 = rects[2];
+    const Rect& rect3 = rects[2];
     black.Blit(rect3, display);
     str.clear();
     str = "unused";
@@ -221,10 +221,16 @@ void Dialog::DrawSystemInfo(const Rects &rects)
     text.Blit(rect3.x + (rect3.w - text.w()) / 2, rect3.y + rect3.h + 5);
 
     // hero move speed
-    const uint32_t is4 = conf.HeroesMoveSpeed() ? (conf.HeroesMoveSpeed() < 9 ? (conf.HeroesMoveSpeed() < 7 ? (
-            conf.HeroesMoveSpeed() < 4 ? 4 : 5) : 6) : 7) : 9;
-    const Sprite &sprite4 = AGG::GetICN(ICN::SPANEL, is4);
-    const Rect &rect4 = rects[3];
+    const uint32_t is4 = conf.HeroesMoveSpeed()
+                             ? (conf.HeroesMoveSpeed() < 9
+                                    ? (conf.HeroesMoveSpeed() < 7
+                                           ? (
+                                               conf.HeroesMoveSpeed() < 4 ? 4 : 5)
+                                           : 6)
+                                    : 7)
+                             : 9;
+    const Sprite& sprite4 = AGG::GetICN(ICN::SPANEL, is4);
+    const Rect& rect4 = rects[3];
     sprite4.Blit(rect4);
     str = _("hero speed");
     str.append(" ");
@@ -236,11 +242,17 @@ void Dialog::DrawSystemInfo(const Rects &rects)
     text.Blit(rect4.x + (rect4.w - text.w()) / 2, rect4.y + rect4.h + 5);
 
     // ai move speed
-    const uint32_t is5 = conf.AIMoveSpeed() ? (conf.AIMoveSpeed() < 9 ? (conf.AIMoveSpeed() < 7 ? (conf.AIMoveSpeed() < 4 ? 4
-                                                                                                                     : 5)
-                                                                                           : 6) : 7) : 9;
-    const Sprite &sprite5 = AGG::GetICN(ICN::SPANEL, is5);
-    const Rect &rect5 = rects[4];
+    const uint32_t is5 = conf.AIMoveSpeed()
+                             ? (conf.AIMoveSpeed() < 9
+                                    ? (conf.AIMoveSpeed() < 7
+                                           ? (conf.AIMoveSpeed() < 4
+                                                  ? 4
+                                                  : 5)
+                                           : 6)
+                                    : 7)
+                             : 9;
+    const Sprite& sprite5 = AGG::GetICN(ICN::SPANEL, is5);
+    const Rect& rect5 = rects[4];
     sprite5.Blit(rect5);
     str = _("ai speed");
     str.append(" ");
@@ -252,11 +264,16 @@ void Dialog::DrawSystemInfo(const Rects &rects)
     text.Blit(rect5.x + (rect5.w - text.w()) / 2, rect5.y + rect5.h + 5);
 
     // scroll speed
-    const uint32_t is6 = conf.ScrollSpeed() < SCROLL_FAST2 ? (conf.ScrollSpeed() < SCROLL_FAST1 ? (conf.ScrollSpeed() <
-                                                                                                   SCROLL_NORMAL ? 4 : 5)
-                                                                  : 6) : 7;
-    const Sprite &sprite6 = AGG::GetICN(ICN::SPANEL, is6);
-    const Rect &rect6 = rects[5];
+    const uint32_t is6 = conf.ScrollSpeed() < SCROLL_FAST2
+                             ? (conf.ScrollSpeed() < SCROLL_FAST1
+                                    ? (conf.ScrollSpeed() <
+                                       SCROLL_NORMAL
+                                           ? 4
+                                           : 5)
+                                    : 6)
+                             : 7;
+    const Sprite& sprite6 = AGG::GetICN(ICN::SPANEL, is6);
+    const Rect& rect6 = rects[5];
     sprite6.Blit(rect6);
     str = _("scroll speed");
     str.append(" ");
@@ -265,8 +282,8 @@ void Dialog::DrawSystemInfo(const Rects &rects)
     text.Blit(rect6.x + (rect6.w - text.w()) / 2, rect6.y + rect6.h + 5);
 
     // interface themes
-    const Sprite &sprite7 = AGG::GetICN(ICN::SPANEL, conf.ExtGameEvilInterface() ? 17 : 16);
-    const Rect &rect7 = rects[6];
+    const Sprite& sprite7 = AGG::GetICN(ICN::SPANEL, conf.ExtGameEvilInterface() ? 17 : 16);
+    const Rect& rect7 = rects[6];
     sprite7.Blit(rect7);
     str.clear();
     str = _("Interface");
@@ -279,9 +296,9 @@ void Dialog::DrawSystemInfo(const Rects &rects)
     text.Blit(rect7.x + (rect7.w - text.w()) / 2, rect7.y + rect7.h + 5);
 
     // interface show/hide
-    const Sprite &sprite8 = AGG::GetICN(ICN::SPANEL, 16);
-    const Sprite &sprite81 = AGG::GetICN(ICN::ESPANEL, 4);
-    const Rect &rect8 = rects[7];
+    const Sprite& sprite8 = AGG::GetICN(ICN::SPANEL, 16);
+    const Sprite& sprite81 = AGG::GetICN(ICN::ESPANEL, 4);
+    const Rect& rect8 = rects[7];
     str.clear();
     str = _("Interface");
     str += ": ";
@@ -289,7 +306,8 @@ void Dialog::DrawSystemInfo(const Rects &rects)
     {
         sprite81.Blit(rect8, display);
         str += _("Hide");
-    } else
+    }
+    else
     {
         sprite8.Blit(rect8, display);
         sprite81.Blit(Rect(13, 13, 38, 38), rect8.x + 13, rect8.y + 13);
@@ -300,7 +318,7 @@ void Dialog::DrawSystemInfo(const Rects &rects)
 
     // unused
     //const Sprite & sprite9 = AGG::GetICN(ICN::SPANEL, 17);
-    const Rect &rect9 = rects[8];
+    const Rect& rect9 = rects[8];
     black.Blit(rect9, display);
     str.clear();
     str = "unused";

@@ -53,16 +53,16 @@ bool Route::Step::isBad() const
 }
 
 /* construct */
-Route::Path::Path(const Heroes &h)
-        : hero(&h), dst(h.GetIndex()), hide(true)
+Route::Path::Path(const Heroes& h)
+    : hero(&h), dst(h.GetIndex()), hide(true)
 {
 }
 
-Route::Path::Path(const Path &p) : list<Step>(p), hero(p.hero), dst(p.dst), hide(p.hide)
+Route::Path::Path(const Path& p) : list<Step>(p), hero(p.hero), dst(p.dst), hide(p.hide)
 {
 }
 
-Route::Path &Route::Path::operator=(const Path &p)
+Route::Path& Route::Path::operator=(const Path& p)
 {
     assign(p.begin(), p.end());
 
@@ -75,9 +75,11 @@ Route::Path &Route::Path::operator=(const Path &p)
 
 int Route::Path::GetFrontDirection() const
 {
-    return empty() ?
-           (dst != hero->GetIndex() ? Direction::Get(hero->GetIndex(), dst)
-                                    : Direction::CENTER) : front().GetDirection();
+    return empty()
+               ? (dst != hero->GetIndex()
+                      ? Direction::Get(hero->GetIndex(), dst)
+                      : Direction::CENTER)
+               : front().GetDirection();
 }
 
 uint32_t Route::Path::GetFrontPenalty() const
@@ -115,7 +117,7 @@ s32 Route::Path::GetDestinedIndex() const
 }
 
 /* return length path */
-bool Route::Path::Calculate(const s32 &dst_index, int limit /* -1 */)
+bool Route::Path::Calculate(const s32& dst_index, int limit /* -1 */)
 {
     dst = dst_index;
 
@@ -144,7 +146,7 @@ void Route::Path::Reset()
 bool Route::Path::isComplete() const
 {
     return dst == hero->GetIndex() ||
-           empty() && Direction::UNKNOWN != Direction::Get(hero->GetIndex(), dst);
+        empty() && Direction::UNKNOWN != Direction::Get(hero->GetIndex(), dst);
 }
 
 bool Route::Path::isValid() const
@@ -160,271 +162,271 @@ int Route::Path::GetIndexSprite(int from, int to, int mod)
 
     switch (mod)
     {
-        case 200:
-            index = 121;
-            break;
-        case 175:
-            index = 97;
-            break;
-        case 150:
-            index = 73;
-            break;
-        case 125:
-            index = 49;
-            break;
-        case 100:
-            index = 25;
-            break;
+    case 200:
+        index = 121;
+        break;
+    case 175:
+        index = 97;
+        break;
+    case 150:
+        index = 73;
+        break;
+    case 125:
+        index = 49;
+        break;
+    case 100:
+        index = 25;
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     switch (from)
     {
+    case Direction::TOP:
+        switch (to)
+        {
         case Direction::TOP:
-            switch (to)
-            {
-                case Direction::TOP:
-                    index += 8;
-                    break;
-                case Direction::TOP_RIGHT:
-                    index += 17;
-                    break;
-                case Direction::RIGHT:
-                    index += 18;
-                    break;
-                case Direction::LEFT:
-                    index += 6;
-                    break;
-                case Direction::TOP_LEFT:
-                    index += 7;
-                    break;
-                case Direction::BOTTOM_LEFT:
-                    index += 5;
-                    break;
-                case Direction::BOTTOM_RIGHT:
-                    index += 19;
-                    break;
-                default:
-                    index = 0;
-                    break;
-            }
+            index += 8;
             break;
-
         case Direction::TOP_RIGHT:
-            switch (to)
-            {
-                case Direction::TOP:
-                    index += 0;
-                    break;
-                case Direction::TOP_RIGHT:
-                    index += 9;
-                    break;
-                case Direction::RIGHT:
-                    index += 18;
-                    break;
-                case Direction::BOTTOM_RIGHT:
-                    index += 19;
-                    break;
-                case Direction::TOP_LEFT:
-                    index += 7;
-                    break;
-                case Direction::BOTTOM:
-                    index += 20;
-                    break;
-                case Direction::LEFT:
-                    index += 6;
-                    break;
-                default:
-                    index = 0;
-                    break;
-            }
+            index += 17;
             break;
-
         case Direction::RIGHT:
-            switch (to)
-            {
-                case Direction::TOP:
-                    index += 0;
-                    break;
-                case Direction::BOTTOM:
-                    index += 20;
-                    break;
-                case Direction::BOTTOM_RIGHT:
-                    index += 19;
-                    break;
-                case Direction::RIGHT:
-                    index += 10;
-                    break;
-                case Direction::TOP_RIGHT:
-                    index += 1;
-                    break;
-                case Direction::TOP_LEFT:
-                    index += 7;
-                    break;
-                case Direction::BOTTOM_LEFT:
-                    index += 21;
-                    break;
-                default:
-                    index = 0;
-                    break;
-            }
+            index += 18;
             break;
-
-        case Direction::BOTTOM_RIGHT:
-            switch (to)
-            {
-                case Direction::TOP_RIGHT:
-                    index += 1;
-                    break;
-                case Direction::RIGHT:
-                    index += 2;
-                    break;
-                case Direction::BOTTOM_RIGHT:
-                    index += 11;
-                    break;
-                case Direction::BOTTOM:
-                    index += 20;
-                    break;
-                case Direction::BOTTOM_LEFT:
-                    index += 21;
-                    break;
-                case Direction::TOP:
-                    index += 0;
-                    break;
-                case Direction::LEFT:
-                    index += 22;
-                    break;
-                default:
-                    index = 0;
-                    break;
-            }
-            break;
-
-        case Direction::BOTTOM:
-            switch (to)
-            {
-                case Direction::RIGHT:
-                    index += 2;
-                    break;
-                case Direction::BOTTOM_RIGHT:
-                    index += 3;
-                    break;
-                case Direction::BOTTOM:
-                    index += 12;
-                    break;
-                case Direction::BOTTOM_LEFT:
-                    index += 21;
-                    break;
-                case Direction::LEFT:
-                    index += 22;
-                    break;
-                case Direction::TOP_LEFT:
-                    index += 16;
-                    break;
-                case Direction::TOP_RIGHT:
-                    index += 1;
-                    break;
-                default:
-                    index = 0;
-                    break;
-            }
-            break;
-
-        case Direction::BOTTOM_LEFT:
-            switch (to)
-            {
-                case Direction::BOTTOM_RIGHT:
-                    index += 3;
-                    break;
-                case Direction::BOTTOM:
-                    index += 4;
-                    break;
-                case Direction::BOTTOM_LEFT:
-                    index += 13;
-                    break;
-                case Direction::LEFT:
-                    index += 22;
-                    break;
-                case Direction::TOP_LEFT:
-                    index += 23;
-                    break;
-                case Direction::TOP:
-                    index += 16;
-                    break;
-                case Direction::RIGHT:
-                    index += 2;
-                    break;
-                default:
-                    index = 0;
-                    break;
-            }
-            break;
-
         case Direction::LEFT:
-            switch (to)
-            {
-                case Direction::TOP:
-                    index += 16;
-                    break;
-                case Direction::BOTTOM:
-                    index += 4;
-                    break;
-                case Direction::BOTTOM_LEFT:
-                    index += 5;
-                    break;
-                case Direction::LEFT:
-                    index += 14;
-                    break;
-                case Direction::TOP_LEFT:
-                    index += 23;
-                    break;
-                case Direction::TOP_RIGHT:
-                    index += 17;
-                    break;
-                case Direction::BOTTOM_RIGHT:
-                    index += 3;
-                    break;
-                default:
-                    index = 0;
-                    break;
-            }
+            index += 6;
             break;
-
         case Direction::TOP_LEFT:
-            switch (to)
-            {
-                case Direction::TOP:
-                    index += 16;
-                    break;
-                case Direction::TOP_RIGHT:
-                    index += 17;
-                    break;
-                case Direction::BOTTOM_LEFT:
-                    index += 5;
-                    break;
-                case Direction::LEFT:
-                    index += 6;
-                    break;
-                case Direction::TOP_LEFT:
-                    index += 15;
-                    break;
-                case Direction::BOTTOM:
-                    index += 4;
-                    break;
-                case Direction::RIGHT:
-                    index += 18;
-                    break;
-                default:
-                    index = 0;
-                    break;
-            }
+            index += 7;
             break;
-
+        case Direction::BOTTOM_LEFT:
+            index += 5;
+            break;
+        case Direction::BOTTOM_RIGHT:
+            index += 19;
+            break;
         default:
             index = 0;
             break;
+        }
+        break;
+
+    case Direction::TOP_RIGHT:
+        switch (to)
+        {
+        case Direction::TOP:
+            index += 0;
+            break;
+        case Direction::TOP_RIGHT:
+            index += 9;
+            break;
+        case Direction::RIGHT:
+            index += 18;
+            break;
+        case Direction::BOTTOM_RIGHT:
+            index += 19;
+            break;
+        case Direction::TOP_LEFT:
+            index += 7;
+            break;
+        case Direction::BOTTOM:
+            index += 20;
+            break;
+        case Direction::LEFT:
+            index += 6;
+            break;
+        default:
+            index = 0;
+            break;
+        }
+        break;
+
+    case Direction::RIGHT:
+        switch (to)
+        {
+        case Direction::TOP:
+            index += 0;
+            break;
+        case Direction::BOTTOM:
+            index += 20;
+            break;
+        case Direction::BOTTOM_RIGHT:
+            index += 19;
+            break;
+        case Direction::RIGHT:
+            index += 10;
+            break;
+        case Direction::TOP_RIGHT:
+            index += 1;
+            break;
+        case Direction::TOP_LEFT:
+            index += 7;
+            break;
+        case Direction::BOTTOM_LEFT:
+            index += 21;
+            break;
+        default:
+            index = 0;
+            break;
+        }
+        break;
+
+    case Direction::BOTTOM_RIGHT:
+        switch (to)
+        {
+        case Direction::TOP_RIGHT:
+            index += 1;
+            break;
+        case Direction::RIGHT:
+            index += 2;
+            break;
+        case Direction::BOTTOM_RIGHT:
+            index += 11;
+            break;
+        case Direction::BOTTOM:
+            index += 20;
+            break;
+        case Direction::BOTTOM_LEFT:
+            index += 21;
+            break;
+        case Direction::TOP:
+            index += 0;
+            break;
+        case Direction::LEFT:
+            index += 22;
+            break;
+        default:
+            index = 0;
+            break;
+        }
+        break;
+
+    case Direction::BOTTOM:
+        switch (to)
+        {
+        case Direction::RIGHT:
+            index += 2;
+            break;
+        case Direction::BOTTOM_RIGHT:
+            index += 3;
+            break;
+        case Direction::BOTTOM:
+            index += 12;
+            break;
+        case Direction::BOTTOM_LEFT:
+            index += 21;
+            break;
+        case Direction::LEFT:
+            index += 22;
+            break;
+        case Direction::TOP_LEFT:
+            index += 16;
+            break;
+        case Direction::TOP_RIGHT:
+            index += 1;
+            break;
+        default:
+            index = 0;
+            break;
+        }
+        break;
+
+    case Direction::BOTTOM_LEFT:
+        switch (to)
+        {
+        case Direction::BOTTOM_RIGHT:
+            index += 3;
+            break;
+        case Direction::BOTTOM:
+            index += 4;
+            break;
+        case Direction::BOTTOM_LEFT:
+            index += 13;
+            break;
+        case Direction::LEFT:
+            index += 22;
+            break;
+        case Direction::TOP_LEFT:
+            index += 23;
+            break;
+        case Direction::TOP:
+            index += 16;
+            break;
+        case Direction::RIGHT:
+            index += 2;
+            break;
+        default:
+            index = 0;
+            break;
+        }
+        break;
+
+    case Direction::LEFT:
+        switch (to)
+        {
+        case Direction::TOP:
+            index += 16;
+            break;
+        case Direction::BOTTOM:
+            index += 4;
+            break;
+        case Direction::BOTTOM_LEFT:
+            index += 5;
+            break;
+        case Direction::LEFT:
+            index += 14;
+            break;
+        case Direction::TOP_LEFT:
+            index += 23;
+            break;
+        case Direction::TOP_RIGHT:
+            index += 17;
+            break;
+        case Direction::BOTTOM_RIGHT:
+            index += 3;
+            break;
+        default:
+            index = 0;
+            break;
+        }
+        break;
+
+    case Direction::TOP_LEFT:
+        switch (to)
+        {
+        case Direction::TOP:
+            index += 16;
+            break;
+        case Direction::TOP_RIGHT:
+            index += 17;
+            break;
+        case Direction::BOTTOM_LEFT:
+            index += 5;
+            break;
+        case Direction::LEFT:
+            index += 6;
+            break;
+        case Direction::TOP_LEFT:
+            index += 15;
+            break;
+        case Direction::BOTTOM:
+            index += 4;
+            break;
+        case Direction::RIGHT:
+            index += 18;
+            break;
+        default:
+            index = 0;
+            break;
+        }
+        break;
+
+    default:
+        index = 0;
+        break;
     }
 
     return index;
@@ -462,7 +464,7 @@ string Route::Path::String() const
     ostringstream os;
 
     os << "from: " << hero->GetIndex() << ", to: " << GetLastIndex() <<
-       ", obj: " << MP2::StringObject(world.GetTiles(dst).GetObject()) << ", dump: ";
+        ", obj: " << MP2::StringObject(world.GetTiles(dst).GetObject()) << ", dump: ";
 
     for (auto it : *this)
         os << Direction::String(it.GetDirection()) << "(" << it.GetPenalty() << ")" << ", ";
@@ -471,27 +473,27 @@ string Route::Path::String() const
     return os.str();
 }
 
-bool StepIsObstacle(const Route::Step &s)
+bool StepIsObstacle(const Route::Step& s)
 {
     const s32 index = s.GetIndex();
-    int obj = 0 <= index 
-        ? world.GetTiles(index).GetObject() 
-        : MP2::OBJ_ZERO;
+    int obj = 0 <= index
+                  ? world.GetTiles(index).GetObject()
+                  : MP2::OBJ_ZERO;
 
     switch (obj)
     {
-        case MP2::OBJ_HEROES:
-        case MP2::OBJ_MONSTER:
-            return true;
+    case MP2::OBJ_HEROES:
+    case MP2::OBJ_MONSTER:
+        return true;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     return false;
 }
 
-bool StepIsPassable(const Route::Step &s, const Heroes *h)
+bool StepIsPassable(const Route::Step& s, const Heroes* h)
 {
     return world.GetTiles(s.GetFrom()).isPassable(h, s.GetDirection(), false);
 }
@@ -528,7 +530,8 @@ void Route::Path::RescanPassable()
     if (hero->isControlAI())
     {
         Reset();
-    } else if (it != end())
+    }
+    else if (it != end())
     {
         if (it == begin())
             Reset();
@@ -540,24 +543,24 @@ void Route::Path::RescanPassable()
     }
 }
 
-ByteVectorWriter &Route::operator<<(ByteVectorWriter &msg, const Step &step)
+ByteVectorWriter& Route::operator<<(ByteVectorWriter& msg, const Step& step)
 {
     return msg << step.from << step.direction << step.penalty;
 }
 
-ByteVectorWriter &Route::operator<<(ByteVectorWriter &msg, const Path &path)
+ByteVectorWriter& Route::operator<<(ByteVectorWriter& msg, const Path& path)
 {
-    return msg << path.dst << path.hide << static_cast< list<Step> >(path);
+    return msg << path.dst << path.hide << static_cast<list<Step>>(path);
 }
 
-ByteVectorReader &Route::operator>>(ByteVectorReader &msg, Step &step)
+ByteVectorReader& Route::operator>>(ByteVectorReader& msg, Step& step)
 {
     return msg >> step.from >> step.direction >> step.penalty;
 }
 
 
-ByteVectorReader &Route::operator>>(ByteVectorReader &msg, Path &path)
+ByteVectorReader& Route::operator>>(ByteVectorReader& msg, Path& path)
 {
-    list<Step> &base = path;
+    list<Step>& base = path;
     return msg >> path.dst >> path.hide >> base;
 }

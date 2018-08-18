@@ -27,109 +27,109 @@
 #include "game.h"
 #include "maps_actions.h"
 
-ByteVectorWriter &operator<<(ByteVectorWriter &sb, const ActionSimple &st)
+ByteVectorWriter& operator<<(ByteVectorWriter& sb, const ActionSimple& st)
 {
     return sb << st.type << st.uid;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &sb, ActionSimple &st)
+ByteVectorReader& operator>>(ByteVectorReader& sb, ActionSimple& st)
 {
     return sb >> st.type >> st.uid;
 }
 
 ActionSimple::~ActionSimple() = default;
 
-ByteVectorWriter &operator<<(ByteVectorWriter &sb, const ActionArtifact &st)
+ByteVectorWriter& operator<<(ByteVectorWriter& sb, const ActionArtifact& st)
 {
     return sb << static_cast<const ActionSimple &>(st) << st.artifact << st.message;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &sb, ActionArtifact &st)
+ByteVectorReader& operator>>(ByteVectorReader& sb, ActionArtifact& st)
 {
     return sb >> static_cast<ActionSimple &>(st) >> st.artifact >> st.message;
 }
 
-ByteVectorWriter &operator<<(ByteVectorWriter &sb, const ActionAccess &st)
+ByteVectorWriter& operator<<(ByteVectorWriter& sb, const ActionAccess& st)
 {
     return sb << static_cast<const ActionSimple &>(st) << st.allowPlayers << st.allowComputer
-              << st.cancelAfterFirstVisit << st.message;
+        << st.cancelAfterFirstVisit << st.message;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &sb, ActionAccess &st)
+ByteVectorReader& operator>>(ByteVectorReader& sb, ActionAccess& st)
 {
     return sb >> static_cast<ActionSimple &>(st) >> st.allowPlayers >> st.allowComputer >> st.cancelAfterFirstVisit
-              >> st.message;
+        >> st.message;
 }
 
-ByteVectorWriter &operator<<(ByteVectorWriter &sb, const ActionDefault &st)
+ByteVectorWriter& operator<<(ByteVectorWriter& sb, const ActionDefault& st)
 {
     return sb << static_cast<const ActionSimple &>(st) << st.enabled << st.message;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &sb, ActionDefault &st)
+ByteVectorReader& operator>>(ByteVectorReader& sb, ActionDefault& st)
 {
     return sb >> static_cast<ActionSimple &>(st) >> st.enabled >> st.message;
 }
 
-ByteVectorWriter &operator<<(ByteVectorWriter &sb, const ActionMessage &st)
+ByteVectorWriter& operator<<(ByteVectorWriter& sb, const ActionMessage& st)
 {
     return sb << static_cast<const ActionSimple &>(st) << st.message;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &sb, ActionMessage &st)
+ByteVectorReader& operator>>(ByteVectorReader& sb, ActionMessage& st)
 {
     return sb >> static_cast<ActionSimple &>(st) >> st.message;
 }
 
-ByteVectorWriter &operator<<(ByteVectorWriter &sb, const ListActions &listActions)
+ByteVectorWriter& operator<<(ByteVectorWriter& sb, const ListActions& listActions)
 {
     sb << static_cast<uint32_t>(listActions.size());
-    for (const auto &listAction : listActions)
+    for (const auto& listAction : listActions)
     {
         sb << listAction->GetType();
 
         switch (listAction->GetType())
         {
-            case ACTION_DEFAULT:
+        case ACTION_DEFAULT:
             {
-                const auto *ptr = static_cast<const ActionDefault *>(listAction.get());
+                const auto* ptr = static_cast<const ActionDefault *>(listAction.get());
                 if (ptr) sb << *ptr;
             }
-                break;
-            case ACTION_ACCESS:
+            break;
+        case ACTION_ACCESS:
             {
-                const auto *ptr = static_cast<const ActionAccess *>(listAction.get());
+                const auto* ptr = static_cast<const ActionAccess *>(listAction.get());
                 if (ptr) sb << *ptr;
             }
-                break;
-            case ACTION_MESSAGE:
+            break;
+        case ACTION_MESSAGE:
             {
-                const auto *ptr = static_cast<const ActionMessage *>(listAction.get());
+                const auto* ptr = static_cast<const ActionMessage *>(listAction.get());
                 if (ptr) sb << *ptr;
             }
-                break;
-            case ACTION_RESOURCES:
+            break;
+        case ACTION_RESOURCES:
             {
-                const auto *ptr = static_cast<const ActionResources *>(listAction.get());
+                const auto* ptr = static_cast<const ActionResources *>(listAction.get());
                 if (ptr) sb << *ptr;
             }
-                break;
-            case ACTION_ARTIFACT:
+            break;
+        case ACTION_ARTIFACT:
             {
-                const auto *ptr = static_cast<const ActionArtifact *>(listAction.get());
+                const auto* ptr = static_cast<const ActionArtifact *>(listAction.get());
                 if (ptr) sb << *ptr;
             }
-                break;
-            default:
-                sb << *listAction;
-                break;
+            break;
+        default:
+            sb << *listAction;
+            break;
         }
     }
 
     return sb;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &sb, MapActions &v)
+ByteVectorReader& operator>>(ByteVectorReader& sb, MapActions& v)
 {
     const uint32_t size = sb.get32();
     v.clear();
@@ -144,7 +144,7 @@ ByteVectorReader &operator>>(ByteVectorReader &sb, MapActions &v)
     return sb;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &sb, ListActions &st)
+ByteVectorReader& operator>>(ByteVectorReader& sb, ListActions& st)
 {
     uint32_t size = 0;
     sb >> size;
@@ -158,56 +158,56 @@ ByteVectorReader &operator>>(ByteVectorReader &sb, ListActions &st)
 
         switch (type)
         {
-            case ACTION_DEFAULT:
+        case ACTION_DEFAULT:
             {
                 auto ptr = std::make_unique<ActionDefault>();
                 sb >> *ptr;
                 st.push_back(std::move(ptr));
             }
-                break;
-            case ACTION_ACCESS:
+            break;
+        case ACTION_ACCESS:
             {
                 auto ptr = std::make_unique<ActionAccess>();
                 sb >> *ptr;
                 st.push_back(std::move(ptr));
             }
-                break;
-            case ACTION_MESSAGE:
+            break;
+        case ACTION_MESSAGE:
             {
                 auto ptr = std::make_unique<ActionMessage>();
                 sb >> *ptr;
                 st.push_back(std::move(ptr));
             }
-                break;
-            case ACTION_RESOURCES:
+            break;
+        case ACTION_RESOURCES:
             {
                 auto ptr = std::make_unique<ActionResources>();
                 sb >> *ptr;
                 st.push_back(std::move(ptr));
             }
-                break;
-            case ACTION_ARTIFACT:
+            break;
+        case ACTION_ARTIFACT:
             {
                 auto ptr = std::make_unique<ActionArtifact>();
                 sb >> *ptr;
                 st.push_back(std::move(ptr));
             }
-                break;
+            break;
 
-            default:
+        default:
             {
                 auto ptr = std::make_unique<ActionSimple>();
                 sb >> *ptr;
                 st.push_back(std::move(ptr));
             }
-                break;
+            break;
         }
     }
 
     return sb;
 }
 
-bool ActionAccess::Action(ActionAccess *act, s32 index, Heroes &hero)
+bool ActionAccess::Action(ActionAccess* act, s32 index, Heroes& hero)
 {
     if (act)
     {
@@ -231,7 +231,7 @@ bool ActionAccess::Action(ActionAccess *act, s32 index, Heroes &hero)
     return false;
 }
 
-bool ActionDefault::Action(ActionDefault *act, s32 index, Heroes &hero)
+bool ActionDefault::Action(ActionDefault* act, s32 index, Heroes& hero)
 {
     if (act)
     {
@@ -243,7 +243,7 @@ bool ActionDefault::Action(ActionDefault *act, s32 index, Heroes &hero)
     return false;
 }
 
-bool ActionArtifact::Action(ActionArtifact *act, s32 index, Heroes &hero)
+bool ActionArtifact::Action(ActionArtifact* act, s32 index, Heroes& hero)
 {
     if (act && act->artifact != Artifact::UNKNOWN)
     {
@@ -257,7 +257,7 @@ bool ActionArtifact::Action(ActionArtifact *act, s32 index, Heroes &hero)
     return false;
 }
 
-bool ActionResources::Action(ActionResources *act, s32 index, Heroes &hero)
+bool ActionResources::Action(ActionResources* act, s32 index, Heroes& hero)
 {
     if (act && 0 < act->resources.GetValidItems())
     {
@@ -270,7 +270,7 @@ bool ActionResources::Action(ActionResources *act, s32 index, Heroes &hero)
     return false;
 }
 
-bool ActionMessage::Action(ActionMessage *act, s32 index, Heroes &hero)
+bool ActionMessage::Action(ActionMessage* act, s32 index, Heroes& hero)
 {
     if (act)
     {

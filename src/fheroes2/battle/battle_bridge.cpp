@@ -55,7 +55,7 @@ bool Battle::Bridge::AllowUp()
     return nullptr == Board::GetCell(49)->GetUnit() && nullptr == Board::GetCell(50)->GetUnit();
 }
 
-bool Battle::Bridge::NeedDown(const Unit &b, s32 pos2)
+bool Battle::Bridge::NeedDown(const Unit& b, s32 pos2)
 {
     const s32 pos1 = b.GetHeadIndex();
 
@@ -63,7 +63,8 @@ bool Battle::Bridge::NeedDown(const Unit &b, s32 pos2)
     {
         if (pos1 == 51) return true;
         if ((pos1 == 61 || pos1 == 39) && b.GetColor() == Arena::GetCastle()->GetColor()) return true;
-    } else if (pos2 == 49)
+    }
+    else if (pos2 == 49)
     {
         if (pos1 != 50 && b.GetColor() == Arena::GetCastle()->GetColor()) return true;
     }
@@ -83,13 +84,14 @@ void Battle::Bridge::SetDestroy()
     Board::GetCell(50)->SetObject(0);
 }
 
-void Battle::Bridge::SetPassable(const Unit &b)
+void Battle::Bridge::SetPassable(const Unit& b)
 {
     if (Board::isCastleIndex(b.GetHeadIndex()) || b.GetColor() == Arena::GetCastle()->GetColor())
     {
         Board::GetCell(49)->SetObject(0);
         Board::GetCell(50)->SetObject(0);
-    } else
+    }
+    else
     {
         Board::GetCell(49)->SetObject(1);
         Board::GetCell(50)->SetObject(1);
@@ -97,13 +99,13 @@ void Battle::Bridge::SetPassable(const Unit &b)
 }
 
 
-bool Battle::Bridge::NeedAction(const Unit &b, s32 dst) const
+bool Battle::Bridge::NeedAction(const Unit& b, s32 dst) const
 {
     return !isDown() && NeedDown(b, dst) ||
-           isValid() && isDown() && AllowUp();
+        isValid() && isDown() && AllowUp();
 }
 
-void Battle::Bridge::Action(const Unit &b, s32 dst)
+void Battle::Bridge::Action(const Unit& b, s32 dst)
 {
     bool action_down = false;
 

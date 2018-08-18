@@ -36,14 +36,14 @@
 #include "game_interface.h"
 
 Interface::Basic::Basic() : gameArea(*this), radar(*this),
-    iconsPanel(*this), buttonsArea(*this),
-    statusWindow(*this),
-    controlPanel(*this),
-    heroesBar(*this),  
-    redraw(0)
+                            iconsPanel(*this), buttonsArea(*this),
+                            statusWindow(*this),
+                            controlPanel(*this),
+                            heroesBar(*this),
+                            redraw(0)
 {
-    Settings &conf = Settings::Get();
-    const Display &display = Display::Get();
+    Settings& conf = Settings::Get();
+    const Display& display = Display::Get();
     const int scroll_width = BORDERWIDTH;
 
     SetHideInterface(conf.ExtGameHideInterface());
@@ -56,40 +56,40 @@ Interface::Basic::Basic() : gameArea(*this), radar(*this),
     system_info.Set(Font::YELLOW_SMALL);
 }
 
-Interface::GameArea &Interface::Basic::GetGameArea()
+Interface::GameArea& Interface::Basic::GetGameArea()
 {
     return gameArea;
 }
 
-Interface::Radar &Interface::Basic::GetRadar()
+Interface::Radar& Interface::Basic::GetRadar()
 {
     return radar;
 }
 
-Interface::IconsPanel &Interface::Basic::GetIconsPanel()
+Interface::IconsPanel& Interface::Basic::GetIconsPanel()
 {
     return iconsPanel;
 }
 
-Interface::ButtonsArea &Interface::Basic::GetButtonsArea()
+Interface::ButtonsArea& Interface::Basic::GetButtonsArea()
 {
     return buttonsArea;
 }
 
-Interface::StatusWindow &Interface::Basic::GetStatusWindow()
+Interface::StatusWindow& Interface::Basic::GetStatusWindow()
 {
     return statusWindow;
 }
 
-Interface::ControlPanel &Interface::Basic::GetControlPanel()
+Interface::ControlPanel& Interface::Basic::GetControlPanel()
 {
     return controlPanel;
 }
 
 void Interface::Basic::SetHideInterface(bool f)
 {
-    Settings &conf = Settings::Get();
-    const Display &display = Display::Get();
+    Settings& conf = Settings::Get();
+    const Display& display = Display::Get();
     const uint32_t px = display.w() - BORDERWIDTH - RADARWIDTH;
     const uint32_t scroll_width = BORDERWIDTH;
 
@@ -121,7 +121,8 @@ void Interface::Basic::SetHideInterface(bool f)
         iconsPanel.SetPos(pos_icon.x, pos_icon.y);
         buttonsArea.SetPos(pos_bttn.x, pos_bttn.y);
         statusWindow.SetPos(pos_stat.x, pos_stat.y);
-    } else
+    }
+    else
     {
         radar.SetPos(px, BORDERWIDTH);
         iconsPanel.SetPos(px, radar.GetArea().y + radar.GetArea().h + BORDERWIDTH);
@@ -133,28 +134,28 @@ void Interface::Basic::SetHideInterface(bool f)
     gameArea.Build();
 }
 
-Interface::Basic &Interface::Basic::Get()
+Interface::Basic& Interface::Basic::Get()
 {
     static Basic basic;
     return basic;
 }
 
-const Rect &Interface::Basic::GetScrollLeft() const
+const Rect& Interface::Basic::GetScrollLeft() const
 {
     return scrollLeft;
 }
 
-const Rect &Interface::Basic::GetScrollRight() const
+const Rect& Interface::Basic::GetScrollRight() const
 {
     return scrollRight;
 }
 
-const Rect &Interface::Basic::GetScrollTop() const
+const Rect& Interface::Basic::GetScrollTop() const
 {
     return scrollTop;
 }
 
-const Rect &Interface::Basic::GetScrollBottom() const
+const Rect& Interface::Basic::GetScrollBottom() const
 {
     return scrollBottom;
 }
@@ -172,7 +173,7 @@ void Interface::Basic::SetRedraw(int f)
 
 void Interface::Basic::Redraw(int force)
 {
-    Settings &conf = Settings::Get();
+    Settings& conf = Settings::Get();
 
     if ((redraw | force) & REDRAW_GAMEAREA) gameArea.Redraw(Display::Get(), LEVEL_ALL);
 
@@ -212,7 +213,7 @@ void Interface::Basic::RedrawSystemInfo(s32 cx, s32 cy, uint32_t usage)
     time_t rawtime;
     time(&rawtime);
     // strtime format: Www Mmm dd hh:mm:ss yyyy
-    const char *strtime = ctime(&rawtime);
+    const char* strtime = ctime(&rawtime);
 
     // draw info
     os << string(&strtime[11], 8);
@@ -223,18 +224,18 @@ void Interface::Basic::RedrawSystemInfo(s32 cx, s32 cy, uint32_t usage)
 
 s32 Interface::Basic::GetDimensionDoorDestination(s32 from, uint32_t distance, bool water) const
 {
-    Cursor &cursor = Cursor::Get();
-    Display &display = Display::Get();
-    Settings &conf = Settings::Get();
-    LocalEvent &le = LocalEvent::Get();
+    Cursor& cursor = Cursor::Get();
+    Display& display = Display::Get();
+    Settings& conf = Settings::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     while (le.HandleEvents())
     {
-        const Point &mp = le.GetMouseCursor();
+        const Point& mp = le.GetMouseCursor();
         const s32 dst = gameArea.GetIndexFromMousePoint(mp);
         if (0 > dst) break;
 
-        const Maps::Tiles &tile = world.GetTiles(dst);
+        const Maps::Tiles& tile = world.GetTiles(dst);
 
         const bool valid = gameArea.GetArea() & mp &&
             dst >= 0 &&

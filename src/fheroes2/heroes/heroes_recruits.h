@@ -38,18 +38,17 @@ public:
 
     int GetID2() const;
 
-    const Heroes *GetHero1() const;
+    const Heroes* GetHero1() const;
 
-    const Heroes *GetHero2() const;
+    const Heroes* GetHero2() const;
 
-    Heroes *GetHero1();
+    Heroes* GetHero1();
 
-    Heroes *GetHero2();
+    Heroes* GetHero2();
 
-    void SetHero1(const Heroes *);
+    void SetHero1(const Heroes*);
 
-    void SetHero2(const Heroes *);
+    void SetHero2(const Heroes*);
 };
 
-ByteVectorReader &operator>>(ByteVectorReader &, Recruits &);
-
+ByteVectorReader& operator>>(ByteVectorReader&, Recruits&);

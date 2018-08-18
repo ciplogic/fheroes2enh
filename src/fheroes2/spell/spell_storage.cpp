@@ -38,19 +38,19 @@ uint32_t SpellStorage::Size(int lvl) const
 {
     switch (lvl)
     {
-        case 1:
-            return getSpellCountOfLevel(1);
-        case 2:
-            return getSpellCountOfLevel(2);
-        case 3:
-            return getSpellCountOfLevel(3);
-        case 4:
-            return getSpellCountOfLevel(4);
-        case 5:
-            return getSpellCountOfLevel(5);
+    case 1:
+        return getSpellCountOfLevel(1);
+    case 2:
+        return getSpellCountOfLevel(2);
+    case 3:
+        return getSpellCountOfLevel(3);
+    case 4:
+        return getSpellCountOfLevel(4);
+    case 5:
+        return getSpellCountOfLevel(5);
 
-        default:
-            break;
+    default:
+        break;
     }
 
     return size();
@@ -58,7 +58,7 @@ uint32_t SpellStorage::Size(int lvl) const
 
 long SpellStorage::getSpellCountOfLevel(int level) const
 {
-    return count_if(begin(), end(), [&](const Spell&s) {return s.isLevel(level); });
+    return count_if(begin(), end(), [&](const Spell& s) { return s.isLevel(level); });
 }
 
 SpellStorage SpellStorage::GetSpells(int lvl) const
@@ -70,21 +70,21 @@ SpellStorage SpellStorage::GetSpells(int lvl) const
     return result;
 }
 
-void SpellStorage::Append(const Spell &sp)
+void SpellStorage::Append(const Spell& sp)
 {
     if (sp != Spell::NONE &&
         end() == find(begin(), end(), sp))
         push_back(sp);
 }
 
-void SpellStorage::Append(const SpellStorage &st)
+void SpellStorage::Append(const SpellStorage& st)
 {
     insert(end(), st.begin(), st.end());
     sort(begin(), end());
     resize(unique(begin(), end()) - begin());
 }
 
-bool SpellStorage::isPresentSpell(const Spell &spell) const
+bool SpellStorage::isPresentSpell(const Spell& spell) const
 {
     return end() != find(begin(), end(), spell);
 }
@@ -99,33 +99,33 @@ string SpellStorage::String() const
     return os.str();
 }
 
-void SpellStorage::Append(const BagArtifacts &bag)
+void SpellStorage::Append(const BagArtifacts& bag)
 {
     for (const auto it : bag)
         Append(it);
 }
 
-void SpellStorage::Append(const Artifact &art)
+void SpellStorage::Append(const Artifact& art)
 {
     switch (art())
     {
-        case Artifact::SPELL_SCROLL:
-            Append(Spell(art.GetSpell()));
-            break;
+    case Artifact::SPELL_SCROLL:
+        Append(Spell(art.GetSpell()));
+        break;
 
-        case Artifact::CRYSTAL_BALL:
-            if (Settings::Get().ExtWorldArtifactCrystalBall())
-            {
-                Append(Spell(Spell::IDENTIFYHERO));
-                Append(Spell(Spell::VISIONS));
-            }
-            break;
+    case Artifact::CRYSTAL_BALL:
+        if (Settings::Get().ExtWorldArtifactCrystalBall())
+        {
+            Append(Spell(Spell::IDENTIFYHERO));
+            Append(Spell(Spell::VISIONS));
+        }
+        break;
 
-        case Artifact::BATTLE_GARB:
-            Append(Spell(Spell::TOWNPORTAL));
-            break;
+    case Artifact::BATTLE_GARB:
+        Append(Spell(Spell::TOWNPORTAL));
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 }

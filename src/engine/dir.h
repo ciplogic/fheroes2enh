@@ -33,12 +33,12 @@ std::string ws2s(const std::wstring& wstr);
 
 struct ListFiles : std::vector<std::string>
 {
-    void Append(const ListFiles &);
+    void Append(const ListFiles&);
 
-    void ReadDir(const std::string &path, const std::string &filter = "", bool sensitive = true);
+    void ReadDir(const std::string& path, const std::string& filter = "", bool sensitive = true);
 };
 
 struct ListDirs : std::vector<std::string>
 {
-    void Append(const std::vector<std::string> &);
+    void Append(const std::vector<std::string>&);
 };

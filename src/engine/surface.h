@@ -36,11 +36,15 @@ public:
 
     RGBA(int r, int g, int b, int a = 255);
 
-    bool operator==(const RGBA &col) const
-    { return pack() == col.pack(); }
+    bool operator==(const RGBA& col) const
+    {
+        return pack() == col.pack();
+    }
 
-    bool operator!=(const RGBA &col) const
-    { return pack() != col.pack(); }
+    bool operator!=(const RGBA& col) const
+    {
+        return pack() != col.pack();
+    }
 
     int r() const;
 
@@ -78,7 +82,8 @@ struct SurfaceFormat
     RGBA ckey;
 
     SurfaceFormat() : depth(0), rmask(0), gmask(0), bmask(0), amask(0)
-    {}
+    {
+    }
 };
 
 class Surface
@@ -86,36 +91,38 @@ class Surface
 public:
     Surface();
 
-    Surface(const Size &, bool amask);
+    Surface(const Size&, bool amask);
 
-    Surface(const Size &, const SurfaceFormat &);
+    Surface(const Size&, const SurfaceFormat&);
 
-    explicit Surface(const std::string &);
+    explicit Surface(const std::string&);
 
-    Surface(const void *pixels, uint32_t width, uint32_t height, uint32_t bytes_per_pixel /* 1, 2, 3, 4 */,
-            bool amask);  /* agg: create raw tile */
-    Surface(const Surface &);
+    Surface(const void* pixels, uint32_t width, uint32_t height, uint32_t bytes_per_pixel /* 1, 2, 3, 4 */,
+            bool amask); /* agg: create raw tile */
+    Surface(const Surface&);
 
-    explicit Surface(SDL_Surface *);
+    explicit Surface(SDL_Surface*);
 
-    Surface &operator=(const Surface &);
+    Surface& operator=(const Surface&);
 
-    bool operator==(const Surface &) const;
+    bool operator==(const Surface&) const;
 
-    SDL_Surface *operator()() const
-    { return surface; }
+    SDL_Surface* operator()() const
+    {
+        return surface;
+    }
 
     virtual ~Surface();
 
-    void Set(uint32_t sw, uint32_t sh, const SurfaceFormat &);
+    void Set(uint32_t sw, uint32_t sh, const SurfaceFormat&);
 
     void Set(uint32_t sw, uint32_t sh, bool amask);
 
     virtual void Reset();
 
-    bool Load(const std::string &);
+    bool Load(const std::string&);
 
-    bool Save(const std::string &) const;
+    bool Save(const std::string&) const;
 
     int w() const;
 
@@ -135,76 +142,76 @@ public:
 
     bool isValid() const;
 
-    void SetColorKey(const RGBA &) const;
+    void SetColorKey(const RGBA&) const;
 
     uint32_t GetColorKey() const;
 
-    void BlitAlpha(const Rect &srt, const Point &dpt, Surface &dst) const;
+    void BlitAlpha(const Rect& srt, const Point& dpt, Surface& dst) const;
 
-    void Blit(Surface &) const;
+    void Blit(Surface&) const;
 
-    void Blit(s32, s32, Surface &) const;
+    void Blit(s32, s32, Surface&) const;
 
-    void Blit(const Point &, Surface &) const;
+    void Blit(const Point&, Surface&) const;
 
-    void Blit(const Rect &srt, s32, s32, Surface &) const;
+    void Blit(const Rect& srt, s32, s32, Surface&) const;
 
-    void Blit(const Rect &srt, const Point &, Surface &) const;
+    void Blit(const Rect& srt, const Point&, Surface&) const;
 
-    void Fill(const RGBA &) const;
+    void Fill(const RGBA&) const;
 
-    void FillRect(const Rect &, const RGBA &) const;
+    void FillRect(const Rect&, const RGBA&) const;
 
     void drawPixel(int x, int y, float brightness, uint32_t col) const;
     void drawPixelSafe(int x, int y, float brightness, const uint32_t col) const;
 
-    void drawAALine(int x0, int y0, int x1, int y1, const RGBA &) const;
+    void drawAALine(int x0, int y0, int x1, int y1, const RGBA&) const;
 
-    void DrawLineAa(const Point &, const Point &, const RGBA &) const;
+    void DrawLineAa(const Point&, const Point&, const RGBA&) const;
 
-    void DrawLine(const Point &, const Point &, const RGBA &) const;
+    void DrawLine(const Point&, const Point&, const RGBA&) const;
 
-    void DrawPoint(const Point &, const RGBA &) const;
+    void DrawPoint(const Point&, const RGBA&) const;
 
-    void DrawRect(const Rect &, const RGBA &) const;
+    void DrawRect(const Rect&, const RGBA&) const;
 
-    void DrawBorder(const RGBA &, bool solid = true) const;
+    void DrawBorder(const RGBA&, bool solid = true) const;
 
     virtual uint32_t GetMemoryUsage() const;
 
     std::string Info() const;
 
-    Surface RenderScale(const Size &) const;
+    Surface RenderScale(const Size&) const;
 
     Surface RenderReflect(int shape /* 0: none, 1 : vert, 2: horz, 3: both */) const;
 
     Surface RenderRotate(int parm /* 0: none, 1 : 90 CW, 2: 90 CCW, 3: 180 */) const;
 
-    Surface RenderStencil(const RGBA &) const;
+    Surface RenderStencil(const RGBA&) const;
 
-    Surface RenderContour(const RGBA &) const;
+    Surface RenderContour(const RGBA&) const;
 
     Surface RenderGrayScale() const;
 
     Surface RenderSepia() const;
 
-    Surface RenderChangeColor(const RGBA &, const RGBA &) const;
+    Surface RenderChangeColor(const RGBA&, const RGBA&) const;
 
-    Surface RenderSurface(const Rect &srcrt, const Size &) const;
+    Surface RenderSurface(const Rect& srcrt, const Size&) const;
 
-    Surface RenderSurface(const Size &) const;
+    Surface RenderSurface(const Size&) const;
 
     virtual Surface GetSurface() const;
 
-    virtual Surface GetSurface(const Rect &) const;
+    virtual Surface GetSurface(const Rect&) const;
 
-    static void SetDefaultPalette(SDL_Color *, int);
+    static void SetDefaultPalette(SDL_Color*, int);
 
     static void SetDefaultDepth(uint32_t);
 
     static void SetDefaultColorKey(int, int, int);
 
-    static void Swap(Surface &, Surface &);
+    static void Swap(Surface&, Surface&);
 
     void SetAlphaMod(int);
 
@@ -216,21 +223,21 @@ public:
 
     void Unlock() const;
 
-    SDL_Surface *surface;
+    SDL_Surface* surface;
 protected:
-    static void FreeSurface(Surface &);
+    static void FreeSurface(Surface&);
 
 
     //void SetColorMod(const RGBA &);
     //void SetBlendMode(int);
 
-    uint32_t MapRGB(const RGBA &) const;
+    uint32_t MapRGB(const RGBA&) const;
 
     RGBA GetRGB(uint32_t pixel) const;
 
-    void Set(const Surface &, bool refcopy);
+    void Set(const Surface&, bool refcopy);
 
-    void Set(SDL_Surface *);
+    void Set(SDL_Surface*);
 
     void SetPalette() const;
 

@@ -29,12 +29,12 @@
 #include "dialog.h"
 #include "localevent.h"
 
-int Dialog::ResourceInfo(const string &header, const string &message, const Funds &rs, int buttons)
+int Dialog::ResourceInfo(const string& header, const string& message, const Funds& rs, int buttons)
 {
-    Display &display = Display::Get();
+    Display& display = Display::Get();
 
     // cursor
-    Cursor &cursor = Cursor::Get();
+    Cursor& cursor = Cursor::Get();
 
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
@@ -57,7 +57,7 @@ int Dialog::ResourceInfo(const string &header, const string &message, const Fund
     rbs.SetPos(pos.x, pos.y);
     rbs.Redraw();
 
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     ButtonGroups btnGroups(box.GetArea(), buttons);
     btnGroups.Draw();

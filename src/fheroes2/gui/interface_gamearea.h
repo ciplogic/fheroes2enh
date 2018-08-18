@@ -61,15 +61,15 @@ namespace Interface
     class GameArea
     {
     public:
-        explicit GameArea(Basic &);
+        explicit GameArea(Basic&);
 
         void Build();
 
-        const Rect &GetArea() const;
+        const Rect& GetArea() const;
 
-        const Point &GetMapsPos() const;
+        const Point& GetMapsPos() const;
 
-        const Rect &GetRectMaps() const;
+        const Rect& GetRectMaps() const;
 
         int GetScrollCursor() const;
 
@@ -81,34 +81,34 @@ namespace Interface
 
         void SetCenter(s32, s32);
 
-        void SetCenter(const Point &);
+        void SetCenter(const Point&);
 
         void SetRedraw() const;
 
-        void Redraw(Surface &dst, int) const;
+        void Redraw(Surface& dst, int) const;
 
-        void DrawHeroRoute(Surface &dst, int flag, const Rect &rt) const;
+        void DrawHeroRoute(Surface& dst, int flag, const Rect& rt) const;
 
-        void Redraw(Surface &dst, int, const Rect &) const;
+        void Redraw(Surface& dst, int, const Rect&) const;
 
-        void BlitOnTile(Surface &, const Surface &, s32, s32, const Point &) const;
+        void BlitOnTile(Surface&, const Surface&, s32, s32, const Point&) const;
 
-        void BlitOnTile(Surface &, const Sprite &, const Point &) const;
+        void BlitOnTile(Surface&, const Sprite&, const Point&) const;
 
         void SetUpdateCursor();
 
         void QueueEventProcessing();
 
-        s32 GetIndexFromMousePoint(const Point &) const;
+        s32 GetIndexFromMousePoint(const Point&) const;
 
-        Rect RectFixed(Point &dst, int rw, int rh) const;
+        Rect RectFixed(Point& dst, int rw, int rh) const;
 
         static Surface GenerateUltimateArtifactAreaSurface(s32);
 
     private:
         void SetAreaPosition(s32, s32, uint32_t, uint32_t);
 
-        Basic &interface;
+        Basic& interface;
 
         Rect areaPosition;
         Rect rectMaps;

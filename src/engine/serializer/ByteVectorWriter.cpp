@@ -24,6 +24,7 @@ void ByteVectorWriter::putLE32(uint32_t v)
     putLE16(v);
     putLE16(v >> 16);
 }
+
 void ByteVectorWriter::putBE32(uint32_t v)
 {
     putBE16(v >> 16);
@@ -35,7 +36,7 @@ void ByteVectorWriter::SetBigEndian(bool value)
     _isBigEndian = value;
 }
 
-ByteVectorWriter& ByteVectorWriter::operator<<(const char&v)
+ByteVectorWriter& ByteVectorWriter::operator<<(const char& v)
 {
     put8(v);
     return *this;
@@ -51,7 +52,7 @@ void ByteVectorWriter::put16(u16 v)
     _isBigEndian ? putBE16(v) : putLE16(v);
 }
 
-ByteVectorWriter& ByteVectorWriter::operator<<(const bool&v)
+ByteVectorWriter& ByteVectorWriter::operator<<(const bool& v)
 {
     put8(v);
     return *this;
@@ -87,13 +88,13 @@ ByteVectorWriter& ByteVectorWriter::operator<<(const u32& v)
     return *this;
 }
 
-ByteVectorWriter& ByteVectorWriter::operator<<(const s32&v)
+ByteVectorWriter& ByteVectorWriter::operator<<(const s32& v)
 {
     put32(v);
     return *this;
 }
 
-ByteVectorWriter& ByteVectorWriter::operator<<(const float&v)
+ByteVectorWriter& ByteVectorWriter::operator<<(const float& v)
 {
     const auto intpart = static_cast<s32>(v);
     const float decpart = (v - intpart) * 100000000;
@@ -122,4 +123,3 @@ ByteVectorWriter& ByteVectorWriter::operator<<(const std::string& v)
 
     return *this;
 }
-

@@ -161,11 +161,11 @@ public:
 
     Artifact(int = UNKNOWN);
 
-    bool operator==(const Spell &) const;
+    bool operator==(const Spell&) const;
 
-    bool operator==(const Artifact &) const;
+    bool operator==(const Artifact&) const;
 
-    bool operator!=(const Artifact &) const;
+    bool operator!=(const Artifact&) const;
 
     int operator()() const;
 
@@ -208,24 +208,24 @@ public:
 
     static Artifact FromMP2IndexSprite(uint32_t);
 
-    static std::string GetScenario(const Artifact &);
+    static std::string GetScenario(const Artifact&);
 
-    static void UpdateStats(const string &);
+    static void UpdateStats(const string&);
 
-    void ReadFrom(ByteVectorReader &msg);
+    void ReadFrom(ByteVectorReader& msg);
 
 private:
-    friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Artifact &);
-    
-    friend ByteVectorReader &operator>>(ByteVectorReader &, Artifact &);
+    friend ByteVectorWriter& operator<<(ByteVectorWriter&, const Artifact&);
+
+    friend ByteVectorReader& operator>>(ByteVectorReader&, Artifact&);
 
     int id;
     int ext;
 };
 
-ByteVectorWriter &operator<<(ByteVectorWriter &, const Artifact &);
+ByteVectorWriter& operator<<(ByteVectorWriter&, const Artifact&);
 
-ByteVectorReader &operator>>(ByteVectorReader &, Artifact &);
+ByteVectorReader& operator>>(ByteVectorReader&, Artifact&);
 
 uint32_t GoldInsteadArtifact(int);
 
@@ -234,11 +234,11 @@ class BagArtifacts : public vector<Artifact>
 public:
     BagArtifacts();
 
-    bool ContainSpell(const Spell &) const;
+    bool ContainSpell(const Spell&) const;
 
-    bool isPresentArtifact(const Artifact &) const;
+    bool isPresentArtifact(const Artifact&) const;
 
-    bool PushArtifact(const Artifact &);
+    bool PushArtifact(const Artifact&);
 
     bool isFull() const;
 
@@ -246,13 +246,13 @@ public:
 
     bool ContainUltimateArtifact() const;
 
-    void RemoveArtifact(const Artifact &);
+    void RemoveArtifact(const Artifact&);
 
-    void RemoveScroll(const Artifact &);
+    void RemoveScroll(const Artifact&);
 
     uint32_t CountArtifacts() const;
 
-    uint32_t Count(const Artifact &) const;
+    uint32_t Count(const Artifact&) const;
 
     string String() const;
 };
@@ -261,34 +261,34 @@ public:
 class ArtifactsBar : public Interface::ItemsActionBar<Artifact>
 {
 public:
-    ArtifactsBar(const Heroes *, bool mini, bool ro, bool change = false);
+    ArtifactsBar(const Heroes*, bool mini, bool ro, bool change = false);
 
-    void RedrawBackground(const Rect &, Surface &) override;
+    void RedrawBackground(const Rect&, Surface&) override;
 
-    void RedrawItem(Artifact &, const Rect &, bool, Surface &) override;
+    void RedrawItem(Artifact&, const Rect&, bool, Surface&) override;
 
     void ResetSelected();
 
-    void Redraw(Surface &dstsf = Display::Get());
+    void Redraw(Surface& dstsf = Display::Get());
 
-    bool ActionBarSingleClick(const Point &, Artifact &, const Rect &) override;
+    bool ActionBarSingleClick(const Point&, Artifact&, const Rect&) override;
 
-    bool ActionBarSingleClick(const Point &, Artifact &, const Rect &, Artifact &, const Rect &) override;
+    bool ActionBarSingleClick(const Point&, Artifact&, const Rect&, Artifact&, const Rect&) override;
 
-    bool ActionBarDoubleClick(const Point &, Artifact &, const Rect &) override;
+    bool ActionBarDoubleClick(const Point&, Artifact&, const Rect&) override;
 
-    bool ActionBarPressRight(const Point &, Artifact &, const Rect &);
+    bool ActionBarPressRight(const Point&, Artifact&, const Rect&);
 
-    bool QueueEventProcessing(string * = nullptr);
+    bool QueueEventProcessing(string* = nullptr);
 
-    bool QueueEventProcessing(ArtifactsBar &, string * = nullptr);
+    bool QueueEventProcessing(ArtifactsBar&, string* = nullptr);
 
-    bool ActionBarCursor(const Point &, Artifact &, const Rect &) override;
+    bool ActionBarCursor(const Point&, Artifact&, const Rect&) override;
 
-    bool ActionBarCursor(const Point &, Artifact &, const Rect &, Artifact &, const Rect &) override;
+    bool ActionBarCursor(const Point&, Artifact&, const Rect&, Artifact&, const Rect&) override;
 
 protected:
-    const Heroes *hero;
+    const Heroes* hero;
     Surface backsf;
     SpriteMove spcursor;
     bool use_mini_sprite;
@@ -296,4 +296,3 @@ protected:
     bool can_change;
     string msg;
 };
-

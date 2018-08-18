@@ -60,7 +60,7 @@ namespace Battle
     class Arena
     {
     public:
-        Arena(Army &, Army &, s32, bool);
+        Arena(Army&, Army&, s32, bool);
 
         ~Arena();
 
@@ -76,23 +76,23 @@ namespace Battle
 
         uint32_t GetCurrentTurn() const;
 
-        Result &GetResult();
+        Result& GetResult();
 
-        const HeroBase *GetCommander(int color, bool invert = false) const;
+        const HeroBase* GetCommander(int color, bool invert = false) const;
 
-        const HeroBase *GetCommander1() const;
+        const HeroBase* GetCommander1() const;
 
-        const HeroBase *GetCommander2() const;
+        const HeroBase* GetCommander2() const;
 
-        const HeroBase *GetCurrentCommander() const;
+        const HeroBase* GetCurrentCommander() const;
 
-        Force &GetForce1() const;
+        Force& GetForce1() const;
 
-        Force &GetForce2() const;
+        Force& GetForce2() const;
 
-        Force &GetForce(int color, bool invert = false) const;
+        Force& GetForce(int color, bool invert = false) const;
 
-        Force &GetCurrentForce() const;
+        Force& GetCurrentForce() const;
 
         int GetArmyColor1() const;
 
@@ -102,42 +102,42 @@ namespace Battle
 
         int GetOppositeColor(int) const;
 
-        Unit *GetTroopBoard(s32);
+        Unit* GetTroopBoard(s32);
 
-        const Unit *GetTroopBoard(s32) const;
+        const Unit* GetTroopBoard(s32) const;
 
-        Unit *GetTroopUID(uint32_t);
+        Unit* GetTroopUID(uint32_t);
 
-        const Unit *GetTroopUID(uint32_t) const;
+        const Unit* GetTroopUID(uint32_t) const;
 
-        const Unit *GetEnemyMaxQuality(int) const;
+        const Unit* GetEnemyMaxQuality(int) const;
 
-        const SpellStorage &
+        const SpellStorage&
         GetUsageSpells() const;
 
-        void DialogBattleSummary(const Result &) const;
+        void DialogBattleSummary(const Result&) const;
 
-        int DialogBattleHero(const HeroBase &, bool) const;
+        int DialogBattleHero(const HeroBase&, bool) const;
 
         void FadeArena() const;
 
-        Indexes GetPath(const Unit &, const Position &);
+        Indexes GetPath(const Unit&, const Position&);
 
-        void ApplyAction(Command &);
+        void ApplyAction(Command&);
 
-        TargetsInfo GetTargetsForDamage(Unit &, Unit &, s32) const;
+        TargetsInfo GetTargetsForDamage(Unit&, Unit&, s32) const;
 
-        static void TargetsApplyDamage(Unit &, Unit &, TargetsInfo &);
+        static void TargetsApplyDamage(Unit&, Unit&, TargetsInfo&);
 
-        TargetsInfo GetTargetsForSpells(const HeroBase *, const Spell &, s32);
+        TargetsInfo GetTargetsForSpells(const HeroBase*, const Spell&, s32);
 
-        static void TargetsApplySpell(const HeroBase *, const Spell &, TargetsInfo &);
+        static void TargetsApplySpell(const HeroBase*, const Spell&, TargetsInfo&);
 
-        bool isDisableCastSpell(const Spell &, string *msg);
+        bool isDisableCastSpell(const Spell&, string* msg);
 
-        bool GraveyardAllowResurrect(s32, const Spell &) const;
+        bool GraveyardAllowResurrect(s32, const Spell&) const;
 
-        const Unit *GraveyardLastTroop(s32) const;
+        const Unit* GraveyardLastTroop(s32) const;
 
         Indexes GraveyardClosedCells() const;
 
@@ -145,46 +145,46 @@ namespace Battle
 
         bool CanRetreatOpponent(int color) const;
 
-        void ApplyActionSpellSummonElemental(Command &, const Spell &) const;
+        void ApplyActionSpellSummonElemental(Command&, const Spell&) const;
 
-        void ApplyActionSpellMirrorImage(Command &);
+        void ApplyActionSpellMirrorImage(Command&);
 
-        void ApplyActionSpellTeleport(Command &);
+        void ApplyActionSpellTeleport(Command&);
 
-        void ApplyActionSpellEarthQuake(Command &);
+        void ApplyActionSpellEarthQuake(Command&);
 
-        void ApplyActionSpellDefaults(Command &, const Spell &);
+        void ApplyActionSpellDefaults(Command&, const Spell&);
 
-        uint32_t GetObstaclesPenalty(const Unit &, const Unit &) const;
+        uint32_t GetObstaclesPenalty(const Unit&, const Unit&) const;
 
         int GetICNCovr() const;
 
         uint32_t GetCastleTargetValue(int) const;
 
-        static Board *GetBoard();
+        static Board* GetBoard();
 
-        static Tower *GetTower(int);
+        static Tower* GetTower(int);
 
-        static Bridge *GetBridge();
+        static Bridge* GetBridge();
 
-        static const Castle *GetCastle();
+        static const Castle* GetCastle();
 
-        static Interface *GetInterface();
+        static Interface* GetInterface();
 
-        static Graveyard *GetGraveyard();
+        static Graveyard* GetGraveyard();
 
     private:
-        friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Arena &);
-        
-        friend ByteVectorReader &operator>>(ByteVectorReader &, Arena &);
+        friend ByteVectorWriter& operator<<(ByteVectorWriter&, const Arena&);
 
-        void RemoteTurn(const Unit &, Actions &);
+        friend ByteVectorReader& operator>>(ByteVectorReader&, Arena&);
 
-        void HumanTurn(const Unit &, Actions &);
+        void RemoteTurn(const Unit&, Actions&);
 
-        void TurnTroop(Unit *);
+        void HumanTurn(const Unit&, Actions&);
 
-        void TowerAction(const Tower &);
+        void TurnTroop(Unit*);
+
+        void TowerAction(const Tower&);
 
         void SetCastleTargetValue(int, uint32_t);
 
@@ -195,46 +195,46 @@ namespace Battle
         vector<int>
         GetCastleTargets() const;
 
-        void ApplyActionRetreat(Command &);
+        void ApplyActionRetreat(Command&);
 
-        void ApplyActionSurrender(Command &);
+        void ApplyActionSurrender(Command&);
 
-        void ApplyActionAttack(Command &);
+        void ApplyActionAttack(Command&);
 
-        void ApplyActionMove(Command &);
+        void ApplyActionMove(Command&);
 
-        void ApplyActionEnd(Command &);
+        void ApplyActionEnd(Command&);
 
-        void ApplyActionSkip(Command &);
+        void ApplyActionSkip(Command&);
 
-        void ApplyActionMorale(Command &);
+        void ApplyActionMorale(Command&);
 
-        void ApplyActionLuck(Command &);
+        void ApplyActionLuck(Command&);
 
-        void ApplyActionSpellCast(Command &);
+        void ApplyActionSpellCast(Command&);
 
-        void ApplyActionTower(Command &);
+        void ApplyActionTower(Command&);
 
-        void ApplyActionCatapult(Command &);
+        void ApplyActionCatapult(Command&);
 
-        void ApplyActionAutoBattle(Command &);
+        void ApplyActionAutoBattle(Command&);
 
-        void BattleProcess(Unit &, Unit &b2, s32 = -1, int = 0);
+        void BattleProcess(Unit&, Unit& b2, s32 = -1, int = 0);
 
-        Unit *CreateElemental(const Spell &) const;
+        Unit* CreateElemental(const Spell&) const;
 
-        Unit *CreateMirrorImage(Unit &, s32) const;
+        Unit* CreateMirrorImage(Unit&, s32) const;
 
         sp<Force> army1;
         sp<Force> army2;
         sp<Units> armies_order;
 
-        const Castle *castle;
+        const Castle* castle;
         int current_color;
 
         sp<Tower> towers[3];
         sp<Catapult> catapult;
-        Bridge *bridge;
+        Bridge* bridge;
 
         sp<Interface> interface;
         Result result_game;
@@ -251,10 +251,9 @@ namespace Battle
         bool end_turn;
     };
 
-    Arena *GetArena();
+    Arena* GetArena();
 
-    ByteVectorWriter &operator<<(ByteVectorWriter &, const Arena &);
+    ByteVectorWriter& operator<<(ByteVectorWriter&, const Arena&);
 
-    ByteVectorReader &operator>>(ByteVectorReader &, Arena &);
+    ByteVectorReader& operator>>(ByteVectorReader&, Arena&);
 }
-

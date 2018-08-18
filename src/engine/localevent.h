@@ -165,14 +165,14 @@ enum KeySym
     KEY_LAST
 };
 
-const char *KeySymGetName(KeySym);
+const char* KeySymGetName(KeySym);
 
 KeySym GetKeySym(int);
 
 class LocalEvent
 {
 public:
-    static LocalEvent &Get();
+    static LocalEvent& Get();
 
     void SetGlobalFilterMouseEvents(void (*pf)(s32, s32));
 
@@ -198,21 +198,21 @@ public:
 
     bool MouseMotion() const;
 
-    bool MouseMotion(const Rect &rt) const;
+    bool MouseMotion(const Rect& rt) const;
 
-    const Point &GetMouseCursor();
+    const Point& GetMouseCursor();
 
-    const Point &GetMousePressLeft() const;
+    const Point& GetMousePressLeft() const;
 
-    const Point &GetMousePressMiddle() const;
+    const Point& GetMousePressMiddle() const;
 
-    const Point &GetMousePressRight() const;
+    const Point& GetMousePressRight() const;
 
-    const Point &GetMouseReleaseLeft() const;
+    const Point& GetMouseReleaseLeft() const;
 
-    const Point &GetMouseReleaseMiddle() const;
+    const Point& GetMouseReleaseMiddle() const;
 
-    const Point &GetMouseReleaseRight() const;
+    const Point& GetMouseReleaseRight() const;
 
     void ResetPressLeft();
 
@@ -232,11 +232,11 @@ public:
 
     bool MouseClickRight();
 
-    bool MouseClickLeft(const Rect &rt);
+    bool MouseClickLeft(const Rect& rt);
 
-    bool MouseClickMiddle(const Rect &rt);
+    bool MouseClickMiddle(const Rect& rt);
 
-    bool MouseClickRight(const Rect &rt);
+    bool MouseClickRight(const Rect& rt);
 
     bool MouseWheelUp() const;
 
@@ -244,35 +244,35 @@ public:
 
     bool MousePressLeft() const;
 
-    bool MousePressLeft(const Rect &rt) const;
+    bool MousePressLeft(const Rect& rt) const;
 
-    bool MousePressLeft(const Point &pt, uint32_t w, uint32_t h) const;
+    bool MousePressLeft(const Point& pt, uint32_t w, uint32_t h) const;
 
     bool MousePressMiddle() const;
 
-    bool MousePressMiddle(const Rect &rt) const;
+    bool MousePressMiddle(const Rect& rt) const;
 
     bool MousePressRight() const;
 
-    bool MousePressRight(const Rect &rt) const;
+    bool MousePressRight(const Rect& rt) const;
 
     bool MouseReleaseLeft() const;
 
-    bool MouseReleaseLeft(const Rect &rt) const;
+    bool MouseReleaseLeft(const Rect& rt) const;
 
     bool MouseReleaseMiddle() const;
 
-    bool MouseReleaseMiddle(const Rect &rt) const;
+    bool MouseReleaseMiddle(const Rect& rt) const;
 
     bool MouseReleaseRight() const;
 
-    bool MouseReleaseRight(const Rect &rt) const;
+    bool MouseReleaseRight(const Rect& rt) const;
 
-    bool MouseWheelUp(const Rect &rt) const;
+    bool MouseWheelUp(const Rect& rt) const;
 
-    bool MouseWheelDn(const Rect &rt) const;
+    bool MouseWheelDn(const Rect& rt) const;
 
-    bool MouseCursor(const Rect &rt) const;
+    bool MouseCursor(const Rect& rt) const;
 
     bool KeyPress() const;
 
@@ -298,13 +298,13 @@ public:
 private:
     LocalEvent();
 
-    void HandleMouseMotionEvent(const SDL_MouseMotionEvent &);
+    void HandleMouseMotionEvent(const SDL_MouseMotionEvent&);
 
-    void HandleMouseButtonEvent(const SDL_MouseButtonEvent &);
+    void HandleMouseButtonEvent(const SDL_MouseButtonEvent&);
 
-    void HandleKeyboardEvent(SDL_KeyboardEvent &);
+    void HandleKeyboardEvent(SDL_KeyboardEvent&);
 
-    static int GlobalFilterEvents(const SDL_Event *);
+    static int GlobalFilterEvents(const SDL_Event*);
     static void ExtractCleanSdlEvents(std::vector<SDL_Event>& eventListCleared);
 
     enum flag_t
@@ -330,17 +330,17 @@ private:
     int mouse_state;
     int mouse_button;
 
-    Point mouse_st;    // mouse offset for pocketpc
+    Point mouse_st; // mouse offset for pocketpc
 
-    Point mouse_pl;    // press left
-    Point mouse_pm;    // press middle
-    Point mouse_pr;    // press right
+    Point mouse_pl; // press left
+    Point mouse_pm; // press middle
+    Point mouse_pr; // press right
 
-    Point mouse_rl;    // release left
-    Point mouse_rm;    // release middle
-    Point mouse_rr;    // release right
+    Point mouse_rl; // release left
+    Point mouse_rm; // release middle
+    Point mouse_rr; // release right
 
-    Point mouse_cu;    // point cursor
+    Point mouse_cu; // point cursor
 
     void (*redraw_cursor_func)(s32, s32);
 
@@ -361,4 +361,3 @@ private:
     KeySym emulate_press_right;
 #endif
 };
-

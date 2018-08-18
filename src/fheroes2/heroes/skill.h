@@ -29,7 +29,7 @@
 #include "ByteVectorReader.h"
 #include "ByteVectorWriter.h"
 
-void StringAppendModifiers(string &, int);
+void StringAppendModifiers(string&, int);
 
 class Spell;
 
@@ -37,17 +37,20 @@ class Heroes;
 
 namespace Skill
 {
-    int GetLeadershipModifiers(int level, string *strs);
+    int GetLeadershipModifiers(int level, string* strs);
 
-    int GetLuckModifiers(int level, string *strs);
+    int GetLuckModifiers(int level, string* strs);
 
-    void UpdateStats(const string &);
+    void UpdateStats(const string&);
 
     namespace Level
     {
         enum
         {
-            NONE = 0, BASIC = 1, ADVANCED = 2, EXPERT = 3
+            NONE = 0,
+            BASIC = 1,
+            ADVANCED = 2,
+            EXPERT = 3
         };
 
         std::string String(int level);
@@ -83,7 +86,7 @@ namespace Skill
 
         void Reset();
 
-        void Set(const Secondary &);
+        void Set(const Secondary&);
 
         void SetSkill(int);
 
@@ -117,10 +120,10 @@ namespace Skill
 
         static std::string String(int);
     };
-    
-    ByteVectorReader &operator>>(ByteVectorReader &, Secondary &);
 
-    class SecSkills 
+    ByteVectorReader& operator>>(ByteVectorReader&, Secondary&);
+
+    class SecSkills
     {
     public:
         vector<Secondary> _items;
@@ -132,29 +135,29 @@ namespace Skill
 
         uint32_t GetValues(int skill) const;
 
-        void AddSkill(const Secondary &);
+        void AddSkill(const Secondary&);
 
-        void FindSkillsForLevelUp(int race, Secondary &, Secondary &) const;
+        void FindSkillsForLevelUp(int race, Secondary&, Secondary&) const;
 
-        void FillMax(const Secondary &);
+        void FillMax(const Secondary&);
 
-        Secondary *FindSkill(int);
+        Secondary* FindSkill(int);
 
         string String() const;
 
         int Count() const;
 
-        vector<Secondary> &
+        vector<Secondary>&
         ToVector();
 
     protected:
-        friend ByteVectorWriter &operator<<(ByteVectorWriter &, const SecSkills &);
+        friend ByteVectorWriter& operator<<(ByteVectorWriter&, const SecSkills&);
 
-        friend ByteVectorReader &operator>>(ByteVectorReader &, SecSkills &);
+        friend ByteVectorReader& operator>>(ByteVectorReader&, SecSkills&);
     };
 
-    ByteVectorWriter &operator<<(ByteVectorWriter &, const SecSkills &);    
-    ByteVectorReader &operator>>(ByteVectorReader &, SecSkills &);
+    ByteVectorWriter& operator<<(ByteVectorWriter&, const SecSkills&);
+    ByteVectorReader& operator>>(ByteVectorReader&, SecSkills&);
 
     class Primary
     {
@@ -166,7 +169,11 @@ namespace Skill
 
         enum
         {
-            UNKNOWN = 0, ATTACK = 1, DEFENSE = 2, POWER = 3, KNOWLEDGE = 4
+            UNKNOWN = 0,
+            ATTACK = 1,
+            DEFENSE = 2,
+            POWER = 3,
+            KNOWLEDGE = 4
         };
 
         virtual int GetAttack() const = 0;
@@ -189,21 +196,21 @@ namespace Skill
 
         int LevelUp(int race, int level);
 
-        string StringSkills(const string &) const;
+        string StringSkills(const string&) const;
 
         static std::string String(int);
 
-        static string StringDescription(int, const Heroes *);
+        static string StringDescription(int, const Heroes*);
 
         static int GetInitialSpell(int race);
 
-        void ReadFrom(ByteVectorReader &msg);
+        void ReadFrom(ByteVectorReader& msg);
 
     protected:
         void LoadDefaults(int type, int race);
 
-        friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Primary &);
-        friend ByteVectorReader &operator>>(ByteVectorReader &, Primary &);
+        friend ByteVectorWriter& operator<<(ByteVectorWriter&, const Primary&);
+        friend ByteVectorReader& operator>>(ByteVectorReader&, Primary&);
 
         int attack;
         int defense;
@@ -211,9 +218,9 @@ namespace Skill
         int knowledge;
     };
 
-    ByteVectorWriter &operator<<(ByteVectorWriter &, const Primary &);
+    ByteVectorWriter& operator<<(ByteVectorWriter&, const Primary&);
 
-    ByteVectorReader &operator>>(ByteVectorReader &, Primary &);
+    ByteVectorReader& operator>>(ByteVectorReader&, Primary&);
 }
 
 #include "interface_itemsbar.h"
@@ -221,24 +228,24 @@ namespace Skill
 class PrimarySkillsBar : public Interface::ItemsBar<int>
 {
 public:
-    PrimarySkillsBar(const Heroes *, bool mini);
+    PrimarySkillsBar(const Heroes*, bool mini);
 
     void SetTextOff(s32, s32);
 
-    void RedrawBackground(const Rect &, Surface &);
+    void RedrawBackground(const Rect&, Surface&);
 
-    void RedrawItem(int &, const Rect &, Surface &);
+    void RedrawItem(int&, const Rect&, Surface&);
 
-    bool ActionBarSingleClick(const Point &, int &, const Rect &);
+    bool ActionBarSingleClick(const Point&, int&, const Rect&);
 
-    bool ActionBarPressRight(const Point &, int &, const Rect &);
+    bool ActionBarPressRight(const Point&, int&, const Rect&);
 
-    bool ActionBarCursor(const Point &, int &, const Rect &);
+    bool ActionBarCursor(const Point&, int&, const Rect&);
 
-    bool QueueEventProcessing(string * = nullptr);
+    bool QueueEventProcessing(string* = nullptr);
 
 protected:
-    const Heroes *hero;
+    const Heroes* hero;
     Surface backsf;
     bool use_mini_sprite;
     vector<int> content;
@@ -251,17 +258,17 @@ class SecondarySkillsBar : public Interface::ItemsBar<Skill::Secondary>
 public:
     SecondarySkillsBar(bool mini = true, bool change = false);
 
-    void RedrawBackground(const Rect &, Surface &);
+    void RedrawBackground(const Rect&, Surface&);
 
-    void RedrawItem(Skill::Secondary &, const Rect &, Surface &);
+    void RedrawItem(Skill::Secondary&, const Rect&, Surface&);
 
-    bool ActionBarSingleClick(const Point &, Skill::Secondary &, const Rect &);
+    bool ActionBarSingleClick(const Point&, Skill::Secondary&, const Rect&);
 
-    bool ActionBarPressRight(const Point &, Skill::Secondary &, const Rect &);
+    bool ActionBarPressRight(const Point&, Skill::Secondary&, const Rect&);
 
-    bool ActionBarCursor(const Point &, Skill::Secondary &, const Rect &);
+    bool ActionBarCursor(const Point&, Skill::Secondary&, const Rect&);
 
-    bool QueueEventProcessing(string * = nullptr);
+    bool QueueEventProcessing(string* = nullptr);
 
 protected:
     Surface backsf;

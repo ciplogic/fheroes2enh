@@ -33,15 +33,19 @@
 
 namespace Battle
 {
-    inline direction_t &operator++(direction_t &d)
-    { return d = CENTER == d ? TOP_LEFT : direction_t(d << 1); }
+    inline direction_t& operator++(direction_t& d)
+    {
+        return d = CENTER == d ? TOP_LEFT : direction_t(d << 1);
+    }
 
-    inline direction_t &operator--(direction_t &d)
-    { return d = TOP_LEFT == d ? CENTER : direction_t(d >> 1); }
+    inline direction_t& operator--(direction_t& d)
+    {
+        return d = TOP_LEFT == d ? CENTER : direction_t(d >> 1);
+    }
 
     typedef vector<s32> Indexes;
 
-    class Board  
+    class Board
     {
     public:
         vector<Cell> _items;
@@ -51,25 +55,25 @@ namespace Battle
 
         Rect GetArea() const;
 
-        void SetArea(const Rect &);
+        void SetArea(const Rect&);
 
-        s32 GetIndexAbsPosition(const Point &) const;
+        s32 GetIndexAbsPosition(const Point&) const;
 
-        Indexes GetPassableQualityPositions(const Unit &b);
+        Indexes GetPassableQualityPositions(const Unit& b);
 
-        Indexes GetNearestTroopIndexes(s32, const Indexes *) const;
+        Indexes GetNearestTroopIndexes(s32, const Indexes*) const;
 
-        Indexes GetAStarPath(const Unit &, const Position &, bool debug = true);
+        Indexes GetAStarPath(const Unit&, const Position&, bool debug = true);
 
         string AllUnitsInfo() const;
 
-        static void SetEnemyQuality(const Unit &);
+        static void SetEnemyQuality(const Unit&);
 
-        void SetPositionQuality(const Unit &) const;
+        void SetPositionQuality(const Unit&) const;
 
-        void SetScanPassability(const Unit &);
+        void SetScanPassability(const Unit&);
 
-        void SetCobjObjects(const Maps::Tiles &);
+        void SetCobjObjects(const Maps::Tiles&);
 
         void SetCobjObject(int icn, s32);
 
@@ -77,7 +81,7 @@ namespace Battle
 
         static string GetMoatInfo();
 
-        static Cell *GetCell(s32, int = CENTER);
+        static Cell* GetCell(s32, int = CENTER);
 
         static bool isNearIndexes(s32, s32);
 
@@ -109,17 +113,18 @@ namespace Battle
 
         static Indexes GetAroundIndexes(s32);
 
-        static Indexes GetAroundIndexes(const Unit &);
+        static Indexes GetAroundIndexes(const Unit&);
 
         static Indexes GetMoveWideIndexes(s32, bool reflect);
 
-        static bool isValidMirrorImageIndex(s32, const Unit *);
+        static bool isValidMirrorImageIndex(s32, const Unit*);
     };
 
     struct ShortestDistance : public binary_function<s32, s32, bool>
     {
         ShortestDistance(s32 index) : center(index)
-        {}
+        {
+        }
 
         bool operator()(s32 index1, s32 index2) const
         {

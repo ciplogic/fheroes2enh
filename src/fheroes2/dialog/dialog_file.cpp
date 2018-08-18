@@ -32,25 +32,25 @@
 
 int Dialog::FileOptions()
 {
-    Display &display = Display::Get();
+    Display& display = Display::Get();
     // preload
     const int cpanbkg = Settings::Get().ExtGameEvilInterface() ? ICN::CPANBKGE : ICN::CPANBKG;
     const int cpanel = Settings::Get().ExtGameEvilInterface() ? ICN::CPANELE : ICN::CPANEL;
 
     // cursor
-    Cursor &cursor = Cursor::Get();
+    Cursor& cursor = Cursor::Get();
     const int oldcursor = cursor.Themes();
     cursor.Hide();
     cursor.SetThemes(Cursor::POINTER);
 
     // image box
-    const Sprite &box = AGG::GetICN(cpanbkg, 0);
+    const Sprite& box = AGG::GetICN(cpanbkg, 0);
 
     SpriteBack back(Rect((display.w() - box.w()) / 2, (display.h() - box.h()) / 2, box.w(), box.h()));
-    const Point &rb = back.GetPos();
+    const Point& rb = back.GetPos();
     box.Blit(rb.x, rb.y);
 
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     Button buttonNew(rb.x + 62, rb.y + 31, cpanel, 0, 1);
     Button buttonLoad(rb.x + 195, rb.y + 31, cpanel, 2, 3);

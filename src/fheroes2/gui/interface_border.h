@@ -32,7 +32,7 @@ namespace Interface
     class BorderWindow
     {
     public:
-        explicit BorderWindow(const Rect &);
+        explicit BorderWindow(const Rect&);
 
         virtual ~BorderWindow() = default;
 
@@ -44,9 +44,9 @@ namespace Interface
 
         bool QueueEventProcessing();
 
-        const Rect &GetArea() const;
+        const Rect& GetArea() const;
 
-        const Rect &GetRect() const;
+        const Rect& GetRect() const;
 
     protected:
         void SetPosition(s32, s32, uint32_t, uint32_t);
@@ -57,5 +57,3 @@ namespace Interface
         Dialog::FrameBorder border;
     };
 }
-
-

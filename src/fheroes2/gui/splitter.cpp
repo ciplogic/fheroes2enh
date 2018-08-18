@@ -27,17 +27,17 @@ Splitter::Splitter() : step(0), min(0), max(0), cur(0)
 {
 }
 
-Splitter::Splitter(const Surface &sf, const Rect &rt)
-        : SpriteMove(sf), area(rt), step(0), min(0), max(0), cur(0)
+Splitter::Splitter(const Surface& sf, const Rect& rt)
+    : SpriteMove(sf), area(rt), step(0), min(0), max(0), cur(0)
 {
 }
 
-void Splitter::SetSprite(const Surface &sf)
+void Splitter::SetSprite(const Surface& sf)
 {
     Set(sf, true);
 }
 
-void Splitter::SetArea(const Rect &rt)
+void Splitter::SetArea(const Rect& rt)
 {
     area = rt;
 }
@@ -59,7 +59,8 @@ void Splitter::SetRange(int smin, int smax)
         step = 100 * (isVertical() ? area.h - h() : area.w - w()) / (max - min);
         cur = min;
         move = GetPositionCursor();
-    } else
+    }
+    else
     {
         step = 0;
         move = Point(area.x + (area.w - w()) / 2,
@@ -77,7 +78,8 @@ Point Splitter::GetPositionCursor() const
     {
         res.x = area.x + (area.w - w()) / 2;
         res.y = area.y + cur * step / 100;
-    } else
+    }
+    else
     {
         res.x = area.x + cur * step / 100;
         res.y = area.y + (area.h - h()) / 2;

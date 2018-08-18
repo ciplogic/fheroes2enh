@@ -47,30 +47,30 @@ int Game::MainMenu()
     Mixer::Pause();
     AGG::PlayMusic(MUS::MAINMENU);
 
-    Settings &conf = Settings::Get();
+    Settings& conf = Settings::Get();
 
     conf.SetGameType(TYPE_MENU);
 
     // cursor
-    Cursor &cursor = Cursor::Get();
+    Cursor& cursor = Cursor::Get();
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
-    Display &display = Display::Get();
+    Display& display = Display::Get();
     display.Fill(ColorBlack);
 
     // image background
-    const Sprite &sprite = AGG::GetICN(ICN::HEROES, 0);
+    const Sprite& sprite = AGG::GetICN(ICN::HEROES, 0);
     const Point top((display.w() - sprite.w()) / 2, (display.h() - sprite.h()) / 2);
     sprite.Blit(top);
 
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
-    const Sprite &s1 = AGG::GetICN(ICN::BTNSHNGL, NEWGAME_DEFAULT);
-    const Sprite &s2 = AGG::GetICN(ICN::BTNSHNGL, LOADGAME_DEFAULT);
-    const Sprite &s3 = AGG::GetICN(ICN::BTNSHNGL, HIGHSCORES_DEFAULT);
-    const Sprite &s4 = AGG::GetICN(ICN::BTNSHNGL, CREDITS_DEFAULT);
-    const Sprite &s5 = AGG::GetICN(ICN::BTNSHNGL, QUIT_DEFAULT);
+    const Sprite& s1 = AGG::GetICN(ICN::BTNSHNGL, NEWGAME_DEFAULT);
+    const Sprite& s2 = AGG::GetICN(ICN::BTNSHNGL, LOADGAME_DEFAULT);
+    const Sprite& s3 = AGG::GetICN(ICN::BTNSHNGL, HIGHSCORES_DEFAULT);
+    const Sprite& s4 = AGG::GetICN(ICN::BTNSHNGL, CREDITS_DEFAULT);
+    const Sprite& s5 = AGG::GetICN(ICN::BTNSHNGL, QUIT_DEFAULT);
 
     Button buttonNewGame(top.x + s1.x(), top.y + s1.y(), ICN::BTNSHNGL, NEWGAME_DEFAULT, NEWGAME_DEFAULT + 2);
     Button buttonLoadGame(top.x + s2.x(), top.y + s2.y(), ICN::BTNSHNGL, LOADGAME_DEFAULT, LOADGAME_DEFAULT + 2);
@@ -80,10 +80,10 @@ int Game::MainMenu()
 
     const Point lt_pt(0, 0);
 
-    const Sprite &lantern10 = AGG::GetICN(ICN::SHNGANIM, 0);
+    const Sprite& lantern10 = AGG::GetICN(ICN::SHNGANIM, 0);
     lantern10.Blit(top.x + lantern10.x(), top.y + lantern10.y());
 
-    const Sprite &lantern11 = AGG::GetICN(ICN::SHNGANIM, AnimationFrame(ICN::SHNGANIM, 0, 0));
+    const Sprite& lantern11 = AGG::GetICN(ICN::SHNGANIM, AnimationFrame(ICN::SHNGANIM, 0, 0));
     lantern11.Blit(top.x + lantern11.x(), top.y + lantern11.y());
 
     buttonNewGame.Draw();
@@ -100,21 +100,21 @@ int Game::MainMenu()
     struct ButtonInfo
     {
         uint32_t frame;
-        Button &button;
+        Button& button;
         bool isOver;
         bool wasOver;
     } buttons[] = {
-            {NEWGAME_DEFAULT,    buttonNewGame,    false, false},
-            {LOADGAME_DEFAULT,   buttonLoadGame,   false, false},
+            {NEWGAME_DEFAULT, buttonNewGame, false, false},
+            {LOADGAME_DEFAULT, buttonLoadGame, false, false},
             {HIGHSCORES_DEFAULT, buttonHighScores, false, false},
-            {CREDITS_DEFAULT,    buttonCredits,    false, false},
-            {QUIT_DEFAULT,       buttonQuit,       false, false}
-    };
+            {CREDITS_DEFAULT, buttonCredits, false, false},
+            {QUIT_DEFAULT, buttonQuit, false, false}
+        };
 
     for (uint32_t i = 0; le.MouseMotion() && i < ARRAY_COUNT(buttons); i++)
     {
         cursor.Hide();
-        const Sprite &sprite = AGG::GetICN(ICN::BTNSHNGL, buttons[i].frame);
+        const Sprite& sprite = AGG::GetICN(ICN::BTNSHNGL, buttons[i].frame);
         sprite.Blit(top.x + sprite.x(), top.y + sprite.y());
         cursor.Show();
     }
@@ -122,7 +122,7 @@ int Game::MainMenu()
     // mainmenu loop
     while (le.HandleEvents())
     {
-        for (auto &button : buttons)
+        for (auto& button : buttons)
         {
             button.wasOver = button.isOver;
 
@@ -140,7 +140,7 @@ int Game::MainMenu()
                 frame++;
 
             cursor.Hide();
-            const Sprite &sprite = AGG::GetICN(ICN::BTNSHNGL, frame);
+            const Sprite& sprite = AGG::GetICN(ICN::BTNSHNGL, frame);
             sprite.Blit(top.x + sprite.x(), top.y + sprite.y());
             cursor.Show();
         }
@@ -171,7 +171,7 @@ int Game::MainMenu()
         if (!AnimateInfrequentDelay(MAIN_MENU_DELAY))
             continue;
         cursor.Hide();
-        const Sprite &lantern12 = AGG::GetICN(ICN::SHNGANIM,
+        const Sprite& lantern12 = AGG::GetICN(ICN::SHNGANIM,
                                               AnimationFrame(ICN::SHNGANIM, 0, lantern_frame++));
         lantern12.Blit(top.x + lantern12.x(), top.y + lantern12.y());
         cursor.Show();

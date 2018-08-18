@@ -32,19 +32,19 @@ class Castle;
 class BuildingInfo
 {
 public:
-    BuildingInfo(const Castle &, building_t);
+    BuildingInfo(const Castle&, building_t);
 
     uint32_t operator()() const;
 
     void SetPos(s32, s32);
 
-    const Rect &GetArea() const;
+    const Rect& GetArea() const;
 
     std::string GetName() const;
 
-    const string &GetDescription() const;
+    const string& GetDescription() const;
 
-    void SetStatusMessage(StatusBar &) const;
+    void SetStatusMessage(StatusBar&) const;
 
     bool IsDwelling() const;
 
@@ -54,7 +54,7 @@ public:
 
     bool DialogBuyBuilding(bool buttons) const;
 
-    static void UpdateCosts(const string &);
+    static void UpdateCosts(const string&);
 
     static payment_t GetCost(uint32_t, int);
 
@@ -63,18 +63,18 @@ private:
 
     string GetConditionDescription() const;
 
-    const Castle &castle;
+    const Castle& castle;
     uint32_t building;
     string description;
     Rect area;
     int bcond;
 
-    static bool CanQuickBuild(const Point &cursor, Rect area);
+    static bool CanQuickBuild(const Point& cursor, Rect area);
 };
 
 struct DwellingItem
 {
-    DwellingItem(Castle &, uint32_t dw);
+    DwellingItem(Castle&, uint32_t dw);
 
     uint32_t type;
     Monster mons;
@@ -83,18 +83,18 @@ struct DwellingItem
 class DwellingsBar : public Interface::ItemsBar<DwellingItem>
 {
 public:
-    DwellingsBar(Castle &, const Size &, const RGBA &fill);
+    DwellingsBar(Castle&, const Size&, const RGBA& fill);
 
-    void RedrawBackground(const Rect &, Surface &);
+    void RedrawBackground(const Rect&, Surface&);
 
-    void RedrawItem(DwellingItem &, const Rect &, Surface &);
+    void RedrawItem(DwellingItem&, const Rect&, Surface&);
 
-    bool ActionBarSingleClick(const Point &, DwellingItem &, const Rect &);
+    bool ActionBarSingleClick(const Point&, DwellingItem&, const Rect&);
 
-    bool ActionBarPressRight(const Point &, DwellingItem &, const Rect &);
+    bool ActionBarPressRight(const Point&, DwellingItem&, const Rect&);
 
 protected:
-    Castle &castle;
+    Castle& castle;
     Surface backsf;
     vector<DwellingItem> content;
 };

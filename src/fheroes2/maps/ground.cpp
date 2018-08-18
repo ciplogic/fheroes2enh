@@ -26,31 +26,33 @@
 
 std::string Maps::Ground::String(int ground)
 {
-    std::string str_ground[] = {_("Desert"), _("Snow"), _("Swamp"), _("Wasteland"), _("Beach"),
-                                _("Lava"), _("Dirt"), _("Grass"), _("Water"), "Unknown"};
+    std::string str_ground[] = {
+        _("Desert"), _("Snow"), _("Swamp"), _("Wasteland"), _("Beach"),
+        _("Lava"), _("Dirt"), _("Grass"), _("Water"), "Unknown"
+    };
 
     switch (ground)
     {
-        case DESERT:
-            return str_ground[0];
-        case SNOW:
-            return str_ground[1];
-        case SWAMP:
-            return str_ground[2];
-        case WASTELAND:
-            return str_ground[3];
-        case BEACH:
-            return str_ground[4];
-        case LAVA:
-            return str_ground[5];
-        case DIRT:
-            return str_ground[6];
-        case GRASS:
-            return str_ground[7];
-        case WATER:
-            return str_ground[8];
-        default:
-            break;
+    case DESERT:
+        return str_ground[0];
+    case SNOW:
+        return str_ground[1];
+    case SWAMP:
+        return str_ground[2];
+    case WASTELAND:
+        return str_ground[3];
+    case BEACH:
+        return str_ground[4];
+    case LAVA:
+        return str_ground[5];
+    case DIRT:
+        return str_ground[6];
+    case GRASS:
+        return str_ground[7];
+    case WATER:
+        return str_ground[8];
+    default:
+        break;
     }
 
     return str_ground[8];
@@ -58,7 +60,7 @@ std::string Maps::Ground::String(int ground)
 
 uint32_t Maps::Ground::GetPenalty(s32 index, int direct, uint32_t level)
 {
-    const Tiles &tile = world.GetTiles(index);
+    const Tiles& tile = world.GetTiles(index);
 
     //            none   basc   advd   expr
     //    Desert  2.00   1.75   1.50   1.00
@@ -80,48 +82,48 @@ uint32_t Maps::Ground::GetPenalty(s32 index, int direct, uint32_t level)
 
     switch (tile.GetGround())
     {
-        case DESERT:
-            switch (level)
-            {
-                case Skill::Level::EXPERT:
-                    break;
-                case Skill::Level::ADVANCED:
-                    result += 50;
-                    break;
-                case Skill::Level::BASIC:
-                    result += 75;
-                    break;
-                default:
-                    result += 100;
-                    break;
-            }
+    case DESERT:
+        switch (level)
+        {
+        case Skill::Level::EXPERT:
             break;
-
-        case SNOW:
-        case SWAMP:
-            switch (level)
-            {
-                case Skill::Level::EXPERT:
-                    break;
-                case Skill::Level::ADVANCED:
-                    result += 25;
-                    break;
-                case Skill::Level::BASIC:
-                    result += 50;
-                    break;
-                default:
-                    result += 75;
-                    break;
-            }
+        case Skill::Level::ADVANCED:
+            result += 50;
             break;
-
-        case WASTELAND:
-        case BEACH:
-            result += Skill::Level::NONE == level ? 25 : 0;
+        case Skill::Level::BASIC:
+            result += 75;
             break;
-
         default:
+            result += 100;
             break;
+        }
+        break;
+
+    case SNOW:
+    case SWAMP:
+        switch (level)
+        {
+        case Skill::Level::EXPERT:
+            break;
+        case Skill::Level::ADVANCED:
+            result += 25;
+            break;
+        case Skill::Level::BASIC:
+            result += 50;
+            break;
+        default:
+            result += 75;
+            break;
+        }
+        break;
+
+    case WASTELAND:
+    case BEACH:
+        result += Skill::Level::NONE == level ? 25 : 0;
+        break;
+
+    default:
+        break;
     }
 
     if (direct & (Direction::TOP_RIGHT | Direction::BOTTOM_RIGHT | Direction::BOTTOM_LEFT | Direction::TOP_LEFT))

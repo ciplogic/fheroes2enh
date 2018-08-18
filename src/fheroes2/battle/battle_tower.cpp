@@ -26,7 +26,7 @@
 #include "battle_troop.h"
 #include "battle_tower.h"
 
-Battle::Tower::Tower(const Castle &castle, int twr) : Unit(Troop(ARCHER, 0), -1, false),
+Battle::Tower::Tower(const Castle& castle, int twr) : Unit(Troop(ARCHER, 0), -1, false),
                                                       type(twr), color(castle.GetColor()), bonus(0), valid(true)
 {
     count += castle.CountBuildings();
@@ -44,13 +44,13 @@ string Battle::Tower::GetName() const
 {
     switch (type)
     {
-        case TWR_LEFT:
-            return _("Left Turret");
-        case TWR_RIGHT:
-            return _("Right Turret");
+    case TWR_LEFT:
+        return _("Left Turret");
+    case TWR_RIGHT:
+        return _("Right Turret");
 
-        default:
-            break;
+    default:
+        break;
     }
 
     return _("Ballista");
@@ -87,17 +87,17 @@ Point Battle::Tower::GetPortPosition() const
 
     switch (type)
     {
-        case TWR_LEFT:
-            res = Point(410, 70);
-            break;
-        case TWR_RIGHT:
-            res = Point(410, 320);
-            break;
-        case TWR_CENTER:
-            res = Point(560, 170);
-            break;
-        default:
-            break;
+    case TWR_LEFT:
+        res = Point(410, 70);
+        break;
+    case TWR_RIGHT:
+        res = Point(410, 320);
+        break;
+    case TWR_CENTER:
+        res = Point(560, 170);
+        break;
+    default:
+        break;
     }
 
     return res;
@@ -107,19 +107,19 @@ void Battle::Tower::SetDestroy()
 {
     switch (type)
     {
-        case TWR_LEFT:
-            Board::GetCell(19)->SetObject(1);
-            break;
-        case TWR_RIGHT:
-            Board::GetCell(85)->SetObject(1);
-            break;
-        default:
-            break;
+    case TWR_LEFT:
+        Board::GetCell(19)->SetObject(1);
+        break;
+    case TWR_RIGHT:
+        Board::GetCell(85)->SetObject(1);
+        break;
+    default:
+        break;
     }
     valid = false;
 }
 
-string Battle::Tower::GetInfo(const Castle &cstl)
+string Battle::Tower::GetInfo(const Castle& cstl)
 {
     string tmpl = _("The %{name} fires with the strength of %{count} Archers");
     string addn = _("each with a +%{attack} bonus to their attack skill.");
@@ -135,7 +135,7 @@ string Battle::Tower::GetInfo(const Castle &cstl)
         if (cstl.isBuild(BUILD_RIGHTTURRET)) towers.push_back(TWR_RIGHT);
 
         for (vector<int>::const_iterator
-                     it = towers.begin(); it != towers.end(); ++it)
+             it = towers.begin(); it != towers.end(); ++it)
         {
             Tower twr = Tower(cstl, *it);
 
@@ -148,7 +148,8 @@ string Battle::Tower::GetInfo(const Castle &cstl)
                 msg.append(", ");
                 msg.append(addn);
                 StringReplace(msg, "%{attack}", twr.GetBonus());
-            } else
+            }
+            else
                 msg.append(".");
 
             if (it + 1 != towers.end())

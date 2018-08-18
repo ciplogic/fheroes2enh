@@ -57,26 +57,26 @@ namespace
     {
         switch (ground)
         {
-            case Maps::Ground::DESERT:
-                return COLOR_DESERT;
-            case Maps::Ground::SNOW:
-                return COLOR_SNOW;
-            case Maps::Ground::SWAMP:
-                return COLOR_SWAMP;
-            case Maps::Ground::WASTELAND:
-                return COLOR_WASTELAND;
-            case Maps::Ground::BEACH:
-                return COLOR_BEACH;
-            case Maps::Ground::LAVA:
-                return COLOR_LAVA;
-            case Maps::Ground::DIRT:
-                return COLOR_DIRT;
-            case Maps::Ground::GRASS:
-                return COLOR_GRASS;
-            case Maps::Ground::WATER:
-                return COLOR_WATER;
-            default:
-                break;
+        case Maps::Ground::DESERT:
+            return COLOR_DESERT;
+        case Maps::Ground::SNOW:
+            return COLOR_SNOW;
+        case Maps::Ground::SWAMP:
+            return COLOR_SWAMP;
+        case Maps::Ground::WASTELAND:
+            return COLOR_WASTELAND;
+        case Maps::Ground::BEACH:
+            return COLOR_BEACH;
+        case Maps::Ground::LAVA:
+            return COLOR_LAVA;
+        case Maps::Ground::DIRT:
+            return COLOR_DIRT;
+        case Maps::Ground::GRASS:
+            return COLOR_GRASS;
+        case Maps::Ground::WATER:
+            return COLOR_WATER;
+        default:
+            break;
         }
 
         return 0;
@@ -86,20 +86,20 @@ namespace
     {
         switch (color)
         {
-            case Color::BLUE:
-                return COLOR_BLUE;
-            case Color::GREEN:
-                return COLOR_GREEN;
-            case Color::RED:
-                return COLOR_RED;
-            case Color::YELLOW:
-                return COLOR_YELLOW;
-            case Color::ORANGE:
-                return COLOR_ORANGE;
-            case Color::PURPLE:
-                return COLOR_PURPLE;
-            default:
-                break;
+        case Color::BLUE:
+            return COLOR_BLUE;
+        case Color::GREEN:
+            return COLOR_GREEN;
+        case Color::RED:
+            return COLOR_RED;
+        case Color::YELLOW:
+            return COLOR_YELLOW;
+        case Color::ORANGE:
+            return COLOR_ORANGE;
+        case Color::PURPLE:
+            return COLOR_PURPLE;
+        default:
+            break;
         }
 
         return COLOR_GRAY;
@@ -120,11 +120,10 @@ namespace
 
         return res;
     }
-
 }
 
 /* constructor */
-Interface::Radar::Radar(Basic &basic) : BorderWindow(Rect(0, 0, RADARWIDTH, RADARWIDTH)), interface(basic), hide(true)
+Interface::Radar::Radar(Basic& basic) : BorderWindow(Rect(0, 0, RADARWIDTH, RADARWIDTH)), interface(basic), hide(true)
 {
 }
 
@@ -148,7 +147,7 @@ void Interface::Radar::Build()
 /* generate mini maps */
 void Interface::Radar::Generate()
 {
-    const Size &area = GetArea();
+    const Size& area = GetArea();
     const s32 world_w = world.w();
     const s32 world_h = world.h();
 
@@ -158,7 +157,7 @@ void Interface::Radar::Generate()
     {
         for (s32 xx = 0; xx < world_w; ++xx)
         {
-            const Maps::Tiles &tile = world.GetTiles(xx, yy);
+            const Maps::Tiles& tile = world.GetTiles(xx, yy);
             RGBA color(0, 0, 0);
 
             if (tile.isRoad())
@@ -188,13 +187,15 @@ void Interface::Radar::Generate()
             new_sz.h = area.h;
             offset.x = (area.w - new_sz.w) / 2;
             offset.y = 0;
-        } else if (world_w > world_h)
+        }
+        else if (world_w > world_h)
         {
             new_sz.w = area.w;
             new_sz.h = world_h * area.w / world_w;
             offset.x = 0;
             offset.y = (area.h - new_sz.h) / 2;
-        } else
+        }
+        else
         {
             new_sz.w = area.w;
             new_sz.h = area.h;
@@ -216,9 +217,9 @@ void Interface::Radar::SetRedraw() const
 
 void Interface::Radar::Redraw()
 {
-    Display &display = Display::Get();
-    const Settings &conf = Settings::Get();
-    const Rect &area = GetArea();
+    Display& display = Display::Get();
+    const Settings& conf = Settings::Get();
+    const Rect& area = GetArea();
 
     if (conf.ExtGameHideInterface() && conf.ShowRadar())
     {
@@ -242,11 +243,12 @@ void Interface::Radar::Redraw()
         }
     }
 }
+
 /* redraw radar area for color */
 void Interface::Radar::RedrawObjects(int color) const
 {
-    Display &display = Display::Get();
-    const Rect &area = GetArea();
+    Display& display = Display::Get();
+    const Rect& area = GetArea();
     const s32 world_w = world.w();
     const s32 world_h = world.h();
     const int areaw = offset.x ? area.w - 2 * offset.x : area.w;
@@ -271,46 +273,45 @@ void Interface::Radar::RedrawObjects(int color) const
     {
         for (s32 xx = 0; xx < world_w; xx += stepx)
         {
-            const Maps::Tiles &tile = world.GetTiles(xx, yy);
-            const bool &show_tile = !tile.isFog(color);
+            const Maps::Tiles& tile = world.GetTiles(xx, yy);
+            const bool& show_tile = !tile.isFog(color);
             RGBA rgba(0, 0, 0);
 
             if (show_tile)
             {
                 switch (tile.GetObject())
                 {
-                    case MP2::OBJ_HEROES:
+                case MP2::OBJ_HEROES:
                     {
-                        const Heroes *hero = world.GetHeroes(tile.GetCenter());
+                        const Heroes* hero = world.GetHeroes(tile.GetCenter());
                         if (hero) rgba = AGG::GetPaletteColor(GetPaletteIndexFromColor(hero->GetColor()));
                     }
-                        break;
+                    break;
 
-                    case MP2::OBJ_CASTLE:
-                    case MP2::OBJN_CASTLE:
+                case MP2::OBJ_CASTLE:
+                case MP2::OBJN_CASTLE:
                     {
-                        const Castle *castle = world.GetCastle(tile.GetCenter());
+                        const Castle* castle = world.GetCastle(tile.GetCenter());
                         if (castle) rgba = AGG::GetPaletteColor(GetPaletteIndexFromColor(castle->GetColor()));
                     }
-                        break;
+                    break;
 
-                    case MP2::OBJ_DRAGONCITY:
-                        //case MP2::OBJN_DRAGONCITY:
-                    case MP2::OBJ_LIGHTHOUSE:
-                        //case MP2::OBJN_LIGHTHOUSE:
-                    case MP2::OBJ_ALCHEMYLAB:
-                        //case MP2::OBJN_ALCHEMYLAB:
-                    case MP2::OBJ_MINES:
-                        //case MP2::OBJN_MINES:
-                    case MP2::OBJ_SAWMILL:
-                        //case MP2::OBJN_SAWMILL:
-                        rgba = AGG::GetPaletteColor(GetPaletteIndexFromColor(tile.QuantityColor()));
-                        break;
+                case MP2::OBJ_DRAGONCITY:
+                    //case MP2::OBJN_DRAGONCITY:
+                case MP2::OBJ_LIGHTHOUSE:
+                    //case MP2::OBJN_LIGHTHOUSE:
+                case MP2::OBJ_ALCHEMYLAB:
+                    //case MP2::OBJN_ALCHEMYLAB:
+                case MP2::OBJ_MINES:
+                    //case MP2::OBJN_MINES:
+                case MP2::OBJ_SAWMILL:
+                    //case MP2::OBJN_SAWMILL:
+                    rgba = AGG::GetPaletteColor(GetPaletteIndexFromColor(tile.QuantityColor()));
+                    break;
 
-                    default:
-                        continue;
+                default:
+                    continue;
                 }
-
             }
 
             const int dstx = area.x + offset.x + xx * areaw / world_w;
@@ -320,7 +321,8 @@ void Interface::Radar::RedrawObjects(int color) const
             {
                 sf.Fill(rgba);
                 sf.Blit(dstx, dsty, display);
-            } else if (dstx < display.w() && dsty < display.h())
+            }
+            else if (dstx < display.w() && dsty < display.h())
                 display.DrawPoint(Point(dstx, dsty), rgba);
         }
     }
@@ -329,12 +331,12 @@ void Interface::Radar::RedrawObjects(int color) const
 /* redraw radar cursor */
 void Interface::Radar::RedrawCursor()
 {
-    const Settings &conf = Settings::Get();
+    const Settings& conf = Settings::Get();
 
     if (!conf.ExtGameHideInterface() || conf.ShowRadar())
     {
-        const Rect &area = GetArea();
-        const Rect &rectMaps = interface.GetGameArea().GetRectMaps();
+        const Rect& area = GetArea();
+        const Rect& rectMaps = interface.GetGameArea().GetRectMaps();
 
         s32 areaw = offset.x ? area.w - 2 * offset.x : area.w;
         s32 areah = offset.y ? area.h - 2 * offset.y : area.h;
@@ -356,10 +358,10 @@ void Interface::Radar::RedrawCursor()
 
 void Interface::Radar::QueueEventProcessing()
 {
-    GameArea &gamearea = interface.GetGameArea();
-    Settings &conf = Settings::Get();
-    LocalEvent &le = LocalEvent::Get();
-    const Rect &area = GetArea();
+    GameArea& gamearea = interface.GetGameArea();
+    Settings& conf = Settings::Get();
+    LocalEvent& le = LocalEvent::Get();
+    const Rect& area = GetArea();
 
     // move border
     if (conf.ShowRadar() &&
@@ -374,7 +376,7 @@ void Interface::Radar::QueueEventProcessing()
     if (le.MouseClickLeft() || le.MousePressLeft())
     {
         const Point prev(gamearea.GetRectMaps());
-        const Point &pt = le.GetMouseCursor();
+        const Point& pt = le.GetMouseCursor();
 
         if (area & pt)
         {
@@ -395,7 +397,7 @@ void Interface::Radar::QueueEventProcessing()
                         Font::BIG);
         return;
     }
-    const Rect &area1 = GetArea();
+    const Rect& area1 = GetArea();
     Size newSize(area1.w, area1.h);
 
     if (le.MouseWheelUp())
@@ -403,7 +405,8 @@ void Interface::Radar::QueueEventProcessing()
         if (area1.w != world.w() ||
             area1.h != world.h())
             newSize = Size(world.w(), world.h());
-    } else if (le.MouseWheelDn())
+    }
+    else if (le.MouseWheelDn())
     {
         if (area1.w != RADARWIDTH ||
             area1.h != RADARWIDTH)
@@ -418,10 +421,10 @@ void Interface::Radar::ResetAreaSize()
     ChangeAreaSize(Size(RADARWIDTH, RADARWIDTH));
 }
 
-void Interface::Radar::ChangeAreaSize(const Size &newSize)
+void Interface::Radar::ChangeAreaSize(const Size& newSize)
 {
     if (newSize == area) return;
-    const Rect &rect = GetRect();
+    const Rect& rect = GetRect();
     Cursor::Get().Hide();
     SetPosition(rect.x < 0 ? 0 : rect.x, rect.y < 0 ? 0 : rect.y, newSize.w, newSize.h);
     Generate();

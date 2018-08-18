@@ -32,7 +32,7 @@
 #define AITURN_REDRAW_EXPIRE 20
 #define RESOURCE_WINDOW_EXPIRE 2500
 
-Interface::StatusWindow::StatusWindow(Basic &basic) : BorderWindow(Rect(0, 0, 144, 72)),
+Interface::StatusWindow::StatusWindow(Basic& basic) : BorderWindow(Rect(0, 0, 144, 72)),
                                                       interface(basic), state(STATUS_UNKNOWN), oldState(STATUS_UNKNOWN),
                                                       lastResource(Resource::UNKNOWN)
 {
@@ -52,7 +52,7 @@ int Interface::StatusWindow::GetState() const
     return state;
 }
 
-uint32_t Interface::StatusWindow::ResetResourceStatus(uint32_t tick, void *ptr)
+uint32_t Interface::StatusWindow::ResetResourceStatus(uint32_t tick, void* ptr)
 {
     if (!ptr)
         return 0;
@@ -62,7 +62,8 @@ uint32_t Interface::StatusWindow::ResetResourceStatus(uint32_t tick, void *ptr)
         status->state = status->oldState;
         Cursor::Get().Hide();
         Basic::Get().SetRedraw(REDRAW_STATUS);
-    } else
+    }
+    else
         status->timerShowLastResource.Remove();
 
     return 0;
@@ -98,7 +99,7 @@ void Interface::StatusWindow::SetState(int info)
 
 void Interface::StatusWindow::Redraw()
 {
-    const Settings &conf = Settings::Get();
+    const Settings& conf = Settings::Get();
 
     if (!conf.ExtGameHideInterface() || conf.ShowStatus())
     {
@@ -106,12 +107,13 @@ void Interface::StatusWindow::Redraw()
         {
             Display::Get().FillRect(GetArea(), RGBA(0x51, 0x31, 0x18));
             BorderWindow::Redraw();
-        } else
+        }
+        else
             DrawBackground();
 
         // draw info: Day and Funds and Army
-        const Sprite &ston = AGG::GetICN(Settings::Get().ExtGameEvilInterface() ? ICN::STONBAKE : ICN::STONBACK, 0);
-        const Rect &pos = GetArea();
+        const Sprite& ston = AGG::GetICN(Settings::Get().ExtGameEvilInterface() ? ICN::STONBAKE : ICN::STONBACK, 0);
+        const Rect& pos = GetArea();
 
         if (STATUS_AITURN == state)
             DrawAITurns();
@@ -128,23 +130,24 @@ void Interface::StatusWindow::Redraw()
                 else
                     DrawResourceInfo(2 * ston.h() + 10);
             }
-        } else
+        }
+        else
             switch (state)
             {
-                case STATUS_DAY:
-                    DrawDayInfo();
-                    break;
-                case STATUS_FUNDS:
-                    DrawKingdomInfo();
-                    break;
-                case STATUS_ARMY:
-                    DrawArmyInfo();
-                    break;
-                case STATUS_RESOURCE:
-                    DrawResourceInfo();
-                    break;
-                default:
-                    break;
+            case STATUS_DAY:
+                DrawDayInfo();
+                break;
+            case STATUS_FUNDS:
+                DrawKingdomInfo();
+                break;
+            case STATUS_ARMY:
+                DrawArmyInfo();
+                break;
+            case STATUS_RESOURCE:
+                DrawResourceInfo();
+                break;
+            default:
+                break;
             }
     }
 }
@@ -158,7 +161,7 @@ void Interface::StatusWindow::NextState()
 
     if (state == STATUS_ARMY)
     {
-        const Castle *castle = GetFocusCastle();
+        const Castle* castle = GetFocusCastle();
 
         // skip empty army for castle
         if (castle && !castle->GetArmy().m_troops.isValid()) NextState();
@@ -168,8 +171,8 @@ void Interface::StatusWindow::NextState()
 
 void Interface::StatusWindow::DrawKingdomInfo(int oh) const
 {
-    const Rect &pos = GetArea();
-    Kingdom &myKingdom = world.GetKingdom(Settings::Get().CurrentColor());
+    const Rect& pos = GetArea();
+    Kingdom& myKingdom = world.GetKingdom(Settings::Get().CurrentColor());
 
     // sprite all resource
     AGG::GetICN(ICN::RESSMALL, 0).Blit(pos.x + 6, pos.y + 3 + oh);
@@ -205,7 +208,7 @@ void Interface::StatusWindow::DrawKingdomInfo(int oh) const
 
 void Interface::StatusWindow::DrawDayInfo(int oh) const
 {
-    const Rect &pos = GetArea();
+    const Rect& pos = GetArea();
 
     AGG::GetICN(Settings::Get().ExtGameEvilInterface() ? ICN::SUNMOONE : ICN::SUNMOON,
                 (world.GetWeek() - 1) % 5).Blit(pos.x, pos.y + 1 + oh);
@@ -238,7 +241,7 @@ void Interface::StatusWindow::SetResource(int res, uint32_t count)
 
 void Interface::StatusWindow::ResetTimer()
 {
-    StatusWindow &window = Basic::Get().GetStatusWindow();
+    StatusWindow& window = Basic::Get().GetStatusWindow();
 
     if (window.timerShowLastResource.IsValid())
     {
@@ -249,14 +252,14 @@ void Interface::StatusWindow::ResetTimer()
 
 void Interface::StatusWindow::DrawResourceInfo(int oh) const
 {
-    const Rect &pos = GetArea();
+    const Rect& pos = GetArea();
 
     string message = _("You find a small\nquantity of %{resource}.");
     StringReplace(message, "%{resource}", Resource::String(lastResource));
     TextBox text(message, Font::SMALL, pos.w);
     text.Blit(pos.x, pos.y + 4 + oh);
 
-    const Sprite &spr = AGG::GetICN(ICN::RESOURCE, Resource::GetIndexSprite2(lastResource));
+    const Sprite& spr = AGG::GetICN(ICN::RESOURCE, Resource::GetIndexSprite2(lastResource));
     spr.Blit(pos.x + (pos.w - spr.w()) / 2, pos.y + 6 + oh + text.h());
 
     text.Set(Int2Str(countLastResource), Font::SMALL, pos.w);
@@ -265,7 +268,7 @@ void Interface::StatusWindow::DrawResourceInfo(int oh) const
 
 void Interface::StatusWindow::DrawArmyInfo(int oh) const
 {
-    const Army *armies = nullptr;
+    const Army* armies = nullptr;
 
     if (GetFocusHeroes())
         armies = &GetFocusHeroes()->GetArmy();
@@ -274,17 +277,19 @@ void Interface::StatusWindow::DrawArmyInfo(int oh) const
 
     if (armies)
     {
-        const Rect &pos = GetArea();
+        const Rect& pos = GetArea();
         uint32_t count = armies->m_troops.GetCount();
 
         if (4 > count)
         {
             Army::DrawMons32LineShort(armies->m_troops, pos.x, pos.y + 20 + oh, 144, 0, 0);
-        } else if (5 > count)
+        }
+        else if (5 > count)
         {
             Army::DrawMons32LineShort(armies->m_troops, pos.x, pos.y + 15 + oh, 110, 0, 2);
             Army::DrawMons32LineShort(armies->m_troops, pos.x + 20, pos.y + 30 + oh, 120, 2, 2);
-        } else
+        }
+        else
         {
             Army::DrawMons32LineShort(armies->m_troops, pos.x, pos.y + 15 + oh, 140, 0, 3);
             Army::DrawMons32LineShort(armies->m_troops, pos.x + 10, pos.y + 30 + oh, 120, 3, 2);
@@ -294,15 +299,15 @@ void Interface::StatusWindow::DrawArmyInfo(int oh) const
 
 void Interface::StatusWindow::DrawAITurns() const
 {
-    const Settings &conf = Settings::Get();
+    const Settings& conf = Settings::Get();
 
     if (!conf.ExtGameHideInterface() || conf.ShowStatus())
     {
         // restore background
         DrawBackground();
 
-        const Sprite &glass = AGG::GetICN(ICN::HOURGLAS, 0);
-        const Rect &pos = GetArea();
+        const Sprite& glass = AGG::GetICN(ICN::HOURGLAS, 0);
+        const Rect& pos = GetArea();
 
         s32 dst_x = pos.x + (pos.w - glass.w()) / 2;
         s32 dst_y = pos.y + (pos.h - glass.h()) / 2;
@@ -313,36 +318,36 @@ void Interface::StatusWindow::DrawAITurns() const
 
         switch (conf.CurrentColor())
         {
-            case Color::BLUE:
-                color_index = 0;
-                break;
-            case Color::GREEN:
-                color_index = 1;
-                break;
-            case Color::RED:
-                color_index = 2;
-                break;
-            case Color::YELLOW:
-                color_index = 3;
-                break;
-            case Color::ORANGE:
-                color_index = 4;
-                break;
-            case Color::PURPLE:
-                color_index = 5;
-                break;
-            default:
-                return;
+        case Color::BLUE:
+            color_index = 0;
+            break;
+        case Color::GREEN:
+            color_index = 1;
+            break;
+        case Color::RED:
+            color_index = 2;
+            break;
+        case Color::YELLOW:
+            color_index = 3;
+            break;
+        case Color::ORANGE:
+            color_index = 4;
+            break;
+        case Color::PURPLE:
+            color_index = 5;
+            break;
+        default:
+            return;
         }
 
-        const Sprite &crest = AGG::GetICN(ICN::BRCREST, color_index);
+        const Sprite& crest = AGG::GetICN(ICN::BRCREST, color_index);
 
         dst_x += 2;
         dst_y += 2;
 
         crest.Blit(dst_x, dst_y);
 
-        const Sprite &sand = AGG::GetICN(ICN::HOURGLAS, 1 + turn_progress % 10);
+        const Sprite& sand = AGG::GetICN(ICN::HOURGLAS, 1 + turn_progress % 10);
 
         dst_x += glass.w() - sand.w() - sand.x() - 3;
         dst_y += sand.y();
@@ -358,9 +363,9 @@ void Interface::StatusWindow::DrawAITurns() const
 
 void Interface::StatusWindow::DrawBackground() const
 {
-    Display &display = Display::Get();
-    const Sprite &icnston = AGG::GetICN(Settings::Get().ExtGameEvilInterface() ? ICN::STONBAKE : ICN::STONBACK, 0);
-    const Rect &pos = GetArea();
+    Display& display = Display::Get();
+    const Sprite& icnston = AGG::GetICN(Settings::Get().ExtGameEvilInterface() ? ICN::STONBAKE : ICN::STONBACK, 0);
+    const Rect& pos = GetArea();
 
     if (!Settings::Get().ExtGameHideInterface() &&
         display.h() - BORDERWIDTH - icnston.h() > pos.y)
@@ -383,22 +388,24 @@ void Interface::StatusWindow::DrawBackground() const
         srcrt = Rect(0, icnston.h() - 16, icnston.w(), 16);
         dstpt = Point(pos.x, pos.y + pos.h - 16);
         icnston.Blit(srcrt, dstpt);
-    } else
+    }
+    else
         icnston.Blit(pos.x, pos.y);
 }
 
 void Interface::StatusWindow::QueueEventProcessing()
 {
-    Display &display = Display::Get();
-    Cursor &cursor = Cursor::Get();
-    LocalEvent &le = LocalEvent::Get();
-    const Rect &area = GetArea();
+    Display& display = Display::Get();
+    Cursor& cursor = Cursor::Get();
+    LocalEvent& le = LocalEvent::Get();
+    const Rect& area = GetArea();
 
     if (Settings::Get().ShowStatus() &&
         // move border window
         BorderWindow::QueueEventProcessing())
     {
-    } else if (le.MouseClickLeft(area))
+    }
+    else if (le.MouseClickLeft(area))
     {
         cursor.Hide();
         NextState();
@@ -408,7 +415,8 @@ void Interface::StatusWindow::QueueEventProcessing()
     }
     if (le.MousePressRight(GetRect()))
         Dialog::Message(_("Status Window"),
-                        _("This window provides information on the status of your hero or kingdom, and shows the date. Left click here to cycle throungh these windows."),
+                        _("This window provides information on the status of your hero or kingdom, and shows the date. Left click here to cycle throungh these windows."
+                        ),
                         Font::BIG);
 }
 

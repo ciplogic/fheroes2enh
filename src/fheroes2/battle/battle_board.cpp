@@ -47,10 +47,10 @@ namespace Battle
     bool WideDifficultDirection(int where, int whereto)
     {
         return
-                TOP_LEFT == where && whereto & (LEFT | TOP_RIGHT) ||
-                TOP_RIGHT == where && whereto & (RIGHT | TOP_LEFT) ||
-                BOTTOM_LEFT == where && whereto & (LEFT | BOTTOM_RIGHT) ||
-                BOTTOM_RIGHT == where && whereto & (RIGHT | BOTTOM_LEFT);
+            TOP_LEFT == where && whereto & (LEFT | TOP_RIGHT) ||
+            TOP_RIGHT == where && whereto & (RIGHT | TOP_LEFT) ||
+            BOTTOM_LEFT == where && whereto & (LEFT | BOTTOM_RIGHT) ||
+            BOTTOM_RIGHT == where && whereto & (RIGHT | BOTTOM_LEFT);
     }
 }
 
@@ -60,9 +60,9 @@ Battle::Board::Board()
     for (uint32_t ii = 0; ii < ARENASIZE; ++ii) _items.push_back(Cell(ii));
 }
 
-void Battle::Board::SetArea(const Rect &area)
+void Battle::Board::SetArea(const Rect& area)
 {
-    for (auto &it : _items)
+    for (auto& it : _items)
         it.SetArea(area);
 }
 
@@ -71,7 +71,7 @@ Rect Battle::Board::GetArea() const
     Rects rects;
     rects.reserve(_items.size());
 
-    for (const auto &it : _items)
+    for (const auto& it : _items)
         rects.push_back(it.GetPos());
 
     return rects.GetRect();
@@ -83,40 +83,40 @@ void Battle::Board::Reset()
     for_each(_items.begin(), _items.end(), mem_fun_ref(&Cell::ResetDirection));
 }
 
-void Battle::Board::SetPositionQuality(const Unit &b) const
+void Battle::Board::SetPositionQuality(const Unit& b) const
 {
-    Arena *arena = GetArena();
+    Arena* arena = GetArena();
     Units enemies(arena->GetForce(b.GetColor(), true), true);
 
     for (auto unit : enemies._items)
     {
         if (!unit || !unit->isValid())
             continue;
-        const Cell *cell1 = GetCell(unit->GetHeadIndex());
+        const Cell* cell1 = GetCell(unit->GetHeadIndex());
         const Indexes around = GetAroundIndexes(*unit);
 
         for (int it2 : around)
         {
-            Cell *cell2 = GetCell(it2);
+            Cell* cell2 = GetCell(it2);
             if (cell2 && cell2->isPassable3(b, false))
                 cell2->SetQuality(cell2->GetQuality() + cell1->GetQuality());
         }
     }
 }
 
-void Battle::Board::SetEnemyQuality(const Unit &b)
+void Battle::Board::SetEnemyQuality(const Unit& b)
 {
-    Arena *arena = GetArena();
+    Arena* arena = GetArena();
     Units enemies(arena->GetForce(b.GetColor(), true), true);
 
     for (auto it = enemies._items.begin(); it != enemies._items.end(); ++it)
     {
-        Unit *unit = *it;
+        Unit* unit = *it;
 
         if (!unit || !unit->isValid())
             continue;
-        const s32 &score = b.GetScoreQuality(*unit);
-        Cell *cell = GetCell(unit->GetHeadIndex());
+        const s32& score = b.GetScoreQuality(*unit);
+        Cell* cell = GetCell(unit->GetHeadIndex());
 
         cell->SetQuality(score);
 
@@ -135,7 +135,7 @@ s32 Battle::Board::GetDistance(s32 index1, s32 index2)
     return Sign(dx) == Sign(dy) ? max(abs(dx), abs(dy)) : abs(dx) + abs(dy);
 }
 
-void Battle::Board::SetScanPassability(const Unit &b)
+void Battle::Board::SetScanPassability(const Unit& b)
 {
     for_each(_items.begin(), _items.end(), mem_fun_ref(&Cell::ResetDirection));
 
@@ -143,16 +143,17 @@ void Battle::Board::SetScanPassability(const Unit &b)
 
     if (b.isFly())
     {
-        for (auto &it : _items)
+        for (auto& it : _items)
             if (it.isPassable3(b, false)) it.SetDirection(CENTER);
-    } else
+    }
+    else
     {
         Indexes indexes = GetDistanceIndexes(b.GetHeadIndex(), b.GetSpeed());
         indexes.resize(distance(indexes.begin(),
                                 remove_if(indexes.begin(), indexes.end(), isImpassableIndex)));
 
         // set pasable
-        for (auto &indexe : indexes)
+        for (auto& indexe : indexes)
             GetAStarPath(b, Position::GetCorrect(b, indexe), false);
     }
 }
@@ -164,13 +165,14 @@ struct bcell_t
     bool open;
 
     bcell_t() : cost(MAXU16), prnt(-1), open(true)
-    {}
+    {
+    }
 };
 
-Battle::Indexes Battle::Board::GetAStarPath(const Unit &b, const Position &dst, bool debug)
+Battle::Indexes Battle::Board::GetAStarPath(const Unit& b, const Position& dst, bool debug)
 {
-    const Castle *castle = Arena::GetCastle();
-    const Bridge *bridge = Arena::GetBridge();
+    const Castle* castle = Arena::GetCastle();
+    const Bridge* bridge = Arena::GetBridge();
     unordered_map<s32, bcell_t> listCells;
     s32 cur = b.GetHeadIndex();
 
@@ -181,38 +183,41 @@ Battle::Indexes Battle::Board::GetAStarPath(const Unit &b, const Position &dst, 
 
     while (cur != dst.GetHead()->GetIndex())
     {
-        const Cell &center = _items.at(cur);
-        Indexes around = b.isWide() ?
-                         GetMoveWideIndexes(cur,
-                                            0 > listCells[cur].prnt ? b.isReflect() : RIGHT_SIDE & GetDirection(cur,
-                                                                                                                listCells[cur].prnt))
-                                    :
-                         GetAroundIndexes(cur);
+        const Cell& center = _items.at(cur);
+        Indexes around = b.isWide()
+                             ? GetMoveWideIndexes(cur,
+                                                  0 > listCells[cur].prnt
+                                                      ? b.isReflect()
+                                                      : RIGHT_SIDE & GetDirection(cur,
+                                                                                  listCells[cur].prnt))
+                             : GetAroundIndexes(cur);
 
         for (const auto& it : around)
         {
-            Cell &cell = _items.at(it);
+            Cell& cell = _items.at(it);
 
             if (!listCells[it].open || !cell.isPassable4(b, center) ||
                 bridge && isBridgeIndex(it) && !bridge->isPassable(b.GetColor()))
                 continue;
             const s32 cost = 100 * GetDistance(it, dst.GetHead()->GetIndex()) +
-                             (b.isWide() && WideDifficultDirection(center.GetDirection(), GetDirection(it, cur))
-                              ? 100 : 0) +
-                             (castle && castle->isBuild(BUILD_MOAT) && isMoatIndex(it) ? 100 : 0);
+                (b.isWide() && WideDifficultDirection(center.GetDirection(), GetDirection(it, cur))
+                     ? 100
+                     : 0) +
+                (castle && castle->isBuild(BUILD_MOAT) && isMoatIndex(it) ? 100 : 0);
 
             // new cell
             if (0 > listCells[it].prnt)
             {
                 listCells[it].prnt = cur;
                 listCells[it].cost = cost + listCells[cur].cost;
-            } else
-                // change parent
-            if (listCells[it].cost > cost + listCells[cur].cost)
-            {
-                listCells[it].prnt = cur;
-                listCells[it].cost = cost + listCells[cur].cost;
             }
+            else
+                // change parent
+                if (listCells[it].cost > cost + listCells[cur].cost)
+                {
+                    listCells[it].prnt = cur;
+                    listCells[it].cost = cost + listCells[cur].cost;
+                }
         }
 
         listCells[cur].open = false;
@@ -236,7 +241,7 @@ Battle::Indexes Battle::Board::GetAStarPath(const Unit &b, const Position &dst, 
     if (cur == dst.GetHead()->GetIndex())
     {
         while (cur != b.GetHeadIndex() &&
-               isValidIndex(cur))
+            isValidIndex(cur))
         {
             result.push_back(cur);
             cur = listCells[cur].prnt;
@@ -257,7 +262,8 @@ Battle::Indexes Battle::Board::GetAStarPath(const Unit &b, const Position &dst, 
 
                 if (!(side & GetDirection(head, prev)))
                     result.push_back(tail);
-            } else if (result.back() == tail)
+            }
+            else if (result.back() == tail)
             {
                 const int side = RIGHT == GetDirection(head, tail) ? LEFT_SIDE : RIGHT_SIDE;
 
@@ -280,15 +286,15 @@ Battle::Indexes Battle::Board::GetAStarPath(const Unit &b, const Position &dst, 
         // set passable info
         for (auto it = result.begin(); it != result.end(); ++it)
         {
-            Cell *cell = GetCell(*it);
+            Cell* cell = GetCell(*it);
             cell->SetDirection(cell->GetDirection() |
-                               GetDirection(*it, it == result.begin() ? b.GetHeadIndex() : *(it - 1)));
+                GetDirection(*it, it == result.begin() ? b.GetHeadIndex() : *(it - 1)));
 
             if (!b.isWide())
                 continue;
             const s32 head = *it;
             const s32 prev = it != result.begin() ? *(it - 1) : b.GetHeadIndex();
-            Cell *tail = GetCell(head, LEFT_SIDE & GetDirection(head, prev) ? LEFT : RIGHT);
+            Cell* tail = GetCell(head, LEFT_SIDE & GetDirection(head, prev) ? LEFT : RIGHT);
 
             if (tail && UNKNOWN == tail->GetDirection())
                 tail->SetDirection(GetDirection(tail->GetIndex(), head));
@@ -302,21 +308,21 @@ string Battle::Board::AllUnitsInfo() const
 {
     ostringstream os;
 
-    for (const auto &it : _items)
+    for (const auto& it : _items)
     {
-        const Unit *b = it.GetUnit();
+        const Unit* b = it.GetUnit();
         if (b) os << "\t" << b->String(true) << endl;
     }
 
     return os.str();
 }
 
-Battle::Indexes Battle::Board::GetPassableQualityPositions(const Unit &b)
+Battle::Indexes Battle::Board::GetPassableQualityPositions(const Unit& b)
 {
     Indexes result;
     result.reserve(30);
 
-    for (auto &it : _items)
+    for (auto& it : _items)
         if (it.isPassable3(b, false) && it.GetQuality())
             result.push_back(it.GetIndex());
     return result;
@@ -324,19 +330,21 @@ Battle::Indexes Battle::Board::GetPassableQualityPositions(const Unit &b)
 
 struct IndexDistanceEqualDistance : binary_function<IndexDistance, uint32_t, bool>
 {
-    bool operator()(const IndexDistance &id, uint32_t dist) const
-    { return id.second == dist; };
+    bool operator()(const IndexDistance& id, uint32_t dist) const
+    {
+        return id.second == dist;
+    };
 };
 
-Battle::Indexes Battle::Board::GetNearestTroopIndexes(s32 pos, const Indexes *black) const
+Battle::Indexes Battle::Board::GetNearestTroopIndexes(s32 pos, const Indexes* black) const
 {
     Indexes result;
     vector<IndexDistance> dists;
     dists.reserve(15);
 
-    for (const auto &it : _items)
+    for (const auto& it : _items)
     {
-        const Unit *b = it.GetUnit();
+        const Unit* b = it.GetUnit();
 
         if (!b)
             continue;
@@ -358,7 +366,7 @@ Battle::Indexes Battle::Board::GetNearestTroopIndexes(s32 pos, const Indexes *bl
     {
         result.reserve(dists.size());
         for (vector<IndexDistance>::const_iterator
-                     it = dists.begin(); it != dists.end(); ++it)
+             it = dists.begin(); it != dists.end(); ++it)
             result.push_back((*it).first);
     }
 
@@ -383,27 +391,27 @@ int Battle::Board::GetDirection(s32 index1, s32 index2)
 bool Battle::Board::isNearIndexes(s32 index1, s32 index2)
 {
     return index1 != index2 &&
-           UNKNOWN != GetDirection(index1, index2);
+        UNKNOWN != GetDirection(index1, index2);
 }
 
 int Battle::Board::GetReflectDirection(int d)
 {
     switch (d)
     {
-        case TOP_LEFT:
-            return BOTTOM_RIGHT;
-        case TOP_RIGHT:
-            return BOTTOM_LEFT;
-        case LEFT:
-            return RIGHT;
-        case RIGHT:
-            return LEFT;
-        case BOTTOM_LEFT:
-            return TOP_RIGHT;
-        case BOTTOM_RIGHT:
-            return TOP_LEFT;
-        default:
-            break;
+    case TOP_LEFT:
+        return BOTTOM_RIGHT;
+    case TOP_RIGHT:
+        return BOTTOM_LEFT;
+    case LEFT:
+        return RIGHT;
+    case RIGHT:
+        return LEFT;
+    case BOTTOM_LEFT:
+        return TOP_RIGHT;
+    case BOTTOM_RIGHT:
+        return TOP_LEFT;
+    default:
+        break;
     }
 
     return UNKNOWN;
@@ -413,12 +421,12 @@ bool Battle::Board::isReflectDirection(int d)
 {
     switch (d)
     {
-        case TOP_LEFT:
-        case LEFT:
-        case BOTTOM_LEFT:
-            return true;
-        default:
-            break;
+    case TOP_LEFT:
+    case LEFT:
+    case BOTTOM_LEFT:
+        return true;
+    default:
+        break;
     }
 
     return false;
@@ -433,22 +441,22 @@ bool Battle::Board::isValidDirection(s32 index, int dir)
 
         switch (dir)
         {
-            case CENTER:
-                return true;
-            case TOP_LEFT:
-                return !(0 == y || 0 == x && y % 2);
-            case TOP_RIGHT:
-                return !(0 == y || ARENAW - 1 == x && !(y % 2));
-            case LEFT:
-                return !(0 == x);
-            case RIGHT:
-                return !(ARENAW - 1 == x);
-            case BOTTOM_LEFT:
-                return !(ARENAH - 1 == y || 0 == x && y % 2);
-            case BOTTOM_RIGHT:
-                return !(ARENAH - 1 == y || ARENAW - 1 == x && !(y % 2));
-            default:
-                break;
+        case CENTER:
+            return true;
+        case TOP_LEFT:
+            return !(0 == y || 0 == x && y % 2);
+        case TOP_RIGHT:
+            return !(0 == y || ARENAW - 1 == x && !(y % 2));
+        case LEFT:
+            return !(0 == x);
+        case RIGHT:
+            return !(ARENAW - 1 == x);
+        case BOTTOM_LEFT:
+            return !(ARENAH - 1 == y || 0 == x && y % 2);
+        case BOTTOM_RIGHT:
+            return !(ARENAH - 1 == y || ARENAW - 1 == x && !(y % 2));
+        default:
+            break;
         }
     }
 
@@ -465,28 +473,28 @@ s32 Battle::Board::GetIndexDirection(s32 index, int dir)
 
     switch (dir)
     {
-        case CENTER:
-            return index;
-        case TOP_LEFT:
-            return index - (y % 2 ? ARENAW + 1 : ARENAW);
-        case TOP_RIGHT:
-            return index - (y % 2 ? ARENAW : ARENAW - 1);
-        case LEFT:
-            return index - 1;
-        case RIGHT:
-            return index + 1;
-        case BOTTOM_LEFT:
-            return index + (y % 2 ? ARENAW - 1 : ARENAW);
-        case BOTTOM_RIGHT:
-            return index + (y % 2 ? ARENAW : ARENAW + 1);
-        default:
-            break;
+    case CENTER:
+        return index;
+    case TOP_LEFT:
+        return index - (y % 2 ? ARENAW + 1 : ARENAW);
+    case TOP_RIGHT:
+        return index - (y % 2 ? ARENAW : ARENAW - 1);
+    case LEFT:
+        return index - 1;
+    case RIGHT:
+        return index + 1;
+    case BOTTOM_LEFT:
+        return index + (y % 2 ? ARENAW - 1 : ARENAW);
+    case BOTTOM_RIGHT:
+        return index + (y % 2 ? ARENAW : ARENAW + 1);
+    default:
+        break;
     }
 
     return -1;
 }
 
-s32 Battle::Board::GetIndexAbsPosition(const Point &pt) const
+s32 Battle::Board::GetIndexAbsPosition(const Point& pt) const
 {
     auto it = _items.begin();
 
@@ -529,7 +537,7 @@ bool Battle::Board::isOutOfWallsIndex(s32 index)
 
 bool Battle::Board::isImpassableIndex(s32 index)
 {
-    const Cell *cell = GetCell(index);
+    const Cell* cell = GetCell(index);
     return !cell || !cell->isPassable1(true);
 }
 
@@ -537,12 +545,12 @@ bool Battle::Board::isBridgeIndex(s32 index)
 {
     switch (index)
     {
-        case 49:
-        case 50:
-            return true;
+    case 49:
+    case 50:
+        return true;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     return false;
@@ -552,26 +560,26 @@ bool Battle::Board::isMoatIndex(s32 index)
 {
     switch (index)
     {
-        case 7:
-        case 18:
-        case 28:
-        case 39:
-        case 61:
-        case 72:
-        case 84:
-        case 95:
-            return true;
+    case 7:
+    case 18:
+    case 28:
+    case 39:
+    case 61:
+    case 72:
+    case 84:
+    case 95:
+        return true;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     return false;
 }
 
-void Battle::Board::SetCobjObjects(const Maps::Tiles &tile)
+void Battle::Board::SetCobjObjects(const Maps::Tiles& tile)
 {
-//    bool trees = Maps::ScanAroundObject(center, MP2::OBJ_TREES).size();
+    //    bool trees = Maps::ScanAroundObject(center, MP2::OBJ_TREES).size();
     const bool grave = MP2::OBJ_GRAVEYARD == tile.GetObject(false);
     const int ground = tile.GetGround();
     vector<int> objs;
@@ -580,67 +588,68 @@ void Battle::Board::SetCobjObjects(const Maps::Tiles &tile)
     {
         objs.push_back(ICN::COBJ0000);
         objs.push_back(ICN::COBJ0001);
-    } else
+    }
+    else
         switch (ground)
         {
-            case Maps::Ground::DESERT:
-                objs.push_back(ICN::COBJ0009);
-                objs.push_back(ICN::COBJ0012);
-                objs.push_back(ICN::COBJ0017);
-                objs.push_back(ICN::COBJ0024);
-                break;
+        case Maps::Ground::DESERT:
+            objs.push_back(ICN::COBJ0009);
+            objs.push_back(ICN::COBJ0012);
+            objs.push_back(ICN::COBJ0017);
+            objs.push_back(ICN::COBJ0024);
+            break;
 
-            case Maps::Ground::SNOW:
-                objs.push_back(ICN::COBJ0022);
-                objs.push_back(ICN::COBJ0026);
-                break;
+        case Maps::Ground::SNOW:
+            objs.push_back(ICN::COBJ0022);
+            objs.push_back(ICN::COBJ0026);
+            break;
 
-            case Maps::Ground::SWAMP:
-                objs.push_back(ICN::COBJ0006);
-                objs.push_back(ICN::COBJ0015);
-                objs.push_back(ICN::COBJ0016);
-                objs.push_back(ICN::COBJ0019);
-                objs.push_back(ICN::COBJ0025);
-                objs.push_back(ICN::COBJ0027);
-                break;
+        case Maps::Ground::SWAMP:
+            objs.push_back(ICN::COBJ0006);
+            objs.push_back(ICN::COBJ0015);
+            objs.push_back(ICN::COBJ0016);
+            objs.push_back(ICN::COBJ0019);
+            objs.push_back(ICN::COBJ0025);
+            objs.push_back(ICN::COBJ0027);
+            break;
 
-            case Maps::Ground::BEACH:
-                objs.push_back(ICN::COBJ0017);
-                break;
+        case Maps::Ground::BEACH:
+            objs.push_back(ICN::COBJ0017);
+            break;
 
-            case Maps::Ground::DIRT:
-                objs.push_back(ICN::COBJ0011);
-            case Maps::Ground::GRASS:
-                objs.push_back(ICN::COBJ0002);
-                objs.push_back(ICN::COBJ0004);
-                objs.push_back(ICN::COBJ0005);
-                objs.push_back(ICN::COBJ0008);
-                objs.push_back(ICN::COBJ0012);
-                objs.push_back(ICN::COBJ0028);
-                break;
+        case Maps::Ground::DIRT:
+            objs.push_back(ICN::COBJ0011);
+        case Maps::Ground::GRASS:
+            objs.push_back(ICN::COBJ0002);
+            objs.push_back(ICN::COBJ0004);
+            objs.push_back(ICN::COBJ0005);
+            objs.push_back(ICN::COBJ0008);
+            objs.push_back(ICN::COBJ0012);
+            objs.push_back(ICN::COBJ0028);
+            break;
 
-            case Maps::Ground::WASTELAND:
-                objs.push_back(ICN::COBJ0013);
-                objs.push_back(ICN::COBJ0018);
-                objs.push_back(ICN::COBJ0020);
-                objs.push_back(ICN::COBJ0021);
-                break;
+        case Maps::Ground::WASTELAND:
+            objs.push_back(ICN::COBJ0013);
+            objs.push_back(ICN::COBJ0018);
+            objs.push_back(ICN::COBJ0020);
+            objs.push_back(ICN::COBJ0021);
+            break;
 
-            case Maps::Ground::LAVA:
-                objs.push_back(ICN::COBJ0007);
-                objs.push_back(ICN::COBJ0029);
-                objs.push_back(ICN::COBJ0030);
-                objs.push_back(ICN::COBJ0031);
-                break;
+        case Maps::Ground::LAVA:
+            objs.push_back(ICN::COBJ0007);
+            objs.push_back(ICN::COBJ0029);
+            objs.push_back(ICN::COBJ0030);
+            objs.push_back(ICN::COBJ0031);
+            break;
 
-            case Maps::Ground::WATER:
-                objs.push_back(ICN::COBJ0003);
-                objs.push_back(ICN::COBJ0010);
-                objs.push_back(ICN::COBJ0023);
-                break;
+        case Maps::Ground::WATER:
+            objs.push_back(ICN::COBJ0003);
+            objs.push_back(ICN::COBJ0010);
+            objs.push_back(ICN::COBJ0023);
+            break;
 
-            default:
-                break;
+        default:
+            break;
         }
 
     if (!objs.empty() && 2 < Rand::Get(1, 10))
@@ -663,127 +672,127 @@ void Battle::Board::SetCobjObject(int icn, s32 dst)
 {
     switch (icn)
     {
-        case ICN::COBJ0000:
-            _items.at(dst).SetObject(0x80);
-            break;
-        case ICN::COBJ0001:
-            _items.at(dst).SetObject(0x81);
-            break;
-        case ICN::COBJ0002:
-            _items.at(dst).SetObject(0x82);
-            break;
-        case ICN::COBJ0003:
-            _items.at(dst).SetObject(0x83);
-            break;
-        case ICN::COBJ0004:
-            _items.at(dst).SetObject(0x84);
-            break;
-        case ICN::COBJ0005:
-            _items.at(dst).SetObject(0x85);
-            break;
-        case ICN::COBJ0006:
-            _items.at(dst).SetObject(0x86);
-            break;
-        case ICN::COBJ0007:
-            _items.at(dst).SetObject(0x87);
-            break;
-        case ICN::COBJ0008:
-            _items.at(dst).SetObject(0x88);
-            break;
-        case ICN::COBJ0009:
-            _items.at(dst).SetObject(0x89);
-            break;
-        case ICN::COBJ0010:
-            _items.at(dst).SetObject(0x8A);
-            break;
-        case ICN::COBJ0011:
-            _items.at(dst).SetObject(0x8B);
-            break;
-        case ICN::COBJ0012:
-            _items.at(dst).SetObject(0x8C);
-            break;
-        case ICN::COBJ0013:
-            _items.at(dst).SetObject(0x8D);
-            break;
-        case ICN::COBJ0014:
-            _items.at(dst).SetObject(0x8E);
-            break;
-        case ICN::COBJ0015:
-            _items.at(dst).SetObject(0x8F);
-            break;
-        case ICN::COBJ0016:
-            _items.at(dst).SetObject(0x90);
-            break;
-        case ICN::COBJ0017:
-            _items.at(dst).SetObject(0x91);
-            break;
-        case ICN::COBJ0018:
-            _items.at(dst).SetObject(0x92);
-            break;
-        case ICN::COBJ0019:
-            _items.at(dst).SetObject(0x93);
-            break;
-        case ICN::COBJ0020:
-            _items.at(dst).SetObject(0x94);
-            break;
-        case ICN::COBJ0021:
-            _items.at(dst).SetObject(0x95);
-            break;
-        case ICN::COBJ0022:
-            _items.at(dst).SetObject(0x96);
-            break;
-        case ICN::COBJ0023:
-            _items.at(dst).SetObject(0x97);
-            break;
-        case ICN::COBJ0024:
-            _items.at(dst).SetObject(0x98);
-            break;
-        case ICN::COBJ0025:
-            _items.at(dst).SetObject(0x99);
-            break;
-        case ICN::COBJ0026:
-            _items.at(dst).SetObject(0x9A);
-            break;
-        case ICN::COBJ0027:
-            _items.at(dst).SetObject(0x9B);
-            break;
-        case ICN::COBJ0028:
-            _items.at(dst).SetObject(0x9C);
-            break;
-        case ICN::COBJ0029:
-            _items.at(dst).SetObject(0x9D);
-            break;
-        case ICN::COBJ0030:
-            _items.at(dst).SetObject(0x9E);
-            break;
-        case ICN::COBJ0031:
-            _items.at(dst).SetObject(0x9F);
-            break;
+    case ICN::COBJ0000:
+        _items.at(dst).SetObject(0x80);
+        break;
+    case ICN::COBJ0001:
+        _items.at(dst).SetObject(0x81);
+        break;
+    case ICN::COBJ0002:
+        _items.at(dst).SetObject(0x82);
+        break;
+    case ICN::COBJ0003:
+        _items.at(dst).SetObject(0x83);
+        break;
+    case ICN::COBJ0004:
+        _items.at(dst).SetObject(0x84);
+        break;
+    case ICN::COBJ0005:
+        _items.at(dst).SetObject(0x85);
+        break;
+    case ICN::COBJ0006:
+        _items.at(dst).SetObject(0x86);
+        break;
+    case ICN::COBJ0007:
+        _items.at(dst).SetObject(0x87);
+        break;
+    case ICN::COBJ0008:
+        _items.at(dst).SetObject(0x88);
+        break;
+    case ICN::COBJ0009:
+        _items.at(dst).SetObject(0x89);
+        break;
+    case ICN::COBJ0010:
+        _items.at(dst).SetObject(0x8A);
+        break;
+    case ICN::COBJ0011:
+        _items.at(dst).SetObject(0x8B);
+        break;
+    case ICN::COBJ0012:
+        _items.at(dst).SetObject(0x8C);
+        break;
+    case ICN::COBJ0013:
+        _items.at(dst).SetObject(0x8D);
+        break;
+    case ICN::COBJ0014:
+        _items.at(dst).SetObject(0x8E);
+        break;
+    case ICN::COBJ0015:
+        _items.at(dst).SetObject(0x8F);
+        break;
+    case ICN::COBJ0016:
+        _items.at(dst).SetObject(0x90);
+        break;
+    case ICN::COBJ0017:
+        _items.at(dst).SetObject(0x91);
+        break;
+    case ICN::COBJ0018:
+        _items.at(dst).SetObject(0x92);
+        break;
+    case ICN::COBJ0019:
+        _items.at(dst).SetObject(0x93);
+        break;
+    case ICN::COBJ0020:
+        _items.at(dst).SetObject(0x94);
+        break;
+    case ICN::COBJ0021:
+        _items.at(dst).SetObject(0x95);
+        break;
+    case ICN::COBJ0022:
+        _items.at(dst).SetObject(0x96);
+        break;
+    case ICN::COBJ0023:
+        _items.at(dst).SetObject(0x97);
+        break;
+    case ICN::COBJ0024:
+        _items.at(dst).SetObject(0x98);
+        break;
+    case ICN::COBJ0025:
+        _items.at(dst).SetObject(0x99);
+        break;
+    case ICN::COBJ0026:
+        _items.at(dst).SetObject(0x9A);
+        break;
+    case ICN::COBJ0027:
+        _items.at(dst).SetObject(0x9B);
+        break;
+    case ICN::COBJ0028:
+        _items.at(dst).SetObject(0x9C);
+        break;
+    case ICN::COBJ0029:
+        _items.at(dst).SetObject(0x9D);
+        break;
+    case ICN::COBJ0030:
+        _items.at(dst).SetObject(0x9E);
+        break;
+    case ICN::COBJ0031:
+        _items.at(dst).SetObject(0x9F);
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     switch (icn)
     {
-        case ICN::COBJ0004:
-        case ICN::COBJ0005:
-        case ICN::COBJ0007:
-        case ICN::COBJ0011:
-        case ICN::COBJ0014:
-        case ICN::COBJ0015:
-        case ICN::COBJ0017:
-        case ICN::COBJ0018:
-        case ICN::COBJ0019:
-        case ICN::COBJ0020:
-        case ICN::COBJ0022:
-        case ICN::COBJ0030:
-        case ICN::COBJ0031:
-            _items.at(dst + 1).SetObject(0x40);
-            break;
+    case ICN::COBJ0004:
+    case ICN::COBJ0005:
+    case ICN::COBJ0007:
+    case ICN::COBJ0011:
+    case ICN::COBJ0014:
+    case ICN::COBJ0015:
+    case ICN::COBJ0017:
+    case ICN::COBJ0018:
+    case ICN::COBJ0019:
+    case ICN::COBJ0020:
+    case ICN::COBJ0022:
+    case ICN::COBJ0030:
+    case ICN::COBJ0031:
+        _items.at(dst + 1).SetObject(0x40);
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 }
 
@@ -791,124 +800,124 @@ void Battle::Board::SetCovrObjects(int icn)
 {
     switch (icn)
     {
-        case ICN::COVR0001:
-        case ICN::COVR0007:
-        case ICN::COVR0013:
-        case ICN::COVR0019:
-            _items.at(15).SetObject(0x40);
-            _items.at(16).SetObject(0x40);
-            _items.at(17).SetObject(0x40);
-            _items.at(25).SetObject(0x40);
-            _items.at(26).SetObject(0x40);
-            _items.at(27).SetObject(0x40);
-            _items.at(28).SetObject(0x40);
-            _items.at(40).SetObject(0x40);
-            _items.at(51).SetObject(0x40);
-            break;
+    case ICN::COVR0001:
+    case ICN::COVR0007:
+    case ICN::COVR0013:
+    case ICN::COVR0019:
+        _items.at(15).SetObject(0x40);
+        _items.at(16).SetObject(0x40);
+        _items.at(17).SetObject(0x40);
+        _items.at(25).SetObject(0x40);
+        _items.at(26).SetObject(0x40);
+        _items.at(27).SetObject(0x40);
+        _items.at(28).SetObject(0x40);
+        _items.at(40).SetObject(0x40);
+        _items.at(51).SetObject(0x40);
+        break;
 
-        case ICN::COVR0002:
-        case ICN::COVR0008:
-        case ICN::COVR0014:
-        case ICN::COVR0020:
-            _items.at(47).SetObject(0x40);
-            _items.at(48).SetObject(0x40);
-            _items.at(49).SetObject(0x40);
-            _items.at(50).SetObject(0x40);
-            _items.at(51).SetObject(0x40);
-            break;
+    case ICN::COVR0002:
+    case ICN::COVR0008:
+    case ICN::COVR0014:
+    case ICN::COVR0020:
+        _items.at(47).SetObject(0x40);
+        _items.at(48).SetObject(0x40);
+        _items.at(49).SetObject(0x40);
+        _items.at(50).SetObject(0x40);
+        _items.at(51).SetObject(0x40);
+        break;
 
-        case ICN::COVR0003:
-        case ICN::COVR0009:
-        case ICN::COVR0015:
-        case ICN::COVR0021:
-            _items.at(35).SetObject(0x40);
-            _items.at(41).SetObject(0x40);
-            _items.at(46).SetObject(0x40);
-            _items.at(47).SetObject(0x40);
-            _items.at(48).SetObject(0x40);
-            _items.at(49).SetObject(0x40);
-            _items.at(50).SetObject(0x40);
-            _items.at(51).SetObject(0x40);
-            break;
+    case ICN::COVR0003:
+    case ICN::COVR0009:
+    case ICN::COVR0015:
+    case ICN::COVR0021:
+        _items.at(35).SetObject(0x40);
+        _items.at(41).SetObject(0x40);
+        _items.at(46).SetObject(0x40);
+        _items.at(47).SetObject(0x40);
+        _items.at(48).SetObject(0x40);
+        _items.at(49).SetObject(0x40);
+        _items.at(50).SetObject(0x40);
+        _items.at(51).SetObject(0x40);
+        break;
 
-        case ICN::COVR0004:
-        case ICN::COVR0010:
-        case ICN::COVR0016:
-        case ICN::COVR0022:
-            _items.at(41).SetObject(0x40);
-            _items.at(51).SetObject(0x40);
-            _items.at(58).SetObject(0x40);
-            _items.at(59).SetObject(0x40);
-            _items.at(60).SetObject(0x40);
-            _items.at(61).SetObject(0x40);
-            _items.at(62).SetObject(0x40);
-            break;
+    case ICN::COVR0004:
+    case ICN::COVR0010:
+    case ICN::COVR0016:
+    case ICN::COVR0022:
+        _items.at(41).SetObject(0x40);
+        _items.at(51).SetObject(0x40);
+        _items.at(58).SetObject(0x40);
+        _items.at(59).SetObject(0x40);
+        _items.at(60).SetObject(0x40);
+        _items.at(61).SetObject(0x40);
+        _items.at(62).SetObject(0x40);
+        break;
 
-        case ICN::COVR0005:
-        case ICN::COVR0017:
-            _items.at(24).SetObject(0x40);
-            _items.at(25).SetObject(0x40);
-            _items.at(26).SetObject(0x40);
-            _items.at(27).SetObject(0x40);
-            _items.at(28).SetObject(0x40);
-            _items.at(29).SetObject(0x40);
-            _items.at(30).SetObject(0x40);
-            _items.at(58).SetObject(0x40);
-            _items.at(59).SetObject(0x40);
-            _items.at(60).SetObject(0x40);
-            _items.at(61).SetObject(0x40);
-            _items.at(62).SetObject(0x40);
-            _items.at(63).SetObject(0x40);
-            _items.at(68).SetObject(0x40);
-            _items.at(74).SetObject(0x40);
-            break;
+    case ICN::COVR0005:
+    case ICN::COVR0017:
+        _items.at(24).SetObject(0x40);
+        _items.at(25).SetObject(0x40);
+        _items.at(26).SetObject(0x40);
+        _items.at(27).SetObject(0x40);
+        _items.at(28).SetObject(0x40);
+        _items.at(29).SetObject(0x40);
+        _items.at(30).SetObject(0x40);
+        _items.at(58).SetObject(0x40);
+        _items.at(59).SetObject(0x40);
+        _items.at(60).SetObject(0x40);
+        _items.at(61).SetObject(0x40);
+        _items.at(62).SetObject(0x40);
+        _items.at(63).SetObject(0x40);
+        _items.at(68).SetObject(0x40);
+        _items.at(74).SetObject(0x40);
+        break;
 
-        case ICN::COVR0006:
-        case ICN::COVR0018:
-            _items.at(14).SetObject(0x40);
-            _items.at(15).SetObject(0x40);
-            _items.at(16).SetObject(0x40);
-            _items.at(17).SetObject(0x40);
-            _items.at(18).SetObject(0x40);
-            _items.at(24).SetObject(0x40);
-            _items.at(68).SetObject(0x40);
-            _items.at(80).SetObject(0x40);
-            _items.at(81).SetObject(0x40);
-            _items.at(82).SetObject(0x40);
-            _items.at(83).SetObject(0x40);
-            _items.at(84).SetObject(0x40);
-            break;
+    case ICN::COVR0006:
+    case ICN::COVR0018:
+        _items.at(14).SetObject(0x40);
+        _items.at(15).SetObject(0x40);
+        _items.at(16).SetObject(0x40);
+        _items.at(17).SetObject(0x40);
+        _items.at(18).SetObject(0x40);
+        _items.at(24).SetObject(0x40);
+        _items.at(68).SetObject(0x40);
+        _items.at(80).SetObject(0x40);
+        _items.at(81).SetObject(0x40);
+        _items.at(82).SetObject(0x40);
+        _items.at(83).SetObject(0x40);
+        _items.at(84).SetObject(0x40);
+        break;
 
-        case ICN::COVR0011:
-        case ICN::COVR0023:
-            _items.at(15).SetObject(0x40);
-            _items.at(25).SetObject(0x40);
-            _items.at(36).SetObject(0x40);
-            _items.at(51).SetObject(0x40);
-            _items.at(62).SetObject(0x40);
-            _items.at(71).SetObject(0x40);
-            _items.at(72).SetObject(0x40);
-            break;
+    case ICN::COVR0011:
+    case ICN::COVR0023:
+        _items.at(15).SetObject(0x40);
+        _items.at(25).SetObject(0x40);
+        _items.at(36).SetObject(0x40);
+        _items.at(51).SetObject(0x40);
+        _items.at(62).SetObject(0x40);
+        _items.at(71).SetObject(0x40);
+        _items.at(72).SetObject(0x40);
+        break;
 
-        case ICN::COVR0012:
-        case ICN::COVR0024:
-            _items.at(18).SetObject(0x40);
-            _items.at(29).SetObject(0x40);
-            _items.at(41).SetObject(0x40);
-            _items.at(59).SetObject(0x40);
-            _items.at(70).SetObject(0x40);
-            _items.at(82).SetObject(0x40);
-            _items.at(83).SetObject(0x40);
-            break;
+    case ICN::COVR0012:
+    case ICN::COVR0024:
+        _items.at(18).SetObject(0x40);
+        _items.at(29).SetObject(0x40);
+        _items.at(41).SetObject(0x40);
+        _items.at(59).SetObject(0x40);
+        _items.at(70).SetObject(0x40);
+        _items.at(82).SetObject(0x40);
+        _items.at(83).SetObject(0x40);
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 }
 
-Battle::Cell *Battle::Board::GetCell(s32 position, int dir)
+Battle::Cell* Battle::Board::GetCell(s32 position, int dir)
 {
-    Board *board = Arena::GetBoard();
+    Board* board = Arena::GetBoard();
 
     if (!isValidIndex(position) || dir == UNKNOWN)
     {
@@ -937,7 +946,8 @@ Battle::Indexes Battle::Board::GetMoveWideIndexes(s32 center, bool reflect)
         if (isValidDirection(center, RIGHT)) result.push_back(GetIndexDirection(center, RIGHT));
         if (isValidDirection(center, TOP_LEFT)) result.push_back(GetIndexDirection(center, TOP_LEFT));
         if (isValidDirection(center, BOTTOM_LEFT)) result.push_back(GetIndexDirection(center, BOTTOM_LEFT));
-    } else
+    }
+    else
     {
         if (isValidDirection(center, LEFT)) result.push_back(GetIndexDirection(center, LEFT));
         if (isValidDirection(center, RIGHT)) result.push_back(GetIndexDirection(center, RIGHT));
@@ -961,12 +971,12 @@ Battle::Indexes Battle::Board::GetAroundIndexes(s32 center)
     return result;
 }
 
-Battle::Indexes Battle::Board::GetAroundIndexes(const Unit &b)
+Battle::Indexes Battle::Board::GetAroundIndexes(const Unit& b)
 {
     if (b.isWide())
     {
         Indexes around = GetAroundIndexes(b.GetHeadIndex());
-        const Indexes &tail = GetAroundIndexes(b.GetTailIndex());
+        const Indexes& tail = GetAroundIndexes(b.GetTailIndex());
         around.insert(around.end(), tail.begin(), tail.end());
 
         auto it_end = around.end();
@@ -997,7 +1007,7 @@ Battle::Indexes Battle::Board::GetDistanceIndexes(s32 center, uint32_t radius)
             set<s32> tm = st;
 
             for (Indexes::const_iterator
-                         it = abroad.begin(); it != abroad.end(); ++it)
+                 it = abroad.begin(); it != abroad.end(); ++it)
             {
                 const Indexes around = GetAroundIndexes(*it);
                 tm.insert(around.begin(), around.end());
@@ -1006,7 +1016,7 @@ Battle::Indexes Battle::Board::GetDistanceIndexes(s32 center, uint32_t radius)
             abroad.resize(tm.size());
 
             const auto abroad_end =
-                    set_difference(tm.begin(), tm.end(), st.begin(), st.end(), abroad.begin());
+                set_difference(tm.begin(), tm.end(), st.begin(), st.end(), abroad.begin());
 
             abroad.resize(distance(abroad.begin(), abroad_end));
 
@@ -1022,11 +1032,11 @@ Battle::Indexes Battle::Board::GetDistanceIndexes(s32 center, uint32_t radius)
     return result;
 }
 
-bool Battle::Board::isValidMirrorImageIndex(s32 index, const Unit *b)
+bool Battle::Board::isValidMirrorImageIndex(s32 index, const Unit* b)
 {
     return b && GetCell(index) &&
-           index != b->GetHeadIndex() && (!b->isWide() || index != b->GetTailIndex()) &&
-           GetCell(index)->isPassable3(*b, true);
+        index != b->GetHeadIndex() && (!b->isWide() || index != b->GetTailIndex()) &&
+        GetCell(index)->isPassable3(*b, true);
 }
 
 string Battle::Board::GetMoatInfo()

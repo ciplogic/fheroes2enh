@@ -23,7 +23,7 @@
 #include "error.h"
 
 /* exception */
-void Error::Except(const char *func, const char *message)
+void Error::Except(const char* func, const char* message)
 {
 #ifndef ANDROID
     throw Exception();

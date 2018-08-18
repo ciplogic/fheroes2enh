@@ -42,52 +42,52 @@
 
 namespace Battle
 {
-    bool AIApplySpell(const Spell &, const Unit *, const HeroBase &, Actions &);
+    bool AIApplySpell(const Spell&, const Unit*, const HeroBase&, Actions&);
 
-    s32 AIShortDistance(s32, const Indexes &);
+    s32 AIShortDistance(s32, const Indexes&);
 
-    s32 AIAttackPosition(Arena &, const Unit &, const Indexes &);
+    s32 AIAttackPosition(Arena&, const Unit&, const Indexes&);
 
-    s32 AIMaxQualityPosition(const Indexes &);
+    s32 AIMaxQualityPosition(const Indexes&);
 
-    const Unit *AIGetEnemyAbroadMaxQuality(s32, int color);
+    const Unit* AIGetEnemyAbroadMaxQuality(s32, int color);
 
-    const Unit *AIGetEnemyAbroadMaxQuality(const Unit &);
+    const Unit* AIGetEnemyAbroadMaxQuality(const Unit&);
 
-    s32 AIAreaSpellDst(const HeroBase &);
+    s32 AIAreaSpellDst(const HeroBase&);
 
-    bool MaxDstCount(const pair<s32, uint32_t> &p1, const pair<s32, uint32_t> &p2)
-    { return p1.second < p2.second; }
+    bool MaxDstCount(const pair<s32, uint32_t>& p1, const pair<s32, uint32_t>& p2)
+    {
+        return p1.second < p2.second;
+    }
 
     int countAlive(Units friends)
     {
         return count_if(friends._items.begin(), friends._items.end(),
-            [](Unit *unit)
-        {
-            return unit->isAlive();
-        });
+                        [](Unit* unit)
+                        {
+                            return unit->isAlive();
+                        });
     }
 
     int countUndead(Units friends)
     {
         return count_if(friends._items.begin(), friends._items.end(),
-            [](Unit *unit)
-        {
-            return unit->isUndead();
-        });
+                        [](Unit* unit)
+                        {
+                            return unit->isUndead();
+                        });
     }
-
-
 }
 
-s32 Battle::AIAreaSpellDst(const HeroBase &hero)
+s32 Battle::AIAreaSpellDst(const HeroBase& hero)
 {
     map<s32, uint32_t> dstcount;
 
-    Arena *arena = GetArena();
+    Arena* arena = GetArena();
     Units enemies(arena->GetForce(hero.GetColor(), true), true);
 
-    for (auto &enemie : enemies._items)
+    for (auto& enemie : enemies._items)
     {
         const Indexes around = Board::GetAroundIndexes(*enemie);
 
@@ -101,7 +101,7 @@ s32 Battle::AIAreaSpellDst(const HeroBase &hero)
     return max != dstcount.end() ? (*max).first : -1;
 }
 
-s32 Battle::AIMaxQualityPosition(const Indexes &positions)
+s32 Battle::AIMaxQualityPosition(const Indexes& positions)
 {
     s32 res = -1;
 
@@ -117,17 +117,17 @@ s32 Battle::AIMaxQualityPosition(const Indexes &positions)
     return res;
 }
 
-const Battle::Unit *Battle::AIGetEnemyAbroadMaxQuality(s32 position, int color)
+const Battle::Unit* Battle::AIGetEnemyAbroadMaxQuality(s32 position, int color)
 {
-    const Unit *res = nullptr;
+    const Unit* res = nullptr;
     s32 quality = 0;
 
     const Indexes around = Board::GetAroundIndexes(position);
 
     for (int it : around)
     {
-        const Cell *cell = Board::GetCell(it);
-        const Unit *enemy = cell ? cell->GetUnit() : nullptr;
+        const Cell* cell = Board::GetCell(it);
+        const Unit* enemy = cell ? cell->GetUnit() : nullptr;
 
         if (enemy && enemy->GetColor() != color &&
             quality < cell->GetQuality())
@@ -140,23 +140,23 @@ const Battle::Unit *Battle::AIGetEnemyAbroadMaxQuality(s32 position, int color)
     return res;
 }
 
-const Battle::Unit *Battle::AIGetEnemyAbroadMaxQuality(const Unit &b)
+const Battle::Unit* Battle::AIGetEnemyAbroadMaxQuality(const Unit& b)
 {
-    const Unit *res1 = AIGetEnemyAbroadMaxQuality(b.GetHeadIndex(), b.GetColor());
+    const Unit* res1 = AIGetEnemyAbroadMaxQuality(b.GetHeadIndex(), b.GetColor());
 
     if (!b.isWide())
         return res1;
-    const Unit *res2 = AIGetEnemyAbroadMaxQuality(b.GetTailIndex(), b.GetColor());
+    const Unit* res2 = AIGetEnemyAbroadMaxQuality(b.GetTailIndex(), b.GetColor());
 
     if (!res1) return res2;
     if (!res2) return res1;
-    const s32 &quality1 = res1->GetPosition().GetHead()->GetQuality();
-    const s32 &quality2 = res2->GetPosition().GetHead()->GetQuality();
+    const s32& quality1 = res1->GetPosition().GetHead()->GetQuality();
+    const s32& quality2 = res2->GetPosition().GetHead()->GetQuality();
 
     return quality1 > quality2 ? res1 : res2;
 }
 
-s32 Battle::AIShortDistance(s32 from, const Indexes &indexes)
+s32 Battle::AIShortDistance(s32 from, const Indexes& indexes)
 {
     uint32_t len = MAXU16;
     s32 res = -1;
@@ -176,14 +176,15 @@ s32 Battle::AIShortDistance(s32 from, const Indexes &indexes)
     return res;
 }
 
-s32 Battle::AIAttackPosition(Arena &arena, const Unit &b, const Indexes &positions)
+s32 Battle::AIAttackPosition(Arena& arena, const Unit& b, const Indexes& positions)
 {
     s32 res = -1;
 
     if (b.isMultiCellAttack())
     {
         res = AIMaxQualityPosition(positions);
-    } else if (b.isDoubleCellAttack())
+    }
+    else if (b.isDoubleCellAttack())
     {
         Indexes results;
         results.reserve(12);
@@ -198,7 +199,7 @@ s32 Battle::AIAttackPosition(Arena &arena, const Unit &b, const Indexes &positio
 
                 for (int it2 : around)
                 {
-                    const Unit *unit = Board::GetCell(it2)->GetUnit();
+                    const Unit* unit = Board::GetCell(it2)->GetUnit();
                     if (unit && enemies._items.end() != find(enemies._items.begin(), enemies._items.end(), unit))
                         results.push_back(it2);
                 }
@@ -210,7 +211,7 @@ s32 Battle::AIAttackPosition(Arena &arena, const Unit &b, const Indexes &positio
                 Indexes passable = Arena::GetBoard()->GetPassableQualityPositions(b);
                 auto it2 = results.begin();
 
-                for (int &result : results)
+                for (int& result : results)
                     if (passable.end() != find(passable.begin(), passable.end(), result))
                         *it2++ = result;
 
@@ -230,9 +231,9 @@ s32 Battle::AIAttackPosition(Arena &arena, const Unit &b, const Indexes &positio
 
 using namespace Battle;
 
-void AI::BattleTurn(Arena &arena, const Unit &b, Actions &a)
+void AI::BattleTurn(Arena& arena, const Unit& b, Actions& a)
 {
-    Board *board = Arena::GetBoard();
+    Board* board = Arena::GetBoard();
 
     // reset quality param for board
     board->Reset();
@@ -240,7 +241,7 @@ void AI::BattleTurn(Arena &arena, const Unit &b, Actions &a)
     // set quality for enemy troop
     board->SetEnemyQuality(b);
 
-    const Unit *enemy = nullptr;
+    const Unit* enemy = nullptr;
     bool attack = false;
 
     if (b.isArchers() && !b.isHandFighting())
@@ -248,12 +249,14 @@ void AI::BattleTurn(Arena &arena, const Unit &b, Actions &a)
         enemy = arena.GetEnemyMaxQuality(b.GetColor());
         if (BattleMagicTurn(arena, b, a, enemy)) return; /* repeat turn: correct spell ability */
         attack = true;
-    } else if (b.isHandFighting())
+    }
+    else if (b.isHandFighting())
     {
         enemy = AIGetEnemyAbroadMaxQuality(b);
         if (BattleMagicTurn(arena, b, a, enemy)) return; /* repeat turn: correct spell ability */
         attack = true;
-    } else
+    }
+    else
     {
         s32 move = -1;
 
@@ -261,7 +264,8 @@ void AI::BattleTurn(Arena &arena, const Unit &b, Actions &a)
         {
             const Indexes positions = board->GetNearestTroopIndexes(b.GetHeadIndex(), nullptr);
             if (!positions.empty()) move = *Rand::Get(positions);
-        } else
+        }
+        else
         {
             if (BattleMagicTurn(arena, b, a, nullptr)) return; /* repeat turn: correct spell ability */
 
@@ -284,18 +288,20 @@ void AI::BattleTurn(Arena &arena, const Unit &b, Actions &a)
                 if (BattleMagicTurn(arena, b, a, enemy)) return; /* repeat turn: correct spell ability */
                 a.push_back(Command(MSG_BATTLE_MOVE, b.GetUID(), move));
                 attack = true;
-            } else
+            }
+            else
             {
                 Position dst = Position::GetCorrect(b, move);
                 Indexes path = arena.GetPath(b, dst);
 
                 if (path.empty())
                 {
-                    const uint32_t direction = b.GetPosition().GetHead()->GetPos().x > dst.GetHead()->GetPos().x ?
-                                          RIGHT : LEFT;
+                    const uint32_t direction = b.GetPosition().GetHead()->GetPos().x > dst.GetHead()->GetPos().x
+                                                   ? RIGHT
+                                                   : LEFT;
                     // find near position
                     while (path.empty() &&
-                           Board::isValidDirection(dst.GetHead()->GetIndex(), direction))
+                        Board::isValidDirection(dst.GetHead()->GetIndex(), direction))
                     {
                         const s32 pos = Board::GetIndexDirection(dst.GetHead()->GetIndex(), direction);
                         if (b.GetHeadIndex() == pos) break;
@@ -330,7 +336,8 @@ void AI::BattleTurn(Arena &arena, const Unit &b, Actions &a)
                     attack = !b.isArchers();
                 }
             }
-        } else
+        }
+        else
             enemy = AIGetEnemyAbroadMaxQuality(b);
     }
 
@@ -344,16 +351,16 @@ void AI::BattleTurn(Arena &arena, const Unit &b, Actions &a)
     a.push_back(Command(MSG_BATTLE_END_TURN, b.GetUID()));
 }
 
-bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *enemy)
+bool AI::BattleMagicTurn(Arena& arena, const Unit& b, Actions& a, const Unit* enemy)
 {
-    const HeroBase *hero = b.GetCommander();
+    const HeroBase* hero = b.GetCommander();
 
     if (b.Modes(SP_BERSERKER) || !hero || hero->Modes(Heroes::SPELLCASTED) || !hero->HaveSpellBook() ||
         arena.isDisableCastSpell(Spell(), nullptr) || a.HaveCommand(MSG_BATTLE_CAST))
         return false;
 
-    const Force &my_army = arena.GetForce(b.GetArmyColor(), false);
-    const Force &enemy_army = arena.GetForce(b.GetArmyColor(), true);
+    const Force& my_army = arena.GetForce(b.GetArmyColor(), false);
+    const Force& enemy_army = arena.GetForce(b.GetArmyColor(), true);
 
     Units friends(my_army, true);
     Units enemies(enemy_army, true);
@@ -365,10 +372,10 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
     {
         // sort strongest
         auto it = find_if(friends._items.begin(), friends._items.end(),
-            [](Unit *unit)
-        {
-            return unit->Modes(IS_BAD_MAGIC);
-        });
+                          [](Unit* unit)
+                          {
+                              return unit->Modes(IS_BAD_MAGIC);
+                          });
         if (it != friends._items.end())
         {
             if (AIApplySpell(Spell::DISPEL, *it, *hero, a)) return true;
@@ -378,8 +385,10 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
 
     // area damage spell
     {
-        const u8 areasp[] = {Spell::METEORSHOWER, Spell::FIREBLAST, Spell::CHAINLIGHTNING, Spell::FIREBALL,
-                             Spell::COLDRING};
+        const u8 areasp[] = {
+            Spell::METEORSHOWER, Spell::FIREBLAST, Spell::CHAINLIGHTNING, Spell::FIREBALL,
+            Spell::COLDRING
+        };
         const s32 dst = AIAreaSpellDst(*hero);
 
         if (Board::isValidIndex(dst))
@@ -425,10 +434,10 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
     {
         // sort strongest
         const auto it = find_if(friends._items.begin(), friends._items.end(),
-            [](Unit *unit)
-        {
-            return !unit->Modes(SP_HASTE);
-        });
+                                [](Unit* unit)
+                                {
+                                    return !unit->Modes(SP_HASTE);
+                                });
         if (it != friends._items.end() &&
             AIApplySpell(Spell::HASTE, *it, *hero, a))
             return true;
@@ -437,12 +446,12 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
     // shield spell conditions
     {
         auto it = find_if(enemies._items.begin(), enemies._items.end(),
-            [](Unit *unit)
-        {
-            return unit->isArchers();
-        });
-            
-        const Castle *castle = Arena::GetCastle();
+                          [](Unit* unit)
+                          {
+                              return unit->isArchers();
+                          });
+
+        const Castle* castle = Arena::GetCastle();
 
         // find enemy archers
         if (it != enemies._items.end() ||
@@ -456,10 +465,10 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
             // or other strongest friends
             if (it == friends._items.end())
                 it = find_if(friends._items.begin(), friends._items.end(),
-                    [](Unit *unit)
-            {
-                return !unit->Modes(SP_SHIELD);
-            });
+                             [](Unit* unit)
+                             {
+                                 return !unit->Modes(SP_SHIELD);
+                             });
 
             if (it != friends._items.end() &&
                 AIApplySpell(Spell::SHIELD, *it, *hero, a))
@@ -472,10 +481,10 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
     {
         // find mirror image or summon elem
         auto it = find_if(enemies._items.begin(), enemies._items.end(),
-            [](Unit *unit)
-        {
-            return unit->Modes(CAP_MIRRORIMAGE | CAP_SUMMONELEM);
-        });
+                          [](Unit* unit)
+                          {
+                              return unit->Modes(CAP_MIRRORIMAGE | CAP_SUMMONELEM);
+                          });
 
         if (it != enemies._items.end())
         {
@@ -485,10 +494,10 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
 
         // find good magic
         it = find_if(enemies._items.begin(), enemies._items.end(),
-            [](Unit *unit)
-            {
-                return unit->Modes(IS_GOOD_MAGIC);
-            });
+                     [](Unit* unit)
+                     {
+                         return unit->Modes(IS_GOOD_MAGIC);
+                     });
 
         if (it != enemies._items.end())
         {
@@ -514,15 +523,15 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
             if (AIApplySpell(Spell::DEATHWAVE, nullptr, *hero, a)) return true;
         }
 
-        Unit *stats = *Rand::Get(enemies._items);
+        Unit* stats = *Rand::Get(enemies._items);
 
         if (AIApplySpell(Spell::LIGHTNINGBOLT, stats, *hero, a)) return true;
         if (AIApplySpell(Spell::ARROW, stats, *hero, a)) return true;
     }
 
-/*
-    FIX: Damage Spell:
-*/
+    /*
+        FIX: Damage Spell:
+    */
 
     if (AIApplySpell(Spell::ARMAGEDDON, nullptr, *hero, a)) return true;
     if (AIApplySpell(Spell::ELEMENTALSTORM, nullptr, *hero, a)) return true;
@@ -530,36 +539,36 @@ bool AI::BattleMagicTurn(Arena &arena, const Unit &b, Actions &a, const Unit *en
     return false;
 }
 
-bool Battle::AIApplySpell(const Spell &spell, const Unit *b, const HeroBase &hero, Actions &a)
+bool Battle::AIApplySpell(const Spell& spell, const Unit* b, const HeroBase& hero, Actions& a)
 {
     uint32_t mass = Spell::NONE;
 
     switch (spell())
     {
-        case Spell::CURE:
-            mass = Spell::MASSCURE;
-            break;
-        case Spell::HASTE:
-            mass = Spell::MASSHASTE;
-            break;
-        case Spell::SLOW:
-            mass = Spell::MASSSLOW;
-            break;
-        case Spell::BLESS:
-            mass = Spell::MASSBLESS;
-            break;
-        case Spell::CURSE:
-            mass = Spell::MASSCURSE;
-            break;
-        case Spell::DISPEL:
-            mass = Spell::MASSDISPEL;
-            break;
-        case Spell::SHIELD:
-            mass = Spell::MASSSHIELD;
-            break;
+    case Spell::CURE:
+        mass = Spell::MASSCURE;
+        break;
+    case Spell::HASTE:
+        mass = Spell::MASSHASTE;
+        break;
+    case Spell::SLOW:
+        mass = Spell::MASSSLOW;
+        break;
+    case Spell::BLESS:
+        mass = Spell::MASSBLESS;
+        break;
+    case Spell::CURSE:
+        mass = Spell::MASSCURSE;
+        break;
+    case Spell::DISPEL:
+        mass = Spell::MASSDISPEL;
+        break;
+    case Spell::SHIELD:
+        mass = Spell::MASSSHIELD;
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     if (mass != Spell::NONE &&

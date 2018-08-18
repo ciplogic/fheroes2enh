@@ -81,11 +81,11 @@ int ObjTown::GetActionObject(uint32_t index)
 {
     switch (index % 32)
     {
-        case 13:
-        case 29:
-            return MP2::OBJ_CASTLE;
-        default:
-            break;
+    case 13:
+    case 29:
+        return MP2::OBJ_CASTLE;
+    default:
+        break;
     }
 
     return MP2::OBJ_ZERO;

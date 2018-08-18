@@ -48,36 +48,37 @@
 std::string Heroes::GetName(int id)
 {
     std::string names[] = {
-            // knight
-            _("Lord Kilburn"), _("Sir Gallanth"), _("Ector"), _("Gwenneth"), _("Tyro"), _("Ambrose"), _("Ruby"),
-            _("Maximus"), _("Dimitry"),
-            // barbarian
-            _("Thundax"), _("Fineous"), _("Jojosh"), _("Crag Hack"), _("Jezebel"), _("Jaclyn"), _("Ergon"), _("Tsabu"),
-            _("Atlas"),
-            // sorceress
-            _("Astra"), _("Natasha"), _("Troyan"), _("Vatawna"), _("Rebecca"), _("Gem"), _("Ariel"), _("Carlawn"),
-            _("Luna"),
-            // warlock
-            _("Arie"), _("Alamar"), _("Vesper"), _("Crodo"), _("Barok"), _("Kastore"), _("Agar"), _("Falagar"),
-            _("Wrathmont"),
-            // wizard
-            _("Myra"), _("Flint"), _("Dawn"), _("Halon"), _("Myrini"), _("Wilfrey"), _("Sarakin"), _("Kalindra"),
-            _("Mandigal"),
-            // necromant
-            _("Zom"), _("Darlana"), _("Zam"), _("Ranloo"), _("Charity"), _("Rialdo"), _("Roxana"), _("Sandro"),
-            _("Celia"),
-            // campains
-            _("Roland"), _("Lord Corlagon"), _("Sister Eliza"), _("Archibald"), _("Lord Halton"), _("Brother Bax"),
-            // loyalty version
-            _("Solmyr"), _("Dainwin"), _("Mog"), _("Uncle Ivan"), _("Joseph"), _("Gallavant"), _("Elderian"),
-            _("Ceallach"), _("Drakonia"), _("Martine"), _("Jarkonas"),
-            // debug
-            "SandySandy", "Unknown"};
+        // knight
+        _("Lord Kilburn"), _("Sir Gallanth"), _("Ector"), _("Gwenneth"), _("Tyro"), _("Ambrose"), _("Ruby"),
+        _("Maximus"), _("Dimitry"),
+        // barbarian
+        _("Thundax"), _("Fineous"), _("Jojosh"), _("Crag Hack"), _("Jezebel"), _("Jaclyn"), _("Ergon"), _("Tsabu"),
+        _("Atlas"),
+        // sorceress
+        _("Astra"), _("Natasha"), _("Troyan"), _("Vatawna"), _("Rebecca"), _("Gem"), _("Ariel"), _("Carlawn"),
+        _("Luna"),
+        // warlock
+        _("Arie"), _("Alamar"), _("Vesper"), _("Crodo"), _("Barok"), _("Kastore"), _("Agar"), _("Falagar"),
+        _("Wrathmont"),
+        // wizard
+        _("Myra"), _("Flint"), _("Dawn"), _("Halon"), _("Myrini"), _("Wilfrey"), _("Sarakin"), _("Kalindra"),
+        _("Mandigal"),
+        // necromant
+        _("Zom"), _("Darlana"), _("Zam"), _("Ranloo"), _("Charity"), _("Rialdo"), _("Roxana"), _("Sandro"),
+        _("Celia"),
+        // campains
+        _("Roland"), _("Lord Corlagon"), _("Sister Eliza"), _("Archibald"), _("Lord Halton"), _("Brother Bax"),
+        // loyalty version
+        _("Solmyr"), _("Dainwin"), _("Mog"), _("Uncle Ivan"), _("Joseph"), _("Gallavant"), _("Elderian"),
+        _("Ceallach"), _("Drakonia"), _("Martine"), _("Jarkonas"),
+        // debug
+        "SandySandy", "Unknown"
+    };
 
     return names[id];
 }
 
-int ObjectVisitedModifiersResult(int type, const u8 *objs, uint32_t size, const Heroes &hero, string *strs)
+int ObjectVisitedModifiersResult(int type, const u8* objs, uint32_t size, const Heroes& hero, string* strs)
 {
     int result = 0;
 
@@ -119,152 +120,152 @@ Heroes::Heroes(int heroid, int rc) : HeroBase(HEROES, rc), ColorBase(Color::NONE
     // extra hero
     switch (hid)
     {
-        case ROLAND:
-            attack = 0;
-            defense = 1;
-            power = 4;
-            knowledge = 5;
+    case ROLAND:
+        attack = 0;
+        defense = 1;
+        power = 4;
+        knowledge = 5;
 
-            secondary_skills = Skill::SecSkills();
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::WISDOM, Skill::Level::ADVANCED));
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::LEADERSHIP, Skill::Level::EXPERT));
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::ARCHERY, Skill::Level::BASIC));
-            break;
+        secondary_skills = Skill::SecSkills();
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::WISDOM, Skill::Level::ADVANCED));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::LEADERSHIP, Skill::Level::EXPERT));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::ARCHERY, Skill::Level::BASIC));
+        break;
 
-        case CORLAGON:
-            attack = 5;
-            defense = 3;
-            power = 1;
-            knowledge = 1;
+    case CORLAGON:
+        attack = 5;
+        defense = 3;
+        power = 1;
+        knowledge = 1;
 
-            secondary_skills = Skill::SecSkills();
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::NECROMANCY, Skill::Level::EXPERT));
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::BALLISTICS, Skill::Level::BASIC));
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::WISDOM, Skill::Level::BASIC));
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::LEADERSHIP, Skill::Level::BASIC));
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::PATHFINDING, Skill::Level::BASIC));
-            break;
+        secondary_skills = Skill::SecSkills();
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::NECROMANCY, Skill::Level::EXPERT));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::BALLISTICS, Skill::Level::BASIC));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::WISDOM, Skill::Level::BASIC));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::LEADERSHIP, Skill::Level::BASIC));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::PATHFINDING, Skill::Level::BASIC));
+        break;
 
-        case ELIZA:
-            attack = 0;
-            defense = 1;
-            power = 2;
-            knowledge = 6;
+    case ELIZA:
+        attack = 0;
+        defense = 1;
+        power = 2;
+        knowledge = 6;
 
-            secondary_skills = Skill::SecSkills();
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::NAVIGATION, Skill::Level::ADVANCED));
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::WISDOM, Skill::Level::EXPERT));
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::ARCHERY, Skill::Level::BASIC));
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::LUCK, Skill::Level::BASIC));
-            break;
+        secondary_skills = Skill::SecSkills();
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::NAVIGATION, Skill::Level::ADVANCED));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::WISDOM, Skill::Level::EXPERT));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::ARCHERY, Skill::Level::BASIC));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::LUCK, Skill::Level::BASIC));
+        break;
 
-        case ARCHIBALD:
-            attack = 1;
-            defense = 1;
-            power = 4;
-            knowledge = 4;
+    case ARCHIBALD:
+        attack = 1;
+        defense = 1;
+        power = 4;
+        knowledge = 4;
 
-            secondary_skills = Skill::SecSkills();
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::SCOUTING, Skill::Level::EXPERT));
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::LEADERSHIP, Skill::Level::EXPERT));
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::WISDOM, Skill::Level::ADVANCED));
-            break;
+        secondary_skills = Skill::SecSkills();
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::SCOUTING, Skill::Level::EXPERT));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::LEADERSHIP, Skill::Level::EXPERT));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::WISDOM, Skill::Level::ADVANCED));
+        break;
 
-        case HALTON:
-            attack = 3;
-            defense = 3;
-            power = 3;
-            knowledge = 2;
+    case HALTON:
+        attack = 3;
+        defense = 3;
+        power = 3;
+        knowledge = 2;
 
-            secondary_skills = Skill::SecSkills();
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::BALLISTICS, Skill::Level::BASIC));
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::LEADERSHIP, Skill::Level::ADVANCED));
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::DIPLOMACY, Skill::Level::BASIC));
-            break;
+        secondary_skills = Skill::SecSkills();
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::BALLISTICS, Skill::Level::BASIC));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::LEADERSHIP, Skill::Level::ADVANCED));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::DIPLOMACY, Skill::Level::BASIC));
+        break;
 
-        case BAX:
-            attack = 1;
-            defense = 1;
-            power = 4;
-            knowledge = 3;
+    case BAX:
+        attack = 1;
+        defense = 1;
+        power = 4;
+        knowledge = 3;
 
-            secondary_skills = Skill::SecSkills();
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::WISDOM, Skill::Level::EXPERT));
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::NECROMANCY, Skill::Level::BASIC));
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::NAVIGATION, Skill::Level::BASIC));
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::PATHFINDING, Skill::Level::BASIC));
-            break;
+        secondary_skills = Skill::SecSkills();
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::WISDOM, Skill::Level::EXPERT));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::NECROMANCY, Skill::Level::BASIC));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::NAVIGATION, Skill::Level::BASIC));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::PATHFINDING, Skill::Level::BASIC));
+        break;
 
-        case SOLMYR:
-        case DRAKONIA:
-            secondary_skills = Skill::SecSkills();
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::WISDOM, Skill::Level::ADVANCED));
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::LEADERSHIP, Skill::Level::BASIC));
-            break;
+    case SOLMYR:
+    case DRAKONIA:
+        secondary_skills = Skill::SecSkills();
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::WISDOM, Skill::Level::ADVANCED));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::LEADERSHIP, Skill::Level::BASIC));
+        break;
 
-        case DAINWIN:
-        case ELDERIAN:
-            secondary_skills = Skill::SecSkills();
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::WISDOM, Skill::Level::ADVANCED));
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::SCOUTING, Skill::Level::BASIC));
-            break;
+    case DAINWIN:
+    case ELDERIAN:
+        secondary_skills = Skill::SecSkills();
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::WISDOM, Skill::Level::ADVANCED));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::SCOUTING, Skill::Level::BASIC));
+        break;
 
-        case MOG:
-            secondary_skills = Skill::SecSkills();
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::WISDOM, Skill::Level::BASIC));
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::NECROMANCY, Skill::Level::ADVANCED));
-            break;
+    case MOG:
+        secondary_skills = Skill::SecSkills();
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::WISDOM, Skill::Level::BASIC));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::NECROMANCY, Skill::Level::ADVANCED));
+        break;
 
-        case UNCLEIVAN:
-            secondary_skills = Skill::SecSkills();
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::PATHFINDING, Skill::Level::ADVANCED));
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::LEADERSHIP, Skill::Level::BASIC));
-            break;
+    case UNCLEIVAN:
+        secondary_skills = Skill::SecSkills();
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::PATHFINDING, Skill::Level::ADVANCED));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::LEADERSHIP, Skill::Level::BASIC));
+        break;
 
-        case JOSEPH:
-            secondary_skills = Skill::SecSkills();
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::LEADERSHIP, Skill::Level::BASIC));
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::SCOUTING, Skill::Level::BASIC));
-            break;
+    case JOSEPH:
+        secondary_skills = Skill::SecSkills();
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::LEADERSHIP, Skill::Level::BASIC));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::SCOUTING, Skill::Level::BASIC));
+        break;
 
-        case GALLAVANT:
-            break;
+    case GALLAVANT:
+        break;
 
-        case CEALLACH:
-            break;
+    case CEALLACH:
+        break;
 
-        case MARTINE:
-            break;
+    case MARTINE:
+        break;
 
-        case JARKONAS:
-            break;
+    case JARKONAS:
+        break;
 
-        case SANDYSANDY:
-            army.m_troops.Clean();
-            army.m_troops.JoinTroop(Monster::BLACK_DRAGON, 2);
-            army.m_troops.JoinTroop(Monster::RED_DRAGON, 3);
+    case SANDYSANDY:
+        army.m_troops.Clean();
+        army.m_troops.JoinTroop(Monster::BLACK_DRAGON, 2);
+        army.m_troops.JoinTroop(Monster::RED_DRAGON, 3);
 
-            secondary_skills = Skill::SecSkills();
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::PATHFINDING, Skill::Level::ADVANCED));
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::LOGISTICS, Skill::Level::ADVANCED));
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::SCOUTING, Skill::Level::BASIC));
-            secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::MYSTICISM, Skill::Level::BASIC));
+        secondary_skills = Skill::SecSkills();
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::PATHFINDING, Skill::Level::ADVANCED));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::LOGISTICS, Skill::Level::ADVANCED));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::SCOUTING, Skill::Level::BASIC));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::MYSTICISM, Skill::Level::BASIC));
 
-            PickupArtifact(Artifact::STEALTH_SHIELD);
-            PickupArtifact(Artifact::DRAGON_SWORD);
-            PickupArtifact(Artifact::NOMAD_BOOTS_MOBILITY);
-            PickupArtifact(Artifact::TRAVELER_BOOTS_MOBILITY);
-            PickupArtifact(Artifact::TRUE_COMPASS_MOBILITY);
+        PickupArtifact(Artifact::STEALTH_SHIELD);
+        PickupArtifact(Artifact::DRAGON_SWORD);
+        PickupArtifact(Artifact::NOMAD_BOOTS_MOBILITY);
+        PickupArtifact(Artifact::TRAVELER_BOOTS_MOBILITY);
+        PickupArtifact(Artifact::TRUE_COMPASS_MOBILITY);
 
-            experience = 777;
-            magic_point = 120;
+        experience = 777;
+        magic_point = 120;
 
-            // all spell in magic book
-            for (uint32_t spell = Spell::FIREBALL; spell < Spell::STONE; ++spell) AppendSpellToBook(Spell(spell), true);
-            break;
+        // all spell in magic book
+        for (uint32_t spell = Spell::FIREBALL; spell < Spell::STONE; ++spell) AppendSpellToBook(Spell(spell), true);
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     if (!magic_point)
@@ -272,7 +273,7 @@ Heroes::Heroes(int heroid, int rc) : HeroBase(HEROES, rc), ColorBase(Color::NONE
     move_point = GetMaxMovePoints();
 }
 
-void Heroes::LoadFromMP2(s32 map_index, int cl, int rc, ByteVectorReader &st)
+void Heroes::LoadFromMP2(s32 map_index, int cl, int rc, ByteVectorReader& st)
 {
     // reset modes
     modes = 0;
@@ -297,7 +298,8 @@ void Heroes::LoadFromMP2(s32 map_index, int cl, int rc, ByteVectorReader &st)
             troop.SetCount(st.getLE16());
 
         army.m_troops.Assign(troops, ARRAY_COUNT_END(troops));
-    } else
+    }
+    else
         st.skip(15);
 
     // custom portrate
@@ -318,7 +320,8 @@ void Heroes::LoadFromMP2(s32 map_index, int cl, int rc, ByteVectorReader &st)
         // fixed race for custom portrait (after level up)
         if (race != rc)
             race = rc;
-    } else
+    }
+    else
         st.skip(1);
 
     // 3 artifacts
@@ -350,9 +353,10 @@ void Heroes::LoadFromMP2(s32 map_index, int cl, int rc, ByteVectorReader &st)
         secondary_skills = Skill::SecSkills();
 
         for (vector<Skill::Secondary>::const_iterator
-                     it = secs.begin(); it != secs.end(); ++it)
+             it = secs.begin(); it != secs.end(); ++it)
             if ((*it).isValid()) secondary_skills.AddSkill(*it);
-    } else
+    }
+    else
         st.skip(16);
 
     // unknown
@@ -363,7 +367,8 @@ void Heroes::LoadFromMP2(s32 map_index, int cl, int rc, ByteVectorReader &st)
     {
         SetModes(NOTDEFAULTS);
         name = Game::GetEncodeString(st.toString(13));
-    } else
+    }
+    else
         st.skip(13);
 
     // patrol
@@ -419,7 +424,6 @@ void Heroes::PostLoad()
     {
         AI::HeroesPostLoad(*this);
     }
-
 }
 
 int Heroes::GetID() const
@@ -432,7 +436,7 @@ int Heroes::GetRace() const
     return race;
 }
 
-const string &Heroes::GetName() const
+const string& Heroes::GetName() const
 {
     return name;
 }
@@ -447,12 +451,12 @@ int Heroes::GetType() const
     return HEROES;
 }
 
-const Army &Heroes::GetArmy() const
+const Army& Heroes::GetArmy() const
 {
     return army;
 }
 
-Army &Heroes::GetArmy()
+Army& Heroes::GetArmy()
 {
     return army;
 }
@@ -476,7 +480,7 @@ int Heroes::GetAttack() const
     return GetAttack(nullptr);
 }
 
-int Heroes::GetAttack(string *strs) const
+int Heroes::GetAttack(string* strs) const
 {
     int result = attack + GetAttackModificator(strs);
     return result < 0 ? 0 : result > 255 ? 255 : result;
@@ -487,7 +491,7 @@ int Heroes::GetDefense() const
     return GetDefense(nullptr);
 }
 
-int Heroes::GetDefense(string *strs) const
+int Heroes::GetDefense(string* strs) const
 {
     int result = defense + GetDefenseModificator(strs);
     return result < 0 ? 0 : result > 255 ? 255 : result;
@@ -498,7 +502,7 @@ int Heroes::GetPower() const
     return GetPower(nullptr);
 }
 
-int Heroes::GetPower(string *strs) const
+int Heroes::GetPower(string* strs) const
 {
     int result = power + GetPowerModificator(strs);
     return result < 0 ? 0 : result > 255 ? 255 : result;
@@ -509,7 +513,7 @@ int Heroes::GetKnowledge() const
     return GetKnowledge(nullptr);
 }
 
-int Heroes::GetKnowledge(string *strs) const
+int Heroes::GetKnowledge(string* strs) const
 {
     int result = knowledge + GetKnowledgeModificator(strs);
     return result < 0 ? 0 : result > 255 ? 255 : result;
@@ -519,20 +523,20 @@ void Heroes::IncreasePrimarySkill(int skill)
 {
     switch (skill)
     {
-        case ATTACK:
-            ++attack;
-            break;
-        case DEFENSE:
-            ++defense;
-            break;
-        case POWER:
-            ++power;
-            break;
-        case KNOWLEDGE:
-            ++knowledge;
-            break;
-        default:
-            break;
+    case ATTACK:
+        ++attack;
+        break;
+    case DEFENSE:
+        ++defense;
+        break;
+    case POWER:
+        ++power;
+        break;
+    case KNOWLEDGE:
+        ++knowledge;
+        break;
+    default:
+        break;
     }
 }
 
@@ -575,36 +579,37 @@ uint32_t Heroes::GetMaxMovePoints() const
 
         // visited object
         if (isVisited(MP2::OBJ_LIGHTHOUSE)) point += 500;
-    } else
+    }
+    else
     {
-        Troop *troop = const_cast<Army &>(army).m_troops.GetSlowestTroop();
+        Troop* troop = const_cast<Army &>(army).m_troops.GetSlowestTroop();
 
         if (troop)
             switch (troop->GetSpeed())
             {
-                default:
-                    break;
-                case Speed::CRAWLING:
-                case Speed::VERYSLOW:
-                    point = 1000;
-                    break;
-                case Speed::SLOW:
-                    point = 1100;
-                    break;
-                case Speed::AVERAGE:
-                    point = 1200;
-                    break;
-                case Speed::FAST:
-                    point = 1300;
-                    break;
-                case Speed::VERYFAST:
-                    point = 1400;
-                    break;
-                case Speed::ULTRAFAST:
-                case Speed::BLAZING:
-                case Speed::INSTANT:
-                    point = 1500;
-                    break;
+            default:
+                break;
+            case Speed::CRAWLING:
+            case Speed::VERYSLOW:
+                point = 1000;
+                break;
+            case Speed::SLOW:
+                point = 1100;
+                break;
+            case Speed::AVERAGE:
+                point = 1200;
+                break;
+            case Speed::FAST:
+                point = 1300;
+                break;
+            case Speed::VERYFAST:
+                point = 1400;
+                break;
+            case Speed::ULTRAFAST:
+            case Speed::BLAZING:
+            case Speed::INSTANT:
+                point = 1500;
+                break;
             }
 
         // skill logistics
@@ -632,7 +637,7 @@ int Heroes::GetMorale() const
     return GetMoraleWithModificators(nullptr);
 }
 
-int Heroes::GetMoraleWithModificators(string *strs) const
+int Heroes::GetMoraleWithModificators(string* strs) const
 {
     int result = Morale::NORMAL;
 
@@ -645,8 +650,10 @@ int Heroes::GetMoraleWithModificators(string *strs) const
     result += Skill::GetLeadershipModifiers(GetLevelSkill(Skill::Secondary::LEADERSHIP), strs);
 
     // object visited
-    const u8 objs[] = {MP2::OBJ_BUOY, MP2::OBJ_OASIS, MP2::OBJ_WATERINGHOLE, MP2::OBJ_TEMPLE, MP2::OBJ_GRAVEYARD,
-                       MP2::OBJ_DERELICTSHIP, MP2::OBJ_SHIPWRECK};
+    const u8 objs[] = {
+        MP2::OBJ_BUOY, MP2::OBJ_OASIS, MP2::OBJ_WATERINGHOLE, MP2::OBJ_TEMPLE, MP2::OBJ_GRAVEYARD,
+        MP2::OBJ_DERELICTSHIP, MP2::OBJ_SHIPWRECK
+    };
     result += ObjectVisitedModifiersResult(MDF_MORALE, objs, ARRAY_COUNT(objs), *this, strs);
 
     // result
@@ -665,7 +672,7 @@ int Heroes::GetLuck() const
     return GetLuckWithModificators(nullptr);
 }
 
-int Heroes::GetLuckWithModificators(string *strs) const
+int Heroes::GetLuckWithModificators(string* strs) const
 {
     int result = Luck::NORMAL;
 
@@ -690,18 +697,18 @@ int Heroes::GetLuckWithModificators(string *strs) const
 }
 
 /* recrut hero */
-bool Heroes::Recruit(int cl, const Point &pt)
+bool Heroes::Recruit(int cl, const Point& pt)
 {
     if (GetColor() != Color::NONE)
     {
         return false;
     }
 
-    Kingdom &kingdom = world.GetKingdom(cl);
+    Kingdom& kingdom = world.GetKingdom(cl);
 
     if (kingdom.AllowRecruitHero(false, 0))
     {
-        Maps::Tiles &tiles = world.GetTiles(pt.x, pt.y);
+        Maps::Tiles& tiles = world.GetTiles(pt.x, pt.y);
         SetColor(cl);
         killer_color.SetColor(Color::NONE);
         SetCenter(pt);
@@ -719,7 +726,7 @@ bool Heroes::Recruit(int cl, const Point &pt)
     return false;
 }
 
-bool Heroes::Recruit(const Castle &castle)
+bool Heroes::Recruit(const Castle& castle)
 {
     if (Recruit(castle.GetColor(), castle.GetCenter()))
     {
@@ -750,7 +757,7 @@ void Heroes::ActionNewDay()
     {
         uint32_t curr = GetSpellPoints();
         uint32_t maxp = GetMaxSpellPoints();
-        const Castle *castle = inCastle();
+        const Castle* castle = inCastle();
 
         // possible visit arteian spring 2 * max
         if (curr < maxp)
@@ -761,7 +768,7 @@ void Heroes::ActionNewDay()
                 //restore from mage guild
                 if (Settings::Get().ExtCastleGuildRestorePointsTurn())
                     curr += maxp * GameStatic::GetMageGuildRestoreSpellPointsPercentDay(castle->GetLevelMageGuild()) /
-                            100;
+                        100;
                 else
                     curr = maxp;
             }
@@ -821,7 +828,7 @@ void Heroes::RescanPath()
 {
     if (path.isValid())
     {
-        const Maps::Tiles &tile = world.GetTiles(path.GetDestinationIndex());
+        const Maps::Tiles& tile = world.GetTiles(path.GetDestinationIndex());
 
         if (!isShipMaster() && tile.isWater() &&
             !MP2::isNeedStayFront(tile.GetObject()))
@@ -833,7 +840,8 @@ void Heroes::RescanPath()
         if (isControlAI())
         {
             if (path.hasObstacle()) path.Reset();
-        } else
+        }
+        else
         {
             path.RescanObstacle();
         }
@@ -841,29 +849,30 @@ void Heroes::RescanPath()
 }
 
 /* if hero in castle */
-const Castle *Heroes::inCastle() const
+const Castle* Heroes::inCastle() const
 {
-    const Castle *castle = Color::NONE != GetColor() ? world.GetCastle(GetCenter()) : nullptr;
+    const Castle* castle = Color::NONE != GetColor() ? world.GetCastle(GetCenter()) : nullptr;
     return castle && castle->GetHeroes() == this ? castle : nullptr;
 }
 
-Castle *Heroes::inCastle()
+Castle* Heroes::inCastle()
 {
-    Castle *castle = Color::NONE != GetColor() ? world.GetCastle(GetCenter()) : nullptr;
+    Castle* castle = Color::NONE != GetColor() ? world.GetCastle(GetCenter()) : nullptr;
     return castle && castle->GetHeroes() == this ? castle : nullptr;
 }
 
 /* is visited cell */
-bool Heroes::isVisited(const Maps::Tiles &tile, Visit::type_t type) const
+bool Heroes::isVisited(const Maps::Tiles& tile, Visit::type_t type) const
 {
-    const s32 &index = tile.GetIndex();
+    const s32& index = tile.GetIndex();
     int object = tile.GetObject(false);
 
     if (Visit::GLOBAL == type) return GetKingdom().isVisited(index, object);
 
     IndexObject valueToFind(index, object);
     auto findIt = std::find_if(visit_object.begin(), visit_object.end(),
-                               [&](const IndexObject &item) {
+                               [&](const IndexObject& item)
+                               {
                                    return item.Value == valueToFind.Value;
                                });
 
@@ -882,7 +891,7 @@ bool Heroes::isVisited(int object, Visit::type_t type) const
 /* set visited cell */
 void Heroes::SetVisited(s32 index, Visit::type_t type)
 {
-    const Maps::Tiles &tile = world.GetTiles(index);
+    const Maps::Tiles& tile = world.GetTiles(index);
     int object = tile.GetObject(false);
 
     if (Visit::GLOBAL == type)
@@ -893,23 +902,23 @@ void Heroes::SetVisited(s32 index, Visit::type_t type)
 
 void Heroes::SetVisitedWideTile(s32 index, int object, Visit::type_t type)
 {
-    const Maps::Tiles &tile = world.GetTiles(index);
-    const Maps::TilesAddon *addon = tile.FindObjectConst(object);
+    const Maps::Tiles& tile = world.GetTiles(index);
+    const Maps::TilesAddon* addon = tile.FindObjectConst(object);
     int wide = 0;
 
     switch (object)
     {
-        case MP2::OBJ_SKELETON:
-        case MP2::OBJ_OASIS:
-        case MP2::OBJ_STANDINGSTONES:
-        case MP2::OBJ_ARTESIANSPRING:
-            wide = 2;
-            break;
-        case MP2::OBJ_WATERINGHOLE:
-            wide = 4;
-            break;
-        default:
-            break;
+    case MP2::OBJ_SKELETON:
+    case MP2::OBJ_OASIS:
+    case MP2::OBJ_STANDINGSTONES:
+    case MP2::OBJ_ARTESIANSPRING:
+        wide = 2;
+        break;
+    case MP2::OBJ_WATERINGHOLE:
+        wide = 4;
+        break;
+    default:
+        break;
     }
 
     if (addon && wide)
@@ -951,7 +960,7 @@ bool Heroes::IsFullBagArtifacts() const
     return bag_artifacts.isFull();
 }
 
-bool Heroes::PickupArtifact(const Artifact &art)
+bool Heroes::PickupArtifact(const Artifact& art)
 {
     if (!art.isValid()) return false;
 
@@ -961,11 +970,13 @@ bool Heroes::PickupArtifact(const Artifact &art)
     {
         if (isControlHuman())
         {
-            art() == Artifact::MAGIC_BOOK ?
-            Message("",
-                    _("You must purchase a spell book to use the mage guild, but you currently have no room for a spell book. Try giving one of your artifacts to another hero."),
-                    Font::BIG, Dialog::OK) :
-            Message(art.GetName(), _("You have no room to carry another artifact!"), Font::BIG, Dialog::OK);
+            art() == Artifact::MAGIC_BOOK
+                ? Message("",
+                          _(
+                              "You must purchase a spell book to use the mage guild, but you currently have no room for a spell book. Try giving one of your artifacts to another hero."
+                          ),
+                          Font::BIG, Dialog::OK)
+                : Message(art.GetName(), _("You have no room to carry another artifact!"), Font::BIG, Dialog::OK);
         }
         return false;
     }
@@ -987,12 +998,12 @@ int Heroes::GetLevel() const
     return GetLevelFromExperience(experience);
 }
 
-const Route::Path &Heroes::GetPath() const
+const Route::Path& Heroes::GetPath() const
 {
     return path;
 }
 
-Route::Path &Heroes::GetPath()
+Route::Path& Heroes::GetPath()
 {
     return path;
 }
@@ -1025,89 +1036,89 @@ uint32_t Heroes::GetExperienceFromLevel(int lvl)
 {
     switch (lvl)
     {
-        case 0:
-            return 0;
-        case 1:
-            return 1000;
-        case 2:
-            return 2000;
-        case 3:
-            return 3200;
-        case 4:
-            return 4500;
-        case 5:
-            return 6000;
-        case 6:
-            return 7700;
-        case 7:
-            return 9000;
-        case 8:
-            return 11000;
-        case 9:
-            return 13200;
-        case 10:
-            return 15500;
-        case 11:
-            return 18500;
-        case 12:
-            return 22100;
-        case 13:
-            return 26400;
-        case 14:
-            return 31600;
-        case 15:
-            return 37800;
-        case 16:
-            return 45300;
-        case 17:
-            return 54200;
-        case 18:
-            return 65000;
-        case 19:
-            return 78000;
-        case 20:
-            return 93600;
-        case 21:
-            return 112300;
-        case 22:
-            return 134700;
-        case 23:
-            return 161600;
-        case 24:
-            return 193900;
-        case 25:
-            return 232700;
-        case 26:
-            return 279300;
-        case 27:
-            return 335200;
-        case 28:
-            return 402300;
-        case 29:
-            return 482800;
-        case 30:
-            return 579400;
-        case 31:
-            return 695300;
-        case 32:
-            return 834400;
-        case 33:
-            return 1001300;
-        case 34:
-            return 1201600;
-        case 35:
-            return 1442000;
-        case 36:
-            return 1730500;
-        case 37:
-            return 2076700;
-        case 38:
-            return 2492100;
-        case 39:
-            return 2990600;
+    case 0:
+        return 0;
+    case 1:
+        return 1000;
+    case 2:
+        return 2000;
+    case 3:
+        return 3200;
+    case 4:
+        return 4500;
+    case 5:
+        return 6000;
+    case 6:
+        return 7700;
+    case 7:
+        return 9000;
+    case 8:
+        return 11000;
+    case 9:
+        return 13200;
+    case 10:
+        return 15500;
+    case 11:
+        return 18500;
+    case 12:
+        return 22100;
+    case 13:
+        return 26400;
+    case 14:
+        return 31600;
+    case 15:
+        return 37800;
+    case 16:
+        return 45300;
+    case 17:
+        return 54200;
+    case 18:
+        return 65000;
+    case 19:
+        return 78000;
+    case 20:
+        return 93600;
+    case 21:
+        return 112300;
+    case 22:
+        return 134700;
+    case 23:
+        return 161600;
+    case 24:
+        return 193900;
+    case 25:
+        return 232700;
+    case 26:
+        return 279300;
+    case 27:
+        return 335200;
+    case 28:
+        return 402300;
+    case 29:
+        return 482800;
+    case 30:
+        return 579400;
+    case 31:
+        return 695300;
+    case 32:
+        return 834400;
+    case 33:
+        return 1001300;
+    case 34:
+        return 1201600;
+    case 35:
+        return 1442000;
+    case 36:
+        return 1730500;
+    case 37:
+        return 2076700;
+    case 38:
+        return 2492100;
+    case 39:
+        return 2990600;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     const uint32_t l1 = GetExperienceFromLevel(lvl - 1);
@@ -1115,12 +1126,12 @@ uint32_t Heroes::GetExperienceFromLevel(int lvl)
 }
 
 /* buy book */
-bool Heroes::BuySpellBook(const Castle *castle, int shrine)
+bool Heroes::BuySpellBook(const Castle* castle, int shrine)
 {
     if (HaveSpellBook() || Color::NONE == GetColor()) return false;
 
     const payment_t payment = PaymentConditions::BuySpellBook(shrine);
-    Kingdom &kingdom = GetKingdom();
+    Kingdom& kingdom = GetKingdom();
 
     string header = _("To cast spells, you must first buy a spell book for %{gold} gold.");
     StringReplace(header, "%{gold}", payment.gold);
@@ -1138,7 +1149,7 @@ bool Heroes::BuySpellBook(const Castle *castle, int shrine)
 
     if (isControlHuman())
     {
-        const Sprite &border = AGG::GetICN(ICN::RESOURCE, 7);
+        const Sprite& border = AGG::GetICN(ICN::RESOURCE, 7);
         Surface sprite = border.GetSurface();
 
         AGG::GetICN(ICN::ARTIFACT, Artifact(Artifact::MAGIC_BOOK).IndexSprite64()).Blit(5, 5, sprite);
@@ -1171,7 +1182,7 @@ bool Heroes::isEnableMove() const
 bool Heroes::CanMove() const
 {
     return move_point >=
-           Maps::Ground::GetPenalty(GetIndex(), Direction::CENTER, GetLevelSkill(Skill::Secondary::PATHFINDING));
+        Maps::Ground::GetPenalty(GetIndex(), Direction::CENTER, GetLevelSkill(Skill::Secondary::PATHFINDING));
 }
 
 /* set enable move */
@@ -1180,33 +1191,34 @@ void Heroes::SetMove(bool f)
     if (f)
     {
         SetModes(ENABLEMOVE);
-    } else
+    }
+    else
     {
         ResetModes(ENABLEMOVE);
 
         // reset sprite position
         switch (direction)
         {
-            case Direction::TOP:
-                sprite_index = 0;
-                break;
-            case Direction::BOTTOM:
-                sprite_index = 36;
-                break;
-            case Direction::TOP_RIGHT:
-            case Direction::TOP_LEFT:
-                sprite_index = 9;
-                break;
-            case Direction::BOTTOM_RIGHT:
-            case Direction::BOTTOM_LEFT:
-                sprite_index = 27;
-                break;
-            case Direction::RIGHT:
-            case Direction::LEFT:
-                sprite_index = 18;
-                break;
-            default:
-                break;
+        case Direction::TOP:
+            sprite_index = 0;
+            break;
+        case Direction::BOTTOM:
+            sprite_index = 36;
+            break;
+        case Direction::TOP_RIGHT:
+        case Direction::TOP_LEFT:
+            sprite_index = 9;
+            break;
+        case Direction::BOTTOM_RIGHT:
+        case Direction::BOTTOM_LEFT:
+            sprite_index = 27;
+            break;
+        case Direction::RIGHT:
+        case Direction::LEFT:
+            sprite_index = 18;
+            break;
+        default:
+            break;
         }
     }
 }
@@ -1221,7 +1233,7 @@ void Heroes::SetShipMaster(bool f)
     f ? SetModes(SHIPMASTER) : ResetModes(SHIPMASTER);
 }
 
-Skill::SecSkills &Heroes::GetSecondarySkills()
+Skill::SecSkills& Heroes::GetSecondarySkills()
 {
     return secondary_skills;
 }
@@ -1246,7 +1258,7 @@ int Heroes::GetLevelSkill(int skill) const
     return secondary_skills.GetLevel(skill);
 }
 
-void Heroes::LearnSkill(const Skill::Secondary &skill)
+void Heroes::LearnSkill(const Skill::Secondary& skill)
 {
     if (skill.isValid())
         secondary_skills.AddSkill(skill);
@@ -1262,7 +1274,7 @@ int Heroes::GetScoute() const
     int acount = HasArtifact(Artifact::TELESCOPE);
 
     return (acount ? acount * GetViewDistance(Game::VIEW_TELESCOPE) : 0) +
-           GetViewDistance(Game::VIEW_HEROES) + GetSecondaryValues(Skill::Secondary::SCOUTING);
+        GetViewDistance(Game::VIEW_HEROES) + GetSecondaryValues(Skill::Secondary::SCOUTING);
 }
 
 uint32_t Heroes::GetVisionsDistance() const
@@ -1334,7 +1346,7 @@ void Heroes::LevelUpSecondarySkill(int primary, bool autoselect)
     Skill::Secondary sec2;
 
     secondary_skills.FindSkillsForLevelUp(race, sec1, sec2);
-    Skill::Secondary *selected = nullptr;
+    Skill::Secondary* selected = nullptr;
 
     if (autoselect)
     {
@@ -1344,9 +1356,11 @@ void Heroes::LevelUpSecondarySkill(int primary, bool autoselect)
                 selected = &sec1;
             else if (Skill::Secondary::UNKNOWN != sec2.Skill())
                 selected = &sec2;
-        } else if (Skill::Secondary::UNKNOWN != sec1.Skill() && Skill::Secondary::UNKNOWN != sec2.Skill())
+        }
+        else if (Skill::Secondary::UNKNOWN != sec1.Skill() && Skill::Secondary::UNKNOWN != sec2.Skill())
             selected = Rand::Get(0, 1) ? &sec1 : &sec2;
-    } else
+    }
+    else
     {
         AGG::PlaySound(M82::NWHEROLV);
         int result = Dialog::LevelUpSelectSkill(name, Primary::String(primary), sec1, sec2, *this);
@@ -1360,7 +1374,7 @@ void Heroes::LevelUpSecondarySkill(int primary, bool autoselect)
     {
         vector<Skill::Secondary>::iterator it;
 
-        Skill::Secondary *secs = secondary_skills.FindSkill(selected->Skill());
+        Skill::Secondary* secs = secondary_skills.FindSkill(selected->Skill());
 
         if (secs)
             secs->NextLevel();
@@ -1370,12 +1384,12 @@ void Heroes::LevelUpSecondarySkill(int primary, bool autoselect)
         // post action
         switch (selected->Skill())
         {
-            case Skill::Secondary::SCOUTING:
-                Scoute();
-                break;
+        case Skill::Secondary::SCOUTING:
+            Scoute();
+            break;
 
-            default:
-                break;
+        default:
+            break;
         }
     }
 }
@@ -1383,9 +1397,10 @@ void Heroes::LevelUpSecondarySkill(int primary, bool autoselect)
 /* apply penalty */
 bool Heroes::ApplyPenaltyMovement()
 {
-    uint32_t penalty = path.isValid() ?
-                  path.GetFrontPenalty() :
-                  Maps::Ground::GetPenalty(GetIndex(), Direction::CENTER, GetLevelSkill(Skill::Secondary::PATHFINDING));
+    uint32_t penalty = path.isValid()
+                           ? path.GetFrontPenalty()
+                           : Maps::Ground::GetPenalty(GetIndex(), Direction::CENTER,
+                                                      GetLevelSkill(Skill::Secondary::PATHFINDING));
 
     if (move_point >= penalty) move_point -= penalty;
     else return false;
@@ -1420,7 +1435,7 @@ void Heroes::SetFreeman(int reason)
 {
     if (isFreeman()) return;
     bool savepoints = false;
-    Kingdom &kingdom = GetKingdom();
+    Kingdom& kingdom = GetKingdom();
 
     if ((Battle::RESULT_RETREAT | Battle::RESULT_SURRENDER) & reason)
     {
@@ -1474,10 +1489,10 @@ bool Heroes::AllowBattle(bool attacker) const
     if (!attacker)
         switch (world.GetTiles(GetIndex()).GetObject(false))
         {
-            case MP2::OBJ_TEMPLE:
-                return false;
-            default:
-                break;
+        case MP2::OBJ_TEMPLE:
+            return false;
+        default:
+            break;
         }
 
     return true;
@@ -1487,12 +1502,12 @@ void Heroes::ActionPreBattle()
 {
 }
 
-void RedrawGameAreaAndHeroAttackMonster(Heroes &hero, s32 dst)
+void RedrawGameAreaAndHeroAttackMonster(Heroes& hero, s32 dst)
 {
     // redraw gamearea for monster action sprite
     if (hero.isControlHuman())
     {
-        Interface::Basic &I = Interface::Basic::Get();
+        Interface::Basic& I = Interface::Basic::Get();
         Cursor::Get().Hide();
         I.GetGameArea().SetCenter(hero.GetCenter());
         I.RedrawFocus();
@@ -1506,7 +1521,7 @@ void RedrawGameAreaAndHeroAttackMonster(Heroes &hero, s32 dst)
 
 void Heroes::ActionNewPosition()
 {
-    const Settings &conf = Settings::Get();
+    const Settings& conf = Settings::Get();
     // check around monster
     MapsIndexes targets = Maps::GetTilesUnderProtection(GetIndex());
 
@@ -1527,7 +1542,7 @@ void Heroes::ActionNewPosition()
 
         // other around targets
         for (MapsIndexes::const_iterator
-                     it = targets.begin(); it != targets.end() && !isFreeman() && !skip_battle; ++it)
+             it = targets.begin(); it != targets.end() && !isFreeman() && !skip_battle; ++it)
         {
             RedrawGameAreaAndHeroAttackMonster(*this, *it);
             if (conf.ExtWorldOnlyFirstMonsterAttack()) skip_battle = true;
@@ -1537,7 +1552,7 @@ void Heroes::ActionNewPosition()
     if (!isFreeman() &&
         GetMapsObject() == MP2::OBJ_EVENT)
     {
-        const MapEvent *event = world.GetMapEvent(GetCenter());
+        const MapEvent* event = world.GetMapEvent(GetCenter());
 
         if (event && event->isAllow(GetColor()))
         {
@@ -1552,12 +1567,12 @@ void Heroes::ActionNewPosition()
     ResetModes(VISIONS);
 }
 
-void Heroes::SetCenterPatrol(const Point &pt)
+void Heroes::SetCenterPatrol(const Point& pt)
 {
     patrol_center = pt;
 }
 
-const Point &Heroes::GetCenterPatrol() const
+const Point& Heroes::GetCenterPatrol() const
 {
     return patrol_center;
 }
@@ -1574,14 +1589,14 @@ int Heroes::CanScouteTile(s32 dst) const
 
     switch (world.GetTiles(dst).GetObject())
     {
-        case MP2::OBJ_MONSTER:
-        case MP2::OBJ_CASTLE:
-        case MP2::OBJ_HEROES:
-            army_info = true;
-            break;
+    case MP2::OBJ_MONSTER:
+    case MP2::OBJ_CASTLE:
+    case MP2::OBJ_HEROES:
+        army_info = true;
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     if (army_info)
@@ -1590,14 +1605,14 @@ int Heroes::CanScouteTile(s32 dst) const
         if (Maps::GetApproximateDistance(GetIndex(), dst) <= GetVisionsDistance())
         {
             // check crystal ball
-            return HasArtifact(Artifact::CRYSTAL_BALL) ?
-                   Skill::Level::EXPERT : scouting;
+            return HasArtifact(Artifact::CRYSTAL_BALL) ? Skill::Level::EXPERT : scouting;
         }
         // check spell identify hero
         if (GetKingdom().Modes(Kingdom::IDENTIFYHERO) &&
             MP2::OBJ_HEROES == world.GetTiles(dst).GetObject())
             return Skill::Level::EXPERT;
-    } else
+    }
+    else
     {
         if (Settings::Get().ExtWorldScouteExtended())
         {
@@ -1624,7 +1639,7 @@ void Heroes::RecalculateMovePoints()
     if (0 <= move_point_scale) move_point = GetMaxMovePoints() * move_point_scale / 1000;
 }
 
-void Heroes::Move2Dest(const s32 &dst_index, bool skip_action /* false */)
+void Heroes::Move2Dest(const s32& dst_index, bool skip_action /* false */)
 {
     if (dst_index != GetIndex())
     {
@@ -1647,15 +1662,17 @@ Surface Heroes::GetPortrait(int id, int type)
     }
     switch (type)
     {
-        case PORT_BIG:
-            return AGG::GetICN(ICN::PORTxxxx(id), 0);
-        case PORT_MEDIUM:
-            return SANDYSANDY > id ? AGG::GetICN(ICN::PORTMEDI, id + 1) : AGG::GetICN(ICN::PORTMEDI,
-                                                                                      BAX + 1);
-        case PORT_SMALL:
-            return SANDYSANDY > id ? AGG::GetICN(ICN::MINIPORT, id) : AGG::GetICN(ICN::MINIPORT, BAX);
-        default:
-            break;
+    case PORT_BIG:
+        return AGG::GetICN(ICN::PORTxxxx(id), 0);
+    case PORT_MEDIUM:
+        return SANDYSANDY > id
+                   ? AGG::GetICN(ICN::PORTMEDI, id + 1)
+                   : AGG::GetICN(ICN::PORTMEDI,
+                                 BAX + 1);
+    case PORT_SMALL:
+        return SANDYSANDY > id ? AGG::GetICN(ICN::MINIPORT, id) : AGG::GetICN(ICN::MINIPORT, BAX);
+    default:
+        break;
     }
 
     return Surface();
@@ -1666,7 +1683,7 @@ Surface Heroes::GetPortrait(int type) const
     return GetPortrait(portrait, type);
 }
 
-void Heroes::PortraitRedraw(s32 px, s32 py, int type, Surface &dstsf) const
+void Heroes::PortraitRedraw(s32 px, s32 py, int type, Surface& dstsf) const
 {
     Surface port = GetPortrait(portrait, type);
     Point mp;
@@ -1678,14 +1695,16 @@ void Heroes::PortraitRedraw(s32 px, s32 py, int type, Surface &dstsf) const
             port.Blit(px, py, dstsf);
             mp.y = 2;
             mp.x = port.w() - 12;
-        } else if (PORT_MEDIUM == type)
+        }
+        else if (PORT_MEDIUM == type)
         {
             port.Blit(px, py, dstsf);
             mp.x = port.w() - 10;
-        } else if (PORT_SMALL == type)
+        }
+        else if (PORT_SMALL == type)
         {
-            const Sprite &mobility = AGG::GetICN(ICN::MOBILITY, GetMobilityIndexSprite());
-            const Sprite &mana = AGG::GetICN(ICN::MANA, GetManaIndexSprite());
+            const Sprite& mobility = AGG::GetICN(ICN::MOBILITY, GetMobilityIndexSprite());
+            const Sprite& mana = AGG::GetICN(ICN::MANA, GetManaIndexSprite());
 
             const int iconsw = Interface::IconsBar::GetItemWidth();
             const int iconsh = Interface::IconsBar::GetItemHeight();
@@ -1712,14 +1731,15 @@ void Heroes::PortraitRedraw(s32 px, s32 py, int type, Surface &dstsf) const
     // heroes marker
     if (Modes(SHIPMASTER))
     {
-        const Sprite &sprite = AGG::GetICN(ICN::BOAT12, 0);
+        const Sprite& sprite = AGG::GetICN(ICN::BOAT12, 0);
         const Rect pos(px + mp.x, py + mp.y - 1, sprite.w(), sprite.h());
         dstsf.FillRect(pos, ColorBlack);
         sprite.Blit(pos.x, pos.y, dstsf);
         mp.y = sprite.h();
-    } else if (Modes(GUARDIAN))
+    }
+    else if (Modes(GUARDIAN))
     {
-        const Sprite &sprite = AGG::GetICN(ICN::MISC6, 11);
+        const Sprite& sprite = AGG::GetICN(ICN::MISC6, 11);
         const Rect pos(px + mp.x + 3, py + mp.y, sprite.w(), sprite.h());
         dstsf.FillRect(pos, ColorBlack);
         sprite.Blit(pos.x, pos.y, dstsf);
@@ -1728,7 +1748,7 @@ void Heroes::PortraitRedraw(s32 px, s32 py, int type, Surface &dstsf) const
 
     if (Modes(SLEEPER))
     {
-        const Sprite &sprite = AGG::GetICN(ICN::MISC4, 14);
+        const Sprite& sprite = AGG::GetICN(ICN::MISC4, 14);
         const Rect pos(px + mp.x + 3, py + mp.y - 1, sprite.w() - 4, sprite.h() - 4);
         dstsf.FillRect(pos, ColorBlack);
         sprite.Blit(pos.x - 2, pos.y - 2);
@@ -1740,23 +1760,23 @@ string Heroes::String() const
     ostringstream os;
 
     os <<
-       "name            : " << name << endl <<
-       "race            : " << Race::String(race) << endl <<
-       "color           : " << Color::String(GetColor()) << endl <<
-       "experience      : " << experience << endl <<
-       "level           : " << GetLevel() << endl <<
-       "magic point     : " << GetSpellPoints() << endl <<
-       "position x      : " << GetCenter().x << endl <<
-       "position y      : " << GetCenter().y << endl <<
-       "move point      : " << move_point << endl <<
-       "max magic point : " << GetMaxSpellPoints() << endl <<
-       "max move point  : " << GetMaxMovePoints() << endl <<
-       "direction       : " << Direction::String(direction) << endl <<
-       "index sprite    : " << sprite_index << endl <<
-       "in castle       : " << (inCastle() ? "true" : "false") << endl <<
-       "save object     : " << MP2::StringObject(world.GetTiles(GetIndex()).GetObject(false)) << endl <<
-       "flags           : " << (Modes(SHIPMASTER) ? "SHIPMASTER," : "") <<
-       (Modes(PATROL) ? "PATROL" : "") << endl;
+        "name            : " << name << endl <<
+        "race            : " << Race::String(race) << endl <<
+        "color           : " << Color::String(GetColor()) << endl <<
+        "experience      : " << experience << endl <<
+        "level           : " << GetLevel() << endl <<
+        "magic point     : " << GetSpellPoints() << endl <<
+        "position x      : " << GetCenter().x << endl <<
+        "position y      : " << GetCenter().y << endl <<
+        "move point      : " << move_point << endl <<
+        "max magic point : " << GetMaxSpellPoints() << endl <<
+        "max move point  : " << GetMaxMovePoints() << endl <<
+        "direction       : " << Direction::String(direction) << endl <<
+        "index sprite    : " << sprite_index << endl <<
+        "in castle       : " << (inCastle() ? "true" : "false") << endl <<
+        "save object     : " << MP2::StringObject(world.GetTiles(GetIndex()).GetObject(false)) << endl <<
+        "flags           : " << (Modes(SHIPMASTER) ? "SHIPMASTER," : "") <<
+        (Modes(PATROL) ? "PATROL" : "") << endl;
 
     if (Modes(PATROL))
     {
@@ -1774,10 +1794,10 @@ string Heroes::String() const
     if (isControlAI())
     {
         os <<
-           "skills          : " << secondary_skills.String() << endl <<
-           "artifacts       : " << bag_artifacts.String() << endl <<
-           "spell book      : " << (HaveSpellBook() ? spell_book.String() : "disabled") << endl <<
-           "army dump       : " << army.String() << endl;
+            "skills          : " << secondary_skills.String() << endl <<
+            "artifacts       : " << bag_artifacts.String() << endl <<
+            "spell book      : " << (HaveSpellBook() ? spell_book.String() : "disabled") << endl <<
+            "army dump       : " << army.String() << endl;
 
         os << AI::HeroesString(*this);
     }
@@ -1787,17 +1807,17 @@ string Heroes::String() const
 
 struct InCastleAndGuardian : binary_function<const Castle *, Heroes *, bool>
 {
-    bool operator()(const Castle *castle, Heroes *hero) const
+    bool operator()(const Castle* castle, Heroes* hero) const
     {
-        const Point &cpt = castle->GetCenter();
-        const Point &hpt = hero->GetCenter();
+        const Point& cpt = castle->GetCenter();
+        const Point& hpt = hero->GetCenter();
         return cpt.x == hpt.x && cpt.y == hpt.y + 1 && hero->Modes(Heroes::GUARDIAN);
     }
 };
 
 struct InCastleNotGuardian : binary_function<const Castle *, Heroes *, bool>
 {
-    bool operator()(const Castle *castle, Heroes *hero) const
+    bool operator()(const Castle* castle, Heroes* hero) const
     {
         return castle->GetCenter() == hero->GetCenter() && !hero->Modes(Heroes::GUARDIAN);
     }
@@ -1805,7 +1825,7 @@ struct InCastleNotGuardian : binary_function<const Castle *, Heroes *, bool>
 
 struct InJailMode : binary_function<s32, Heroes *, bool>
 {
-    bool operator()(s32 index, Heroes *hero) const
+    bool operator()(s32 index, Heroes* hero) const
     {
         return hero->Modes(Heroes::JAIL) && index == hero->GetIndex();
     }
@@ -1880,83 +1900,86 @@ void AllHeroes::Init()
 
 void AllHeroes::clear()
 {
-    for (auto &it : _items)
+    for (auto& it : _items)
         delete it;
     _items.clear();
 }
 
-Heroes *VecHeroes::Get(int hid) const
+Heroes* VecHeroes::Get(int hid) const
 {
-    const vector<Heroes *> &vec = _items;
+    const vector<Heroes *>& vec = _items;
     return 0 <= hid && hid < Heroes::UNKNOWN ? vec[hid] : nullptr;
 }
 
-Heroes *VecHeroes::Get(const Point &center) const
+Heroes* VecHeroes::Get(const Point& center) const
 {
     auto it = _items.begin();
     for (; it != _items.end(); ++it) if ((*it)->isPosition(center)) break;
     return _items.end() != it ? *it : nullptr;
 }
 
-Heroes *AllHeroes::GetGuest(const Castle &castle) const
+Heroes* AllHeroes::GetGuest(const Castle& castle) const
 {
     auto it = find_if(_items.begin(), _items.end(),
-                                bind1st(InCastleNotGuardian(), &castle));
+                      bind1st(InCastleNotGuardian(), &castle));
     return _items.end() != it ? *it : nullptr;
 }
 
-Heroes *AllHeroes::GetGuard(const Castle &castle) const
+Heroes* AllHeroes::GetGuard(const Castle& castle) const
 {
-    auto it = Settings::Get().ExtCastleAllowGuardians() ?
-                        find_if(_items.begin(), _items.end(), bind1st(InCastleAndGuardian(), &castle)) : _items.end();
+    auto it = Settings::Get().ExtCastleAllowGuardians()
+                  ? find_if(_items.begin(), _items.end(), bind1st(InCastleAndGuardian(), &castle))
+                  : _items.end();
     return _items.end() != it ? *it : nullptr;
 }
 
-Heroes *AllHeroes::GetFreeman(int race) const
+Heroes* AllHeroes::GetFreeman(int race) const
 {
-    const Settings &conf = Settings::Get();
+    const Settings& conf = Settings::Get();
 
     int min = Heroes::UNKNOWN;
     int max = Heroes::UNKNOWN;
 
     switch (race)
     {
-        case Race::KNGT:
-            min = Heroes::LORDKILBURN;
-            max = Heroes::DIMITRY;
-            break;
+    case Race::KNGT:
+        min = Heroes::LORDKILBURN;
+        max = Heroes::DIMITRY;
+        break;
 
-        case Race::BARB:
-            min = Heroes::THUNDAX;
-            max = Heroes::ATLAS;
-            break;
+    case Race::BARB:
+        min = Heroes::THUNDAX;
+        max = Heroes::ATLAS;
+        break;
 
-        case Race::SORC:
-            min = Heroes::ASTRA;
-            max = Heroes::LUNA;
-            break;
+    case Race::SORC:
+        min = Heroes::ASTRA;
+        max = Heroes::LUNA;
+        break;
 
-        case Race::WRLK:
-            min = Heroes::ARIE;
-            max = Heroes::WRATHMONT;
-            break;
+    case Race::WRLK:
+        min = Heroes::ARIE;
+        max = Heroes::WRATHMONT;
+        break;
 
-        case Race::WZRD:
-            min = Heroes::MYRA;
-            max = Heroes::MANDIGAL;
-            break;
+    case Race::WZRD:
+        min = Heroes::MYRA;
+        max = Heroes::MANDIGAL;
+        break;
 
-        case Race::NECR:
-            min = Heroes::ZOM;
-            max = Heroes::CELIA;
-            break;
+    case Race::NECR:
+        min = Heroes::ZOM;
+        max = Heroes::CELIA;
+        break;
 
-        default:
-            min = Heroes::LORDKILBURN;
-            max = conf.ExtCastleAllowRecruitSpecialHeroes() ? (conf.PriceLoyaltyVersion() ? Heroes::JARKONAS
-                                                                                          : Heroes::BAX)
-                                                            : Heroes::CELIA;
-            break;
+    default:
+        min = Heroes::LORDKILBURN;
+        max = conf.ExtCastleAllowRecruitSpecialHeroes()
+                  ? (conf.PriceLoyaltyVersion()
+                         ? Heroes::JARKONAS
+                         : Heroes::BAX)
+                  : Heroes::CELIA;
+        break;
     }
 
     vector<int> freeman_heroes;
@@ -1970,8 +1993,9 @@ Heroes *AllHeroes::GetFreeman(int race) const
     if (Race::NONE != race && freeman_heroes.empty())
     {
         min = Heroes::LORDKILBURN;
-        max = conf.ExtCastleAllowRecruitSpecialHeroes() ? (conf.PriceLoyaltyVersion() ? Heroes::JARKONAS : Heroes::BAX)
-                                                        : Heroes::CELIA;
+        max = conf.ExtCastleAllowRecruitSpecialHeroes()
+                  ? (conf.PriceLoyaltyVersion() ? Heroes::JARKONAS : Heroes::BAX)
+                  : Heroes::CELIA;
 
         for (int ii = min; ii <= max; ++ii)
             if (_items.at(ii)->isFreeman()) freeman_heroes.push_back(ii);
@@ -1992,7 +2016,7 @@ void AllHeroes::Scoute(int colors) const
         if (colors & it->GetColor()) it->Scoute();
 }
 
-Heroes *AllHeroes::FromJail(s32 index) const
+Heroes* AllHeroes::FromJail(s32 index) const
 {
     auto it = find_if(_items.begin(), _items.end(),
                       bind1st(InJailMode(), index));
@@ -2005,7 +2029,7 @@ bool AllHeroes::HaveTwoFreemans() const
                          mem_fun(&Heroes::isFreeman));
 }
 
-ByteVectorWriter &operator<<(ByteVectorWriter &msg, const VecHeroes &heroes)
+ByteVectorWriter& operator<<(ByteVectorWriter& msg, const VecHeroes& heroes)
 {
     msg << static_cast<uint32_t>(heroes._items.size());
 
@@ -2015,14 +2039,14 @@ ByteVectorWriter &operator<<(ByteVectorWriter &msg, const VecHeroes &heroes)
     return msg;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, VecHeroes &heroes)
+ByteVectorReader& operator>>(ByteVectorReader& msg, VecHeroes& heroes)
 {
     uint32_t size;
     msg >> size;
 
     heroes._items.resize(size, nullptr);
 
-    for (auto &heroe : heroes._items)
+    for (auto& heroe : heroes._items)
     {
         uint32_t hid;
         msg >> hid;
@@ -2032,10 +2056,10 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, VecHeroes &heroes)
     return msg;
 }
 
-ByteVectorWriter &operator<<(ByteVectorWriter &msg, const Heroes &hero)
+ByteVectorWriter& operator<<(ByteVectorWriter& msg, const Heroes& hero)
 {
-    const HeroBase &base = hero;
-    const ColorBase &col = hero;
+    const HeroBase& base = hero;
+    const ColorBase& col = hero;
 
     return msg <<
         base <<
@@ -2067,10 +2091,10 @@ enum deprecated_t
     STUPID = 0x00000040
 };
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, Heroes &hero)
+ByteVectorReader& operator>>(ByteVectorReader& msg, Heroes& hero)
 {
-    HeroBase &base = hero;
-    ColorBase &col = hero;
+    HeroBase& base = hero;
+    ColorBase& col = hero;
 
     msg >> base >>
         hero.name >>
@@ -2095,7 +2119,7 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, Heroes &hero)
     return msg;
 }
 
-ByteVectorWriter &operator<<(ByteVectorWriter &msg, const AllHeroes &heroes)
+ByteVectorWriter& operator<<(ByteVectorWriter& msg, const AllHeroes& heroes)
 {
     msg << static_cast<uint32_t>(heroes._items.size());
 
@@ -2105,7 +2129,7 @@ ByteVectorWriter &operator<<(ByteVectorWriter &msg, const AllHeroes &heroes)
     return msg;
 }
 
-ByteVectorReader &operator>>(ByteVectorReader &msg, AllHeroes &heroes)
+ByteVectorReader& operator>>(ByteVectorReader& msg, AllHeroes& heroes)
 {
     uint32_t size;
     msg >> size;
@@ -2113,7 +2137,7 @@ ByteVectorReader &operator>>(ByteVectorReader &msg, AllHeroes &heroes)
     heroes.clear();
     heroes._items.resize(size, nullptr);
 
-    for (auto &heroe : heroes._items)
+    for (auto& heroe : heroes._items)
     {
         heroe = new Heroes();
         msg >> *heroe;

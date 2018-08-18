@@ -43,32 +43,32 @@ LocalEvent::LocalEvent() : modes(0), key_value(KEY_NONE), mouse_state(0),
 #endif
 }
 
-const Point &LocalEvent::GetMousePressLeft() const
+const Point& LocalEvent::GetMousePressLeft() const
 {
     return mouse_pl;
 }
 
-const Point &LocalEvent::GetMousePressMiddle() const
+const Point& LocalEvent::GetMousePressMiddle() const
 {
     return mouse_pm;
 }
 
-const Point &LocalEvent::GetMousePressRight() const
+const Point& LocalEvent::GetMousePressRight() const
 {
     return mouse_pr;
 }
 
-const Point &LocalEvent::GetMouseReleaseLeft() const
+const Point& LocalEvent::GetMouseReleaseLeft() const
 {
     return mouse_rl;
 }
 
-const Point &LocalEvent::GetMouseReleaseMiddle() const
+const Point& LocalEvent::GetMouseReleaseMiddle() const
 {
     return mouse_rm;
 }
 
-const Point &LocalEvent::GetMouseReleaseRight() const
+const Point& LocalEvent::GetMouseReleaseRight() const
 {
     return mouse_rr;
 }
@@ -117,242 +117,241 @@ void LocalEvent::SetGlobalFilter(bool f)
     f ? SetModes(GLOBAL_FILTER) : ResetModes(GLOBAL_FILTER);
 }
 
-const char *KeySymGetName(KeySym sym)
+const char* KeySymGetName(KeySym sym)
 {
     return SDL_GetKeyName(static_cast<SDLKey>(sym));
-
 }
 
 KeySym GetKeySym(int key)
 {
     switch (key)
     {
-        default:
-            break;
+    default:
+        break;
 
-        case SDLK_RETURN:
-            return KEY_RETURN;
-        case SDLK_LEFT:
-            return KEY_LEFT;
-        case SDLK_RIGHT:
-            return KEY_RIGHT;
-        case SDLK_UP:
-            return KEY_UP;
-        case SDLK_DOWN:
-            return KEY_DOWN;
+    case SDLK_RETURN:
+        return KEY_RETURN;
+    case SDLK_LEFT:
+        return KEY_LEFT;
+    case SDLK_RIGHT:
+        return KEY_RIGHT;
+    case SDLK_UP:
+        return KEY_UP;
+    case SDLK_DOWN:
+        return KEY_DOWN;
 
-        case SDLK_ESCAPE:
-            return KEY_ESCAPE;
-        case SDLK_BACKSPACE:
-            return KEY_BACKSPACE;
-        case SDLK_EXCLAIM:
-            return KEY_EXCLAIM;
-        case SDLK_QUOTEDBL:
-            return KEY_QUOTEDBL;
-        case SDLK_HASH:
-            return KEY_HASH;
-        case SDLK_DOLLAR:
-            return KEY_DOLLAR;
-        case SDLK_AMPERSAND:
-            return KEY_AMPERSAND;
-        case SDLK_QUOTE:
-            return KEY_QUOTE;
-        case SDLK_LEFTPAREN:
-            return KEY_LEFTPAREN;
-        case SDLK_RIGHTPAREN:
-            return KEY_RIGHTPAREN;
-        case SDLK_ASTERISK:
-            return KEY_ASTERISK;
-        case SDLK_PLUS:
-            return KEY_PLUS;
-        case SDLK_COMMA:
-            return KEY_COMMA;
-        case SDLK_MINUS:
-            return KEY_MINUS;
-        case SDLK_PERIOD:
-            return KEY_PERIOD;
-        case SDLK_SLASH:
-            return KEY_SLASH;
-        case SDLK_COLON:
-            return KEY_COLON;
-        case SDLK_SEMICOLON:
-            return KEY_SEMICOLON;
-        case SDLK_LESS:
-            return KEY_LESS;
-        case SDLK_EQUALS:
-            return KEY_EQUALS;
-        case SDLK_GREATER:
-            return KEY_GREATER;
-        case SDLK_QUESTION:
-            return KEY_QUESTION;
-        case SDLK_AT:
-            return KEY_AT;
-        case SDLK_LEFTBRACKET:
-            return KEY_LEFTBRACKET;
-        case SDLK_BACKSLASH:
-            return KEY_BACKSLASH;
-        case SDLK_RIGHTBRACKET:
-            return KEY_RIGHTBRACKET;
-        case SDLK_CARET:
-            return KEY_CARET;
-        case SDLK_UNDERSCORE:
-            return KEY_UNDERSCORE;
-        case SDLK_LALT:
-            return KEY_ALT;
-        case SDLK_RALT:
-            return KEY_ALT;
-        case SDLK_LCTRL:
-            return KEY_CONTROL;
-        case SDLK_RCTRL:
-            return KEY_CONTROL;
-        case SDLK_LSHIFT:
-            return KEY_SHIFT;
-        case SDLK_RSHIFT:
-            return KEY_SHIFT;
-        case SDLK_TAB:
-            return KEY_TAB;
-        case SDLK_SPACE:
-            return KEY_SPACE;
-        case SDLK_DELETE:
-            return KEY_DELETE;
-        case SDLK_PAGEUP:
-            return KEY_PAGEUP;
-        case SDLK_PAGEDOWN:
-            return KEY_PAGEDOWN;
-        case SDLK_F1:
-            return KEY_F1;
-        case SDLK_F2:
-            return KEY_F2;
-        case SDLK_F3:
-            return KEY_F3;
-        case SDLK_F4:
-            return KEY_F4;
-        case SDLK_F5:
-            return KEY_F5;
-        case SDLK_F6:
-            return KEY_F6;
-        case SDLK_F7:
-            return KEY_F7;
-        case SDLK_F8:
-            return KEY_F8;
-        case SDLK_F9:
-            return KEY_F9;
-        case SDLK_F10:
-            return KEY_F10;
-        case SDLK_F11:
-            return KEY_F11;
-        case SDLK_F12:
-            return KEY_F12;
-        case SDLK_0:
-            return KEY_0;
-        case SDLK_1:
-            return KEY_1;
-        case SDLK_2:
-            return KEY_2;
-        case SDLK_3:
-            return KEY_3;
-        case SDLK_4:
-            return KEY_4;
-        case SDLK_5:
-            return KEY_5;
-        case SDLK_6:
-            return KEY_6;
-        case SDLK_7:
-            return KEY_7;
-        case SDLK_8:
-            return KEY_8;
-        case SDLK_9:
-            return KEY_9;
-        case SDLK_a:
-            return KEY_a;
-        case SDLK_b:
-            return KEY_b;
-        case SDLK_c:
-            return KEY_c;
-        case SDLK_d:
-            return KEY_d;
-        case SDLK_e:
-            return KEY_e;
-        case SDLK_f:
-            return KEY_f;
-        case SDLK_g:
-            return KEY_g;
-        case SDLK_h:
-            return KEY_h;
-        case SDLK_i:
-            return KEY_i;
-        case SDLK_j:
-            return KEY_j;
-        case SDLK_k:
-            return KEY_k;
-        case SDLK_l:
-            return KEY_l;
-        case SDLK_m:
-            return KEY_m;
-        case SDLK_n:
-            return KEY_n;
-        case SDLK_o:
-            return KEY_o;
-        case SDLK_p:
-            return KEY_p;
-        case SDLK_q:
-            return KEY_q;
-        case SDLK_r:
-            return KEY_r;
-        case SDLK_s:
-            return KEY_s;
-        case SDLK_t:
-            return KEY_t;
-        case SDLK_u:
-            return KEY_u;
-        case SDLK_v:
-            return KEY_v;
-        case SDLK_w:
-            return KEY_w;
-        case SDLK_x:
-            return KEY_x;
-        case SDLK_y:
-            return KEY_y;
-        case SDLK_z:
-            return KEY_z;
+    case SDLK_ESCAPE:
+        return KEY_ESCAPE;
+    case SDLK_BACKSPACE:
+        return KEY_BACKSPACE;
+    case SDLK_EXCLAIM:
+        return KEY_EXCLAIM;
+    case SDLK_QUOTEDBL:
+        return KEY_QUOTEDBL;
+    case SDLK_HASH:
+        return KEY_HASH;
+    case SDLK_DOLLAR:
+        return KEY_DOLLAR;
+    case SDLK_AMPERSAND:
+        return KEY_AMPERSAND;
+    case SDLK_QUOTE:
+        return KEY_QUOTE;
+    case SDLK_LEFTPAREN:
+        return KEY_LEFTPAREN;
+    case SDLK_RIGHTPAREN:
+        return KEY_RIGHTPAREN;
+    case SDLK_ASTERISK:
+        return KEY_ASTERISK;
+    case SDLK_PLUS:
+        return KEY_PLUS;
+    case SDLK_COMMA:
+        return KEY_COMMA;
+    case SDLK_MINUS:
+        return KEY_MINUS;
+    case SDLK_PERIOD:
+        return KEY_PERIOD;
+    case SDLK_SLASH:
+        return KEY_SLASH;
+    case SDLK_COLON:
+        return KEY_COLON;
+    case SDLK_SEMICOLON:
+        return KEY_SEMICOLON;
+    case SDLK_LESS:
+        return KEY_LESS;
+    case SDLK_EQUALS:
+        return KEY_EQUALS;
+    case SDLK_GREATER:
+        return KEY_GREATER;
+    case SDLK_QUESTION:
+        return KEY_QUESTION;
+    case SDLK_AT:
+        return KEY_AT;
+    case SDLK_LEFTBRACKET:
+        return KEY_LEFTBRACKET;
+    case SDLK_BACKSLASH:
+        return KEY_BACKSLASH;
+    case SDLK_RIGHTBRACKET:
+        return KEY_RIGHTBRACKET;
+    case SDLK_CARET:
+        return KEY_CARET;
+    case SDLK_UNDERSCORE:
+        return KEY_UNDERSCORE;
+    case SDLK_LALT:
+        return KEY_ALT;
+    case SDLK_RALT:
+        return KEY_ALT;
+    case SDLK_LCTRL:
+        return KEY_CONTROL;
+    case SDLK_RCTRL:
+        return KEY_CONTROL;
+    case SDLK_LSHIFT:
+        return KEY_SHIFT;
+    case SDLK_RSHIFT:
+        return KEY_SHIFT;
+    case SDLK_TAB:
+        return KEY_TAB;
+    case SDLK_SPACE:
+        return KEY_SPACE;
+    case SDLK_DELETE:
+        return KEY_DELETE;
+    case SDLK_PAGEUP:
+        return KEY_PAGEUP;
+    case SDLK_PAGEDOWN:
+        return KEY_PAGEDOWN;
+    case SDLK_F1:
+        return KEY_F1;
+    case SDLK_F2:
+        return KEY_F2;
+    case SDLK_F3:
+        return KEY_F3;
+    case SDLK_F4:
+        return KEY_F4;
+    case SDLK_F5:
+        return KEY_F5;
+    case SDLK_F6:
+        return KEY_F6;
+    case SDLK_F7:
+        return KEY_F7;
+    case SDLK_F8:
+        return KEY_F8;
+    case SDLK_F9:
+        return KEY_F9;
+    case SDLK_F10:
+        return KEY_F10;
+    case SDLK_F11:
+        return KEY_F11;
+    case SDLK_F12:
+        return KEY_F12;
+    case SDLK_0:
+        return KEY_0;
+    case SDLK_1:
+        return KEY_1;
+    case SDLK_2:
+        return KEY_2;
+    case SDLK_3:
+        return KEY_3;
+    case SDLK_4:
+        return KEY_4;
+    case SDLK_5:
+        return KEY_5;
+    case SDLK_6:
+        return KEY_6;
+    case SDLK_7:
+        return KEY_7;
+    case SDLK_8:
+        return KEY_8;
+    case SDLK_9:
+        return KEY_9;
+    case SDLK_a:
+        return KEY_a;
+    case SDLK_b:
+        return KEY_b;
+    case SDLK_c:
+        return KEY_c;
+    case SDLK_d:
+        return KEY_d;
+    case SDLK_e:
+        return KEY_e;
+    case SDLK_f:
+        return KEY_f;
+    case SDLK_g:
+        return KEY_g;
+    case SDLK_h:
+        return KEY_h;
+    case SDLK_i:
+        return KEY_i;
+    case SDLK_j:
+        return KEY_j;
+    case SDLK_k:
+        return KEY_k;
+    case SDLK_l:
+        return KEY_l;
+    case SDLK_m:
+        return KEY_m;
+    case SDLK_n:
+        return KEY_n;
+    case SDLK_o:
+        return KEY_o;
+    case SDLK_p:
+        return KEY_p;
+    case SDLK_q:
+        return KEY_q;
+    case SDLK_r:
+        return KEY_r;
+    case SDLK_s:
+        return KEY_s;
+    case SDLK_t:
+        return KEY_t;
+    case SDLK_u:
+        return KEY_u;
+    case SDLK_v:
+        return KEY_v;
+    case SDLK_w:
+        return KEY_w;
+    case SDLK_x:
+        return KEY_x;
+    case SDLK_y:
+        return KEY_y;
+    case SDLK_z:
+        return KEY_z;
 
-        case SDLK_PRINT:
-            return KEY_PRINT;
-        case SDLK_KP0:
-            return KEY_KP0;
-        case SDLK_KP1:
-            return KEY_KP1;
-        case SDLK_KP2:
-            return KEY_KP2;
-        case SDLK_KP3:
-            return KEY_KP3;
-        case SDLK_KP4:
-            return KEY_KP4;
-        case SDLK_KP5:
-            return KEY_KP5;
-        case SDLK_KP6:
-            return KEY_KP6;
-        case SDLK_KP7:
-            return KEY_KP7;
-        case SDLK_KP8:
-            return KEY_KP8;
-        case SDLK_KP9:
-            return KEY_KP9;
+    case SDLK_PRINT:
+        return KEY_PRINT;
+    case SDLK_KP0:
+        return KEY_KP0;
+    case SDLK_KP1:
+        return KEY_KP1;
+    case SDLK_KP2:
+        return KEY_KP2;
+    case SDLK_KP3:
+        return KEY_KP3;
+    case SDLK_KP4:
+        return KEY_KP4;
+    case SDLK_KP5:
+        return KEY_KP5;
+    case SDLK_KP6:
+        return KEY_KP6;
+    case SDLK_KP7:
+        return KEY_KP7;
+    case SDLK_KP8:
+        return KEY_KP8;
+    case SDLK_KP9:
+        return KEY_KP9;
 
-        case SDLK_KP_PERIOD:
-            return KEY_KP_PERIOD;
-        case SDLK_KP_DIVIDE:
-            return KEY_KP_DIVIDE;
-        case SDLK_KP_MULTIPLY:
-            return KEY_KP_MULTIPLY;
-        case SDLK_KP_MINUS:
-            return KEY_KP_MINUS;
-        case SDLK_KP_PLUS:
-            return KEY_KP_PLUS;
-        case SDLK_KP_ENTER:
-            return KEY_KP_ENTER;
-        case SDLK_KP_EQUALS:
-            return KEY_KP_EQUALS;
+    case SDLK_KP_PERIOD:
+        return KEY_KP_PERIOD;
+    case SDLK_KP_DIVIDE:
+        return KEY_KP_DIVIDE;
+    case SDLK_KP_MULTIPLY:
+        return KEY_KP_MULTIPLY;
+    case SDLK_KP_MINUS:
+        return KEY_KP_MINUS;
+    case SDLK_KP_PLUS:
+        return KEY_KP_PLUS;
+    case SDLK_KP_ENTER:
+        return KEY_KP_ENTER;
+    case SDLK_KP_EQUALS:
+        return KEY_KP_EQUALS;
 
 #ifdef _WIN32_WCE
         case 0xC1: return KEY_APP01;
@@ -376,7 +375,7 @@ KeySym GetKeySym(int key)
     return KEY_NONE;
 }
 
-LocalEvent &LocalEvent::Get()
+LocalEvent& LocalEvent::Get()
 {
     static LocalEvent le;
 
@@ -393,7 +392,7 @@ void LocalEvent::ExtractCleanSdlEvents(std::vector<SDL_Event>& eventListCleared)
         eventList.push_back(event);
     }
     int lastPosMouse = -1;
-    for (auto &sdlEvent : eventList)
+    for (auto& sdlEvent : eventList)
     {
         if (sdlEvent.type == SDL_MOUSEMOTION)
         {
@@ -401,7 +400,8 @@ void LocalEvent::ExtractCleanSdlEvents(std::vector<SDL_Event>& eventListCleared)
             {
                 lastPosMouse = eventListCleared.size();
                 eventListCleared.push_back(sdlEvent);
-            } else
+            }
+            else
             {
                 eventListCleared[lastPosMouse] = sdlEvent;
             }
@@ -413,61 +413,60 @@ void LocalEvent::ExtractCleanSdlEvents(std::vector<SDL_Event>& eventListCleared)
 
 bool LocalEvent::HandleEvents(bool delay)
 {
-
     ResetModes(MOUSE_MOTION);
     ResetModes(KEY_PRESSED);
     std::vector<SDL_Event> eventListCleared;
     ExtractCleanSdlEvents(eventListCleared);
 
-    for (auto &event : eventListCleared)
+    for (auto& event : eventListCleared)
     {
         switch (event.type)
         {
-
-            case SDL_ACTIVEEVENT:
-                if (event.active.state & SDL_APPACTIVE)
+        case SDL_ACTIVEEVENT:
+            if (event.active.state & SDL_APPACTIVE)
+            {
+                if (Mixer::isValid())
                 {
-                    if (Mixer::isValid())
+                    //iconify
+                    if (0 == event.active.gain)
                     {
-                        //iconify
-                        if (0 == event.active.gain)
-                        {
-                            Mixer::Pause();
-                            Music::Pause();
-                            loop_delay = 100;
-                        } else
-                        {
-                            Mixer::Resume();
-                            Music::Resume();
-                            loop_delay = 1;
-                        }
+                        Mixer::Pause();
+                        Music::Pause();
+                        loop_delay = 100;
+                    }
+                    else
+                    {
+                        Mixer::Resume();
+                        Music::Resume();
+                        loop_delay = 1;
                     }
                 }
-                break;
+            }
+            break;
 
-                // keyboard
-            case SDL_KEYDOWN:
-            case SDL_KEYUP:
-                HandleKeyboardEvent(event.key);
-                break;
+            // keyboard
+        case SDL_KEYDOWN:
+        case SDL_KEYUP:
+            HandleKeyboardEvent(event.key);
+            break;
 
-                // mouse motion
-            case SDL_MOUSEMOTION:
-                HandleMouseMotionEvent(event.motion);
-                break;
+            // mouse motion
+        case SDL_MOUSEMOTION:
+            HandleMouseMotionEvent(event.motion);
+            break;
 
-                // mouse button
-            case SDL_MOUSEBUTTONDOWN:
-            case SDL_MOUSEBUTTONUP:
-                HandleMouseButtonEvent(event.button);
-                break;
+            // mouse button
+        case SDL_MOUSEBUTTONDOWN:
+        case SDL_MOUSEBUTTONUP:
+            HandleMouseButtonEvent(event.button);
+            break;
 
-                // exit
-            case SDL_QUIT:
-                exit(0);
+            // exit
+        case SDL_QUIT:
+            exit(0);
 
-            default:
-                break;
+        default:
+            break;
         }
 
         // need for wheel up/down delay
@@ -499,7 +498,7 @@ bool LocalEvent::MouseMotion() const
     return modes & MOUSE_MOTION;
 }
 
-bool LocalEvent::MouseMotion(const Rect &rt) const
+bool LocalEvent::MouseMotion(const Rect& rt) const
 {
     return (modes & MOUSE_MOTION) != 0 && rt & mouse_cu;
 }
@@ -534,7 +533,7 @@ bool LocalEvent::MouseReleaseRight() const
     return !(modes & MOUSE_PRESSED) && SDL_BUTTON_RIGHT == mouse_button;
 }
 
-void LocalEvent::HandleKeyboardEvent(SDL_KeyboardEvent &event)
+void LocalEvent::HandleKeyboardEvent(SDL_KeyboardEvent& event)
 {
     if (KEY_NONE != GetKeySym(event.keysym.sym))
     {
@@ -548,7 +547,7 @@ void LocalEvent::HandleKeyboardEvent(SDL_KeyboardEvent &event)
     }
 }
 
-void LocalEvent::HandleMouseMotionEvent(const SDL_MouseMotionEvent &motion)
+void LocalEvent::HandleMouseMotionEvent(const SDL_MouseMotionEvent& motion)
 {
     mouse_state = motion.state;
     SetModes(MOUSE_MOTION);
@@ -557,7 +556,7 @@ void LocalEvent::HandleMouseMotionEvent(const SDL_MouseMotionEvent &motion)
     if (modes & MOUSE_OFFSET) mouse_cu += mouse_st;
 }
 
-void LocalEvent::HandleMouseButtonEvent(const SDL_MouseButtonEvent &button)
+void LocalEvent::HandleMouseButtonEvent(const SDL_MouseButtonEvent& button)
 {
     button.state == SDL_PRESSED ? SetModes(MOUSE_PRESSED) : ResetModes(MOUSE_PRESSED);
     mouse_button = button.button;
@@ -569,64 +568,66 @@ void LocalEvent::HandleMouseButtonEvent(const SDL_MouseButtonEvent &button)
     if (modes & MOUSE_PRESSED)
         switch (button.button)
         {
-            case SDL_BUTTON_WHEELDOWN:
-            case SDL_BUTTON_WHEELUP:
-                mouse_pm = mouse_cu;
-                break;
+        case SDL_BUTTON_WHEELDOWN:
+        case SDL_BUTTON_WHEELUP:
+            mouse_pm = mouse_cu;
+            break;
 
-            case SDL_BUTTON_LEFT:
-                mouse_pl = mouse_cu;
-                SetModes(CLICK_LEFT);
+        case SDL_BUTTON_LEFT:
+            mouse_pl = mouse_cu;
+            SetModes(CLICK_LEFT);
 
-                // emulate press right
-                if (modes & TAP_MODE)
-                {
-                    clock.Start();
-                    SetModes(CLOCK_ON);
-                }
-                break;
+            // emulate press right
+            if (modes & TAP_MODE)
+            {
+                clock.Start();
+                SetModes(CLOCK_ON);
+            }
+            break;
 
-            case SDL_BUTTON_MIDDLE:
-                mouse_pm = mouse_cu;
-                SetModes(CLICK_MIDDLE);
-                break;
+        case SDL_BUTTON_MIDDLE:
+            mouse_pm = mouse_cu;
+            SetModes(CLICK_MIDDLE);
+            break;
 
 
-            case SDL_BUTTON_RIGHT:
-                mouse_pr = mouse_cu;
-                SetModes(CLICK_RIGHT);
-                break;
+        case SDL_BUTTON_RIGHT:
+            mouse_pr = mouse_cu;
+            SetModes(CLICK_RIGHT);
+            break;
 
-            default:
-                break;
+        default:
+            break;
         }
     else
         switch (button.button)
         {
-            case SDL_BUTTON_WHEELDOWN:
-            case SDL_BUTTON_WHEELUP:
-                mouse_rm = mouse_cu;
-                break;
+        case SDL_BUTTON_WHEELDOWN:
+        case SDL_BUTTON_WHEELUP:
+            mouse_rm = mouse_cu;
+            break;
 
-            case SDL_BUTTON_LEFT:
-                mouse_rl = mouse_cu;
+        case SDL_BUTTON_LEFT:
+            mouse_rl = mouse_cu;
 
-                // emulate press right
-                if (modes & TAP_MODE)
-                { ResetModes(CLOCK_ON); }
-                break;
+            // emulate press right
+            if (modes & TAP_MODE)
+            {
+                ResetModes(CLOCK_ON);
+            }
+            break;
 
-            case SDL_BUTTON_MIDDLE:
-                mouse_rm = mouse_cu;
-                break;
+        case SDL_BUTTON_MIDDLE:
+            mouse_rm = mouse_cu;
+            break;
 
 
-            case SDL_BUTTON_RIGHT:
-                mouse_rr = mouse_cu;
-                break;
+        case SDL_BUTTON_RIGHT:
+            mouse_rr = mouse_cu;
+            break;
 
-            default:
-                break;
+        default:
+            break;
         }
 }
 
@@ -641,7 +642,7 @@ bool LocalEvent::MouseClickLeft()
     return false;
 }
 
-bool LocalEvent::MouseClickLeft(const Rect &rt)
+bool LocalEvent::MouseClickLeft(const Rect& rt)
 {
     //if(MouseReleaseLeft() && (rt & mouse_rl) && (CLICK_LEFT & modes) && ((modes & TAP_MODE) || (rt & mouse_pl)))
     if (MouseReleaseLeft() && rt & mouse_pl && rt & mouse_rl && CLICK_LEFT & modes)
@@ -664,7 +665,7 @@ bool LocalEvent::MouseClickMiddle()
     return false;
 }
 
-bool LocalEvent::MouseClickMiddle(const Rect &rt)
+bool LocalEvent::MouseClickMiddle(const Rect& rt)
 {
     if (MouseReleaseMiddle() && rt & mouse_pm && rt & mouse_rm && CLICK_MIDDLE & modes)
     {
@@ -686,7 +687,7 @@ bool LocalEvent::MouseClickRight()
     return false;
 }
 
-bool LocalEvent::MouseClickRight(const Rect &rt)
+bool LocalEvent::MouseClickRight(const Rect& rt)
 {
     if (MouseReleaseRight() && rt & mouse_pr && rt & mouse_rr && CLICK_RIGHT & modes)
     {
@@ -707,37 +708,37 @@ bool LocalEvent::MouseWheelDn() const
     return modes & MOUSE_PRESSED && SDL_BUTTON_WHEELDOWN == mouse_button;
 }
 
-bool LocalEvent::MousePressLeft(const Rect &rt) const
+bool LocalEvent::MousePressLeft(const Rect& rt) const
 {
     return MousePressLeft() && rt & mouse_pl;
 }
 
-bool LocalEvent::MousePressLeft(const Point &pt, uint32_t w, uint32_t h) const
+bool LocalEvent::MousePressLeft(const Point& pt, uint32_t w, uint32_t h) const
 {
     return MousePressLeft() && Rect(pt.x, pt.y, w, h) & mouse_pl;
 }
 
-bool LocalEvent::MousePressMiddle(const Rect &rt) const
+bool LocalEvent::MousePressMiddle(const Rect& rt) const
 {
     return MousePressMiddle() && rt & mouse_pm;
 }
 
-bool LocalEvent::MousePressRight(const Rect &rt) const
+bool LocalEvent::MousePressRight(const Rect& rt) const
 {
     return MousePressRight() && rt & mouse_pr;
 }
 
-bool LocalEvent::MouseReleaseLeft(const Rect &rt) const
+bool LocalEvent::MouseReleaseLeft(const Rect& rt) const
 {
     return MouseReleaseLeft() && rt & mouse_rl;
 }
 
-bool LocalEvent::MouseReleaseMiddle(const Rect &rt) const
+bool LocalEvent::MouseReleaseMiddle(const Rect& rt) const
 {
     return MouseReleaseMiddle() && rt & mouse_rm;
 }
 
-bool LocalEvent::MouseReleaseRight(const Rect &rt) const
+bool LocalEvent::MouseReleaseRight(const Rect& rt) const
 {
     return MouseReleaseRight() && rt & mouse_rr;
 }
@@ -778,22 +779,22 @@ void LocalEvent::ResetReleaseMiddle()
     mouse_rm.y = -1;
 }
 
-bool LocalEvent::MouseWheelUp(const Rect &rt) const
+bool LocalEvent::MouseWheelUp(const Rect& rt) const
 {
     return MouseWheelUp() && rt & mouse_cu;
 }
 
-bool LocalEvent::MouseWheelDn(const Rect &rt) const
+bool LocalEvent::MouseWheelDn(const Rect& rt) const
 {
     return MouseWheelDn() && rt & mouse_cu;
 }
 
-bool LocalEvent::MouseCursor(const Rect &rt) const
+bool LocalEvent::MouseCursor(const Rect& rt) const
 {
     return rt & mouse_cu;
 }
 
-const Point &LocalEvent::GetMouseCursor()
+const Point& LocalEvent::GetMouseCursor()
 {
 #ifdef WITHOUT_MOUSE
     if(!emulate_mouse)
@@ -844,9 +845,9 @@ void LocalEvent::SetGlobalFilterKeysEvents(void (*pf)(int, int))
 }
 
 
-int LocalEvent::GlobalFilterEvents(const SDL_Event *event)
+int LocalEvent::GlobalFilterEvents(const SDL_Event* event)
 {
-    LocalEvent &le = Get();
+    LocalEvent& le = Get();
 
     // motion
     if (le.modes & GLOBAL_FILTER && SDL_MOUSEMOTION == event->type)
@@ -906,7 +907,6 @@ void LocalEvent::SetStateDefaults()
     SetState(SDL_VIDEOEXPOSE, false);
 
     SDL_SetEventFilter(GlobalFilterEvents);
-
 }
 
 #ifdef WITHOUT_MOUSE

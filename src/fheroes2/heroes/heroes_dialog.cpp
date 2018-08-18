@@ -38,8 +38,8 @@
 /* readonly: false, fade: false */
 int Heroes::OpenDialog(bool readonly, bool fade)
 {
-    Display &display = Display::Get();
-    Cursor &cursor = Cursor::Get();
+    Display& display = Display::Get();
+    Cursor& cursor = Cursor::Get();
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
@@ -47,7 +47,7 @@ int Heroes::OpenDialog(bool readonly, bool fade)
     if (fade && Settings::Get().ExtGameUseFade()) display.Fade();
 
     Dialog::FrameBorder background(Size(640, 480));
-    const Point &cur_pt = background.GetArea();
+    const Point& cur_pt = background.GetArea();
     Point dst_pt(cur_pt);
 
     AGG::GetICN(ICN::HEROBKG, 0).Blit(dst_pt);
@@ -92,23 +92,24 @@ int Heroes::OpenDialog(bool readonly, bool fade)
     // army format spread
     dst_pt.x = cur_pt.x + 515;
     dst_pt.y = cur_pt.y + 63;
-    const Sprite &sprite1 = AGG::GetICN(ICN::HSICONS, 9);
+    const Sprite& sprite1 = AGG::GetICN(ICN::HSICONS, 9);
     sprite1.Blit(dst_pt);
 
     const Rect rectSpreadArmyFormat(dst_pt, sprite1.w(), sprite1.h());
     const string descriptionSpreadArmyFormat = _(
-            "'Spread' combat formation spreads your armies from the top to the bottom of the battlefield, with at least one empty space between each army.");
+        "'Spread' combat formation spreads your armies from the top to the bottom of the battlefield, with at least one empty space between each army."
+    );
     const Point army1_pt(dst_pt.x - 1, dst_pt.y - 1);
 
     // army format grouped
     dst_pt.x = cur_pt.x + 552;
     dst_pt.y = cur_pt.y + 63;
-    const Sprite &sprite2 = AGG::GetICN(ICN::HSICONS, 10);
+    const Sprite& sprite2 = AGG::GetICN(ICN::HSICONS, 10);
     sprite2.Blit(dst_pt);
 
     const Rect rectGroupedArmyFormat(dst_pt, sprite2.w(), sprite2.h());
     const string descriptionGroupedArmyFormat = _(
-            "'Grouped' combat formation bunches your army together in the center of your side of the battlefield.");
+        "'Grouped' combat formation bunches your army together in the center of your side of the battlefield.");
     const Point army2_pt(dst_pt.x - 1, dst_pt.y - 1);
 
     // cursor format
@@ -130,7 +131,9 @@ int Heroes::OpenDialog(bool readonly, bool fade)
     dst_pt.y = cur_pt.y + 130;
 
     AGG::GetICN(ICN::CREST,
-                Color::NONE == GetColor() ? Color::GetIndex(Settings::Get().CurrentColor()) : Color::GetIndex(
+                Color::NONE == GetColor()
+                    ? Color::GetIndex(Settings::Get().CurrentColor())
+                    : Color::GetIndex(
                         GetColor())).Blit(dst_pt);
 
     // monster
@@ -166,7 +169,7 @@ int Heroes::OpenDialog(bool readonly, bool fade)
     // bottom small bar
     dst_pt.x = cur_pt.x + 22;
     dst_pt.y = cur_pt.y + 460;
-    const Sprite &bar = AGG::GetICN(ICN::HSBTNS, 8);
+    const Sprite& bar = AGG::GetICN(ICN::HSBTNS, 8);
     bar.Blit(dst_pt);
 
     StatusBar statusBar;
@@ -192,7 +195,7 @@ int Heroes::OpenDialog(bool readonly, bool fade)
     dst_pt.y = cur_pt.y + 318;
     Button buttonExit(dst_pt.x, dst_pt.y, ICN::HSBTNS, 2, 3);
 
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     if (inCastle() || readonly || Modes(NOTDISMISS))
     {
@@ -276,17 +279,23 @@ int Heroes::OpenDialog(bool readonly, bool fade)
 
         // prev hero
         if (buttonPrevHero.isEnable() && le.MouseClickLeft(buttonPrevHero))
-        { return Dialog::PREV; }
+        {
+            return Dialog::PREV;
+        }
 
         // next hero
         if (buttonNextHero.isEnable() && le.MouseClickLeft(buttonNextHero))
-        { return Dialog::NEXT; }
+        {
+            return Dialog::NEXT;
+        }
 
         // dismiss
         if (buttonDismiss.isEnable() && le.MouseClickLeft(buttonDismiss) &&
             Dialog::YES == Dialog::Message(GetName(), _("Are you sure you want to dismiss this Hero?"), Font::BIG,
                                            Dialog::YES | Dialog::NO))
-        { return Dialog::DISMISS; }
+        {
+            return Dialog::DISMISS;
+        }
 
         if (le.MouseCursor(moraleIndicator.GetArea())) MoraleIndicator::QueueEventProcessing(moraleIndicator);
         else if (le.MouseCursor(luckIndicator.GetArea())) LuckIndicator::QueueEventProcessing(luckIndicator);
@@ -301,18 +310,21 @@ int Heroes::OpenDialog(bool readonly, bool fade)
             cursor.Show();
             display.Flip();
             army.SetSpreadFormat(true);
-        } else if (!readonly && le.MouseClickLeft(rectGroupedArmyFormat) && army.isSpreadFormat())
+        }
+        else if (!readonly && le.MouseClickLeft(rectGroupedArmyFormat) && army.isSpreadFormat())
         {
             cursor.Hide();
             cursorFormat.Move(army2_pt);
             cursor.Show();
             display.Flip();
             army.SetSpreadFormat(false);
-        } else if (le.MouseCursor(secskill_bar.GetArea()) && secskill_bar.QueueEventProcessing(&message))
+        }
+        else if (le.MouseCursor(secskill_bar.GetArea()) && secskill_bar.QueueEventProcessing(&message))
         {
             cursor.Show();
             display.Flip();
-        } else if (le.MouseCursor(primskill_bar.GetArea()) && primskill_bar.QueueEventProcessing(&message))
+        }
+        else if (le.MouseCursor(primskill_bar.GetArea()) && primskill_bar.QueueEventProcessing(&message))
         {
             cursor.Show();
             display.Flip();
@@ -349,7 +361,8 @@ int Heroes::OpenDialog(bool readonly, bool fade)
                 message = "Dismiss disabled, see game info";
             else
                 message = _("Dismiss hero");
-        } else if (le.MouseCursor(buttonPrevHero))
+        }
+        else if (le.MouseCursor(buttonPrevHero))
             message = _("Show prev heroes");
         else if (le.MouseCursor(buttonNextHero))
             message = _("Show next heroes");

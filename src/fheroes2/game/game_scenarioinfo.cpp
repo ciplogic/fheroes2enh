@@ -38,11 +38,11 @@
 #include "game.h"
 #include "mus.h"
 
-void RedrawScenarioStaticInfo(const Rect &);
+void RedrawScenarioStaticInfo(const Rect&);
 
-void RedrawRatingInfo(TextSprite &);
+void RedrawRatingInfo(TextSprite&);
 
-void RedrawDifficultyInfo(const Point &dst, bool label = true);
+void RedrawDifficultyInfo(const Point& dst, bool label = true);
 
 int Game::SelectScenario()
 {
@@ -51,7 +51,7 @@ int Game::SelectScenario()
 
 int Game::ScenarioInfo()
 {
-    Settings &conf = Settings::Get();
+    Settings& conf = Settings::Get();
 
     AGG::PlayMusic(MUS::MAINMENU);
 
@@ -63,14 +63,14 @@ int Game::ScenarioInfo()
     }
 
     int result = QUITGAME;
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     // cursor
-    Cursor &cursor = Cursor::Get();
+    Cursor& cursor = Cursor::Get();
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
-    Display &display = Display::Get();
+    Display& display = Display::Get();
 
     Point top, pointDifficultyInfo, pointOpponentInfo, pointClassInfo;
     Rect rectPanel;
@@ -82,13 +82,13 @@ int Game::ScenarioInfo()
     Rects coordDifficulty;
     coordDifficulty.reserve(5);
 
-    const Sprite &ngextra = AGG::GetICN(ICN::NGEXTRA, 62);
+    const Sprite& ngextra = AGG::GetICN(ICN::NGEXTRA, 62);
     up<Dialog::FrameBorder> frameborder = nullptr;
 
     // image background
     {
-        const Sprite &panel = AGG::GetICN(ICN::NGHSBKG, 0);
-        const Sprite &back = AGG::GetICN(ICN::HEROES, 0);
+        const Sprite& panel = AGG::GetICN(ICN::NGHSBKG, 0);
+        const Sprite& back = AGG::GetICN(ICN::HEROES, 0);
         const Point top((display.w() - back.w()) / 2, (display.h() - back.h()) / 2);
 
         rectPanel = Rect(top.x + 204, top.y + 32, panel.w(), panel.h());
@@ -109,19 +109,21 @@ int Game::ScenarioInfo()
         back.Blit(top);
     }
     const bool reset_starting_settings = conf.MapsFile().empty() || !System::IsFile(conf.MapsFile());
-    Players &players = conf.GetPlayers();
+    Players& players = conf.GetPlayers();
     Interface::PlayersInfo playersInfo(true, true, true);
 
     // set first maps settings
     if (reset_starting_settings)
     {
-        const auto it = std::find_if(lists.begin(), lists.end(), [](auto &_map) {
+        const auto it = std::find_if(lists.begin(), lists.end(), [](auto& _map)
+        {
             return _map.name == "Broken Alliance";
         });
         if (it != lists.end())
         {
             conf.SetCurrentFileInfo(*it);
-        } else
+        }
+        else
         {
             conf.SetCurrentFileInfo(lists.front());
         }
@@ -146,21 +148,21 @@ int Game::ScenarioInfo()
 
     switch ((DifficultyEnum)conf.GameDifficulty())
     {
-        case DifficultyEnum::EASY:
-            levelCursor.Move(coordDifficulty[0]);
-            break;
-        case DifficultyEnum::NORMAL:
-            levelCursor.Move(coordDifficulty[1]);
-            break;
-        case DifficultyEnum::HARD:
-            levelCursor.Move(coordDifficulty[2]);
-            break;
-        case DifficultyEnum::EXPERT:
-            levelCursor.Move(coordDifficulty[3]);
-            break;
-        case DifficultyEnum::IMPOSSIBLE:
-            levelCursor.Move(coordDifficulty[4]);
-            break;
+    case DifficultyEnum::EASY:
+        levelCursor.Move(coordDifficulty[0]);
+        break;
+    case DifficultyEnum::NORMAL:
+        levelCursor.Move(coordDifficulty[1]);
+        break;
+    case DifficultyEnum::HARD:
+        levelCursor.Move(coordDifficulty[2]);
+        break;
+    case DifficultyEnum::EXPERT:
+        levelCursor.Move(coordDifficulty[3]);
+        break;
+    case DifficultyEnum::IMPOSSIBLE:
+        levelCursor.Move(coordDifficulty[4]);
+        break;
     }
 
     if (buttonSelectMaps) buttonSelectMaps->Draw();
@@ -183,7 +185,7 @@ int Game::ScenarioInfo()
             (HotKeyPressEvent(EVENT_BUTTON_SELECT) || le.MouseClickLeft(*buttonSelectMaps)))
         {
             levelCursor.Hide();
-            const Maps::FileInfo *fi = Dialog::SelectScenario(lists);
+            const Maps::FileInfo* fi = Dialog::SelectScenario(lists);
             if (fi)
             {
                 conf.SetCurrentFileInfo(*fi);
@@ -202,48 +204,52 @@ int Game::ScenarioInfo()
             }
             cursor.Show();
             display.Flip();
-        } else
-            // click cancel
-        if (HotKeyPressEvent(EVENT_DEFAULT_EXIT) || le.MouseClickLeft(*buttonCancel))
-        {
-            result = MAINMENU;
-            break;
-        } else
-            // click ok
-        if (HotKeyPressEvent(EVENT_DEFAULT_READY) || le.MouseClickLeft(*buttonOk))
-        {
-            result = STARTGAME;
-            break;
-        } else if (le.MouseClickLeft(rectPanel))
-        {
-            const s32 index = coordDifficulty.GetIndex(le.GetMouseCursor());
-
-            // select difficulty
-            if (0 <= index)
-            {
-                cursor.Hide();
-                levelCursor.Move(coordDifficulty[index]);
-                conf.SetGameDifficulty(index);
-                if (rating) RedrawRatingInfo(*rating);
-                cursor.Show();
-                display.Flip();
-            } else
-                // playersInfo
-            if (playersInfo.QueueEventProcessing())
-            {
-                cursor.Hide();
-                RedrawScenarioStaticInfo(rectPanel);
-                levelCursor.Redraw();
-                RedrawDifficultyInfo(pointDifficultyInfo, true);
-
-                playersInfo.RedrawInfo();
-                if (rating) RedrawRatingInfo(*rating);
-                buttonOk->Draw();
-                buttonCancel->Draw();
-                cursor.Show();
-                display.Flip();
-            }
         }
+        else
+            // click cancel
+            if (HotKeyPressEvent(EVENT_DEFAULT_EXIT) || le.MouseClickLeft(*buttonCancel))
+            {
+                result = MAINMENU;
+                break;
+            }
+            else
+                // click ok
+                if (HotKeyPressEvent(EVENT_DEFAULT_READY) || le.MouseClickLeft(*buttonOk))
+                {
+                    result = STARTGAME;
+                    break;
+                }
+                else if (le.MouseClickLeft(rectPanel))
+                {
+                    const s32 index = coordDifficulty.GetIndex(le.GetMouseCursor());
+
+                    // select difficulty
+                    if (0 <= index)
+                    {
+                        cursor.Hide();
+                        levelCursor.Move(coordDifficulty[index]);
+                        conf.SetGameDifficulty(index);
+                        if (rating) RedrawRatingInfo(*rating);
+                        cursor.Show();
+                        display.Flip();
+                    }
+                    else
+                        // playersInfo
+                        if (playersInfo.QueueEventProcessing())
+                        {
+                            cursor.Hide();
+                            RedrawScenarioStaticInfo(rectPanel);
+                            levelCursor.Redraw();
+                            RedrawDifficultyInfo(pointDifficultyInfo, true);
+
+                            playersInfo.RedrawInfo();
+                            if (rating) RedrawRatingInfo(*rating);
+                            buttonOk->Draw();
+                            buttonCancel->Draw();
+                            cursor.Show();
+                            display.Flip();
+                        }
+                }
 
         if (le.MousePressRight(rectPanel))
         {
@@ -251,11 +257,14 @@ int Game::ScenarioInfo()
                 Dialog::Message(_("Scenario"), _("Click here to select which scenario to play."), Font::BIG);
             else if (0 <= coordDifficulty.GetIndex(le.GetMouseCursor()))
                 Dialog::Message(_("Game Difficulty"),
-                                _("This lets you change the starting difficulty at which you will play. Higher difficulty levels start you of with fewer resources, and at the higher settings, give extra resources to the computer."),
+                                _(
+                                    "This lets you change the starting difficulty at which you will play. Higher difficulty levels start you of with fewer resources, and at the higher settings, give extra resources to the computer."
+                                ),
                                 Font::BIG);
             else if (rating && le.MousePressRight(rating->GetRect()))
                 Dialog::Message(_("Difficulty Rating"),
-                                _("The difficulty rating reflects a combination of various settings for your game. This number will be applied to your final score."),
+                                _("The difficulty rating reflects a combination of various settings for your game. This number will be applied to your final score."
+                                ),
                                 Font::BIG);
             else if (le.MousePressRight(*buttonOk))
                 Dialog::Message(_("OK"), _("Click to accept these settings and start a new game."), Font::BIG);
@@ -284,8 +293,8 @@ int Game::ScenarioInfo()
                 result = world.LoadMapMP2(conf.MapsFile()) ? STARTGAME : MAINMENU;
             else if (ext == "map")
                 result = world.LoadMapMAP(conf.MapsFile()) ? STARTGAME : MAINMENU;
-
-        } else
+        }
+        else
         {
             result = MAINMENU;
         }
@@ -299,11 +308,11 @@ uint32_t Game::GetStep4Player(uint32_t current, uint32_t width, uint32_t count)
     return current * width * KINGDOMMAX / count + width * (KINGDOMMAX - count) / (2 * count);
 }
 
-void RedrawScenarioStaticInfo(const Rect &rt)
+void RedrawScenarioStaticInfo(const Rect& rt)
 {
-    Settings &conf = Settings::Get();
+    Settings& conf = Settings::Get();
 
-    const Sprite &panel = AGG::GetICN(ICN::NGHSBKG, 0);
+    const Sprite& panel = AGG::GetICN(ICN::NGHSBKG, 0);
     panel.Blit(rt);
     Text text(_("Scenario:"), Font::BIG);
     text.Blit(rt.x + (rt.w - text.w()) / 2, rt.y + 20);
@@ -317,11 +326,11 @@ void RedrawScenarioStaticInfo(const Rect &rt)
     text.Blit(rt.x + (rt.w - text.w()) / 2, rt.y + 262);
 }
 
-void RedrawDifficultyInfo(const Point &dst, bool label)
+void RedrawDifficultyInfo(const Point& dst, bool label)
 {
     for (uint32_t current = (uint32_t)DifficultyEnum::EASY; current <= (uint32_t)DifficultyEnum::IMPOSSIBLE; ++current)
     {
-        const Sprite &sprite = AGG::GetICN(ICN::NGHSBKG, 0);
+        const Sprite& sprite = AGG::GetICN(ICN::NGHSBKG, 0);
         Rect src_rt(24, 94, 65, 65);
         const uint32_t offset = current * (src_rt.w + 12);
         src_rt.x = src_rt.x + offset;
@@ -335,7 +344,7 @@ void RedrawDifficultyInfo(const Point &dst, bool label)
     }
 }
 
-void RedrawRatingInfo(TextSprite &sprite)
+void RedrawRatingInfo(TextSprite& sprite)
 {
     sprite.Hide();
     string str(_("Rating %{rating}%"));

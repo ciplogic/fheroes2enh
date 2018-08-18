@@ -70,19 +70,19 @@ namespace Battle
 
         void SetQuality(uint32_t);
 
-        void SetArea(const Rect &);
+        void SetArea(const Rect&);
 
-        bool isPassable4(const Unit &, const Cell &) const;
+        bool isPassable4(const Unit&, const Cell&) const;
 
-        bool isPassable3(const Unit &, bool check_reflect) const;
+        bool isPassable3(const Unit&, bool check_reflect) const;
 
         bool isPassable1(bool check_troop) const;
 
-        bool isPositionIncludePoint(const Point &) const;
+        bool isPositionIncludePoint(const Point&) const;
 
         s32 GetIndex() const;
 
-        const Rect &GetPos() const;
+        const Rect& GetPos() const;
 
         int GetObject() const;
 
@@ -90,36 +90,37 @@ namespace Battle
 
         s32 GetQuality() const;
 
-        direction_t GetTriangleDirection(const Point &) const;
+        direction_t GetTriangleDirection(const Point&) const;
 
-        const Unit *GetUnit() const;
+        const Unit* GetUnit() const;
 
-        Unit *GetUnit();
+        Unit* GetUnit();
 
-        void SetUnit(Unit *);
+        void SetUnit(Unit*);
 
     private:
-        friend ByteVectorWriter &operator<<(ByteVectorWriter &, const Cell &);
+        friend ByteVectorWriter& operator<<(ByteVectorWriter&, const Cell&);
 
-        friend ByteVectorReader &operator>>(ByteVectorReader &, Cell &);
+        friend ByteVectorReader& operator>>(ByteVectorReader&, Cell&);
 
         s32 index;
         Rect pos;
         int object;
         int direction;
         s32 quality;
-        Unit *troop;
+        Unit* troop;
         Point coord[7];
     };
 
-    ByteVectorWriter &operator<<(ByteVectorWriter &, const Cell &);
-    ByteVectorReader &operator>>(ByteVectorReader &, Cell &);
+    ByteVectorWriter& operator<<(ByteVectorWriter&, const Cell&);
+    ByteVectorReader& operator>>(ByteVectorReader&, Cell&);
 
     class Position : protected pair<Cell *, Cell *>
     {
     public:
         Position() : pair<Cell *, Cell *>(nullptr, nullptr)
-        {}
+        {
+        }
 
         void Set(s32 head, bool wide, bool reflect);
 
@@ -129,16 +130,16 @@ namespace Battle
 
         bool isValid() const;
 
-        static Position GetCorrect(const Unit &, s32);
+        static Position GetCorrect(const Unit&, s32);
 
         Rect GetRect() const;
 
-        Cell *GetHead();
+        Cell* GetHead();
 
-        const Cell *GetHead() const;
+        const Cell* GetHead() const;
 
-        Cell *GetTail();
+        Cell* GetTail();
 
-        const Cell *GetTail() const;
+        const Cell* GetTail() const;
     };
 }

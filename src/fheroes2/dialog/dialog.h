@@ -96,58 +96,58 @@ namespace Dialog
     std::string SelectFileSave();
 
     // show info cell maps
-    void QuickInfo(const Maps::Tiles &);
+    void QuickInfo(const Maps::Tiles&);
 
-    void QuickInfo(const Castle &);
+    void QuickInfo(const Castle&);
 
-    void QuickInfo(const Heroes &);
+    void QuickInfo(const Heroes&);
 
-    int Message(const std::string &, const std::string &, int ft,
+    int Message(const std::string&, const std::string&, int ft,
                 int buttons = 0 /* buttons: OK : CANCEL : OK|CANCEL : YES|NO */);
 
     void ExtSettings(bool);
 
-    int LevelUpSelectSkill(const std::string &, const std::string &, const Skill::Secondary &, const Skill::Secondary &,
-                           Heroes &);
+    int LevelUpSelectSkill(const std::string&, const std::string&, const Skill::Secondary&, const Skill::Secondary&,
+                           Heroes&);
 
-    bool SelectGoldOrExp(const std::string &, const std::string &, uint32_t gold, uint32_t expr, const Heroes &);
+    bool SelectGoldOrExp(const std::string&, const std::string&, uint32_t gold, uint32_t expr, const Heroes&);
 
-    void SpellInfo(const Spell &, bool ok_button = true);
+    void SpellInfo(const Spell&, bool ok_button = true);
 
-    void SpellInfo(const std::string &, const std::string &, const Spell &, bool ok_button = true);
+    void SpellInfo(const std::string&, const std::string&, const Spell&, bool ok_button = true);
 
-    void SecondarySkillInfo(const Skill::Secondary &, const bool ok_button = true);
+    void SecondarySkillInfo(const Skill::Secondary&, const bool ok_button = true);
 
     void
-    SecondarySkillInfo(const std::string &, const std::string &, const Skill::Secondary &, const bool ok_button = true);
+    SecondarySkillInfo(const std::string&, const std::string&, const Skill::Secondary&, const bool ok_button = true);
 
-    void PrimarySkillInfo(const std::string &, const std::string &, int);
+    void PrimarySkillInfo(const std::string&, const std::string&, int);
 
-    int SpriteInfo(const std::string &, const std::string &, Surface &, int buttons = OK);
+    int SpriteInfo(const std::string&, const std::string&, Surface&, int buttons = OK);
 
-    int ArtifactInfo(const std::string &, const std::string &, const Artifact &, int buttons = OK);
+    int ArtifactInfo(const std::string&, const std::string&, const Artifact&, int buttons = OK);
 
-    int ResourceInfo(const std::string &, const std::string &, const Funds &, int buttons = OK);
+    int ResourceInfo(const std::string&, const std::string&, const Funds&, int buttons = OK);
 
     int SelectSkillFromArena();
 
-    bool SelectCount(const std::string &, uint32_t min, uint32_t max, uint32_t &res, int step = 1);
+    bool SelectCount(const std::string&, uint32_t min, uint32_t max, uint32_t& res, int step = 1);
 
-    bool InputString(const std::string &, std::string &);
+    bool InputString(const std::string&, std::string&);
 
-    Troop RecruitMonster(const Monster &, uint32_t available, bool);
+    Troop RecruitMonster(const Monster&, uint32_t available, bool);
 
-    void DwellingInfo(const Monster &, uint32_t available);
+    void DwellingInfo(const Monster&, uint32_t available);
 
-    bool SetGuardian(Heroes &, Troop &, CapturedObject &, bool readonly);
+    bool SetGuardian(Heroes&, Troop&, CapturedObject&, bool readonly);
 
-    int ArmyInfo(const Troop &troop, int flags);
+    int ArmyInfo(const Troop& troop, int flags);
 
-    int ArmyJoinFree(const Troop &, Heroes &);
+    int ArmyJoinFree(const Troop&, Heroes&);
 
-    int ArmyJoinWithCost(const Troop &, uint32_t join, uint32_t gold, Heroes &);
+    int ArmyJoinWithCost(const Troop&, uint32_t join, uint32_t gold, Heroes&);
 
-    int ArmySplitTroop(int free_slots, uint32_t max, uint32_t &, bool);
+    int ArmySplitTroop(int free_slots, uint32_t max, uint32_t&, bool);
 
     void Marketplace(bool fromTradingPost = false);
 
@@ -168,8 +168,10 @@ namespace Dialog
 
         ~FrameBox();
 
-        const Rect &GetArea() const
-        { return area; };
+        const Rect& GetArea() const
+        {
+            return area;
+        };
 
     protected:
         SpriteBack background;
@@ -181,9 +183,9 @@ namespace Dialog
     public:
         explicit FrameBorder(int v = BORDERWIDTH);
 
-        explicit FrameBorder(const Size &);
+        explicit FrameBorder(const Size&);
 
-        FrameBorder(const Size &, const Surface &);
+        FrameBorder(const Size&, const Surface&);
 
         FrameBorder(s32, s32, uint32_t, uint32_t);
 
@@ -199,15 +201,15 @@ namespace Dialog
 
         void SetPosition(s32, s32, uint32_t = 0, uint32_t = 0);
 
-        const Rect &GetRect() const;
+        const Rect& GetRect() const;
 
-        const Rect &GetArea() const;
+        const Rect& GetArea() const;
 
-        const Rect &GetTop() const;
+        const Rect& GetTop() const;
 
-        static void RenderRegular(const Rect &);
+        static void RenderRegular(const Rect&);
 
-        static void RenderOther(const Surface &, const Rect &);
+        static void RenderOther(const Surface&, const Rect&);
 
     protected:
         SpriteBack background;

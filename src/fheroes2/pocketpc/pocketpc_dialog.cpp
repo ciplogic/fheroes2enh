@@ -26,27 +26,27 @@
 #include "localevent.h"
 #include "icn.h"
 
-uint32_t PocketPC::GetCursorAttackDialog(const Point &dst, int allow)
+uint32_t PocketPC::GetCursorAttackDialog(const Point& dst, int allow)
 {
-    Display &display = Display::Get();
-    LocalEvent &le = LocalEvent::Get();
+    Display& display = Display::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     const Rect rt(dst.x - 32, dst.y - 32, 86, 86);
 
-    const Sprite &sp_info = AGG::GetICN(ICN::CMSECO, 5);
-    const Sprite &sp_bleft = AGG::GetICN(ICN::CMSECO, 10);
-    const Sprite &sp_left = AGG::GetICN(ICN::CMSECO, 11);
-    const Sprite &sp_tleft = AGG::GetICN(ICN::CMSECO, 12);
-    const Sprite &sp_tright = AGG::GetICN(ICN::CMSECO, 7);
-    const Sprite &sp_right = AGG::GetICN(ICN::CMSECO, 8);
-    const Sprite &sp_bright = AGG::GetICN(ICN::CMSECO, 9);
+    const Sprite& sp_info = AGG::GetICN(ICN::CMSECO, 5);
+    const Sprite& sp_bleft = AGG::GetICN(ICN::CMSECO, 10);
+    const Sprite& sp_left = AGG::GetICN(ICN::CMSECO, 11);
+    const Sprite& sp_tleft = AGG::GetICN(ICN::CMSECO, 12);
+    const Sprite& sp_tright = AGG::GetICN(ICN::CMSECO, 7);
+    const Sprite& sp_right = AGG::GetICN(ICN::CMSECO, 8);
+    const Sprite& sp_bright = AGG::GetICN(ICN::CMSECO, 9);
 
     Surface shadow(rt, false);
     shadow.Fill(ColorBlack);
 
     SpriteBack back(rt);
 
-    Cursor &cursor = Cursor::Get();
+    Cursor& cursor = Cursor::Get();
     cursor.Hide();
     cursor.SetThemes(Cursor::POINTER);
 
@@ -97,7 +97,7 @@ Surface CreateTouchButton()
     const uint32_t ww = sf.w() / 2;
     const uint32_t hh = sf.h() / 2;
 
-    const Sprite &sp0 = AGG::GetICN(ICN::LOCATORS, 22);
+    const Sprite& sp0 = AGG::GetICN(ICN::LOCATORS, 22);
 
     sp0.Blit(Rect(0, 0, ww, hh), Point(0, 0), sf);
     sp0.Blit(Rect(sp0.w() - ww, 0, ww, hh), Point(ww, 0), sf);
@@ -107,9 +107,9 @@ Surface CreateTouchButton()
     return sf;
 }
 
-void RedrawTouchButton(const Surface &sf, const Rect &rt, const char *lb)
+void RedrawTouchButton(const Surface& sf, const Rect& rt, const char* lb)
 {
-    Display &display = Display::Get();
+    Display& display = Display::Get();
 
     if (sf.w() != rt.w)
     {
@@ -124,7 +124,8 @@ void RedrawTouchButton(const Surface &sf, const Rect &rt, const char *lb)
         }
 
         sf.Blit(Rect(sf.w() - ww, 0, ww, sf.h()), rt.x + rt.w - ww, rt.y, display);
-    } else
+    }
+    else
         sf.Blit(rt.x, rt.y, display);
 
     if (lb)

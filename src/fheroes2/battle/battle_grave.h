@@ -33,7 +33,9 @@ namespace Battle
     struct TroopUIDs : vector<uint32_t>
     {
         TroopUIDs()
-        { reserve(4); }
+        {
+            reserve(4);
+        }
     };
 
     class Graveyard : public map<s32, TroopUIDs>
@@ -43,9 +45,9 @@ namespace Battle
 
         Indexes GetClosedCells() const;
 
-        void AddTroop(const Unit &);
+        void AddTroop(const Unit&);
 
-        void RemoveTroop(const Unit &);
+        void RemoveTroop(const Unit&);
 
         uint32_t GetLastTroopUID(s32) const;
     };

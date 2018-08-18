@@ -41,22 +41,22 @@ void Battle::Position::Swap()
         std::swap(first, second);
 }
 
-Battle::Cell *Battle::Position::GetHead()
+Battle::Cell* Battle::Position::GetHead()
 {
     return first;
 }
 
-Battle::Cell *Battle::Position::GetTail()
+Battle::Cell* Battle::Position::GetTail()
 {
     return second;
 }
 
-const Battle::Cell *Battle::Position::GetHead() const
+const Battle::Cell* Battle::Position::GetHead() const
 {
     return first;
 }
 
-const Battle::Cell *Battle::Position::GetTail() const
+const Battle::Cell* Battle::Position::GetTail() const
 {
     return second;
 }
@@ -69,7 +69,7 @@ Rect Battle::Position::GetRect() const
     return {};
 }
 
-Battle::Position Battle::Position::GetCorrect(const Unit &b, s32 head)
+Battle::Position Battle::Position::GetCorrect(const Unit& b, s32 head)
 {
     Position result;
 
@@ -102,7 +102,7 @@ bool Battle::Position::isReflect() const
 bool Battle::Position::isValid() const
 {
     return first && (!second ||
-                     (LEFT | RIGHT) & Board::GetDirection(first->GetIndex(), second->GetIndex()));
+        (LEFT | RIGHT) & Board::GetDirection(first->GetIndex(), second->GetIndex()));
 }
 
 
@@ -115,7 +115,7 @@ Battle::Cell::Cell(s32 ii) : index(ii), object(0), direction(UNKNOWN), quality(0
     SetArea(Rect());
 }
 
-void Battle::Cell::SetArea(const Rect &area)
+void Battle::Cell::SetArea(const Rect& area)
 {
     pos.x = area.x + 88 - (index / ARENAW % 2 ? CELLW / 2 : 0) + (CELLW - 1) * (index % ARENAW);
     pos.y = area.y + 85 + (CELLH / 4 * 3 - 1) * (index / ARENAW);
@@ -133,7 +133,7 @@ void Battle::Cell::SetArea(const Rect &area)
     coord[6] = Point(INFL * pos.x, INFL * pos.y + INFL * pos.h - INFL * pos.h / 4);
 }
 
-Battle::direction_t Battle::Cell::GetTriangleDirection(const Point &dst) const
+Battle::direction_t Battle::Cell::GetTriangleDirection(const Point& dst) const
 {
     const Point pt(INFL * dst.x, INFL * dst.y);
 
@@ -155,7 +155,7 @@ Battle::direction_t Battle::Cell::GetTriangleDirection(const Point &dst) const
     return UNKNOWN;
 }
 
-bool Battle::Cell::isPositionIncludePoint(const Point &pt) const
+bool Battle::Cell::isPositionIncludePoint(const Point& pt) const
 {
     return UNKNOWN != GetTriangleDirection(pt);
 }
@@ -195,27 +195,27 @@ int Battle::Cell::GetDirection() const
     return direction;
 }
 
-const Rect &Battle::Cell::GetPos() const
+const Rect& Battle::Cell::GetPos() const
 {
     return pos;
 }
 
-const Battle::Unit *Battle::Cell::GetUnit() const
+const Battle::Unit* Battle::Cell::GetUnit() const
 {
     return troop;
 }
 
-Battle::Unit *Battle::Cell::GetUnit()
+Battle::Unit* Battle::Cell::GetUnit()
 {
     return troop;
 }
 
-void Battle::Cell::SetUnit(Unit *val)
+void Battle::Cell::SetUnit(Unit* val)
 {
     troop = val;
 }
 
-bool Battle::Cell::isPassable4(const Unit &b, const Cell &from) const
+bool Battle::Cell::isPassable4(const Unit& b, const Cell& from) const
 {
     if (!b.isWide())
         return isPassable1(true);
@@ -223,28 +223,28 @@ bool Battle::Cell::isPassable4(const Unit &b, const Cell &from) const
 
     switch (dir)
     {
-        case BOTTOM_RIGHT:
-        case TOP_RIGHT:
-        case BOTTOM_LEFT:
-        case TOP_LEFT:
+    case BOTTOM_RIGHT:
+    case TOP_RIGHT:
+    case BOTTOM_LEFT:
+    case TOP_LEFT:
         {
             bool reflect = (BOTTOM_LEFT | TOP_LEFT) & dir;
-            const Cell *tail = Board::GetCell(index, reflect ? RIGHT : LEFT);
+            const Cell* tail = Board::GetCell(index, reflect ? RIGHT : LEFT);
             return tail && tail->isPassable1(true) && isPassable1(true);
         }
 
-        case LEFT:
-        case RIGHT:
-            return isPassable1(true) || index == b.GetTailIndex();
+    case LEFT:
+    case RIGHT:
+        return isPassable1(true) || index == b.GetTailIndex();
 
-        default:
-            break;
+    default:
+        break;
     }
 
     return isPassable1(true);
 }
 
-bool Battle::Cell::isPassable3(const Unit &b, bool check_reflect) const
+bool Battle::Cell::isPassable3(const Unit& b, bool check_reflect) const
 {
     if (!b.isWide())
         return isPassable1(true);
@@ -252,21 +252,19 @@ bool Battle::Cell::isPassable3(const Unit &b, bool check_reflect) const
 
     if (check_reflect)
     {
-        const Cell *cell = Board::GetCell(index, b.isReflect() ? RIGHT : LEFT);
+        const Cell* cell = Board::GetCell(index, b.isReflect() ? RIGHT : LEFT);
         return cell &&
-               (cell->isPassable1(true) || cell->index == b.GetTailIndex() || cell->index == b.GetHeadIndex()) &&
-               isPassable1(true);
+            (cell->isPassable1(true) || cell->index == b.GetTailIndex() || cell->index == b.GetHeadIndex()) &&
+            isPassable1(true);
     }
 
-    Cell *left = Board::GetCell(index, LEFT);
-    Cell *right = Board::GetCell(index, RIGHT);
+    Cell* left = Board::GetCell(index, LEFT);
+    Cell* right = Board::GetCell(index, RIGHT);
     return (left &&
             (left->isPassable1(true) || left->index == b.GetTailIndex() || left->index == b.GetHeadIndex()) ||
             right && (right->isPassable1(true) || right->index == b.GetTailIndex() ||
                 right->index == b.GetHeadIndex())) &&
-           isPassable1(true);
-
-
+        isPassable1(true);
 }
 
 bool Battle::Cell::isPassable1(bool check_troop) const
@@ -284,13 +282,13 @@ void Battle::Cell::ResetDirection()
     direction = UNKNOWN;
 }
 
-ByteVectorWriter &Battle::operator<<(ByteVectorWriter &msg, const Cell &c)
+ByteVectorWriter& Battle::operator<<(ByteVectorWriter& msg, const Cell& c)
 {
     return msg << c.index << c.object << c.direction << c.quality <<
-               (c.troop ? c.troop->GetUID() : static_cast<uint32_t>(0));
+        (c.troop ? c.troop->GetUID() : static_cast<uint32_t>(0));
 }
 
-ByteVectorReader &Battle::operator>>(ByteVectorReader &msg, Cell &c)
+ByteVectorReader& Battle::operator>>(ByteVectorReader& msg, Cell& c)
 {
     uint32_t uid = 0;
     msg >> c.index >> c.object >> c.direction >> c.quality >> uid;

@@ -34,24 +34,26 @@ namespace Maps
     public:
         FileInfo();
 
-        FileInfo(const FileInfo &);
+        FileInfo(const FileInfo&);
 
-        FileInfo &operator=(const FileInfo &);
+        FileInfo& operator=(const FileInfo&);
 
-        static bool ReadMAP(const string &);
+        static bool ReadMAP(const string&);
 
-        bool ReadMP2(const string &);
+        bool ReadMP2(const string&);
 
-        bool ReadSAV(const string &);
+        bool ReadSAV(const string&);
 
-        bool operator==(const FileInfo &fi) const
-        { return file == fi.file; }
+        bool operator==(const FileInfo& fi) const
+        {
+            return file == fi.file;
+        }
 
-        static bool NameSorting(const FileInfo &, const FileInfo &);
+        static bool NameSorting(const FileInfo&, const FileInfo&);
 
-        static bool FileSorting(const FileInfo &, const FileInfo &);
+        static bool FileSorting(const FileInfo&, const FileInfo&);
 
-        static bool NameCompare(const FileInfo &, const FileInfo &);
+        static bool NameCompare(const FileInfo&, const FileInfo&);
 
         bool isAllowCountPlayers(uint32_t) const;
 
@@ -124,10 +126,10 @@ namespace Maps
         bool with_heroes{};
     };
 
-    ByteVectorWriter & operator<<(ByteVectorWriter & msg, const FileInfo & fi);
-    ByteVectorReader &operator>>(ByteVectorReader &, FileInfo &);
+    ByteVectorWriter& operator<<(ByteVectorWriter& msg, const FileInfo& fi);
+    ByteVectorReader& operator>>(ByteVectorReader&, FileInfo&);
 }
 
 typedef vector<Maps::FileInfo> MapsFileInfoList;
 
-bool PrepareMapsFileInfoList(MapsFileInfoList &, bool multi);
+bool PrepareMapsFileInfoList(MapsFileInfoList&, bool multi);

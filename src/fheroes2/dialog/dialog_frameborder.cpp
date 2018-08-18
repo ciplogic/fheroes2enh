@@ -36,20 +36,22 @@ Dialog::FrameBorder::FrameBorder(int v) : border(v)
 Dialog::FrameBorder::~FrameBorder()
 {
     if (Cursor::Get().isVisible())
-    { Cursor::Get().Hide(); }
+    {
+        Cursor::Get().Hide();
+    }
     background.Restore();
 }
 
-Dialog::FrameBorder::FrameBorder(const Size &sz, const Surface &sf) : border(BORDERWIDTH)
+Dialog::FrameBorder::FrameBorder(const Size& sz, const Surface& sf) : border(BORDERWIDTH)
 {
-    Display &display = Display::Get();
+    Display& display = Display::Get();
     SetPosition((display.w() - sz.w - border * 2) / 2, (display.h() - sz.h - border * 2) / 2, sz.w, sz.h);
     RenderOther(sf, GetRect());
 }
 
-Dialog::FrameBorder::FrameBorder(const Size &sz) : border(BORDERWIDTH)
+Dialog::FrameBorder::FrameBorder(const Size& sz) : border(BORDERWIDTH)
 {
-    Display &display = Display::Get();
+    Display& display = Display::Get();
     SetPosition((display.w() - sz.w - border * 2) / 2, (display.h() - sz.h - border * 2) / 2, sz.w, sz.h);
     RenderRegular(GetRect());
 }
@@ -92,7 +94,8 @@ void Dialog::FrameBorder::SetPosition(s32 posx, s32 posy, uint32_t encw, uint32_
 
         area.w = encw;
         area.h = ench;
-    } else
+    }
+    else
         background.Save(Point(posx, posy));
 
     area.x = posx + border;
@@ -106,30 +109,30 @@ void Dialog::FrameBorder::SetBorder(int v)
     border = v;
 }
 
-const Rect &Dialog::FrameBorder::GetTop() const
+const Rect& Dialog::FrameBorder::GetTop() const
 {
     return top;
 }
 
-const Rect &Dialog::FrameBorder::GetRect() const
+const Rect& Dialog::FrameBorder::GetRect() const
 {
     return rect;
 }
 
-const Rect &Dialog::FrameBorder::GetArea() const
+const Rect& Dialog::FrameBorder::GetArea() const
 {
     return area;
 }
 
-void Dialog::FrameBorder::RenderRegular(const Rect &dstrt)
+void Dialog::FrameBorder::RenderRegular(const Rect& dstrt)
 {
-    const Sprite &sf = AGG::GetICN(Settings::Get().ExtGameEvilInterface() ? ICN::SURDRBKE : ICN::SURDRBKG, 0);
+    const Sprite& sf = AGG::GetICN(Settings::Get().ExtGameEvilInterface() ? ICN::SURDRBKE : ICN::SURDRBKG, 0);
     const uint32_t shadow = 16;
     sf.RenderSurface(Rect(shadow, 0, sf.w() - shadow, sf.h() - shadow), Size(dstrt.w, dstrt.h)).Blit(dstrt.x, dstrt.y,
                                                                                                      Display::Get());
 }
 
-void Dialog::FrameBorder::RenderOther(const Surface &srcsf, const Rect &dstrt)
+void Dialog::FrameBorder::RenderOther(const Surface& srcsf, const Rect& dstrt)
 {
     srcsf.RenderSurface(Size(dstrt.w, dstrt.h)).Blit(dstrt.x, dstrt.y, Display::Get());
 }

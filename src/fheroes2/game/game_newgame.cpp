@@ -36,10 +36,9 @@
 #include <iostream>
 
 
-
 int Game::NewStandard()
 {
-    Settings &conf = Settings::Get();
+    Settings& conf = Settings::Get();
     conf.SetGameType(TYPE_STANDARD);
     conf.SetPreferablyCountPlayers(0);
     return SELECTSCENARIO;
@@ -47,7 +46,7 @@ int Game::NewStandard()
 
 int Game::NewBattleOnly()
 {
-    Settings &conf = Settings::Get();
+    Settings& conf = Settings::Get();
     conf.SetGameType(TYPE_BATTLEONLY);
 
     return NEWMULTI;
@@ -55,7 +54,7 @@ int Game::NewBattleOnly()
 
 int Game::NewHotSeat()
 {
-    Settings &conf = Settings::Get();
+    Settings& conf = Settings::Get();
     conf.SetGameType(conf.GameType() | TYPE_HOTSEAT);
 
     if (conf.GameType(TYPE_BATTLEONLY))
@@ -83,26 +82,26 @@ int Game::NewCampain()
 #ifdef NETWORK_ENABLE
 int Game::NewNetwork()
 {
-    Settings & conf = Settings::Get();
+    Settings& conf = Settings::Get();
     conf.SetGameType(conf.GameType() | Game::TYPE_NETWORK);
 
     // cursor
-    Cursor & cursor = Cursor::Get();
+    Cursor& cursor = Cursor::Get();
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
-    Display & display = Display::Get();
+    Display& display = Display::Get();
     //Settings & conf = Settings::Get();
 
     // image background
-    const Sprite &back = AGG::GetICN(ICN::HEROES, 0);
+    const Sprite& back = AGG::GetICN(ICN::HEROES, 0);
     const Point top((display.w() - back.w()) / 2, (display.h() - back.h()) / 2);
     back.Blit(top);
 
-    const Sprite &panel = AGG::GetICN(ICN::REDBACK, 0);
+    const Sprite& panel = AGG::GetICN(ICN::REDBACK, 0);
     panel.Blit(top.x + 405, top.y + 5);
 
-    LocalEvent & le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     Button buttonHost(top.x + 455, top.y + 45, ICN::BTNNET, 0, 1);
     Button buttonGuest(top.x + 455, top.y + 110, ICN::BTNNET, 2, 3);
@@ -116,20 +115,25 @@ int Game::NewNetwork()
     display.Flip();
 
     // newgame loop
-    while(le.HandleEvents())
+    while (le.HandleEvents())
     {
-    le.MousePressLeft(buttonHost) ? buttonHost.PressDraw() : buttonHost.ReleaseDraw();
-    le.MousePressLeft(buttonGuest) ? buttonGuest.PressDraw() : buttonGuest.ReleaseDraw();
-    le.MousePressLeft(buttonCancelGame) ? buttonCancelGame.PressDraw() : buttonCancelGame.ReleaseDraw();
+        le.MousePressLeft(buttonHost) ? buttonHost.PressDraw() : buttonHost.ReleaseDraw();
+        le.MousePressLeft(buttonGuest) ? buttonGuest.PressDraw() : buttonGuest.ReleaseDraw();
+        le.MousePressLeft(buttonCancelGame) ? buttonCancelGame.PressDraw() : buttonCancelGame.ReleaseDraw();
 
-    //if(le.MouseClickLeft(buttonHost) || HotKeyPressEvent(EVENT_BUTTON_HOST)) return NetworkHost();
-    //if(le.MouseClickLeft(buttonGuest) || HotKeyPressEvent(EVENT_BUTTON_GUEST)) return NetworkGuest();
-    if(HotKeyPressEvent(EVENT_DEFAULT_EXIT) || le.MouseClickLeft(buttonCancelGame)) return MAINMENU;
+        //if(le.MouseClickLeft(buttonHost) || HotKeyPressEvent(EVENT_BUTTON_HOST)) return NetworkHost();
+        //if(le.MouseClickLeft(buttonGuest) || HotKeyPressEvent(EVENT_BUTTON_GUEST)) return NetworkGuest();
+        if (HotKeyPressEvent(EVENT_DEFAULT_EXIT) || le.MouseClickLeft(buttonCancelGame)) return MAINMENU;
 
         // right info
-    if(le.MousePressRight(buttonHost)) Dialog::Message(_("Host"), _("The host sets up the game options. There can only be one host per network game."), Font::BIG);
-    if(le.MousePressRight(buttonGuest)) Dialog::Message(_("Guest"), _("The guest waits for the host to set up the game, then is automatically added in. There can be multiple guests for TCP/IP games."), Font::BIG);
-    if(le.MousePressRight(buttonCancelGame)) Dialog::Message(_("Cancel"), _("Cancel back to the main menu."), Font::BIG);
+        if (le.MousePressRight(buttonHost)) Dialog::Message(
+            _("Host"), _("The host sets up the game options. There can only be one host per network game."), Font::BIG);
+        if (le.MousePressRight(buttonGuest)) Dialog::Message(
+            _("Guest"),
+            _("The guest waits for the host to set up the game, then is automatically added in. There can be multiple guests for TCP/IP games."
+            ), Font::BIG);
+        if (le.MousePressRight(buttonCancelGame)) Dialog::Message(
+            _("Cancel"), _("Cancel back to the main menu."), Font::BIG);
     }
 
     return Game::MAINMENU;
@@ -140,31 +144,31 @@ int Game::NewGame()
 {
     Mixer::Pause();
     AGG::PlayMusic(MUS::MAINMENU);
-    Settings &conf = Settings::Get();
+    Settings& conf = Settings::Get();
 
     // reset last save name
     SetLastSavename("");
 
     // cursor
-    Cursor &cursor = Cursor::Get();
+    Cursor& cursor = Cursor::Get();
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
-    Display &display = Display::Get();
+    Display& display = Display::Get();
     display.Fill(ColorBlack);
 
     // load game settings
     conf.BinaryLoad();
 
     // image background
-    const Sprite &back = AGG::GetICN(ICN::HEROES, 0);
+    const Sprite& back = AGG::GetICN(ICN::HEROES, 0);
     const Point top((display.w() - back.w()) / 2, (display.h() - back.h()) / 2);
     back.Blit(top);
 
-    const Sprite &panel = AGG::GetICN(ICN::REDBACK, 0);
+    const Sprite& panel = AGG::GetICN(ICN::REDBACK, 0);
     panel.Blit(top.x + 405, top.y + 5);
 
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     Button buttonStandartGame(top.x + 455, top.y + 45, ICN::BTNNEWGM, 0, 1);
     Button buttonMultiGame(top.x + 455, top.y + 110, ICN::BTNNEWGM, 4, 5);
@@ -197,8 +201,9 @@ int Game::NewGame()
         le.MousePressLeft(buttonMultiGame) ? buttonMultiGame.PressDraw() : buttonMultiGame.ReleaseDraw();
         le.MousePressLeft(buttonCancelGame) ? buttonCancelGame.PressDraw() : buttonCancelGame.ReleaseDraw();
         le.MousePressLeft(buttonSettings) ? buttonSettings.PressDraw() : buttonSettings.ReleaseDraw();
-        buttonBattleGame.isEnable() && le.MousePressLeft(buttonBattleGame) ? buttonBattleGame.PressDraw()
-                                                                           : buttonBattleGame.ReleaseDraw();
+        buttonBattleGame.isEnable() && le.MousePressLeft(buttonBattleGame)
+            ? buttonBattleGame.PressDraw()
+            : buttonBattleGame.ReleaseDraw();
 
         if (HotKeyPressEvent(EVENT_BUTTON_STANDARD) || le.MouseClickLeft(buttonStandartGame)) return NEWSTANDARD;
         //if(HotKeyPressEvent(EVENT_BUTTON_CAMPAIN) || le.MouseClickLeft(buttonCampainGame)) return NEWCAMPAIN;
@@ -220,7 +225,8 @@ int Game::NewGame()
         //if(le.MousePressRight(buttonCampainGame)) Dialog::Message(_("Campaign Game"), _("A single player game playing through a series of maps."), Font::BIG);
         if (le.MousePressRight(buttonMultiGame))
             Dialog::Message(_("Multi-Player Game"),
-                            _("A multi-player game, with several human players completing against each other on a single map."),
+                            _("A multi-player game, with several human players completing against each other on a single map."
+                            ),
                             Font::BIG);
         if (le.MousePressRight(buttonSettings)) Dialog::Message(_("Settings"), _("FHeroes2 game settings."), Font::BIG);
         if (le.MousePressRight(buttonCancelGame))
@@ -232,27 +238,27 @@ int Game::NewGame()
 
 int Game::NewMulti()
 {
-    Settings &conf = Settings::Get();
+    Settings& conf = Settings::Get();
 
     if (!conf.GameType(TYPE_BATTLEONLY))
         conf.SetGameType(TYPE_STANDARD);
 
     // cursor
-    Cursor &cursor = Cursor::Get();
+    Cursor& cursor = Cursor::Get();
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
-    Display &display = Display::Get();
+    Display& display = Display::Get();
 
     // image background
-    const Sprite &back = AGG::GetICN(ICN::HEROES, 0);
+    const Sprite& back = AGG::GetICN(ICN::HEROES, 0);
     const Point top((display.w() - back.w()) / 2, (display.h() - back.h()) / 2);
     back.Blit(top);
 
-    const Sprite &panel = AGG::GetICN(ICN::REDBACK, 0);
+    const Sprite& panel = AGG::GetICN(ICN::REDBACK, 0);
     panel.Blit(top.x + 405, top.y + 5);
 
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     Button buttonHotSeat(top.x + 455, top.y + 45, ICN::BTNMP, 0, 1);
     Button buttonNetwork(top.x + 455, top.y + 110, ICN::BTNMP, 2, 3);
@@ -277,17 +283,21 @@ int Game::NewMulti()
         // right info
         if (le.MousePressRight(buttonHotSeat))
             Dialog::Message(_("Hot Seat"),
-                            _("Play a Hot Seat game, where 2 to 4 players play around the same computer, switching into the 'Hot Seat' when it is their turn."),
+                            _("Play a Hot Seat game, where 2 to 4 players play around the same computer, switching into the 'Hot Seat' when it is their turn."
+                            ),
                             Font::BIG);
         if (le.MousePressRight(buttonCancelGame))
             Dialog::Message(_("Cancel"), _("Cancel back to the main menu."), Font::BIG);
 
 #ifdef NETWORK_ENABLE
-        if(buttonNetwork.isEnable())
+        if (buttonNetwork.isEnable())
         {
             le.MousePressLeft(buttonNetwork) ? buttonNetwork.PressDraw() : buttonNetwork.ReleaseDraw();
-            if(le.MouseClickLeft(buttonNetwork) || HotKeyPressEvent(EVENT_BUTTON_NETWORK)) return NEWNETWORK;
-            if(le.MousePressRight(buttonNetwork)) Dialog::Message(_("Network"), _("Play a network game, where 2 players use their own computers connected through a LAN (Local Area Network)."), Font::BIG);
+            if (le.MouseClickLeft(buttonNetwork) || HotKeyPressEvent(EVENT_BUTTON_NETWORK)) return NEWNETWORK;
+            if (le.MousePressRight(buttonNetwork)) Dialog::Message(
+                _("Network"),
+                _("Play a network game, where 2 players use their own computers connected through a LAN (Local Area Network)."
+                ), Font::BIG);
         }
 #endif
     }
@@ -298,21 +308,21 @@ int Game::NewMulti()
 uint32_t Game::SelectCountPlayers()
 {
     // cursor
-    Cursor &cursor = Cursor::Get();
+    Cursor& cursor = Cursor::Get();
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
-    Display &display = Display::Get();
+    Display& display = Display::Get();
 
     // image background
-    const Sprite &back = AGG::GetICN(ICN::HEROES, 0);
+    const Sprite& back = AGG::GetICN(ICN::HEROES, 0);
     const Point top((display.w() - back.w()) / 2, (display.h() - back.h()) / 2);
     back.Blit(top);
 
-    const Sprite &panel = AGG::GetICN(ICN::REDBACK, 0);
+    const Sprite& panel = AGG::GetICN(ICN::REDBACK, 0);
     panel.Blit(top.x + 405, top.y + 5);
 
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     Button button2Players(top.x + 455, top.y + 45, ICN::BTNHOTST, 0, 1);
     Button button3Players(top.x + 455, top.y + 110, ICN::BTNHOTST, 2, 3);

@@ -37,16 +37,16 @@ Thread::~Thread()
     Kill();
 }
 
-Thread::Thread(const Thread &) : thread(nullptr)
+Thread::Thread(const Thread&) : thread(nullptr)
 {
 }
 
-Thread &Thread::operator=(const Thread &)
+Thread& Thread::operator=(const Thread&)
 {
     return *this;
 }
 
-void Thread::Create(int (*fn)(void *), void *param)
+void Thread::Create(int (*fn)(void*), void* param)
 {
     thread = SDL_CreateThread(fn, param);
 }
@@ -79,7 +79,7 @@ Mutex::Mutex(bool init) : mutex(init ? SDL_CreateMutex() : nullptr)
 {
 }
 
-Mutex::Mutex(const Mutex &) : mutex(nullptr)
+Mutex::Mutex(const Mutex&) : mutex(nullptr)
 {
 }
 
@@ -88,7 +88,7 @@ Mutex::~Mutex()
     if (mutex) SDL_DestroyMutex(mutex);
 }
 
-Mutex &Mutex::operator=(const Mutex &)
+Mutex& Mutex::operator=(const Mutex&)
 {
     return *this;
 }
@@ -113,7 +113,7 @@ Timer::Timer() : id(nullptr)
 {
 }
 
-void Timer::Run(uint32_t interval, uint32_t(*fn)(uint32_t, void *), void *param)
+void Timer::Run(uint32_t interval, uint32_t (*fn)(uint32_t, void*), void* param)
 {
     if (id) Remove();
 
@@ -151,7 +151,7 @@ uint32_t Time::Get() const
     return tick2 > tick1 ? tick2 - tick1 : 0;
 }
 
-void Time::Print(const char *header) const
+void Time::Print(const char* header) const
 {
     H2ERROR((header ? header : "time: ") << Get() << " ms");
 }

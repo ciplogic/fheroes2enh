@@ -32,9 +32,9 @@
 #include <sstream>
 #include <iostream>
 
-s32 GetIndexClickRects(const Rects &rects)
+s32 GetIndexClickRects(const Rects& rects)
 {
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
     const s32 index = rects.GetIndex(le.GetMouseCursor());
     return 0 <= index && le.MouseClickLeft() ? index : -1;
 }
@@ -45,17 +45,17 @@ struct SelectRecipientsColors
     int recipients;
     Rects positions;
 
-    SelectRecipientsColors(const Point &pos) :
-            colors(Settings::Get().GetPlayers().GetColors() & ~Settings::Get().GetPlayers().current_color),
-            recipients(0)
+    SelectRecipientsColors(const Point& pos) :
+        colors(Settings::Get().GetPlayers().GetColors() & ~Settings::Get().GetPlayers().current_color),
+        recipients(0)
     {
         positions.reserve(colors.size());
 
         for (auto
-                     it = colors.begin(); it != colors.end(); ++it)
+             it = colors.begin(); it != colors.end(); ++it)
         {
             const uint32_t current = distance(colors.begin(), it);
-            const Sprite &sprite = AGG::GetICN(ICN::CELLWIN, 43);
+            const Sprite& sprite = AGG::GetICN(ICN::CELLWIN, 43);
 
             positions.push_back(Rect(pos.x + Game::GetStep4Player(current, sprite.w() + 15, colors.size()),
                                      pos.y, sprite.w(), sprite.h()));
@@ -70,9 +70,9 @@ struct SelectRecipientsColors
     void Redraw() const
     {
         for (auto
-                     it = colors.begin(); it != colors.end(); ++it)
+             it = colors.begin(); it != colors.end(); ++it)
         {
-            const Rect &pos = positions[distance(colors.begin(), it)];
+            const Rect& pos = positions[distance(colors.begin(), it)];
 
             AGG::GetICN(ICN::CELLWIN, 43 + Color::GetIndex(*it)).Blit(pos);
             if (recipients & *it)
@@ -86,7 +86,7 @@ struct SelectRecipientsColors
 
         if (index >= 0)
         {
-            const int &cols = colors[index];
+            const int& cols = colors[index];
 
             if (recipients & cols)
                 recipients &= ~cols;
@@ -102,14 +102,14 @@ struct SelectRecipientsColors
 
 struct ResourceBar
 {
-    Funds &resource;
+    Funds& resource;
     Point pos;
     Rects positions;
 
-    ResourceBar(Funds &funds, s32 posx, s32 posy) : resource(funds), pos(posx, posy)
+    ResourceBar(Funds& funds, s32 posx, s32 posy) : resource(funds), pos(posx, posy)
     {
         positions.reserve(7);
-        const Sprite &sprite = AGG::GetICN(ICN::TRADPOST, 7);
+        const Sprite& sprite = AGG::GetICN(ICN::TRADPOST, 7);
 
         positions.push_back(Rect(posx, posy, sprite.w(), sprite.h()));
         positions.push_back(Rect(posx + 40, posy, sprite.w(), sprite.h()));
@@ -126,12 +126,12 @@ struct ResourceBar
 
         os << count;
         Text text(os.str(), Font::SMALL);
-        const Sprite &sprite = AGG::GetICN(ICN::TRADPOST, 7 + Resource::GetIndexSprite2(type));
+        const Sprite& sprite = AGG::GetICN(ICN::TRADPOST, 7 + Resource::GetIndexSprite2(type));
         sprite.Blit(posx, posy);
         text.Blit(posx + (sprite.w() - text.w()) / 2, posy + sprite.h() - 12);
     }
 
-    void Redraw(const Funds *res = nullptr) const
+    void Redraw(const Funds* res = nullptr) const
     {
         if (!res) res = &resource;
 
@@ -147,7 +147,7 @@ struct ResourceBar
         return GetIndexClickRects(positions);
     }
 
-    bool QueueEventProcessing(Funds &funds, uint32_t mul) const
+    bool QueueEventProcessing(Funds& funds, uint32_t mul) const
     {
         const s32 index = GetIndexClick();
 
@@ -160,27 +160,29 @@ struct ResourceBar
 
         const uint32_t cur = resource.Get(rs);
         uint32_t sel = cur;
-        const uint32_t max = mul > 1 
-                                 ? (funds.Get(rs) + resource.Get(rs)) / mul 
+        const uint32_t max = mul > 1
+                                 ? (funds.Get(rs) + resource.Get(rs)) / mul
                                  : funds.Get(rs) + resource.Get(rs);
 
         if (0 == mul)
         {
             Message("", "First select recipients!", Font::BIG, Dialog::OK);
-        } else if (0 == max)
+        }
+        else if (0 == max)
         {
             string msg = _("You cannot select %{resource}!");
             StringReplace(msg, "%{resource}", Resource::String(rs));
             Message("", msg, Font::BIG, Dialog::OK);
-        } else
+        }
+        else
         {
             string msg = _("Select count %{resource}:");
             StringReplace(msg, "%{resource}", Resource::String(rs));
 
             if (Dialog::SelectCount(msg, 0, max, sel, step) && cur != sel)
             {
-                s32 *from = funds.GetPtr(rs);
-                s32 *to = resource.GetPtr(rs);
+                s32* from = funds.GetPtr(rs);
+                s32* to = resource.GetPtr(rs);
 
                 if (from && to)
                 {
@@ -200,18 +202,18 @@ struct ResourceBar
 
 void Dialog::MakeGiftResource()
 {
-    Cursor &cursor = Cursor::Get();
-    Display &display = Display::Get();
-    LocalEvent &le = LocalEvent::Get();
-    const Settings &conf = Settings::Get();
+    Cursor& cursor = Cursor::Get();
+    Display& display = Display::Get();
+    LocalEvent& le = LocalEvent::Get();
+    const Settings& conf = Settings::Get();
 
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
     FrameBorder frameborder(Size(320, 224));
-    const Rect &box = frameborder.GetArea();
+    const Rect& box = frameborder.GetArea();
 
-    Kingdom &myKingdom = world.GetKingdom(conf.CurrentColor());
+    Kingdom& myKingdom = world.GetKingdom(conf.CurrentColor());
 
     Funds funds1(myKingdom.GetFunds());
     Funds funds2;
@@ -267,7 +269,8 @@ void Dialog::MakeGiftResource()
             selector.Redraw();
             cursor.Show();
             display.Flip();
-        } else if (info2.QueueEventProcessing(funds1, count))
+        }
+        else if (info2.QueueEventProcessing(funds1, count))
         {
             cursor.Hide();
             btnGroups.DisableButton1(0 == Color::Count(selector.recipients) || 0 == funds2.GetValidItemsCount());

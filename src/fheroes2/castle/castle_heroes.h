@@ -29,36 +29,57 @@
 class CastleHeroes : protected pair<Heroes *, Heroes *>
 {
 public:
-    CastleHeroes(Heroes *guest, Heroes *guard) : pair<Heroes *, Heroes *>(guest, guard)
-    {}
+    CastleHeroes(Heroes* guest, Heroes* guard) : pair<Heroes *, Heroes *>(guest, guard)
+    {
+    }
 
-    Heroes *Guest()
-    { return first; };
+    Heroes* Guest()
+    {
+        return first;
+    };
 
-    Heroes *Guard()
-    { return second; }
+    Heroes* Guard()
+    {
+        return second;
+    }
 
-    const Heroes *Guest() const
-    { return first; }
+    const Heroes* Guest() const
+    {
+        return first;
+    }
 
-    const Heroes *Guard() const
-    { return second; }
+    const Heroes* Guard() const
+    {
+        return second;
+    }
 
-    Heroes *GuestFirst()
-    { return first ? first : second; };
+    Heroes* GuestFirst()
+    {
+        return first ? first : second;
+    };
 
-    Heroes *GuardFirst()
-    { return second ? second : first; };
+    Heroes* GuardFirst()
+    {
+        return second ? second : first;
+    };
 
-    bool operator==(const Heroes *hero) const
-    { return first == hero || second == hero; };
+    bool operator==(const Heroes* hero) const
+    {
+        return first == hero || second == hero;
+    };
 
     void Swap()
-    { std::swap(first, second); };
+    {
+        std::swap(first, second);
+    };
 
     bool FullHouse() const
-    { return first && second; };
+    {
+        return first && second;
+    };
 
     bool IsValid() const
-    { return first || second; };
+    {
+        return first || second;
+    };
 };

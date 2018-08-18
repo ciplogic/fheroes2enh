@@ -31,9 +31,9 @@
 #include "sprite.h"
 #include "icn.h"
 
-void InfoSkillClear(const Rect &, const Rect &, const Rect &, const Rect &);
+void InfoSkillClear(const Rect&, const Rect&, const Rect&, const Rect&);
 
-void InfoSkillSelect(int, const Rect &, const Rect &, const Rect &, const Rect &);
+void InfoSkillSelect(int, const Rect&, const Rect&, const Rect&, const Rect&);
 
 int InfoSkillNext(int);
 
@@ -41,24 +41,26 @@ int InfoSkillPrev(int);
 
 int Dialog::SelectSkillFromArena()
 {
-    Display &display = Display::Get();
+    Display& display = Display::Get();
     const int system = Settings::Get().ExtGameEvilInterface() ? ICN::SYSTEME : ICN::SYSTEM;
 
     // cursor
-    Cursor &cursor = Cursor::Get();
+    Cursor& cursor = Cursor::Get();
     int oldthemes = cursor.Themes();
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
     TextBox textbox(
-            _("You enter the arena and face a pack of vicious lions. You handily defeat them, to the wild cheers of the crowd.  Impressed by your skill, the aged trainer of gladiators agrees to train you in a skill of your choice."),
-            Font::BIG, BOXAREA_WIDTH);
-    const Sprite &sprite = AGG::GetICN(ICN::XPRIMARY, 0);
+        _(
+            "You enter the arena and face a pack of vicious lions. You handily defeat them, to the wild cheers of the crowd.  Impressed by your skill, the aged trainer of gladiators agrees to train you in a skill of your choice."
+        ),
+        Font::BIG, BOXAREA_WIDTH);
+    const Sprite& sprite = AGG::GetICN(ICN::XPRIMARY, 0);
     const int spacer = 10;
 
     FrameBox box(textbox.h() + spacer + sprite.h() + 15, true);
 
-    const Rect &box_rt = box.GetArea();
+    const Rect& box_rt = box.GetArea();
     Point dst_pt = box_rt;
 
     textbox.Blit(dst_pt);
@@ -73,7 +75,8 @@ int Dialog::SelectSkillFromArena()
         rect2 = Rect(dst_pt.x + box_rt.w / 2 - sprite.w() - 10, dst_pt.y, sprite.w(), sprite.h());
         rect3 = Rect(dst_pt.x + box_rt.w / 2 + 10, dst_pt.y, sprite.w(), sprite.h());
         rect4 = Rect(dst_pt.x + box_rt.w / 2 + sprite.w() + 30, dst_pt.y, sprite.w(), sprite.h());
-    } else
+    }
+    else
     {
         rect1 = Rect(dst_pt.x + box_rt.w / 2 - 2 * sprite.w() - 10, dst_pt.y, sprite.w(), sprite.h());
         rect2 = Rect(dst_pt.x + box_rt.w / 2 - sprite.w() + 15, dst_pt.y, sprite.w(), sprite.h());
@@ -112,7 +115,7 @@ int Dialog::SelectSkillFromArena()
     dst_pt.y = box_rt.y + box_rt.h - AGG::GetICN(system, 1).h();
     Button buttonOk(dst_pt.x, dst_pt.y, system, 1, 2);
 
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
     bool redraw = false;
 
     buttonOk.Draw();
@@ -128,23 +131,28 @@ int Dialog::SelectSkillFromArena()
         {
             res = InfoSkillPrev(res);
             redraw = true;
-        } else if (HotKeyPressEvent(Game::EVENT_DEFAULT_RIGHT) && Skill::Primary::UNKNOWN != InfoSkillNext(res))
+        }
+        else if (HotKeyPressEvent(Game::EVENT_DEFAULT_RIGHT) && Skill::Primary::UNKNOWN != InfoSkillNext(res))
         {
             res = InfoSkillNext(res);
             redraw = true;
-        } else if (le.MouseClickLeft(rect1))
+        }
+        else if (le.MouseClickLeft(rect1))
         {
             res = Skill::Primary::ATTACK;
             redraw = true;
-        } else if (le.MouseClickLeft(rect2))
+        }
+        else if (le.MouseClickLeft(rect2))
         {
             res = Skill::Primary::DEFENSE;
             redraw = true;
-        } else if (le.MouseClickLeft(rect3))
+        }
+        else if (le.MouseClickLeft(rect3))
         {
             res = Skill::Primary::POWER;
             redraw = true;
-        } else if (Settings::Get().ExtHeroArenaCanChoiseAnySkills() && le.MouseClickLeft(rect4))
+        }
+        else if (Settings::Get().ExtHeroArenaCanChoiseAnySkills() && le.MouseClickLeft(rect4))
         {
             res = Skill::Primary::KNOWLEDGE;
             redraw = true;
@@ -170,7 +178,7 @@ int Dialog::SelectSkillFromArena()
     return res;
 }
 
-void InfoSkillClear(const Rect &rect1, const Rect &rect2, const Rect &rect3, const Rect &rect4)
+void InfoSkillClear(const Rect& rect1, const Rect& rect2, const Rect& rect3, const Rect& rect4)
 {
     AGG::GetICN(ICN::XPRIMARY, 0).Blit(rect1);
     AGG::GetICN(ICN::XPRIMARY, 1).Blit(rect2);
@@ -179,24 +187,24 @@ void InfoSkillClear(const Rect &rect1, const Rect &rect2, const Rect &rect3, con
         AGG::GetICN(ICN::XPRIMARY, 3).Blit(rect4);
 }
 
-void InfoSkillSelect(int skill, const Rect &rect1, const Rect &rect2, const Rect &rect3, const Rect &rect4)
+void InfoSkillSelect(int skill, const Rect& rect1, const Rect& rect2, const Rect& rect3, const Rect& rect4)
 {
     switch (skill)
     {
-        case Skill::Primary::ATTACK:
-            AGG::GetICN(ICN::XPRIMARY, 4).Blit(rect1);
-            break;
-        case Skill::Primary::DEFENSE:
-            AGG::GetICN(ICN::XPRIMARY, 5).Blit(rect2);
-            break;
-        case Skill::Primary::POWER:
-            AGG::GetICN(ICN::XPRIMARY, 6).Blit(rect3);
-            break;
-        case Skill::Primary::KNOWLEDGE:
-            if (Settings::Get().ExtHeroArenaCanChoiseAnySkills()) AGG::GetICN(ICN::XPRIMARY, 7).Blit(rect4);
-            break;
-        default:
-            break;
+    case Skill::Primary::ATTACK:
+        AGG::GetICN(ICN::XPRIMARY, 4).Blit(rect1);
+        break;
+    case Skill::Primary::DEFENSE:
+        AGG::GetICN(ICN::XPRIMARY, 5).Blit(rect2);
+        break;
+    case Skill::Primary::POWER:
+        AGG::GetICN(ICN::XPRIMARY, 6).Blit(rect3);
+        break;
+    case Skill::Primary::KNOWLEDGE:
+        if (Settings::Get().ExtHeroArenaCanChoiseAnySkills()) AGG::GetICN(ICN::XPRIMARY, 7).Blit(rect4);
+        break;
+    default:
+        break;
     }
 }
 
@@ -204,15 +212,15 @@ int InfoSkillNext(int skill)
 {
     switch (skill)
     {
-        case Skill::Primary::ATTACK:
-            return Skill::Primary::DEFENSE;
-        case Skill::Primary::DEFENSE:
-            return Skill::Primary::POWER;
-        case Skill::Primary::POWER:
-            if (Settings::Get().ExtHeroArenaCanChoiseAnySkills()) return Skill::Primary::KNOWLEDGE;
-            break;
-        default:
-            break;
+    case Skill::Primary::ATTACK:
+        return Skill::Primary::DEFENSE;
+    case Skill::Primary::DEFENSE:
+        return Skill::Primary::POWER;
+    case Skill::Primary::POWER:
+        if (Settings::Get().ExtHeroArenaCanChoiseAnySkills()) return Skill::Primary::KNOWLEDGE;
+        break;
+    default:
+        break;
     }
 
     return Skill::Primary::UNKNOWN;
@@ -222,14 +230,14 @@ int InfoSkillPrev(int skill)
 {
     switch (skill)
     {
-        case Skill::Primary::DEFENSE:
-            return Skill::Primary::ATTACK;
-        case Skill::Primary::POWER:
-            return Skill::Primary::DEFENSE;
-        case Skill::Primary::KNOWLEDGE:
-            return Skill::Primary::POWER;
-        default:
-            break;
+    case Skill::Primary::DEFENSE:
+        return Skill::Primary::ATTACK;
+    case Skill::Primary::POWER:
+        return Skill::Primary::DEFENSE;
+    case Skill::Primary::KNOWLEDGE:
+        return Skill::Primary::POWER;
+    default:
+        break;
     }
 
     return Skill::Primary::UNKNOWN;

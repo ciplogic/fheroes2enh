@@ -39,5 +39,3 @@ namespace SDL
 
     bool SubSystem(uint32_t system);
 }
-
-

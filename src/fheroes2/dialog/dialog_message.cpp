@@ -28,12 +28,12 @@
 #include "dialog.h"
 #include "localevent.h"
 
-int Dialog::Message(const string &header, const string &message, int ft, int buttons)
+int Dialog::Message(const string& header, const string& message, int ft, int buttons)
 {
-    Display &display = Display::Get();
+    Display& display = Display::Get();
 
     // cursor
-    Cursor &cursor = Cursor::Get();
+    Cursor& cursor = Cursor::Get();
     int oldthemes = cursor.Themes();
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
@@ -42,12 +42,12 @@ int Dialog::Message(const string &header, const string &message, int ft, int but
     TextBox textbox2(message, ft, BOXAREA_WIDTH);
 
     FrameBox box(10 + (!header.empty() ? textbox1.h() + 10 : 0) + textbox2.h(), buttons);
-    const Rect &pos = box.GetArea();
+    const Rect& pos = box.GetArea();
 
     if (!header.empty()) textbox1.Blit(pos.x, pos.y + 10);
     if (!message.empty()) textbox2.Blit(pos.x, pos.y + 10 + (!header.empty() ? textbox1.h() : 0) + 10);
 
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     ButtonGroups btnGroups(box.GetArea(), buttons);
     btnGroups.Draw();

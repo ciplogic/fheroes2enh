@@ -33,19 +33,19 @@ namespace Battle
     public:
         Bridge();
 
-        bool NeedAction(const Unit &, s32) const;
+        bool NeedAction(const Unit&, s32) const;
 
-        void Action(const Unit &, s32);
+        void Action(const Unit&, s32);
 
         void SetDestroy();
 
         void SetDown(bool);
 
-        static void SetPassable(const Unit &);
+        static void SetPassable(const Unit&);
 
         static bool AllowUp();
 
-        static bool NeedDown(const Unit &, s32);
+        static bool NeedDown(const Unit&, s32);
 
         bool isPassable(int) const;
 
@@ -60,5 +60,3 @@ namespace Battle
         bool down;
     };
 }
-
-

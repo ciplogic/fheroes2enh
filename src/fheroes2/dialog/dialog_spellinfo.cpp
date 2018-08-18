@@ -33,20 +33,20 @@
 #include "system.h"
 #include "tools.h"
 
-void Dialog::SpellInfo(const Spell &spell, bool ok_button)
+void Dialog::SpellInfo(const Spell& spell, bool ok_button)
 {
     string msg = spell.GetDescription();
     uint32_t extra = spell.ExtraValue();
 
     switch (spell())
     {
-        case Spell::HASTE:
-        case Spell::MASSHASTE:
-            if (0 == extra) extra = 2;
-            break;
+    case Spell::HASTE:
+    case Spell::MASSHASTE:
+        if (0 == extra) extra = 2;
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     if (1 == extra)
@@ -59,13 +59,13 @@ void Dialog::SpellInfo(const Spell &spell, bool ok_button)
     SpellInfo(spell.GetName(), msg, spell, ok_button);
 }
 
-void Dialog::SpellInfo(const string &header, const string &message, const Spell &spell, bool ok_button)
+void Dialog::SpellInfo(const string& header, const string& message, const Spell& spell, bool ok_button)
 {
-    Display &display = Display::Get();
+    Display& display = Display::Get();
     const int system = Settings::Get().ExtGameEvilInterface() ? ICN::SYSTEME : ICN::SYSTEM;
 
     // cursor
-    Cursor &cursor = Cursor::Get();
+    Cursor& cursor = Cursor::Get();
 
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
@@ -74,7 +74,7 @@ void Dialog::SpellInfo(const string &header, const string &message, const Spell 
     TextBox box2(message, Font::BIG, BOXAREA_WIDTH);
     Text text(spell.GetName(), Font::SMALL);
 
-    const auto &sprite = AGG::GetICN(ICN::SPELLS, spell.IndexSprite());
+    const auto& sprite = AGG::GetICN(ICN::SPELLS, spell.IndexSprite());
 
     const int spacer = 10;
 
@@ -97,7 +97,7 @@ void Dialog::SpellInfo(const string &header, const string &message, const Spell 
     pos.y = pos.y + sprite.h() + 2;
     text.Blit(pos);
 
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     up<Button> button;
     Point pt;
@@ -120,9 +120,13 @@ void Dialog::SpellInfo(const string &header, const string &message, const Spell 
         if (!ok_button && !le.MousePressRight()) break;
         if (button) le.MousePressLeft(*button) ? button->PressDraw() : button->ReleaseDraw();
         if (button && le.MouseClickLeft(*button))
-        { break; }
+        {
+            break;
+        }
         if (HotKeyCloseWindow)
-        { break; }
+        {
+            break;
+        }
     }
 
     cursor.Hide();

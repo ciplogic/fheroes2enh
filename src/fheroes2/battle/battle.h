@@ -45,7 +45,10 @@ namespace Battle
 
     enum
     {
-        RESULT_LOSS = 0x01, RESULT_RETREAT = 0x02, RESULT_SURRENDER = 0x04, RESULT_WINS = 0x80
+        RESULT_LOSS = 0x01,
+        RESULT_RETREAT = 0x02,
+        RESULT_SURRENDER = 0x04,
+        RESULT_WINS = 0x80
     };
 
     enum class FightResultType
@@ -64,7 +67,8 @@ namespace Battle
         mutable FightResultType fightAgain;
 
         Result() : army1(0), army2(0), exp1(0), exp2(0), killed(0), fightAgain(FightResultType::Accept)
-        {}
+        {
+        }
 
         bool AttackerWins() const;
 
@@ -79,15 +83,15 @@ namespace Battle
         uint32_t GetExperienceDefender() const;
     };
 
-    ByteVectorWriter &operator<<(ByteVectorWriter &, const Result &);
+    ByteVectorWriter& operator<<(ByteVectorWriter&, const Result&);
 
-    ByteVectorReader &operator>>(ByteVectorReader &, Result &);
+    ByteVectorReader& operator>>(ByteVectorReader&, Result&);
 
-    Result Loader(Army &, Army &, s32);
+    Result Loader(Army&, Army&, s32);
 
-    void UpdateMonsterSpriteAnimation(const string &);
+    void UpdateMonsterSpriteAnimation(const string&);
 
-    void UpdateMonsterAttributes(const string &);
+    void UpdateMonsterAttributes(const string&);
 
     enum
     {
@@ -141,31 +145,32 @@ namespace Battle
 
     struct TargetInfo
     {
-        Unit *defender;
+        Unit* defender;
         uint32_t damage;
         uint32_t killed;
         bool resist;
 
         TargetInfo() : defender(nullptr), damage(0), killed(0), resist(false)
-        {}
+        {
+        }
 
-        bool operator==(const TargetInfo &) const;
+        bool operator==(const TargetInfo&) const;
 
         bool isFinishAnimFrame() const;
     };
 
-    ByteVectorWriter &operator<<(ByteVectorWriter &, const TargetInfo &);
-    
-    ByteVectorReader &operator>>(ByteVectorReader &, TargetInfo &);
+    ByteVectorWriter& operator<<(ByteVectorWriter&, const TargetInfo&);
+
+    ByteVectorReader& operator>>(ByteVectorReader&, TargetInfo&);
 
     struct TargetsInfo : public vector<TargetInfo>
     {
         TargetsInfo() = default;
     };
 
-    ByteVectorWriter &operator<<(ByteVectorWriter &, const TargetsInfo &);
+    ByteVectorWriter& operator<<(ByteVectorWriter&, const TargetsInfo&);
 
-    ByteVectorReader &operator>>(ByteVectorReader &, TargetsInfo &);
+    ByteVectorReader& operator>>(ByteVectorReader&, TargetsInfo&);
 
     enum stats_t
     {
@@ -215,4 +220,3 @@ namespace Battle
         SP_SHIELD | SP_STEELSKIN | SP_STONESKIN | SP_DRAGONSLAYER | SP_BLOODLUST | SP_BLESS | SP_HASTE | SP_ANTIMAGIC
     };
 }
-

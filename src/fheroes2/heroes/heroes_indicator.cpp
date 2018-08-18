@@ -34,21 +34,21 @@ std::string MoraleString(int morale)
 {
     switch (morale)
     {
-        case Morale::TREASON:
-        case Morale::AWFUL:
-        case Morale::POOR:
-            return _("Bad Morale");
+    case Morale::TREASON:
+    case Morale::AWFUL:
+    case Morale::POOR:
+        return _("Bad Morale");
 
-        case Morale::NORMAL:
-            return _("Neutral Morale");
+    case Morale::NORMAL:
+        return _("Neutral Morale");
 
-        case Morale::GOOD:
-        case Morale::GREAT:
-        case Morale::BLOOD:
-            return _("Good Morale");
+    case Morale::GOOD:
+    case Morale::GREAT:
+    case Morale::BLOOD:
+        return _("Good Morale");
 
-        default:
-            break;
+    default:
+        break;
     }
     return nullptr;
 }
@@ -57,48 +57,48 @@ std::string LuckString(int luck)
 {
     switch (luck)
     {
-        case Luck::CURSED:
-        case Luck::AWFUL:
-        case Luck::BAD:
-            return _("Bad Luck");
+    case Luck::CURSED:
+    case Luck::AWFUL:
+    case Luck::BAD:
+        return _("Bad Luck");
 
-        case Luck::NORMAL:
-            return _("Neutral Luck");
+    case Luck::NORMAL:
+        return _("Neutral Luck");
 
-        case Luck::GOOD:
-        case Luck::GREAT:
-        case Luck::IRISH:
-            return _("Good Luck");
+    case Luck::GOOD:
+    case Luck::GREAT:
+    case Luck::IRISH:
+        return _("Good Luck");
 
-        default:
-            break;
+    default:
+        break;
     }
     return nullptr;
 }
 
-HeroesIndicator::HeroesIndicator(const Heroes &h) : hero(h)
+HeroesIndicator::HeroesIndicator(const Heroes& h) : hero(h)
 {
     descriptions.reserve(256);
 }
 
-const Rect &HeroesIndicator::GetArea() const
+const Rect& HeroesIndicator::GetArea() const
 {
     return area;
 }
 
-const string &HeroesIndicator::GetDescriptions() const
+const string& HeroesIndicator::GetDescriptions() const
 {
     return descriptions;
 }
 
-void HeroesIndicator::SetPos(const Point &pt, bool skip_back)
+void HeroesIndicator::SetPos(const Point& pt, bool skip_back)
 {
     area.x = pt.x;
     area.y = pt.y;
     if (!skip_back) back.Save(area);
 }
 
-LuckIndicator::LuckIndicator(const Heroes &h) : HeroesIndicator(h), luck(Luck::NORMAL)
+LuckIndicator::LuckIndicator(const Heroes& h) : HeroesIndicator(h), luck(Luck::NORMAL)
 {
     area.w = 35;
     area.h = 26;
@@ -116,7 +116,7 @@ void LuckIndicator::Redraw()
     descriptions.append(_("Current Modifiers:"));
     descriptions.append("\n \n");
 
-    const Sprite &sprite = AGG::GetICN(ICN::HSICONS, 0 > luck ? 3 : 0 < luck ? 2 : 6);
+    const Sprite& sprite = AGG::GetICN(ICN::HSICONS, 0 > luck ? 3 : 0 < luck ? 2 : 6);
     const int inter = 6;
     int count = 0 == luck ? 1 : abs(luck);
     s32 cx = area.x + (area.w - (sprite.w() + inter * (count - 1))) / 2;
@@ -135,9 +135,9 @@ void LuckIndicator::Redraw()
     }
 }
 
-void LuckIndicator::QueueEventProcessing(LuckIndicator &indicator)
+void LuckIndicator::QueueEventProcessing(LuckIndicator& indicator)
 {
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     if (le.MouseClickLeft(indicator.area))
         Message(LuckString(indicator.luck), indicator.descriptions, Font::BIG, Dialog::OK);
@@ -145,7 +145,7 @@ void LuckIndicator::QueueEventProcessing(LuckIndicator &indicator)
         Dialog::Message(LuckString(indicator.luck), indicator.descriptions, Font::BIG);
 }
 
-MoraleIndicator::MoraleIndicator(const Heroes &h) : HeroesIndicator(h), morale(Morale::NORMAL)
+MoraleIndicator::MoraleIndicator(const Heroes& h) : HeroesIndicator(h), morale(Morale::NORMAL)
 {
     area.w = 35;
     area.h = 26;
@@ -163,7 +163,7 @@ void MoraleIndicator::Redraw()
     descriptions.append(_("Current Modifiers:"));
     descriptions.append("\n \n");
 
-    const Sprite &sprite = AGG::GetICN(ICN::HSICONS, 0 > morale ? 5 : 0 < morale ? 4 : 7);
+    const Sprite& sprite = AGG::GetICN(ICN::HSICONS, 0 > morale ? 5 : 0 < morale ? 4 : 7);
     const int inter = 6;
     int count = 0 == morale ? 1 : abs(morale);
     s32 cx = area.x + (area.w - (sprite.w() + inter * (count - 1))) / 2;
@@ -182,9 +182,9 @@ void MoraleIndicator::Redraw()
     }
 }
 
-void MoraleIndicator::QueueEventProcessing(MoraleIndicator &indicator)
+void MoraleIndicator::QueueEventProcessing(MoraleIndicator& indicator)
 {
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     if (le.MouseClickLeft(indicator.area))
         Message(MoraleString(indicator.morale), indicator.descriptions, Font::BIG, Dialog::OK);
@@ -192,7 +192,7 @@ void MoraleIndicator::QueueEventProcessing(MoraleIndicator &indicator)
         Dialog::Message(MoraleString(indicator.morale), indicator.descriptions, Font::BIG);
 }
 
-ExperienceIndicator::ExperienceIndicator(const Heroes &h) : HeroesIndicator(h)
+ExperienceIndicator::ExperienceIndicator(const Heroes& h) : HeroesIndicator(h)
 {
     area.w = 39;
     area.h = 36;
@@ -201,12 +201,12 @@ ExperienceIndicator::ExperienceIndicator(const Heroes &h) : HeroesIndicator(h)
     StringReplace(descriptions, "%{exp1}", hero.GetExperience());
     StringReplace(descriptions, "%{exp2}",
                   Heroes::GetExperienceFromLevel(
-                          Heroes::GetLevelFromExperience(hero.GetExperience())));
+                      Heroes::GetLevelFromExperience(hero.GetExperience())));
 }
 
 void ExperienceIndicator::Redraw() const
 {
-    const Sprite &sprite3 = AGG::GetICN(ICN::HSICONS, 1);
+    const Sprite& sprite3 = AGG::GetICN(ICN::HSICONS, 1);
     sprite3.Blit(area.x, area.y);
 
     Text text(Int2Str(hero.GetExperience()), Font::SMALL);
@@ -215,7 +215,7 @@ void ExperienceIndicator::Redraw() const
 
 void ExperienceIndicator::QueueEventProcessing() const
 {
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     if (le.MouseClickLeft(area) || le.MousePressRight(area))
     {
@@ -225,13 +225,14 @@ void ExperienceIndicator::QueueEventProcessing() const
     }
 }
 
-SpellPointsIndicator::SpellPointsIndicator(const Heroes &h) : HeroesIndicator(h)
+SpellPointsIndicator::SpellPointsIndicator(const Heroes& h) : HeroesIndicator(h)
 {
     area.w = 39;
     area.h = 36;
 
     descriptions = _(
-            "%{name} currently has %{point} spell points out of a maximum of %{max}. The maximum number of spell points is 10 times your knowledge. It is occasionally possible to have more than your maximum spell points via special events.");
+        "%{name} currently has %{point} spell points out of a maximum of %{max}. The maximum number of spell points is 10 times your knowledge. It is occasionally possible to have more than your maximum spell points via special events."
+    );
     StringReplace(descriptions, "%{name}", hero.GetName());
     StringReplace(descriptions, "%{point}", hero.GetSpellPoints());
     StringReplace(descriptions, "%{max}", hero.GetMaxSpellPoints());
@@ -239,7 +240,7 @@ SpellPointsIndicator::SpellPointsIndicator(const Heroes &h) : HeroesIndicator(h)
 
 void SpellPointsIndicator::Redraw() const
 {
-    const Sprite &sprite3 = AGG::GetICN(ICN::HSICONS, 8);
+    const Sprite& sprite3 = AGG::GetICN(ICN::HSICONS, 8);
     sprite3.Blit(area.x, area.y);
 
     Text text(Int2Str(hero.GetSpellPoints()) + "/" + Int2Str(hero.GetMaxSpellPoints()), Font::SMALL);
@@ -248,7 +249,7 @@ void SpellPointsIndicator::Redraw() const
 
 void SpellPointsIndicator::QueueEventProcessing() const
 {
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     if (le.MouseClickLeft(area) || le.MousePressRight(area))
     {

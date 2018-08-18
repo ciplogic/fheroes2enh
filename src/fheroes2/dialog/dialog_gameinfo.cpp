@@ -36,17 +36,17 @@
 
 void Dialog::GameInfo()
 {
-    Display &display = Display::Get();
-    Cursor &cursor = Cursor::Get();
-    Settings &conf = Settings::Get();
+    Display& display = Display::Get();
+    Cursor& cursor = Cursor::Get();
+    Settings& conf = Settings::Get();
 
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
-    const Sprite &dlg = AGG::GetICN(ICN::SCENIBKG, 0);
+    const Sprite& dlg = AGG::GetICN(ICN::SCENIBKG, 0);
 
     SpriteBack back(Rect((display.w() - dlg.w()) / 2, (display.h() - dlg.h()) / 2, dlg.w(), dlg.h()));
-    const Point &pt = back.GetPos();
+    const Point& pt = back.GetPos();
     dlg.Blit(pt);
 
     TextBox text;
@@ -116,7 +116,7 @@ void Dialog::GameInfo()
     cursor.Show();
     display.Flip();
 
-    LocalEvent &le = LocalEvent::Get();
+    LocalEvent& le = LocalEvent::Get();
 
     // message loop
     while (le.HandleEvents())
