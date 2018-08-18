@@ -24,7 +24,6 @@
 
 #include "army.h"
 #include "players.h"
-#include "heroes_recruits.h"
 
 class ArmyBar;
 

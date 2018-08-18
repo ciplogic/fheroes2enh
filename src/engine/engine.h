@@ -23,7 +23,6 @@
 #pragma once
 
 #include "types.h"
-#include "translations.h"
 
 
 #define INIT_VIDEO    SDL_INIT_VIDEO

@@ -29,7 +29,6 @@
 #include "surface.h"
 #include "error.h"
 #include "system.h"
-#include "error.h"
 
 #ifdef WITH_IMAGE
 

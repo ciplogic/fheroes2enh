@@ -28,7 +28,6 @@
 #include "army_bar.h"
 #include "heroes_indicator.h"
 #include "world.h"
-#include "game.h"
 #include "dialog.h"
 #include "icn.h"
 

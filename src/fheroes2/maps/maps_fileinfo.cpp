@@ -40,6 +40,8 @@
 #include "game_io.h"
 #include "game_over.h"
 #include "BinaryFileReader.h"
+#include <functional>
+#include "system.h"
 
 #define LENGTHNAME        16
 #define LENGTHDESCRIPTION    143

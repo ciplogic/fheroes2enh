@@ -31,6 +31,7 @@
 #include "heroes.h"
 #include "castle.h"
 #include "ai_simple.h"
+#include "ai.h"
 
 const char* AI::Type()
 {

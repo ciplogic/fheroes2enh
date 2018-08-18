@@ -27,11 +27,9 @@
 #include "dialog.h"
 #include "button.h"
 #include "settings.h"
-#include "pocketpc.h"
 #include "game.h"
 #include "localevent.h"
 #include "mus.h"
-#include "audio.h"
 #include "audio_mixer.h"
 #include "icn.h"
 

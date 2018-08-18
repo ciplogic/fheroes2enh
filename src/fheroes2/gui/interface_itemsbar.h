@@ -24,7 +24,6 @@
 
 #include <utility>
 #include <algorithm>
-#include "gamedefs.h"
 #include "display.h"
 #include "tools.h"
 

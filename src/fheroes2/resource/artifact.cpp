@@ -37,6 +37,7 @@
 #include "icn.h"
 
 #include <sstream>
+#include <functional>
 
 enum
 {

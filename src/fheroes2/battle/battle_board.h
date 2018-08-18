@@ -22,8 +22,6 @@
 
 #pragma once
 
-#include <functional>
-
 #include "battle.h"
 #include "battle_cell.h"
 

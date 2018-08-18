@@ -22,9 +22,6 @@
 
 #pragma once
 
-
-#include <list>
-#include "gamedefs.h"
 #include "direction.h"
 #include "skill.h"
 #include "artifact.h"

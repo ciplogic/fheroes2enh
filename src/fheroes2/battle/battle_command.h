@@ -22,7 +22,6 @@
 
 #pragma once
 
-#include "gamedefs.h"
 #include "battle_board.h"
 
 namespace Battle

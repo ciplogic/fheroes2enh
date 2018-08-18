@@ -22,7 +22,6 @@
 
 #pragma once
 
-#include "gamedefs.h"
 #include "spell_storage.h"
 #include "ByteVectorReader.h"
 #include "ByteVectorWriter.h"

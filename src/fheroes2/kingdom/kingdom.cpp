@@ -33,6 +33,7 @@
 #include "game_interface.h"
 #include "ai.h"
 #include "bitmodes.h"
+#include <functional>
 
 bool HeroesStrongestArmy(const Heroes* h1, const Heroes* h2)
 {

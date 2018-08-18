@@ -37,6 +37,7 @@
 #include "icn.h"
 #include "game.h"
 #include "mus.h"
+#include "system.h"
 
 void RedrawScenarioStaticInfo(const Rect&);
 

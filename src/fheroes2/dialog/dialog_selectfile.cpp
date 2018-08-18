@@ -27,6 +27,7 @@
 #include <iterator>
 #include <ctime>
 #include <sstream>
+#include <iomanip>
 
 #include "icn.h"
 

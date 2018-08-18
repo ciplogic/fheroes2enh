@@ -30,6 +30,7 @@
 #include "display.h"
 #include "icn.h"
 #include <iostream>
+#include "system.h"
 
 
 int Game::LoadCampain()

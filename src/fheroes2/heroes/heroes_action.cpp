@@ -37,6 +37,7 @@
 #include "audio_mixer.h"
 
 #include "icn.h"
+#include <functional>
 
 #define PlayMusicReplacement(m82) if(MUS::FromMapObject(obj) == MUS::UNKNOWN) \
                                       AGG::PlaySound(m82)

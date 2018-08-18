@@ -38,6 +38,7 @@
 #include "rand.h"
 #include "battle_army.h"
 #include <sstream>
+#include <iomanip>
 
 namespace Battle
 {

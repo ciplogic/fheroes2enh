@@ -24,8 +24,6 @@
 #include "game.h"
 #include "settings.h"
 #include <sstream>
-#include <iostream>
-
 
 s32 Route::Step::GetIndex() const
 {

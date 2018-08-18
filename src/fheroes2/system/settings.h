@@ -24,11 +24,6 @@
 
 #include "ByteVectorReader.h"
 #include <list>
-#include <vector>
-#include <iomanip>
-
-#include "system.h"
-#include "gamedefs.h"
 #include "players.h"
 #include "dir.h"
 #include "maps_fileinfo.h"

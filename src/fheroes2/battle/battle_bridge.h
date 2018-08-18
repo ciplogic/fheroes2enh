@@ -22,8 +22,6 @@
 
 #pragma once
 
-#include "gamedefs.h"
-
 namespace Battle
 {
     class Unit;

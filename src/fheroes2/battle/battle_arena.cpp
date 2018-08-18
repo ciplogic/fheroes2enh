@@ -46,6 +46,7 @@
 #include "icn.h"
 #include "audio_mixer.h"
 #include "audio_music.h"
+#include <functional>
 
 namespace Battle
 {

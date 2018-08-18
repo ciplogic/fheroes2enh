@@ -34,7 +34,6 @@
 #include <vector>
 
 #include "pairs.h"
-#include "ai.h"
 
 struct IndexObjectMap : map<s32, int>
 {

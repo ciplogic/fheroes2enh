@@ -39,6 +39,7 @@
 #include "rand.h"
 
 #include <sstream>
+#include "ai.h"
 
 #define HERO_MAX_SHEDULED_TASK 7
 
@@ -90,8 +91,7 @@ string AI::HeroesString(const Heroes& hero)
 
     os << "ai primary target: " << ai_hero.primary_target << endl <<
         "ai sheduled visit: ";
-    for (Queue::const_iterator
-         it = task.begin(); it != task.end(); ++it)
+    for (auto it = task.begin(); it != task.end(); ++it)
         os << *it << "(" << MP2::StringObject(world.GetTiles(*it).GetObject()) << "), ";
     os << endl;
 
@@ -367,8 +367,7 @@ void AI::HeroesActionNewPosition(Heroes& hero)
         pickups.end() == find(pickups.begin(), pickups.end(), hero.GetPath().GetDestinationIndex()))
         hero.GetPath().Reset();
 
-    for (MapsIndexes::const_iterator
-         it = pickups.begin(); it != pickups.end(); ++it)
+    for (auto it = pickups.begin(); it != pickups.end(); ++it)
         if (*it != hero.GetPath().GetDestinationIndex())
             task.push_front(*it);
 }

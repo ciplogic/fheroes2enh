@@ -37,6 +37,7 @@
 #include "m82.h"
 #include "audio_mixer.h"
 #include "settings.h"
+#include "system.h"
 
 void Interface::Basic::ShowPathOrStartMoveHero(Heroes* hero, s32 dst_index)
 {

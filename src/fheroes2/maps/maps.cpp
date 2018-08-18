@@ -27,6 +27,7 @@
 #include "game.h"
 #include "difficulty.h"
 #include <iostream>
+#include "system.h"
 
 
 struct ComparsionDistance

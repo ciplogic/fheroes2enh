@@ -29,6 +29,7 @@
 #include "game.h"
 #include "game_interface.h"
 #include "mus.h"
+#include <functional>
 
 void Interface::Basic::SetFocus(Heroes* hero)
 {

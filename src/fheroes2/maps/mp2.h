@@ -22,7 +22,8 @@
 
 #pragma once
 
-#include "gamedefs.h"
+#include "types.h"
+#include <string>
 
 #define MP2OFFSETDATA    428
 #define SIZEOFMP2TILE    20

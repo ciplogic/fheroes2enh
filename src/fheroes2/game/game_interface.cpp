@@ -34,6 +34,7 @@
 #include "game.h"
 #include "dialog.h"
 #include "game_interface.h"
+#include "system.h"
 
 Interface::Basic::Basic() : gameArea(*this), radar(*this),
                             iconsPanel(*this), buttonsArea(*this),

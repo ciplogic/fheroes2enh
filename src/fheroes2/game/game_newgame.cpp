@@ -34,6 +34,7 @@
 #include "icn.h"
 #include <sstream>
 #include <iostream>
+#include "system.h"
 
 
 int Game::NewStandard()

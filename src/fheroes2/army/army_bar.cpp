@@ -24,7 +24,6 @@
 #include "agg.h"
 #include "icn.h"
 #include "cursor.h"
-#include "settings.h"
 #include "race.h"
 #include "dialog.h"
 #include "dialog_selectitems.h"

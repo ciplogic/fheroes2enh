@@ -36,6 +36,7 @@
 #include <chrono>
 #include "FileUtils.h"
 #include <iostream>
+#include "system.h"
 
 static u16 SAV2ID2 = 0xFF02;
 static u16 SAV2ID3 = 0xFF03;

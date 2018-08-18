@@ -47,6 +47,7 @@
 
 #include "audio_mixer.h"
 #include "battle_army.h"
+#include <functional>
 
 #define  ARMYORDERW    40
 

@@ -20,11 +20,9 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include "engine.h"
 #include "gamedefs.h"
 #include "settings.h"
 #include "world.h"
-#include "game.h"
 #include "rand.h"
 
 std::string Week::GetName() const

@@ -20,10 +20,8 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef TINYCONFIG_H
-#define TINYCONFIG_H
+#pragma once
 
-#include <ostream>
 #include <string>
 #include <vector>
 #include <map>
@@ -57,5 +55,3 @@ protected:
     char separator;
     char comment;
 };
-
-#endif

@@ -27,6 +27,7 @@
 #include "battle_troop.h"
 #include "rand.h"
 #include "battle_army.h"
+#include <functional>
 
 #define CAPACITY 16
 

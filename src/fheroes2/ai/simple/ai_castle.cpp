@@ -31,6 +31,7 @@
 #include "race.h"
 #include "game.h"
 #include "ai_simple.h"
+#include "ai.h"
 
 void AICastleDefense(Castle& c)
 {

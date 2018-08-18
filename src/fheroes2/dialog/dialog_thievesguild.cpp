@@ -20,7 +20,6 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <string>
 #include <algorithm>
 #include "agg.h"
 #include "text.h"
@@ -31,6 +30,7 @@
 #include "icn.h"
 #include "game.h"
 #include "dialog.h"
+#include <functional>
 
 struct ValueColors : pair<int, int>
 {
