@@ -35,14 +35,10 @@
 #define SPELL_PER_PAGE        6
 #define SPELL_PER_PAGE_SMALL    2
 
-struct SpellFiltered : binary_function<Spell, int, bool>
+bool SpellFiltered(Spell s, int f) 
 {
-    bool operator()(Spell s, int f) const
-    {
-        return SpellBook::ADVN & f && s.isCombat() || SpellBook::CMBT & f && !s.isCombat();
-    }
-};
-
+    return SpellBook::ADVN & f && s.isCombat() || SpellBook::CMBT & f && !s.isCombat();
+}
 void SpellBookRedrawLists(const SpellStorage&, Rects&, size_t, const Point&, uint32_t, int only, const HeroBase& hero);
 
 void SpellBookRedrawSpells(const SpellStorage&, Rects&, size_t, s32, s32, const HeroBase& hero);
@@ -165,7 +161,7 @@ Spell SpellBook::Open(const HeroBase& hero, int filter, bool canselect) const
 
             if (0 <= index)
             {
-                const_iterator spell = spells2.begin() + (index + current_index);
+                auto spell = spells2.begin() + (index + current_index);
 
                 if (spell < spells2.end())
                 {
@@ -201,7 +197,7 @@ Spell SpellBook::Open(const HeroBase& hero, int filter, bool canselect) const
 
             if (0 <= index)
             {
-                const_iterator spell = spells2.begin() + (index + current_index);
+                auto spell = spells2.begin() + (index + current_index);
                 if (spell < spells2.end())
                 {
                     cursor.Hide();
@@ -350,7 +346,11 @@ SpellStorage SpellBook::SetFilter(int filter, const HeroBase* hero) const
     if (filter != ALL)
     {
         res.resize(distance(res.begin(),
-                            remove_if(res.begin(), res.end(), bind2nd(SpellFiltered(), filter))));
+                            remove_if(res.begin(), res.end(), 
+                                [&](const Spell& it)
+        {
+            return SpellFiltered(it, filter);
+        })));
     }
 
     // check on water: disable portal spells

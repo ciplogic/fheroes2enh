@@ -120,17 +120,4 @@ namespace Battle
         static bool isValidMirrorImageIndex(s32, const Unit*);
     };
 
-    struct ShortestDistance : public binary_function<s32, s32, bool>
-    {
-        ShortestDistance(s32 index) : center(index)
-        {
-        }
-
-        bool operator()(s32 index1, s32 index2) const
-        {
-            return Board::GetDistance(center, index1) < Board::GetDistance(center, index2);
-        }
-
-        s32 center;
-    };
 }

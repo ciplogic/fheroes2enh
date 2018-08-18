@@ -106,11 +106,12 @@ Heroes::Heroes() : move_point_scale(-1), army(this), hid(UNKNOWN), portrait(UNKN
 {
 }
 
-Heroes::Heroes(int heroid, int rc) : HeroBase(HEROES, rc), ColorBase(Color::NONE), experience(0),
-                                     move_point_scale(-1), secondary_skills(rc), army(this), hid(heroid),
-                                     portrait(heroid), race(rc),
-                                     save_maps_object(MP2::OBJ_ZERO), path(*this), direction(Direction::RIGHT),
-                                     sprite_index(18), patrol_square(0)
+Heroes::Heroes(int heroid, int rc) : 
+    HeroBase(HEROES, rc), ColorBase(Color::NONE), 
+    experience(0), move_point_scale(-1), secondary_skills(rc), army(this), hid(heroid),
+    portrait(heroid), race(rc),
+    save_maps_object(MP2::OBJ_ZERO), path(*this), direction(Direction::RIGHT),
+    sprite_index(18), patrol_square(0)
 {
     name = _(Heroes::GetName(heroid));
 

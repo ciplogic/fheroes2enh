@@ -1229,8 +1229,11 @@ void Maps::Tiles::UpdatePassable()
             //! MP2::isActionObject(obj, false) &&
             !emptyobj &&
             TileIsCoast(GetIndex(), Direction::TOP | Direction::BOTTOM | Direction::LEFT | Direction::RIGHT) &&
-            addons_level1.size() != static_cast<size_t>(count_if(addons_level1.begin(), addons_level1.end(),
-                                                                 ptr_fun(&TilesAddon::isShadow))))
+            addons_level1.size() != static_cast<size_t>(count_if(
+                addons_level1.begin(), addons_level1.end(),
+                [](const TilesAddon&it) {
+                    return TilesAddon::isShadow(it);
+                })))
         {
             tile_passable = 0;
         }
@@ -1719,7 +1722,7 @@ void Maps::Tiles::RedrawTop4Hero(Surface& dst, bool skip_ground) const
 Maps::TilesAddon* Maps::Tiles::FindAddonICN1(int icn1)
 {
     const auto it = find_if(addons_level1.begin(), addons_level1.end(),
-                            bind2nd(mem_fun_ref(&TilesAddon::isICN), icn1));
+        [&](const TilesAddon& it) { return it.isICN(icn1); });
 
     return it != addons_level1.end() ? &*it : nullptr;
 }
@@ -1727,7 +1730,7 @@ Maps::TilesAddon* Maps::Tiles::FindAddonICN1(int icn1)
 Maps::TilesAddon* Maps::Tiles::FindAddonICN2(int icn2)
 {
     auto it = find_if(addons_level2.begin(), addons_level2.end(),
-                      bind2nd(mem_fun_ref(&TilesAddon::isICN), icn2));
+        [&](const TilesAddon& it) { return it.isICN(icn2); });
 
     return it != addons_level2.end() ? &*it : nullptr;
 }
@@ -1735,7 +1738,7 @@ Maps::TilesAddon* Maps::Tiles::FindAddonICN2(int icn2)
 Maps::TilesAddon* Maps::Tiles::FindAddonLevel1(uint32_t uniq1)
 {
     auto it = find_if(addons_level1.begin(), addons_level1.end(),
-                      bind2nd(mem_fun_ref(&TilesAddon::isUniq), uniq1));
+        [&](const TilesAddon& it) { return it.isUniq(uniq1); });
 
     return it != addons_level1.end() ? &*it : nullptr;
 }
@@ -1743,7 +1746,7 @@ Maps::TilesAddon* Maps::Tiles::FindAddonLevel1(uint32_t uniq1)
 Maps::TilesAddon* Maps::Tiles::FindAddonLevel2(uint32_t uniq2)
 {
     auto it = find_if(addons_level2.begin(), addons_level2.end(),
-                      bind2nd(mem_fun_ref(&TilesAddon::isUniq), uniq2));
+        [&](const TilesAddon& it) { return it.isUniq(uniq2); });
 
     return it != addons_level2.end() ? &*it : nullptr;
 }
@@ -1761,7 +1764,10 @@ string Maps::Tiles::String() const
     if (isRoad())
     {
         auto it = find_if(addons_level1.begin(), addons_level1.end(),
-                          bind2nd(mem_fun_ref(&TilesAddon::isRoad), DIRECTION_ALL));
+            [](const TilesAddon& it)
+        {
+            return it.isRoad(DIRECTION_ALL);
+        });
         os << ", (" << "road";
         if (ICN::ROAD == MP2::GetICNObject((*it).object))
             os << ", " << "index: " << static_cast<int>((*it).index);
@@ -1876,7 +1882,7 @@ bool Maps::Tiles::GoodForUltimateArtifact() const
     return !isWater() && (addons_level1.empty() ||
             addons_level1.size() ==
             static_cast<size_t>(count_if(addons_level1.begin(), addons_level1.end(),
-                                         ptr_fun(&TilesAddon::isShadow)))) &&
+                [&](const TilesAddon& it) { return TilesAddon::isShadow(it); }))) &&
         isPassable(nullptr, Direction::CENTER, true);
 }
 

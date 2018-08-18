@@ -295,12 +295,9 @@ void Heroes::MeetingDialog(Heroes& heroes2)
 }
 
 // spell_book.cpp
-struct HeroesCanTeachSpell : binary_function<const HeroBase *, Spell, bool>
+bool HeroesCanTeachSpell(const HeroBase* hero, Spell spell)
 {
-    bool operator()(const HeroBase* hero, Spell spell) const
-    {
-        return hero->CanTeachSpell(spell);
-    };
+    return hero->CanTeachSpell(spell);
 };
 
 struct HeroesHaveSpell : binary_function<const HeroBase *, Spell, bool>
@@ -360,25 +357,27 @@ void Heroes::ScholarAction(Heroes& hero1, Heroes& hero2)
 
     if (!learn.empty())
     {
-        auto
-            res = remove_if(learn.begin(), learn.end(),
-                            not1(bind1st(HeroesCanTeachSpell(), teacher)));
+        const auto res = remove_if(learn.begin(), learn.end(),
+            [&](const Spell& spell)
+        {
+            return !HeroesCanTeachSpell(teacher, spell);
+        });
         learn.resize(distance(learn.begin(), res));
     }
 
     // remove_if for teach spells
     if (!teach.empty())
     {
-        auto
-            res = remove_if(teach.begin(), teach.end(), bind1st(HeroesHaveSpell(), learner));
+        const auto res = remove_if(teach.begin(), teach.end(), bind1st(HeroesHaveSpell(), learner));
         teach.resize(distance(teach.begin(), res));
     }
 
     if (!teach.empty())
     {
-        auto
-            res = remove_if(teach.begin(), teach.end(),
-                            not1(bind1st(HeroesCanTeachSpell(), teacher)));
+        const auto res = remove_if(teach.begin(), teach.end(), [&](const Spell& spell)
+        {
+            return !HeroesCanTeachSpell(teacher, spell);
+        });
         teach.resize(distance(teach.begin(), res));
     }
 

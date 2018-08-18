@@ -20,6 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
+#include "battle.h"
 #include <algorithm>
 #include "settings.h"
 #include "world.h"
@@ -760,10 +761,15 @@ void Battle::Arena::ApplyActionSpellMirrorImage(Command& cmd)
         return;
     Indexes distances = Board::GetDistanceIndexes(b->GetHeadIndex(), 4);
 
-    const ShortestDistance SortingDistance(b->GetHeadIndex());
+    const std::function<bool(s32, s32)> SortingDistance = [=](s32 index1, s32 index2)
+    {
+        auto center = b->GetHeadIndex();
+        return Board::GetDistance(center, index1) < Board::GetDistance(center, index2);
+    };
+    
     sort(distances.begin(), distances.end(), SortingDistance);
 
-    auto it = find_if(distances.begin(), distances.end(),
+    const auto it = find_if(distances.begin(), distances.end(),
                       bind2nd(ptr_fun(&Board::isValidMirrorImageIndex), b));
 
     for (auto& distance : distances)
