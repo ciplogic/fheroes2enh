@@ -174,8 +174,11 @@ void Battle::Units::SortWeakest()
 
 Battle::Unit *Battle::Units::FindUID(uint32_t pid)
 {
-    auto it = find_if(_items.begin(), _items.end(),
-                      bind2nd(mem_fun(&Unit::isUID), pid));
+    auto it = find_if(_items.begin(), _items.end(), 
+        [&](const Unit* unit)
+    {
+        return unit->isUID(pid);
+    });
 
     return it == _items.end() ? nullptr : *it;
 }
@@ -183,8 +186,10 @@ Battle::Unit *Battle::Units::FindUID(uint32_t pid)
 Battle::Unit *Battle::Units::FindMode(uint32_t mod)
 {
     auto it = find_if(_items.begin(), _items.end(),
-                          bind2nd(mem_fun(&Unit::Modes), mod));
-
+        [&](const Unit* unit)
+    {
+        return unit->Modes(mod);
+    });
     return it == _items.end() ? nullptr : *it;
 }
 

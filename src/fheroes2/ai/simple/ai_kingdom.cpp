@@ -187,8 +187,10 @@ void AI::KingdomTurn(Kingdom &kingdom)
             modes = HEROES_HUNTER | HEROES_SCOUTER;
         else if (heroes._items.size() < maxhero ||
                  0 == count_if(heroes._items.begin(), heroes._items.end(),
-                               bind2nd(mem_fun(&Heroes::Modes), HEROES_SCOUTER)))
-            modes = HEROES_SCOUTER;
+                     [&](const Heroes* unit) {
+                         return unit->Modes(HEROES_SCOUTER);
+                     }))        
+                    modes = HEROES_SCOUTER;
 
         if (modes &&
             heroes._items.size() < Kingdom::GetMaxHeroes())
@@ -226,9 +228,10 @@ void AI::KingdomTurn(Kingdom &kingdom)
         if (0 == hunters && !heroes._items.empty())
         {
             auto it = find_if(heroes._items.begin(), heroes._items.end(),
-                              not1(bind2nd(mem_fun(&Heroes::Modes),
-                                           Heroes::PATROL)));
-
+                [&](const Heroes* unit)
+            {
+                return !unit->Modes(Heroes::PATROL);
+            });
             if (it != heroes._items.end() &&
                 !ai.capital->GetHeroes().Guest())
                 AIHeroesSetHunterWithTarget(*it, ai.capital->GetIndex());
@@ -237,7 +240,10 @@ void AI::KingdomTurn(Kingdom &kingdom)
         if (world.BeginMonth() && 1 < world.CountDay())
         {
             auto it = find_if(heroes._items.begin(), heroes._items.end(),
-                              bind2nd(mem_fun(&Heroes::Modes), HEROES_HUNTER));
+                [&](const Heroes* unit)
+            {
+                return unit->Modes(HEROES_HUNTER);
+            });
 
             if (it != heroes._items.end() &&
                 !ai.capital->GetHeroes().Guest())
