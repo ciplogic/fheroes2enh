@@ -93,9 +93,8 @@ public:
     ColorBase(int col = Color::NONE) : color(col)
     {
     }
-
-    virtual ~ColorBase()
-    = default;
+    explicit ColorBase(const ColorBase&) = default;
+    virtual ~ColorBase() = default;
 
     bool operator==(int) const;
 

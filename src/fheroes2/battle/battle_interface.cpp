@@ -694,20 +694,20 @@ void Battle::ArmiesOrder::QueueEventProcessing(string& msg)
 {
     LocalEvent& le = LocalEvent::Get();
 
-    for (auto it = rects.begin(); it != rects.end(); ++it)
+    for (auto& rect : rects)
     {
-        if (!it->first)
+        if (!rect.first)
             continue;
-        if (le.MouseCursor((*it).second))
+        if (le.MouseCursor(rect.second))
         {
             msg = _("View %{monster} info.");
-            StringReplace(msg, "%{monster}", (*it).first->GetName());
+            StringReplace(msg, "%{monster}", rect.first->GetName());
         }
 
-        if (le.MouseClickLeft((*it).second))
-            Dialog::ArmyInfo(*(*it).first, Dialog::READONLY | Dialog::BUTTONS);
-        else if (le.MousePressRight((*it).second))
-            ArmyInfo(*(*it).first, Dialog::READONLY);
+        if (le.MouseClickLeft(rect.second))
+            Dialog::ArmyInfo(*rect.first, Dialog::READONLY | Dialog::BUTTONS);
+        else if (le.MousePressRight(rect.second))
+            ArmyInfo(*rect.first, Dialog::READONLY);
     }
 }
 

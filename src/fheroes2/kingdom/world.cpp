@@ -33,6 +33,7 @@
 #include "maps_actions.h"
 #include "world.h"
 #include "rand.h"
+#include <random>
 #include <sstream>
 #include <iostream>
 
@@ -586,10 +587,8 @@ void World::MonthOfMonstersAction(const Monster& mons)
         }
 
         // create valid points
-        for (auto it = vec_tiles.begin(); it != vec_tiles.end(); ++it)
+        for (auto& tile : vec_tiles)
         {
-            const Maps::Tiles& tile = *it;
-
             if (!tile.isWater() &&
                 MP2::OBJ_ZERO == tile.GetObject() &&
                 tile.isPassable(nullptr, Direction::CENTER, true) &&
@@ -603,7 +602,7 @@ void World::MonthOfMonstersAction(const Monster& mons)
 
         const uint32_t area = 12;
         const uint32_t maxc = w() / area * (h() / area);
-        random_shuffle(tiles.begin(), tiles.end());
+        shuffle(tiles.begin(), tiles.end(), std::mt19937(std::random_device()()));
         if (tiles.size() > maxc) tiles.resize(maxc);
 
         for (auto& tile : tiles)
@@ -697,9 +696,9 @@ MapsIndexes World::GetWhirlpoolEndPoints(s32 center) const
 
         if (addon)
         {
-            for (auto it = uniq_whirlpools.begin(); it != uniq_whirlpools.end(); ++it)
+            for (auto& uniq_whirlpool : uniq_whirlpools)
             {
-                const uint32_t& uniq = (*it).first;
+                const uint32_t& uniq = uniq_whirlpool.first;
                 if (uniq == addon->uniq) continue;
                 uniqs.push_back(uniq);
             }

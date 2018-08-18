@@ -57,7 +57,7 @@ namespace Battle
 Battle::Board::Board()
 {
     _items.reserve(ARENASIZE);
-    for (uint32_t ii = 0; ii < ARENASIZE; ++ii) _items.push_back(Cell(ii));
+    for (uint32_t ii = 0; ii < ARENASIZE; ++ii) _items.emplace_back(ii);
 }
 
 void Battle::Board::SetArea(const Rect& area)
@@ -109,10 +109,8 @@ void Battle::Board::SetEnemyQuality(const Unit& b)
     Arena* arena = GetArena();
     Units enemies(arena->GetForce(b.GetColor(), true), true);
 
-    for (auto it = enemies._items.begin(); it != enemies._items.end(); ++it)
+    for (auto unit : enemies._items)
     {
-        Unit* unit = *it;
-
         if (!unit || !unit->isValid())
             continue;
         const s32& score = b.GetScoreQuality(*unit);

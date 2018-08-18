@@ -329,7 +329,7 @@ void RedrawScenarioStaticInfo(const Rect& rt)
 
 void RedrawDifficultyInfo(const Point& dst, bool label)
 {
-    for (uint32_t current = (uint32_t)DifficultyEnum::EASY; current <= (uint32_t)DifficultyEnum::IMPOSSIBLE; ++current)
+    for (auto current = (uint32_t)DifficultyEnum::EASY; current <= (uint32_t)DifficultyEnum::IMPOSSIBLE; ++current)
     {
         const Sprite& sprite = AGG::GetICN(ICN::NGHSBKG, 0);
         Rect src_rt(24, 94, 65, 65);

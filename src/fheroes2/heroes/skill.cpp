@@ -732,10 +732,10 @@ int Skill::SecondaryPriorityFromRace(int race, const vector<int>& exclude)
 {
     Rand::Queue parts(MAXSECONDARYSKILL);
 
-    for (uint32_t ii = 0; ii < ARRAY_COUNT(secskills); ++ii)
+    for (int secskill : secskills)
         if (exclude.empty() ||
-            exclude.end() == find(exclude.begin(), exclude.end(), secskills[ii]))
-            parts.Push(secskills[ii], SecondaryGetWeightSkillFromRace(race, secskills[ii]));
+            exclude.end() == find(exclude.begin(), exclude.end(), secskill))
+            parts.Push(secskill, SecondaryGetWeightSkillFromRace(race, secskill));
 
     return parts.Size() ? parts.Get() : Secondary::UNKNOWN;
 }
@@ -753,8 +753,8 @@ void Skill::SecSkills::FindSkillsForLevelUp(int race, Secondary& sec1, Secondary
     // exclude is full, add other.
     if (HEROESMAXSKILL <= Count())
     {
-        for (uint32_t ii = 0; ii < ARRAY_COUNT(secskills); ++ii)
-            if (Level::NONE == GetLevel(secskills[ii])) exclude_skills.push_back(secskills[ii]);
+        for (int secskill : secskills)
+            if (Level::NONE == GetLevel(secskill)) exclude_skills.push_back(secskill);
     }
 
     sec1.SetSkill(SecondaryPriorityFromRace(race, exclude_skills));

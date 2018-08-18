@@ -111,7 +111,7 @@ Skill::Secondary Maps::Tiles::QuantitySkill() const
         break;
 
     case MP2::OBJ_WITCHSHUT:
-        return Skill::Secondary(quantity1, Skill::Level::BASIC);
+        return {quantity1, Skill::Level::BASIC};
 
     default:
         break;
@@ -150,7 +150,7 @@ Spell Maps::Tiles::QuantitySpell() const
         break;
     }
 
-    return Spell(Spell::NONE);
+    return {Spell::NONE};
 }
 
 void Maps::Tiles::QuantitySetSpell(int spell)
@@ -194,7 +194,7 @@ Artifact Maps::Tiles::QuantityArtifact() const
                 art.SetSpell(QuantitySpell().GetID());
                 return art;
             }
-            return Artifact(quantity1);
+            return {quantity1};
         }
 
     default:
@@ -294,7 +294,7 @@ ResourceCount Maps::Tiles::QuantityResourceCount() const
         case 2:
             return {Resource::FromIndexSprite2(QuantityExt() - 1), 3};
         case 3:
-            return ResourceCount(Resource::FromIndexSprite2(QuantityExt() - 1), 5);
+            return {Resource::FromIndexSprite2(QuantityExt() - 1), 5};
         default:
             break;
         }

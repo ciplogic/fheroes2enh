@@ -262,8 +262,8 @@ void Players::clear()
 {
     _items.clear();
 
-    for (uint32_t ii = 0; ii < KINGDOMMAX + 1; ++ii)
-        _players[ii] = nullptr;
+    for (auto& _player : _players)
+        _player = nullptr;
 
     current_color = 0;
     human_colors = 0;

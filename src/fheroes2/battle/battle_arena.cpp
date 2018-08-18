@@ -763,9 +763,9 @@ bool Battle::Arena::isDisableCastSpell(const Spell& spell, string* msg)
         else if (spell.isValid())
         {
             // check army
-            for (auto it = board._items.begin(); it != board._items.end(); ++it)
+            for (auto& _item : board._items)
             {
-                const Unit* b = (*it).GetUnit();
+                const Unit* b = _item.GetUnit();
 
                 if (b)
                 {
@@ -774,7 +774,7 @@ bool Battle::Arena::isDisableCastSpell(const Spell& spell, string* msg)
                 }
                 else
                     // check graveyard
-                    if (GraveyardAllowResurrect((*it).GetIndex(), spell))
+                    if (GraveyardAllowResurrect(_item.GetIndex(), spell))
                         return false;
             }
             *msg = _("That spell will affect no one!");

@@ -828,7 +828,7 @@ void ActionToMonster(Heroes& hero, uint32_t obj, s32 dst_index)
 {
     bool destroy = false;
     Maps::Tiles& tile = world.GetTiles(dst_index);
-    MapMonster* map_troop = static_cast<MapMonster *>(world.GetMapObject(tile.GetObjectUID(obj)));
+    auto map_troop = static_cast<MapMonster *>(world.GetMapObject(tile.GetObjectUID(obj)));
     Troop troop = map_troop ? map_troop->QuantityTroop() : tile.QuantityTroop();
     //const Settings & conf = Settings::Get();
 
@@ -1150,7 +1150,7 @@ void ActionToPickupResource(Heroes& hero, uint32_t obj, s32 dst_index)
 
     if (obj == MP2::OBJ_BOTTLE)
     {
-        MapSign* sign = static_cast<MapSign *>(world.GetMapObject(tile.GetObjectUID(obj)));
+        auto sign = static_cast<MapSign *>(world.GetMapObject(tile.GetObjectUID(obj)));
         Message(MP2::StringObject(obj), sign ? sign->message : "", Font::BIG, Dialog::OK);
     }
     else
