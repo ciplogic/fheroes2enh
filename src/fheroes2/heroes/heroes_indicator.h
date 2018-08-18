@@ -23,7 +23,6 @@
 #pragma once
 
 #include <string>
-#include "gamedefs.h"
 
 class Heroes;
 

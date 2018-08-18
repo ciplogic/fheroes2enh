@@ -22,8 +22,6 @@
 
 #pragma once
 
-#include "gamedefs.h"
-
 namespace ObjSwmp
 {
     bool isShadow(uint32_t index);

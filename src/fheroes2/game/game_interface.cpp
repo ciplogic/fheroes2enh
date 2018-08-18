@@ -26,12 +26,10 @@
 
 #include <ctime>
 #include <sstream>
-#include "agg.h"
 #include "settings.h"
 #include "maps.h"
 #include "mp2.h"
 #include "world.h"
-#include "game.h"
 #include "dialog.h"
 #include "game_interface.h"
 #include "system.h"

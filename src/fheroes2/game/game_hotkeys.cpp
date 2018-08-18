@@ -25,13 +25,11 @@
 #include <algorithm>
 
 #include "system.h"
-#include "gamedefs.h"
-#include "tinyconfig.h"
-#include "agg.h"
 #include "settings.h"
 #include "game.h"
 #include "game_interface.h"
 #include "localevent.h"
+#include "tinyconfig.h"
 
 namespace Game
 {

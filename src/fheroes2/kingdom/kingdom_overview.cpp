@@ -33,7 +33,6 @@
 #include "interface_icons.h"
 
 #include <sstream>
-#include <iostream>
 
 #include "icn.h"
 

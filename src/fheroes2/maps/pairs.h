@@ -23,7 +23,6 @@
 #pragma once
 
 #include <utility>
-#include <map>
 #include "mp2.h"
 #include "color.h"
 #include "resource.h"

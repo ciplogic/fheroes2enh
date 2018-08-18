@@ -23,7 +23,6 @@
 
 #pragma once
 
-#include "gamedefs.h"
 #include "direction.h"
 #include "rect.h"
 

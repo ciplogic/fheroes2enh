@@ -22,8 +22,6 @@
 
 #pragma once
 
-#include "gamedefs.h"
-
 namespace ObjDsrt
 {
     bool isShadow(uint32_t index);

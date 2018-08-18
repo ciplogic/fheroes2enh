@@ -24,7 +24,6 @@
 #pragma once
 
 #include <list>
-#include "gamedefs.h"
 #include "direction.h"
 #include "ByteVectorReader.h"
 #include "ByteVectorWriter.h"

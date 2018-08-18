@@ -22,7 +22,6 @@
 
 #include "maps.h"
 #include "world.h"
-#include "game.h"
 
 MapPosition::MapPosition(const Point& pt) : center(pt)
 {

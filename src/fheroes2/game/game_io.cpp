@@ -34,8 +34,6 @@
 #include "ByteVectorReader.h"
 #include "BinaryFileReader.h"
 #include <chrono>
-#include "FileUtils.h"
-#include <iostream>
 #include "system.h"
 
 static u16 SAV2ID2 = 0xFF02;

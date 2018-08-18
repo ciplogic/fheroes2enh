@@ -26,7 +26,6 @@
 #include "cursor.h"
 #include "button.h"
 #include "artifact.h"
-#include "game.h"
 #include "dialog.h"
 #include "icn.h"
 

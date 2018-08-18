@@ -29,7 +29,6 @@
 #include "morale.h"
 #include "game_static.h"
 #include "icn.h"
-#include "game.h"
 #include "rand.h"
 
 struct monstats_t

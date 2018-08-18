@@ -23,7 +23,6 @@
 #pragma once
 
 #include "interface_heroes_bar.h"
-#include "gamedefs.h"
 #include "interface_radar.h"
 #include "interface_buttons.h"
 #include "interface_icons.h"
@@ -31,7 +30,6 @@
 #include "interface_gamearea.h"
 #include "interface_cpanel.h"
 #include "text.h"
-#include "interface_castle_bar.h"
 
 enum redraw_t
 {

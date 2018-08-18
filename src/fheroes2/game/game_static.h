@@ -22,7 +22,6 @@
 
 #pragma once
 
-#include "gamedefs.h"
 #include "ByteVectorWriter.h"
 
 struct cost_t;

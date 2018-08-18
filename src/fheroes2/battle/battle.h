@@ -25,7 +25,8 @@
 #include <vector>
 #include "ByteVectorReader.h"
 #include "ByteVectorWriter.h"
-#include "army.h"
+
+class Army;
 
 namespace Battle
 {

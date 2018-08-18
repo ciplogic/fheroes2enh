@@ -21,6 +21,7 @@
  ***************************************************************************/
 
 #include "agg.h"
+#include "army.h"
 #include "cursor.h"
 #include "settings.h"
 #include "battle.h"

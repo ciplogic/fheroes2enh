@@ -45,7 +45,6 @@
 #include "objcrck.h"
 #include "til.h"
 #include <sstream>
-#include <iostream>
 
 u8 monster_animation_cicle[] = {0, 1, 2, 1, 0, 3, 4, 5, 4, 3};
 

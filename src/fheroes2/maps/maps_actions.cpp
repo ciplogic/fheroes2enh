@@ -24,7 +24,6 @@
 #include "text.h"
 #include "dialog.h"
 #include "settings.h"
-#include "game.h"
 #include "maps_actions.h"
 
 ByteVectorWriter& operator<<(ByteVectorWriter& sb, const ActionSimple& st)

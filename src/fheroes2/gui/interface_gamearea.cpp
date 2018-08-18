@@ -24,7 +24,6 @@
 #include "settings.h"
 #include "world.h"
 #include "ground.h"
-#include "game.h"
 #include "icn.h"
 #include "game_interface.h"
 #include <chrono>

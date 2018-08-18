@@ -22,8 +22,6 @@
 
 #pragma once
 
-#include "gamedefs.h"
-
 namespace ObjLav2
 {
     bool isAction(uint32_t index);

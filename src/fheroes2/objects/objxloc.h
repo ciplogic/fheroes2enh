@@ -22,8 +22,6 @@
 
 #pragma once
 
-#include "gamedefs.h"
-
 namespace ObjXlc1
 {
     int GetPassable(uint32_t index);

@@ -24,6 +24,7 @@
 
 #include "battle.h"
 #include "battle_cell.h"
+#include "maps_tiles.h"
 
 #define ARENAW 11
 #define ARENAH 9

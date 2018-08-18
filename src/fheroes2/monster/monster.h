@@ -25,7 +25,6 @@
 #include "ByteVectorReader.h"
 #include <string>
 #include "payment.h"
-#include "gamedefs.h"
 
 class Spell;
 

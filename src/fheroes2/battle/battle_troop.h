@@ -30,6 +30,7 @@
 #include "ByteVectorReader.h"
 #include "ByteVectorWriter.h"
 #include "battle_arena.h"
+#include "players.h"
 
 class Sprite;
 
