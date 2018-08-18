@@ -1273,12 +1273,11 @@ void Maps::Tiles::UpdatePassable()
     }
 
     // check all sprite (level 1)
-    for (Addons::const_iterator
-                 it = addons_level1.begin(); it != addons_level1.end(); ++it)
+    for (const auto& it : addons_level1)
     {
         if (tile_passable)
         {
-            tile_passable &= TilesAddon::GetPassable(*it);
+            tile_passable &= TilesAddon::GetPassable(it);
         }
     }
 

@@ -78,7 +78,8 @@ void IndexObjectMap::DumpObjects(const IndexDistance &id)
 
 void WorldStoreObjects(int color, IndexObjectMap &store)
 {
-    for (s32 it = 0; it < world.w() * world.h(); ++it)
+    const auto worldSize = world.w() * world.h();
+    for (s32 it = 0; it < worldSize; ++it)
     {
         const Maps::Tiles &tile = world.GetTiles(it);
         if (tile.isFog(color)) continue;
