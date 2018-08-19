@@ -67,7 +67,7 @@ class CastleIndexListBox : public Interface::ListBox<s32>
 public:
     CastleIndexListBox(const Point& pt, int& res) : ListBox<s32>(pt), result(res)
     {
-    };
+    }
 
     void RedrawItem(const s32&, s32, s32, bool);
 
@@ -75,7 +75,7 @@ public:
 
     void ActionCurrentUp()
     {
-    };
+    }
 
     void ActionCurrentDn()
     {
@@ -84,15 +84,15 @@ public:
     void ActionListDoubleClick(s32&)
     {
         result = Dialog::OK;
-    };
+    }
 
     void ActionListSingleClick(s32&)
     {
-    };
+    }
 
     void ActionListPressRight(s32&)
     {
-    };
+    }
 
     int& result;
 };

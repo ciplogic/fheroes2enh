@@ -329,7 +329,7 @@ Battle::Indexes Battle::Board::GetPassableQualityPositions(const Unit& b)
 bool IndexDistanceEqualDistance(const IndexDistance& id, uint32_t dist) 
 {
     return id.second == dist;
-};
+}
 
 Battle::Indexes Battle::Board::GetNearestTroopIndexes(s32 pos, const Indexes* black) const
 {

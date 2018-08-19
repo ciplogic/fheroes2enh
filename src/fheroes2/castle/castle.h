@@ -302,7 +302,6 @@ private:
 
     void PostLoad();
 
-private:
     friend ByteVectorWriter& operator<<(ByteVectorWriter&, const Castle&);
     friend ByteVectorReader& operator>>(ByteVectorReader&, Castle&);
 
@@ -329,7 +328,7 @@ namespace CastleDialog
         bool operator==(uint32_t b) const
         {
             return b == id;
-        };
+        }
 
         building_t id;
         Rect coord;

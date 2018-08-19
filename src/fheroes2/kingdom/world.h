@@ -330,7 +330,6 @@ private:
 
     void PostLoad();
 
-private:
     friend class Radar;
 
     friend ByteVectorWriter& operator<<(ByteVectorWriter&, const World&);

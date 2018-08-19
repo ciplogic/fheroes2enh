@@ -42,12 +42,12 @@ public:
     static bool Shortest(const IndexDistance& id1, const IndexDistance& id2)
     {
         return id1.second < id2.second;
-    };
+    }
 
     static bool Longest(const IndexDistance& id1, const IndexDistance& id2)
     {
         return id1.second > id2.second;
-    };
+    }
 };
 
 ByteVectorWriter& operator<<(ByteVectorWriter&, const IndexDistance&);
@@ -64,17 +64,17 @@ public:
 
     IndexObject(s32 index, int object) : Value(index, object)
     {
-    };
+    }
 
     bool isIndex(s32 index) const
     {
         return index == Value.first;
-    };
+    }
 
     bool isObject(int object) const
     {
         return object == Value.second;
-    };
+    }
 };
 
 ByteVectorReader& operator>>(ByteVectorReader&, IndexObject&);
@@ -89,7 +89,7 @@ public:
 
     ObjectColor(int object, int color) : pair<int, int>(object, color)
     {
-    };
+    }
 
     bool isObject(int object) const
     {

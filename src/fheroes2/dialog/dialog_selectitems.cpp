@@ -54,16 +54,16 @@ public:
             AGG::GetICN(ICN::LISTBOX, 8).Blit(dst.x + area.w - 24, dst.y + 44 + ii * 19);
 
         AGG::GetICN(ICN::LISTBOX, 9).Blit(dst.x + area.w - 24, dst.y + area.h - 74);
-    };
+    }
 
     void ActionListDoubleClick(int& index)
     {
         ok = true;
-    };
+    }
 
     void RedrawItem(const int&, s32, s32, bool)
     {
-    };
+    }
 
     void ActionCurrentUp()
     {
@@ -71,7 +71,7 @@ public:
 
     void ActionCurrentDn()
     {
-    };
+    }
 
     void ActionListSingleClick(int&)
     {
@@ -114,7 +114,7 @@ public:
     {
         Troop troop(Monster(index), 1);
         Dialog::ArmyInfo(troop, 0);
-    };
+    }
 };
 
 class SelectEnumHeroes : public SelectEnum
@@ -220,7 +220,7 @@ public:
         text.Blit(dst.x + (area.w - text.w()) / 2, dst.y);
 
         SelectEnum::RedrawBackground(dst);
-    };
+    }
 };
 
 Skill::Secondary Dialog::SelectSecondarySkill()

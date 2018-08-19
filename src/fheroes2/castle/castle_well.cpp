@@ -42,7 +42,7 @@ struct dwelling_t : pair<uint32_t, uint32_t>
 {
     dwelling_t(uint32_t type, uint32_t count) : pair<uint32_t, uint32_t>(type, count)
     {
-    };
+    }
 };
 
 struct dwellings_t : vector<dwelling_t>
@@ -50,7 +50,7 @@ struct dwellings_t : vector<dwelling_t>
     dwellings_t()
     {
         reserve(6);
-    };
+    }
 };
 
 uint32_t HowManyRecruitMonster(const Castle& castle, uint32_t dw, const Funds& add, Funds& res)

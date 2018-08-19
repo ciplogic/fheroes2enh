@@ -344,7 +344,7 @@ public:
 
     void ActionListDoubleClick(CstlRow&) override
     {
-    };
+    }
 
     void ActionListSingleClick(CstlRow&) override
     {

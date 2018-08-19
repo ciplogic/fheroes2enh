@@ -296,11 +296,10 @@ size_t System::GetMemoryUsage()
 std::string System::GetTime()
 {
     time_t raw;
-    struct tm* tmi;
     char buf[13] = {0};
 
     time(&raw);
-    tmi = localtime(&raw);
+    struct tm * tmi = localtime(&raw);
 
     strftime(buf, sizeof buf - 1, "%X", tmi);
 

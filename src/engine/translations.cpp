@@ -39,7 +39,6 @@ namespace ModernTranslation
         StringTable singularTranslation;
         StringTable pluralTranslation;
 
-    public:
         void clear();
         bool readFile(const std::string& fileName) const;
         void addDirectTranslation(StringVector& id, StringVector& trans);

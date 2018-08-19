@@ -239,7 +239,7 @@ namespace Maps
         bool isObject(int obj) const
         {
             return obj == mp2_object;
-        };
+        }
 
         bool isStream() const;
 
@@ -426,7 +426,6 @@ namespace Maps
 
         static void UpdateTreasureChestSprite(Tiles&);
 
-    private:
         friend ByteVectorWriter& operator<<(ByteVectorWriter&, const Tiles&);
 
         friend ByteVectorReader& operator>>(ByteVectorReader&, Tiles&);

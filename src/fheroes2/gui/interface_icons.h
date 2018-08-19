@@ -47,7 +47,7 @@ namespace Interface
         void SetShow(bool f)
         {
             show = f;
-        };
+        }
 
         bool IsShow() const
         {

@@ -45,13 +45,13 @@ struct ValueColors : pair<int, int>
     bool IsValue(int v) const
     {
         return v == first;
-    };
+    }
     //bool IsColor(int c) const { return (c & second); };
 
     static bool SortValueGreat(const ValueColors& v1, const ValueColors& v2)
     {
         return v1.first > v2.first;
-    };
+    }
 };
 
 void UpdateValuesColors(vector<ValueColors>& v, int value, int color)

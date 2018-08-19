@@ -36,7 +36,7 @@ public:
     Heroes* Guest()
     {
         return first;
-    };
+    }
 
     Heroes* Guard()
     {

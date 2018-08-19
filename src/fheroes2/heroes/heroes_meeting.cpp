@@ -298,7 +298,7 @@ void Heroes::MeetingDialog(Heroes& heroes2)
 bool HeroesCanTeachSpell(const HeroBase* hero, Spell spell)
 {
     return hero->CanTeachSpell(spell);
-};
+}
 
 
 bool HeroesHaveSpell(const HeroBase* hero, Spell spell) 

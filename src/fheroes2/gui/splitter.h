@@ -65,17 +65,17 @@ public:
     int Max() const
     {
         return max;
-    };
+    }
 
     int Min() const
     {
         return min;
-    };
+    }
 
     const Rect& GetRect() const
     {
         return area;
-    };
+    }
 
 private:
     Point GetPositionCursor() const;

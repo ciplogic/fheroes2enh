@@ -81,7 +81,7 @@ namespace Interface
         virtual void ActionListSingleClick(Item& item, const Point& cursor, s32 ox, s32 oy)
         {
             ActionListSingleClick(item);
-        };
+        }
 
         virtual void ActionListPressRight(Item& item, const Point& cursor, s32 ox, s32 oy)
         {

@@ -44,11 +44,11 @@ public:
 
     void ActionCurrentUp()
     {
-    };
+    }
 
     void ActionCurrentDn()
     {
-    };
+    }
 
     void ActionListDoubleClick(uint32_t&);
 

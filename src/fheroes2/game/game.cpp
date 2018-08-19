@@ -337,11 +337,10 @@ uint32_t Game::GetWhirlpoolPercent()
 
 void Game::LoadExternalResource(const Settings& conf)
 {
-    string spec;
     const string prefix_stats = System::ConcatePath("files", "stats");
 
     // globals.xml
-    spec = Settings::GetLastFile(prefix_stats, "globals.xml");
+    string spec = Settings::GetLastFile(prefix_stats, "globals.xml");
 
     if (System::IsFile(spec))
         UpdateGlobalDefines(spec);

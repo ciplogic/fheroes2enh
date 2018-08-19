@@ -164,8 +164,7 @@ namespace Skill
     public:
         Primary();
 
-        virtual ~Primary()
-        = default;;
+        virtual ~Primary() = default;
 
         enum
         {

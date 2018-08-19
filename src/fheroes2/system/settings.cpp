@@ -121,7 +121,7 @@ struct settings_t
     bool operator==(uint32_t i) const
     {
         return id && id == i;
-    };
+    }
 };
 
 // external settings
@@ -265,13 +265,12 @@ Settings& Settings::Get()
 bool Settings::Read(const string& filename)
 {
     TinyConfig config('=', '#');
-    int ival;
     LocalEvent& le = LocalEvent::Get();
 
     if (!config.Load(filename)) return false;
 
     // debug
-    ival = config.IntParams("debug");
+    int ival = config.IntParams("debug");
 
     switch (ival)
     {

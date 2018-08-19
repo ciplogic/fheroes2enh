@@ -24,7 +24,6 @@
 
 #include <vector>
 #include "spell.h"
-#include "gamedefs.h"
 
 class Artifact;
 

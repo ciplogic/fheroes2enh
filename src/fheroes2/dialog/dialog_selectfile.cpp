@@ -69,7 +69,7 @@ public:
 
     void ActionListPressRight(Maps::FileInfo&)
     {
-    };
+    }
 
     bool& edit_mode;
 };
