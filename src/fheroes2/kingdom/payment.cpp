@@ -59,8 +59,8 @@ payment_t PaymentConditions::BuyBoat()
     payment_t result;
     paymentstats_t* ptr = &_payments[0];
 
-    while (ptr->id.size() && strcmp("buy_boat", ptr->id.c_str())) ++ptr;
-    if (ptr->id.size()) result = ptr->cost;
+    while (!ptr->id.empty() && strcmp("buy_boat", ptr->id.c_str())) ++ptr;
+    if (!ptr->id.empty()) result = ptr->cost;
 
     return result;
 }
@@ -87,8 +87,8 @@ payment_t PaymentConditions::BuySpellBook(int shrine)
         break;
     }
 
-    while (ptr->id.size() && strcmp(skey, ptr->id.c_str())) ++ptr;
-    if (ptr->id.size()) result = ptr->cost;
+    while (!ptr->id.empty() && strcmp(skey, ptr->id.c_str())) ++ptr;
+    if (!ptr->id.empty()) result = ptr->cost;
 
     return result;
 }
@@ -97,14 +97,14 @@ payment_t PaymentConditions::RecruitHero(int level)
 {
     payment_t result;
     paymentstats_t* ptr = &_payments[0];
-    while (ptr->id.size() && strcmp("recruit_hero", ptr->id.c_str())) ++ptr;
-    if (ptr->id.size()) result = ptr->cost;
+    while (!ptr->id.empty() && strcmp("recruit_hero", ptr->id.c_str())) ++ptr;
+    if (!ptr->id.empty()) result = ptr->cost;
 
     // level price
     if (Settings::Get().ExtHeroRecruitCostDependedFromLevel())
     {
         ptr = &_payments[0];
-        while (ptr->id.size() && strcmp("recruit_level", ptr->id.c_str())) ++ptr;
+        while (!ptr->id.empty() && strcmp("recruit_level", ptr->id.c_str())) ++ptr;
         if (ptr && 1 < level)
         {
             if (ptr->cost.gold) result.gold += (level - 1) * ptr->cost.gold;
@@ -124,8 +124,8 @@ payment_t PaymentConditions::ForAlchemist(int arts)
 {
     payment_t result;
     paymentstats_t* ptr = &_payments[0];
-    while (ptr->id.size() && strcmp("alchemist_payment", ptr->id.c_str())) ++ptr;
-    if (ptr->id.size()) result = ptr->cost;
+    while (!ptr->id.empty() && strcmp("alchemist_payment", ptr->id.c_str())) ++ptr;
+    if (!ptr->id.empty()) result = ptr->cost;
 
     return result;
 }

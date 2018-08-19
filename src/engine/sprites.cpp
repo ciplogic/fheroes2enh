@@ -37,7 +37,7 @@ const Point& SpritePos::GetPos() const
 
 Rect SpritePos::GetArea() const
 {
-    return Rect(GetPos(), GetSize());
+    return { GetPos(), GetSize() };
 }
 
 void SpritePos::SetSurface(const Surface& sf)

@@ -613,15 +613,15 @@ Rect CastleGetCoordBuilding(int race, building_t building, const Point& pt)
         case Race::KNGT:
             return {pt.x + 398, pt.y + 150, 58, 30};
         case Race::BARB:
-            return Rect(pt.x + 348, pt.y + 118, 50, 25);
+            return {pt.x + 348, pt.y + 118, 50, 25};
         case Race::SORC:
-            return Rect(pt.x + 285, pt.y + 32, 55, 129);
+            return {pt.x + 285, pt.y + 32, 55, 129};
         case Race::WRLK:
-            return Rect(pt.x + 590, pt.y + 135, 50, 35);
+            return {pt.x + 590, pt.y + 135, 50, 35};
         case Race::WZRD:
-            return Rect(pt.x + 583, pt.y + 73, 57, 48);
+            return {pt.x + 583, pt.y + 73, 57, 48};
         case Race::NECR:
-            return Rect(pt.x + 565, pt.y + 131, 73, 74);
+            return {pt.x + 565, pt.y + 131, 73, 74};
         default:
             break;
         }
@@ -631,17 +631,17 @@ Rect CastleGetCoordBuilding(int race, building_t building, const Point& pt)
         switch (race)
         {
         case Race::KNGT:
-            return Rect(pt.x + 398, pt.y + 128, 58, 52);
+            return {pt.x + 398, pt.y + 128, 58, 52};
         case Race::BARB:
-            return Rect(pt.x + 348, pt.y + 94, 50, 49);
+            return {pt.x + 348, pt.y + 94, 50, 49};
         case Race::SORC:
-            return Rect(pt.x + 285, pt.y + 32, 55, 129);
+            return {pt.x + 285, pt.y + 32, 55, 129};
         case Race::WRLK:
-            return Rect(pt.x + 590, pt.y + 108, 50, 60);
+            return {pt.x + 590, pt.y + 108, 50, 60};
         case Race::WZRD:
-            return Rect(pt.x + 585, pt.y + 69, 55, 50);
+            return {pt.x + 585, pt.y + 69, 55, 50};
         case Race::NECR:
-            return Rect(pt.x + 568, pt.y + 102, 62, 104);
+            return {pt.x + 568, pt.y + 102, 62, 104};
         default:
             break;
         }
@@ -651,17 +651,17 @@ Rect CastleGetCoordBuilding(int race, building_t building, const Point& pt)
         switch (race)
         {
         case Race::KNGT:
-            return Rect(pt.x + 398, pt.y + 105, 58, 75);
+            return {pt.x + 398, pt.y + 105, 58, 75};
         case Race::BARB:
-            return Rect(pt.x + 348, pt.y + 72, 50, 72);
+            return {pt.x + 348, pt.y + 72, 50, 72};
         case Race::SORC:
-            return Rect(pt.x + 285, pt.y + 32, 55, 129);
+            return {pt.x + 285, pt.y + 32, 55, 129};
         case Race::WRLK:
-            return Rect(pt.x + 590, pt.y + 77, 50, 90);
+            return {pt.x + 590, pt.y + 77, 50, 90};
         case Race::WZRD:
-            return Rect(pt.x + 585, pt.y + 44, 55, 78);
+            return {pt.x + 585, pt.y + 44, 55, 78};
         case Race::NECR:
-            return Rect(pt.x + 570, pt.y + 79, 56, 130);
+            return {pt.x + 570, pt.y + 79, 56, 130};
         default:
             break;
         }
@@ -671,17 +671,17 @@ Rect CastleGetCoordBuilding(int race, building_t building, const Point& pt)
         switch (race)
         {
         case Race::KNGT:
-            return Rect(pt.x + 398, pt.y + 85, 58, 95);
+            return {pt.x + 398, pt.y + 85, 58, 95};
         case Race::BARB:
-            return Rect(pt.x + 348, pt.y + 48, 50, 96);
+            return {pt.x + 348, pt.y + 48, 50, 96};
         case Race::SORC:
-            return Rect(pt.x + 285, pt.y + 32, 55, 129);
+            return {pt.x + 285, pt.y + 32, 55, 129};
         case Race::WRLK:
-            return Rect(pt.x + 590, pt.y + 45, 50, 125);
+            return {pt.x + 590, pt.y + 45, 50, 125};
         case Race::WZRD:
-            return Rect(pt.x + 585, pt.y + 20, 54, 102);
+            return {pt.x + 585, pt.y + 20, 54, 102};
         case Race::NECR:
-            return Rect(pt.x + 570, pt.y + 61, 60, 146);
+            return {pt.x + 570, pt.y + 61, 60, 146};
         default:
             break;
         }
@@ -691,17 +691,17 @@ Rect CastleGetCoordBuilding(int race, building_t building, const Point& pt)
         switch (race)
         {
         case Race::KNGT:
-            return Rect(pt.x + 398, pt.y + 55, 58, 125);
+            return {pt.x + 398, pt.y + 55, 58, 125};
         case Race::BARB:
-            return Rect(pt.x + 348, pt.y + 20, 50, 124);
+            return {pt.x + 348, pt.y + 20, 50, 124};
         case Race::SORC:
-            return Rect(pt.x + 285, pt.y + 32, 55, 129);
+            return {pt.x + 285, pt.y + 32, 55, 129};
         case Race::WRLK:
-            return Rect(pt.x + 590, pt.y + 14, 50, 155);
+            return {pt.x + 590, pt.y + 14, 50, 155};
         case Race::WZRD:
-            return Rect(pt.x + 585, pt.y, 57, 122);
+            return {pt.x + 585, pt.y, 57, 122};
         case Race::NECR:
-            return Rect(pt.x + 570, pt.y + 45, 61, 162);
+            return {pt.x + 570, pt.y + 45, 61, 162};
         default:
             break;
         }
@@ -711,17 +711,17 @@ Rect CastleGetCoordBuilding(int race, building_t building, const Point& pt)
         switch (race)
         {
         case Race::KNGT:
-            return Rect(pt.x + 82, pt.y + 132, 42, 30);
+            return {pt.x + 82, pt.y + 132, 42, 30};
         case Race::BARB:
-            return Rect(pt.x + 53, pt.y + 119, 67, 35);
+            return {pt.x + 53, pt.y + 119, 67, 35};
         case Race::SORC:
-            return Rect(pt.x + 88, pt.y + 145, 62, 36);
+            return {pt.x + 88, pt.y + 145, 62, 36};
         case Race::WRLK:
-            return Rect(pt.x + 308, pt.y + 140, 52, 28);
+            return {pt.x + 308, pt.y + 140, 52, 28};
         case Race::WZRD:
-            return Rect(pt.x + 60, pt.y + 68, 46, 33);
+            return {pt.x + 60, pt.y + 68, 46, 33};
         case Race::NECR:
-            return Rect(pt.x + 333, pt.y + 131, 49, 51);
+            return {pt.x + 333, pt.y + 131, 49, 51};
         default:
             break;
         }
@@ -731,17 +731,17 @@ Rect CastleGetCoordBuilding(int race, building_t building, const Point& pt)
         switch (race)
         {
         case Race::KNGT:
-            return Rect(pt.x + 195, pt.y + 175, 50, 40);
+            return {pt.x + 195, pt.y + 175, 50, 40};
         case Race::BARB:
-            return Rect(pt.x + 258, pt.y + 142, 71, 41);
+            return {pt.x + 258, pt.y + 142, 71, 41};
         case Race::SORC:
-            return Rect(pt.x + 478, pt.y + 70, 92, 62);
+            return {pt.x + 478, pt.y + 70, 92, 62};
         case Race::WRLK:
-            return Rect(pt.x, pt.y + 63, 68, 53);
+            return {pt.x, pt.y + 63, 68, 53};
         case Race::WZRD:
-            return Rect(pt.x + 459, pt.y + 181, 45, 32);
+            return {pt.x + 459, pt.y + 181, 45, 32};
         case Race::NECR:
-            return Rect(pt.x + 404, pt.y + 181, 56, 25);
+            return {pt.x + 404, pt.y + 181, 56, 25};
         default:
             break;
         }
@@ -752,17 +752,17 @@ Rect CastleGetCoordBuilding(int race, building_t building, const Point& pt)
         switch (race)
         {
         case Race::KNGT:
-            return Rect(pt.x + 145, pt.y + 155, 58, 20);
+            return {pt.x + 145, pt.y + 155, 58, 20};
         case Race::BARB:
-            return Rect(pt.x + 152, pt.y + 190, 68, 50);
+            return {pt.x + 152, pt.y + 190, 68, 50};
         case Race::SORC:
-            return Rect(pt.x + 345, pt.y + 149, 70, 56);
+            return {pt.x + 345, pt.y + 149, 70, 56};
         case Race::WRLK:
-            return Rect(pt.x + 248, pt.y + 192, 60, 55);
+            return {pt.x + 248, pt.y + 192, 60, 55};
         case Race::WZRD:
-            return Rect(pt.x + 253, pt.y + 69, 90, 29);
+            return {pt.x + 253, pt.y + 69, 90, 29};
         case Race::NECR:
-            return Rect(pt.x + 147, pt.y + 184, 92, 32);
+            return {pt.x + 147, pt.y + 184, 92, 32};
         default:
             break;
         }
@@ -773,17 +773,17 @@ Rect CastleGetCoordBuilding(int race, building_t building, const Point& pt)
         switch (race)
         {
         case Race::KNGT:
-            return Rect(pt.x + 250, pt.y + 177, 70, 50);
+            return {pt.x + 250, pt.y + 177, 70, 50};
         case Race::BARB:
-            return Rect(pt.x + 582, pt.y + 81, 58, 40);
+            return {pt.x + 582, pt.y + 81, 58, 40};
         case Race::SORC:
-            return Rect(pt.x + 90, pt.y + 180, 56, 21);
+            return {pt.x + 90, pt.y + 180, 56, 21};
         case Race::WRLK:
-            return Rect(pt.x + 504, pt.y + 53, 38, 30);
+            return {pt.x + 504, pt.y + 53, 38, 30};
         case Race::WZRD:
-            return Rect(pt.x + 156, pt.y + 139, 74, 51);
+            return {pt.x + 156, pt.y + 139, 74, 51};
         case Race::NECR:
-            return Rect(pt.x + 108, pt.y + 69, 117, 91);
+            return {pt.x + 108, pt.y + 69, 117, 91};
         default:
             break;
         }
@@ -794,17 +794,17 @@ Rect CastleGetCoordBuilding(int race, building_t building, const Point& pt)
         switch (race)
         {
         case Race::KNGT:
-            return Rect(pt.x + 328, pt.y + 195, 100, 50);
+            return {pt.x + 328, pt.y + 195, 100, 50};
         case Race::BARB:
-            return Rect(pt.x + 509, pt.y + 148, 123, 57);
+            return {pt.x + 509, pt.y + 148, 123, 57};
         case Race::SORC:
-            return Rect(pt.x + 208, pt.y + 182, 127, 55);
+            return {pt.x + 208, pt.y + 182, 127, 55};
         case Race::WRLK:
-            return Rect(pt.x + 154, pt.y + 168, 171, 76);
+            return {pt.x + 154, pt.y + 168, 171, 76};
         case Race::WZRD:
-            return Rect(pt.x + 593, pt.y + 187, 47, 28);
+            return {pt.x + 593, pt.y + 187, 47, 28};
         case Race::NECR:
-            return Rect(pt.x, pt.y + 154, 140, 74);
+            return {pt.x, pt.y + 154, 140, 74};
         default:
             break;
         }
@@ -815,17 +815,17 @@ Rect CastleGetCoordBuilding(int race, building_t building, const Point& pt)
         switch (race)
         {
         case Race::KNGT:
-            return Rect(pt.x + 0, pt.y + 200, 150, 55);
+            return {pt.x + 0, pt.y + 200, 150, 55};
         case Race::BARB:
-            return Rect(pt.x + 331, pt.y + 186, 121, 44);
+            return {pt.x + 331, pt.y + 186, 121, 44};
         case Race::SORC:
-            return Rect(pt.x + 345, pt.y + 231, 165, 21);
+            return {pt.x + 345, pt.y + 231, 165, 21};
         case Race::WRLK:
-            return Rect(pt.x + 149, pt.y + 98, 95, 58);
+            return {pt.x + 149, pt.y + 98, 95, 58};
         case Race::WZRD:
-            return Rect(pt.x + 417, pt.y + 25, 35, 140);
+            return {pt.x + 417, pt.y + 25, 35, 140};
         case Race::NECR:
-            return Rect(pt.x + 235, pt.y + 136, 53, 70);
+            return {pt.x + 235, pt.y + 136, 53, 70};
         default:
             break;
         }
@@ -837,15 +837,15 @@ Rect CastleGetCoordBuilding(int race, building_t building, const Point& pt)
         switch (race)
         {
         case Race::KNGT:
-            return Rect(pt.x + 465, pt.y + 85, 175, 110);
+            return {pt.x + 465, pt.y + 85, 175, 110};
         case Race::BARB:
-            return Rect(pt.x + 407, pt.y + 13, 109, 80);
+            return {pt.x + 407, pt.y + 13, 109, 80};
         case Race::SORC:
-            return Rect(pt.x + 202, pt.y + 38, 42, 65);
+            return {pt.x + 202, pt.y + 38, 42, 65};
         case Race::WRLK:
-            return Rect(pt.x + 98, pt.y + 25, 55, 229);
+            return {pt.x + 98, pt.y + 25, 55, 229};
         case Race::WZRD:
-            return Rect(pt.x + 196, pt.y + 7, 129, 38);
+            return {pt.x + 196, pt.y + 7, 129, 38};
         case Race::NECR:
             return Rect(pt.x + 468, pt.y + 112, 92, 78);
         default:

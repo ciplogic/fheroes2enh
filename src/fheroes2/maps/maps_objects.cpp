@@ -289,7 +289,7 @@ ResourceCount MapArtifact::QuantityResourceCount() const
         break;
     }
 
-    return ResourceCount();
+    return {};
 }
 
 ByteVectorWriter& operator<<(ByteVectorWriter& msg, const MapArtifact& obj)
