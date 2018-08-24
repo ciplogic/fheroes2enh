@@ -566,8 +566,10 @@ bool Maps::PrepareMapsFileInfoList(Maps::MapsFileInfoList& lists, bool multi)
 
     if (!multi)
     {
-        auto it = remove_if(lists.begin(), lists.end(),
-                            mem_fun_ref(&Maps::FileInfo::isMultiPlayerMap));
+		auto it = remove_if(lists.begin(), lists.end(),
+			[](const FileInfo& it) {
+			return it.isMultiPlayerMap();
+		});
         if (it != lists.begin()) lists.resize(distance(lists.begin(), it));
     }
 

@@ -2632,7 +2632,8 @@ void Battle::Interface::RedrawActionWincesKills(TargetsInfo& targets)
 
     // targets damage animation loop
     while (le.HandleEvents() && finish != count_if(targets.begin(), targets.end(),
-                                                   mem_fun_ref(&TargetInfo::isFinishAnimFrame)))
+		[](TargetInfo&it) {return it.isFinishAnimFrame(); }
+	))
     {
         CheckGlobalEvents(le);
 

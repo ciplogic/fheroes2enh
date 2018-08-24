@@ -3301,7 +3301,8 @@ void ActionToDaemonCave(Heroes& hero, uint32_t obj, s32 dst_index)
 void ActionToAlchemistsTower(Heroes& hero, uint32_t obj, s32 dst_index)
 {
     BagArtifacts& bag = hero.GetBagArtifacts();
-    uint32_t cursed = count_if(bag._items.begin(), bag._items.end(), mem_fun_ref(&Artifact::isAlchemistRemove));
+	uint32_t cursed = count_if(bag._items.begin(), bag._items.end(),
+		[](const Artifact& it) {return it.isAlchemistRemove(); });
 
     if (cursed)
     {
@@ -3324,7 +3325,7 @@ void ActionToAlchemistsTower(Heroes& hero, uint32_t obj, s32 dst_index)
                 hero.GetKingdom().OddFundsResource(payment);
                 bag._items.resize(distance(bag._items.begin(),
                                     remove_if(bag._items.begin(), bag._items.end(),
-                                              mem_fun_ref(&Artifact::isAlchemistRemove))));
+										[](const Artifact& it) {return it.isAlchemistRemove(); })));
             }
         }
         else

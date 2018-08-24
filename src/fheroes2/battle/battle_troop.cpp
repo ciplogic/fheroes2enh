@@ -417,12 +417,12 @@ void Battle::ModesAffected::RemoveMode(uint32_t mode)
 
 void Battle::ModesAffected::DecreaseDuration()
 {
-    for_each(begin(), end(), mem_fun_ref(&ModeDuration::DecreaseDuration));
+	for_each(begin(), end(), [](ModeDuration&it) { it.DecreaseDuration(); });
 }
 
 uint32_t Battle::ModesAffected::FindZeroDuration() const
 {
-    auto it = find_if(begin(), end(), mem_fun_ref(&ModeDuration::isZeroDuration));
+	auto it = find_if(begin(), end(), [](const ModeDuration&it) {return it.isZeroDuration(); });
     return it == end() ? 0 : (*it).first;
 }
 

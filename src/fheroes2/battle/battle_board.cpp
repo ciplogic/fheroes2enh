@@ -79,8 +79,8 @@ Rect Battle::Board::GetArea() const
 
 void Battle::Board::Reset()
 {
-    for_each(_items.begin(), _items.end(), mem_fun_ref(&Cell::ResetQuality));
-    for_each(_items.begin(), _items.end(), mem_fun_ref(&Cell::ResetDirection));
+	for_each(_items.begin(), _items.end(), [](Cell& it) { it.ResetQuality(); });
+    for_each(_items.begin(), _items.end(), [](Cell& it) { it.ResetDirection(); });
 }
 
 void Battle::Board::SetPositionQuality(const Unit& b) const
@@ -135,7 +135,7 @@ s32 Battle::Board::GetDistance(s32 index1, s32 index2)
 
 void Battle::Board::SetScanPassability(const Unit& b)
 {
-    for_each(_items.begin(), _items.end(), mem_fun_ref(&Cell::ResetDirection));
+	for_each(_items.begin(), _items.end(), [](Cell& it) { it.ResetDirection(); });
 
     _items.at(b.GetHeadIndex()).SetDirection(CENTER);
 
