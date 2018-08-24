@@ -128,8 +128,10 @@ namespace Maps
 
     ByteVectorWriter& operator<<(ByteVectorWriter& msg, const FileInfo& fi);
     ByteVectorReader& operator>>(ByteVectorReader&, FileInfo&);
+
+
+	typedef std::vector<Maps::FileInfo> MapsFileInfoList;
+
+	bool PrepareMapsFileInfoList(MapsFileInfoList&, bool multi);
 }
 
-typedef vector<Maps::FileInfo> MapsFileInfoList;
-
-bool PrepareMapsFileInfoList(MapsFileInfoList&, bool multi);

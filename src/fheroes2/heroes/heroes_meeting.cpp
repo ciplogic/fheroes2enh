@@ -181,7 +181,7 @@ void Heroes::MeetingDialog(Heroes& heroes2)
     selectArtifacts1.SetColRows(7, 2);
     selectArtifacts1.SetHSpace(2);
     selectArtifacts1.SetVSpace(2);
-    selectArtifacts1.SetContent(GetBagArtifacts());
+    selectArtifacts1.SetContent(GetBagArtifacts()._items);
     selectArtifacts1.SetPos(dst_pt.x, dst_pt.y);
     selectArtifacts1.Redraw();
 
@@ -192,7 +192,7 @@ void Heroes::MeetingDialog(Heroes& heroes2)
     selectArtifacts2.SetColRows(7, 2);
     selectArtifacts2.SetHSpace(2);
     selectArtifacts2.SetVSpace(2);
-    selectArtifacts2.SetContent(heroes2.GetBagArtifacts());
+    selectArtifacts2.SetContent(heroes2.GetBagArtifacts()._items);
     selectArtifacts2.SetPos(dst_pt.x, dst_pt.y);
     selectArtifacts2.Redraw();
 

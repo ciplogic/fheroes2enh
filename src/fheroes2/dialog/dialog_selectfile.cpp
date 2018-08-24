@@ -155,12 +155,12 @@ bool FileSortingByTime(const Maps::FileInfo& fi1, const Maps::FileInfo& fi2)
     return timeF1 > timeF2;
 }
 
-MapsFileInfoList GetSortedMapsFileInfoList()
+Maps::MapsFileInfoList GetSortedMapsFileInfoList()
 {
     ListFiles list1;
     list1.ReadDir(Settings::GetSaveDir(), ".sav", false);
 
-    MapsFileInfoList list2(list1.size());
+	Maps::MapsFileInfoList list2(list1.size());
     int ii = 0;
     for (auto itd = list1.begin(); itd != list1.end(); ++itd, ++ii)
         if (!list2[ii].ReadSAV(*itd))--ii;
@@ -213,7 +213,7 @@ string SelectFileListSimple(const string& header, const string& lastfile, bool e
 
     bool edit_mode = false;
 
-    MapsFileInfoList lists = GetSortedMapsFileInfoList();
+	Maps::MapsFileInfoList lists = GetSortedMapsFileInfoList();
     FileInfoListBox listbox(rt, edit_mode);
 
     listbox.RedrawBackground(rt);

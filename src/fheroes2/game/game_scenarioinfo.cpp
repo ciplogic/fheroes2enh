@@ -56,7 +56,7 @@ int Game::ScenarioInfo()
 
     AGG::PlayMusic(MUS::MAINMENU);
 
-    MapsFileInfoList lists;
+	Maps::MapsFileInfoList lists;
     if (!PrepareMapsFileInfoList(lists, conf.GameType(TYPE_MULTI)))
     {
         Message(_("Warning"), _("No maps available!"), Font::BIG, Dialog::OK);

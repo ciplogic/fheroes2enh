@@ -544,7 +544,7 @@ ListFiles GetMapsFiles(const char* suffix)
     return maps;
 }
 
-bool PrepareMapsFileInfoList(MapsFileInfoList& lists, bool multi)
+bool Maps::PrepareMapsFileInfoList(Maps::MapsFileInfoList& lists, bool multi)
 {
     const Settings& conf = Settings::Get();
 

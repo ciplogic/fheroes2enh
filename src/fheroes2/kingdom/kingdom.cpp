@@ -297,27 +297,27 @@ void Kingdom::RemoveCastle(const Castle* castle)
 
 uint32_t Kingdom::GetCountCastle() const
 {
-    return count_if(castles.begin(), castles.end(), Castle::PredicateIsCastle);
+    return std::count_if(castles.begin(), castles.end(), Castle::PredicateIsCastle);
 }
 
 uint32_t Kingdom::GetCountTown() const
 {
-    return count_if(castles.begin(), castles.end(), Castle::PredicateIsTown);
+    return std::count_if(castles.begin(), castles.end(), Castle::PredicateIsTown);
 }
 
 uint32_t Kingdom::GetCountMarketplace() const
 {
-    return count_if(castles.begin(), castles.end(), Castle::PredicateIsBuildMarketplace);
+    return std::count_if(castles.begin(), castles.end(), Castle::PredicateIsBuildMarketplace);
 }
 
 uint32_t Kingdom::GetCountNecromancyShrineBuild() const
 {
-    return count_if(castles.begin(), castles.end(), mem_fun(&Castle::isNecromancyShrineBuild));
+    return std::count_if(castles.begin(), castles.end(), mem_fun(&Castle::isNecromancyShrineBuild));
 }
 
 uint32_t Kingdom::GetCountBuilding(uint32_t build) const
 {
-    return count_if(castles.begin(), castles.end(), bind2nd(mem_fun(&Castle::isBuild), build));
+    return std::count_if(castles.begin(), castles.end(), bind2nd(mem_fun(&Castle::isBuild), build));
 }
 
 bool Kingdom::AllowPayment(const Funds& funds) const

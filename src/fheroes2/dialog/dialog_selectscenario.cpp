@@ -36,6 +36,8 @@
 #include "system.h"
 #include "tools.h"
 
+using namespace Maps;
+
 void LossConditionInfo(const Maps::FileInfo&);
 
 void VictoryConditionInfo(const Maps::FileInfo&);

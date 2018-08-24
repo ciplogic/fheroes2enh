@@ -626,7 +626,7 @@ Skill::SecSkills::SecSkills(int race)
 int Skill::SecSkills::GetLevel(int skill) const
 {
     const auto it = find_if(_items.begin(), _items.end(),
-                            bind2nd(mem_fun_ref(&Secondary::isSkill), skill));
+		[&](const Secondary& it) { return it.isSkill(skill); });
 
     return it == _items.end() ? Level::NONE : (*it).Level();
 }
@@ -634,14 +634,15 @@ int Skill::SecSkills::GetLevel(int skill) const
 uint32_t Skill::SecSkills::GetValues(int skill) const
 {
     const auto it = find_if(_items.begin(), _items.end(),
-                            bind2nd(mem_fun_ref(&Secondary::isSkill), skill));
+		[&](const Secondary& it) { return it.isSkill(skill); });
 
     return it == _items.end() ? 0 : (*it).GetValues();
 }
 
 int Skill::SecSkills::Count() const
 {
-    return count_if(_items.begin(), _items.end(), mem_fun_ref(&Secondary::isValid));
+    return count_if(_items.begin(), _items.end(), 
+		[&](const Secondary& it) { return it.isValid(); });
 }
 
 void Skill::SecSkills::AddSkill(const Secondary& skill)
@@ -649,13 +650,13 @@ void Skill::SecSkills::AddSkill(const Secondary& skill)
     if (skill.isValid())
     {
         auto it = find_if(_items.begin(), _items.end(),
-                          bind2nd(mem_fun_ref(&Secondary::isSkill), skill.Skill()));
+			[&](Secondary& it) { return it.isSkill(skill.Skill()); });
         if (it != _items.end())
             (*it).SetLevel(skill.Level());
         else
         {
             it = find_if(_items.begin(), _items.end(),
-                         not1(mem_fun_ref(&Secondary::isValid)));
+				[&](Secondary& it) { return it.isValid(); });
             if (it != _items.end())
                 (*it).Set(skill);
             else if (_items.size() < HEROESMAXSKILL)
@@ -667,7 +668,7 @@ void Skill::SecSkills::AddSkill(const Secondary& skill)
 Skill::Secondary* Skill::SecSkills::FindSkill(int skill)
 {
     const auto it = find_if(_items.begin(), _items.end(),
-                            bind2nd(mem_fun_ref(&Secondary::isSkill), skill));
+		[&](Secondary& it) { return it.isValid(); });
     return it != _items.end() ? &*it : nullptr;
 }
 
@@ -728,7 +729,7 @@ std::vector<int> Skill::SecondarySkills()
 }
 */
 
-int Skill::SecondaryPriorityFromRace(int race, const vector<int>& exclude)
+int Skill::SecondaryPriorityFromRace(int race, const std::vector<int>& exclude)
 {
     Rand::Queue parts(MAXSECONDARYSKILL);
 

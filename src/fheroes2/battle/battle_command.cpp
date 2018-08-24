@@ -28,7 +28,8 @@
 
 bool Battle::Actions::HaveCommand(uint32_t cmd) const
 {
-    return end() != find_if(begin(), end(), bind2nd(mem_fun_ref(&Command::isType), cmd));
+	return end() != find_if(begin(), end(),
+		[&](const Command& it) { return it.isType(cmd); });
 }
 
 Battle::Command::Command(int cmd) : type(cmd)

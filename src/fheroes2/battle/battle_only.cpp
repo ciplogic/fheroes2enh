@@ -487,7 +487,7 @@ void Battle::Only::UpdateHero1(const Point& cur_pt)
         selectArtifacts1->SetColRows(7, 2);
         selectArtifacts1->SetHSpace(2);
         selectArtifacts1->SetVSpace(2);
-        selectArtifacts1->SetContent(hero1->GetBagArtifacts());
+        selectArtifacts1->SetContent(hero1->GetBagArtifacts()._items);
         selectArtifacts1->SetPos(cur_pt.x + 23, cur_pt.y + 347);
 
         army1 = &hero1->GetArmy();
@@ -561,7 +561,7 @@ void Battle::Only::UpdateHero2(const Point& cur_pt)
         selectArtifacts2->SetColRows(7, 2);
         selectArtifacts2->SetHSpace(2);
         selectArtifacts2->SetVSpace(2);
-        selectArtifacts2->SetContent(hero2->GetBagArtifacts());
+        selectArtifacts2->SetContent(hero2->GetBagArtifacts()._items);
         selectArtifacts2->SetPos(cur_pt.x + 367, cur_pt.y + 347);
 
         army1 = &hero1->GetArmy();

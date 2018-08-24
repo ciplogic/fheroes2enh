@@ -57,7 +57,7 @@ AIHero& AIHeroes::Get(const Heroes& ht)
 void AIHeroes::Reset()
 {
     AIHeroes& ai = Get();
-    for_each(ai.begin(), ai.end(), mem_fun_ref(&AIHero::Reset));
+    for_each(ai.begin(), ai.end(), std::function<void(AIHero)>(&AIHero::Reset));
 }
 
 void AIHero::Reset()

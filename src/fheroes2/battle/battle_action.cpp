@@ -770,8 +770,8 @@ void Battle::Arena::ApplyActionSpellMirrorImage(Command& cmd)
     
     sort(distances.begin(), distances.end(), SortingDistance);
 
-    const auto it = find_if(distances.begin(), distances.end(),
-                      bind2nd(ptr_fun(&Board::isValidMirrorImageIndex), b));
+	const auto it = find_if(distances.begin(), distances.end(),
+		[&](s32 dist) {return Board::isValidMirrorImageIndex(dist, b); });
 
     for (auto& distance : distances)
     {

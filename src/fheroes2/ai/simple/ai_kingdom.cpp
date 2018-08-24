@@ -63,7 +63,7 @@ AIKingdom& AIKingdoms::Get(int color)
 void AIKingdoms::Reset()
 {
     AIKingdoms& ai = Get();
-    for_each(ai._items.begin(), ai._items.end(), mem_fun_ref(&AIKingdom::Reset));
+    for_each(ai._items.begin(), ai._items.end(), std::function<void(AIKingdom)>(&AIKingdom::Reset));
 }
 
 void AIKingdom::Reset()

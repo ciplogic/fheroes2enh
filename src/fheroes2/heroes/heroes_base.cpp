@@ -159,7 +159,7 @@ int ArtifactsModifiersLuck(const HeroBase& base, string* strs)
 HeroBase::HeroBase(int type, int race)
     : magic_point(0), move_point(0)
 {
-    bag_artifacts.assign(HEROESMAXARTIFACT, Artifact::UNKNOWN);
+    bag_artifacts._items.assign(HEROESMAXARTIFACT, Artifact::UNKNOWN);
     LoadDefaults(type, race);
 }
 
@@ -215,12 +215,12 @@ void HeroBase::ReadFrom(ByteVectorReader& msg)
         hero.magic_point >> hero.move_point;
 
     msg.readToVec(hero.spell_book);
-    msg.readToVec(hero.bag_artifacts);
+    msg.readToVec(hero.bag_artifacts._items);
 
     if (FORMAT_VERSION_3269 > Game::GetLoadVersion())
     {
-        if (hero.bag_artifacts.size() < HEROESMAXARTIFACT)
-            hero.bag_artifacts.resize(HEROESMAXARTIFACT, Artifact::UNKNOWN);
+        if (hero.bag_artifacts._items.size() < HEROESMAXARTIFACT)
+            hero.bag_artifacts._items.resize(HEROESMAXARTIFACT, Artifact::UNKNOWN);
     }
 }
 
@@ -532,7 +532,7 @@ ByteVectorWriter& operator<<(ByteVectorWriter& msg, const HeroBase& hero)
         hero.modes <<
         // hero base
         hero.magic_point << hero.move_point <<
-        hero.spell_book << hero.bag_artifacts;
+        hero.spell_book << hero.bag_artifacts._items;
 }
 
 /* unpack hero base */
@@ -544,12 +544,12 @@ ByteVectorReader& operator>>(ByteVectorReader& msg, HeroBase& hero)
         // modes
         hero.modes >>
         hero.magic_point >> hero.move_point >>
-        hero.spell_book >> hero.bag_artifacts;
+        hero.spell_book >> hero.bag_artifacts._items;
 
     if (FORMAT_VERSION_3269 > Game::GetLoadVersion())
     {
-        if (hero.bag_artifacts.size() < HEROESMAXARTIFACT)
-            hero.bag_artifacts.resize(HEROESMAXARTIFACT, Artifact::UNKNOWN);
+        if (hero.bag_artifacts._items.size() < HEROESMAXARTIFACT)
+            hero.bag_artifacts._items.resize(HEROESMAXARTIFACT, Artifact::UNKNOWN);
     }
 
     return msg;

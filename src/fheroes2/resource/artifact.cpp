@@ -774,18 +774,18 @@ ByteVectorReader& operator>>(ByteVectorReader& msg, Artifact& art)
     return msg >> art.id >> art.ext;
 }
 
-BagArtifacts::BagArtifacts() : vector<Artifact>(HEROESMAXARTIFACT, Artifact::UNKNOWN)
-{
-}
+BagArtifacts::BagArtifacts() 
+: _items(HEROESMAXARTIFACT, Artifact::UNKNOWN)
+{}
 
 bool BagArtifacts::ContainSpell(const Spell& spell) const
 {
-    return end() != find(begin(), end(), spell);
+    return _items.end() != find(_items.begin(), _items.end(), spell);
 }
 
 bool BagArtifacts::isPresentArtifact(const Artifact& art) const
 {
-    return end() != find(begin(), end(), art);
+    return _items.end() != find(_items.begin(), _items.end(), art);
 }
 
 bool BagArtifacts::PushArtifact(const Artifact& art)
@@ -795,35 +795,35 @@ bool BagArtifacts::PushArtifact(const Artifact& art)
     if (art() == Artifact::MAGIC_BOOK && isPresentArtifact(art))
         return false;
 
-    auto it = find(begin(), end(), Artifact(Artifact::UNKNOWN));
-    if (it == end()) return false;
+    auto it = find(_items.begin(), _items.end(), Artifact(Artifact::UNKNOWN));
+    if (it == _items.end()) return false;
 
     *it = art;
 
     // book insert first
     if (art() == Artifact::MAGIC_BOOK)
-        std::swap(*it, front());
+        std::swap(*it, _items.front());
 
     return true;
 }
 
 void BagArtifacts::RemoveArtifact(const Artifact& art)
 {
-    auto it = find(begin(), end(), art);
-    if (it != end()) (*it).Reset();
+    auto it = find(_items.begin(), _items.end(), art);
+    if (it != _items.end()) (*it).Reset();
 }
 
 bool BagArtifacts::isFull() const
 {
-    return end() == find(begin(), end(), Artifact(Artifact::UNKNOWN));
+    return _items.end() == find(_items.begin(), _items.end(), Artifact(Artifact::UNKNOWN));
 }
 
 bool BagArtifacts::MakeBattleGarb()
 {
-    auto it1 = find(begin(), end(), Artifact(Artifact::BREASTPLATE_ANDURAN));
-    auto it2 = find(begin(), end(), Artifact(Artifact::HELMET_ANDURAN));
-    auto it3 = find(begin(), end(), Artifact(Artifact::SWORD_ANDURAN));
-    if (it1 == end() || it2 == end() || it3 == end()) return false;
+    auto it1 = find(_items.begin(), _items.end(), Artifact(Artifact::BREASTPLATE_ANDURAN));
+    auto it2 = find(_items.begin(), _items.end(), Artifact(Artifact::HELMET_ANDURAN));
+    auto it3 = find(_items.begin(), _items.end(), Artifact(Artifact::SWORD_ANDURAN));
+    if (it1 == _items.end() || it2 == _items.end() || it3 == _items.end()) return false;
 
     *it1 = Artifact::UNKNOWN;
     *it2 = Artifact::UNKNOWN;
@@ -836,12 +836,12 @@ bool BagArtifacts::MakeBattleGarb()
 
 uint32_t BagArtifacts::CountArtifacts() const
 {
-    return count_if(begin(), end(), [](const auto& it) { return it.isValid(); });
+    return count_if(_items.begin(), _items.end(), [](const auto& it) { return it.isValid(); });
 }
 
 bool BagArtifacts::ContainUltimateArtifact() const
 {
-    return end() != find_if(begin(), end(), mem_fun_ref(&Artifact::isUltimate));
+    return _items.end() != find_if(_items.begin(), _items.end(), mem_fun_ref(&Artifact::isUltimate));
 }
 
 void BagArtifacts::RemoveScroll(const Artifact& art)
@@ -849,8 +849,8 @@ void BagArtifacts::RemoveScroll(const Artifact& art)
     Spell spell(art.GetSpell());
     if (spell.isValid())
     {
-        auto it = find(begin(), end(), spell);
-        if (it != end()) (*it).Reset();
+        auto it = find(_items.begin(), _items.end(), spell);
+        if (it != _items.end()) (*it).Reset();
     }
 }
 
@@ -858,7 +858,7 @@ string BagArtifacts::String() const
 {
     ostringstream os;
 
-    for (auto it : *this)
+    for (const auto& it : _items)
         os << it.GetName() << ", ";
 
     return os.str();
@@ -866,7 +866,7 @@ string BagArtifacts::String() const
 
 uint32_t BagArtifacts::Count(const Artifact& art) const
 {
-    return count(begin(), end(), art);
+    return count(_items.begin(), _items.end(), art);
 }
 
 uint32_t GoldInsteadArtifact(int obj)

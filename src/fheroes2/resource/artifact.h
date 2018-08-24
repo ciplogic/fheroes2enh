@@ -229,9 +229,10 @@ ByteVectorReader& operator>>(ByteVectorReader&, Artifact&);
 
 uint32_t GoldInsteadArtifact(int);
 
-class BagArtifacts : public vector<Artifact>
+class BagArtifacts 
 {
 public:
+	vector<Artifact> _items;
     BagArtifacts();
 
     bool ContainSpell(const Spell&) const;

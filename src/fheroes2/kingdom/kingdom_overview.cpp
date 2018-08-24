@@ -76,7 +76,7 @@ struct HeroRow
         artifactsBar->SetColRows(7, 2);
         artifactsBar->SetHSpace(1);
         artifactsBar->SetVSpace(8);
-        artifactsBar->SetContent(hero->GetBagArtifacts());
+        artifactsBar->SetContent(hero->GetBagArtifacts()._items);
 
         secskillsBar = make_shared<SecondarySkillsBar>();
         secskillsBar->SetColRows(4, 2);

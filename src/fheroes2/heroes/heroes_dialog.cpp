@@ -162,7 +162,7 @@ int Heroes::OpenDialog(bool readonly, bool fade)
     selectArtifacts.SetColRows(7, 2);
     selectArtifacts.SetHSpace(15);
     selectArtifacts.SetVSpace(15);
-    selectArtifacts.SetContent(GetBagArtifacts());
+    selectArtifacts.SetContent(GetBagArtifacts()._items);
     selectArtifacts.SetPos(dst_pt.x, dst_pt.y);
     selectArtifacts.Redraw();
 

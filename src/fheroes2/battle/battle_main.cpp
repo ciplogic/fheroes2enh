@@ -165,9 +165,9 @@ void Battle::PickupArtifactsAction(HeroBase& hero1, HeroBase& hero2, bool local)
     BagArtifacts& bag1 = hero1.GetBagArtifacts();
     BagArtifacts& bag2 = hero2.GetBagArtifacts();
 
-    for (uint32_t ii = 0; ii < bag2.size(); ++ii)
+    for (uint32_t ii = 0; ii < bag2._items.size(); ++ii)
     {
-        Artifact& art = bag2[ii];
+        Artifact& art = bag2._items[ii];
 
         if (art.isUltimate())
         {
@@ -175,8 +175,8 @@ void Battle::PickupArtifactsAction(HeroBase& hero1, HeroBase& hero2, bool local)
         }
         else if (art() != Artifact::UNKNOWN && art() != Artifact::MAGIC_BOOK)
         {
-            auto it = find(bag1.begin(), bag1.end(), Artifact(Artifact::UNKNOWN));
-            if (bag1.end() != it)
+            auto it = find(bag1._items.begin(), bag1._items.end(), Artifact(Artifact::UNKNOWN));
+            if (bag1._items.end() != it)
             {
                 *it = art;
                 if (local)

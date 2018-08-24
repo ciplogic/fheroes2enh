@@ -101,7 +101,7 @@ string SpellStorage::String() const
 
 void SpellStorage::Append(const BagArtifacts& bag)
 {
-    for (const auto it : bag)
+    for (const auto& it : bag._items)
         Append(it);
 }
 
