@@ -533,14 +533,14 @@ bool Interface::PlayerInfo::operator==(const sp<Player>& p) const
 
 Interface::PlayersInfo::PlayersInfo(bool name, bool race, bool swap) : show_name(name), show_race(race), show_swap(swap)
 {
-    reserve(KINGDOMMAX);
+	_items.reserve(KINGDOMMAX);
 }
 
 void Interface::PlayersInfo::UpdateInfo(Players& players, const Point& pt1, const Point& pt2)
 {
     const Sprite& sprite = AGG::GetICN(ICN::NGEXTRA, 3);
 
-    clear();
+	_items.clear();
 
     for (auto it = players._items.begin(); it != players._items.end(); ++it)
     {
@@ -553,12 +553,12 @@ void Interface::PlayersInfo::UpdateInfo(Players& players, const Point& pt1, cons
         info.rect2 = Rect(pt2.x + Game::GetStep4Player(current, sprite.w(), players._items.size()), pt2.y, sprite.w(),
                           sprite.h());
 
-        push_back(info);
+		_items.push_back(info);
     }
 
-    for (auto it = begin(); it != end(); ++it)
+    for (auto it = _items.begin(); it != _items.end(); ++it)
     {
-        if (it + 1 != end())
+        if (it + 1 != _items.end())
         {
             const Rect& rect1 = (*it).rect2;
             const Rect& rect2 = (*(it + 1)).rect2;
@@ -572,7 +572,7 @@ void Interface::PlayersInfo::UpdateInfo(Players& players, const Point& pt1, cons
 
 sp<Player> Interface::PlayersInfo::GetFromOpponentClick(const Point& pt)
 {
-    for (auto& it : *this)
+    for (auto& it : _items)
         if (it.rect1 & pt) return it.player;
 
     return nullptr;
@@ -580,7 +580,7 @@ sp<Player> Interface::PlayersInfo::GetFromOpponentClick(const Point& pt)
 
 sp<Player> Interface::PlayersInfo::GetFromOpponentNameClick(const Point& pt)
 {
-    for (auto& it : *this)
+    for (auto& it : _items)
         if (Rect(it.rect1.x, it.rect1.y + it.rect1.h, it.rect1.w, 10) & pt) return it.player;
 
     return nullptr;
@@ -588,7 +588,7 @@ sp<Player> Interface::PlayersInfo::GetFromOpponentNameClick(const Point& pt)
 
 sp<Player> Interface::PlayersInfo::GetFromOpponentChangeClick(const Point& pt)
 {
-    for (auto& it : *this)
+    for (auto& it : _items)
         if (it.rect3 & pt) return it.player;
 
     return nullptr;
@@ -596,7 +596,7 @@ sp<Player> Interface::PlayersInfo::GetFromOpponentChangeClick(const Point& pt)
 
 sp<Player> Interface::PlayersInfo::GetFromClassClick(const Point& pt)
 {
-    for (auto& it : *this)
+    for (auto& it : _items)
         if (it.rect2 & pt) return it.player;
 
     return nullptr;
@@ -611,7 +611,7 @@ void Interface::PlayersInfo::RedrawInfo(
     const uint32_t humans_colors = conf.GetPlayers().GetColors(CONTROL_HUMAN, true);
     uint32_t index = 0;
 
-    for (auto it = begin(); it != end(); ++it)
+    for (auto it = _items.begin(); it != _items.end(); ++it)
     {
         const Player& player = *(*it).player;
         const Rect& rect1 = (*it).rect1;
@@ -708,7 +708,7 @@ void Interface::PlayersInfo::RedrawInfo(
 
         // "swap" sprite
 
-        if (show_swap && it + 1 != end())
+        if (show_swap && it + 1 != _items.end())
         {
             const Sprite& sprite3 = AGG::GetICN(ICN::ADVMCO, 8);
             sprite3.Blit(rect3.x, rect3.y);
@@ -820,8 +820,8 @@ bool Interface::PlayersInfo::QueueEventProcessing()
                     // change players
                     if (show_swap && nullptr != (player = GetFromOpponentChangeClick(le.GetMouseCursor())))
                     {
-                        const auto it = find(begin(), end(), player);
-                        if (it != end() && it + 1 != end())
+                        const auto it = find(_items.begin(), _items.end(), player);
+                        if (it != _items.end() && it + 1 != _items.end())
                         {
                             Players& players = conf.GetPlayers();
                             const auto it1 = find(players._items.begin(), players._items.end(), (*it).player);

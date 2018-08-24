@@ -242,8 +242,9 @@ namespace Interface
         Rect rect3; // change
     };
 
-    struct PlayersInfo : vector<PlayerInfo>
+    struct PlayersInfo 
     {
+		vector<PlayerInfo> _items;
         PlayersInfo(bool /* show name */, bool /* show race */, bool /* show swap button */);
 
         void UpdateInfo(Players&, const Point& opponents, const Point& classes);
