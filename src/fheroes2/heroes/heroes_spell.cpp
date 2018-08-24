@@ -414,7 +414,7 @@ bool ActionSpellTownGate(Heroes& hero)
     s32 min = -1;
 
     // find the nearest castle
-    for (auto it : castles)
+    for (auto it : castles._items)
         if (it && !it->GetHeroes().Guest())
         {
             int min2 = Maps::GetApproximateDistance(center, it->GetIndex());
@@ -455,7 +455,7 @@ bool ActionSpellTownPortal(Heroes& hero)
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
-    for (const auto it : kingdom.GetCastles())
+    for (const auto it : kingdom.GetCastles()._items)
         if (it && !it->GetHeroes().Guest()) castles.push_back((*it).GetIndex());
 
     if (castles.empty())

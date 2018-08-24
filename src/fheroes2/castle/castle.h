@@ -335,8 +335,9 @@ namespace CastleDialog
         Sprite contour;
     };
 
-    struct CacheBuildings : vector<builds_t>
+    struct CacheBuildings 
     {
+		vector<builds_t> _items;
         CacheBuildings(const Castle&, const Point&);
 
         const Rect& GetRect(building_t) const;
@@ -349,8 +350,9 @@ namespace CastleDialog
     void RedrawBuildingSpriteToArea(const Sprite&, s32, s32, const Rect&);
 }
 
-struct VecCastles : vector<Castle *>
+struct VecCastles 
 {
+	vector<Castle *> _items;
     Castle* Get(const Point&) const;
 
     Castle* GetFirstCastle() const;

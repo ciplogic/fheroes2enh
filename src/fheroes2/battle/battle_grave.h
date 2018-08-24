@@ -30,11 +30,12 @@ namespace Battle
 {
     class Unit;
 
-    struct TroopUIDs : vector<uint32_t>
+    struct TroopUIDs 
     {
+		vector<uint32_t> _items;
         TroopUIDs()
         {
-            reserve(4);
+			_items.reserve(4);
         }
     };
 

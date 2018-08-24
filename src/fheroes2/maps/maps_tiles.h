@@ -188,8 +188,9 @@ namespace Maps
         u8 tmp;
     };
 
-    struct Addons : vector<TilesAddon>
+    struct Addons 
     {
+		vector<TilesAddon> _items;
         void Remove(uint32_t uniq);
     };
 

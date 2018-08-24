@@ -94,9 +94,9 @@ void Interface::CastleBar::Redraw()
     SetListContent(kingdom.GetCastles());
 
     const auto selectedIndex = getSelectedIndex();
-    SetPos(dst_pt.x, dst_pt.y - kingdomCastles.size() * ::spaceTiling);
+    SetPos(dst_pt.x, dst_pt.y - kingdomCastles._items.size() * ::spaceTiling);
     int pos = 0;
-    for (Castle* & castle : this->kingdomCastles)
+    for (Castle* & castle : this->kingdomCastles._items)
     {
         PortraitRedraw(dst_pt.x, dst_pt.y, *castle, display, pos == selectedIndex);
         dst_pt.y -= spaceTiling;
@@ -113,7 +113,7 @@ int Interface::CastleBar::getSelectedIndex() const
     if (!selectedHero)
         return -1;
     int selected = 0;
-    for (Castle* & castle : this->kingdomCastles)
+    for (Castle* & castle : this->kingdomCastles._items)
     {
         if (castle->GetName() == selectedHero->GetName())
         {
@@ -159,13 +159,13 @@ bool Interface::CastleBar::EventProcessing()
         return false;
     uint32_t index = (posBottom - pt.y) / spaceTiling;
 
-    if (index >= kingdomCastles.size())
+    if (index >= kingdomCastles._items.size())
         return false;
     if (le.MouseClickLeft())
     {
         const Point& mousePoint = le.GetMousePressLeft();
 
-        Castle* heroClick = kingdomCastles[index];
+        Castle* heroClick = kingdomCastles._items[index];
         interface.SetFocus(heroClick);
         return true;
     }

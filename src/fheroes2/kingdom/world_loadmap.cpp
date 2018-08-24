@@ -223,37 +223,37 @@ bool World::LoadMapMP2(const string& filename)
         {
         case 0x00: // tower: knight
         case 0x80: // castle: knight
-            vec_castles.push_back(new Castle(cx, cy, Race::KNGT));
+            vec_castles._items.push_back(new Castle(cx, cy, Race::KNGT));
             break;
 
         case 0x01: // tower: barbarian
         case 0x81: // castle: barbarian
-            vec_castles.push_back(new Castle(cx, cy, Race::BARB));
+            vec_castles._items.push_back(new Castle(cx, cy, Race::BARB));
             break;
 
         case 0x02: // tower: sorceress
         case 0x82: // castle: sorceress
-            vec_castles.push_back(new Castle(cx, cy, Race::SORC));
+            vec_castles._items.push_back(new Castle(cx, cy, Race::SORC));
             break;
 
         case 0x03: // tower: warlock
         case 0x83: // castle: warlock
-            vec_castles.push_back(new Castle(cx, cy, Race::WRLK));
+            vec_castles._items.push_back(new Castle(cx, cy, Race::WRLK));
             break;
 
         case 0x04: // tower: wizard
         case 0x84: // castle: wizard
-            vec_castles.push_back(new Castle(cx, cy, Race::WZRD));
+            vec_castles._items.push_back(new Castle(cx, cy, Race::WZRD));
             break;
 
         case 0x05: // tower: necromancer
         case 0x85: // castle: necromancer
-            vec_castles.push_back(new Castle(cx, cy, Race::NECR));
+            vec_castles._items.push_back(new Castle(cx, cy, Race::NECR));
             break;
 
         case 0x06: // tower: random
         case 0x86: // castle: random
-            vec_castles.push_back(new Castle(cx, cy, Race::NONE));
+            vec_castles._items.push_back(new Castle(cx, cy, Race::NONE));
             break;
 
         default:
@@ -685,9 +685,9 @@ void World::PostLoad()
         // get first castle position
         Kingdom& kingdom = GetKingdom(Color::GetFirst(Players::HumanColors()));
 
-        if (!kingdom.GetCastles().empty())
+        if (!kingdom.GetCastles()._items.empty())
         {
-            const Castle* castle = kingdom.GetCastles().front();
+            const Castle* castle = kingdom.GetCastles()._items.front();
             Heroes* hero = vec_heroes.Get(Heroes::SANDYSANDY);
 
             if (hero)

@@ -64,14 +64,14 @@ CastleDialog::CacheBuildings::CacheBuildings(const Castle& castle, const Point& 
     for (vector<building_t>::const_iterator
          it = ordersBuildings.begin(); it != ordersBuildings.end(); ++it)
     {
-        push_back(builds_t(*it, CastleGetCoordBuilding(castle.GetRace(), *it, top)));
+		_items.push_back(builds_t(*it, CastleGetCoordBuilding(castle.GetRace(), *it, top)));
     }
 }
 
 const Rect& CastleDialog::CacheBuildings::GetRect(building_t b) const
 {
-    auto it = find(begin(), end(), b);
-    return it != end() ? (*it).coord : back().coord;
+    auto it = find(_items.begin(), _items.end(), b);
+    return it != _items.end() ? (*it).coord : _items.back().coord;
 }
 
 void CastleDialog::RedrawAnimationBuilding(const Castle& castle, const Point& dst_pt, const CacheBuildings& orders,
@@ -191,24 +191,23 @@ void CastleRedrawCurrentBuilding(const Castle& castle, const Point& dst_pt,
     // redraw all builds
     if (BUILD_NOTHING == build)
     {
-        for (const auto& order : orders)
+        for (const auto& order : orders._items)
         {
-            if (castle.isBuild(order.id))
-            {
-                CastleRedrawBuilding(castle, dst_pt, order.id, frame, 0);
+            if (!castle.isBuild(order.id))
+		        continue;
+	        CastleRedrawBuilding(castle, dst_pt, order.id, frame, 0);
 
-                if (flash == order.id)
-                {
-                    CastleDialog::RedrawBuildingSpriteToArea(order.contour,
-                                                             dst_pt.x + order.contour.x(), dst_pt.y + order.contour.y(),
-                                                             max);
-                }
-                CastleRedrawBuildingExtended(castle, dst_pt, order.id, frame);
-            }
+	        if (flash == order.id)
+	        {
+		        CastleDialog::RedrawBuildingSpriteToArea(order.contour,
+		                                                 dst_pt.x + order.contour.x(), dst_pt.y + order.contour.y(),
+		                                                 max);
+	        }
+	        CastleRedrawBuildingExtended(castle, dst_pt, order.id, frame);
         }
     }
         // redraw build with alpha
-    else if (orders.end() != find(orders.begin(), orders.end(), build))
+    else if (orders._items.end() != find(orders._items.begin(), orders._items.end(), build))
     {
         LocalEvent& le = LocalEvent::Get();
         int alpha = 1;
@@ -219,7 +218,7 @@ void CastleRedrawCurrentBuilding(const Castle& castle, const Point& dst_pt,
             {
                 cursor.Hide();
 
-                for (const auto& order : orders)
+                for (const auto& order : orders._items)
                 {
                     const uint32_t& build2 = order.id;
 

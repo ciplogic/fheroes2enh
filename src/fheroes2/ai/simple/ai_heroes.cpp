@@ -51,13 +51,13 @@ AIHeroes& AIHeroes::Get()
 
 AIHero& AIHeroes::Get(const Heroes& ht)
 {
-    return Get().at(ht.GetID());
+    return Get()._items.at(ht.GetID());
 }
 
 void AIHeroes::Reset()
 {
     AIHeroes& ai = Get();
-    for_each(ai.begin(), ai.end(), std::function<void(AIHero)>(&AIHero::Reset));
+    for_each(ai._items.begin(), ai._items.end(), std::function<void(AIHero)>(&AIHero::Reset));
 }
 
 void AIHero::Reset()

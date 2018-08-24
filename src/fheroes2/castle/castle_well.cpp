@@ -45,11 +45,12 @@ struct dwelling_t : pair<uint32_t, uint32_t>
     }
 };
 
-struct dwellings_t : vector<dwelling_t>
+struct dwellings_t 
 {
+	vector<dwelling_t> _items;
     dwellings_t()
     {
-        reserve(6);
+		_items.reserve(6);
     }
 };
 
@@ -153,7 +154,7 @@ void Castle::OpenWell()
                 {
                     if (0 == (can_recruit = HowManyRecruitMonster(*this, alldwelling, total, cur)))
                         continue;
-                    results.push_back(dwelling_t(alldwelling, can_recruit));
+                    results._items.emplace_back(alldwelling, can_recruit);
                     total += cur;
                     const Monster ms(race, GetActualDwelling(alldwelling));
                     str.append(ms.GetPluralName(can_recruit));
@@ -167,11 +168,9 @@ void Castle::OpenWell()
                 if (Dialog::YES ==
                     Dialog::ResourceInfo(_("Buy Monsters:"), str, total, Dialog::YES | Dialog::NO))
                 {
-                    for (dwellings_t::const_iterator
-                         it = results.begin(); it != results.end(); ++it)
+                    for (auto& dw : results._items)
                     {
-                        const dwelling_t& dw = *it;
-                        RecruitMonsterFromDwelling(dw.first, dw.second);
+	                    RecruitMonsterFromDwelling(dw.first, dw.second);
                     }
                     redraw = true;
                 }

@@ -147,11 +147,11 @@ void AI::KingdomTurn(Kingdom& kingdom)
     WorldStoreObjects(color, ai.scans);
 
     // set capital
-    if (nullptr == ai.capital && !castles.empty())
+    if (nullptr == ai.capital && !castles._items.empty())
     {
-        auto it = find_if(castles.begin(), castles.end(), Castle::PredicateIsCastle);
+        auto it = find_if(castles._items.begin(), castles._items.end(), Castle::PredicateIsCastle);
 
-        if (castles.end() != it)
+        if (castles._items.end() != it)
         {
             if (*it)
             {
@@ -162,7 +162,7 @@ void AI::KingdomTurn(Kingdom& kingdom)
         else
             // first town
         {
-            ai.capital = castles.front();
+            ai.capital = castles._items.front();
             ai.capital->SetModes(Castle::CAPITAL);
         }
     }
@@ -171,10 +171,10 @@ void AI::KingdomTurn(Kingdom& kingdom)
     status.RedrawTurnProgress(1);
 
     // castles AI turn
-    for_each(castles.begin(), castles.end(), [](auto* castle) { AICastleTurn(castle); });
+    for_each(castles._items.begin(), castles._items.end(), [](auto* castle) { AICastleTurn(castle); });
 
     // need capture town?
-    if (castles.empty())
+    if (castles._items.empty())
         for_each(heroes._items.begin(), heroes._items.end(), [](auto* castle)
         {
             AIHeroesCaptureNearestTown(castle);

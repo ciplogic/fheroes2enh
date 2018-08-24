@@ -705,14 +705,14 @@ bool Battle::Arena::CanSurrenderOpponent(int color) const
     const HeroBase* hero1 = GetCommander(color, false); // enemy
     const HeroBase* hero2 = GetCommander(color, true);
     return hero1 && hero1->isHeroes() && hero2 &&
-        !world.GetKingdom(hero2->GetColor()).GetCastles().empty();
+        !world.GetKingdom(hero2->GetColor()).GetCastles()._items.empty();
 }
 
 bool Battle::Arena::CanRetreatOpponent(int color) const
 {
     const HeroBase* hero = army1->GetColor() == color ? army1->GetCommander() : army2->GetCommander();
     return hero && hero->isHeroes() && nullptr == hero->inCastle() &&
-        !world.GetKingdom(hero->GetColor()).GetCastles().empty();
+        !world.GetKingdom(hero->GetColor()).GetCastles()._items.empty();
 }
 
 bool Battle::Arena::isDisableCastSpell(const Spell& spell, string* msg)

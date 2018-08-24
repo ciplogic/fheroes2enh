@@ -514,17 +514,18 @@ ByteVectorWriter& operator<<(ByteVectorWriter& sb, const MidTrack& st)
     return sb;
 }
 
-struct MidTracks : vector<MidTrack>
+struct MidTracks 
 {
+	vector<MidTrack> _items;
     size_t count() const
     {
-        return vector<MidTrack>::size();
+        return _items.size();
     }
 
     size_t size() const
     {
         size_t res = 0;
-        for (const auto& it : *this)
+        for (const auto& it : _items)
             res += it.size();
         return res;
     }
@@ -534,13 +535,13 @@ struct MidTracks : vector<MidTrack>
     explicit MidTracks(const XMITracks& tracks)
     {
         for (const auto& track : tracks)
-            push_back(MidTrack(track));
+			_items.emplace_back(track);
     }
 };
 
 ByteVectorWriter& operator<<(ByteVectorWriter& sb, const MidTracks& st)
 {
-    for (const auto& it : st)
+    for (const auto& it : st._items)
         sb << it;
     return sb;
 }

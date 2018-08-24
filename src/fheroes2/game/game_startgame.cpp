@@ -117,11 +117,11 @@ void Game::OpenCastleDialog(Castle& castle)
     Kingdom& myKingdom = world.GetKingdom(conf.CurrentColor());
     const KingdomCastles& myCastles = myKingdom.GetCastles();
     Display& display = Display::Get();
-    auto it = find(myCastles.begin(), myCastles.end(), &castle);
+    auto it = find(myCastles._items.begin(), myCastles._items.end(), &castle);
     Interface::StatusWindow::ResetTimer();
     bool need_fade = conf.ExtGameUseFade() && 640 == display.w() && 480 == display.h();
 
-    if (it != myCastles.end())
+    if (it != myCastles._items.end())
     {
         int result = Dialog::ZERO;
         while (Dialog::CANCEL != result)
@@ -129,17 +129,17 @@ void Game::OpenCastleDialog(Castle& castle)
             result = (*it)->OpenDialog(false, need_fade);
             if (need_fade) need_fade = false;
 
-            if (it != myCastles.end())
+            if (it != myCastles._items.end())
             {
                 if (Dialog::PREV == result)
                 {
-                    if (it == myCastles.begin()) it = myCastles.end();
+                    if (it == myCastles._items.begin()) it = myCastles._items.end();
                     --it;
                 }
                 else if (Dialog::NEXT == result)
                 {
                     ++it;
-                    if (it == myCastles.end()) it = myCastles.begin();
+                    if (it == myCastles._items.end()) it = myCastles._items.begin();
                 }
             }
         }
@@ -149,7 +149,7 @@ void Game::OpenCastleDialog(Castle& castle)
         (*it)->OpenDialog(true, need_fade);
     }
 
-    if (it != myCastles.end())
+    if (it != myCastles._items.end())
     {
         // focus priority: castle heroes
         Heroes* hero = (*it)->GetHeroes().Guest();
@@ -687,7 +687,7 @@ int Interface::Basic::HumanTurn(bool isload)
     res = gameResult.LocalCheckGameOver();
 
     // warning lost all town
-    if (myCastles.empty())
+    if (myCastles._items.empty())
         res = ShowWarningLostTownsDialog();
 
     // check around actions (and skip for h2 orig, bug?)
@@ -1029,7 +1029,7 @@ int Interface::Basic::HumanTurn(bool isload)
     if (Game::ENDTURN == res)
     {
         // warning lost all town
-        if (!myHeroes._items.empty() && myCastles.empty() && Game::GetLostTownDays() < myKingdom.GetLostTownDays())
+        if (!myHeroes._items.empty() && myCastles._items.empty() && Game::GetLostTownDays() < myKingdom.GetLostTownDays())
         {
             Game::DialogPlayers(conf.CurrentColor(),
                                 _("%{color} player, you have lost your last town. If you do not conquer another town in next week, you will be eliminated."

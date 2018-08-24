@@ -114,11 +114,11 @@ Sprite GetActualSpriteBuilding(const Castle& castle, uint32_t build)
 building_t GetCurrentFlash(const Castle& castle, CastleDialog::CacheBuildings& cache)
 {
     LocalEvent& le = LocalEvent::Get();
-    CastleDialog::CacheBuildings::iterator it;
+    auto it = cache._items.begin();
     building_t flash = BUILD_NOTHING;
 
 
-    for (it = cache.begin(); it != cache.end(); ++it)
+    for (auto it = cache._items.begin(); it != cache._items.end(); ++it)
     {
         if (castle.isBuild((*it).id) && (*it).coord & le.GetMouseCursor() &&
             AllowFlashBuilding((*it).id))
@@ -137,7 +137,7 @@ building_t GetCurrentFlash(const Castle& castle, CastleDialog::CacheBuildings& c
         }
     }
 
-    if (it != cache.end())
+    if (it != cache._items.end())
     {
         flash = (*it).id;
 
@@ -323,7 +323,7 @@ int Castle::OpenDialog(bool readonly, bool fade)
     // draw building
     RedrawAllBuilding(*this, cur_pt, cacheBuildings);
 
-    if (2 > world.GetKingdom(GetColor()).GetCastles().size() || readonly)
+    if (2 > world.GetKingdom(GetColor()).GetCastles()._items.size() || readonly)
     {
         buttonPrevCastle.Press();
         buttonPrevCastle.SetDisable(true);
@@ -487,24 +487,22 @@ int Castle::OpenDialog(bool readonly, bool fade)
 
         // buildings event
 
-        for (CastleDialog::CacheBuildings::const_reverse_iterator
-             it = cacheBuildings.rbegin(); it != cacheBuildings.rend(); ++it)
+        for (auto it = cacheBuildings._items.rbegin(); it != cacheBuildings._items.rend(); ++it)
         {
-            if ((*it).id == GetActualDwelling((*it).id) && isBuild((*it).id))
-            {
-                if (!readonly && le.MouseClickLeft((*it).coord) &&
-                    RecruitMonster(Dialog::RecruitMonster(
-                        Monster(race, GetActualDwelling((*it).id)), GetDwellingLivedCount((*it).id), true)))
-                    need_redraw = true;
-                else if (le.MousePressRight((*it).coord))
-                    Dialog::DwellingInfo(Monster(race, GetActualDwelling((*it).id)), GetDwellingLivedCount((*it).id));
+            if ((*it).id != GetActualDwelling((*it).id) || !isBuild((*it).id))
+		        continue;
+	        if (!readonly && le.MouseClickLeft((*it).coord) &&
+		        RecruitMonster(Dialog::RecruitMonster(
+			        Monster(race, GetActualDwelling((*it).id)), GetDwellingLivedCount((*it).id), true)))
+		        need_redraw = true;
+	        else if (le.MousePressRight((*it).coord))
+		        Dialog::DwellingInfo(Monster(race, GetActualDwelling((*it).id)), GetDwellingLivedCount((*it).id));
 
-                if (le.MouseCursor((*it).coord))
-                    msg_status = Monster(race, (*it).id).GetName();
-            }
+	        if (le.MouseCursor((*it).coord))
+		        msg_status = Monster(race, (*it).id).GetName();
         }
 
-        for (auto it = cacheBuildings.begin(); it != cacheBuildings.end(); ++it)
+        for (auto it = cacheBuildings._items.begin(); it != cacheBuildings._items.end(); ++it)
         {
             if (BUILD_MAGEGUILD & (*it).id)
             {

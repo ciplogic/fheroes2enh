@@ -282,13 +282,13 @@ void Interface::Basic::EventNextTown()
     Kingdom& myKingdom = world.GetKingdom(Settings::Get().CurrentColor());
     KingdomCastles& myCastles = myKingdom.GetCastles();
 
-    if (myCastles.empty()) return;
+    if (myCastles._items.empty()) return;
     if (GetFocusCastle())
     {
-        KingdomCastles::const_iterator it = find(myCastles.begin(), myCastles.end(),
+        auto it = find(myCastles._items.begin(), myCastles._items.end(),
                                                  GetFocusCastle());
         ++it;
-        if (it == myCastles.end()) it = myCastles.begin();
+        if (it == myCastles._items.end()) it = myCastles._items.begin();
         SetFocus(*it);
     }
     else

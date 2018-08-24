@@ -377,10 +377,10 @@ StatsCastlesList::StatsCastlesList(const Point& pt, KingdomCastles& castles) : L
     SetAreaMaxItems(4);
     SetAreaItems(Rect(pt.x + 30, pt.y + 17, 594, 344));
 
-    content.resize(castles.size());
+    content.resize(castles._items.size());
 
-    for (auto it = castles.begin(); it != castles.end(); ++it)
-        content[distance(castles.begin(), it)].Init(*it);
+    for (auto it = castles._items.begin(); it != castles._items.end(); ++it)
+        content[distance(castles._items.begin(), it)].Init(*it);
 
     SetListContent(content);
 }

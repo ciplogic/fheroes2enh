@@ -114,10 +114,10 @@ void Interface::Basic::ResetFocus(int priority)
             SetFocus(focus.GetHeroes());
         else if (!myKingdom.GetHeroes()._items.empty())
             SetFocus(myKingdom.GetHeroes()._items.front());
-        else if (!myKingdom.GetCastles().empty())
+        else if (!myKingdom.GetCastles()._items.empty())
         {
             iconsPanel.SetRedraw(ICON_HEROES);
-            SetFocus(myKingdom.GetCastles().front());
+            SetFocus(myKingdom.GetCastles()._items.front());
         }
         else
             focus.Reset();
@@ -126,8 +126,8 @@ void Interface::Basic::ResetFocus(int priority)
     case GameFocus::CASTLE:
         if (focus.GetCastle() && focus.GetCastle()->GetColor() == player->GetColor())
             SetFocus(focus.GetCastle());
-        else if (!myKingdom.GetCastles().empty())
-            SetFocus(myKingdom.GetCastles().front());
+        else if (!myKingdom.GetCastles()._items.empty())
+            SetFocus(myKingdom.GetCastles()._items.front());
         else if (!myKingdom.GetHeroes()._items.empty())
         {
             iconsPanel.SetRedraw(ICON_CASTLES);

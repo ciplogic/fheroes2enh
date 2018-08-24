@@ -53,7 +53,7 @@ void Kingdom::Init(int clr)
     if (Color::ALL & color)
     {
         heroes._items.reserve(GetMaxHeroes());
-        castles.reserve(15);
+        castles._items.reserve(15);
 
         UpdateStartingResource();
     }
@@ -68,7 +68,7 @@ void Kingdom::clear()
     lost_town_days = Game::GetLostTownDays() + 1;
 
     heroes._items.clear();
-    castles.clear();
+    castles._items.clear();
     visit_object.clear();
 
     recruits.Reset();
@@ -98,7 +98,7 @@ void Kingdom::UpdateStartingResource()
 
 bool Kingdom::isLoss() const
 {
-    return castles.empty() && heroes._items.empty();
+    return castles._items.empty() && heroes._items.empty();
 }
 
 bool Kingdom::isPlay() const
@@ -118,10 +118,10 @@ void Kingdom::LossPostActions()
                      bind2nd(mem_fun(&Heroes::SetFreeman), static_cast<int>(Battle::RESULT_LOSS)));
             heroes._items.clear();
         }
-        if (!castles.empty())
+        if (!castles._items.empty())
         {
             castles.ChangeColors(GetColor(), Color::NONE);
-            castles.clear();
+            castles._items.clear();
         }
         world.ResetCapturedObjects(GetColor());
     }
@@ -145,13 +145,13 @@ void Kingdom::ActionNewDay()
     ResetModes(IDENTIFYHERO);
 
     // check lost town
-    if (castles.empty()) --lost_town_days;
+    if (castles._items.empty()) --lost_town_days;
 
     // skip incomes for first day
     if (1 < world.CountDay())
     {
         // castle New Day
-        for_each(castles.begin(), castles.end(), mem_fun(&Castle::ActionNewDay));
+        for_each(castles._items.begin(), castles._items.end(), mem_fun(&Castle::ActionNewDay));
 
         // heroes New Day
         for_each(heroes._items.begin(), heroes._items.end(), mem_fun(&Heroes::ActionNewDay));
@@ -162,9 +162,8 @@ void Kingdom::ActionNewDay()
 
     // check event day AI
     EventsDate events = world.GetEventsDate(GetColor());
-    for (EventsDate::const_iterator
-         it = events.begin(); it != events.end(); ++it)
-        AddFundsResource((*it).resource);
+    for (const auto& event : events)
+	    AddFundsResource(event.resource);
 
     // remove day visit object
     visit_object.remove_if(Visit::isDayLife);
@@ -178,7 +177,7 @@ void Kingdom::ActionNewWeek()
     if (1 < world.CountDay())
     {
         // castle New Week
-        for_each(castles.begin(), castles.end(), mem_fun(&Castle::ActionNewWeek));
+        for_each(castles._items.begin(), castles._items.end(), mem_fun(&Castle::ActionNewWeek));
 
         // heroes New Week
         for_each(heroes._items.begin(), heroes._items.end(), mem_fun(&Heroes::ActionNewWeek));
@@ -203,7 +202,7 @@ void Kingdom::ActionNewMonth()
     if (1 < world.CountDay())
     {
         // castle New Month
-        for_each(castles.begin(), castles.end(), mem_fun(&Castle::ActionNewMonth));
+        for_each(castles._items.begin(), castles._items.end(), mem_fun(&Castle::ActionNewMonth));
 
         // heroes New Month
         for_each(heroes._items.begin(), heroes._items.end(), mem_fun(&Heroes::ActionNewMonth));
@@ -269,8 +268,8 @@ void Kingdom::AddCastle(const Castle* castle)
 {
     if (castle)
     {
-        if (castles.end() == find(castles.begin(), castles.end(), castle))
-            castles.push_back(const_cast<Castle *>(castle));
+        if (castles._items.end() == find(castles._items.begin(), castles._items.end(), castle))
+            castles._items.push_back(const_cast<Castle *>(castle));
 
         auto player = Settings::Get().GetPlayers().GetCurrent();
         if (player && player->isColor(GetColor()))
@@ -286,8 +285,8 @@ void Kingdom::RemoveCastle(const Castle* castle)
 {
     if (castle)
     {
-        if (!castles.empty())
-            castles.erase(find(castles.begin(), castles.end(), castle));
+        if (!castles._items.empty())
+            castles._items.erase(find(castles._items.begin(), castles._items.end(), castle));
 
         AI::CastleRemove(*castle);
     }
@@ -297,27 +296,27 @@ void Kingdom::RemoveCastle(const Castle* castle)
 
 uint32_t Kingdom::GetCountCastle() const
 {
-    return std::count_if(castles.begin(), castles.end(), Castle::PredicateIsCastle);
+    return std::count_if(castles._items.begin(), castles._items.end(), Castle::PredicateIsCastle);
 }
 
 uint32_t Kingdom::GetCountTown() const
 {
-    return std::count_if(castles.begin(), castles.end(), Castle::PredicateIsTown);
+    return std::count_if(castles._items.begin(), castles._items.end(), Castle::PredicateIsTown);
 }
 
 uint32_t Kingdom::GetCountMarketplace() const
 {
-    return std::count_if(castles.begin(), castles.end(), Castle::PredicateIsBuildMarketplace);
+    return std::count_if(castles._items.begin(), castles._items.end(), Castle::PredicateIsBuildMarketplace);
 }
 
 uint32_t Kingdom::GetCountNecromancyShrineBuild() const
 {
-    return std::count_if(castles.begin(), castles.end(), mem_fun(&Castle::isNecromancyShrineBuild));
+    return std::count_if(castles._items.begin(), castles._items.end(), mem_fun(&Castle::isNecromancyShrineBuild));
 }
 
 uint32_t Kingdom::GetCountBuilding(uint32_t build) const
 {
-    return std::count_if(castles.begin(), castles.end(), bind2nd(mem_fun(&Castle::isBuild), build));
+    return std::count_if(castles._items.begin(), castles._items.end(), bind2nd(mem_fun(&Castle::isBuild), build));
 }
 
 bool Kingdom::AllowPayment(const Funds& funds) const
@@ -372,7 +371,7 @@ bool Kingdom::HeroesMayStillMove() const
 
 uint32_t Kingdom::GetCountCapital() const
 {
-    return count_if(castles.begin(), castles.end(), Castle::PredicateIsCapital);
+    return count_if(castles._items.begin(), castles._items.end(), Castle::PredicateIsCapital);
 }
 
 void Kingdom::AddFundsResource(const Funds& funds)
@@ -441,11 +440,11 @@ bool Kingdom::AllowRecruitHero(bool check_payment, int level) const
 
 void Kingdom::ApplyPlayWithStartingHero()
 {
-    if (isPlay() && !castles.empty())
+    if (isPlay() && !castles._items.empty())
     {
         // get first castle
         Castle* first = castles.GetFirstCastle();
-        if (nullptr == first) first = castles.front();
+        if (nullptr == first) first = castles._items.front();
 
         // check manual set hero (castle position + point(0, 1))?
         const Point& cp = first->GetCenter();
@@ -504,7 +503,7 @@ Funds Kingdom::GetIncome(int type /* INCOME_ALL */) const
     if (INCOME_CASTLES & type)
     {
         // castles
-        for (auto it : castles)
+        for (auto it : castles._items)
         {
             const Castle& castle = *it;
 
@@ -567,7 +566,7 @@ uint32_t Kingdom::GetArmiesStrength() const
     for (auto heroe : heroes._items)
         res += (*heroe).GetArmy().m_troops.GetStrength();
 
-    for (auto castle : castles)
+    for (auto castle : castles._items)
         res += (*castle).GetArmy().m_troops.GetStrength();
 
     return res;
@@ -740,7 +739,7 @@ void Kingdoms::AddCondLossHeroes(const AllHeroes& heroes)
 
 void Kingdoms::AddCastles(const AllCastles& castles)
 {
-    for (auto castle : castles)
+    for (auto castle : castles._items)
         // skip gray color
         if (castle->GetColor()) GetKingdom(castle->GetColor()).AddCastle(castle);
 }

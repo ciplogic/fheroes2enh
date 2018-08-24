@@ -2487,32 +2487,32 @@ void Castle::ActionAfterBattle(bool attacker_wins)
 
 Castle* VecCastles::Get(const Point& position) const
 {
-    const auto it = find_if(begin(), end(), [&](auto& castle)
+    const auto it = find_if(_items.begin(), _items.end(), [&](auto& castle)
     {
         return castle->isPosition(position);
     });
-    return end() != it ? *it : nullptr;
+    return _items.end() != it ? *it : nullptr;
 }
 
 Castle* VecCastles::GetFirstCastle() const
 {
-    auto it = find_if(begin(), end(), [](auto& castle)
+    auto it = find_if(_items.begin(), _items.end(), [](auto& castle)
     {
         return castle->isCastle();
     });
-    return end() != it ? *it : nullptr;
+    return _items.end() != it ? *it : nullptr;
 }
 
 void VecCastles::ChangeColors(int col1, int col2)
 {
-    for (auto& it : *this)
+    for (auto& it : _items)
         if (it->GetColor() == col1) it->ChangeColor(col2);
 }
 
 AllCastles::AllCastles()
 {
     // reserve memory
-    reserve(MAXCASTLES);
+	_items.reserve(MAXCASTLES);
 }
 
 AllCastles::~AllCastles()
@@ -2522,20 +2522,20 @@ AllCastles::~AllCastles()
 
 void AllCastles::Init()
 {
-    if (!empty())
+    if (!_items.empty())
         clear();
 }
 
 void AllCastles::clear()
 {
-    for (auto& it : *this)
+    for (auto& it : _items)
         delete it;
-    vector<Castle *>::clear();
+	_items.clear();
 }
 
 void AllCastles::Scoute(int colors) const
 {
-    for (auto it : *this)
+    for (auto it : _items)
         if (colors & it->GetColor()) it->Scoute();
 }
 
@@ -2588,9 +2588,9 @@ ByteVectorReader& operator>>(ByteVectorReader& msg, Castle& castle)
 
 ByteVectorWriter& operator<<(ByteVectorWriter& msg, const VecCastles& castles)
 {
-    msg << static_cast<uint32_t>(castles.size());
+    msg << static_cast<uint32_t>(castles._items.size());
 
-    for (auto castle : castles)
+    for (auto castle : castles._items)
         msg << (castle ? castle->GetIndex() : static_cast<s32>(-1));
 
     return msg;
@@ -2602,9 +2602,9 @@ ByteVectorReader& operator>>(ByteVectorReader& msg, VecCastles& castles)
     uint32_t size;
     msg >> size;
 
-    castles.resize(size, nullptr);
+    castles._items.resize(size, nullptr);
 
-    for (auto& castle : castles)
+    for (auto& castle : castles._items)
     {
         msg >> index;
         castle = index < 0 ? nullptr : world.GetCastle(Maps::GetPoint(index));
@@ -2615,9 +2615,9 @@ ByteVectorReader& operator>>(ByteVectorReader& msg, VecCastles& castles)
 
 ByteVectorWriter& operator<<(ByteVectorWriter& msg, const AllCastles& castles)
 {
-    msg << static_cast<uint32_t>(castles.size());
+    msg << static_cast<uint32_t>(castles._items.size());
 
-    for (auto castle : castles)
+    for (auto castle : castles._items)
         msg << *castle;
 
     return msg;
@@ -2629,9 +2629,9 @@ ByteVectorReader& operator>>(ByteVectorReader& msg, AllCastles& castles)
     msg >> size;
 
     castles.clear();
-    castles.resize(size, nullptr);
+    castles._items.resize(size, nullptr);
 
-    for (auto& castle : castles)
+    for (auto& castle : castles._items)
     {
         castle = new Castle();
         msg >> *castle;

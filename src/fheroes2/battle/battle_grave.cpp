@@ -38,10 +38,10 @@ void Battle::Graveyard::AddTroop(const Unit& b)
 {
     Graveyard& map = *this;
 
-    map[b.GetHeadIndex()].push_back(b.GetUID());
+    map[b.GetHeadIndex()]._items.push_back(b.GetUID());
 
     if (b.isWide())
-        map[b.GetTailIndex()].push_back(b.GetUID());
+        map[b.GetTailIndex()]._items.push_back(b.GetUID());
 }
 
 void Battle::Graveyard::RemoveTroop(const Unit& b)
@@ -49,21 +49,21 @@ void Battle::Graveyard::RemoveTroop(const Unit& b)
     Graveyard& map = *this;
     TroopUIDs& ids = map[b.GetHeadIndex()];
 
-    auto it = std::find(ids.begin(), ids.end(), b.GetUID());
-    if (it != ids.end()) ids.erase(it);
+    auto it = std::find(ids._items.begin(), ids._items.end(), b.GetUID());
+    if (it != ids._items.end()) ids._items.erase(it);
 
     if (!b.isWide()) return;
     TroopUIDs& ids2 = map[b.GetTailIndex()];
 
-    it = std::find(ids2.begin(), ids2.end(), b.GetUID());
-    if (it != ids2.end()) ids2.erase(it);
+    it = std::find(ids2._items.begin(), ids2._items.end(), b.GetUID());
+    if (it != ids2._items.end()) ids2._items.erase(it);
 }
 
 uint32_t Battle::Graveyard::GetLastTroopUID(s32 index) const
 {
     for (auto troop : *this)
-        if (index == troop.first && !troop.second.empty())
-            return troop.second.back();
+        if (index == troop.first && !troop.second._items.empty())
+            return troop.second._items.back();
 
     return 0;
 }

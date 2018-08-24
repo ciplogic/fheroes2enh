@@ -532,7 +532,7 @@ void World::NewWeek()
                 vec_tile.QuantityUpdate();
 
         // update gray towns
-        for (auto& vec_castle : vec_castles)
+        for (auto& vec_castle : vec_castles._items)
             if (vec_castle->GetColor() == Color::NONE) vec_castle->ActionNewWeek();
     }
 
@@ -559,7 +559,7 @@ void World::NewMonth()
         MonthOfMonstersAction(Monster(week_current.GetMonster()));
 
     // update gray towns
-    for (auto& vec_castle : vec_castles)
+    for (auto& vec_castle : vec_castles._items)
         if (vec_castle->GetColor() == Color::NONE) vec_castle->ActionNewMonth();
 }
 

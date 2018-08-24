@@ -235,7 +235,7 @@ void Interface::CastleIcons::SetPos(s32 px, s32 py)
     SetAreaItems(Rect(px + 5, py + 5, ICONS_CURSOR_WIDTH, iconsCount * ICONS_CURSOR_HEIGHT));
     DisableHotkeys(true);
 
-    SetListContent(world.GetKingdom(Settings::Get().CurrentColor()).GetCastles());
+    SetListContent(world.GetKingdom(Settings::Get().CurrentColor()).GetCastles()._items);
     Reset();
 }
 
@@ -470,7 +470,7 @@ void Interface::IconsPanel::ResetIcons(icons_t type)
 
         if (type & ICON_CASTLES)
         {
-            castleIcons.SetListContent(kingdom.GetCastles());
+            castleIcons.SetListContent(kingdom.GetCastles()._items);
             castleIcons.Reset();
         }
     }

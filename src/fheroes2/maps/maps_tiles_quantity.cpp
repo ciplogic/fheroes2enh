@@ -850,18 +850,18 @@ void Maps::Tiles::QuantityUpdate()
 
     case MP2::OBJ_BARRIER:
         {
-            const Addons::const_reverse_iterator it = find_if(addons_level1.rbegin(), addons_level1.rend(),
+            const auto it = find_if(addons_level1._items.rbegin(), addons_level1._items.rend(),
                                                               ptr_fun(&TilesAddon::ColorFromBarrierSprite));
-            if (it != addons_level1.rend())
+            if (it != addons_level1._items.rend())
                 QuantitySetColor(TilesAddon::ColorFromBarrierSprite(*it));
         }
         break;
 
     case MP2::OBJ_TRAVELLERTENT:
         {
-            Addons::const_reverse_iterator it = find_if(addons_level1.rbegin(), addons_level1.rend(),
+            auto it = find_if(addons_level1._items.rbegin(), addons_level1._items.rend(),
                                                         ptr_fun(&TilesAddon::ColorFromTravellerTentSprite));
-            if (it != addons_level1.rend())
+            if (it != addons_level1._items.rend())
                 QuantitySetColor(TilesAddon::ColorFromTravellerTentSprite(*it));
         }
         break;
