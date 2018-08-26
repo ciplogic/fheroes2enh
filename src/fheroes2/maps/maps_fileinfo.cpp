@@ -576,10 +576,11 @@ bool Maps::PrepareMapsFileInfoList(Maps::MapsFileInfoList& lists, bool multi)
     // set preferably count filter
     if (conf.PreferablyCountPlayers())
     {
-        auto it = remove_if(lists.begin(), lists.end(),
-                            not1(bind2nd(
-                                mem_fun_ref(&Maps::FileInfo::isAllowCountPlayers),
-                                conf.PreferablyCountPlayers())));
+		const auto it = remove_if(lists.begin(), lists.end(),
+			[&](FileInfo& fileInfo)
+		{
+			return fileInfo.isAllowCountPlayers(conf.PreferablyCountPlayers());
+		});
         if (it != lists.begin()) lists.resize(distance(lists.begin(), it));
     }
 

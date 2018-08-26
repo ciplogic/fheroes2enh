@@ -841,7 +841,10 @@ uint32_t BagArtifacts::CountArtifacts() const
 
 bool BagArtifacts::ContainUltimateArtifact() const
 {
-    return _items.end() != find_if(_items.begin(), _items.end(), mem_fun_ref(&Artifact::isUltimate));
+	return _items.end() != find_if(_items.begin(), _items.end(), [](const Artifact&it)
+	{
+		return it.isUltimate();
+	});
 }
 
 void BagArtifacts::RemoveScroll(const Artifact& art)
