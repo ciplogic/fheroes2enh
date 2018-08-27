@@ -8,9 +8,6 @@ std::vector<std::string> extractArgsVector(int argc, char** argv)
 {
 	std::vector<std::string> vArgv;
 
-
-
-
 	int nArgs;
 	std::wstring commandLine = GetCommandLineW();
 
