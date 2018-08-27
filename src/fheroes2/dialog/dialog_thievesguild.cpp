@@ -57,7 +57,8 @@ struct ValueColors : pair<int, int>
 void UpdateValuesColors(vector<ValueColors>& v, int value, int color)
 {
     const auto it =
-        find_if(v.begin(), v.end(), bind2nd(mem_fun_ref(&ValueColors::IsValue), value));
+        find_if(v.begin(), v.end(), 
+			[&](const ValueColors& it) { return it.IsValue(value); });
 
     if (it == v.end())
         v.emplace_back(value, color);

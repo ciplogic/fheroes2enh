@@ -886,7 +886,7 @@ bool Heroes::isVisited(int object, Visit::type_t type) const
     if (Visit::GLOBAL == type) return GetKingdom().isVisited(object);
 
     return visit_object.end() != find_if(visit_object.begin(), visit_object.end(),
-                                         bind2nd(mem_fun_ref(&IndexObject::isObject), object));
+		[&](const IndexObject& it) { return it.isObject(object); });
 }
 
 /* set visited cell */
@@ -2028,8 +2028,8 @@ Heroes* AllHeroes::FromJail(s32 index) const
 
 bool AllHeroes::HaveTwoFreemans() const
 {
-    return 2 <= count_if(_items.begin(), _items.end(),
-                         mem_fun(&Heroes::isFreeman));
+	return 2 <= count_if(_items.begin(), _items.end(),
+		[](Heroes*it) {return  it->isFreeman(); });
 }
 
 ByteVectorWriter& operator<<(ByteVectorWriter& msg, const VecHeroes& heroes)

@@ -191,19 +191,12 @@ s32 FindUncharteredTerritory(Heroes& hero, uint32_t scoute)
     Maps::GetAroundIndexes(hero.GetIndex(), scoute, true, v);
     Maps::Indexes res;
 
-    v.resize(distance(v.begin(),
-                      remove_if(v.begin(), v.end(), ptr_fun(&Maps::TileIsUnderProtection))));
+	v.resize(distance(v.begin(),
+		remove_if(v.begin(), v.end(),
+			[](s32 it) {return Maps::TileIsUnderProtection(it); })));
 
 
-#if defined(ANDROID)
-    const MapsIndexes::const_reverse_iterator crend = v.rend();
-
-    for(MapsIndexes::const_reverse_iterator
-    it = v.rbegin(); it != crend && res.size() < 4; ++it)
-#else
-    for (MapsIndexes::const_reverse_iterator
-         it = v.rbegin(); it != v.rend() && res.size() < 4; ++it)
-#endif
+    for (auto it = v.rbegin(); it != v.rend() && res.size() < 4; ++it)
     {
         // find fogs
         if (world.GetTiles(*it).isFog(hero.GetColor()) &&
@@ -224,17 +217,11 @@ s32 GetRandomHeroesPosition(Heroes& hero, uint32_t scoute)
     Maps::Indexes res;
 
     v.resize(distance(v.begin(),
-                      remove_if(v.begin(), v.end(), ptr_fun(&Maps::TileIsUnderProtection))));
+                      remove_if(v.begin(), v.end(), 
+						  [](s32 it) {return Maps::TileIsUnderProtection(it); })));
 
-#if defined(ANDROID)
-    const MapsIndexes::const_reverse_iterator crend = v.rend();
 
-    for(MapsIndexes::const_reverse_iterator
-    it = v.rbegin(); it != crend && res.size() < 4; ++it)
-#else
-    for (MapsIndexes::const_reverse_iterator
-         it = v.rbegin(); it != v.rend() && res.size() < 4; ++it)
-#endif
+    for (auto it = v.rbegin(); it != v.rend() && res.size() < 4; ++it)
     {
         if (world.GetTiles(*it).isPassable(&hero, Direction::CENTER, true) &&
             hero.GetPath().Calculate(*it))
@@ -305,8 +292,7 @@ void AIHeroesAddedTask(Heroes& hero)
     vector<IndexDistance> objs;
     objs.reserve(ai_objects.size());
 
-    for (map<s32, int>::const_iterator
-         it = ai_objects.begin(); it != ai_objects.end(); ++it)
+    for (auto it = ai_objects.begin(); it != ai_objects.end(); ++it)
     {
         const Maps::Tiles& tile = world.GetTiles((*it).first);
 
@@ -556,8 +542,13 @@ bool AI::HeroesGetTask(Heroes& hero)
         AIHeroesAddedTask(hero);
     }
     else
-        // remove invalid task
-        task.remove_if(not1(bind1st(ptr_fun(&AIHeroesValidObject2), &hero)));
+    {
+		// remove invalid task
+		task.remove_if([&](s32&it)
+		{
+			return !AIHeroesValidObject2(&hero, it);
+		});
+    }
 
     // random shuffle
     if (1 < task.size() && Rand::Get(1))

@@ -390,14 +390,15 @@ Battle::ModesAffected::ModesAffected()
 
 uint32_t Battle::ModesAffected::GetMode(uint32_t mode) const
 {
-    auto it = find_if(begin(), end(),
-                      bind2nd(mem_fun_ref(&ModeDuration::isMode), mode));
+	const auto it = find_if(begin(), end(),
+		[&](const ModeDuration& it) { return it.isMode(mode); });
     return it == end() ? 0 : (*it).second;
 }
 
 void Battle::ModesAffected::AddMode(uint32_t mode, uint32_t duration)
 {
-    auto it = find_if(begin(), end(), bind2nd(mem_fun_ref(&ModeDuration::isMode), mode));
+    auto it = find_if(begin(), end(),
+		[&](const ModeDuration& it) { return it.isMode(mode); });
     if (it == end())
         push_back(ModeDuration(mode, duration));
     else
@@ -406,7 +407,8 @@ void Battle::ModesAffected::AddMode(uint32_t mode, uint32_t duration)
 
 void Battle::ModesAffected::RemoveMode(uint32_t mode)
 {
-    auto it = find_if(begin(), end(), bind2nd(mem_fun_ref(&ModeDuration::isMode), mode));
+    auto it = find_if(begin(), end(),
+		[&](const ModeDuration& it) { return it.isMode(mode); });
     if (it != end())
     {
         // erase(it)

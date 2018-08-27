@@ -98,9 +98,8 @@ void Interface::Basic::ResetFocus(int priority)
         {
             const KingdomHeroes& heroes = myKingdom.GetHeroes();
             // skip sleeping
-            auto it =
-                find_if(heroes._items.begin(), heroes._items.end(),
-                        not1(bind2nd(mem_fun(&Heroes::Modes), Heroes::SLEEPER)));
+	        const auto it = find_if(heroes._items.begin(), heroes._items.end(),
+					[&](const Heroes* it) { return it->Modes(Heroes::SLEEPER); });
 
             if (it != heroes._items.end())
                 SetFocus(*it);

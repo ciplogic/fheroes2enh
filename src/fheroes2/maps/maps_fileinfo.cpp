@@ -72,9 +72,9 @@ namespace Editor
     };
 }
 
-int ByteToColor(int byte)
+int ByteToColor(int byteColor)
 {
-    switch (byte)
+    switch (byteColor)
     {
     case 0:
         return Color::BLUE;
@@ -96,9 +96,9 @@ int ByteToColor(int byte)
     return Color::NONE;
 }
 
-int ByteToRace(int byte)
+int ByteToRace(int byteValue)
 {
-    switch (byte)
+    switch (byteValue)
     {
     case 0x00:
         return Race::KNGT;

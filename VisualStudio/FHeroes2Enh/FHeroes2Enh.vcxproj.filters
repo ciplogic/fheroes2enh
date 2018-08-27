@@ -1175,5 +1175,8 @@
     <ClCompile Include="..\..\src\fheroes2\gui\interface_castle_bar.cpp">
       <Filter>Source Files\fheroes2\gui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\fheroes2\system\fh2_win32.cpp">
+      <Filter>Source Files\fheroes2\game</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

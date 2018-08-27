@@ -94,41 +94,14 @@ string GetCaption()
     return string("Free Heroes II, version: " + Settings::GetVersion());
 }
 
-#ifdef WIN32
-#include <Windows.h>
-#endif
-std::vector<std::string> extractArgsVector(int argc, char** argv)
-{
-    vector<string> vArgv;
-
-
-#ifndef WIN32
-    for (int i = 0; i < argc; i++)
-    {
-        vArgv.emplace_back(argv[i]);
-    }
-#else
-
-    int nArgs;
-    wstring commandLine = GetCommandLineW();
-
-    LPWSTR* szArglist = CommandLineToArgvW(commandLine.c_str(), &nArgs);
-    for (int i = 0; i < nArgs; i++)
-    {
-        vArgv.emplace_back(ws2s(szArglist[i]));
-    }
-    LocalFree(szArglist);
-#endif
-    return vArgv;
-}
+std::vector<std::string> extractArgsVector(int argc, char** argv);
 
 #ifdef __APPLE__
 int SDL_main(int argc, char **argv)
 {
 #elif WIN32
-#include <Windows.h>
-
-int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
+struct HINSTANCE__ { int unused; };
+int __stdcall wWinMain(HINSTANCE__* hInstance, HINSTANCE__* hPrevInstance, wchar_t* pCmdLine, int nCmdShow)
 {
     int argc = 0;
     char** argv = nullptr;
@@ -439,5 +412,5 @@ void SetLangEnvPath(const Settings& conf)
         Translation::bindDomain(translations.back().c_str());
     }
     else
-        ERROR("translation not found: " + mofile);
+        H2ERROR("translation not found: " + mofile);
 }

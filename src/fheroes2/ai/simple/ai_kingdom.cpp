@@ -297,7 +297,7 @@ void AI::KingdomTurn(Kingdom& kingdom)
 
     // heroes turns
     for_each(heroes._items.begin(), heroes._items.end(), [](Heroes* hero) { AIHeroesTurn(hero); });
-    //std::for_each(heroes.begin(), heroes.end(), std::bind2nd(std::mem_fun(&Heroes::ResetModes), AI::HEROES_STUPID|AI::HEROES_WAITING));
+    //for_each(heroes._items.begin(), heroes._items.end(), [&](Heroes* hero) { hero->ResetModes(AI::HEROES_STUPID | AI::HEROES_WAITING); });
     for_each(heroes._items.begin(), heroes._items.end(), [](Heroes* hero) { AIHeroesTurn(hero); });
     for_each(heroes._items.begin(), heroes._items.end(), [](Heroes* hero) { AIHeroesEnd(hero); });
 

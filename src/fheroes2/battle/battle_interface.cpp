@@ -742,7 +742,7 @@ void Battle::ArmiesOrder::Redraw(const Unit* current)
     const uint32_t ow = ARMYORDERW + 2;
 
     uint32_t ox = area.x + (area.w - ow * count_if(orders->_items.begin(), orders->_items.end(),
-                                                   mem_fun(&Unit::isValid))) / 2;
+		[&](const Unit* it) { return it->isValid(); })) / 2;
     uint32_t oy = area.y;
 
     x = ox;
