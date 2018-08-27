@@ -22,7 +22,6 @@
 #pragma once
 
 #include <string>
-#include <vector>
 #include "gamedefs.h"
 #include "sprites.h"
 

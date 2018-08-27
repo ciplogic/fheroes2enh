@@ -23,7 +23,6 @@
 #pragma once
 
 #include <utility>
-#include <algorithm>
 #include "display.h"
 #include "tools.h"
 

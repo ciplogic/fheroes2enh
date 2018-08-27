@@ -22,7 +22,6 @@
 
 #include <cmath>
 #include <algorithm>
-#include <functional>
 #include "artifact.h"
 #include "world.h"
 #include "settings.h"

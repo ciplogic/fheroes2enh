@@ -23,7 +23,6 @@
 #pragma once
 
 #include "payment.h"
-#include "gamedefs.h"
 #include "ByteVectorReader.h"
 #include "ByteVectorWriter.h"
 

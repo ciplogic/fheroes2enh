@@ -32,7 +32,6 @@
 #include "settings.h"
 #include "icn.h"
 #include <sstream>
-#include <iostream>
 
 namespace
 {

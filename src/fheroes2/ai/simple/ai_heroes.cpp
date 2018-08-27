@@ -402,9 +402,9 @@ bool AI::HeroesGetTask(Heroes& hero)
         // scan enemy hero
         if (hero.GetSquarePatrol())
         {
-            const Maps::Indexes& results = Maps::ScanAroundObject(Maps::GetIndexFromAbsPoint(hero.GetCenterPatrol()),
+            const Maps::Indexes& indicesAround = Maps::ScanAroundObject(Maps::GetIndexFromAbsPoint(hero.GetCenterPatrol()),
                                                                   hero.GetSquarePatrol(), MP2::OBJ_HEROES);
-            for (int result : results)
+            for (int result : indicesAround)
             {
                 const Heroes* enemy = world.GetTiles(result).GetHeroes();
                 if (!enemy || enemy->isFriends(hero.GetColor()))
@@ -418,9 +418,9 @@ bool AI::HeroesGetTask(Heroes& hero)
         // can pickup objects
         if (conf.ExtHeroPatrolAllowPickup())
         {
-            const Maps::Indexes& results = Maps::ScanAroundObjects(hero.GetIndex(),
+            const Maps::Indexes& indicesAround = Maps::ScanAroundObjects(hero.GetIndex(),
                                                                    hero.GetSquarePatrol(), objs1);
-            for (auto result : results)
+            for (auto result : indicesAround)
             {
                 if (!HeroesValidObject(hero, result) || !hero.GetPath().Calculate(result))
                     continue;

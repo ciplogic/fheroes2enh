@@ -22,7 +22,6 @@
 
 #include "agg.h"
 #include "text.h"
-#include "settings.h"
 #include "cursor.h"
 #include "heroes.h"
 #include "army_bar.h"

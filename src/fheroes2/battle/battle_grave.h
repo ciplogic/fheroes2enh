@@ -24,8 +24,6 @@
 #include <vector>
 #include <map>
 
-#include "gamedefs.h"
-
 namespace Battle
 {
     class Unit;

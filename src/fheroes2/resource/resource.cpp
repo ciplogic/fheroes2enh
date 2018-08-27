@@ -27,7 +27,6 @@
 #include "rand.h"
 #include "icn.h"
 #include <sstream>
-#include <iostream>
 
 Funds::Funds()
     : wood(0), mercury(0), ore(0), sulfur(0), crystal(0), gems(0), gold(0)

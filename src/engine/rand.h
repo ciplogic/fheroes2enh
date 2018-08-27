@@ -22,7 +22,6 @@
 #pragma once
 
 #include <vector>
-#include <list>
 #include <utility>
 #include <iterator>
 #include "types.h"

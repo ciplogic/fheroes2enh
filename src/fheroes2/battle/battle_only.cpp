@@ -24,7 +24,6 @@
 #include "army.h"
 #include "cursor.h"
 #include "settings.h"
-#include "battle.h"
 #include "world.h"
 #include "heroes_indicator.h"
 #include "dialog_selectitems.h"

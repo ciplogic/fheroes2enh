@@ -23,7 +23,6 @@
 #pragma once
 
 #include "ByteVectorReader.h"
-#include <list>
 #include "players.h"
 #include "dir.h"
 #include "maps_fileinfo.h"

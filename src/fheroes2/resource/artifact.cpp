@@ -30,7 +30,6 @@
 #include "cursor.h"
 #include "settings.h"
 #include "world.h"
-#include "game.h"
 #include "dialog.h"
 #include "dialog_selectitems.h"
 #include "rand.h"

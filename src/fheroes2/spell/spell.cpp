@@ -21,10 +21,8 @@
  ***************************************************************************/
 
 #include "heroes_base.h"
-#include "settings.h"
 #include "race.h"
 #include "army.h"
-#include "game.h"
 #include "game_static.h"
 #include "rand.h"
 

@@ -22,7 +22,6 @@
 
 #include "icn.h"
 #include <algorithm>
-#include <functional>
 #include "engine.h"
 #include "agg.h"
 #include "world.h"
