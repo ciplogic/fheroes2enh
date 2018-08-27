@@ -528,19 +528,19 @@ void Interface::HeroesBottomIcons::ActionCurrentDn()
 {
 }
 
-void Interface::HeroesBottomIcons::ActionListDoubleClick(Interface::HEROES&)
+void Interface::HeroesBottomIcons::ActionListDoubleClick(HEROES&)
 {
 }
 
-void Interface::HeroesBottomIcons::ActionListSingleClick(Interface::HEROES&)
+void Interface::HeroesBottomIcons::ActionListSingleClick(HEROES&)
 {
 }
 
-void Interface::HeroesBottomIcons::ActionListPressRight(Interface::HEROES&)
+void Interface::HeroesBottomIcons::ActionListPressRight(HEROES&)
 {
 }
 
-void Interface::HeroesBottomIcons::RedrawItem(Interface::HEROES const&, s32 ox, s32 oy, bool current)
+void Interface::HeroesBottomIcons::RedrawItem(HEROES const&, s32 ox, s32 oy, bool current)
 {
 }
 
@@ -548,6 +548,6 @@ void Interface::HeroesBottomIcons::RedrawBackground(const Point&)
 {
 }
 
-void Interface::HeroesBottomIcons::SetHero(Interface::HEROES const pHeroes)
+void Interface::HeroesBottomIcons::SetHero(HEROES const pHeroes)
 {
 }

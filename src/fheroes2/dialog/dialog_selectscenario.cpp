@@ -38,9 +38,9 @@
 
 using namespace Maps;
 
-void LossConditionInfo(const Maps::FileInfo&);
+void LossConditionInfo(const FileInfo&);
 
-void VictoryConditionInfo(const Maps::FileInfo&);
+void VictoryConditionInfo(const FileInfo&);
 
 Surface GetNonStandardSizeIcon()
 {
@@ -52,7 +52,7 @@ Surface GetNonStandardSizeIcon()
     return res;
 }
 
-void ScenarioListBox::RedrawItem(const Maps::FileInfo& info, s32 dstx, s32 dsty, bool current)
+void ScenarioListBox::RedrawItem(const FileInfo& info, s32 dstx, s32 dsty, bool current)
 {
     Text text;
     int index = 19 + Color::Count(info.kingdom_colors);
@@ -104,7 +104,7 @@ void ScenarioListBox::RedrawItem(const Maps::FileInfo& info, s32 dstx, s32 dsty,
     spriteLoss.Blit(dstx + 224 + spriteWins.w() + 2, dsty);
 }
 
-void ScenarioListBox::ActionListDoubleClick(Maps::FileInfo&)
+void ScenarioListBox::ActionListDoubleClick(FileInfo&)
 {
     selectOk = true;
 }
@@ -114,7 +114,7 @@ void ScenarioListBox::RedrawBackground(const Point& dst)
     AGG::GetICN(ICN::REQSBKG, 0).Blit(dst);
     if (!content || cur == content->end()) return;
     Text text;
-    const Maps::FileInfo& info = *cur;
+    const FileInfo& info = *cur;
     int index = 19 + Color::Count(info.kingdom_colors);
 
     const Sprite& spriteCount = AGG::GetICN(ICN::REQUESTS, index);
@@ -163,7 +163,7 @@ void ScenarioListBox::RedrawBackground(const Point& dst)
     box.Blit(dst.x + 45, dst.y + 320);
 }
 
-const Maps::FileInfo* Dialog::SelectScenario(const MapsFileInfoList& all)
+const FileInfo* Dialog::SelectScenario(const MapsFileInfoList& all)
 {
     Cursor& cursor = Cursor::Get();
     Display& display = Display::Get();
@@ -172,7 +172,7 @@ const Maps::FileInfo* Dialog::SelectScenario(const MapsFileInfoList& all)
     cursor.Hide();
     cursor.SetThemes(cursor.POINTER);
 
-    const Maps::FileInfo* result = nullptr;
+    const FileInfo* result = nullptr;
     MapsFileInfoList small;
     MapsFileInfoList medium;
     MapsFileInfoList large;
@@ -342,12 +342,12 @@ const Maps::FileInfo* Dialog::SelectScenario(const MapsFileInfoList& all)
             Message(_("Selected Name"), _("The name of the currently selected map."), Font::BIG);
         else if (le.MousePressRight(victoryConds))
         {
-            const Maps::FileInfo* item = listbox.GetFromPosition(le.GetMouseCursor());
+            const FileInfo* item = listbox.GetFromPosition(le.GetMouseCursor());
             if (item) VictoryConditionInfo(*item);
         }
         else if (le.MousePressRight(lossConds))
         {
-            const Maps::FileInfo* item = listbox.GetFromPosition(le.GetMouseCursor());
+            const FileInfo* item = listbox.GetFromPosition(le.GetMouseCursor());
             if (item) LossConditionInfo(*item);
         }
         else if (le.MousePressRight(curVictoryCond)) VictoryConditionInfo(listbox.GetCurrent());
@@ -382,7 +382,7 @@ const Maps::FileInfo* Dialog::SelectScenario(const MapsFileInfoList& all)
     return result;
 }
 
-void LossConditionInfo(const Maps::FileInfo& info)
+void LossConditionInfo(const FileInfo& info)
 {
     string msg;
 
@@ -406,7 +406,7 @@ void LossConditionInfo(const Maps::FileInfo& info)
     Dialog::Message(_("Loss Condition"), msg, Font::BIG);
 }
 
-void VictoryConditionInfo(const Maps::FileInfo& info)
+void VictoryConditionInfo(const FileInfo& info)
 {
     string msg;
 

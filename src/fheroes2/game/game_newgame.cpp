@@ -83,7 +83,7 @@ int Game::NewCampain()
 int Game::NewNetwork()
 {
     Settings& conf = Settings::Get();
-    conf.SetGameType(conf.GameType() | Game::TYPE_NETWORK);
+    conf.SetGameType(conf.GameType() | TYPE_NETWORK);
 
     // cursor
     Cursor& cursor = Cursor::Get();
@@ -136,7 +136,7 @@ int Game::NewNetwork()
             _("Cancel"), _("Cancel back to the main menu."), Font::BIG);
     }
 
-    return Game::MAINMENU;
+    return MAINMENU;
 }
 #endif
 

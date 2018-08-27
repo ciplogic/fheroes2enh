@@ -326,13 +326,13 @@ void Battle::Arena::DialogBattleSummary(const Result& res) const
     {
         //le.MousePressLeft(btn_ok) ? btn_ok.PressDraw() : btn_ok.ReleaseDraw();
         auto result = btnGroups.QueueEventProcessing();
-        if (Dialog::YES == result)
+        if (YES == result)
         {
             res.fightAgain = FightResultType::FightAgain;
             break;
         }
         // exit
-        if (HotKeyCloseWindow || result != Dialog::ZERO) break;
+        if (HotKeyCloseWindow || result != ZERO) break;
 
         // animation
         if (AnimateInfrequentDelay(Game::BATTLE_DIALOG_DELAY))
@@ -484,23 +484,23 @@ int Battle::Arena::DialogBattleHero(const HeroBase& hero, bool buttons) const
             result = 3;
 
         if (le.MousePressRight(btnCast))
-            Dialog::Message(_("Cast Spell"),
+            Message(_("Cast Spell"),
                             _("Cast a magical spell. You may only cast one spell per combat round. The round is reset when every creature has had a turn"
                             ),
                             Font::BIG);
         else if (le.MousePressRight(btnRetreat))
-            Dialog::Message(_("Retreat"),
+            Message(_("Retreat"),
                             _(
                                 "Retreat your hero, abandoning your creatures. Your hero will be available for you to recruit again, however, the hero will have only a novice hero's forces."
                             ),
                             Font::BIG);
         else if (le.MousePressRight(btnSurrender))
-            Dialog::Message(_("Surrender"),
+            Message(_("Surrender"),
                             _("Surrendering costs gold. However if you pay the ransom, the hero and all of his or her surviving creatures will be available to recruit again."
                             ),
                             Font::BIG);
         else if (le.MousePressRight(btnClose))
-            Dialog::Message(_("Cancel"), _("Return to the battle."), Font::BIG);
+            Message(_("Cancel"), _("Return to the battle."), Font::BIG);
 
         // exit
         if (HotKeyCloseWindow || le.MouseClickLeft(btnClose)) break;
@@ -599,7 +599,7 @@ bool Battle::DialogBattleSurrender(const HeroBase& hero, uint32_t cost)
 
         if (btnMarket.isEnable() && le.MouseClickLeft(btnMarket))
         {
-            Dialog::Marketplace(false);
+            Marketplace(false);
 
             if (kingdom.AllowPayment(payment_t(Resource::GOLD, cost)))
             {

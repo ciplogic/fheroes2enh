@@ -90,5 +90,5 @@ public:
     void clear()
     {
         _data.clear();
-    };
+    }
 };

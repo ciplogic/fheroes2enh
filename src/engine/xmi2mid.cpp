@@ -308,7 +308,7 @@ struct MidEvent
         return pack.size() + data[3] + 1;
     }
 
-    MidEvent(): data{}
+    MidEvent()
     {
     }
 

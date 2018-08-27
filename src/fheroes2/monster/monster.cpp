@@ -332,7 +332,7 @@ uint32_t Monster::GetHitPoints(const Monster& m)
 
 uint32_t Monster::GetHitPoints() const
 {
-    return Monster::GetHitPoints(*this);
+    return GetHitPoints(*this);
 }
 
 uint32_t Monster::GetSpeed() const
@@ -1545,7 +1545,7 @@ uint32_t Monster::GetCountFromHitPoints(const Monster& mons, uint32_t hp)
 {
     if (!hp)
         return 0;
-    const uint32_t hp1 = Monster::GetHitPoints(mons);
+    const uint32_t hp1 = GetHitPoints(mons);
     const uint32_t count = hp / hp1;
     return count * hp1 < hp ? count + 1 : count;
 }

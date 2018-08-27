@@ -205,7 +205,7 @@ void HeroBase::ReadFrom(ByteVectorReader& msg)
 {
     auto& hero = *this;
 
-    auto& skillPrimary = static_cast<Skill::Primary &>(hero);
+    auto& skillPrimary = static_cast<Primary &>(hero);
     skillPrimary.ReadFrom(msg);
     auto& mapPos = static_cast<MapPosition &>(hero);
     mapPos.ReadFrom(msg);

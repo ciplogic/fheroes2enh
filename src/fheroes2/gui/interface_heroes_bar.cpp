@@ -141,12 +141,12 @@ bool Interface::HeroesBar::EventProcessing()
 
     Display& display = Display::Get();
     const Rect& area = Rect(
-        ::posLeftSpacing, display.h() - 110,
-        display.w() - 50, ::spaceTiling);
+        posLeftSpacing, display.h() - 110,
+        display.w() - 50, spaceTiling);
 
     // move border
     if (conf.ShowRadar() &&
-        BorderWindow::QueueEventProcessing())
+        QueueEventProcessing())
     {
         RedrawCursor();
         return false;

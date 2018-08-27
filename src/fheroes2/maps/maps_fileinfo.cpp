@@ -544,7 +544,7 @@ ListFiles GetMapsFiles(const char* suffix)
     return maps;
 }
 
-bool Maps::PrepareMapsFileInfoList(Maps::MapsFileInfoList& lists, bool multi)
+bool Maps::PrepareMapsFileInfoList(MapsFileInfoList& lists, bool multi)
 {
     const Settings& conf = Settings::Get();
 
@@ -555,14 +555,14 @@ bool Maps::PrepareMapsFileInfoList(Maps::MapsFileInfoList& lists, bool multi)
     for (ListFiles::const_iterator
          it = maps_old.begin(); it != maps_old.end(); ++it)
     {
-        Maps::FileInfo fi;
+        FileInfo fi;
         if (fi.ReadMP2(*it)) lists.push_back(fi);
     }
 
     if (lists.empty()) return false;
 
-    sort(lists.begin(), lists.end(), Maps::FileInfo::NameSorting);
-    lists.resize(unique(lists.begin(), lists.end(), Maps::FileInfo::NameCompare) - lists.begin());
+    sort(lists.begin(), lists.end(), FileInfo::NameSorting);
+    lists.resize(unique(lists.begin(), lists.end(), FileInfo::NameCompare) - lists.begin());
 
     if (!multi)
     {

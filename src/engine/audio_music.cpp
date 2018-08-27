@@ -66,7 +66,7 @@ void Music::Play(const std::vector<u8>& v, bool loop)
     Mix_Music* mix = Mix_LoadMUS_RW(rwops);
 
     SDL_FreeRW(rwops);
-    Music::Play(mix, id, loop);
+    Play(mix, id, loop);
 }
 
 void Music::Play(const std::string& file, bool loop)
@@ -81,7 +81,7 @@ void Music::Play(const std::string& file, bool loop)
         H2ERROR(Mix_GetError());
     }
     else
-        Music::Play(mix, id, loop);
+        Play(mix, id, loop);
 }
 
 void Music::SetFadeIn(int f)

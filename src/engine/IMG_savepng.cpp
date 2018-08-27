@@ -59,8 +59,6 @@ static void png_write_data(png_structp png_ptr, png_bytep data, png_size_t lengt
 
 int IMG_SavePNG_RW(SDL_RWops* src, SDL_Surface* surf, int compression)
 {
-    SDL_PixelFormat* fmt = nullptr;
-    SDL_Surface* tempsurf = nullptr;
     unsigned int i;
     Uint8 used_alpha, temp_alpha = 0;
     Uint8* palette_alpha = nullptr;
@@ -117,7 +115,7 @@ int IMG_SavePNG_RW(SDL_RWops* src, SDL_Surface* surf, int compression)
     else
         png_set_compression_level(png_ptr, compression);
 
-    fmt = surf->format;
+    SDL_PixelFormat* fmt = surf->format;
     if (fmt->BitsPerPixel == 8)
     {
         /* Paletted */
@@ -245,7 +243,7 @@ int IMG_SavePNG_RW(SDL_RWops* src, SDL_Surface* surf, int compression)
             tempsurf = SDL_CreateRGBSurface(SDL_SWSURFACE, surf->w, surf->h, 32,
                                     0xff000000, 0x00ff0000, 0x0000ff00, 0x000000ff);
 #else
-            tempsurf = SDL_CreateRGBSurface(SDL_SWSURFACE, surf->w, surf->h, 32,
+            auto* tempsurf = SDL_CreateRGBSurface(SDL_SWSURFACE, surf->w, surf->h, 32,
                                             0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000);
 #endif
             if (!tempsurf)
@@ -273,7 +271,7 @@ int IMG_SavePNG_RW(SDL_RWops* src, SDL_Surface* surf, int compression)
             {
                 SDL_SetAlpha(surf, SDL_SRCALPHA, (Uint8)temp_alpha); /* Restore alpha settings*/
             }
-            for (i = 0; (signed int)i < tempsurf->h; i++)
+            for (i = 0; static_cast<signed int>(i) < tempsurf->h; i++)
             {
                 row_pointers[i] = (png_byte *)tempsurf->pixels + i * tempsurf->pitch;
             }

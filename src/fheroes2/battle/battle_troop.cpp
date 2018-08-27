@@ -429,7 +429,7 @@ uint32_t Battle::ModesAffected::FindZeroDuration() const
 }
 
 Battle::Unit::Unit(const Troop& t, s32 pos, bool ref) : ArmyTroop(nullptr, t),
-                                                        uid(World::GetUniq()), hp(Monster::GetHitPoints(t)),
+                                                        uid(World::GetUniq()), hp(GetHitPoints(t)),
                                                         count0(t.GetCount()), dead(0), shots(t.GetShots()),
                                                         disruptingray(0), reflect(ref), animstate(0), animframe(0),
                                                         animstep(1), mirror(nullptr), blindanswer(false)
@@ -559,7 +559,7 @@ uint32_t Battle::Unit::GetDead() const
 
 uint32_t Battle::Unit::GetHitPointsLeft() const
 {
-    return GetHitPointsTroop() - (GetCount() - 1) * Monster::GetHitPoints();
+    return GetHitPointsTroop() - (GetCount() - 1) * GetHitPoints();
 }
 
 uint32_t Battle::Unit::GetAffectedDuration(uint32_t mod) const
@@ -901,7 +901,7 @@ uint32_t Battle::Unit::HowManyCanKill(const Unit& b) const
 
 uint32_t Battle::Unit::HowManyWillKilled(uint32_t& dmg) const
 {
-    int unitLife = Monster::GetHitPoints(*this);
+    int unitLife = GetHitPoints(*this);
 
     int killTopUnit = dmg > hp ? 1 : 0;
     if (killTopUnit)
@@ -1048,7 +1048,7 @@ uint32_t Battle::Unit::ApplyDamage(Unit& enemy, uint32_t dmg)
             break;
 
         case VAMPIRE_LORD:
-            resurrect = killed * Monster::GetHitPoints();
+            resurrect = killed * GetHitPoints();
             // restore hit points
             enemy.Resurrect(resurrect, false, false);
             break;
@@ -1379,7 +1379,7 @@ s32 Battle::Unit::GetScoreQuality(const Unit& defender) const
     const uint32_t& damage = (attacker.GetDamageMin(defender) + attacker.GetDamageMax(defender)) / 2;
     uint32_t dmg = attacker.isTwiceAttack() ? damage * 2 : damage;
     const uint32_t& kills = defender.HowManyWillKilled(dmg);
-    double res = kills * Monster::GetHitPoints(defender);
+    double res = kills * GetHitPoints(defender);
     bool noscale = false;
 
     // attacker
@@ -2023,7 +2023,7 @@ case Monster::ARCHMAGE:
 
 bool Battle::Unit::isHaveDamage() const
 {
-    return hp < count0 * Monster::GetHitPoints();
+    return hp < count0 * GetHitPoints();
 }
 
 int Battle::Unit::GetFrameStart() const

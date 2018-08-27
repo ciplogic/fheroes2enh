@@ -246,7 +246,7 @@ void Maps::GetAroundIndexes(s32 center, Indexes& result)
     }
 }
 
-void Maps::GetAroundIndexes(s32 center, int dist, bool sort, Maps::Indexes& results)
+void Maps::GetAroundIndexes(s32 center, int dist, bool sort, Indexes& results)
 {
     results.clear();
 

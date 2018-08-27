@@ -87,7 +87,7 @@ void Mixer::Quit()
     if (!SDL::SubSystem(SDL_INIT_AUDIO) || !valid)
         return;
     Music::Reset();
-    Mixer::Reset();
+    Reset();
     valid = false;
     Mix_CloseAudio();
 }

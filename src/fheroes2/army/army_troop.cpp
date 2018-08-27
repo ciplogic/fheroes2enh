@@ -94,7 +94,7 @@ uint32_t Troop::GetCount() const
 
 uint32_t Troop::GetHitPointsTroop() const
 {
-    return Monster::GetHitPoints(*this) * count;
+    return GetHitPoints(*this) * count;
 }
 
 uint32_t Troop::GetDamageMin() const
