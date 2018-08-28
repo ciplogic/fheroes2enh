@@ -28,34 +28,34 @@
 #include "gamedefs.h"
 #include "sprite.h"
 
-class ICNSprite : public std::pair<Surface, Surface> /* first: image with out alpha, second: shadow with alpha */
-{
-public:
-    ICNSprite() = default;
-
-    ICNSprite(const Surface& sf1, const Surface& sf2) : std::pair<Surface, Surface>(sf1, sf2)
-    {
-    }
-
-    bool isValid() const;
-
-    sp<Sprite> CreateSprite(bool reflect, bool shadow) const;
-
-    Surface First() const
-    {
-        return first;
-    }
-
-    Surface Second() const
-    {
-        return second;
-    }
-
-    Point offset;
-};
-
 namespace AGG
 {
+	class ICNSprite : public std::pair<Surface, Surface> /* first: image with out alpha, second: shadow with alpha */
+	{
+	public:
+		ICNSprite() = default;
+
+		ICNSprite(const Surface& sf1, const Surface& sf2) : std::pair<Surface, Surface>(sf1, sf2)
+		{
+		}
+
+		bool isValid() const;
+
+		sp<Sprite> CreateSprite(bool reflect, bool shadow) const;
+
+		Surface First() const
+		{
+			return first;
+		}
+
+		Surface Second() const
+		{
+			return second;
+		}
+
+		Point offset;
+	};
+
     bool Init();
 
     void Quit();

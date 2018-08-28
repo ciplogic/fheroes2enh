@@ -23,6 +23,7 @@
 #pragma once
 
 #include "types.h"
+#include <string>
 
 namespace ICN
 {
@@ -916,9 +917,9 @@ namespace ICN
         LASTICN
     };
 
-    const char* GetString(int);
+    std::string GetString(int);
 
-    int FromString(const char*);
+    int FromString(const std::string&);
 
     uint32_t AnimationFrame(int icn, uint32_t, uint32_t, bool = false);
 

@@ -366,8 +366,7 @@ void BuildingInfo::RedrawCaptain() const
 
     if (allow_buy && bcond != ALREADY_BUILT)
     {
-        PlusSignAddon plusSignAddon;
-        plusSignAddon.draw(area.x + area.w, area.y, true);
+        PlusSignAddon::draw(area.x + area.w, area.y, true);
     }
 }
 
@@ -440,8 +439,7 @@ void BuildingInfo::Redraw() const
 
         if (canBuildQuick)
         {
-            PlusSignAddon plusSignAddon;
-            plusSignAddon.draw(area.x + 132, area.y, true);
+            PlusSignAddon::draw(area.x + 132, area.y, true);
         }
     }
 }

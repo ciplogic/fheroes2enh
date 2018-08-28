@@ -23,7 +23,7 @@
 #include "gamedefs.h"
 #include "morale.h"
 
-const std::string Morale::String(int morale)
+std::string Morale::String(int morale)
 {
     std::string str_morale[] = {
         "Unknown", _("morale|Treason"), _("morale|Awful"), _("morale|Poor"), _("morale|Normal"),
@@ -53,7 +53,7 @@ const std::string Morale::String(int morale)
     return str_morale[0];
 }
 
-const std::string Morale::Description(int morale)
+std::string Morale::Description(int morale)
 {
     std::string str_desc_morale[] = {
         "Unknown",

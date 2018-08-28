@@ -140,7 +140,7 @@ void TextAscii::Blit(s32 ax, s32 ay, int maxw, Surface& dst)
 {
     if (message.empty()) return;
 
-    int oy = 0;
+    int oy;
     int sx = ax;
 
     for (string::const_iterator
@@ -230,7 +230,6 @@ void TextUnicode::SetText(const std::string& msg)
 
 void TextUnicode::SetFont(int ft)
 {
-    const Settings& conf = Settings::Get();
     font = ft;
 }
 
@@ -345,7 +344,10 @@ void TextUnicode::Blit(s32 ax, s32 ay, int maxw, Surface& dst)
         const Surface& sprite = AGG::GetUnicodeLetter(it, font);
         if (!sprite.isValid()) return;
 
-        const Surface& shaddow = AGG::GetUnicodeLetter(it, font == 4 || font == 2 ? Font::SHADDOW_BIG : Font::SHADDOW);
+        const Surface& shaddow = AGG::GetUnicodeLetter(it,
+			font == 4 || font == 2
+			    ? Font::SHADDOW_BIG 
+			    : Font::SHADDOW);
         shaddow.Blit(ax + 1, ay + 1, dst);
         sprite.Blit(ax, ay, dst);
         ax += sprite.w();
@@ -357,12 +359,12 @@ void TextUnicode::Blit(s32 ax, s32 ay, int maxw, Surface& dst)
 
 Text::Text() : message(nullptr), gw(0), gh(0)
 {
-    message = sp<TextInterface>(new TextUnicode());
+    message = std::static_pointer_cast<TextInterface>(std::make_shared<TextUnicode>());
 }
 
 Text::Text(const string& msg, int ft) : message(nullptr), gw(0), gh(0)
 {
-    message = sp<TextInterface>(new TextUnicode(msg, ft));
+    message = std::static_pointer_cast<TextInterface>(std::make_shared<TextUnicode>(msg, ft));
 
     gw = message->w();
     gh = message->h();
@@ -371,7 +373,7 @@ Text::Text(const string& msg, int ft) : message(nullptr), gw(0), gh(0)
 Text::Text(const u16* pt, size_t sz, int ft) : message(nullptr), gw(0), gh(0)
 {
     if (!pt) return;
-    message = sp<TextInterface>(new TextUnicode(pt, sz, ft));
+    message = std::static_pointer_cast<TextInterface>(std::make_shared<TextUnicode>(pt, sz, ft));
 
     gw = message->w();
     gh = message->h();
@@ -379,7 +381,8 @@ Text::Text(const u16* pt, size_t sz, int ft) : message(nullptr), gw(0), gh(0)
 
 Text::Text(const Text& t)
 {
-    message = sp<TextInterface>(new TextUnicode(static_cast<TextUnicode &>(*t.message)));
+    message = std::static_pointer_cast<TextInterface>(
+        std::make_shared<TextUnicode>(static_cast<TextUnicode &>(*t.message)));
 
     gw = t.gw;
     gh = t.gh;
@@ -387,7 +390,8 @@ Text::Text(const Text& t)
 
 Text& Text::operator=(const Text& t)
 {
-    message = sp<TextInterface>(new TextUnicode(static_cast<TextUnicode &>(*t.message)));
+    message = std::static_pointer_cast<TextInterface>(
+        std::make_shared<TextUnicode>(static_cast<TextUnicode &>(*t.message)));
 
     gw = t.gw;
     gh = t.gh;

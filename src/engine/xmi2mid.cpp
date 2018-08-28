@@ -308,9 +308,7 @@ struct MidEvent
         return pack.size() + data[3] + 1;
     }
 
-    MidEvent()
-    {
-    }
+    MidEvent() = default;
 
     MidEvent(uint32_t delta, u8 st, u8 d1, u8 d2)
     {
@@ -387,7 +385,7 @@ struct MidEvents
                     if ((*it1).duration <= delta)
                     {
                         // note off
-						_items.push_back(MidEvent((*it1).duration - delta2, (*it1).command, (*it1).quantity, 0x7F));
+						_items.emplace_back((*it1).duration - delta2, (*it1).command, (*it1).quantity, 0x7F);
                         delta2 += (*it1).duration - delta2;
                     }
                 }
@@ -416,7 +414,7 @@ struct MidEvents
                 // end
                 if (0xFF == *ptr && 0x2F == *(ptr + 1))
                 {
-					_items.push_back(MidEvent(delta, *ptr, *(ptr + 1), *(ptr + 2)));
+					_items.emplace_back(delta, *ptr, *(ptr + 1), *(ptr + 2));
                     break;
                 }
                 switch (*ptr >> 4)
@@ -437,7 +435,7 @@ struct MidEvents
                     // pitch bend
                 case 0x0E:
                     {
-					    _items.push_back(MidEvent(delta, *ptr, *(ptr + 1), *(ptr + 2)));
+					    _items.emplace_back(delta, *ptr, *(ptr + 1), *(ptr + 2));
                         ptr += 3;
                         delta = 0;
                     }
@@ -448,7 +446,7 @@ struct MidEvents
                     // note on
                 case 0x09:
                     {
-					    _items.push_back(MidEvent(delta, *ptr, *(ptr + 1), *(ptr + 2)));
+					    _items.emplace_back(delta, *ptr, *(ptr + 1), *(ptr + 2));
                         pack_t pack = unpackValue(ptr + 3);
                         notesoff.emplace_back(*ptr - 0x10, *(ptr + 1), pack.first);
                         ptr += 3 + pack.second;
@@ -461,7 +459,7 @@ struct MidEvents
                     // chanel pressure
                 case 0x0D:
                     {
-					    _items.push_back(MidEvent(delta, *ptr, *(ptr + 1)));
+					    _items.emplace_back(delta, *ptr, *(ptr + 1));
                         ptr += 2;
                         delta = 0;
                     }
@@ -469,7 +467,7 @@ struct MidEvents
 
                     // unused command
                 default:
-					_items.push_back(MidEvent(0, 0xFF, 0x2F, 0));
+					_items.emplace_back(0, 0xFF, 0x2F, 0);
                     H2ERROR("unknown st: 0x" << std::setw(2) << std::setfill('0') << std::hex <<
                         static_cast<int>(*ptr) << ", ln: "
                         << static_cast<int>(&t.evnt[0] + t.evnt.size() - ptr));

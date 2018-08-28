@@ -25,7 +25,7 @@ public:
     void putLE32(uint32_t v);
     void putBE32(uint32_t v);
 
-    const std::vector<u8> data() const
+    std::vector<u8> data() const
     {
         return _data;
     }

@@ -121,8 +121,8 @@ void Battle::Tower::SetDestroy()
 
 string Battle::Tower::GetInfo(const Castle& cstl)
 {
-    string tmpl = _("The %{name} fires with the strength of %{count} Archers");
-    string addn = _("each with a +%{attack} bonus to their attack skill.");
+    const string tmpl = _("The %{name} fires with the strength of %{count} Archers");
+    const string addn = _("each with a +%{attack} bonus to their attack skill.");
 
     vector<int> towers;
     string msg;

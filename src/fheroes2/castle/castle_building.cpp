@@ -64,7 +64,7 @@ CastleDialog::CacheBuildings::CacheBuildings(const Castle& castle, const Point& 
     for (vector<building_t>::const_iterator
          it = ordersBuildings.begin(); it != ordersBuildings.end(); ++it)
     {
-		_items.push_back(builds_t(*it, CastleGetCoordBuilding(castle.GetRace(), *it, top)));
+		_items.emplace_back(*it, CastleGetCoordBuilding(castle.GetRace(), *it, top));
     }
 }
 

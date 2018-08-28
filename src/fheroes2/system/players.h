@@ -195,7 +195,7 @@ public:
 
     sp<Player> GetCurrent();
 
-    const sp<Player> GetCurrent() const;
+    sp<Player> GetCurrent() const;
 
     static sp<Player> Get(int color);
 

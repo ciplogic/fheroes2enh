@@ -656,7 +656,7 @@ void Skill::SecSkills::AddSkill(const Secondary& skill)
         else
         {
             it = find_if(_items.begin(), _items.end(),
-				[&](Secondary& it) { return it.isValid(); });
+				[&](Secondary& it) { return !it.isValid(); });
             if (it != _items.end())
                 (*it).Set(skill);
             else if (_items.size() < HEROESMAXSKILL)

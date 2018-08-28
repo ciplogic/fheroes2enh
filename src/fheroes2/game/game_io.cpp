@@ -210,7 +210,7 @@ bool Game::Load(const string& fn)
         gameOverResult >> gameStatic
         >> monsterData
         >> end_check;
-    World::Get().PostFixLoad();
+    World::PostFixLoad();
 
     if (end_check != SAV2ID2 && end_check != SAV2ID3)
     {

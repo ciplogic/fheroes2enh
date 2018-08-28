@@ -11,7 +11,7 @@
 void PlusSignAddon::draw(int rightMost, int top, bool isEnabled)
 {
     Text textPlus = {"+"};
-    Rect pos(rightMost - 14, top + 3, 10, 10);
+    const Rect pos(rightMost - 14, top + 3, 10, 10);
     Surface greenUp(Size(textPlus.w() + 4, textPlus.h() + 4), false);
     greenUp.SetAlphaMod(120);
     if (isEnabled)
@@ -19,7 +19,7 @@ void PlusSignAddon::draw(int rightMost, int top, bool isEnabled)
     else
         greenUp.Fill(ColorsTable::Gray);
 
-    Rect area{0, 0, greenUp.w() - 1, greenUp.h() - 1};
+    const Rect area{0, 0, greenUp.w() - 1, greenUp.h() - 1};
     greenUp.DrawRect(area, RGBA(255, 255, 0));
 
     const Point ptPlus(pos.x + pos.w - greenUp.w() - 1, pos.y + 2);

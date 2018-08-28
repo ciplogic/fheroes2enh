@@ -2243,10 +2243,10 @@ void Maps::Tiles::CorrectFlags32(uint32_t index, bool up)
         taddon->index = index;
     else if (up)
         // or new flag
-        addons_level2._items.push_back(TilesAddon(TilesAddon::UPPER, world.GetUniq(), 0x38, index));
+        addons_level2._items.emplace_back(TilesAddon::UPPER, world.GetUniq(), 0x38, index);
     else
         // or new flag
-        addons_level1._items.push_back(TilesAddon(TilesAddon::UPPER, world.GetUniq(), 0x38, index));
+        addons_level1._items.emplace_back(TilesAddon::UPPER, world.GetUniq(), 0x38, index);
 }
 
 void Maps::Tiles::FixedPreload(Tiles& tile)

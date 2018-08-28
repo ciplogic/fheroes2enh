@@ -370,7 +370,7 @@ sp<Player> Players::GetCurrent()
     return Get(current_color);
 }
 
-const sp<Player> Players::GetCurrent() const
+sp<Player> Players::GetCurrent() const
 {
     return Get(current_color);
 }

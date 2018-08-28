@@ -72,7 +72,7 @@ void extractFrames()
         int frameId = 0;
         do
         {
-            ICNSprite sprite;
+            AGG::ICNSprite sprite;
             try
             {
                 sprite = AGG::RenderICNSprite(icnId, frameId);

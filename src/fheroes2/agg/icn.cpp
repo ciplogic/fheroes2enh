@@ -32,7 +32,7 @@ namespace ICN
     struct icnmap_t
     {
         int type;
-        const char* string;
+        std::string name;
     };
 
     const icnmap_t icnmap[] = {
@@ -926,9 +926,9 @@ namespace ICN
     uint32_t missile7(float, float);
 }
 
-const char* ICN::GetString(int icn)
+std::string ICN::GetString(int icn)
 {
-    return UNKNOWN <= icn && LASTICN > icn ? icnmap[icn].string : "CUSTOM";
+    return UNKNOWN <= icn && LASTICN > icn ? icnmap[icn].name : "CUSTOM";
 }
 
 uint32_t ICN::AnimationFrame(int icn, uint32_t start, uint32_t ticket, bool quantity)
@@ -2009,10 +2009,11 @@ bool ICN::isBattleMonsterICN(int icn)
     return false;
 }
 
-int ICN::FromString(const char* str)
+int ICN::FromString(const std::string& str)
 {
     const icnmap_t* ptr = &icnmap[0];
-    while (ptr->type != UNKNOWN && str && 0 != strcmp(str, ptr->string)) ++ptr;
+    while (ptr->type != UNKNOWN && !str.empty() && str!= ptr->name)
+		++ptr;
     return ptr->type;
 }
 

@@ -150,6 +150,7 @@
       <CreateHotpatchableImage>false</CreateHotpatchableImage>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <CallingConvention>Cdecl</CallingConvention>
+      <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

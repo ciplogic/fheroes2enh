@@ -323,17 +323,17 @@ namespace Translation
         return ModernTranslation::mainTable.readFile(file);
     }
 
-    const string gettext(const string& str)
+    string gettext(const string& str)
     {
         return ModernTranslation::mainTable.getTranslation(str);
     }
 
-    const string ngettext(const char* str, const char* plural, size_t n)
+    string ngettext(const char* str, const char* plural, size_t n)
     {
         return ModernTranslation::mainTable.getTranslationPlural(str, plural, n);
     }
 
-    const string dngettext(const char* domain, const char* str, const char* plural, size_t num)
+    string dngettext(const char* domain, const char* str, const char* plural, size_t num)
     {
         return ngettext(str, plural, num);
     }

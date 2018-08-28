@@ -56,9 +56,7 @@ Route::Path::Path(const Heroes& h)
 {
 }
 
-Route::Path::Path(const Path& p) : list<Step>(p), hero(p.hero), dst(p.dst), hide(p.hide)
-{
-}
+Route::Path::Path(const Path& p) = default;
 
 Route::Path& Route::Path::operator=(const Path& p)
 {

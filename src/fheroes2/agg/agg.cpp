@@ -54,11 +54,11 @@
 #include <sstream>
 #include <iostream>
 
-#define FATSIZENAME    15
-
 
 namespace
 {
+	const int FATSIZENAME = 15;
+
     std::vector<SDL_Color> pal_colors;
     std::vector<uint32_t> pal_colors_u32;
 }
@@ -211,7 +211,7 @@ namespace AGG
     vector<u8> ReadChunk(const string&);
 }
 
-sp<Sprite> ICNSprite::CreateSprite(bool reflect, bool shadow) const
+sp<Sprite> AGG::ICNSprite::CreateSprite(bool reflect, bool shadow) const
 {
     Surface res(first.GetSize(), true);
     first.Blit(res);
@@ -222,7 +222,7 @@ sp<Sprite> ICNSprite::CreateSprite(bool reflect, bool shadow) const
     return std::make_shared<Sprite>(reflect ? res.RenderReflect(2) : res, offset.x, offset.y);
 }
 
-bool ICNSprite::isValid() const
+bool AGG::ICNSprite::isValid() const
 {
     return first.isValid();
 }
@@ -822,7 +822,7 @@ std::string joinValues(const std::vector<u8>& body, int maxSize)
     return result;
 }
 
-ICNSprite AGG::RenderICNSprite(int icn, uint32_t index)
+AGG::ICNSprite AGG::RenderICNSprite(int icn, uint32_t index)
 {
     ICNSprite res;
     const vector<u8> body = ReadICNChunk(icn, index);
