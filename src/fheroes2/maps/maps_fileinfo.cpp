@@ -257,18 +257,15 @@ bool Maps::FileInfo::ReadMP2(const string& filename)
     Colors colors(Color::ALL);
 
     // kingdom color - blue, green, red, yellow, orange, purple
-    for (Colors::const_iterator
-         it = colors.begin(); it != colors.end(); ++it)
+    for (auto it = colors._items.begin(); it != colors._items.end(); ++it)
         if (fs.get()) kingdom_colors |= *it;
 
     // allow human color - blue, green, red, yellow, orange, purple
-    for (Colors::const_iterator
-         it = colors.begin(); it != colors.end(); ++it)
+    for (auto it = colors._items.begin(); it != colors._items.end(); ++it)
         if (fs.get()) allow_human_colors |= *it;
 
     // allow comp color - blue, green, red, yellow, orange, purple
-    for (Colors::const_iterator
-         it = colors.begin(); it != colors.end(); ++it)
+    for (auto it = colors._items.begin(); it != colors._items.end(); ++it)
         if (fs.get()) allow_comp_colors |= *it;
 
     // kingdom count
@@ -302,8 +299,7 @@ bool Maps::FileInfo::ReadMP2(const string& filename)
     with_heroes = 0 == fs.get();
 
     // race color
-    for (Colors::const_iterator
-         it = colors.begin(); it != colors.end(); ++it)
+    for (auto it = colors._items.begin(); it != colors._items.end(); ++it)
     {
         int race = ByteToRace(fs.get());
         races[Color::GetIndex(*it)] = race;
@@ -332,7 +328,7 @@ void Maps::FileInfo::FillUnions()
 
     const Colors colors(kingdom_colors);
 
-    for (int color : colors)
+    for (int color : colors._items)
     {
         if (Color::GetIndex(color) < wins1)
             side1 |= color;

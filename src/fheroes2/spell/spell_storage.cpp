@@ -31,7 +31,7 @@
 
 SpellStorage::SpellStorage()
 {
-    reserve(67);
+	_items.reserve(67);
 }
 
 uint32_t SpellStorage::Size(int lvl) const
@@ -53,47 +53,47 @@ uint32_t SpellStorage::Size(int lvl) const
         break;
     }
 
-    return size();
+    return _items.size();
 }
 
 long SpellStorage::getSpellCountOfLevel(int level) const
 {
-    return count_if(begin(), end(), [&](const Spell& s) { return s.isLevel(level); });
+    return count_if(_items.begin(), _items.end(), [&](const Spell& s) { return s.isLevel(level); });
 }
 
 SpellStorage SpellStorage::GetSpells(int lvl) const
 {
     SpellStorage result;
-    result.reserve(20);
-    for (auto it : *this)
-        if (it.isLevel(lvl)) result.push_back(it);
+    result._items.reserve(20);
+    for (auto it : _items)
+        if (it.isLevel(lvl)) result._items.push_back(it);
     return result;
 }
 
 void SpellStorage::Append(const Spell& sp)
 {
     if (sp != Spell::NONE &&
-        end() == find(begin(), end(), sp))
-        push_back(sp);
+		_items.end() == find(_items.begin(), _items.end(), sp))
+		_items.push_back(sp);
 }
 
 void SpellStorage::Append(const SpellStorage& st)
 {
-    insert(end(), st.begin(), st.end());
-    sort(begin(), end());
-    resize(unique(begin(), end()) - begin());
+	_items.insert(_items.end(), st._items.begin(), st._items.end());
+    sort(_items.begin(), _items.end());
+	_items.resize(unique(_items.begin(), _items.end()) - _items.begin());
 }
 
 bool SpellStorage::isPresentSpell(const Spell& spell) const
 {
-    return end() != find(begin(), end(), spell);
+    return _items.end() != find(_items.begin(), _items.end(), spell);
 }
 
 string SpellStorage::String() const
 {
     ostringstream os;
 
-    for (auto it : *this)
+    for (auto it : _items)
         os << it.GetName() << ", ";
 
     return os.str();

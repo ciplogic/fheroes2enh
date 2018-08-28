@@ -2411,7 +2411,7 @@ void Battle::Interface::RedrawActionAttackPart1(Unit& attacker, Unit& defender, 
         action1 = AS_ATTK2;
 
     // long distance attack animation
-    if (attacker.isDoubleCellAttack() && 2 == targets.size())
+    if (attacker.isDoubleCellAttack() && 2 == targets._items.size())
     {
         action0 = AS_SHOT0;
         if (action1 == AS_ATTK1)
@@ -2515,18 +2515,17 @@ void Battle::Interface::RedrawActionAttackPart2(Unit& attacker, TargetsInfo& tar
     RedrawActionWincesKills(targets);
 
     // draw status for first defender
-    if (!targets.empty())
+    if (!targets._items.empty())
     {
         string msg = _("%{attacker} do %{damage} damage.");
         StringReplace(msg, "%{attacker}", attacker.GetName());
 
-        if (1 < targets.size())
+        if (1 < targets._items.size())
         {
             uint32_t killed = 0;
             uint32_t damage = 0;
 
-            for (TargetsInfo::const_iterator
-                 it = targets.begin(); it != targets.end(); ++it)
+            for (auto it = targets._items.begin(); it != targets._items.end(); ++it)
             {
                 killed += (*it).killed;
                 damage += (*it).damage;
@@ -2543,7 +2542,7 @@ void Battle::Interface::RedrawActionAttackPart2(Unit& attacker, TargetsInfo& tar
         }
         else
         {
-            TargetInfo& target = targets.front();
+            TargetInfo& target = targets._items.front();
             StringReplace(msg, "%{damage}", target.damage);
 
             if (target.killed)
@@ -2560,7 +2559,7 @@ void Battle::Interface::RedrawActionAttackPart2(Unit& attacker, TargetsInfo& tar
     }
 
     // restore
-    for (auto& it : targets)
+    for (auto& it : targets._items)
     {
         if (!it.defender) continue;
         TargetInfo& target1 = it;
@@ -2589,7 +2588,7 @@ void Battle::Interface::RedrawActionWincesKills(TargetsInfo& targets)
     int py = 50;
     int finish = 0;
 
-    for (auto& it : targets)
+    for (auto& it : targets._items)
     {
         if (!it.defender)
             continue;
@@ -2631,7 +2630,7 @@ void Battle::Interface::RedrawActionWincesKills(TargetsInfo& targets)
     const Point& topleft = border.GetArea();
 
     // targets damage animation loop
-    while (le.HandleEvents() && finish != count_if(targets.begin(), targets.end(),
+    while (le.HandleEvents() && finish != count_if(targets._items.begin(), targets._items.end(),
 		[](TargetInfo&it) {return it.isFinishAnimFrame(); }
 	))
     {
@@ -2639,7 +2638,7 @@ void Battle::Interface::RedrawActionWincesKills(TargetsInfo& targets)
 
         if (!Battle::AnimateInfrequentDelay(Game::BATTLE_FRAME_DELAY))
             continue;
-        for (auto& it1 : targets)
+        for (auto& it1 : targets._items)
         {
             if (!it1.defender)
                 continue;
@@ -2801,7 +2800,7 @@ void Battle::Interface::RedrawActionSpellCastPart1(const Spell& spell, s32 dst, 
                                                    const string& name, const TargetsInfo& targets)
 {
     string msg;
-    Unit* target = !targets.empty() ? targets.front().defender : nullptr;
+    Unit* target = !targets._items.empty() ? targets._items.front().defender : nullptr;
 
     if (target && target->GetHeadIndex() == dst)
     {
@@ -2995,11 +2994,10 @@ void Battle::Interface::RedrawActionSpellCastPart2(const Spell& spell, TargetsIn
         uint32_t killed = 0;
         uint32_t damage = 0;
 
-        for (TargetsInfo::const_iterator
-             it = targets.begin(); it != targets.end(); ++it)
+        for (auto& _item : targets._items)
         {
-            killed += (*it).killed;
-            damage += (*it).damage;
+            killed += _item.killed;
+            damage += _item.damage;
         }
 
         if (damage)
@@ -3028,7 +3026,7 @@ void Battle::Interface::RedrawActionSpellCastPart2(const Spell& spell, TargetsIn
     status.SetMessage(" ", false);
 
     // restore
-    for (auto& it : targets)
+    for (auto& it : targets._items)
     {
         if (!it.defender)
             continue;
@@ -3205,7 +3203,7 @@ void Battle::Interface::RedrawActionTowerPart1(Tower& tower, Unit& defender)
 void Battle::Interface::RedrawActionTowerPart2(Tower& tower, TargetInfo& target)
 {
     TargetsInfo targets;
-    targets.push_back(target);
+    targets._items.push_back(target);
 
     // targets damage animation
     RedrawActionWincesKills(targets);
@@ -3576,7 +3574,7 @@ void Battle::Interface::RedrawActionChainLightningSpell(const TargetsInfo& targe
 
     const Rect& rectArea = border.GetArea();
     Point startPos = Point(rectArea.x + rectArea.w / 2, rectArea.y);
-    for (const auto& target : targets)
+    for (const auto& target : targets._items)
     {
         const Rect& pos = target.defender->GetRectPosition();
         populateSpark(startPos, pos);
@@ -3823,7 +3821,7 @@ void Battle::Interface::RedrawActionColdRingSpell(s32 dst, const TargetsInfo& ta
 
     // set WNCE
     b_current = nullptr;
-    for (const auto& target : targets)
+    for (const auto& target : targets._items)
         if (target.defender && target.damage) target.defender->ResetAnimFrame(AS_WNCE);
 
     if (M82::UNKNOWN != m82) AGG::PlaySound(m82);
@@ -3843,7 +3841,7 @@ void Battle::Interface::RedrawActionColdRingSpell(s32 dst, const TargetsInfo& ta
         cursor.Show();
         display.Flip();
 
-        for (const auto& target1 : targets)
+        for (const auto& target1 : targets._items)
         {
             if (target1.defender && target1.damage)
             {
@@ -3853,7 +3851,7 @@ void Battle::Interface::RedrawActionColdRingSpell(s32 dst, const TargetsInfo& ta
         ++frame;
     }
 
-    for (const auto& target : targets)
+    for (const auto& target : targets._items)
     {
         if (!target.defender)
             continue;
@@ -3879,7 +3877,7 @@ void Battle::Interface::RedrawActionElementalStormSpell(const TargetsInfo& targe
     cursor.SetThemes(Cursor::WAR_NONE);
 
     b_current = nullptr;
-    for (const auto& target : targets)
+    for (const auto& target : targets._items)
         if (target.defender && target.damage)
             target.defender->ResetAnimFrame(AS_WNCE);
 
@@ -3903,7 +3901,7 @@ void Battle::Interface::RedrawActionElementalStormSpell(const TargetsInfo& targe
             cursor.Show();
             display.Flip();
 
-            for (const auto& target : targets)
+            for (const auto& target : targets._items)
             {
                 if (target.defender && target.damage)
                 {
@@ -3921,7 +3919,7 @@ void Battle::Interface::RedrawActionElementalStormSpell(const TargetsInfo& targe
     }
 
 
-    for (const auto& target : targets)
+    for (const auto& target : targets._items)
     {
         if (!target.defender)
             continue;
@@ -4136,7 +4134,7 @@ void Battle::Interface::RedrawTargetsWithFrameAnimation(s32 dst, const TargetsIn
     cursor.SetThemes(Cursor::WAR_NONE);
 
     b_current = nullptr;
-    for (const auto& target : targets)
+    for (const auto& target : targets._items)
     {
         if (target.defender && target.damage) target.defender->ResetAnimFrame(AS_WNCE);
     }
@@ -4157,7 +4155,7 @@ void Battle::Interface::RedrawTargetsWithFrameAnimation(s32 dst, const TargetsIn
         cursor.Show();
         display.Flip();
 
-        for (const auto& target1 : targets)
+        for (const auto& target1 : targets._items)
         {
             if (!target1.defender || !target1.damage)
                 continue;
@@ -4166,7 +4164,7 @@ void Battle::Interface::RedrawTargetsWithFrameAnimation(s32 dst, const TargetsIn
         ++frame;
     }
 
-    for (const auto& target : targets)
+    for (const auto& target : targets._items)
         if (target.defender)
         {
             target.defender->ResetAnimFrame(AS_IDLE);
@@ -4219,7 +4217,7 @@ void Battle::Interface::RedrawTargetsWithFrameAnimation(const TargetsInfo& targe
         cursor.Hide();
         Redraw();
 
-        for (const auto& target : targets)
+        for (const auto& target : targets._items)
         {
             if (!target.defender)
                 continue;

@@ -1214,10 +1214,6 @@ void Surface::DrawLineAa(const Point& p1, const Point& p2, const RGBA& color) co
     int y1 = p1.y;
     int x2 = p2.x;
     int y2 = p2.y;
-
-    const int dx = abs(x2 - x1);
-    const int dy = abs(y2 - y1);
-
     Lock();
     drawAALine(x1, y1, x2, y2, color);
     Unlock();

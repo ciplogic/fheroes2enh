@@ -192,17 +192,17 @@ void Battle::PickupArtifactsAction(HeroBase& hero1, HeroBase& hero2, bool local)
 
 void Battle::EagleEyeSkillAction(HeroBase& hero, const SpellStorage& spells, bool local)
 {
-    if (spells.empty() ||
+    if (spells._items.empty() ||
         !hero.HaveSpellBook())
         return;
 
     SpellStorage new_spells;
-    new_spells.reserve(10);
+    new_spells._items.reserve(10);
 
     const Skill::Secondary eagleeye(Skill::Secondary::EAGLEEYE, hero.GetLevelSkill(Skill::Secondary::EAGLEEYE));
 
     // filter spells
-    for (auto sp : spells)
+    for (auto sp : spells._items)
     {
         if (hero.HaveSpell(sp))
             continue;
@@ -210,15 +210,15 @@ void Battle::EagleEyeSkillAction(HeroBase& hero, const SpellStorage& spells, boo
         {
         case Skill::Level::BASIC:
             // 20%
-            if (3 > sp.Level() && eagleeye.GetValues() >= Rand::Get(1, 100)) new_spells.push_back(sp);
+            if (3 > sp.Level() && eagleeye.GetValues() >= Rand::Get(1, 100)) new_spells._items.push_back(sp);
             break;
         case Skill::Level::ADVANCED:
             // 30%
-            if (4 > sp.Level() && eagleeye.GetValues() >= Rand::Get(1, 100)) new_spells.push_back(sp);
+            if (4 > sp.Level() && eagleeye.GetValues() >= Rand::Get(1, 100)) new_spells._items.push_back(sp);
             break;
         case Skill::Level::EXPERT:
             // 40%
-            if (5 > sp.Level() && eagleeye.GetValues() >= Rand::Get(1, 100)) new_spells.push_back(sp);
+            if (5 > sp.Level() && eagleeye.GetValues() >= Rand::Get(1, 100)) new_spells._items.push_back(sp);
             break;
         default:
             break;
@@ -226,7 +226,7 @@ void Battle::EagleEyeSkillAction(HeroBase& hero, const SpellStorage& spells, boo
     }
 
     // add new spell
-    for (auto& sp : new_spells)
+    for (auto& sp : new_spells._items)
     {
         if (local)
         {

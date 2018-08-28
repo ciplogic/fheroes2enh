@@ -82,8 +82,8 @@ ByteVectorReader& operator>>(ByteVectorReader& sb, ActionMessage& st)
 
 ByteVectorWriter& operator<<(ByteVectorWriter& sb, const ListActions& listActions)
 {
-    sb << static_cast<uint32_t>(listActions.size());
-    for (const auto& listAction : listActions)
+    sb << static_cast<uint32_t>(listActions._items.size());
+    for (const auto& listAction : listActions._items)
     {
         sb << listAction->GetType();
 
@@ -148,7 +148,7 @@ ByteVectorReader& operator>>(ByteVectorReader& sb, ListActions& st)
     uint32_t size = 0;
     sb >> size;
 
-    st.clear();
+    st._items.clear();
 
     for (uint32_t ii = 0; ii < size; ++ii)
     {
@@ -161,35 +161,35 @@ ByteVectorReader& operator>>(ByteVectorReader& sb, ListActions& st)
             {
                 auto ptr = std::make_unique<ActionDefault>();
                 sb >> *ptr;
-                st.push_back(std::move(ptr));
+                st._items.push_back(std::move(ptr));
             }
             break;
         case ACTION_ACCESS:
             {
                 auto ptr = std::make_unique<ActionAccess>();
                 sb >> *ptr;
-                st.push_back(std::move(ptr));
+                st._items.push_back(std::move(ptr));
             }
             break;
         case ACTION_MESSAGE:
             {
                 auto ptr = std::make_unique<ActionMessage>();
                 sb >> *ptr;
-                st.push_back(std::move(ptr));
+                st._items.push_back(std::move(ptr));
             }
             break;
         case ACTION_RESOURCES:
             {
                 auto ptr = std::make_unique<ActionResources>();
                 sb >> *ptr;
-                st.push_back(std::move(ptr));
+                st._items.push_back(std::move(ptr));
             }
             break;
         case ACTION_ARTIFACT:
             {
                 auto ptr = std::make_unique<ActionArtifact>();
                 sb >> *ptr;
-                st.push_back(std::move(ptr));
+                st._items.push_back(std::move(ptr));
             }
             break;
 
@@ -197,7 +197,7 @@ ByteVectorReader& operator>>(ByteVectorReader& sb, ListActions& st)
             {
                 auto ptr = std::make_unique<ActionSimple>();
                 sb >> *ptr;
-                st.push_back(std::move(ptr));
+                st._items.push_back(std::move(ptr));
             }
             break;
         }

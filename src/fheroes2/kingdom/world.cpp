@@ -783,7 +783,7 @@ void World::ResetCapturedObjects(int color)
 
 void World::ClearFog(int colors)
 {
-    if (Settings::Get().ExtUnionsAllowViewMaps())
+    if (Settings::ExtUnionsAllowViewMaps())
         colors = Players::GetPlayerFriends(colors);
 
     // clear abroad castles

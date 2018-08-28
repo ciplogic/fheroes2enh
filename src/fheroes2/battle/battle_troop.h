@@ -53,8 +53,9 @@ namespace Battle
         void DecreaseDuration();
     };
 
-    struct ModesAffected : public vector<ModeDuration>
+    struct ModesAffected 
     {
+		vector<ModeDuration> _items;
         ModesAffected();
 
         uint32_t GetMode(uint32_t) const;

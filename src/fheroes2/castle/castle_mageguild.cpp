@@ -77,9 +77,9 @@ RowSpells::RowSpells(const Point& pos, const Castle& castle, int lvl)
                      roll_hide.w(), roll_hide.h()));
     }
 
-    spells.reserve(6);
+    spells._items.reserve(6);
     spells = guild.GetSpells(castle.GetLevelMageGuild(), castle.isLibraryBuild(), lvl);
-    spells.resize(coords.size(), Spell::NONE);
+    spells._items.resize(coords.size(), Spell::NONE);
 }
 
 void RowSpells::Redraw()
@@ -90,7 +90,7 @@ void RowSpells::Redraw()
     for (auto it = coords.begin(); it != coords.end(); ++it)
     {
         const Rect& dst = *it;
-        const Spell& spell = spells[distance(coords.begin(), it)];
+        const Spell& spell = spells._items[distance(coords.begin(), it)];
 
         // roll hide
         if (dst.w < roll_show.w() || spell == Spell::NONE)
@@ -120,7 +120,7 @@ bool RowSpells::QueueEventProcessing()
 
     if (0 > index || !(le.MouseClickLeft() || le.MousePressRight()))
         return 0 <= index;
-    const Spell& spell = spells[index];
+    const Spell& spell = spells._items[index];
 
     if (spell != Spell::NONE)
     {

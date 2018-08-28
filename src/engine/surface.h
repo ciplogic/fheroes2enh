@@ -163,7 +163,7 @@ public:
     void FillRect(const Rect&, const RGBA&) const;
 
     void drawPixel(int x, int y, float brightness, uint32_t col) const;
-    void drawPixelSafe(int x, int y, float brightness, const uint32_t col) const;
+    void drawPixelSafe(int x, int y, float brightness, uint32_t col) const;
 
     void drawAALine(int x0, int y0, int x1, int y1, const RGBA&) const;
 

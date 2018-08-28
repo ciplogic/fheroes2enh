@@ -123,9 +123,9 @@ ByteVectorReader& Battle::operator>>(ByteVectorReader& msg, TargetInfo& t)
 
 ByteVectorWriter& Battle::operator<<(ByteVectorWriter& msg, const TargetsInfo& ts)
 {
-    msg << static_cast<uint32_t>(ts.size());
+    msg << static_cast<uint32_t>(ts._items.size());
 
-    for (const auto& t : ts)
+    for (const auto& t : ts._items)
         msg << t;
 
     return msg;
@@ -136,9 +136,9 @@ ByteVectorReader& Battle::operator>>(ByteVectorReader& msg, TargetsInfo& ts)
     uint32_t size = 0;
 
     msg >> size;
-    ts.resize(size);
+    ts._items.resize(size);
 
-    for (auto& t : ts)
+    for (auto& t : ts._items)
         msg >> t;
 
     return msg;
@@ -201,7 +201,7 @@ Battle::Arena::Arena(Army& a1, Army& a2, s32 index, bool local) :
 {
     const Settings& conf = Settings::Get();
     auto_battle = conf.QuickCombat();
-    usage_spells.reserve(20);
+    usage_spells._items.reserve(20);
 
     arena = this;
     army1 = make_unique<Force>(a1, false);

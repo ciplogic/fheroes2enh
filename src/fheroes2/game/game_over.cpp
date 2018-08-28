@@ -332,7 +332,7 @@ int GameOver::Result::LocalCheckGameOver()
 
     const Colors colors2(colors);
 
-    for (int it : colors2)
+    for (int it : colors2._items)
         if (!world.GetKingdom(it).isPlay())
         {
             Game::DialogPlayers(it, _("%{color} has been vanquished!"));

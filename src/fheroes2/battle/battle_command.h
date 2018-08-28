@@ -51,11 +51,12 @@ namespace Battle
         MSG_UNKNOWN
     };
 
-    class Command : public vector<int>
+    class Command 
     {
         int type;
-
     public:
+		vector<int> _items;
+		
         explicit Command(int);
 
         Command(int cmd, int param1, int param2, const Indexes&);

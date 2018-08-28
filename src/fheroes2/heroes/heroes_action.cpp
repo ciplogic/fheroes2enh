@@ -459,7 +459,7 @@ void Heroes::Action(s32 dst_index)
 
     if (listActions)
     {
-        for (const auto& it : *listActions)
+        for (const auto& it : listActions->_items)
         {
             switch (it->GetType())
             {

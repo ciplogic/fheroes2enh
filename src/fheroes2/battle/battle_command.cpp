@@ -38,16 +38,16 @@ Battle::Command::Command(int cmd) : type(cmd)
 
 Battle::Command& Battle::Command::operator<<(const int& val)
 {
-    push_back(val);
+	_items.push_back(val);
     return *this;
 }
 
 Battle::Command& Battle::Command::operator>>(int& val)
 {
-    if (!empty())
+    if (!_items.empty())
     {
-        val = back();
-        pop_back();
+        val = _items.back();
+		_items.pop_back();
     }
     return *this;
 }

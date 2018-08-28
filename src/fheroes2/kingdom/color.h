@@ -71,9 +71,10 @@ namespace Color
     int FromInt(int);
 }
 
-class Colors : public vector<int>
+class Colors 
 {
 public:
+	vector<int> _items;
     Colors(int = Color::ALL);
 
     string String() const;

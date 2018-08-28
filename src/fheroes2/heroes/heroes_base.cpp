@@ -214,7 +214,7 @@ void HeroBase::ReadFrom(ByteVectorReader& msg)
         hero.modes >>
         hero.magic_point >> hero.move_point;
 
-    msg.readToVec(hero.spell_book);
+    msg.readToVec(hero.spell_book._items);
     msg.readToVec(hero.bag_artifacts._items);
 
     if (FORMAT_VERSION_3269 > Game::GetLoadVersion())
@@ -282,7 +282,7 @@ void HeroBase::AppendSpellToBook(const Spell& spell, bool without_wisdom)
 
 void HeroBase::AppendSpellsToBook(const SpellStorage& spells, bool without_wisdom)
 {
-    for (auto spell : spells)
+    for (auto spell : spells._items)
         AppendSpellToBook(spell, without_wisdom);
 }
 
@@ -532,7 +532,7 @@ ByteVectorWriter& operator<<(ByteVectorWriter& msg, const HeroBase& hero)
         hero.modes <<
         // hero base
         hero.magic_point << hero.move_point <<
-        hero.spell_book << hero.bag_artifacts._items;
+        hero.spell_book._items << hero.bag_artifacts._items;
 }
 
 /* unpack hero base */
@@ -544,7 +544,7 @@ ByteVectorReader& operator>>(ByteVectorReader& msg, HeroBase& hero)
         // modes
         hero.modes >>
         hero.magic_point >> hero.move_point >>
-        hero.spell_book >> hero.bag_artifacts._items;
+        hero.spell_book._items >> hero.bag_artifacts._items;
 
     if (FORMAT_VERSION_3269 > Game::GetLoadVersion())
     {

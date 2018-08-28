@@ -76,7 +76,7 @@ void Battle::Arena::BattleProcess(Unit& attacker, Unit& defender, s32 dst, int d
         const string name(attacker.GetName());
         targets = GetTargetsForSpells(attacker.GetCommander(), spell, defender.GetHeadIndex());
 
-        if (!targets.empty())
+        if (!targets._items.empty())
         {
             if (interface)
                 interface->RedrawActionSpellCastPart1(spell, defender.GetHeadIndex(), nullptr, name, targets);
@@ -84,7 +84,7 @@ void Battle::Arena::BattleProcess(Unit& attacker, Unit& defender, s32 dst, int d
             // magic attack not depends from hero
             TargetsApplySpell(nullptr, spell, targets);
             if (interface) interface->RedrawActionSpellCastPart2(spell, targets);
-            if (interface) interface->RedrawActionMonsterSpellCastStatus(attacker, targets.front());
+            if (interface) interface->RedrawActionMonsterSpellCastStatus(attacker, targets._items.front());
         }
     }
 
@@ -401,7 +401,7 @@ void Battle::Arena::ApplyActionSurrender(Command& cmd)
 
 void Battle::Arena::TargetsApplyDamage(Unit& attacker, Unit& defender, TargetsInfo& targets)
 {
-    for (auto& target : targets)
+    for (auto& target : targets._items)
     {
         if (!target.defender) continue;
         target.killed = target.defender->ApplyDamage(attacker, target.damage);
@@ -411,7 +411,7 @@ void Battle::Arena::TargetsApplyDamage(Unit& attacker, Unit& defender, TargetsIn
 Battle::TargetsInfo Battle::Arena::GetTargetsForDamage(Unit& attacker, Unit& defender, s32 dst) const
 {
     TargetsInfo targets;
-    targets.reserve(8);
+    targets._items.reserve(8);
 
     Unit* enemy = nullptr;
     Cell* cell = nullptr;
@@ -420,7 +420,7 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForDamage(Unit& attacker, Unit& def
     // first target
     res.defender = &defender;
     res.damage = attacker.GetDamage(defender);
-    targets.push_back(res);
+    targets._items.push_back(res);
 
     // long distance attack
     if (attacker.isDoubleCellAttack())
@@ -433,7 +433,7 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForDamage(Unit& attacker, Unit& def
             {
                 res.defender = enemy;
                 res.damage = attacker.GetDamage(*enemy);
-                targets.push_back(res);
+                targets._items.push_back(res);
             }
         }
     }
@@ -453,7 +453,7 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForDamage(Unit& attacker, Unit& def
                 {
                     res.defender = enemy;
                     res.damage = attacker.GetDamage(*enemy);
-                    targets.push_back(res);
+                    targets._items.push_back(res);
                 }
             }
         }
@@ -470,7 +470,7 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForDamage(Unit& attacker, Unit& def
                     {
                         res.defender = enemy;
                         res.damage = attacker.GetDamage(*enemy);
-                        targets.push_back(res);
+                        targets._items.push_back(res);
                     }
                 }
             }
@@ -480,7 +480,7 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForDamage(Unit& attacker, Unit& def
 
 void Battle::Arena::TargetsApplySpell(const HeroBase* hero, const Spell& spell, TargetsInfo& targets)
 {
-    for (auto& target : targets)
+    for (auto& target : targets._items)
     {
         if (!target.defender) continue;
         target.defender->ApplySpell(spell, hero, target);
@@ -490,7 +490,7 @@ void Battle::Arena::TargetsApplySpell(const HeroBase* hero, const Spell& spell, 
 Battle::TargetsInfo Battle::Arena::GetTargetsForSpells(const HeroBase* hero, const Spell& spell, s32 dst)
 {
     TargetsInfo targets;
-    targets.reserve(8);
+    targets._items.reserve(8);
 
     TargetInfo res;
     Unit* target = GetTroopBoard(dst);
@@ -512,7 +512,7 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForSpells(const HeroBase* hero, con
     if (target && target->AllowApplySpell(spell, hero))
     {
         res.defender = target;
-        targets.push_back(res);
+        targets._items.push_back(res);
     }
 
     // resurrect spell? get target from graveyard
@@ -523,7 +523,7 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForSpells(const HeroBase* hero, con
         if (target && target->AllowApplySpell(spell, hero))
         {
             res.defender = target;
-            targets.push_back(res);
+            targets._items.push_back(res);
         }
     }
     else
@@ -555,7 +555,7 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForSpells(const HeroBase* hero, con
                         res.defender = target;
                         // store temp priority for calculate damage
                         res.damage = distance(trgts.begin(), it);
-                        targets.push_back(res);
+                        targets._items.push_back(res);
                     }
                 }
             }
@@ -575,12 +575,14 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForSpells(const HeroBase* hero, con
                     if (target && target->AllowApplySpell(spell, hero))
                     {
                         res.defender = target;
-                        targets.push_back(res);
+                        targets._items.push_back(res);
                     }
                 }
 
                 // unique
-                targets.resize(distance(targets.begin(), unique(targets.begin(), targets.end())));
+                targets._items.resize(
+					distance(targets._items.begin(), 
+						unique(targets._items.begin(), targets._items.end())));
             }
             break;
 
@@ -605,12 +607,12 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForSpells(const HeroBase* hero, con
                     if (target && target->AllowApplySpell(spell, hero))
                     {
                         res.defender = target;
-                        targets.push_back(res);
+                        targets._items.push_back(res);
                     }
                 }
 
                 // unique
-                targets.resize(distance(targets.begin(), unique(targets.begin(), targets.end())));
+                targets._items.resize(distance(targets._items.begin(), unique(targets._items.begin(), targets._items.end())));
             }
             break;
 
@@ -619,8 +621,8 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForSpells(const HeroBase* hero, con
         }
 
     // remove resistent magic troop
-    auto it = targets.begin();
-    while (it != targets.end())
+    auto it = targets._items.begin();
+    while (it != targets._items.end())
     {
         const uint32_t resist = (*it).defender->GetMagicResist(spell, hero ? hero->GetPower() : 0);
 
@@ -629,8 +631,8 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForSpells(const HeroBase* hero, con
             if (interface) interface->RedrawActionResistSpell(*(*it).defender);
 
             // erase(it)
-            if (it + 1 != targets.end()) swap(*it, targets.back());
-            targets.pop_back();
+            if (it + 1 != targets._items.end()) swap(*it, targets._items.back());
+            targets._items.pop_back();
         }
         else ++it;
     }

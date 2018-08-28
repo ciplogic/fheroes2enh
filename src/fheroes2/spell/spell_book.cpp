@@ -70,14 +70,14 @@ Spell SpellBook::Open(const HeroBase& hero, int filter, bool canselect) const
     int filterLocal = filter;
     SpellStorage spells2 = SetFilter(filterLocal, &hero);
 
-    if (canselect && spells2.empty())
+    if (canselect && spells2._items.empty())
     {
         Message("", _("No spell to cast."), Font::BIG, Dialog::OK);
         return Spell::NONE;
     }
 
     // sorting results
-    sort(spells2.begin(), spells2.end(), SpellBookSortingSpell);
+    sort(spells2._items.begin(), spells2._items.end(), SpellBookSortingSpell);
 
     size_t current_index = 0;
 
@@ -123,7 +123,7 @@ Spell SpellBook::Open(const HeroBase& hero, int filter, bool canselect) const
             redraw = true;
         }
         else if (le.MouseClickLeft(next_list) &&
-            spells2.size() > current_index + SPELL_PER_PAGE * 2)
+            spells2._items.size() > current_index + SPELL_PER_PAGE * 2)
         {
             current_index += SPELL_PER_PAGE * 2;
             redraw = true;
@@ -161,9 +161,9 @@ Spell SpellBook::Open(const HeroBase& hero, int filter, bool canselect) const
 
             if (0 <= index)
             {
-                auto spell = spells2.begin() + (index + current_index);
+                auto spell = spells2._items.begin() + (index + current_index);
 
-                if (spell < spells2.end())
+                if (spell < spells2._items.end())
                 {
                     if (canselect)
                     {
@@ -197,8 +197,8 @@ Spell SpellBook::Open(const HeroBase& hero, int filter, bool canselect) const
 
             if (0 <= index)
             {
-                auto spell = spells2.begin() + (index + current_index);
-                if (spell < spells2.end())
+                auto spell = spells2._items.begin() + (index + current_index);
+                if (spell < spells2._items.end())
                 {
                     cursor.Hide();
                     Dialog::SpellInfo(*spell, false);
@@ -272,7 +272,7 @@ void SpellBook::Edit(const HeroBase& hero)
             current_index -= SPELL_PER_PAGE * 2;
             redraw = true;
         }
-        else if (le.MouseClickLeft(next_list) && size() > current_index + SPELL_PER_PAGE * 2)
+        else if (le.MouseClickLeft(next_list) && _items.size() > current_index + SPELL_PER_PAGE * 2)
         {
             current_index += SPELL_PER_PAGE * 2;
             redraw = true;
@@ -286,9 +286,9 @@ void SpellBook::Edit(const HeroBase& hero)
 
             if (0 <= index)
             {
-                const_iterator spell = spells2.begin() + (index + current_index);
+                auto spell = spells2._items.begin() + (index + current_index);
 
-                if (spell < spells2.end())
+                if (spell < spells2._items.end())
                 {
                     Dialog::SpellInfo(*spell, true);
                     redraw = true;
@@ -309,9 +309,9 @@ void SpellBook::Edit(const HeroBase& hero)
 
             if (0 <= index)
             {
-                const_iterator spell = spells2.begin() + (index + current_index);
+                auto spell = spells2._items.begin() + (index + current_index);
 
-                if (spell < spells2.end())
+                if (spell < spells2._items.end())
                 {
                     Dialog::SpellInfo(*spell, false);
                     redraw = true;
@@ -345,8 +345,8 @@ SpellStorage SpellBook::SetFilter(int filter, const HeroBase* hero) const
 
     if (filter != ALL)
     {
-        res.resize(distance(res.begin(),
-                            remove_if(res.begin(), res.end(), 
+        res._items.resize(distance(res._items.begin(),
+                            remove_if(res._items.begin(), res._items.end(),
                                 [&](const Spell& it)
         {
             return SpellFiltered(it, filter);
@@ -356,11 +356,11 @@ SpellStorage SpellBook::SetFilter(int filter, const HeroBase* hero) const
     // check on water: disable portal spells
     if (hero && hero->Modes(Heroes::SHIPMASTER))
     {
-        auto itend = res.end();
-        itend = remove(res.begin(), itend, Spell(Spell::TOWNGATE));
-        itend = remove(res.begin(), itend, Spell(Spell::TOWNPORTAL));
-        if (res.end() != itend)
-            res.resize(distance(res.begin(), itend));
+        auto itend = res._items.end();
+        itend = remove(res._items.begin(), itend, Spell(Spell::TOWNGATE));
+        itend = remove(res._items.begin(), itend, Spell(Spell::TOWNPORTAL));
+        if (res._items.end() != itend)
+            res._items.resize(distance(res._items.begin(), itend));
     }
 
     return res;
@@ -426,7 +426,7 @@ SpellBookRedrawSpells(const SpellStorage& spells, Rects& coords, const size_t cu
 
     for (uint32_t ii = 0; ii < SPELL_PER_PAGE; ++ii)
     {
-        if (spells.size() <= cur + ii)
+        if (spells._items.size() <= cur + ii)
             continue;
         if (0 == ii % (SPELL_PER_PAGE / 2))
         {
@@ -434,7 +434,7 @@ SpellBookRedrawSpells(const SpellStorage& spells, Rects& coords, const size_t cu
             ox += 80;
         }
 
-        const Spell& spell = spells[ii + cur];
+        const Spell& spell = spells._items[ii + cur];
         const Sprite& icon = AGG::GetICN(ICN::SPELLS, spell.IndexSprite());
         const Rect rect(px + ox - icon.w() / 2, py + oy - icon.h() / 2, icon.w(), icon.h() + 10);
 

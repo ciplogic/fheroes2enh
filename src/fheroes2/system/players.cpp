@@ -274,7 +274,7 @@ void Players::Init(int colors)
 
     const Colors vcolors(colors);
 
-    for (int vcolor : vcolors)
+    for (int vcolor : vcolors._items)
     {
         _items.push_back(make_shared<Player>(vcolor));
         _players[Color::GetIndex(vcolor)] = _items.back();
@@ -292,7 +292,7 @@ void Players::Init(const Maps::FileInfo& fi)
 
     sp<Player> first = nullptr;
 
-    for (int vcolor : vcolors)
+    for (int vcolor : vcolors._items)
     {
         sp<Player> player = make_shared<Player>(vcolor);
         player->SetRace(fi.KingdomRace(vcolor));
@@ -514,7 +514,7 @@ ByteVectorReader& operator>>(ByteVectorReader& msg, Players& players)
     players.current_color = current;
     const Colors vcolors(colors);
 
-    for (uint32_t ii = 0; ii < vcolors.size(); ++ii)
+    for (uint32_t ii = 0; ii < vcolors._items.size(); ++ii)
     {
         const sp<Player> player = make_shared<Player>();
         msg >> *player;

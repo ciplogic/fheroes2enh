@@ -347,64 +347,62 @@ void Heroes::ScholarAction(Heroes& hero1, Heroes& hero2)
     SpellStorage learn = learner->spell_book.SetFilter(SpellBook::ALL);
 
     // remove_if for learn spells
-    if (!learn.empty())
+    if (!learn._items.empty())
     {
-        const auto res = remove_if(learn.begin(), learn.end(),
+        const auto res = remove_if(learn._items.begin(), learn._items.end(),
             [&](const Spell& spell)
         {
             return HeroesHaveSpell(teacher, spell);
         });
-        learn.resize(distance(learn.begin(), res));
+        learn._items.resize(distance(learn._items.begin(), res));
     }
 
-    if (!learn.empty())
+    if (!learn._items.empty())
     {
-        const auto res = remove_if(learn.begin(), learn.end(),
+        const auto res = remove_if(learn._items.begin(), learn._items.end(),
             [&](const Spell& spell)
         {
             return !HeroesCanTeachSpell(teacher, spell);
         });
-        learn.resize(distance(learn.begin(), res));
+        learn._items.resize(distance(learn._items.begin(), res));
     }
 
     // remove_if for teach spells
-    if (!teach.empty())
+    if (!teach._items.empty())
     {
-        const auto res = remove_if(teach.begin(), teach.end(), [&](const Spell& spell)
+        const auto res = remove_if(teach._items.begin(), teach._items.end(), [&](const Spell& spell)
         {
             return HeroesHaveSpell(teacher, spell);
         });
-        teach.resize(distance(teach.begin(), res));
+        teach._items.resize(distance(teach._items.begin(), res));
     }
 
-    if (!teach.empty())
+    if (!teach._items.empty())
     {
-        const auto res = remove_if(teach.begin(), teach.end(), [&](const Spell& spell)
+        const auto res = remove_if(teach._items.begin(), teach._items.end(), [&](const Spell& spell)
         {
             return !HeroesCanTeachSpell(teacher, spell);
         });
-        teach.resize(distance(teach.begin(), res));
+        teach._items.resize(distance(teach._items.begin(), res));
     }
 
     string message, spells1, spells2;
 
     // learning
-    for (SpellStorage::const_iterator
-         it = learn.begin(); it != learn.end(); ++it)
+    for (auto it = learn._items.begin(); it != learn._items.end(); ++it)
     {
         teacher->AppendSpellToBook(*it);
         if (!spells1.empty())
-            spells1.append(it + 1 == learn.end() ? _(" and ") : ", ");
+            spells1.append(it + 1 == learn._items.end() ? _(" and ") : ", ");
         spells1.append((*it).GetName());
     }
 
     // teacher
-    for (SpellStorage::const_iterator
-         it = teach.begin(); it != teach.end(); ++it)
+    for (auto it = teach._items.begin(); it != teach._items.end(); ++it)
     {
         learner->AppendSpellToBook(*it);
         if (!spells2.empty())
-            spells2.append(it + 1 == teach.end() ? _(" and ") : ", ");
+            spells2.append(it + 1 == teach._items.end() ? _(" and ") : ", ");
         spells2.append((*it).GetName());
     }
 

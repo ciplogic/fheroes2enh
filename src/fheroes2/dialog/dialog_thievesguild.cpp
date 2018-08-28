@@ -70,7 +70,7 @@ void GetTownsInfo(vector<ValueColors>& v, const Colors& colors)
 {
     v.clear();
 
-    for (auto color : colors)
+    for (auto color : colors._items)
     {
         int value = world.GetKingdom(color).GetCountTown();
         UpdateValuesColors(v, value, color);
@@ -83,7 +83,7 @@ void GetCastlesInfo(vector<ValueColors>& v, const Colors& colors)
 {
     v.clear();
 
-    for (auto color : colors)
+    for (auto color : colors._items)
     {
         int value = world.GetKingdom(color).GetCountCastle();
         UpdateValuesColors(v, value, color);
@@ -96,7 +96,7 @@ void GetHeroesInfo(vector<ValueColors>& v, const Colors& colors)
 {
     v.clear();
 
-    for (auto color : colors)
+    for (auto color : colors._items)
     {
         int value = world.GetKingdom(color).GetHeroes()._items.size();
         UpdateValuesColors(v, value, color);
@@ -109,7 +109,7 @@ void GetGoldsInfo(vector<ValueColors>& v, const Colors& colors)
 {
     v.clear();
 
-    for (auto color : colors)
+    for (auto color : colors._items)
     {
         int value = world.GetKingdom(color).GetFunds().Get(Resource::GOLD);
         UpdateValuesColors(v, value, color);
@@ -122,7 +122,7 @@ void GetWoodOreInfo(vector<ValueColors>& v, const Colors& colors)
 {
     v.clear();
 
-    for (auto color : colors)
+    for (auto color : colors._items)
     {
         const Funds& funds = world.GetKingdom(color).GetFunds();
         int value = funds.Get(Resource::WOOD) + funds.Get(Resource::ORE);
@@ -136,7 +136,7 @@ void GetGemsCrSlfMerInfo(vector<ValueColors>& v, const Colors& colors)
 {
     v.clear();
 
-    for (auto color : colors)
+    for (auto color : colors._items)
     {
         const Funds& funds = world.GetKingdom(color).GetFunds();
         int value = funds.Get(Resource::GEMS) + funds.Get(Resource::CRYSTAL) +
@@ -151,7 +151,7 @@ void GetObelisksInfo(vector<ValueColors>& v, const Colors& colors)
 {
     v.clear();
 
-    for (auto color : colors)
+    for (auto color : colors._items)
     {
         int value = world.GetKingdom(color).CountVisitedObjects(MP2::OBJ_OBELISK);
         UpdateValuesColors(v, value, color);
@@ -164,7 +164,7 @@ void GetArmyInfo(vector<ValueColors>& v, const Colors& colors)
 {
     v.clear();
 
-    for (auto color : colors)
+    for (auto color : colors._items)
     {
         int value = world.GetKingdom(color).GetArmiesStrength();
         UpdateValuesColors(v, value, color);
@@ -177,7 +177,7 @@ void GetIncomesInfo(vector<ValueColors>& v, const Colors& colors)
 {
     v.clear();
 
-    for (auto color : colors)
+    for (auto color : colors._items)
     {
         int value = world.GetKingdom(color).GetIncome().gold;
         UpdateValuesColors(v, value, color);
@@ -190,7 +190,7 @@ void GetBestHeroArmyInfo(vector<ValueColors>& v, const Colors& colors)
 {
     v.clear();
 
-    for (auto color : colors)
+    for (auto color : colors._items)
     {
         const Heroes* hero = world.GetKingdom(color).GetBestHero();
         v.emplace_back(hero ? hero->GetID() : Heroes::UNKNOWN, color);
@@ -205,9 +205,9 @@ void DrawFlags(const vector<ValueColors>& v, const Point& pos, uint32_t width, u
         if (ii >= v.size()) continue;
         const Colors colors(v[ii].second);
         const uint32_t sw = AGG::GetICN(ICN::FLAG32, 1).w();
-        s32 px = pos.x + chunk / 2 + ii * chunk - colors.size() * sw / 2;
+        s32 px = pos.x + chunk / 2 + ii * chunk - colors._items.size() * sw / 2;
 
-        for (auto color : colors)
+        for (auto color : colors._items)
         {
             const Sprite& flag = AGG::GetICN(ICN::FLAG32, Color::GetIndex(color) * 2 + 1);
             flag.Blit(px, pos.y);
@@ -263,7 +263,7 @@ void Dialog::ThievesGuild(bool oracle)
 
     // head 1
     uint32_t ii = 0;
-    for (ii = 0; ii < colors.size(); ++ii)
+    for (ii = 0; ii < colors._items.size(); ++ii)
     {
         switch (ii + 1)
         {
@@ -289,7 +289,7 @@ void Dialog::ThievesGuild(bool oracle)
             break;
         }
 
-        dst_pt.x = cur_pt.x + startx + maxw / (colors.size() * 2) + ii * maxw / colors.size() - text.w() / 2;
+        dst_pt.x = cur_pt.x + startx + maxw / (colors._items.size() * 2) + ii * maxw / colors._items.size() - text.w() / 2;
         dst_pt.y = cur_pt.y + 5;
         text.Blit(dst_pt);
     }
@@ -317,7 +317,7 @@ void Dialog::ThievesGuild(bool oracle)
 
     dst_pt.x = cur_pt.x + startx;
     GetTownsInfo(v, colors);
-    DrawFlags(v, dst_pt, maxw, colors.size());
+    DrawFlags(v, dst_pt, maxw, colors._items.size());
 
     text.Set(_("Number of Castles:"));
     dst_pt.x = cur_pt.x + textx - text.w();
@@ -326,7 +326,7 @@ void Dialog::ThievesGuild(bool oracle)
 
     dst_pt.x = cur_pt.x + startx;
     GetCastlesInfo(v, colors);
-    DrawFlags(v, dst_pt, maxw, colors.size());
+    DrawFlags(v, dst_pt, maxw, colors._items.size());
 
     text.Set(_("Number of Heroes:"));
     dst_pt.x = cur_pt.x + textx - text.w();
@@ -335,7 +335,7 @@ void Dialog::ThievesGuild(bool oracle)
 
     dst_pt.x = cur_pt.x + startx;
     GetHeroesInfo(v, colors);
-    DrawFlags(v, dst_pt, maxw, colors.size());
+    DrawFlags(v, dst_pt, maxw, colors._items.size());
 
     text.Set(_("Gold in Treasury:"));
     dst_pt.x = cur_pt.x + textx - text.w();
@@ -344,7 +344,7 @@ void Dialog::ThievesGuild(bool oracle)
 
     dst_pt.x = cur_pt.x + startx;
     GetGoldsInfo(v, colors);
-    if (1 < count) DrawFlags(v, dst_pt, maxw, colors.size());
+    if (1 < count) DrawFlags(v, dst_pt, maxw, colors._items.size());
 
     text.Set(_("Wood & Ore:"));
     dst_pt.x = cur_pt.x + textx - text.w();
@@ -353,7 +353,7 @@ void Dialog::ThievesGuild(bool oracle)
 
     dst_pt.x = cur_pt.x + startx;
     GetWoodOreInfo(v, colors);
-    if (1 < count) DrawFlags(v, dst_pt, maxw, colors.size());
+    if (1 < count) DrawFlags(v, dst_pt, maxw, colors._items.size());
 
     text.Set(_("Gems, Cr, Slf & Mer:"));
     dst_pt.x = cur_pt.x + textx - text.w();
@@ -362,7 +362,7 @@ void Dialog::ThievesGuild(bool oracle)
 
     dst_pt.x = cur_pt.x + startx;
     GetGemsCrSlfMerInfo(v, colors);
-    if (1 < count) DrawFlags(v, dst_pt, maxw, colors.size());
+    if (1 < count) DrawFlags(v, dst_pt, maxw, colors._items.size());
 
     text.Set(_("Obelisks Found:"));
     dst_pt.x = cur_pt.x + textx - text.w();
@@ -371,7 +371,7 @@ void Dialog::ThievesGuild(bool oracle)
 
     dst_pt.x = cur_pt.x + startx;
     GetObelisksInfo(v, colors);
-    if (2 < count) DrawFlags(v, dst_pt, maxw, colors.size());
+    if (2 < count) DrawFlags(v, dst_pt, maxw, colors._items.size());
 
     text.Set(_("Total Army Strength:"));
     dst_pt.x = cur_pt.x + textx - text.w();
@@ -380,7 +380,7 @@ void Dialog::ThievesGuild(bool oracle)
 
     dst_pt.x = cur_pt.x + startx;
     GetArmyInfo(v, colors);
-    if (3 < count) DrawFlags(v, dst_pt, maxw, colors.size());
+    if (3 < count) DrawFlags(v, dst_pt, maxw, colors._items.size());
 
     text.Set(_("Income:"));
     dst_pt.x = cur_pt.x + textx - text.w();
@@ -389,15 +389,15 @@ void Dialog::ThievesGuild(bool oracle)
 
     dst_pt.x = cur_pt.x + startx;
     GetIncomesInfo(v, colors);
-    if (4 < count) DrawFlags(v, dst_pt, maxw, colors.size());
+    if (4 < count) DrawFlags(v, dst_pt, maxw, colors._items.size());
 
     // head 2
     ii = 0;
     for (auto
-         color = colors.begin(); color != colors.end(); ++color)
+         color = colors._items.begin(); color != colors._items.end(); ++color)
     {
         text.Set(Color::String(*color));
-        dst_pt.x = cur_pt.x + startx + maxw / (colors.size() * 2) + ii * maxw / colors.size() - text.w() / 2;
+        dst_pt.x = cur_pt.x + startx + maxw / (colors._items.size() * 2) + ii * maxw / colors._items.size() - text.w() / 2;
         dst_pt.y = cur_pt.y + 270;
         text.Blit(dst_pt);
         ++ii;

@@ -1940,7 +1940,7 @@ bool AIHeroesShowAnimation(const Heroes& hero)
     if (conf.GameType() & Game::TYPE_HOTSEAT)
     {
         const Colors vcolors(Players::HumanColors());
-        for (int vcolor : vcolors)
+        for (int vcolor : vcolors._items)
         {
             const auto player = Players::Get(vcolor);
             if (player) colors |= player->GetFriends();

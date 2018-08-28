@@ -49,8 +49,9 @@ class Radar;
 class MapObjectSimple;
 
 
-struct ListActions : public vector<up<ActionSimple>>
+struct ListActions 
 {
+	vector<up<ActionSimple>> _items;
 };
 
 struct MapObjects : public unordered_map<uint32_t, MapObjectSimple *>

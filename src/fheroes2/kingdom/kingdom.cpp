@@ -596,7 +596,7 @@ void Kingdoms::Init()
 
     clear();
 
-    for (int color : colors)
+    for (int color : colors._items)
         GetKingdom(color).Init(color);
 }
 

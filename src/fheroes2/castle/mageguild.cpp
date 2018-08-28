@@ -30,8 +30,8 @@ Spell GetCombatSpellCompatibility(int race, int level);
 
 void MageGuild::Builds(int race, bool libraryCap)
 {
-    general.clear();
-    library.clear();
+    general._items.clear();
+    library._items.clear();
 
     // level 5
     general.Append(7 > Rand::Get(1, 10) ? Spell::RandCombat(5) : Spell::RandAdventure(5));
@@ -108,10 +108,10 @@ Spell GetCombatSpellCompatibility(int race, int level)
 
 ByteVectorWriter& operator<<(ByteVectorWriter& msg, const MageGuild& guild)
 {
-    return msg << guild.general << guild.library;
+    return msg << guild.general._items << guild.library._items;
 }
 
 ByteVectorReader& operator>>(ByteVectorReader& msg, MageGuild& guild)
 {
-    return msg >> guild.general >> guild.library;
+    return msg >> guild.general._items >> guild.library._items;
 }

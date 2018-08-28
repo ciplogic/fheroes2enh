@@ -343,23 +343,23 @@ ByteVectorWriter& operator<<(ByteVectorWriter& sb, const MidEvent& st)
     return sb;
 }
 
-struct MidEvents : public vector<MidEvent>
+struct MidEvents 
 {
+	vector<MidEvent> _items;
     size_t count() const
     {
-        return vector<MidEvent>::size();
+		return _items.size();
     }
 
     size_t size() const
     {
         size_t res = 0;
-        for (const auto& it : *this)
+        for (const auto& it : _items)
             res += it.size();
         return res;
     }
 
-    MidEvents()
-    = default;
+    MidEvents() = default;
 
     explicit MidEvents(const XMITrack& t)
     {
@@ -387,7 +387,7 @@ struct MidEvents : public vector<MidEvent>
                     if ((*it1).duration <= delta)
                     {
                         // note off
-                        push_back(MidEvent((*it1).duration - delta2, (*it1).command, (*it1).quantity, 0x7F));
+						_items.push_back(MidEvent((*it1).duration - delta2, (*it1).command, (*it1).quantity, 0x7F));
                         delta2 += (*it1).duration - delta2;
                     }
                 }
@@ -416,7 +416,7 @@ struct MidEvents : public vector<MidEvent>
                 // end
                 if (0xFF == *ptr && 0x2F == *(ptr + 1))
                 {
-                    push_back(MidEvent(delta, *ptr, *(ptr + 1), *(ptr + 2)));
+					_items.push_back(MidEvent(delta, *ptr, *(ptr + 1), *(ptr + 2)));
                     break;
                 }
                 switch (*ptr >> 4)
@@ -437,7 +437,7 @@ struct MidEvents : public vector<MidEvent>
                     // pitch bend
                 case 0x0E:
                     {
-                        push_back(MidEvent(delta, *ptr, *(ptr + 1), *(ptr + 2)));
+					    _items.push_back(MidEvent(delta, *ptr, *(ptr + 1), *(ptr + 2)));
                         ptr += 3;
                         delta = 0;
                     }
@@ -448,7 +448,7 @@ struct MidEvents : public vector<MidEvent>
                     // note on
                 case 0x09:
                     {
-                        push_back(MidEvent(delta, *ptr, *(ptr + 1), *(ptr + 2)));
+					    _items.push_back(MidEvent(delta, *ptr, *(ptr + 1), *(ptr + 2)));
                         pack_t pack = unpackValue(ptr + 3);
                         notesoff.emplace_back(*ptr - 0x10, *(ptr + 1), pack.first);
                         ptr += 3 + pack.second;
@@ -461,7 +461,7 @@ struct MidEvents : public vector<MidEvent>
                     // chanel pressure
                 case 0x0D:
                     {
-                        push_back(MidEvent(delta, *ptr, *(ptr + 1)));
+					    _items.push_back(MidEvent(delta, *ptr, *(ptr + 1)));
                         ptr += 2;
                         delta = 0;
                     }
@@ -469,7 +469,7 @@ struct MidEvents : public vector<MidEvent>
 
                     // unused command
                 default:
-                    push_back(MidEvent(0, 0xFF, 0x2F, 0));
+					_items.push_back(MidEvent(0, 0xFF, 0x2F, 0));
                     H2ERROR("unknown st: 0x" << std::setw(2) << std::setfill('0') << std::hex <<
                         static_cast<int>(*ptr) << ", ln: "
                         << static_cast<int>(&t.evnt[0] + t.evnt.size() - ptr));
@@ -482,7 +482,7 @@ struct MidEvents : public vector<MidEvent>
 
 ByteVectorWriter& operator<<(ByteVectorWriter& sb, const MidEvents& st)
 {
-    for (const auto& it : st)
+    for (const auto& it : st._items)
         sb << it;
     return sb;
 }

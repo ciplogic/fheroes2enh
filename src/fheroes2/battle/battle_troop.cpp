@@ -384,47 +384,47 @@ void Battle::ModeDuration::DecreaseDuration()
 
 Battle::ModesAffected::ModesAffected()
 {
-    reserve(3);
+	_items.reserve(3);
 }
 
 uint32_t Battle::ModesAffected::GetMode(uint32_t mode) const
 {
-	const auto it = find_if(begin(), end(),
+	const auto it = find_if(_items.begin(), _items.end(),
 		[&](const ModeDuration& it) { return it.isMode(mode); });
-    return it == end() ? 0 : (*it).second;
+    return it == _items.end() ? 0 : (*it).second;
 }
 
 void Battle::ModesAffected::AddMode(uint32_t mode, uint32_t duration)
 {
-    auto it = find_if(begin(), end(),
+    auto it = find_if(_items.begin(), _items.end(),
 		[&](const ModeDuration& it) { return it.isMode(mode); });
-    if (it == end())
-        push_back(ModeDuration(mode, duration));
+    if (it == _items.end())
+		_items.emplace_back(mode, duration);
     else
         (*it).second = duration;
 }
 
 void Battle::ModesAffected::RemoveMode(uint32_t mode)
 {
-    auto it = find_if(begin(), end(),
+    auto it = find_if(_items.begin(), _items.end(),
 		[&](const ModeDuration& it) { return it.isMode(mode); });
-    if (it != end())
+    if (it != _items.end())
     {
         // erase(it)
-        if (it + 1 != end()) std::swap(*it, back());
-        pop_back();
+        if (it + 1 != _items.end()) std::swap(*it, _items.back());
+		_items.pop_back();
     }
 }
 
 void Battle::ModesAffected::DecreaseDuration()
 {
-	for_each(begin(), end(), [](ModeDuration&it) { it.DecreaseDuration(); });
+	for_each(_items.begin(), _items.end(), [](ModeDuration&it) { it.DecreaseDuration(); });
 }
 
 uint32_t Battle::ModesAffected::FindZeroDuration() const
 {
-	auto it = find_if(begin(), end(), [](const ModeDuration&it) {return it.isZeroDuration(); });
-    return it == end() ? 0 : (*it).first;
+	auto it = find_if(_items.begin(), _items.end(), [](const ModeDuration&it) {return it.isZeroDuration(); });
+    return it == _items.end() ? 0 : (*it).first;
 }
 
 Battle::Unit::Unit(const Troop& t, s32 pos, bool ref) : ArmyTroop(nullptr, t),
@@ -1182,10 +1182,10 @@ string Battle::Unit::String(bool more) const
 
 ByteVectorWriter& Battle::operator<<(ByteVectorWriter& msg, const ModesAffected& v)
 {
-    msg << static_cast<uint32_t>(v.size());
+    msg << static_cast<uint32_t>(v._items.size());
 
-    for (size_t ii = 0; ii < v.size(); ++ii)
-        msg << v[ii].first << v[ii].second;
+    for (size_t ii = 0; ii < v._items.size(); ++ii)
+        msg << v._items[ii].first << v._items[ii].second;
 
     return msg;
 }
@@ -1195,13 +1195,13 @@ ByteVectorReader& Battle::operator>>(ByteVectorReader& msg, ModesAffected& v)
 {
     uint32_t size = 0;
     msg >> size;
-    v.clear();
+    v._items.clear();
 
     for (size_t ii = 0; ii < size; ++ii)
     {
         ModeDuration md;
         msg >> md.first >> md.second;
-        v.push_back(md);
+        v._items.push_back(md);
     }
 
     return msg;

@@ -48,15 +48,15 @@ struct SelectRecipientsColors
         colors(Settings::Get().GetPlayers().GetColors() & ~Settings::Get().GetPlayers().current_color),
         recipients(0)
     {
-        positions.reserve(colors.size());
+        positions.reserve(colors._items.size());
 
         for (auto
-             it = colors.begin(); it != colors.end(); ++it)
+             it = colors._items.begin(); it != colors._items.end(); ++it)
         {
-            const uint32_t current = distance(colors.begin(), it);
+            const uint32_t current = distance(colors._items.begin(), it);
             const Sprite& sprite = AGG::GetICN(ICN::CELLWIN, 43);
 
-            positions.push_back(Rect(pos.x + Game::GetStep4Player(current, sprite.w() + 15, colors.size()),
+            positions.push_back(Rect(pos.x + Game::GetStep4Player(current, sprite.w() + 15, colors._items.size()),
                                      pos.y, sprite.w(), sprite.h()));
         }
     }
@@ -69,9 +69,9 @@ struct SelectRecipientsColors
     void Redraw() const
     {
         for (auto
-             it = colors.begin(); it != colors.end(); ++it)
+             it = colors._items.begin(); it != colors._items.end(); ++it)
         {
-            const Rect& pos = positions[distance(colors.begin(), it)];
+            const Rect& pos = positions[distance(colors._items.begin(), it)];
 
             AGG::GetICN(ICN::CELLWIN, 43 + Color::GetIndex(*it)).Blit(pos);
             if (recipients & *it)
@@ -85,7 +85,7 @@ struct SelectRecipientsColors
 
         if (index >= 0)
         {
-            const int& cols = colors[index];
+            const int& cols = colors._items[index];
 
             if (recipients & cols)
                 recipients &= ~cols;

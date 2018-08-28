@@ -164,8 +164,9 @@ namespace Battle
 
     ByteVectorReader& operator>>(ByteVectorReader&, TargetInfo&);
 
-    struct TargetsInfo : public vector<TargetInfo>
+    struct TargetsInfo 
     {
+		vector<TargetInfo> _items;
         TargetsInfo() = default;
     };
 

@@ -141,21 +141,21 @@ std::string BarrierColor::String(int val)
 
 Colors::Colors(int colors)
 {
-    reserve(6);
+	_items.reserve(6);
 
-    if (colors & Color::BLUE) push_back(Color::BLUE);
-    if (colors & Color::GREEN) push_back(Color::GREEN);
-    if (colors & Color::RED) push_back(Color::RED);
-    if (colors & Color::YELLOW) push_back(Color::YELLOW);
-    if (colors & Color::ORANGE) push_back(Color::ORANGE);
-    if (colors & Color::PURPLE) push_back(Color::PURPLE);
+    if (colors & Color::BLUE) _items.push_back(Color::BLUE);
+    if (colors & Color::GREEN) _items.push_back(Color::GREEN);
+    if (colors & Color::RED) _items.push_back(Color::RED);
+    if (colors & Color::YELLOW) _items.push_back(Color::YELLOW);
+    if (colors & Color::ORANGE) _items.push_back(Color::ORANGE);
+    if (colors & Color::PURPLE) _items.push_back(Color::PURPLE);
 }
 
 string Colors::String() const
 {
     ostringstream os;
 
-    for (int it : *this)
+    for (int it : _items)
         os << Color::String(it) << ", ";
 
     return os.str();
