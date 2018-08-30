@@ -806,7 +806,7 @@ std::string MP2::StringObject(int object)
         return "OBJ_UNKNW_FA";
     }
 
-    return nullptr;
+    return "";
 }
 
 bool MP2::isDayLife(int obj)

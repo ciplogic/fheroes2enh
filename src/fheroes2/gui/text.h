@@ -71,7 +71,7 @@ public:
 
     virtual void Blit(s32, s32, int maxw, Surface& sf = Display::Get()) = 0;
 
-    int font;
+    int font = 0;
 };
 
 
@@ -207,9 +207,9 @@ public:
     static uint32_t height(const string&, int ft, uint32_t width = 0);
 
 protected:
-    sp<TextInterface> message;
-    uint32_t gw;
-    uint32_t gh;
+    sp<TextInterface> message{};
+    uint32_t gw{};
+    uint32_t gh{};
 };
 
 class TextSprite : protected Text
@@ -311,5 +311,5 @@ private:
 #endif
 
     vector<Text> messages;
-    int align;
+    int align{};
 };

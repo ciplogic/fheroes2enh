@@ -42,13 +42,13 @@ struct IndexObjectMap : map<s32, int>
 
 struct AIKingdom
 {
-    AIKingdom() : capital(nullptr)
+    AIKingdom()
     {
     };
 
     void Reset();
 
-    Castle* capital;
+    Castle* capital = nullptr;
     IndexObjectMap scans;
 };
 
@@ -75,7 +75,7 @@ struct Queue : public list<s32>
 
 struct AIHero
 {
-    AIHero() : primary_target(-1), fix_loop(0)
+    AIHero() : primary_target(-1)
     {
     };
 
@@ -88,7 +88,7 @@ struct AIHero
 
     Queue sheduled_visit;
     s32 primary_target;
-    uint32_t fix_loop;
+    uint32_t fix_loop = 0;
 };
 
 struct AIHeroes 

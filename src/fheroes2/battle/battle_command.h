@@ -53,7 +53,7 @@ namespace Battle
 
     class Command 
     {
-        int type;
+        int type {};
     public:
 		vector<int> _items;
 		

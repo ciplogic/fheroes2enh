@@ -38,7 +38,7 @@
 
 struct HeroRow
 {
-    Heroes* hero;
+    Heroes* hero = nullptr;
     sp<ArmyBar> armyBar;
     sp<ArtifactsBar> artifactsBar;
     sp<SecondarySkillsBar> secskillsBar;
@@ -274,12 +274,12 @@ void StatsHeroesList::RedrawBackground(const Point& dst)
 
 struct CstlRow
 {
-    Castle* castle;
+    Castle* castle = nullptr;
     sp<ArmyBar> armyBarGuard;
     sp<ArmyBar> armyBarGuest;
     sp<DwellingsBar> dwellingsBar;
 
-    CstlRow() : castle(nullptr), armyBarGuard(nullptr), armyBarGuest(nullptr), dwellingsBar(nullptr)
+    CstlRow() : armyBarGuard(nullptr), armyBarGuest(nullptr), dwellingsBar(nullptr)
     {
     }
 

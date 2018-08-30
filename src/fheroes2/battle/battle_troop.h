@@ -278,24 +278,24 @@ namespace Battle
 
         friend ByteVectorReader& operator>>(ByteVectorReader&, Unit&);
 
-        uint32_t uid;
-        uint32_t hp;
-        uint32_t count0;
-        uint32_t dead;
-        uint32_t shots;
-        uint32_t disruptingray;
-        bool reflect;
+        uint32_t uid = 0;
+        uint32_t hp = 0;
+        uint32_t count0 = 0;
+        uint32_t dead = 0;
+        uint32_t shots = 0;
+        uint32_t disruptingray = 0;
+        bool reflect = false;
 
         uint32_t animstate;
-        s32 animframe;
-        s32 animstep;
+        s32 animframe = 0;
+        s32 animstep = 0;
 
         Position position;
         ModesAffected affected;
-        Unit* mirror;
+        Unit* mirror = nullptr;
         Surface contours[4];
 
-        bool blindanswer;
+        bool blindanswer = false;
     };
 
     ByteVectorWriter& operator<<(ByteVectorWriter&, const Unit&);

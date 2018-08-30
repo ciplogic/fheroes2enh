@@ -53,7 +53,7 @@ namespace AGG
 			return second;
 		}
 
-		Point offset;
+		Point offset{};
 	};
 
     bool Init();

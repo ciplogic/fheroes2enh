@@ -46,17 +46,15 @@
 
 struct hgs_t
 {
-    hgs_t() : localtime(0), days(0), rating(0)
-    {
-    };
+	hgs_t() = default;
 
     bool operator==(const hgs_t&) const;
 
     string player;
     string land;
-    uint32_t localtime;
-    uint32_t days;
-    uint32_t rating;
+    uint32_t localtime = 0;
+    uint32_t days = 0;
+    uint32_t rating = 0;
 };
 
 ByteVectorWriter& operator<<(ByteVectorWriter& msg, const hgs_t& hgs)

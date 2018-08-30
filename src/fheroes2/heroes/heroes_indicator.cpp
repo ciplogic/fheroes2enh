@@ -50,7 +50,7 @@ std::string MoraleString(int morale)
     default:
         break;
     }
-    return nullptr;
+    return "";
 }
 
 std::string LuckString(int luck)
@@ -73,7 +73,7 @@ std::string LuckString(int luck)
     default:
         break;
     }
-    return nullptr;
+    return "";
 }
 
 HeroesIndicator::HeroesIndicator(const Heroes& h) : hero(h)

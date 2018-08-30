@@ -634,7 +634,7 @@ std::string GetBuildConditionDescription(int bcond)
         break;
     }
 
-    return nullptr;
+    return "";
 }
 
 string BuildingInfo::GetConditionDescription() const

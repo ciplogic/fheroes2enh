@@ -76,7 +76,7 @@ struct DwellingItem
 {
     DwellingItem(Castle&, uint32_t dw);
 
-    uint32_t type;
+    uint32_t type = 0;
     Monster mons;
 };
 

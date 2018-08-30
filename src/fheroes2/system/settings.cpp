@@ -1234,7 +1234,7 @@ std::string Settings::ExtName(uint32_t f)
     const settings_t* ptr = find(settingsFHeroes2,
                                  ARRAY_COUNT_END(settingsFHeroes2) - 1, f);
 
-    return ptr ? _(ptr->str) : nullptr;
+    return ptr ? _(ptr->str) : "";
 }
 
 void Settings::ExtSetModes(uint32_t f)

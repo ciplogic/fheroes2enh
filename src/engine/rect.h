@@ -27,11 +27,9 @@
 
 struct Point
 {
-    s16 x, y;
+    s16 x = 0, y = 0;
 
-    Point() : x(0), y(0)
-    {
-    }
+	Point() = default;
 
     Point(int, int);
 
@@ -53,9 +51,9 @@ struct Point
 
 struct Size
 {
-    u16 w, h;
+    u16 w = 0, h = 0;
 
-    Size();
+    Size() = default;
 
     Size(u16, u16);
     Size(int, int);

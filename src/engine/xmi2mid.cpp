@@ -23,6 +23,7 @@
 #include <utility>
 #include <iomanip>
 #include <list>
+#include <array>
 #include <vector>
 #include <iostream>
 
@@ -112,7 +113,7 @@ pack_t unpackValue(const u8* ptr)
 
 struct meta_t
 {
-    meta_t() : command(0), quantity(0), duration(0)
+    meta_t() 
     {
     }
 
@@ -130,23 +131,21 @@ struct meta_t
         duration -= delta;
     }
 
-    u8 command;
-    u8 quantity;
-    uint32_t duration;
+    u8 command = 0;
+    u8 quantity = 0;
+    uint32_t duration = 0;
 };
 
 struct IFFChunkHeader
 {
-    uint32_t ID; // 4 upper case ASCII chars, padded with 0x20 (space)
-    uint32_t length; // big-endian
+    uint32_t ID = 0; // 4 upper case ASCII chars, padded with 0x20 (space)
+    uint32_t length = 0; // big-endian
 
     IFFChunkHeader(uint32_t id, uint32_t sz) : ID(id), length(sz)
     {
     }
 
-    IFFChunkHeader() : ID(0), length(0)
-    {
-    }
+	IFFChunkHeader() = default;
 };
 
 
@@ -166,17 +165,15 @@ ByteVectorWriter& operator<<(ByteVectorWriter& sb, const IFFChunkHeader& st)
 
 struct GroupChunkHeader
 {
-    uint32_t ID; // 4 byte ASCII string, either 'FORM', 'CAT ' or 'LIST'
-    uint32_t length;
-    uint32_t type; // 4 byte ASCII string
+    uint32_t ID = 0; // 4 byte ASCII string, either 'FORM', 'CAT ' or 'LIST'
+    uint32_t length = 0;
+    uint32_t type = 0; // 4 byte ASCII string
 
     GroupChunkHeader(uint32_t id, uint32_t sz, uint32_t tp) : ID(id), length(sz), type(tp)
     {
     }
 
-    GroupChunkHeader() : ID(0), length(0), type(0)
-    {
-    }
+	GroupChunkHeader() = default;
 };
 
 ByteVectorWriter& operator<<(ByteVectorWriter& sb, const GroupChunkHeader& st)
@@ -299,7 +296,7 @@ struct XMIData
 struct MidEvent
 {
     vector<u8> pack;
-    u8 data[4]{}; // status, data1, data2, count
+    std::array<u8,4> data; // status, data1, data2, count
     //char		status;
     //std::vector<u8>	data;
 

@@ -108,6 +108,10 @@ bool Battle::Position::isValid() const
 
 Battle::Cell::Cell() : index(0), object(0), direction(UNKNOWN), quality(0), troop(nullptr)
 {
+    for(auto& cell:coord)
+    {
+		cell = Point{};
+    }
 }
 
 Battle::Cell::Cell(s32 ii) : index(ii), object(0), direction(UNKNOWN), quality(0), troop(nullptr)

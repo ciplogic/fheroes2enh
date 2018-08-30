@@ -77,11 +77,9 @@ struct CapturedObject
 {
     ObjectColor objcol;
     Troop guardians;
-    int split;
+    int split = 1;
 
-    CapturedObject() : split(1)
-    {
-    }
+	CapturedObject() = default;
 
     int GetSplit() const
     {
@@ -147,7 +145,7 @@ struct CapturedObjects : map<s32, CapturedObject>
 
 struct EventDate
 {
-    EventDate() : computer(false), first(0), subsequent(0), colors(0)
+    EventDate()
     {
     }
 
@@ -158,10 +156,10 @@ struct EventDate
     bool isDeprecated(uint32_t date) const;
 
     Funds resource;
-    bool computer;
-    uint32_t first;
-    uint32_t subsequent;
-    int colors;
+    bool computer = false;
+    uint32_t first = 0;
+    uint32_t subsequent = 0;
+    int colors = 0;
     string message;
 };
 

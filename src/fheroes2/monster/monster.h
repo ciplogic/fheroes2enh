@@ -245,7 +245,7 @@ public:
 protected:
     static Monster FromDwelling(int race, uint32_t dw);
 
-    int id;
+    int id = 0;
 };
 
 struct MonsterStaticData

@@ -73,10 +73,6 @@ bool Point::inABC(const Point& pt1, const Point& pt2, const Point& pt3) const
     return a >= 0 && b >= 0 && c >= 0 || a < 0 && b < 0 && c < 0;
 }
 
-Size::Size() : w(0), h(0)
-{
-}
-
 Size::Size(u16 sw, u16 sh) : w(sw), h(sh)
 {
 }

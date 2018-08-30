@@ -96,7 +96,7 @@ protected:
 
     friend ByteVectorReader& operator>>(ByteVectorReader& msg, Troop& troop);
 
-    uint32_t count;
+    uint32_t count = 0;
 };
 
 ByteVectorWriter& operator<<(ByteVectorWriter&, const Troop&);

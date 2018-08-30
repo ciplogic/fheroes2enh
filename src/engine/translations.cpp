@@ -89,7 +89,7 @@ namespace ModernTranslation
 
     struct ClassifiedLine
     {
-        TranslationLineType translationLineType{};
+        TranslationLineType translationLineType = TranslationLineType::Empty;
         std::string line;
     };
 
