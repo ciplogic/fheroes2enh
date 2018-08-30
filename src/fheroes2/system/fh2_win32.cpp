@@ -1,8 +1,9 @@
-#include <Windows.h>
 #include <vector>
-#include "dir.h"
+#include <string>
 
 #ifdef WIN32
+#include "dir.h"
+#include <Windows.h>
 
 std::vector<std::string> extractArgsVector(int argc, char** argv)
 {
@@ -21,4 +22,17 @@ std::vector<std::string> extractArgsVector(int argc, char** argv)
 	return vArgv;
 }
 
+#else
+
+
+std::vector<std::string> extractArgsVector(int argc, char** argv)
+{
+    std::vector<std::string> vArgv;
+    vArgv.reserve(argc);
+    for (int i = 0; i < argc; i++)
+    {
+        vArgv.emplace_back(argv[i]);
+    }
+    return vArgv;
+}
 #endif

@@ -349,11 +349,15 @@ set(SOURCE_FILES
         src/fheroes2/system/players.h
         src/fheroes2/system/settings.cpp
         src/fheroes2/system/settings.h
+        src/fheroes2/system/fh2_win32.cpp
         src/tools/palette_h2.h
         src/tools/palette_h2.cpp
         src/fheroes2/agg/ColorTable.h
         src/fheroes2/dialog/FileUtils.cpp
-        src/fheroes2/dialog/FileUtils.h src/tools/palette_h2.cpp src/fheroes2/dialog/plus_sign_addon.cpp src/fheroes2/dialog/plus_sign_addon.h)
+        src/fheroes2/dialog/FileUtils.h
+        src/tools/palette_h2.cpp
+        src/fheroes2/dialog/plus_sign_addon.cpp
+        src/fheroes2/dialog/plus_sign_addon.h)
 
 add_executable(fheroes2 ${SOURCE_FILES})
 

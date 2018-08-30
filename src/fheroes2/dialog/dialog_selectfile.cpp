@@ -176,8 +176,8 @@ string Dialog::SelectFileSave()
     const string& name = conf.CurrentFileInfo().name;
 
     string base = !name.empty() ? name : "newgame";
-    base.resize(distance(base.begin(), find_if(base.begin(), base.end(), ispunct)));
-    replace_if(base.begin(), base.end(), isspace, '_');
+    base.resize(distance(base.begin(), std::find_if(base.begin(), base.end(), ::ispunct)));
+    std::replace_if(base.begin(), base.end(), ::isspace, '_');
     ostringstream os;
 
     os << System::ConcatePath(Settings::GetSaveDir(), base) <<
