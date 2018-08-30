@@ -106,7 +106,6 @@ void Display::SetIcons(Surface& icons)
 
 Size Display::GetMaxMode(bool rotate) const
 {
-    Size result;
     SDL_Rect** modes = SDL_ListModes(nullptr, SDL_ANYFORMAT);
 
     if (modes == (SDL_Rect **)nullptr ||
@@ -118,7 +117,7 @@ Size Display::GetMaxMode(bool rotate) const
     int max = 0;
     int cur = 0;
 
-    for (int ii = 0; modes[ii]; ++ii)
+    for (auto ii = 0; modes[ii]; ++ii)
     {
         if (max < modes[ii]->w * modes[ii]->h)
         {
@@ -127,6 +126,9 @@ Size Display::GetMaxMode(bool rotate) const
         }
     }
 
+	Size result;
+	if (!modes[cur])
+		return {};
     result.w = modes[cur]->w;
     result.h = modes[cur]->h;
 

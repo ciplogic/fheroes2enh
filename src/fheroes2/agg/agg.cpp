@@ -100,7 +100,7 @@ namespace AGG
     private:
         string filename;
         unordered_map<string, FAT> fat;
-        uint32_t count_items;
+        uint32_t count_items = 0;
         up<ByteVectorReader> stream;
         vector<u8> fileContent;
         string key;

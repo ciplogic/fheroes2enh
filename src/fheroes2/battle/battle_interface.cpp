@@ -4531,22 +4531,21 @@ Battle::PopupDamageInfo::PopupDamageInfo() : FrameBorder(5), cell(nullptr), atta
 
 void Battle::PopupDamageInfo::SetInfo(const Cell* c, const Unit* a, const Unit* b)
 {
-    if(!cell)
+    if(!c || cell==c)
         return;
-    if (Settings::Get().ExtBattleShowDamage() &&
-        Battle::AnimateInfrequentDelay(Game::BATTLE_POPUP_DELAY) &&
-        (c && cell != c ||
-            !attacker || a && attacker != a ||
-            !defender || b && defender != b))
-    {
-        redraw = true;
-        cell = c;
-        attacker = a;
-        defender = b;
+	if (!a || attacker == a)
+		return;
+	if (!b || defender == b)
+		return;
+    if (!Settings::Get().ExtBattleShowDamage() || !Battle::AnimateInfrequentDelay(Game::BATTLE_POPUP_DELAY))
+        return;
+    redraw = true;
+    cell = c;
+    attacker = a;
+    defender = b;
 
-        const Rect& rt = cell->GetPos();
-        SetPosition(rt.x + rt.w, rt.y, 20, 20);
-    }
+    const Rect& rt = cell->GetPos();
+    SetPosition(rt.x + rt.w, rt.y, 20, 20);
 }
 
 void Battle::PopupDamageInfo::Reset()

@@ -434,16 +434,16 @@ namespace Maps
         Addons addons_level1;
         Addons addons_level2; // 16
 
-        uint32_t maps_index;
-        u16 pack_sprite_index;
+        uint32_t maps_index = 0;
+        u16 pack_sprite_index = 0;
 
-        u16 tile_passable;
-        u8 mp2_object;
-        u8 fog_colors;
+        u16 tile_passable = 0;
+        u8 mp2_object = 0;
+        u8 fog_colors = 0;
 
-        u8 quantity1;
-        u8 quantity2;
-        u8 quantity3;
+        u8 quantity1 = 0;
+        u8 quantity2 = 0;
+        u8 quantity3 = 0;
     };
 
     ByteVectorWriter& operator<<(ByteVectorWriter&, const TilesAddon&);

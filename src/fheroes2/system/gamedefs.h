@@ -30,8 +30,8 @@
 #include "translations.h"
 #include <memory>
 
-#define _(s)       Translation::gettext(s)
-#define _n(a, b, c)    Translation::ngettext(a,b,c)
+std::string _(const std::string & s);
+std::string _n(const std::string &str, const std::string &plural, size_t n);
 
 // hardcore defines: kingdom
 #define KINGDOMMAX            6

@@ -26,7 +26,17 @@
 #include <fstream>
 
 
+#include "translations.h"
+
 using namespace std;
+std::string _(const std::string& text)
+{
+	return Translation::gettext(text);
+}
+std::string _n(const std::string &str, const std::string &plural, size_t n)
+{
+	return Translation::ngettext(str.c_str(), plural.c_str(), n);
+}
 
 namespace ModernTranslation
 {
