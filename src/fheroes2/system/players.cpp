@@ -532,14 +532,14 @@ bool Interface::PlayerInfo::operator==(const sp<Player>& p) const
 
 Interface::PlayersInfo::PlayersInfo(bool name, bool race, bool swap) : show_name(name), show_race(race), show_swap(swap)
 {
-	_items.reserve(KINGDOMMAX);
+    _items.reserve(KINGDOMMAX);
 }
 
 void Interface::PlayersInfo::UpdateInfo(Players& players, const Point& pt1, const Point& pt2)
 {
     const Sprite& sprite = AGG::GetICN(ICN::NGEXTRA, 3);
 
-	_items.clear();
+    _items.clear();
 
     for (auto it = players._items.begin(); it != players._items.end(); ++it)
     {
@@ -552,7 +552,7 @@ void Interface::PlayersInfo::UpdateInfo(Players& players, const Point& pt1, cons
         info.rect2 = Rect(pt2.x + Game::GetStep4Player(current, sprite.w(), players._items.size()), pt2.y, sprite.w(),
                           sprite.h());
 
-		_items.push_back(info);
+        _items.push_back(info);
     }
 
     for (auto it = _items.begin(); it != _items.end(); ++it)

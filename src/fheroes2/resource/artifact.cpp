@@ -140,7 +140,8 @@ artifactstats_t artifacts[] = {
     {0, 0, TYPE0, _("Wand of Negation"), _("The %{name} protects your troops from the Dispel Magic spell.")},
     {
         0, 50, TYPE0, _("Golden Bow"),
-        _("The %{name} eliminates the %{count} percent penalty for your troops shooting past obstacles. (e.g. castle walls)"
+        _(
+            "The %{name} eliminates the %{count} percent penalty for your troops shooting past obstacles. (e.g. castle walls)"
         )
     },
     {
@@ -149,7 +150,8 @@ artifactstats_t artifacts[] = {
     },
     {
         0, 10, TYPE0, _("Statesman's Quill"),
-        _("The %{name} reduces the cost of surrender to %{count} percent of the total cost of troops you have in your army."
+        _(
+            "The %{name} reduces the cost of surrender to %{count} percent of the total cost of troops you have in your army."
         )
     },
     {0, 10, TYPE0, _("Wizard's Hat"), _("The %{name} increases the duration of your spells by %{count} turns.")},
@@ -183,17 +185,20 @@ artifactstats_t artifacts[] = {
     {0, 5, TYPE3, _("Breastplate of Anduran"), _("The %{name} increases your defense by %{count}.")},
     {
         0, 50, TYPE3, _("Broach of Shielding"),
-        _("The %{name} provides %{count} percent protection from Armageddon and Elemental Storm, but decreases spell power by 2."
+        _(
+            "The %{name} provides %{count} percent protection from Armageddon and Elemental Storm, but decreases spell power by 2."
         )
     },
     {
         0, 5, TYPE0, _("Battle Garb of Anduran"),
-        _("The %{name} combines the powers of the three Anduran artifacts.  It provides maximum luck and morale for your troops and gives you the Town Portal spell."
+        _(
+            "The %{name} combines the powers of the three Anduran artifacts.  It provides maximum luck and morale for your troops and gives you the Town Portal spell."
         )
     },
     {
         0, 0, TYPE0, _("Crystal Ball"),
-        _("The %{name} lets you get more specific information about monsters, enemy heroes, and castles nearby the hero who holds it."
+        _(
+            "The %{name} lets you get more specific information about monsters, enemy heroes, and castles nearby the hero who holds it."
         )
     },
     {
@@ -223,31 +228,31 @@ std::string GetPluralDescription(const Artifact& art, uint32_t count)
     {
     case Artifact::ENCHANTED_HOURGLASS:
         return _n("The %{name} extends the duration of all your spells by %{count} turn.",
-            "The %{name} extends the duration of all your spells by %{count} turns.", count);
+                  "The %{name} extends the duration of all your spells by %{count} turns.", count);
     case Artifact::WIZARD_HAT:
         return _n("The %{name} increases the duration of your spells by %{count} turn.",
-            "The %{name} increases the duration of your spells by %{count} turns.", count);
+                  "The %{name} increases the duration of your spells by %{count} turns.", count);
     case Artifact::POWER_RING:
         return _n("The %{name} returns %{count} extra power point/turn to your hero.",
-            "The %{name} returns %{count} extra power points/turn to your hero.", count);
+                  "The %{name} returns %{count} extra power points/turn to your hero.", count);
     case Artifact::ENDLESS_POUCH_SULFUR:
         return _n("The %{name} provides %{count} unit of sulfur per day.",
-            "The %{name} provides %{count} units of sulfur per day.", count);
+                  "The %{name} provides %{count} units of sulfur per day.", count);
     case Artifact::ENDLESS_VIAL_MERCURY:
         return _n("The %{name} provides %{count} unit of mercury per day.",
-            "The %{name} provides %{count} units of mercury per day.", count);
+                  "The %{name} provides %{count} units of mercury per day.", count);
     case Artifact::ENDLESS_POUCH_GEMS:
         return _n("The %{name} provides %{count} unit of gems per day.",
-            "The %{name} provides %{count} units of gems per day.", count);
+                  "The %{name} provides %{count} units of gems per day.", count);
     case Artifact::ENDLESS_CORD_WOOD:
         return _n("The %{name} provides %{count} unit of wood per day.",
-            "The %{name} provides %{count} units of wood per day.", count);
+                  "The %{name} provides %{count} units of wood per day.", count);
     case Artifact::ENDLESS_CART_ORE:
         return _n("The %{name} provides %{count} unit of ore per day.",
-            "The %{name} provides %{count} units of ore per day.", count);
+                  "The %{name} provides %{count} units of ore per day.", count);
     case Artifact::ENDLESS_POUCH_CRYSTAL:
         return _n("The %{name} provides %{count} unit of crystal per day.",
-            "The %{name} provides %{count} units of crystal per day.", count);
+                  "The %{name} provides %{count} units of crystal per day.", count);
     default:
         break;
     }
@@ -773,9 +778,10 @@ ByteVectorReader& operator>>(ByteVectorReader& msg, Artifact& art)
     return msg >> art.id >> art.ext;
 }
 
-BagArtifacts::BagArtifacts() 
-: _items(HEROESMAXARTIFACT, Artifact::UNKNOWN)
-{}
+BagArtifacts::BagArtifacts()
+    : _items(HEROESMAXARTIFACT, Artifact::UNKNOWN)
+{
+}
 
 bool BagArtifacts::ContainSpell(const Spell& spell) const
 {
@@ -840,10 +846,10 @@ uint32_t BagArtifacts::CountArtifacts() const
 
 bool BagArtifacts::ContainUltimateArtifact() const
 {
-	return _items.end() != find_if(_items.begin(), _items.end(), [](const Artifact&it)
-	{
-		return it.isUltimate();
-	});
+    return _items.end() != find_if(_items.begin(), _items.end(), [](const Artifact& it)
+    {
+        return it.isUltimate();
+    });
 }
 
 void BagArtifacts::RemoveScroll(const Artifact& art)

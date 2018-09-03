@@ -141,7 +141,7 @@ std::string BarrierColor::String(int val)
 
 Colors::Colors(int colors)
 {
-	_items.reserve(6);
+    _items.reserve(6);
 
     if (colors & Color::BLUE) _items.push_back(Color::BLUE);
     if (colors & Color::GREEN) _items.push_back(Color::GREEN);

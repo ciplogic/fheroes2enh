@@ -25,7 +25,7 @@
 #include "world.h"
 #include "rand.h"
 
-std::string Week::GetName() const
+namespace
 {
     std::string str_name[] = {
         "Unnamed", _("week|PLAGUE"),
@@ -37,7 +37,10 @@ std::string Week::GetName() const
         _("week|Mongoose"), _("week|Aardvark"),
         _("week|Lizard"), _("week|Tortoise"), _("week|Hedgehog"), _("week|Condor")
     };
+}
 
+std::string Week::GetName() const
+{
     switch (first)
     {
     case PLAGUE:

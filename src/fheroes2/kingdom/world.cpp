@@ -631,35 +631,36 @@ MapsIndexes World::GetTeleportEndPoints(s32 center) const
     MapsIndexes result;
 
     if (MP2::OBJ_STONELIGHTS != GetTiles(center).GetObject(false))
-	{
-		return result;
-	}
-	result = Maps::GetObjectPositions(MP2::OBJ_STONELIGHTS, true);
+    {
+        return result;
+    }
+    result = Maps::GetObjectPositions(MP2::OBJ_STONELIGHTS, true);
 
-	if (2 > result.size())
-	{
-		result.clear();
-	}
-	else
-	{
-		auto itend = result.end();
+    if (2 > result.size())
+    {
+        result.clear();
+    }
+    else
+    {
+        auto itend = result.end();
 
-		// remove if not type
-		itend = remove_if(result.begin(), itend,
-			[&](s32& it) { return !TeleportCheckType(it, GetTiles(center).QuantityTeleportType()); });
+        // remove if not type
+        itend = remove_if(result.begin(), itend,
+                          [&](s32& it) { return !TeleportCheckType(it, GetTiles(center).QuantityTeleportType()); });
 
-		// remove if index
-		itend = remove(result.begin(), itend, center);
+        // remove if index
+        itend = remove(result.begin(), itend, center);
 
-		// remove if not ground
-		itend = remove_if(result.begin(), itend, [&](s32&it) {
-			return !TeleportCheckGround(it, GetTiles(center).isWater());
-		});
+        // remove if not ground
+        itend = remove_if(result.begin(), itend, [&](s32& it)
+        {
+            return !TeleportCheckGround(it, GetTiles(center).isWater());
+        });
 
-		result.resize(distance(result.begin(), itend));
-	}
+        result.resize(distance(result.begin(), itend));
+    }
 
-	return result;
+    return result;
 }
 
 /* return random teleport destination */
@@ -1261,8 +1262,8 @@ ByteVectorReader& operator>>(ByteVectorReader& msg, World& w)
     msg >> w.map_objects;
 
     // update tile passable
-	for_each(w.vec_tiles.begin(), w.vec_tiles.end(),
-		[](Maps::Tiles&it) { it.UpdatePassable(); });
+    for_each(w.vec_tiles.begin(), w.vec_tiles.end(),
+             [](Maps::Tiles& it) { it.UpdatePassable(); });
 
     // heroes postfix
     for_each(w.vec_heroes._items.begin(), w.vec_heroes._items.end(),

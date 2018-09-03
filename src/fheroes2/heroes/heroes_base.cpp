@@ -37,47 +37,44 @@ int ArtifactsModifiersResult(int type, const u8* arts, uint32_t size, const Hero
     {
         const Artifact art(arts[ii]);
 
-        if (art.isValid())
+        if (!art.isValid())
+            continue;
+        int acount = base.HasArtifact(art);
+        if (!acount) continue;
+        s32 mod = art.ExtraValue();
+
+        switch (art())
         {
-            int acount = base.HasArtifact(art);
-            if (acount)
-            {
-                s32 mod = art.ExtraValue();
+        case Artifact::SWORD_BREAKER:
+            if (type == MDF_ATTACK) mod = 1;
+            break;
+            // power
+        case Artifact::BROACH_SHIELDING:
+            if (type == MDF_POWER) mod = -2;
+            break;
+            // morale/luck
+        case Artifact::BATTLE_GARB:
+            if (type == MDF_MORALE || type == MDF_LUCK) mod = 10;
+            break;
+        case Artifact::MASTHEAD:
+            if (type == MDF_MORALE || type == MDF_LUCK)
+                mod = base.Modes(Heroes::SHIPMASTER) ? art.ExtraValue() : 0;
+            break;
+            // morale
+        case Artifact::FIZBIN_MISFORTUNE:
+            if (type == MDF_MORALE) mod = 0 - art.ExtraValue();
+            break;
+        default:
+            break;
+        }
 
-                switch (art())
-                {
-                case Artifact::SWORD_BREAKER:
-                    if (type == MDF_ATTACK) mod = 1;
-                    break;
-                    // power
-                case Artifact::BROACH_SHIELDING:
-                    if (type == MDF_POWER) mod = -2;
-                    break;
-                    // morale/luck
-                case Artifact::BATTLE_GARB:
-                    if (type == MDF_MORALE || type == MDF_LUCK) mod = 10;
-                    break;
-                case Artifact::MASTHEAD:
-                    if (type == MDF_MORALE || type == MDF_LUCK)
-                        mod = base.Modes(Heroes::SHIPMASTER) ? art.ExtraValue() : 0;
-                    break;
-                    // morale
-                case Artifact::FIZBIN_MISFORTUNE:
-                    if (type == MDF_MORALE) mod = 0 - art.ExtraValue();
-                    break;
-                default:
-                    break;
-                }
+        result += mod * acount;
 
-                result += mod * acount;
-
-                if (strs && mod)
-                {
-                    strs->append(art.GetName());
-                    StringAppendModifiers(*strs, mod);
-                    strs->append("\n");
-                }
-            }
+        if (strs && mod)
+        {
+            strs->append(art.GetName());
+            StringAppendModifiers(*strs, mod);
+            strs->append("\n");
         }
     }
 

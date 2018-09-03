@@ -44,9 +44,7 @@ struct HeroRow
     sp<SecondarySkillsBar> secskillsBar;
     sp<PrimarySkillsBar> primskillsBar;
 
-    HeroRow() : hero(nullptr), armyBar(nullptr), artifactsBar(nullptr), secskillsBar(nullptr), primskillsBar(nullptr)
-    {
-    }
+	HeroRow() = default;
 
     ~HeroRow()
     {

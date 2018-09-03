@@ -31,7 +31,7 @@
 
 SpellStorage::SpellStorage()
 {
-	_items.reserve(67);
+    _items.reserve(67);
 }
 
 uint32_t SpellStorage::Size(int lvl) const
@@ -73,15 +73,15 @@ SpellStorage SpellStorage::GetSpells(int lvl) const
 void SpellStorage::Append(const Spell& sp)
 {
     if (sp != Spell::NONE &&
-		_items.end() == find(_items.begin(), _items.end(), sp))
-		_items.push_back(sp);
+        _items.end() == find(_items.begin(), _items.end(), sp))
+        _items.push_back(sp);
 }
 
 void SpellStorage::Append(const SpellStorage& st)
 {
-	_items.insert(_items.end(), st._items.begin(), st._items.end());
+    _items.insert(_items.end(), st._items.begin(), st._items.end());
     sort(_items.begin(), _items.end());
-	_items.resize(unique(_items.begin(), _items.end()) - _items.begin());
+    _items.resize(unique(_items.begin(), _items.end()) - _items.begin());
 }
 
 bool SpellStorage::isPresentSpell(const Spell& spell) const

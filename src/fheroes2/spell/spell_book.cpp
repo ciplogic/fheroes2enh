@@ -35,10 +35,11 @@
 #define SPELL_PER_PAGE        6
 #define SPELL_PER_PAGE_SMALL    2
 
-bool SpellFiltered(Spell s, int f) 
+bool SpellFiltered(Spell s, int f)
 {
     return SpellBook::ADVN & f && s.isCombat() || SpellBook::CMBT & f && !s.isCombat();
 }
+
 void SpellBookRedrawLists(const SpellStorage&, Rects&, size_t, const Point&, uint32_t, int only, const HeroBase& hero);
 
 void SpellBookRedrawSpells(const SpellStorage&, Rects&, size_t, s32, s32, const HeroBase& hero);
@@ -346,11 +347,11 @@ SpellStorage SpellBook::SetFilter(int filter, const HeroBase* hero) const
     if (filter != ALL)
     {
         res._items.resize(distance(res._items.begin(),
-                            remove_if(res._items.begin(), res._items.end(),
-                                [&](const Spell& it)
-        {
-            return SpellFiltered(it, filter);
-        })));
+                                   remove_if(res._items.begin(), res._items.end(),
+                                             [&](const Spell& it)
+                                             {
+                                                 return SpellFiltered(it, filter);
+                                             })));
     }
 
     // check on water: disable portal spells

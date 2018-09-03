@@ -1218,10 +1218,14 @@ void Maps::Tiles::UpdatePassable()
     // on ground
     if (MP2::OBJ_HEROES != mp2_object && !isWater())
     {
-        bool mounts1 = addons_level1._items.end() != find_if(addons_level1._items.begin(), addons_level1._items.end(), isMountsRocs);
-        bool mounts2 = addons_level2._items.end() != find_if(addons_level2._items.begin(), addons_level2._items.end(), isMountsRocs);
-        bool trees1 = addons_level1._items.end() != find_if(addons_level1._items.begin(), addons_level1._items.end(), isForestsTrees);
-        bool trees2 = addons_level2._items.end() != find_if(addons_level2._items.begin(), addons_level2._items.end(), isForestsTrees);
+        bool mounts1 = addons_level1._items.end() != find_if(addons_level1._items.begin(), addons_level1._items.end(),
+                                                             isMountsRocs);
+        bool mounts2 = addons_level2._items.end() != find_if(addons_level2._items.begin(), addons_level2._items.end(),
+                                                             isMountsRocs);
+        bool trees1 = addons_level1._items.end() != find_if(addons_level1._items.begin(), addons_level1._items.end(),
+                                                            isForestsTrees);
+        bool trees2 = addons_level2._items.end() != find_if(addons_level2._items.begin(), addons_level2._items.end(),
+                                                            isForestsTrees);
 
         // fix coast passable
         if (tile_passable &&
@@ -1230,7 +1234,8 @@ void Maps::Tiles::UpdatePassable()
             TileIsCoast(GetIndex(), Direction::TOP | Direction::BOTTOM | Direction::LEFT | Direction::RIGHT) &&
             addons_level1._items.size() != static_cast<size_t>(count_if(
                 addons_level1._items.begin(), addons_level1._items.end(),
-                [](const TilesAddon&it) {
+                [](const TilesAddon& it)
+                {
                     return TilesAddon::isShadow(it);
                 })))
         {
@@ -1721,7 +1726,7 @@ void Maps::Tiles::RedrawTop4Hero(Surface& dst, bool skip_ground) const
 Maps::TilesAddon* Maps::Tiles::FindAddonICN1(int icn1)
 {
     const auto it = find_if(addons_level1._items.begin(), addons_level1._items.end(),
-        [&](const TilesAddon& it) { return it.isICN(icn1); });
+                            [&](const TilesAddon& it) { return it.isICN(icn1); });
 
     return it != addons_level1._items.end() ? &*it : nullptr;
 }
@@ -1729,7 +1734,7 @@ Maps::TilesAddon* Maps::Tiles::FindAddonICN1(int icn1)
 Maps::TilesAddon* Maps::Tiles::FindAddonICN2(int icn2)
 {
     auto it = find_if(addons_level2._items.begin(), addons_level2._items.end(),
-        [&](const TilesAddon& it) { return it.isICN(icn2); });
+                      [&](const TilesAddon& it) { return it.isICN(icn2); });
 
     return it != addons_level2._items.end() ? &*it : nullptr;
 }
@@ -1737,7 +1742,7 @@ Maps::TilesAddon* Maps::Tiles::FindAddonICN2(int icn2)
 Maps::TilesAddon* Maps::Tiles::FindAddonLevel1(uint32_t uniq1)
 {
     auto it = find_if(addons_level1._items.begin(), addons_level1._items.end(),
-        [&](const TilesAddon& it) { return it.isUniq(uniq1); });
+                      [&](const TilesAddon& it) { return it.isUniq(uniq1); });
 
     return it != addons_level1._items.end() ? &*it : nullptr;
 }
@@ -1745,7 +1750,7 @@ Maps::TilesAddon* Maps::Tiles::FindAddonLevel1(uint32_t uniq1)
 Maps::TilesAddon* Maps::Tiles::FindAddonLevel2(uint32_t uniq2)
 {
     auto it = find_if(addons_level2._items.begin(), addons_level2._items.end(),
-        [&](const TilesAddon& it) { return it.isUniq(uniq2); });
+                      [&](const TilesAddon& it) { return it.isUniq(uniq2); });
 
     return it != addons_level2._items.end() ? &*it : nullptr;
 }
@@ -1763,10 +1768,10 @@ string Maps::Tiles::String() const
     if (isRoad())
     {
         auto it = find_if(addons_level1._items.begin(), addons_level1._items.end(),
-            [](const TilesAddon& it)
-        {
-            return it.isRoad(DIRECTION_ALL);
-        });
+                          [](const TilesAddon& it)
+                          {
+                              return it.isRoad(DIRECTION_ALL);
+                          });
         os << ", (" << "road";
         if (ICN::ROAD == MP2::GetICNObject((*it).object))
             os << ", " << "index: " << static_cast<int>((*it).index);
@@ -1869,7 +1874,8 @@ void Maps::Tiles::FixObject()
 {
     if (MP2::OBJ_ZERO != mp2_object)
         return;
-    if (addons_level1._items.end() != find_if(addons_level1._items.begin(), addons_level1._items.end(), TilesAddon::isArtifact))
+    if (addons_level1._items.end() != find_if(addons_level1._items.begin(), addons_level1._items.end(),
+                                              TilesAddon::isArtifact))
         SetObject(MP2::OBJ_ARTIFACT);
     else if (addons_level1._items.end() !=
         find_if(addons_level1._items.begin(), addons_level1._items.end(), TilesAddon::isResource))
@@ -1881,7 +1887,7 @@ bool Maps::Tiles::GoodForUltimateArtifact() const
     return !isWater() && (addons_level1._items.empty() ||
             addons_level1._items.size() ==
             static_cast<size_t>(count_if(addons_level1._items.begin(), addons_level1._items.end(),
-                [&](const TilesAddon& it) { return TilesAddon::isShadow(it); }))) &&
+                                         [&](const TilesAddon& it) { return TilesAddon::isShadow(it); }))) &&
         isPassable(nullptr, Direction::CENTER, true);
 }
 

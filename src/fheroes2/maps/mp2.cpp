@@ -33,7 +33,6 @@ int MP2::GetICNObject(int type)
         // reserverd
     case 0:
         return ICN::UNKNOWN;
-
         // manual
     case 0x11:
         return ICN::TELEPORT1;

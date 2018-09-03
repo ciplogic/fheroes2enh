@@ -21,6 +21,9 @@
  ***************************************************************************/
 
 #include <algorithm>
+#include <sstream>
+#include <iostream>
+
 #include "agg.h"
 #include "difficulty.h"
 #include "settings.h"
@@ -40,8 +43,6 @@
 #include "m82.h"
 #include "rand.h"
 #include "icn.h"
-#include <sstream>
-#include <iostream>
 
 
 Castle::Castle() : race(Race::NONE), building(0), captain(*this), army(nullptr)

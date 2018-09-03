@@ -52,7 +52,8 @@ spellstats_t spells[] = {
     },
     {
         _("Fireblast"), 15, 0, 9, 10, 0, COST_NONE,
-        _("An improved version of fireball, fireblast affects two hexes around the center point of the spell, rather than one."
+        _(
+            "An improved version of fireball, fireblast affects two hexes around the center point of the spell, rather than one."
         )
     },
     {
@@ -71,12 +72,14 @@ spellstats_t spells[] = {
     },
     {
         _("Cure"), 6, 0, 6, 5, 0, COST_NONE,
-        _("Removes all negative spells cast upon one of your units, and restores up to %{count} HP per level of spell power."
+        _(
+            "Removes all negative spells cast upon one of your units, and restores up to %{count} HP per level of spell power."
         )
     },
     {
         _("Mass Cure"), 15, 0, 2, 5, 0, COST_NONE,
-        _("Removes all negative spells cast upon your forces, and restores up to %{count} HP per level of spell power, per creature."
+        _(
+            "Removes all negative spells cast upon your forces, and restores up to %{count} HP per level of spell power, per creature."
         )
     },
     {
@@ -127,7 +130,8 @@ spellstats_t spells[] = {
     {_("Paralyze"), 9, 0, 20, 0, 0, COST_NONE, _("The targeted creatures are paralyzed, unable to move or retaliate.")},
     {
         _("Hypnotize"), 15, 0, 37, 25, 0, COST_NONE,
-        _("Brings a single enemy unit under your control for one combat round if its hits are less than %{count} times the caster's spell power."
+        _(
+            "Brings a single enemy unit under your control for one combat round if its hits are less than %{count} times the caster's spell power."
         )
     },
     {_("Cold Ray"), 6, 0, 36, 20, 0, COST_NONE, _("Drains body heat from a single enemy unit.")},
@@ -149,7 +153,8 @@ spellstats_t spells[] = {
     },
     {
         _("Mirror Image"), 25, 0, 26, 0, 0, COST_NONE,
-        _("Creates an illusionary unit that duplicates one of your existing units.  This illusionary unit does the same damages as the original, but will vanish if it takes any damage."
+        _(
+            "Creates an illusionary unit that duplicates one of your existing units.  This illusionary unit does the same damages as the original, but will vanish if it takes any damage."
         )
     },
     {_("Shield"), 3, 0, 15, 2, 0, COST_NONE, _("Halves damage received from ranged attacks for a single unit.")},
@@ -174,7 +179,8 @@ spellstats_t spells[] = {
     },
     {
         _("Summon Boat"), 5, 0, 46, 0, 0, COST_NONE,
-        _("Summons the nearest unoccupied, friendly boat to an adjacent shore location.  A friendly boat is one which you just built or were the most recent player to occupy."
+        _(
+            "Summons the nearest unoccupied, friendly boat to an adjacent shore location.  A friendly boat is one which you just built or were the most recent player to occupy."
         )
     },
     {
@@ -192,7 +198,8 @@ spellstats_t spells[] = {
     },
     {
         _("Haunt"), 8, 0, 51, 4, 0, COST_NONE,
-        _("Haunts a mine you control with Ghosts.  This mine stops producing resources.  (If I can't keep it, nobody will!)"
+        _(
+            "Haunts a mine you control with Ghosts.  This mine stops producing resources.  (If I can't keep it, nobody will!)"
         )
     },
     {

@@ -109,28 +109,28 @@ bool Kingdom::isPlay() const
 void Kingdom::LossPostActions()
 {
     if (!isPlay())
-		return;
-	Players::SetPlayerInGame(color, false);
+        return;
+    Players::SetPlayerInGame(color, false);
 
-	if (!heroes._items.empty())
-	{
-		for_each(heroes._items.begin(), heroes._items.end(),
-			[](Heroes* hero) { hero->SetFreeman(static_cast<int>(Battle::RESULT_LOSS)); });
-		heroes._items.clear();
-	}
-	if (!castles._items.empty())
-	{
-		castles.ChangeColors(GetColor(), Color::NONE);
-		castles._items.clear();
-	}
-	world.ResetCapturedObjects(GetColor());
+    if (!heroes._items.empty())
+    {
+        for_each(heroes._items.begin(), heroes._items.end(),
+                 [](Heroes* hero) { hero->SetFreeman(static_cast<int>(Battle::RESULT_LOSS)); });
+        heroes._items.clear();
+    }
+    if (!castles._items.empty())
+    {
+        castles.ChangeColors(GetColor(), Color::NONE);
+        castles._items.clear();
+    }
+    world.ResetCapturedObjects(GetColor());
 }
 
 void Kingdom::ActionBeforeTurn()
 {
     // rescan heroes path
-	for_each(heroes._items.begin(), heroes._items.end(), 
-		[](Heroes*it) { it->RescanPath(); });
+    for_each(heroes._items.begin(), heroes._items.end(),
+             [](Heroes* it) { it->RescanPath(); });
 }
 
 void Kingdom::ActionNewDay()
@@ -152,11 +152,11 @@ void Kingdom::ActionNewDay()
     {
         // castle New Day
         for_each(castles._items.begin(), castles._items.end(),
-			[](Castle* it) { it->ActionNewDay(); });
+                 [](Castle* it) { it->ActionNewDay(); });
 
         // heroes New Day
-        for_each(heroes._items.begin(), heroes._items.end(), 
-			[](Heroes* hero) { hero->ActionNewDay(); });
+        for_each(heroes._items.begin(), heroes._items.end(),
+                 [](Heroes* hero) { hero->ActionNewDay(); });
 
         // income
         AddFundsResource(GetIncome());
@@ -165,7 +165,7 @@ void Kingdom::ActionNewDay()
     // check event day AI
     EventsDate events = world.GetEventsDate(GetColor());
     for (const auto& event : events)
-	    AddFundsResource(event.resource);
+        AddFundsResource(event.resource);
 
     // remove day visit object
     visit_object.remove_if(Visit::isDayLife);
@@ -177,15 +177,15 @@ void Kingdom::ActionNewWeek()
 
     // skip first day
     if (1 < world.CountDay())
-	{
-		// castle New Week
-		for_each(castles._items.begin(), castles._items.end(),
-			[](Castle* it) { it->ActionNewWeek(); });
+    {
+        // castle New Week
+        for_each(castles._items.begin(), castles._items.end(),
+                 [](Castle* it) { it->ActionNewWeek(); });
 
-		// heroes New Week
-		for_each(heroes._items.begin(), heroes._items.end(),
-			[](Heroes* hero) { hero->ActionNewWeek(); });
-  
+        // heroes New Week
+        for_each(heroes._items.begin(), heroes._items.end(),
+                 [](Heroes* hero) { hero->ActionNewWeek(); });
+
 
         // debug an gift
         if (IS_DEVEL() && isControlHuman())
@@ -204,16 +204,16 @@ void Kingdom::ActionNewWeek()
 void Kingdom::ActionNewMonth()
 {
     // skip first day
-	if (1 < world.CountDay())
-	{
-		// castle New Month
-		for_each(castles._items.begin(), castles._items.end(),
-			[](Castle* it) { it->ActionNewMonth(); });
+    if (1 < world.CountDay())
+    {
+        // castle New Month
+        for_each(castles._items.begin(), castles._items.end(),
+                 [](Castle* it) { it->ActionNewMonth(); });
 
-		// heroes New Month
-		for_each(heroes._items.begin(), heroes._items.end(),
-			[](Heroes* hero) { hero->ActionNewMonth(); });
-	}
+        // heroes New Month
+        for_each(heroes._items.begin(), heroes._items.end(),
+                 [](Heroes* hero) { hero->ActionNewMonth(); });
+    }
 
     // remove week visit object
     visit_object.remove_if(Visit::isMonthLife);
@@ -318,15 +318,14 @@ uint32_t Kingdom::GetCountMarketplace() const
 
 uint32_t Kingdom::GetCountNecromancyShrineBuild() const
 {
-
-    return std::count_if(castles._items.begin(), castles._items.end(), 
-		[](Castle* it) { return  it->isNecromancyShrineBuild(); });
+    return std::count_if(castles._items.begin(), castles._items.end(),
+                         [](Castle* it) { return it->isNecromancyShrineBuild(); });
 }
 
 uint32_t Kingdom::GetCountBuilding(uint32_t build) const
 {
     return std::count_if(castles._items.begin(), castles._items.end(),
-		[&](const Castle* it) { return it->isBuild(build); });
+                         [&](const Castle* it) { return it->isBuild(build); });
 }
 
 bool Kingdom::AllowPayment(const Funds& funds) const
@@ -350,11 +349,11 @@ bool Kingdom::isVisited(const Maps::Tiles& tile) const
 bool Kingdom::isVisited(s32 index, int object) const
 {
     const auto it = find_if(visit_object.begin(), visit_object.end(),
-		[&](const IndexObject& it)
-    {
-		return it.isIndex(index);
-	});
-      
+                            [&](const IndexObject& it)
+                            {
+                                return it.isIndex(index);
+                            });
+
     return visit_object.end() != it && (*it).isObject(object);
 }
 
@@ -362,13 +361,13 @@ bool Kingdom::isVisited(s32 index, int object) const
 bool Kingdom::isVisited(int object) const
 {
     return visit_object.end() != find_if(visit_object.begin(), visit_object.end(),
-		[&](const IndexObject& it) { return it.isObject(object); });
+                                         [&](const IndexObject& it) { return it.isObject(object); });
 }
 
 uint32_t Kingdom::CountVisitedObjects(int object) const
 {
     return count_if(visit_object.begin(), visit_object.end(),
-		[&](const IndexObject& it) { return it.isObject(object); });
+                    [&](const IndexObject& it) { return it.isObject(object); });
 }
 
 /* set visited cell */
@@ -379,8 +378,8 @@ void Kingdom::SetVisited(s32 index, int object)
 
 bool Kingdom::HeroesMayStillMove() const
 {
-    return heroes._items.end() != find_if(heroes._items.begin(), heroes._items.end(), 
-		[](const Heroes* hero) { return hero->MayStillMove(); });
+    return heroes._items.end() != find_if(heroes._items.begin(), heroes._items.end(),
+                                          [](const Heroes* hero) { return hero->MayStillMove(); });
 }
 
 uint32_t Kingdom::GetCountCapital() const
@@ -494,8 +493,8 @@ void Kingdom::HeroesActionNewPosition() const
 {
     // Heroes::ActionNewPosition: can remove elements from heroes vector.
     KingdomHeroes heroes2(heroes);
-    for_each(heroes2._items.begin(), heroes2._items.end(), 
-		[](Heroes*it) { it->ActionNewPosition(); });
+    for_each(heroes2._items.begin(), heroes2._items.end(),
+             [](Heroes* it) { it->ActionNewPosition(); });
 }
 
 Funds Kingdom::GetIncome(int type /* INCOME_ALL */) const

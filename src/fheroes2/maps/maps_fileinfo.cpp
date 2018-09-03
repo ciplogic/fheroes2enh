@@ -562,21 +562,22 @@ bool Maps::PrepareMapsFileInfoList(MapsFileInfoList& lists, bool multi)
 
     if (!multi)
     {
-		auto it = remove_if(lists.begin(), lists.end(),
-			[](const FileInfo& it) {
-			return it.isMultiPlayerMap();
-		});
+        auto it = remove_if(lists.begin(), lists.end(),
+                            [](const FileInfo& it)
+                            {
+                                return it.isMultiPlayerMap();
+                            });
         if (it != lists.begin()) lists.resize(distance(lists.begin(), it));
     }
 
     // set preferably count filter
     if (conf.PreferablyCountPlayers())
     {
-		const auto it = remove_if(lists.begin(), lists.end(),
-			[&](FileInfo& fileInfo)
-		{
-			return fileInfo.isAllowCountPlayers(conf.PreferablyCountPlayers());
-		});
+        const auto it = remove_if(lists.begin(), lists.end(),
+                                  [&](FileInfo& fileInfo)
+                                  {
+                                      return fileInfo.isAllowCountPlayers(conf.PreferablyCountPlayers());
+                                  });
         if (it != lists.begin()) lists.resize(distance(lists.begin(), it));
     }
 

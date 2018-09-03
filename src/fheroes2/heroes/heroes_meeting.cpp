@@ -301,7 +301,7 @@ bool HeroesCanTeachSpell(const HeroBase* hero, Spell spell)
 }
 
 
-bool HeroesHaveSpell(const HeroBase* hero, Spell spell) 
+bool HeroesHaveSpell(const HeroBase* hero, Spell spell)
 {
     return hero->HaveSpell(spell);
 }
@@ -350,20 +350,20 @@ void Heroes::ScholarAction(Heroes& hero1, Heroes& hero2)
     if (!learn._items.empty())
     {
         const auto res = remove_if(learn._items.begin(), learn._items.end(),
-            [&](const Spell& spell)
-        {
-            return HeroesHaveSpell(teacher, spell);
-        });
+                                   [&](const Spell& spell)
+                                   {
+                                       return HeroesHaveSpell(teacher, spell);
+                                   });
         learn._items.resize(distance(learn._items.begin(), res));
     }
 
     if (!learn._items.empty())
     {
         const auto res = remove_if(learn._items.begin(), learn._items.end(),
-            [&](const Spell& spell)
-        {
-            return !HeroesCanTeachSpell(teacher, spell);
-        });
+                                   [&](const Spell& spell)
+                                   {
+                                       return !HeroesCanTeachSpell(teacher, spell);
+                                   });
         learn._items.resize(distance(learn._items.begin(), res));
     }
 

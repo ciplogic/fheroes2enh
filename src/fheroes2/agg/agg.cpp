@@ -984,14 +984,11 @@ bool AGG::LoadOrgICN(Sprite& sp, int icn, uint32_t index, bool reflect)
 {
     ICNSprite icnSprite = RenderICNSprite(icn, index);
 
-    if (icnSprite.isValid())
-    {
-        const auto picSp = icnSprite.CreateSprite(reflect, !ICN::SkipLocalAlpha(icn));
-        sp = *picSp;
-        return true;
-    }
-
-    return false;
+    if (!icnSprite.isValid())
+        return false;
+    const auto picSp = icnSprite.CreateSprite(reflect, !ICN::SkipLocalAlpha(icn));
+    sp = *picSp;
+    return true;
 }
 
 bool AGG::LoadOrgICN(int icn, uint32_t index, bool reflect)

@@ -633,8 +633,8 @@ Battle::Status::Status() : back1(AGG::GetICN(ICN::TEXTBAR, 8)), back2(AGG::GetIC
 
 void Battle::Status::SetPosition(s32 cx, s32 cy)
 {
-    x = cx;
-    y = cy;
+	x = cx;
+	y = cy;
 }
 
 void Battle::Status::SetMessage(const string& str, bool top)
@@ -1270,7 +1270,7 @@ void Battle::Interface::RedrawCoverStatic(Surface& dst) const
 
 void Battle::Interface::RedrawCastle1(const Castle& castle, Surface& dst) const
 {
-    const Point& topleft = border.GetArea();
+	const Point& topleft = border.GetArea();
     const bool fortification = Race::KNGT == castle.GetRace() && castle.isBuild(BUILD_SPEC);
 
     int icn_castbkg;

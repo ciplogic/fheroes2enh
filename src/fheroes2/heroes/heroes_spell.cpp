@@ -540,7 +540,7 @@ bool ActionSpellVisions(Heroes& hero)
                 else
                 {
                     msg = _n("The creature will join us...", "%{count} of the creatures will join us...",
-                        join.second);
+                             join.second);
                     StringReplace(msg, "%{count}", join.second);
                 }
                 msg.append("\n");
@@ -576,7 +576,8 @@ bool ActionSpellSetGuardian(Heroes& hero, const Spell& spell, int mons)
     if (MP2::OBJ_MINES != tile.GetObject(false))
     {
         Message("",
-                _("You must be standing on the entrance to a mine (sawmills and alchemists don't count) to cast this spell."
+                _(
+                    "You must be standing on the entrance to a mine (sawmills and alchemists don't count) to cast this spell."
                 ),
                 Font::BIG, Dialog::OK);
         return false;

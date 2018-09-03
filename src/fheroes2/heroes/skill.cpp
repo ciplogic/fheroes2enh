@@ -456,33 +456,33 @@ string Skill::Secondary::GetDescription() const
     {
     case PATHFINDING:
         str = _n("Reduces the movement penalty for rough terrain by %{count} percent.",
-            "Reduces the movement penalty for rough terrain by %{count} percent.", count);
+                 "Reduces the movement penalty for rough terrain by %{count} percent.", count);
         break;
     case ARCHERY:
         str = _n("Increases the damage done by range attacking creatures by %{count} percent.",
-            "Increases the damage done by range attacking creatures by %{count} percent.", count);
+                 "Increases the damage done by range attacking creatures by %{count} percent.", count);
         break;
     case LOGISTICS:
         str = _n("Increases your hero's movement points by %{count} percent.",
-            "Increases your hero's movement points by %{count} percent.", count);
+                 "Increases your hero's movement points by %{count} percent.", count);
         break;
     case SCOUTING:
         str = _n("Increases your hero's viewable area by %{count} square.",
-            "Increases your hero's viewable area by %{count} squares.", count);
+                 "Increases your hero's viewable area by %{count} squares.", count);
         break;
     case DIPLOMACY:
         str = _("Allows you to negotiate with monsters who are weaker than your group.");
         str.append(" ");
         str.append(_n("Approximately %{count} percent of the creatures may offer to join you.",
-            "Approximately %{count} percent of the creatures may offer to join you.", count));
+                      "Approximately %{count} percent of the creatures may offer to join you.", count));
         break;
     case NAVIGATION:
         str = _n("Increases your hero's movement points over water by %{count} percent.",
-            "Increases your hero's movement points over water by %{count} percent.", count);
+                 "Increases your hero's movement points over water by %{count} percent.", count);
         break;
     case LEADERSHIP:
         str = _n("Increases your hero's troops morale by %{count}.",
-            "Increases your hero's troops morale by %{count}.", count);
+                 "Increases your hero's troops morale by %{count}.", count);
         break;
     case WISDOM:
         {
@@ -504,11 +504,11 @@ string Skill::Secondary::GetDescription() const
         }
     case MYSTICISM:
         str = _n("Regenerates %{count} of your hero's spell point per day.",
-            "Regenerates %{count} of your hero's spell points per day.", count);
+                 "Regenerates %{count} of your hero's spell points per day.", count);
         break;
     case LUCK:
         str = _n("Increases your hero's luck by %{count}.",
-            "Increases your hero's luck by %{count}.", count);
+                 "Increases your hero's luck by %{count}.", count);
         break;
     case BALLISTICS:
         switch (Level())
@@ -569,7 +569,7 @@ string Skill::Secondary::GetDescription() const
         break;
     case ESTATES:
         str = _n("Your hero produce %{count} gold pieces per turn as tax revenue from estates.",
-            "Your hero produces %{count} gold pieces per turn as tax revenue from estates.", count);
+                 "Your hero produces %{count} gold pieces per turn as tax revenue from estates.", count);
         break;
     default:
         break;
@@ -626,7 +626,7 @@ Skill::SecSkills::SecSkills(int race)
 int Skill::SecSkills::GetLevel(int skill) const
 {
     const auto it = find_if(_items.begin(), _items.end(),
-		[&](const Secondary& it) { return it.isSkill(skill); });
+                            [&](const Secondary& it) { return it.isSkill(skill); });
 
     return it == _items.end() ? Level::NONE : (*it).Level();
 }
@@ -634,15 +634,15 @@ int Skill::SecSkills::GetLevel(int skill) const
 uint32_t Skill::SecSkills::GetValues(int skill) const
 {
     const auto it = find_if(_items.begin(), _items.end(),
-		[&](const Secondary& it) { return it.isSkill(skill); });
+                            [&](const Secondary& it) { return it.isSkill(skill); });
 
     return it == _items.end() ? 0 : (*it).GetValues();
 }
 
 int Skill::SecSkills::Count() const
 {
-    return count_if(_items.begin(), _items.end(), 
-		[&](const Secondary& it) { return it.isValid(); });
+    return count_if(_items.begin(), _items.end(),
+                    [&](const Secondary& it) { return it.isValid(); });
 }
 
 void Skill::SecSkills::AddSkill(const Secondary& skill)
@@ -650,13 +650,13 @@ void Skill::SecSkills::AddSkill(const Secondary& skill)
     if (skill.isValid())
     {
         auto it = find_if(_items.begin(), _items.end(),
-			[&](Secondary& it) { return it.isSkill(skill.Skill()); });
+                          [&](Secondary& it) { return it.isSkill(skill.Skill()); });
         if (it != _items.end())
             (*it).SetLevel(skill.Level());
         else
         {
             it = find_if(_items.begin(), _items.end(),
-				[&](Secondary& it) { return !it.isValid(); });
+                         [&](Secondary& it) { return !it.isValid(); });
             if (it != _items.end())
                 (*it).Set(skill);
             else if (_items.size() < HEROESMAXSKILL)
@@ -668,7 +668,7 @@ void Skill::SecSkills::AddSkill(const Secondary& skill)
 Skill::Secondary* Skill::SecSkills::FindSkill(int skill)
 {
     const auto it = find_if(_items.begin(), _items.end(),
-		[&](Secondary& it) { return it.isValid(); });
+                            [&](Secondary& it) { return it.isValid(); });
     return it != _items.end() ? &*it : nullptr;
 }
 
