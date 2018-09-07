@@ -118,19 +118,19 @@ building_t GetCurrentFlash(const Castle& castle, CastleDialog::CacheBuildings& c
     building_t flash = BUILD_NOTHING;
 
 
-    for (auto it = cache._items.begin(); it != cache._items.end(); ++it)
+    for (auto& _item : cache._items)
     {
-        if (castle.isBuild((*it).id) && (*it).coord & le.GetMouseCursor() &&
-            AllowFlashBuilding((*it).id))
+        if (castle.isBuild(_item.id) && _item.coord & le.GetMouseCursor() &&
+            AllowFlashBuilding(_item.id))
         {
-            if ((*it).id & BUILD_MAGEGUILD)
+            if (_item.id & BUILD_MAGEGUILD)
             {
                 uint32_t lvl = castle.GetLevelMageGuild();
 
-                if ((*it).id == BUILD_MAGEGUILD1 && lvl > 1 ||
-                    (*it).id == BUILD_MAGEGUILD2 && lvl > 2 ||
-                    (*it).id == BUILD_MAGEGUILD3 && lvl > 3 ||
-                    (*it).id == BUILD_MAGEGUILD4 && lvl > 4)
+                if (_item.id == BUILD_MAGEGUILD1 && lvl > 1 ||
+                    _item.id == BUILD_MAGEGUILD2 && lvl > 2 ||
+                    _item.id == BUILD_MAGEGUILD3 && lvl > 3 ||
+                    _item.id == BUILD_MAGEGUILD4 && lvl > 4)
                     continue;
             }
             break;

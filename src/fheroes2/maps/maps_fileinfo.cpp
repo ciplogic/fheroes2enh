@@ -257,16 +257,16 @@ bool Maps::FileInfo::ReadMP2(const string& filename)
     Colors colors(Color::ALL);
 
     // kingdom color - blue, green, red, yellow, orange, purple
-    for (auto it = colors._items.begin(); it != colors._items.end(); ++it)
-        if (fs.get()) kingdom_colors |= *it;
+    for (auto& _item : colors._items)
+        if (fs.get()) kingdom_colors |= _item;
 
     // allow human color - blue, green, red, yellow, orange, purple
-    for (auto it = colors._items.begin(); it != colors._items.end(); ++it)
-        if (fs.get()) allow_human_colors |= *it;
+    for (auto& _item : colors._items)
+        if (fs.get()) allow_human_colors |= _item;
 
     // allow comp color - blue, green, red, yellow, orange, purple
-    for (auto it = colors._items.begin(); it != colors._items.end(); ++it)
-        if (fs.get()) allow_comp_colors |= *it;
+    for (auto& _item : colors._items)
+        if (fs.get()) allow_comp_colors |= _item;
 
     // kingdom count
     // fs.seekg(0x1A, std::ios_base::beg);
@@ -299,11 +299,11 @@ bool Maps::FileInfo::ReadMP2(const string& filename)
     with_heroes = 0 == fs.get();
 
     // race color
-    for (auto it = colors._items.begin(); it != colors._items.end(); ++it)
+    for (auto& _item : colors._items)
     {
         int race = ByteToRace(fs.get());
-        races[Color::GetIndex(*it)] = race;
-        if (Race::RAND == race) rnd_races |= *it;
+        races[Color::GetIndex(_item)] = race;
+        if (Race::RAND == race) rnd_races |= _item;
     }
 
     // name

@@ -2529,10 +2529,10 @@ void Battle::Interface::RedrawActionAttackPart2(Unit& attacker, TargetsInfo& tar
             uint32_t killed = 0;
             uint32_t damage = 0;
 
-            for (auto it = targets._items.begin(); it != targets._items.end(); ++it)
+            for (auto& _item : targets._items)
             {
-                killed += (*it).killed;
-                damage += (*it).damage;
+                killed += _item.killed;
+                damage += _item.damage;
             }
 
             StringReplace(msg, "%{damage}", damage);

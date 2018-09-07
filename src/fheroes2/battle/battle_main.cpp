@@ -165,10 +165,8 @@ void Battle::PickupArtifactsAction(HeroBase& hero1, HeroBase& hero2, bool local)
     BagArtifacts& bag1 = hero1.GetBagArtifacts();
     BagArtifacts& bag2 = hero2.GetBagArtifacts();
 
-    for (uint32_t ii = 0; ii < bag2._items.size(); ++ii)
+    for (auto& art : bag2._items)
     {
-        Artifact& art = bag2._items[ii];
-
         if (art.isUltimate())
         {
             art = Artifact::UNKNOWN;

@@ -1184,8 +1184,8 @@ ByteVectorWriter& Battle::operator<<(ByteVectorWriter& msg, const ModesAffected&
 {
     msg << static_cast<uint32_t>(v._items.size());
 
-    for (size_t ii = 0; ii < v._items.size(); ++ii)
-        msg << v._items[ii].first << v._items[ii].second;
+    for (const auto& _item : v._items)
+        msg << _item.first << _item.second;
 
     return msg;
 }

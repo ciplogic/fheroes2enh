@@ -292,9 +292,9 @@ void AIHeroesAddedTask(Heroes& hero)
     vector<IndexDistance> objs;
     objs.reserve(ai_objects.size());
 
-    for (auto it = ai_objects.begin(); it != ai_objects.end(); ++it)
+    for (auto& ai_object : ai_objects)
     {
-        const Maps::Tiles& tile = world.GetTiles((*it).first);
+        const Maps::Tiles& tile = world.GetTiles(ai_object.first);
 
         if (hero.isShipMaster())
         {
@@ -303,8 +303,8 @@ void AIHeroesAddedTask(Heroes& hero)
                 continue;
 
             // check previous positions
-            if (MP2::OBJ_COAST == (*it).second &&
-                hero.isVisited(world.GetTiles((*it).first)))
+            if (MP2::OBJ_COAST == ai_object.second &&
+                hero.isVisited(world.GetTiles(ai_object.first)))
                 continue;
         }
         else
@@ -312,8 +312,8 @@ void AIHeroesAddedTask(Heroes& hero)
             if (tile.isWater() && MP2::OBJ_BOAT != tile.GetObject()) continue;
         }
 
-        objs.emplace_back((*it).first,
-                          Maps::GetApproximateDistance(hero.GetIndex(), (*it).first));
+        objs.emplace_back(ai_object.first,
+                          Maps::GetApproximateDistance(hero.GetIndex(), ai_object.first));
     }
 
 
