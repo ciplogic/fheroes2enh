@@ -118,7 +118,7 @@ void Battle::Board::SetEnemyQuality(const Unit& b)
 
         cell->SetQuality(score);
 
-        if (unit->isWide())
+        if (unit->_monster.isWide())
             GetCell(unit->GetTailIndex())->SetQuality(score);
     }
 }
@@ -182,7 +182,7 @@ Battle::Indexes Battle::Board::GetAStarPath(const Unit& b, const Position& dst, 
     while (cur != dst.GetHead()->GetIndex())
     {
         const Cell& center = _items.at(cur);
-        Indexes around = b.isWide()
+        Indexes around = b._monster.isWide()
                              ? GetMoveWideIndexes(cur,
                                                   0 > listCells[cur].prnt
                                                       ? b.isReflect()
@@ -198,7 +198,7 @@ Battle::Indexes Battle::Board::GetAStarPath(const Unit& b, const Position& dst, 
                 bridge && isBridgeIndex(it) && !bridge->isPassable(b.GetColor()))
                 continue;
             const s32 cost = 100 * GetDistance(it, dst.GetHead()->GetIndex()) +
-                (b.isWide() && WideDifficultDirection(center.GetDirection(), GetDirection(it, cur))
+                (b._monster.isWide() && WideDifficultDirection(center.GetDirection(), GetDirection(it, cur))
                      ? 100
                      : 0) +
                 (castle && castle->isBuild(BUILD_MOAT) && isMoatIndex(it) ? 100 : 0);
@@ -248,7 +248,7 @@ Battle::Indexes Battle::Board::GetAStarPath(const Unit& b, const Position& dst, 
         reverse(result.begin(), result.end());
 
         // correct wide position
-        if (b.isWide() && !result.empty())
+        if (b._monster.isWide() && !result.empty())
         {
             const s32 head = dst.GetHead()->GetIndex();
             const s32 tail = dst.GetTail()->GetIndex();
@@ -288,7 +288,7 @@ Battle::Indexes Battle::Board::GetAStarPath(const Unit& b, const Position& dst, 
             cell->SetDirection(cell->GetDirection() |
                 GetDirection(*it, it == result.begin() ? b.GetHeadIndex() : *(it - 1)));
 
-            if (!b.isWide())
+            if (!b._monster.isWide())
                 continue;
             const s32 head = *it;
             const s32 prev = it != result.begin() ? *(it - 1) : b.GetHeadIndex();
@@ -971,7 +971,7 @@ Battle::Indexes Battle::Board::GetAroundIndexes(s32 center)
 
 Battle::Indexes Battle::Board::GetAroundIndexes(const Unit& b)
 {
-    if (b.isWide())
+    if (b._monster.isWide())
     {
         Indexes around = GetAroundIndexes(b.GetHeadIndex());
         const Indexes& tail = GetAroundIndexes(b.GetTailIndex());
@@ -1033,7 +1033,7 @@ Battle::Indexes Battle::Board::GetDistanceIndexes(s32 center, uint32_t radius)
 bool Battle::Board::isValidMirrorImageIndex(s32 index, const Unit* b)
 {
     return b && GetCell(index) &&
-        index != b->GetHeadIndex() && (!b->isWide() || index != b->GetTailIndex()) &&
+        index != b->GetHeadIndex() && (!b->_monster.isWide() || index != b->GetTailIndex()) &&
         GetCell(index)->isPassable3(*b, true);
 }
 

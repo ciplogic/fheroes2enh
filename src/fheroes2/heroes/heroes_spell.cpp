@@ -521,7 +521,7 @@ bool ActionSpellVisions(Heroes& hero)
 
             string msg;
 
-            string hdr = string("%{count} ") + StringLower(troop.GetPluralName(join.second));
+            string hdr = string("%{count} ") + StringLower(troop._monster.GetPluralName(join.second));
             StringReplace(hdr, "%{count}", join.second);
 
             switch (join.first)

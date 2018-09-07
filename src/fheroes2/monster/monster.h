@@ -133,8 +133,7 @@ public:
 
     Monster(int race, uint32_t dw);
 
-    virtual ~Monster()
-    = default;
+    virtual ~Monster() = default;
 
     bool operator<(const Monster&) const;
 
@@ -242,10 +241,10 @@ public:
 
     static float GetUpgradeRatio();
 
+	int id = 0;
 protected:
-    static Monster FromDwelling(int race, uint32_t dw);
+	static Monster FromDwelling(int race, uint32_t dw);
 
-    int id = 0;
 };
 
 struct MonsterStaticData

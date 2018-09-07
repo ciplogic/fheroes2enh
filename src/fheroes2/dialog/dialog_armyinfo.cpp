@@ -86,7 +86,7 @@ int Dialog::ArmyInfo(const Troop& troop, int flags)
     dst_pt.y = pos_rt.y + 225;
     text.Blit(dst_pt);
 
-    const Sprite& frame = AGG::GetICN(troop.ICNMonh(), 0);
+    const Sprite& frame = AGG::GetICN(troop._monster.ICNMonh(), 0);
     frame.Blit(pos_rt.x + (pos_rt.w / 2 - frame.w()) / 2, pos_rt.y + 180 - frame.h());
 
     // button upgrade
@@ -110,7 +110,7 @@ int Dialog::ArmyInfo(const Troop& troop, int flags)
         buttonDismiss.SetDisable(true);
     }
 
-    if (!troop.isBattle() && troop.isAllowUpgrade())
+    if (!troop.isBattle() && troop._monster.isAllowUpgrade())
     {
         if (UPGRADE & flags)
         {
@@ -222,7 +222,7 @@ void DrawMonsterStats(const Point& dst, const Troop& troop)
     text.Blit(dst_pt);
 
     // shot
-    if (troop.isArchers())
+    if (troop._monster.isArchers())
     {
         string message = troop.isBattle() ? _("Shots Left") : _("Shots");
         message.append(":");
@@ -287,7 +287,7 @@ void DrawMonsterStats(const Point& dst, const Troop& troop)
     dst_pt.y += 18;
     text.Blit(dst_pt);
 
-    text.Set(Morale::String(troop.GetMorale()));
+    text.Set(Morale::String(troop._monster.GetMorale()));
     dst_pt.x = dst.x + ox;
     text.Blit(dst_pt);
 
@@ -297,7 +297,7 @@ void DrawMonsterStats(const Point& dst, const Troop& troop)
     dst_pt.y += 18;
     text.Blit(dst_pt);
 
-    text.Set(Luck::String(troop.GetLuck()));
+    text.Set(Luck::String(troop._monster.GetLuck()));
     dst_pt.x = dst.x + ox;
     text.Blit(dst_pt);
 }
@@ -400,7 +400,7 @@ int Dialog::ArmyJoinFree(const Troop& troop, Heroes& hero)
     cursor.SetThemes(cursor.POINTER);
 
     string message = _("A group of %{monster} with a desire for greater glory wish to join you.\nDo you accept?");
-    StringReplace(message, "%{monster}", StringLower(troop.GetMultiName()));
+    StringReplace(message, "%{monster}", StringLower(troop._monster.GetMultiName()));
 
     TextBox textbox(message, Font::BIG, BOXAREA_WIDTH);
     const int buttons = YES | NO;
@@ -416,7 +416,7 @@ int Dialog::ArmyJoinFree(const Troop& troop, Heroes& hero)
                      (conf.ExtGameEvilInterface() ? ICN::ADVEBTNS : ICN::ADVBTNS), 0, 1);
 
     if (hero.GetArmy().m_troops.GetCount() < hero.GetArmy().m_troops.Size()
-        || hero.GetArmy().m_troops.HasMonster(troop))
+        || hero.GetArmy().m_troops.HasMonster(troop._monster))
         btnHeroes.SetDisable(true);
     else
     {
@@ -498,7 +498,7 @@ int Dialog::ArmyJoinWithCost(const Troop& troop, uint32_t join, uint32_t gold, H
 
     StringReplace(message, "%{offer}", join);
     StringReplace(message, "%{total}", troop.GetCount());
-    StringReplace(message, "%{monster}", StringLower(troop.GetPluralName(join)));
+    StringReplace(message, "%{monster}", StringLower(troop._monster.GetPluralName(join)));
     StringReplace(message, "%{gold}", gold);
 
     TextBox textbox(message, Font::BIG, BOXAREA_WIDTH);
@@ -556,7 +556,7 @@ int Dialog::ArmyJoinWithCost(const Troop& troop, uint32_t join, uint32_t gold, H
     }
 
     if (hero.GetArmy().m_troops.GetCount() < hero.GetArmy().m_troops.Size()
-        || hero.GetArmy().m_troops.HasMonster(troop))
+        || hero.GetArmy().m_troops.HasMonster(troop._monster))
         btnHeroes.SetDisable(true);
     else
     {

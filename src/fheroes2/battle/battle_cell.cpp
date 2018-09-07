@@ -75,7 +75,7 @@ Battle::Position Battle::Position::GetCorrect(const Unit& b, s32 head)
 
     result.first = Board::GetCell(head);
 
-    if (!result.first || !b.isWide())
+    if (!result.first || !b._monster.isWide())
         return result;
     result.second = Board::GetCell(head, b.isReflect() ? RIGHT : LEFT);
 
@@ -221,7 +221,7 @@ void Battle::Cell::SetUnit(Unit* val)
 
 bool Battle::Cell::isPassable4(const Unit& b, const Cell& from) const
 {
-    if (!b.isWide())
+    if (!b._monster.isWide())
         return isPassable1(true);
     const int dir = Board::GetDirection(from.index, index);
 
@@ -250,7 +250,7 @@ bool Battle::Cell::isPassable4(const Unit& b, const Cell& from) const
 
 bool Battle::Cell::isPassable3(const Unit& b, bool check_reflect) const
 {
-    if (!b.isWide())
+    if (!b._monster.isWide())
         return isPassable1(true);
     if (index == b.GetTailIndex() || index == b.GetHeadIndex()) return true;
 

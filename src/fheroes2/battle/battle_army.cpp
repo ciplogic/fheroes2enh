@@ -416,7 +416,7 @@ Troops Battle::Force::GetKilledTroops() const
     for (auto it : _items)
     {
         const Unit& b = *it;
-        killed.PushBack(b, b.GetDead());
+        killed.PushBack(b._monster, b.GetDead());
     }
 
     return killed;
@@ -488,7 +488,7 @@ uint32_t Battle::Force::GetDeadHitPoints() const
 
     for (auto it : _items)
     {
-        res += Monster::GetHitPoints(*it) * it->GetDead();
+        res += Monster::GetHitPoints(it->_monster) * it->GetDead();
     }
 
     return res;

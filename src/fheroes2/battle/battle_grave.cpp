@@ -40,7 +40,7 @@ void Battle::Graveyard::AddTroop(const Unit& b)
 
     map[b.GetHeadIndex()]._items.push_back(b.GetUID());
 
-    if (b.isWide())
+    if (b._monster.isWide())
         map[b.GetTailIndex()]._items.push_back(b.GetUID());
 }
 
@@ -52,7 +52,7 @@ void Battle::Graveyard::RemoveTroop(const Unit& b)
     auto it = std::find(ids._items.begin(), ids._items.end(), b.GetUID());
     if (it != ids._items.end()) ids._items.erase(it);
 
-    if (!b.isWide()) return;
+    if (!b._monster.isWide()) return;
     TroopUIDs& ids2 = map[b.GetTailIndex()];
 
     it = std::find(ids2._items.begin(), ids2._items.end(), b.GetUID());

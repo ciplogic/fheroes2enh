@@ -655,7 +655,7 @@ const Battle::Unit* Battle::Arena::GetEnemyMaxQuality(int my_color) const
         const Unit* enemy = it.GetUnit();
 
         if (enemy && enemy->GetColor() != my_color &&
-            (!enemy->isWide() || enemy->GetTailIndex() != it.GetIndex()) &&
+            (!enemy->_monster.isWide() || enemy->GetTailIndex() != it.GetIndex()) &&
             quality < it.GetQuality())
         {
             res = enemy;
@@ -811,11 +811,11 @@ bool Battle::Arena::GraveyardAllowResurrect(s32 index, const Spell& spell) const
 {
     const HeroBase* hero = GetCurrentCommander();
     const Unit* killed = GetTroopUID(graveyard.GetLastTroopUID(index));
-    const Unit* tail = killed && killed->isWide()
+    const Unit* tail = killed && killed->_monster.isWide()
                            ? GetTroopUID(graveyard.GetLastTroopUID(killed->GetTailIndex()))
                            : nullptr;
 
-    return killed && (!killed->isWide() || killed == tail) &&
+    return killed && (!killed->_monster.isWide() || killed == tail) &&
         hero && spell.isResurrect() && killed->AllowApplySpell(spell, hero, nullptr);
 }
 

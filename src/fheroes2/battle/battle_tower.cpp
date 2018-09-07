@@ -26,7 +26,7 @@
 #include "battle_troop.h"
 #include "battle_tower.h"
 
-Battle::Tower::Tower(const Castle& castle, int twr) : Unit(Troop(ARCHER, 0), -1, false),
+Battle::Tower::Tower(const Castle& castle, int twr) : Unit(Troop(Monster::ARCHER, 0), -1, false),
                                                       type(twr), color(castle.GetColor()), bonus(0), valid(true)
 {
     count += castle.CountBuildings();

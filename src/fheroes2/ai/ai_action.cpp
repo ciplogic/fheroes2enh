@@ -623,7 +623,7 @@ void AIToMonster(Heroes& hero, uint32_t obj, s32 dst_index)
     if (JOIN_FREE == join.first)
     {
         // join if ranged or flying monsters present
-        if (hero.GetArmy().m_troops.HasMonster(troop()) || troop.isArchers() || troop.isFly())
+        if (hero.GetArmy().m_troops.HasMonster(troop()) || troop._monster.isArchers() || troop._monster.isFly())
         {
             hero.GetArmy().m_troops.JoinTroop(troop);
             destroy = true;
@@ -636,7 +636,7 @@ void AIToMonster(Heroes& hero, uint32_t obj, s32 dst_index)
         if (JOIN_COST == join.first)
         {
             // join if archers or fly or present
-            if (hero.GetArmy().m_troops.HasMonster(troop()) || troop.isArchers() || troop.isFly())
+            if (hero.GetArmy().m_troops.HasMonster(troop()) || troop._monster.isArchers() || troop._monster.isFly())
             {
                 uint32_t gold = troop.GetCost().gold;
                 hero.GetArmy().m_troops.JoinTroop(troop(), join.second);
@@ -951,7 +951,7 @@ void AIToWhirlpools(Heroes& hero, s32 index_from)
 
     if (troop && Rand::Get(1) && 1 < troop->GetCount())
     {
-        const Monster monster(troop->GetID());
+        const Monster monster(troop->_monster.GetID());
         troop->SetCount(
             Monster::GetCountFromHitPoints(monster, troop->GetHitPointsTroop() - troop->GetHitPointsTroop() *
                                            Game::GetWhirlpoolPercent() /
@@ -1768,7 +1768,7 @@ bool AI::HeroesValidObject(const Heroes& hero, s32 index)
             const Troop& troop = tile.QuantityTroop();
             if (troop.isValid() &&
                 (army.m_troops.HasMonster(troop()) ||
-                    !army.isFullHouse() && (troop.isArchers() || troop.isFly())))
+                    !army.isFullHouse() && (troop._monster.isArchers() || troop._monster.isFly())))
                 return true;
             break;
         }
@@ -1789,7 +1789,7 @@ bool AI::HeroesValidObject(const Heroes& hero, s32 index)
 
             if (troop.isValid() && kingdom.AllowPayment(paymentCosts) &&
                 (army.m_troops.HasMonster(troop()) ||
-                    !army.isFullHouse() && (troop.isArchers() || troop.isFly())))
+                    !army.isFullHouse() && (troop._monster.isArchers() || troop._monster.isFly())))
                 return true;
             break;
         }

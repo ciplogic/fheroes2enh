@@ -50,7 +50,7 @@ public:
         back.Blit(*this, display);
         if (troop.isValid())
         {
-            const Sprite& mons32 = AGG::GetICN(ICN::MONS32, troop.GetSpriteIndex());
+            const Sprite& mons32 = AGG::GetICN(ICN::MONS32, troop._monster.GetSpriteIndex());
             mons32.Blit(x + (back.w() - mons32.w()) / 2, y + back.h() - mons32.h() - 11);
 
             if (readonly)
@@ -228,7 +228,7 @@ bool Dialog::SetGuardian(Heroes& hero, Troop& troop, CapturedObject& co, bool re
                 if (troop1)
                 {
                     // combine
-                    if (troop() == troop1->GetID())
+                    if (troop() == troop1->_monster.GetID())
                     {
                         troop1->SetCount(troop.GetCount() + troop1->GetCount());
                         troop.Reset();
@@ -270,7 +270,7 @@ bool Dialog::SetGuardian(Heroes& hero, Troop& troop, CapturedObject& co, bool re
                 if (troop1)
                 {
                     // combine
-                    if (troop() == troop1->GetID())
+                    if (troop() == troop1->_monster.GetID())
                     {
                         if (troop1->GetCount() + troop.GetCount() < MAXU16)
                         {

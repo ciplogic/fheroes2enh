@@ -457,7 +457,7 @@ Monster Maps::Tiles::QuantityMonster() const
     }
 
     return MP2::isCaptureObject(GetObject(false))
-               ? world.GetCapturedObject(GetIndex()).GetTroop()
+               ? world.GetCapturedObject(GetIndex()).GetTroop()._monster
                : Monster(Monster::UNKNOWN);
 }
 
@@ -1290,7 +1290,7 @@ void Maps::Tiles::UpdateMonsterPopulation(Tiles& tile)
     const Troop& troop = tile.QuantityTroop();
 
     if (0 == troop.GetCount())
-        tile.MonsterSetCount(troop.GetRNDSize(false));
+        tile.MonsterSetCount(troop._monster.GetRNDSize(false));
     else if (!tile.MonsterFixedCount())
         tile.MonsterSetCount(troop.GetCount() * 8 / 7);
 }

@@ -874,7 +874,7 @@ bool Castle::RecruitMonster(const Troop& troop)
 
     int dw_index = 0;
 
-    switch (troop.GetDwelling())
+    switch (troop._monster.GetDwelling())
     {
     case DWELLING_MONSTER1:
         dw_index = 0;
@@ -904,7 +904,7 @@ bool Castle::RecruitMonster(const Troop& troop)
         return false;
     }
 
-    const Monster& ms = troop;
+    const Monster& ms = troop._monster;
     uint32_t count = troop.GetCount();
 
     // fix count

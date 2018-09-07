@@ -66,7 +66,7 @@ namespace Battle
         return count_if(friends._items.begin(), friends._items.end(),
                         [](Unit* unit)
                         {
-                            return unit->isAlive();
+                            return unit->_monster.isAlive();
                         });
     }
 
@@ -75,7 +75,7 @@ namespace Battle
         return count_if(friends._items.begin(), friends._items.end(),
                         [](Unit* unit)
                         {
-                            return unit->isUndead();
+                            return unit->_monster.isUndead();
                         });
     }
 }
@@ -144,7 +144,7 @@ const Battle::Unit* Battle::AIGetEnemyAbroadMaxQuality(const Unit& b)
 {
     const Unit* res1 = AIGetEnemyAbroadMaxQuality(b.GetHeadIndex(), b.GetColor());
 
-    if (!b.isWide())
+    if (!b._monster.isWide())
         return res1;
     const Unit* res2 = AIGetEnemyAbroadMaxQuality(b.GetTailIndex(), b.GetColor());
 
@@ -180,11 +180,11 @@ s32 Battle::AIAttackPosition(Arena& arena, const Unit& b, const Indexes& positio
 {
     s32 res = -1;
 
-    if (b.isMultiCellAttack())
+    if (b._monster.isMultiCellAttack())
     {
         res = AIMaxQualityPosition(positions);
     }
-    else if (b.isDoubleCellAttack())
+    else if (b._monster.isDoubleCellAttack())
     {
         Indexes results;
         results.reserve(12);
@@ -306,14 +306,14 @@ void AI::BattleTurn(Arena& arena, const Unit& b, Actions& a)
                         const s32 pos = Board::GetIndexDirection(dst.GetHead()->GetIndex(), direction);
                         if (b.GetHeadIndex() == pos) break;
 
-                        dst.Set(pos, b.isWide(), direction == RIGHT);
+                        dst.Set(pos, b._monster.isWide(), direction == RIGHT);
                         path = arena.GetPath(b, dst);
                     }
                 }
 
                 if (!path.empty())
                 {
-                    if (b.isWide())
+                    if (b._monster.isWide())
                     {
                         const s32 head = dst.GetHead()->GetIndex();
                         const s32 tail = dst.GetTail()->GetIndex();
@@ -406,7 +406,7 @@ bool AI::BattleMagicTurn(Arena& arena, const Unit& b, Actions& a, const Unit* en
     if (enemy)
     {
         // kill dragons
-        if (enemy->isDragons() &&
+        if (enemy->_monster.isDragons() &&
             !b.Modes(SP_DRAGONSLAYER) && AIApplySpell(Spell::DRAGONSLAYER, &b, *hero, a))
             return true;
 

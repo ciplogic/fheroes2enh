@@ -27,32 +27,32 @@
 #include "heroes_base.h"
 #include "tools.h"
 
-Troop::Troop() : Monster(UNKNOWN), count(0)
+Troop::Troop() : _monster(Monster::UNKNOWN), count(0)
 {
 }
 
-Troop::Troop(const Monster& m, uint32_t c) : Monster(m), count(c)
+Troop::Troop(const Monster& m, uint32_t c) : _monster(m), count(c)
 {
 }
 
 bool Troop::operator==(const Monster& m) const
 {
-    return static_cast<Monster>(*this) == m;
+    return _monster.GetID() == m.GetID();
 }
 
 bool Troop::isMonster(int mons) const
 {
-    return GetID() == mons;
+    return _monster.GetID() == mons;
 }
 
 Monster Troop::operator()() const
 {
-    return *this;
+    return _monster;
 }
 
 Monster Troop::GetMonster() const
 {
-    return *this;
+    return _monster;
 }
 
 void Troop::Set(const Troop& t)
@@ -68,7 +68,7 @@ void Troop::Set(const Monster& m, uint32_t c)
 
 void Troop::SetMonster(const Monster& m)
 {
-    id = m();
+	_monster.id = m.GetID();
 }
 
 void Troop::SetCount(uint32_t c)
@@ -78,13 +78,13 @@ void Troop::SetCount(uint32_t c)
 
 void Troop::Reset()
 {
-    id = UNKNOWN;
+	_monster.id = Monster::UNKNOWN;
     count = 0;
 }
 
 std::string Troop::GetName() const
 {
-    return GetPluralName(count);
+    return _monster.GetPluralName(count);
 }
 
 uint32_t Troop::GetCount() const
@@ -94,17 +94,17 @@ uint32_t Troop::GetCount() const
 
 uint32_t Troop::GetHitPointsTroop() const
 {
-    return GetHitPoints(*this) * count;
+    return _monster.GetHitPoints() * count;
 }
 
 uint32_t Troop::GetDamageMin() const
 {
-    return Monster::GetDamageMin() * count;
+    return _monster.GetDamageMin() * count;
 }
 
 uint32_t Troop::GetDamageMax() const
 {
-    return Monster::GetDamageMax() * count;
+    return _monster.GetDamageMax() * count;
 }
 
 uint32_t Troop::GetStrength() const
@@ -112,17 +112,17 @@ uint32_t Troop::GetStrength() const
     double res = (GetDamageMin() + GetDamageMax()) >> 1;
 
     // increase strength
-    if (isFly()) res += res * 0.5;
-    if (isArchers()) res += res * 0.5;
-    if (isTwiceAttack()) res += res * 0.5;
-    if (isHideAttack()) res += res * 0.5;
+    if (_monster.isFly()) res += res * 0.5;
+    if (_monster.isArchers()) res += res * 0.5;
+    if (_monster.isTwiceAttack()) res += res * 0.5;
+    if (_monster.isHideAttack()) res += res * 0.5;
 
     // slowly: decrease strength
-    if (!isFly() && !isArchers() && Speed::AVERAGE > GetSpeed()) res -= res * 0.5;
+    if (!_monster.isFly() && !_monster.isArchers() && Speed::AVERAGE > GetSpeed()) res -= res * 0.5;
 
-    switch (GetID())
+    switch (_monster.GetID())
     {
-    case GHOST:
+    case Monster::GHOST:
         res *= 2;
         break;
 
@@ -135,17 +135,17 @@ uint32_t Troop::GetStrength() const
 
 bool Troop::isValid() const
 {
-    return Monster::isValid() && count;
+    return _monster.isValid() && count;
 }
 
 payment_t Troop::GetCost() const
 {
-    return Monster::GetCost() * count;
+    return _monster.GetCost() * count;
 }
 
 payment_t Troop::GetUpgradeCost() const
 {
-    return Monster::GetUpgradeCost() * count;
+    return _monster.GetUpgradeCost() * count;
 }
 
 bool Troop::isBattle() const
@@ -160,17 +160,17 @@ bool Troop::isModes(uint32_t)
 
 string Troop::GetAttackString() const
 {
-    return Int2Str(GetAttack());
+    return Int2Str(_monster.GetAttack());
 }
 
 string Troop::GetDefenseString() const
 {
-    return Int2Str(GetDefense());
+    return Int2Str(_monster.GetDefense());
 }
 
 string Troop::GetShotString() const
 {
-    return Int2Str(GetShots());
+    return Int2Str(_monster.GetShots());
 }
 
 string Troop::GetSpeedString() const
@@ -185,7 +185,7 @@ uint32_t Troop::GetHitPointsLeft()
 
 uint32_t Troop::GetSpeed() const
 {
-    return Monster::GetSpeed();
+    return _monster.GetSpeed();
 }
 
 uint32_t Troop::GetAffectedDuration(uint32_t)
@@ -210,12 +210,12 @@ ArmyTroop& ArmyTroop::operator=(const Troop& t)
 
 uint32_t ArmyTroop::GetAttack() const
 {
-    return Troop::GetAttack() + (army && army->GetCommander() ? army->GetCommander()->GetAttack() : 0);
+    return _monster.GetAttack() + (army && army->GetCommander() ? army->GetCommander()->GetAttack() : 0);
 }
 
 uint32_t ArmyTroop::GetDefense() const
 {
-    return Troop::GetDefense() + (army && army->GetCommander() ? army->GetCommander()->GetDefense() : 0);
+    return _monster.GetDefense() + (army && army->GetCommander() ? army->GetCommander()->GetDefense() : 0);
 }
 
 int ArmyTroop::GetColor() const
@@ -225,12 +225,12 @@ int ArmyTroop::GetColor() const
 
 int ArmyTroop::GetMorale() const
 {
-    return army && isAffectedByMorale() ? army->GetMorale() : Troop::GetMorale();
+    return army && _monster.isAffectedByMorale() ? army->GetMorale() : _monster.GetMorale();
 }
 
 int ArmyTroop::GetLuck() const
 {
-    return army ? army->GetLuck() : Troop::GetLuck();
+    return army ? army->GetLuck() : _monster.GetLuck();
 }
 
 void ArmyTroop::SetArmy(const Army& a)
@@ -245,30 +245,30 @@ const Army* ArmyTroop::GetArmy() const
 
 string ArmyTroop::GetAttackString() const
 {
-    if (Troop::GetAttack() == GetAttack())
-        return Int2Str(Troop::GetAttack());
+    if (_monster.GetAttack() == GetAttack())
+        return Int2Str(_monster.GetAttack());
 
     ostringstream os;
-    os << Troop::GetAttack() << " (" << GetAttack() << ")";
+    os << _monster.GetAttack() << " (" << GetAttack() << ")";
     return os.str();
 }
 
 string ArmyTroop::GetDefenseString() const
 {
-    if (Troop::GetDefense() == GetDefense())
-        return Int2Str(Troop::GetDefense());
+    if (_monster.GetDefense() == GetDefense())
+        return Int2Str(_monster.GetDefense());
 
     ostringstream os;
-    os << Troop::GetDefense() << " (" << GetDefense() << ")";
+    os << _monster.GetDefense() << " (" << GetDefense() << ")";
     return os.str();
 }
 
 ByteVectorWriter& operator<<(ByteVectorWriter& msg, const Troop& troop)
 {
-    return msg << troop.id << troop.count;
+    return msg << troop._monster.id << troop.count;
 }
 
 ByteVectorReader& operator>>(ByteVectorReader& msg, Troop& troop)
 {
-    return msg >> troop.id >> troop.count;
+    return msg >> troop._monster.id >> troop.count;
 }

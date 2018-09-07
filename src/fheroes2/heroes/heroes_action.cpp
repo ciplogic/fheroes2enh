@@ -402,7 +402,7 @@ void AnimationRemoveObject(Maps::Tiles& tile)
 
 void RecruitMonsterFromTile(Heroes& hero, Maps::Tiles& tile, const string& msg, const Troop& troop, bool remove)
 {
-    if (!hero.GetArmy().m_troops.CanJoinTroop(troop))
+    if (!hero.GetArmy().m_troops.CanJoinTroop(troop._monster))
         Message(msg, _("You are unable to recruit at this time, your ranks are full."), Font::BIG, Dialog::OK);
     else
     {
@@ -877,7 +877,7 @@ void ActionToMonster(Heroes& hero, uint32_t obj, s32 dst_index)
                 string message = _(
                     "The %{monster}, awed by the power of your forces, begin to scatter.\nDo you wish to pursue and engage them?"
                 );
-                StringReplace(message, "%{monster}", StringLower(troop.GetMultiName()));
+                StringReplace(message, "%{monster}", StringLower(troop._monster.GetMultiName()));
 
                 if (Dialog::Message("", message, Font::BIG, Dialog::YES | Dialog::NO) == Dialog::NO)
                     destroy = true;
@@ -2109,7 +2109,7 @@ void ActionToArtifact(Heroes& hero, uint32_t obj, s32 dst_index)
 
                     if (troop)
                     {
-                        if (Monster::ROGUE == troop->GetID())
+                        if (Monster::ROGUE == troop->_monster.GetID())
                             Message("",
                                     _(
                                         "You come upon an ancient artifact. As you reach for it, a pack of Rogues leap out of the brush to guard their stolen loot."
@@ -2376,7 +2376,7 @@ void ActionToWhirlpools(Heroes& hero, uint32_t obj, s32 index_from)
         Message(_("A whirlpool engulfs your ship."), _("Some of your army has fallen overboard."), Font::BIG,
                 Dialog::OK);
         troop->SetCount(
-            Monster::GetCountFromHitPoints(troop->GetID(), troop->GetHitPointsTroop() - troop->GetHitPointsTroop() *
+            Monster::GetCountFromHitPoints(troop->_monster.GetID(), troop->GetHitPointsTroop() - troop->GetHitPointsTroop() *
                                            Game::GetWhirlpoolPercent() /
                                            100));
     }
@@ -2547,7 +2547,7 @@ void ActionToDwellingJoinMonster(Heroes& hero, uint32_t obj, s32 dst_index)
 
         string message = _(
             "A group of %{monster} with a desire for greater glory wish to join you. Do you accept?");
-        StringReplace(message, "%{monster}", troop.GetMultiName());
+        StringReplace(message, "%{monster}", troop._monster.GetMultiName());
 
         if (!Settings::Get().MusicMIDI() && obj == MP2::OBJ_WATCHTOWER)
             AGG::PlayMusic(MUS::WATCHTOWER, false);
@@ -2556,7 +2556,7 @@ void ActionToDwellingJoinMonster(Heroes& hero, uint32_t obj, s32 dst_index)
 
         if (Dialog::YES == Dialog::Message(MP2::StringObject(obj), message, Font::BIG, Dialog::YES | Dialog::NO))
         {
-            if (!hero.GetArmy().m_troops.CanJoinTroop(troop))
+            if (!hero.GetArmy().m_troops.CanJoinTroop(troop._monster))
                 Message(troop.GetName(), _("You are unable to recruit at this time, your ranks are full."),
                         Font::BIG, Dialog::OK);
             else

@@ -29,9 +29,12 @@
 
 class Army;
 
-class Troop : public Monster
+class Troop 
 {
 public:
+
+    Monster _monster;
+
     Troop();
 
     Troop(const Monster&, uint32_t);
@@ -129,6 +132,7 @@ public:
     string GetAttackString() const;
 
     string GetDefenseString() const;
+	int GetID() const { return _monster.GetID(); } 
 
 protected:
     const Army* army;

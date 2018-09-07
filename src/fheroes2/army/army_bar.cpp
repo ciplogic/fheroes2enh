@@ -39,9 +39,9 @@ bool CanUpgradeTroopButNoResources(Troop& troop, Army* army)
 {
     const Castle* castle = army->inCastle();
     bool candidate = false;
-    if (troop.isAllowUpgrade() &&
+    if (troop._monster.isAllowUpgrade() &&
         // allow upgrade
-        castle && castle->GetRace() == troop.GetRace() && castle->isBuild(troop.GetUpgrade().GetDwelling()))
+        castle && castle->GetRace() == troop._monster.GetRace() && castle->isBuild(troop._monster.GetUpgrade().GetDwelling()))
     {
         candidate = true;
     }
@@ -52,9 +52,9 @@ bool CanUpgradeTroop(Troop& troop, Army* army)
 {
     const Castle* castle = army->inCastle();
     bool candidate = false;
-    if (troop.isAllowUpgrade() &&
+    if (troop._monster.isAllowUpgrade() &&
         // allow upgrade
-        castle && castle->GetRace() == troop.GetRace() && castle->isBuild(troop.GetUpgrade().GetDwelling()))
+        castle && castle->GetRace() == troop._monster.GetRace() && castle->isBuild(troop._monster.GetUpgrade().GetDwelling()))
     {
         candidate = true;
     }
@@ -75,7 +75,7 @@ bool DoUpgradeOnPlusClick(const Point& cursor, ArmyTroop& troop, const Rect& pos
     if (isUpgradable && CanUpgradeTroop(troop, army))
     {
         world.GetKingdom(army->GetColor()).OddFundsResource(troop.GetUpgradeCost());
-        troop.Upgrade();
+        troop._monster.Upgrade();
         return true;
     }
     return false;
@@ -108,7 +108,7 @@ void RedistributeArmy(ArmyTroop& troop1 /* from */, ArmyTroop& troop2 /* to */)
         case 5:
             if (save_last_troop)
             {
-                const Troop troop(troop1, troop1.GetCount() - 1);
+                const Troop troop(troop1._monster, troop1.GetCount() - 1);
                 troop1.SetCount(1);
                 const_cast<Army *>(army2)->m_troops.SplitTroopIntoFreeSlots(troop, slotCount);
             }
@@ -121,7 +121,7 @@ void RedistributeArmy(ArmyTroop& troop1 /* from */, ArmyTroop& troop2 /* to */)
             break;
 
         case 2:
-            troop2.Set(troop1, redistr_count);
+            troop2.Set(troop1._monster, redistr_count);
             troop1.SetCount(troop1.GetCount() - redistr_count);
             break;
 
@@ -195,7 +195,7 @@ void ArmyBar::RedrawItem(ArmyTroop& troop, const Rect& pos, bool selected, Surfa
 
     if (use_mini_sprite)
     {
-        const Sprite& mons32 = AGG::GetICN(ICN::MONS32, troop.GetSpriteIndex());
+        const Sprite& mons32 = AGG::GetICN(ICN::MONS32, troop._monster.GetSpriteIndex());
         Rect srcrt(0, 0, mons32.w(), mons32.h());
 
         if (mons32.w() > pos.w)
@@ -214,7 +214,7 @@ void ArmyBar::RedrawItem(ArmyTroop& troop, const Rect& pos, bool selected, Surfa
     }
     else
     {
-        switch (troop.GetRace())
+        switch (troop._monster.GetRace())
         {
         case Race::KNGT:
             AGG::GetICN(ICN::STRIP, 4).Blit(pos, dstsf);
@@ -239,7 +239,7 @@ void ArmyBar::RedrawItem(ArmyTroop& troop, const Rect& pos, bool selected, Surfa
             break;
         }
 
-        const Sprite& spmonh = AGG::GetICN(troop.ICNMonh(), 0);
+        const Sprite& spmonh = AGG::GetICN(troop._monster.ICNMonh(), 0);
         spmonh.Blit(pos.x + spmonh.x(), pos.y + spmonh.y(), dstsf);
     }
 
@@ -495,9 +495,9 @@ bool ArmyBar::ActionBarDoubleClick(const Point& cursor, ArmyTroop& troop, const 
         int flags = read_only || army->SaveLastTroop() ? Dialog::READONLY | Dialog::BUTTONS : Dialog::BUTTONS;
         const Castle* castle = army->inCastle();
 
-        if (troop.isAllowUpgrade() &&
+        if (troop._monster.isAllowUpgrade() &&
             // allow upgrade
-            castle && castle->GetRace() == troop.GetRace() && castle->isBuild(troop.GetUpgrade().GetDwelling()))
+            castle && castle->GetRace() == troop._monster.GetRace() && castle->isBuild(troop._monster.GetUpgrade().GetDwelling()))
         {
             flags |= Dialog::UPGRADE;
 
@@ -509,7 +509,7 @@ bool ArmyBar::ActionBarDoubleClick(const Point& cursor, ArmyTroop& troop, const 
         {
         case Dialog::UPGRADE:
             world.GetKingdom(army->GetColor()).OddFundsResource(troop.GetUpgradeCost());
-            troop.Upgrade();
+            troop._monster.Upgrade();
             break;
 
         case Dialog::DISMISS:

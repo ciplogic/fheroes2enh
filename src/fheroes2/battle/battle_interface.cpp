@@ -714,7 +714,7 @@ void Battle::ArmiesOrder::QueueEventProcessing(string& msg)
 void Battle::ArmiesOrder::RedrawUnit(const Rect& pos, const Unit& unit, bool revert, bool current) const
 {
     Display& display = Display::Get();
-    const Sprite& mons32 = AGG::GetICN(ICN::MONS32, unit.GetSpriteIndex(), revert);
+    const Sprite& mons32 = AGG::GetICN(ICN::MONS32, unit._monster.GetSpriteIndex(), revert);
 
     // background
     display.FillRect(pos, RGBA(0x33, 0x33, 0x13));
@@ -1071,8 +1071,8 @@ Point GetTroopPosition(const Battle::Unit& b, const Sprite& sprite)
     const Rect& rt = b.GetRectPosition();
 
     const s32 sx = b.isReflect()
-                       ? rt.x + (b.isWide() ? rt.w / 2 + rt.w / 4 : rt.w / 2) - sprite.w() - sprite.x()
-                       : rt.x + (b.isWide() ? rt.w / 4 : rt.w / 2) + sprite.x();
+                       ? rt.x + (b._monster.isWide() ? rt.w / 2 + rt.w / 4 : rt.w / 2) - sprite.w() - sprite.x()
+                       : rt.x + (b._monster.isWide() ? rt.w / 4 : rt.w / 2) + sprite.x();
     const s32 sy = rt.y + rt.h + sprite.y() - 10;
 
     return {sx, sy};
@@ -1631,7 +1631,7 @@ int Battle::Interface::GetBattleCursor(string& status) const
             if (b_current->GetColor() == b_enemy->GetColor() && !b_enemy->Modes(SP_HYPNOTIZE))
             {
                 status = _("View %{monster} info.");
-                StringReplace(status, "%{monster}", b_enemy->GetMultiName());
+                StringReplace(status, "%{monster}", b_enemy->_monster.GetMultiName());
                 return Cursor::WAR_INFO;
             }
             if (b_current->isArchers() && !b_current->isHandFighting())
@@ -1639,7 +1639,7 @@ int Battle::Interface::GetBattleCursor(string& status) const
                 status = _("Shoot %{monster}");
                 status.append(" ");
                 status.append(_n("(one shot left)", "(%{count} shots left)", b_current->GetShots()));
-                StringReplace(status, "%{monster}", b_enemy->GetMultiName());
+                StringReplace(status, "%{monster}", b_enemy->_monster.GetMultiName());
                 StringReplace(status, "%{count}", b_current->GetShots());
 
                 return arena.GetObstaclesPenalty(*b_current, *b_enemy)
@@ -1656,7 +1656,7 @@ int Battle::Interface::GetBattleCursor(string& status) const
                 // if free cell or it is b_current
                 if (UNKNOWN != Board::GetCell(from)->GetDirection() ||
                     from == b_current->GetHeadIndex() ||
-                    b_current->isWide() && from == b_current->GetTailIndex())
+                    b_current->_monster.isWide() && from == b_current->GetTailIndex())
                 {
                     status = _("Attack %{monster}");
                     StringReplace(status, "%{monster}", b_enemy->GetName());
@@ -2212,7 +2212,7 @@ int Battle::Interface::GetAllowSwordDirection(uint32_t index) const
     {
         if (UNKNOWN != Board::GetCell(from)->GetDirection() ||
             from == b_current->GetHeadIndex() ||
-            b_current->isWide() && from == b_current->GetTailIndex())
+            b_current->_monster.isWide() && from == b_current->GetTailIndex())
         {
             res |= Board::GetDirection(index, from);
         }
@@ -2415,7 +2415,7 @@ void Battle::Interface::RedrawActionAttackPart1(Unit& attacker, Unit& defender, 
         action1 = AS_ATTK2;
 
     // long distance attack animation
-    if (attacker.isDoubleCellAttack() && 2 == targets._items.size())
+    if (attacker._monster.isDoubleCellAttack() && 2 == targets._items.size())
     {
         action0 = AS_SHOT0;
         if (action1 == AS_ATTK1)
@@ -2554,7 +2554,7 @@ void Battle::Interface::RedrawActionAttackPart2(Unit& attacker, TargetsInfo& tar
                 msg.append(" ");
                 msg.append(_n("one %{defender} perishes.", "%{count} %{defender} perish.", target.killed));
                 StringReplace(msg, "%{count}", target.killed);
-                StringReplace(msg, "%{defender}", target.defender->GetPluralName(target.killed));
+                StringReplace(msg, "%{defender}", target.defender->_monster.GetPluralName(target.killed));
             }
         }
 
@@ -2700,7 +2700,7 @@ void Battle::Interface::RedrawActionMove(Unit& b, const Indexes& path)
             b_move = &b;
         }
 
-        if (b.isWide())
+        if (b._monster.isWide())
         {
             if (b.GetTailIndex() == *dst)
                 b.SetReflection(!b.isReflect());
@@ -2745,7 +2745,7 @@ void Battle::Interface::RedrawActionFly(Unit& b, const Position& pos)
     Point pt2(pos2.x, pos2.y);
 
     cursor.SetThemes(Cursor::WAR_NONE);
-    const uint32_t step = b.isWide() ? 80 : 40;
+    const uint32_t step = b._monster.isWide() ? 80 : 40;
 
     const Points points = GetLinePoints(pt1, pt2, step);
     auto pnt = points.begin();
@@ -4238,7 +4238,7 @@ void Battle::Interface::RedrawTargetsWithFrameAnimation(const TargetsInfo& targe
             }
 
             const Sprite& sprite = AGG::GetICN(icn, frame, reflect);
-            const Point offset = RedrawTroopWithFrameAnimationOffset(icn, pos, sprite, target.defender->isWide(),
+            const Point offset = RedrawTroopWithFrameAnimationOffset(icn, pos, sprite, target.defender->_monster.isWide(),
                                                                      reflect, false);
             const Point sprite_pos(offset.x + (reflect ? 0 : pos.w / 2), offset.y);
 
@@ -4309,7 +4309,7 @@ void Battle::Interface::RedrawTroopWithFrameAnimation(Unit& b, int icn, int m82,
         Redraw();
 
         const Sprite& sprite = AGG::GetICN(icn, frame, reflect);
-        const Point offset = RedrawTroopWithFrameAnimationOffset(icn, pos, sprite, b.isWide(), reflect,
+        const Point offset = RedrawTroopWithFrameAnimationOffset(icn, pos, sprite, b._monster.isWide(), reflect,
                                                                  false);
         const Point sprite_pos(offset.x + (reflect ? 0 : pos.w / 2), offset.y);
 

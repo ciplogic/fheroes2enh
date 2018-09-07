@@ -72,7 +72,7 @@ string ShowGuardiansInfo(const Maps::Tiles& tile, int scoute)
         str.append("\n");
         str.append(_("guarded by %{count} of %{monster}"));
 
-        StringReplace(str, "%{monster}", StringLower(troop.GetMultiName()));
+        StringReplace(str, "%{monster}", StringLower(troop._monster.GetMultiName()));
         StringReplace(str, "%{count}", Game::CountScoute(troop.GetCount(), scoute));
     }
 
@@ -88,7 +88,7 @@ string ShowMonsterInfo(const Maps::Tiles& tile, int scoute)
     {
         str = "%{count} %{monster}";
         StringReplace(str, "%{count}", Game::CountScoute(troop.GetCount(), scoute));
-        StringReplace(str, "%{monster}", StringLower(troop.GetMultiName()));
+        StringReplace(str, "%{monster}", StringLower(troop._monster.GetMultiName()));
     }
     else
         str = Army::TroopSizeString(troop);

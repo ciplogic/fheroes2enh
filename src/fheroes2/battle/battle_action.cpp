@@ -41,7 +41,7 @@ void Battle::Arena::BattleProcess(Unit& attacker, Unit& defender, s32 dst, int d
 
     if (dir)
     {
-        if (attacker.isWide())
+        if (attacker._monster.isWide())
         {
             if (!Board::isNearIndexes(attacker.GetHeadIndex(), dst))
                 attacker.UpdateDirection(board._items[dst].GetPos());
@@ -211,7 +211,7 @@ void Battle::Arena::ApplyActionAttack(Command& cmd)
     if (b2->isValid())
     {
         // defense answer
-        if (handfighting && !b1->isHideAttack() && b2->AllowResponse())
+        if (handfighting && !b1->_monster.isHideAttack() && b2->AllowResponse())
         {
             BattleProcess(*b2, *b1);
             b2->SetResponse();
@@ -244,7 +244,7 @@ void Battle::Arena::ApplyActionMove(Command& cmd)
     Position pos1 = Position::GetCorrect(*b, dst);
 
     // force check fly
-    if (static_cast<ArmyTroop *>(b)->isFly())
+    if (static_cast<ArmyTroop *>(b)->_monster.isFly())
     {
         b->UpdateDirection(pos1.GetRect());
         if (b->isReflect() != pos1.isReflect()) pos1.Swap();
@@ -278,12 +278,12 @@ void Battle::Arena::ApplyActionMove(Command& cmd)
                 if (bridge->NeedAction(*b, *it)) bridge->Action(*b, *it);
         }
 
-        if (b->isWide())
+        if (b->_monster.isWide())
         {
             const s32 dst1 = path.back();
             const s32 dst2 = 1 < path.size() ? path[path.size() - 2] : head;
 
-            pos2.Set(dst1, b->isWide(), RIGHT_SIDE & Board::GetDirection(dst1, dst2));
+            pos2.Set(dst1, b->_monster.isWide(), RIGHT_SIDE & Board::GetDirection(dst1, dst2));
         }
         else
             pos2.Set(path.back(), false, b->isReflect());
@@ -423,10 +423,10 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForDamage(Unit& attacker, Unit& def
     targets._items.push_back(res);
 
     // long distance attack
-    if (attacker.isDoubleCellAttack())
+    if (attacker._monster.isDoubleCellAttack())
     {
         const int dir = Board::GetDirection(attacker.GetHeadIndex(), dst);
-        if (!defender.isWide() || 0 == ((RIGHT | LEFT) & dir))
+        if (!defender._monster.isWide() || 0 == ((RIGHT | LEFT) & dir))
         {
             if (nullptr != (cell = Board::GetCell(dst, dir)) &&
                 nullptr != (enemy = cell->GetUnit()) && enemy != &defender)
