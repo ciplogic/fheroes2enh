@@ -7,7 +7,7 @@
     <ProjectGuid>{714B81C8-C6CB-49EF-AEDE-A237CFB1C802}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Installer</RootNamespace>
-    <AssemblyName>Installer</AssemblyName>
+    <AssemblyName>FH2EnhInstaller</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
