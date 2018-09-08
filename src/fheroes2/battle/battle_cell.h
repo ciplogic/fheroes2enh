@@ -123,6 +123,9 @@ namespace Battle
         {
         }
 
+        Position& operator=(const Position& pos);
+        
+
         void Set(s32 head, bool wide, bool reflect);
 
         void Swap();

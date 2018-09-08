@@ -988,7 +988,7 @@ void Battle::Unit::PostKilledAction()
 
 uint32_t Battle::Unit::Resurrect(uint32_t points, bool allow_overflow, bool skip_dead)
 {
-    uint32_t resurrect = _monster.GetCountFromHitPoints(this->_monster, hp + points) - GetCount();
+	int resurrect = Monster::GetCountFromHitPoints(this->_monster, hp + points);
 
     SetCount(GetCount() + resurrect);
     hp += points;
@@ -1001,7 +1001,7 @@ uint32_t Battle::Unit::Resurrect(uint32_t points, bool allow_overflow, bool skip
     {
         resurrect -= GetCount() - count0;
         SetCount(count0);
-        hp = ArmyTroop::GetHitPointsTroop();
+        hp = _monster.GetHitPoints();
     }
 
     if (!skip_dead)

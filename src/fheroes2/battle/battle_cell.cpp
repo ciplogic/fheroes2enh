@@ -27,6 +27,13 @@
 
 #define INFL 12
 
+Battle::Position& Battle::Position::operator=(const Position& pos)
+{
+    first = pos.first;
+    second = pos.second;
+    return *this;
+}
+
 void Battle::Position::Set(s32 head, bool wide, bool reflect)
 {
     first = Board::GetCell(head);
@@ -232,7 +239,7 @@ bool Battle::Cell::isPassable4(const Unit& b, const Cell& from) const
     case BOTTOM_LEFT:
     case TOP_LEFT:
         {
-            bool reflect = (BOTTOM_LEFT | TOP_LEFT) & dir;
+            const bool reflect = (BOTTOM_LEFT | TOP_LEFT) & dir;
             const Cell* tail = Board::GetCell(index, reflect ? RIGHT : LEFT);
             return tail && tail->isPassable1(true) && isPassable1(true);
         }
