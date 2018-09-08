@@ -160,7 +160,7 @@ Maps::MapsFileInfoList GetSortedMapsFileInfoList()
     ListFiles list1;
     list1.ReadDir(Settings::GetSaveDir(), ".sav", false);
 
-	Maps::MapsFileInfoList list2(list1.size());
+    Maps::MapsFileInfoList list2(list1.size());
     int ii = 0;
     for (auto itd = list1.begin(); itd != list1.end(); ++itd, ++ii)
         if (!list2[ii].ReadSAV(*itd))--ii;
@@ -213,7 +213,7 @@ string SelectFileListSimple(const string& header, const string& lastfile, bool e
 
     bool edit_mode = false;
 
-	Maps::MapsFileInfoList lists = GetSortedMapsFileInfoList();
+    Maps::MapsFileInfoList lists = GetSortedMapsFileInfoList();
     FileInfoListBox listbox(rt, edit_mode);
 
     listbox.RedrawBackground(rt);

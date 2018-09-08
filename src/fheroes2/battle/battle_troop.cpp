@@ -384,22 +384,22 @@ void Battle::ModeDuration::DecreaseDuration()
 
 Battle::ModesAffected::ModesAffected()
 {
-	_items.reserve(3);
+    _items.reserve(3);
 }
 
 uint32_t Battle::ModesAffected::GetMode(uint32_t mode) const
 {
-	const auto it = find_if(_items.begin(), _items.end(),
-		[&](const ModeDuration& it) { return it.isMode(mode); });
+    const auto it = find_if(_items.begin(), _items.end(),
+                            [&](const ModeDuration& it) { return it.isMode(mode); });
     return it == _items.end() ? 0 : (*it).second;
 }
 
 void Battle::ModesAffected::AddMode(uint32_t mode, uint32_t duration)
 {
     auto it = find_if(_items.begin(), _items.end(),
-		[&](const ModeDuration& it) { return it.isMode(mode); });
+                      [&](const ModeDuration& it) { return it.isMode(mode); });
     if (it == _items.end())
-		_items.emplace_back(mode, duration);
+        _items.emplace_back(mode, duration);
     else
         (*it).second = duration;
 }
@@ -407,23 +407,23 @@ void Battle::ModesAffected::AddMode(uint32_t mode, uint32_t duration)
 void Battle::ModesAffected::RemoveMode(uint32_t mode)
 {
     auto it = find_if(_items.begin(), _items.end(),
-		[&](const ModeDuration& it) { return it.isMode(mode); });
+                      [&](const ModeDuration& it) { return it.isMode(mode); });
     if (it != _items.end())
     {
         // erase(it)
         if (it + 1 != _items.end()) std::swap(*it, _items.back());
-		_items.pop_back();
+        _items.pop_back();
     }
 }
 
 void Battle::ModesAffected::DecreaseDuration()
 {
-	for_each(_items.begin(), _items.end(), [](ModeDuration&it) { it.DecreaseDuration(); });
+    for_each(_items.begin(), _items.end(), [](ModeDuration& it) { it.DecreaseDuration(); });
 }
 
 uint32_t Battle::ModesAffected::FindZeroDuration() const
 {
-	auto it = find_if(_items.begin(), _items.end(), [](const ModeDuration&it) {return it.isZeroDuration(); });
+    auto it = find_if(_items.begin(), _items.end(), [](const ModeDuration& it) { return it.isZeroDuration(); });
     return it == _items.end() ? 0 : (*it).first;
 }
 
@@ -710,7 +710,7 @@ bool Battle::Unit::isReflect() const
 bool Battle::Unit::OutOfWalls() const
 {
     return Board::isOutOfWallsIndex(GetHeadIndex()) ||
-		_monster.isWide() && Board::isOutOfWallsIndex(GetTailIndex());
+        _monster.isWide() && Board::isOutOfWallsIndex(GetTailIndex());
 }
 
 bool Battle::Unit::isHandFighting() const
@@ -988,7 +988,7 @@ void Battle::Unit::PostKilledAction()
 
 uint32_t Battle::Unit::Resurrect(uint32_t points, bool allow_overflow, bool skip_dead)
 {
-	int resurrect = Monster::GetCountFromHitPoints(this->_monster, hp + points);
+    int resurrect = Monster::GetCountFromHitPoints(this->_monster, hp + points);
 
     SetCount(GetCount() + resurrect);
     hp += points;
@@ -1839,7 +1839,7 @@ uint32_t Battle::Unit::GetMagicResist(const Spell& spell, uint32_t spower) const
         return 100;
 
     if (spell.isALiveOnly() &&
-		_monster.isUndead())
+        _monster.isUndead())
         return 100;
 
     if (spell.isUndeadOnly() &&

@@ -227,10 +227,10 @@ Battle::Arena::Arena(Army& a1, Army& a2, s32 index, bool local) :
         interface = std::make_unique<Interface>(*this, index);
         board.SetArea(interface->GetArea());
 
-		for_each(army1->_items.begin(), army1->_items.end(),
-			[](Unit* it ) { it->InitContours(); });
+        for_each(army1->_items.begin(), army1->_items.end(),
+                 [](Unit* it) { it->InitContours(); });
         for_each(army2->_items.begin(), army2->_items.end(),
-			[](Unit* it) { it->InitContours(); });
+                 [](Unit* it) { it->InitContours(); });
 
         if (conf.Sound())
             AGG::PlaySound(M82::PREBATTL);
@@ -606,20 +606,19 @@ int Battle::Arena::GetOppositeColor(int col) const
 Battle::Unit* Battle::Arena::GetTroopUID(uint32_t uid)
 {
     auto it = find_if(army1->_items.begin(), army1->_items.end(),
-		[uid](const Unit *it)
-    {
-		return it->isUID(uid);
-	});
-       
+                      [uid](const Unit* it)
+                      {
+                          return it->isUID(uid);
+                      });
+
 
     if (it != army1->_items.end()) return *it;
 
     it = find_if(army2->_items.begin(), army2->_items.end(),
-		[uid](const Unit *it)
-	{
-		return it->isUID(uid);
-	});
-
+                 [uid](const Unit* it)
+                 {
+                     return it->isUID(uid);
+                 });
 
 
     return it != army2->_items.end() ? *it : nullptr;
@@ -628,18 +627,18 @@ Battle::Unit* Battle::Arena::GetTroopUID(uint32_t uid)
 const Battle::Unit* Battle::Arena::GetTroopUID(uint32_t uid) const
 {
     auto it = find_if(army1->_items.begin(), army1->_items.end(),
-		[uid](const Unit *it)
-	{
-		return it->isUID(uid);
-	});
+                      [uid](const Unit* it)
+                      {
+                          return it->isUID(uid);
+                      });
 
-	if (it != army1->_items.end()) return *it;
+    if (it != army1->_items.end()) return *it;
 
     it = find_if(army2->_items.begin(), army2->_items.end(),
-		[uid](const Unit *it)
-	{
-		return it->isUID(uid);
-	});
+                 [uid](const Unit* it)
+                 {
+                     return it->isUID(uid);
+                 });
 
 
     return it != army2->_items.end() ? *it : nullptr;
@@ -901,7 +900,7 @@ uint32_t Battle::Arena::GetCastleTargetValue(int target) const
 
 std::vector<int> Battle::Arena::GetCastleTargets() const
 {
-	std::vector<int> targets;
+    std::vector<int> targets;
     targets.reserve(8);
 
     // check walls

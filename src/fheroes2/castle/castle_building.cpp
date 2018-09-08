@@ -64,7 +64,7 @@ CastleDialog::CacheBuildings::CacheBuildings(const Castle& castle, const Point& 
     for (vector<building_t>::const_iterator
          it = ordersBuildings.begin(); it != ordersBuildings.end(); ++it)
     {
-		_items.emplace_back(*it, CastleGetCoordBuilding(castle.GetRace(), *it, top));
+        _items.emplace_back(*it, CastleGetCoordBuilding(castle.GetRace(), *it, top));
     }
 }
 
@@ -194,16 +194,16 @@ void CastleRedrawCurrentBuilding(const Castle& castle, const Point& dst_pt,
         for (const auto& order : orders._items)
         {
             if (!castle.isBuild(order.id))
-		        continue;
-	        CastleRedrawBuilding(castle, dst_pt, order.id, frame, 0);
+                continue;
+            CastleRedrawBuilding(castle, dst_pt, order.id, frame, 0);
 
-	        if (flash == order.id)
-	        {
-		        CastleDialog::RedrawBuildingSpriteToArea(order.contour,
-		                                                 dst_pt.x + order.contour.x(), dst_pt.y + order.contour.y(),
-		                                                 max);
-	        }
-	        CastleRedrawBuildingExtended(castle, dst_pt, order.id, frame);
+            if (flash == order.id)
+            {
+                CastleDialog::RedrawBuildingSpriteToArea(order.contour,
+                                                         dst_pt.x + order.contour.x(), dst_pt.y + order.contour.y(),
+                                                         max);
+            }
+            CastleRedrawBuildingExtended(castle, dst_pt, order.id, frame);
         }
     }
         // redraw build with alpha

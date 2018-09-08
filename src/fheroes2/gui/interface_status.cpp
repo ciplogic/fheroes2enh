@@ -414,7 +414,8 @@ void Interface::StatusWindow::QueueEventProcessing()
     }
     if (le.MousePressRight(GetRect()))
         Dialog::Message(_("Status Window"),
-                        _("This window provides information on the status of your hero or kingdom, and shows the date. Left click here to cycle throungh these windows."
+                        _(
+                            "This window provides information on the status of your hero or kingdom, and shows the date. Left click here to cycle throungh these windows."
                         ),
                         Font::BIG);
 }

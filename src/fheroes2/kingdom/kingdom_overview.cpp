@@ -44,7 +44,7 @@ struct HeroRow
     sp<SecondarySkillsBar> secskillsBar;
     sp<PrimarySkillsBar> primskillsBar;
 
-	HeroRow() = default;
+    HeroRow() = default;
 
     ~HeroRow()
     {

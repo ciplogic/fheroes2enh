@@ -28,8 +28,8 @@
 
 bool Battle::Actions::HaveCommand(uint32_t cmd) const
 {
-	return end() != find_if(begin(), end(),
-		[&](const Command& it) { return it.isType(cmd); });
+    return end() != find_if(begin(), end(),
+                            [&](const Command& it) { return it.isType(cmd); });
 }
 
 Battle::Command::Command(int cmd) : type(cmd)
@@ -38,7 +38,7 @@ Battle::Command::Command(int cmd) : type(cmd)
 
 Battle::Command& Battle::Command::operator<<(const int& val)
 {
-	_items.push_back(val);
+    _items.push_back(val);
     return *this;
 }
 
@@ -47,7 +47,7 @@ Battle::Command& Battle::Command::operator>>(int& val)
     if (!_items.empty())
     {
         val = _items.back();
-		_items.pop_back();
+        _items.pop_back();
     }
     return *this;
 }

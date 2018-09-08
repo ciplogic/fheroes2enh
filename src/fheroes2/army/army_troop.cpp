@@ -68,7 +68,7 @@ void Troop::Set(const Monster& m, uint32_t c)
 
 void Troop::SetMonster(const Monster& m)
 {
-	_monster.id = m.GetID();
+    _monster.id = m.GetID();
 }
 
 void Troop::SetCount(uint32_t c)
@@ -78,7 +78,7 @@ void Troop::SetCount(uint32_t c)
 
 void Troop::Reset()
 {
-	_monster.id = Monster::UNKNOWN;
+    _monster.id = Monster::UNKNOWN;
     count = 0;
 }
 

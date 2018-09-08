@@ -68,7 +68,7 @@ int IMG_SavePNG_RW(SDL_RWops* src, SDL_Surface* surf, int compression)
     png_colorp palette = nullptr;
     int ret = -1;
     int funky_format = 0;
-	SDL_PixelFormat* fmt{};
+    SDL_PixelFormat* fmt{};
 
     if (!src || !surf)
     {
@@ -245,7 +245,7 @@ int IMG_SavePNG_RW(SDL_RWops* src, SDL_Surface* surf, int compression)
                                     0xff000000, 0x00ff0000, 0x0000ff00, 0x000000ff);
 #else
             auto* tempsurf = SDL_CreateRGBSurface(SDL_SWSURFACE, surf->w, surf->h, 32,
-                                            0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000);
+                                                  0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000);
 #endif
             if (!tempsurf)
             {

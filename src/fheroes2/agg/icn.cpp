@@ -2012,8 +2012,8 @@ bool ICN::isBattleMonsterICN(int icn)
 int ICN::FromString(const std::string& str)
 {
     const icnmap_t* ptr = &icnmap[0];
-    while (ptr->type != UNKNOWN && !str.empty() && str!= ptr->name)
-		++ptr;
+    while (ptr->type != UNKNOWN && !str.empty() && str != ptr->name)
+        ++ptr;
     return ptr->type;
 }
 

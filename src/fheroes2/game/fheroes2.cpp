@@ -100,7 +100,11 @@ std::vector<std::string> extractArgsVector(int argc, char** argv);
 int SDL_main(int argc, char **argv)
 {
 #elif WIN32
-struct HINSTANCE__ { int unused; };
+struct HINSTANCE__
+{
+    int unused;
+};
+
 int __stdcall wWinMain(HINSTANCE__* hInstance, HINSTANCE__* hPrevInstance, wchar_t* pCmdLine, int nCmdShow)
 {
     int argc = 0;
@@ -412,5 +416,5 @@ void SetLangEnvPath(const Settings& conf)
         Translation::bindDomain(translations.back().c_str());
     }
     else
-        H2ERROR("translation not found: " + mofile);
+    H2ERROR("translation not found: " + mofile);
 }

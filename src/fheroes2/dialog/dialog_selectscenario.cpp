@@ -306,7 +306,7 @@ const FileInfo* Dialog::SelectScenario(const MapsFileInfoList& all)
             cursor.Hide();
         }
         else if ((le.MouseClickLeft(buttonSelectXLarge) || le.KeyPress(KEY_x)) &&
-            buttonSelectXLarge.isEnable() )
+            buttonSelectXLarge.isEnable())
         {
             listbox.SetListContent(xlarge);
             cursor.Hide();
@@ -330,12 +330,14 @@ const FileInfo* Dialog::SelectScenario(const MapsFileInfoList& all)
             Message(_("All Maps"), _("View all maps, regardless of size."), Font::BIG);
         else if (le.MousePressRight(countPlayers) || le.MousePressRight(curCountPlayer))
             Message(_("Players Icon"),
-                    _("Indicates how many players total are in the EditScenario. Any positions not occupied by humans will be occupied by computer players."
+                    _(
+                        "Indicates how many players total are in the EditScenario. Any positions not occupied by humans will be occupied by computer players."
                     ),
                     Font::BIG);
         else if (le.MousePressRight(sizeMaps) || le.MousePressRight(curMapSize))
             Message(_("Size Icon"),
-                    _("Indicates whether the maps is small (36x36), medium (72x72), large (108x108), or extra large (144x144)."
+                    _(
+                        "Indicates whether the maps is small (36x36), medium (72x72), large (108x108), or extra large (144x144)."
                     ),
                     Font::BIG);
         else if (le.MousePressRight(curMapName))

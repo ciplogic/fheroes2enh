@@ -56,7 +56,7 @@ int Game::ScenarioInfo()
 
     AGG::PlayMusic(MUS::MAINMENU);
 
-	Maps::MapsFileInfoList lists;
+    Maps::MapsFileInfoList lists;
     if (!PrepareMapsFileInfoList(lists, conf.GameType(TYPE_MULTI)))
     {
         Message(_("Warning"), _("No maps available!"), Font::BIG, Dialog::OK);
@@ -264,7 +264,8 @@ int Game::ScenarioInfo()
                                 Font::BIG);
             else if (rating && le.MousePressRight(rating->GetRect()))
                 Dialog::Message(_("Difficulty Rating"),
-                                _("The difficulty rating reflects a combination of various settings for your game. This number will be applied to your final score."
+                                _(
+                                    "The difficulty rating reflects a combination of various settings for your game. This number will be applied to your final score."
                                 ),
                                 Font::BIG);
             else if (le.MousePressRight(*buttonOk))

@@ -669,11 +669,11 @@ Skill::Secondary* Skill::SecSkills::FindSkill(SkillT skill)
 {
     const auto it = find_if(_items.begin(), _items.end(),
                             [&](Secondary& it)
-    {
-        if (!it.isValid())
-            return false;
-        return it.isSkill(skill);
-    });
+                            {
+                                if (!it.isValid())
+                                    return false;
+                                return it.isSkill(skill);
+                            });
     return it != _items.end() ? &*it : nullptr;
 }
 
@@ -743,7 +743,7 @@ Skill::SkillT Skill::SecondaryPriorityFromRace(int race, const std::vector<Skill
             exclude.end() == find(exclude.begin(), exclude.end(), secskill))
             parts.Push((int)secskill, (uint32_t)SecondaryGetWeightSkillFromRace(race, secskill));
 
-    return parts.Size() ? (SkillT) parts.Get() : SkillT::UNKNOWN;
+    return parts.Size() ? (SkillT)parts.Get() : SkillT::UNKNOWN;
 }
 
 /* select secondary skills for level up */
@@ -1106,7 +1106,7 @@ ByteVectorWriter& Skill::operator<<(ByteVectorWriter& sb, const SecSkills& ss)
     const vector<Secondary>& v = ss._items;
 
     sb.put32(static_cast<uint32_t>(v.size()));
-    for(const Secondary& it:v)
+    for (const Secondary& it : v)
     {
         sb << ((int)it.first) << it.second;
     }

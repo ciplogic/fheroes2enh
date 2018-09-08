@@ -313,7 +313,7 @@ void Battle::Force::NewTurn()
         GetCommander()->ResetModes(Heroes::SPELLCASTED);
 
     for_each(_items.begin(), _items.end(),
-		[&](Unit* it) { it->NewTurn(); });
+             [&](Unit* it) { it->NewTurn(); });
 }
 
 bool isUnitFirst(const Battle::Unit* last, bool part1, int army2_color)

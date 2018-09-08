@@ -633,8 +633,8 @@ Battle::Status::Status() : back1(AGG::GetICN(ICN::TEXTBAR, 8)), back2(AGG::GetIC
 
 void Battle::Status::SetPosition(s32 cx, s32 cy)
 {
-	x = cx;
-	y = cy;
+    x = cx;
+    y = cy;
 }
 
 void Battle::Status::SetMessage(const string& str, bool top)
@@ -742,7 +742,7 @@ void Battle::ArmiesOrder::Redraw(const Unit* current)
     const uint32_t ow = ARMYORDERW + 2;
 
     uint32_t ox = area.x + (area.w - ow * count_if(orders->_items.begin(), orders->_items.end(),
-		[&](const Unit* it) { return it->isValid(); })) / 2;
+                                                   [&](const Unit* it) { return it->isValid(); })) / 2;
     uint32_t oy = area.y;
 
     x = ox;
@@ -1270,7 +1270,7 @@ void Battle::Interface::RedrawCoverStatic(Surface& dst) const
 
 void Battle::Interface::RedrawCastle1(const Castle& castle, Surface& dst) const
 {
-	const Point& topleft = border.GetArea();
+    const Point& topleft = border.GetArea();
     const bool fortification = Race::KNGT == castle.GetRace() && castle.isBuild(BUILD_SPEC);
 
     int icn_castbkg;
@@ -1446,8 +1446,8 @@ void Battle::Interface::RedrawCastle3(const Castle& castle) const
 void Battle::Interface::RedrawLowObjects(s32 cell_index, Surface& dst)
 {
     const Cell* cell = Board::GetCell(cell_index);
-	if (!cell)
-		return;
+    if (!cell)
+        return;
     Sprite sprite;
 
     switch (cell->GetObject())
@@ -1481,106 +1481,106 @@ void Battle::Interface::RedrawLowObjects(s32 cell_index, Surface& dst)
 
 void Battle::Interface::RedrawHighObjects(s32 cell_index)
 {
-	const Cell* cell = Board::GetCell(cell_index);
+    const Cell* cell = Board::GetCell(cell_index);
 
-	if (!cell)
-		return;
+    if (!cell)
+        return;
 
-	Sprite sprite;
+    Sprite sprite;
 
-	switch (cell->GetObject())
-	{
-	case 0x80:
-		sprite = AGG::GetICN(ICN::COBJ0000, 0);
-		break;
-	case 0x81:
-		sprite = AGG::GetICN(ICN::COBJ0001, 0);
-		break;
-	case 0x82:
-		sprite = AGG::GetICN(ICN::COBJ0002, 0);
-		break;
-	case 0x83:
-		sprite = AGG::GetICN(ICN::COBJ0003, 0);
-		break;
-	case 0x85:
-		sprite = AGG::GetICN(ICN::COBJ0005, 0);
-		break;
-	case 0x86:
-		sprite = AGG::GetICN(ICN::COBJ0006, 0);
-		break;
-	case 0x88:
-		sprite = AGG::GetICN(ICN::COBJ0008, 0);
-		break;
-	case 0x89:
-		sprite = AGG::GetICN(ICN::COBJ0009, 0);
-		break;
-	case 0x8A:
-		sprite = AGG::GetICN(ICN::COBJ0010, 0);
-		break;
-	case 0x8B:
-		sprite = AGG::GetICN(ICN::COBJ0011, 0);
-		break;
-	case 0x8C:
-		sprite = AGG::GetICN(ICN::COBJ0012, 0);
-		break;
-	case 0x8D:
-		sprite = AGG::GetICN(ICN::COBJ0013, 0);
-		break;
-	case 0x8E:
-		sprite = AGG::GetICN(ICN::COBJ0014, 0);
-		break;
-	case 0x8F:
-		sprite = AGG::GetICN(ICN::COBJ0015, 0);
-		break;
-	case 0x91:
-		sprite = AGG::GetICN(ICN::COBJ0017, 0);
-		break;
-	case 0x92:
-		sprite = AGG::GetICN(ICN::COBJ0018, 0);
-		break;
-	case 0x93:
-		sprite = AGG::GetICN(ICN::COBJ0019, 0);
-		break;
-	case 0x94:
-		sprite = AGG::GetICN(ICN::COBJ0020, 0);
-		break;
-	case 0x95:
-		sprite = AGG::GetICN(ICN::COBJ0021, 0);
-		break;
-	case 0x96:
-		sprite = AGG::GetICN(ICN::COBJ0022, 0);
-		break;
-	case 0x97:
-		sprite = AGG::GetICN(ICN::COBJ0023, 0);
-		break;
-	case 0x98:
-		sprite = AGG::GetICN(ICN::COBJ0024, 0);
-		break;
-	case 0x99:
-		sprite = AGG::GetICN(ICN::COBJ0025, 0);
-		break;
-	case 0x9A:
-		sprite = AGG::GetICN(ICN::COBJ0026, 0);
-		break;
-	case 0x9B:
-		sprite = AGG::GetICN(ICN::COBJ0027, 0);
-		break;
-	case 0x9C:
-		sprite = AGG::GetICN(ICN::COBJ0028, 0);
-		break;
-	case 0x9D:
-		sprite = AGG::GetICN(ICN::COBJ0029, 0);
-		break;
-	default:
-		break;
-	}
+    switch (cell->GetObject())
+    {
+    case 0x80:
+        sprite = AGG::GetICN(ICN::COBJ0000, 0);
+        break;
+    case 0x81:
+        sprite = AGG::GetICN(ICN::COBJ0001, 0);
+        break;
+    case 0x82:
+        sprite = AGG::GetICN(ICN::COBJ0002, 0);
+        break;
+    case 0x83:
+        sprite = AGG::GetICN(ICN::COBJ0003, 0);
+        break;
+    case 0x85:
+        sprite = AGG::GetICN(ICN::COBJ0005, 0);
+        break;
+    case 0x86:
+        sprite = AGG::GetICN(ICN::COBJ0006, 0);
+        break;
+    case 0x88:
+        sprite = AGG::GetICN(ICN::COBJ0008, 0);
+        break;
+    case 0x89:
+        sprite = AGG::GetICN(ICN::COBJ0009, 0);
+        break;
+    case 0x8A:
+        sprite = AGG::GetICN(ICN::COBJ0010, 0);
+        break;
+    case 0x8B:
+        sprite = AGG::GetICN(ICN::COBJ0011, 0);
+        break;
+    case 0x8C:
+        sprite = AGG::GetICN(ICN::COBJ0012, 0);
+        break;
+    case 0x8D:
+        sprite = AGG::GetICN(ICN::COBJ0013, 0);
+        break;
+    case 0x8E:
+        sprite = AGG::GetICN(ICN::COBJ0014, 0);
+        break;
+    case 0x8F:
+        sprite = AGG::GetICN(ICN::COBJ0015, 0);
+        break;
+    case 0x91:
+        sprite = AGG::GetICN(ICN::COBJ0017, 0);
+        break;
+    case 0x92:
+        sprite = AGG::GetICN(ICN::COBJ0018, 0);
+        break;
+    case 0x93:
+        sprite = AGG::GetICN(ICN::COBJ0019, 0);
+        break;
+    case 0x94:
+        sprite = AGG::GetICN(ICN::COBJ0020, 0);
+        break;
+    case 0x95:
+        sprite = AGG::GetICN(ICN::COBJ0021, 0);
+        break;
+    case 0x96:
+        sprite = AGG::GetICN(ICN::COBJ0022, 0);
+        break;
+    case 0x97:
+        sprite = AGG::GetICN(ICN::COBJ0023, 0);
+        break;
+    case 0x98:
+        sprite = AGG::GetICN(ICN::COBJ0024, 0);
+        break;
+    case 0x99:
+        sprite = AGG::GetICN(ICN::COBJ0025, 0);
+        break;
+    case 0x9A:
+        sprite = AGG::GetICN(ICN::COBJ0026, 0);
+        break;
+    case 0x9B:
+        sprite = AGG::GetICN(ICN::COBJ0027, 0);
+        break;
+    case 0x9C:
+        sprite = AGG::GetICN(ICN::COBJ0028, 0);
+        break;
+    case 0x9D:
+        sprite = AGG::GetICN(ICN::COBJ0029, 0);
+        break;
+    default:
+        break;
+    }
 
-	if (sprite.isValid())
-	{
-		//const Point & topleft = border.GetArea();
-		const Rect& pt = cell->GetPos();
-		sprite.Blit(pt.x + pt.w / 2 + sprite.x(), pt.y + pt.h + sprite.y() - 10);
-	}
+    if (sprite.isValid())
+    {
+        //const Point & topleft = border.GetArea();
+        const Rect& pt = cell->GetPos();
+        sprite.Blit(pt.x + pt.w / 2 + sprite.x(), pt.y + pt.h + sprite.y() - 10);
+    }
 }
 
 void Battle::Interface::RedrawKilled() const
@@ -2635,8 +2635,8 @@ void Battle::Interface::RedrawActionWincesKills(TargetsInfo& targets)
 
     // targets damage animation loop
     while (le.HandleEvents() && finish != count_if(targets._items.begin(), targets._items.end(),
-		[](TargetInfo&it) {return it.isFinishAnimFrame(); }
-	))
+                                                   [](TargetInfo& it) { return it.isFinishAnimFrame(); }
+    ))
     {
         CheckGlobalEvents(le);
 
@@ -4238,7 +4238,8 @@ void Battle::Interface::RedrawTargetsWithFrameAnimation(const TargetsInfo& targe
             }
 
             const Sprite& sprite = AGG::GetICN(icn, frame, reflect);
-            const Point offset = RedrawTroopWithFrameAnimationOffset(icn, pos, sprite, target.defender->_monster.isWide(),
+            const Point offset = RedrawTroopWithFrameAnimationOffset(icn, pos, sprite,
+                                                                     target.defender->_monster.isWide(),
                                                                      reflect, false);
             const Point sprite_pos(offset.x + (reflect ? 0 : pos.w / 2), offset.y);
 
@@ -4531,12 +4532,12 @@ Battle::PopupDamageInfo::PopupDamageInfo() : FrameBorder(5), cell(nullptr), atta
 
 void Battle::PopupDamageInfo::SetInfo(const Cell* c, const Unit* a, const Unit* b)
 {
-    if(!c || cell==c)
+    if (!c || cell == c)
         return;
-	if (!a || attacker == a)
-		return;
-	if (!b || defender == b)
-		return;
+    if (!a || attacker == a)
+        return;
+    if (!b || defender == b)
+        return;
     if (!Settings::Get().ExtBattleShowDamage() || !Battle::AnimateInfrequentDelay(Game::BATTLE_POPUP_DELAY))
         return;
     redraw = true;

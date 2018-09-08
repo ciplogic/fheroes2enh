@@ -79,7 +79,7 @@ Rect Battle::Board::GetArea() const
 
 void Battle::Board::Reset()
 {
-	for_each(_items.begin(), _items.end(), [](Cell& it) { it.ResetQuality(); });
+    for_each(_items.begin(), _items.end(), [](Cell& it) { it.ResetQuality(); });
     for_each(_items.begin(), _items.end(), [](Cell& it) { it.ResetDirection(); });
 }
 
@@ -135,7 +135,7 @@ s32 Battle::Board::GetDistance(s32 index1, s32 index2)
 
 void Battle::Board::SetScanPassability(const Unit& b)
 {
-	for_each(_items.begin(), _items.end(), [](Cell& it) { it.ResetDirection(); });
+    for_each(_items.begin(), _items.end(), [](Cell& it) { it.ResetDirection(); });
 
     _items.at(b.GetHeadIndex()).SetDirection(CENTER);
 
@@ -326,7 +326,7 @@ Battle::Indexes Battle::Board::GetPassableQualityPositions(const Unit& b)
     return result;
 }
 
-bool IndexDistanceEqualDistance(const IndexDistance& id, uint32_t dist) 
+bool IndexDistanceEqualDistance(const IndexDistance& id, uint32_t dist)
 {
     return id.second == dist;
 }
@@ -354,10 +354,10 @@ Battle::Indexes Battle::Board::GetNearestTroopIndexes(s32 pos, const Indexes* bl
     {
         sort(dists.begin(), dists.end(), IndexDistance::Shortest);
         dists.resize(count_if(dists.begin(), dists.end(),
-            [=](const IndexDistance&it)
-        {
-            return IndexDistanceEqualDistance(it, dists.front().second);
-        }));
+                              [=](const IndexDistance& it)
+                              {
+                                  return IndexDistanceEqualDistance(it, dists.front().second);
+                              }));
     }
 
     if (!dists.empty())

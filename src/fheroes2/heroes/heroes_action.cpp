@@ -1468,7 +1468,8 @@ void ActionToWitchsHut(Heroes& hero, uint32_t obj, s32 dst_index)
         if (hero.HasMaxSecondarySkill())
         {
             msg.append(
-                _("As you approach, she turns and focuses her one glass eye on you.\n\"You already know everything you deserve to learn!\" the witch screeches. \"NOW GET OUT OF MY HOUSE!\""
+                _(
+                    "As you approach, she turns and focuses her one glass eye on you.\n\"You already know everything you deserve to learn!\" the witch screeches. \"NOW GET OUT OF MY HOUSE!\""
                 ));
             Message(MP2::StringObject(obj), msg, Font::BIG, Dialog::OK);
         }
@@ -1477,7 +1478,8 @@ void ActionToWitchsHut(Heroes& hero, uint32_t obj, s32 dst_index)
             if (hero.HasSecondarySkill(skill.Skill()))
             {
                 msg.append(
-                    _("As you approach, she turns and speaks.\n\"You already know that which I would teach you. I can help you no further.\""
+                    _(
+                        "As you approach, she turns and speaks.\n\"You already know that which I would teach you. I can help you no further.\""
                     ));
                 Message(MP2::StringObject(obj), msg, Font::BIG, Dialog::OK);
             }
@@ -1486,7 +1488,8 @@ void ActionToWitchsHut(Heroes& hero, uint32_t obj, s32 dst_index)
                 hero.LearnSkill(skill);
 
                 msg.append(
-                    _("An ancient and immortal witch living in a hut with bird's legs for stilts teaches you %{skill} for her own inscrutable purposes."
+                    _(
+                        "An ancient and immortal witch living in a hut with bird's legs for stilts teaches you %{skill} for her own inscrutable purposes."
                     ));
                 StringReplace(msg, "%{skill}", skill_name);
                 Dialog::SecondarySkillInfo(MP2::StringObject(obj), msg, skill);
@@ -2053,14 +2056,16 @@ void ActionToArtifact(Heroes& hero, uint32_t obj, s32 dst_index)
                 {
                     PlaySoundFailure;
                     Message("",
-                            _("You try to pay the leprechaun, but realize that you can't afford it. The leprechaun stamps his foot and ignores you."
+                            _(
+                                "You try to pay the leprechaun, but realize that you can't afford it. The leprechaun stamps his foot and ignores you."
                             ),
                             Font::BIG, Dialog::OK);
                 }
             }
             else
                 Message("",
-                        _("Insulted by your refusal of his generous offer, the leprechaun stamps his foot and ignores you."
+                        _(
+                            "Insulted by your refusal of his generous offer, the leprechaun stamps his foot and ignores you."
                         ),
                         Font::BIG, Dialog::OK);
         }
@@ -2147,7 +2152,8 @@ void ActionToArtifact(Heroes& hero, uint32_t obj, s32 dst_index)
                     {
                         PlaySoundFailure;
                         Message("",
-                                _("Discretion is the better part of valor, and you decide to avoid this fight for today."
+                                _(
+                                    "Discretion is the better part of valor, and you decide to avoid this fight for today."
                                 ),
                                 Font::BIG, Dialog::OK);
                     }
@@ -2232,7 +2238,8 @@ void ActionToTreasureChest(Heroes& hero, uint32_t obj, s32 dst_index)
         else
         {
             Message(hdr,
-                    _("After spending hours trying to fish the chest out of the sea, you open it, only to find it empty."
+                    _(
+                        "After spending hours trying to fish the chest out of the sea, you open it, only to find it empty."
                     ),
                     Font::BIG, Dialog::OK);
         }
@@ -2289,7 +2296,8 @@ void ActionToAncientLamp(Heroes& hero, uint32_t obj, s32 dst_index)
     PlaySoundSuccess;
     if (troop.isValid() &&
         Dialog::YES == Dialog::Message(MP2::StringObject(obj),
-                                       _("You stumble upon a dented and tarnished lamp lodged deep in the earth. Do you wish to rub the lamp?"
+                                       _(
+                                           "You stumble upon a dented and tarnished lamp lodged deep in the earth. Do you wish to rub the lamp?"
                                        ),
                                        Font::BIG, Dialog::YES | Dialog::NO))
         RecruitMonsterFromTile(hero, tile, MP2::StringObject(obj), troop, true);
@@ -2376,7 +2384,8 @@ void ActionToWhirlpools(Heroes& hero, uint32_t obj, s32 index_from)
         Message(_("A whirlpool engulfs your ship."), _("Some of your army has fallen overboard."), Font::BIG,
                 Dialog::OK);
         troop->SetCount(
-            Monster::GetCountFromHitPoints(troop->_monster.GetID(), troop->GetHitPointsTroop() - troop->GetHitPointsTroop() *
+            Monster::GetCountFromHitPoints(troop->_monster.GetID(),
+                                           troop->GetHitPointsTroop() - troop->GetHitPointsTroop() *
                                            Game::GetWhirlpoolPercent() /
                                            100));
     }
@@ -2390,7 +2399,8 @@ void ActionToAbandoneMine(Heroes& hero, uint32_t obj, s32 dst_index)
     PlaySoundWarning;
 
     if (Dialog::YES == Dialog::Message("",
-                                       _("You come upon an abandoned gold mine. The mine appears to be haunted. Do you wish to enter?"
+                                       _(
+                                           "You come upon an abandoned gold mine. The mine appears to be haunted. Do you wish to enter?"
                                        ),
                                        Font::BIG, Dialog::YES | Dialog::NO))
     {
@@ -2808,7 +2818,8 @@ void ActionToArtesianSpring(Heroes& hero, uint32_t obj, s32 dst_index)
     {
         PlaySoundFailure;
         Message(name,
-                _("A drink at the spring is supposed to give you twice your normal spell points, but you are already at that level."
+                _(
+                    "A drink at the spring is supposed to give you twice your normal spell points, but you are already at that level."
                 ),
                 Font::BIG, Dialog::OK);
     }
@@ -2822,7 +2833,8 @@ void ActionToArtesianSpring(Heroes& hero, uint32_t obj, s32 dst_index)
             AGG::PlayMusic(MUS::WATERSPRING, false);
         hero.SetSpellPoints(max * 2);
         Message(name,
-                _("A drink from the spring fills your blood with magic! You have twice your normal spell points in reserve."
+                _(
+                    "A drink from the spring fills your blood with magic! You have twice your normal spell points in reserve."
                 ),
                 Font::BIG, Dialog::OK);
 
@@ -2842,7 +2854,8 @@ void ActionToXanadu(Heroes& hero, uint32_t obj, s32 dst_index)
     {
         PlaySoundVisited;
         Message(MP2::StringObject(obj),
-                _("Recognizing you, the butler refuses to admit you. \"The master,\" he says, \"will not see the same student twice.\""
+                _(
+                    "Recognizing you, the butler refuses to admit you. \"The master,\" he says, \"will not see the same student twice.\""
                 ),
                 Font::BIG, Dialog::OK);
     }
@@ -2869,7 +2882,8 @@ void ActionToXanadu(Heroes& hero, uint32_t obj, s32 dst_index)
         {
             PlaySoundSuccess;
             Message(MP2::StringObject(obj),
-                    _("The butler admits you to see the master of the house. He trains you in the four skills a hero should know."
+                    _(
+                        "The butler admits you to see the master of the house. He trains you in the four skills a hero should know."
                     ),
                     Font::BIG, Dialog::OK);
             hero.IncreasePrimarySkill(Skill::Primary::ATTACK);
@@ -3035,7 +3049,8 @@ void ActionToMagellanMaps(Heroes& hero, uint32_t obj, s32 dst_index)
     {
         PlaySoundFailure;
         Message(MP2::StringObject(obj),
-                _("The captain sighs. \"You don't have enough money, eh?  You can't expect me to give my maps away for free!\""
+                _(
+                    "The captain sighs. \"You don't have enough money, eh?  You can't expect me to give my maps away for free!\""
                 ),
                 Font::BIG, Dialog::OK);
     }
@@ -3108,7 +3123,8 @@ void ActionToTreeKnowledge(Heroes& hero, uint32_t obj, s32 dst_index)
     {
         PlaySoundVisited;
         Message(MP2::StringObject(obj),
-                _("Upon your approach, the tree opens its eyes in delight. \"It is good to see you, my student. I hope my teachings have helped you.\""
+                _(
+                    "Upon your approach, the tree opens its eyes in delight. \"It is good to see you, my student. I hope my teachings have helped you.\""
                 ),
                 Font::BIG, Dialog::OK);
     }
@@ -3136,7 +3152,8 @@ void ActionToTreeKnowledge(Heroes& hero, uint32_t obj, s32 dst_index)
                 msg = _("Upon your approach, the tree opens its eyes in delight.");
                 msg.append("\n");
                 msg.append(
-                    _("\"Ahh, an adventurer! I will be happy to teach you a little of what I have learned over the ages for a mere %{count} %{res}.\""
+                    _(
+                        "\"Ahh, an adventurer! I will be happy to teach you a little of what I have learned over the ages for a mere %{count} %{res}.\""
                     ));
                 msg.append("\n");
                 msg.append(_("(Just bury it around my roots.)"));
@@ -3180,7 +3197,8 @@ void ActionToDaemonCave(Heroes& hero, uint32_t obj, s32 dst_index)
     AGG::PlayMusic(MUS::DEMONCAVE, false);
 
     if (Dialog::YES == Dialog::Message(MP2::StringObject(obj),
-                                       _("The entrance to the cave is dark, and a foul, sulfurous smell issues from the cave mouth. Will you enter?"
+                                       _(
+                                           "The entrance to the cave is dark, and a foul, sulfurous smell issues from the cave mouth. Will you enter?"
                                        ),
                                        Font::BIG, Dialog::YES | Dialog::NO))
     {
@@ -3301,8 +3319,8 @@ void ActionToDaemonCave(Heroes& hero, uint32_t obj, s32 dst_index)
 void ActionToAlchemistsTower(Heroes& hero, uint32_t obj, s32 dst_index)
 {
     BagArtifacts& bag = hero.GetBagArtifacts();
-	uint32_t cursed = count_if(bag._items.begin(), bag._items.end(),
-		[](const Artifact& it) {return it.isAlchemistRemove(); });
+    uint32_t cursed = count_if(bag._items.begin(), bag._items.end(),
+                               [](const Artifact& it) { return it.isAlchemistRemove(); });
 
     if (cursed)
     {
@@ -3314,7 +3332,7 @@ void ActionToAlchemistsTower(Heroes& hero, uint32_t obj, s32 dst_index)
                 "As you enter the Alchemist's Tower, a hobbled, graying man in a brown cloak makes his way towards you.";
             msg.append("\n");
             msg.append(_n("He checks your pack, and sees that you have 1 cursed item.",
-                "He checks your pack, and sees that you have %{count} cursed items.", cursed));
+                          "He checks your pack, and sees that you have %{count} cursed items.", cursed));
             StringReplace(msg, "%{count}", cursed);
             msg.append("\n");
             msg.append(_("For %{gold} gold, the alchemist will remove it for you. Do you pay?"));
@@ -3324,13 +3342,14 @@ void ActionToAlchemistsTower(Heroes& hero, uint32_t obj, s32 dst_index)
             {
                 hero.GetKingdom().OddFundsResource(payment);
                 bag._items.resize(distance(bag._items.begin(),
-                                    remove_if(bag._items.begin(), bag._items.end(),
-										[](const Artifact& it) {return it.isAlchemistRemove(); })));
+                                           remove_if(bag._items.begin(), bag._items.end(),
+                                                     [](const Artifact& it) { return it.isAlchemistRemove(); })));
             }
         }
         else
             Message("",
-                    _("You hear a voice from behind the locked door, \"You don't have enough gold to pay for my services.\""
+                    _(
+                        "You hear a voice from behind the locked door, \"You don't have enough gold to pay for my services.\""
                     ),
                     Font::BIG, Dialog::OK);
     }
@@ -3401,7 +3420,8 @@ void ActionToSirens(Heroes& hero, uint32_t obj, s32 dst_index)
     {
         PlaySoundVisited;
         Message(MP2::StringObject(obj),
-                _("As the sirens sing their eerie song, your small, determined army manages to overcome the urge to dive headlong into the sea."
+                _(
+                    "As the sirens sing their eerie song, your small, determined army manages to overcome the urge to dive headlong into the sea."
                 ),
                 Font::BIG, Dialog::OK);
     }
@@ -3429,7 +3449,8 @@ void ActionToJail(Heroes& hero, uint32_t obj, s32 dst_index)
         Maps::Tiles& tile = world.GetTiles(dst_index);
         PlaySoundSuccess;
         Message(MP2::StringObject(obj),
-                _("In a dazzling display of daring, you break into the local jail and free the hero imprisoned there, who, in return, pledges loyalty to your cause."
+                _(
+                    "In a dazzling display of daring, you break into the local jail and free the hero imprisoned there, who, in return, pledges loyalty to your cause."
                 ),
                 Font::BIG, Dialog::OK);
 
@@ -3459,7 +3480,8 @@ void ActionToJail(Heroes& hero, uint32_t obj, s32 dst_index)
 void ActionToHutMagi(Heroes& hero, uint32_t obj, s32 dst_index)
 {
     Message(MP2::StringObject(obj),
-            _("You enter a rickety hut and talk to the magician who lives there. He tells you of places near and far which may aid you in your journeys."
+            _(
+                "You enter a rickety hut and talk to the magician who lives there. He tells you of places near and far which may aid you in your journeys."
             ),
             Font::BIG, Dialog::OK);
 
@@ -3564,7 +3586,8 @@ void ActionToBarrier(Heroes& hero, uint32_t obj, s32 dst_index)
     else
     {
         Message(MP2::StringObject(obj),
-                _("A magical barrier stands tall before you, blocking your way. Runes on the arch read,\n\"Speak the key and you may pass.\"\nYou speak, and nothing happens."
+                _(
+                    "A magical barrier stands tall before you, blocking your way. Runes on the arch read,\n\"Speak the key and you may pass.\"\nYou speak, and nothing happens."
                 ),
                 Font::BIG, Dialog::OK);
     }

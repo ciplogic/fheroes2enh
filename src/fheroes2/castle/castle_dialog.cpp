@@ -490,16 +490,16 @@ int Castle::OpenDialog(bool readonly, bool fade)
         for (auto it = cacheBuildings._items.rbegin(); it != cacheBuildings._items.rend(); ++it)
         {
             if ((*it).id != GetActualDwelling((*it).id) || !isBuild((*it).id))
-		        continue;
-	        if (!readonly && le.MouseClickLeft((*it).coord) &&
-		        RecruitMonster(Dialog::RecruitMonster(
-			        Monster(race, GetActualDwelling((*it).id)), GetDwellingLivedCount((*it).id), true)))
-		        need_redraw = true;
-	        else if (le.MousePressRight((*it).coord))
-		        Dialog::DwellingInfo(Monster(race, GetActualDwelling((*it).id)), GetDwellingLivedCount((*it).id));
+                continue;
+            if (!readonly && le.MouseClickLeft((*it).coord) &&
+                RecruitMonster(Dialog::RecruitMonster(
+                    Monster(race, GetActualDwelling((*it).id)), GetDwellingLivedCount((*it).id), true)))
+                need_redraw = true;
+            else if (le.MousePressRight((*it).coord))
+                Dialog::DwellingInfo(Monster(race, GetActualDwelling((*it).id)), GetDwellingLivedCount((*it).id));
 
-	        if (le.MouseCursor((*it).coord))
-		        msg_status = Monster(race, (*it).id).GetName();
+            if (le.MouseCursor((*it).coord))
+                msg_status = Monster(race, (*it).id).GetName();
         }
 
         for (auto it = cacheBuildings._items.begin(); it != cacheBuildings._items.end(); ++it)

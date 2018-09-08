@@ -41,7 +41,8 @@ bool CanUpgradeTroopButNoResources(Troop& troop, Army* army)
     bool candidate = false;
     if (troop._monster.isAllowUpgrade() &&
         // allow upgrade
-        castle && castle->GetRace() == troop._monster.GetRace() && castle->isBuild(troop._monster.GetUpgrade().GetDwelling()))
+        castle && castle->GetRace() == troop._monster.GetRace() && castle->isBuild(
+            troop._monster.GetUpgrade().GetDwelling()))
     {
         candidate = true;
     }
@@ -54,7 +55,8 @@ bool CanUpgradeTroop(Troop& troop, Army* army)
     bool candidate = false;
     if (troop._monster.isAllowUpgrade() &&
         // allow upgrade
-        castle && castle->GetRace() == troop._monster.GetRace() && castle->isBuild(troop._monster.GetUpgrade().GetDwelling()))
+        castle && castle->GetRace() == troop._monster.GetRace() && castle->isBuild(
+            troop._monster.GetUpgrade().GetDwelling()))
     {
         candidate = true;
     }
@@ -497,7 +499,8 @@ bool ArmyBar::ActionBarDoubleClick(const Point& cursor, ArmyTroop& troop, const 
 
         if (troop._monster.isAllowUpgrade() &&
             // allow upgrade
-            castle && castle->GetRace() == troop._monster.GetRace() && castle->isBuild(troop._monster.GetUpgrade().GetDwelling()))
+            castle && castle->GetRace() == troop._monster.GetRace() && castle->isBuild(
+                troop._monster.GetUpgrade().GetDwelling()))
         {
             flags |= Dialog::UPGRADE;
 

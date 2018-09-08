@@ -191,9 +191,9 @@ s32 FindUncharteredTerritory(Heroes& hero, uint32_t scoute)
     Maps::GetAroundIndexes(hero.GetIndex(), scoute, true, v);
     Maps::Indexes res;
 
-	v.resize(distance(v.begin(),
-		remove_if(v.begin(), v.end(),
-			[](s32 it) {return Maps::TileIsUnderProtection(it); })));
+    v.resize(distance(v.begin(),
+                      remove_if(v.begin(), v.end(),
+                                [](s32 it) { return Maps::TileIsUnderProtection(it); })));
 
 
     for (auto it = v.rbegin(); it != v.rend() && res.size() < 4; ++it)
@@ -217,8 +217,8 @@ s32 GetRandomHeroesPosition(Heroes& hero, uint32_t scoute)
     Maps::Indexes res;
 
     v.resize(distance(v.begin(),
-                      remove_if(v.begin(), v.end(), 
-						  [](s32 it) {return Maps::TileIsUnderProtection(it); })));
+                      remove_if(v.begin(), v.end(),
+                                [](s32 it) { return Maps::TileIsUnderProtection(it); })));
 
 
     for (auto it = v.rbegin(); it != v.rend() && res.size() < 4; ++it)
@@ -402,8 +402,9 @@ bool AI::HeroesGetTask(Heroes& hero)
         // scan enemy hero
         if (hero.GetSquarePatrol())
         {
-            const Maps::Indexes& indicesAround = Maps::ScanAroundObject(Maps::GetIndexFromAbsPoint(hero.GetCenterPatrol()),
-                                                                  hero.GetSquarePatrol(), MP2::OBJ_HEROES);
+            const Maps::Indexes& indicesAround = Maps::ScanAroundObject(
+                Maps::GetIndexFromAbsPoint(hero.GetCenterPatrol()),
+                hero.GetSquarePatrol(), MP2::OBJ_HEROES);
             for (int result : indicesAround)
             {
                 const Heroes* enemy = world.GetTiles(result).GetHeroes();
@@ -419,7 +420,7 @@ bool AI::HeroesGetTask(Heroes& hero)
         if (conf.ExtHeroPatrolAllowPickup())
         {
             const Maps::Indexes& indicesAround = Maps::ScanAroundObjects(hero.GetIndex(),
-                                                                   hero.GetSquarePatrol(), objs1);
+                                                                         hero.GetSquarePatrol(), objs1);
             for (auto result : indicesAround)
             {
                 if (!HeroesValidObject(hero, result) || !hero.GetPath().Calculate(result))
@@ -543,11 +544,11 @@ bool AI::HeroesGetTask(Heroes& hero)
     }
     else
     {
-		// remove invalid task
-		task.remove_if([&](s32&it)
-		{
-			return !AIHeroesValidObject2(&hero, it);
-		});
+        // remove invalid task
+        task.remove_if([&](s32& it)
+        {
+            return !AIHeroesValidObject2(&hero, it);
+        });
     }
 
     // random shuffle

@@ -581,8 +581,8 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForSpells(const HeroBase* hero, con
 
                 // unique
                 targets._items.resize(
-					distance(targets._items.begin(), 
-						unique(targets._items.begin(), targets._items.end())));
+                    distance(targets._items.begin(),
+                             unique(targets._items.begin(), targets._items.end())));
             }
             break;
 
@@ -612,7 +612,8 @@ Battle::TargetsInfo Battle::Arena::GetTargetsForSpells(const HeroBase* hero, con
                 }
 
                 // unique
-                targets._items.resize(distance(targets._items.begin(), unique(targets._items.begin(), targets._items.end())));
+                targets._items.resize(distance(targets._items.begin(),
+                                               unique(targets._items.begin(), targets._items.end())));
             }
             break;
 
@@ -769,11 +770,11 @@ void Battle::Arena::ApplyActionSpellMirrorImage(Command& cmd)
         auto center = b->GetHeadIndex();
         return Board::GetDistance(center, index1) < Board::GetDistance(center, index2);
     };
-    
+
     sort(distances.begin(), distances.end(), SortingDistance);
 
-	const auto it = find_if(distances.begin(), distances.end(),
-		[&](s32 dist) {return Board::isValidMirrorImageIndex(dist, b); });
+    const auto it = find_if(distances.begin(), distances.end(),
+                            [&](s32 dist) { return Board::isValidMirrorImageIndex(dist, b); });
 
     for (auto& distance : distances)
     {

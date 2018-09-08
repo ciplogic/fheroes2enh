@@ -105,8 +105,8 @@ Heroes::Heroes() : move_point_scale(-1), army(this), hid(UNKNOWN), portrait(UNKN
 {
 }
 
-Heroes::Heroes(int heroid, int rc) : 
-    HeroBase(HEROES, rc), ColorBase(Color::NONE), 
+Heroes::Heroes(int heroid, int rc) :
+    HeroBase(HEROES, rc), ColorBase(Color::NONE),
     experience(0), move_point_scale(-1), secondary_skills(rc), army(this), hid(heroid),
     portrait(heroid), race(rc),
     save_maps_object(MP2::OBJ_ZERO), path(*this), direction(Direction::RIGHT),
@@ -885,7 +885,7 @@ bool Heroes::isVisited(int object, Visit::type_t type) const
     if (Visit::GLOBAL == type) return GetKingdom().isVisited(object);
 
     return visit_object.end() != find_if(visit_object.begin(), visit_object.end(),
-		[&](const IndexObject& it) { return it.isObject(object); });
+                                         [&](const IndexObject& it) { return it.isObject(object); });
 }
 
 /* set visited cell */
@@ -1812,7 +1812,7 @@ bool InCastleAndGuardian(const Castle* castle, Heroes* hero)
 }
 
 
-bool InCastleNotGuardian(const Castle* castle, Heroes* hero) 
+bool InCastleNotGuardian(const Castle* castle, Heroes* hero)
 {
     return castle->GetCenter() == hero->GetCenter() && !hero->Modes(Heroes::GUARDIAN);
 }
@@ -1913,19 +1913,19 @@ Heroes* VecHeroes::Get(const Point& center) const
 Heroes* AllHeroes::GetGuest(const Castle& castle) const
 {
     const auto it = find_if(_items.begin(), _items.end(),
-        [&](Heroes* hero)
-    {
-        return InCastleNotGuardian(&castle, hero);
-    });
+                            [&](Heroes* hero)
+                            {
+                                return InCastleNotGuardian(&castle, hero);
+                            });
     return _items.end() != it ? *it : nullptr;
 }
 
 Heroes* AllHeroes::GetGuard(const Castle& castle) const
 {
     auto it = Settings::Get().ExtCastleAllowGuardians()
-                  ? find_if(_items.begin(), _items.end(), 
-                      [&](Heroes* hero) {return InCastleAndGuardian(&castle, hero); }
-                      )
+                  ? find_if(_items.begin(), _items.end(),
+                            [&](Heroes* hero) { return InCastleAndGuardian(&castle, hero); }
+                  )
                   : _items.end();
     return _items.end() != it ? *it : nullptr;
 }
@@ -2016,17 +2016,17 @@ void AllHeroes::Scoute(int colors) const
 Heroes* AllHeroes::FromJail(s32 index) const
 {
     auto it = find_if(_items.begin(), _items.end(),
-        [=](Heroes* it)
-    {
-        return InJailMode(index, it);
-    });
+                      [=](Heroes* it)
+                      {
+                          return InJailMode(index, it);
+                      });
     return _items.end() != it ? *it : nullptr;
 }
 
 bool AllHeroes::HaveTwoFreemans() const
 {
-	return 2 <= count_if(_items.begin(), _items.end(),
-		[](Heroes*it) {return  it->isFreeman(); });
+    return 2 <= count_if(_items.begin(), _items.end(),
+                         [](Heroes* it) { return it->isFreeman(); });
 }
 
 ByteVectorWriter& operator<<(ByteVectorWriter& msg, const VecHeroes& heroes)

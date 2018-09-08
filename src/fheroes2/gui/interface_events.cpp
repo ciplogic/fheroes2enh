@@ -286,7 +286,7 @@ void Interface::Basic::EventNextTown()
     if (GetFocusCastle())
     {
         auto it = find(myCastles._items.begin(), myCastles._items.end(),
-                                                 GetFocusCastle());
+                       GetFocusCastle());
         ++it;
         if (it == myCastles._items.end()) it = myCastles._items.begin();
         SetFocus(*it);

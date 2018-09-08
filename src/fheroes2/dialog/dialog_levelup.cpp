@@ -70,7 +70,7 @@ Skill::SkillT DialogOneSecondary(const string& name, const string& primary, cons
 }
 
 Skill::SkillT DialogSelectSecondary(const string& name, const string& primary, const Skill::Secondary& sec1,
-                          const Skill::Secondary& sec2, Heroes& hero)
+                                    const Skill::Secondary& sec2, Heroes& hero)
 {
     string header = _("%{name} has gained a level.");
     header.append("\n \n");
@@ -217,7 +217,7 @@ Skill::SkillT DialogSelectSecondary(const string& name, const string& primary, c
 }
 
 Skill::SkillT Dialog::LevelUpSelectSkill(const string& name, const string& primary, const Skill::Secondary& sec1,
-                               const Skill::Secondary& sec2, Heroes& hero)
+                                         const Skill::Secondary& sec2, Heroes& hero)
 {
     Skill::SkillT result = Skill::SkillT::UNKNOWN;
 

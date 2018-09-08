@@ -112,7 +112,7 @@ Size Display::GetMaxMode(bool rotate) const
         modes == (SDL_Rect **)-1)
     {
         H2ERROR("GetMaxMode: " << "no modes available");
-		return {};
+        return {};
     }
     int max = 0;
     int cur = 0;
@@ -126,9 +126,9 @@ Size Display::GetMaxMode(bool rotate) const
         }
     }
 
-	Size result;
-	if (!modes[cur])
-		return {};
+    Size result;
+    if (!modes[cur])
+        return {};
     result.w = modes[cur]->w;
     result.h = modes[cur]->h;
 

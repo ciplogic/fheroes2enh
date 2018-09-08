@@ -45,12 +45,13 @@ struct dwelling_t : pair<uint32_t, uint32_t>
     }
 };
 
-struct dwellings_t 
+struct dwellings_t
 {
-	vector<dwelling_t> _items;
+    vector<dwelling_t> _items;
+
     dwellings_t()
     {
-		_items.reserve(6);
+        _items.reserve(6);
     }
 };
 
@@ -170,7 +171,7 @@ void Castle::OpenWell()
                 {
                     for (auto& dw : results._items)
                     {
-	                    RecruitMonsterFromDwelling(dw.first, dw.second);
+                        RecruitMonsterFromDwelling(dw.first, dw.second);
                     }
                     redraw = true;
                 }

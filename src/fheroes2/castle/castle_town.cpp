@@ -290,7 +290,8 @@ uint32_t Castle::OpenTown()
     const Rect rectGroupedArmyFormat(cur_pt.x + 585, cur_pt.y + 220, spriteGroupedArmyFormat.w(),
                                      spriteGroupedArmyFormat.h());
     const string descriptionSpreadArmyFormat(
-        _("'Spread' combat formation spreads your armies from the top to the bottom of the battlefield, with at least one empty space between each army."
+        _(
+            "'Spread' combat formation spreads your armies from the top to the bottom of the battlefield, with at least one empty space between each army."
         ));
     const string descriptionGroupedArmyFormat(
         _("'Grouped' combat formation bunches your army toget her in the center of your side of the battlefield."));

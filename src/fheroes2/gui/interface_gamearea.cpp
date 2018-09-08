@@ -174,7 +174,8 @@ void Interface::GameArea::DrawHeroRoute(Surface& dst, int flag, const Rect& rt) 
                                        : Route::Path::GetIndexSprite((*it1).GetDirection(), (*it3).GetDirection(),
                                                                      Maps::Ground::GetPenalty(from, Direction::CENTER,
                                                                                               hero->GetLevelSkill(
-                                                                                                  Skill::SkillT::PATHFINDING)));
+                                                                                                  Skill::SkillT::
+                                                                                                  PATHFINDING)));
 
             Sprite sprite = AGG::GetICN(0 > green ? ICN::ROUTERED : ICN::ROUTE, index);
             sprite.SetAlphaMod(180);

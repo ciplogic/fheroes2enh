@@ -207,7 +207,7 @@ public:
 
     void RedrawItem(const int& index, s32 dstx, s32 dsty, bool current)
     {
-        Skill::Secondary skill(static_cast < Skill::SkillT>(1 + index / 3), 1 + index % 3);
+        Skill::Secondary skill(static_cast<Skill::SkillT>(1 + index / 3), 1 + index % 3);
         AGG::GetICN(ICN::MINISS, skill.GetIndexSprite2()).Blit(dstx + 5, dsty + 3);
         string str = skill.GetName();
         Text text(str, (current ? Font::YELLOW_BIG : Font::BIG));

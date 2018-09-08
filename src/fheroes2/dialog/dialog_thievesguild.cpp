@@ -46,6 +46,7 @@ struct ValueColors : pair<int, int>
     {
         return v == first;
     }
+
     //bool IsColor(int c) const { return (c & second); };
 
     static bool SortValueGreat(const ValueColors& v1, const ValueColors& v2)
@@ -57,8 +58,8 @@ struct ValueColors : pair<int, int>
 void UpdateValuesColors(vector<ValueColors>& v, int value, int color)
 {
     const auto it =
-        find_if(v.begin(), v.end(), 
-			[&](const ValueColors& it) { return it.IsValue(value); });
+        find_if(v.begin(), v.end(),
+                [&](const ValueColors& it) { return it.IsValue(value); });
 
     if (it == v.end())
         v.emplace_back(value, color);
@@ -289,7 +290,8 @@ void Dialog::ThievesGuild(bool oracle)
             break;
         }
 
-        dst_pt.x = cur_pt.x + startx + maxw / (colors._items.size() * 2) + ii * maxw / colors._items.size() - text.w() / 2;
+        dst_pt.x = cur_pt.x + startx + maxw / (colors._items.size() * 2) + ii * maxw / colors._items.size() - text.w() /
+            2;
         dst_pt.y = cur_pt.y + 5;
         text.Blit(dst_pt);
     }
@@ -397,7 +399,8 @@ void Dialog::ThievesGuild(bool oracle)
          color = colors._items.begin(); color != colors._items.end(); ++color)
     {
         text.Set(Color::String(*color));
-        dst_pt.x = cur_pt.x + startx + maxw / (colors._items.size() * 2) + ii * maxw / colors._items.size() - text.w() / 2;
+        dst_pt.x = cur_pt.x + startx + maxw / (colors._items.size() * 2) + ii * maxw / colors._items.size() - text.w() /
+            2;
         dst_pt.y = cur_pt.y + 270;
         text.Blit(dst_pt);
         ++ii;

@@ -46,7 +46,7 @@
 
 struct hgs_t
 {
-	hgs_t() = default;
+    hgs_t() = default;
 
     bool operator==(const hgs_t&) const;
 

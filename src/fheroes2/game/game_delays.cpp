@@ -102,7 +102,7 @@ namespace Game
 
 void Game::AnimateDelaysInitialize()
 {
-	for_each(&delays[0], &delays[LAST_DELAY], [](TimeDelay&it) {it.Reset(); });
+    for_each(&delays[0], &delays[LAST_DELAY], [](TimeDelay& it) { it.Reset(); });
     UpdateHeroesMoveSpeed();
     UpdateBattleSpeed();
 }

@@ -299,7 +299,7 @@ std::string System::GetTime()
     char buf[13] = {0};
 
     time(&raw);
-    struct tm * tmi = localtime(&raw);
+    struct tm* tmi = localtime(&raw);
 
     strftime(buf, sizeof buf - 1, "%X", tmi);
 

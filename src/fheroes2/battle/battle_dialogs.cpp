@@ -485,20 +485,22 @@ int Battle::Arena::DialogBattleHero(const HeroBase& hero, bool buttons) const
 
         if (le.MousePressRight(btnCast))
             Message(_("Cast Spell"),
-                            _("Cast a magical spell. You may only cast one spell per combat round. The round is reset when every creature has had a turn"
-                            ),
-                            Font::BIG);
+                    _(
+                        "Cast a magical spell. You may only cast one spell per combat round. The round is reset when every creature has had a turn"
+                    ),
+                    Font::BIG);
         else if (le.MousePressRight(btnRetreat))
             Message(_("Retreat"),
-                            _(
-                                "Retreat your hero, abandoning your creatures. Your hero will be available for you to recruit again, however, the hero will have only a novice hero's forces."
-                            ),
-                            Font::BIG);
+                    _(
+                        "Retreat your hero, abandoning your creatures. Your hero will be available for you to recruit again, however, the hero will have only a novice hero's forces."
+                    ),
+                    Font::BIG);
         else if (le.MousePressRight(btnSurrender))
             Message(_("Surrender"),
-                            _("Surrendering costs gold. However if you pay the ransom, the hero and all of his or her surviving creatures will be available to recruit again."
-                            ),
-                            Font::BIG);
+                    _(
+                        "Surrendering costs gold. However if you pay the ransom, the hero and all of his or her surviving creatures will be available to recruit again."
+                    ),
+                    Font::BIG);
         else if (le.MousePressRight(btnClose))
             Message(_("Cancel"), _("Return to the battle."), Font::BIG);
 

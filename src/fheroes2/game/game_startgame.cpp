@@ -250,11 +250,11 @@ void ShowNewWeekDialog()
                                ? _(
                                    "After regular growth, population of %{monster} is doubled!")
                                : _n("After regular growth, population of %{monter} increase on %{count} percent!",
-                                   "After regular growth, population of %{monter} increase on %{count} percent!", count
+                                    "After regular growth, population of %{monter} increase on %{count} percent!", count
                                );
             else
                 message += _n("%{monster} population increases by +%{count}.",
-                    "%{monster} population increases by +%{count}.", count);
+                              "%{monster} population increases by +%{count}.", count);
             StringReplace(message, "%{monster}", monster.GetMultiName());
             StringReplace(message, "%{count}", count);
             message += "\n";
@@ -299,7 +299,8 @@ int ShowWarningLostTownsDialog()
     if (1 == myKingdom.GetLostTownDays())
     {
         Game::DialogPlayers(myKingdom.GetColor(),
-                            _("%{color} player, this is your last day to capture a town, or you will be banished from this land."
+                            _(
+                                "%{color} player, this is your last day to capture a town, or you will be banished from this land."
                             ));
     }
     else if (Game::GetLostTownDays() >= myKingdom.GetLostTownDays())
@@ -828,8 +829,9 @@ int Interface::Basic::HumanTurn(bool isload)
                                                                                             else if (HotKeyPressEvent(
                                                                                                     Game::
                                                                                                     EVENT_SCROLLRIGHT)
-                                                                                            ) gameArea.SetScroll(
-                                                                                                SCROLL_RIGHT);
+                                                                                            )
+                                                                                                gameArea.SetScroll(
+                                                                                                    SCROLL_RIGHT);
                                                                                             else if (HotKeyPressEvent(
                                                                                                 Game::EVENT_SCROLLUP))
                                                                                                 gameArea.SetScroll(
@@ -1029,10 +1031,12 @@ int Interface::Basic::HumanTurn(bool isload)
     if (Game::ENDTURN == res)
     {
         // warning lost all town
-        if (!myHeroes._items.empty() && myCastles._items.empty() && Game::GetLostTownDays() < myKingdom.GetLostTownDays())
+        if (!myHeroes._items.empty() && myCastles._items.empty() && Game::GetLostTownDays() < myKingdom.
+            GetLostTownDays())
         {
             Game::DialogPlayers(conf.CurrentColor(),
-                                _("%{color} player, you have lost your last town. If you do not conquer another town in next week, you will be eliminated."
+                                _(
+                                    "%{color} player, you have lost your last town. If you do not conquer another town in next week, you will be eliminated."
                                 ));
         }
 

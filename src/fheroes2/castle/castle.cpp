@@ -367,30 +367,31 @@ void Castle::ActionNewDay()
 
 uint32_t* Castle::GetDwelling(uint32_t dw)
 {
-    if (isBuild(dw))
-        switch (dw)
-        {
-        case DWELLING_MONSTER1:
-            return &dwelling[0];
-        case DWELLING_MONSTER2:
-        case DWELLING_UPGRADE2:
-            return &dwelling[1];
-        case DWELLING_MONSTER3:
-        case DWELLING_UPGRADE3:
-            return &dwelling[2];
-        case DWELLING_MONSTER4:
-        case DWELLING_UPGRADE4:
-            return &dwelling[3];
-        case DWELLING_MONSTER5:
-        case DWELLING_UPGRADE5:
-            return &dwelling[4];
-        case DWELLING_MONSTER6:
-        case DWELLING_UPGRADE6:
-        case DWELLING_UPGRADE7:
-            return &dwelling[5];
-        default:
-            break;
-        }
+    if (!isBuild(dw))
+        return nullptr;
+    switch (dw)
+    {
+    case DWELLING_MONSTER1:
+        return &dwelling[0];
+    case DWELLING_MONSTER2:
+    case DWELLING_UPGRADE2:
+        return &dwelling[1];
+    case DWELLING_MONSTER3:
+    case DWELLING_UPGRADE3:
+        return &dwelling[2];
+    case DWELLING_MONSTER4:
+    case DWELLING_UPGRADE4:
+        return &dwelling[3];
+    case DWELLING_MONSTER5:
+    case DWELLING_UPGRADE5:
+        return &dwelling[4];
+    case DWELLING_MONSTER6:
+    case DWELLING_UPGRADE6:
+    case DWELLING_UPGRADE7:
+        return &dwelling[5];
+    default:
+        break;
+    }
     return nullptr;
 }
 
@@ -670,7 +671,8 @@ string Castle::GetStringBuilding(uint32_t build, int race)
 string Castle::GetDescriptionBuilding(uint32_t build, int race)
 {
     string desc_build[] = {
-        _("The Thieves' Guild provides information on enemy players. Thieves' Guilds can also provide scouting information on enemy towns."
+        _(
+            "The Thieves' Guild provides information on enemy players. Thieves' Guilds can also provide scouting information on enemy towns."
         ),
         _("The Tavern increases morale for troops defending the castle."),
         _("The Shipyard allows ships to be built."),
@@ -678,9 +680,11 @@ string Castle::GetDescriptionBuilding(uint32_t build, int race)
         _("The Statue increases your town's income by %{count} per day."),
         _("The Left Turret provides extra firepower during castle combat."),
         _("The Right Turret provides extra firepower during castle combat."),
-        _("The Marketplace can be used to convert one type of resource into another. The more marketplaces you control, the better the exchange rate."
+        _(
+            "The Marketplace can be used to convert one type of resource into another. The more marketplaces you control, the better the exchange rate."
         ),
-        _("The Moat slows attacking units. Any unit entering the moat must end its turn there and becomes more vulnerable to attack."
+        _(
+            "The Moat slows attacking units. Any unit entering the moat must end its turn there and becomes more vulnerable to attack."
         ),
         _("The Castle improves town defense and increases income to %{count} gold per day."),
         _("The Tent provides workers to build a castle, provided the materials and the gold are available."),
@@ -698,7 +702,8 @@ string Castle::GetDescriptionBuilding(uint32_t build, int race)
     };
 
     string desc_spec[] = {
-        _("The Fortifications increase the toughness of the walls, increasing the number of turns it takes to knock them down."
+        _(
+            "The Fortifications increase the toughness of the walls, increasing the number of turns it takes to knock them down."
         ),
         _("The Coliseum provides inspiring spectacles to defending troops, raising their morale by two during combat."),
         _("The Rainbow increases the luck of the defending units by two."),
@@ -2512,7 +2517,7 @@ void VecCastles::ChangeColors(int col1, int col2)
 AllCastles::AllCastles()
 {
     // reserve memory
-	_items.reserve(MAXCASTLES);
+    _items.reserve(MAXCASTLES);
 }
 
 AllCastles::~AllCastles()
@@ -2530,7 +2535,7 @@ void AllCastles::clear()
 {
     for (auto& it : _items)
         delete it;
-	_items.clear();
+    _items.clear();
 }
 
 void AllCastles::Scoute(int colors) const

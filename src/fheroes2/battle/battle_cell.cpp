@@ -115,9 +115,9 @@ bool Battle::Position::isValid() const
 
 Battle::Cell::Cell() : index(0), object(0), direction(UNKNOWN), quality(0), troop(nullptr)
 {
-    for(auto& cell:coord)
+    for (auto& cell : coord)
     {
-		cell = Point{};
+        cell = Point{};
     }
 }
 

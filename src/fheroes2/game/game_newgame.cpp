@@ -126,14 +126,19 @@ int Game::NewNetwork()
         if (HotKeyPressEvent(EVENT_DEFAULT_EXIT) || le.MouseClickLeft(buttonCancelGame)) return MAINMENU;
 
         // right info
-        if (le.MousePressRight(buttonHost)) Dialog::Message(
-            _("Host"), _("The host sets up the game options. There can only be one host per network game."), Font::BIG);
-        if (le.MousePressRight(buttonGuest)) Dialog::Message(
-            _("Guest"),
-            _("The guest waits for the host to set up the game, then is automatically added in. There can be multiple guests for TCP/IP games."
-            ), Font::BIG);
-        if (le.MousePressRight(buttonCancelGame)) Dialog::Message(
-            _("Cancel"), _("Cancel back to the main menu."), Font::BIG);
+        if (le.MousePressRight(buttonHost))
+            Dialog::Message(
+                _("Host"), _("The host sets up the game options. There can only be one host per network game."),
+                Font::BIG);
+        if (le.MousePressRight(buttonGuest))
+            Dialog::Message(
+                _("Guest"),
+                _(
+                    "The guest waits for the host to set up the game, then is automatically added in. There can be multiple guests for TCP/IP games."
+                ), Font::BIG);
+        if (le.MousePressRight(buttonCancelGame))
+            Dialog::Message(
+                _("Cancel"), _("Cancel back to the main menu."), Font::BIG);
     }
 
     return MAINMENU;
@@ -225,7 +230,8 @@ int Game::NewGame()
         //if(le.MousePressRight(buttonCampainGame)) Dialog::Message(_("Campaign Game"), _("A single player game playing through a series of maps."), Font::BIG);
         if (le.MousePressRight(buttonMultiGame))
             Dialog::Message(_("Multi-Player Game"),
-                            _("A multi-player game, with several human players completing against each other on a single map."
+                            _(
+                                "A multi-player game, with several human players completing against each other on a single map."
                             ),
                             Font::BIG);
         if (le.MousePressRight(buttonSettings)) Dialog::Message(_("Settings"), _("FHeroes2 game settings."), Font::BIG);
@@ -283,7 +289,8 @@ int Game::NewMulti()
         // right info
         if (le.MousePressRight(buttonHotSeat))
             Dialog::Message(_("Hot Seat"),
-                            _("Play a Hot Seat game, where 2 to 4 players play around the same computer, switching into the 'Hot Seat' when it is their turn."
+                            _(
+                                "Play a Hot Seat game, where 2 to 4 players play around the same computer, switching into the 'Hot Seat' when it is their turn."
                             ),
                             Font::BIG);
         if (le.MousePressRight(buttonCancelGame))
@@ -294,10 +301,12 @@ int Game::NewMulti()
         {
             le.MousePressLeft(buttonNetwork) ? buttonNetwork.PressDraw() : buttonNetwork.ReleaseDraw();
             if (le.MouseClickLeft(buttonNetwork) || HotKeyPressEvent(EVENT_BUTTON_NETWORK)) return NEWNETWORK;
-            if (le.MousePressRight(buttonNetwork)) Dialog::Message(
-                _("Network"),
-                _("Play a network game, where 2 players use their own computers connected through a LAN (Local Area Network)."
-                ), Font::BIG);
+            if (le.MousePressRight(buttonNetwork))
+                Dialog::Message(
+                    _("Network"),
+                    _(
+                        "Play a network game, where 2 players use their own computers connected through a LAN (Local Area Network)."
+                    ), Font::BIG);
         }
 #endif
     }
