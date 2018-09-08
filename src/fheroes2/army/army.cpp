@@ -1304,12 +1304,12 @@ JoinCount Army::GetJoinSolution(const Heroes& hero, const Maps::Tiles& tile, con
     {
         if (join_free || join_force)
             return {JOIN_FREE, troop.GetCount()};
-        if (hero.HasSecondarySkill(Skill::Secondary::DIPLOMACY))
+        if (hero.HasSecondarySkill(Skill::SkillT::DIPLOMACY))
         {
             // skill diplomacy
             const uint32_t to_join = Monster::GetCountFromHitPoints(troop._monster,
                                                                     troop.GetHitPointsTroop() *
-                                                                    hero.GetSecondaryValues(Skill::Secondary::DIPLOMACY)
+                                                                    hero.GetSecondaryValues(Skill::SkillT::DIPLOMACY)
                                                                     /
                                                                     100);
 

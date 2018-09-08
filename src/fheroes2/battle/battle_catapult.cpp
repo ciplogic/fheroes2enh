@@ -29,7 +29,7 @@
 Battle::Catapult::Catapult(const HeroBase& hero, bool fortification) : cat_shots(1), cat_first(20),
                                                                        cat_miss(true) /*, cat_fort(fortification) */
 {
-    switch (hero.GetLevelSkill(Skill::Secondary::BALLISTICS))
+    switch (hero.GetLevelSkill(Skill::SkillT::BALLISTICS))
     {
     case Skill::Level::BASIC:
         cat_first = 40;

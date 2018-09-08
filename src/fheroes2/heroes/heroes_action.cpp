@@ -1423,7 +1423,7 @@ void ActionToShrine(Heroes& hero, uint32_t obj, s32 dst_index)
     if (hero.HaveSpellBook())
     {
         // check valid level spell and wisdom skill
-        if (3 == spell_level && Skill::Level::NONE == hero.GetLevelSkill(Skill::Secondary::WISDOM))
+        if (3 == spell_level && Skill::Level::NONE == hero.GetLevelSkill(Skill::SkillT::WISDOM))
         {
             PlaySoundFailure;
             body += _(
@@ -1595,7 +1595,7 @@ void ActionToPoorLuckObject(Heroes& hero, uint32_t obj, s32 dst_index)
                     msg = _("Unfortunately, you have no Magic Book to record the spell with.");
                 else
                     // check skill level for wisdom
-                    if (Skill::Level::EXPERT > hero.GetLevelSkill(Skill::Secondary::WISDOM))
+                    if (Skill::Level::EXPERT > hero.GetLevelSkill(Skill::SkillT::WISDOM))
                         msg = _(
                             "Unfortunately, you do not have the wisdom to understand the spell, and you are unable to learn it."
                         );
@@ -2082,11 +2082,11 @@ void ActionToArtifact(Heroes& hero, uint32_t obj, s32 dst_index)
                 {
                     PlaySoundFailure;
 
-                    if (skill.Skill() == Skill::Secondary::WISDOM)
+                    if (skill.Skill() == Skill::SkillT::WISDOM)
                         msg = _(
                             "You've found the humble dwelling of a withered hermit. The hermit tells you that he is willing to give the %{art} to the first wise person he meets."
                         );
-                    else if (skill.Skill() == Skill::Secondary::LEADERSHIP)
+                    else if (skill.Skill() == Skill::SkillT::LEADERSHIP)
                         msg = _(
                             "You've come across the spartan quarters of a retired soldier. The soldier tells you that he is willing to pass on the %{art} to the first true leader he meets."
                         );
@@ -2849,7 +2849,7 @@ void ActionToXanadu(Heroes& hero, uint32_t obj, s32 dst_index)
     else
     {
         bool access = false;
-        switch (hero.GetLevelSkill(Skill::Secondary::DIPLOMACY))
+        switch (hero.GetLevelSkill(Skill::SkillT::DIPLOMACY))
         {
         case Skill::Level::BASIC:
             if (7 < hero.GetLevel()) access = true;

@@ -113,12 +113,12 @@ int Captain::GetType() const
     return CAPTAIN;
 }
 
-int Captain::GetLevelSkill(int) const
+int Captain::GetLevelSkill(Skill::SkillT) const
 {
     return 0;
 }
 
-uint32_t Captain::GetSecondaryValues(int) const
+uint32_t Captain::GetSecondaryValues(Skill::SkillT) const
 {
     return 0;
 }

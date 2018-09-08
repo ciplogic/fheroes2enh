@@ -1079,7 +1079,7 @@ uint32_t Battle::Arena::GetObstaclesPenalty(const Unit& attacker, const Unit& de
     if (castle)
     {
         // archery skill
-        if (enemy && Skill::Level::NONE != enemy->GetLevelSkill(Skill::Secondary::ARCHERY)) return 0;
+        if (enemy && Skill::Level::NONE != enemy->GetLevelSkill(Skill::SkillT::ARCHERY)) return 0;
 
         // attacker is castle owner
         if (attacker.GetColor() == castle->GetColor() &&
@@ -1153,7 +1153,7 @@ uint32_t Battle::Arena::GetObstaclesPenalty(const Unit& attacker, const Unit& de
 
         if (enemy)
         {
-            switch (enemy->GetLevelSkill(Skill::Secondary::ARCHERY))
+            switch (enemy->GetLevelSkill(Skill::SkillT::ARCHERY))
             {
             case Skill::Level::BASIC:
                 if (result < 2) return 0;

@@ -306,7 +306,7 @@ bool ActionSpellSummonBoat(Heroes& hero)
 {
     uint32_t chance = 0;
 
-    switch (hero.GetLevelSkill(Skill::Secondary::WISDOM))
+    switch (hero.GetLevelSkill(Skill::SkillT::WISDOM))
     {
     case Skill::Level::BASIC:
         chance = 50;

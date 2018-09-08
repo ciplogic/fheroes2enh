@@ -251,13 +251,13 @@ public:
 
     void RecalculateMovePoints();
 
-    bool HasSecondarySkill(int) const;
+    bool HasSecondarySkill(Skill::SkillT) const;
 
     bool HasMaxSecondarySkill() const;
 
-    int GetLevelSkill(int) const;
+    int GetLevelSkill(Skill::SkillT) const;
 
-    uint32_t GetSecondaryValues(int) const;
+    uint32_t GetSecondaryValues(Skill::SkillT) const;
 
     void LearnSkill(const Skill::Secondary&);
 

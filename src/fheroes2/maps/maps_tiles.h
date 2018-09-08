@@ -397,7 +397,7 @@ namespace Maps
 
         void QuantitySetExt(int);
 
-        void QuantitySetSkill(int);
+        void QuantitySetSkill(Skill::SkillT);
 
         void QuantitySetSpell(int);
 

@@ -127,9 +127,9 @@ Heroes::Heroes(int heroid, int rc) :
         knowledge = 5;
 
         secondary_skills = Skill::SecSkills();
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::WISDOM, Skill::Level::ADVANCED));
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::LEADERSHIP, Skill::Level::EXPERT));
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::ARCHERY, Skill::Level::BASIC));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::WISDOM, Skill::Level::ADVANCED));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::LEADERSHIP, Skill::Level::EXPERT));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::ARCHERY, Skill::Level::BASIC));
         break;
 
     case CORLAGON:
@@ -139,11 +139,11 @@ Heroes::Heroes(int heroid, int rc) :
         knowledge = 1;
 
         secondary_skills = Skill::SecSkills();
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::NECROMANCY, Skill::Level::EXPERT));
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::BALLISTICS, Skill::Level::BASIC));
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::WISDOM, Skill::Level::BASIC));
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::LEADERSHIP, Skill::Level::BASIC));
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::PATHFINDING, Skill::Level::BASIC));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::NECROMANCY, Skill::Level::EXPERT));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::BALLISTICS, Skill::Level::BASIC));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::WISDOM, Skill::Level::BASIC));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::LEADERSHIP, Skill::Level::BASIC));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::PATHFINDING, Skill::Level::BASIC));
         break;
 
     case ELIZA:
@@ -153,10 +153,10 @@ Heroes::Heroes(int heroid, int rc) :
         knowledge = 6;
 
         secondary_skills = Skill::SecSkills();
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::NAVIGATION, Skill::Level::ADVANCED));
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::WISDOM, Skill::Level::EXPERT));
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::ARCHERY, Skill::Level::BASIC));
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::LUCK, Skill::Level::BASIC));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::NAVIGATION, Skill::Level::ADVANCED));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::WISDOM, Skill::Level::EXPERT));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::ARCHERY, Skill::Level::BASIC));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::LUCK, Skill::Level::BASIC));
         break;
 
     case ARCHIBALD:
@@ -166,9 +166,9 @@ Heroes::Heroes(int heroid, int rc) :
         knowledge = 4;
 
         secondary_skills = Skill::SecSkills();
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::SCOUTING, Skill::Level::EXPERT));
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::LEADERSHIP, Skill::Level::EXPERT));
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::WISDOM, Skill::Level::ADVANCED));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::SCOUTING, Skill::Level::EXPERT));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::LEADERSHIP, Skill::Level::EXPERT));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::WISDOM, Skill::Level::ADVANCED));
         break;
 
     case HALTON:
@@ -178,9 +178,9 @@ Heroes::Heroes(int heroid, int rc) :
         knowledge = 2;
 
         secondary_skills = Skill::SecSkills();
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::BALLISTICS, Skill::Level::BASIC));
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::LEADERSHIP, Skill::Level::ADVANCED));
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::DIPLOMACY, Skill::Level::BASIC));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::BALLISTICS, Skill::Level::BASIC));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::LEADERSHIP, Skill::Level::ADVANCED));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::DIPLOMACY, Skill::Level::BASIC));
         break;
 
     case BAX:
@@ -190,42 +190,42 @@ Heroes::Heroes(int heroid, int rc) :
         knowledge = 3;
 
         secondary_skills = Skill::SecSkills();
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::WISDOM, Skill::Level::EXPERT));
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::NECROMANCY, Skill::Level::BASIC));
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::NAVIGATION, Skill::Level::BASIC));
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::PATHFINDING, Skill::Level::BASIC));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::WISDOM, Skill::Level::EXPERT));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::NECROMANCY, Skill::Level::BASIC));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::NAVIGATION, Skill::Level::BASIC));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::PATHFINDING, Skill::Level::BASIC));
         break;
 
     case SOLMYR:
     case DRAKONIA:
         secondary_skills = Skill::SecSkills();
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::WISDOM, Skill::Level::ADVANCED));
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::LEADERSHIP, Skill::Level::BASIC));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::WISDOM, Skill::Level::ADVANCED));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::LEADERSHIP, Skill::Level::BASIC));
         break;
 
     case DAINWIN:
     case ELDERIAN:
         secondary_skills = Skill::SecSkills();
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::WISDOM, Skill::Level::ADVANCED));
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::SCOUTING, Skill::Level::BASIC));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::WISDOM, Skill::Level::ADVANCED));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::SCOUTING, Skill::Level::BASIC));
         break;
 
     case MOG:
         secondary_skills = Skill::SecSkills();
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::WISDOM, Skill::Level::BASIC));
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::NECROMANCY, Skill::Level::ADVANCED));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::WISDOM, Skill::Level::BASIC));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::NECROMANCY, Skill::Level::ADVANCED));
         break;
 
     case UNCLEIVAN:
         secondary_skills = Skill::SecSkills();
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::PATHFINDING, Skill::Level::ADVANCED));
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::LEADERSHIP, Skill::Level::BASIC));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::PATHFINDING, Skill::Level::ADVANCED));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::LEADERSHIP, Skill::Level::BASIC));
         break;
 
     case JOSEPH:
         secondary_skills = Skill::SecSkills();
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::LEADERSHIP, Skill::Level::BASIC));
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::SCOUTING, Skill::Level::BASIC));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::LEADERSHIP, Skill::Level::BASIC));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::SCOUTING, Skill::Level::BASIC));
         break;
 
     case GALLAVANT:
@@ -246,10 +246,10 @@ Heroes::Heroes(int heroid, int rc) :
         army.m_troops.JoinTroop(Monster::RED_DRAGON, 3);
 
         secondary_skills = Skill::SecSkills();
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::PATHFINDING, Skill::Level::ADVANCED));
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::LOGISTICS, Skill::Level::ADVANCED));
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::SCOUTING, Skill::Level::BASIC));
-        secondary_skills.AddSkill(Skill::Secondary(Skill::Secondary::MYSTICISM, Skill::Level::BASIC));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::PATHFINDING, Skill::Level::ADVANCED));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::LOGISTICS, Skill::Level::ADVANCED));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::SCOUTING, Skill::Level::BASIC));
+        secondary_skills.AddSkill(Skill::Secondary(Skill::SkillT::MYSTICISM, Skill::Level::BASIC));
 
         PickupArtifact(Artifact::STEALTH_SHIELD);
         PickupArtifact(Artifact::DRAGON_SWORD);
@@ -345,7 +345,7 @@ void Heroes::LoadFromMP2(s32 map_index, int cl, int rc, ByteVectorReader& st)
         vector<Skill::Secondary> secs(8);
 
         for (auto& sec : secs)
-            sec.SetSkill(st.get() + 1);
+            sec.SetSkill((Skill::SkillT)(st.get() + 1));
 
         for (auto& sec : secs)
             sec.SetLevel(st.get());
@@ -571,7 +571,7 @@ uint32_t Heroes::GetMaxMovePoints() const
         point = 1500;
 
         // skill navigation
-        point += point * GetSecondaryValues(Skill::Secondary::NAVIGATION) / 100;
+        point += point * GetSecondaryValues(Skill::SkillT::NAVIGATION) / 100;
 
         // artifact bonus
         acount = HasArtifact(Artifact::SAILORS_ASTROLABE_MOBILITY);
@@ -613,7 +613,7 @@ uint32_t Heroes::GetMaxMovePoints() const
             }
 
         // skill logistics
-        point += point * GetSecondaryValues(Skill::Secondary::LOGISTICS) / 100;
+        point += point * GetSecondaryValues(Skill::SkillT::LOGISTICS) / 100;
 
         // artifact bonus
         acount = HasArtifact(Artifact::NOMAD_BOOTS_MOBILITY);
@@ -647,7 +647,7 @@ int Heroes::GetMoraleWithModificators(string* strs) const
     if (army.m_troops.AllTroopsIsRace(Race::NECR)) return Morale::NORMAL;
 
     // bonus leadership
-    result += Skill::GetLeadershipModifiers(GetLevelSkill(Skill::Secondary::LEADERSHIP), strs);
+    result += Skill::GetLeadershipModifiers(GetLevelSkill(Skill::SkillT::LEADERSHIP), strs);
 
     // object visited
     const u8 objs[] = {
@@ -680,7 +680,7 @@ int Heroes::GetLuckWithModificators(string* strs) const
     result += GetLuckModificator(strs);
 
     // bonus luck
-    result += Skill::GetLuckModifiers(GetLevelSkill(Skill::Secondary::LUCK), strs);
+    result += Skill::GetLuckModifiers(GetLevelSkill(Skill::SkillT::LUCK), strs);
 
     // object visited
     const u8 objs[] = {MP2::OBJ_MERMAID, MP2::OBJ_FAERIERING, MP2::OBJ_FOUNTAIN, MP2::OBJ_IDOL, MP2::OBJ_PYRAMID};
@@ -782,7 +782,7 @@ void Heroes::ActionNewDay()
                 curr += acount * Artifact(Artifact::POWER_RING).ExtraValue();
 
             // secondary skill
-            curr += GetSecondaryValues(Skill::Secondary::MYSTICISM);
+            curr += GetSecondaryValues(Skill::SkillT::MYSTICISM);
 
             SetSpellPoints(curr > maxp ? maxp : curr);
         }
@@ -1182,7 +1182,7 @@ bool Heroes::isEnableMove() const
 bool Heroes::CanMove() const
 {
     return move_point >=
-        Maps::Ground::GetPenalty(GetIndex(), Direction::CENTER, GetLevelSkill(Skill::Secondary::PATHFINDING));
+        Maps::Ground::GetPenalty(GetIndex(), Direction::CENTER, GetLevelSkill(Skill::SkillT::PATHFINDING));
 }
 
 /* set enable move */
@@ -1238,12 +1238,12 @@ Skill::SecSkills& Heroes::GetSecondarySkills()
     return secondary_skills;
 }
 
-bool Heroes::HasSecondarySkill(int skill) const
+bool Heroes::HasSecondarySkill(Skill::SkillT skill) const
 {
     return Skill::Level::NONE != secondary_skills.GetLevel(skill);
 }
 
-uint32_t Heroes::GetSecondaryValues(int skill) const
+uint32_t Heroes::GetSecondaryValues(Skill::SkillT skill) const
 {
     return secondary_skills.GetValues(skill);
 }
@@ -1253,7 +1253,7 @@ bool Heroes::HasMaxSecondarySkill() const
     return HEROESMAXSKILL <= secondary_skills.Count();
 }
 
-int Heroes::GetLevelSkill(int skill) const
+int Heroes::GetLevelSkill(Skill::SkillT skill) const
 {
     return secondary_skills.GetLevel(skill);
 }
@@ -1274,7 +1274,7 @@ int Heroes::GetScoute() const
     int acount = HasArtifact(Artifact::TELESCOPE);
 
     return (acount ? acount * GetViewDistance(Game::VIEW_TELESCOPE) : 0) +
-        GetViewDistance(Game::VIEW_HEROES) + GetSecondaryValues(Skill::Secondary::SCOUTING);
+        GetViewDistance(Game::VIEW_HEROES) + GetSecondaryValues(Skill::SkillT::SCOUTING);
 }
 
 uint32_t Heroes::GetVisionsDistance() const
@@ -1350,30 +1350,28 @@ void Heroes::LevelUpSecondarySkill(int primary, bool autoselect)
 
     if (autoselect)
     {
-        if (Skill::Secondary::UNKNOWN == sec1.Skill() || Skill::Secondary::UNKNOWN == sec2.Skill())
+        if (Skill::SkillT::UNKNOWN == sec1.Skill() || Skill::SkillT::UNKNOWN == sec2.Skill())
         {
-            if (Skill::Secondary::UNKNOWN != sec1.Skill())
+            if (Skill::SkillT::UNKNOWN != sec1.Skill())
                 selected = &sec1;
-            else if (Skill::Secondary::UNKNOWN != sec2.Skill())
+            else if (Skill::SkillT::UNKNOWN != sec2.Skill())
                 selected = &sec2;
         }
-        else if (Skill::Secondary::UNKNOWN != sec1.Skill() && Skill::Secondary::UNKNOWN != sec2.Skill())
+        else if (Skill::SkillT::UNKNOWN != sec1.Skill() && Skill::SkillT::UNKNOWN != sec2.Skill())
             selected = Rand::Get(0, 1) ? &sec1 : &sec2;
     }
     else
     {
         AGG::PlaySound(M82::NWHEROLV);
-        int result = Dialog::LevelUpSelectSkill(name, Primary::String(primary), sec1, sec2, *this);
+        Skill::SkillT result = Dialog::LevelUpSelectSkill(name, Primary::String(primary), sec1, sec2, *this);
 
-        if (Skill::Secondary::UNKNOWN != result)
+        if (Skill::SkillT::UNKNOWN != result)
             selected = result == sec2.Skill() ? &sec2 : &sec1;
     }
 
     // level up sec. skill
     if (selected)
     {
-        vector<Skill::Secondary>::iterator it;
-
         Skill::Secondary* secs = secondary_skills.FindSkill(selected->Skill());
 
         if (secs)
@@ -1384,7 +1382,7 @@ void Heroes::LevelUpSecondarySkill(int primary, bool autoselect)
         // post action
         switch (selected->Skill())
         {
-        case Skill::Secondary::SCOUTING:
+        case Skill::SkillT::SCOUTING:
             Scoute();
             break;
 
@@ -1400,7 +1398,7 @@ bool Heroes::ApplyPenaltyMovement()
     uint32_t penalty = path.isValid()
                            ? path.GetFrontPenalty()
                            : Maps::Ground::GetPenalty(GetIndex(), Direction::CENTER,
-                                                      GetLevelSkill(Skill::Secondary::PATHFINDING));
+                                                      GetLevelSkill(Skill::SkillT::PATHFINDING));
 
     if (move_point >= penalty) move_point -= penalty;
     else return false;
@@ -1584,7 +1582,7 @@ int Heroes::GetSquarePatrol() const
 
 int Heroes::CanScouteTile(s32 dst) const
 {
-    int scouting = GetSecondaryValues(Skill::Secondary::SCOUTING);
+    int scouting = GetSecondaryValues(Skill::SkillT::SCOUTING);
     bool army_info = false;
 
     switch (world.GetTiles(dst).GetObject())
@@ -1618,7 +1616,7 @@ int Heroes::CanScouteTile(s32 dst) const
         {
             //const Maps::Tiles & tile = world.GetTiles(dst);
 
-            uint32_t dist = GetSecondaryValues(Skill::Secondary::SCOUTING) ? GetScoute() : 0;
+            uint32_t dist = GetSecondaryValues(Skill::SkillT::SCOUTING) ? GetScoute() : 0;
             if (Modes(VISIONS) && dist < GetVisionsDistance()) dist = GetVisionsDistance();
 
             if (dist > Maps::GetApproximateDistance(GetIndex(), dst))

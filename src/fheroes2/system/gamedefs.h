@@ -21,11 +21,10 @@
  ***************************************************************************/
 #pragma once
 
-#include "engine.h"
 #include <memory>
 
-#define MAJOR_VERSION 0
-#define MINOR_VERSION 9
+#define MAJOR_VERSION 1
+#define MINOR_VERSION 0
 
 #include "translations.h"
 #include <memory>

@@ -560,7 +560,7 @@ Funds Kingdom::GetIncome(int type /* INCOME_ALL */) const
     {
         // estates skill bonus
         for (auto heroe : heroes._items)
-            resource.gold += (*heroe).GetSecondaryValues(Skill::Secondary::ESTATES);
+            resource.gold += (*heroe).GetSecondaryValues(Skill::SkillT::ESTATES);
     }
 
     return resource;

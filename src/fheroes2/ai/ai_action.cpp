@@ -1063,7 +1063,7 @@ void AIToShrine(Heroes& hero, uint32_t obj, s32 dst_index)
         // check present spell (skip bag artifacts)
         !hero.HaveSpell(spell, true) &&
         // check valid level spell and wisdom skill
-        !(3 == spell_level && Skill::Level::NONE == hero.GetLevelSkill(Skill::Secondary::WISDOM)))
+        !(3 == spell_level && Skill::Level::NONE == hero.GetLevelSkill(Skill::SkillT::WISDOM)))
     {
         hero.AppendSpellToBook(spell);
         hero.SetVisited(dst_index);
@@ -1137,7 +1137,7 @@ void AIToArtesianSpring(Heroes& hero, uint32_t obj, s32 dst_index)
 void AIToXanadu(Heroes& hero, uint32_t obj, s32 dst_index)
 {
     const Maps::Tiles& tile = world.GetTiles(dst_index);
-    const uint32_t level1 = hero.GetLevelSkill(Skill::Secondary::DIPLOMACY);
+    const uint32_t level1 = hero.GetLevelSkill(Skill::SkillT::DIPLOMACY);
     const uint32_t level2 = hero.GetLevel();
 
     if (!hero.isVisited(tile) &&
@@ -1260,7 +1260,7 @@ void AIToPoorLuckObject(Heroes& hero, uint32_t obj, s32 dst_index)
             // check magick book
             if (hero.HaveSpellBook() &&
                 // check skill level for wisdom
-                Skill::Level::EXPERT == hero.GetLevelSkill(Skill::Secondary::WISDOM))
+                Skill::Level::EXPERT == hero.GetLevelSkill(Skill::SkillT::WISDOM))
             {
                 hero.AppendSpellToBook(spell);
             }
@@ -1684,7 +1684,7 @@ bool AI::HeroesValidObject(const Heroes& hero, s32 index)
                 !hero.HaveSpell(spell) &&
                 // check valid level spell and wisdom skill
                 !(3 == spell.Level() &&
-                    Skill::Level::NONE == hero.GetLevelSkill(Skill::Secondary::WISDOM)))
+                    Skill::Level::NONE == hero.GetLevelSkill(Skill::SkillT::WISDOM)))
                 return true;
         }
         break;
@@ -1742,7 +1742,7 @@ bool AI::HeroesValidObject(const Heroes& hero, s32 index)
 
     case MP2::OBJ_XANADU:
         {
-            const uint32_t level1 = hero.GetLevelSkill(Skill::Secondary::DIPLOMACY);
+            const uint32_t level1 = hero.GetLevelSkill(Skill::SkillT::DIPLOMACY);
             const uint32_t level2 = hero.GetLevel();
 
             if (!hero.isVisited(tile) &&

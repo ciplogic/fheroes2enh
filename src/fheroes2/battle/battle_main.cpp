@@ -133,13 +133,13 @@ Battle::Result Battle::Loader(Army& army1, Army& army2, s32 mapsindex)
 
     // eagle eye capability
     if (hero_wins && hero_loss &&
-        hero_wins->GetLevelSkill(Skill::Secondary::EAGLEEYE) &&
+        hero_wins->GetLevelSkill(Skill::SkillT::EAGLEEYE) &&
         hero_loss->isHeroes())
         EagleEyeSkillAction(*hero_wins, arena.GetUsageSpells(), hero_wins->isControlHuman());
 
     // necromancy capability
     if (hero_wins &&
-        hero_wins->GetLevelSkill(Skill::Secondary::NECROMANCY))
+        hero_wins->GetLevelSkill(Skill::SkillT::NECROMANCY))
         NecromancySkillAction(*hero_wins, result.killed, hero_wins->isControlHuman());
 
 
@@ -197,7 +197,7 @@ void Battle::EagleEyeSkillAction(HeroBase& hero, const SpellStorage& spells, boo
     SpellStorage new_spells;
     new_spells._items.reserve(10);
 
-    const Skill::Secondary eagleeye(Skill::Secondary::EAGLEEYE, hero.GetLevelSkill(Skill::Secondary::EAGLEEYE));
+    const Skill::Secondary eagleeye(Skill::SkillT::EAGLEEYE, hero.GetLevelSkill(Skill::SkillT::EAGLEEYE));
 
     // filter spells
     for (auto sp : spells._items)
@@ -257,7 +257,7 @@ void Battle::NecromancySkillAction(HeroBase& hero, uint32_t killed, bool local)
     // fix over 60%
     if (percent > 60) percent = 60;
 
-    percent += hero.GetSecondaryValues(Skill::Secondary::NECROMANCY);
+    percent += hero.GetSecondaryValues(Skill::SkillT::NECROMANCY);
 
     // hard fix overflow
     if (percent > 90) percent = 90;

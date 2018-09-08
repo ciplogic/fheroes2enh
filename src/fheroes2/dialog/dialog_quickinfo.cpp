@@ -285,7 +285,7 @@ string ShowGroundInfo(const Maps::Tiles& tile, bool show, const Heroes* hero)
     if (!(dir != Direction::UNKNOWN))
         return str;
     uint32_t cost = Maps::Ground::GetPenalty(tile.GetIndex(), Direction::Reflect(dir),
-                                             hero->GetLevelSkill(Skill::Secondary::PATHFINDING));
+                                             hero->GetLevelSkill(Skill::SkillT::PATHFINDING));
     if (cost)
     {
         str.append("\n");
@@ -675,7 +675,7 @@ void Dialog::QuickInfo(const Castle& castle)
         (castle.isFriends(conf.CurrentColor()) ||
             // show guardians (scouting: advanced)
             from_hero &&
-            Skill::Level::ADVANCED <= from_hero->GetSecondaryValues(Skill::Secondary::SCOUTING)))
+            Skill::Level::ADVANCED <= from_hero->GetSecondaryValues(Skill::SkillT::SCOUTING)))
     {
         // heroes name
         text.Set(guardian->GetName(), Font::SMALL);
@@ -708,7 +708,7 @@ void Dialog::QuickInfo(const Castle& castle)
         // show limited
         Army::DrawMons32LineWithScoute(castle.GetArmy().m_troops, cur_rt.x - 5, cur_rt.y + 100, 192, 0, 0,
                                        from_hero && from_hero->CanScouteTile(castle.GetIndex())
-                                           ? from_hero->GetSecondaryValues(Skill::Secondary::SCOUTING)
+                                           ? from_hero->GetSecondaryValues(Skill::SkillT::SCOUTING)
                                            : Skill::Level::NONE);
 
     cursor.Show();
@@ -940,7 +940,7 @@ void Dialog::QuickInfo(const Heroes& hero)
         // show limited
         Army::DrawMons32LineWithScoute(hero.GetArmy().m_troops, cur_rt.x - 5, cur_rt.y + 114, 160, 0, 0,
                                        from_hero && from_hero->CanScouteTile(hero.GetIndex())
-                                           ? from_hero->GetSecondaryValues(Skill::Secondary::SCOUTING)
+                                           ? from_hero->GetSecondaryValues(Skill::SkillT::SCOUTING)
                                            : Skill::Level::NONE);
 
     cursor.Show();

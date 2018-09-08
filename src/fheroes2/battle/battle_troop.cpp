@@ -838,7 +838,7 @@ uint32_t Battle::Unit::CalculateDamageUnit(const Unit& enemy, double dmg) const
             // check skill archery +%10, +%25, +%50
             if (GetCommander())
             {
-                dmg += dmg * GetCommander()->GetSecondaryValues(Skill::Secondary::ARCHERY) / 100;
+                dmg += dmg * GetCommander()->GetSecondaryValues(Skill::SkillT::ARCHERY) / 100;
             }
 
             // check castle defense

@@ -55,40 +55,40 @@ namespace Skill
 
         std::string String(int level);
     }
+    enum class SkillT
+    {
+        UNKNOWN = 0,
+        PATHFINDING = 1,
+        ARCHERY = 2,
+        LOGISTICS = 3,
+        SCOUTING = 4,
+        DIPLOMACY = 5,
+        NAVIGATION = 6,
+        LEADERSHIP = 7,
+        WISDOM = 8,
+        MYSTICISM = 9,
+        LUCK = 10,
+        BALLISTICS = 11,
+        EAGLEEYE = 12,
+        NECROMANCY = 13,
+        ESTATES = 14,
 
-    class Secondary : public pair<int, int>
+        LEARNING = EAGLEEYE
+    };
+
+    class Secondary : public pair<SkillT, int>
     {
     public:
-        enum
-        {
-            UNKNOWN = 0,
-            PATHFINDING = 1,
-            ARCHERY = 2,
-            LOGISTICS = 3,
-            SCOUTING = 4,
-            DIPLOMACY = 5,
-            NAVIGATION = 6,
-            LEADERSHIP = 7,
-            WISDOM = 8,
-            MYSTICISM = 9,
-            LUCK = 10,
-            BALLISTICS = 11,
-            EAGLEEYE = 12,
-            NECROMANCY = 13,
-            ESTATES = 14,
-
-            LEARNING = EAGLEEYE
-        };
-
+        
         Secondary();
 
-        Secondary(int skill, int level);
+        Secondary(SkillT skill, int level);
 
         void Reset();
 
         void Set(const Secondary&);
 
-        void SetSkill(int);
+        void SetSkill(SkillT);
 
         void SetLevel(int);
 
@@ -96,11 +96,11 @@ namespace Skill
 
         int Level() const;
 
-        int Skill() const;
+        SkillT Skill() const;
 
         bool isLevel(int) const;
 
-        bool isSkill(int) const;
+        bool isSkill(SkillT) const;
 
         bool isValid() const;
 
@@ -116,9 +116,9 @@ namespace Skill
         /* index sprite from MINISS */
         int GetIndexSprite2() const;
 
-        static int RandForWitchsHut();
+        static SkillT RandForWitchsHut();
 
-        static std::string String(int);
+        static std::string String(SkillT);
     };
 
     ByteVectorReader& operator>>(ByteVectorReader&, Secondary&);
@@ -131,9 +131,9 @@ namespace Skill
 
         SecSkills(int race);
 
-        int GetLevel(int skill) const;
+        int GetLevel(SkillT skill) const;
 
-        uint32_t GetValues(int skill) const;
+        uint32_t GetValues(SkillT skill) const;
 
         void AddSkill(const Secondary&);
 
@@ -141,7 +141,7 @@ namespace Skill
 
         void FillMax(const Secondary&);
 
-        Secondary* FindSkill(int);
+        Secondary* FindSkill(SkillT);
 
         string String() const;
 

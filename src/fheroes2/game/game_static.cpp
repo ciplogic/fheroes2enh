@@ -460,37 +460,37 @@ const Skill::stats_t* GameStatic::GetSkillStats(int race)
     return nullptr;
 }
 
-const Skill::values_t* GameStatic::GetSkillValues(int type)
+const Skill::values_t* GameStatic::GetSkillValues(Skill::SkillT type)
 {
     switch (type)
     {
-    case Skill::Secondary::PATHFINDING:
+    case Skill::SkillT::PATHFINDING:
         return &Skill::_values[0];
-    case Skill::Secondary::ARCHERY:
+    case Skill::SkillT::ARCHERY:
         return &Skill::_values[1];
-    case Skill::Secondary::LOGISTICS:
+    case Skill::SkillT::LOGISTICS:
         return &Skill::_values[2];
-    case Skill::Secondary::SCOUTING:
+    case Skill::SkillT::SCOUTING:
         return &Skill::_values[3];
-    case Skill::Secondary::DIPLOMACY:
+    case Skill::SkillT::DIPLOMACY:
         return &Skill::_values[4];
-    case Skill::Secondary::NAVIGATION:
+    case Skill::SkillT::NAVIGATION:
         return &Skill::_values[5];
-    case Skill::Secondary::LEADERSHIP:
+    case Skill::SkillT::LEADERSHIP:
         return &Skill::_values[6];
-    case Skill::Secondary::WISDOM:
+    case Skill::SkillT::WISDOM:
         return &Skill::_values[7];
-    case Skill::Secondary::MYSTICISM:
+    case Skill::SkillT::MYSTICISM:
         return &Skill::_values[8];
-    case Skill::Secondary::LUCK:
+    case Skill::SkillT::LUCK:
         return &Skill::_values[9];
-    case Skill::Secondary::BALLISTICS:
+    case Skill::SkillT::BALLISTICS:
         return &Skill::_values[10];
-    case Skill::Secondary::EAGLEEYE:
+    case Skill::SkillT::EAGLEEYE:
         return &Skill::_values[11];
-    case Skill::Secondary::NECROMANCY:
+    case Skill::SkillT::NECROMANCY:
         return &Skill::_values[12];
-    case Skill::Secondary::ESTATES:
+    case Skill::SkillT::ESTATES:
         return &Skill::_values[13];
     default:
         break;

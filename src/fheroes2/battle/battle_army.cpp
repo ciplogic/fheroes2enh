@@ -275,7 +275,7 @@ uint32_t Battle::Force::GetSurrenderCost() const
 
     if (commander)
     {
-        switch (commander->GetLevelSkill(Skill::Secondary::DIPLOMACY))
+        switch (commander->GetLevelSkill(Skill::SkillT::DIPLOMACY))
         {
             // 40%
         case Skill::Level::BASIC:

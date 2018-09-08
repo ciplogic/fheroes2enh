@@ -41,16 +41,16 @@
 
 namespace Skill
 {
-    int SecondaryGetWeightSkillFromRace(int race, int skill);
+    int SecondaryGetWeightSkillFromRace(int race, SkillT skill);
 
-    int SecondaryPriorityFromRace(int, const vector<int>&);
+    SkillT SecondaryPriorityFromRace(int, const vector<SkillT>&);
 
-    const int secskills[] = {
-        Secondary::PATHFINDING, Secondary::ARCHERY, Secondary::LOGISTICS, Secondary::SCOUTING,
-        Secondary::DIPLOMACY, Secondary::NAVIGATION, Secondary::LEADERSHIP, Secondary::WISDOM,
-        Secondary::MYSTICISM,
-        Secondary::LUCK, Secondary::BALLISTICS, Secondary::EAGLEEYE, Secondary::NECROMANCY,
-        Secondary::ESTATES
+    const SkillT secskills[] = {
+        SkillT::PATHFINDING, SkillT::ARCHERY, SkillT::LOGISTICS, SkillT::SCOUTING,
+        SkillT::DIPLOMACY, SkillT::NAVIGATION, SkillT::LEADERSHIP, SkillT::WISDOM,
+        SkillT::MYSTICISM,
+        SkillT::LUCK, SkillT::BALLISTICS, SkillT::EAGLEEYE, SkillT::NECROMANCY,
+        SkillT::ESTATES
     };
 }
 
@@ -262,11 +262,11 @@ std::string Skill::Level::String(int level)
     return str_level[0];
 }
 
-Skill::Secondary::Secondary() : pair<int, int>(UNKNOWN, Level::NONE)
+Skill::Secondary::Secondary() : pair<SkillT, int>(SkillT::UNKNOWN, Level::NONE)
 {
 }
 
-Skill::Secondary::Secondary(int skill, int level) : pair<int, int>(UNKNOWN, Level::NONE)
+Skill::Secondary::Secondary(SkillT skill, int level) : pair<SkillT, int>(SkillT::UNKNOWN, Level::NONE)
 {
     SetSkill(skill);
     SetLevel(level);
@@ -274,7 +274,7 @@ Skill::Secondary::Secondary(int skill, int level) : pair<int, int>(UNKNOWN, Leve
 
 void Skill::Secondary::Reset()
 {
-    first = UNKNOWN;
+    first = SkillT::UNKNOWN;
     second = Level::NONE;
 }
 
@@ -284,9 +284,9 @@ void Skill::Secondary::Set(const Secondary& skill)
     second = skill.second;
 }
 
-void Skill::Secondary::SetSkill(int skill)
+void Skill::Secondary::SetSkill(SkillT skill)
 {
-    first = skill <= ESTATES ? skill : UNKNOWN;
+    first = skill <= SkillT::ESTATES ? skill : SkillT::UNKNOWN;
 }
 
 void Skill::Secondary::SetLevel(int level)
@@ -312,7 +312,7 @@ void Skill::Secondary::NextLevel()
     }
 }
 
-int Skill::Secondary::Skill() const
+Skill::SkillT Skill::Secondary::Skill() const
 {
     return first;
 }
@@ -327,57 +327,57 @@ bool Skill::Secondary::isLevel(int level) const
     return level == second;
 }
 
-bool Skill::Secondary::isSkill(int skill) const
+bool Skill::Secondary::isSkill(SkillT skill) const
 {
     return skill == first;
 }
 
 bool Skill::Secondary::isValid() const
 {
-    return Skill() != UNKNOWN && Level() != Level::NONE;
+    return Skill() != SkillT::UNKNOWN && Level() != Level::NONE;
 }
 
-int Skill::Secondary::RandForWitchsHut()
+Skill::SkillT Skill::Secondary::RandForWitchsHut()
 {
     const secondary_t* sec = GameStatic::GetSkillForWitchsHut();
-    vector<int> v;
+    vector<SkillT> v;
 
     if (sec)
     {
         v.reserve(14);
 
-        if (sec->archery) v.push_back(ARCHERY);
-        if (sec->ballistics) v.push_back(BALLISTICS);
-        if (sec->diplomacy) v.push_back(DIPLOMACY);
-        if (sec->eagleeye) v.push_back(EAGLEEYE);
-        if (sec->estates) v.push_back(ESTATES);
-        if (sec->leadership) v.push_back(LEADERSHIP);
-        if (sec->logistics) v.push_back(LOGISTICS);
-        if (sec->luck) v.push_back(LUCK);
-        if (sec->mysticism) v.push_back(MYSTICISM);
-        if (sec->navigation) v.push_back(NAVIGATION);
-        if (sec->necromancy) v.push_back(NECROMANCY);
-        if (sec->pathfinding) v.push_back(PATHFINDING);
-        if (sec->scouting) v.push_back(SCOUTING);
-        if (sec->wisdom) v.push_back(WISDOM);
+        if (sec->archery) v.push_back(SkillT::ARCHERY);
+        if (sec->ballistics) v.push_back(SkillT::BALLISTICS);
+        if (sec->diplomacy) v.push_back(SkillT::DIPLOMACY);
+        if (sec->eagleeye) v.push_back(SkillT::EAGLEEYE);
+        if (sec->estates) v.push_back(SkillT::ESTATES);
+        if (sec->leadership) v.push_back(SkillT::LEADERSHIP);
+        if (sec->logistics) v.push_back(SkillT::LOGISTICS);
+        if (sec->luck) v.push_back(SkillT::LUCK);
+        if (sec->mysticism) v.push_back(SkillT::MYSTICISM);
+        if (sec->navigation) v.push_back(SkillT::NAVIGATION);
+        if (sec->necromancy) v.push_back(SkillT::NECROMANCY);
+        if (sec->pathfinding) v.push_back(SkillT::PATHFINDING);
+        if (sec->scouting) v.push_back(SkillT::SCOUTING);
+        if (sec->wisdom) v.push_back(SkillT::WISDOM);
     }
 
-    return v.empty() ? UNKNOWN : *Rand::Get(v);
+    return v.empty() ? SkillT::UNKNOWN : *Rand::Get(v);
 }
 
 /* index sprite from SECSKILL */
 int Skill::Secondary::GetIndexSprite1() const
 {
-    return Skill() <= ESTATES ? Skill() : 0;
+    return Skill() <= SkillT::ESTATES ? (int)Skill() : 0;
 }
 
 /* index sprite from MINISS */
 int Skill::Secondary::GetIndexSprite2() const
 {
-    return Skill() <= ESTATES ? Skill() - 1 : 0xFF;
+    return Skill() <= SkillT::ESTATES ? (int)Skill() - 1 : 0xFF;
 }
 
-std::string Skill::Secondary::String(int skill)
+std::string Skill::Secondary::String(Skill::SkillT skill)
 {
     std::string str_skill[] = {
         _("Pathfinding"), _("Archery"), _("Logistics"), _("Scouting"), _("Diplomacy"),
@@ -388,33 +388,33 @@ std::string Skill::Secondary::String(int skill)
 
     switch (skill)
     {
-    case PATHFINDING:
+    case SkillT::PATHFINDING:
         return str_skill[0];
-    case ARCHERY:
+    case SkillT::ARCHERY:
         return str_skill[1];
-    case LOGISTICS:
+    case SkillT::LOGISTICS:
         return str_skill[2];
-    case SCOUTING:
+    case SkillT::SCOUTING:
         return str_skill[3];
-    case DIPLOMACY:
+    case SkillT::DIPLOMACY:
         return str_skill[4];
-    case NAVIGATION:
+    case SkillT::NAVIGATION:
         return str_skill[5];
-    case LEADERSHIP:
+    case SkillT::LEADERSHIP:
         return str_skill[6];
-    case WISDOM:
+    case SkillT::WISDOM:
         return str_skill[7];
-    case MYSTICISM:
+    case SkillT::MYSTICISM:
         return str_skill[8];
-    case LUCK:
+    case SkillT::LUCK:
         return str_skill[9];
-    case BALLISTICS:
+    case SkillT::BALLISTICS:
         return str_skill[10];
-    case EAGLEEYE:
+    case SkillT::EAGLEEYE:
         return str_skill[11];
-    case NECROMANCY:
+    case SkillT::NECROMANCY:
         return str_skill[12];
-    case ESTATES:
+    case SkillT::ESTATES:
         return str_skill[13];
 
     default:
@@ -444,7 +444,7 @@ std::string Skill::Secondary::GetName() const
         _("Basic Estates"), _("Advanced Estates"), _("Expert Estates")
     };
 
-    return isValid() ? name_skill[Level() - 1 + (Skill() - 1) * 3] : "unknown";
+    return isValid() ? name_skill[Level() - 1 + ((int)Skill() - 1) * 3] : "unknown";
 }
 
 string Skill::Secondary::GetDescription() const
@@ -454,37 +454,37 @@ string Skill::Secondary::GetDescription() const
 
     switch (Skill())
     {
-    case PATHFINDING:
+    case SkillT::PATHFINDING:
         str = _n("Reduces the movement penalty for rough terrain by %{count} percent.",
                  "Reduces the movement penalty for rough terrain by %{count} percent.", count);
         break;
-    case ARCHERY:
+    case SkillT::ARCHERY:
         str = _n("Increases the damage done by range attacking creatures by %{count} percent.",
                  "Increases the damage done by range attacking creatures by %{count} percent.", count);
         break;
-    case LOGISTICS:
+    case SkillT::LOGISTICS:
         str = _n("Increases your hero's movement points by %{count} percent.",
                  "Increases your hero's movement points by %{count} percent.", count);
         break;
-    case SCOUTING:
+    case SkillT::SCOUTING:
         str = _n("Increases your hero's viewable area by %{count} square.",
                  "Increases your hero's viewable area by %{count} squares.", count);
         break;
-    case DIPLOMACY:
+    case SkillT::DIPLOMACY:
         str = _("Allows you to negotiate with monsters who are weaker than your group.");
         str.append(" ");
         str.append(_n("Approximately %{count} percent of the creatures may offer to join you.",
                       "Approximately %{count} percent of the creatures may offer to join you.", count));
         break;
-    case NAVIGATION:
+    case SkillT::NAVIGATION:
         str = _n("Increases your hero's movement points over water by %{count} percent.",
                  "Increases your hero's movement points over water by %{count} percent.", count);
         break;
-    case LEADERSHIP:
+    case SkillT::LEADERSHIP:
         str = _n("Increases your hero's troops morale by %{count}.",
                  "Increases your hero's troops morale by %{count}.", count);
         break;
-    case WISDOM:
+    case SkillT::WISDOM:
         {
             switch (Level())
             {
@@ -502,15 +502,15 @@ string Skill::Secondary::GetDescription() const
             }
             break;
         }
-    case MYSTICISM:
+    case SkillT::MYSTICISM:
         str = _n("Regenerates %{count} of your hero's spell point per day.",
                  "Regenerates %{count} of your hero's spell points per day.", count);
         break;
-    case LUCK:
+    case SkillT::LUCK:
         str = _n("Increases your hero's luck by %{count}.",
                  "Increases your hero's luck by %{count}.", count);
         break;
-    case BALLISTICS:
+    case SkillT::BALLISTICS:
         switch (Level())
         {
         case Level::BASIC:
@@ -530,7 +530,7 @@ string Skill::Secondary::GetDescription() const
             break;
         }
         break;
-    case EAGLEEYE:
+    case SkillT::EAGLEEYE:
         switch (Level())
         {
         case Level::BASIC:
@@ -561,13 +561,13 @@ string Skill::Secondary::GetDescription() const
             break;
         }
         break;
-    case NECROMANCY:
+    case SkillT::NECROMANCY:
         str = _n(
             "Allows %{count} percent of the creatures killed in combat to be brought back from the dead as Skeletons.",
             "Allows %{count} percent of the creatures killed in combat to be brought back from the dead as Skeletons.",
             count);
         break;
-    case ESTATES:
+    case SkillT::ESTATES:
         str = _n("Your hero produce %{count} gold pieces per turn as tax revenue from estates.",
                  "Your hero produces %{count} gold pieces per turn as tax revenue from estates.", count);
         break;
@@ -595,35 +595,35 @@ Skill::SecSkills::SecSkills(int race)
 
         if (ptr)
         {
-            if (ptr->initial_secondary.archery) AddSkill(Secondary(Secondary::ARCHERY, ptr->initial_secondary.archery));
+            if (ptr->initial_secondary.archery) AddSkill(Secondary(SkillT::ARCHERY, ptr->initial_secondary.archery));
             if (ptr->initial_secondary.ballistics)
-                AddSkill(Secondary(Secondary::BALLISTICS, ptr->initial_secondary.ballistics));
+                AddSkill(Secondary(SkillT::BALLISTICS, ptr->initial_secondary.ballistics));
             if (ptr->initial_secondary.diplomacy)
-                AddSkill(Secondary(Secondary::DIPLOMACY, ptr->initial_secondary.diplomacy));
+                AddSkill(Secondary(SkillT::DIPLOMACY, ptr->initial_secondary.diplomacy));
             if (ptr->initial_secondary.eagleeye)
-                AddSkill(Secondary(Secondary::EAGLEEYE, ptr->initial_secondary.eagleeye));
-            if (ptr->initial_secondary.estates) AddSkill(Secondary(Secondary::ESTATES, ptr->initial_secondary.estates));
+                AddSkill(Secondary(SkillT::EAGLEEYE, ptr->initial_secondary.eagleeye));
+            if (ptr->initial_secondary.estates) AddSkill(Secondary(SkillT::ESTATES, ptr->initial_secondary.estates));
             if (ptr->initial_secondary.leadership)
-                AddSkill(Secondary(Secondary::LEADERSHIP, ptr->initial_secondary.leadership));
+                AddSkill(Secondary(SkillT::LEADERSHIP, ptr->initial_secondary.leadership));
             if (ptr->initial_secondary.logistics)
-                AddSkill(Secondary(Secondary::LOGISTICS, ptr->initial_secondary.logistics));
-            if (ptr->initial_secondary.luck) AddSkill(Secondary(Secondary::LUCK, ptr->initial_secondary.luck));
+                AddSkill(Secondary(SkillT::LOGISTICS, ptr->initial_secondary.logistics));
+            if (ptr->initial_secondary.luck) AddSkill(Secondary(SkillT::LUCK, ptr->initial_secondary.luck));
             if (ptr->initial_secondary.mysticism)
-                AddSkill(Secondary(Secondary::MYSTICISM, ptr->initial_secondary.mysticism));
+                AddSkill(Secondary(SkillT::MYSTICISM, ptr->initial_secondary.mysticism));
             if (ptr->initial_secondary.navigation)
-                AddSkill(Secondary(Secondary::NAVIGATION, ptr->initial_secondary.navigation));
+                AddSkill(Secondary(SkillT::NAVIGATION, ptr->initial_secondary.navigation));
             if (ptr->initial_secondary.necromancy)
-                AddSkill(Secondary(Secondary::NECROMANCY, ptr->initial_secondary.necromancy));
+                AddSkill(Secondary(SkillT::NECROMANCY, ptr->initial_secondary.necromancy));
             if (ptr->initial_secondary.pathfinding)
-                AddSkill(Secondary(Secondary::PATHFINDING, ptr->initial_secondary.pathfinding));
+                AddSkill(Secondary(SkillT::PATHFINDING, ptr->initial_secondary.pathfinding));
             if (ptr->initial_secondary.scouting)
-                AddSkill(Secondary(Secondary::SCOUTING, ptr->initial_secondary.scouting));
-            if (ptr->initial_secondary.wisdom) AddSkill(Secondary(Secondary::WISDOM, ptr->initial_secondary.wisdom));
+                AddSkill(Secondary(SkillT::SCOUTING, ptr->initial_secondary.scouting));
+            if (ptr->initial_secondary.wisdom) AddSkill(Secondary(SkillT::WISDOM, ptr->initial_secondary.wisdom));
         }
     }
 }
 
-int Skill::SecSkills::GetLevel(int skill) const
+int Skill::SecSkills::GetLevel(SkillT skill) const
 {
     const auto it = find_if(_items.begin(), _items.end(),
                             [&](const Secondary& it) { return it.isSkill(skill); });
@@ -631,7 +631,7 @@ int Skill::SecSkills::GetLevel(int skill) const
     return it == _items.end() ? Level::NONE : (*it).Level();
 }
 
-uint32_t Skill::SecSkills::GetValues(int skill) const
+uint32_t Skill::SecSkills::GetValues(SkillT skill) const
 {
     const auto it = find_if(_items.begin(), _items.end(),
                             [&](const Secondary& it) { return it.isSkill(skill); });
@@ -665,10 +665,15 @@ void Skill::SecSkills::AddSkill(const Secondary& skill)
     }
 }
 
-Skill::Secondary* Skill::SecSkills::FindSkill(int skill)
+Skill::Secondary* Skill::SecSkills::FindSkill(SkillT skill)
 {
     const auto it = find_if(_items.begin(), _items.end(),
-                            [&](Secondary& it) { return it.isValid(); });
+                            [&](Secondary& it)
+    {
+        if (!it.isValid())
+            return false;
+        return it.isSkill(skill);
+    });
     return it != _items.end() ? &*it : nullptr;
 }
 
@@ -694,26 +699,26 @@ void Skill::SecSkills::FillMax(const Secondary& skill)
         _items.resize(HEROESMAXSKILL, skill);
 }
 
-int Skill::SecondaryGetWeightSkillFromRace(int race, int skill)
+int Skill::SecondaryGetWeightSkillFromRace(int race, SkillT skill)
 {
     const stats_t* ptr = GameStatic::GetSkillStats(race);
 
     if (!ptr)
         return 0;
-    if (skill == Secondary::PATHFINDING) return ptr->mature_secondary.pathfinding;
-    if (skill == Secondary::ARCHERY) return ptr->mature_secondary.archery;
-    if (skill == Secondary::LOGISTICS) return ptr->mature_secondary.logistics;
-    if (skill == Secondary::SCOUTING) return ptr->mature_secondary.scouting;
-    if (skill == Secondary::DIPLOMACY) return ptr->mature_secondary.diplomacy;
-    if (skill == Secondary::NAVIGATION) return ptr->mature_secondary.navigation;
-    if (skill == Secondary::LEADERSHIP) return ptr->mature_secondary.leadership;
-    if (skill == Secondary::WISDOM) return ptr->mature_secondary.wisdom;
-    if (skill == Secondary::MYSTICISM) return ptr->mature_secondary.mysticism;
-    if (skill == Secondary::LUCK) return ptr->mature_secondary.luck;
-    if (skill == Secondary::BALLISTICS) return ptr->mature_secondary.ballistics;
-    if (skill == Secondary::EAGLEEYE) return ptr->mature_secondary.eagleeye;
-    if (skill == Secondary::NECROMANCY) return ptr->mature_secondary.necromancy;
-    if (skill == Secondary::ESTATES) return ptr->mature_secondary.estates;
+    if (skill == SkillT::PATHFINDING) return ptr->mature_secondary.pathfinding;
+    if (skill == SkillT::ARCHERY) return ptr->mature_secondary.archery;
+    if (skill == SkillT::LOGISTICS) return ptr->mature_secondary.logistics;
+    if (skill == SkillT::SCOUTING) return ptr->mature_secondary.scouting;
+    if (skill == SkillT::DIPLOMACY) return ptr->mature_secondary.diplomacy;
+    if (skill == SkillT::NAVIGATION) return ptr->mature_secondary.navigation;
+    if (skill == SkillT::LEADERSHIP) return ptr->mature_secondary.leadership;
+    if (skill == SkillT::WISDOM) return ptr->mature_secondary.wisdom;
+    if (skill == SkillT::MYSTICISM) return ptr->mature_secondary.mysticism;
+    if (skill == SkillT::LUCK) return ptr->mature_secondary.luck;
+    if (skill == SkillT::BALLISTICS) return ptr->mature_secondary.ballistics;
+    if (skill == SkillT::EAGLEEYE) return ptr->mature_secondary.eagleeye;
+    if (skill == SkillT::NECROMANCY) return ptr->mature_secondary.necromancy;
+    if (skill == SkillT::ESTATES) return ptr->mature_secondary.estates;
 
     return 0;
 }
@@ -729,22 +734,22 @@ std::vector<int> Skill::SecondarySkills()
 }
 */
 
-int Skill::SecondaryPriorityFromRace(int race, const std::vector<int>& exclude)
+Skill::SkillT Skill::SecondaryPriorityFromRace(int race, const std::vector<SkillT>& exclude)
 {
     Rand::Queue parts(MAXSECONDARYSKILL);
 
-    for (int secskill : secskills)
+    for (SkillT secskill : secskills)
         if (exclude.empty() ||
             exclude.end() == find(exclude.begin(), exclude.end(), secskill))
-            parts.Push(secskill, SecondaryGetWeightSkillFromRace(race, secskill));
+            parts.Push((int)secskill, (uint32_t)SecondaryGetWeightSkillFromRace(race, secskill));
 
-    return parts.Size() ? parts.Get() : Secondary::UNKNOWN;
+    return parts.Size() ? (SkillT) parts.Get() : SkillT::UNKNOWN;
 }
 
 /* select secondary skills for level up */
 void Skill::SecSkills::FindSkillsForLevelUp(int race, Secondary& sec1, Secondary& sec2) const
 {
-    vector<int> exclude_skills;
+    vector<SkillT> exclude_skills;
     exclude_skills.reserve(MAXSECONDARYSKILL + HEROESMAXSKILL);
 
     // exclude for expert
@@ -754,13 +759,13 @@ void Skill::SecSkills::FindSkillsForLevelUp(int race, Secondary& sec1, Secondary
     // exclude is full, add other.
     if (HEROESMAXSKILL <= Count())
     {
-        for (int secskill : secskills)
+        for (auto secskill : secskills)
             if (Level::NONE == GetLevel(secskill)) exclude_skills.push_back(secskill);
     }
 
     sec1.SetSkill(SecondaryPriorityFromRace(race, exclude_skills));
 
-    if (Secondary::UNKNOWN != sec1.Skill())
+    if (SkillT::UNKNOWN != sec1.Skill())
     {
         exclude_skills.push_back(sec1.Skill());
         sec2.SetSkill(SecondaryPriorityFromRace(race, exclude_skills));
@@ -797,7 +802,7 @@ void StringAppendModifiers(string& str, int value)
 
 int Skill::GetLeadershipModifiers(int level, string* strs = nullptr)
 {
-    Secondary skill(Secondary::LEADERSHIP, level);
+    Secondary skill(SkillT::LEADERSHIP, level);
 
     if (skill.GetValues() && strs)
     {
@@ -811,7 +816,7 @@ int Skill::GetLeadershipModifiers(int level, string* strs = nullptr)
 
 int Skill::GetLuckModifiers(int level, string* strs = nullptr)
 {
-    Secondary skill(Secondary::LUCK, level);
+    Secondary skill(SkillT::LUCK, level);
 
     if (skill.GetValues() && strs)
     {
@@ -1089,13 +1094,23 @@ bool SecondarySkillsBar::QueueEventProcessing(string* str)
 
 ByteVectorReader& Skill::operator>>(ByteVectorReader& sb, Secondary& st)
 {
-    return sb >> st.first >> st.second;
+    int skill;
+    sb >> (skill) >> st.second;
+    st.first = (SkillT)skill;
+    return sb;
 }
+
 
 ByteVectorWriter& Skill::operator<<(ByteVectorWriter& sb, const SecSkills& ss)
 {
     const vector<Secondary>& v = ss._items;
-    return sb << v;
+
+    sb.put32(static_cast<uint32_t>(v.size()));
+    for(const Secondary& it:v)
+    {
+        sb << ((int)it.first) << it.second;
+    }
+    return sb;
 }
 
 ByteVectorReader& Skill::operator>>(ByteVectorReader& sb, SecSkills& ss)

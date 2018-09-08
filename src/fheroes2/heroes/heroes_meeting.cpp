@@ -318,8 +318,8 @@ void Heroes::ScholarAction(Heroes& hero1, Heroes& hero2)
         return;
     }
 
-    const int scholar1 = hero1.GetLevelSkill(Skill::Secondary::EAGLEEYE);
-    const int scholar2 = hero2.GetLevelSkill(Skill::Secondary::EAGLEEYE);
+    const int scholar1 = hero1.GetLevelSkill(Skill::SkillT::EAGLEEYE);
+    const int scholar2 = hero2.GetLevelSkill(Skill::SkillT::EAGLEEYE);
     int scholar = 0;
 
     Heroes* teacher = nullptr;
@@ -425,7 +425,7 @@ void Heroes::ScholarAction(Heroes& hero1, Heroes& hero2)
             StringReplace(message, "%{teacher}", teacher->GetName());
             StringReplace(message, "%{learner}", learner->GetName());
             StringReplace(message, "%{level}", Skill::Level::String(scholar));
-            StringReplace(message, "%{scholar}", Skill::Secondary::String(Skill::Secondary::EAGLEEYE));
+            StringReplace(message, "%{scholar}", Skill::Secondary::String(Skill::SkillT::EAGLEEYE));
             StringReplace(message, "%{spells1}", spells1);
             StringReplace(message, "%{spells2}", spells2);
 

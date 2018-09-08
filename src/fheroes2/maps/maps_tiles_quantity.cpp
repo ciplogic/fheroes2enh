@@ -102,16 +102,16 @@ Skill::Secondary Maps::Tiles::QuantitySkill() const
         switch (QuantityVariant())
         {
         case 4:
-            return {Skill::Secondary::LEADERSHIP, Skill::Level::BASIC};
+            return {Skill::SkillT::LEADERSHIP, Skill::Level::BASIC};
         case 5:
-            return {Skill::Secondary::WISDOM, Skill::Level::BASIC};
+            return {Skill::SkillT::WISDOM, Skill::Level::BASIC};
         default:
             break;
         }
         break;
 
     case MP2::OBJ_WITCHSHUT:
-        return {quantity1, Skill::Level::BASIC};
+        return {(Skill::SkillT)quantity1, Skill::Level::BASIC};
 
     default:
         break;
@@ -120,12 +120,12 @@ Skill::Secondary Maps::Tiles::QuantitySkill() const
     return Skill::Secondary();
 }
 
-void Maps::Tiles::QuantitySetSkill(int skill)
+void Maps::Tiles::QuantitySetSkill(Skill::SkillT skill)
 {
     switch (GetObject(false))
     {
     case MP2::OBJ_WITCHSHUT:
-        quantity1 = skill;
+        quantity1 = (u8)skill;
         break;
 
     default:

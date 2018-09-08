@@ -315,7 +315,7 @@ namespace
 
 bool Route::Path::Find(s32 to, int limit)
 {
-    const int pathfinding = hero->GetLevelSkill(Skill::Secondary::PATHFINDING);
+    const int pathfinding = hero->GetLevelSkill(Skill::SkillT::PATHFINDING);
     const s32 from = hero->GetIndex();
 
     s32 cur = from;

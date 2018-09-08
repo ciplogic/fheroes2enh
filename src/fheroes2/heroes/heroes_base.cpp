@@ -473,7 +473,7 @@ bool HeroBase::CanTranscribeScroll(const Artifact& art) const
 
     if (spell.isValid() && CanCastSpell(spell))
     {
-        int learning = GetLevelSkill(Skill::Secondary::LEARNING);
+        int learning = GetLevelSkill(Skill::SkillT::LEARNING);
 
         return 3 < spell.Level() && Skill::Level::EXPERT == learning ||
             3 == spell.Level() && Skill::Level::ADVANCED <= learning ||
@@ -485,7 +485,7 @@ bool HeroBase::CanTranscribeScroll(const Artifact& art) const
 
 bool HeroBase::CanTeachSpell(const Spell& spell) const
 {
-    int learning = GetLevelSkill(Skill::Secondary::LEARNING);
+    int learning = GetLevelSkill(Skill::SkillT::LEARNING);
 
     return 4 == spell.Level() && Skill::Level::EXPERT == learning ||
         3 == spell.Level() && Skill::Level::ADVANCED <= learning ||
@@ -494,7 +494,7 @@ bool HeroBase::CanTeachSpell(const Spell& spell) const
 
 bool HeroBase::CanLearnSpell(const Spell& spell) const
 {
-    int wisdom = GetLevelSkill(Skill::Secondary::WISDOM);
+    int wisdom = GetLevelSkill(Skill::SkillT::WISDOM);
 
     return 4 < spell.Level() && Skill::Level::EXPERT == wisdom ||
         4 == spell.Level() && Skill::Level::ADVANCED <= wisdom ||

@@ -24,6 +24,7 @@
 #include <string>
 #include "gamedefs.h"
 #include "sprites.h"
+#include "skill.h"
 
 #define    SHADOWWIDTH    16
 #define BOXAREA_WIDTH   245
@@ -106,7 +107,7 @@ namespace Dialog
 
     void ExtSettings(bool);
 
-    int LevelUpSelectSkill(const std::string&, const std::string&, const Skill::Secondary&, const Skill::Secondary&,
+    Skill::SkillT LevelUpSelectSkill(const std::string&, const std::string&, const Skill::Secondary&, const Skill::Secondary&,
                            Heroes&);
 
     bool SelectGoldOrExp(const std::string&, const std::string&, uint32_t gold, uint32_t expr, const Heroes&);

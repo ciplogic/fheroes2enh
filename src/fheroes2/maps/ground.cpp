@@ -58,7 +58,7 @@ std::string Maps::Ground::String(int ground)
     return str_ground[8];
 }
 
-uint32_t Maps::Ground::GetPenalty(s32 index, int direct, uint32_t level)
+uint32_t Maps::Ground::GetPenalty(int index, int direct, uint32_t level)
 {
     const Tiles& tile = world.GetTiles(index);
 

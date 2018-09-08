@@ -26,7 +26,8 @@
 #include <string>
 #include <vector>
 
-#include "gamedefs.h"
+#include "engine.h"
+
 
 typedef std::vector<int> Directions;
 

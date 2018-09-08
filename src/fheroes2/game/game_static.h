@@ -75,7 +75,7 @@ namespace GameStatic
 
     const Skill::stats_t* GetSkillStats(int race);
 
-    const Skill::values_t* GetSkillValues(int skill);
+    const Skill::values_t* GetSkillValues(Skill::SkillT skill);
 
     const Skill::secondary_t* GetSkillForWitchsHut();
 

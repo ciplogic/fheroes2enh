@@ -40,7 +40,7 @@ void DialogPrimaryOnly(const string& name, const string& primary)
     Message("", message, Font::BIG, Dialog::OK);
 }
 
-int DialogOneSecondary(const string& name, const string& primary, const Skill::Secondary& sec)
+Skill::SkillT DialogOneSecondary(const string& name, const string& primary, const Skill::Secondary& sec)
 {
     string message = _("%{name} has gained a level.");
     message.append("\n \n");
@@ -69,7 +69,7 @@ int DialogOneSecondary(const string& name, const string& primary, const Skill::S
     return sec.Skill();
 }
 
-int DialogSelectSecondary(const string& name, const string& primary, const Skill::Secondary& sec1,
+Skill::SkillT DialogSelectSecondary(const string& name, const string& primary, const Skill::Secondary& sec1,
                           const Skill::Secondary& sec2, Heroes& hero)
 {
     string header = _("%{name} has gained a level.");
@@ -213,18 +213,18 @@ int DialogSelectSecondary(const string& name, const string& primary, const Skill
     }
 
     cursor.Hide();
-    return Skill::Secondary::UNKNOWN;
+    return Skill::SkillT::UNKNOWN;
 }
 
-int Dialog::LevelUpSelectSkill(const string& name, const string& primary, const Skill::Secondary& sec1,
+Skill::SkillT Dialog::LevelUpSelectSkill(const string& name, const string& primary, const Skill::Secondary& sec1,
                                const Skill::Secondary& sec2, Heroes& hero)
 {
-    int result = Skill::Secondary::UNKNOWN;
+    Skill::SkillT result = Skill::SkillT::UNKNOWN;
 
-    if (Skill::Secondary::UNKNOWN == sec1.Skill() && Skill::Secondary::UNKNOWN == sec2.Skill())
+    if (Skill::SkillT::UNKNOWN == sec1.Skill() && Skill::SkillT::UNKNOWN == sec2.Skill())
         DialogPrimaryOnly(name, primary);
-    else if (Skill::Secondary::UNKNOWN == sec1.Skill() || Skill::Secondary::UNKNOWN == sec2.Skill())
-        result = DialogOneSecondary(name, primary, Skill::Secondary::UNKNOWN == sec2.Skill() ? sec1 : sec2);
+    else if (Skill::SkillT::UNKNOWN == sec1.Skill() || Skill::SkillT::UNKNOWN == sec2.Skill())
+        result = DialogOneSecondary(name, primary, Skill::SkillT::UNKNOWN == sec2.Skill() ? sec1 : sec2);
     else
         result = DialogSelectSecondary(name, primary, sec1, sec2, hero);
 

@@ -58,9 +58,9 @@ public:
 
     const Castle* inCastle() const;
 
-    int GetLevelSkill(int) const;
+    int GetLevelSkill(Skill::SkillT) const override;
 
-    uint32_t GetSecondaryValues(int) const;
+    uint32_t GetSecondaryValues(Skill::SkillT) const;
 
     const Army& GetArmy() const;
 
