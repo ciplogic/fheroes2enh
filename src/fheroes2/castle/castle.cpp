@@ -342,21 +342,20 @@ bool Castle::isPosition(const Point& pt) const
 void Castle::EducateHeroes()
 {
     // for learns new spells need 1 day
-    if (GetLevelMageGuild())
+    if (!GetLevelMageGuild())
+        return;
+    CastleHeroes heroes = world.GetHeroes(*this);
+
+    if (heroes.FullHouse())
     {
-        CastleHeroes heroes = world.GetHeroes(*this);
-
-        if (heroes.FullHouse())
-        {
-            MageGuildEducateHero(*heroes.Guest());
-            MageGuildEducateHero(*heroes.Guard());
-        }
-        else if (heroes.IsValid())
-            MageGuildEducateHero(*heroes.GuestFirst());
-
-        // captain
-        if (captain.isValid()) MageGuildEducateHero(captain);
+        MageGuildEducateHero(*heroes.Guest());
+        MageGuildEducateHero(*heroes.Guard());
     }
+    else if (heroes.IsValid())
+        MageGuildEducateHero(*heroes.GuestFirst());
+
+    // captain
+    if (captain.isValid()) MageGuildEducateHero(captain);
 }
 
 void Castle::ActionNewDay()
