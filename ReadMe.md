@@ -4,6 +4,18 @@
 
 Free Heroes 2 is an engine recreation of game Heroes 2 (of Might and Magic) with UI and coding enhancements.
 
+**Version 1.0 was launched!**
+
+
+*Download (on Windows)*
+
+![Last release](https://github.com/ciplogic/fheroes2enh/releases/tag/1.01)
+
+Releases are here:
+
+https://github.com/ciplogic/fheroes2enh/releases/
+
+
 *What do you mean by enhancements?*
 
 Features:
