@@ -178,7 +178,7 @@ string Troop::GetSpeedString() const
     return Speed::String(GetSpeed());
 }
 
-uint32_t Troop::GetHitPointsLeft()
+uint32_t Troop::GetHitPointsLeft() const
 {
     return 0;
 }
@@ -188,7 +188,7 @@ uint32_t Troop::GetSpeed() const
     return _monster.GetSpeed();
 }
 
-uint32_t Troop::GetAffectedDuration(uint32_t)
+uint32_t Troop::GetAffectedDuration(uint32_t) const
 {
     return 0;
 }

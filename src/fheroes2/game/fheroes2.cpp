@@ -201,7 +201,7 @@ int main(int argc, char **argv)
 
         try
         {
-            AGG::GetICN(ICN::ADVMCO, 0);
+            AGG::GetICN(ICN::DRAGRED, 0);
         }
         catch (...)
         {
@@ -214,7 +214,7 @@ int main(int argc, char **argv)
 
             return -1;
         }
-        extractFrames();
+        //extractFrames();
         conf.SetBlitSpeed(TestBlitSpeed());
 
         // init cursor

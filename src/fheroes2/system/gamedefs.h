@@ -21,11 +21,6 @@
  ***************************************************************************/
 #pragma once
 
-#include <memory>
-
-#define MAJOR_VERSION 1
-#define MINOR_VERSION 0
-
 #include "translations.h"
 #include <memory>
 

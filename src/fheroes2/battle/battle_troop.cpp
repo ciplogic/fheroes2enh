@@ -558,7 +558,8 @@ uint32_t Battle::Unit::GetDead() const
 
 uint32_t Battle::Unit::GetHitPointsLeft() const
 {
-    return GetHitPointsTroop() - (GetCount() - 1) * _monster.GetHitPoints();
+    const auto monsterLife = _monster.GetHitPoints();
+    return hp-monsterLife*(count-1);
 }
 
 uint32_t Battle::Unit::GetAffectedDuration(uint32_t mod) const

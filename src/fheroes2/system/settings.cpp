@@ -221,16 +221,7 @@ const settings_t settingsFHeroes2[] =
 
 string Settings::GetVersion()
 {
-    ostringstream os;
-
-    os << static_cast<int>(MAJOR_VERSION) << "." << static_cast<int>(MINOR_VERSION) << "."
-#ifdef SVN_REVISION
-            SVN_REVISION;
-#else
-        "0000";
-#endif
-
-    return os.str();
+    return "1.01";
 }
 
 /* constructor */
