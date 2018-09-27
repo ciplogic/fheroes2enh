@@ -231,9 +231,6 @@
     <ClInclude Include="..\..\src\engine\types.h">
       <Filter>Header Files\engine</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\engine\zzlib.h">
-      <Filter>Header Files\engine</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\fheroes2\agg\agg.h">
       <Filter>Header Files\fheroes2\agg</Filter>
     </ClInclude>
