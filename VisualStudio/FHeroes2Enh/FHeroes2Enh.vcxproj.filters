@@ -567,14 +567,8 @@
     <ClInclude Include="..\..\src\fheroes2\system\settings.h">
       <Filter>Header Files\fheroes2\system</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\fheroes2\test\test.h">
-      <Filter>Header Files\fheroes2\test</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\tools\palette_h2.h">
       <Filter>Header Files\tools</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\xmlccwrap\gzstream.h">
-      <Filter>Header Files\xmlccwrap</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\xmlccwrap\tinystr.h">
       <Filter>Header Files\xmlccwrap</Filter>

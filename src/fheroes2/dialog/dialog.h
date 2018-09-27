@@ -107,8 +107,9 @@ namespace Dialog
 
     void ExtSettings(bool);
 
-    Skill::SkillT LevelUpSelectSkill(const std::string&, const std::string&, const Skill::Secondary&, const Skill::Secondary&,
-                           Heroes&);
+    Skill::SkillT LevelUpSelectSkill(const std::string&, const std::string&, const Skill::Secondary&,
+                                     const Skill::Secondary&,
+                                     Heroes&);
 
     bool SelectGoldOrExp(const std::string&, const std::string&, uint32_t gold, uint32_t expr, const Heroes&);
 

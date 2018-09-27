@@ -130,8 +130,7 @@ namespace Maps
     ByteVectorReader& operator>>(ByteVectorReader&, FileInfo&);
 
 
-	typedef std::vector<FileInfo> MapsFileInfoList;
+    typedef std::vector<FileInfo> MapsFileInfoList;
 
-	bool PrepareMapsFileInfoList(MapsFileInfoList&, bool multi);
+    bool PrepareMapsFileInfoList(MapsFileInfoList&, bool multi);
 }
-

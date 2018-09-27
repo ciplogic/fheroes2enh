@@ -118,5 +118,4 @@ namespace Battle
 
         static bool isValidMirrorImageIndex(s32, const Unit*);
     };
-
 }

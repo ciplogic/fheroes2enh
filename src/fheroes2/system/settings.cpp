@@ -212,10 +212,7 @@ const settings_t settingsFHeroes2[] =
     {Settings::GAME_DYNAMIC_INTERFACE, _("game: also use dynamic interface for castles"),},
     {Settings::GAME_HIDE_INTERFACE, _("game: hide interface"),},
     {Settings::GAME_CONTINUE_AFTER_VICTORY, _("game: offer to continue the game afer victory condition"),},
-    {Settings::POCKETPC_HIDE_CURSOR, _("pocketpc: hide cursor"),},
-    {Settings::POCKETPC_TAP_MODE, _("pocketpc: tap mode"),},
-    {Settings::POCKETPC_DRAG_DROP_SCROLL, _("pocketpc: drag&drop gamearea as scroll"),},
-    {Settings::POCKETPC_LOW_MEMORY, _("pocketpc: low memory"),},
+
 
 };
 
@@ -1462,11 +1459,6 @@ bool Settings::ExtGameAutosaveConfirm() const
     return ExtModes(GAME_ALSO_CONFIRM_AUTOSAVE);
 }
 
-bool Settings::ExtPocketHideCursor() const
-{
-    return ExtModes(POCKETPC_HIDE_CURSOR);
-}
-
 bool Settings::ExtGameShowSystemInfo() const
 {
     return ExtModes(GAME_SHOW_SYSTEM_INFO);
@@ -1505,21 +1497,6 @@ bool Settings::ExtGameDynamicInterface() const
 bool Settings::ExtGameHideInterface() const
 {
     return ExtModes(GAME_HIDE_INTERFACE);
-}
-
-bool Settings::ExtPocketLowMemory() const
-{
-    return ExtModes(POCKETPC_LOW_MEMORY);
-}
-
-bool Settings::ExtPocketTapMode() const
-{
-    return ExtModes(POCKETPC_TAP_MODE);
-}
-
-bool Settings::ExtPocketDragDropScroll() const
-{
-    return ExtModes(POCKETPC_DRAG_DROP_SCROLL);
 }
 
 bool Settings::ExtCastleAllowRecruitSpecialHeroes() const

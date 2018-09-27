@@ -91,9 +91,9 @@ struct AIHero
     uint32_t fix_loop = 0;
 };
 
-struct AIHeroes 
+struct AIHeroes
 {
-	vector<AIHero> _items;
+    vector<AIHero> _items;
     static AIHero& Get(const Heroes&);
 
     static void Reset();

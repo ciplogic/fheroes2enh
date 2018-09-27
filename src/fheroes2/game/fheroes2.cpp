@@ -100,6 +100,7 @@ std::vector<std::string> extractArgsVector(int argc, char** argv);
 int SDL_main(int argc, char **argv)
 {
 #elif WIN32
+
 struct HINSTANCE__
 {
     int unused;
@@ -109,6 +110,8 @@ int __stdcall wWinMain(HINSTANCE__* hInstance, HINSTANCE__* hPrevInstance, wchar
 {
     int argc = 0;
     char** argv = nullptr;
+
+
 #else
 
 int main(int argc, char **argv)

@@ -21,7 +21,6 @@
  ***************************************************************************/
 
 #include <cmath>
-#include <cstring>
 #include "settings.h"
 #include "heroes.h"
 #include "race.h"

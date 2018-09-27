@@ -55,6 +55,7 @@ namespace Skill
 
         std::string String(int level);
     }
+
     enum class SkillT
     {
         UNKNOWN = 0,
@@ -79,7 +80,7 @@ namespace Skill
     class Secondary : public pair<SkillT, int>
     {
     public:
-        
+
         Secondary();
 
         Secondary(SkillT skill, int level);

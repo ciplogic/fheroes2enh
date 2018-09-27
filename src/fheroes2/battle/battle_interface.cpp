@@ -843,8 +843,6 @@ Battle::Interface::Interface(Arena& a, s32 center) : arena(a), icn_cbkg(ICN::UNK
         light = true;
         icn_frng = ICN::FRNG0001;
     }
-    if (conf.ExtPocketLowMemory()) icn_frng = ICN::UNKNOWN;
-
     // hexagon
     sf_hexagon = DrawHexagon(light ? RGBA(0x78, 0x94, 0) : RGBA(0x38, 0x48, 0));
     sf_cursor = DrawHexagon(RGBA(0xb0, 0x0c, 0));
@@ -874,8 +872,7 @@ Battle::Interface::Interface(Arena& a, s32 center) : arena(a), icn_cbkg(ICN::UNK
 
     status.SetPosition(area.x + btn_settings.w, btn_auto.y);
 
-    if (!conf.ExtPocketLowMemory())
-        listlog = std::make_unique<StatusListBox>();
+    listlog = std::make_unique<StatusListBox>();
 
     if (listlog)
         listlog->SetPosition(area.x, area.y + area.h - 36);
@@ -943,8 +940,7 @@ void Battle::Interface::RedrawInterface()
     if (conf.ExtBattleSoftWait()) btn_wait.Draw();
     btn_skip.Draw();
 
-    if (!conf.ExtPocketLowMemory())
-        popup.Redraw(rectBoard.x + rectBoard.w + 60, rectBoard.y + rectBoard.h);
+    popup.Redraw(rectBoard.x + rectBoard.w + 60, rectBoard.y + rectBoard.h);
 
     if (listlog && listlog->isOpenLog())
         listlog->Redraw();
@@ -2231,7 +2227,7 @@ void Battle::Interface::MousePressRightBoardAction(uint32_t themes, const Cell& 
     const Settings& conf = Settings::Get();
     const int allow = GetAllowSwordDirection(index);
 
-    if (arena.GetCurrentColor() == b->GetColor() || !conf.ExtPocketTapMode() || !allow)
+    if (arena.GetCurrentColor() == b->GetColor() || !allow)
     {
         ArmyInfo(*b, Dialog::READONLY);
         return;
@@ -2260,8 +2256,7 @@ void Battle::Interface::MouseLeftClickBoardAction(uint32_t themes, const Cell& c
     const s32 index = cell.GetIndex();
     const Unit* b = cell.GetUnit();
 
-    if (Settings::Get().ExtPocketTapMode() &&
-        !b_current->isArchers()) // archers always attack
+    if (!b_current->isArchers()) // archers always attack
     {
         // fast tap; attack
         if (Board::isNearIndexes(index_pos, b_current->GetHeadIndex()))

@@ -241,10 +241,9 @@ public:
 
     static float GetUpgradeRatio();
 
-	int id = 0;
+    int id = 0;
 protected:
-	static Monster FromDwelling(int race, uint32_t dw);
-
+    static Monster FromDwelling(int race, uint32_t dw);
 };
 
 struct MonsterStaticData

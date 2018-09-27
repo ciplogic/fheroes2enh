@@ -401,7 +401,7 @@ bool AGG::CheckMemoryLimit()
     Settings& conf = Settings::Get();
 
     // memory limit trigger
-    if (conf.ExtPocketLowMemory() && 0 < conf.MemoryLimit() && memlimit_usage)
+    if ( 0 < conf.MemoryLimit() && memlimit_usage)
     {
         uint32_t usage = System::GetMemoryUsage();
 

@@ -71,10 +71,10 @@ namespace Color
     int FromInt(int);
 }
 
-class Colors 
+class Colors
 {
 public:
-	vector<int> _items;
+    vector<int> _items;
     Colors(int = Color::ALL);
 
     string String() const;
@@ -94,6 +94,7 @@ public:
     ColorBase(int col = Color::NONE) : color(col)
     {
     }
+
     explicit ColorBase(const ColorBase&) = default;
     virtual ~ColorBase() = default;
 

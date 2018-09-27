@@ -244,7 +244,7 @@ void Cursor::SetOffset(int name)
 void Cursor::Show()
 {
     SetAlphaMod(210);
-    if (!Settings::Get().ExtPocketHideCursor()) SpriteMove::Show();
+    SpriteMove::Show();
 }
 
 int Cursor::DistanceThemes(int theme, uint32_t dist)

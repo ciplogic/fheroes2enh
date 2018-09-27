@@ -323,9 +323,7 @@
     <ClInclude Include="..\..\src\fheroes2\system\gamedefs.h" />
     <ClInclude Include="..\..\src\fheroes2\system\players.h" />
     <ClInclude Include="..\..\src\fheroes2\system\settings.h" />
-    <ClInclude Include="..\..\src\fheroes2\test\test.h" />
     <ClInclude Include="..\..\src\tools\palette_h2.h" />
-    <ClInclude Include="..\..\src\xmlccwrap\gzstream.h" />
     <ClInclude Include="..\..\src\xmlccwrap\tinystr.h" />
     <ClInclude Include="..\..\src\xmlccwrap\tinyxml.h" />
     <ClInclude Include="..\..\src\xmlccwrap\xmlccwrap.h" />

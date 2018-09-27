@@ -115,11 +115,6 @@ public:
         GAME_BATTLE_SHOW_MOVE_SHADOW = 0x10080000,
         GAME_BATTLE_SHOW_DAMAGE = 0x10100000,
         GAME_CONTINUE_AFTER_VICTORY = 0x10200000,
-        POCKETPC_HIDE_CURSOR = 0x10400000,
-        POCKETPC_LOW_MEMORY = 0x10800000,
-        POCKETPC_TAP_MODE = 0x11000000,
-        POCKETPC_DRAG_DROP_SCROLL = 0x12000000,
-        POCKETPC_LOW_RESOLUTION = 0x14000000,
         GAME_QUICKCOMBAT_ON = 0x18000000,
 
         /* influence on game balance: save to savefile */
@@ -427,14 +422,6 @@ public:
     bool ExtGameDynamicInterface() const;
 
     bool ExtGameHideInterface() const;
-
-    bool ExtPocketHideCursor() const;
-
-    bool ExtPocketLowMemory() const;
-
-    bool ExtPocketTapMode() const;
-
-    bool ExtPocketDragDropScroll() const;
 
     const Size& VideoMode() const;
 

@@ -1002,21 +1002,20 @@ Surface Surface::RenderSepia() const
     for (int y = 0; y < height; y++)
         for (int x = 0; x < width; x++)
         {
-            uint32_t pixel = GetPixel4(x, y);
-            if (colkey == 0 || pixel != colkey)
-            {
-                RGBA col = GetRGB(pixel);
-                //Numbers derived from http://blogs.techrepublic.com.com/howdoi/?p=120
-                const uint32_t outR = CLAMP255(
-                    static_cast<uint32_t>(col.r() * 0.693f + col.g() * 0.769f + col.b() * 0.189f));
-                const uint32_t outG = CLAMP255(
-                    static_cast<uint32_t>(col.r() * 0.449f + col.g() * 0.686f + col.b() * 0.168f));
-                const uint32_t outB = CLAMP255(
-                    static_cast<uint32_t>(col.r() * 0.272f + col.g() * 0.534f + col.b() * 0.131f));
+            const uint32_t pixel = GetPixel4(x, y);
+            if (colkey != 0 && pixel == colkey)
+                continue;
+            RGBA col = GetRGB(pixel);
+            //Numbers derived from http://blogs.techrepublic.com.com/howdoi/?p=120
+            const uint32_t outR = CLAMP255(
+                static_cast<uint32_t>(col.r() * 0.693f + col.g() * 0.769f + col.b() * 0.189f));
+            const uint32_t outG = CLAMP255(
+                static_cast<uint32_t>(col.r() * 0.449f + col.g() * 0.686f + col.b() * 0.168f));
+            const uint32_t outB = CLAMP255(
+                static_cast<uint32_t>(col.r() * 0.272f + col.g() * 0.534f + col.b() * 0.131f));
 
-                const uint32_t outPixel = RGBA::packRgba(outR, outG, outB, col.a());
-                res.SetPixel4(x, y, outPixel);
-            }
+            const uint32_t outPixel = RGBA::packRgba(outR, outG, outB, col.a());
+            res.SetPixel4(x, y, outPixel);
         }
     res.Unlock();
     return res;
@@ -1077,14 +1076,16 @@ void Surface::FillRect(const Rect& rect, const RGBA& col) const
     SDL_FillRect(surface, &dstrect, MapRGB(col));
 }
 
-// swaps two numbers
-void swap(int* a, int* b)
+namespace
 {
-    int temp = *a;
-    *a = *b;
-    *b = temp;
+    // swaps two numbers
+    void swap(int& a, int& b)
+    {
+        int temp = a;
+        a = b;
+        b = temp;
+    }
 }
-
 // returns absolute value of number
 float absolute(float x)
 {
@@ -1157,13 +1158,13 @@ void Surface::drawAALine(int x0, int y0, int x1, int y1, const RGBA& col) const
     // draw backwards
     if (steep)
     {
-        swap(&x0, &y0);
-        swap(&x1, &y1);
+        swap(x0, y0);
+        swap(x1, y1);
     }
     if (x0 > x1)
     {
-        swap(&x0, &x1);
-        swap(&y0, &y1);
+        swap(x0, x1);
+        swap(y0, y1);
     }
 
     //compute the slope

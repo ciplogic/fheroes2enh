@@ -24,8 +24,8 @@
 #include "translations.h"
 #include <memory>
 
-std::string _(const std::string & s);
-std::string _n(const std::string &str, const std::string &plural, size_t n);
+std::string _(const std::string& s);
+std::string _n(const std::string& str, const std::string& plural, size_t n);
 
 // hardcore defines: kingdom
 #define KINGDOMMAX            6

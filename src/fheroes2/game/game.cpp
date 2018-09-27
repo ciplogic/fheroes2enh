@@ -150,7 +150,7 @@ void Game::Init()
     le.SetGlobalFilterKeysEvents(KeyboardGlobalFilter);
     le.SetGlobalFilter(true);
 
-    le.SetTapMode(conf.ExtPocketTapMode());
+    le.SetTapMode(false);
 
     AnimateDelaysInitialize();
 

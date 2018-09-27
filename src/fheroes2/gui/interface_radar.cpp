@@ -391,7 +391,7 @@ void Interface::Radar::QueueEventProcessing()
         }
         return;
     }
-    if (!conf.ExtPocketTapMode() && le.MousePressRight(GetRect()))
+    if (le.MousePressRight(GetRect()))
     {
         Dialog::Message(_("World Map"), _("A miniature view of the known world. Left click to move viewing area."),
                         Font::BIG);

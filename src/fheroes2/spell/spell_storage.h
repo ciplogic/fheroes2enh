@@ -29,10 +29,10 @@ class Artifact;
 
 class BagArtifacts;
 
-class SpellStorage 
+class SpellStorage
 {
 public:
-	vector<Spell> _items;
+    vector<Spell> _items;
     SpellStorage();
 
     uint32_t Size(int lvl = 0) const;

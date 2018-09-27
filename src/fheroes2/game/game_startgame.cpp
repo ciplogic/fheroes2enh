@@ -851,38 +851,18 @@ int Interface::Basic::HumanTurn(bool isload)
                                                                                                 EventOpenFocus();
         }
 
-        if (conf.ExtPocketTapMode())
-        {
-            // scroll area maps left
-            if (le.MouseCursor(GetScrollLeft()) && le.MousePressLeft()) gameArea.SetScroll(SCROLL_LEFT);
-            else
-                // scroll area maps right
-                if (le.MouseCursor(GetScrollRight()) && le.MousePressLeft()) gameArea.SetScroll(SCROLL_RIGHT);
-                else
-                    // scroll area maps top
-                    if (le.MouseCursor(GetScrollTop()) && le.MousePressLeft()) gameArea.SetScroll(SCROLL_TOP);
-                    else
-                        // scroll area maps bottom
-                        if (le.MouseCursor(GetScrollBottom()) && le.MousePressLeft()) gameArea.SetScroll(SCROLL_BOTTOM);
-
-            // disable right click emulation
-            if (gameArea.NeedScroll()) le.SetTapMode(false);
-        }
+        
+        // scroll area maps left
+        if (le.MouseCursor(GetScrollLeft())) gameArea.SetScroll(SCROLL_LEFT);
         else
-        {
-            // scroll area maps left
-            if (le.MouseCursor(GetScrollLeft())) gameArea.SetScroll(SCROLL_LEFT);
-            else
-                // scroll area maps right
-                if (le.MouseCursor(GetScrollRight())) gameArea.SetScroll(SCROLL_RIGHT);
-                else
-                    // scroll area maps top
-                    if (le.MouseCursor(GetScrollTop())) gameArea.SetScroll(SCROLL_TOP);
-                    else
-                        // scroll area maps bottom
-                        if (le.MouseCursor(GetScrollBottom())) gameArea.SetScroll(SCROLL_BOTTOM);
-        }
-
+        // scroll area maps right
+        if (le.MouseCursor(GetScrollRight())) gameArea.SetScroll(SCROLL_RIGHT);
+        else
+        // scroll area maps top
+        if (le.MouseCursor(GetScrollTop())) gameArea.SetScroll(SCROLL_TOP);
+        else
+        // scroll area maps bottom
+        if (le.MouseCursor(GetScrollBottom())) gameArea.SetScroll(SCROLL_BOTTOM);
 
         // cursor over radar
         if ((!conf.ExtGameHideInterface() || conf.ShowRadar()) &&
@@ -961,11 +941,7 @@ int Interface::Basic::HumanTurn(bool isload)
             Redraw();
             cursor.Show();
             display.Flip();
-
-            // enable right click emulation
-            if (conf.ExtPocketTapMode())
-                le.SetTapMode(true);
-
+            
             continue;
         }
 

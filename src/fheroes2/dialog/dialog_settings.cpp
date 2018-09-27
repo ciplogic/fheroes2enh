@@ -295,7 +295,7 @@ void Dialog::ExtSettings(bool readonly)
     // store
     if (result == OK)
     {
-        le.SetTapMode(conf.ExtPocketTapMode());
+        le.SetTapMode(false);
         Settings::Get().BinarySave();
     }
 }

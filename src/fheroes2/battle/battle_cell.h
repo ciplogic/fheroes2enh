@@ -54,63 +54,63 @@ namespace Battle
         AROUND = RIGHT_SIDE | LEFT_SIDE
     };
 
-	class Cell
-	{
-	public:
-		Cell();
+    class Cell
+    {
+    public:
+        Cell();
 
-		explicit Cell(s32);
+        explicit Cell(s32);
 
-		void ResetQuality();
+        void ResetQuality();
 
-		void ResetDirection();
+        void ResetDirection();
 
-		void SetObject(int);
+        void SetObject(int);
 
-		void SetDirection(int);
+        void SetDirection(int);
 
-		void SetQuality(uint32_t);
+        void SetQuality(uint32_t);
 
-		void SetArea(const Rect&);
+        void SetArea(const Rect&);
 
-		bool isPassable4(const Unit&, const Cell&) const;
+        bool isPassable4(const Unit&, const Cell&) const;
 
-		bool isPassable3(const Unit&, bool check_reflect) const;
+        bool isPassable3(const Unit&, bool check_reflect) const;
 
-		bool isPassable1(bool check_troop) const;
+        bool isPassable1(bool check_troop) const;
 
-		bool isPositionIncludePoint(const Point&) const;
+        bool isPositionIncludePoint(const Point&) const;
 
-		s32 GetIndex() const;
+        s32 GetIndex() const;
 
-		const Rect& GetPos() const;
+        const Rect& GetPos() const;
 
-		int GetObject() const;
+        int GetObject() const;
 
-		int GetDirection() const;
+        int GetDirection() const;
 
-		s32 GetQuality() const;
+        s32 GetQuality() const;
 
-		direction_t GetTriangleDirection(const Point&) const;
+        direction_t GetTriangleDirection(const Point&) const;
 
-		const Unit* GetUnit() const;
+        const Unit* GetUnit() const;
 
-		Unit* GetUnit();
+        Unit* GetUnit();
 
-		void SetUnit(Unit*);
+        void SetUnit(Unit*);
 
-	private:
-		friend ByteVectorWriter& operator<<(ByteVectorWriter&, const Cell&);
+    private:
+        friend ByteVectorWriter& operator<<(ByteVectorWriter&, const Cell&);
 
-		friend ByteVectorReader& operator>>(ByteVectorReader&, Cell&);
+        friend ByteVectorReader& operator>>(ByteVectorReader&, Cell&);
 
-		s32 index;
-		Rect pos;
-		int object;
-		int direction;
-		s32 quality;
-		Unit* troop;
-		std::array<Point, 7> coord{};
+        s32 index;
+        Rect pos;
+        int object;
+        int direction;
+        s32 quality;
+        Unit* troop;
+        std::array<Point, 7> coord{};
     };
 
     ByteVectorWriter& operator<<(ByteVectorWriter&, const Cell&);
@@ -124,7 +124,7 @@ namespace Battle
         }
 
         Position& operator=(const Position& pos);
-        
+
 
         void Set(s32 head, bool wide, bool reflect);
 

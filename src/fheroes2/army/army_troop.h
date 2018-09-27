@@ -29,7 +29,7 @@
 
 class Army;
 
-class Troop 
+class Troop
 {
 public:
 
@@ -132,7 +132,7 @@ public:
     string GetAttackString() const;
 
     string GetDefenseString() const;
-	int GetID() const { return _monster.GetID(); } 
+    int GetID() const { return _monster.GetID(); }
 
 protected:
     const Army* army;

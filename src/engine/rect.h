@@ -29,7 +29,7 @@ struct Point
 {
     s16 x = 0, y = 0;
 
-	Point() = default;
+    Point() = default;
 
     Point(int, int);
 

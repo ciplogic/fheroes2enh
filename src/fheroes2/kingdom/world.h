@@ -49,9 +49,9 @@ class Radar;
 class MapObjectSimple;
 
 
-struct ListActions 
+struct ListActions
 {
-	vector<up<ActionSimple>> _items;
+    vector<up<ActionSimple>> _items;
 };
 
 struct MapObjects : public unordered_map<uint32_t, MapObjectSimple *>
@@ -79,7 +79,7 @@ struct CapturedObject
     Troop guardians;
     int split = 1;
 
-	CapturedObject() = default;
+    CapturedObject() = default;
 
     int GetSplit() const
     {

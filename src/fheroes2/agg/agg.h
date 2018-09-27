@@ -30,31 +30,31 @@
 
 namespace AGG
 {
-	class ICNSprite : public std::pair<Surface, Surface> /* first: image with out alpha, second: shadow with alpha */
-	{
-	public:
-		ICNSprite() = default;
+    class ICNSprite : public std::pair<Surface, Surface> /* first: image with out alpha, second: shadow with alpha */
+    {
+    public:
+        ICNSprite() = default;
 
-		ICNSprite(const Surface& sf1, const Surface& sf2) : std::pair<Surface, Surface>(sf1, sf2)
-		{
-		}
+        ICNSprite(const Surface& sf1, const Surface& sf2) : std::pair<Surface, Surface>(sf1, sf2)
+        {
+        }
 
-		bool isValid() const;
+        bool isValid() const;
 
-		sp<Sprite> CreateSprite(bool reflect, bool shadow) const;
+        sp<Sprite> CreateSprite(bool reflect, bool shadow) const;
 
-		Surface First() const
-		{
-			return first;
-		}
+        Surface First() const
+        {
+            return first;
+        }
 
-		Surface Second() const
-		{
-			return second;
-		}
+        Surface Second() const
+        {
+            return second;
+        }
 
-		Point offset{};
-	};
+        Point offset{};
+    };
 
     bool Init();
 
