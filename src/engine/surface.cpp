@@ -30,12 +30,10 @@
 #include "error.h"
 #include "system.h"
 
-#ifdef WITH_IMAGE
 
 #include "SDL_image.h"
 #include "IMG_savepng.h"
 
-#endif
 
 namespace
 {
@@ -182,7 +180,7 @@ SDL_Color RGBA::packSdlColor() const
     resColor.r = r();
     resColor.g = g();
     resColor.b = b();
-    resColor.unused = a();
+    resColor.a = a();
     return resColor;
 }
 
@@ -239,23 +237,37 @@ Surface::Surface(const void* pixels, uint32_t width, uint32_t height, uint32_t b
                  bool amask)
     : surface(nullptr)
 {
-    const SurfaceFormat fm = GetRGBAMask(8 * bytes_per_pixel);
+    SurfaceFormat fm = GetRGBAMask(8 * bytes_per_pixel);
 
     if (8 == fm.depth)
     {
-        surface = SDL_CreateRGBSurface(SDL_HWSURFACE, width, height, fm.depth, fm.rmask, fm.gmask, fm.bmask,
-                                       amask ? fm.amask : 0);
-        SetPalette();
-        Lock();
-        memcpy(surface->pixels, pixels, width * height);
-        Unlock();
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+        surface = SDL_CreateRGBSurface(0, width, height, fm.depth, fm.rmask, fm.gmask, fm.bmask, (amask ? fm.amask : 0));
+#else
+        surface = SDL_CreateRGBSurface(SDL_SWSURFACE, width, height, fm.depth, fm.rmask, fm.gmask, fm.bmask, (amask ? fm.amask : 0));
+#endif
     }
     else
     {
         surface = SDL_CreateRGBSurfaceFrom(const_cast<void *>(pixels), width, height, fm.depth, width * bytes_per_pixel,
-                                           fm.rmask, fm.gmask, fm.bmask, amask ? fm.amask : 0);
+            fm.rmask, fm.gmask, fm.bmask, amask ? fm.amask : 0);
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+        SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_NONE);
+#endif
+    }
+
+    if (!surface)
+        Error::Except(__FUNCTION__, SDL_GetError());
+
+    if (8 == fm.depth)
+    {
+        SetPalette();
+        Lock();
+        std::memcpy(surface->pixels, pixels, width * height);
+        Unlock();
     }
 }
+
 
 Surface::~Surface()
 {
@@ -322,7 +334,11 @@ void Surface::Set(uint32_t sw, uint32_t sh, const SurfaceFormat& fm)
 {
     FreeSurface(*this);
 
-    surface = SDL_CreateRGBSurface(SDL_HWSURFACE, sw, sh, fm.depth, fm.rmask, fm.gmask, fm.bmask, fm.amask);
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+    surface = SDL_CreateRGBSurface(0, sw, sh, fm.depth, fm.rmask, fm.gmask, fm.bmask, fm.amask);
+#else
+    surface = SDL_CreateRGBSurface(SDL_SWSURFACE, sw, sh, fm.depth, fm.rmask, fm.gmask, fm.bmask, fm.amask);
+#endif
 
     if (!surface)
         Error::Except(__FUNCTION__, SDL_GetError());
@@ -333,24 +349,38 @@ void Surface::Set(uint32_t sw, uint32_t sh, const SurfaceFormat& fm)
         Fill(fm.ckey);
         SetColorKey(fm.ckey);
     }
-    else if (amask())
-    {
-        Fill(RGBA(fm.ckey.r(), fm.ckey.g(), fm.ckey.b(), 0));
-        SetColorKey(fm.ckey);
-    }
-    else if (fm.ckey.pack())
-    {
-        Fill(fm.ckey);
-        SetColorKey(fm.ckey);
-    }
+    else
+        if (amask())
+        {
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+            Fill(RGBA(0, 0, 0, 0)); // no color key only amask
+#else
+            Fill(RGBA(fm.ckey.r(), fm.ckey.g(), fm.ckey.b(), 0));
+            SetColorKey(fm.ckey);
+#endif
+        }
+        else
+            if (fm.ckey.pack())
+            {
+                Fill(fm.ckey);
+                SetColorKey(fm.ckey);
+            }
 
     if (amask())
     {
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+        SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_BLEND);
+#else
         SDL_SetAlpha(surface, SDL_SRCALPHA, 255);
+#endif
     }
     else
     {
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+        SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_NONE);
+#else
         SDL_SetAlpha(surface, 0, 0);
+#endif
     }
 }
 
@@ -413,6 +443,8 @@ bool Surface::Load(const std::string& fn)
 
 bool Surface::Save(const std::string& fn) const
 {
+    return false;
+    /*
     const int res = IMG_SavePNG(fn.c_str(), surface, -1);
 
     if (0 != res)
@@ -421,7 +453,7 @@ bool Surface::Save(const std::string& fn) const
         return false;
     }
 
-    return true;
+    return true;*/
 }
 
 int Surface::w() const
@@ -446,7 +478,17 @@ uint32_t Surface::amask() const
 
 uint32_t Surface::alpha() const
 {
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+    if (isValid())
+    {
+        u8 alpha = 0;
+        SDL_GetSurfaceAlphaMod(surface, &alpha);
+        return alpha;
+    }
+    return 0;
+#else
     return isValid() ? surface->format->alpha : 0;
+#endif
 }
 
 SurfaceFormat Surface::GetFormat() const
@@ -507,12 +549,29 @@ void Surface::SetPalette() const
 
 uint32_t Surface::GetColorKey() const
 {
-    return isValid() && surface->flags & SDL_SRCCOLORKEY ? surface->format->colorkey : 0;
+
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+    if (isValid() && !amask())
+    {
+        u32 res = 0;
+        SDL_GetColorKey(surface, &res);
+        return res;
+    }
+    return 0;
+#else
+    return isValid() && (surface->flags & SDL_SRCCOLORKEY) ? surface->format->colorkey : 0;
+#endif
 }
 
 void Surface::SetColorKey(const RGBA& color) const
 {
-    SDL_SetColorKey(surface, SDL_SRCCOLORKEY, MapRGB(color));
+    
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+        SDL_SetColorKey(surface, SDL_TRUE, MapRGB(color));
+#else
+        SDL_SetColorKey(surface, SDL_SRCCOLORKEY, MapRGB(color));
+#endif
+    
 }
 
 /* draw uint32_t pixel */
@@ -679,14 +738,7 @@ void Surface::Blit(const Rect& srt, const Point& dpt, Surface& dst) const
     SDL_Rect srcrect;
     SDLRect(srt, srcrect);
 
-    if (amask() && dst.amask())
-    {
-        SDL_SetAlpha(surface, 0, 0);
-        SDL_BlitSurface(surface, &srcrect, dst.surface, &dstrect);
-        SDL_SetAlpha(surface, SDL_SRCALPHA, 255);
-    }
-    else
-        SDL_BlitSurface(surface, &srcrect, dst.surface, &dstrect);
+    SDL_BlitSurface(surface, &srcrect, dst.surface, &dstrect);
 }
 
 void Surface::Blit(Surface& dst) const
@@ -711,18 +763,8 @@ void Surface::Blit(const Point& dpt, Surface& dst) const
 
 void Surface::SetAlphaMod(int level)
 {
-    if (!isValid())
-        return;
-    if (amask())
-    {
-        Surface res(GetSize(), false);
-        SDL_SetAlpha(surface, 0, 0);
-        Blit(res);
-        SDL_SetAlpha(surface, SDL_SRCALPHA, 255);
-        Set(res, true);
-    }
-
-    SDL_SetAlpha(surface, SDL_SRCALPHA, level);
+    if (isValid())
+        SDL_SetSurfaceAlphaMod(surface, level);
 }
 
 void Surface::Lock() const
@@ -781,16 +823,20 @@ std::string Surface::Info() const
     if (isValid())
     {
         os <<
-            "flags" << "(" << surface->flags << ", " << (surface->flags & SDL_SRCALPHA ? "SRCALPHA" : "")
-            << (surface->flags & SDL_SRCCOLORKEY ? "SRCCOLORKEY" : "") << "), " <<
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+            "flags" << "(" << surface->flags << "), " <<
+#else
+            "flags" << "(" << surface->flags << ", " << (surface->flags & SDL_SRCALPHA ? "SRCALPHA" : "") << (surface->flags & SDL_SRCCOLORKEY ? "SRCCOLORKEY" : "") << "), " <<
+#endif
             "w" << "(" << surface->w << "), " <<
             "h" << "(" << surface->h << "), " <<
             "size" << "(" << GetMemoryUsage() << "), " <<
             "bpp" << "(" << depth() << "), " <<
-            "Amask" << "(" << "0x" << std::setw(8) << std::setfill('0') << std::hex << surface->format->Amask << "), "
-            <<
-            "colorkey" << "(" << "0x" << std::setw(8) << std::setfill('0') << surface->format->colorkey << "), "
-            << std::dec <<
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+#else
+            "Amask" << "(" << "0x" << std::setw(8) << std::setfill('0') << std::hex << surface->format->Amask << "), " <<
+            "colorkey" << "(" << "0x" << std::setw(8) << std::setfill('0') << surface->format->colorkey << "), " << std::dec <<
+#endif
             "alpha" << "(" << alpha() << "), ";
     }
     else
@@ -1051,15 +1097,32 @@ Surface Surface::GetSurface(const Rect& rt) const
 {
     SurfaceFormat fm = GetFormat();
 
+    if (isDisplay())
+    {
+        Surface res(rt, fm);
+        Blit(rt, Point(0, 0), res);
+        return res;
+    }
+
     Surface res(rt, fm);
 
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+    if (amask())
+        SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_NONE);
+#else
     if (amask())
         SDL_SetAlpha(surface, 0, 0);
+#endif
 
     Blit(rt, Point(0, 0), res);
 
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+    if (amask())
+        SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_BLEND);
+#else
     if (amask())
         SDL_SetAlpha(surface, SDL_SRCALPHA, 255);
+#endif
 
     return res;
 }

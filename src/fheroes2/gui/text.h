@@ -28,6 +28,7 @@
 #include "display.h"
 #include "sprites.h"
 
+using namespace std;
 namespace Font
 {
     enum

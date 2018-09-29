@@ -19,56 +19,99 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#pragma once
+#ifndef H2DISPLAY_H
+#define H2DISPLAY_H
 
+#include <string>
 #include "surface.h"
-
-using namespace std;
+class Texture;
 
 class Display : public Surface
 {
 public:
-    ~Display() override;
+    ~Display();
 
-    static Display& Get();
+    static Display &    Get(void);
 
-    Size GetSize() const;
+    Size        GetSize(void) const;
 
-    string GetInfo() const;
+    std::string	GetInfo(void) const;
+    Size	GetMaxMode(bool enable_rotate) const;
 
-    Size GetMaxMode(bool rotate) const;
+    void	SetVideoMode(int w, int h, bool);
+    void	SetCaption(const char*);
+    void	SetIcons(Surface &);
 
-    void SetVideoMode(int w, int h, bool);
+    void	Flip(void);
+    void	Present(void);
+    void        Clear(void);
+    void        ToggleFullScreen(void);
+#ifdef VITA
+    void	VitaFlip(void);
+    bool        IsFullscreen(void);
+#endif
 
-    static void SetCaption(const char*);
+    void	Fade(int delay = 500);
+    void	Fade(const Surface &, const Surface &, const Point &, int level, int delay);
+    void	Rise(int delay = 500);
+    void	Rise(const Surface &, const Surface &, const Point &, int level, int delay);
 
-    static void SetIcons(Surface&);
+    static void HideCursor(void);
+    static void ShowCursor(void);
 
-    void Flip();
-
-    void Clear() const;
-
-    void ToggleFullScreen() const;
-
-    void Fade(int delay = 500);
-
-    void Fade(const Surface&, const Surface&, const Point&, int level, int delay);
-
-    void Rise(int delay = 500);
-
-    void Rise(const Surface&, const Surface&, const Point&, int level, int delay);
-
-    static void HideCursor();
-
-    static void ShowCursor();
-
-    Surface GetSurface() const override;
-
-    Surface GetSurface(const Rect& rt) const override;
+    Surface	GetSurface(void) const;
+    Surface	GetSurface(const Rect & rt) const;
 
 protected:
+    friend class Texture;
 
-    Surface displaySurface;
+    bool	isDisplay(void) const;
 
     Display();
+
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+    SDL_Window*         window;
+    SDL_Renderer*	renderer;
+#endif
 };
+
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+class TextureTarget
+{
+public:
+    TextureTarget();
+
+    void Fill(const RGBA &);
+    void FillRect(const Rect &, const RGBA &);
+};
+
+class Texture
+{
+public:
+    Texture();
+    Texture(const Surface &);
+    Texture(const Texture &);
+    ~Texture();
+
+    Texture &	operator= (const Texture &);
+    Size	GetSize(void) const;
+
+    void	Blit(Display &) const;
+    void        Blit(s32 dx, s32 dy, Display &) const;
+    void        Blit(const Point & dstpt, Display &) const;
+    void        Blit(const Rect & srcrt, s32 dx, s32 dy, Display &) const;
+    void        Blit(const Rect & srcrt, const Point & dstpt, Display &) const;
+
+protected:
+    SDL_Texture*        texture;
+    int*		counter;
+};
+#else
+class Texture : public Surface
+{
+public:
+    Texture(const Surface &);
+};
+#endif
+
+#endif

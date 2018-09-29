@@ -23,6 +23,7 @@
 #pragma once
 
 #include <string>
+#include <iostream>
 
 #define COUT(x) { std::cerr << x << std::endl; }
 

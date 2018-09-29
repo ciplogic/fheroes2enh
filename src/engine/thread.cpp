@@ -22,13 +22,10 @@
 
 #include "system.h"
 #include "thread.h"
-#include <sstream>
-#include <iostream>
-
 
 using namespace SDL;
 
-Thread::Thread() : thread(nullptr)
+Thread::Thread() : thread(NULL)
 {
 }
 
@@ -37,116 +34,125 @@ Thread::~Thread()
     Kill();
 }
 
-Thread::Thread(const Thread&) : thread(nullptr)
+Thread::Thread(const Thread &) : thread(NULL)
 {
 }
 
-Thread& Thread::operator=(const Thread&)
+Thread & Thread::operator= (const Thread &)
 {
     return *this;
 }
 
-void Thread::Create(int (*fn)(void*), void* param)
+void Thread::Create(int (*fn)(void *), void *param)
 {
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+    thread = SDL_CreateThread(fn, "", param);
+#else
     thread = SDL_CreateThread(fn, param);
+#endif
 }
 
-int Thread::Wait()
+int Thread::Wait(void)
 {
     int status = 0;
-    if (thread) SDL_WaitThread(thread, &status);
-    thread = nullptr;
+    if(thread) SDL_WaitThread(thread, &status);
+    thread = NULL;
     return status;
 }
 
-void Thread::Kill()
+void Thread::Kill(void)
 {
-    if (thread) SDL_KillThread(thread);
-    thread = nullptr;
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+#else
+    if(thread) SDL_KillThread(thread);
+    thread = NULL;
+#endif
 }
 
-bool Thread::IsRun() const
+bool Thread::IsRun(void) const
 {
     return GetID();
 }
 
-uint32_t Thread::GetID() const
+u32 Thread::GetID(void) const
 {
     return thread ? SDL_GetThreadID(thread) : 0;
 }
 
-Mutex::Mutex(bool init) : mutex(init ? SDL_CreateMutex() : nullptr)
+Mutex::Mutex(bool init) : mutex(init ? SDL_CreateMutex() : NULL)
 {
 }
 
-Mutex::Mutex(const Mutex&) : mutex(nullptr)
+Mutex::Mutex(const Mutex &) : mutex(NULL)
 {
 }
 
 Mutex::~Mutex()
 {
-    if (mutex) SDL_DestroyMutex(mutex);
+    if(mutex) SDL_DestroyMutex(mutex);
 }
 
-Mutex& Mutex::operator=(const Mutex&)
+Mutex & Mutex::operator= (const Mutex &)
 {
     return *this;
 }
 
-void Mutex::Create()
+void Mutex::Create(void)
 {
-    if (mutex) SDL_DestroyMutex(mutex);
+    if(mutex) SDL_DestroyMutex(mutex);
     mutex = SDL_CreateMutex();
 }
 
-bool Mutex::Lock() const
+bool Mutex::Lock(void) const
 {
-    return mutex != nullptr && 0 == SDL_mutexP(mutex);
+    return mutex ? 0 == SDL_mutexP(mutex) : false;
 }
 
-bool Mutex::Unlock() const
+bool Mutex::Unlock(void) const
 {
-    return mutex != nullptr && 0 == SDL_mutexV(mutex);
+    return mutex ? 0 == SDL_mutexV(mutex) : false;
 }
 
-Timer::Timer() : id(nullptr)
+Timer::Timer() : id(0)
 {
 }
 
-void Timer::Run(uint32_t interval, uint32_t (*fn)(uint32_t, void*), void* param)
+void Timer::Run(u32 interval, u32 (*fn)(u32, void *), void *param)
 {
-    if (id) Remove();
+    if(id) Remove();
 
     id = SDL_AddTimer(interval, fn, param);
 }
 
-void Timer::Remove()
+void Timer::Remove(void)
 {
-    if (id)
+    if(id)
     {
-        SDL_RemoveTimer(id);
-        id = nullptr;
+	SDL_RemoveTimer(id);
+	id = 0;
     }
 }
 
-bool Timer::IsValid() const
+bool Timer::IsValid(void) const
 {
     return id;
 }
 
-Time::Time() = default;
+Time::Time()
+{
+}
 
-void Time::Start()
+void Time::Start(void)
 {
     tick2 = tick1 = SDL_GetTicks();
 }
 
-void Time::Stop()
+void Time::Stop(void)
 {
     tick2 = SDL_GetTicks();
 }
 
-uint32_t Time::Get() const
+u32 Time::Get(void) const
 {
     return tick2 > tick1 ? tick2 - tick1 : 0;
 }

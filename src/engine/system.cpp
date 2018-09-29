@@ -202,7 +202,7 @@ int System::SetEnvironment(const char* name, const char* value)
 #if defined(WIN32)
     std::string str(std::string(name) + "=" + std::string(value));
     // SDL 1.2.12 (char *)
-    return SDL_putenv(const_cast<char *>(str.c_str()));
+    return SetEnvironmentVariableA(name, value);
 #else
     return setenv(name, value, 1);
 #endif
@@ -478,11 +478,5 @@ int System::ShellCommand(const char* cmd)
 
 int System::GetRenderFlags()
 {
-#if defined(__MINGW32CE__) || defined(__SYMBIAN32__)
-    return SDL_SWSURFACE;
-#endif
-#if defined(__WIN32__) || defined(ANDROID)
-    return SDL_HWSURFACE;
-#endif
-    return SDL_SWSURFACE;
+    return SDL_RENDERER_ACCELERATED;
 }

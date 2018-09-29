@@ -20,8 +20,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-
-#pragma once
+#ifndef H2LOCALEVENT_H
+#define H2LOCALEVENT_H
 
 #include "rect.h"
 #include "thread.h"
@@ -29,120 +29,133 @@
 
 enum KeySym
 {
-    KEY_NONE = -1,
+    KEY_NONE		= -1,
 
-    KEY_UNKNOWN = SDLK_UNKNOWN,
+    KEY_UNKNOWN		= SDLK_UNKNOWN,
 
-    KEY_BACKSPACE = SDLK_BACKSPACE,
-    KEY_RETURN = SDLK_RETURN,
-    KEY_ESCAPE = SDLK_ESCAPE,
-    KEY_SPACE = SDLK_SPACE,
-    KEY_EXCLAIM = SDLK_EXCLAIM,
-    KEY_QUOTEDBL = SDLK_QUOTEDBL,
-    KEY_HASH = SDLK_HASH,
-    KEY_DOLLAR = SDLK_DOLLAR,
-    KEY_AMPERSAND = SDLK_AMPERSAND,
-    KEY_QUOTE = SDLK_QUOTE,
-    KEY_LEFTPAREN = SDLK_LEFTPAREN,
-    KEY_RIGHTPAREN = SDLK_RIGHTPAREN,
-    KEY_ASTERISK = SDLK_ASTERISK,
-    KEY_PLUS = SDLK_PLUS,
-    KEY_COMMA = SDLK_COMMA,
-    KEY_MINUS = SDLK_MINUS,
-    KEY_PERIOD = SDLK_PERIOD,
-    KEY_SLASH = SDLK_SLASH,
-    KEY_COLON = SDLK_COLON,
-    KEY_SEMICOLON = SDLK_SEMICOLON,
-    KEY_LESS = SDLK_LESS,
-    KEY_EQUALS = SDLK_EQUALS,
-    KEY_GREATER = SDLK_GREATER,
-    KEY_QUESTION = SDLK_QUESTION,
-    KEY_AT = SDLK_AT,
-    KEY_LEFTBRACKET = SDLK_LEFTBRACKET,
-    KEY_BACKSLASH = SDLK_BACKSLASH,
-    KEY_RIGHTBRACKET = SDLK_RIGHTBRACKET,
-    KEY_CARET = SDLK_CARET,
-    KEY_UNDERSCORE = SDLK_UNDERSCORE,
-    KEY_ALT = SDLK_LALT,
-    KEY_CONTROL = SDLK_LCTRL,
-    KEY_SHIFT = SDLK_LSHIFT,
-    KEY_TAB = SDLK_TAB,
-    KEY_DELETE = SDLK_DELETE,
-    KEY_PAGEUP = SDLK_PAGEUP,
-    KEY_PAGEDOWN = SDLK_PAGEDOWN,
-    KEY_F1 = SDLK_F1,
-    KEY_F2 = SDLK_F2,
-    KEY_F3 = SDLK_F3,
-    KEY_F4 = SDLK_F4,
-    KEY_F5 = SDLK_F5,
-    KEY_F6 = SDLK_F6,
-    KEY_F7 = SDLK_F7,
-    KEY_F8 = SDLK_F8,
-    KEY_F9 = SDLK_F9,
-    KEY_F10 = SDLK_F10,
-    KEY_F11 = SDLK_F11,
-    KEY_F12 = SDLK_F12,
-    KEY_LEFT = SDLK_LEFT,
-    KEY_RIGHT = SDLK_RIGHT,
-    KEY_UP = SDLK_UP,
-    KEY_DOWN = SDLK_DOWN,
-    KEY_0 = SDLK_0,
-    KEY_1 = SDLK_1,
-    KEY_2 = SDLK_2,
-    KEY_3 = SDLK_3,
-    KEY_4 = SDLK_4,
-    KEY_5 = SDLK_5,
-    KEY_6 = SDLK_6,
-    KEY_7 = SDLK_7,
-    KEY_8 = SDLK_8,
-    KEY_9 = SDLK_9,
-    KEY_a = SDLK_a,
-    KEY_b = SDLK_b,
-    KEY_c = SDLK_c,
-    KEY_d = SDLK_d,
-    KEY_e = SDLK_e,
-    KEY_f = SDLK_f,
-    KEY_g = SDLK_g,
-    KEY_h = SDLK_h,
-    KEY_i = SDLK_i,
-    KEY_j = SDLK_j,
-    KEY_k = SDLK_k,
-    KEY_l = SDLK_l,
-    KEY_m = SDLK_m,
-    KEY_n = SDLK_n,
-    KEY_o = SDLK_o,
-    KEY_p = SDLK_p,
-    KEY_q = SDLK_q,
-    KEY_r = SDLK_r,
-    KEY_s = SDLK_s,
-    KEY_t = SDLK_t,
-    KEY_u = SDLK_u,
-    KEY_v = SDLK_v,
-    KEY_w = SDLK_w,
-    KEY_x = SDLK_x,
-    KEY_y = SDLK_y,
-    KEY_z = SDLK_z,
+    KEY_BACKSPACE	= SDLK_BACKSPACE,
+    KEY_RETURN		= SDLK_RETURN,
+    KEY_ESCAPE		= SDLK_ESCAPE,
+    KEY_SPACE		= SDLK_SPACE,
+    KEY_EXCLAIM		= SDLK_EXCLAIM,
+    KEY_QUOTEDBL	= SDLK_QUOTEDBL,
+    KEY_HASH		= SDLK_HASH,
+    KEY_DOLLAR		= SDLK_DOLLAR,
+    KEY_AMPERSAND	= SDLK_AMPERSAND,
+    KEY_QUOTE		= SDLK_QUOTE,
+    KEY_LEFTPAREN	= SDLK_LEFTPAREN,
+    KEY_RIGHTPAREN	= SDLK_RIGHTPAREN,
+    KEY_ASTERISK	= SDLK_ASTERISK,
+    KEY_PLUS		= SDLK_PLUS,
+    KEY_COMMA		= SDLK_COMMA,
+    KEY_MINUS		= SDLK_MINUS,
+    KEY_PERIOD		= SDLK_PERIOD,
+    KEY_SLASH		= SDLK_SLASH,
+    KEY_COLON		= SDLK_COLON,
+    KEY_SEMICOLON	= SDLK_SEMICOLON,
+    KEY_LESS		= SDLK_LESS,
+    KEY_EQUALS		= SDLK_EQUALS,
+    KEY_GREATER		= SDLK_GREATER,
+    KEY_QUESTION	= SDLK_QUESTION,
+    KEY_AT		= SDLK_AT,
+    KEY_LEFTBRACKET	= SDLK_LEFTBRACKET,
+    KEY_BACKSLASH	= SDLK_BACKSLASH,
+    KEY_RIGHTBRACKET	= SDLK_RIGHTBRACKET,
+    KEY_CARET		= SDLK_CARET,
+    KEY_UNDERSCORE	= SDLK_UNDERSCORE,
+    KEY_ALT		= SDLK_LALT,
+    KEY_CONTROL		= SDLK_LCTRL,
+    KEY_SHIFT		= SDLK_LSHIFT,
+    KEY_TAB		= SDLK_TAB,
+    KEY_DELETE		= SDLK_DELETE,
+    KEY_PAGEUP		= SDLK_PAGEUP,
+    KEY_PAGEDOWN	= SDLK_PAGEDOWN,
+    KEY_F1		= SDLK_F1,
+    KEY_F2		= SDLK_F2,
+    KEY_F3		= SDLK_F3,
+    KEY_F4		= SDLK_F4,
+    KEY_F5		= SDLK_F5,
+    KEY_F6		= SDLK_F6,
+    KEY_F7		= SDLK_F7,
+    KEY_F8		= SDLK_F8,
+    KEY_F9		= SDLK_F9,
+    KEY_F10		= SDLK_F10,
+    KEY_F11		= SDLK_F11,
+    KEY_F12		= SDLK_F12,
+    KEY_LEFT		= SDLK_LEFT,
+    KEY_RIGHT		= SDLK_RIGHT,
+    KEY_UP		= SDLK_UP,
+    KEY_DOWN		= SDLK_DOWN,
+    KEY_0		= SDLK_0,
+    KEY_1		= SDLK_1,
+    KEY_2		= SDLK_2,
+    KEY_3		= SDLK_3,
+    KEY_4		= SDLK_4,
+    KEY_5		= SDLK_5,
+    KEY_6		= SDLK_6,
+    KEY_7		= SDLK_7,
+    KEY_8		= SDLK_8,
+    KEY_9		= SDLK_9,
+    KEY_a		= SDLK_a,
+    KEY_b		= SDLK_b,
+    KEY_c		= SDLK_c,
+    KEY_d		= SDLK_d,
+    KEY_e		= SDLK_e,
+    KEY_f		= SDLK_f,
+    KEY_g		= SDLK_g,
+    KEY_h		= SDLK_h,
+    KEY_i		= SDLK_i,
+    KEY_j		= SDLK_j,
+    KEY_k		= SDLK_k,
+    KEY_l		= SDLK_l,
+    KEY_m		= SDLK_m,
+    KEY_n		= SDLK_n,
+    KEY_o		= SDLK_o,
+    KEY_p		= SDLK_p,
+    KEY_q		= SDLK_q,
+    KEY_r		= SDLK_r,
+    KEY_s		= SDLK_s,
+    KEY_t		= SDLK_t,
+    KEY_u		= SDLK_u,
+    KEY_v		= SDLK_v,
+    KEY_w		= SDLK_w,
+    KEY_x		= SDLK_x,
+    KEY_y		= SDLK_y,
+    KEY_z		= SDLK_z,
 
-    KEY_PRINT = SDLK_PRINT,
-    KEY_KP0 = SDLK_KP0,
-    KEY_KP1 = SDLK_KP1,
-    KEY_KP2 = SDLK_KP2,
-    KEY_KP3 = SDLK_KP3,
-    KEY_KP4 = SDLK_KP4,
-    KEY_KP5 = SDLK_KP5,
-    KEY_KP6 = SDLK_KP6,
-    KEY_KP7 = SDLK_KP7,
-    KEY_KP8 = SDLK_KP8,
-    KEY_KP9 = SDLK_KP9,
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+    KEY_PRINT		= SDLK_PRINTSCREEN,
+    KEY_KP0             = SDLK_KP_0,
+    KEY_KP1             = SDLK_KP_1,
+    KEY_KP2             = SDLK_KP_2,
+    KEY_KP3             = SDLK_KP_3,
+    KEY_KP4             = SDLK_KP_4,
+    KEY_KP5             = SDLK_KP_5,
+    KEY_KP6             = SDLK_KP_6,
+    KEY_KP7             = SDLK_KP_7,
+    KEY_KP8             = SDLK_KP_8,
+    KEY_KP9             = SDLK_KP_9,
+#else
+    KEY_PRINT		= SDLK_PRINT,
+    KEY_KP0		= SDLK_KP0,
+    KEY_KP1		= SDLK_KP1,
+    KEY_KP2		= SDLK_KP2,
+    KEY_KP3		= SDLK_KP3,
+    KEY_KP4		= SDLK_KP4,
+    KEY_KP5		= SDLK_KP5,
+    KEY_KP6		= SDLK_KP6,
+    KEY_KP7		= SDLK_KP7,
+    KEY_KP8		= SDLK_KP8,
+    KEY_KP9		= SDLK_KP9,
+#endif
 
-
-    KEY_KP_PERIOD = SDLK_KP_PERIOD,
-    KEY_KP_DIVIDE = SDLK_KP_DIVIDE,
-    KEY_KP_MULTIPLY = SDLK_KP_MULTIPLY,
-    KEY_KP_MINUS = SDLK_KP_MINUS,
-    KEY_KP_PLUS = SDLK_KP_PLUS,
-    KEY_KP_ENTER = SDLK_KP_ENTER,
-    KEY_KP_EQUALS = SDLK_KP_EQUALS,
+    KEY_KP_PERIOD	= SDLK_KP_PERIOD,
+    KEY_KP_DIVIDE	= SDLK_KP_DIVIDE,
+    KEY_KP_MULTIPLY	= SDLK_KP_MULTIPLY,
+    KEY_KP_MINUS	= SDLK_KP_MINUS,
+    KEY_KP_PLUS		= SDLK_KP_PLUS,
+    KEY_KP_ENTER	= SDLK_KP_ENTER,
+    KEY_KP_EQUALS	= SDLK_KP_EQUALS,
 
 #ifdef _WIN32_WCE
     KEY_APP01		= 0xC1,
@@ -166,124 +179,84 @@ enum KeySym
 };
 
 const char* KeySymGetName(KeySym);
-
 KeySym GetKeySym(int);
 
 class LocalEvent
 {
 public:
-    static LocalEvent& Get();
+    static LocalEvent & Get(void);
 
     void SetGlobalFilterMouseEvents(void (*pf)(s32, s32));
-
     void SetGlobalFilterKeysEvents(void (*pf)(int, int));
-
     void SetGlobalFilter(bool);
-
     void SetTapMode(bool);
-
-    void SetTapDelayForRightClickEmulation(uint32_t);
-
+    void SetTapDelayForRightClickEmulation(u32);
     void SetMouseOffsetX(s16);
-
     void SetMouseOffsetY(s16);
 
-    static void SetStateDefaults();
-
-    static void SetState(uint32_t type, bool enable);
-
-    static int GetState(uint32_t type);
+    static void SetStateDefaults(void);
+    static void SetState(u32 type, bool enable);
+    static int  GetState(u32 type);
 
     bool HandleEvents(bool delay = true);
 
-    bool MouseMotion() const;
+    bool MouseMotion(void) const;
+    bool MouseMotion(const Rect &rt) const;
 
-    bool MouseMotion(const Rect& rt) const;
+    const Point & GetMouseCursor(void);
+    const Point & GetMousePressLeft(void) const;
+    const Point & GetMousePressMiddle(void) const;
+    const Point & GetMousePressRight(void) const;
+    const Point & GetMouseReleaseLeft(void) const;
+    const Point & GetMouseReleaseMiddle(void) const;
+    const Point & GetMouseReleaseRight(void) const;
 
-    const Point& GetMouseCursor();
+    void ResetPressLeft(void);
+    void ResetPressRight(void);
+    void ResetPressMiddle(void);
 
-    const Point& GetMousePressLeft() const;
+    void ResetReleaseLeft(void);
+    void ResetReleaseRight(void);
+    void ResetReleaseMiddle(void);
+    
+    bool MouseClickLeft(void);
+    bool MouseClickMiddle(void);
+    bool MouseClickRight(void);
 
-    const Point& GetMousePressMiddle() const;
+    bool MouseClickLeft(const Rect &rt);
+    bool MouseClickMiddle(const Rect &rt);
+    bool MouseClickRight(const Rect &rt);
 
-    const Point& GetMousePressRight() const;
+    bool MouseWheelUp(void) const;
+    bool MouseWheelDn(void) const;
 
-    const Point& GetMouseReleaseLeft() const;
+    bool MousePressLeft(void) const;
+    bool MousePressLeft(const Rect &rt) const;
+    bool MousePressLeft(const Point &pt, u32 w, u32 h) const;
+    bool MousePressMiddle(void) const;
+    bool MousePressMiddle(const Rect &rt) const;
+    bool MousePressRight(void) const;
+    bool MousePressRight(const Rect &rt) const;
 
-    const Point& GetMouseReleaseMiddle() const;
+    bool MouseReleaseLeft(void) const;
+    bool MouseReleaseLeft(const Rect &rt) const;
+    bool MouseReleaseMiddle(void) const;
+    bool MouseReleaseMiddle(const Rect &rt) const;
+    bool MouseReleaseRight(void) const;
+    bool MouseReleaseRight(const Rect &rt) const;
 
-    const Point& GetMouseReleaseRight() const;
+    bool MouseWheelUp(const Rect &rt) const;
+    bool MouseWheelDn(const Rect &rt) const;
 
-    void ResetPressLeft();
+    bool MouseCursor(const Rect &rt) const;
 
-    void ResetPressRight();
-
-    void ResetPressMiddle();
-
-    void ResetReleaseLeft();
-
-    void ResetReleaseRight();
-
-    void ResetReleaseMiddle();
-
-    bool MouseClickLeft();
-
-    bool MouseClickMiddle();
-
-    bool MouseClickRight();
-
-    bool MouseClickLeft(const Rect& rt);
-
-    bool MouseClickMiddle(const Rect& rt);
-
-    bool MouseClickRight(const Rect& rt);
-
-    bool MouseWheelUp() const;
-
-    bool MouseWheelDn() const;
-
-    bool MousePressLeft() const;
-
-    bool MousePressLeft(const Rect& rt) const;
-
-    bool MousePressLeft(const Point& pt, uint32_t w, uint32_t h) const;
-
-    bool MousePressMiddle() const;
-
-    bool MousePressMiddle(const Rect& rt) const;
-
-    bool MousePressRight() const;
-
-    bool MousePressRight(const Rect& rt) const;
-
-    bool MouseReleaseLeft() const;
-
-    bool MouseReleaseLeft(const Rect& rt) const;
-
-    bool MouseReleaseMiddle() const;
-
-    bool MouseReleaseMiddle(const Rect& rt) const;
-
-    bool MouseReleaseRight() const;
-
-    bool MouseReleaseRight(const Rect& rt) const;
-
-    bool MouseWheelUp(const Rect& rt) const;
-
-    bool MouseWheelDn(const Rect& rt) const;
-
-    bool MouseCursor(const Rect& rt) const;
-
-    bool KeyPress() const;
-
+    bool KeyPress(void) const;
     bool KeyPress(KeySym key) const;
-
-    KeySym KeyValue() const;
-
-    static int KeyMod();
+    KeySym KeyValue(void) const;
+    int	   KeyMod(void) const;
 
 #ifdef WITHOUT_MOUSE
-    void ToggleEmulateMouse();
+    void ToggleEmulateMouse(void);
     void SetEmulateMouse(bool);
     void SetEmulateMouseUpKey(KeySym);
     void SetEmulateMouseDownKey(KeySym);
@@ -294,61 +267,72 @@ public:
     void SetEmulatePressRightKey(KeySym);
     bool EmulateMouseAction(KeySym);
 #endif
+    
+#ifdef VITA
+    void                 SetVitaPointerSpeed(int newSpeed) { vita_pointer_speed = newSpeed; }
+    void                 SetVitaTouchControlType(int newType) { vita_touchcontrol_type = newType; }
+    void                 SetVitaTouchControlSpeed(int newSpeed) { vita_touchcontrol_speed = newSpeed; }
+#endif
 
 private:
     LocalEvent();
 
-    void HandleMouseMotionEvent(const SDL_MouseMotionEvent&);
+    void HandleMouseMotionEvent(const SDL_MouseMotionEvent &);
+    void HandleMouseButtonEvent(const SDL_MouseButtonEvent &);
+    void HandleKeyboardEvent(SDL_KeyboardEvent &);
+#ifdef VITA
+    void HandleJoyAxisEvent(const SDL_JoyAxisEvent & motion);
+    void HandleJoyButtonEvent(const SDL_JoyButtonEvent & button);
+    void HandleTouchEvent(const SDL_TouchFingerEvent & event);
+    void ProcessAxisMotion(void);
+#endif
 
-    void HandleMouseButtonEvent(const SDL_MouseButtonEvent&);
-
-    void HandleKeyboardEvent(SDL_KeyboardEvent&);
-
+#if SDL_VERSION_ATLEAST(2, 0, 0)
+    static int GlobalFilterEvents(void*, SDL_Event*);
+#else
     static int GlobalFilterEvents(const SDL_Event*);
-    static void ExtractCleanSdlEvents(std::vector<SDL_Event>& eventListCleared);
+#endif
 
     enum flag_t
     {
-        KEY_PRESSED = 0x0001,
-        MOUSE_MOTION = 0x0002,
-        MOUSE_PRESSED = 0x0004,
-        GLOBAL_FILTER = 0x0008,
-        CLICK_LEFT = 0x0010,
-        CLICK_RIGHT = 0x0020,
-        CLICK_MIDDLE = 0x0040,
-        TAP_MODE = 0x0080,
-        MOUSE_OFFSET = 0x0100,
-        CLOCK_ON = 0x0200
+	KEY_PRESSED	= 0x0001,
+	MOUSE_MOTION	= 0x0002,
+	MOUSE_PRESSED	= 0x0004,
+	GLOBAL_FILTER	= 0x0008,
+	CLICK_LEFT	= 0x0010,
+	CLICK_RIGHT	= 0x0020,
+	CLICK_MIDDLE	= 0x0040,
+	TAP_MODE	= 0x0080,
+	MOUSE_OFFSET	= 0x0100,
+	CLOCK_ON	= 0x0200
     };
 
     void SetModes(flag_t);
-
     void ResetModes(flag_t);
 
-    int modes;
+    int    modes;
     KeySym key_value;
-    int mouse_state;
-    int mouse_button;
+    int    mouse_state;
+    int    mouse_button;
 
-    Point mouse_st; // mouse offset for pocketpc
+    Point mouse_st;	// mouse offset for pocketpc
 
-    Point mouse_pl; // press left
-    Point mouse_pm; // press middle
-    Point mouse_pr; // press right
+    Point mouse_pl;	// press left
+    Point mouse_pm;	// press middle
+    Point mouse_pr;	// press right
 
-    Point mouse_rl; // release left
-    Point mouse_rm; // release middle
-    Point mouse_rr; // release right
+    Point mouse_rl;	// release left
+    Point mouse_rm;	// release middle
+    Point mouse_rr;	// release right
 
-    Point mouse_cu; // point cursor
+    Point mouse_cu;	// point cursor
 
     void (*redraw_cursor_func)(s32, s32);
-
     void (*keyboard_filter_func)(int, int);
 
     SDL::Time clock;
-    uint32_t clock_delay;
-    int loop_delay;
+    u32  clock_delay;
+    int  loop_delay;
 
 #ifdef WITHOUT_MOUSE
     bool   emulate_mouse;
@@ -360,4 +344,12 @@ private:
     KeySym emulate_press_left;
     KeySym emulate_press_right;
 #endif
+    
+#ifdef VITA
+    int         vita_pointer_speed = 10;
+    int         vita_touchcontrol_type = 1;
+    int         vita_touchcontrol_speed = 15;
+#endif
 };
+
+#endif

@@ -190,7 +190,7 @@ int main(int argc, char **argv)
         Display& display = Display::Get();
         display.SetVideoMode(conf.VideoMode().w, conf.VideoMode().h, conf.FullScreen());
         Display::HideCursor();
-        Display::SetCaption(GetCaption().c_str());
+        Display::Get().SetCaption(GetCaption().c_str());
 
         //Ensure the mouse position is updated to prevent bad initial values.
         LocalEvent::Get().GetMouseCursor();

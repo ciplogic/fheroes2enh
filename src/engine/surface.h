@@ -24,10 +24,10 @@
 #include <string>
 #include "rect.h"
 #include "types.h"
+#include "SDL.h"
 
 struct Point;
 struct Rect;
-struct SDL_Surface;
 
 class RGBA
 {
@@ -106,6 +106,8 @@ public:
     Surface& operator=(const Surface&);
 
     bool operator==(const Surface&) const;
+
+    virtual bool isDisplay() const { return false; }
 
     SDL_Surface* operator()() const
     {

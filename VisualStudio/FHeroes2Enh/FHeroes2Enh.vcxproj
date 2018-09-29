@@ -89,8 +89,8 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>false</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;BUILD_RELEASE;WITH_AI=simple;WITH_IMAGE;WITH_MIXER;WITH_NET;NETWORK_ENABLE;WITH_TTF;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\src\tools\;..\..\src\engine\serializer;..\..\libs\libpng\include;..\..\libs\zlib\include\;..\..\src\engine\;..\..\src\fheroes2\agg;..\..\libs\SDL\include\SDL;..\..\src\fheroes2\ai\simple\;..\..\src\fheroes2\ai\;..\..\src\fheroes2\army;..\..\src\fheroes2\battle;..\..\src\fheroes2\castle;..\..\src\fheroes2\dialog;..\..\src\fheroes2\game;..\..\src\fheroes2\gui;..\..\src\fheroes2\heroes;..\..\src\fheroes2\image;..\..\src\fheroes2\kingdom;..\..\src\fheroes2\maps;..\..\src\fheroes2\monster;..\..\src\fheroes2\objects;..\..\src\fheroes2\resource;..\..\src\fheroes2\spell;..\..\src\fheroes2\system;..\..\src\fheroes2\pocketpc\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;BUILD_RELEASE;WITH_AI=simple;WITH_IMAGE;WITH_MIXER;WITH_TTF;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src\tools\;..\..\src\engine\serializer;..\..\libs\libpng\include;..\..\libs\zlib\include\;..\..\src\engine\;..\..\src\fheroes2\agg;..\..\libs\SDL2\include\;..\..\src\fheroes2\ai\simple\;..\..\src\fheroes2\ai\;..\..\src\fheroes2\army;..\..\src\fheroes2\battle;..\..\src\fheroes2\castle;..\..\src\fheroes2\dialog;..\..\src\fheroes2\game;..\..\src\fheroes2\gui;..\..\src\fheroes2\heroes;..\..\src\fheroes2\image;..\..\src\fheroes2\kingdom;..\..\src\fheroes2\maps;..\..\src\fheroes2\monster;..\..\src\fheroes2\objects;..\..\src\fheroes2\resource;..\..\src\fheroes2\spell;..\..\src\fheroes2\system;..\..\src\fheroes2\pocketpc\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -104,8 +104,8 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Cs-Oss\fheroes2enh\libs\SDL\lib;C:\Cs-Oss\fheroes2enh\libs\libpng\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL.lib;libpng.lib;SDL_mixer.lib;SDL_image.lib;SDL_net.lib;SDL_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>d:\cs-oss\fheroes2enh\libs\sdl2\lib\win32\;d:\cs-oss\fheroes2enh\libs\sdl2\lib\x86\;d:\cs-oss\fheroes2enh\libs\libpng\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2_mixer.lib;SDL2_image.lib;SDL2_ttf.lib;libpng.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>..\..\..\..\$(TargetName)$(TargetExt)</OutputFile>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
@@ -131,8 +131,8 @@
       <FunctionLevelLinking>false</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>false</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);BUILD_RELEASE;WITH_AI=simple;WITH_IMAGE;WITH_MIXER;WITH_NET;WITH_TTF;NETWORK_ENABLE;_ITERATOR_DEBUG_LEVEL=0</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\src\tools\;..\..\src\engine\serializer;..\..\libs\libpng\include;..\..\libs\zlib\include\;..\..\src\engine\;..\..\src\fheroes2\agg;..\..\libs\SDL\include\SDL;..\..\src\fheroes2\ai\simple\;..\..\src\fheroes2\ai\;..\..\src\fheroes2\army;..\..\src\fheroes2\battle;..\..\src\fheroes2\castle;..\..\src\fheroes2\dialog;..\..\src\fheroes2\game;..\..\src\fheroes2\gui;..\..\src\fheroes2\heroes;..\..\src\fheroes2\image;..\..\src\fheroes2\kingdom;..\..\src\fheroes2\maps;..\..\src\fheroes2\monster;..\..\src\fheroes2\objects;..\..\src\fheroes2\resource;..\..\src\fheroes2\spell;..\..\src\fheroes2\system;..\..\src\fheroes2\pocketpc\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);BUILD_RELEASE;WITH_AI=simple;WITH_IMAGE;WITH_MIXER;WITH_TTF;NETWORK_ENABLE;_ITERATOR_DEBUG_LEVEL=0</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src\tools\;..\..\src\engine\serializer;..\..\libs\libpng\include;..\..\libs\zlib\include\;..\..\src\engine\;..\..\src\fheroes2\agg;..\..\libs\SDL2\include\;..\..\src\fheroes2\ai\simple\;..\..\src\fheroes2\ai\;..\..\src\fheroes2\army;..\..\src\fheroes2\battle;..\..\src\fheroes2\castle;..\..\src\fheroes2\dialog;..\..\src\fheroes2\game;..\..\src\fheroes2\gui;..\..\src\fheroes2\heroes;..\..\src\fheroes2\image;..\..\src\fheroes2\kingdom;..\..\src\fheroes2\maps;..\..\src\fheroes2\monster;..\..\src\fheroes2\objects;..\..\src\fheroes2\resource;..\..\src\fheroes2\spell;..\..\src\fheroes2\system;..\..\src\fheroes2\pocketpc\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WholeProgramOptimization>true</WholeProgramOptimization>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
@@ -156,8 +156,8 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalDependencies>SDL.lib;libpng.lib;SDL_mixer.lib;SDL_image.lib;SDL_net.lib;SDL_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Cs-Oss\fheroes2enh\libs\SDL\lib;C:\Cs-Oss\fheroes2enh\libs\libpng\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2_mixer.lib;SDL2_image.lib;SDL2_ttf.lib;libpng.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>d:\cs-oss\fheroes2enh\libs\sdl2\lib\win32\;d:\cs-oss\fheroes2enh\libs\sdl2\lib\x86\;d:\cs-oss\fheroes2enh\libs\libpng\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>...\..\..\..\$(TargetName)$(TargetExt)</OutputFile>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -195,7 +195,6 @@
     <ClInclude Include="..\..\src\engine\rand.h" />
     <ClInclude Include="..\..\src\engine\rect.h" />
     <ClInclude Include="..\..\src\engine\sdlnet.h" />
-    <ClInclude Include="..\..\src\engine\serialize.h" />
     <ClInclude Include="..\..\src\engine\serializer\BinaryFileReader.h" />
     <ClInclude Include="..\..\src\engine\serializer\ByteVectorReader.h" />
     <ClInclude Include="..\..\src\engine\serializer\ByteVectorWriter.h" />

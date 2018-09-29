@@ -204,9 +204,6 @@
     <ClInclude Include="..\..\src\engine\sdlnet.h">
       <Filter>Header Files\engine</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\engine\serialize.h">
-      <Filter>Header Files\engine</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\engine\sprites.h">
       <Filter>Header Files\engine</Filter>
     </ClInclude>

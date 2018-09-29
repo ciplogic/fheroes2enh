@@ -20,96 +20,86 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#pragma once
+#ifndef SDLTHREAD_H
+#define SDLTHREAD_H
 
-#ifndef WIN32
-
+#if(!WIN32)
 #include <sys/time.h>
-
-#endif // !WINDOWS
-
+#endif
 #include "SDL_thread.h"
 #include "types.h"
 
 namespace SDL
 {
-    class Thread
-    {
-    public:
-        Thread();
 
-        ~Thread();
+class Thread
+{
+public:
+    Thread();
+    ~Thread();
+    Thread(const Thread &);
 
-        Thread(const Thread&);
+    Thread & operator= (const Thread &);
 
-        Thread& operator=(const Thread&);
+    void	Create(int (*)(void *), void *param = NULL);
+    int		Wait(void);
+    void	Kill(void);
 
-        void Create(int (*)(void*), void* param = nullptr);
+    bool	IsRun(void) const;
 
-        int Wait();
+    u32		GetID(void) const;
 
-        void Kill();
+private:
+    SDL_Thread *thread;
+};
 
-        bool IsRun() const;
+class Mutex
+{
+public:
+    Mutex(bool init = false);
+    Mutex(const Mutex &);
+    ~Mutex();
 
-        uint32_t GetID() const;
+    Mutex & operator= (const Mutex &);
 
-    private:
-        SDL_Thread* thread;
-    };
+    void Create(void);
+    bool Lock(void) const;
+    bool Unlock(void) const;
 
-    class Mutex
-    {
-    public:
-        explicit Mutex(bool init = false);
+private:
 
-        Mutex(const Mutex&);
+    SDL_mutex *mutex;
+};
 
-        ~Mutex();
+class Timer
+{
+public:
+    Timer();
 
-        Mutex& operator=(const Mutex&);
+    bool IsValid(void) const;
 
-        void Create();
+    void Run(u32, u32 (*)(u32, void *), void *param = NULL);
+    void Remove(void);
 
-        bool Lock() const;
+private:
+    SDL_TimerID id;
+};
 
-        bool Unlock() const;
+class Time
+{
+public:
+    Time();
 
-    private:
+    void Start(void);
+    void Stop(void);
+    u32 Get(void) const;
+    void Print(const char* header = NULL) const;
 
-        SDL_mutex* mutex;
-    };
+private:
+    u32 tick1;
+    u32 tick2;
+};
 
-    class Timer
-    {
-    public:
-        Timer();
-
-        bool IsValid() const;
-
-        void Run(uint32_t, uint32_t (*)(uint32_t, void*), void* param = nullptr);
-
-        void Remove();
-
-    private:
-        SDL_TimerID id;
-    };
-
-    class Time
-    {
-    public:
-        Time();
-
-        void Start();
-
-        void Stop();
-
-        uint32_t Get() const;
-
-        void Print(const char* header = nullptr) const;
-
-    private:
-        uint32_t tick1{};
-        uint32_t tick2{};
-    };
 }
+
+#endif

@@ -126,3 +126,8 @@ struct Rects : std::vector<Rect>
 
     Rect GetRect() const;
 };
+
+
+SDL_Rect SDLRect(s32, s32, u32, u32);
+SDL_Rect SDLRect(const Rect &);
+
