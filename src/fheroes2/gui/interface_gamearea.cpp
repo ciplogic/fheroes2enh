@@ -29,7 +29,7 @@
 #include <chrono>
 
 #define SCROLL_MIN    8
-#define SCROLL_MAX    TILEWIDTH
+#define SCROLL_MAX    8
 
 namespace Game
 {
@@ -73,8 +73,8 @@ void Interface::GameCamera::SetScreenAreaPosition(s32 x, s32 y, uint32_t w, uint
 
 Point Interface::GameCamera::GetTileCoordinate(const Point& tileCoordinate) const
 {
-    int worldX = tileCoordinate.x * TILEWIDTH;
-    int worldY = tileCoordinate.y * TILEWIDTH;
+    const int worldX = tileCoordinate.x * TILEWIDTH;
+    const int worldY = tileCoordinate.y * TILEWIDTH;
     Point result(worldX - _mapTopLeftPoint.x, worldY - _mapTopLeftPoint.y);
     return result;
 }
@@ -579,7 +579,6 @@ void Interface::GameArea::SetUpdateCursor()
 void Interface::GameArea::QueueEventProcessing()
 {
     const Settings& conf = Settings::Get();
-    Display& display = Display::Get();
     Cursor& cursor = Cursor::Get();
     LocalEvent& le = LocalEvent::Get();
     const Point& mp = le.GetMouseCursor();

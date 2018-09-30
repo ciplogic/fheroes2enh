@@ -316,16 +316,17 @@ void RedrawScenarioStaticInfo(const Rect& rt)
 
     const Sprite& panel = AGG::GetICN(ICN::NGHSBKG, 0);
     panel.Blit(rt);
+    int leftAlignPos = 24;
     Text text(_("Scenario:"), Font::BIG);
-    text.Blit(rt.x + (rt.w - text.w()) / 2, rt.y + 20);
+    text.Blit(rt.x + leftAlignPos, rt.y + 20);
     text.Set(conf.MapsName());
-    text.Blit(rt.x + (rt.w - text.w()) / 2, rt.y + 46);
+    text.Blit(rt.x + 40, rt.y + 46);
     text.Set(_("Game Difficulty:"));
-    text.Blit(rt.x + (rt.w - text.w()) / 2, rt.y + 75);
+    text.Blit(rt.x + leftAlignPos, rt.y + 75);
     text.Set(_("Opponents:"), Font::BIG);
-    text.Blit(rt.x + (rt.w - text.w()) / 2, rt.y + 181);
+    text.Blit(rt.x + leftAlignPos, rt.y + 181);
     text.Set(_("Class:"), Font::BIG);
-    text.Blit(rt.x + (rt.w - text.w()) / 2, rt.y + 262);
+    text.Blit(rt.x + leftAlignPos, rt.y + 262);
 }
 
 void RedrawDifficultyInfo(const Point& dst, bool label)

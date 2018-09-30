@@ -35,6 +35,7 @@
 #include "game.h"
 #include "icn.h"
 #include "settings.h"
+#include "plus_sign_addon.h"
 
 string GetMinesIncomeString(int type)
 {
@@ -296,80 +297,9 @@ string ShowGroundInfo(const Maps::Tiles& tile, bool show, const Heroes* hero)
     return str;
 }
 
-void Dialog::QuickInfo(const Maps::Tiles& tile)
+std::string getObjectName(const Maps::Tiles& tile, const Settings& settings)
 {
-    // check
-    switch (tile.GetObject())
-    {
-    case MP2::OBJN_MINES:
-    case MP2::OBJN_ABANDONEDMINE:
-    case MP2::OBJN_SAWMILL:
-    case MP2::OBJN_ALCHEMYLAB:
-        {
-            const Maps::Tiles& left = world.GetTiles(tile.GetIndex() - 1);
-            const Maps::Tiles& right = world.GetTiles(tile.GetIndex() + 1);
-            const Maps::Tiles* center = nullptr;
-
-            if (MP2::isGroundObject(left.GetObject())) center = &left;
-            else if (MP2::isGroundObject(right.GetObject())) center = &right;
-
-            if (center)
-            {
-                QuickInfo(*center);
-                return;
-            }
-        }
-        break;
-
-    default:
-        break;
-    }
-
-    const Settings& settings = Settings::Get();
-    Display& display = Display::Get();
-    Cursor& cursor = Cursor::Get();
-    cursor.Hide();
-
-    // preload
-    const int qwikinfo = ICN::QWIKINFO;
-
-    // image box
-    auto boxInfo = AGG::GetICN(qwikinfo, 0);
-    Sprite& box = boxInfo;
-    const Interface::GameArea& gamearea = Interface::Basic::Get().GetGameArea();
-    const Rect ar(BORDERWIDTH, BORDERWIDTH, gamearea.GetArea().w, gamearea.GetArea().h);
-
-    LocalEvent& le = LocalEvent::Get();
-    const Point& mp = le.GetMouseCursor();
-
-    Rect pos;
-    s32 mx = (mp.x - BORDERWIDTH) / TILEWIDTH;
-    mx *= TILEWIDTH;
-    s32 my = (mp.y - BORDERWIDTH) / TILEWIDTH;
-    my *= TILEWIDTH;
-
-    // top left
-    if (mx <= ar.x + ar.w / 2 && my <= ar.y + ar.h / 2)
-        pos = Rect(mx + TILEWIDTH, my + TILEWIDTH, box.w(), box.h());
-    else
-        // top right
-        if (mx > ar.x + ar.w / 2 && my <= ar.y + ar.h / 2)
-            pos = Rect(mx - box.w(), my + TILEWIDTH, box.w(), box.h());
-        else
-            // bottom left
-            if (mx <= ar.x + ar.w / 2 && my > ar.y + ar.h / 2)
-                pos = Rect(mx + TILEWIDTH, my - box.h(), box.w(), box.h());
-            else
-                // bottom right
-                pos = Rect(mx - box.w(), my - box.h(), box.w(), box.h());
-
-    SpriteBack back(pos);
-
-    box.SetAlphaMod(210);
-    box.Blit(pos.x, pos.y);
-
     string name_object;
-
     const Heroes* from_hero = Interface::GetFocusHeroes();
     const Kingdom& kingdom = world.GetKingdom(settings.CurrentColor());
     int scoute = from_hero ? from_hero->CanScouteTile(tile.GetIndex()) : 0;
@@ -517,6 +447,83 @@ void Dialog::QuickInfo(const Maps::Tiles& tile)
                 name_object = MP2::StringObject(tile.GetObject());
                 break;
             }
+            return name_object;
+}
+
+void Dialog::QuickInfo(const Maps::Tiles& tile)
+{
+    // check
+    switch (tile.GetObject())
+    {
+    case MP2::OBJN_MINES:
+    case MP2::OBJN_ABANDONEDMINE:
+    case MP2::OBJN_SAWMILL:
+    case MP2::OBJN_ALCHEMYLAB:
+        {
+            const Maps::Tiles& left = world.GetTiles(tile.GetIndex() - 1);
+            const Maps::Tiles& right = world.GetTiles(tile.GetIndex() + 1);
+            const Maps::Tiles* center = nullptr;
+
+            if (MP2::isGroundObject(left.GetObject())) center = &left;
+            else if (MP2::isGroundObject(right.GetObject())) center = &right;
+
+            if (center)
+            {
+                QuickInfo(*center);
+                return;
+            }
+        }
+        break;
+
+    default:
+        break;
+    }
+
+    const Settings& settings = Settings::Get();
+    Display& display = Display::Get();
+    Cursor& cursor = Cursor::Get();
+    cursor.Hide();
+
+    // preload
+    const int qwikinfo = ICN::QWIKINFO;
+
+    // image box
+    auto boxInfo = AGG::GetICN(qwikinfo, 0);
+    Sprite& box = PlusSignAddon::DefaultBackground(1);
+    //Sprite& box = boxInfo;
+    const Interface::GameArea& gamearea = Interface::Basic::Get().GetGameArea();
+    const Rect ar(BORDERWIDTH, BORDERWIDTH, gamearea.GetArea().w, gamearea.GetArea().h);
+
+    LocalEvent& le = LocalEvent::Get();
+    const Point& mp = le.GetMouseCursor();
+
+    Rect pos;
+    s32 mx = (mp.x - BORDERWIDTH) / TILEWIDTH;
+    mx *= TILEWIDTH;
+    s32 my = (mp.y - BORDERWIDTH) / TILEWIDTH;
+    my *= TILEWIDTH;
+
+    // top left
+    if (mx <= ar.x + ar.w / 2 && my <= ar.y + ar.h / 2)
+        pos = Rect(mx + TILEWIDTH, my + TILEWIDTH, box.w(), box.h());
+    else
+        // top right
+        if (mx > ar.x + ar.w / 2 && my <= ar.y + ar.h / 2)
+            pos = Rect(mx - box.w(), my + TILEWIDTH, box.w(), box.h());
+        else
+            // bottom left
+            if (mx <= ar.x + ar.w / 2 && my > ar.y + ar.h / 2)
+                pos = Rect(mx + TILEWIDTH, my - box.h(), box.w(), box.h());
+            else
+                // bottom right
+                pos = Rect(mx - box.w(), my - box.h(), box.w(), box.h());
+
+    SpriteBack back(pos);
+
+    box.SetAlphaMod(210);
+    box.Blit(pos.x, pos.y);
+
+    auto name_object = getObjectName(tile, settings);
 
     TextBox text(name_object, Font::SMALL, 118);
     text.Blit(pos.x + BORDERWIDTH + (pos.w - BORDERWIDTH - text.w()) / 2, pos.y + (pos.h - BORDERWIDTH - text.h()) / 2);
@@ -545,7 +552,8 @@ void Dialog::QuickInfo(const Castle& castle)
 
     // image box
     auto boxInfo = AGG::GetICN(qwiktown, 0);
-    Sprite& box = boxInfo;
+    Sprite& box = PlusSignAddon::DefaultBackground(2);
+    //Sprite& box = boxInfo;
     const Interface::GameArea& gamearea = Interface::Basic::Get().GetGameArea();
     const Rect ar(BORDERWIDTH, BORDERWIDTH, gamearea.GetArea().w, gamearea.GetArea().h);
 
@@ -736,7 +744,9 @@ void Dialog::QuickInfo(const Heroes& hero)
 
     // image box
     auto boxInfo = AGG::GetICN(qwikhero, 0);
-    Sprite& box = boxInfo;
+
+    Sprite& box = PlusSignAddon::DefaultBackground(0);
+    //Sprite& box = boxInfo;
     const Interface::GameArea& gamearea = Interface::Basic::Get().GetGameArea();
     const Rect ar(BORDERWIDTH, BORDERWIDTH, gamearea.GetArea().w, gamearea.GetArea().h);
 

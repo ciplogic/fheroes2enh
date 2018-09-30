@@ -102,7 +102,7 @@ Skill::SkillT DialogSelectSecondary(const string& name, const string& primary, c
     StringReplace(message, "%{skill2}", sec2.GetName());
 
     TextBox box1(header, Font::BIG, BOXAREA_WIDTH);
-    TextBox box2(message, Font::BIG, BOXAREA_WIDTH);
+    TextBox box2(message, Font::BIG, BOXAREA_WIDTH, ALIGN_CENTER);
     const int spacer = 10;
 
     Dialog::FrameBox box(box1.h() + spacer + box2.h() + 10 + sprite_frame.h(), true);
@@ -183,17 +183,11 @@ Skill::SkillT DialogSelectSecondary(const string& name, const string& primary, c
 
         if (le.MouseClickLeft(rect_image1))
         {
-            cursor.Hide();
-            Dialog::SecondarySkillInfo(sec1);
-            cursor.Show();
-            display.Flip();
+            return sec1.Skill();
         }
-        else if (le.MouseClickLeft(rect_image2))
+        if (le.MouseClickLeft(rect_image2))
         {
-            cursor.Hide();
-            Dialog::SecondarySkillInfo(sec2);
-            cursor.Show();
-            display.Flip();
+            return sec2.Skill();
         }
 
         if (le.MousePressRight(rect_image1))

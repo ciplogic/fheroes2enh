@@ -7,6 +7,7 @@
 
 #include "ColorTable.h"
 #include "text.h"
+#include "sprite.h"
 
 void PlusSignAddon::draw(int rightMost, int top, bool isEnabled)
 {
@@ -25,4 +26,54 @@ void PlusSignAddon::draw(int rightMost, int top, bool isEnabled)
     const Point ptPlus(pos.x + pos.w - greenUp.w() - 1, pos.y + 2);
     greenUp.Blit(ptPlus.x, ptPlus.y, Display::Get());
     textPlus.Blit(ptPlus.x + 2, ptPlus.y + 1, Display::Get());
+}
+
+void PaintArea(Surface& surface, Rect area, RGBA col)
+{
+    uint32_t iCol = col.pack();
+    int offX = area.x;
+    int offY = area.y;
+    for (int y = 0; y < area.h; y++)
+        for (int x = 0; x < area.w; x++)
+        {
+            surface.SetPixel4(offX+x, offY+y, iCol);
+        }
+}
+
+namespace
+{
+    Surface qwikheroC[3];
+    Sprite* boxInfoCPtr[3];
+    bool Initialize()
+    {
+        PlusSignAddon::GenerateInfoArea(qwikheroC[0], 191, 189);
+        boxInfoCPtr[0] = new Sprite(qwikheroC[0], 0, 0);
+        PlusSignAddon::GenerateInfoArea(qwikheroC[1], 158, 64);
+        boxInfoCPtr[1] = new Sprite(qwikheroC[1], 0, 0);
+        PlusSignAddon::GenerateInfoArea(qwikheroC[2], 223, 185);
+        boxInfoCPtr[2] = new Sprite(qwikheroC[2], 0, 0);
+        return true;
+    }
+
+
+    bool initialize = Initialize();
+}
+
+void PlusSignAddon::GenerateInfoArea(Surface& surface, int w, int h)
+{
+    surface.Set(w, h, false);
+     
+    const RGBA brown(30,30,30);
+    const RGBA brownBright(255,255,255);
+    
+    const Rect area{ 0, 0, w, h};
+    PaintArea(surface, area, brownBright);
+
+    const Rect area2{ 4, 4, w - 9, h - 9 };
+    PaintArea(surface, area2, brown);
+}
+
+Sprite& PlusSignAddon::DefaultBackground(int id)
+{
+    return *boxInfoCPtr[id];
 }

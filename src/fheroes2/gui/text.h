@@ -259,9 +259,9 @@ class TextBox : protected Rect
 public:
     TextBox();
 
-    TextBox(const string&, int, uint32_t width);
+    TextBox(const string&, int, uint32_t width, int al = ALIGN_LEFT);
 
-    TextBox(const string&, int, const Rect&);
+    TextBox(const string&, int, const Rect&, int al = ALIGN_LEFT);
 
     void Set(const string&, int, uint32_t width);
 

@@ -472,16 +472,16 @@ uint32_t Text::height(const string& str, int ft, uint32_t width)
     return text.h(width);
 }
 
-TextBox::TextBox() : align(ALIGN_CENTER)
+TextBox::TextBox() : align(ALIGN_LEFT)
 {
 }
 
-TextBox::TextBox(const string& msg, int ft, uint32_t width) : align(ALIGN_CENTER)
+TextBox::TextBox(const string& msg, int ft, uint32_t width, int al) : align(al)
 {
     Set(msg, ft, width);
 }
 
-TextBox::TextBox(const string& msg, int ft, const Rect& rt) : align(ALIGN_CENTER)
+TextBox::TextBox(const string& msg, int ft, const Rect& rt, int al) : align(al)
 {
     Set(msg, ft, rt.w);
     Blit(rt.x, rt.y);

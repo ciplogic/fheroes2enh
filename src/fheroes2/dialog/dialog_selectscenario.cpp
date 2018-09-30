@@ -154,12 +154,13 @@ void ScenarioListBox::RedrawBackground(const Point& dst)
     spriteLoss.Blit(dst.x + 275 + spriteWins.w() + 2, dst.y + 265);
 
     text.Set(_("Maps Difficulty:"), Font::BIG);
-    text.Blit(dst.x + 70, dst.y + 290);
+    text.Blit(dst.x + 40, dst.y + 290);
 
     text.Set(Difficulty::String(info.difficulty));
     text.Blit(dst.x + 275 - text.w() / 2, dst.y + 290);
 
     TextBox box(info.description, Font::BIG, 290);
+    box.SetAlign(ALIGN_LEFT);
     box.Blit(dst.x + 45, dst.y + 320);
 }
 
