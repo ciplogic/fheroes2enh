@@ -540,19 +540,81 @@ ListFiles GetMapsFiles(const char* suffix)
     return maps;
 }
 
-bool Maps::PrepareMapsFileInfoList(MapsFileInfoList& lists, bool multi)
+namespace
+{
+    std::string gCachedInfos = "cachedInfos.fh2";
+    struct FileInfoCache
+    {
+        map<std::string, Maps::FileInfo> filesInfo;
+        ListFiles maps_old;
+        bool _initialized;
+
+        bool ReadMP2(const string& filename, Maps::FileInfo& fi)
+        {
+            const auto findIt = filesInfo.find(filename);
+            if(findIt!=filesInfo.end())
+            {
+                fi = findIt->second;
+                return true;
+            }
+            const bool result = fi.ReadMP2(filename);
+            filesInfo[filename] = fi;
+            return result;
+        }
+        void SaveCache()
+        {
+            return;
+            ByteVectorWriter bvw;
+            bvw << filesInfo;
+            bvw << maps_old;
+            FileUtils::writeFileBytes(gCachedInfos, bvw.data());
+        }
+        bool LoadCache()
+        {
+            return false;
+            if(!FileUtils::Exists(gCachedInfos))
+                return false;
+            auto data = FileUtils::readFileBytes(gCachedInfos);
+            ByteVectorReader bvw(data);
+            bvw >> filesInfo;
+            bvw >> maps_old;
+            return true;
+        }
+
+    };
+
+    FileInfoCache gInfoCache;
+
+}
+
+void Maps::PrepareFilesCache()
 {
     const Settings& conf = Settings::Get();
-
     ListFiles maps_old = GetMapsFiles(".mp2");
     if (conf.PriceLoyaltyVersion())
         maps_old.Append(GetMapsFiles(".mx2"));
 
-    for (ListFiles::const_iterator
-         it = maps_old.begin(); it != maps_old.end(); ++it)
+    for (ListFiles::const_iterator it = maps_old.begin(); it != maps_old.end(); ++it)
+    {
+        Maps::FileInfo fi;
+        gInfoCache.ReadMP2(*it, fi);
+
+    }
+    gInfoCache.maps_old = maps_old;
+    gInfoCache.SaveCache();
+}
+
+bool Maps::PrepareMapsFileInfoList(MapsFileInfoList& lists, bool multi)
+{
+    const Settings& conf = Settings::Get();
+
+    ListFiles maps_old = gInfoCache.maps_old;
+
+    for (ListFiles::const_iterator it = maps_old.begin(); it != maps_old.end(); ++it)
     {
         FileInfo fi;
-        if (fi.ReadMP2(*it)) lists.push_back(fi);
+        if(gInfoCache.ReadMP2(*it, fi))
+            lists.push_back(fi);
     }
 
     if (lists.empty()) return false;

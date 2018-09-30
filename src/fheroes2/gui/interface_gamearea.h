@@ -57,6 +57,25 @@ namespace Maps
 namespace Interface
 {
     class Basic;
+    
+    struct MapCoord
+    {
+        int x, y;
+        MapCoord(int x, int y):x(x),y(y) {}
+        Point toPoint() const;
+    };
+
+    struct GameCamera
+    {
+        static GameCamera& Get();
+        void SetCenter(const MapCoord& center);
+        void SetCenter(const Point& center);
+        void SetScreenAreaPosition(s32 x, s32 y, uint32_t w, uint32_t h);
+
+        Rect _screenArea;
+        Point _center;
+        Point _mapTopLeftPoint;
+    };
 
     class GameArea
     {

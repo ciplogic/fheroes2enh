@@ -133,4 +133,5 @@ namespace Maps
     typedef std::vector<FileInfo> MapsFileInfoList;
 
     bool PrepareMapsFileInfoList(MapsFileInfoList&, bool multi);
+    void PrepareFilesCache();
 }

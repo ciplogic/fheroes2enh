@@ -41,6 +41,34 @@ namespace Game
     void MouseCursorAreaPressRight(s32);
 }
 
+Point Interface::MapCoord::toPoint() const
+{
+    return { x*TILEWIDTH, y*TILEWIDTH };
+}
+
+Interface::GameCamera& Interface::GameCamera::Get()
+{
+    static GameCamera result;
+    return result;
+}
+
+void Interface::GameCamera::SetCenter(const MapCoord& center)
+{
+    SetCenter(center.toPoint());
+}
+
+void Interface::GameCamera::SetCenter(const Point& center)
+{
+    _center = center;
+    _mapTopLeftPoint.x = std::max(0, _center.x - _screenArea.w / 2);
+    _mapTopLeftPoint.y = std::max(0, _center.y - _screenArea.h / 2);
+}
+
+void Interface::GameCamera::SetScreenAreaPosition(s32 x, s32 y, uint32_t w, uint32_t h)
+{
+    _screenArea = Rect(x, y, w, h);
+}
+
 Interface::GameArea::GameArea(Basic& basic) : interface(basic), oldIndexPos(0), scrollDirection(0),
                                               scrollStepX(32), scrollStepY(32), tailX(0), tailY(0), updateCursor(false)
 {
@@ -84,6 +112,7 @@ void Interface::GameArea::Build()
 
 void Interface::GameArea::SetAreaPosition(s32 x, s32 y, uint32_t w, uint32_t h)
 {
+    GameCamera::Get().SetScreenAreaPosition(x, y, w, h);
     areaPosition.x = x;
     areaPosition.y = y;
     areaPosition.w = w;
@@ -314,6 +343,8 @@ void Interface::GameArea::SetCenter(const Point& pt)
 
 void Interface::GameArea::SetCenter(s32 px, s32 py)
 {
+    MapCoord coord(px, py);
+    GameCamera::Get().SetCenter(coord);
     Point pos(px - rectMaps.w / 2, py - rectMaps.h / 2);
 
     // our of range

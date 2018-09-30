@@ -26,7 +26,7 @@
 #include "direction.h"
 #include "rect.h"
 
-#define TILEWIDTH 32
+enum { TILEWIDTH = 32 };
 
 struct Point;
 
@@ -50,6 +50,11 @@ enum class mapsize_t
 
 namespace Maps
 {
+    struct Camera
+    {
+        
+    };
+
     typedef MapsIndexes Indexes;
 
     class IndexesDistance : public std::vector<IndexDistance>

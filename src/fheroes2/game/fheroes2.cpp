@@ -35,6 +35,7 @@
 #include "audio_mixer.h"
 #include "audio_music.h"
 #include "icn.h"
+#include "text.h"
 
 void LoadZLogo();
 
@@ -217,7 +218,14 @@ int main(int argc, char **argv)
 
             return -1;
         }
+
+        Text loadingTextMessage = { "Building maps file list..." };
+        loadingTextMessage.Blit((display.w()-loadingTextMessage.w())/2, display.h() / 2, Display::Get());
+        display.Flip();
+
+        Maps::PrepareFilesCache();
         //extractFrames();
+        
         conf.SetBlitSpeed(TestBlitSpeed());
 
         // init cursor
