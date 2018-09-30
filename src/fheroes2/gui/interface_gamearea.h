@@ -71,10 +71,12 @@ namespace Interface
         void SetCenter(const MapCoord& center);
         void SetCenter(const Point& center);
         void SetScreenAreaPosition(s32 x, s32 y, uint32_t w, uint32_t h);
+        Point GetTileCoordinate(const Point& tileCoordinate) const;
 
         Rect _screenArea;
         Point _center;
         Point _mapTopLeftPoint;
+        Point _mapTopLeftCell;
     };
 
     class GameArea

@@ -1440,7 +1440,10 @@ void Maps::Tiles::RedrawTile(Surface& dst) const
     const Point mp = GetPoint(GetIndex());
 
     if (area.GetRectMaps() & mp)
-        area.BlitOnTile(dst, GetTileSurface(), 0, 0, mp);
+    {
+        const Surface& tileSurface = GetTileSurface();
+        area.BlitOnTile(dst, tileSurface, 0, 0, mp);
+    }
 }
 
 void Maps::Tiles::RedrawBottom(Surface& dst, bool skip_objs) const

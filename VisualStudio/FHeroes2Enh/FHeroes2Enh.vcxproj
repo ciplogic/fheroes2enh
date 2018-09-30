@@ -106,7 +106,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Cs-Oss\fheroes2enh\libs\SDL\lib;C:\Cs-Oss\fheroes2enh\libs\libpng\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL.lib;libpng.lib;SDL_mixer.lib;SDL_image.lib;SDL_net.lib;SDL_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>..\..\..\..\$(TargetName)$(TargetExt)</OutputFile>
+      <OutputFile>C:\cs-oss\fheroes2enh\FHeroes2Enh.exe</OutputFile>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
   </ItemDefinitionGroup>
@@ -158,7 +158,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <AdditionalDependencies>SDL.lib;libpng.lib;SDL_mixer.lib;SDL_image.lib;SDL_net.lib;SDL_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\Cs-Oss\fheroes2enh\libs\SDL\lib;C:\Cs-Oss\fheroes2enh\libs\libpng\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <OutputFile>...\..\..\..\$(TargetName)$(TargetExt)</OutputFile>
+      <OutputFile>..\..\..\$(TargetName)$(TargetExt)</OutputFile>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
     </Link>
