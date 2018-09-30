@@ -71,6 +71,14 @@ void Interface::GameCamera::SetScreenAreaPosition(s32 x, s32 y, uint32_t w, uint
     _screenArea = Rect(x, y, w, h);
 }
 
+Point Interface::GameCamera::GetTileCoordinate(const Point& tileCoordinate) const
+{
+    int worldX = tileCoordinate.x * TILEWIDTH;
+    int worldY = tileCoordinate.y * TILEWIDTH;
+    Point result(worldX - _mapTopLeftPoint.x, worldY - _mapTopLeftPoint.y);
+    return result;
+}
+
 Interface::GameArea::GameArea(Basic& basic) : interface(basic), oldIndexPos(0), scrollDirection(0),
                                               scrollStepX(32), scrollStepY(32), tailX(0), tailY(0), updateCursor(false)
 {
@@ -358,63 +366,75 @@ void Interface::GameArea::SetCenter(s32 px, s32 py)
     if (pos.x == rectMaps.x && pos.y == rectMaps.y) return;
 
     // possible fast scroll
-    if (pos.y == rectMaps.y && 1 == pos.x - rectMaps.x) scrollDirection |= SCROLL_RIGHT;
-    else if (pos.y == rectMaps.y && -1 == pos.x - rectMaps.x) scrollDirection |= SCROLL_LEFT;
-    else if (pos.x == rectMaps.x && 1 == pos.y - rectMaps.y) scrollDirection |= SCROLL_BOTTOM;
-    else if (pos.x == rectMaps.x && -1 == pos.y - rectMaps.y) scrollDirection |= SCROLL_TOP;
+    if (pos.y == rectMaps.y && 1 == pos.x - rectMaps.x) 
+    {
+        scrollDirection |= SCROLL_RIGHT;
+    }
+    else if (pos.y == rectMaps.y && -1 == pos.x - rectMaps.x)
+    {
+        scrollDirection |= SCROLL_LEFT;
+    }
+    else if (pos.x == rectMaps.x && 1 == pos.y - rectMaps.y)
+    {
+        scrollDirection |= SCROLL_BOTTOM;
+    }
+    else if (pos.x == rectMaps.x && -1 == pos.y - rectMaps.y) 
+    {
+        scrollDirection |= SCROLL_TOP;
+    }
     else
-        // diagonal
-        if (-1 == pos.y - rectMaps.y && 1 == pos.x - rectMaps.x)
+    // diagonal
+    if (-1 == pos.y - rectMaps.y && 1 == pos.x - rectMaps.x)
+    {
+        scrollDirection |= SCROLL_TOP | SCROLL_RIGHT;
+    }
+    else if (-1 == pos.y - rectMaps.y && -1 == pos.x - rectMaps.x)
+    {
+        scrollDirection |= SCROLL_TOP | SCROLL_LEFT;
+    }
+    else if (1 == pos.y - rectMaps.y && 1 == pos.x - rectMaps.x)
+    {
+        scrollDirection |= SCROLL_BOTTOM | SCROLL_RIGHT;
+    }
+    else if (1 == pos.y - rectMaps.y && -1 == pos.x - rectMaps.x)
+    {
+        scrollDirection |= SCROLL_BOTTOM | SCROLL_LEFT;
+    }
+    else
+    {
+        rectMaps.x = pos.x;
+        rectMaps.y = pos.y;
+        scrollDirection = 0;
+
+        if (pos.x == 0) scrollOffset.x = 0;
+        else if (pos.x == world.w() - rectMaps.w)
         {
-            scrollDirection |= SCROLL_TOP | SCROLL_RIGHT;
-        }
-        else if (-1 == pos.y - rectMaps.y && -1 == pos.x - rectMaps.x)
-        {
-            scrollDirection |= SCROLL_TOP | SCROLL_LEFT;
-        }
-        else if (1 == pos.y - rectMaps.y && 1 == pos.x - rectMaps.x)
-        {
-            scrollDirection |= SCROLL_BOTTOM | SCROLL_RIGHT;
-        }
-        else if (1 == pos.y - rectMaps.y && -1 == pos.x - rectMaps.x)
-        {
-            scrollDirection |= SCROLL_BOTTOM | SCROLL_LEFT;
+            scrollOffset.x = SCROLL_MAX * 2 - tailX;
         }
         else
         {
-            rectMaps.x = pos.x;
-            rectMaps.y = pos.y;
-            scrollDirection = 0;
-
-            if (pos.x == 0) scrollOffset.x = 0;
-            else if (pos.x == world.w() - rectMaps.w)
-            {
-                scrollOffset.x = SCROLL_MAX * 2 - tailX;
-            }
-            else
-            {
-                scrollOffset.x = (rectMaps.w % 2 == 0 ? SCROLL_MAX + TILEWIDTH / 2 : SCROLL_MAX) - tailX;
-            }
-
-            if (pos.y == 0) scrollOffset.y = 0;
-            else if (pos.y == world.h() - rectMaps.h)
-            {
-                scrollOffset.y = SCROLL_MAX * 2 - tailY;
-            }
-            else
-            {
-                scrollOffset.y = (rectMaps.h % 2 == 0 ? SCROLL_MAX + TILEWIDTH / 2 : SCROLL_MAX) - tailY;
-            }
-
-            rectMapsPosition.x = areaPosition.x - scrollOffset.x;
-            rectMapsPosition.y = areaPosition.y - scrollOffset.y;
-
-            if (Display::Get().w() > areaPosition.w)
-                scrollStepX = Settings::Get().ScrollSpeed();
-
-            if (Display::Get().h() > areaPosition.h)
-                scrollStepY = Settings::Get().ScrollSpeed();
+            scrollOffset.x = (rectMaps.w % 2 == 0 ? SCROLL_MAX + TILEWIDTH / 2 : SCROLL_MAX) - tailX;
         }
+
+        if (pos.y == 0) scrollOffset.y = 0;
+        else if (pos.y == world.h() - rectMaps.h)
+        {
+            scrollOffset.y = SCROLL_MAX * 2 - tailY;
+        }
+        else
+        {
+            scrollOffset.y = (rectMaps.h % 2 == 0 ? SCROLL_MAX + TILEWIDTH / 2 : SCROLL_MAX) - tailY;
+        }
+
+        rectMapsPosition.x = areaPosition.x - scrollOffset.x;
+        rectMapsPosition.y = areaPosition.y - scrollOffset.y;
+
+        if (Display::Get().w() > areaPosition.w)
+            scrollStepX = Settings::Get().ScrollSpeed();
+
+        if (Display::Get().h() > areaPosition.h)
+            scrollStepY = Settings::Get().ScrollSpeed();
+    }
 
     if (scrollDirection) Scroll();
 }

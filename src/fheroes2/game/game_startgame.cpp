@@ -853,17 +853,28 @@ int Interface::Basic::HumanTurn(bool isload)
 
         
         // scroll area maps left
-        if (le.MouseCursor(GetScrollLeft())) gameArea.SetScroll(SCROLL_LEFT);
+        if (le.MouseCursor(GetScrollLeft()))
+        {
+            gameArea.SetScroll(SCROLL_LEFT);
+        }
         else
         // scroll area maps right
-        if (le.MouseCursor(GetScrollRight())) gameArea.SetScroll(SCROLL_RIGHT);
+        if (le.MouseCursor(GetScrollRight()))
+        {
+            gameArea.SetScroll(SCROLL_RIGHT);
+        }
         else
         // scroll area maps top
-        if (le.MouseCursor(GetScrollTop())) gameArea.SetScroll(SCROLL_TOP);
+        if (le.MouseCursor(GetScrollTop()))
+        {
+            gameArea.SetScroll(SCROLL_TOP);
+        }
         else
         // scroll area maps bottom
-        if (le.MouseCursor(GetScrollBottom())) gameArea.SetScroll(SCROLL_BOTTOM);
-
+        if (le.MouseCursor(GetScrollBottom()))
+        {
+            gameArea.SetScroll(SCROLL_BOTTOM);
+        }
         // cursor over radar
         if ((!conf.ExtGameHideInterface() || conf.ShowRadar()) &&
             le.MouseCursor(radar.GetRect()))
@@ -873,51 +884,51 @@ int Interface::Basic::HumanTurn(bool isload)
             radar.QueueEventProcessing();
         }
         else
-            // cursor over icons panel
-            if ((!conf.ExtGameHideInterface() || conf.ShowIcons()) &&
-                le.MouseCursor(iconsPanel.GetRect()))
-            {
-                if (Cursor::POINTER != cursor.Themes())
-                    cursor.SetThemes(Cursor::POINTER);
-                iconsPanel.QueueEventProcessing();
-            }
-            else
-                // cursor over buttons area
-                if ((!conf.ExtGameHideInterface() || conf.ShowButtons()) &&
-                    le.MouseCursor(buttonsArea.GetRect()))
-                {
-                    if (Cursor::POINTER != cursor.Themes())
-                        cursor.SetThemes(Cursor::POINTER);
-                    res = buttonsArea.QueueEventProcessing();
-                }
-                else
-                    // cursor over status area
-                    if ((!conf.ExtGameHideInterface() || conf.ShowStatus()) &&
-                        le.MouseCursor(statusWindow.GetRect()))
-                    {
-                        if (Cursor::POINTER != cursor.Themes())
-                            cursor.SetThemes(Cursor::POINTER);
-                        statusWindow.QueueEventProcessing();
-                    }
-                    else
-                        // cursor over control panel
-                        if (conf.ExtGameHideInterface() && conf.ShowControlPanel() &&
-                            le.MouseCursor(controlPanel.GetArea()))
-                        {
-                            if (Cursor::POINTER != cursor.Themes())
-                                cursor.SetThemes(Cursor::POINTER);
-                            res = controlPanel.QueueEventProcessing();
-                        }
-                        else if (conf.UiHeroesBar() && heroesBar.EventProcessing())
-                        {
-                            res = Game::CANCEL;
-                        }
-                        else
-                            // cursor over game area
-                            if (le.MouseCursor(gameArea.GetArea()) && !gameArea.NeedScroll())
-                            {
-                                gameArea.QueueEventProcessing();
-                            }
+        // cursor over icons panel
+        if ((!conf.ExtGameHideInterface() || conf.ShowIcons()) &&
+            le.MouseCursor(iconsPanel.GetRect()))
+        {
+            if (Cursor::POINTER != cursor.Themes())
+                cursor.SetThemes(Cursor::POINTER);
+            iconsPanel.QueueEventProcessing();
+        }
+        else
+        // cursor over buttons area
+        if ((!conf.ExtGameHideInterface() || conf.ShowButtons()) &&
+            le.MouseCursor(buttonsArea.GetRect()))
+        {
+            if (Cursor::POINTER != cursor.Themes())
+                cursor.SetThemes(Cursor::POINTER);
+            res = buttonsArea.QueueEventProcessing();
+        }
+        else
+        // cursor over status area
+        if ((!conf.ExtGameHideInterface() || conf.ShowStatus()) &&
+            le.MouseCursor(statusWindow.GetRect()))
+        {
+            if (Cursor::POINTER != cursor.Themes())
+                cursor.SetThemes(Cursor::POINTER);
+            statusWindow.QueueEventProcessing();
+        }
+        else
+        // cursor over control panel
+        if (conf.ExtGameHideInterface() && conf.ShowControlPanel() &&
+            le.MouseCursor(controlPanel.GetArea()))
+        {
+            if (Cursor::POINTER != cursor.Themes())
+                cursor.SetThemes(Cursor::POINTER);
+            res = controlPanel.QueueEventProcessing();
+        }
+        else if (conf.UiHeroesBar() && heroesBar.EventProcessing())
+        {
+            res = Game::CANCEL;
+        }
+        else
+        // cursor over game area
+        if (le.MouseCursor(gameArea.GetArea()) && !gameArea.NeedScroll())
+        {
+            gameArea.QueueEventProcessing();
+        }
 
         // fast scroll
         if (gameArea.NeedScroll() && AnimateInfrequentDelay(Game::SCROLL_DELAY))
