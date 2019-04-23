@@ -228,7 +228,7 @@ void Kingdom::AddHeroes(Heroes* hero)
 
     auto player = Settings::Get().GetPlayers().GetCurrent();
     if (player && player->isColor(GetColor()))
-        Interface::Basic::Get().GetIconsPanel().ResetIcons(ICON_HEROES);
+        Interface::Basic::Get().GetIconsPanel().ResetIcons(icons_t::ICON_HEROES);
 
     AI::HeroesAdd(*hero);
 }
@@ -280,7 +280,7 @@ void Kingdom::AddCastle(const Castle* castle)
 
         auto player = Settings::Get().GetPlayers().GetCurrent();
         if (player && player->isColor(GetColor()))
-            Interface::Basic::Get().GetIconsPanel().ResetIcons(ICON_CASTLES);
+            Interface::Basic::Get().GetIconsPanel().ResetIcons(icons_t::ICON_CASTLES);
 
         AI::CastleAdd(*castle);
     }

@@ -4,6 +4,7 @@
 #include <vector>
 #include <map>
 #include <list>
+#include <string>
 #include "rect.h"
 
 using namespace std;

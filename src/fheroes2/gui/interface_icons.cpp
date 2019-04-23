@@ -359,10 +359,10 @@ void Interface::IconsPanel::SetRedraw(icons_t type) const
     {
         switch (type)
         {
-        case ICON_HEROES:
+        case icons_t::ICON_HEROES:
             interface.SetRedraw(REDRAW_HEROES);
             break;
-        case ICON_CASTLES:
+        case icons_t::ICON_CASTLES:
             interface.SetRedraw(REDRAW_CASTLES);
             break;
         default:
@@ -375,7 +375,7 @@ void Interface::IconsPanel::SetRedraw(icons_t type) const
 
 void Interface::IconsPanel::SetRedraw() const
 {
-    SetRedraw(ICON_ANY);
+    SetRedraw(icons_t::ICON_ANY);
 }
 
 void Interface::IconsPanel::SetPos(s32 ox, s32 oy)
@@ -462,13 +462,13 @@ void Interface::IconsPanel::ResetIcons(icons_t type)
 
     if (!kingdom.isControlAI())
     {
-        if (type & ICON_HEROES)
+        if (type & icons_t::ICON_HEROES)
         {
             heroesIcons.SetListContent(kingdom.GetHeroes()._items);
             heroesIcons.Reset();
         }
 
-        if (type & ICON_CASTLES)
+        if (type & icons_t::ICON_CASTLES)
         {
             castleIcons.SetListContent(kingdom.GetCastles()._items);
             castleIcons.Reset();
@@ -478,14 +478,14 @@ void Interface::IconsPanel::ResetIcons(icons_t type)
 
 void Interface::IconsPanel::HideIcons(icons_t type)
 {
-    if (type & ICON_HEROES) heroesIcons.SetShow(false);
-    if (type & ICON_CASTLES) castleIcons.SetShow(false);
+    if (type & icons_t::ICON_HEROES) heroesIcons.SetShow(false);
+    if (type & icons_t::ICON_CASTLES) castleIcons.SetShow(false);
 }
 
 void Interface::IconsPanel::ShowIcons(icons_t type)
 {
-    if (type & ICON_HEROES) heroesIcons.SetShow(true);
-    if (type & ICON_CASTLES) castleIcons.SetShow(true);
+    if (type & icons_t::ICON_HEROES) heroesIcons.SetShow(true);
+    if (type & icons_t::ICON_CASTLES) castleIcons.SetShow(true);
 }
 
 void Interface::IconsPanel::SetCurrentVisible()
@@ -504,14 +504,14 @@ void Interface::IconsPanel::SetCurrentVisible()
 
 void Interface::IconsPanel::RedrawIcons(icons_t type)
 {
-    if (type & ICON_HEROES) heroesIcons.Redraw();
-    if (type & ICON_CASTLES) castleIcons.Redraw();
+    if (type & icons_t::ICON_HEROES) heroesIcons.Redraw();
+    if (type & icons_t::ICON_CASTLES) castleIcons.Redraw();
 }
 
 bool Interface::IconsPanel::IsSelected(icons_t type) const
 {
-    if (type & ICON_HEROES) return heroesIcons.isSelected();
-    if (type & ICON_CASTLES) return castleIcons.isSelected();
+    if (type & icons_t::ICON_HEROES) return heroesIcons.isSelected();
+    if (type & icons_t::ICON_CASTLES) return castleIcons.isSelected();
 
     return false;
 }
@@ -550,4 +550,9 @@ void Interface::HeroesBottomIcons::RedrawBackground(const Point&)
 
 void Interface::HeroesBottomIcons::SetHero(HEROES const pHeroes)
 {
+}
+
+int operator&(icons_t left, icons_t right)
+{
+	return ((int)left) & ((int)right);
 }

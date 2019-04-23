@@ -182,8 +182,8 @@ void Interface::Basic::Redraw(int force)
         heroesBar.Redraw();
     }
     if (conf.ExtGameHideInterface() && conf.ShowIcons() || (redraw | force) & REDRAW_ICONS) iconsPanel.Redraw();
-    else if ((redraw | force) & REDRAW_HEROES) iconsPanel.RedrawIcons(ICON_HEROES);
-    else if ((redraw | force) & REDRAW_CASTLES) iconsPanel.RedrawIcons(ICON_CASTLES);
+    else if ((redraw | force) & REDRAW_HEROES) iconsPanel.RedrawIcons(icons_t::ICON_HEROES);
+    else if ((redraw | force) & REDRAW_CASTLES) iconsPanel.RedrawIcons(icons_t::ICON_CASTLES);
 
     if (conf.ExtGameHideInterface() && conf.ShowButtons() || (redraw | force) & REDRAW_BUTTONS)
         buttonsArea.Redraw();

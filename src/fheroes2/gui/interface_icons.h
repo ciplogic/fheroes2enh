@@ -25,12 +25,14 @@
 #include "interface_list.h"
 #include "interface_border.h"
 
-enum icons_t
+enum class icons_t
 {
     ICON_HEROES = 0x01,
     ICON_CASTLES = 0x02,
     ICON_ANY = ICON_HEROES | ICON_CASTLES
 };
+
+int operator&(icons_t left, icons_t right);
 
 namespace Interface
 {
@@ -191,13 +193,13 @@ namespace Interface
 
         bool IsSelected(icons_t) const;
 
-        void ResetIcons(icons_t = ICON_ANY);
+        void ResetIcons(icons_t = icons_t::ICON_ANY);
 
-        void HideIcons(icons_t = ICON_ANY);
+        void HideIcons(icons_t = icons_t::ICON_ANY);
 
-        void ShowIcons(icons_t = ICON_ANY);
+        void ShowIcons(icons_t = icons_t::ICON_ANY);
 
-        void RedrawIcons(icons_t = ICON_ANY);
+        void RedrawIcons(icons_t = icons_t::ICON_ANY);
 
         void SetCurrentVisible();
 

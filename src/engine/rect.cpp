@@ -209,18 +209,19 @@ Rect Points::GetRect() const
 {
     Rect res;
 
-    if (1 < size())
+    if (1 >= size())
     {
-        res = Rect::Get(at(0), at(1));
+        return res;
+    }
+    res = Rect::Get(at(0), at(1));
 
-        for (auto it = begin() + 2; it != end(); ++it)
-        {
-            if ((*it).x < res.x) res.x = (*it).x;
-            else if ((*it).x > res.x + res.w) res.w = (*it).x - res.x + 1;
+    for (auto it = begin() + 2; it != end(); ++it)
+    {
+        if ((*it).x < res.x) res.x = (*it).x;
+        else if ((*it).x > res.x + res.w) res.w = (*it).x - res.x + 1;
 
-            if ((*it).y < res.y) res.y = (*it).y;
-            else if ((*it).y > res.y + res.h) res.h = (*it).y - res.y + 1;
-        }
+        if ((*it).y < res.y) res.y = (*it).y;
+        else if ((*it).y > res.y + res.h) res.h = (*it).y - res.y + 1;
     }
 
     return res;
@@ -230,16 +231,17 @@ Rect Rects::GetRect() const
 {
     Rect res;
 
-    if (!empty())
+    if (empty())
     {
-        auto it = begin();
-        res = *it;
-
-        ++it;
-
-        for (; it != end(); ++it)
-            res = Rect::Get(*it, res, false);
+        return res;
     }
+    auto it = begin();
+    res = *it;
+
+    ++it;
+
+    for (; it != end(); ++it)
+        res = Rect::Get(*it, res, false);
 
     return res;
 }
@@ -257,33 +259,32 @@ std::pair<Rect, Point> Rect::Fixed4Blit(const Rect& srcrt, const Rect& dstrt)
     Rect& srcrtfix = res.first;
     Point& dstptfix = res.second;
 
-    if (srcrt.w && srcrt.h &&
-        srcrt.x + srcrt.w > dstrt.x && srcrt.y + srcrt.h > dstrt.y &&
-        srcrt.x < dstrt.x + dstrt.w && srcrt.y < dstrt.y + dstrt.h)
+    if (!srcrt.w || !srcrt.h || srcrt.x + srcrt.w <= dstrt.x || srcrt.y + srcrt.h <= dstrt.y || srcrt.x >= dstrt.x + dstrt.w || srcrt.y >= dstrt.y + dstrt.h)
     {
-        srcrtfix.w = srcrt.w;
-        srcrtfix.h = srcrt.h;
-        dstptfix.x = srcrt.x;
-        dstptfix.y = srcrt.y;
-
-        if (srcrt.x < dstrt.x)
-        {
-            srcrtfix.x = dstrt.x - srcrt.x;
-            dstptfix.x = dstrt.x;
-        }
-
-        if (srcrt.y < dstrt.y)
-        {
-            srcrtfix.y = dstrt.y - srcrt.y;
-            dstptfix.y = dstrt.y;
-        }
-
-        if (dstptfix.x + srcrtfix.w > dstrt.x + dstrt.w)
-            srcrtfix.w = dstrt.x + dstrt.w - dstptfix.x;
-
-        if (dstptfix.y + srcrtfix.h > dstrt.y + dstrt.h)
-            srcrtfix.h = dstrt.y + dstrt.h - dstptfix.y;
+        return res;
     }
+    srcrtfix.w = srcrt.w;
+    srcrtfix.h = srcrt.h;
+    dstptfix.x = srcrt.x;
+    dstptfix.y = srcrt.y;
+
+    if (srcrt.x < dstrt.x)
+    {
+        srcrtfix.x = dstrt.x - srcrt.x;
+        dstptfix.x = dstrt.x;
+    }
+
+    if (srcrt.y < dstrt.y)
+    {
+        srcrtfix.y = dstrt.y - srcrt.y;
+        dstptfix.y = dstrt.y;
+    }
+
+    if (dstptfix.x + srcrtfix.w > dstrt.x + dstrt.w)
+        srcrtfix.w = dstrt.x + dstrt.w - dstptfix.x;
+
+    if (dstptfix.y + srcrtfix.h > dstrt.y + dstrt.h)
+        srcrtfix.h = dstrt.y + dstrt.h - dstptfix.y;
 
     return res;
 }

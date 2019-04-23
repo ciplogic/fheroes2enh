@@ -114,7 +114,7 @@ void Interface::Basic::ResetFocus(int priority)
             SetFocus(myKingdom.GetHeroes()._items.front());
         else if (!myKingdom.GetCastles()._items.empty())
         {
-            iconsPanel.SetRedraw(ICON_HEROES);
+            iconsPanel.SetRedraw(icons_t::ICON_HEROES);
             SetFocus(myKingdom.GetCastles()._items.front());
         }
         else
@@ -128,7 +128,7 @@ void Interface::Basic::ResetFocus(int priority)
             SetFocus(myKingdom.GetCastles()._items.front());
         else if (!myKingdom.GetHeroes()._items.empty())
         {
-            iconsPanel.SetRedraw(ICON_CASTLES);
+            iconsPanel.SetRedraw(icons_t::ICON_CASTLES);
             SetFocus(myKingdom.GetHeroes()._items.front());
         }
         else
@@ -191,23 +191,23 @@ void Interface::Basic::RedrawFocus()
 {
     int type = GetFocusType();
 
-    if (type != FOCUS_HEROES && iconsPanel.IsSelected(ICON_HEROES))
+    if (type != FOCUS_HEROES && iconsPanel.IsSelected(icons_t::ICON_HEROES))
     {
-        iconsPanel.ResetIcons(ICON_HEROES);
+        iconsPanel.ResetIcons(icons_t::ICON_HEROES);
         iconsPanel.SetRedraw();
     }
-    else if (type == FOCUS_HEROES && !iconsPanel.IsSelected(ICON_HEROES))
+    else if (type == FOCUS_HEROES && !iconsPanel.IsSelected(icons_t::ICON_HEROES))
     {
         iconsPanel.Select(*GetFocusHeroes());
         iconsPanel.SetRedraw();
     }
 
-    if (type != FOCUS_CASTLE && iconsPanel.IsSelected(ICON_CASTLES))
+    if (type != FOCUS_CASTLE && iconsPanel.IsSelected(icons_t::ICON_CASTLES))
     {
-        iconsPanel.ResetIcons(ICON_CASTLES);
+        iconsPanel.ResetIcons(icons_t::ICON_CASTLES);
         iconsPanel.SetRedraw();
     }
-    else if (type == FOCUS_CASTLE && !iconsPanel.IsSelected(ICON_CASTLES))
+    else if (type == FOCUS_CASTLE && !iconsPanel.IsSelected(icons_t::ICON_CASTLES))
     {
         iconsPanel.Select(*GetFocusCastle());
         iconsPanel.SetRedraw();
@@ -216,9 +216,9 @@ void Interface::Basic::RedrawFocus()
     SetRedraw(REDRAW_GAMEAREA | REDRAW_RADAR);
 
     if (type == FOCUS_HEROES)
-        iconsPanel.SetRedraw(ICON_HEROES);
+        iconsPanel.SetRedraw(icons_t::ICON_HEROES);
     else if (type == FOCUS_CASTLE)
-        iconsPanel.SetRedraw(ICON_CASTLES);
+        iconsPanel.SetRedraw(icons_t::ICON_CASTLES);
 
     statusWindow.SetRedraw();
 }

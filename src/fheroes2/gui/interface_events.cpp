@@ -395,7 +395,7 @@ int Interface::Basic::EventDigArtifact()
         Message("", _("Nothing here. Where could it be?"), Font::BIG, Dialog::OK);
 
     Cursor::Get().Hide();
-    iconsPanel.RedrawIcons(ICON_HEROES);
+    iconsPanel.RedrawIcons(icons_t::ICON_HEROES);
     Cursor::Get().Show();
     Display::Get().Flip();
 

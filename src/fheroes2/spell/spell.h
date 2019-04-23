@@ -35,7 +35,7 @@ class StreamBase;
 class Spell
 {
 public:
-    enum type_t
+    enum SpellType
     {
         NONE = 0,
         FIREBALL,
