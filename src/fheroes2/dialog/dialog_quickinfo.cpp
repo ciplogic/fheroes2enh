@@ -489,8 +489,8 @@ void Dialog::QuickInfo(const Maps::Tiles& tile)
 
     // image box
     auto boxInfo = AGG::GetICN(qwikinfo, 0);
-    Sprite& box = PlusSignAddon::DefaultBackground(1);
-    //Sprite& box = boxInfo;
+    //Sprite& box = PlusSignAddon::DefaultBackground(1);
+    Sprite& box = boxInfo;
     const Interface::GameArea& gamearea = Interface::Basic::Get().GetGameArea();
     const Rect ar(BORDERWIDTH, BORDERWIDTH, gamearea.GetArea().w, gamearea.GetArea().h);
 
@@ -552,8 +552,8 @@ void Dialog::QuickInfo(const Castle& castle)
 
     // image box
     auto boxInfo = AGG::GetICN(qwiktown, 0);
-    Sprite& box = PlusSignAddon::DefaultBackground(2);
-    //Sprite& box = boxInfo;
+    //Sprite& box = PlusSignAddon::DefaultBackground(2);
+    Sprite& box = boxInfo;
     const Interface::GameArea& gamearea = Interface::Basic::Get().GetGameArea();
     const Rect ar(BORDERWIDTH, BORDERWIDTH, gamearea.GetArea().w, gamearea.GetArea().h);
 
@@ -745,8 +745,7 @@ void Dialog::QuickInfo(const Heroes& hero)
     // image box
     auto boxInfo = AGG::GetICN(qwikhero, 0);
 
-    Sprite& box = PlusSignAddon::DefaultBackground(0);
-    //Sprite& box = boxInfo;
+    Sprite& box = boxInfo;
     const Interface::GameArea& gamearea = Interface::Basic::Get().GetGameArea();
     const Rect ar(BORDERWIDTH, BORDERWIDTH, gamearea.GetArea().w, gamearea.GetArea().h);
 
