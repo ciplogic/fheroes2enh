@@ -37,7 +37,7 @@
 
 bool SpellFiltered(Spell s, int f)
 {
-    return SpellBook::ADVN & f && s.isCombat() || SpellBook::CMBT & f && !s.isCombat();
+    return (SpellBook::ADVN & f && s.isCombat()) || (SpellBook::CMBT & f && !s.isCombat());
 }
 
 void SpellBookRedrawLists(const SpellStorage&, Rects&, size_t, const Point&, uint32_t, int only, const HeroBase& hero);
@@ -48,7 +48,7 @@ void SpellBookRedrawMP(const Point&, uint32_t);
 
 bool SpellBookSortingSpell(const Spell& spell1, const Spell& spell2)
 {
-    return spell1.isCombat() != spell2.isCombat() && spell1.isCombat() ||
+    return (spell1.isCombat() != spell2.isCombat() && spell1.isCombat()) ||
         string(spell1.GetName()) < string(spell2.GetName());
 }
 

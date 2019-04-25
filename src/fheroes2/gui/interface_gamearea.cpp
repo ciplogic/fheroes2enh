@@ -205,7 +205,7 @@ void Interface::GameArea::DrawHeroRoute(Surface& dst, int flag, const Rect& rt) 
 
         // is visible
         if (!(Rect(rectMaps.x + rt.x, rectMaps.y + rt.y, rt.w, rt.h) & mp)
-            || it1 == hero->GetPath().begin() && skipfirst)
+            || (it1 == hero->GetPath().begin() && skipfirst))
             continue;
 
         uint32_t index = 0;

@@ -472,15 +472,15 @@ int Battle::Arena::DialogBattleHero(const HeroBase& hero, bool buttons) const
         if (!buttons && !le.MousePressRight()) break;
 
         if (HotKeyPressEvent(Game::EVENT_BATTLE_CASTSPELL) ||
-            btnCast.isEnable() && le.MouseClickLeft(btnCast))
+            (btnCast.isEnable() && le.MouseClickLeft(btnCast)))
             result = 1;
 
         if (HotKeyPressEvent(Game::EVENT_BATTLE_RETREAT) ||
-            btnRetreat.isEnable() && le.MouseClickLeft(btnRetreat))
+            (btnRetreat.isEnable() && le.MouseClickLeft(btnRetreat)))
             result = 2;
 
         if (HotKeyPressEvent(Game::EVENT_BATTLE_SURRENDER) ||
-            btnSurrender.isEnable() && le.MouseClickLeft(btnSurrender))
+            (btnSurrender.isEnable() && le.MouseClickLeft(btnSurrender)))
             result = 3;
 
         if (le.MousePressRight(btnCast))

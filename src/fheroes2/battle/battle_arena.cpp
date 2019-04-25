@@ -721,8 +721,8 @@ bool Battle::Arena::isDisableCastSpell(const Spell& spell, string* msg)
     const HeroBase* current_commander = GetCurrentCommander();
 
     // check sphere negation (only for heroes)
-    if (hero1 && hero1->HasArtifact(Artifact::SPHERE_NEGATION) ||
-        hero2 && hero2->HasArtifact(Artifact::SPHERE_NEGATION))
+    if ((hero1 && hero1->HasArtifact(Artifact::SPHERE_NEGATION)) ||
+        (hero2 && hero2->HasArtifact(Artifact::SPHERE_NEGATION)))
     {
         if (msg) *msg = _("The Sphere of Negation artifact is in effect for this battle, disabling all combat spells.");
         return true;

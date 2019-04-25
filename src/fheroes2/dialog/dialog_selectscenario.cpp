@@ -275,7 +275,7 @@ const FileInfo* Dialog::SelectScenario(const MapsFileInfoList& all)
 
         listbox.QueueEventProcessing();
 
-        if (buttonOk.isEnable() && le.MouseClickLeft(buttonOk) ||
+        if ((buttonOk.isEnable() && le.MouseClickLeft(buttonOk)) ||
             HotKeyPressEvent(Game::EVENT_DEFAULT_READY) ||
             listbox.selectOk)
         {

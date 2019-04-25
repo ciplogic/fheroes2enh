@@ -382,7 +382,7 @@ bool Maps::TilesAddon::isRoad(int direct) const
 bool Maps::TilesAddon::isStream(const TilesAddon& ta)
 {
     return ICN::STREAM == MP2::GetICNObject(ta.object) ||
-        ICN::OBJNMUL2 == MP2::GetICNObject(ta.object) && ta.index < 14;
+        (ICN::OBJNMUL2 == MP2::GetICNObject(ta.object) && ta.index < 14);
 }
 
 bool Maps::TilesAddon::isRoad(const TilesAddon& ta)
@@ -415,7 +415,7 @@ bool Maps::TilesAddon::isStandingStone(const TilesAddon& ta)
 bool Maps::TilesAddon::isResource(const TilesAddon& ta)
 {
     // OBJNRSRC
-    return ICN::OBJNRSRC == MP2::GetICNObject(ta.object) && ta.index % 2 ||
+    return (ICN::OBJNRSRC == MP2::GetICNObject(ta.object) && ta.index % 2) ||
         // TREASURE
         ICN::TREASURE == MP2::GetICNObject(ta.object);
 }
@@ -465,11 +465,11 @@ bool Maps::TilesAddon::isUltimateArtifact(const TilesAddon& ta)
 bool Maps::TilesAddon::isCampFire(const TilesAddon& ta)
 {
     // MTNDSRT
-    return ICN::OBJNDSRT == MP2::GetICNObject(ta.object) && 61 == ta.index ||
+    return (ICN::OBJNDSRT == MP2::GetICNObject(ta.object) && 61 == ta.index) ||
         // OBJNMULT
-        ICN::OBJNMULT == MP2::GetICNObject(ta.object) && 131 == ta.index ||
+        (ICN::OBJNMULT == MP2::GetICNObject(ta.object) && 131 == ta.index) ||
         // OBJNSNOW
-        ICN::OBJNSNOW == MP2::GetICNObject(ta.object) && 4 == ta.index;
+        (ICN::OBJNSNOW == MP2::GetICNObject(ta.object) && 4 == ta.index);
 }
 
 bool Maps::TilesAddon::isMonster(const TilesAddon& ta)
@@ -580,8 +580,8 @@ int Maps::TilesAddon::ColorFromTravellerTentSprite(const TilesAddon& ta)
 
 bool Maps::TilesAddon::isAbandoneMineSprite(const TilesAddon& ta)
 {
-    return ICN::OBJNGRAS == MP2::GetICNObject(ta.object) && 6 == ta.index ||
-        ICN::OBJNDIRT == MP2::GetICNObject(ta.object) && 8 == ta.index;
+    return (ICN::OBJNGRAS == MP2::GetICNObject(ta.object) && 6 == ta.index) ||
+        (ICN::OBJNDIRT == MP2::GetICNObject(ta.object) && 8 == ta.index);
 }
 
 bool Maps::TilesAddon::isFlag32(const TilesAddon& ta)
@@ -691,20 +691,20 @@ bool Maps::TilesAddon::isRocs(const TilesAddon& ta)
     {
         // roc objects
     case ICN::OBJNSNOW:
-        if (ta.index > 21 && ta.index < 25 || ta.index > 25 && ta.index < 29 ||
+        if ((ta.index > 21 && ta.index < 25) || (ta.index > 25 && ta.index < 29) ||
             ta.index == 30 || ta.index == 32 || ta.index == 34 || ta.index == 35 ||
-            ta.index > 36 && ta.index < 40)
+            (ta.index > 36 && ta.index < 40))
             return true;
         break;
 
     case ICN::OBJNSWMP:
         if (ta.index == 201 || ta.index == 205 ||
-            ta.index > 207 && ta.index < 211)
+            (ta.index > 207 && ta.index < 211))
             return true;
         break;
 
     case ICN::OBJNGRAS:
-        if (ta.index > 32 && ta.index < 36 || ta.index == 37 || ta.index == 38 ||
+        if ((ta.index > 32 && ta.index < 36) || ta.index == 37 || ta.index == 38 ||
             ta.index == 40 || ta.index == 41 || ta.index == 43 || ta.index == 45)
             return true;
         break;
@@ -718,9 +718,9 @@ bool Maps::TilesAddon::isRocs(const TilesAddon& ta)
     case ICN::OBJNCRCK:
         if (ta.index == 10 || ta.index == 11 ||
             ta.index == 18 || ta.index == 19 || ta.index == 21 || ta.index == 22 ||
-            ta.index > 23 && ta.index < 28 || ta.index > 28 && ta.index < 33 ||
+            (ta.index > 23 && ta.index < 28) || (ta.index > 28 && ta.index < 33) ||
             ta.index == 34 || ta.index == 35 || ta.index == 37 || ta.index == 38 ||
-            ta.index > 39 && ta.index < 45 || ta.index == 46 || ta.index == 47 ||
+            (ta.index > 39 && ta.index < 45) || ta.index == 46 || ta.index == 47 ||
             ta.index == 49 || ta.index == 50 || ta.index == 52 || ta.index == 53 || ta.index == 55)
             return true;
         break;
@@ -732,7 +732,7 @@ bool Maps::TilesAddon::isRocs(const TilesAddon& ta)
 
     case ICN::OBJNWATR:
         if (ta.index == 182 || ta.index == 183 ||
-            ta.index > 184 && ta.index < 188)
+            (ta.index > 184 && ta.index < 188))
             return true;
         break;
 
@@ -794,8 +794,8 @@ bool Maps::TilesAddon::isDeadTrees(const TilesAddon& ta)
         break;
 
     case ICN::OBJNSNOW:
-        if (ta.index > 50 && ta.index < 53 || ta.index > 54 && ta.index < 59 ||
-            ta.index > 59 && ta.index < 63 || ta.index > 63 && ta.index < 67 ||
+        if ((ta.index > 50 && ta.index < 53) || (ta.index > 54 && ta.index < 59) ||
+            (ta.index > 59 && ta.index < 63) || (ta.index > 63 && ta.index < 67) ||
             ta.index == 68 || ta.index == 69 || ta.index == 71 || ta.index == 72 ||
             ta.index == 74 || ta.index == 75 || ta.index == 77)
             return true;
@@ -803,8 +803,8 @@ bool Maps::TilesAddon::isDeadTrees(const TilesAddon& ta)
 
     case ICN::OBJNSWMP:
         if (ta.index == 161 || ta.index == 162 ||
-            ta.index > 163 && ta.index < 170 ||
-            ta.index > 170 && ta.index < 175 ||
+            (ta.index > 163 && ta.index < 170) ||
+            (ta.index > 170 && ta.index < 175) ||
             ta.index == 176 || ta.index == 177)
             return true;
         break;
@@ -822,7 +822,7 @@ bool Maps::TilesAddon::isCactus(const TilesAddon& ta)
     {
     case ICN::OBJNDSRT:
         if (ta.index == 24 || ta.index == 26 || ta.index == 28 ||
-            ta.index > 29 && ta.index < 33 ||
+            (ta.index > 29 && ta.index < 33) ||
             ta.index == 34 || ta.index == 36 || ta.index == 37 || ta.index == 39 ||
             ta.index == 40 || ta.index == 42 || ta.index == 43 ||
             ta.index == 45 || ta.index == 48 || ta.index == 49 ||
@@ -861,8 +861,8 @@ bool Maps::TilesAddon::isTrees(const TilesAddon& ta)
         break;
 
     case ICN::OBJNGRAS:
-        if (ta.index == 80 || ta.index > 82 && ta.index < 86 ||
-            ta.index == 87 || ta.index > 88 && ta.index < 92)
+        if (ta.index == 80 || (ta.index > 82 && ta.index < 86) ||
+            ta.index == 87 || (ta.index > 88 && ta.index < 92))
             return true;
         break;
 
@@ -1196,7 +1196,7 @@ bool Maps::Tiles::isLongObject(int direction)
     for (const auto& it : addons_level1._items)
         if (!Exclude4LongObject(it) &&
             (HaveLongObjectUniq(tile.addons_level1, it.uniq) ||
-                !TilesAddon::isTrees(it) && HaveLongObjectUniq(tile.addons_level2, it.uniq)))
+                (!TilesAddon::isTrees(it) && HaveLongObjectUniq(tile.addons_level2, it.uniq))))
             return true;
     return false;
 }
@@ -1520,8 +1520,7 @@ void Maps::Tiles::RedrawMonster(Surface& dst) const
 
         if (MP2::OBJ_HEROES != mp2_object ||
             // skip bottom, bottom_right, bottom_left with ground objects
-            DIRECTION_BOTTOM_ROW & Direction::Get(GetIndex(), it) &&
-            MP2::isGroundObject(tile.GetObject(false)) ||
+            (DIRECTION_BOTTOM_ROW & Direction::Get(GetIndex(), it) && MP2::isGroundObject(tile.GetObject(false))) ||
             // skip ground check
             tile.isWater() != isWater())
             dst_index = -1;

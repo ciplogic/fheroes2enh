@@ -1132,8 +1132,8 @@ void Maps::Tiles::PlaceMonsterOnTile(Tiles& tile, const Monster& mons, uint32_t 
         // fixed count: for money
         if (tile.MonsterFixedCount() ||
             // month of monster
-            world.GetWeekType().GetType() == Week::MONSTERS &&
-            world.GetWeekType().GetMonster() == mons())
+            (world.GetWeekType().GetType() == Week::MONSTERS &&
+            world.GetWeekType().GetMonster() == mons()))
             tile.MonsterSetJoinCondition(Monster::JOIN_CONDITION_MONEY);
         else
         {

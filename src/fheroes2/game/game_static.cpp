@@ -330,8 +330,6 @@ cost_t& GameStatic::GetKingdomStartingResource(int df)
         return kingdom_starting_resource[3];
     case DifficultyEnum::IMPOSSIBLE:
         return kingdom_starting_resource[4];
-    default:
-        break;
     }
 
     return kingdom_starting_resource[5];

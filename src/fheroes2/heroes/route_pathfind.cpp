@@ -181,34 +181,34 @@ bool PassableFromToTile(const Heroes& hero, s32 from, const s32& to, int direct,
         switch (direct)
         {
         case Direction::TOP_LEFT:
-            if (Maps::isValidDirection(from, Direction::TOP, wSize) &&
-                !world.GetTiles(Maps::GetDirectionIndex(from, Direction::TOP)).isWater() ||
-                Maps::isValidDirection(from, Direction::LEFT, wSize) &&
-                !world.GetTiles(Maps::GetDirectionIndex(from, Direction::LEFT)).isWater())
+            if ((Maps::isValidDirection(from, Direction::TOP, wSize) &&
+                !world.GetTiles(Maps::GetDirectionIndex(from, Direction::TOP)).isWater()) ||
+                (Maps::isValidDirection(from, Direction::LEFT, wSize) &&
+                !world.GetTiles(Maps::GetDirectionIndex(from, Direction::LEFT)).isWater()))
                 return false;
             break;
 
         case Direction::TOP_RIGHT:
-            if (Maps::isValidDirection(from, Direction::TOP, wSize) &&
-                !world.GetTiles(Maps::GetDirectionIndex(from, Direction::TOP)).isWater() ||
-                Maps::isValidDirection(from, Direction::RIGHT, wSize) &&
-                !world.GetTiles(Maps::GetDirectionIndex(from, Direction::RIGHT)).isWater())
+            if ((Maps::isValidDirection(from, Direction::TOP, wSize) &&
+                !world.GetTiles(Maps::GetDirectionIndex(from, Direction::TOP)).isWater()) ||
+                (Maps::isValidDirection(from, Direction::RIGHT, wSize) &&
+                !world.GetTiles(Maps::GetDirectionIndex(from, Direction::RIGHT)).isWater()))
                 return false;
             break;
 
         case Direction::BOTTOM_RIGHT:
-            if (Maps::isValidDirection(from, Direction::BOTTOM, wSize) &&
-                !world.GetTiles(Maps::GetDirectionIndex(from, Direction::BOTTOM)).isWater() ||
-                Maps::isValidDirection(from, Direction::RIGHT, wSize) &&
-                !world.GetTiles(Maps::GetDirectionIndex(from, Direction::RIGHT)).isWater())
+            if ((Maps::isValidDirection(from, Direction::BOTTOM, wSize) &&
+                !world.GetTiles(Maps::GetDirectionIndex(from, Direction::BOTTOM)).isWater()) ||
+                (Maps::isValidDirection(from, Direction::RIGHT, wSize) &&
+                !world.GetTiles(Maps::GetDirectionIndex(from, Direction::RIGHT)).isWater()))
                 return false;
             break;
 
         case Direction::BOTTOM_LEFT:
-            if (Maps::isValidDirection(from, Direction::BOTTOM, wSize) &&
-                !world.GetTiles(Maps::GetDirectionIndex(from, Direction::BOTTOM)).isWater() ||
-                Maps::isValidDirection(from, Direction::LEFT, wSize) &&
-                !world.GetTiles(Maps::GetDirectionIndex(from, Direction::LEFT)).isWater())
+            if ((Maps::isValidDirection(from, Direction::BOTTOM, wSize) &&
+                !world.GetTiles(Maps::GetDirectionIndex(from, Direction::BOTTOM)).isWater()) ||
+                (Maps::isValidDirection(from, Direction::LEFT, wSize) &&
+                !world.GetTiles(Maps::GetDirectionIndex(from, Direction::LEFT)).isWater()))
                 return false;
             break;
 

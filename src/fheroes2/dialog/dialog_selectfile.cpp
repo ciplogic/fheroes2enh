@@ -285,7 +285,7 @@ string SelectFileListSimple(const string& header, const string& lastfile, bool e
 
         listbox.QueueEventProcessing();
 
-        if (buttonOk.isEnable() && le.MouseClickLeft(buttonOk) || HotKeyPressEvent(Game::EVENT_DEFAULT_READY))
+        if ((buttonOk.isEnable() && le.MouseClickLeft(buttonOk)) || HotKeyPressEvent(Game::EVENT_DEFAULT_READY))
         {
             if (!filename.empty())
                 result = System::ConcatePath(Settings::GetSaveDir(), filename + ".sav");

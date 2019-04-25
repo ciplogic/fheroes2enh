@@ -42,8 +42,6 @@ std::string Difficulty::String(int difficulty)
         return str_difficulty[3];
     case DifficultyEnum::IMPOSSIBLE:
         return str_difficulty[4];
-    default:
-        break;
     }
 
     return str_difficulty[5];

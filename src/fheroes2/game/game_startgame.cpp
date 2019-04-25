@@ -493,8 +493,7 @@ int Interface::Basic::GetCursorFocusHeroes(const Heroes& from_hero, const Maps::
             const bool protection = MP2::isPickupObject(tile.GetObject())
                                         ? false
                                         : Maps::TileIsUnderProtection(tile.GetIndex()) ||
-                                        !from_hero.isFriends(tile.QuantityColor()) &&
-                                        tile.CaptureObjectIsProtection();
+                                        (!from_hero.isFriends(tile.QuantityColor()) && tile.CaptureObjectIsProtection());
 
             return Cursor::DistanceThemes(protection ? Cursor::FIGHT : Cursor::ACTION,
                                           from_hero.GetRangeRouteDays(tile.GetIndex()));
@@ -565,10 +564,9 @@ int Interface::Basic::StartGame()
             const Player& player = *it;
             Kingdom& kingdom = world.GetKingdom(player.GetColor());
 
-            if (!kingdom.isPlay() ||
-                skip_turns && !player.isColor(conf.CurrentColor()))
-                continue;
-
+            if (!kingdom.isPlay()
+                || (skip_turns && !player.isColor(conf.CurrentColor()))
+                )continue;
 
             radar.SetHide(true);
             radar.SetRedraw();

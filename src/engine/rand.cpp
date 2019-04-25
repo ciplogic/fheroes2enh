@@ -37,7 +37,7 @@ int32_t Rand::Get(int32_t min, int32_t max)
 {
     if (max)
     {
-        if (min > max) swap(min, max);
+        if (min > max) std::swap(min, max);
 
         return min + Get(max - min);
     }

@@ -256,7 +256,7 @@ bool Dialog::InputString(const string& header, string& res)
         le.MousePressLeft(buttonCancel) ? buttonCancel.PressDraw() : buttonCancel.ReleaseDraw();
 
         if (HotKeyPressEvent(Game::EVENT_DEFAULT_READY) ||
-            buttonOk.isEnable() && le.MouseClickLeft(buttonOk))
+            (buttonOk.isEnable() && le.MouseClickLeft(buttonOk)))
             break;
         if (HotKeyPressEvent(Game::EVENT_DEFAULT_EXIT) || le.MouseClickLeft(buttonCancel))
         {

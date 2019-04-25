@@ -828,7 +828,7 @@ bool Heroes::Move(bool fast)
 
     // move hero
     if (path.isValid() &&
-        (isEnableMove() || GetSpriteIndex() < 45 && GetSpriteIndex() % 9 || GetSpriteIndex() >= 45))
+        (isEnableMove() || (GetSpriteIndex() < 45 && GetSpriteIndex() % 9) || GetSpriteIndex() >= 45))
     {
         // fast move for hide AI
         if (fast)

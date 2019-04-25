@@ -188,10 +188,10 @@ SDL_Color RGBA::packSdlColor() const
 
 uint32_t RGBA::pack() const
 {
-    return r() << 24 & 0xFF000000 |
-        g() << 16 & 0x00FF0000 |
-        b() << 8 & 0x0000FF00 |
-        a() & 0x000000FF;
+    return (r() << 24 & 0xFF000000) |
+        (g() << 16 & 0x00FF0000) |
+        (b() << 8 & 0x0000FF00) |
+        (a() & 0x000000FF);
 }
 
 RGBA RGBA::unpack(int v)
@@ -906,7 +906,7 @@ Surface Surface::RenderStencil(const RGBA& color) const
         for (int x = 0; x < w(); ++x)
         {
             RGBA col = GetRGB(GetPixel(x, y));
-            if (clkey0 && clkey == col || col.a() < 200) continue;
+            if ((clkey0 && clkey == col) || col.a() < 200) continue;
             res.SetPixel(x, y, pixel);
         }
     res.Unlock();
@@ -938,23 +938,23 @@ Surface Surface::RenderContour(const RGBA& color) const
             if (0 < x)
             {
                 RGBA col = trf.GetRGB(trf.GetPixel(x - 1, y));
-                if (clkey0 && col == clkey || col.a() < 200) res.SetPixel(x - 1, y, pixel);
+                if ((clkey0 && col == clkey) || col.a() < 200) res.SetPixel(x - 1, y, pixel);
             }
             if (trf.w() - 1 > x)
             {
                 RGBA col = trf.GetRGB(trf.GetPixel(x + 1, y));
-                if (clkey0 && col == clkey || col.a() < 200) res.SetPixel(x + 1, y, pixel);
+                if ((clkey0 && col == clkey) || col.a() < 200) res.SetPixel(x + 1, y, pixel);
             }
 
             if (0 < y)
             {
                 RGBA col = trf.GetRGB(trf.GetPixel(x, y - 1));
-                if (clkey0 && col == clkey || col.a() < 200) res.SetPixel(x, y - 1, pixel);
+                if ((clkey0 && col == clkey) || col.a() < 200) res.SetPixel(x, y - 1, pixel);
             }
             if (trf.h() - 1 > y)
             {
                 RGBA col = trf.GetRGB(trf.GetPixel(x, y + 1));
-                if (clkey0 && col == clkey || col.a() < 200) res.SetPixel(x, y + 1, pixel);
+                if ((clkey0 && col == clkey) || col.a() < 200) res.SetPixel(x, y + 1, pixel);
             }
         }
     res.Unlock();

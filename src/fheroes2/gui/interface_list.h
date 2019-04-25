@@ -272,7 +272,7 @@ namespace Interface
 
             if (!content) return false;
 
-            if ((le.MouseClickLeft(buttonPgUp) || useHotkeys && le.KeyPress(KEY_PAGEUP)) &&
+            if ((le.MouseClickLeft(buttonPgUp) || (useHotkeys && le.KeyPress(KEY_PAGEUP))) &&
                 (top > content->begin()))
             {
                 cursor.Hide();
@@ -281,7 +281,7 @@ namespace Interface
                 splitter.MoveIndex(top - content->begin());
                 return true;
             }
-            if ((le.MouseClickLeft(buttonPgDn) || useHotkeys && le.KeyPress(KEY_PAGEDOWN)) &&
+            if ((le.MouseClickLeft(buttonPgDn) || (useHotkeys && le.KeyPress(KEY_PAGEDOWN))) &&
                 (top + maxItems < content->end()))
             {
                 cursor.Hide();

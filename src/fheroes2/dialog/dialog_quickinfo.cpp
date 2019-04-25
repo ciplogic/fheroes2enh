@@ -431,7 +431,7 @@ std::string getObjectName(const Maps::Tiles& tile, const Settings& settings)
 
             case MP2::OBJ_WITCHSHUT:
                 name_object = ShowWitchHutInfo(tile, from_hero,
-                                               show && kingdom.isVisited(tile) || scoute == Skill::Level::EXPERT);
+                                               (show && kingdom.isVisited(tile)) || scoute == Skill::Level::EXPERT);
                 break;
 
             case MP2::OBJ_OBELISK:
@@ -682,8 +682,8 @@ void Dialog::QuickInfo(const Castle& castle)
         // my  colors
         (castle.isFriends(conf.CurrentColor()) ||
             // show guardians (scouting: advanced)
-            from_hero &&
-            Skill::Level::ADVANCED <= from_hero->GetSecondaryValues(Skill::SkillT::SCOUTING)))
+            (from_hero &&
+            Skill::Level::ADVANCED <= from_hero->GetSecondaryValues(Skill::SkillT::SCOUTING))))
     {
         // heroes name
         text.Set(guardian->GetName(), Font::SMALL);

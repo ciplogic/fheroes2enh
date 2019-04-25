@@ -405,11 +405,11 @@ uint32_t Kingdom::GetLostTownDays() const
 Recruits& Kingdom::GetRecruits()
 {
     // update hero1
-    if (Heroes::UNKNOWN == recruits.GetID1() || recruits.GetHero1() && !recruits.GetHero1()->isFreeman())
+    if (Heroes::UNKNOWN == recruits.GetID1() || (recruits.GetHero1() && !recruits.GetHero1()->isFreeman()))
         recruits.SetHero1(world.GetFreemanHeroes(GetRace()));
 
     // update hero2
-    if (Heroes::UNKNOWN == recruits.GetID2() || recruits.GetHero2() && !recruits.GetHero2()->isFreeman())
+    if (Heroes::UNKNOWN == recruits.GetID2() || (recruits.GetHero2() && !recruits.GetHero2()->isFreeman()))
         recruits.SetHero2(world.GetFreemanHeroes());
 
     if (recruits.GetID1() == recruits.GetID2()) world.UpdateRecruits(recruits);

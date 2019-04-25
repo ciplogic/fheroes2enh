@@ -87,7 +87,7 @@ Battle::Position Battle::Position::GetCorrect(const Unit& b, s32 head)
     result.second = Board::GetCell(head, b.isReflect() ? RIGHT : LEFT);
 
     if (!result.second ||
-        result.second != b.GetPosition().GetHead() && !result.second->isPassable1(true))
+        (result.second != b.GetPosition().GetHead() && !result.second->isPassable1(true)))
     {
         result.second = Board::GetCell(head, b.isReflect() ? LEFT : RIGHT);
 
@@ -271,10 +271,10 @@ bool Battle::Cell::isPassable3(const Unit& b, bool check_reflect) const
 
     Cell* left = Board::GetCell(index, LEFT);
     Cell* right = Board::GetCell(index, RIGHT);
-    return (left &&
-            (left->isPassable1(true) || left->index == b.GetTailIndex() || left->index == b.GetHeadIndex()) ||
-            right && (right->isPassable1(true) || right->index == b.GetTailIndex() ||
-                right->index == b.GetHeadIndex())) &&
+    return ((left &&
+            (left->isPassable1(true) || left->index == b.GetTailIndex() || left->index == b.GetHeadIndex())) ||
+            (right && (right->isPassable1(true) || right->index == b.GetTailIndex() ||
+                right->index == b.GetHeadIndex()))) &&
         isPassable1(true);
 }
 

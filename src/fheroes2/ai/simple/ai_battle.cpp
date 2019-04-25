@@ -456,7 +456,7 @@ bool AI::BattleMagicTurn(Arena& arena, const Unit& b, Actions& a, const Unit* en
         // find enemy archers
         if (it != enemies._items.end() ||
             // or archers tower
-            castle && castle->GetColor() != b.GetColor() && castle->isCastle())
+            (castle && castle->GetColor() != b.GetColor() && castle->isCastle()))
         {
             // find strongest archers
             for (it = friends._items.begin(); it != friends._items.end(); ++it)

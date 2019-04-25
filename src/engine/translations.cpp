@@ -200,21 +200,23 @@ namespace ModernTranslation
         {
             switch (lineType)
             {
-            case TranslationLineType::Msgid:
-                messageIds.push_back(line);
-                break;
-            case TranslationLineType::Msgid_plural:
-                messagePlurals.push_back(line);
-                break;
-            case TranslationLineType::Msgstr:
-                messageStr.push_back(line);
-                break;
-            case TranslationLineType::Msgstr1:
-                messageStr1.push_back(line);
-                break;
-            case TranslationLineType::Msgstr2:
-                messageStr2.push_back(line);
-                break;
+                case TranslationLineType::Msgid:
+                    messageIds.push_back(line);
+                    break;
+                case TranslationLineType::Msgid_plural:
+                    messagePlurals.push_back(line);
+                    break;
+                case TranslationLineType::Msgstr:
+                    messageStr.push_back(line);
+                    break;
+                case TranslationLineType::Msgstr1:
+                    messageStr1.push_back(line);
+                    break;
+                case TranslationLineType::Msgstr2:
+                    messageStr2.push_back(line);
+                    break;
+                default:
+                    break;
             }
         }
     };

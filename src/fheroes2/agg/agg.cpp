@@ -1022,10 +1022,10 @@ void AGG::LoadICN(int icn, uint32_t index, bool reflect)
     icn_cache_t& v = icn_cache[icn];
 
     // need load
-    if ((!reflect || v.reflect
-            && (index >= v.count || v.reflect[index].isValid()))
-        && (reflect || v.sprites &&
-            (index >= v.count || v.sprites[index].isValid())))
+    if ((!reflect || (v.reflect
+            && (index >= v.count || v.reflect[index].isValid())))
+        && (reflect || (v.sprites &&
+            (index >= v.count || v.sprites[index].isValid()))))
         return;
     const Settings& conf = Settings::Get();
 
@@ -1059,7 +1059,7 @@ Sprite AGG::GetICN(int icn, uint32_t index, bool reflect)
 
     // need load?
     if (0 == v.count ||
-        (reflect && (!v.reflect || !v.reflect[index].isValid()) || (!v.sprites || !v.sprites[index].isValid())))
+        ((reflect && (!v.reflect || !v.reflect[index].isValid())) || (!v.sprites || !v.sprites[index].isValid())))
     {
         CheckMemoryLimit();
         LoadICN(icn, index, reflect);
@@ -1387,7 +1387,7 @@ void AGG::PlayMusic(int mus, bool loop)
     const Settings& conf = Settings::Get();
 
     if (!conf.Music() || MUS::UNUSED == mus || MUS::UNKNOWN == mus ||
-        Game::CurrentMusic() == mus && Music::isPlaying())
+        (Game::CurrentMusic() == mus && Music::isPlaying()))
         return;
 
     Game::SetCurrentMusic(mus);

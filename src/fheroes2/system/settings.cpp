@@ -58,12 +58,12 @@ bool IS_DEBUG(int name, int level)
 {
     const int debug = Settings::Get().Debug();
     return
-        DBG_ENGINE & name && (DBG_ENGINE & debug) >> 2 >= level ||
-        DBG_GAME & name && (DBG_GAME & debug) >> 4 >= level ||
-        DBG_BATTLE & name && (DBG_BATTLE & debug) >> 6 >= level ||
-        DBG_AI & name && (DBG_AI & debug) >> 8 >= level ||
-        DBG_NETWORK & name && (DBG_NETWORK & debug) >> 10 >= level ||
-        DBG_DEVEL & name && (DBG_DEVEL & debug) >> 12 >= level;
+        (DBG_ENGINE & name && (DBG_ENGINE & debug) >> 2 >= level) ||
+        (DBG_GAME & name && (DBG_GAME & debug) >> 4 >= level) ||
+        (DBG_BATTLE & name && (DBG_BATTLE & debug) >> 6 >= level) ||
+        (DBG_AI & name && (DBG_AI & debug) >> 8 >= level) ||
+        (DBG_NETWORK & name && (DBG_NETWORK & debug) >> 10 >= level) ||
+        (DBG_DEVEL & name && (DBG_DEVEL & debug) >> 12 >= level);
 }
 
 const char* StringDebug(int name)

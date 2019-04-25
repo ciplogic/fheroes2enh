@@ -1333,7 +1333,7 @@ bool EventDate::isDeprecated(uint32_t date) const
 bool EventDate::isAllow(int col, uint32_t date) const
 {
     return (first == date ||
-            subsequent && (first < date && 0 == (date - first) % subsequent)) &&
+            (subsequent && (first < date && 0 == (date - first) % subsequent))) &&
         col & colors;
 }
 

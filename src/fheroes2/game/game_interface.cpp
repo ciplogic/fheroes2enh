@@ -176,19 +176,19 @@ void Interface::Basic::Redraw(int force)
 
     if ((redraw | force) & REDRAW_GAMEAREA) gameArea.Redraw(Display::Get(), LEVEL_ALL);
 
-    if (conf.ExtGameHideInterface() && conf.ShowRadar() || (redraw | force) & REDRAW_RADAR) radar.Redraw();
+    if ((conf.ExtGameHideInterface() && conf.ShowRadar()) || (redraw | force) & REDRAW_RADAR) radar.Redraw();
     if (conf.UiHeroesBar())
     {
         heroesBar.Redraw();
     }
-    if (conf.ExtGameHideInterface() && conf.ShowIcons() || (redraw | force) & REDRAW_ICONS) iconsPanel.Redraw();
+    if ((conf.ExtGameHideInterface() && conf.ShowIcons()) || (redraw | force) & REDRAW_ICONS) iconsPanel.Redraw();
     else if ((redraw | force) & REDRAW_HEROES) iconsPanel.RedrawIcons(icons_t::ICON_HEROES);
     else if ((redraw | force) & REDRAW_CASTLES) iconsPanel.RedrawIcons(icons_t::ICON_CASTLES);
 
-    if (conf.ExtGameHideInterface() && conf.ShowButtons() || (redraw | force) & REDRAW_BUTTONS)
+    if ((conf.ExtGameHideInterface() && conf.ShowButtons()) || (redraw | force) & REDRAW_BUTTONS)
         buttonsArea.Redraw();
 
-    if (conf.ExtGameHideInterface() && conf.ShowStatus() || (redraw | force) & REDRAW_STATUS) statusWindow.Redraw();
+    if ((conf.ExtGameHideInterface() && conf.ShowStatus()) || (redraw | force) & REDRAW_STATUS) statusWindow.Redraw();
 
     if (conf.ExtGameHideInterface() && conf.ShowControlPanel() && redraw & REDRAW_GAMEAREA) controlPanel.Redraw();
 

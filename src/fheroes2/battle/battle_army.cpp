@@ -318,7 +318,7 @@ void Battle::Force::NewTurn()
 
 bool isUnitFirst(const Battle::Unit* last, bool part1, int army2_color)
 {
-    return !last && part1 || last && army2_color == last->GetColor();
+    return (!last && part1) || (last && army2_color == last->GetColor());
 }
 
 void Battle::Force::UpdateOrderUnits(const Force& army1, const Force& army2, Units& orders)

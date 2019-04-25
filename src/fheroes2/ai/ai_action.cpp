@@ -457,7 +457,7 @@ void AIToHeroes(Heroes& hero, uint32_t obj, s32 dst_index)
     if (!other_hero) return;
 
     if (hero.GetColor() == other_hero->GetColor() ||
-        conf.ExtUnionsAllowHeroesMeetings() && Players::isFriends(hero.GetColor(), other_hero->GetColor()))
+        (conf.ExtUnionsAllowHeroesMeetings() && Players::isFriends(hero.GetColor(), other_hero->GetColor())))
     {
         AIMeeting(hero, *other_hero);
     }
@@ -523,7 +523,7 @@ void AIToCastle(Heroes& hero, uint32_t obj, s32 dst_index)
     if (!castle) return;
 
     if (hero.GetColor() == castle->GetColor() ||
-        conf.ExtUnionsAllowCastleVisiting() && Players::isFriends(hero.GetColor(), castle->GetColor()))
+        (conf.ExtUnionsAllowCastleVisiting() && Players::isFriends(hero.GetColor(), castle->GetColor())))
     {
         castle->MageGuildEducateHero(hero);
         hero.SetVisited(dst_index);
@@ -1005,7 +1005,7 @@ void AIToPrimarySkillObject(Heroes& hero, uint32_t obj, s32 dst_index)
         break;
     }
 
-    if (MP2::OBJ_ARENA == obj && !hero.isVisited(obj) ||
+    if ((MP2::OBJ_ARENA == obj && !hero.isVisited(obj)) ||
         !hero.isVisited(tile))
     {
         // increase skill
@@ -1141,9 +1141,9 @@ void AIToXanadu(Heroes& hero, uint32_t obj, s32 dst_index)
     const uint32_t level2 = hero.GetLevel();
 
     if (!hero.isVisited(tile) &&
-        (level1 == Skill::Level::BASIC && 7 < level2 ||
-            level1 == Skill::Level::ADVANCED && 5 < level2 ||
-            level1 == Skill::Level::EXPERT && 3 < level2 ||
+        ((level1 == Skill::Level::BASIC && 7 < level2) ||
+            (level1 == Skill::Level::ADVANCED && 5 < level2) ||
+            (level1 == Skill::Level::EXPERT && 3 < level2) ||
             9 < level2))
     {
         hero.IncreasePrimarySkill(Skill::Primary::ATTACK);
@@ -1746,9 +1746,9 @@ bool AI::HeroesValidObject(const Heroes& hero, s32 index)
             const uint32_t level2 = hero.GetLevel();
 
             if (!hero.isVisited(tile) &&
-                (level1 == Skill::Level::BASIC && 7 < level2 ||
-                    level1 == Skill::Level::ADVANCED && 5 < level2 ||
-                    level1 == Skill::Level::EXPERT && 3 < level2 || 9 < level2))
+                ((level1 == Skill::Level::BASIC && 7 < level2) ||
+                    (level1 == Skill::Level::ADVANCED && 5 < level2) ||
+                    (level1 == Skill::Level::EXPERT && 3 < level2) || 9 < level2))
                 return true;
             break;
         }
@@ -1768,7 +1768,7 @@ bool AI::HeroesValidObject(const Heroes& hero, s32 index)
             const Troop& troop = tile.QuantityTroop();
             if (troop.isValid() &&
                 (army.m_troops.HasMonster(troop()) ||
-                    !army.isFullHouse() && (troop._monster.isArchers() || troop._monster.isFly())))
+                    (!army.isFullHouse() && (troop._monster.isArchers() || troop._monster.isFly()))))
                 return true;
             break;
         }
@@ -1789,7 +1789,7 @@ bool AI::HeroesValidObject(const Heroes& hero, s32 index)
 
             if (troop.isValid() && kingdom.AllowPayment(paymentCosts) &&
                 (army.m_troops.HasMonster(troop()) ||
-                    !army.isFullHouse() && (troop._monster.isArchers() || troop._monster.isFly())))
+                    (!army.isFullHouse() && (troop._monster.isArchers() || troop._monster.isFly()))))
                 return true;
             break;
         }
@@ -1997,7 +1997,7 @@ void AI::HeroesMove(Heroes& hero)
         if (hero.isFreeman() || !hero.isEnableMove()) break;
 
         const bool hide_move = 0 == conf.AIMoveSpeed() ||
-            !IS_DEVEL() && !AIHeroesShowAnimation(hero);
+            (!IS_DEVEL() && !AIHeroesShowAnimation(hero));
 
         if (hide_move)
         {
@@ -2026,7 +2026,7 @@ void AI::HeroesMove(Heroes& hero)
     }
 
     const bool hide_move = 0 == conf.AIMoveSpeed() ||
-        !IS_DEVEL() && !AIHeroesShowAnimation(hero);
+        (!IS_DEVEL() && !AIHeroesShowAnimation(hero));
 
     // 0.2 sec delay for show enemy hero position
     if (!hero.isFreeman() && !hide_move) DELAY(200);

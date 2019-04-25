@@ -348,8 +348,8 @@ int Players::GetColors(int control, bool strong) const
 
     for (const auto& it : _items)
         if (control == 0xFF ||
-            strong && it->GetControl() == control ||
-            !strong && it->GetControl() & control)
+            (strong && it->GetControl() == control) ||
+            (!strong && it->GetControl() & control))
             res |= it->GetColor();
 
     return res;

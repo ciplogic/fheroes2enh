@@ -959,7 +959,7 @@ void ActionToHeroes(Heroes& hero, uint32_t obj, s32 dst_index)
     if (!other_hero) return;
 
     if (hero.GetColor() == other_hero->GetColor() ||
-        conf.ExtUnionsAllowHeroesMeetings() && Players::isFriends(hero.GetColor(), other_hero->GetColor()))
+        (conf.ExtUnionsAllowHeroesMeetings() && Players::isFriends(hero.GetColor(), other_hero->GetColor())))
     {
         hero.MeetingDialog(*other_hero);
     }
@@ -1025,7 +1025,7 @@ void ActionToCastle(Heroes& hero, uint32_t obj, s32 dst_index)
     {
     }
     else if (hero.GetColor() == castle->GetColor() ||
-        conf.ExtUnionsAllowCastleVisiting() && Players::isFriends(hero.GetColor(), castle->GetColor()))
+        (conf.ExtUnionsAllowCastleVisiting() && Players::isFriends(hero.GetColor(), castle->GetColor())))
     {
         Mixer::Reduce();
         if (!conf.ExtHeroLearnSpellsWithDay()) castle->MageGuildEducateHero(hero);

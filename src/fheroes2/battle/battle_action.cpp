@@ -196,7 +196,7 @@ void Battle::Arena::ApplyActionAttack(Command& cmd)
 
     if (!b1 || !b1->isValid()
         || !b2 || !b2->isValid()
-        || b1->GetColor() == b2->GetColor() && !b2->Modes(SP_HYPNOTIZE))
+        || (b1->GetColor() == b2->GetColor() && !b2->Modes(SP_HYPNOTIZE)))
         return;
     // reset blind
     if (b2->Modes(SP_BLIND)) b2->ResetBlind();

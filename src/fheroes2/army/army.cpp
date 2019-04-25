@@ -1082,10 +1082,10 @@ int Army::GetMoraleModificator(string* strs) const
     }
 
     // undead in life group
-    if (1 < uniq_count && (count_necr || ghost_present) &&
-        (count_kngt || count_barb || count_sorc || count_wrlk || count_wzrd || count_bomg) ||
+    if ((1 < uniq_count && (count_necr || ghost_present) &&
+        (count_kngt || count_barb || count_sorc || count_wrlk || count_wzrd || count_bomg)) ||
         // or artifact Arm Martyr
-        GetCommander() && GetCommander()->HasArtifact(Artifact::ARM_MARTYR))
+        (GetCommander() && GetCommander()->HasArtifact(Artifact::ARM_MARTYR)))
     {
         result -= 1;
         if (strs)
@@ -1169,7 +1169,7 @@ void Army::SetCommander(HeroBase* c)
 
 HeroBase* Army::GetCommander()
 {
-    return !commander || commander->isCaptain() && !commander->isValid() ? nullptr : commander;
+    return !commander || (commander->isCaptain() && !commander->isValid()) ? nullptr : commander;
 }
 
 const Castle* Army::inCastle() const
@@ -1179,7 +1179,7 @@ const Castle* Army::inCastle() const
 
 const HeroBase* Army::GetCommander() const
 {
-    return !commander || commander->isCaptain() && !commander->isValid() ? nullptr : commander;
+    return !commander || (commander->isCaptain() && !commander->isValid()) ? nullptr : commander;
 }
 
 int Army::GetControl() const
@@ -1300,7 +1300,7 @@ JoinCount Army::GetJoinSolution(const Heroes& hero, const Maps::Tiles& tile, con
     const bool join_force = map_troop ? map_troop->JoinConditionForce() : tile.MonsterJoinConditionForce();
 
     if (!join_skip &&
-        check_free_stack && (check_extra_condition && ratios >= 2 || join_force))
+        check_free_stack && ((check_extra_condition && ratios >= 2) || join_force))
     {
         if (join_free || join_force)
             return {JOIN_FREE, troop.GetCount()};

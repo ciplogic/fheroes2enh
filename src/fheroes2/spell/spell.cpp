@@ -614,7 +614,7 @@ Spell Spell::Rand(int lvl, bool adv)
     for (uint32_t sp = NONE; sp < STONE; ++sp)
     {
         const Spell spell(sp);
-        if ((adv && !spell.isCombat() || !adv && spell.isCombat()) &&
+        if (((adv && !spell.isCombat()) || (!adv && spell.isCombat())) &&
             lvl == spell.Level() &&
             !(spells[sp].bits & SP_DISABLE))
             v.push_back(spell);
