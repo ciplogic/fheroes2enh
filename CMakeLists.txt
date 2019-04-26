@@ -125,6 +125,8 @@ set(SOURCE_FILES
         src/fheroes2/battle/battle_command.cpp
         src/fheroes2/battle/battle_command.h
         src/fheroes2/battle/battle_dialogs.cpp
+        src/fheroes2/battle/battle_force.h
+        src/fheroes2/battle/battle_force.cpp
         src/fheroes2/battle/battle_grave.cpp
         src/fheroes2/battle/battle_grave.h
         src/fheroes2/battle/battle_interface.cpp

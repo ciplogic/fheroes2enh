@@ -39,6 +39,7 @@
 #include "battle_interface.h"
 #include "battle_command.h"
 #include "battle_army.h"
+#include "battle_force.h"
 
 namespace Battle
 {

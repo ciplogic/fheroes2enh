@@ -34,6 +34,7 @@
 #include "rand.h"
 #include "battle_army.h"
 #include <functional>
+#include "battle_force.h"
 
 void Battle::Arena::BattleProcess(Unit& attacker, Unit& defender, s32 dst, int dir)
 {

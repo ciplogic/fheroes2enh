@@ -135,7 +135,7 @@ int Castle::DialogBuyHero(const Heroes* hero) const
 
 int Castle::DialogBuyCastle(bool buttons) const
 {
-    BuildingInfo info(*this, BUILD_CASTLE);
+    castle::BuildingInfo info(*this, BUILD_CASTLE);
     return info.DialogBuyBuilding(buttons) ? Dialog::OK : Dialog::CANCEL;
 }
 
@@ -174,27 +174,27 @@ uint32_t Castle::OpenTown()
     text.Blit(cur_pt.x + 536 - text.w() / 2, cur_pt.y + 1);
 
     //
-    BuildingInfo dwelling1(*this, DWELLING_MONSTER1);
+    castle::BuildingInfo dwelling1(*this, DWELLING_MONSTER1);
     dwelling1.SetPos(cur_pt.x + 5, cur_pt.y + 2);
     dwelling1.Redraw();
 
-    BuildingInfo dwelling2(*this, DWELLING_MONSTER2);
+    castle::BuildingInfo dwelling2(*this, DWELLING_MONSTER2);
     dwelling2.SetPos(cur_pt.x + 149, cur_pt.y + 2);
     dwelling2.Redraw();
 
-    BuildingInfo dwelling3(*this, DWELLING_MONSTER3);
+    castle::BuildingInfo dwelling3(*this, DWELLING_MONSTER3);
     dwelling3.SetPos(cur_pt.x + 293, cur_pt.y + 2);
     dwelling3.Redraw();
 
-    BuildingInfo dwelling4(*this, DWELLING_MONSTER4);
+    castle::BuildingInfo dwelling4(*this, DWELLING_MONSTER4);
     dwelling4.SetPos(cur_pt.x + 5, cur_pt.y + 77);
     dwelling4.Redraw();
 
-    BuildingInfo dwelling5(*this, DWELLING_MONSTER5);
+    castle::BuildingInfo dwelling5(*this, DWELLING_MONSTER5);
     dwelling5.SetPos(cur_pt.x + 149, cur_pt.y + 77);
     dwelling5.Redraw();
 
-    BuildingInfo dwelling6(*this, DWELLING_MONSTER6);
+    castle::BuildingInfo dwelling6(*this, DWELLING_MONSTER6);
     dwelling6.SetPos(cur_pt.x + 293, cur_pt.y + 77);
     dwelling6.Redraw();
 
@@ -218,67 +218,67 @@ uint32_t Castle::OpenTown()
         level = BUILD_MAGEGUILD5;
         break;
     }
-    BuildingInfo buildingMageGuild(*this, level);
+    castle::BuildingInfo buildingMageGuild(*this, level);
     buildingMageGuild.SetPos(cur_pt.x + 5, cur_pt.y + 157);
     buildingMageGuild.Redraw();
 
     // tavern
-    BuildingInfo buildingTavern(*this, BUILD_TAVERN);
+    castle::BuildingInfo buildingTavern(*this, BUILD_TAVERN);
     buildingTavern.SetPos(cur_pt.x + 149, cur_pt.y + 157);
     buildingTavern.Redraw();
 
     // thieves guild
-    BuildingInfo buildingThievesGuild(*this, BUILD_THIEVESGUILD);
+    castle::BuildingInfo buildingThievesGuild(*this, BUILD_THIEVESGUILD);
     buildingThievesGuild.SetPos(cur_pt.x + 293, cur_pt.y + 157);
     buildingThievesGuild.Redraw();
 
     // shipyard
-    BuildingInfo buildingShipyard(*this, BUILD_SHIPYARD);
+    castle::BuildingInfo buildingShipyard(*this, BUILD_SHIPYARD);
     buildingShipyard.SetPos(cur_pt.x + 5, cur_pt.y + 232);
     buildingShipyard.Redraw();
 
     // statue
-    BuildingInfo buildingStatue(*this, BUILD_STATUE);
+    castle::BuildingInfo buildingStatue(*this, BUILD_STATUE);
     buildingStatue.SetPos(cur_pt.x + 149, cur_pt.y + 232);
     buildingStatue.Redraw();
 
     // marketplace
-    BuildingInfo buildingMarketplace(*this, BUILD_MARKETPLACE);
+    castle::BuildingInfo buildingMarketplace(*this, BUILD_MARKETPLACE);
     buildingMarketplace.SetPos(cur_pt.x + 293, cur_pt.y + 232);
     buildingMarketplace.Redraw();
 
     // well
-    BuildingInfo buildingWell(*this, BUILD_WELL);
+    castle::BuildingInfo buildingWell(*this, BUILD_WELL);
     buildingWell.SetPos(cur_pt.x + 5, cur_pt.y + 307);
     buildingWell.Redraw();
 
     // wel2
-    BuildingInfo buildingWel2(*this, BUILD_WEL2);
+    castle::BuildingInfo buildingWel2(*this, BUILD_WEL2);
     buildingWel2.SetPos(cur_pt.x + 149, cur_pt.y + 307);
     buildingWel2.Redraw();
 
     // spec
-    BuildingInfo buildingSpec(*this, BUILD_SPEC);
+    castle::BuildingInfo buildingSpec(*this, BUILD_SPEC);
     buildingSpec.SetPos(cur_pt.x + 293, cur_pt.y + 307);
     buildingSpec.Redraw();
 
     // left turret
-    BuildingInfo buildingLTurret(*this, BUILD_LEFTTURRET);
+    castle::BuildingInfo buildingLTurret(*this, BUILD_LEFTTURRET);
     buildingLTurret.SetPos(cur_pt.x + 5, cur_pt.y + 387);
     buildingLTurret.Redraw();
 
     // right turret
-    BuildingInfo buildingRTurret(*this, BUILD_RIGHTTURRET);
+    castle::BuildingInfo buildingRTurret(*this, BUILD_RIGHTTURRET);
     buildingRTurret.SetPos(cur_pt.x + 149, cur_pt.y + 387);
     buildingRTurret.Redraw();
 
     // moat
-    BuildingInfo buildingMoat(*this, BUILD_MOAT);
+    castle::BuildingInfo buildingMoat(*this, BUILD_MOAT);
     buildingMoat.SetPos(cur_pt.x + 293, cur_pt.y + 387);
     buildingMoat.Redraw();
 
     // captain
-    BuildingInfo buildingCaptain(*this, BUILD_CAPTAIN);
+    castle::BuildingInfo buildingCaptain(*this, BUILD_CAPTAIN);
     buildingCaptain.SetPos(cur_pt.x + 444, cur_pt.y + 165);
     buildingCaptain.Redraw();
 

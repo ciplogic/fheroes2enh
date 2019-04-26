@@ -379,7 +379,7 @@ void Game::LoadExternalResource(const Settings& conf)
     spec = Settings::GetLastFile(prefix_stats, "buildings.xml");
 
     if (System::IsFile(spec))
-        BuildingInfo::UpdateCosts(spec);
+        castle::BuildingInfo::UpdateCosts(spec);
 
     // payments.xml
     spec = Settings::GetLastFile(prefix_stats, "payments.xml");

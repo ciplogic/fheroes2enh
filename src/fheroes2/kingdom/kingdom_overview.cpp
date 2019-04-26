@@ -275,7 +275,7 @@ struct CstlRow
     Castle* castle = nullptr;
     sp<ArmyBar> armyBarGuard;
     sp<ArmyBar> armyBarGuest;
-    sp<DwellingsBar> dwellingsBar;
+    sp<castle::DwellingsBar> dwellingsBar;
 
     CstlRow() : armyBarGuard(nullptr), armyBarGuest(nullptr), dwellingsBar(nullptr)
     {
@@ -315,7 +315,7 @@ struct CstlRow
             armyBarGuest->SetHSpace(-1);
         }
 
-        dwellingsBar = make_shared<DwellingsBar>(*castle, Size(39, 52), fill);
+        dwellingsBar = make_shared<castle::DwellingsBar>(*castle, Size(39, 52), fill);
         dwellingsBar->SetColRows(6, 1);
         dwellingsBar->SetHSpace(2);
     }

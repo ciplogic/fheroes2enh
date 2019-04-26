@@ -149,11 +149,11 @@ buildstats_t _builds[] = {
     {BUILD_NOTHING, Race::NONE, {0, 0, 0, 0, 0, 0, 0}},
 };
 
-void BuildingInfo::UpdateCosts(const string& spec)
+void castle::BuildingInfo::UpdateCosts(const string& spec)
 {
 }
 
-payment_t BuildingInfo::GetCost(uint32_t build, int race)
+payment_t castle::BuildingInfo::GetCost(uint32_t build, int race)
 {
     payment_t payment;
     const buildstats_t* ptr = &_builds[0];
@@ -242,7 +242,7 @@ int GetIndexBuildingSprite(uint32_t build)
     return 0;
 }
 
-BuildingInfo::BuildingInfo(const Castle& c, building_t b) : castle(c), building(b), area(0, 0, 135, 57),
+castle::BuildingInfo::BuildingInfo(const Castle& c, building_t b) : castle(c), building(b), area(0, 0, 135, 57),
                                                             bcond(ALLOW_BUILD)
 {
     if (IsDwelling()) building = castle.GetActualDwelling(b);
@@ -299,23 +299,23 @@ BuildingInfo::BuildingInfo(const Castle& c, building_t b) : castle(c), building(
     }
 }
 
-uint32_t BuildingInfo::operator()() const
+uint32_t castle::BuildingInfo::operator()() const
 {
     return building;
 }
 
-void BuildingInfo::SetPos(s32 x, s32 y)
+void castle::BuildingInfo::SetPos(s32 x, s32 y)
 {
     area.x = x;
     area.y = y;
 }
 
-const Rect& BuildingInfo::GetArea() const
+const Rect& castle::BuildingInfo::GetArea() const
 {
     return area;
 }
 
-bool BuildingInfo::IsDwelling() const
+bool castle::BuildingInfo::IsDwelling() const
 {
     switch (building)
     {
@@ -338,7 +338,7 @@ bool BuildingInfo::IsDwelling() const
     return false;
 }
 
-void BuildingInfo::RedrawCaptain() const
+void castle::BuildingInfo::RedrawCaptain() const
 {
     AGG::GetICN(ICN::Get4Captain(castle.GetRace()),
                 building & BUILD_CAPTAIN ? 1 : 0).Blit(area.x, area.y);
@@ -371,7 +371,7 @@ void BuildingInfo::RedrawCaptain() const
 }
 
 
-void BuildingInfo::Redraw() const
+void castle::BuildingInfo::Redraw() const
 {
     if (BUILD_CAPTAIN == building)
     {
@@ -445,17 +445,17 @@ void BuildingInfo::Redraw() const
 }
 
 
-std::string BuildingInfo::GetName() const
+std::string castle::BuildingInfo::GetName() const
 {
     return Castle::GetStringBuilding(building, castle.GetRace());
 }
 
-const string& BuildingInfo::GetDescription() const
+const string& castle::BuildingInfo::GetDescription() const
 {
     return description;
 }
 
-bool BuildingInfo::QueueEventProcessing() const
+bool castle::BuildingInfo::QueueEventProcessing() const
 {
     LocalEvent& le = LocalEvent::Get();
 
@@ -488,7 +488,7 @@ bool BuildingInfo::QueueEventProcessing() const
     return false;
 }
 
-bool BuildingInfo::DialogBuyBuilding(bool buttons) const
+bool castle::BuildingInfo::DialogBuyBuilding(bool buttons) const
 {
     Display& display = Display::Get();
 
@@ -637,7 +637,7 @@ std::string GetBuildConditionDescription(int bcond)
     return "";
 }
 
-string BuildingInfo::GetConditionDescription() const
+string castle::BuildingInfo::GetConditionDescription() const
 {
     string res;
 
@@ -685,7 +685,7 @@ string BuildingInfo::GetConditionDescription() const
     return res;
 }
 
-void BuildingInfo::SetStatusMessage(StatusBar& bar) const
+void castle::BuildingInfo::SetStatusMessage(StatusBar& bar) const
 {
     string str;
 
@@ -708,20 +708,20 @@ void BuildingInfo::SetStatusMessage(StatusBar& bar) const
     bar.ShowMessage(str);
 }
 
-bool BuildingInfo::CanQuickBuild(const Point& cursor, Rect area)
+bool castle::BuildingInfo::CanQuickBuild(const Point& cursor, Rect area)
 {
     int dx = area.w - (cursor.x - area.x);
     int dy = cursor.y - area.y;
     return dy < 20 && dx < 20;
 }
 
-DwellingItem::DwellingItem(Castle& castle, uint32_t dw)
+castle::DwellingItem::DwellingItem(Castle& castle, uint32_t dw)
 {
     type = castle.GetActualDwelling(dw);
     mons = Monster(castle.GetRace(), type);
 }
 
-DwellingsBar::DwellingsBar(Castle& cstl, const Size& sz, const RGBA& fill) : castle(cstl)
+castle::DwellingsBar::DwellingsBar(Castle& cstl, const Size& sz, const RGBA& fill) : castle(cstl)
 {
     for (uint32_t dw = DWELLING_MONSTER1; dw <= DWELLING_MONSTER6; dw <<= 1)
         content.emplace_back(castle, dw);
@@ -732,12 +732,12 @@ DwellingsBar::DwellingsBar(Castle& cstl, const Size& sz, const RGBA& fill) : cas
     SetItemSize(sz.w, sz.h);
 }
 
-void DwellingsBar::RedrawBackground(const Rect& pos, Surface& dstsf)
+void castle::DwellingsBar::RedrawBackground(const Rect& pos, Surface& dstsf)
 {
     backsf.Blit(pos.x, pos.y, dstsf);
 }
 
-void DwellingsBar::RedrawItem(DwellingItem& dwl, const Rect& pos, Surface& dstsf)
+void castle::DwellingsBar::RedrawItem(DwellingItem& dwl, const Rect& pos, Surface& dstsf)
 {
     const Sprite& mons32 = AGG::GetICN(ICN::MONS32, dwl.mons.GetSpriteIndex());
     mons32.Blit(pos.x + (pos.w - mons32.w()) / 2, pos.y + (pos.h - 3 - mons32.h()));
@@ -760,7 +760,7 @@ void DwellingsBar::RedrawItem(DwellingItem& dwl, const Rect& pos, Surface& dstsf
         AGG::GetICN(ICN::CSLMARKER, 0).Blit(pos.x + pos.w - 10, pos.y + 4, dstsf);
 }
 
-bool DwellingsBar::ActionBarSingleClick(const Point& cursor, DwellingItem& dwl, const Rect& pos)
+bool castle::DwellingsBar::ActionBarSingleClick(const Point& cursor, DwellingItem& dwl, const Rect& pos)
 {
     if (castle.isBuild(dwl.type))
     {
@@ -782,7 +782,7 @@ bool DwellingsBar::ActionBarSingleClick(const Point& cursor, DwellingItem& dwl, 
     return true;
 }
 
-bool DwellingsBar::ActionBarPressRight(const Point& cursor, DwellingItem& dwl, const Rect& pos)
+bool castle::DwellingsBar::ActionBarPressRight(const Point& cursor, DwellingItem& dwl, const Rect& pos)
 {
     Dialog::ArmyInfo(Troop(dwl.mons, castle.GetDwellingLivedCount(dwl.type)), 0);
 

@@ -22,7 +22,6 @@
 
 #pragma once
 
-
 #include <list>
 
 #include "ByteVectorReader.h"
@@ -32,6 +31,7 @@
 #include "spell_storage.h"
 #include "battle_board.h"
 #include "battle_grave.h"
+#include "battle_force.h"
 
 #define ARENAW 11
 #define ARENAH 9
@@ -43,8 +43,6 @@ class HeroBase;
 
 namespace Battle
 {
-    class Force;
-
     class Units;
 
     class Unit;

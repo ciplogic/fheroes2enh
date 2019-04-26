@@ -38,6 +38,7 @@
 #include "battle_army.h"
 #include "world.h"
 #include "mus.h"
+#include "battle_force.h"
 
 using namespace Dialog;
 
