@@ -5,6 +5,8 @@ set(CMAKE_CXX_STANDARD 14)
 
 ADD_DEFINITIONS(-DBUILD_RELEASE -DWITH_AI=simple -DWITH_IMAGE -DWITH_MIXER -DWITH_TTF)
 
+add_subdirectory(src)
+
 include_directories(
         src/engine
         src/engine/serializer
@@ -80,20 +82,6 @@ set(SOURCE_FILES
         src/engine/serializer/BinaryFileReader.h
         src/engine/serializer/ByteVectorWriter.cpp
         src/engine/serializer/ByteVectorWriter.h
-        src/fheroes2/agg/agg.cpp
-        src/fheroes2/agg/agg.h
-        src/fheroes2/agg/icn.cpp
-        src/fheroes2/agg/icn.h
-        src/fheroes2/agg/m82.cpp
-        src/fheroes2/agg/m82.h
-        src/fheroes2/agg/mus.cpp
-        src/fheroes2/agg/mus.h
-        src/fheroes2/agg/sprite.cpp
-        src/fheroes2/agg/sprite.h
-        src/fheroes2/agg/til.cpp
-        src/fheroes2/agg/til.h
-        src/fheroes2/agg/xmi.cpp
-        src/fheroes2/agg/xmi.h
         src/fheroes2/ai/simple/ai_battle.cpp
         src/fheroes2/ai/simple/ai_castle.cpp
         src/fheroes2/ai/simple/ai_heroes.cpp
