@@ -354,12 +354,15 @@ add_executable(fheroes2 ${SOURCE_FILES})
 
 INCLUDE(FindPkgConfig)
 
+set(CMAKE_FIND_FRAMEWORK LAST)
 
 #SDL
 find_package(SDL REQUIRED)
 find_package(SDL_image REQUIRED)
 find_package(SDL_mixer REQUIRED)
 find_package(SDL_ttf REQUIRED)
+find_package(PNG REQUIRED)
+
 
 PKG_SEARCH_MODULE(SDL REQUIRED sdl)
 PKG_SEARCH_MODULE(SDLIMAGE REQUIRED SDL_image>=1.2)
@@ -378,7 +381,10 @@ if(LINUX)
     TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${SDL_LIBRARY} ${SDLIMAGE_LIBRARY} ${SDLMIXER_LIBRARY} ${SDLTTF_LIBRARY} -lSDL -lpng)
 else()
     INCLUDE_DIRECTORIES(${SDL_INCLUDE_DIRS} /usr/local/include)
-    TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${SDL_LIBRARY} ${SDLIMAGE_LIBRARY} ${SDLMIXER_LIBRARY} ${SDLTTF_LIBRARY} -lpng -lSDL -lSDLmain  -Wl,-framework,Cocoa )
+    link_directories(/usr/local/lib)
+    link_libraries(libpng.a libSDL.a libSDLmain.a libSDL_image.a libSDL_mixer.a)
+
+    TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${SDL_LIBRARY} ${SDLIMAGE_LIBRARY} ${SDLMIXER_LIBRARY} ${SDLTTF_LIBRARY} -lpng -Wl,-framework,Cocoa )
 endif()
 
 
