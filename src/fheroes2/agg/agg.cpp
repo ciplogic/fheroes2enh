@@ -53,101 +53,19 @@
 
 #include <sstream>
 #include <iostream>
-
+#include "agg_private.h"
 
 namespace
 {
-    const int FATSIZENAME = 15;
 
     std::vector<SDL_Color> pal_colors;
     std::vector<uint32_t> pal_colors_u32;
 }
 
+
+
 namespace AGG
 {
-    class FAT
-    {
-    public:
-        FAT() : crc(0), offset(0), size(0)
-        {
-        }
-
-        uint32_t crc;
-        uint32_t offset;
-        uint32_t size;
-
-        string Info() const;
-    };
-
-
-    class File
-    {
-    public:
-        File();
-
-        ~File();
-
-        bool Open(const string&);
-
-        bool isGood() const;
-
-        const string& Name() const;
-
-        const FAT& Fat(const string& key);
-
-        vector<u8> Read(const string& str);
-
-    private:
-        string filename;
-        unordered_map<string, FAT> fat;
-        uint32_t count_items = 0;
-        up<ByteVectorReader> stream;
-        vector<u8> fileContent;
-        string key;
-        vector<u8> body;
-    };
-
-    struct icn_cache_t
-    {
-        icn_cache_t() : sprites(nullptr), reflect(nullptr), count(0)
-        {
-        }
-
-        Sprite* sprites;
-        Sprite* reflect;
-        uint32_t count;
-    };
-
-    struct til_cache_t
-    {
-        til_cache_t() : sprites(nullptr), count(0)
-        {
-        }
-
-        Surface* sprites;
-        uint32_t count;
-    };
-
-    struct fnt_cache_t
-    {
-        Surface sfs[6]; /* small_white, small_yellow, medium_white, medium_yellow */
-    };
-
-    struct loop_sound_t
-    {
-        loop_sound_t(int w, int c) : sound(w), channel(c)
-        {
-        }
-
-        bool operator==(int m82) const
-        {
-            return m82 == sound;
-        }
-
-        int sound;
-        int channel;
-    };
-
     File heroes2_agg;
     File heroes2x_agg;
 
@@ -225,101 +143,6 @@ sp<Sprite> AGG::ICNSprite::CreateSprite(bool reflect, bool shadow) const
 bool AGG::ICNSprite::isValid() const
 {
     return first.isValid();
-}
-
-/*AGG::File constructor */
-AGG::File::File() : count_items(0)
-{
-}
-
-bool AGG::File::Open(const string& fname)
-{
-    filename = fname;
-    if (!FileUtils::Exists(fname))
-        return false;
-    fileContent = FileUtils::readFileBytes(filename);
-    stream = std::make_unique<ByteVectorReader>(fileContent);
-
-    const uint32_t size = stream->size();
-
-    count_items = stream->getLE16();
-
-    stream->seek(size - FATSIZENAME * count_items);
-    std::vector<std::string> vectorNames;
-    vectorNames.reserve(count_items);
-    for (uint32_t ii = 0; ii < count_items; ++ii)
-    {
-        vectorNames.push_back(stream->toString(FATSIZENAME));
-    }
-    stream->seek(2);
-    for (uint32_t ii = 0; ii < count_items; ++ii)
-    {
-        const string& itemName = vectorNames[ii];
-        FAT f;
-        const auto crc = stream->getLE32();
-        f.crc = crc;
-        const auto offset = stream->getLE32();
-        f.offset = offset;
-        const auto sizeChunk = stream->getLE32();
-        f.size = sizeChunk;
-        fat[itemName] = f;
-    }
-
-    return true;
-}
-
-AGG::File::~File() = default;
-
-bool AGG::File::isGood() const
-{
-    return stream && stream->size() && count_items;
-}
-
-/* get AGG file name */
-const string& AGG::File::Name() const
-{
-    return filename;
-}
-
-/* get FAT element */
-const AGG::FAT& AGG::File::Fat(const string& key)
-{
-    return fat[key];
-}
-
-/* dump FAT */
-string AGG::FAT::Info() const
-{
-    ostringstream os;
-
-    os << "crc: " << crc << ", offset: " << offset << ", size: " << size;
-    return os.str();
-}
-
-/* read element to body */
-vector<u8> AGG::File::Read(const string& str)
-{
-    const auto it = fat.find(str);
-
-    if (it == fat.end())
-    {
-        vector<u8> emptyBuf;
-        return emptyBuf;
-    }
-
-    const FAT& f = (*it).second;
-    key = str;
-
-    if (!f.size)
-    {
-        vector<u8> emptyBuf;
-        return emptyBuf;
-    }
-    stream->seek(f.offset);
-    vector<u8> body = stream->getRaw(f.size);
-
-
-    return body;
 }
 
 uint32_t AGG::ClearFreeObjects()

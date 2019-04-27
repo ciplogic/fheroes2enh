@@ -2,6 +2,8 @@
 list(APPEND SOURCE_FILES
     "${CMAKE_CURRENT_SOURCE_DIR}/agg.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/agg.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/agg_private.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/agg_private.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/icn.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/icn.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/m82.cpp"
