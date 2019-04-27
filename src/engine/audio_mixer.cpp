@@ -183,7 +183,7 @@ void Mixer::Reset()
 {
     Music::Reset();
 #ifdef WITH_AUDIOCD
-    if(Cdrom::isValid()) Cdrom::Pause();
+    if(Cdrom::IsValid()) Cdrom::Pause();
 #endif
     Mix_HaltChannel(-1);
 }

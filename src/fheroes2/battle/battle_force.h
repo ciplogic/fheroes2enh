@@ -19,7 +19,7 @@ namespace Battle
 
         const HeroBase *GetCommander() const;
 
-        bool isValid() const;
+        bool IsValid() const;
 
         bool HasMonster(const Monster&) const;
 
@@ -42,9 +42,7 @@ namespace Battle
         void NewTurn();
 
         void SyncArmyCount();
-
-        //static Unit *GetCurrentUnit(const Force&, const Force&, Unit *last, Units *all, bool part1);
-
+        
         static Unit *GetCurrentUnit(const Force&, const Force&, Unit *last, bool part1);
 
         static void UpdateOrderUnits(const Force&, const Force&, Units&);

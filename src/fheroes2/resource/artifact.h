@@ -175,7 +175,7 @@ public:
 
     bool isAlchemistRemove() const;
 
-    bool isValid() const;
+    bool IsValid() const;
 
     void Reset();
 

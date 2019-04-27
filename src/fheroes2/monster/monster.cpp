@@ -236,7 +236,7 @@ Monster::Monster(int race, uint32_t dw) : id(UNKNOWN)
     id = FromDwelling(race, dw).id;
 }
 
-bool Monster::isValid() const
+bool Monster::IsValid() const
 {
     return id != UNKNOWN;
 }
@@ -380,7 +380,7 @@ uint32_t Monster::GetRNDSize(bool skip_factor) const
         if (res == 0) res = 1;
     }
 
-    return isValid() ? GetCountFromHitPoints(id, res) : 0;
+    return IsValid() ? GetCountFromHitPoints(id, res) : 0;
 }
 
 bool Monster::isUndead() const

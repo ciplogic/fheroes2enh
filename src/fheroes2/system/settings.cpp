@@ -218,7 +218,7 @@ const settings_t settingsFHeroes2[] =
 
 string Settings::GetVersion()
 {
-    return "1.01";
+    return "1.02";
 }
 
 /* constructor */

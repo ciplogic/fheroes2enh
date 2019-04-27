@@ -37,7 +37,7 @@ int ArtifactsModifiersResult(int type, const u8* arts, uint32_t size, const Hero
     {
         const Artifact art(arts[ii]);
 
-        if (!art.isValid())
+        if (!art.IsValid())
             continue;
         int acount = base.HasArtifact(art);
         if (!acount) continue;

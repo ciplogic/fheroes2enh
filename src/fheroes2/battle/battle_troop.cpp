@@ -1129,7 +1129,7 @@ bool Battle::Unit::AllowApplySpell(const Spell& spell, const HeroBase* hero, str
         break;
     }
 
-    if (guard_art.isValid() && myhero->HasArtifact(guard_art))
+    if (guard_art.IsValid() && myhero->HasArtifact(guard_art))
     {
         if (msg)
         {

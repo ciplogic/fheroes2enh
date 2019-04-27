@@ -118,7 +118,7 @@ struct CapturedObject
 
     bool GuardiansProtected() const
     {
-        return guardians.isValid();
+        return guardians.IsValid();
     }
 };
 

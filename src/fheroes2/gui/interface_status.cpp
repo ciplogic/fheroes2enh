@@ -163,7 +163,7 @@ void Interface::StatusWindow::NextState()
         const Castle* castle = GetFocusCastle();
 
         // skip empty army for castle
-        if (castle && !castle->GetArmy().m_troops.isValid()) NextState();
+        if (castle && !castle->GetArmy().m_troops.IsValid()) NextState();
     }
 }
 

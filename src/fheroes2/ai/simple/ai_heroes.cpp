@@ -148,7 +148,7 @@ bool AIHeroesPriorityObject(const Heroes& hero, s32 index)
             {
                 // maybe need join army
                 return hero.Modes(AI::HEROES_HUNTER) &&
-                    castle->GetArmy().m_troops.isValid() &&
+                    castle->GetArmy().m_troops.IsValid() &&
                     !hero.isVisited(world.GetTiles(castle->GetIndex()));
             }
             if (!hero.isFriends(castle->GetColor()))

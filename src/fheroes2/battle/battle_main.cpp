@@ -147,14 +147,14 @@ Battle::Result Battle::Loader(Army& army1, Army& army2, s32 mapsindex)
     if (army1.GetCommander() && army1.GetCommander()->isHeroes())
     {
         // hard reset army
-        if (!army1.m_troops.isValid() || result.army1 & RESULT_RETREAT) army1.Reset(false);
+        if (!army1.m_troops.IsValid() || result.army1 & RESULT_RETREAT) army1.Reset(false);
     }
 
     // update army
     if (army2.GetCommander() && army2.GetCommander()->isHeroes())
     {
         // hard reset army
-        if (!army2.m_troops.isValid() || result.army2 & RESULT_RETREAT) army2.Reset(false);
+        if (!army2.m_troops.IsValid() || result.army2 & RESULT_RETREAT) army2.Reset(false);
     }
 
     return result;

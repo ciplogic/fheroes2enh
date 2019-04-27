@@ -162,7 +162,7 @@ void Troops::Assign(const Troop* it1, const Troop* it2)
 
     while (it != _items.end() && it1 != it2)
     {
-        if (it1->isValid()) (*it)->Set(*it1);
+        if (it1->IsValid()) (*it)->Set(*it1);
         ++it;
         ++it1;
     }
@@ -177,7 +177,7 @@ void Troops::Assign(const Troops& troops)
 
     while (it1 != _items.end() && it2 != troops._items.end())
     {
-        if ((*it2)->isValid()) (*it1)->Set(**it2);
+        if ((*it2)->IsValid()) (*it1)->Set(**it2);
         ++it2;
         ++it1;
     }
@@ -215,7 +215,7 @@ const Troop* Troops::GetTroop(size_t pos) const
 void Troops::UpgradeMonsters(const Monster& m)
 {
     for (const auto& it : _items)
-        if (it->isValid() && *it == m) it->_monster.Upgrade();
+        if (it->IsValid() && *it == m) it->_monster.Upgrade();
 }
 
 uint32_t Troops::GetCountMonsters(const Monster& m) const
@@ -223,19 +223,19 @@ uint32_t Troops::GetCountMonsters(const Monster& m) const
     uint32_t c = 0;
 
     for (const auto& it : _items)
-        if (it->isValid() && *it == m) c += it->GetCount();
+        if (it->IsValid() && *it == m) c += it->GetCount();
 
     return c;
 }
 
-bool Troops::isValid() const
+bool Troops::IsValid() const
 {
-    return _items.end() != find_if(_items.begin(), _items.end(), [](auto& it) { return it->isValid(); });
+    return _items.end() != find_if(_items.begin(), _items.end(), [](auto& it) { return it->IsValid(); });
 }
 
 uint32_t Troops::GetCount() const
 {
-    return count_if(_items.begin(), _items.end(), [](auto& it) { return it->isValid(); });
+    return count_if(_items.begin(), _items.end(), [](auto& it) { return it->IsValid(); });
 }
 
 bool Troops::HasMonster(const Monster& mons) const
@@ -246,7 +246,7 @@ bool Troops::HasMonster(const Monster& mons) const
 bool Troops::AllTroopsIsRace(int race) const
 {
     for (const auto& it : _items)
-        if (it->isValid() && it->_monster.GetRace() != race) return false;
+        if (it->IsValid() && it->_monster.GetRace() != race) return false;
 
     return true;
 }
@@ -254,21 +254,21 @@ bool Troops::AllTroopsIsRace(int race) const
 bool Troops::CanJoinTroop(const Monster& mons) const
 {
     auto it = find_if(_items.begin(), _items.end(), [&](auto& it) { return it->isMonster(mons()); });
-    if (it == _items.end()) it = find_if(_items.begin(), _items.end(), [&](auto& it) { return !it->isValid(); });
+    if (it == _items.end()) it = find_if(_items.begin(), _items.end(), [&](auto& it) { return !it->IsValid(); });
 
     return it != _items.end();
 }
 
 bool Troops::JoinTroop(const Monster& mons, uint32_t count)
 {
-    if (mons.isValid() && count)
+    if (mons.IsValid() && count)
     {
         auto it = find_if(_items.begin(), _items.end(), [&](auto& it) { return it->isMonster(mons()); });
-        if (it == _items.end()) it = find_if(_items.begin(), _items.end(), [&](auto& it) { return !it->isValid(); });
+        if (it == _items.end()) it = find_if(_items.begin(), _items.end(), [&](auto& it) { return !it->IsValid(); });
 
         if (it != _items.end())
         {
-            if ((*it)->isValid())
+            if ((*it)->IsValid())
                 (*it)->SetCount((*it)->GetCount() + count);
             else
                 (*it)->Set(mons, count);
@@ -282,7 +282,7 @@ bool Troops::JoinTroop(const Monster& mons, uint32_t count)
 
 bool Troops::JoinTroop(const Troop& troop)
 {
-    return troop.isValid() && JoinTroop(troop(), troop.GetCount());
+    return troop.IsValid() && JoinTroop(troop(), troop.GetCount());
 }
 
 bool Troops::CanJoinTroops(const Troops& troops2) const
@@ -294,7 +294,7 @@ bool Troops::CanJoinTroops(const Troops& troops2) const
     troops1.m_troops.Insert(*this);
 
     for (const auto& it : troops2._items)
-        if (it->isValid() && !troops1.m_troops.JoinTroop(*it)) return false;
+        if (it->IsValid() && !troops1.m_troops.JoinTroop(*it)) return false;
 
     return true;
 }
@@ -305,7 +305,7 @@ void Troops::JoinTroops(Troops& troops2)
         return;
 
     for (auto& _item : troops2._items)
-        if (_item->isValid())
+        if (_item->IsValid())
         {
             JoinTroop(*_item);
             _item->Reset();
@@ -318,7 +318,7 @@ uint32_t Troops::GetUniqueCount() const
     monsters.reserve(_items.size());
 
     for (const auto& _item : _items)
-        if (_item->isValid()) monsters.push_back(_item->_monster.GetID());
+        if (_item->IsValid()) monsters.push_back(_item->_monster.GetID());
 
     sort(monsters.begin(), monsters.end());
     monsters.resize(distance(monsters.begin(),
@@ -334,7 +334,7 @@ uint32_t Troops::GetAttack() const
     uint32_t count = 0;
 
     for (const auto& _item : _items)
-        if (_item->isValid())
+        if (_item->IsValid())
         {
             res += static_cast<Monster *>(&_item->_monster)->GetAttack();
             ++count;
@@ -349,7 +349,7 @@ uint32_t Troops::GetDefense() const
     uint32_t count = 0;
 
     for (const auto& _item : _items)
-        if (_item->isValid())
+        if (_item->IsValid())
         {
             res += static_cast<Monster *>(&_item->_monster)->GetDefense();
             ++count;
@@ -363,7 +363,7 @@ uint32_t Troops::GetHitPoints() const
     uint32_t res = 0;
 
     for (const auto& _item : _items)
-        if (_item->isValid()) res += _item->GetHitPointsTroop();
+        if (_item->IsValid()) res += _item->GetHitPointsTroop();
 
     return res;
 }
@@ -374,7 +374,7 @@ uint32_t Troops::GetDamageMin() const
     uint32_t count = 0;
 
     for (const auto& _item : _items)
-        if (_item->isValid())
+        if (_item->IsValid())
         {
             res += _item->GetDamageMin();
             ++count;
@@ -389,7 +389,7 @@ uint32_t Troops::GetDamageMax() const
     uint32_t count = 0;
 
     for (const auto& _item : _items)
-        if (_item->isValid())
+        if (_item->IsValid())
         {
             res += _item->GetDamageMax();
             ++count;
@@ -403,7 +403,7 @@ uint32_t Troops::GetStrength() const
     uint32_t res = 0;
 
     for (const auto& _item : _items)
-        if (_item->isValid()) res += _item->GetStrength();
+        if (_item->IsValid()) res += _item->GetStrength();
 
     return res;
 }
@@ -416,7 +416,7 @@ void Troops::Clean()
 void Troops::UpgradeTroops(const Castle& castle)
 {
     for (auto& _item : _items)
-        if (_item->isValid())
+        if (_item->IsValid())
         {
             payment_t payment = _item->GetUpgradeCost();
             Kingdom& kingdom = castle.GetKingdom();
@@ -433,7 +433,7 @@ void Troops::UpgradeTroops(const Castle& castle)
 
 Troop* Troops::GetFirstValid()
 {
-    auto it = find_if(_items.begin(), _items.end(), [](sp<Troop>& it) { return it->isValid(); });
+    auto it = find_if(_items.begin(), _items.end(), [](sp<Troop>& it) { return it->IsValid(); });
     return it == _items.end() ? nullptr : it->get();
 }
 
@@ -444,7 +444,7 @@ Troop* Troops::GetWeakestTroop()
 
     while (first != last)
     {
-        if ((*first)->isValid()) break;
+        if ((*first)->IsValid()) break;
         ++first;
     }
 
@@ -453,7 +453,7 @@ Troop* Troops::GetWeakestTroop()
 
     if (first != last)
         while (++first != last)
-            if ((*first)->isValid() && Army::WeakestTroop(first->get(), lowest->get()))
+            if ((*first)->IsValid() && Army::WeakestTroop(first->get(), lowest->get()))
                 lowest = first;
 
     return lowest->get();
@@ -466,7 +466,7 @@ Troop* Troops::GetSlowestTroop()
 
     while (first != last)
     {
-        if ((*first)->isValid()) break;
+        if ((*first)->IsValid()) break;
         ++first;
     }
 
@@ -475,7 +475,7 @@ Troop* Troops::GetSlowestTroop()
 
     if (first != last)
         while (++first != last)
-            if ((*first)->isValid() && Army::SlowestTroop(first->get(), lowest->get()))
+            if ((*first)->IsValid() && Army::SlowestTroop(first->get(), lowest->get()))
                 lowest = first;
 
     return lowest->get();
@@ -488,7 +488,7 @@ Troops Troops::GetOptimized() const
 
     for (auto _item : _items)
     {
-        if (!_item->isValid()) continue;
+        if (!_item->IsValid()) continue;
         auto it2 = find_if(result._items.begin(), result._items.end(),
                            [&](sp<Troop>& it) { return it->isMonster(_item->_monster.GetID()); });
 
@@ -595,7 +595,7 @@ void Troops::JoinStrongest(Troops& troops2, bool save_last)
     }
 
     // save half weak of strongest to army2
-    if (save_last && !troops2.isValid())
+    if (save_last && !troops2.IsValid())
     {
         Troop& last = *priority._items.back();
         uint32_t count = last.GetCount() / 2;
@@ -636,7 +636,7 @@ void Troops::KeepOnlyWeakest(Troops& troops2, bool save_last)
     }
 
     // save half weak of strongest to army
-    if (save_last && !isValid())
+    if (save_last && !IsValid())
     {
         Troop& last = *priority._items.back();
         uint32_t count = last.GetCount() / 2;
@@ -655,7 +655,7 @@ void Troops::KeepOnlyWeakest(Troops& troops2, bool save_last)
 void Troops::DrawMons32LineWithScoute(s32 cx, s32 cy, uint32_t width, uint32_t first, uint32_t count, uint32_t scoute,
                                       bool shorts) const
 {
-    if (!isValid()) return;
+    if (!IsValid()) return;
     if (0 == count) count = GetCount();
 
     const uint32_t chunk = width / count;
@@ -666,7 +666,7 @@ void Troops::DrawMons32LineWithScoute(s32 cx, s32 cy, uint32_t width, uint32_t f
 
     for (const auto& _item : _items)
     {
-        if (!_item->isValid())
+        if (!_item->IsValid())
             continue;
         if (0 == first && count)
         {
@@ -693,7 +693,7 @@ void Troops::SplitTroopIntoFreeSlots(const Troop& troop, uint32_t slotCount)
         vector<vector<sp<Troop>>::iterator> iters;
 
         for (auto it = _items.begin(); it != _items.end(); ++it)
-            if (!(*it)->isValid() && limits)
+            if (!(*it)->IsValid() && limits)
             {
                 iters.push_back(it);
                 (*it)->Set(troop.GetMonster(), chunk);
@@ -910,7 +910,7 @@ int Army::GetRace() const
     races.reserve(m_troops._items.size());
 
     for (const auto& _item : m_troops._items)
-        if (_item->isValid()) races.push_back(_item->_monster.GetRace());
+        if (_item->IsValid()) races.push_back(_item->_monster.GetRace());
 
     sort(races.begin(), races.end());
     races.resize(distance(races.begin(), unique(races.begin(), races.end())));
@@ -956,7 +956,7 @@ int Army::GetMoraleModificator(string* strs) const
 
     for (const auto& _item : m_troops._items)
     {
-        if (!_item->isValid())
+        if (!_item->IsValid())
             continue;
         switch (_item->_monster.GetRace())
         {
@@ -1105,7 +1105,7 @@ uint32_t Army::GetAttack() const
 
     for (const auto& _item : m_troops._items)
     {
-        if (!_item->isValid())
+        if (!_item->IsValid())
             continue;
         res += _item->_monster.GetAttack();
         ++count;
@@ -1121,7 +1121,7 @@ uint32_t Army::GetDefense() const
 
     for (const auto& _item : m_troops._items)
     {
-        if (!_item->isValid())
+        if (!_item->IsValid())
             continue;
         res += _item->_monster.GetDefense();
         ++count;
@@ -1199,7 +1199,7 @@ string Army::String() const
     os << ": ";
 
     for (const auto& _item : m_troops._items)
-        if (_item->isValid())
+        if (_item->IsValid())
             os << dec << _item->GetCount() << " " << _item->GetName() << ", ";
 
     return os.str();
@@ -1223,7 +1223,7 @@ uint32_t Army::ActionToSirens()
 
     for (auto& _item : m_troops._items)
     {
-        if (!_item->isValid()) continue;
+        if (!_item->IsValid()) continue;
         const uint32_t kill = _item->GetCount() * 30 / 100;
 
         if (!kill) continue;
@@ -1235,7 +1235,7 @@ uint32_t Army::ActionToSirens()
 
 bool Army::TroopsStrongerEnemyTroops(const Troops& troops1, const Troops& troops2)
 {
-    if (!troops2.isValid()) return true;
+    if (!troops2.IsValid()) return true;
 
     const int a1 = troops1.GetAttack();
     const int d1 = troops1.GetDefense();
@@ -1288,7 +1288,7 @@ void Army::DrawMons32LineShort(const Troops& troops, s32 cx, s32 cy, uint32_t wi
 JoinCount Army::GetJoinSolution(const Heroes& hero, const Maps::Tiles& tile, const Troop& troop)
 {
     auto* map_troop = static_cast<MapMonster *>(world.GetMapObject(tile.GetObjectUID(MP2::OBJ_MONSTER)));
-    const uint32_t ratios = troop.isValid() ? hero.GetArmy().m_troops.GetHitPoints() / troop.GetHitPointsTroop() : 0;
+    const uint32_t ratios = troop.IsValid() ? hero.GetArmy().m_troops.GetHitPoints() / troop.GetHitPointsTroop() : 0;
     const bool check_free_stack = true;
     // (hero.GetArmy().GetCount() < hero.GetArmy().size() || hero.GetArmy().HasMonster(troop)); // set force, see Dialog::ArmyJoinWithCost, http://sourceforge.net/tracker/?func=detail&aid=3567985&group_id=96859&atid=616183
     const bool check_extra_condition = !hero.HasArtifact(Artifact::HIDEOUS_MASK) &&

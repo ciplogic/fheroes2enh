@@ -392,7 +392,7 @@ void Heroes::PostLoad()
     save_maps_object = MP2::OBJ_ZERO;
 
     // fix zero army
-    if (!army.m_troops.isValid())
+    if (!army.m_troops.IsValid())
         army.Reset(true);
     else
         SetModes(CUSTOMARMY);
@@ -715,7 +715,7 @@ bool Heroes::Recruit(int cl, const Point& pt)
         if (!Modes(SAVEPOINTS)) move_point = GetMaxMovePoints();
         MovePointsScaleFixed();
 
-        if (!army.m_troops.isValid()) army.Reset(false);
+        if (!army.m_troops.IsValid()) army.Reset(false);
 
         tiles.SetHeroes(this);
         kingdom.AddHeroes(this);
@@ -962,7 +962,7 @@ bool Heroes::IsFullBagArtifacts() const
 
 bool Heroes::PickupArtifact(const Artifact& art)
 {
-    if (!art.isValid()) return false;
+    if (!art.IsValid()) return false;
 
     //const Settings & conf = Settings::Get();
 
@@ -1441,7 +1441,7 @@ void Heroes::SetFreeman(int reason)
         kingdom.SetLastLostHero(*this);
     }
 
-    if (!army.m_troops.isValid() || Battle::RESULT_RETREAT & reason) army.Reset(false);
+    if (!army.m_troops.IsValid() || Battle::RESULT_RETREAT & reason) army.Reset(false);
     else if (Battle::RESULT_LOSS & reason && !(Battle::RESULT_SURRENDER & reason)) army.Reset(true);
 
     if (GetColor() != Color::NONE) kingdom.RemoveHeroes(this);

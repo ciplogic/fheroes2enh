@@ -68,7 +68,7 @@ public:
 
     uint32_t GetCount() const;
 
-    bool isValid() const;
+    bool IsValid() const;
 
     bool HasMonster(const Monster&) const;
 

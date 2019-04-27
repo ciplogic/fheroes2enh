@@ -84,7 +84,7 @@ void Cdrom::Close()
     }
 }
 
-bool Cdrom::isValid()
+bool Cdrom::IsValid()
 {
     return cd;
 }
@@ -104,7 +104,7 @@ int Cdrom::LoopCheck(void *data)
 
 void Cdrom::Play(const u8 track, bool loop, bool force)
 {
-    if(Mixer::isValid() && cd)
+    if(Mixer::IsValid() && cd)
     {
         SDL_LockMutex(cdLock);
         

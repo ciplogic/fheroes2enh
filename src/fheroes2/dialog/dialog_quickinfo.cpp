@@ -91,7 +91,7 @@ string ShowGuardiansInfo(const Maps::Tiles& tile, int scoute)
     else
         str = MP2::StringObject(tile.GetObject());
 
-    if (troop.isValid())
+    if (troop.IsValid())
     {
         str.append("\n");
         str.append(_("guarded by %{count} of %{monster}"));
@@ -169,7 +169,7 @@ string ShowDwellingInfo(const Maps::Tiles& tile, int scoute)
         return str;
     str.append("\n");
     const Troop& troop = tile.QuantityTroop();
-    if (troop.isValid())
+    if (troop.IsValid())
     {
         str.append(_("(available: %{count})"));
         StringReplace(str, "%{count}", Game::CountScoute(troop.GetCount(), scoute));

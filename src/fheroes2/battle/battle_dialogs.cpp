@@ -288,7 +288,7 @@ void Battle::Arena::DialogBattleSummary(const Result& res) const
     text.Set(_("Attacker"), Font::SMALL);
     text.Blit(pos_rt.x + (pos_rt.w - text.w()) / 2, pos_rt.y + 285);
 
-    if (killed1.isValid())
+    if (killed1.IsValid())
         Army::DrawMons32Line(killed1, pos_rt.x + 25, pos_rt.y + 303, 270);
     else
     {
@@ -300,7 +300,7 @@ void Battle::Arena::DialogBattleSummary(const Result& res) const
     text.Set(_("Defender"), Font::SMALL);
     text.Blit(pos_rt.x + (pos_rt.w - text.w()) / 2, pos_rt.y + 345);
 
-    if (killed2.isValid())
+    if (killed2.IsValid())
         Army::DrawMons32Line(killed2, pos_rt.x + 25, pos_rt.y + 363, 270);
     else
     {

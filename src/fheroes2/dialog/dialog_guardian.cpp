@@ -48,7 +48,7 @@ public:
         Display& display = Display::Get();
 
         back.Blit(*this, display);
-        if (troop.isValid())
+        if (troop.IsValid())
         {
             const Sprite& mons32 = AGG::GetICN(ICN::MONS32, troop._monster.GetSpriteIndex());
             mons32.Blit(x + (back.w() - mons32.w()) / 2, y + back.h() - mons32.h() - 11);
@@ -94,7 +94,7 @@ public:
         sp.Blit(rt2);
         sp.Blit(rt3);
 
-        if (troop.isValid())
+        if (troop.IsValid())
         {
             switch (cobj.GetSplit())
             {
@@ -297,14 +297,14 @@ bool Dialog::SetGuardian(Heroes& hero, Troop& troop, CapturedObject& co, bool re
             }
             else
                 // select
-                if (troop.isValid() && !readonly)
+                if (troop.IsValid() && !readonly)
                 {
                     selectArmy.ResetSelected();
                     guardian.select = true;
                     cursor.Hide();
                 }
         }
-        else if (le.MousePressRight(guardian) && troop.isValid())
+        else if (le.MousePressRight(guardian) && troop.IsValid())
         {
             selectArmy.ResetSelected();
             ArmyInfo(troop, 0);

@@ -74,7 +74,7 @@ public:
 
     payment_t GetUpgradeCost() const;
 
-    bool isValid() const;
+    bool IsValid() const;
 
     virtual bool isBattle() const;
 

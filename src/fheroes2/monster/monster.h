@@ -187,7 +187,7 @@ public:
 
     std::string GetPluralName(uint32_t) const;
 
-    bool isValid() const;
+    bool IsValid() const;
 
     bool isElemental() const;
 

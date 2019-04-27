@@ -111,7 +111,7 @@ void CapturedObjects::Set(s32 index, int obj, int col)
 {
     CapturedObject& co = Get(index);
 
-    if (co.GetColor() != col && co.guardians.isValid())
+    if (co.GetColor() != col && co.guardians.IsValid())
         co.guardians.Reset();
 
     co.Set(obj, col);
@@ -565,7 +565,7 @@ void World::NewMonth()
 
 void World::MonthOfMonstersAction(const Monster& mons)
 {
-    if (mons.isValid())
+    if (mons.IsValid())
     {
         MapsIndexes tiles, excld;
         tiles.reserve(vec_tiles.size() / 2);

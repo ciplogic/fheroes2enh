@@ -1860,7 +1860,7 @@ string Maps::Tiles::String() const
 
         os <<
             "capture color   : " << Color::String(co.objcol.second) << endl;
-        if (co.guardians.isValid())
+        if (co.guardians.IsValid())
         {
             os <<
                 "capture guard   : " << co.guardians.GetName() << endl <<
@@ -2313,10 +2313,10 @@ bool Maps::Tiles::CaptureObjectIsProtection() const
         return false;
     }
     if (MP2::OBJ_CASTLE != object)
-        return QuantityTroop().isValid();
+        return QuantityTroop().IsValid();
     Castle* castle = world.GetCastle(GetCenter());
     if (castle)
-        return castle->GetArmy().m_troops.isValid();
+        return castle->GetArmy().m_troops.IsValid();
 
     return false;
 }
@@ -2498,7 +2498,7 @@ void Maps::Tiles::UpdateRNDArtifactSprite(Tiles& tile)
         return;
     }
 
-    if (!art.isValid())
+    if (!art.IsValid())
     {
         return;
     }

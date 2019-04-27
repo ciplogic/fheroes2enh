@@ -88,7 +88,7 @@ Battle::Force::Force(Army& parent, bool opposite) : army(parent)
         const uint32_t position = army.isSpreadFormat() ? index * 22 : 22 + index * 11;
         uint32_t uid = 0;
 
-        if (troop && troop->isValid())
+        if (troop && troop->IsValid())
         {
             _items.push_back(new Unit(*troop, opposite ? position + 10 : position, opposite));
             _items.back()->SetArmy(army);
@@ -124,7 +124,7 @@ int Battle::Force::GetControl() const
     return army.GetControl();
 }
 
-bool Battle::Force::isValid() const
+bool Battle::Force::IsValid() const
 {
     for (auto& it : _items)
     {
@@ -375,7 +375,7 @@ void Battle::Force::SyncArmyCount()
     {
         Troop* troop = army.m_troops.GetTroop(index);
 
-        if (!troop || !troop->isValid())
+        if (!troop || !troop->IsValid())
             continue;
         const Unit* unit = FindUID(uids.at(index));
 

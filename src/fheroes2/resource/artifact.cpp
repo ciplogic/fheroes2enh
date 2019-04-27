@@ -427,7 +427,7 @@ bool Artifact::isUltimate() const
     return false;
 }
 
-bool Artifact::isValid() const
+bool Artifact::IsValid() const
 {
     return id != UNKNOWN;
 }
@@ -795,7 +795,7 @@ bool BagArtifacts::isPresentArtifact(const Artifact& art) const
 
 bool BagArtifacts::PushArtifact(const Artifact& art)
 {
-    if (!art.isValid())
+    if (!art.IsValid())
         return false;
     if (art() == Artifact::MAGIC_BOOK && isPresentArtifact(art))
         return false;
@@ -841,7 +841,7 @@ bool BagArtifacts::MakeBattleGarb()
 
 uint32_t BagArtifacts::CountArtifacts() const
 {
-    return count_if(_items.begin(), _items.end(), [](const auto& it) { return it.isValid(); });
+    return count_if(_items.begin(), _items.end(), [](const auto& it) { return it.IsValid(); });
 }
 
 bool BagArtifacts::ContainUltimateArtifact() const
@@ -947,7 +947,7 @@ void ArtifactsBar::RedrawBackground(const Rect& pos, Surface& dstsf)
 
 void ArtifactsBar::RedrawItem(Artifact& art, const Rect& pos, bool selected, Surface& dstsf)
 {
-    if (art.isValid())
+    if (art.IsValid())
     {
         Cursor::Get().Hide();
 
@@ -973,7 +973,7 @@ bool ArtifactsBar::ActionBarSingleClick(const Point& cursor, Artifact& art, cons
         swap(art, *GetSelectedItem());
         return false;
     }
-    if (art.isValid())
+    if (art.IsValid())
     {
         if (!read_only)
         {
@@ -1049,7 +1049,7 @@ bool ArtifactsBar::ActionBarPressRight(const Point& cursor, Artifact& art, const
 {
     ResetSelected();
 
-    if (art.isValid())
+    if (art.IsValid())
     {
         if (can_change)
             art.Reset();
@@ -1092,7 +1092,7 @@ bool ArtifactsBar::ActionBarCursor(const Point& cursor, Artifact& art, const Rec
                 StringReplace(msg, "%{name}", art.GetName());
             }
         }
-        else if (!art.isValid())
+        else if (!art.IsValid())
         {
             msg = _("Move %{name}");
             StringReplace(msg, "%{name}", art2->GetName());
@@ -1104,7 +1104,7 @@ bool ArtifactsBar::ActionBarCursor(const Point& cursor, Artifact& art, const Rec
             StringReplace(msg, "%{name2}", art2->GetName());
         }
     }
-    else if (art.isValid())
+    else if (art.IsValid())
     {
         msg = _("Select %{name}");
         StringReplace(msg, "%{name}", art.GetName());
@@ -1118,7 +1118,7 @@ bool ArtifactsBar::ActionBarCursor(const Point& cursor, Artifact& art1, const Re
 {
     if (art2() == Artifact::MAGIC_BOOK || art1() == Artifact::MAGIC_BOOK)
         msg = _("Cannot move artifact");
-    else if (art1.isValid())
+    else if (art1.IsValid())
     {
         msg = _("Exchange %{name2} with %{name}");
         StringReplace(msg, "%{name}", art1.GetName());

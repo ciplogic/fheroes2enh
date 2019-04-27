@@ -440,7 +440,7 @@ void Castle::ActionNewWeek()
                 if (nullptr != (dw = GetDwelling(dwellings2[ii])))
                 {
                     const Monster mons(race, dwellings2[ii]);
-                    if (mons.isValid() && mons() == world.GetWeekType().GetMonster())
+                    if (mons.IsValid() && mons() == world.GetWeekType().GetMonster())
                     {
                         *dw += GetGrownWeekOf(mons);
                         break;
@@ -478,7 +478,7 @@ void Castle::ActionNewMonth()
                 if (nullptr != (dw = GetDwelling(dwellings[ii])))
                 {
                     const Monster mons(race, dwellings[ii]);
-                    if (mons.isValid() && mons() == world.GetWeekType().GetMonster())
+                    if (mons.IsValid() && mons() == world.GetWeekType().GetMonster())
                     {
                         *dw += *dw * GetGrownMonthOf() / 100;
                         break;
@@ -873,7 +873,7 @@ Heroes* Castle::RecruitHero(Heroes* hero)
 /* recruit monster from building to castle army */
 bool Castle::RecruitMonster(const Troop& troop)
 {
-    if (!troop.isValid())
+    if (!troop.IsValid())
         return false;
 
     int dw_index = 0;
@@ -2301,7 +2301,7 @@ void Castle::RecruitAllMonster()
     // skip recruit: AI with customization of empty army
     if (Modes(CUSTOMARMY) &&
         isControlAI() &&
-        !army.m_troops.isValid() && !army.m_troops.HasMonster(Monster(Monster::UNKNOWN)))
+        !army.m_troops.IsValid() && !army.m_troops.HasMonster(Monster(Monster::UNKNOWN)))
         skip_recruit = true;
 
     if (!skip_recruit)
@@ -2473,7 +2473,7 @@ void Castle::ActionPreBattle()
     {
         CastleHeroes heroes = world.GetHeroes(*this);
         Heroes* hero = heroes.GuardFirst();
-        if (hero && army.m_troops.isValid())
+        if (hero && army.m_troops.IsValid())
             hero->GetArmy().JoinStrongestFromArmy(army);
     }
 }

@@ -1049,7 +1049,7 @@ void ActionToCastle(Heroes& hero, uint32_t obj, s32 dst_index)
         Army& army = castle->GetActualArmy();
         bool allow_enter = false;
 
-        if (army.m_troops.isValid())
+        if (army.m_troops.IsValid())
         {
             Heroes* defender = heroes.GuardFirst();
             castle->ActionPreBattle();
@@ -1308,7 +1308,7 @@ void ActionToWagon(Heroes& hero, uint32_t obj, s32 dst_index)
     {
         const Artifact& art = tile.QuantityArtifact();
 
-        if (art.isValid())
+        if (art.IsValid())
         {
             if (hero.IsFullBagArtifacts())
             {
@@ -1810,7 +1810,7 @@ void ActionToPoorMoraleObject(Heroes& hero, uint32_t obj, s32 dst_index)
 
                 PlaySoundSuccess;
 
-                if (art.isValid())
+                if (art.IsValid())
                 {
                     if (hero.IsFullBagArtifacts())
                     {
@@ -2204,7 +2204,7 @@ void ActionToTreasureChest(Heroes& hero, uint32_t obj, s32 dst_index)
         {
             const Artifact& art = tile.QuantityArtifact();
 
-            if (art.isValid())
+            if (art.IsValid())
             {
                 if (hero.IsFullBagArtifacts())
                 {
@@ -2261,7 +2261,7 @@ void ActionToTreasureChest(Heroes& hero, uint32_t obj, s32 dst_index)
                 hero.IncreaseExperience(expr);
             }
         }
-        else if (art.isValid())
+        else if (art.IsValid())
         {
             if (hero.IsFullBagArtifacts())
             {
@@ -2294,7 +2294,7 @@ void ActionToAncientLamp(Heroes& hero, uint32_t obj, s32 dst_index)
     const Troop& troop = tile.QuantityTroop();
 
     PlaySoundSuccess;
-    if (troop.isValid() &&
+    if (troop.IsValid() &&
         Dialog::YES == Dialog::Message(MP2::StringObject(obj),
                                        _(
                                            "You stumble upon a dented and tarnished lamp lodged deep in the earth. Do you wish to rub the lamp?"
@@ -2551,7 +2551,7 @@ void ActionToDwellingJoinMonster(Heroes& hero, uint32_t obj, s32 dst_index)
     Maps::Tiles& tile = world.GetTiles(dst_index);
     const Troop& troop = tile.QuantityTroop();
 
-    if (troop.isValid())
+    if (troop.IsValid())
     {
         hero.MovePointsScaleFixed();
 
@@ -2678,7 +2678,7 @@ void ActionToDwellingRecruitMonster(Heroes& hero, uint32_t obj, s32 dst_index)
 
     const Troop& troop = tile.QuantityTroop();
 
-    if (!troop.isValid())
+    if (!troop.IsValid())
         Message(MP2::StringObject(obj), msg_void, Font::BIG, Dialog::OK);
     else if (Dialog::YES == Dialog::Message(MP2::StringObject(obj), msg_full, Font::BIG, Dialog::YES | Dialog::NO))
         RecruitMonsterFromTile(hero, tile, MP2::StringObject(obj), troop, false);
@@ -2749,7 +2749,7 @@ void ActionToDwellingBattleMonster(Heroes& hero, uint32_t obj, s32 dst_index)
 
     if (!battle)
     {
-        if (troop.isValid())
+        if (troop.IsValid())
         {
             PlaySoundSuccess;
             str_scss = str_recr;
@@ -2787,7 +2787,7 @@ void ActionToDwellingBattleMonster(Heroes& hero, uint32_t obj, s32 dst_index)
     // recruit monster
     if (!str_scss.empty())
     {
-        if (troop.isValid() &&
+        if (troop.IsValid() &&
             Dialog::YES == Dialog::Message(MP2::StringObject(obj), str_scss, Font::BIG, Dialog::YES | Dialog::NO))
             RecruitMonsterFromTile(hero, tile, MP2::StringObject(obj), troop, false);
 
@@ -3075,7 +3075,7 @@ void ActionToEvent(Heroes& hero, uint32_t obj, s32 dst_index)
             Message("", event_maps->message, Font::BIG, Dialog::OK);
 
         const Artifact& art = event_maps->artifact;
-        if (art.isValid())
+        if (art.IsValid())
         {
             if (hero.PickupArtifact(art))
             {
@@ -3255,7 +3255,7 @@ void ActionToDaemonCave(Heroes& hero, uint32_t obj, s32 dst_index)
                     "The Demon screams its challenge and attacks! After a short, desperate battle, you slay the monster and find the %{art} in the back of the cave."
                 );
                 StringReplace(msg, "%{art}", art.GetName());
-                if (art.isValid()) DialogArtifactWithExp("", msg, art, exp);
+                if (art.IsValid()) DialogArtifactWithExp("", msg, art, exp);
                 hero.PickupArtifact(art);
                 hero.IncreaseExperience(exp);
             }
@@ -3534,20 +3534,20 @@ void ActionToSphinx(Heroes& hero, uint32_t obj, s32 dst_index)
 
         if (count)
         {
-            if (1 == count && res.gold && art.isValid())
+            if (1 == count && res.gold && art.IsValid())
                 DialogWithArtifactAndGold("", say, art, res.gold);
             else
             {
                 Dialog::ResourceInfo("", say, res);
-                if (art.isValid()) Dialog::ArtifactInfo("", say, art);
+                if (art.IsValid()) Dialog::ArtifactInfo("", say, art);
             }
         }
-        else if (art.isValid()) Dialog::ArtifactInfo("", say, art);
+        else if (art.IsValid()) Dialog::ArtifactInfo("", say, art);
 
         riddle->SetQuiet();
         hero.SetVisited(dst_index, Visit::GLOBAL);
 
-        if (art.isValid())
+        if (art.IsValid())
             hero.PickupArtifact(art);
 
         if (count)

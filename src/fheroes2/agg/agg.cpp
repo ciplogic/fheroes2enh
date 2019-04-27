@@ -1243,7 +1243,7 @@ void AGG::PlayMusic(int mus, bool loop)
     }
     else
 #ifdef WITH_AUDIOCD
-        if(conf.MusicCD() && Cdrom::isValid())
+        if(conf.MusicCD() && Cdrom::IsValid())
         {
             Cdrom::Play(mus, loop);
         }

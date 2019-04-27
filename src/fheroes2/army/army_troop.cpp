@@ -133,9 +133,9 @@ uint32_t Troop::GetStrength() const
     return static_cast<uint32_t>(res);
 }
 
-bool Troop::isValid() const
+bool Troop::IsValid() const
 {
-    return _monster.isValid() && count;
+    return _monster.IsValid() && count;
 }
 
 payment_t Troop::GetCost() const

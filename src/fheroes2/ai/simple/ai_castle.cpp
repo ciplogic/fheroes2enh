@@ -203,7 +203,7 @@ void AI::CastleTurn(Castle& castle)
 
         // part II
         if (enemy &&
-            castle.GetArmy().m_troops.isValid() &&
+            castle.GetArmy().m_troops.IsValid() &&
             Army::TroopsStrongerEnemyTroops(castle.GetArmy().m_troops, enemy->GetArmy().m_troops))
         {
             if (can_recruit)
@@ -223,7 +223,7 @@ void AI::CastleTurn(Castle& castle)
         // part III
         AIKingdom& ai = AIKingdoms::Get(castle.GetColor());
         if (ai.capital != &castle &&
-            castle.GetArmy().m_troops.isValid() && !hero &&
+            castle.GetArmy().m_troops.IsValid() && !hero &&
             2 < castle.GetArmy().m_troops.GetCount() &&
             150 < castle.GetArmy().m_troops.GetHitPoints() &&
             can_recruit)
@@ -244,7 +244,7 @@ void AI::CastleTurn(Castle& castle)
 void AI::CastlePreBattle(Castle& castle)
 {
     Heroes* hero = castle.GetHeroes().GuardFirst();
-    if (hero && castle.GetArmy().m_troops.isValid())
+    if (hero && castle.GetArmy().m_troops.IsValid())
         hero->GetArmy().JoinStrongestFromArmy(castle.GetArmy());
 }
 

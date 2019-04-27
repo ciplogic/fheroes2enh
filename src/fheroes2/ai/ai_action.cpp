@@ -545,7 +545,7 @@ void AIToCastle(Heroes& hero, uint32_t obj, s32 dst_index)
         Army& army = castle->GetActualArmy();
         //bool allow_enter = false;
 
-        if (army.m_troops.isValid())
+        if (army.m_troops.IsValid())
         {
             Heroes* defender = heroes.GuardFirst();
             castle->ActionPreBattle();
@@ -735,7 +735,7 @@ void AIToTreasureChest(Heroes& hero, uint32_t obj, s32 dst_index)
         {
             const Artifact& art = tile.QuantityArtifact();
 
-            if (art.isValid() && !hero.PickupArtifact(art))
+            if (art.IsValid() && !hero.PickupArtifact(art))
                 gold = GoldInsteadArtifact(obj);
         }
     }
@@ -753,7 +753,7 @@ void AIToTreasureChest(Heroes& hero, uint32_t obj, s32 dst_index)
                 hero.IncreaseExperience(expr);
             }
         }
-        else if (art.isValid() && !hero.PickupArtifact(art))
+        else if (art.IsValid() && !hero.PickupArtifact(art))
             gold = GoldInsteadArtifact(obj);
     }
 
@@ -808,7 +808,7 @@ void AIToWagon(Heroes& hero, uint32_t obj, s32 dst_index)
     {
         const Artifact& art = tile.QuantityArtifact();
 
-        if (art.isValid())
+        if (art.IsValid())
             hero.PickupArtifact(art);
         else
             hero.GetKingdom().AddFundsResource(tile.QuantityFunds());
@@ -1163,7 +1163,7 @@ void AIToEvent(Heroes& hero, uint32_t obj, s32 dst_index)
     {
         if (event_maps->resources.GetValidItemsCount())
             hero.GetKingdom().AddFundsResource(event_maps->resources);
-        if (event_maps->artifact.isValid())
+        if (event_maps->artifact.IsValid())
             hero.PickupArtifact(event_maps->artifact);
         event_maps->SetVisited(hero.GetColor());
 
@@ -1219,7 +1219,7 @@ void AIToPoorMoraleObject(Heroes& hero, uint32_t obj, s32 dst_index)
             complete = true;
             const Artifact& art = tile.QuantityArtifact();
 
-            if (art.isValid() && !hero.PickupArtifact(art))
+            if (art.IsValid() && !hero.PickupArtifact(art))
                 gold = GoldInsteadArtifact(obj);
 
             hero.GetKingdom().AddFundsResource(Funds(Resource::GOLD, gold));
@@ -1338,7 +1338,7 @@ void AIToDwellingJoinMonster(Heroes& hero, uint32_t obj, s32 dst_index)
     Maps::Tiles& tile = world.GetTiles(dst_index);
     const Troop& troop = tile.QuantityTroop();
 
-    if (troop.isValid() && hero.GetArmy().m_troops.JoinTroop(troop)) tile.MonsterSetCount(0);
+    if (troop.IsValid() && hero.GetArmy().m_troops.JoinTroop(troop)) tile.MonsterSetCount(0);
 }
 
 void AIToDwellingRecruitMonster(Heroes& hero, uint32_t obj, s32 dst_index)
@@ -1346,7 +1346,7 @@ void AIToDwellingRecruitMonster(Heroes& hero, uint32_t obj, s32 dst_index)
     Maps::Tiles& tile = world.GetTiles(dst_index);
     const Troop& troop = tile.QuantityTroop();
 
-    if (troop.isValid())
+    if (troop.IsValid())
     {
         Kingdom& kingdom = hero.GetKingdom();
         const payment_t paymentCosts = troop.GetCost();
@@ -1588,7 +1588,7 @@ bool AI::HeroesValidObject(const Heroes& hero, s32 index)
             if (tile.CaptureObjectIsProtection())
             {
                 Army enemy(tile);
-                return !enemy.m_troops.isValid() || Army::TroopsStrongerEnemyTroops(army.m_troops, enemy.m_troops);
+                return !enemy.m_troops.IsValid() || Army::TroopsStrongerEnemyTroops(army.m_troops, enemy.m_troops);
             }
             return true;
         }
@@ -1611,7 +1611,7 @@ bool AI::HeroesValidObject(const Heroes& hero, s32 index)
                 if (tile.CaptureObjectIsProtection())
                 {
                     Army enemy(tile);
-                    return !enemy.m_troops.isValid() ||
+                    return !enemy.m_troops.IsValid() ||
                         Army::TroopsStrongerEnemyTroops(army.m_troops, enemy.m_troops);
                 }
                 return true;
@@ -1649,7 +1649,7 @@ bool AI::HeroesValidObject(const Heroes& hero, s32 index)
             if (5 < variants && 14 > variants)
             {
                 Army enemy(tile);
-                return !enemy.m_troops.isValid()
+                return !enemy.m_troops.IsValid()
                     || Army::TroopsStrongerEnemyTroops(army.m_troops, enemy.m_troops);
             }
             // other
@@ -1766,7 +1766,7 @@ bool AI::HeroesValidObject(const Heroes& hero, s32 index)
     case MP2::OBJ_THATCHEDHUT:
         {
             const Troop& troop = tile.QuantityTroop();
-            if (troop.isValid() &&
+            if (troop.IsValid() &&
                 (army.m_troops.HasMonster(troop()) ||
                     (!army.isFullHouse() && (troop._monster.isArchers() || troop._monster.isFly()))))
                 return true;
@@ -1787,7 +1787,7 @@ bool AI::HeroesValidObject(const Heroes& hero, s32 index)
             const Troop& troop = tile.QuantityTroop();
             const payment_t paymentCosts = troop.GetCost();
 
-            if (troop.isValid() && kingdom.AllowPayment(paymentCosts) &&
+            if (troop.IsValid() && kingdom.AllowPayment(paymentCosts) &&
                 (army.m_troops.HasMonster(troop()) ||
                     (!army.isFullHouse() && (troop._monster.isArchers() || troop._monster.isFly()))))
                 return true;
@@ -1805,7 +1805,7 @@ bool AI::HeroesValidObject(const Heroes& hero, s32 index)
                 const Troop& troop = tile.QuantityTroop();
                 const payment_t paymentCosts = troop.GetCost();
 
-                if (troop.isValid() && kingdom.AllowPayment(paymentCosts) &&
+                if (troop.IsValid() && kingdom.AllowPayment(paymentCosts) &&
                     (army.m_troops.HasMonster(troop()) ||
                         !army.isFullHouse()))
                     return true;
@@ -1819,7 +1819,7 @@ bool AI::HeroesValidObject(const Heroes& hero, s32 index)
             const Troop& troop = tile.QuantityTroop();
             const payment_t paymentCosts = troop.GetCost();
 
-            if (troop.isValid() && kingdom.AllowPayment(paymentCosts) &&
+            if (troop.IsValid() && kingdom.AllowPayment(paymentCosts) &&
                 (army.m_troops.HasMonster(troop()) ||
                     !army.isFullHouse()))
                 return true;
@@ -1861,7 +1861,7 @@ bool AI::HeroesValidObject(const Heroes& hero, s32 index)
             tile.QuantityIsValid())
         {
             Army enemy(tile);
-            return enemy.m_troops.isValid()
+            return enemy.m_troops.IsValid()
                 && Army::TroopsStrongerEnemyTroops(army.m_troops, enemy.m_troops);
         }
         break;
@@ -1875,7 +1875,7 @@ bool AI::HeroesValidObject(const Heroes& hero, s32 index)
     case MP2::OBJ_MONSTER:
         {
             Army enemy(tile);
-            return !enemy.m_troops.isValid()
+            return !enemy.m_troops.IsValid()
                 || Army::TroopsStrongerEnemyTroops(army.m_troops, enemy.m_troops);
         }
         break;

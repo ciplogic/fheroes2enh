@@ -392,7 +392,7 @@ void Battle::Arena::TurnTroop(Unit* current_troop)
 
 bool Battle::Arena::BattleValid() const
 {
-    return army1->isValid() && army2->isValid() &&
+    return army1->IsValid() && army2->IsValid() &&
         0 == result_game.army1 && 0 == result_game.army2;
 }
 
@@ -466,16 +466,16 @@ void Battle::Arena::Turns()
         }
 
     // end turn: fix result
-    if (!army1->isValid() || result_game.army1 & (RESULT_RETREAT | RESULT_SURRENDER))
+    if (!army1->IsValid() || result_game.army1 & (RESULT_RETREAT | RESULT_SURRENDER))
     {
         result_game.army1 |= RESULT_LOSS;
-        if (army2->isValid()) result_game.army2 = RESULT_WINS;
+        if (army2->IsValid()) result_game.army2 = RESULT_WINS;
     }
 
-    if (!army2->isValid() || result_game.army2 & (RESULT_RETREAT | RESULT_SURRENDER))
+    if (!army2->IsValid() || result_game.army2 & (RESULT_RETREAT | RESULT_SURRENDER))
     {
         result_game.army2 |= RESULT_LOSS;
-        if (army1->isValid()) result_game.army1 = RESULT_WINS;
+        if (army1->IsValid()) result_game.army1 = RESULT_WINS;
     }
 
     // fix experience and killed
@@ -1022,7 +1022,7 @@ Battle::Unit* Battle::Arena::CreateElemental(const Spell& spell) const
 
     Monster mons(spell);
 
-    if (!mons.isValid())
+    if (!mons.IsValid())
     {
         return nullptr;
     }

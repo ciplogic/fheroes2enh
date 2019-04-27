@@ -243,7 +243,7 @@ void ShowNewWeekDialog()
         const Monster monster(week.GetMonster());
         const uint32_t count = world.BeginMonth() ? Castle::GetGrownMonthOf() : Castle::GetGrownWeekOf(monster);
 
-        if (monster.isValid() && count)
+        if (monster.IsValid() && count)
         {
             if (world.BeginMonth())
                 message += 100 == Castle::GetGrownMonthOf()
@@ -446,7 +446,7 @@ int Interface::Basic::GetCursorFocusHeroes(const Heroes& from_hero, const Maps::
                     return Cursor::DistanceThemes(Cursor::ACTION, from_hero.GetRangeRouteDays(castle->GetIndex()));
                 if (from_hero.isFriends(castle->GetColor()))
                     return conf.ExtUnionsAllowCastleVisiting() ? Cursor::ACTION : Cursor::POINTER;
-                if (castle->GetActualArmy().m_troops.isValid())
+                if (castle->GetActualArmy().m_troops.IsValid())
                     return Cursor::DistanceThemes(Cursor::FIGHT, from_hero.GetRangeRouteDays(castle->GetIndex()));
                 return Cursor::DistanceThemes(Cursor::ACTION, from_hero.GetRangeRouteDays(castle->GetIndex()));
             }

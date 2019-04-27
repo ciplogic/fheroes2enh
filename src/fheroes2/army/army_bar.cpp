@@ -92,7 +92,7 @@ void RedistributeArmy(ArmyTroop& troop1 /* from */, ArmyTroop& troop2 /* to */)
 
     if (2 > troop1.GetCount())
     {
-        if (!save_last_troop || troop2.isValid())
+        if (!save_last_troop || troop2.IsValid())
             Army::SwapTroops(troop1, troop2);
     }
     else
@@ -191,7 +191,7 @@ void ArmyBar::RedrawBackground(const Rect& pos, Surface& dstsf)
 
 void ArmyBar::RedrawItem(ArmyTroop& troop, const Rect& pos, bool selected, Surface& dstsf)
 {
-    if (!troop.isValid())
+    if (!troop.IsValid())
         return;
     Text text(Int2Str(troop.GetCount()), (use_mini_sprite ? Font::SMALL : Font::BIG));
 
@@ -300,7 +300,7 @@ bool ArmyBar::ActionBarCursor(const Point& cursor, ArmyTroop& troop, const Rect&
             msg = _("View %{name}");
             StringReplace(msg, "%{name}", troop.GetName());
         }
-        else if (!troop.isValid())
+        else if (!troop.IsValid())
         {
             msg = _("Move or right click Redistribute %{name}");
             StringReplace(msg, "%{name}", troop2->GetName());
@@ -317,7 +317,7 @@ bool ArmyBar::ActionBarCursor(const Point& cursor, ArmyTroop& troop, const Rect&
             StringReplace(msg, "%{name2}", troop2->GetName());
         }
     }
-    else if (troop.isValid())
+    else if (troop.IsValid())
     {
         msg = _("Select %{name}");
         StringReplace(msg, "%{name}", troop.GetName());
@@ -327,7 +327,7 @@ bool ArmyBar::ActionBarCursor(const Point& cursor, ArmyTroop& troop, const Rect&
     LocalEvent& le = LocalEvent::Get();
     ArmyTroop* troop_p = GetItem(le.GetMousePressLeft());
 
-    if (!troop.isValid() && troop_p && troop_p->isValid())
+    if (!troop.IsValid() && troop_p && troop_p->IsValid())
     {
         while (le.HandleEvents() && le.MousePressLeft())
         {
@@ -337,7 +337,7 @@ bool ArmyBar::ActionBarCursor(const Point& cursor, ArmyTroop& troop, const Rect&
         }
         ArmyTroop* troop_r = GetItem(le.GetMouseReleaseLeft());
 
-        if (troop_r && !troop_r->isValid())
+        if (troop_r && !troop_r->IsValid())
         {
             RedistributeArmy(*troop_p, *troop_r);
             if (isSelected()) ResetSelected();
@@ -356,7 +356,7 @@ ArmyBar::ActionBarCursor(const Point& cursor, ArmyTroop& troop1, const Rect& pos
 {
     bool save_last_troop = troop2.GetArmy()->SaveLastTroop();
 
-    if (troop1.isValid())
+    if (troop1.IsValid())
     {
         if (troop1.GetID() != troop2.GetID())
         {
@@ -404,7 +404,7 @@ bool ArmyBar::ActionBarSingleClick(const Point& cursor, ArmyTroop& troop, const 
 
         return false; // reset cursor
     }
-    if (troop.isValid())
+    if (troop.IsValid())
     {
         if (!read_only) // select
         {
@@ -445,7 +445,7 @@ bool ArmyBar::ActionBarSingleClick(const Point& cursor, ArmyTroop& troop, const 
 
             const Monster mons = Dialog::SelectMonster(cur);
 
-            if (mons.isValid())
+            if (mons.IsValid())
             {
                 uint32_t count = 1;
 
@@ -465,14 +465,14 @@ bool ArmyBar::ActionBarSingleClick(const Point& cursor, ArmyTroop& troop1, const
 {
     if (troop2.GetArmy()->SaveLastTroop())
     {
-        if (troop1.isValid())
+        if (troop1.IsValid())
             Army::SwapTroops(troop1, troop2);
     }
     else
     {
-        if (!troop1.isValid())
+        if (!troop1.IsValid())
             Army::SwapTroops(troop1, troop2);
-        else if (troop1.isValid() && troop1.GetID() == troop2.GetID())
+        else if (troop1.IsValid() && troop1.GetID() == troop2.GetID())
         {
             troop1.SetCount(troop1.GetCount() + troop2.GetCount());
             troop2.Reset();
@@ -531,7 +531,7 @@ bool ArmyBar::ActionBarDoubleClick(const Point& cursor, ArmyTroop& troop, const 
 
 bool ArmyBar::ActionBarPressRight(const Point& cursor, ArmyTroop& troop, const Rect& pos)
 {
-    if (troop.isValid())
+    if (troop.IsValid())
     {
         ResetSelected();
 
@@ -558,7 +558,7 @@ ArmyBar::ActionBarPressRight(const Point& cursor, ArmyTroop& troop1, const Rect&
 {
     ResetSelected();
 
-    if (troop1.isValid())
+    if (troop1.IsValid())
         Dialog::ArmyInfo(troop1, 0);
     else
         RedistributeArmy(troop2, troop1);

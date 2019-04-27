@@ -27,7 +27,7 @@
 
 namespace Cdrom
 {
-    bool	isValid();
+    bool	IsValid();
     void	Play(const u8 track, bool loop, bool force = false);
     void	Pause();
 }
