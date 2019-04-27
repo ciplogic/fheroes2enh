@@ -597,6 +597,9 @@
     <ClInclude Include="..\..\src\fheroes2\gui\interface_castle_bar.h">
       <Filter>Header Files\fheroes2\gui</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\fheroes2\battle\battle_force.h">
+      <Filter>Header Files\fheroes2\battle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\engine\audio.cpp">
@@ -1168,6 +1171,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\fheroes2\system\fh2_win32.cpp">
       <Filter>Source Files\fheroes2\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\fheroes2\battle\battle_force.cpp">
+      <Filter>Source Files\fheroes2\battle</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

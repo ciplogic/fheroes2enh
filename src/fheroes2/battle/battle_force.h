@@ -43,7 +43,7 @@ namespace Battle
 
         void SyncArmyCount();
 
-        static Unit *GetCurrentUnit(const Force&, const Force&, Unit *last, Units *all, bool part1);
+        //static Unit *GetCurrentUnit(const Force&, const Force&, Unit *last, Units *all, bool part1);
 
         static Unit *GetCurrentUnit(const Force&, const Force&, Unit *last, bool part1);
 

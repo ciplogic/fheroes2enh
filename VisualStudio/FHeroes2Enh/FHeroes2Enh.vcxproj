@@ -229,6 +229,7 @@
     <ClInclude Include="..\..\src\fheroes2\battle\battle_catapult.h" />
     <ClInclude Include="..\..\src\fheroes2\battle\battle_cell.h" />
     <ClInclude Include="..\..\src\fheroes2\battle\battle_command.h" />
+    <ClInclude Include="..\..\src\fheroes2\battle\battle_force.h" />
     <ClInclude Include="..\..\src\fheroes2\battle\battle_grave.h" />
     <ClInclude Include="..\..\src\fheroes2\battle\battle_interface.h" />
     <ClInclude Include="..\..\src\fheroes2\battle\battle_only.h" />
@@ -379,6 +380,7 @@
     <ClCompile Include="..\..\src\fheroes2\battle\battle_cell.cpp" />
     <ClCompile Include="..\..\src\fheroes2\battle\battle_command.cpp" />
     <ClCompile Include="..\..\src\fheroes2\battle\battle_dialogs.cpp" />
+    <ClCompile Include="..\..\src\fheroes2\battle\battle_force.cpp" />
     <ClCompile Include="..\..\src\fheroes2\battle\battle_grave.cpp" />
     <ClCompile Include="..\..\src\fheroes2\battle\battle_interface.cpp" />
     <ClCompile Include="..\..\src\fheroes2\battle\battle_main.cpp" />
