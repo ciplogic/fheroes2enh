@@ -5,8 +5,6 @@ set(CMAKE_CXX_STANDARD 14)
 
 ADD_DEFINITIONS(-DBUILD_RELEASE -DWITH_AI=simple -DWITH_IMAGE -DWITH_MIXER -DWITH_TTF)
 
-add_subdirectory(src)
-
 include_directories(
         src/engine
         src/engine/serializer
@@ -348,6 +346,8 @@ set(SOURCE_FILES
         src/tools/palette_h2.cpp
         src/fheroes2/dialog/plus_sign_addon.cpp
         src/fheroes2/dialog/plus_sign_addon.h)
+
+add_subdirectory(src)
 
 add_executable(fheroes2 ${SOURCE_FILES})
 
