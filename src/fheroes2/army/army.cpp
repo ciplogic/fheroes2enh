@@ -77,31 +77,31 @@ string Army::TroopSizeString(const Troop& troop)
     switch (ArmyGetSize(troop.GetCount()))
     {
     default:
-        str = _("A few\n%{monster}");
+        str = _("A few %{monster}");
         break;
     case ARMY_SEVERAL:
-        str = _("Several\n%{monster}");
+        str = _("Several %{monster}");
         break;
     case ARMY_PACK:
-        str = _("A pack of\n%{monster}");
+        str = _("A pack of %{monster}");
         break;
     case ARMY_LOTS:
-        str = _("Lots of\n%{monster}");
+        str = _("Lots of %{monster}");
         break;
     case ARMY_HORDE:
-        str = _("A horde of\n%{monster}");
+        str = _("A horde of %{monster}");
         break;
     case ARMY_THRONG:
-        str = _("A throng of\n%{monster}");
+        str = _("A throng of %{monster}");
         break;
     case ARMY_SWARM:
-        str = _("A swarm of\n%{monster}");
+        str = _("A swarm of %{monster}");
         break;
     case ARMY_ZOUNDS:
-        str = _("Zounds of\n%{monster}");
+        str = _("Zounds of %{monster}");
         break;
     case ARMY_LEGION:
-        str = _("A legion of\n%{monster}");
+        str = _("A legion of %{monster}");
         break;
     }
 

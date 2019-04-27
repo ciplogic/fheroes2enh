@@ -266,7 +266,7 @@ uint32_t Game::GetGameOverScores()
 
     uint32_t k_size = 0;
 
-    switch ((mapsize_t)conf.MapsSize().w)
+    switch (static_cast<mapsize_t>(conf.MapsSize().w))
     {
     case mapsize_t::SMALL:
         k_size = 140;

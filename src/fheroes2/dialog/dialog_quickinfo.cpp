@@ -36,6 +36,29 @@
 #include "icn.h"
 #include "settings.h"
 #include "plus_sign_addon.h"
+#include <cassert>
+
+namespace
+{
+	std::string BattleDificultyBasedOnRatio(double ratio)
+	{
+		assert(ratio != 0.0);
+		double inverseRatio = 1 / ratio;
+		if (ratio > 10)
+			return "Trivial";
+		if (ratio > 3)
+			return "Very Easy";
+		if (ratio > 1.5)
+			return "Easy";
+		if (inverseRatio<1.5 )
+			return "Normal";
+		if (inverseRatio > 10)
+			return "Impossible";
+		if (inverseRatio > 3)
+			return "Very Hard";
+		return "Hard";
+	}
+}
 
 string GetMinesIncomeString(int type)
 {
@@ -80,19 +103,25 @@ string ShowGuardiansInfo(const Maps::Tiles& tile, int scoute)
     return str;
 }
 
-string ShowMonsterInfo(const Maps::Tiles& tile, int scoute)
+string ShowMonsterInfo(const Maps::Tiles& tile, int scoute, const Heroes* from_hero)
 {
     string str;
     const Troop& troop = tile.QuantityTroop();
-
+	if (from_hero)
+	{
+		const auto heroArmy = from_hero->GetArmy().m_troops.GetHitPoints();
+		const auto otherArmy = troop.GetHitPointsTroop();
+        const double ratio = static_cast<double>(heroArmy) / otherArmy;
+		str = "Battle: " + BattleDificultyBasedOnRatio(ratio) + "\n";
+	}
     if (scoute)
     {
-        str = "%{count} %{monster}";
+        str += "%{count} %{monster}";
         StringReplace(str, "%{count}", Game::CountScoute(troop.GetCount(), scoute));
         StringReplace(str, "%{monster}", StringLower(troop._monster.GetMultiName()));
     }
     else
-        str = Army::TroopSizeString(troop);
+		str += Army::TroopSizeString(troop);
 
     return str;
 }
@@ -321,7 +350,7 @@ std::string getObjectName(const Maps::Tiles& tile, const Settings& settings)
             switch (tile.GetObject())
             {
             case MP2::OBJ_MONSTER:
-                name_object = ShowMonsterInfo(tile, scoute);
+                name_object = ShowMonsterInfo(tile, scoute, from_hero);
                 break;
 
             case MP2::OBJ_EVENT:

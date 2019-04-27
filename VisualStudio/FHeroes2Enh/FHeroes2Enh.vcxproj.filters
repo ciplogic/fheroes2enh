@@ -600,6 +600,9 @@
     <ClInclude Include="..\..\src\fheroes2\battle\battle_force.h">
       <Filter>Header Files\fheroes2\battle</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\fheroes2\agg\agg_private.h">
+      <Filter>Header Files\fheroes2\agg</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\engine\audio.cpp">
@@ -1174,6 +1177,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\fheroes2\battle\battle_force.cpp">
       <Filter>Source Files\fheroes2\battle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\fheroes2\agg\agg_private.cpp">
+      <Filter>Source Files\fheroes2\agg</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
