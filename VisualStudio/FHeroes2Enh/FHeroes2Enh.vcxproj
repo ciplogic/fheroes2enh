@@ -195,7 +195,6 @@
     <ClInclude Include="..\..\src\engine\rand.h" />
     <ClInclude Include="..\..\src\engine\rect.h" />
     <ClInclude Include="..\..\src\engine\sdlnet.h" />
-    <ClInclude Include="..\..\src\engine\serialize.h" />
     <ClInclude Include="..\..\src\engine\serializer\BinaryFileReader.h" />
     <ClInclude Include="..\..\src\engine\serializer\ByteVectorReader.h" />
     <ClInclude Include="..\..\src\engine\serializer\ByteVectorWriter.h" />
