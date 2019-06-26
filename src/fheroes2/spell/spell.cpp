@@ -47,11 +47,11 @@ spellstats_t spells[] = {
     //  name                      sp   mp  spr value  bits cost     description
     {"Unknown", 0, 0, 0, 0, 0, COST_NONE, "Unknown spell."},
     {
-        _("Fireball"), 9, 0, 8, 10, 0, COST_NONE,
+        _("Fireball"), 8, 0, 8, 13, 0, COST_NONE,
         _("Causes a giant fireball to strike the selected area, damaging all nearby creatures.")
     },
     {
-        _("Fireblast"), 15, 0, 9, 10, 0, COST_NONE,
+        _("Fireblast"), 14, 0, 9, 13, 0, COST_NONE,
         _(
             "An improved version of fireball, fireblast affects two hexes around the center point of the spell, rather than one."
         )
@@ -61,7 +61,7 @@ spellstats_t spells[] = {
         _("Causes a bolt of electrical energy to strike the selected creature.")
     },
     {
-        _("Chain Lightning"), 15, 0, 5, 40, 0, COST_NONE,
+        _("Chain Lightning"), 20, 0, 5, 40, 0, COST_NONE,
         _(
             "Causes a bolt of electrical energy to strike a selected creature, then strike the nearest creature with half damage, then strike the NEXT nearest creature with half again damage, and so on, until it becomes too weak to be harmful.  Warning:  This spell can hit your own creatures!"
         )
@@ -83,11 +83,11 @@ spellstats_t spells[] = {
         )
     },
     {
-        _("Resurrect"), 12, 0, 13, 50, 0, COST_NONE,
+        _("Resurrect"), 13, 0, 13, 50, 0, COST_NONE,
         _("Resurrects creatures from a damaged or dead unit until end of combat.")
     },
     {
-        _("Resurrect True"), 15, 0, 12, 50, 0, COST_NONE,
+        _("Resurrect True"), 20, 0, 12, 50, 0, COST_NONE,
         _("Resurrects creatures from a damaged or dead unit permanently.")
     },
     {_("Haste"), 3, 0, 14, 0, 0, COST_NONE, _("Increases the speed of any creature by %{count}.")},
@@ -95,7 +95,7 @@ spellstats_t spells[] = {
     {_("spell|Slow"), 3, 0, 1, 0, 0, COST_NONE, _("Slows target to half movement rate.")},
     {_("Mass Slow"), 15, 0, 1, 0, 0, COST_NONE, _("Slows all enemies to half movement rate.")},
     //
-    {_("Blind "), 6, 0, 21, 0, 0, COST_NONE, _("Clouds the affected creatures' eyes, preventing them from moving.")},
+    {_("Blind "), 7, 0, 21, 0, 0, COST_NONE, _("Clouds the affected creatures' eyes, preventing them from moving.")},
     {_("Bless"), 3, 0, 7, 0, 0, COST_NONE, _("Causes the selected creatures to inflict maximum damage.")},
     {_("Mass Bless"), 12, 0, 7, 0, 0, COST_NONE, _("Causes all of your units to inflict maximum damage.")},
     {_("Stoneskin"), 3, 0, 31, 3, 0, COST_NONE, _("Magically increases the defense skill of the selected creatures.")},
@@ -107,7 +107,7 @@ spellstats_t spells[] = {
     {_("Mass Curse"), 12, 0, 3, 0, 0, COST_NONE, _("Causes all enemy troops to inflict minimum damage.")},
     {_("Holy Word"), 9, 0, 22, 10, 0, COST_NONE, _("Damages all undead in the battle.")},
     {
-        _("Holy Shout"), 12, 0, 23, 20, 0, COST_NONE,
+        _("Holy Shout"), 14, 0, 23, 20, 0, COST_NONE,
         _("Damages all undead in the battle.  This is an improved version of Holy Word.")
     },
     {_("Anti-Magic"), 7, 0, 17, 0, 0, COST_NONE, _("Prevents harmful magic against the selected creatures.")},
@@ -116,15 +116,15 @@ spellstats_t spells[] = {
     {_("Magic Arrow"), 3, 0, 38, 10, 0, COST_NONE, _("Causes a magic arrow to strike the selected target.")},
     {_("Berserker"), 12, 0, 19, 0, 0, COST_NONE, _("Causes a creature to attack its nearest neighbor.")},
     {
-        _("Armageddon"), 20, 0, 16, 50, 0, COST_NONE,
+        _("Armageddon"), 30, 0, 16, 50, 0, COST_NONE,
         _("Holy terror strikes the battlefield, causing severe damage to all creatures.")
     },
     {
-        _("Elemental Storm"), 15, 0, 11, 25, 0, COST_NONE,
+        _("Elemental Storm"), 20, 0, 11, 25, 0, COST_NONE,
         _("Magical elements pour down on the battlefield, damaging all creatures.")
     },
     {
-        _("Meteor Shower"), 15, 0, 24, 25, 0, COST_NONE,
+        _("Meteor Shower"), 18, 0, 24, 25, 0, COST_NONE,
         _("A rain of rocks strikes an area of the battlefield, damaging all nearby creatures.")
     },
     {_("Paralyze"), 9, 0, 20, 0, 0, COST_NONE, _("The targeted creatures are paralyzed, unable to move or retaliate.")},
@@ -136,7 +136,7 @@ spellstats_t spells[] = {
     },
     {_("Cold Ray"), 6, 0, 36, 20, 0, COST_NONE, _("Drains body heat from a single enemy unit.")},
     {
-        _("Cold Ring"), 9, 0, 35, 10, 0, COST_NONE,
+        _("Cold Ring"), 8, 0, 35, 13, 0, COST_NONE,
         _("Drains body heat from all units surrounding the center point, but not including the center point.")
     },
     {_("Disrupting Ray"), 7, 0, 34, 3, 0, COST_NONE, _("Reduces the defense rating of an enemy unit by three.")},
@@ -148,11 +148,11 @@ spellstats_t spells[] = {
     {_("Dragon Slayer"), 6, 0, 32, 5, 0, COST_NONE, _("Greatly increases a unit's attack skill vs. Dragons.")},
     {_("Blood Lust"), 3, 0, 27, 3, 0, COST_NONE, _("Increases a unit's attack skill.")},
     {
-        _("Animate Dead"), 10, 0, 25, 50, 0, COST_NONE,
+        _("Animate Dead"), 15, 0, 25, 50, 0, COST_NONE,
         _("Resurrects creatures from a damaged or dead undead unit permanently.")
     },
     {
-        _("Mirror Image"), 25, 0, 26, 0, 0, COST_NONE,
+        _("Mirror Image"), 20, 0, 26, 0, 0, COST_NONE,
         _(
             "Creates an illusionary unit that duplicates one of your existing units.  This illusionary unit does the same damages as the original, but will vanish if it takes any damage."
         )
@@ -184,7 +184,7 @@ spellstats_t spells[] = {
         )
     },
     {
-        _("Dimension Door"), 10, 0, 47, 0, 0, COST_NONE,
+        _("Dimension Door"), 22, 0, 47, 0, 0, COST_NONE,
         _("Allows the caster to magically transport to a nearby location.")
     },
     {_("Town Gate"), 10, 0, 48, 0, 0, COST_NONE, _("Returns the caster to any town or castle currently owned.")},
@@ -387,7 +387,6 @@ int Spell::Level() const
         return 3;
 
     case BERSERKER:
-    case CHAINLIGHTNING:
     case ELEMENTALSTORM:
     case FIREBLAST:
     case HOLYSHOUT:
@@ -396,6 +395,7 @@ int Spell::Level() const
     case MASSSLOW:
     case METEORSHOWER:
     case RESURRECT:
+    case HYPNOTIZE:
 
     case SETEGUARDIAN:
     case SETAGUARDIAN:
@@ -405,8 +405,8 @@ int Spell::Level() const
     case VIEWALL:
         return 4;
 
+    case CHAINLIGHTNING:
     case ARMAGEDDON:
-    case HYPNOTIZE:
     case MIRRORIMAGE:
     case RESURRECTTRUE:
     case SUMMONEELEMENT:
