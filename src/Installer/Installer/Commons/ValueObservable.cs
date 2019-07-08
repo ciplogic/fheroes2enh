@@ -7,8 +7,8 @@ namespace Installer.Commons
     {
         public T Value
         {
-            get => _value;
-            set => Change(value);
+            get { return _value; }
+            set { Change(value); }
         }
 
         readonly List<Action<T>> _actionList = new List<Action<T>>();

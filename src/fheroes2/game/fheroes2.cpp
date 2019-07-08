@@ -64,6 +64,7 @@ int PrintHelp(const char* basename)
 
 void extractFrames()
 {
+    return;
     static bool isExtracted = false;
     if (isExtracted)
         return;
