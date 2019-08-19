@@ -244,7 +244,7 @@ void Battle::NecromancySkillAction(HeroBase& hero, uint32_t killed, bool local)
     Army& army = hero.GetArmy();
 
     if (0 == killed ||
-        army.isFullHouse() && !army.m_troops.HasMonster(Monster::SKELETON))
+        (army.isFullHouse() && !army.m_troops.HasMonster(Monster::SKELETON)))
         return;
 
     // check necromancy shrine build
