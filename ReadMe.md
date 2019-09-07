@@ -15,6 +15,11 @@ Releases are here:
 
 https://github.com/ciplogic/fheroes2enh/releases/
 
+You can also install it via Chocolatey:
+```
+choco install fheroes2enh --version 1.1.0
+```
+
 
 *What do you mean by enhancements?*
 
