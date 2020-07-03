@@ -4,6 +4,16 @@
 
 Free Heroes 2 is an engine recreation of game Heroes 2 (of Might and Magic) with UI and coding enhancements.
 
+***Work is suspended***
+
+Some people notice that issues are untouched and sadly they will remain as such. As for now, I have lost the interest to strongly go into code and fix issues, for various reasons, including a heavier setup. Though I will not close it, as people can contribute simple fixes as PRs and if they kind of work on my machine, I will incorporate and make a new release.
+
+Now I am trying to redo the game in Java (basically a port of C++ code, but with some easier to debug/contribute, and it will run eventually on a Mac!, 4K screens, it supports 2X and 4X scaling) using JavaFX.
+
+If you are interested into contributing and make Free Heroes 2 "Great again" (sorry, I dislike some guy making things great again), and you like a modern up-to-date Java (meaning you can use "var" keyword, enhanced switch, etc), a full map loading is working with game that supports multiple scalings and a working game on Linux/Windows/Mac (it should work even on Mac/Big Sur). I didn't try it on R-Pi, but it should work on a R-Pi3 or alike with a modern OpenJDK install
+
+https://github.com/ciplogic/TilePainter
+
 **Version 1.0 was launched!**
 
 
